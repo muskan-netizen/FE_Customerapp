@@ -73,7 +73,7 @@ const App = () => {
       var data = deepLinkUrl?.split('=').pop();
       let removePer = decodeURI(data);
       let sendingData = JSON.parse(removePer);
-      console.log(sendingData, 'split url');
+
       // return;
       setTimeout(() => {
         NavigationService.navigate(navigationStrings.TAB_ROUTES, {
@@ -114,7 +114,6 @@ const App = () => {
 
     AsyncStorage.getItem('autoConnectEnabled').then((res) => {
       if (res !== null) {
-        console.log('hit connect funcions >>>>');
         ConnectBTFunction();
       }
     });
@@ -321,7 +320,7 @@ const App = () => {
         setProgress(false)
         break;
       case codePush.SyncStatus.UNKNOWN_ERROR:
-        console.log("codepush status An unknown error occurred.")
+        console.log("codepush status An unknown error occurred")
         setProgress(false)
         break;
     }

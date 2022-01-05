@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Animated,
   Image,
@@ -9,20 +9,20 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FastImage from 'react-native-fast-image';
-import { UIActivityIndicator } from 'react-native-indicators';
+import {UIActivityIndicator} from 'react-native-indicators';
 import StarRating from 'react-native-star-rating';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import commonStylesFunc, { hitSlopProp } from '../styles/commonStyles';
+import commonStylesFunc, {hitSlopProp} from '../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
-import { currencyNumberFormatter } from '../utils/commonFunction';
+import {MyDarkTheme} from '../styles/theme';
+import {currencyNumberFormatter} from '../utils/commonFunction';
 import {
   getImageUrl,
   pressInAnimation,
@@ -31,8 +31,8 @@ import {
 
 const ProductCard3 = ({
   data = {},
-  onPress = () => { },
-  addToCart = () => { },
+  onPress = () => {},
+  addToCart = () => {},
   index,
   onIncrement,
   onDecrement,
@@ -44,13 +44,13 @@ const ProductCard3 = ({
   categoryInfo = '',
   businessType,
 }) => {
-  console.log("item data++", data)
+  // console.log('item data++', data);
   // data['qty'] = 1
   const [state, setState] = useState({
     selectedIndex: -1,
     selectedIndexForCartIcon: -1,
   });
-  const { selectedIndex, selectedIndexForCartIcon } = state;
+  const {selectedIndex, selectedIndexForCartIcon} = state;
 
   var totalProductQty = 0;
   if (data?.check_if_in_cart_app) {
@@ -59,20 +59,20 @@ const ProductCard3 = ({
     });
   }
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const isDarkMode = theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
-  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
+  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = styleData({ themeColors, fontFamily });
+  const styles = styleData({themeColors, fontFamily});
 
-  const { themeLayouts } = currentTheme;
-  const commonStyles = commonStylesFunc({ fontFamily });
+  const {themeLayouts} = currentTheme;
+  const commonStyles = commonStylesFunc({fontFamily});
 
   const url1 = data?.media[0]?.image?.path.image_fit;
   const url2 = data?.media[0]?.image?.path.image_path;
@@ -84,18 +84,17 @@ const ProductCard3 = ({
 
   const changePosition = () => {
     let i = selectedIndex == -1 ? index : -1;
-    updateState({ selectedIndex: i });
+    updateState({selectedIndex: i});
   };
 
   const changePositionForCartIcon = () => {
     let i = selectedIndexForCartIcon == -1 ? index : -1;
-    updateState({ selectedIndexForCartIcon: i });
+    updateState({selectedIndexForCartIcon: i});
   };
 
   let htmlText = data?.translation[0]?.body_html || null;
 
   let typeId = data?.category?.category_detail?.type_id;
-
   return (
     <Animatable.View
       // animation={index > 8 ? '' : 'fadeInUp'}
@@ -129,30 +128,31 @@ const ProductCard3 = ({
               flex: 1,
               marginTop: selectedIndex == index ? moderateScaleVertical(8) : 0,
             }}
-          // animation={selectedIndex == index ? 'fadeInDown' : 'fadeInLeft'}
+            // animation={selectedIndex == index ? 'fadeInDown' : 'fadeInLeft'}
           >
             {/* Title View */}
             <View>
-              {data && !!data?.tags && data?.tags.length > 0 ?
+              {data && !!data?.tags && data?.tags.length > 0 ? (
                 <View>
-                  {!!data.tags[0]?.tag?.icon ? <Image
-                    source={{
-                      uri: getIconImage(
-                        data.tags[0]?.tag?.icon?.image_fit,
-                        data?.tags[0]?.tag?.icon?.image_path,
-                        '50/50',
-                      ),
-                    }}
-                    style={{
-                      marginLeft: moderateScale(1),
-                      marginBottom: moderateScale(5),
-                      width: moderateScale(17),
-                      height: moderateScale(17),
-                    }}
-                  /> : null}
+                  {!!data.tags[0]?.tag?.icon ? (
+                    <Image
+                      source={{
+                        uri: getIconImage(
+                          data.tags[0]?.tag?.icon?.image_fit,
+                          data?.tags[0]?.tag?.icon?.image_path,
+                          '50/50',
+                        ),
+                      }}
+                      style={{
+                        marginLeft: moderateScale(1),
+                        marginBottom: moderateScale(5),
+                        width: moderateScale(17),
+                        height: moderateScale(17),
+                      }}
+                    />
+                  ) : null}
                 </View>
-                : null
-              }
+              ) : null}
               <Text
                 // numberOfLines={1}
                 style={{
@@ -201,7 +201,7 @@ const ProductCard3 = ({
                   rating={Number(parseInt(data?.averageRating).toFixed(1))}
                   fullStarColor={colors.yellowB}
                   starSize={8}
-                  containerStyle={{ width: width / 9 }}
+                  containerStyle={{width: width / 9}}
                 />
               </View>
             )}
@@ -220,17 +220,18 @@ const ProductCard3 = ({
                   fontSize: textScale(12),
                   fontFamily: fontFamily.regular,
                 }}>
-                {`${currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
-                    (
-                      Number(
-                        data?.variant[0]?.multiplier || data?.variant_multiplier,
-                      ) * Number(data?.variant[0]?.price)
-                    ).toFixed(2),
-                  )}`}
+                {`${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  (
+                    Number(
+                      data?.variant[0]?.multiplier || data?.variant_multiplier,
+                    ) * Number(data?.variant[0]?.price)
+                  ).toFixed(2),
+                )}`}
               </Text>
             </View>
-            <View style={{ width: width / 2 }}>
+            <View style={{width: width / 2}}>
               <Text
                 style={{
                   fontSize: textScale(10),
@@ -258,7 +259,7 @@ const ProductCard3 = ({
             style={{
               paddingBottom:
                 (!!data?.add_on && data?.add_on.length !== 0) ||
-                  (!!data?.variantSet && data?.variantSet.length !== 0)
+                (!!data?.variantSet && data?.variantSet.length !== 0)
                   ? moderateScale(30)
                   : moderateScale(15),
               alignItems: 'center',
@@ -292,7 +293,7 @@ const ProductCard3 = ({
                         : colors.greyColor,
                       borderRadius: moderateScale(7),
                     }}
-                    source={{ uri: getImage('800/400') }}
+                    source={{uri: getImage('800/400')}}
                   />
                 </TouchableOpacity>
               </Animatable.View>
@@ -306,9 +307,9 @@ const ProductCard3 = ({
                 justifyContent: url1 ? 'flex-start' : 'center',
               }}>
               {!!data?.variant[0]?.quantity ||
-                (!!typeId && typeId == 8) ||
-                (!!businessType && businessType == 'laundry') ||
-                data?.has_inventory == 0 ? (
+              (!!typeId && typeId == 8) ||
+              (!!businessType && businessType == 'laundry') ||
+              data?.has_inventory == 0 ? (
                 <View
                   style={{
                     marginTop:
@@ -317,8 +318,8 @@ const ProductCard3 = ({
                   }}>
                   {(!!data?.check_if_in_cart_app &&
                     data?.check_if_in_cart_app.length > 0) ||
-                    !!data?.qty ||
-                    totalProductQty ? (
+                  !!data?.qty ||
+                  totalProductQty ? (
                     <View
                       style={{
                         ...styles.addBtnStyle,
@@ -414,7 +415,7 @@ const ProductCard3 = ({
                     </>
                   )}
                   {(!!data?.add_on && data?.add_on.length !== 0) ||
-                    (!!data?.variantSet && data?.variantSet.length !== 0) ? (
+                  (!!data?.variantSet && data?.variantSet.length !== 0) ? (
                     <Text
                       style={{
                         ...styles.customTextStyle,
@@ -436,7 +437,7 @@ const ProductCard3 = ({
   );
 };
 
-function styleData({ themeColors, fontFamily }) {
+function styleData({themeColors, fontFamily}) {
   const styles = StyleSheet.create({
     outOfStock: {
       color: colors.orangeB,

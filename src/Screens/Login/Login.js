@@ -166,9 +166,9 @@ export default function Login({navigation}) {
               !!res.data?.client_preference?.verify_phone
             ? !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
-              ? navigation.push(navigationStrings.DRAWER_ROUTES)
+              ? navigation.push(navigationStrings.TAB_ROUTES)
               : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : navigation.push(navigationStrings.DRAWER_ROUTES);
+            : navigation.push(navigationStrings.TAB_ROUTES);
         }
         updateState({isLoading: false});
         getCartDetail();
@@ -242,9 +242,9 @@ export default function Login({navigation}) {
           !!res.data?.client_preference?.verify_phone
             ? !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
-              ? navigation.push(navigationStrings.DRAWER_ROUTES)
+              ? navigation.push(navigationStrings.TAB_ROUTES)
               : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : navigation.push(navigationStrings.DRAWER_ROUTES);
+            : navigation.push(navigationStrings.TAB_ROUTES);
         }
         updateState({isLoading: false});
         getCartDetail();
@@ -631,7 +631,7 @@ export default function Login({navigation}) {
                 ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
                 : {...styles.txtSmall, color: colors.textGreyLight}
             }>
-            {strings.ALREADY_HAVE_AN_ACCOUNT1}
+            {strings.DONT_HAVE_ACCOUNT}
             <Text
               onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
               style={{

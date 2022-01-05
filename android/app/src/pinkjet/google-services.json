@@ -1,58 +1,41 @@
 {
   "project_info": {
-    "project_number": "1052902265321",
-    "project_id": "pinkjet-bfa45",
-    "storage_bucket": "pinkjet-bfa45.appspot.com"
+    "project_number": "459562959416",
+    "project_id": "pinkjet-9df47",
+    "storage_bucket": "pinkjet-9df47.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1052902265321:android:51cebcaa2fb027626cbb78",
+        "mobilesdk_app_id": "1:459562959416:android:b6ad212c134ed29c4edccd",
         "android_client_info": {
           "package_name": "com.customer.pinkjet"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1052902265321-o5u875l0a27dtilo8l64k40ju7su11gb.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.customer.pinkjet",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "1052902265321-ppr7d1eshrdnuib0b82afputkcvhsubc.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.customer.pinkjet",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "1052902265321-qk38ikv750212l87kllfcuj383v4egps.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.customer.pinkjet",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "1052902265321-dkd5pl5i6rhglns02tp3i8m59brh0g7e.apps.googleusercontent.com",
+          "client_id": "459562959416-4sm2rvf0qtsd3h489j3c0bp6g96tgap4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA9mfym49Dybj0B-UTu0CX2Q9rGN_y3Rus"
+          "current_key": "AIzaSyAVD8COTOqWzD_ZZHQrC45xl_AyHUVVwtw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1052902265321-dkd5pl5i6rhglns02tp3i8m59brh0g7e.apps.googleusercontent.com",
+              "client_id": "459562959416-4sm2rvf0qtsd3h489j3c0bp6g96tgap4.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "459562959416-gk3tqm2a88ie21797q69rjvqq9nh69sa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pinkjet"
+              }
             }
           ]
         }

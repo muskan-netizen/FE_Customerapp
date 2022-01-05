@@ -727,7 +727,10 @@ export default {
   OUTFORDELIVERY: 'Your driver is heading to you',
   ORDERDELIVERED: 'Your order has been delivered',
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
+  INVOICE: 'Invoice',
+  PROOF: 'Proof',
   ORDER: 'طلب',
-  SELECT_VIA_MAP:"حدد عبر الخريطة",
-  HOUSE_NO:'رقم الدار'
+  SELECT_VIA_MAP: 'حدد عبر الخريطة',
+  HOUSE_NO: 'رقم الدار',
+  CUSTOMIZZATION_FOR: 'Customizations for',
 };

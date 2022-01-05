@@ -728,7 +728,10 @@ export default {
   MYRIDES: 'My Rides',
   MYRIDES: 'My Rides',
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
+  INVOICE: 'Invoice',
+  PROOF: 'Proof',
   ORDER: 'Order',
-  SELECT_VIA_MAP:"Select via map",
-  HOUSE_NO:'House No'
+  SELECT_VIA_MAP: 'Select via map',
+  HOUSE_NO: 'House No',
+  CUSTOMIZZATION_FOR: 'Customizations for',
 };

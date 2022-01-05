@@ -707,7 +707,10 @@ export default {
   ORDERDELIVERED: 'Your order has been delivered',
   MYRIDES: 'My Rides',
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
+  INVOICE: 'Invoice',
+  PROOF: 'Proof',
   ORDER: 'Order',
-  SELECT_VIA_MAP:"Select via map",
+  SELECT_VIA_MAP: 'Select via map',
   HOUSE_NO: 'House No.',
+  CUSTOMIZZATION_FOR: 'Customizations for',
 };

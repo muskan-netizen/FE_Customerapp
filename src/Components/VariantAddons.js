@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import DeviceInfo from 'react-native-device-info';
-import Modal from 'react-native-modal';
 import {Pagination} from 'react-native-snap-carousel';
 import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
@@ -38,14 +37,12 @@ import {
   getColorCodeWithOpactiyNumber,
   hapticEffects,
   playHapticEffect,
-  playVibration,
   showError,
   showSuccess,
 } from '../utils/helperFunctions';
 import HtmlViewComp from './HtmlViewComp';
 import BannerLoader from './Loaders/BannerLoader';
 import HeaderLoader from './Loaders/HeaderLoader';
-import BottomSheet from '@gorhom/bottom-sheet';
 
 const VariantAddons = ({
   productdetail = {},
@@ -248,6 +245,9 @@ const VariantAddons = ({
           productSku: res.data.products.sku,
           variantSet: res.data.products.variant_set,
           typeId: res?.data?.products?.category?.category_detail?.type_id,
+          productQuantityForCart: !!res.data.products?.minimum_order_count
+            ? Number(res.data.products?.minimum_order_count)
+            : 1,
         });
         shimmerClose(false);
       })
@@ -921,12 +921,20 @@ const VariantAddons = ({
 
   const productIncrDecreamentForCart = (type) => {
     playHapticEffect(hapticEffects.rigid);
+    let quantityToIncreaseDecrease = !!productDetailData?.batch_count
+      ? Number(productDetailData?.batch_count)
+      : 1;
+
     if (type == 2) {
-      if (productQuantityForCart <= 1) {
+      let limitOfMinimumQuantity = !!productDetailData?.minimum_order_count
+        ? Number(productDetailData?.minimum_order_count)
+        : 1;
+      if (productQuantityForCart <= limitOfMinimumQuantity) {
         onClose();
       } else {
         updateState({
-          productQuantityForCart: productQuantityForCart - 1,
+          productQuantityForCart:
+            productQuantityForCart - quantityToIncreaseDecrease,
         });
       }
     } else if (type == 1) {
@@ -934,7 +942,8 @@ const VariantAddons = ({
         showError(strings.MAXIMUM_LIMIT_REACHED);
       } else {
         updateState({
-          productQuantityForCart: productQuantityForCart + 1,
+          productQuantityForCart:
+            productQuantityForCart + quantityToIncreaseDecrease,
         });
       }
     }
@@ -1215,6 +1224,7 @@ const VariantAddons = ({
               )}
             </View>
           )}
+          <View style={{height: moderateScale(100)}} />
         </Animatable.View>
       )}
     </View>
