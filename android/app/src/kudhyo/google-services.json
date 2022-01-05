@@ -1,124 +1,64 @@
 {
   "project_info": {
-    "project_number": "1073948422654",
-    "project_id": "royo-order-version2",
-    "storage_bucket": "royo-order-version2.appspot.com"
+    "project_number": "799638602311",
+    "project_id": "kudhyo-3e4f5",
+    "storage_bucket": "kudhyo-3e4f5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1073948422654:android:48458405b2be731dc410af",
+        "mobilesdk_app_id": "1:799638602311:android:5b65200cab04f6ad9c2762",
         "android_client_info": {
-          "package_name": "com.codebrew.royoorder"
+          "package_name": "com.kudhyo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1073948422654-6v7rr9nnp525avok1n9v2oab0bmoh5fn.apps.googleusercontent.com",
+          "client_id": "799638602311-4i06186f6pvibah3t23qlm8gg1ne7ecq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.codebrew.royoorder",
+            "package_name": "com.kudhyo",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "1073948422654-bn0rnnhe6f9hfsko09ujvsgtq2no2kta.apps.googleusercontent.com",
+          "client_id": "799638602311-bsm15a3fb30qh6v7u0uuqpfvok1q6018.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.codebrew.royoorder",
+            "package_name": "com.kudhyo",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "1073948422654-pcd9p1bcojnk6lu007hqaac7rvqlfcd0.apps.googleusercontent.com",
+          "client_id": "799638602311-j10krsps54p7djhjmh194groi80kpr1m.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.codebrew.royoorder",
+            "package_name": "com.kudhyo",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "1073948422654-besh07o3vs4qkjr6r0cs74rqa42lrqb3.apps.googleusercontent.com",
+          "client_id": "799638602311-gj10lb6mf9kjitf0iidrb68bed60442d.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBy2IpueD5vKX_VpGaH8gj7f2NqA58h2dg"
+          "current_key": "AIzaSyBeM4mO_pHojrbyxYeiJjYXRcmY_Te0Vug"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1073948422654-besh07o3vs4qkjr6r0cs74rqa42lrqb3.apps.googleusercontent.com",
+              "client_id": "799638602311-gj10lb6mf9kjitf0iidrb68bed60442d.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "1073948422654-evug2209p0rlpjno8t4f5ddfq4uavh4f.apps.googleusercontent.com",
+              "client_id": "799638602311-u8ii0pel8i89ufstd3g7v9ktdo08g2u7.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.codebrew.royoordersreactnative"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1073948422654:android:b575b2fe8b405d2fc410af",
-        "android_client_info": {
-          "package_name": "com.codebrew.royoordersreactnative"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1073948422654-irdg5coguj36tp460h8qlh3b9bbm2dh4.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.codebrew.royoordersreactnative",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "1073948422654-pm8928or1g9a4sgrkfjvm5q55vkpluko.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.codebrew.royoordersreactnative",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "1073948422654-qkpm0a0l9l79p5grmg8mm6c6sqdrahip.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.codebrew.royoordersreactnative",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "1073948422654-besh07o3vs4qkjr6r0cs74rqa42lrqb3.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBy2IpueD5vKX_VpGaH8gj7f2NqA58h2dg"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1073948422654-besh07o3vs4qkjr6r0cs74rqa42lrqb3.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "1073948422654-evug2209p0rlpjno8t4f5ddfq4uavh4f.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.codebrew.royoordersreactnative"
+                "bundle_id": "com.kudhyo"
               }
             }
           ]

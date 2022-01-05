@@ -170,6 +170,7 @@ export default {
   HIGH_TO_LOW: 'Mayor a menor',
   POPULARITY: 'Popularidad',
   MOST_PURCHASED: 'Más vendido',
+  NEWLY_ADDED: 'Newly Added',
   HOME: 'Inicio',
   HOME_1: 'Home',
   HOLD_ON: 'Espera',
@@ -732,4 +733,8 @@ export default {
   ORDERDELIVERED: '¡Hemos terminado!',
   PLEASE_RECHARGE_WALLET: 'Por favor, recarga tu monedero',
   ORDER: 'Operación',
+  PLEASE_ENTER_VALID_NUMERIC: 'Please enter numeric value for',
+  RELEVANCE: 'Relevance',
+  BESTSELLER: 'Best Seller',
+  NEAR_BY: 'Near By',
 };

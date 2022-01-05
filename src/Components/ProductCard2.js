@@ -3,7 +3,6 @@ import {Animated, Text, TouchableOpacity, View} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import DashedLine from 'react-native-dashed-line';
 import FastImage from 'react-native-fast-image';
-import HTMLView from 'react-native-htmlview';
 import {useSelector} from 'react-redux';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
