@@ -6,6 +6,7 @@ export default {
   VERIFY_NUMBER: 'Phone Number Verify',
   JOIN_US: 'Create a  free account and join us!',
   CREATE_AN_ACCOUNT: 'CREATE NEW ACCOUNT',
+  DONT_HAVE_ACCOUNT: "Don't have an account ?",
   CREATE_NEW_ACCOUNT: 'Create new Account',
   GUEST_LOGIN: 'SKIP',
   OR_SIGNUP_WITH: 'Or signup with',
@@ -740,4 +741,5 @@ Amount`,
   ORDER: 'Order',
   SELECT_VIA_MAP: 'Select via map',
   CUSTOMIZZATION_FOR: 'Customizations for',
+  ORDER_DELIVERED_SUCESSFULLY: 'Order delivered successfully !',
 };
