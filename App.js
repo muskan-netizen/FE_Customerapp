@@ -39,6 +39,7 @@ import {
   requestUserPermission,
 } from './src/utils/notificationService';
 import {getItem, getUserData, setItem} from './src/utils/utils';
+import {MenuProvider} from 'react-native-popup-menu';
 
 // import withCodePush from './withcodepush';
 
@@ -325,7 +326,7 @@ const App = () => {
         setProgress(false);
         break;
       case codePush.SyncStatus.UNKNOWN_ERROR:
-        console.log('codepush status An unknown error occurred');
+        console.log('codepush status An unknown error occurred.');
         setProgress(false);
         break;
     }
@@ -408,12 +409,14 @@ const App = () => {
   };
   return (
     <SafeAreaProvider>
-      <Provider ref={blurRef} store={store}>
-        <ForegroundHandler />
-        {!!progress ? progressView() : null}
-        <Routes />
-        <NotificationModal />
-      </Provider>
+      <MenuProvider>
+        <Provider ref={blurRef} store={store}>
+          <ForegroundHandler />
+          {!!progress ? progressView() : null}
+          <Routes />
+          <NotificationModal />
+        </Provider>
+      </MenuProvider>
       <Container
         width={width - 20}
         position="top"

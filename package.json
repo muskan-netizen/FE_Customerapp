@@ -495,6 +495,7 @@
     "react-native-paper": "^4.11.1",
     "react-native-permissions": "^3.0.5",
     "react-native-photo-view-ex": "^1.1.0",
+    "react-native-popup-menu": "^0.15.12",
     "react-native-progress": "^5.0.0",
     "react-native-push-notification": "^8.1.0",
     "react-native-radio-buttons-group": "^2.2.5",
