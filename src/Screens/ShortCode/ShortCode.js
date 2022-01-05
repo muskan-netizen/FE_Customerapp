@@ -1217,6 +1217,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.vendorspot:
+          updateState({
+            shortCode: shortCodes.vendorspot,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sxm2go:
+          updateState({
+            shortCode: shortCodes.sxm2go,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

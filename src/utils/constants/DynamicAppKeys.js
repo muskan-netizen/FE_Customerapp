@@ -187,6 +187,8 @@ const shortCodes = {
   sofia: 'e2ef1a',
   mml: '348045',
   bimol: '94fc5b',
+  vendorspot: 'dfa952',
+  sxm2go: 'b6e6e8',
 };
 
 const appIds = {
@@ -933,6 +935,14 @@ const appIds = {
   bimol: Platform.select({
     ios: 'com.bimol',
     android: 'com.bimol',
+  }),
+  vendorspot: Platform.select({
+    ios: 'com.vendorspot',
+    android: 'com.vendorspot',
+  }),
+  sxm2go: Platform.select({
+    ios: 'com.sxm2go',
+    android: 'com.sxm2go',
   }),
 };
 
