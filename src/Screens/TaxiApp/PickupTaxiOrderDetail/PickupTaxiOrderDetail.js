@@ -13,23 +13,15 @@ import {
   Keyboard,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-import HeaderWithFilters from '../../../Components/HeaderWithFilters';
 import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import * as Animatable from 'react-native-animatable';
 
 import DeviceInfo from 'react-native-device-info';
-import BottomSheet, {
-  BottomSheetFlatList,
-  BottomSheetScrollView,
-  BottomSheetSectionList,
-  BottomSheetVirtualizedList,
-  BottomSheetView,
-} from '@gorhom/bottom-sheet';
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {
   getImageUrl,
   hapticEffects,
@@ -40,7 +32,6 @@ import {
 import stylesFunc from './styles';
 const {height, width} = Dimensions.get('window');
 import MapViewDirections from 'react-native-maps-directions';
-import Geocoder from 'react-native-geocoding';
 import MapView, {Marker, Callout, PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import {useIsFocused} from '@react-navigation/native';
 
@@ -50,10 +41,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import TaxiOrderDetailView from './TaxiOrderDetailView';
 import SearchingForDriverView from './SearchingForDriverView';
-import {color} from 'react-native-reanimated';
 import useInterval from '../../../utils/useInterval';
 import {cloneDeep} from 'lodash';
-import BottomViewModal from '../../../Components/BottomViewModal';
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
 
@@ -64,17 +53,13 @@ import {
 } from '../../../styles/responsiveSize';
 import StarRating from 'react-native-star-rating';
 import {mapStyleGrey} from '../../../utils/constants/MapStyle';
-import StepIndicators from '../../../Components/StepIndicator';
-import AnimatedHeader from '../../../Components/AnimatedHeader';
 import RoundImg from '../../../Components/RoundImg';
 import LeftRightText from '../../../Components/LeftRightText';
 import SearchDriver from '../ChooseCarTypeAndTime/SearchDriver';
 import moment from 'moment';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import {FlatList} from 'react-native';
-import {PulseIndicator} from 'react-native-indicators';
 import CustomCallouts from '../../../Components/CustomCallouts';
-import localization from 'moment/locale/es';
 import {appIds} from '../../../utils/constants/DynamicAppKeys';
 
 const ASPECT_RATIO = width / height;
