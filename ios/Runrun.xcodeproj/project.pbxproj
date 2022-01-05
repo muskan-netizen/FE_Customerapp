@@ -16209,8 +16209,7 @@
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 6FXUMT5X23;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -16219,9 +16218,8 @@
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
 					76693A57269D9B87000F83B2 = {
-						DevelopmentTeam = 6FXUMT5X23;
 						LastSwiftMigration = 1240;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					8400B09327253C87003BF24A = {
 						DevelopmentTeam = 6FXUMT5X23;
@@ -16268,8 +16266,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					8415975226B4169D00FF20F4 = {
-						DevelopmentTeam = SKB5RJ3Z8F;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					8416E5EB26CD1FF600D9B686 = {
 						DevelopmentTeam = 6FXUMT5X23;
@@ -16734,9 +16731,9 @@
 						ProvisioningStyle = Automatic;
 					};
 					84A1A238269EE69D00A83511 = {
-						DevelopmentTeam = 2UZ8NDAHUP;
+						DevelopmentTeam = 6FXUMT5X23;
 						LastSwiftMigration = 1240;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					84A801F626C3982E00F35132 = {
 						DevelopmentTeam = 6FXUMT5X23;
@@ -16911,7 +16908,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					84ECE25B26A7FA8F009A0F8C = {
-						DevelopmentTeam = ZA95DW5G26;
+						DevelopmentTeam = 6FXUMT5X23;
 						ProvisioningStyle = Automatic;
 					};
 					84F31BC12719823D00130594 = {
@@ -16923,7 +16920,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					84F464E326A6F14700D378D5 = {
-						DevelopmentTeam = 6MFM9CR7R2;
+						DevelopmentTeam = 6FXUMT5X23;
 						LastSwiftMigration = 1240;
 						ProvisioningStyle = Automatic;
 					};
@@ -16944,7 +16941,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					84FFF3CA26D6520700F2B059 = {
-						DevelopmentTeam = Q4J4D67SCB;
+						DevelopmentTeam = 6FXUMT5X23;
 						ProvisioningStyle = Automatic;
 					};
 					84FFF94826D6652C00F2B059 = {
@@ -53073,8 +53070,9 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Runrun-tvOS/Info.plist";
@@ -53086,6 +53084,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.Runrun-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 10.0;
@@ -53182,7 +53181,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Capcorp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
@@ -54221,9 +54220,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = GovaChow.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = SKB5RJ3Z8F;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -61795,9 +61794,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Masa.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 2UZ8NDAHUP;
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -64613,7 +64612,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = ZA95DW5G26;
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -64807,7 +64806,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6MFM9CR7R2;
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -65135,7 +65134,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = Q4J4D67SCB;
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
