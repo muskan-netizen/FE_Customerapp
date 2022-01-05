@@ -1,4 +1,3 @@
-import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep, debounce} from 'lodash';
 import React, {createRef, useEffect, useState} from 'react';
 import {

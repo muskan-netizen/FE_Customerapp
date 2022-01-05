@@ -1,6 +1,6 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep, debounce} from 'lodash';
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -34,7 +34,6 @@ import {
   getImageUrl,
   hapticEffects,
   playHapticEffect,
-  playVibration,
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';

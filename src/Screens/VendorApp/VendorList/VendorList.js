@@ -59,14 +59,15 @@ export default function VendorList({navigation, route}) {
         ? navigationStrings.VENDOR_ORDER
         : screenType == staticStrings.PRODUCTS
         ? navigationStrings.VENDOR_PRODUCT
-        : navigationStrings.VENDOR_REVENUE,
+        : screenType == staticStrings.REVENUE
+        ? navigationStrings.VENDOR_REVENUE
+        : screenType,
       {
         selectedVendorFrom: i,
       },
     );
   };
   const styles = stylesData({fontFamily});
-
   return (
     <WrapperContainer
       bgColor={
