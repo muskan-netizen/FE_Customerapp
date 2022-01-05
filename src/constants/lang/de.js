@@ -323,7 +323,7 @@ export default {
   PLEASE_ENTER_OR_SELECT_AMOUNT:
     'Bitte wählen oder geben Sie einen bestimmten Betrag ein',
   PLEASE_SELECT_PAYMENT_METHOD: 'Bitte wählen Sie eine Zahlungsmethode aus',
-  LINKS: 'Links',
+  LINKS: 'Join Us!',
   LOCATION_DISABLED_MSG: `Standortberechtigung dauerhaft deaktiviert! Bitte erlauben Sie aus den Einstellungen`,
   LOCATION_LIMITED:
     'Die Berechtigung ist eingeschränkt: einige Aktionen sind möglich',

@@ -319,7 +319,7 @@ export default {
   ADD: 'ADD',
   PLEASE_ENTER_OR_SELECT_AMOUNT: 'Please select or enter a specific amount',
   PLEASE_SELECT_PAYMENT_METHOD: 'Please select a payment method',
-  LINKS: 'Links',
+  LINKS: 'Join Us!',
   LOCATION_DISABLED_MSG: `Location permission permanently disabled! Please allow from settings`,
   LOCATION_LIMITED: 'The permission is limited: some actions are possible',
   LOCATION_UNAVAILABLE: 'This feature is not available on this device',

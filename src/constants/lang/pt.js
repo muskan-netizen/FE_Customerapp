@@ -308,7 +308,7 @@ export default {
   PLEASE_ENTER_OR_SELECT_AMOUNT:
     'Selecione ou digite uma quantidade específica',
   PLEASE_SELECT_PAYMENT_METHOD: 'Selecione um método de pagamento',
-  LINKS: 'Links',
+  LINKS: 'Join Us!',
   LOCATION_DISABLED_MSG:
     'Permissão de localização permanaly desativado! Por favor, permita a partir de configurações',
   LOCATION_LIMITED: 'A permissão é limitada: algumas ações são possíveis',
