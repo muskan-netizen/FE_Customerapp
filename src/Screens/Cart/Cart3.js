@@ -447,12 +447,23 @@ export default function Cart({navigation, route}) {
 
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
+    console.log(item, 'itemitemitemitem');
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
+    let quantityToIncrease = !!itemToUpdate?.product?.batch_count
+      ? Number(itemToUpdate?.product?.batch_count)
+      : 1;
     if (type == 1) {
-      quanitity = Number(itemToUpdate.quantity) + 1;
+      quanitity = Number(itemToUpdate.quantity) + quantityToIncrease;
     } else {
-      quanitity = Number(itemToUpdate.quantity) - 1;
+      if (
+        Number(itemToUpdate.quantity - itemToUpdate?.product?.batch_count) <=
+        itemToUpdate?.product?.minimum_order_count
+      ) {
+        quanitity = 0;
+      } else {
+        quanitity = Number(itemToUpdate.quantity) - quantityToIncrease;
+      }
     }
     if (quanitity) {
       let data = {};
@@ -650,6 +661,9 @@ export default function Cart({navigation, route}) {
       case 13: //Square Payment Getway
         navigation.navigate(navigationStrings.SQUARE, paymentData);
         break;
+        case 15: //Pagarme Payment Getway
+        navigation.navigate(navigationStrings.PAGARME, paymentData);
+        break;
       default:
         if (
           !!businessType &&
@@ -837,7 +851,7 @@ export default function Cart({navigation, route}) {
       return;
     }
     if (
-      selectedPayment?.id === 3 &&
+      (selectedPayment?.id === 3) &&
       selectedPayment?.off_site === 1 &&
       !!(
         Number(cartData?.total_payable_amount) + Number(selectedTipAmount) !==
@@ -995,6 +1009,8 @@ export default function Cart({navigation, route}) {
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
 
+    console.log(returnUrl,"returnUrl");
+    console.log(cancelUrl,"cancelUrl");
     let queryData = `/${selectedMethod}?tip=${
       selectedTipAmount && selectedTipAmount != ''
         ? Number(selectedTipAmount)
@@ -1008,6 +1024,7 @@ export default function Cart({navigation, route}) {
       selectedAddressData?.id
     }&payment_option_id=${selectedPayment?.id}&action=cart`;
 
+    console.log(queryData,"queryData"); 
     actions
       .openPaymentWebUrl(
         queryData,

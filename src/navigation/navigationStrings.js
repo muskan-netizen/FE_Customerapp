@@ -87,6 +87,18 @@ export default {
   OFFERS2: 'OFFERS2',
   PICKUPTAXIORDERDETAILS: 'PickupTaxiOrderDetails',
   PICKUPORDERDETAIL2: 'pickOrderDetail2',
+
+  // royo order
+
+  ROYO_VENDOR_HOME: 'royoHome',
+  ROYO_VENDOR_ORDER: 'royoOrder',
+  ROYO_VENDOR_BOTTOMTAB: 'royoBottom',
+  ROYO_VENDOR_ACCOUNT: 'royoAccount',
+  ROYO_VENDOR_PRODUCTS: 'royoProducts',
+  ROYO_VENDOR_TRANSACTIONS: 'royoTransactions',
+  ROYO_VENDOR_PAYMENT_SETTINGS: 'royoPaymentSettings',
+  ROYO_VENDOR_ORDER_DETAIL: 'royoOrderDetail',
+  ROYO_VENDOR_ADD_PRODUCT: 'royoAddProduct',
   VIEW_ALL_DATA: 'viewAllData',
   TAXIHOMESCREEN: 'taxiHomeScreen',
   TAXITABROUTES: 'taxiTabRoutes',
@@ -102,4 +114,11 @@ export default {
   CART_SCREEN: 'cartScreen',
   SIMPLIFY: 'simplify',
   SQUARE: 'square',
+  PAGARME: 'pagarme',
+  INVENTORY: 'inventory',
+  UDHAARLEDGER: 'udhaarLedger',
+  SALES_EXPENSES: 'salesExpenses',
+  ADD_PRODUCT: 'addProduct',
+  ADD_NEW_CUSTOMER: 'addNewCustomer',
+  CUSTOMER_EARNING_HISTORY: 'customerEarningHistory',
 };

@@ -31,9 +31,12 @@ export default function DashBoardOne({
     newCategoryData: [],
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
+  const homeData = useSelector((state) => state?.home);
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  console.log(appMainData, 'appMainData');
+  console.log(homeData, 'homeData');
 
   const fontFamily = appStyle?.fontSizeData;
   const {bannerRef} = useRef();
@@ -42,7 +45,8 @@ export default function DashBoardOne({
 
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const newCategoryAry = [...appMainData?.categories];
+  const newCategoryAry =
+    appMainData && appMainData?.categories ? [...appMainData?.categories] : [];
   useEffect(() => {
     gridFn(10, 5);
   }, [appMainData]);
@@ -81,6 +85,8 @@ export default function DashBoardOne({
     );
   };
 
+  console.log(appData?.banners,"Banners");
+
   return (
     <ScrollView
       // bounces={false}
@@ -110,15 +116,17 @@ export default function DashBoardOne({
         appData.banners.length
       ) && (
         <>
-          <BannerHome
-            bannerRef={bannerRef}
-            slider1ActiveSlide={slider1ActiveSlide}
-            bannerData={appData?.banners}
-            sliderWidth={sliderWidth}
-            itemWidth={itemWidth}
-            onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}
-            onPress={(item) => bannerPress(item)}
-          />
+          {appData?.banners ? (
+            <BannerHome
+              bannerRef={bannerRef}
+              slider1ActiveSlide={slider1ActiveSlide}
+              bannerData={appData?.banners ? appData?.banners : []}
+              sliderWidth={sliderWidth}
+              itemWidth={itemWidth}
+              onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}
+              onPress={(item) => bannerPress(item)}
+            />
+          ) : null}
           <View style={{height: moderateScaleVertical(5)}} />
         </>
       )}

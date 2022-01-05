@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
@@ -23,18 +23,18 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import { shortCodes } from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
   showError,
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
-import {ScrollView} from 'react-native-gesture-handler';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../styles/theme';
+import { ScrollView } from 'react-native-gesture-handler';
 
-export default function Loyalty({navigation}) {
+export default function Loyalty({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -57,21 +57,21 @@ export default function Loyalty({navigation}) {
   } = state;
 
   //update your state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Redux Store Data
-  const {appData, themeColors, appStyle, currencies, languages} = useSelector(
+  const { appData, themeColors, appStyle, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
-  const {preferences} = appData?.profile;
+  const { preferences } = appData?.profile;
   const userData = useSelector((state) => state.auth.userData);
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily, isDarkMode, MyDarkTheme});
-  const commonStyles = commonStylesFunc({fontFamily});
+  const styles = stylesFun({ fontFamily, isDarkMode, MyDarkTheme });
+  const commonStyles = commonStylesFunc({ fontFamily });
 
   //Navigation to specific screen
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {data});
+    navigation.navigate(screenName, { data });
   };
 
   //Give Rating
@@ -81,7 +81,7 @@ export default function Loyalty({navigation}) {
   }, []);
 
   const getUserLoyaltyInfo = () => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     actions
       .getLoyaltyInfo(
         {},
@@ -108,13 +108,13 @@ export default function Loyalty({navigation}) {
   //Error handling in screen
   const errorMethod = (error) => {
     console.log('getUserLoyaltyInfo', error);
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({ isLoading: false, isLoadingB: false, isRefreshing: false });
     showError(error?.message || error?.error);
   };
 
   console.log(upcomingLoyalty, 'upcomingLoyalty');
 
-  const renderProduct = ({item, index}) => {
+  const renderProduct = ({ item, index }) => {
     return (
       <View style={styles.rowStyle}>
         <Text
@@ -166,8 +166,8 @@ export default function Loyalty({navigation}) {
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3
-            ? imagePath.icBackb
-            : imagePath.back
+              ? imagePath.icBackb
+              : imagePath.back
         }
         centerTitle={strings.LOYALTYPOINTS}
         textStyle={{
@@ -176,8 +176,8 @@ export default function Loyalty({navigation}) {
         }}
         headerStyle={
           isDarkMode
-            ? {backgroundColor: MyDarkTheme.colors.background}
-            : {backgroundColor: colors.white}
+            ? { backgroundColor: MyDarkTheme.colors.background }
+            : { backgroundColor: colors.white }
         }
       />
       {/* current loyalty status */}
@@ -257,7 +257,7 @@ export default function Loyalty({navigation}) {
                   marginTop: moderateScaleVertical(34),
                   marginBottom: moderateScaleVertical(16),
                 }}>
-                <View
+                {/* <View
                   style={{
                     width: '100%',
                     position: 'relative',
@@ -317,6 +317,17 @@ export default function Loyalty({navigation}) {
                     style={{width: '100%', height: moderateScale(160)}}
                     resizeMode="stretch"
                   />
+                </View> */}
+
+                <View //first card
+                  style={{
+                 
+                  }}>
+                  <Image
+                    source={{ uri: imageUrl }}
+                    style={{ width: '100%', height: moderateScale(160) }}
+                    resizeMode="stretch"
+                  />
                 </View>
               </View>
               <Text
@@ -340,7 +351,7 @@ export default function Loyalty({navigation}) {
           )}
 
           {!!upcomingLoyalty.length > 0 && (
-            <View style={{marginTop: moderateScaleVertical(6)}}>
+            <View style={{ marginTop: moderateScaleVertical(6) }}>
               <Text
                 style={{
                   ...styles.commTextStyle,
@@ -358,11 +369,11 @@ export default function Loyalty({navigation}) {
 
           {/* Current point status */}
 
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             <FlatList
               data={upcomingLoyalty}
               extraData={upcomingLoyalty}
-              contentContainerStyle={{flexGrow: 1}}
+              contentContainerStyle={{ flexGrow: 1 }}
               keyExtractor={(item, index) => String(index)}
               renderItem={renderProduct}
             />
