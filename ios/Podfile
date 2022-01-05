@@ -407,7 +407,7 @@ target 'Snabbhem' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' # end
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' 
 
 
 #Rerak Target
@@ -1217,7 +1217,7 @@ target 'eBOYO' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' # end
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' end
 
 #Carlito Target
 target 'Carlitoo' do
@@ -2514,7 +2514,7 @@ target 'Hokitch' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' # end
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' end
 #FoodNests Target
 target 'FoodNests' do
   permissions_path = '../node_modules/react-native-permissions/ios'
@@ -2526,7 +2526,7 @@ target 'FoodNests' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' # end
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' end
 
 #Sponge Target
 target 'Sponge' do
@@ -2539,7 +2539,7 @@ target 'Sponge' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' # end
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' end
 #Skidoo Target
 target 'Skidoo' do
   permissions_path = '../node_modules/react-native-permissions/ios'
@@ -2551,7 +2551,7 @@ target 'Skidoo' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' # end
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' end
 
 
 #GoMeat Target
@@ -2565,7 +2565,7 @@ target 'GoMeat' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' # end
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' end
 
 #ShopCentral Target
 target 'ShopCentral' do
@@ -2578,7 +2578,7 @@ target 'ShopCentral' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' # end
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' end
 
 #ADMCourier Target
 target 'ADMCourier' do
@@ -2591,7 +2591,7 @@ target 'ADMCourier' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' # end
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' end
 
 #KurbsideKings Target
 target 'KurbsideKings' do
@@ -2604,7 +2604,7 @@ target 'KurbsideKings' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' # end
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' end
 
 #MovingWheelsDelivery Target
 target 'MovingWheelsDelivery' do
@@ -2617,7 +2617,7 @@ target 'MovingWheelsDelivery' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' # end
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' end
 
 #SafeWalks Target
 target 'SafeWalks' do
@@ -2630,7 +2630,7 @@ target 'SafeWalks' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' # end
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' end
 
 #DimaVega Target
 target 'DimaVega' do
@@ -2643,7 +2643,7 @@ target 'DimaVega' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' # end
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' end
 #Skoop Target
 target 'Skoop' do
   permissions_path = '../node_modules/react-native-permissions/ios'
@@ -2655,7 +2655,7 @@ target 'Skoop' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' # end
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' end
 
 #Kudhyo Target
 target 'Kudhyo' do
@@ -2668,7 +2668,7 @@ target 'Kudhyo' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' # end
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' end
 
 #BharatMove Target
 target 'BharatMove' do
@@ -2681,7 +2681,8 @@ target 'BharatMove' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' # end
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' 
+end
 #Sofia Target
 target 'Sofia' do
  permissions_path = '../node_modules/react-native-permissions/ios'
