@@ -446,7 +446,7 @@ export default function Addaddress({ navigation, route }) {
           profile?.preferences?.map_key,
         );
         const {result} = res;
-        console.log('res=== result', result);
+    
         let addressData = getAddressComponent(result);
         cloneArr[searchResult.currentIndex].latitude =
           result.geometry.location.lat;
