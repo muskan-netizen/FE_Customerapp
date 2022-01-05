@@ -407,8 +407,8 @@ target 'Snabbhem' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' 
-
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts'
+end
 
 #Rerak Target
 target 'Rerak' do
@@ -1834,8 +1834,6 @@ target 'OrderChekout' do
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
   pod 'react-native-contacts', :path => '../node_modules/react-native-contacts' 
-  #   pod 'ZendeskChatSDK'
-  pod'ZendeskChatProvidersSDK'
 
 end
 
@@ -2757,7 +2755,6 @@ rn_maps_path = '../node_modules/react-native-maps'
  config = use_native_modules!
  use_react_native!(:path => config["reactNativePath"])
  pod 'react-native-google-maps', :path => rn_maps_path
-
  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
@@ -2772,5 +2769,4 @@ post_install do |installer|
       target.remove_from_project
     end
   end
-end
 end
