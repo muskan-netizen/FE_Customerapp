@@ -115,4 +115,9 @@ export default {
   blueLight: '#93DCEF',
   DarkBlue: '#0087AA',
   paleRed: '#f6d2d6',
+  seaGreen: '#3ECAC6',
+  seaGreen1: '#F2F7FA',
+  greenB: '#7ED321',
+  redE: '#E02020',
+  greyC: '#D0021B',
 };

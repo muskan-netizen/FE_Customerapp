@@ -482,4 +482,6 @@ export default {
   icStore2: require('../assets/images/RoyoorderNewImages/ic_store2.png'),
   icUdhaarl: require('../assets/images/RoyoorderNewImages/ic_udhaarl.png'),
   icPlus2: require('../assets/images/RoyoorderNewImages/ic_plus2.png'),
+  icAdd1: require('../assets/images/RoyoorderNewImages/ic_add1.png'),
+  icUp1: require('../assets/images/RoyoorderNewImages/ic_up.png'),
 };

@@ -750,7 +750,6 @@ export default function SelectPaymentModalView({
 
               {productFaqQuestionAnswers?.product_faq?.map((item, index) => {
                 setAllRequiredQuestions(item, index);
-
                 return (
                   <View
                     style={{
@@ -811,30 +810,19 @@ export default function SelectPaymentModalView({
                   marginBottom: moderateScaleVertical(12),
                   marginTop: moderateScaleVertical(5),
                 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text
-                    style={{
-                      marginBottom: moderateScaleVertical(10),
-                      color: colors.redColor,
-                    }}>
-                    {`${item?.is_required ? '* ' : ''}`}
-                  </Text>
-                  <Text
-                    style={{
-                      marginBottom: moderateScaleVertical(10),
-                      fontFamily: fontFamily.medium,
-                      color: isDarkMode ? colors.white : colors.blackC,
-                    }}>
-                    {item?.translations[0]?.name} :-
-                  </Text>
-                </View>
+              
                 <View
                   style={{
                     fontFamily: fontFamily.medium,
                     textAlign: 'left',
                     color: isDarkMode ? colors.white : colors.blackC,
                   }}>
-                  <Text>
+                  <Text
+                  style={{
+                    fontFamily: fontFamily.medium,
+                    color: isDarkMode ? colors.white : colors.blackC,
+                  }}
+                  >
                     {strings.ADDINSTRACTION}
                   </Text>
                 </View>

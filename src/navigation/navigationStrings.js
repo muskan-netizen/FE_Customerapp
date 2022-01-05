@@ -88,13 +88,7 @@ export default {
   PICKUPTAXIORDERDETAILS: 'PickupTaxiOrderDetails',
   PICKUPORDERDETAIL2: 'pickOrderDetail2',
 
-
-
-
-
-
   // royo order
-
 
   ROYO_VENDOR_HOME: 'royoHome',
   ROYO_VENDOR_ORDER: 'royoOrder',
@@ -120,5 +114,11 @@ export default {
   CART_SCREEN: 'cartScreen',
   SIMPLIFY: 'simplify',
   SQUARE: 'square',
-  PAGARME:'pagarme'
+  PAGARME: 'pagarme',
+  INVENTORY: 'inventory',
+  UDHAARLEDGER: 'udhaarLedger',
+  SALES_EXPENSES: 'salesExpenses',
+  ADD_PRODUCT: 'addProduct',
+  ADD_NEW_CUSTOMER: 'addNewCustomer',
+  CUSTOMER_EARNING_HISTORY: 'customerEarningHistory',
 };
