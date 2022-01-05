@@ -1320,7 +1320,7 @@ export default function ShortCode({route, navigation}) {
         });
       }, 1800);
     } else {
-      navigation.push(navigationStrings.DRAWER_ROUTES);
+      navigation.push(navigationStrings.TAB_ROUTES);
     }
   }
 
@@ -1331,7 +1331,7 @@ export default function ShortCode({route, navigation}) {
           images: res.dynamic_tutorial,
         });
       } else {
-        // navigation.push(navigationStrings.DRAWER_ROUTES);
+        // navigation.push(navigationStrings.TAB_ROUTES);
         Linking.getInitialURL()
           .then((link) => {
             handleDynamicLink(link);
@@ -1352,6 +1352,7 @@ export default function ShortCode({route, navigation}) {
           currency: res?.currencies?.find((x) => x.is_primary).currency_id,
           language: res?.languages?.find((x) => x.is_primary).language_id,
         },
+        true,
       )
       .then(() => {
         updateState({isLoading: false, LoadingScreen: false});

@@ -171,6 +171,7 @@ export default {
   POPULARITY: 'Popularidad',
   MOST_PURCHASED: 'Más vendido',
   HOME: 'Inicio',
+  HOME_1: 'Home',
   HOLD_ON: 'Espera',
   EXIT_WARNING: '¿Estás seguro que quieres salir?',
   YES: 'Sí',

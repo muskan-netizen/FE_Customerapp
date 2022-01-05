@@ -42,14 +42,19 @@ import stylesFun from './styles';
 import useInterval from '../../utils/useInterval';
 
 export default function MyOrders({navigation}) {
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const {
+    appData,
+    currencies,
+    languages,
+    themeColors,
+    appStyle,
+    themeColor,
+    themeToggle,
+  } = useSelector((state) => state?.initBoot);
   const location = useSelector((state) => state?.home?.location);
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appData, currencies, languages, themeColors, appStyle} = useSelector(
-    (state) => state?.initBoot,
-  );
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+
   const businessType = appStyle?.homePageLayout;
   const [state, setState] = useState({
     tabBarData: [

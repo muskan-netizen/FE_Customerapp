@@ -1,3 +1,4 @@
+import {isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
@@ -258,14 +259,36 @@ export default function WebLinks({navigation, route}) {
   };
 
   const _onSubmit = () => {
-    const checkValid = isValidData();
-    if (!checkValid) {
-      return;
-    }
-
-    updateState({isLoading: true});
+    // const checkValid = isValidData();
+    // if (!checkValid) {
+    //   return;
+    // }
 
     if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
+      var isRequired = true;
+
+      driverRegDocs?.driver_registration_documents.map((itm, indx) => {
+        if (itm.is_required) {
+          if (isRequired) {
+            if (isEmpty(driverRegistrationDocs)) {
+              showError(`Please upload ${itm?.name}`);
+              isRequired = false;
+              return;
+            } else {
+              driverRegistrationDocs.map((item, index) => {
+                if (item.id !== itm.id) {
+                  showError(`Please upload ${item?.name}`);
+                  isRequired = false;
+                  return;
+                }
+              });
+            }
+          }
+        }
+      });
+
+      return;
+
       var formData = new FormData();
       formData.append('name', driverName);
       formData.append('phone_number', driverPhoneNumber);
@@ -305,6 +328,7 @@ export default function WebLinks({navigation, route}) {
             : item?.fileData,
         );
       });
+      updateState({isLoading: true});
       actions
         .driverRegisteration(formData, {
           code: appData?.profile?.code,
@@ -352,7 +376,7 @@ export default function WebLinks({navigation, route}) {
         filename: vendorBanner.filename,
         mime: vendorBanner.mime,
       });
-
+      updateState({isLoading: true});
       vendorRegisterationDocs.map((item, indx) => {
         formData.append(
           item?.item?.primary?.slug,

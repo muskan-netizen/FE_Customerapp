@@ -171,6 +171,7 @@ export default {
   POPULARITY: 'Popülerlik',
   MOST_PURCHASED: 'En çok satın alınan',
   HOME: 'Ev',
+  HOME_1: 'Home',
   HOLD_ON: 'Bekle',
   EXIT_WARNING: 'Çıkmak istediğinizden emin misiniz?',
   EVET: 'Evet',
@@ -717,5 +718,10 @@ export default {
   OUTFORDELIVERY: 'Your driver is heading to you',
   ORDERDELIVERED: 'Your order has been delivered',
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
+  INVOICE: 'Invoice',
+  PROOF: 'Proof',
   ORDER: 'Order',
+  SELECT_VIA_MAP: 'Select via map',
+  HOUSE_NO: 'House No.',
+  CUSTOMIZZATION_FOR: 'Customizations for',
 };

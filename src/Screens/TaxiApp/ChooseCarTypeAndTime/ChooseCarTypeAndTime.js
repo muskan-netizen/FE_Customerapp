@@ -766,6 +766,10 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   };
 
   const _selectPaymentView = () => {
+    console.log(
+      'selectedPaymentselectedPaymentselectedPayment',
+      selectedPayment,
+    );
     return (
       <SelectPaymentModalView
         _confirmAndPay={_confirmAndPay}
