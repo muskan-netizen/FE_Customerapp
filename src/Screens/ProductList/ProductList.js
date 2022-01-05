@@ -77,26 +77,38 @@ export default function Products({route, navigation}) {
         value: [
           {
             id: 1,
+            label: 'A - Z',
+            labelValue: 'a_to_z',
+            parent: strings.SORT_BY,
+          },
+          {
+            id: 2,
+            label: 'Z - A',
+            labelValue: 'z_to_a',
+            parent: strings.SORT_BY,
+          },
+          {
+            id: 3,
             label: strings.LOW_TO_HIGH,
             labelValue: 'low_to_high',
             parent: strings.SORT_BY,
           },
           {
-            id: 2,
+            id: 4,
             label: strings.HIGH_TO_LOW,
             labelValue: 'high_to_low',
             parent: strings.SORT_BY,
           },
           {
-            id: 3,
+            id: 5,
             label: strings.POPULARITY,
             labelValue: 'popularity',
             parent: strings.SORT_BY,
           },
           {
-            id: 4,
-            label: strings.MOST_PURCHASED,
-            labelValue: 'most_purcahsed',
+            id: 6,
+            label: strings.NEWLY_ADDED,
+            labelValue: 'newly_added',
             parent: strings.SORT_BY,
           },
         ],
@@ -180,7 +192,6 @@ export default function Products({route, navigation}) {
     React.useCallback(() => {
       updateState({pageNo: 1});
       getAllListItems();
-      console.log('run again');
     }, [
       pageNo,
       isRefreshing,
@@ -228,6 +239,18 @@ export default function Products({route, navigation}) {
       checkForMaximumPriceChange ||
       checkForMinimumPriceChange;
 
+    console.log(
+      sleectdBrands,
+      selectedVariants,
+      selectedOptions,
+      slectedSortBy,
+      minimumPrice,
+      maximumPrice,
+      checkForMaximumPriceChange,
+      checkForMinimumPriceChange,
+      'filterExistfilterExist',
+    );
+
     {
       filterExist
         ? updateState({showFilterSlectedIcon: true})
@@ -244,6 +267,7 @@ export default function Products({route, navigation}) {
       }
     } else {
       {
+        console.log(filterExist, 'filterExistfilterExist +++ for category');
         filterExist ? getAllProductsCategoryFilter() : getAllProducts();
       }
     }
@@ -289,7 +313,7 @@ export default function Products({route, navigation}) {
       });
       // updateState({allFilters: [...allFilters,...filterDataNew]});
     }
-
+    console.log(sortFilters, 'sortFilters');
     updateState({
       allFilters: [...brandDatas, ...sortFilters, ...filterDataNew],
     });
@@ -318,10 +342,19 @@ export default function Products({route, navigation}) {
       slectedSortBy: slectedSortBy,
     });
   };
+  console.log(
+    slectedSortBy.length,
+    slectedSortBy[0],
+    'api hit getAllProductsCategoryFilter',
+  );
 
   /**********Get all list items by category filters */
   const getAllProductsVendorFilter = () => {
-    console.log('api hit getAllProductsCategoryFilter');
+    console.log(
+      slectedSortBy.length,
+      slectedSortBy[0],
+      'api hit getAllProductsCategoryFilter ++++++',
+    );
     let data = {};
     data['variants'] = selectedVariants;
     data['options'] = selectedOptions;
@@ -339,7 +372,6 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'getAllProductsCategoryFilter');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -353,15 +385,22 @@ export default function Products({route, navigation}) {
     // }
   };
 
+  console.log(languages?.primary_language?.id, 'data in category product');
   /**********Get all list items by category filters */
   const getAllProductsCategoryFilter = () => {
-    console.log('api hit getAllProductsCategoryFilter');
+    console.log(
+      slectedSortBy.length,
+      slectedSortBy[0],
+      'api hit getAllProductsCategoryFilter',
+    );
+
     let data = {};
     data['variants'] = selectedVariants;
     data['options'] = selectedOptions;
     data['brands'] = sleectdBrands;
     data['order_type'] = slectedSortBy.length ? slectedSortBy[0] : '';
     data['range'] = `${minimumPrice};${maximumPrice}`;
+
     actions
       .getProductByCategoryFilters(
         `/${productListId.id}?limit=${limit}&page=${pageNo}`,
@@ -373,6 +412,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
+        console.log(res, 'getAllProductsCategoryFilter ++++++');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -389,6 +429,7 @@ export default function Products({route, navigation}) {
   /****Get all list items by vendor id */
   const getAllProductsByVendorCategory = () => {
     // alert("21312")
+
     console.log('api hit getAllProductsByVendorCategory', data);
     actions
       .getProductByVendorCategoryId(
@@ -401,7 +442,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'getAllProductsByVendorCategory');
+        console.log(res.data.filterData, 'getAllProductsByVendorCategory');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -412,6 +453,7 @@ export default function Products({route, navigation}) {
               ? res.data.products.data
               : [...productListData, ...res?.data?.products?.data],
         });
+        console.log(res.data.filterData, 'res.data.filterData');
         updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
       .catch(errorMethod);
@@ -485,6 +527,7 @@ export default function Products({route, navigation}) {
               ? res.data.listData.data
               : [...productListData, ...res.data.listData.data],
         });
+
         updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
       .catch(errorMethod);
@@ -697,7 +740,9 @@ export default function Products({route, navigation}) {
                 })}>
                 <Image
                   style={{
-                    tintColor: isDarkMode ? MyDarkTheme.colors.text : null,
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
                   }}
                   source={
                     showFilterSlectedIcon
@@ -717,7 +762,11 @@ export default function Products({route, navigation}) {
               })}
               style={{marginLeft: 10}}>
               <Image
-                style={{tintColor: isDarkMode ? MyDarkTheme.colors.text : null}}
+                style={{
+                  tintColor: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.black,
+                }}
                 source={imagePath.search}
               />
             </TouchableOpacity>

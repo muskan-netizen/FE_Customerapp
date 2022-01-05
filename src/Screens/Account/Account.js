@@ -376,7 +376,7 @@ export default function Account({navigation}) {
 
         {!!userData?.auth_token &&
           !!appMainData?.is_admin &&
-          (businessType === 4 ? null : (
+          businessType != 4 && (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -392,7 +392,7 @@ export default function Account({navigation}) {
               iconRight={imagePath.goRight}
               rightIconStyle={{tintColor: colors.textGreyLight}}
             />
-          ))}
+          )}
 
         <View style={styles.loginView}>
           <TouchableOpacity

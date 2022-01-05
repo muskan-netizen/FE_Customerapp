@@ -37,6 +37,8 @@ import {
 import stylesFun from './styles';
 import ZendeskChat from '../../library/react-native-zendesk-chat';
 import Share from 'react-native-share';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
+import DeviceInfo from 'react-native-device-info';
 
 export default function Account3({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -332,6 +334,59 @@ export default function Account3({navigation}) {
                 // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             ))}
+
+          {DeviceInfo.getBundleId() == appIds.bharatMove ? (
+            <View>
+              {!userData?.auth_token && (
+                <View>
+                  <ListItemHorizontal
+                    centerContainerStyle={{flexDirection: 'row'}}
+                    leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                    onPress={moveToNewScreen(navigationStrings.INVENTORY)}
+                    iconLeft={imagePath.icInventory}
+                    centerHeading={strings.INVENTORY}
+                    containerStyle={styles.containerStyle2}
+                    centerHeadingStyle={{
+                      fontSize: textScale(14),
+                      fontFamily: fontFamily.regular,
+                    }}
+                    // iconRight={imagePath.goRight}
+                    // rightIconStyle={{tintColor: colors.textGreyLight}}
+                  />
+                  <ListItemHorizontal
+                    centerContainerStyle={{flexDirection: 'row'}}
+                    leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                    onPress={moveToNewScreen(navigationStrings.UDHAARLEDGER)}
+                    iconLeft={imagePath.icUdhaarl}
+                    centerHeading={strings.UDHAARLEDGER}
+                    containerStyle={styles.containerStyle2}
+                    centerHeadingStyle={{
+                      fontSize: textScale(14),
+                      fontFamily: fontFamily.regular,
+                    }}
+                    // iconRight={imagePath.goRight}
+                    // rightIconStyle={{tintColor: colors.textGreyLight}}
+                  />
+                  <ListItemHorizontal
+                    centerContainerStyle={{flexDirection: 'row'}}
+                    leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                    onPress={moveToNewScreen(navigationStrings.SALES_EXPENSES)}
+                    iconLeft={imagePath.icSales}
+                    centerHeading={strings.SALES_EXPENSES}
+                    containerStyle={styles.containerStyle2}
+                    centerHeadingStyle={{
+                      fontSize: textScale(14),
+                      fontFamily: fontFamily.regular,
+                    }}
+                    // iconRight={imagePath.goRight}
+                    // rightIconStyle={{tintColor: colors.textGreyLight}}
+                  />
+                </View>
+              )}
+            </View>
+          ) : (
+            <View></View>
+          )}
 
           {!!userData?.auth_token &&
             !!appData &&

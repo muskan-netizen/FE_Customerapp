@@ -410,7 +410,9 @@ const VariantAddons = ({
                     color: isDarkMode
                       ? MyDarkTheme.colors.text
                       : colors.textGrey,
-                  }}>{`${strings.CHOICE_OF} ${i?.title}`}</Text>
+                  }}>
+                  {i?.title}
+                </Text>
 
                 <Text
                   style={{
@@ -471,7 +473,9 @@ const VariantAddons = ({
                     color: isDarkMode
                       ? MyDarkTheme.colors.text
                       : colors.textGrey,
-                  }}>{`${strings.CHOICE_OF} ${i?.title}`}</Text>
+                  }}>
+                  {i?.title}
+                </Text>
                 <Text
                   style={{
                     ...styles.chooseOption,
