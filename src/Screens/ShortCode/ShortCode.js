@@ -1247,6 +1247,13 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+
+        case appIds.vendoor:
+          updateState({
+            shortCode: shortCodes.vendoor,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

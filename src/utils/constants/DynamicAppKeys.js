@@ -192,6 +192,7 @@ const shortCodes = {
   pinkydeli: '66c095',
   gasgiant: 'e6c73a',
   releezer: 'c2a130',
+  vendoor: '203685',
 };
 
 const appIds = {
@@ -958,6 +959,10 @@ const appIds = {
   releezer: Platform.select({
     ios: 'com.releezer',
     android: 'com.releezer',
+  }),
+  vendoor: Platform.select({
+    ios: 'com.vendoor',
+    android: 'com.vendoor',
   }),
 };
 

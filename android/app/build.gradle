@@ -2138,6 +2138,16 @@ android {
             resValue "string", "app_name", "Releezer"
             resValue "string", "host_name", ""
          }
+            vendoor{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.vendoor'
+            resValue "string", "app_name", "Vendoor"
+            resValue "string", "host_name", ""
+         }
     }
 }
 
