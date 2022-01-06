@@ -1986,21 +1986,21 @@ platform :ios, '11.0'
 #   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
 #
 # end
-# #Dishefs Target
-# target 'Dishefs' do
-#   permissions_path = '../node_modules/react-native-permissions/ios'
-#
-#  rn_maps_path = '../node_modules/react-native-maps'
-#   config = use_native_modules!
-#   use_react_native!(:path => config["reactNativePath"])
-#   pod 'react-native-google-maps', :path => rn_maps_path
-#
-#   pod 'react-native-restart', :path => '../node_modules/react-native-restart'
-#   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
-#   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
-#   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-#
-# end
+ #Dishefs Target
+ target 'Dishefs' do
+   permissions_path = '../node_modules/react-native-permissions/ios'
+
+  rn_maps_path = '../node_modules/react-native-maps'
+   config = use_native_modules!
+   use_react_native!(:path => config["reactNativePath"])
+   pod 'react-native-google-maps', :path => rn_maps_path
+
+   pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+
+ end
 #
 # #Bilionza Target
 # target 'Bilionza' do
@@ -2723,37 +2723,37 @@ platform :ios, '11.0'
 #
 #end
 #
-#VendorSpot Target
-target 'VendorSpot' do
-  permissions_path = '../node_modules/react-native-permissions/ios'
+##VendorSpot Target
+#target 'VendorSpot' do
+#  permissions_path = '../node_modules/react-native-permissions/ios'
+#
+# rn_maps_path = '../node_modules/react-native-maps'
+#  config = use_native_modules!
+#  use_react_native!(:path => config["reactNativePath"])
+#  pod 'react-native-google-maps', :path => rn_maps_path
+#
+#  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+#  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+#  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+#  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+#
+#end
 
- rn_maps_path = '../node_modules/react-native-maps'
-  config = use_native_modules!
-  use_react_native!(:path => config["reactNativePath"])
-  pod 'react-native-google-maps', :path => rn_maps_path
-
-  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
-  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
-  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
-  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-
-end
-
-#SXM2GO Target
-target 'SXM2GO' do
-  permissions_path = '../node_modules/react-native-permissions/ios'
-
- rn_maps_path = '../node_modules/react-native-maps'
-  config = use_native_modules!
-  use_react_native!(:path => config["reactNativePath"])
-  pod 'react-native-google-maps', :path => rn_maps_path
-
-  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
-  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
-  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
-  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-
-end
+##SXM2GO Target
+#target 'SXM2GO' do
+#  permissions_path = '../node_modules/react-native-permissions/ios'
+#
+# rn_maps_path = '../node_modules/react-native-maps'
+#  config = use_native_modules!
+#  use_react_native!(:path => config["reactNativePath"])
+#  pod 'react-native-google-maps', :path => rn_maps_path
+#
+#  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+#  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+#  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+#  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+#
+#end
 #
 post_install do |installer|
 
