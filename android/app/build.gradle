@@ -2087,14 +2087,25 @@ android {
             resValue "string", "app_name", "Bimol"
             resValue "string", "host_name", ""
          }
-         vendorspot{
-            dimension "appType"
+        
+            vendorspot{
+             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.vendorspot'
             resValue "string", "app_name", "Vendor Spot"
+            resValue "string", "host_name", ""
+         }
+         pinkydeli{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.pinkydeli'
+            resValue "string", "app_name", "Pinky Deli"
             resValue "string", "host_name", ""
          }
           sxm2go{

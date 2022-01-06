@@ -19,6 +19,8 @@ import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
 import UserInterfaceStyle from 'react-native-user-interface-style';
 import colors from '../styles/colors';
 import TaxiAppStack from './TaxiAppStack';
+import RoyoOrderStack from './RoyoOrderStack';
+import RoyoVendroAppTabRoute from './RoyoVendroAppTabRoute';
 import AsyncStorage from '@react-native-community/async-storage';
 import AppIntro from '../Screens/AppIntro';
 import { getItem } from '../utils/utils';
@@ -92,6 +94,7 @@ export default function Routes() {
         // theme={scheme == 'dark' ? DarkTheme : DefaultTheme}
         ref={navigationRef}>
         <Stack.Navigator>
+          {/* {RoyoOrderStack(Stack)} */}
           {shortCode(Stack)}
           {AuthStack(Stack)}
           {CourierStack(Stack)}
@@ -117,7 +120,8 @@ export default function Routes() {
 
           <Stack.Screen
             name={navigationStrings.TABROUTESVENDOR}
-            component={TabRoutesVendor}
+            // component={TabRoutesVendor}
+            component={RoyoVendroAppTabRoute}
             options={{ headerShown: false, gestureEnabled: false }}
           />
         </Stack.Navigator>

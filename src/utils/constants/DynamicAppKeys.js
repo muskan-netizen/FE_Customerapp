@@ -189,6 +189,7 @@ const shortCodes = {
   bimol: '94fc5b',
   vendorspot: 'dfa952',
   sxm2go: 'b6e6e8',
+  pinkydeli: '66c095',
 };
 
 const appIds = {
@@ -944,6 +945,10 @@ const appIds = {
     ios: 'com.sxm2go',
     android: 'com.sxm2go',
   }),
+  pinkydeli: Platform.select({
+    ios: 'com.codebrew.pinkydeli',
+    android: 'com.app.pinkydeli',
+  })
 };
 
 const socialKeys = {

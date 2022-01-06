@@ -208,6 +208,7 @@ const GradientCartView = ({
                 <Image source={imagePath.cartIcon} />
               </Animatable.View>
             </LinearGradient>
+          
           </Animatable.View>
         </TouchableOpacity>
       )}

@@ -97,6 +97,16 @@ export {default as PickupTaxiOrderDetail} from './TaxiApp/PickupTaxiOrderDetail/
 export {default as PrinterConnection} from './PrinterConnection/PrinterScreen';
 export {default as TaxiHomeScreen} from './Home/TaxiHomeScreen/TaxiHomeScreen';
 export {default as ViewAllData} from './ViewAllData/ViewAllData';
+// royo order
+export {default as RoyoHome} from './RoyoVendorApp/RoyoHome/RoyoHome';
+export {default as RoyoOrder} from './RoyoVendorApp/RoyoOrder/RoyoOrder';
+export {default as RoyoAccounts} from './RoyoVendorApp/RoyoAccounts/RoyoAccounts';
+export {default as RoyoProducts} from './RoyoVendorApp/RoyoProducts/RoyoProducts';
+export {default as RoyoPaymentSetting} from './RoyoVendorApp/RoyoPaymentSetting/RoyoPaymentSetting';
+export {default as RoyoTransactions} from './RoyoVendorApp/RoyoTransactions/RoyoTransactions';
+export {default as RoyoOrderDetail} from './RoyoVendorApp/RoyoOrderDetail/RoyoOrderDetail';
+export {default as RoyoAddProduct} from './RoyoVendorApp/RoyoAddProduct/RoyoAddProduct';
+
 export {default as Mobbex} from './PaymentGateways/Mobbex';
 export {default as Payfast} from './PaymentGateways/Payfast';
 export {default as Yoco} from './PaymentGateways/Yoco';
@@ -107,3 +117,9 @@ export {default as CategoryBrands} from './CategoryBrands/CategoryBrands';
 export {default as AllinonePyments} from './AllinonePyments/AllinonePyments';
 export {default as Simplify} from './PaymentGateways/Simplify';
 export {default as Square} from './PaymentGateways/Square';
+export {default as Inventory} from './Inventory/Inventory';
+export {default as SalesExpenses} from './SalesExpenses/SalesExpenses';
+export {default as UdhaarLedger} from './UdhaarLedger/UdhaarLedger';
+export {default as AddProduct} from './AddProduct/AddProduct';
+export {default as AddNewCustomer} from './AddNewCustomer/AddNewCustomer';
+export {default as CustomerEarningHistory} from './CustomerEarningHistory/CustomerEarningHistory';

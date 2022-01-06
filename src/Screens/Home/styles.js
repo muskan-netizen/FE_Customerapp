@@ -370,7 +370,8 @@ export default ({themeColors, fontFamily}) => {
       alignItems: 'center',
       justifyContent: 'space-between',
       marginHorizontal: moderateScale(16),
-      marginVertical: moderateScaleVertical(24),
+      marginBottom: moderateScaleVertical(24),
+      marginTop: moderateScaleVertical(15),
     },
     hdrRatingTxtView: {
       flexDirection: 'row',

@@ -27,6 +27,7 @@ import {
   Square,
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
+import Pagarme from '../Screens/PaymentGateways/Pagarme';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
@@ -137,6 +138,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.SQUARE}
         component={Square}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name={navigationStrings.PAGARME}
+        component={Pagarme}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
