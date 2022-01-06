@@ -1,4 +1,3 @@
-import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {
   HomeScreenCourier,
@@ -10,7 +9,6 @@ import {
   PickupOrderDetail,
   Offers,
   MyOrders,
-  VerifyAccount,
 } from '../Screens';
 import VerifyAccountSecond from '../Screens/VerifyAccountSecond/VerifyAccount';
 import navigationStrings from './navigationStrings';
