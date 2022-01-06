@@ -472,7 +472,7 @@ export default function DashBoardFive({
                             borderColor: colors.textGreyB,
                             paddingLeft: moderateScale(5),
                             paddingHorizontal: moderateScale(5),
-                            marginTop: moderateScaleVertical(8),
+                            marginVertical: moderateScaleVertical(4),
                             justifyContent: 'center',
                             alignItems: 'center',
                           }}>

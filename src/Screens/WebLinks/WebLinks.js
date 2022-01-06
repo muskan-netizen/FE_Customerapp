@@ -240,54 +240,57 @@ export default function WebLinks({navigation, route}) {
       }
       return true;
     } else {
-      // const error = validator({
-      //   name: fullname,
-      //   email: email,
-      //   phoneNumber: phoneNumber,
-      //   newPassword: password,
-      //   confirmPassword: confirm_password,
-      //   vendorName: vendor_name,
-      //   vendorAddress: address,
-      // });
+      const error = validator({
+        name: fullname,
+        email: email,
+        phoneNumber: phoneNumber,
+        vendorTitle: title,
+        newPassword: password,
+        confirmPassword: confirm_password,
+        vendorLogo: vendorLogo,
+        vendorName: vendor_name,
+        vendorDesc: description,
+        vendorAddress: address,
+      });
 
-      // if (error) {
-      //   showError(error);
-      //   return;
-      // }
+      if (error) {
+        showError(error);
+        return;
+      }
       return true;
     }
   };
 
   const _onSubmit = () => {
-    // const checkValid = isValidData();
-    // if (!checkValid) {
-    //   return;
-    // }
+    const checkValid = isValidData();
+    if (!checkValid) {
+      return;
+    }
 
     if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
-      var isRequired = true;
+      // var isRequired = true;
 
-      driverRegDocs?.driver_registration_documents.map((itm, indx) => {
-        if (itm.is_required) {
-          if (isRequired) {
-            if (isEmpty(driverRegistrationDocs)) {
-              showError(`Please upload ${itm?.name}`);
-              isRequired = false;
-              return;
-            } else {
-              driverRegistrationDocs.map((item, index) => {
-                if (item.id !== itm.id) {
-                  showError(`Please upload ${item?.name}`);
-                  isRequired = false;
-                  return;
-                }
-              });
-            }
-          }
-        }
-      });
+      // driverRegDocs?.driver_registration_documents.map((itm, indx) => {
+      //   if (itm.is_required) {
+      //     if (isRequired) {
+      //       if (isEmpty(driverRegistrationDocs)) {
+      //         showError(`Please upload ${itm?.name}`);
+      //         isRequired = false;
+      //         return;
+      //       } else {
+      //         driverRegistrationDocs.map((item, index) => {
+      //           if (item.id !== itm.id) {
+      //             showError(`Please upload ${item?.name}`);
+      //             isRequired = false;
+      //             return;
+      //           }
+      //         });
+      //       }
+      //     }
+      //   }
+      // });
 
-      return;
+      // return;
 
       var formData = new FormData();
       formData.append('name', driverName);
@@ -348,6 +351,7 @@ export default function WebLinks({navigation, route}) {
         .catch(errorMethod);
     } else {
       var formData = new FormData();
+      var isRequired = true;
       formData.append('full_name', fullname);
       formData.append('email', email);
       formData.append('phone_number', phoneNumber);
@@ -376,7 +380,29 @@ export default function WebLinks({navigation, route}) {
         filename: vendorBanner.filename,
         mime: vendorBanner.mime,
       });
+
+      // if(item?.item?.is_required){
+      //   if(isRequired){
+
+      //   }
+      // }
+
+      // console.log(vendorRegDocs, 'vendorRegDocs');
+
+      // vendorRegDocs?.map((itm, index) => {
+      //   vendorRegisterationDocs.map((item, indx) => {
+      //     if (itm?.id == item?.id) {
+      //       if (item?.is_required) {
+      //         if (isRequired) {
+      //         }
+      //       }
+      //     }
+      //   });
+      // });
+
+      // return;
       updateState({isLoading: true});
+
       vendorRegisterationDocs.map((item, indx) => {
         formData.append(
           item?.item?.primary?.slug,
@@ -390,7 +416,6 @@ export default function WebLinks({navigation, route}) {
             : item?.fileData,
         );
       });
-      console.log(formData, 'formData');
 
       actions
         .vendorRegisteration(formData, {
@@ -793,13 +818,13 @@ export default function WebLinks({navigation, route}) {
               <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
             </View>
             <BorderTextInput
-              placeholder={strings.YOUR_NAME}
+              placeholder={`${strings.YOUR_NAME}*`}
               onChangeText={_onChangeText('fullname')}
               containerStyle={styles.containerStyle}
             />
 
             <BorderTextInput
-              placeholder={strings.YOUR_EMAIL}
+              placeholder={`${strings.YOUR_EMAIL}*`}
               onChangeText={_onChangeText('email')}
               containerStyle={styles.containerStyle}
             />
@@ -811,13 +836,13 @@ export default function WebLinks({navigation, route}) {
               cca2={cca2}
               phoneNumber={phoneNumber}
               callingCode={state.callingCode}
-              placeholder={strings.YOUR_PHONE_NUMBER}
+              placeholder={`${strings.YOUR_PHONE_NUMBER}*`}
               keyboardType={'phone-pad'}
               containerStyle={styles.containerStyle}
             />
 
             <BorderTextInput
-              placeholder={strings.ENTER_TITLE}
+              placeholder={`${strings.ENTER_TITLE}*`}
               label={'Title'}
               onChangeText={_onChangeText('title')}
               containerStyle={styles.containerStyle}
@@ -825,13 +850,13 @@ export default function WebLinks({navigation, route}) {
 
             <BorderTextInput
               secureTextEntry={true}
-              placeholder={strings.ENTER_PASSWORD}
+              placeholder={`${strings.ENTER_PASSWORD}*`}
               onChangeText={_onChangeText('password')}
               containerStyle={styles.containerStyle}
             />
             <BorderTextInput
               secureTextEntry={true}
-              placeholder={strings.CONFIRM_PASSWORD}
+              placeholder={`${strings.CONFIRM_PASSWORD}*`}
               onChangeText={_onChangeText('confirm_password')}
               containerStyle={styles.containerStyle}
             />
@@ -843,7 +868,9 @@ export default function WebLinks({navigation, route}) {
                     style={{
                       width: width / 2 - moderateScale(22),
                     }}>
-                    <Text style={styles.uploadText}>{strings.UPLOAD_LOGO}</Text>
+                    <Text style={styles.uploadText}>
+                      {strings.UPLOAD_LOGO}*
+                    </Text>
 
                     <View style={styles.imageView}>
                       {console.log(vendorLogo, 'vendorLogo')}
@@ -922,17 +949,17 @@ export default function WebLinks({navigation, route}) {
             </View>
 
             <BorderTextInput
-              placeholder={strings.VENDOR_NAME}
+              placeholder={`${strings.VENDOR_NAME}*`}
               onChangeText={_onChangeText('vendor_name')}
               containerStyle={styles.containerStyle}
             />
             <BorderTextInput
-              placeholder={strings.DESCRIPTION}
+              placeholder={`${strings.DESCRIPTION}*`}
               onChangeText={_onChangeText('description')}
               containerStyle={styles.containerStyle}
             />
             <BorderTextInput
-              placeholder={strings.ADDRESS}
+              placeholder={`${strings.ADDRESS}*`}
               onChangeText={_onChangeText('address')}
               containerStyle={styles.containerStyle}
             />
