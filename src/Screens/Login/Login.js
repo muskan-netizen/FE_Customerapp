@@ -631,7 +631,7 @@ export default function Login({navigation}) {
                 ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
                 : {...styles.txtSmall, color: colors.textGreyLight}
             }>
-            {strings.ALREADY_HAVE_AN_ACCOUNT1}
+            {strings.DONT_HAVE_ACCOUNT}
             <Text
               onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
               style={{

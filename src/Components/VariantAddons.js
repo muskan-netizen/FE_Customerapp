@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import DeviceInfo from 'react-native-device-info';
-import Modal from 'react-native-modal';
 import {Pagination} from 'react-native-snap-carousel';
 import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
@@ -38,14 +37,12 @@ import {
   getColorCodeWithOpactiyNumber,
   hapticEffects,
   playHapticEffect,
-  playVibration,
   showError,
   showSuccess,
 } from '../utils/helperFunctions';
 import HtmlViewComp from './HtmlViewComp';
 import BannerLoader from './Loaders/BannerLoader';
 import HeaderLoader from './Loaders/HeaderLoader';
-import BottomSheet from '@gorhom/bottom-sheet';
 
 const VariantAddons = ({
   productdetail = {},

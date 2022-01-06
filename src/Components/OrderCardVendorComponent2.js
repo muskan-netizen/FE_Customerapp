@@ -1,4 +1,3 @@
-import moment from 'moment';
 import React, {useState, useEffect} from 'react';
 import {
   Image,
@@ -17,8 +16,6 @@ import {useSelector} from 'react-redux';
 import {dummyUser} from '../constants/constants';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
-import staticStrings from '../constants/staticStrings';
-import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
