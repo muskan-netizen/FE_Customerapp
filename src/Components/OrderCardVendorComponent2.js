@@ -43,6 +43,8 @@ const OrderCardVendorComponent2 = ({
   etaTime = null,
   cardStyle,
   updateLocalItem,
+  showRepeatOrderButton,
+  onRepeatOrderPress,
 }) => {
   let cardWidth = width - 21.5;
   const [reason, setReason] = useState('');
@@ -144,6 +146,35 @@ const OrderCardVendorComponent2 = ({
           : colors.white,
         ...cardStyle,
       }}>
+      {showRepeatOrderButton ? (
+        <View
+          style={{
+            marginTop: moderateScale(10),
+            marginRight: moderateScale(10),
+          }}>
+          <TouchableOpacity
+            onPress={onRepeatOrderPress}
+            style={[
+              styles.orderAcceptAndReadyStyleSecond,
+              {
+                // backgroundColor: themeColor.primary_color,
+                paddingHorizontal: moderateScale(10),
+                paddingVertical: moderateScale(5),
+                borderRadius: moderateScale(3),
+                alignSelf: 'flex-end',
+              },
+            ]}>
+            <Text
+              style={{
+                fontSize: textScale(10),
+                color: colors.white,
+                fontFamily: fontFamily.bold,
+              }}>
+              Repeat Order
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ) : null}
       {data?.order_status?.current_status?.title !== strings.DELIVERED &&
         data?.order_status?.current_status?.title !== strings.REJECTED &&
         (!!etaTime || !!data?.scheduled_date_time) && (
@@ -531,6 +562,7 @@ const OrderCardVendorComponent2 = ({
             </TouchableOpacity>
           )}
       </View>
+
       <Modal
         isVisible={!!cancellationItem ? true : false}
         onBackdropPress={hideModal}

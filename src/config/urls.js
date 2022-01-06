@@ -31,7 +31,7 @@ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
 // export const API_BASE_URL = 'https://ufood.ca/api/v1';
-export const API_BASE_URL = 'https://app.vici.la/api/v1';
+// export const API_BASE_URL = 'https://app.vici.la/api/v1';
 // export const API_BASE_URL = 'https://blipdelivery.com/api/v1';
 // export const API_BASE_URL = 'https://africanvillage.market/api/v1';
 // export const API_BASE_URL = 'https://govachow.com/api/v1';
@@ -146,6 +146,7 @@ export const GET_RETURN_PRODUCT_DETAIL = getApiUrl(
 );
 
 export const UPLOAD_PRODUCT_IMAGE = getApiUrl('/upload-file');
+export const REPEAT_ORDER = getApiUrl('/repeatOrder');
 
 export const SUBMIT_RETURN_ORDER = getApiUrl(
   '/return-order/update-product-return',
