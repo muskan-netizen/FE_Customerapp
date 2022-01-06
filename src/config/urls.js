@@ -1,5 +1,5 @@
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+//export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL='http://192.168.97.123:8020/api/v1'
 // export const API_BASE_URL = 'http://192.168.96.20:8020/api/v1';
@@ -31,7 +31,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
 // export const API_BASE_URL = 'https://ufood.ca/api/v1';
-// export const API_BASE_URL = 'https://app.vici.la/api/v1';
+export const API_BASE_URL = 'https://app.vici.la/api/v1';
 // export const API_BASE_URL = 'https://blipdelivery.com/api/v1';
 // export const API_BASE_URL = 'https://africanvillage.market/api/v1';
 // export const API_BASE_URL = 'https://govachow.com/api/v1';
