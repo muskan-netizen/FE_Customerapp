@@ -33,7 +33,6 @@ import {
   SendProduct,
   SendRefferal,
   Settings,
-  Subscriptions,
   Subscriptions2,
   TipPaymentOptions,
   TrackDetail,
@@ -53,8 +52,6 @@ import {
   Yoco,
   AllinonePyments,
 } from '../Screens';
-import AccountTemplateFive from '../Screens/Account/AccountTemplateFive';
-import AccountTemplateFour from '../Screens/Account/AccountTemplateFour';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();

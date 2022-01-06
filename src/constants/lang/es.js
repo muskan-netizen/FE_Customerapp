@@ -732,4 +732,5 @@ export default {
   ORDERDELIVERED: '¡Hemos terminado!',
   PLEASE_RECHARGE_WALLET: 'Por favor, recarga tu monedero',
   ORDER: 'Operación',
+  ACCEPTING_ORDER_MSG: 'We are not accepting orders less then',
 };

@@ -1303,7 +1303,7 @@ export default function Cart({navigation, route}) {
             marginTop: moderateScaleVertical(10),
             paddingHorizontal: moderateScale(5),
           }}>
-          {`We are not accepting orders less then ${currencies?.primary_currency?.symbol}${item?.vendor?.order_min_amount}`}
+          {`${strings.ACCEPTING_ORDER_MSG} ${currencies?.primary_currency?.symbol}${item?.vendor?.order_min_amount}`}
         </Text>
       );
     }

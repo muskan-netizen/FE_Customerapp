@@ -776,4 +776,5 @@ montant`,
   ORDER: 'Order',
   SELECT_VIA_MAP: 'Select via map',
   CUSTOMIZZATION_FOR: 'Customizations for',
+  ACCEPTING_ORDER_MSG: 'We are not accepting orders less then',
 };

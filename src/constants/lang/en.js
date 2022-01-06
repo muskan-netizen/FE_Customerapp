@@ -742,4 +742,5 @@ Amount`,
   SELECT_VIA_MAP: 'Select via map',
   CUSTOMIZZATION_FOR: 'Customizations for',
   ORDER_DELIVERED_SUCESSFULLY: 'Order delivered successfully !',
+  ACCEPTING_ORDER_MSG: 'We are not accepting orders less then',
 };

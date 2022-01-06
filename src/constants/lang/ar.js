@@ -733,4 +733,5 @@ export default {
   SELECT_VIA_MAP: 'حدد عبر الخريطة',
   HOUSE_NO: 'رقم الدار',
   CUSTOMIZZATION_FOR: 'Customizations for',
+  ACCEPTING_ORDER_MSG: 'We are not accepting orders less then',
 };

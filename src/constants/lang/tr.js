@@ -724,4 +724,5 @@ export default {
   SELECT_VIA_MAP: 'Select via map',
   HOUSE_NO: 'House No.',
   CUSTOMIZZATION_FOR: 'Customizations for',
+  ACCEPTING_ORDER_MSG: 'We are not accepting orders less then',
 };
