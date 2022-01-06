@@ -1234,6 +1234,19 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.gasgiant:
+          updateState({
+            shortCode: shortCodes.gasgiant,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.releezer:
+          updateState({
+            shortCode: shortCodes.releezer,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

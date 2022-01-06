@@ -190,6 +190,8 @@ const shortCodes = {
   vendorspot: 'dfa952',
   sxm2go: 'b6e6e8',
   pinkydeli: '66c095',
+  gasgiant: 'e6c73a',
+  releezer: 'c2a130',
 };
 
 const appIds = {
@@ -948,7 +950,15 @@ const appIds = {
   pinkydeli: Platform.select({
     ios: 'com.codebrew.pinkydeli',
     android: 'com.app.pinkydeli',
-  })
+  }),
+  gasgiant: Platform.select({
+    ios: 'com.gasgiant',
+    android: 'com.gasgiant',
+  }),
+  releezer: Platform.select({
+    ios: 'com.releezer',
+    android: 'com.releezer',
+  }),
 };
 
 const socialKeys = {

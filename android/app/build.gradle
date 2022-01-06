@@ -2118,6 +2118,26 @@ android {
             resValue "string", "app_name", "SXM2GO"
             resValue "string", "host_name", ""
          }
+         gasgiant{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.gasgiant'
+            resValue "string", "app_name", "Gas Giant"
+            resValue "string", "host_name", ""
+         }
+          releezer{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.releezer'
+            resValue "string", "app_name", "Releezer"
+            resValue "string", "host_name", ""
+         }
     }
 }
 
