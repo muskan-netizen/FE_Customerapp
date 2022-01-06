@@ -62,7 +62,6 @@ const PendingOrderCard = ({
       : dummyUser;
   const fontFamily = appStyle?.fontSizeData;
 
-  alert(data?.date_time);
 
   const styles = stylesFunc({fontFamily, themeColors});
   return (

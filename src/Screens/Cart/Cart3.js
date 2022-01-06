@@ -3651,7 +3651,7 @@ export default function Cart({navigation, route}) {
         )}
         <View style={{marginVertical: moderateScaleVertical(8)}} />
 
-        {recommendedVendorsdata.length > 0 && (
+        {recommendedVendorsdata && recommendedVendorsdata.length > 0 && (
           <View>
             <Text
               style={{
