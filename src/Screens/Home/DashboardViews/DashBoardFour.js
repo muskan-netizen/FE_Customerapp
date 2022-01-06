@@ -72,7 +72,6 @@ export default function DashBoardFour({
   );
   const _changeVendorListStyle = () =>
     updateState({isVendorColumnList: !isVendorColumnList});
-
   return (
     <ScrollView
       refreshing={isRefreshing}

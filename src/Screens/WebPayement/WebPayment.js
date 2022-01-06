@@ -39,6 +39,7 @@ export default function WebPayment({navigation, route}) {
   console.log('paramData', paramData);
 
   const onNavigationStateChange = (navState) => {
+    console.log(navState,"navState>>>UPDATE");
     const URL = queryString.parseUrl(navState.url);
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
@@ -133,6 +134,7 @@ export default function WebPayment({navigation, route}) {
         console.log('error rraised', error);
       });
   };
+  console.log(paramData,"paramData");
 
   return (
     <WrapperContainer

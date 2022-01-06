@@ -13,6 +13,10 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+
+
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
@@ -42,12 +46,13 @@
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
         android:launchMode="singleTask"
         android:exported="true"
-        android:windowSoftInputMode="stateAlwaysHidden|adjustPan|adjustResize"
+        android:windowSoftInputMode="adjustPan"
         android:screenOrientation="portrait"
         >
         <!-- <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan|adjustResize"
         </intent-filter> -->
 
         <!-- Deeplinking -->
