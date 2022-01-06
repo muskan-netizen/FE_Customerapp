@@ -381,26 +381,38 @@ export default function WebLinks({navigation, route}) {
         mime: vendorBanner.mime,
       });
 
-      // if(item?.item?.is_required){
-      //   if(isRequired){
-
-      //   }
-      // }
-
-      // console.log(vendorRegDocs, 'vendorRegDocs');
-
-      // vendorRegDocs?.map((itm, index) => {
-      //   vendorRegisterationDocs.map((item, indx) => {
-      //     if (itm?.id == item?.id) {
-      //       if (item?.is_required) {
-      //         if (isRequired) {
-      //         }
+      // console.log(vendorRegisterationDocs, 'vendorRegDocs');
+      // vendorRegDocs?.map((itm) => {
+      //   if (itm?.is_required) {
+      //     if (isEmpty(vendorRegisterationDocs)) {
+      //       if (isRequired) {
+      //         isRequired = false;
+      //         showError(`${itm.primary?.name} is required`);
+      //         return;
       //       }
+      //     } else {
+      //       var itemReplacement = {};
+      //       vendorRegisterationDocs.map((item) => {
+      //         if (item?.item?.primary?.id != itm?.id) {
+      //           if (isRequired) {
+      //             itemReplacement = itm?.primary?.name;
+      //             isRequired = false;
+      //             showError(`${itemReplacement} is required`);
+      //             return;
+      //           }
+      //         }
+      //       });
+      //       // console.log(itemReplacement, 'itemReplacement');
+      //       // if (!isEmpty(itemReplacement)) {
+      //       //   showError(`${itemReplacement} is required`);
+      //       //   return;
+      //       // }
       //     }
-      //   });
+      //   }
       // });
 
       // return;
+      // if (isRequired) {
       updateState({isLoading: true});
 
       vendorRegisterationDocs.map((item, indx) => {
@@ -434,6 +446,7 @@ export default function WebLinks({navigation, route}) {
           navigation.goBack();
         })
         .catch(errorMethod);
+      // }
     }
   };
 

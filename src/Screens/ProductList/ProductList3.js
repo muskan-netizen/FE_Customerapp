@@ -611,11 +611,11 @@ export default function Products({route, navigation}) {
               vendorCategories: res?.data?.categories,
               // vendorCategoryItms: res?.data?.categories[0]?.products,
             });
-          }else{
+          } else {
             updateState({
               isLoading: false,
               isRefreshing: false,
-            })
+            });
           }
         }
         if (res?.data) {
@@ -1509,13 +1509,16 @@ export default function Products({route, navigation}) {
     index,
     type,
   ) => {
-    let batchCount= !!item?.batch_count?item?.batch_count:1
+    let batchCount = !!item?.batch_count ? item?.batch_count : 1;
     let differentAddsOnsQty = 0;
     let cloneArr = differentAddsOns;
     let updateLocallyAddOns = cloneArr.map((val) => {
       differentAddsOnsQty = differentAddsOnsQty + val.quantity;
       if (cartId == val.id) {
-        return {...val, quantity: type == 1 ? qty + batchCount : qty - batchCount};
+        return {
+          ...val,
+          quantity: type == 1 ? qty + batchCount : qty - batchCount,
+        };
       }
       return val;
     });
@@ -1528,7 +1531,9 @@ export default function Products({route, navigation}) {
       index,
       type,
       null,
-      type == 1 ? differentAddsOnsQty + batchCount : differentAddsOnsQty - batchCount, //send updated total quantity
+      type == 1
+        ? differentAddsOnsQty + batchCount
+        : differentAddsOnsQty - batchCount, //send updated total quantity
     );
     updateState({differentAddsOns: updateLocallyAddOns});
   };
@@ -2718,7 +2723,6 @@ export default function Products({route, navigation}) {
     );
   };
   const renderSectionItem = ({item, index, section}) => {
-    console.log(item, 'itemitemitemInSec');
     return (
       <View>
         <ProductCard3
