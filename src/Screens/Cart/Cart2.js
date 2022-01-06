@@ -38,21 +38,18 @@ import {
   textScale,
   width,
   height,
-  StatusBarHeight,
 } from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
-import ListEmptyCart from './ListEmptyCart';
 import Modal from 'react-native-modal';
 import DatePicker from 'react-native-date-picker';
 import GradientButton from '../../Components/GradientButton';
 import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
+import {MyDarkTheme} from '../../styles/theme';
 import LottieView from 'lottie-react-native';
 import {
   loaderOne,
