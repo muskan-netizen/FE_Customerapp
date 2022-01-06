@@ -276,17 +276,7 @@ android {
             resValue "string", "app_name", "Yogo Food"
             resValue "string", "host_name", "yogofood.royoorders.com"
         }
-        spidbi{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            // applicationIdSuffix ".hmoobhhub"
-            applicationId 'com.user.spidbi'
-            resValue "string", "app_name", "Spidbi"
-            resValue "string", "host_name", ""
-        }
+     
         clicktoeat{
             dimension "appType"
             versionCode 2
