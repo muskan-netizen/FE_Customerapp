@@ -430,7 +430,7 @@ export default function Products({route, navigation}) {
   const getAllProductsByVendorCategory = () => {
     // alert("21312")
 
-    console.log('api hit getAllProductsByVendorCategory', data);
+    console.log('api hit getAllProductsByVendorCategory vendor ++++', data);
     actions
       .getProductByVendorCategoryId(
         `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
@@ -442,7 +442,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res.data.filterData, 'getAllProductsByVendorCategory');
+        console.log(res.data.filterData, 'getAllProductsByVendorCategory vendor +++');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -453,7 +453,7 @@ export default function Products({route, navigation}) {
               ? res.data.products.data
               : [...productListData, ...res?.data?.products?.data],
         });
-        console.log(res.data.filterData, 'res.data.filterData');
+        console.log(res.data.filterData, 'res.data.filterData vendor +++');
         updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
       .catch(errorMethod);
