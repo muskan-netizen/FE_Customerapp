@@ -666,11 +666,7 @@ Amount`,
   CONNECTION_ERROR: 'Connection Error',
   INTERNET_CONNECTION_ERROR:
     'Oops! Looks like your device is not connected to the Internet.',
-<<<<<<< HEAD
-  HERE_YOU_ARE_FOR_RETURN: 'Report an issue or request a return/refund :',
-=======
   HERE_YOU_ARE_FOR_RETURN: 'Report an issue or request a return / refund :',
->>>>>>> 4c1966fbfa0134af924b3ec97b25eb723ec24907
   BROWSE_MENU: 'Browse Menu',
   MINS: 'min',
   AVAILABLE_OFFERS: 'Available Offers',
