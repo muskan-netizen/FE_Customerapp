@@ -1254,6 +1254,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.farmersouq:
+          updateState({
+            shortCode: shortCodes.farmersouq,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

@@ -2148,6 +2148,16 @@ android {
             resValue "string", "app_name", "Vendoor"
             resValue "string", "host_name", ""
          }
+       farmersouq{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.farmersouq'
+            resValue "string", "app_name", "FARMER SOUQ"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

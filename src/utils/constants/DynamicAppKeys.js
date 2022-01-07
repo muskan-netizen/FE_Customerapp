@@ -193,6 +193,7 @@ const shortCodes = {
   gasgiant: 'e6c73a',
   releezer: 'c2a130',
   vendoor: '203685',
+  farmersouq: 'cc6a32',
 };
 
 const appIds = {
@@ -963,6 +964,10 @@ const appIds = {
   vendoor: Platform.select({
     ios: 'com.vendoor',
     android: 'com.vendoor',
+  }),
+  farmersouq: Platform.select({
+    ios: 'com.farmersouq',
+    android: 'com.farmersouq',
   }),
 };
 
