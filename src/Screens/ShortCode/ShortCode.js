@@ -1260,6 +1260,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.tmgShops:
+          updateState({
+            shortCode: shortCodes.tmgShops,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.stitchesonsite:
+          updateState({
+            shortCode: shortCodes.stitchesonsite,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

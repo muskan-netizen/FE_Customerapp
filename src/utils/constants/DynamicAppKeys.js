@@ -194,6 +194,8 @@ const shortCodes = {
   releezer: 'c2a130',
   vendoor: '203685',
   farmersouq: 'cc6a32',
+  tmgShops: '6da47f',
+  stitchesonsite: '5bdfee',
 };
 
 const appIds = {
@@ -968,6 +970,14 @@ const appIds = {
   farmersouq: Platform.select({
     ios: 'com.farmersouq',
     android: 'com.farmersouq',
+  }),
+  tmgShops: Platform.select({
+    ios: 'com.tmgShops',
+    android: 'com.tmgShops',
+  }),
+  stitchesonsite: Platform.select({
+    ios: 'com.stitchesonsite',
+    android: 'com.stitchesonsite',
   }),
 };
 

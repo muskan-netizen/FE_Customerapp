@@ -2158,6 +2158,26 @@ android {
             resValue "string", "app_name", "FARMER SOUQ"
             resValue "string", "host_name", ""
          }
+          tmgShops{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.tmgShops'
+            resValue "string", "app_name", "TMG Shops"
+            resValue "string", "host_name", ""
+         }
+         stitchesonsite{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.stitchesonsite'
+            resValue "string", "app_name", "Stitches on Site"
+            resValue "string", "host_name", ""
+         }
     }
 }
 
