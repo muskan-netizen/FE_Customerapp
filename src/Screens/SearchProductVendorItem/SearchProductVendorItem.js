@@ -207,7 +207,7 @@ export default function SearchProductVendorItem({navigation, route}) {
     );
   };
 
-  const _listEmptyComponent = () => {
+  const _listComponent = () => {
     return (
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
         <LottieView

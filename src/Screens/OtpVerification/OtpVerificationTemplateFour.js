@@ -135,15 +135,15 @@ export default function OtpVerificationTemplateFour({navigation, route}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        navigation.push(navigationStrings.DRAWER_ROUTES);
+        navigation.push(navigationStrings.TAB_ROUTES);
         // if (userData) {
         //   userData?.client_preference?.verify_email ||
         //   userData?.client_preference?.verify_phone
         //     ? userData?.verify_details?.is_email_verified ||
         //       userData?.verify_details?.is_phone_verified
-        //       ? navigation.push(navigationStrings.DRAWER_ROUTES)
+        //       ? navigation.push(navigationStrings.TAB_ROUTES)
         //       : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-        //     : navigation.push(navigationStrings.DRAWER_ROUTES);
+        //     : navigation.push(navigationStrings.TAB_ROUTES);
         // }
         updateState({isLoading: false});
       })
@@ -205,9 +205,9 @@ export default function OtpVerificationTemplateFour({navigation, route}) {
                 !!res.data?.client_preference?.verify_phone
               ? !!res.data?.verify_details?.is_email_verified &&
                 !!res.data?.verify_details?.is_phone_verified
-                ? navigation.push(navigationStrings.DRAWER_ROUTES)
+                ? navigation.push(navigationStrings.TAB_ROUTES)
                 : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-              : navigation.push(navigationStrings.DRAWER_ROUTES);
+              : navigation.push(navigationStrings.TAB_ROUTES);
           }
           updateState({isLoading: false});
           getCartDetail();
@@ -239,7 +239,7 @@ export default function OtpVerificationTemplateFour({navigation, route}) {
           />
         </TouchableOpacity>
         {/* <TouchableOpacity
-          onPress={() => navigation.push(navigationStrings.DRAWER_ROUTES)}>
+          onPress={() => navigation.push(navigationStrings.TAB_ROUTES)}>
           <Text style={styles.skipText}>{strings.SKIP}</Text>
         </TouchableOpacity> */}
       </View>

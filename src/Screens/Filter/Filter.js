@@ -44,6 +44,16 @@ export default function Filter({route, navigation}) {
     showSortBy = true,
   } = route.params.data;
 
+  console.log(
+    allFilters,
+    getProductBasedOnFilter,
+    minPrice,
+    maxPrice,
+    checkForMinimumPriceChange,
+    checkForMaximumPriceChange,
+    'show all filter data',
+  );
+
   const [state, setState] = useState({
     isLoading: false,
     filterTypes: [],
@@ -405,6 +415,8 @@ export default function Filter({route, navigation}) {
       </View>
     );
   };
+
+  console.log(filterTypes, 'filterTypes');
 
   return (
     <WrapperContainer

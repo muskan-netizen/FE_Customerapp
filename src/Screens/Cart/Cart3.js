@@ -447,12 +447,23 @@ export default function Cart({navigation, route}) {
 
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
+    console.log(item, 'itemitemitemitem');
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
+    let quantityToIncrease = !!itemToUpdate?.product?.batch_count
+      ? Number(itemToUpdate?.product?.batch_count)
+      : 1;
     if (type == 1) {
-      quanitity = Number(itemToUpdate.quantity) + 1;
+      quanitity = Number(itemToUpdate.quantity) + quantityToIncrease;
     } else {
-      quanitity = Number(itemToUpdate.quantity) - 1;
+      if (
+        Number(itemToUpdate.quantity - itemToUpdate?.product?.batch_count) <=
+        itemToUpdate?.product?.minimum_order_count
+      ) {
+        quanitity = 0;
+      } else {
+        quanitity = Number(itemToUpdate.quantity) - quantityToIncrease;
+      }
     }
     if (quanitity) {
       let data = {};
@@ -650,6 +661,9 @@ export default function Cart({navigation, route}) {
       case 13: //Square Payment Getway
         navigation.navigate(navigationStrings.SQUARE, paymentData);
         break;
+        case 15: //Pagarme Payment Getway
+        navigation.navigate(navigationStrings.PAGARME, paymentData);
+        break;
       default:
         if (
           !!businessType &&
@@ -837,7 +851,7 @@ export default function Cart({navigation, route}) {
       return;
     }
     if (
-      selectedPayment?.id === 3 &&
+      (selectedPayment?.id === 3) &&
       selectedPayment?.off_site === 1 &&
       !!(
         Number(cartData?.total_payable_amount) + Number(selectedTipAmount) !==
@@ -995,6 +1009,8 @@ export default function Cart({navigation, route}) {
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
 
+    console.log(returnUrl,"returnUrl");
+    console.log(cancelUrl,"cancelUrl");
     let queryData = `/${selectedMethod}?tip=${
       selectedTipAmount && selectedTipAmount != ''
         ? Number(selectedTipAmount)
@@ -1008,6 +1024,7 @@ export default function Cart({navigation, route}) {
       selectedAddressData?.id
     }&payment_option_id=${selectedPayment?.id}&action=cart`;
 
+    console.log(queryData,"queryData"); 
     actions
       .openPaymentWebUrl(
         queryData,
@@ -1276,6 +1293,27 @@ export default function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
+  const renderMinAmountMsg = (item) => {
+    if (
+      Number(item?.vendor?.order_min_amount) >
+      Number(item?.payable_amount ? item?.payable_amount : 0).toFixed(2)
+    ) {
+      return (
+        <Text
+          numberOfLines={1}
+          style={{
+            ...styles.priceItemLabel2,
+            color: colors.redB,
+            fontSize: textScale(13),
+            fontFamily: fontFamily.medium,
+            marginTop: moderateScaleVertical(10),
+            paddingHorizontal: moderateScale(5),
+          }}>
+          {`${strings.ACCEPTING_ORDER_MSG} ${currencies?.primary_currency?.symbol}${item?.vendor?.order_min_amount}`}
+        </Text>
+      );
+    }
+  };
   const _renderItem = ({item, index}) => {
     return (
       <View>
@@ -1325,13 +1363,14 @@ export default function Cart({navigation, route}) {
           </View>
         )}
         <View
-          key={swipeKey}
+          key={swipeKey + Math.random()}
           style={{
             ...styles.mainViewRednderItem,
             backgroundColor: isDarkMode
               ? MyDarkTheme.colors.background
               : colors.white,
           }}>
+          {renderMinAmountMsg(item)}
           <View
             style={{
               ...styles.vendorView,
@@ -1344,6 +1383,7 @@ export default function Cart({navigation, route}) {
                 ...styles.priceItemLabel2,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
+              {console.log('jbbbkhbk', item?.vendor)}
               {item?.vendor?.name}
             </Text>
             {item?.is_vendor_closed && (
@@ -1364,7 +1404,7 @@ export default function Cart({navigation, route}) {
                 return (
                   <Swipeable
                     ref={swipeRef}
-                    key={swipeKey}
+                    key={swipeKey + Math.random()}
                     renderRightActions={swipeBtns}
                     onSwipeableOpen={() => deleteItem(i, index)}
                     rightThreshold={width / 1.4}
@@ -3943,7 +3983,7 @@ export default function Cart({navigation, route}) {
           useNativeDriver={false}
         /> */}
         <FlatList
-          key={swipeKey}
+          key={swipeKey + Math.random()}
           data={cartItems}
           extraData={cartItems}
           ListHeaderComponent={cartItems?.length ? getHeader() : null}

@@ -50,6 +50,7 @@ const TextInputWithUnderlineAndLabel = ({
   labelIconPath = '',
   labelIconStyle = {},
   onPressLabel = () => {},
+  underlineColor = colors.textGreyB,
   ...props
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -98,7 +99,7 @@ const TextInputWithUnderlineAndLabel = ({
           color: colors.white,
           marginBottom,
           borderBottomWidth: StyleSheet.hairlineWidth,
-          borderBottomColor: colors.textGreyB,
+          borderBottomColor: underlineColor,
           paddingBottom: 11,
           ...containerStyle,
         }}>

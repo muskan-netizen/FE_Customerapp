@@ -20,7 +20,11 @@ import {
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {currencyNumberFormatter} from '../../utils/commonFunction';
-import {getImageUrl, hapticEffects, playHapticEffect} from '../../utils/helperFunctions';
+import {
+  getImageUrl,
+  hapticEffects,
+  playHapticEffect,
+} from '../../utils/helperFunctions';
 import stylesFunc from './styles';
 
 export default function AddonModal({
@@ -198,7 +202,9 @@ export default function AddonModal({
                         ? MyDarkTheme.colors.text
                         : colors.textGrey,
                     },
-                  ]}>{`${strings.CHOICE_OF} ${i?.title}`}</Text>
+                  ]}>
+                  {i?.title}
+                </Text>
                 <Text
                   style={[
                     styles.chooseOption,
@@ -208,7 +214,7 @@ export default function AddonModal({
                         : colors.textGreyF,
                     },
                   ]}>
-                   {`${strings.MIN} ${i?.min_select} ${strings.AND_MAX} ${i?.max_select} ${strings.SELECTION_ALLOWED}`}
+                  {`${strings.MIN} ${i?.min_select} ${strings.AND_MAX} ${i?.max_select} ${strings.SELECTION_ALLOWED}`}
                 </Text>
                 {!!i.errorShow && (
                   <Text
@@ -236,7 +242,6 @@ export default function AddonModal({
     );
   };
 
-
   const checkIfMaxReached = (minVal, Arr) => {
     const SelectedItems = Arr.filter((el) => el.value);
     if (SelectedItems.length >= minVal) {
@@ -245,7 +250,6 @@ export default function AddonModal({
     return false;
   };
 
-
   const addToCart = () => {
     playHapticEffect(hapticEffects.impactLight);
     addonSetData.map((i, inx) => {
@@ -253,12 +257,12 @@ export default function AddonModal({
       console.log('temp value', temp);
       if (temp) {
         let CloneArr = addonSetData;
-        CloneArr[inx] = { ...CloneArr[inx], errorShow: false };
-        updateState({ addonSetData: CloneArr });
+        CloneArr[inx] = {...CloneArr[inx], errorShow: false};
+        updateState({addonSetData: CloneArr});
       } else {
         let CloneArr = addonSetData;
-        CloneArr[inx] = { ...CloneArr[inx], errorShow: true };
-        updateState({ addonSetData: CloneArr });
+        CloneArr[inx] = {...CloneArr[inx], errorShow: true};
+        updateState({addonSetData: CloneArr});
       }
     });
 

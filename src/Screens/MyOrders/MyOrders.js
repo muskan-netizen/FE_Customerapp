@@ -1,7 +1,7 @@
-import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep, debounce} from 'lodash';
 import React, {createRef, useEffect, useState} from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   RefreshControl,
@@ -42,14 +42,21 @@ import stylesFun from './styles';
 import useInterval from '../../utils/useInterval';
 
 export default function MyOrders({navigation}) {
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const {
+    appData,
+    currencies,
+    languages,
+    themeColors,
+    appStyle,
+    themeColor,
+    themeToggle,
+  } = useSelector((state) => state?.initBoot);
   const location = useSelector((state) => state?.home?.location);
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appData, currencies, languages, themeColors, appStyle} = useSelector(
-    (state) => state?.initBoot,
-  );
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+
+  const cartData = useSelector((state) => state?.cart?.cartItemCount);
+
   const businessType = appStyle?.homePageLayout;
   const [state, setState] = useState({
     tabBarData: [
@@ -325,6 +332,30 @@ export default function MyOrders({navigation}) {
       .catch(errorMethod);
   };
 
+  const repeatOrder = (item) => {
+    console.log(item);
+    console.log(cartData);
+    let data = {};
+    data['order_vendor_id'] = item.id;
+    data['cart_id'] = cartData?.data?.id;
+    console.log(data);
+    updateState({isLoading: true});
+    actions
+      .repeatOrder(``, data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        console.log(res, 'getReturnOrderDetailData>>>res>>>');
+        navigation.navigate(navigationStrings.CART);
+        updateState({
+          isLoading: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+
   const renderOrders = ({item, index}) => {
     return (
       <OrderCardVendorComponent2
@@ -343,6 +374,21 @@ export default function MyOrders({navigation}) {
         cardStyle={{padding: 0}}
         etaTime={!!item?.ETA ? item.ETA : null}
         updateLocalItem={updateLocalItem}
+        showRepeatOrderButton={selectedTab == strings.PAST_ORDERS}
+        // onRepeatOrderPress={() => repeatOrder(item)}
+        onRepeatOrderPress={() => {
+          Alert.alert('', 'This will clear your cart.', [
+            {
+              text: strings.CANCEL,
+              onPress: () => console.log('Cancel Pressed'),
+              // style: 'destructive',
+            },
+            {
+              text: strings.CONTINUE,
+              onPress: () => repeatOrder(item),
+            },
+          ]);
+        }}
       />
       // <OrderCardComponent
       //   data={item}

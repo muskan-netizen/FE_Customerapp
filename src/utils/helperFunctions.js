@@ -28,6 +28,7 @@ const getCurrentLocation = (type) =>
           position.coords.longitude,
           type,
         ).then((res) => {
+          console.log(res, 'response in utils file');
           if (type == 'home') {
             const data = {
               ...cords,
@@ -36,6 +37,12 @@ const getCurrentLocation = (type) =>
             resolve(data);
           } else if (type == 'address') {
             resolve(res);
+          } else {
+            const data = {
+              ...cords,
+              address: res,
+            };
+            resolve(data);
           }
         });
       },
@@ -82,6 +89,8 @@ const getLocation = async (lat, lng, type) => {
 
       return data;
     } catch (err) {}
+  } else {
+    return await Geocoder.geocodePosition({lat, lng});
   }
 };
 
@@ -380,8 +389,19 @@ const getNearestLocation = (currentLocation, savedLocations) => {
   return nearestAddress;
 };
 
+const timeConvert = (n) => {
+  var num = n;
+  var hours = num / 60;
+  var rhours = Math.floor(hours);
+  var minutes = (hours - rhours) * 60;
+  var rminutes = Math.round(minutes);
+  return num >= 60
+    ? rhours + 'h :' + rminutes + `${strings.MINS}`
+    : rminutes + `${strings.MINS}`;
+};
+
 const checkEvenOdd = (num) => {
-  return num % 5 === 0 ? num : num - (num % 5);
+  return timeConvert(num);
 };
 
 const playVibration = () => {

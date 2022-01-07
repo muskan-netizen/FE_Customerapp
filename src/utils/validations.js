@@ -25,6 +25,14 @@ const checkMinLength = (val, minLength, key) => {
   }
 };
 
+const checkNumeric = (val, key) => {
+  if (isNaN(val)) {
+    return false;
+  } else {
+    return `${strings.PLEASE_ENTER_VALID_NUMERIC} ${key}`;
+  }
+};
+
 export default function (data) {
   let error = '';
   const {
@@ -54,6 +62,16 @@ export default function (data) {
     driverLicencePlate,
     driverColor,
     driverTransportType,
+    selectedBuisnessType,
+    productCategory,
+    productDetail,
+    productName,
+    mrp,
+    salePrice,
+    vendorLogo,
+    vendorTitle,
+    vendorDesc,
+    isTermsConditions,
   } = data;
   console.log(message, 'message');
   if (username !== undefined) {
@@ -77,6 +95,61 @@ export default function (data) {
       if (minLengthValidation !== '') {
         return minLengthValidation;
       }
+    }
+  }
+  if (selectedBuisnessType !== undefined) {
+    let emptyValidationText = checkEmpty(
+      selectedBuisnessType,
+      strings.ENTER_NEW_ADDRESS,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+  if (productCategory !== undefined) {
+    let emptyValidationText = checkEmpty(
+      productCategory,
+      strings.ENTER_NEW_ADDRESS,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+  if (productDetail !== undefined) {
+    let emptyValidationText = checkEmpty(
+      productDetail,
+      strings.ENTER_NEW_ADDRESS,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+  if (productName !== undefined) {
+    let emptyValidationText = checkEmpty(
+      productName,
+      strings.ENTER_NEW_ADDRESS,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+  if (mrp !== undefined) {
+    let emptyValidationText = checkEmpty(mrp, strings.ENTER_NEW_ADDRESS);
+    let checkNumericValue = checkNumeric(mrp, strings.ENTER_NEW_ADDRESS);
+    console.log(checkNumericValue, 'checkNumericValue');
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    } else if (checkNumericValue) {
+      return checkNumericValue;
+    }
+  }
+  if (salePrice !== undefined) {
+    let emptyValidationText = checkEmpty(salePrice, strings.ENTER_NEW_ADDRESS);
+    let checkNumericValue = checkNumeric(salePrice, strings.ENTER_NEW_ADDRESS);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    } else if (checkNumericValue) {
+      return checkNumericValue;
     }
   }
 
@@ -206,6 +279,13 @@ export default function (data) {
   // 	}
   // }
 
+  if (vendorTitle !== undefined) {
+    let emptyValidationText = checkEmpty(vendorTitle, 'title', false);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
   if (password !== undefined) {
     let emptyValidationText = checkEmpty(password, strings.PASSWORD);
     if (emptyValidationText !== '') {
@@ -281,6 +361,12 @@ export default function (data) {
     }
   }
 
+  if (vendorLogo !== undefined) {
+    if (validator.empty(vendorLogo)) {
+      return 'Please upload vendor logo';
+    }
+  }
+
   if (vendorName !== undefined) {
     let emptyValidationText = checkEmpty(
       vendorName,
@@ -301,6 +387,13 @@ export default function (data) {
     }
   }
 
+  if (vendorDesc !== undefined) {
+    let emptyValidationText = checkEmpty(vendorDesc, 'description', false);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
   if (vendorAddress !== undefined) {
     let emptyValidationText = checkEmpty(
       vendorAddress,
@@ -311,6 +404,11 @@ export default function (data) {
       return emptyValidationText;
     }
   }
+
+  // if(!isTermsConditions){
+  //   return "Please accecpt Terms & Conditions"
+  // }
+
   if (driverType !== undefined) {
     let emptyValidationText = checkEmptyForSelection(
       driverType,

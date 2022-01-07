@@ -184,6 +184,10 @@ const shortCodes = {
   skoop: 'ff2327',
   kudhyo: '300420',
   bharatMove: 'e2ec5e',
+  sofia: 'e2ef1a',
+  mml: '348045',
+  bimol: '94fc5b',
+  pinkydeli: '66c095',
 };
 
 const appIds = {
@@ -512,8 +516,8 @@ const appIds = {
     android: 'com.totum4U',
   }),
   hmc: Platform.select({
-    ios: 'com.hmc.customer',
-    android: 'com.hmc',
+    ios: 'com.eatkareem.hmchalal',
+    android: 'com.eatkareem.hmchalal',
   }),
   groupy: Platform.select({
     ios: 'com.groupy',
@@ -918,6 +922,22 @@ const appIds = {
   bharatMove: Platform.select({
     ios: 'com.bharatMove',
     android: 'com.bharatMove',
+  }),
+  sofia: Platform.select({
+    ios: 'com.app.sofia',
+    android: 'com.app.sofia',
+  }),
+  mml: Platform.select({
+    ios: 'com.mml',
+    android: 'com.mml',
+  }),
+  bimol: Platform.select({
+    ios: 'com.bimol',
+    android: 'com.bimol',
+  }),
+  pinkydeli: Platform.select({
+    ios: 'com.codebrew.pinkydeli',
+    android: 'com.app.pinkydeli',
   }),
 };
 

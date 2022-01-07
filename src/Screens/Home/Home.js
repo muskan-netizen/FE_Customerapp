@@ -72,6 +72,10 @@ export default function Home({route, navigation}) {
     saveAllUserAddress,
     isLoadingB: false,
     searchDataLoader: false,
+    openVendor: 0,
+    closeVendor: 0,
+    bestSeller: 0,
+    nearMe: 1,
   });
 
   const {
@@ -84,6 +88,10 @@ export default function Home({route, navigation}) {
     saveAllUserAddress,
     isLoadingB,
     searchDataLoader,
+    openVendor,
+    closeVendor,
+    bestSeller,
+    nearMe,
   } = state;
 
   const {profile} = appData;
@@ -280,6 +288,13 @@ export default function Home({route, navigation}) {
           : location?.longitude,
       };
     }
+    let vendorFilterData = {
+      close_vendor: closeVendor,
+      open_vendor: openVendor,
+      best_vendor: bestSeller,
+      near_me: nearMe,
+    };
+    console.log(vendorFilterData, 'vendorFilterData');
     {
       selectedTabType
         ? actions
@@ -287,6 +302,7 @@ export default function Home({route, navigation}) {
               {
                 type: dineInType ? dineInType : dineInType,
                 ...latlongObj,
+                ...vendorFilterData,
               },
               {
                 code: appData?.profile?.code,
@@ -391,6 +407,7 @@ export default function Home({route, navigation}) {
 
   //onPress Category
   const onPressCategory = (item) => {
+    console.log(item, 'itemitem');
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -400,8 +417,11 @@ export default function Home({route, navigation}) {
       item?.redirect_to == staticStrings.LAUNDRY
     ) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-        ...item,
         fetchOffers: true,
+        id: item.id,
+        vendor: true,
+        name: item.name,
+        isVendorList: true,
       })();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
@@ -453,6 +473,7 @@ export default function Home({route, navigation}) {
             vendor: true,
             name: item?.name,
             isVendorList: true,
+            fetchOffers: true,
           })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
@@ -463,7 +484,7 @@ export default function Home({route, navigation}) {
     if (!saveAllUserAddress) {
       homeData();
     }
-  }, [location]);
+  }, [location, bestSeller, openVendor, closeVendor]);
 
   //On Press banner
   const bannerPress = (data) => {
@@ -476,6 +497,7 @@ export default function Home({route, navigation}) {
           id: data.redirect_id,
           vendor: true,
           name: data.redirect_name,
+          fetchOffers: true,
         })();
         return;
       }
@@ -503,6 +525,7 @@ export default function Home({route, navigation}) {
               id: data.redirect_id,
               vendor: true,
               name: data.redirect_name,
+              fetchOffers: true,
             })();
       } else if (data.redirect_to == staticStrings.CATEGORY) {
         if (data?.category?.type?.title == staticStrings.VENDOR) {
@@ -514,6 +537,7 @@ export default function Home({route, navigation}) {
             id: data.redirect_id,
             // vendor: true,
             name: data.redirect_name,
+            fetchOffers: true,
           })();
         }
       }
@@ -626,11 +650,56 @@ export default function Home({route, navigation}) {
             id: data?.id,
             vendor: true,
             name: data?.name,
+            fetchOffers: true,
           })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
+
+  const onVendorFilterSeletion = (selectedFilter) => {
+    switch (selectedFilter?.id) {
+      case 1:
+        updateState({
+          isLoadingB: true,
+          openVendor: 1,
+          closeVendor: 0,
+          bestSeller: 0,
+          nearMe: 0,
+        });
+        break;
+      case 2:
+        updateState({
+          isLoadingB: true,
+          openVendor: 0,
+          closeVendor: 1,
+          bestSeller: 0,
+          nearMe: 0,
+        });
+        break;
+      case 3:
+        updateState({
+          isLoadingB: true,
+          openVendor: 0,
+          closeVendor: 0,
+          bestSeller: 1,
+          nearMe: 0,
+        });
+        break;
+      case 4:
+        updateState({
+          isLoadingB: true,
+          openVendor: 0,
+          closeVendor: 0,
+          bestSeller: 0,
+          nearMe: 1,
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
   const renderHomeScreen = () => {
     const case_ = 5;
     switch (appStyle?.homePageLayout) {
@@ -696,6 +765,7 @@ export default function Home({route, navigation}) {
               selcetedToggle={selcetedToggle}
               toggleData={appData}
               navigation={navigation}
+              onVendorFilterSeletion={onVendorFilterSeletion}
             />
           </>
         );

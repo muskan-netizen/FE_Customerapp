@@ -1,4 +1,3 @@
-import moment from 'moment';
 import React, {useState, useEffect} from 'react';
 import {
   Image,
@@ -17,8 +16,6 @@ import {useSelector} from 'react-redux';
 import {dummyUser} from '../constants/constants';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
-import staticStrings from '../constants/staticStrings';
-import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
@@ -46,6 +43,8 @@ const OrderCardVendorComponent2 = ({
   etaTime = null,
   cardStyle,
   updateLocalItem,
+  showRepeatOrderButton,
+  onRepeatOrderPress,
 }) => {
   let cardWidth = width - 21.5;
   const [reason, setReason] = useState('');
@@ -54,13 +53,19 @@ const OrderCardVendorComponent2 = ({
   const [cancelLoader, setLoader] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
-    useSelector((state) => state?.initBoot);
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const {
+    appData,
+    themeColors,
+    themeLayouts,
+    currencies,
+    languages,
+    appStyle,
+    themeToggle,
+    themeColor,
+  } = useSelector((state) => state?.initBoot);
   const businessType = appStyle?.homePageLayout;
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const imageUrl =
     data && data.vendor
       ? getImageUrl(
@@ -72,11 +77,6 @@ const OrderCardVendorComponent2 = ({
   const fontFamily = appStyle?.fontSizeData;
 
   const styles = stylesFunc({fontFamily, themeColors});
-
-  console.log(
-    'data?.order_status?.current_status?.title',
-    data?.order_status?.current_status?.title,
-  );
 
   const onCancel = async () => {
     if (reason == '') {
@@ -146,6 +146,35 @@ const OrderCardVendorComponent2 = ({
           : colors.white,
         ...cardStyle,
       }}>
+      {showRepeatOrderButton ? (
+        <View
+          style={{
+            marginTop: moderateScale(10),
+            marginRight: moderateScale(10),
+          }}>
+          <TouchableOpacity
+            onPress={onRepeatOrderPress}
+            style={[
+              styles.orderAcceptAndReadyStyleSecond,
+              {
+                // backgroundColor: themeColor.primary_color,
+                paddingHorizontal: moderateScale(10),
+                paddingVertical: moderateScale(5),
+                borderRadius: moderateScale(3),
+                alignSelf: 'flex-end',
+              },
+            ]}>
+            <Text
+              style={{
+                fontSize: textScale(10),
+                color: colors.white,
+                fontFamily: fontFamily.bold,
+              }}>
+              Repeat Order
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ) : null}
       {data?.order_status?.current_status?.title !== strings.DELIVERED &&
         data?.order_status?.current_status?.title !== strings.REJECTED &&
         (!!etaTime || !!data?.scheduled_date_time) && (
@@ -264,15 +293,19 @@ const OrderCardVendorComponent2 = ({
             justifyContent: 'space-between',
             marginVertical: moderateScaleVertical(10),
           }}>
-          <Text
-            style={{
-              fontFamily: fontFamily.semiBold,
-              fontSize: textScale(14),
+          {businessType !== 4 ? (
+            <Text
+              style={{
+                fontFamily: fontFamily.semiBold,
+                fontSize: textScale(14),
 
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            }}>
-            {`${strings.TOTAL_ITEMS}: ${data?.product_details?.length}`}
-          </Text>
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
+              {`${strings.TOTAL_ITEMS}: ${data?.product_details?.length}`}
+            </Text>
+          ) : (
+            <></>
+          )}
           {/* {data?.order_status?.current_status?.title == strings.DELIVERED && (
             <TouchableOpacity
               activeOpacity={0.8}
@@ -442,7 +475,7 @@ const OrderCardVendorComponent2 = ({
                 </Text>
               </View>
             </View>
-            {selectedTab &&
+            {/* {selectedTab &&
             data?.dispatch_traking_url &&
             data?.product_details[0]?.category_type !=
               staticStrings.PICKUPANDDELIEVRY &&
@@ -466,7 +499,7 @@ const OrderCardVendorComponent2 = ({
                   </Text>
                 </View>
               </TouchableOpacity>
-            ) : null}
+            ) : null} */}
 
             {selectedTab &&
             (selectedTab != strings.ACTIVE_ORDERS ||
@@ -529,6 +562,7 @@ const OrderCardVendorComponent2 = ({
             </TouchableOpacity>
           )}
       </View>
+
       <Modal
         isVisible={!!cancellationItem ? true : false}
         onBackdropPress={hideModal}

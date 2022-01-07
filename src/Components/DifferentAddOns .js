@@ -21,6 +21,7 @@ import {
 import colors from '../styles/colors';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {hitSlopProp} from '../styles/commonStyles';
+import strings from '../constants/lang';
 
 // create a component
 const DifferentAddOns = ({
@@ -54,6 +55,10 @@ const DifferentAddOns = ({
     setSelectedItem(item);
 
     var totalProductQty = 0;
+    var batchCount = !!item?.product?.batch_count
+      ? item?.product?.batch_count
+      : 1;
+
     if (!!storeLocalQty) {
       totalProductQty = storeLocalQty;
     } else {
@@ -74,7 +79,7 @@ const DifferentAddOns = ({
       selectedDiffAdsOnSection,
       index,
       type,
-      type == 1 ? totalProductQty + 1 : totalProductQty - 1, //update total quantity
+      type == 1 ? totalProductQty + batchCount : totalProductQty - batchCount, //update total quantity
     );
   };
 
@@ -201,7 +206,8 @@ const DifferentAddOns = ({
             fontSize: textScale(15),
             paddingHorizontal: moderateScale(12),
           }}>
-          Customizations for {selectedDiffAdsOnItem?.translation_title}
+          {strings.CUSTOMIZZATION_FOR}{' '}
+          {selectedDiffAdsOnItem?.translation_title}
         </Text>
         <View style={styles.horizontaLine} />
         <View style={{paddingHorizontal: moderateScale(12)}}>

@@ -1,10 +1,10 @@
-import { useNavigation } from '@react-navigation/native';
-import { Alert, PermissionsAndroid, Platform } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {Alert, PermissionsAndroid, Platform} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
-import { check, PERMISSIONS, request, RESULTS } from 'react-native-permissions';
+import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 import strings from '../constants/lang';
-import { showError } from './helperFunctions';
-import { openAppSetting } from './openNativeApp';
+import {showError} from './helperFunctions';
+import {openAppSetting} from './openNativeApp';
 
 export const androidCameraPermission = () =>
   new Promise(async (resolve, reject) => {
@@ -25,8 +25,8 @@ export const androidCameraPermission = () =>
           Alert.alert(
             strings.ALERT,
             strings.CAMERA_PERMISSION_DENIED_MSG,
-            [{ text: strings.OK }],
-            { cancelable: true },
+            [{text: strings.OK}],
+            {cancelable: true},
           );
           return resolve(false);
           // alert(strings.DO_NOT_HAVE_PERMISSIONS_TO_SELECT_IMAGE);
@@ -143,3 +143,63 @@ export const chekLocationPermission = (showAlert = true) =>
       return reject(error);
     }
   });
+
+export const checkContactPermission = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      check(
+        Platform.OS === 'ios'
+          ? PERMISSIONS.IOS.CONTACTS
+          : PERMISSIONS.ANDROID.READ_CONTACTS,
+      )
+        .then((result) => {
+          switch (result) {
+            case RESULTS.UNAVAILABLE:
+              showError(strings.LOCATION_UNAVAILABLE);
+              break;
+            case RESULTS.DENIED:
+              request(
+                Platform.OS === 'ios'
+                  ? PERMISSIONS.IOS.CONTACTS
+                  : PERMISSIONS.ANDROID.READ_CONTACTS,
+              )
+                .then((result) => {
+                  return reject(result);
+                })
+                .catch((error) => {
+                  return reject(error);
+                });
+
+              break;
+            case RESULTS.LIMITED:
+              showError('The permission is limited: some actions are possible');
+              break;
+            case RESULTS.GRANTED:
+              return resolve(result);
+            case RESULTS.BLOCKED:
+              Alert.alert('', 'Contact permission permanantly disabled!!', [
+                {
+                  text: strings.CANCEL,
+                  onPress: () => console.log('Cancle pressed'),
+                },
+                {
+                  text: strings.CONFIRM,
+                  onPress: () => {
+                    // const locationPath = 'LOCATION_SERVICES';
+                    // openAppSetting(locationPath);
+                    console.log('Confirm pressed');
+                  },
+                },
+              ]);
+
+              return reject(result);
+          }
+        })
+        .catch((error) => {
+          return reject(error);
+        });
+    } catch (error) {
+      return reject(error);
+    }
+  });
+};
