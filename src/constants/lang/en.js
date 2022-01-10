@@ -799,4 +799,5 @@ Amount`,
   UNITS_SET: 'Units per Set',
   PRODUCTS_DETAIL: 'Products Details',
   SEARCH_FOR_PRODUCT: 'Search for customer',
+  CURRENTLYUNAVAILABLE: ' Currently Unavailable',
 };

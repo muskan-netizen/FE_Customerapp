@@ -738,4 +738,5 @@ export default {
   SELECT_VIA_MAP: 'حدد عبر الخريطة',
   HOUSE_NO: 'رقم الدار',
   CUSTOMIZZATION_FOR: 'Customizations for',
+  CURRENTLYUNAVAILABLE: ' Currently Unavailable',
 };
