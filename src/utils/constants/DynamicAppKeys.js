@@ -196,6 +196,9 @@ const shortCodes = {
   farmersouq: 'cc6a32',
   tmgShops: '6da47f',
   stitchesonsite: '5bdfee',
+  easyu: '20b62b',
+  mozmarcas: '649832',
+  myfiji: 'a69fda',
 };
 
 const appIds = {
@@ -978,6 +981,18 @@ const appIds = {
   stitchesonsite: Platform.select({
     ios: 'com.stitchesonsite',
     android: 'com.stitchesonsite',
+  }),
+  easyu: Platform.select({
+    ios: 'com.easyu',
+    android: 'com.easyu',
+  }),
+  mozmarcas: Platform.select({
+    ios: 'com.mozmarcas',
+    android: 'com.mozmarcas',
+  }),
+  myfiji: Platform.select({
+    ios: 'com.myfiji',
+    android: 'com.myfiji',
   }),
 };
 

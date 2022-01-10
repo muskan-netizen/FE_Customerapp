@@ -2178,6 +2178,36 @@ android {
             resValue "string", "app_name", "Stitches on Site"
             resValue "string", "host_name", ""
          }
+        easyu{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.easyu'
+            resValue "string", "app_name", "Easyu"
+            resValue "string", "host_name", ""
+         }
+          mozmarcas{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.mozmarcas'
+            resValue "string", "app_name", "Mozmarcas"
+            resValue "string", "host_name", ""
+         } 
+          myfiji{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.myfiji'
+            resValue "string", "app_name", "My fiji"
+            resValue "string", "host_name", ""
+         } 
     }
 }
 

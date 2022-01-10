@@ -1272,6 +1272,24 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.easyu:
+          updateState({
+            shortCode: shortCodes.easyu,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mozmarcas:
+          updateState({
+            shortCode: shortCodes.mozmarcas,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.myfiji:
+          updateState({
+            shortCode: shortCodes.myfiji,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
