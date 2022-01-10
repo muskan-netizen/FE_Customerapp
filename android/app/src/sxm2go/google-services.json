@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "414788535604",
+    "project_id": "sxm2go-8c9e2",
+    "storage_bucket": "sxm2go-8c9e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414788535604:android:6c6ec2388b036631b31161",
+        "android_client_info": {
+          "package_name": "com.sxm2go"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414788535604-4s2a3k77bh17jg1l71auf8cm17n92u9f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sxm2go",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "414788535604-er8r2n7qqmff4v7du0v3fg82mksvt7ln.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sxm2go",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "414788535604-q150jpt6e8f7rerbcecqco5i677fpeqd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sxm2go",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "414788535604-la2mq26ec4uqi9snmu4iv5mj8oo02o0p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZZZb7DxlCyazaYnkYvjMY2fnbHULgosk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414788535604-la2mq26ec4uqi9snmu4iv5mj8oo02o0p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414788535604-p1ke8ncpp1lg7dqcheuv8qs90d7iop85.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sxm2go"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

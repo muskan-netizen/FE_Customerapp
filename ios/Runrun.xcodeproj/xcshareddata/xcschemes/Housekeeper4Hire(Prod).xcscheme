@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "848007A926CE260D0014F500"
-               BuildableName = "Housekeeper4Hire.app"
+               BuildableName = "Runrun.app"
                BlueprintName = "Housekeeper4Hire"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "848007A926CE260D0014F500"
-            BuildableName = "Housekeeper4Hire.app"
+            BuildableName = "Runrun.app"
             BlueprintName = "Housekeeper4Hire"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "848007A926CE260D0014F500"
-            BuildableName = "Housekeeper4Hire.app"
+            BuildableName = "Runrun.app"
             BlueprintName = "Housekeeper4Hire"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
