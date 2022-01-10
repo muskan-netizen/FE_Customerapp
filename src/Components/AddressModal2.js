@@ -335,13 +335,6 @@ const AddressModal2 = ({
           style={{tintColor: themeColors.secondary_color}}
         />
       </TouchableOpacity>
-      {/* <ScrollView
-        showsVerticalScrollIndicator={false}
-        bounces={false}
-        style={[
-          styles.modalMainViewContainer,
-          {paddingHorizontal: moderateScale(24)},
-        ]}> */}
 
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps="always"
@@ -355,18 +348,6 @@ const AddressModal2 = ({
           </Text>
         </View>
 
-        {/* <BorderTextInput
-          containerStyle={styles.textInputContainer}
-          onChangeText={_onChangeText('address')}
-          placeholder={strings.SEARCH_LOCATION}
-          textInputStyle={getTextInputStyle(address, 2)}
-          numberOfLines={1}
-          value={address}
-          onFocus={() => {
-            updateState({showDialogBox: true});
-          }}
-        /> */}
-
         <GooglePlaceInput
           getDefaultValue={address}
           type={type}
@@ -379,36 +360,10 @@ const AddressModal2 = ({
           handleAddressOnKeyUp={(text) => handleAddressOnKeyUp(text)}
         />
 
-        {/* <View style={styles.textInputContainerAddress}>
-            <TextInput
-              onChangeText={_onChangeText('address')}
-              placeholder={strings.SEARCH_LOCATION}
-              style={[
-                styles.addressTextStyle,
-                {
-                  textAlign: I18nManager.isRTL ? 'right' : 'left',
-                  ...getTextInputStyle(address, 2),
-                },
-              ]}
-              multiline={false}
-              // style={getTextInputStyle(address, 2)}
-              numberOfLines={2}
-              value={address}
-              onFocus={() => {
-                updateState({showDialogBox: true});
-              }}
-            />
-          </View> */}
-
-        {/* {showDialogBox && dropDownData && dropDownData.length > 0 && (
-          <View style={styles.addressDropDownView}>{renderDropDown()}</View>
-        )} */}
         <View
           style={{
             zIndex: -1000,
-            // marginTop: moderateScaleVertical(80)
           }}>
-          {/* <View> */}
           <View style={styles.useCurrentLocationView}>
             <Image
               style={{tintColor: themeColors.primary_color}}
@@ -472,7 +427,7 @@ const AddressModal2 = ({
           </View>
           <Text
             style={{fontFamily: fontFamily.bold, marginTop: moderateScale(15)}}>
-            Save as
+            {strings.SAVE_AS}
           </Text>
           <View style={styles.addressTypeView}>
             {addressTypeArray.map((item, index) => {
@@ -519,8 +474,6 @@ const AddressModal2 = ({
           />
         </View>
       </KeyboardAwareScrollView>
-      {/* </View> */}
-      {/* </ScrollView> */}
     </Modal>
   );
 };

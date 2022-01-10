@@ -120,4 +120,5 @@ export default {
   greenB: '#7ED321',
   redE: '#E02020',
   greyC: '#D0021B',
+  greyD: '#9898A0',
 };

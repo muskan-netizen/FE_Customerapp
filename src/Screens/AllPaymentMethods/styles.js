@@ -7,7 +7,7 @@ import {
   textScale,
 } from '../../styles/responsiveSize';
 
-export default ({fontFamily}) => {
+export default ({fontFamily, themeColors}) => {
   const commonStyles = commonStylesFun({fontFamily});
   const styles = StyleSheet.create({
     scrollviewHorizontal: {
@@ -34,7 +34,7 @@ export default ({fontFamily}) => {
       borderRadius: moderateScaleVertical(13),
       // borderWidth: 2,
       // borderColor: colors.borderLight,
-      alignItems:'center',
+      alignItems: 'center',
       flexDirection: 'row',
       marginVertical: 5,
       marginTop: moderateScaleVertical(10),

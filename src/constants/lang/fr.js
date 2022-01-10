@@ -782,4 +782,5 @@ montant`,
   SELECT_VIA_MAP: 'Select via map',
   CUSTOMIZZATION_FOR: 'Customizations for',
   ACCEPTING_ORDER_MSG: 'We are not accepting orders less then',
+  INVALID_CARD_DETAILS: 'Invalid card details',
 };
