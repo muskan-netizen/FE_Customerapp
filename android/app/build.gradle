@@ -614,17 +614,7 @@ android {
             resValue "string", "app_name", "Cabdelivr"
             resValue "string", "host_name", ""
          }
-        drus{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.app.drus'
-            resValue "string", "app_name", "Drus"
-            resValue "string", "host_name", ""
-
-         }
+    
         arenagrub{
             dimension "appType"
             versionCode 1

@@ -787,7 +787,9 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 )}
 
               {/* Directions and paths */}
+              {console.log('dskalfkjads', tasks)}
               <MapViewDirections
+              resetOnChange={false}
                 origin={
                   orderStatus !== 'completed' && orderStatus !== "unassigned"  ?
                     {
@@ -799,7 +801,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     tasks[0]
                 }
                 waypoints={tasks.length > 2 ? tasks.slice(1, -1) : []}
-                destination={orderFullDetail?.order_details?.dispatcher_status_type == 1 ?  tasks[0] :tasks[tasks.length - 1]}
+                destination={orderFullDetail?.order_details.dispatcher_status_type == 1 ?  tasks[0] :tasks[tasks.length - 1]}
                 // destination={tasks[tasks.length - 1]}
                 apikey={profile?.preferences?.map_key}
                 strokeWidth={4}
