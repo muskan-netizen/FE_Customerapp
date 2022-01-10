@@ -762,6 +762,12 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
               {!!tasks && tasks.length > 0 && <CustomCallouts data={tasks} />}
 
               {/* driver location */}
+              {console.log(
+                'checking agent location coordinates >>> ',
+                agent_location?.lat,
+                '    ',
+                agent_location?.long,
+              )}
               {!!agent_location &&
                 !!agent_location?.lat &&
                 orderStatus != 'completed' && (

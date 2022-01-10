@@ -405,7 +405,10 @@ const ProductCard3 = ({
                         ) : (
                           <View>
                             <Text style={styles.addStyleText}>
-                              {strings.ADD}
+                              {strings.ADD}{' '}
+                              {data?.minimum_order_count > 1
+                                ? `(${data?.minimum_order_count})`
+                                : ''}
                             </Text>
                           </View>
                         )}
