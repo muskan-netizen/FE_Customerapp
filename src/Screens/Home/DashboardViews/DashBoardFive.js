@@ -261,7 +261,6 @@ export default function DashBoardFive({
       '800/600',
     );
     const isSVG = imageURI ? imageURI.includes('.svg') : null;
-    console.log('svg url', imageURI);
     return (
       <TouchableOpacity
         activeOpacity={0.7}
@@ -472,7 +471,7 @@ export default function DashBoardFive({
                             borderColor: colors.textGreyB,
                             paddingLeft: moderateScale(5),
                             paddingHorizontal: moderateScale(5),
-                            marginTop: moderateScaleVertical(8),
+                            marginVertical: moderateScaleVertical(4),
                             justifyContent: 'center',
                             alignItems: 'center',
                           }}>

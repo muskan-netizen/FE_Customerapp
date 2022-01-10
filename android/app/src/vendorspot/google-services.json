@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "964402586633",
+    "project_id": "vendor-spot",
+    "storage_bucket": "vendor-spot.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964402586633:android:4f53ee793c94d5f3f784d8",
+        "android_client_info": {
+          "package_name": "com.vendorspot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "964402586633-4nvqnjqvd0b3atdtma0ps243ub2tf97f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vendorspot",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "964402586633-eul5rp52opsrtaf4jfn19oojd9et6s36.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vendorspot",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "964402586633-pbpe7m98rc2otj9ln8uln1fs4d534q68.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vendorspot",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "964402586633-l5ufins3m9aq3r090r6623vur64p9olo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7hFvva84WE_9BYCrk7prAomQGg3klaq8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "964402586633-l5ufins3m9aq3r090r6623vur64p9olo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "964402586633-9ms91i4t990rd4m8lns8hmj2sbi29c6l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vendorspot"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

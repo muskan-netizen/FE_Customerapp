@@ -2750,7 +2750,6 @@ export default function Products({route, navigation}) {
     );
   };
   const renderSectionItem = ({item, index, section}) => {
-    console.log(item, 'itemitemitemInSec');
     return (
       <View>
         <ProductCard3
