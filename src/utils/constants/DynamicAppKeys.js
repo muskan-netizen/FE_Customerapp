@@ -200,6 +200,7 @@ const shortCodes = {
   mozmarcas: '649832',
   myfiji: 'a69fda',
   fastmikes: 'd89823',
+  citysuds: 'aaedee',
 };
 
 const appIds = {
@@ -998,6 +999,10 @@ const appIds = {
   fastmikes: Platform.select({
     ios: 'com.fastmikes',
     android: 'com.fastmikes',
+  }),
+  citysuds: Platform.select({
+    ios: 'com.citysuds',
+    android: 'com.citysuds',
   }),
 };
 

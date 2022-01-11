@@ -1296,6 +1296,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.citysuds:
+          updateState({
+            shortCode: shortCodes.citysuds,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

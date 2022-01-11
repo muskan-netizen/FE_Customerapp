@@ -2218,6 +2218,16 @@ android {
             resValue "string", "app_name", "Fast Mikes"
             resValue "string", "host_name", ""
          } 
+         citysuds{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.citysuds'
+            resValue "string", "app_name", "CitySuds"
+            resValue "string", "host_name", ""
+         } 
     }
 }
 
