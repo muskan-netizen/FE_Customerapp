@@ -719,4 +719,5 @@ export default {
   PLEASE_ENTER_VALID_NUMERIC: 'Please enter numeric value for',
   CUSTOMIZZATION_FOR: 'Customizations for',
   ACCEPTING_ORDER_MSG: 'We are not accepting orders less then',
+  INVALID_CARD_DETAILS: 'Invalid card details',
 };

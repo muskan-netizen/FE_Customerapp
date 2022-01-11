@@ -200,9 +200,9 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(6),
       paddingVertical: moderateScaleVertical(4),
-      flexDirection:'row',
-      alignItems:'center',
-      justifyContent:'space-between'
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
     },
     cartItemRatting: {
       tintColor: colors.orange,
@@ -466,6 +466,12 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       fontFamily: fontFamily.regular,
       fontSize: textScale(12),
       opacity: 0.6,
+    },
+    outOfStock: {
+      color: colors.orangeB,
+      fontSize: textScale(10),
+      lineHeight: 20,
+      fontFamily: fontFamily.medium,
     },
   });
   return styles;

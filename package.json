@@ -427,6 +427,7 @@
     "axios": "^0.21.1",
     "country-data": "0.0.31",
     "entities": "^2.2.0",
+    "frames-react-native": "^1.1.1",
     "geolib": "^3.3.3",
     "immer": "^8.0.1",
     "is_js": "^0.9.0",

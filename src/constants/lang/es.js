@@ -738,4 +738,5 @@ export default {
   RELEVANCE: 'Relevance',
   BESTSELLER: 'Best Seller',
   NEAR_BY: 'Near By',
+  INVALID_CARD_DETAILS: 'Invalid card details',
 };

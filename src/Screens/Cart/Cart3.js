@@ -182,9 +182,7 @@ export default function Cart({navigation, route}) {
   );
 
   const dineInType = useSelector((state) => state?.home?.dineInType);
-  console.log(dineInType, 'dineInType');
 
-  console.log('cartData?.delay_date', cartData);
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -661,8 +659,11 @@ export default function Cart({navigation, route}) {
       case 13: //Square Payment Getway
         navigation.navigate(navigationStrings.SQUARE, paymentData);
         break;
-        case 15: //Pagarme Payment Getway
+      case 15: //Pagarme Payment Getway
         navigation.navigate(navigationStrings.PAGARME, paymentData);
+        break;
+      case 17: //Checkout Payment Getway
+        checkoutPayment(paymentData);
         break;
       default:
         if (
@@ -680,6 +681,37 @@ export default function Cart({navigation, route}) {
         }
         break;
     }
+  };
+
+  const checkoutPayment = (paymentData) => {
+    let queryData = `/${paymentData?.selectedPayment?.code?.toLowerCase()}?amount=${
+      paymentData?.total_payable_amount
+    }&payment_option_id=${paymentData?.payment_option_id}&order_number=${
+      paymentData?.orderDetail?.order_number
+    }&token=${paramsData?.cardInfo}&action=cart`;
+    actions
+      .openPaymentWebUrl(
+        queryData,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        updateState({
+          cartItems: [],
+          cartData: {},
+        });
+        moveToNewScreen(navigationStrings.ORDERSUCESS, {
+          orderDetail: {
+            order_number: paymentData?.orderDetail?.order_number,
+            id: paymentData?.orderDetail?.id,
+          },
+        })();
+      })
+      .catch(errorMethod);
   };
 
   const _directOrderPlace = () => {
@@ -701,6 +733,8 @@ export default function Cart({navigation, route}) {
     placeOrderData(data);
   };
 
+  console.log(location, 'locationlocationlocation', dineInType);
+
   const placeOrderData = (data) => {
     console.log('Sending data', data);
 
@@ -709,14 +743,12 @@ export default function Cart({navigation, route}) {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
-        latitude: location?.latitude.toString() || '',
-        longitude: location?.longitude.toString() || '',
+        latitude: !isEmpty(location) ? location?.latitude.toString() : '',
+        longitude: !isEmpty(location) ? location?.longitude.toString() : '',
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
         updateState({
-          cartItems: [],
-          cartData: {},
           isLoadingB: false,
           placeLoader: false,
           pickupDriverComment: null,
@@ -732,7 +764,20 @@ export default function Cart({navigation, route}) {
         });
         actions.cartItemQty({});
         checkPaymentOptions(res);
-        showSuccess(res?.message);
+        if (paramsData?.selectedMethod?.id != 17) {
+          updateState({
+            cartItems: [],
+            cartData: {},
+          });
+          if (
+            paramsData?.selectedMethod?.id == 1 ||
+            res?.data?.payable_amount == 0
+          ) {
+            showSuccess(res?.message);
+            return;
+          }
+          return;
+        }
       })
       .catch(errorMethod);
   };
@@ -851,7 +896,7 @@ export default function Cart({navigation, route}) {
       return;
     }
     if (
-      (selectedPayment?.id === 3) &&
+      selectedPayment?.id === 3 &&
       selectedPayment?.off_site === 1 &&
       !!(
         Number(cartData?.total_payable_amount) + Number(selectedTipAmount) !==
@@ -886,8 +931,6 @@ export default function Cart({navigation, route}) {
     // }
     // _offineLinePayment();
   };
-
-  console.log('cartDatacartData', cartData);
 
   //Clear cart
   const placeOrder = () => {
@@ -1009,8 +1052,8 @@ export default function Cart({navigation, route}) {
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
 
-    console.log(returnUrl,"returnUrl");
-    console.log(cancelUrl,"cancelUrl");
+    console.log(returnUrl, 'returnUrl');
+    console.log(cancelUrl, 'cancelUrl');
     let queryData = `/${selectedMethod}?tip=${
       selectedTipAmount && selectedTipAmount != ''
         ? Number(selectedTipAmount)
@@ -1024,7 +1067,7 @@ export default function Cart({navigation, route}) {
       selectedAddressData?.id
     }&payment_option_id=${selectedPayment?.id}&action=cart`;
 
-    console.log(queryData,"queryData"); 
+    console.log(queryData, 'queryData');
     actions
       .openPaymentWebUrl(
         queryData,
@@ -1144,6 +1187,8 @@ export default function Cart({navigation, route}) {
       errorMethod(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }
   };
+
+  console.log(paramsData, 'paramsDataparamsDataparamsDataparamsData>>>');
 
   const _renderRazor = () => {
     updateState({isLoadingB: true});
@@ -1475,49 +1520,54 @@ export default function Cart({navigation, route}) {
                                   }}>
                                   {i?.product?.translation[0]?.title},
                                 </Text>
-
-                                <View
-                                  pointerEvents={btnLoader ? 'none' : 'auto'}
-                                  style={{flex: 0.3}}>
-                                  <View style={styles.incDecBtnContainer}>
-                                    <TouchableOpacity
-                                      style={{alignItems: 'center'}}
-                                      onPress={() =>
-                                        addDeleteCartItems(i, inx, 2)
-                                      }>
-                                      <Text style={styles.cartItemValueBtn}>
-                                        -
-                                      </Text>
-                                    </TouchableOpacity>
-                                    <View
-                                      style={{
-                                        alignItems: 'center',
-                                        width: moderateScale(20),
-                                        height: moderateScale(20),
-                                        justifyContent: 'center',
-                                      }}>
-                                      {btnLoadrId === i.id && btnLoader ? (
-                                        <UIActivityIndicator
-                                          size={moderateScale(16)}
-                                          color={colors.white}
-                                        />
-                                      ) : (
-                                        <Text style={styles.cartItemValue}>
-                                          {i?.quantity}
+                                {i?.product_out_of_stock ? (
+                                  <Text style={styles.outOfStock}>
+                                    {strings.OUT_OF_STOCK}
+                                  </Text>
+                                ) : (
+                                  <View
+                                    pointerEvents={btnLoader ? 'none' : 'auto'}
+                                    style={{flex: 0.3}}>
+                                    <View style={styles.incDecBtnContainer}>
+                                      <TouchableOpacity
+                                        style={{alignItems: 'center'}}
+                                        onPress={() =>
+                                          addDeleteCartItems(i, inx, 2)
+                                        }>
+                                        <Text style={styles.cartItemValueBtn}>
+                                          -
                                         </Text>
-                                      )}
+                                      </TouchableOpacity>
+                                      <View
+                                        style={{
+                                          alignItems: 'center',
+                                          width: moderateScale(20),
+                                          height: moderateScale(20),
+                                          justifyContent: 'center',
+                                        }}>
+                                        {btnLoadrId === i.id && btnLoader ? (
+                                          <UIActivityIndicator
+                                            size={moderateScale(16)}
+                                            color={colors.white}
+                                          />
+                                        ) : (
+                                          <Text style={styles.cartItemValue}>
+                                            {i?.quantity}
+                                          </Text>
+                                        )}
+                                      </View>
+                                      <TouchableOpacity
+                                        style={{alignItems: 'center'}}
+                                        onPress={() =>
+                                          addDeleteCartItems(i, inx, 1)
+                                        }>
+                                        <Text style={styles.cartItemValueBtn}>
+                                          +
+                                        </Text>
+                                      </TouchableOpacity>
                                     </View>
-                                    <TouchableOpacity
-                                      style={{alignItems: 'center'}}
-                                      onPress={() =>
-                                        addDeleteCartItems(i, inx, 1)
-                                      }>
-                                      <Text style={styles.cartItemValueBtn}>
-                                        +
-                                      </Text>
-                                    </TouchableOpacity>
                                   </View>
-                                </View>
+                                )}
                               </View>
                               <Text
                                 style={{
@@ -3264,6 +3314,7 @@ export default function Cart({navigation, route}) {
             <View
               style={{
                 ...styles.suggetionView,
+                marginTop: cartData?.deliver_status ? 0 : moderateScale(10),
               }}>
               <Text
                 style={{
