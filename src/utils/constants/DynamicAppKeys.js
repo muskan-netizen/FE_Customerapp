@@ -201,6 +201,7 @@ const shortCodes = {
   myfiji: 'a69fda',
   fastmikes: 'd89823',
   citysuds: 'aaedee',
+  homeTownDelivery: 'c49349',
 };
 
 const appIds = {
@@ -1003,6 +1004,10 @@ const appIds = {
   citysuds: Platform.select({
     ios: 'com.citysuds',
     android: 'com.citysuds',
+  }),
+  homeTownDelivery: Platform.select({
+    ios: 'com.homeTownDelivery',
+    android: 'com.homeTownDelivery',
   }),
 };
 
