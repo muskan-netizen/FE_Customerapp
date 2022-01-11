@@ -180,7 +180,7 @@ export default function OrderDetail({ navigation, route }) {
       data['vendor_id'] = paramData?.selectedVendor.id;
     }
     data['new_dispatch_traking_url'] = new_dispatch_traking_url;
-    console.log('new dispatch+++', data);
+
     // updateState({ isLoading: true });
     actions
       .getOrderDetail(data, {
@@ -1513,7 +1513,7 @@ export default function OrderDetail({ navigation, route }) {
     }
   };
 
-  console.log('order status+++',orderStatus)
+  console.log('order status+++', orderStatus)
 
   const onCenter = () => {
     mapRef.current.fitToCoordinates(
@@ -1555,7 +1555,7 @@ export default function OrderDetail({ navigation, route }) {
           />
           : null}
         {!!driverStatus &&
-          !!driverStatus?.agent_location?.lat?
+          !!driverStatus?.agent_location?.lat ?
           <View style={{ width: '100%', height: height / 2.2 }}>
             <MapView
               ref={mapRef}
@@ -1568,6 +1568,7 @@ export default function OrderDetail({ navigation, route }) {
               }}
               rotateEnabled={true}>
               <MapViewDirections
+                resetOnChange={false}
                 origin={{
                   latitude: Number(driverStatus.tasks[0]?.latitude),
                   longitude: Number(driverStatus.tasks[0]?.longitude),
@@ -1609,7 +1610,7 @@ export default function OrderDetail({ navigation, route }) {
                   //
                 }}
               />
-               <Marker
+              <Marker
                 coordinate={{
                   latitude: Number(driverStatus.tasks[0]?.latitude),
                   longitude: Number(driverStatus.tasks[0]?.longitude),

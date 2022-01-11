@@ -718,4 +718,5 @@ export default {
   HOUSE_NO: 'House No.',
   PLEASE_ENTER_VALID_NUMERIC: 'Please enter numeric value for',
   CUSTOMIZZATION_FOR: 'Customizations for',
+  TRANSFER_FUNDS:"Transfer Funds"
 };

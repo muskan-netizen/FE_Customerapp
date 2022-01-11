@@ -781,4 +781,5 @@ montant`,
   PLEASE_ENTER_VALID_NUMERIC: 'Please enter numeric value for',
   SELECT_VIA_MAP: 'Select via map',
   CUSTOMIZZATION_FOR: 'Customizations for',
+  TRANSFER_FUNDS:"Transfer Funds"
 };

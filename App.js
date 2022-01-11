@@ -275,6 +275,7 @@ const App = () => {
   //Check internet connection
   useEffect(() => {
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
+      console.log('checkingInternetConnections',state)
       const netStatus = state.isConnected;
       setInternet(netStatus);
       updateInternetConnection(netStatus);

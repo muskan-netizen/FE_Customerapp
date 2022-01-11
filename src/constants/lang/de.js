@@ -739,4 +739,5 @@ export default {
   SELECT_VIA_MAP: 'Select via map',
   HOUSE_NO: 'House No',
   CUSTOMIZZATION_FOR: 'Customizations for',
+   TRANSFER_FUNDS:"Transfer Funds"
 };

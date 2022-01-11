@@ -737,4 +737,5 @@ export default {
   RELEVANCE: 'Relevance',
   BESTSELLER: 'Best Seller',
   NEAR_BY: 'Near By',
+  TRANSFER_FUNDS:"Transfer Funds"
 };
