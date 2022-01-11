@@ -199,6 +199,7 @@ const shortCodes = {
   easyu: '20b62b',
   mozmarcas: '649832',
   myfiji: 'a69fda',
+  fastmikes: 'd89823',
 };
 
 const appIds = {
@@ -993,6 +994,10 @@ const appIds = {
   myfiji: Platform.select({
     ios: 'com.myfiji',
     android: 'com.myfiji',
+  }),
+  fastmikes: Platform.select({
+    ios: 'com.fastmikes',
+    android: 'com.fastmikes',
   }),
 };
 

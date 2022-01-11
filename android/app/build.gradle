@@ -2208,6 +2208,16 @@ android {
             resValue "string", "app_name", "My fiji"
             resValue "string", "host_name", ""
          } 
+          fastmikes{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.fastmikes'
+            resValue "string", "app_name", "Fast Mikes"
+            resValue "string", "host_name", ""
+         } 
     }
 }
 

@@ -1290,6 +1290,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.fastmikes:
+          updateState({
+            shortCode: shortCodes.fastmikes,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
