@@ -1532,7 +1532,7 @@ export default function OrderDetail({navigation, route}) {
     }
   };
 
-  console.log('order status+++', orderStatus)
+  console.log('order status+++', orderStatus);
 
   const onCenter = () => {
     mapRef.current.fitToCoordinates(
@@ -1573,16 +1573,9 @@ export default function OrderDetail({navigation, route}) {
             type={strings.DRIVER}
             containerStyle={{paddingHorizontal: moderateScale(8)}}
           />
-<<<<<<< HEAD
         ) : null}
         {!!driverStatus && !!driverStatus?.agent_location?.lat ? (
           <View style={{width: '100%', height: height / 2.2}}>
-=======
-          : null}
-        {!!driverStatus &&
-          !!driverStatus?.agent_location?.lat ?
-          <View style={{ width: '100%', height: height / 2.2 }}>
->>>>>>> 0984eacc334794a7e6c69aa0863cb4af0a9ee37f
             <MapView
               ref={mapRef}
               style={StyleSheet.absoluteFillObject}
