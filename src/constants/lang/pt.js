@@ -710,4 +710,5 @@ export default {
   CUSTOMIZZATION_FOR: 'Customizations for',
   ACCEPTING_ORDER_MSG: 'We are not accepting orders less then',
   INVALID_CARD_DETAILS: 'Invalid card details',
+  TRANSFER_FUNDS: 'Transfer Funds',
 };

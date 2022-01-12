@@ -180,7 +180,7 @@ export default function OrderDetail({navigation, route}) {
       data['vendor_id'] = paramData?.selectedVendor.id;
     }
     data['new_dispatch_traking_url'] = new_dispatch_traking_url;
-    console.log('new dispatch+++', data);
+
     // updateState({ isLoading: true });
     actions
       .getOrderDetail(data, {
@@ -1066,7 +1066,7 @@ export default function OrderDetail({navigation, route}) {
           {!!cartData?.scheduled_date_time && (
             <LeftRightText
               leftText={strings.SEHEDLEDFOR}
-              rightText={moment(cartData?.scheduled_date_time).format('lll')}
+              rightText={cartData?.scheduled_date_time}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
               leftTextStyle={{
@@ -1532,7 +1532,7 @@ export default function OrderDetail({navigation, route}) {
     }
   };
 
-  console.log('order status+++', orderStatus);
+  console.log('order status+++', orderStatus)
 
   const onCenter = () => {
     mapRef.current.fitToCoordinates(
@@ -1573,9 +1573,16 @@ export default function OrderDetail({navigation, route}) {
             type={strings.DRIVER}
             containerStyle={{paddingHorizontal: moderateScale(8)}}
           />
+<<<<<<< HEAD
         ) : null}
         {!!driverStatus && !!driverStatus?.agent_location?.lat ? (
           <View style={{width: '100%', height: height / 2.2}}>
+=======
+          : null}
+        {!!driverStatus &&
+          !!driverStatus?.agent_location?.lat ?
+          <View style={{ width: '100%', height: height / 2.2 }}>
+>>>>>>> 0984eacc334794a7e6c69aa0863cb4af0a9ee37f
             <MapView
               ref={mapRef}
               style={StyleSheet.absoluteFillObject}
@@ -1587,6 +1594,7 @@ export default function OrderDetail({navigation, route}) {
               }}
               rotateEnabled={true}>
               <MapViewDirections
+                resetOnChange={false}
                 origin={{
                   latitude: Number(driverStatus.tasks[0]?.latitude),
                   longitude: Number(driverStatus.tasks[0]?.longitude),

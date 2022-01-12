@@ -266,7 +266,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       )
       .then((res) => {
         // console.log(res?.data?.order_details?.dispatcher_status, 'res---agent');
-        console.log('agent location1', res?.data.order_details);
+        console.log('agent location1', res?.data);
         updateState({
           agent_location: res?.data?.agent_location,
           orderDetail: res?.data?.order,
@@ -793,9 +793,11 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 )}
 
               {/* Directions and paths */}
+              {console.log('dskalfkjads', tasks)}
               <MapViewDirections
+                resetOnChange={false}
                 origin={
-                  orderStatus !== 'completed' && orderStatus !== "unassigned"  ?
+                  orderStatus !== 'completed' && orderStatus !== "unassigned" ?
                     {
                       latitude: Number(agent_location?.lat),
                       longitude: Number(
@@ -805,7 +807,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     tasks[0]
                 }
                 waypoints={tasks.length > 2 ? tasks.slice(1, -1) : []}
-                destination={orderFullDetail?.order_details?.dispatcher_status_type == 1 ?  tasks[0] :tasks[tasks.length - 1]}
+                destination={orderFullDetail?.order_details.dispatcher_status_type == 1 ? tasks[0] : tasks[tasks.length - 1]}
                 // destination={tasks[tasks.length - 1]}
                 apikey={profile?.preferences?.map_key}
                 strokeWidth={4}

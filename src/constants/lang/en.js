@@ -802,4 +802,5 @@ Amount`,
   PRODUCTS_DETAIL: 'Products Details',
   SEARCH_FOR_PRODUCT: 'Search for customer',
   INVALID_CARD_DETAILS: 'Invalid card details',
+  TRANSFER_FUNDS: 'Transfer Funds',
 };

@@ -40,15 +40,15 @@ export default ({fontFamily, themeColors}) => {
     addMoneybtn: {
       width: moderateScale(100),
       backgroundColor: themeColors?.primary_color,
-      padding: moderateScaleVertical(10),
-      marginHorizontal: moderateScaleVertical(10),
+      padding: moderateScaleVertical(8),
+      marginHorizontal: moderateScaleVertical(8),
       borderRadius: moderateScale(20),
       marginTop: moderateScale(18),
       justifyContent: 'center',
       flexDirection: 'row',
     },
     addMoneyText: {
-      fontSize: moderateScale(12),
+      fontSize: moderateScale(11),
       fontFamily: fontFamily.medium,
       color: themeColors?.secondary_color,
     },
