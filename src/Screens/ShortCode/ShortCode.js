@@ -1308,6 +1308,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.ritenow:
+          updateState({
+            shortCode: shortCodes.ritenow,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.flit:
+          updateState({
+            shortCode: shortCodes.flit,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

@@ -822,7 +822,7 @@ android {
          }
          vici{
             dimension "appType"
-            versionCode 4
+            versionCode 6
             versionName "1.1"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -2238,6 +2238,27 @@ android {
             resValue "string", "app_name", "Home Town Delivery LLC"
             resValue "string", "host_name", ""
          } 
+          ritenow{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ritenow'
+            resValue "string", "app_name", "Ritenow"
+            resValue "string", "host_name", ""
+         } 
+         flit{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.app.flit'
+            resValue "string", "app_name", "Flit"
+            resValue "string", "host_name", ""
+         } 
+
     }
 }
 

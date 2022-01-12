@@ -202,6 +202,8 @@ const shortCodes = {
   fastmikes: 'd89823',
   citysuds: 'aaedee',
   homeTownDelivery: 'c49349',
+  ritenow: '4b0d72',
+  flit: '20c702',
 };
 
 const appIds = {
@@ -330,7 +332,7 @@ const appIds = {
     android: 'com.app.yummiidash',
   }),
   yoho: Platform.select({
-    ios: 'com.codebrewlab.yoho',
+    ios: 'com.codebrew.yoho',
     android: 'com.codebrew.yoho',
   }),
   glamsouq: Platform.select({
@@ -1008,6 +1010,14 @@ const appIds = {
   homeTownDelivery: Platform.select({
     ios: 'com.homeTownDelivery',
     android: 'com.homeTownDelivery',
+  }),
+  ritenow: Platform.select({
+    ios: 'com.ritenow',
+    android: 'com.ritenow',
+  }),
+  flit: Platform.select({
+    ios: 'com.app.flit',
+    android: 'com.app.flit',
   }),
 };
 
