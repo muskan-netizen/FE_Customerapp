@@ -17,6 +17,7 @@ import commonStylesFun from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
 } from '../../styles/responsiveSize';
 import { currencyNumberFormatter } from '../../utils/commonFunction';
 import { shortCodes } from '../../utils/constants/DynamicAppKeys';
@@ -26,6 +27,7 @@ import { MyDarkTheme } from '../../styles/theme';
 import Modal from 'react-native-modal'
 import BorderTextInputWithLable from '../../Components/BorderTextInputWithLable';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
+import { getImageUrl } from '../../utils/helperFunctions';
 
 export default function Wallet({ navigation }) {
   const [state, setState] = useState({
@@ -37,7 +39,10 @@ export default function Wallet({ navigation }) {
     transferModal: false,
     keyboardHeight: 0,
     transferEmail: '',
-    transferAmount: ''
+    transferAmount: '',
+    verifiedUser: null,
+    confirmLoader: false,
+    errorRaised: null
   });
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -51,7 +56,20 @@ export default function Wallet({ navigation }) {
   const commonStyles = commonStylesFun({ fontFamily });
   const styles = stylesFun({ fontFamily, themeColors });
   const moveToNewScreen = (screenName, data) => () => { navigation.navigate(screenName, { data }) };
-  const { pageNo, walletHistory, limit, wallet_amount, isRefreshing, transferModal, keyboardHeight, transferAmount, transferEmail } = state;
+  const {
+    pageNo,
+    walletHistory,
+    limit,
+    wallet_amount,
+    isRefreshing,
+    transferModal,
+    keyboardHeight,
+    transferAmount,
+    transferEmail,
+    verifiedUser,
+    confirmLoader,
+    errorRaised
+  } = state;
   console.log('my currencies', currencies);
   useFocusEffect(
     React.useCallback(() => {
@@ -115,6 +133,55 @@ export default function Wallet({ navigation }) {
     updateState({ isLoading: false, isLoadingB: false, isRefreshing: false });
     showError(error?.message || error?.error);
   };
+
+  useEffect(() => {
+
+  }, [])
+
+  const searchUser = async (val) => {
+    try {
+      let data = { username: val }
+      const res = await actions.walletUserVerify(data, { code: appData?.profile?.code, })
+      const imageUrl = getImageUrl(res.data.image.image_fit, res.data.image.image_path, '400/400')
+      console.log("verifiedUser res++", imageUrl)
+      const resData = { name: res?.data?.name || '', image: imageUrl || '' }
+      updateState({
+        verifiedUser: resData,
+        errorRaised: null
+      })
+    } catch (error) {
+      console.log("erro raised", error)
+      updateState({
+        verifiedUser: null,
+        errorRaised: error?.message
+      })
+    }
+  }
+
+  useEffect(() => {
+    const searchInterval = setTimeout(() => {
+      let searchObj = {};
+      if (transferEmail.trim()) {
+        updateState({ searchLoader: true });
+        searchObj.search_text = transferEmail;
+      }
+      if (!!searchObj.search_text) {
+        searchUser(searchObj.search_text)
+      } else {
+        updateState({
+          searchLoader: false,
+          verifiedUser: null,
+          errorRaised: null
+        });
+      }
+    }, 600);
+    return () => {
+      if (searchInterval) {
+        clearInterval(searchInterval);
+      }
+    };
+  }, [transferEmail]);
+
 
   const _renderItem = ({ item, index }) => {
     return (
@@ -188,7 +255,7 @@ export default function Wallet({ navigation }) {
   };
 
   const onTransferFunds = () => {
-
+    updateState({ transferModal: true })
   }
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
     leading: true,
@@ -266,12 +333,12 @@ export default function Wallet({ navigation }) {
           <TouchableOpacity onPress={goToAddMoney} style={styles.addMoneybtn}>
             <Text style={styles.addMoneyText}>{strings.ADD_MONEY}</Text>
           </TouchableOpacity>
-          {/* <TouchableOpacity
+          <TouchableOpacity
             onPress={onTransferFunds}
             style={styles.addMoneybtn}
           >
             <Text style={styles.addMoneyText}>{strings.TRANSFER_FUNDS}</Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
       </View>
       <View
@@ -338,6 +405,7 @@ export default function Wallet({ navigation }) {
           justifyContent: 'flex-end',
           marginBottom: moderateScale(keyboardHeight),
         }}
+        onBackdropPress={() => updateState({ transferModal: false })}
       >
         <View style={{
           backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
@@ -347,7 +415,10 @@ export default function Wallet({ navigation }) {
         }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: moderateScaleVertical(8) }}>
             <Text>Transfer Funds</Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => updateState({ transferModal: false })}
+              activeOpacity={0.8}
+            >
               <Image source={imagePath.closeButton} />
             </TouchableOpacity>
           </View>
@@ -379,16 +450,38 @@ export default function Wallet({ navigation }) {
           <BorderTextInputWithLable
             label={'Amount to transfer'}
             onChangeText={text => updateState({ transferAmount: text })}
+            placeholder={'Enter amount'}
+            textInputStyle={{ fontSize: textScale(12) }}
           />
           <BorderTextInputWithLable
             label={'Transfer to'}
             onChangeText={text => updateState({ transferEmail: text })}
+            placeholder={'Enter email or phone number with country code'}
+            textInputStyle={{ fontSize: textScale(12) }}
           />
+
+          {!!verifiedUser ?
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Image
+                source={{ uri: verifiedUser?.image || '' }}
+                style={{ height: 50, width: 50, borderRadius: 25 }}
+              />
+              <Text style={{
+                ...styles.nameTextStyle,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>{verifiedUser?.name}</Text>
+            </View> : null}
+          {!!errorRaised ? <Text style={{
+            ...styles.nameTextStyle,
+            color: colors.redB,
+            marginTop: moderateScaleVertical(12)
+          }} >{errorRaised}</Text> : null}
 
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: moderateScaleVertical(24) }}>
             <ButtonWithLoader
               btnStyle={{ flex: 1, backgroundColor: themeColors.primary_color }}
               btnText='Confirm'
+              isLoading={confirmLoader}
             />
             <View style={{ marginHorizontal: moderateScaleVertical(8) }} />
             <ButtonWithLoader

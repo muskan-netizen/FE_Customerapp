@@ -3,7 +3,7 @@
 
 // export const API_BASE_URL='http://192.168.97.123:8020/api/v1'
 // export const API_BASE_URL = 'http://192.168.96.20:8020/api/v1';
-// export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'; // preet
+export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.97.123:8020/api/v1'; // sujata
 
 //export const API_BASE_URL = 'http://192.168.103.186:8005/api/v1'; // harbans
@@ -20,7 +20,7 @@
 // export const API_BASE_URL = 'https://tranzit.app/api/v1';
 // export const API_BASE_URL = 'https://pinkjettaxi.com/api/v1';
 // export const API_BASE_URL = 'https://snabbhem.se/api/v1';
-export const API_BASE_URL = 'https://codiner.com/api/v1';
+// export const API_BASE_URL = 'https://codiner.com/api/v1';
 // export const API_BASE_URL = 'https://somame-247.com/api/v1';
 // export const API_BASE_URL = 'https://order.africanize.co/api/v1';
 // export const API_BASE_URL = 'https://destinationops.com/api/v1';
@@ -168,3 +168,5 @@ export const WALLET_CREDIT = getApiUrl('/myWallet/credit');
 export const VENDOR_REGISTER = getApiUrl('/vendor/register');
 export const DRIVER_REGISTER = getApiUrl('/driver/register');
 export const CANCEL_ORDER = getApiUrl('/return-order/vendor-order-for-cancel');
+export const WALLET_USER_VERIFY = getApiUrl('/wallet/transfer/user/verify');
+export const WALLET_TRANSFER_CONFIRM = getApiUrl('/wallet/transfer/confirm');

@@ -4,6 +4,7 @@ import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
 } from '../../styles/responsiveSize';
 import commonStylesFun from '../../styles/commonStyles';
 
@@ -109,6 +110,11 @@ export default ({fontFamily, themeColors}) => {
       flex: 0.2,
       justifyContent: 'center',
     },
+    nameTextStyle: {
+      fontSize: textScale(12),
+      marginLeft: moderateScale(14),
+      fontFamily: fontFamily.medium
+    }
   });
   return styles;
 };
