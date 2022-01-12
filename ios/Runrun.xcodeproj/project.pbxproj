@@ -2899,7 +2899,7 @@
 		847F6E2427203FDA00C7A32F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847F6E2327203FDA00C7A32F /* Images.xcassets */; };
 		847F6F1A2720428800C7A32F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847F6F192720428700C7A32F /* GoogleService-Info.plist */; };
 		8480076A26CE20340014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		8480076B26CE20340014F500 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		8480076B26CE20340014F500 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8480076C26CE20340014F500 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8480076D26CE20340014F500 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848007AD26CE260D0014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -3498,7 +3498,7 @@
 		848CB12D278D662700DD824C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848CB12C278D662700DD824C /* Images.xcassets */; };
 		848CB1FB278D66F400DD824C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848CB1FA278D66F300DD824C /* GoogleService-Info.plist */; };
 		848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		848CEF8126CE229D0077C918 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		848CEF8126CE229D0077C918 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		848CEF8226CE229D0077C918 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848CEF8326CE229D0077C918 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848D76B92748F70100FE87AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -4017,6 +4017,7 @@
 		8496BD0726F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
 		8496BD0826F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
 		8496BD0926F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		84988E93278E9FDC0022BA90 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84988E92278E9FDB0022BA90 /* GoogleService-Info.plist */; };
 		849A371426D7C48600A1D9AA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849A371326D7C48500A1D9AA /* GoogleService-Info.plist */; };
 		849AE06A26C5245800B6C20D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		849AE06B26C5245800B6C20D /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -5497,7 +5498,6 @@
 		84F31EF72719835F00130594 /* Agrionline(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84F31EF62719835F00130594 /* Agrionline(Development).xcconfig */; };
 		84F31FE52719837D00130594 /* Agrionline(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84F31FE42719837D00130594 /* Agrionline(Production).xcconfig */; };
 		84F31FE72719839200130594 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F31FE62719839200130594 /* Images.xcassets */; };
-		84F31FE92719843900130594 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84F31FE82719843800130594 /* GoogleService-Info.plist */; };
 		84F3239F271986D400130594 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84F323A0271986D400130594 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		84F323A1271986D400130594 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -6675,6 +6675,7 @@
 		8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Metropolis-Regular.otf"; sourceTree = "<group>"; };
 		8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Metropolis-SemiBold.otf"; sourceTree = "<group>"; };
 		8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Metropolis-Bold.otf"; sourceTree = "<group>"; };
+		84988E92278E9FDB0022BA90 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		849A371326D7C48500A1D9AA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		849AE09326C5245800B6C20D /* Travo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Travo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		849AE16D26C5263300B6C20D /* Travo(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Travo(Development).xcconfig"; sourceTree = "<group>"; };
@@ -7012,7 +7013,6 @@
 		84F31EF62719835F00130594 /* Agrionline(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Agrionline(Development).xcconfig"; sourceTree = "<group>"; };
 		84F31FE42719837D00130594 /* Agrionline(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Agrionline(Production).xcconfig"; sourceTree = "<group>"; };
 		84F31FE62719839200130594 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		84F31FE82719843800130594 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84F321C2271985AD00130594 /* Agrionline.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Agrionline.entitlements; sourceTree = "<group>"; };
 		84F32409271986D400130594 /* Sambiga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sambiga.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F327C5271987A600130594 /* Sambiga(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Sambiga(Development).xcconfig"; sourceTree = "<group>"; };
@@ -11353,7 +11353,7 @@
 		84F31E7F2719833200130594 /* Agrionline */ = {
 			isa = PBXGroup;
 			children = (
-				84F31FE82719843800130594 /* GoogleService-Info.plist */,
+				84988E92278E9FDB0022BA90 /* GoogleService-Info.plist */,
 				84F31EF62719835F00130594 /* Agrionline(Development).xcconfig */,
 				84F31FE42719837D00130594 /* Agrionline(Production).xcconfig */,
 				84F31FE62719839200130594 /* Images.xcassets */,
@@ -22654,7 +22654,7 @@
 				84F31C172719823D00130594 /* SFProText-Medium.ttf in Resources */,
 				84F31C192719823D00130594 /* notification.wav in Resources */,
 				84F31C1B2719823D00130594 /* Plists in Resources */,
-				84F31FE92719843900130594 /* GoogleService-Info.plist in Resources */,
+				84988E93278E9FDC0022BA90 /* GoogleService-Info.plist in Resources */,
 				84F31EF72719835F00130594 /* Agrionline(Development).xcconfig in Resources */,
 				84F31C1C2719823D00130594 /* Futura-Normal.ttf in Resources */,
 				84F31C1D2719823D00130594 /* Eina02-Bold.ttf in Resources */,
@@ -32862,7 +32862,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */,
-				848CEF8126CE229D0077C918 /* BuildFile in Sources */,
+				848CEF8126CE229D0077C918 /* (null) in Sources */,
 				848CEF8226CE229D0077C918 /* Royo.swift in Sources */,
 				848CEF8326CE229D0077C918 /* main.m in Sources */,
 			);
@@ -32966,7 +32966,7 @@
 				84FFFF2026D672E600F2B059 /* Royo.swift in Sources */,
 				84FFFF2126D672E600F2B059 /* main.m in Sources */,
 				8480076A26CE20340014F500 /* AppDelegate.m in Sources */,
-				8480076B26CE20340014F500 /* BuildFile in Sources */,
+				8480076B26CE20340014F500 /* (null) in Sources */,
 				8480076C26CE20340014F500 /* Royo.swift in Sources */,
 				8480076D26CE20340014F500 /* main.m in Sources */,
 			);
@@ -45409,7 +45409,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = 2HTJB4D325;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

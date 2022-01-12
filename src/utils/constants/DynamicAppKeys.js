@@ -662,7 +662,7 @@ const appIds = {
     android: 'com.sambiga',
   }),
   agrionline: Platform.select({
-    ios: 'com.agrionline',
+    ios: 'com.app.agrionline',
     android: 'com.agrionline',
   }),
   quickquick: Platform.select({
