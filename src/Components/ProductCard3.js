@@ -29,6 +29,8 @@ import {
   pressOutAnimation,
 } from '../utils/helperFunctions';
 
+let numberOfHits = [];
+
 const ProductCard3 = ({
   data = {},
   onPress = () => {},
@@ -49,8 +51,21 @@ const ProductCard3 = ({
   const [state, setState] = useState({
     selectedIndex: -1,
     selectedIndexForCartIcon: -1,
+    isVisibleTextSlideUp: false,
+    qtyText: '1',
+    isVisibleText: true,
+    disabledBtn: false,
+    isIncrement: true,
   });
-  const {selectedIndex, selectedIndexForCartIcon} = state;
+  const {
+    selectedIndex,
+    selectedIndexForCartIcon,
+    isVisibleText,
+    qtyText,
+    isVisibleTextSlideUp,
+    disabledBtn,
+    isIncrement,
+  } = state;
 
   var totalProductQty = 0;
   if (data?.check_if_in_cart_app) {
@@ -87,9 +102,115 @@ const ProductCard3 = ({
     updateState({selectedIndex: i});
   };
 
+  useEffect(() => {
+    updateState({qtyText: data?.qty || totalProductQty});
+  }, []);
+
+  useEffect(() => {
+    updateState({qtyText: data?.qty || totalProductQty});
+  }, [data?.qty]);
+
   const changePositionForCartIcon = () => {
     let i = selectedIndexForCartIcon == -1 ? index : -1;
     updateState({selectedIndexForCartIcon: i});
+  };
+
+  const textAnimateForIncrement = {
+    0: {
+      top: 0,
+    },
+    0.5: {
+      top: -3,
+      height: 20,
+    },
+    1: {
+      top: -50,
+      height: 20,
+    },
+  };
+
+  const textAnimateForIncrement_ = {
+    0: {
+      top: 50,
+      height: 0,
+    },
+    0.5: {
+      top: 30,
+      height: 0,
+    },
+    1: {
+      top: 9,
+      height: 20,
+    },
+  };
+
+  const textAnimateForDecrement = {
+    0: {
+      top: 9,
+      height: 0,
+    },
+    0.5: {
+      top: 20,
+      height: 0,
+    },
+    1: {
+      top: 35,
+      height: 20,
+    },
+  };
+
+  const textAnimateForDecrement_ = {
+    0: {
+      top: -50,
+      height: 0,
+    },
+    0.5: {
+      top: -3,
+      height: 0,
+    },
+    1: {
+      top: 9,
+      height: 20,
+    },
+  };
+
+  const initAnimation = async () => {
+    updateState({disabledBtn: true});
+    console.log('checking text >>>>', numberOfHits[0]);
+    updateState({isVisibleTextSlideUp: true});
+    updateState({qtyText: Number(numberOfHits[0]) + 1});
+
+    await setTimeout(() => {
+      updateState({isVisibleText: false, isVisibleTextSlideUp: false});
+      updateState({isVisibleText: true});
+    }, 250);
+    await setTimeout(() => {
+      numberOfHits.shift();
+    }, 200);
+    setTimeout(() => {
+      if (numberOfHits.length > 0) {
+        initAnimation();
+      }
+    }, 800);
+    setTimeout(() => {
+      updateState({disabledBtn: false});
+    }, 300);
+
+    return;
+    numberOfHits.forEach((el, index) => {
+      console.log('checking text >>>>', el);
+      updateState({isVisibleTextSlideUp: true});
+      updateState({qtyText: el});
+
+      setTimeout(() => {
+        updateState({isVisibleText: false});
+        updateState({isVisibleText: true});
+        updateState({isVisibleTextSlideUp: false});
+      }, 500);
+      if (numberOfHits.length === index + 1) {
+        numberOfHits = [];
+      }
+    });
   };
 
   let htmlText = data?.translation[0]?.body_html || null;
@@ -315,6 +436,7 @@ const ProductCard3 = ({
                     marginTop:
                       selectedIndex == index ? moderateScaleVertical(8) : 0,
                     alignItems: 'center',
+                    // backgroundColor: 'red',
                   }}>
                   {(!!data?.check_if_in_cart_app &&
                     data?.check_if_in_cart_app.length > 0) ||
@@ -336,7 +458,17 @@ const ProductCard3 = ({
                       }}>
                       <TouchableOpacity
                         disabled={selectedItemID == data?.id}
-                        onPress={onDecrement}
+                        onPress={() => {
+                          updateState({...state, isIncrement: false});
+                          if (!disabledBtn) {
+                            const isEnabled = numberOfHits.length === 0;
+                            numberOfHits.push(data?.qty || totalProductQty);
+                            if (isEnabled) {
+                              initAnimation();
+                            }
+                            onDecrement();
+                          }
+                        }}
                         activeOpacity={0.8}
                         hitSlop={hitSlopProp}>
                         <Text
@@ -348,7 +480,12 @@ const ProductCard3 = ({
                           -
                         </Text>
                       </TouchableOpacity>
-                      <View>
+                      <Animatable.View
+                        style={{
+                          // backgroundColor: 'red',
+                          // height: 30,
+                          overflow: 'hidden',
+                        }}>
                         {selectedItemID == data?.id && btnLoader ? (
                           <UIActivityIndicator
                             size={moderateScale(18)}
@@ -362,21 +499,47 @@ const ProductCard3 = ({
                           //     size={moderateScale(18)}
                           //     color={themeColors.primary_color}
                           //   /> */}
-                          <Text
-                            style={{
-                              fontFamily: fontFamily.bold,
-                              fontSize: moderateScale(16),
-                              color: themeColors.primary_color,
-                            }}>
-                            {data?.qty || totalProductQty}
-                          </Text>
+                          <Animatable.View style={{flex: 1}}>
+                            {isVisibleText ? (
+                              <Animatable.Text
+                                animation={
+                                  isIncrement
+                                    ? isVisibleTextSlideUp
+                                      ? textAnimateForIncrement
+                                      : textAnimateForIncrement_
+                                    : isVisibleTextSlideUp
+                                    ? textAnimateForDecrement
+                                    : textAnimateForDecrement_
+                                }
+                                duration={150}
+                                style={{
+                                  fontFamily: fontFamily.bold,
+                                  fontSize: moderateScale(16),
+                                  color: themeColors.primary_color,
+                                  height: 100,
+                                }}>
+                                {/* {qtyText || data?.qty || totalProductQty} */}
+                                {qtyText}
+                              </Animatable.Text>
+                            ) : null}
+                          </Animatable.View>
                         )}
-                      </View>
+                      </Animatable.View>
                       <TouchableOpacity
                         disabled={selectedItemID == data?.id}
                         activeOpacity={0.8}
                         hitSlop={hitSlopProp}
-                        onPress={onIncrement}>
+                        onPress={() => {
+                          updateState({...state, isIncrement: true});
+                          if (!disabledBtn) {
+                            const isEnabled = numberOfHits.length === 0;
+                            numberOfHits.push(data?.qty || totalProductQty);
+                            if (isEnabled) {
+                              initAnimation();
+                            }
+                            onIncrement();
+                          }
+                        }}>
                         <Text
                           style={{
                             fontFamily: fontFamily.bold,

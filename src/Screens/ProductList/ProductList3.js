@@ -1550,7 +1550,7 @@ export default function Products({route, navigation}) {
           onIncrement={() => checkIsCustomize(item, null, index, 1)}
           onDecrement={() => checkIsCustomize(item, null, index, 2)}
           selectedItemID={selectedItemID}
-          btnLoader={btnLoader}
+          btnLoader={false}
           selectedItemIndx={selectedItemIndx}
           differentAddsOns={differentAddsOns}
           businessType={businessType}
@@ -3259,6 +3259,7 @@ export default function Products({route, navigation}) {
             playHapticEffect(hapticEffects.impactLight);
             updateState({MenuModalVisible: !MenuModalVisible});
           }}
+          isLoading={btnLoader}
         />
       )}
 
