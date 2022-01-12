@@ -739,5 +739,12 @@ export default {
   SELECT_VIA_MAP: 'Select via map',
   HOUSE_NO: 'House No',
   CUSTOMIZZATION_FOR: 'Customizations for',
-   TRANSFER_FUNDS:"Transfer Funds"
+  TRANSFER_FUNDS:"Transfer Funds",
+  AMOUNT_TO_TRANSFER:"Amount to transfer",
+  ENTER_AMOUNT:"Enter amount",
+  TRANSFER_TO:"Transfer to",
+  ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE:"Enter email or phone number with country code",
+  INVALID_AMOUNT:"Invalid Amount",
+  INSUFFICIENT_FUNDS_IN_WALLET:"Insufficient funds in wallet",
+  USER_DOES_NOT_EXIST:"User doest not exist",
 };

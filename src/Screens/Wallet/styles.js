@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {color} from 'react-native-reanimated';
+import { I18nManager, StyleSheet } from 'react-native';
+import { color } from 'react-native-reanimated';
 import colors from '../../styles/colors';
 import {
   moderateScale,
@@ -8,8 +8,8 @@ import {
 } from '../../styles/responsiveSize';
 import commonStylesFun from '../../styles/commonStyles';
 
-export default ({fontFamily, themeColors}) => {
-  const commonStyles = commonStylesFun({fontFamily});
+export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
+  const commonStyles = commonStylesFun({ fontFamily });
   const styles = StyleSheet.create({
     availableBalanceCon: {
       flexDirection: 'row',
@@ -114,6 +114,34 @@ export default ({fontFamily, themeColors}) => {
       fontSize: textScale(12),
       marginLeft: moderateScale(14),
       fontFamily: fontFamily.medium
+    },
+    textInputStyle: {
+      flex: 1,
+      opacity: 0.7,
+      color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7,
+      fontFamily: fontFamily.medium,
+      fontSize: textScale(14),
+      paddingHorizontal: 10,
+      paddingTop: 0,
+      paddingBottom: 0,
+      textAlign: I18nManager.isRTL ? 'right' : 'left',
+    },
+    textInputView: {
+      flexDirection: 'row',
+      height: moderateScaleVertical(49),
+      color: colors.white,
+      borderWidth: 1,
+      borderRadius: 13,
+      borderColor: colors.borderLight,
+      borderBottomColor: isDarkMode
+        ? MyDarkTheme.colors.text
+        : colors.lightGreyBorder,
+      paddingHorizontal: moderateScale(12)
+    },
+    headingStyle: {
+      fontSize: textScale(14),
+      fontFamily: fontFamily.medium,
+      marginBottom: moderateScaleVertical(6)
     }
   });
   return styles;
