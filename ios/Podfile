@@ -20,7 +20,7 @@ target 'RoyoOrder' do
 
 end
 
-##Runrun Target
+#Runrun Target
 target 'Runrun' do
   permissions_path = '../node_modules/react-native-permissions/ios'
  rn_maps_path = '../node_modules/react-native-maps'
