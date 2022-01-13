@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-FidesDelivery/Pods-FidesDelivery.debug.xcconfig"
+
+PROJECT_APPLE_ID = 1604778454
+PROJECT_BUNDLE_ID =com.fidesDelivery
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = Fides Delivery
+PROJECT_GOOGLE_CLIENT_ID =132064546186-cfisp8fv9bn11fetmq1i1lt3iq2ji3rm.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.132064546186-cfisp8fv9bn11fetmq1i1lt3iq2ji3rm
+PROJECT_FACEBOOK_ID = 864446164312024
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =FidesDeliveryInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

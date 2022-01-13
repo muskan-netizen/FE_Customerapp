@@ -204,6 +204,10 @@ const shortCodes = {
   homeTownDelivery: 'c49349',
   ritenow: '4b0d72',
   flit: '20c702',
+  ihelp: '6c74a0',
+  ullaz: '1b1c0d',
+  privatepremiumpickups: '8d559d',
+  fidesDelivery: 'd83920',
 };
 
 const appIds = {
@@ -1018,6 +1022,22 @@ const appIds = {
   flit: Platform.select({
     ios: 'com.app.flit',
     android: 'com.app.flit',
+  }),
+  ihelp: Platform.select({
+    ios: 'com.customer.Ihelp',
+    android: 'com.customer.Ihelp',
+  }),
+  ullaz: Platform.select({
+    ios: 'com.ullaz',
+    android: 'com.ullaz',
+  }),
+  privatepremiumpickups: Platform.select({
+    ios: 'com.privatepremiumpickups',
+    android: 'com.privatepremiumpickups',
+  }),
+  fidesDelivery: Platform.select({
+    ios: 'com.fidesDelivery',
+    android: 'com.fidesDelivery',
   }),
 };
 
