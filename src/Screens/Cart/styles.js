@@ -352,7 +352,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       marginVertical: moderateScaleVertical(10),
     },
     modalMainViewContainer: {
-      flex: 1,
+      // flex: 1,
       backgroundColor: colors.white,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
