@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Image,
   ScrollView,
@@ -10,10 +10,10 @@ import {
   I18nManager,
   Keyboard,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dark-mode';
 import Modal from 'react-native-modal';
-import { useSelector } from 'react-redux';
-import { dummyUser } from '../constants/constants';
+import {useSelector} from 'react-redux';
+import {dummyUser} from '../constants/constants';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import actions from '../redux/actions';
@@ -26,9 +26,9 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
-import { currencyNumberFormatter } from '../utils/commonFunction';
-import { getImageUrl, showError } from '../utils/helperFunctions';
+import {MyDarkTheme} from '../styles/theme';
+import {currencyNumberFormatter} from '../utils/commonFunction';
+import {getImageUrl, showError} from '../utils/helperFunctions';
 import ButtonWithLoader from './ButtonWithLoader';
 
 const OrderCardVendorComponent2 = ({
@@ -43,6 +43,8 @@ const OrderCardVendorComponent2 = ({
   etaTime = null,
   cardStyle,
   updateLocalItem,
+  showRepeatOrderButton,
+  onRepeatOrderPress,
 }) => {
   let cardWidth = width - 21.5;
   const [reason, setReason] = useState('');
@@ -67,14 +69,14 @@ const OrderCardVendorComponent2 = ({
   const imageUrl =
     data && data.vendor
       ? getImageUrl(
-        data.vendor.logo.image_fit,
-        data.vendor.logo.image_path,
-        '200/200',
-      )
+          data.vendor.logo.image_fit,
+          data.vendor.logo.image_path,
+          '200/200',
+        )
       : dummyUser;
   const fontFamily = appStyle?.fontSizeData;
 
-  const styles = stylesFunc({ fontFamily, themeColors });
+  const styles = stylesFunc({fontFamily, themeColors});
 
   const onCancel = async () => {
     if (reason == '') {
@@ -116,14 +118,12 @@ const OrderCardVendorComponent2 = ({
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       (event) => {
-        console.log('my events', event);
         setKeyboardHeight(event.endCoordinates.height + 10);
       },
     );
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       (event) => {
-        console.log('my events', event);
         setKeyboardHeight(0);
       },
     );
@@ -144,6 +144,36 @@ const OrderCardVendorComponent2 = ({
           : colors.white,
         ...cardStyle,
       }}>
+      {showRepeatOrderButton ? (
+        <View
+          style={{
+            marginTop: moderateScale(10),
+            marginRight: moderateScale(10),
+          }}>
+          <TouchableOpacity
+            onPress={onRepeatOrderPress}
+            style={[
+              styles.orderAcceptAndReadyStyleSecond,
+              {
+                // backgroundColor: themeColor.primary_color,
+                paddingHorizontal: moderateScale(10),
+                paddingVertical: moderateScale(5),
+                borderRadius: moderateScale(3),
+                alignSelf: 'flex-end',
+              },
+            ]}>
+            <Text
+              style={{
+                fontSize: textScale(10),
+                color: colors.white,
+                fontFamily: fontFamily.bold,
+              }}>
+              Repeat Order
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ) : null}
+      {console.log('checking ssa', data)}
       {data?.order_status?.current_status?.title !== strings.DELIVERED &&
         data?.order_status?.current_status?.title !== strings.REJECTED &&
         (!!etaTime || !!data?.scheduled_date_time) && (
@@ -168,40 +198,45 @@ const OrderCardVendorComponent2 = ({
           flex: 1,
           flexDirection: 'row',
           alignItems: 'center',
-          padding: moderateScale(8)
+          padding: moderateScale(8),
         }}>
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
             flex: 0.5,
-            alignItems:'flex-start'
+            alignItems: 'flex-start',
           }}>
           <Image
-              source={{uri: imageUrl}}
-              style={{
-                height: moderateScale(50),
-                width: moderateScale(50),
-                borderRadius: moderateScale(50 / 2),
-                resizeMode: 'contain',
-                marginRight:moderateScale(8)
-              }}
-            />
+            source={{uri: imageUrl}}
+            style={{
+              height: moderateScale(50),
+              width: moderateScale(50),
+              borderRadius: moderateScale(50 / 2),
+              resizeMode: 'contain',
+              marginRight: moderateScale(8),
+            }}
+          />
           <Text
             numberOfLines={2}
             style={
               isDarkMode
-                ? [styles.userName, { color: MyDarkTheme.colors.text }]
+                ? [styles.userName, {color: MyDarkTheme.colors.text}]
                 : styles.userName
             }>
             {data?.vendor?.name || ''}
           </Text>
         </View>
-        <View style={{flex:0.5, justifyContent:'flex-end',alignItems:'flex-end'}}>
+        <View
+          style={{
+            flex: 0.5,
+            justifyContent: 'flex-end',
+            alignItems: 'flex-end',
+          }}>
           <Text
             style={
               isDarkMode
-                ? [styles.orderLableStyle, { color: MyDarkTheme.colors.text }]
+                ? [styles.orderLableStyle, {color: MyDarkTheme.colors.text}]
                 : styles.orderLableStyle
             }>
             {`${strings.ORDER_ID}: #${data?.order_number}`}
@@ -210,30 +245,29 @@ const OrderCardVendorComponent2 = ({
             style={
               isDarkMode
                 ? [
-                  styles.orderLableStyle,
-                  {
-                    color: MyDarkTheme.colors.text,
-                    marginVertical: moderateScaleVertical(5),
-                  },
-                ]
+                    styles.orderLableStyle,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      marginVertical: moderateScaleVertical(5),
+                    },
+                  ]
                 : [
-                  styles.orderLableStyle,
-                  {
-                    marginVertical: moderateScaleVertical(5),
-                    color: colors.black,
-                  },
-                ]
+                    styles.orderLableStyle,
+                    {
+                      marginVertical: moderateScaleVertical(5),
+                      color: colors.black,
+                    },
+                  ]
             }>
             {data?.date_time}
           </Text>
         </View>
       </View>
 
-
       <View
         style={[
           styles.borderStyle,
-          { marginHorizontal: moderateScale(10) },
+          {marginHorizontal: moderateScale(10)},
         ]}></View>
       <View
         style={{
@@ -285,9 +319,9 @@ const OrderCardVendorComponent2 = ({
                       style={
                         isDarkMode
                           ? [
-                            styles.orderLableStyle,
-                            { color: MyDarkTheme.colors.text },
-                          ]
+                              styles.orderLableStyle,
+                              {color: MyDarkTheme.colors.text},
+                            ]
                           : styles.orderLableStyle
                       }>
                       {i?.title || ''}
@@ -298,13 +332,13 @@ const OrderCardVendorComponent2 = ({
                       style={
                         isDarkMode
                           ? [
-                            styles.qtyViewStyle,
-                            {
-                              color: MyDarkTheme.colors.text,
-                              fontSize: textScale(10),
-                            },
-                          ]
-                          : [styles.qtyViewStyle, { fontSize: textScale(10) }]
+                              styles.qtyViewStyle,
+                              {
+                                color: MyDarkTheme.colors.text,
+                                fontSize: textScale(10),
+                              },
+                            ]
+                          : [styles.qtyViewStyle, {fontSize: textScale(10)}]
                       }>
                       {`x ${i?.qty || ''}`}
                     </Text>
@@ -329,19 +363,19 @@ const OrderCardVendorComponent2 = ({
             }}>
             <Image
               source={imagePath.iconPayments}
-              style={{ tintColor: colors.textGreyB }}
+              style={{tintColor: colors.textGreyB}}
             />
             <Text
               style={
                 isDarkMode
                   ? [
-                    styles.lableOrders,
-                    {
-                      paddingLeft: moderateScale(5),
-                      color: MyDarkTheme.colors.text,
-                    },
-                  ]
-                  : [styles.lableOrders, { paddingLeft: moderateScale(5) }]
+                      styles.lableOrders,
+                      {
+                        paddingLeft: moderateScale(5),
+                        color: MyDarkTheme.colors.text,
+                      },
+                    ]
+                  : [styles.lableOrders, {paddingLeft: moderateScale(5)}]
               }>
               {`${strings.PAYMENT} : `}
               <Text style={styles.valueOrders}>
@@ -355,13 +389,13 @@ const OrderCardVendorComponent2 = ({
                 color: themeColors.primary_color,
                 marginHorizontal: moderateScale(10),
               }}>{`${currencies?.primary_currency?.symbol}${
-                // Number(i?.pvariant?.multiplier) *
-                currencyNumberFormatter(Number(data?.payable_amount).toFixed(2))
-                }`}</Text>
+              // Number(i?.pvariant?.multiplier) *
+              currencyNumberFormatter(Number(data?.payable_amount).toFixed(2))
+            }`}</Text>
           </View>
         </View>
 
-        <View style={[styles.borderStyle, { marginHorizontal: -15 }]}></View>
+        <View style={[styles.borderStyle, {marginHorizontal: -15}]}></View>
 
         {selectedTab && selectedTab == strings.PAST_ORDERS ? (
           <View
@@ -402,7 +436,7 @@ const OrderCardVendorComponent2 = ({
                 )}
               </TouchableOpacity>
             ) : (
-              <View style={{ flex: 0.6 }} />
+              <View style={{flex: 0.6}} />
             )}
           </View>
         ) : (
@@ -455,11 +489,11 @@ const OrderCardVendorComponent2 = ({
             ) : null} */}
 
             {selectedTab &&
-              (selectedTab != strings.ACTIVE_ORDERS ||
-                selectedTab != strings.SCHEDULED_ORDERS) ? null : (
+            (selectedTab != strings.ACTIVE_ORDERS ||
+              selectedTab != strings.SCHEDULED_ORDERS) ? null : (
               <View style={styles.bottomSecondHalf}>
                 {data?.order_status?.current_status?.id == 1 ? (
-                  <View style={{ flexDirection: 'row' }}>
+                  <View style={{flexDirection: 'row'}}>
                     <TouchableOpacity
                       onPress={() => updateOrderStatus(data, 8)}
                       style={styles.orderReject}>
@@ -467,7 +501,7 @@ const OrderCardVendorComponent2 = ({
                         {strings.REJECT}
                       </Text>
                     </TouchableOpacity>
-                    <View style={{ width: moderateScale(10) }} />
+                    <View style={{width: moderateScale(10)}} />
                     <TouchableOpacity
                       onPress={() => updateOrderStatus(data, 7)}
                       style={styles.orderAccept}>
@@ -515,6 +549,7 @@ const OrderCardVendorComponent2 = ({
             </TouchableOpacity>
           )}
       </View>
+
       <Modal
         isVisible={!!cancellationItem ? true : false}
         onBackdropPress={hideModal}
@@ -553,7 +588,7 @@ const OrderCardVendorComponent2 = ({
             </Text>
             <TouchableOpacity onPress={hideModal}>
               <Image
-                style={isDarkMode && { tintColor: colors.white }}
+                style={isDarkMode && {tintColor: colors.white}}
                 source={imagePath.closeButton}
               />
             </TouchableOpacity>
@@ -614,8 +649,8 @@ const OrderCardVendorComponent2 = ({
     </TouchableOpacity>
   );
 };
-export function stylesFunc({ fontFamily, themeColors }) {
-  const commonStyles = commonStylesFunc({ fontFamily });
+export function stylesFunc({fontFamily, themeColors}) {
+  const commonStyles = commonStylesFunc({fontFamily});
 
   let cardWidth = width - 21.5;
 

@@ -33,7 +33,6 @@ import {
   SendProduct,
   SendRefferal,
   Settings,
-  Subscriptions,
   Subscriptions2,
   TipPaymentOptions,
   TrackDetail,
@@ -59,8 +58,6 @@ import {
   AddNewCustomer,
   CustomerEarningHistory,
 } from '../Screens';
-import AccountTemplateFive from '../Screens/Account/AccountTemplateFive';
-import AccountTemplateFour from '../Screens/Account/AccountTemplateFour';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();

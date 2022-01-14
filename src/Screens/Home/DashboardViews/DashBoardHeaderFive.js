@@ -404,7 +404,7 @@ export default function DashBoardHeaderFive({
   return (
     <View
       style={{
-        borderBottomWidth: tabs.length > 1 ? 0.8: 0,
+        borderBottomWidth: tabs.length > 1 ? 0.8 : 0,
         borderBottomColor: isDarkMode
           ? colors.whiteOpacity22
           : colors.borderColorD,
@@ -428,7 +428,7 @@ export default function DashBoardHeaderFive({
             <Image
               style={{
                 width: width / 6,
-                height: moderateScaleVertical(50)
+                height: moderateScaleVertical(50),
               }}
               resizeMode="contain"
               source={

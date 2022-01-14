@@ -733,6 +733,7 @@ export default {
   ORDERDELIVERED: '¡Hemos terminado!',
   PLEASE_RECHARGE_WALLET: 'Por favor, recarga tu monedero',
   ORDER: 'Operación',
+  ACCEPTING_ORDER_MSG: 'We are not accepting orders less then',
   PLEASE_ENTER_VALID_NUMERIC: 'Please enter numeric value for',
   RELEVANCE: 'Relevance',
   BESTSELLER: 'Best Seller',
@@ -745,4 +746,6 @@ export default {
   INVALID_AMOUNT:"Invalid Amount",
   INSUFFICIENT_FUNDS_IN_WALLET:"Insufficient funds in wallet",
   USER_DOES_NOT_EXIST:"User doest not exist",
+  INVALID_CARD_DETAILS: 'Invalid card details',
+  TRANSFER_FUNDS: 'Transfer Funds',
 };

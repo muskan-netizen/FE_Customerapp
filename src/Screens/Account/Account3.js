@@ -335,7 +335,7 @@ export default function Account3({ navigation }) {
               />
             ))}
 
-          {DeviceInfo.getBundleId() == appIds.bharatMove ? (
+          {/* {DeviceInfo.getBundleId() == appIds.bharatMove ? (
             <View>
               {!userData?.auth_token && (
                 <View>
@@ -386,7 +386,7 @@ export default function Account3({ navigation }) {
             </View>
           ) : (
             <View></View>
-          )}
+          )} */}
 
           {!!userData?.auth_token &&
             !!appData &&

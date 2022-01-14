@@ -75,10 +75,6 @@ export default function DashBoardFive({
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(
-    appData?.profile?.preferences?.is_hyperlocal,
-    'appData?.profile?.preferences?.is_hyperlocal',
-  );
 
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -505,6 +501,7 @@ export default function DashBoardFive({
                           return (
                             <MenuOption
                               onSelect={() => onSelectedFilter(item)}
+                              key={String(index)}
                               text={item?.type}
                               style={{
                                 marginVertical: moderateScaleVertical(5),
