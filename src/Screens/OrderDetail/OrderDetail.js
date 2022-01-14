@@ -342,6 +342,7 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const _renderItem = ({item, index}) => {
+    console.log('checking timngs>>>', item);
     // return <OffersCard />;
     let {itemCount} = state;
     return (
