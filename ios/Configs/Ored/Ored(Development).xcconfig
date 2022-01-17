@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Ored/Pods-Ored.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Ored/Pods-available_pods-Ored.debug.xcconfig"
 
 PROJECT_APPLE_ID =1591786858
 PROJECT_BUNDLE_ID =com.ored

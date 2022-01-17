@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-SwiftandValu/Pods-SwiftandValu.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-SwiftandValu/Pods-available_pods-SwiftandValu.debug.xcconfig"
 
 PROJECT_APPLE_ID =1596568404
 PROJECT_BUNDLE_ID =com.customer.swiftandvalu

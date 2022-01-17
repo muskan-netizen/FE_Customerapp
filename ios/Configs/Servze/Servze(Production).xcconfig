@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Servze/Pods-Servze.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Servze/Pods-available_pods-Servze.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1582765607

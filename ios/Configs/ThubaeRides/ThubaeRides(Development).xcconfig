@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-ThubaeRides/Pods-ThubaeRides.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-ThubaeRides/Pods-available_pods-ThubaeRides.debug.xcconfig"
 
 PROJECT_APPLE_ID =1592485068
 PROJECT_BUNDLE_ID =com.thubaerides

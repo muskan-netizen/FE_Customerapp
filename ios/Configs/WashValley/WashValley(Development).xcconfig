@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-WashValley/Pods-WashValley.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-WashValley/Pods-available_pods-WashValley.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1580685447

@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-GajaMove/Pods-GajaMove.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-GajaMove/Pods-available_pods-GajaMove.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1579511777
