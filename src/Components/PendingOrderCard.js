@@ -62,7 +62,6 @@ const PendingOrderCard = ({
       : dummyUser;
   const fontFamily = appStyle?.fontSizeData;
 
-
   const styles = stylesFunc({fontFamily, themeColors});
   return (
     <TouchableOpacity

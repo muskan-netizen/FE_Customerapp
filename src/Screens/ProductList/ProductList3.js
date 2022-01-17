@@ -611,11 +611,11 @@ export default function Products({route, navigation}) {
               vendorCategories: res?.data?.categories,
               // vendorCategoryItms: res?.data?.categories[0]?.products,
             });
-          }else{
+          } else {
             updateState({
               isLoading: false,
               isRefreshing: false,
-            })
+            });
           }
         }
         if (res?.data) {
@@ -1509,13 +1509,16 @@ export default function Products({route, navigation}) {
     index,
     type,
   ) => {
-    let batchCount= !!item?.batch_count?item?.batch_count:1
+    let batchCount = !!item?.batch_count ? item?.batch_count : 1;
     let differentAddsOnsQty = 0;
     let cloneArr = differentAddsOns;
     let updateLocallyAddOns = cloneArr.map((val) => {
       differentAddsOnsQty = differentAddsOnsQty + val.quantity;
       if (cartId == val.id) {
-        return {...val, quantity: type == 1 ? qty + batchCount : qty - batchCount};
+        return {
+          ...val,
+          quantity: type == 1 ? qty + batchCount : qty - batchCount,
+        };
       }
       return val;
     });
@@ -1528,7 +1531,9 @@ export default function Products({route, navigation}) {
       index,
       type,
       null,
-      type == 1 ? differentAddsOnsQty + batchCount : differentAddsOnsQty - batchCount, //send updated total quantity
+      type == 1
+        ? differentAddsOnsQty + batchCount
+        : differentAddsOnsQty - batchCount, //send updated total quantity
     );
     updateState({differentAddsOns: updateLocallyAddOns});
   };
@@ -1545,7 +1550,7 @@ export default function Products({route, navigation}) {
           onIncrement={() => checkIsCustomize(item, null, index, 1)}
           onDecrement={() => checkIsCustomize(item, null, index, 2)}
           selectedItemID={selectedItemID}
-          btnLoader={btnLoader}
+          btnLoader={false}
           selectedItemIndx={selectedItemIndx}
           differentAddsOns={differentAddsOns}
           businessType={businessType}
@@ -1927,7 +1932,7 @@ export default function Products({route, navigation}) {
     return (
       <View>
         {!!categoryInfo?.categoriesList ? (
-          <View style={{...styles.header2, height: height * 0.29}}>
+          <View style={{...styles.header2, height: height * 0.31}}>
             <View style={{height: '80%'}}>
               <ImageBackground
                 source={{
@@ -2072,8 +2077,35 @@ export default function Products({route, navigation}) {
                         </View>
                       )}
                     </View>
+                    {console.log('KKKKKKK', categoryInfo)}
+                    {Number(categoryInfo?.order_min_amount) > 0 ? (
+                      <View
+                        style={{
+                          backgroundColor: colors.redB,
+                          width: moderateScale(230),
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          height: moderateScaleVertical(30),
+                          // paddingHorizontal: moderateScale(10),
+                          // paddingVertical: moderateScaleVertical(10),
+                          borderRadius: moderateScale(6),
+                          marginTop: moderateScale(10),
+                        }}>
+                        <Text
+                          style={{
+                            fontSize: textScale(12),
+                            fontFamily: fontFamily.medium,
+                            color: colors.white,
+                          }}>
+                          Minimum order value{' '}
+                          {currencies?.primary_currency?.symbol}
+                          {categoryInfo?.order_min_amount}
+                        </Text>
+                      </View>
+                    ) : null}
                   </View>
                 </LinearGradient>
+
                 {/* ****************************************/}
                 <View
                   style={{
@@ -2718,7 +2750,6 @@ export default function Products({route, navigation}) {
     );
   };
   const renderSectionItem = ({item, index, section}) => {
-    console.log(item, 'itemitemitemInSec');
     return (
       <View>
         <ProductCard3
@@ -3228,6 +3259,7 @@ export default function Products({route, navigation}) {
             playHapticEffect(hapticEffects.impactLight);
             updateState({MenuModalVisible: !MenuModalVisible});
           }}
+          isLoading={btnLoader}
         />
       )}
 

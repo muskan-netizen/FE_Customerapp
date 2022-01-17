@@ -194,7 +194,7 @@ export const printReciept = async (data) => {
               await BluetoothEscposPrinter.printText(
                 `${strings.CUSTOMER}: ${`${detail.user.name}`}\r\n${
                   strings.ORDER_PLACE_ON
-                }: ${`${moment(detail.created_at).format(
+                }: ${`${moment(detail.created).format(
                   'YYYY-MM-DD [at] hh:mm A z',
                 )}`}\r\n${strings.TOBE_PREPARED}: ${moment(
                   detail.scheduled_date_time,
@@ -209,7 +209,7 @@ export const printReciept = async (data) => {
               await BluetoothEscposPrinter.printText(
                 `${strings.CUSTOMER}: ${`${detail.user.name}`}\r\n${
                   strings.ORDER_PLACE_ON
-                }: ${`${moment(detail.created_at).format(
+                }: ${`${moment(detail.created).format(
                   'YYYY-MM-DD [at] hh:mm A z',
                 )}`}\r\n\r\n${strings.DELIVERY}:\r\n${
                   detail.address.address

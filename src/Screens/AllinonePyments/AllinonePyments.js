@@ -57,10 +57,20 @@ export default function AllinonePyments({navigation, route}) {
           return;
         }
         if (paramsData.action == 'tip') {
-          tipAfterOrder(transId);
+          if (paramsData?.id != 6) {
+            tipAfterOrder(transId);
+            return;
+          } else {
+            moveToNewScreen(paramsData?.screenName)();
+          }
         }
         if (paramsData?.action == 'subscription') {
-          subscriptionApiHit(transId);
+          if (paramsData?.id != 6) {
+            subscriptionApiHit(transId);
+            return;
+          } else {
+            moveToNewScreen(paramsData?.screenName)();
+          }
         }
         if (paramsData.action == 'wallet') {
           moveToNewScreen(paramsData?.screenName)();
@@ -140,13 +150,26 @@ export default function AllinonePyments({navigation, route}) {
         centerTitle={paramsData?.selectedPayment?.title || paramsData?.title}
         headerStyle={{backgroundColor: colors.white}}
       />
-      {!!paramsData?.paymentUrl && (
+      {!!paramsData?.paymentUrl && paramsData?.id != 6 ? (
         <WebView
           // onLoad={() => updateState({ isLoading: false })}
           source={{uri: paramsData?.paymentUrl}}
           onNavigationStateChange={onNavigationStateChange}
         />
+      ) : (
+        <WebView
+          // onLoad={() => updateState({ isLoading: false })}
+          source={{
+            uri: paramsData?.paymentUrl?.redirectUrl,
+            method: 'POST',
+            body: queryString.stringify(paramsData?.paymentUrl?.formData),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          }}
+          onNavigationStateChange={onNavigationStateChange}
+        />
+        // <></>
       )}
+
       <View
         style={{
           height: moderateScaleVertical(75),
