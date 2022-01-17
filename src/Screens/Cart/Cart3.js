@@ -245,30 +245,33 @@ export default function Cart({navigation, route}) {
     if (allAddresss.length == 0) {
       updateState({selectedAddress: null});
       actions.saveAddress(null);
+      return;
     }
     if (!selectedAddress && allAddresss.length) {
       let find = allAddresss.find((x) => x.is_primary);
-
       if (find) {
         updateState({selectedAddress: find});
         actions.saveAddress(find);
       } else {
         selectAddress(allAddresss[0]);
       }
+      return;
     }
     if (selectedAddress && allAddresss.length) {
-      let find = allAddresss.find(
-        (x) =>
+      let find = allAddresss.find((x) =>
           x.id == selectedAddress.id &&
           x.is_primary == selectedAddress.is_primary,
       );
       if (find) {
         selectAddress(find);
+        return;
       } else {
         selectAddress(allAddresss[0]);
+        return;
         // updateState({selectedAddress: null});
         // actions.saveAddress(null);
       }
+      return;
     }
   };
 
