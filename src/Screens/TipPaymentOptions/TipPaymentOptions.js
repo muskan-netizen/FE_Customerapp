@@ -310,7 +310,7 @@ export default function TipPaymentOptions({navigation, route}) {
     updateState({isLoading: true});
     actions
       .openPaymentWebUrl(
-        `/${selectedMethod}?amount=${data?.selectedTipAmount}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&payment_option_id=${selectedPaymentMethod?.id}&action=tip&order_number=${data?.order_number}`,
+        `/${selectedMethod}?amount=${data?.selectedTipAmount}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&payment_option_id=${selectedPaymentMethod?.id}&order_number=${data?.order_number}&action=tip`,
         {},
         {
           code: appData?.profile?.code,

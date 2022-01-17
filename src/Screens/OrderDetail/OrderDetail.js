@@ -2,7 +2,7 @@ import {useIsFocused} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
 import LottieView from 'lottie-react-native';
 import moment from 'moment';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -154,14 +154,24 @@ export default function OrderDetail({navigation, route}) {
 
   useInterval(
     () => {
-      if (!!userData?.auth_token) {
-        _getOrderDetailScreen();
-      } else {
-        showError(strings.UNAUTHORIZED_MESSAGE);
+      if (paramData?.orderDetail?.dispatch_traking_url != null) {
+        getOrders();
       }
     },
     isFocused ? 5000 : null,
   );
+
+  useEffect(() => {
+    getOrders();
+  }, []);
+
+  const getOrders = () => {
+    if (!!userData?.auth_token) {
+      _getOrderDetailScreen();
+    } else {
+      showError(strings.UNAUTHORIZED_MESSAGE);
+    }
+  };
 
   const new_dispatch_traking_url = paramData?.orderDetail?.dispatch_traking_url
     ? (paramData?.orderDetail?.dispatch_traking_url).replace(
