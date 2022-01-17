@@ -55,7 +55,7 @@ export default function Payfast({navigation, route}) {
       );
       console.log(res?.data, 'responseData===>');
 
-      updateState({webData: res?.data});
+      updateState({webData: res?.data, isLoading: false});
     } catch (error) {
       updateState({isLoading: false});
       showError(error.message || error);

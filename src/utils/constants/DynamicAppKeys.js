@@ -187,7 +187,15 @@ const shortCodes = {
   sofia: 'e2ef1a',
   mml: '348045',
   bimol: '94fc5b',
+  vendorspot: 'dfa952',
+  sxm2go: 'b6e6e8',
   pinkydeli: '66c095',
+  gasgiant: 'e6c73a',
+  releezer: 'c2a130',
+  vendoor: '203685',
+  farmersouq: 'cc6a32',
+  tmgShops: '6da47f',
+  stitchesonsite: '5bdfee',
 };
 
 const appIds = {
@@ -935,9 +943,41 @@ const appIds = {
     ios: 'com.bimol',
     android: 'com.bimol',
   }),
+  vendorspot: Platform.select({
+    ios: 'com.vendorspot',
+    android: 'com.vendorspot',
+  }),
+  sxm2go: Platform.select({
+    ios: 'com.sxm2go',
+    android: 'com.sxm2go',
+  }),
   pinkydeli: Platform.select({
     ios: 'com.codebrew.pinkydeli',
     android: 'com.app.pinkydeli',
+  }),
+  gasgiant: Platform.select({
+    ios: 'com.gasgiant',
+    android: 'com.gasgiant',
+  }),
+  releezer: Platform.select({
+    ios: 'com.releezer',
+    android: 'com.releezer',
+  }),
+  vendoor: Platform.select({
+    ios: 'com.vendoor',
+    android: 'com.vendoor',
+  }),
+  farmersouq: Platform.select({
+    ios: 'com.farmersouq',
+    android: 'com.farmersouq',
+  }),
+  tmgShops: Platform.select({
+    ios: 'com.tmgShops',
+    android: 'com.tmgShops',
+  }),
+  stitchesonsite: Platform.select({
+    ios: 'com.stitchesonsite',
+    android: 'com.stitchesonsite',
   }),
 };
 

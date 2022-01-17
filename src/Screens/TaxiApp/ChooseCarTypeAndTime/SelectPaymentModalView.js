@@ -188,14 +188,12 @@ export default function SelectPaymentModalView({
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       (event) => {
-        console.log('my events', event);
         setKeyboardHeight(event.endCoordinates.height + 10);
       },
     );
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       (event) => {
-        console.log('my events', event);
         setKeyboardHeight(0);
       },
     );

@@ -123,3 +123,4 @@ export {default as UdhaarLedger} from './UdhaarLedger/UdhaarLedger';
 export {default as AddProduct} from './AddProduct/AddProduct';
 export {default as AddNewCustomer} from './AddNewCustomer/AddNewCustomer';
 export {default as CustomerEarningHistory} from './CustomerEarningHistory/CustomerEarningHistory';
+export {default as Paystack} from './PaymentGateways/Paystack';

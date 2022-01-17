@@ -11,6 +11,7 @@ import * as order from './order';
 import * as pickup from './pickupdelivery';
 import * as pendingNotifications from './pendingNotifications';
 import * as addressSearch from './addressSearch';
+import * as walletUserVerify from './walletUserVerify';
 
 export default {
   ...init,
@@ -24,5 +25,6 @@ export default {
   ...order,
   ...pickup,
   ...pendingNotifications,
-  ...addressSearch
+  ...addressSearch,
+  ...walletUserVerify
 };
