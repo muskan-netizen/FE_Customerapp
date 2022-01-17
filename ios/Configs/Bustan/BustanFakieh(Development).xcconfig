@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-BustanFakieh/Pods-BustanFakieh.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-BustanFakieh/Pods-available_pods-BustanFakieh.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1579671423

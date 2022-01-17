@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Dishefs/Pods-Dishefs.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Dishefs/Pods-available_pods-Dishefs.debug.xcconfig"
 
 PROJECT_APPLE_ID =1594591904
 PROJECT_BUNDLE_ID =com.dishefs

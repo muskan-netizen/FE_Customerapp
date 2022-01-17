@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-BotsEats/Pods-BotsEats.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-BotsEats/Pods-available_pods-BotsEats.release.xcconfig"
 
 PROJECT_APPLE_ID =1594353692
 PROJECT_BUNDLE_ID =com.botseats

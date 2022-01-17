@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-GoKab/Pods-GoKab.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-GoKab/Pods-available_pods-GoKab.release.xcconfig"
 
 PROJECT_APPLE_ID = 1588382858
 PROJECT_BUNDLE_ID =com.gokab

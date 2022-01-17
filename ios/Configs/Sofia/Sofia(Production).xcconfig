@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Sofia/Pods-Sofia.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Sofia/Pods-available_pods-Sofia.release.xcconfig"
 
 PROJECT_APPLE_ID = 1602213678
 PROJECT_BUNDLE_ID = com.app.sofia

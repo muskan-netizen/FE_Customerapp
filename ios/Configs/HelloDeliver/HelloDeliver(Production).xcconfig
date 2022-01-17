@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-HelloDeliver/Pods-HelloDeliver.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-HelloDeliver/Pods-available_pods-HelloDeliver.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1580717153

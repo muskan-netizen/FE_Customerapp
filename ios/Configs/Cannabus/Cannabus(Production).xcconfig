@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Cannabus/Pods-Cannabus.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Cannabus/Pods-available_pods-Cannabus.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1578712108

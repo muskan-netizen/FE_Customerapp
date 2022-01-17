@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Codiner/Pods-Codiner.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Codiner/Pods-available_pods-Codiner.release.xcconfig"
 
 PROJECT_APPLE_ID = 1591191283
 PROJECT_BUNDLE_ID = com.app.codiner

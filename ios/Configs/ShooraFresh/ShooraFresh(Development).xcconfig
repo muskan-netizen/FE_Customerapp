@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-ShooraFresh/Pods-ShooraFresh.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-ShooraFresh/Pods-available_pods-ShooraFresh.debug.xcconfig"
 
 PROJECT_APPLE_ID =1595299755
 PROJECT_BUNDLE_ID =com.shoorafresh

@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Marasym/Pods-Marasym.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Marasym/Pods-available_pods-Marasym.release.xcconfig"
 
 PROJECT_APPLE_ID =1597231964
 PROJECT_BUNDLE_ID =com.marasym
