@@ -544,7 +544,8 @@ const AddressModal3 = ({
             style={{
               alignItems: 'center',
               flexDirection: 'row',
-              marginTop: moderateScaleVertical(12)
+              marginTop: moderateScaleVertical(12),
+              zIndex: -2000
             }}>
             <Image source={imagePath.currentLocation} />
             <Text style={{
