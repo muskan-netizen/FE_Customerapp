@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-ZuzuClean/Pods-ZuzuClean.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-ZuzuClean/Pods-available_pods-ZuzuClean.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1581089034

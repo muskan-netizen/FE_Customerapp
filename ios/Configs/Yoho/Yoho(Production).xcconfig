@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Yoho/Pods-Yoho.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Yoho/Pods-available_pods-Yoho.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1580543034
