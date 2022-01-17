@@ -65,7 +65,7 @@ export default function AllinonePyments({navigation, route}) {
           }
         }
         if (paramsData?.action == 'subscription') {
-          if (paramsData?.id != 6) {
+          if (paramsData?.id != 6 && paramsData?.id != 5) {
             subscriptionApiHit(transId);
             return;
           } else {

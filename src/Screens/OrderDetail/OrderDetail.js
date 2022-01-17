@@ -1,4 +1,4 @@
-import {useIsFocused} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
 import LottieView from 'lottie-react-native';
 import moment from 'moment';
@@ -161,9 +161,12 @@ export default function OrderDetail({navigation, route}) {
     isFocused ? 5000 : null,
   );
 
-  useEffect(() => {
-    getOrders();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log('dfshsfjdhjkfhskjfh');
+      getOrders();
+    }, []),
+  );
 
   const getOrders = () => {
     if (!!userData?.auth_token) {
