@@ -1,6 +1,6 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, isEmpty, update} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep, isEmpty, update } from 'lodash';
+import React, { useEffect, useRef, useState, Fragment } from 'react';
 import {
   Alert,
   Animated,
@@ -67,8 +67,9 @@ import {getItem, removeItem, setItem} from '../../utils/utils';
 import stylesFun from './styles';
 import RazorpayCheckout from 'react-native-razorpay';
 import moment from 'moment';
-import {hitSlopProp} from '../../styles/commonStyles';
-import {CheckBox} from 'react-native-elements';
+import { hitSlopProp } from '../../styles/commonStyles';
+import { CheckBox } from 'react-native-elements';
+import { Calendar } from 'react-native-calendars'
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -125,6 +126,9 @@ export default function Cart({navigation, route}) {
     modalType: null,
     showTaxFeeArea: false,
     isGiftBoxSelected: false,
+    selectedDateFromCalendar: '',
+    availableTimeSlots: [],
+    selectedTimeSlots: ''
   });
   const {
     viewHeight,
@@ -167,6 +171,9 @@ export default function Cart({navigation, route}) {
     sheduleddropoffdate,
     showTaxFeeArea,
     isGiftBoxSelected,
+    selectedDateFromCalendar,
+    selectedTimeSlots,
+    availableTimeSlots
   } = state;
 
   //Redux store data
@@ -205,7 +212,7 @@ export default function Cart({navigation, route}) {
         updateState({isLoadingB: true});
       }
       getCartDetail();
-      getAllWishListData();
+      // getAllWishListData();
       // if (!!checkCartItem?.data) {
       //   getCartDetail();
       // } else {
@@ -227,8 +234,9 @@ export default function Cart({navigation, route}) {
   );
 
   useEffect(() => {
-    if (!!checkCartItem?.data) {
+    if (!!checkCartItem?.data && !!checkCartItem?.data?.products && !!checkCartItem?.data?.products.length) {
       checkforAddressUpdate();
+      console.log("useEffect 1",checkCartItem)
     }
   }, [selectedAddress, allAddresss]);
 
@@ -306,7 +314,7 @@ export default function Cart({navigation, route}) {
       )
       .then((res) => {
         actions.cartItemQty(res);
-        console.log(res.data, 'cart details>>>', cartItems);
+        console.log(res.data, 'cart details>>>', res);
         let checkDate = !!res?.data?.scheduled_date_time;
 
         if (!!checkDate && res.data.schedule_type == 'schedule') {
@@ -413,12 +421,13 @@ export default function Cart({navigation, route}) {
             cartItems: res.data.products,
             vendorAddress: res.data.address,
             cartData: res.data,
+            availableTimeSlots: res.data.slots,
             isLoadingB: false,
             isRefreshing: false,
             selectedTipvalue:
               res?.data?.total_payable_amount == 0 ? 'custom' : null,
           });
-          if (!res?.data?.schedule_type) {
+          if (!res?.data?.schedule_type && res.data.products.length > 0) {
             //if schedule type is null then hit the api again with now option
             setDateAndTimeSchedule();
           }
@@ -582,6 +591,7 @@ export default function Cart({navigation, route}) {
   useEffect(() => {
     if (paramsData?.transactionId && !!checkCartItem?.data) {
       _directOrderPlace();
+      console.log("useEffect 2")
     }
   }, [paramsData?.transactionId]);
 
@@ -853,12 +863,10 @@ export default function Cart({navigation, route}) {
         ? new Date(sheduleddropoffdate).toISOString()
         : null;
     } else {
-      data['task_type'] = scheduleType;
-      data['schedule_dt'] =
-        scheduleType != 'now' && sheduledorderdate
-          ? new Date(sheduledorderdate).toISOString()
-          : null;
+      data['task_type'] = !!selectedTimeSlots ? 'schedule' : scheduleType;
+      data['schedule_dt'] = !!selectedTimeSlots ? selectedDateFromCalendar : scheduleType != 'now' && sheduledorderdate ? new Date(sheduledorderdate).toISOString() : null;
       data['comment_for_vendor'] = instruction;
+      data['slot'] = selectedTimeSlots
     }
 
     console.log(data, 'setDateAndTimeSchedule>>>DATA');
@@ -871,7 +879,7 @@ export default function Cart({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'res>>>');
+        console.log(res, 'schedulte api res res>>>');
         if (res && res?.status == 'Success') {
           if (toHitApiForPlaceOrder && businessType == 'laundry') {
             _finalPayment();
@@ -935,9 +943,12 @@ export default function Cart({navigation, route}) {
     // _offineLinePayment();
   };
 
+  console.log('cartDatacartData', cartItems);
+
   //Clear cart
   const placeOrder = () => {
     if (!!userData?.auth_token) {
+
       if (!!cartData?.delay_date && !localeSheduledOrderDate) {
         showInfo(strings.SCHEDULE_DATE_REQUIRED);
         return;
@@ -1023,6 +1034,7 @@ export default function Cart({navigation, route}) {
   useEffect(() => {
     if (paramsData?.redirectFrom && !!checkCartItem?.data) {
       _directOrderPlace();
+      console.log("useEffect 3")
     }
   }, [paramsData?.redirectFrom]);
 
@@ -1045,7 +1057,14 @@ export default function Cart({navigation, route}) {
         style={{
           ...styles.swipeView,
         }}>
-        <Image source={imagePath.deleteRed} />
+        <FastImage
+          source={imagePath.deleteRed}
+          resizeMode="contain"
+          style={{
+            width: moderateScale(16),
+            height: moderateScale(16),
+          }}
+        />
       </Animated.View>
     );
   };
@@ -1246,9 +1265,10 @@ export default function Cart({navigation, route}) {
     if (
       scheduleType != null &&
       scheduleType == 'now' &&
-      !!checkCartItem?.data
+      !!checkCartItem?.data && !!checkCartItem?.data.products.length
     ) {
       setDateAndTimeSchedule();
+      console.log("useEffect 4")
     }
   }, [scheduleType]);
 
@@ -1276,8 +1296,24 @@ export default function Cart({navigation, route}) {
   };
 
   const selectOrderDate = () => {
-    onClose();
 
+    if (availableTimeSlots.length > 0 || cartData.slots.length > 0) {
+      if (selectedDateFromCalendar == '' || selectedTimeSlots == '') {
+        alert("Please select date and time slots")
+        return
+      } else {
+        // let formatDate = new Date(selectedDateFromCalendar);
+        const date = selectedDateFromCalendar;
+        const time = selectedTimeSlots.split(":")[0];
+        const formatDate = moment(`${date} ${time}`, 'YYYY-MM-DD HH:mm:ss').format();
+        console.log("formate date", moment(new Date(formatDate)).format('lll'))
+        updateState({
+          localeSheduledOrderDate: moment(new Date(formatDate)).format('lll')
+        });
+      }
+    }
+
+    onClose();
     if (modalType != 'schedule' && businessType != 'laundry') {
       updateState({
         scheduleType: 'schedule',
@@ -1523,54 +1559,49 @@ export default function Cart({navigation, route}) {
                                   }}>
                                   {i?.product?.translation[0]?.title},
                                 </Text>
-                                {i?.product_out_of_stock ? (
-                                  <Text style={styles.outOfStock}>
-                                    {strings.OUT_OF_STOCK}
-                                  </Text>
-                                ) : (
-                                  <View
-                                    pointerEvents={btnLoader ? 'none' : 'auto'}
-                                    style={{flex: 0.3}}>
-                                    <View style={styles.incDecBtnContainer}>
-                                      <TouchableOpacity
-                                        style={{alignItems: 'center'}}
-                                        onPress={() =>
-                                          addDeleteCartItems(i, inx, 2)
-                                        }>
-                                        <Text style={styles.cartItemValueBtn}>
-                                          -
+
+                                <View
+                                  pointerEvents={btnLoader ? 'none' : 'auto'}
+                                  style={{flex: 0.3}}>
+                                  <View style={styles.incDecBtnContainer}>
+                                    <TouchableOpacity
+                                      style={{alignItems: 'center'}}
+                                      onPress={() =>
+                                        addDeleteCartItems(i, inx, 2)
+                                      }>
+                                      <Text style={styles.cartItemValueBtn}>
+                                        -
+                                      </Text>
+                                    </TouchableOpacity>
+                                    <View
+                                      style={{
+                                        alignItems: 'center',
+                                        width: moderateScale(20),
+                                        height: moderateScale(20),
+                                        justifyContent: 'center',
+                                      }}>
+                                      {btnLoadrId === i.id && btnLoader ? (
+                                        <UIActivityIndicator
+                                          size={moderateScale(16)}
+                                          color={colors.white}
+                                        />
+                                      ) : (
+                                        <Text style={styles.cartItemValue}>
+                                          {i?.quantity}
                                         </Text>
-                                      </TouchableOpacity>
-                                      <View
-                                        style={{
-                                          alignItems: 'center',
-                                          width: moderateScale(20),
-                                          height: moderateScale(20),
-                                          justifyContent: 'center',
-                                        }}>
-                                        {btnLoadrId === i.id && btnLoader ? (
-                                          <UIActivityIndicator
-                                            size={moderateScale(16)}
-                                            color={colors.white}
-                                          />
-                                        ) : (
-                                          <Text style={styles.cartItemValue}>
-                                            {i?.quantity}
-                                          </Text>
-                                        )}
-                                      </View>
-                                      <TouchableOpacity
-                                        style={{alignItems: 'center'}}
-                                        onPress={() =>
-                                          addDeleteCartItems(i, inx, 1)
-                                        }>
-                                        <Text style={styles.cartItemValueBtn}>
-                                          +
-                                        </Text>
-                                      </TouchableOpacity>
+                                      )}
                                     </View>
+                                    <TouchableOpacity
+                                      style={{alignItems: 'center'}}
+                                      onPress={() =>
+                                        addDeleteCartItems(i, inx, 1)
+                                      }>
+                                      <Text style={styles.cartItemValueBtn}>
+                                        +
+                                      </Text>
+                                    </TouchableOpacity>
                                   </View>
-                                )}
+                                </View>
                               </View>
                               <Text
                                 style={{
@@ -1814,7 +1845,14 @@ export default function Cart({navigation, route}) {
                               marginTop: moderateScale(6),
                             }}
                             onPress={() => openDeleteView(i)}>
-                            <Image source={imagePath.deleteRed} />
+                            <FastImage
+                              source={imagePath.deleteRed}
+                              resizeMode="contain"
+                              style={{
+                                width: moderateScale(16),
+                                height: moderateScale(16),
+                              }}
+                            />
                           </TouchableOpacity>
                         </View>
                       </View>
@@ -1878,9 +1916,14 @@ export default function Cart({navigation, route}) {
                       flexDirection: 'row',
                       alignItems: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       style={{tintColor: themeColors.primary_color}}
                       source={imagePath.percent}
+                      resizeMode="contain"
+                      style={{
+                        width: moderateScale(16),
+                        height: moderateScale(16),
+                      }}
                     />
                     <Text
                       numberOfLines={1}
@@ -3219,10 +3262,16 @@ export default function Cart({navigation, route}) {
           }
           style={styles.paymentMainView}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Image
-              style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
+            <FastImage
               source={imagePath.paymentMethod}
+              resizeMode="contain"
+              style={{
+                width: moderateScale(32),
+                height: moderateScale(32),
+                tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}
             />
+
             <Text
               style={{
                 ...styles.priceItemLabel2,
@@ -3237,16 +3286,15 @@ export default function Cart({navigation, route}) {
             </Text>
           </View>
           <View>
-            <Image
+            <FastImage
               source={imagePath.goRight}
-              style={
-                isDarkMode
-                  ? {
-                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                      tintColor: MyDarkTheme.colors.text,
-                    }
-                  : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
-              }
+              resizeMode="contain"
+              style={{
+                width: moderateScale(14),
+                height: moderateScale(14),
+                tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+              }}
             />
           </View>
         </TouchableOpacity>
@@ -3400,7 +3448,14 @@ export default function Cart({navigation, route}) {
           justifyContent: 'space-between',
         }}>
         <View style={{flexDirection: 'row', flex: 0.85}}>
-          <Image source={imagePath.mapIcon} />
+          <FastImage
+            source={imagePath.mapIcon}
+            resizeMode="contain"
+            style={{
+              width: moderateScale(50),
+              height: moderateScale(50),
+            }}
+          />
           <View style={styles.addressView}>
             <Text
               style={{
@@ -3432,10 +3487,10 @@ export default function Cart({navigation, route}) {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => setModalVisible(true)}>
-            <Image
+            <FastImage
               source={imagePath.icEdit1}
-              style={styles.editIcon}
               resizeMode="contain"
+              style={styles.editIcon}
             />
           </TouchableOpacity>
         )}
@@ -3525,6 +3580,8 @@ export default function Cart({navigation, route}) {
   const onClose = () => {
     updateState({
       isVisibleTimeModal: false,
+      selectedDateFromCalendar: '',
+      selectedTimeSlots: ''
     });
   };
 
@@ -3557,6 +3614,7 @@ export default function Cart({navigation, route}) {
   };
 
   const onDateChange = (value) => {
+    alert('dfdf')
     updateState({
       scheduleType: 'schedule',
       sheduledorderdate: value,
@@ -3573,6 +3631,7 @@ export default function Cart({navigation, route}) {
 
   useEffect(() => {
     if (!!checkCartItem?.data) {
+      console.log("useEffect 5")
       getItem('deepLinkUrl')
         .then((res) => {
           if (res) {
@@ -4003,6 +4062,70 @@ export default function Cart({navigation, route}) {
     );
   };
 
+
+  const checkVendorSlots = async (date) => {
+    console.log("vendro slot date", date)
+    try {
+      let vendorId = cartItems[0].vendor.id
+      // vendor_id,date,delivery
+      const res = await actions.checkVendorSlots(`?vendor_id=${vendorId}&date=${date}&delivery=${dineInType}`,
+        {
+          code: appData?.profile?.code,
+          // currency: currencies?.primary_currency?.id,
+          // language: languages?.primary_language?.id,
+          // systemuser: DeviceInfo.getUniqueId(),
+          timezone: RNLocalize.getTimeZone(),
+          // device_token: DeviceInfo.getUniqueId(),
+        },
+      )
+      console.log("avail slots++", res)
+      updateState({
+        availableTimeSlots: res
+      })
+      if (res.length == 0) {
+        updateState({ selectedTimeSlots: '' })
+      }
+
+    } catch (error) {
+      console.log("error riased", error)
+    }
+  }
+  const onSelectTime = (item) => {
+    console.log("sleecte time slots", item)
+    updateState({ selectedTimeSlots: item.value })
+  }
+
+  const renderTimeSlots = ({ item, index }) => {
+    return (
+      <TouchableOpacity
+        key={String(index)}
+        activeOpacity={0.8}
+        onPress={() => onSelectTime(item)}
+        style={{
+          backgroundColor: selectedTimeSlots == item.value ? themeColors.primary_color : colors.white,
+          padding: 8,
+          borderRadius: 8,
+          borderWidth: selectedTimeSlots == item.value ? 0 : 1
+        }}
+      >
+        <Text style={{
+          color: selectedTimeSlots == item.value ? colors.white : colors.black,
+          fontFamily: fontFamily.regular,
+          fontSize: textScale(11)
+        }}>{item?.value}</Text>
+      </TouchableOpacity>
+    )
+  }
+
+  const onSelectDateFromCalendar = (day) => {
+    updateState({
+      selectedDateFromCalendar: day.dateString,
+      modalType: 'schedule',
+    })
+    console.log('selected day', day)
+    checkVendorSlots(day.dateString)
+  }
+
   return (
     <WrapperContainer
       bgColor={
@@ -4067,7 +4190,7 @@ export default function Cart({navigation, route}) {
           showBottomButton={true}
           mainText={strings.AREYOUSURE}
           bottomButtonClick={bottomButtonClick}
-          updateStatus={(item) => updateStatus(item)}
+        // updateStatus={(item) => updateStatus(item)}
         />
       )}
       <ChooseAddressModal
@@ -4095,7 +4218,7 @@ export default function Cart({navigation, route}) {
         transparent={true}
         isVisible={isVisibleTimeModal}
         animationType={'none'}
-        style={styles.modalContainer}
+        style={{ margin: 0, justifyContent: 'flex-end' }}
         onLayout={(event) => {
           updateState({viewHeight: event.nativeEvent.layout.height});
         }}>
@@ -4146,7 +4269,7 @@ export default function Cart({navigation, route}) {
               <View
                 style={{
                   alignItems: 'center',
-                  height: height / 3.5,
+                  // height: height / 3.5,
                 }}>
                 {modalType == 'pickup' ? (
                   <DatePicker
@@ -4164,7 +4287,7 @@ export default function Cart({navigation, route}) {
                         : new Date()
                     }
                     maximumDate={undefined}
-                    style={styles.datetimePickerText}
+                    // style={styles.datetimePickerText}
                     // onDateChange={setDate}
                     onDateChange={(value) => onDateChangeSecond(value)}
                   />
@@ -4184,7 +4307,7 @@ export default function Cart({navigation, route}) {
                         : new Date()
                     }
                     maximumDate={undefined}
-                    style={styles.datetimePickerText}
+                    // style={styles.datetimePickerText}
                     // onDateChange={setDate}
                     onDateChange={(value) => onDateChangeSecond(value)}
                   />
@@ -4193,26 +4316,87 @@ export default function Cart({navigation, route}) {
             ) : (
               <View
                 style={{
-                  alignItems: 'center',
-                  height: height / 3.5,
+                  // alignItems: 'center',
+                  // height: height / 4,
                 }}>
-                <DatePicker
-                  locale={selectedLanguage}
-                  date={
-                    sheduledorderdate ? new Date(sheduledorderdate) : new Date()
-                  }
-                  textColor={isDarkMode ? colors.white : colors.blackB}
-                  mode="datetime"
-                  minimumDate={
-                    !!cartData?.delay_date
-                      ? new Date(cartData?.delay_date)
-                      : new Date()
-                  }
-                  maximumDate={undefined}
-                  style={styles.datetimePickerText}
-                  // onDateChange={setDate}
-                  onDateChange={(value) => onDateChange(value)}
-                />
+                {!!availableTimeSlots && availableTimeSlots.length > 0 || !!cartData && !!cartData?.slots && !!cartData?.slots.length > 0 ?
+                  <Fragment>
+                    <ScrollView>
+                      <Calendar
+                        current={new Date()}
+                        minDate={new Date()}
+                        onDayPress={onSelectDateFromCalendar}
+                        markedDates={{
+                          [selectedDateFromCalendar]: {
+                            selected: true,
+                            disableTouchEvent: true,
+                            selectedColor: themeColors.primary_color,
+                            selectedTextColor: colors.white
+                          }
+                        }}
+                        theme={{
+                          arrowColor: themeColors.primary_color,
+                          textDayFontFamily: fontFamily.medium,
+                          textMonthFontFamily: fontFamily.medium,
+                          textDayHeaderFontFamily: fontFamily.bold,
+                          // textDayFontSize: textScale(12),
+                          // textMonthFontSize: textScale(10),
+                          // textDayHeaderFontSize: textScale(10),
+                        }}
+                      />
+
+                      <View>
+                        <Text style={{
+                          marginHorizontal: moderateScale(24),
+                          fontFamily: fontFamily.medium,
+                          fontSize: textScale(12),
+                          marginBottom: moderateScaleVertical(8),
+                          // height:moderateScale(20)
+                        }} >Time Slots</Text>
+                        <FlatList
+                          horizontal
+                          data={availableTimeSlots || []}
+                          renderItem={renderTimeSlots}
+                          keyExtractor={item => item.value || ''}
+                          ItemSeparatorComponent={() => (
+                            <View style={{ marginRight: moderateScale(12) }} />
+                          )}
+                          ListHeaderComponent={() => (
+                            <View style={{ marginLeft: moderateScale(24) }} />
+                          )}
+                          ListFooterComponent={() => (
+                            <View style={{ marginRight: moderateScale(24) }} />
+                          )}
+                          ListEmptyComponent={() => <View><Text style={{
+                            fontFamily: fontFamily.medium,
+                            color: colors.redB
+                          }}>Slot not available please select another date</Text></View>}
+                        />
+                      </View>
+                    </ScrollView>
+
+                  </Fragment>
+                  :
+                  <DatePicker
+                    locale={selectedLanguage}
+                    date={
+                      sheduledorderdate ? new Date(sheduledorderdate) : new Date()
+                    }
+                    textColor={isDarkMode ? colors.white : colors.blackB}
+                    mode="datetime"
+                    minimumDate={
+                      !!cartData?.delay_date
+                        ? new Date(cartData?.delay_date)
+                        : new Date()
+                    }
+                    maximumDate={undefined}
+                    // style={styles.datetimePickerText}
+                    // onDateChange={setDate}
+                    onDateChange={(value) => onDateChange(value)}
+
+                  />
+                }
+
               </View>
             )}
           </ScrollView>

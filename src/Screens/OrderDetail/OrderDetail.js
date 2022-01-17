@@ -180,7 +180,7 @@ export default function OrderDetail({navigation, route}) {
       data['vendor_id'] = paramData?.selectedVendor.id;
     }
     data['new_dispatch_traking_url'] = new_dispatch_traking_url;
-    console.log('new dispatch+++', data);
+
     // updateState({ isLoading: true });
     actions
       .getOrderDetail(data, {
@@ -342,6 +342,7 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const _renderItem = ({item, index}) => {
+    console.log('checking timngs>>>', item);
     // return <OffersCard />;
     let {itemCount} = state;
     return (
@@ -1066,7 +1067,7 @@ export default function OrderDetail({navigation, route}) {
           {!!cartData?.scheduled_date_time && (
             <LeftRightText
               leftText={strings.SEHEDLEDFOR}
-              rightText={moment(cartData?.scheduled_date_time).format('lll')}
+              rightText={cartData?.scheduled_date_time}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
               leftTextStyle={{
@@ -1587,6 +1588,7 @@ export default function OrderDetail({navigation, route}) {
               }}
               rotateEnabled={true}>
               <MapViewDirections
+                resetOnChange={false}
                 origin={{
                   latitude: Number(driverStatus.tasks[0]?.latitude),
                   longitude: Number(driverStatus.tasks[0]?.longitude),

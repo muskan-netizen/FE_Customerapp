@@ -51,7 +51,7 @@ const Banner = ({
           item.image.path.image_path,
           '1000/1000',
         )
-      : getImageUrl(item.image.image_fi, item.image.image_path, '1000/1000');
+      : getImageUrl(item.image.image_fit, item.image.image_path, '1000/1000');
 
     return (
       <>

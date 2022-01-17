@@ -1,5 +1,6 @@
 export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'http://192.168.97.160:8000/api/v1';
 
 // export const API_BASE_URL='http://192.168.97.123:8020/api/v1'
 // export const API_BASE_URL = 'http://192.168.96.20:8020/api/v1';
@@ -41,6 +42,7 @@ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://tranzonline.com/api/v1';
 // export const API_BASE_URL = 'https://hellodeliver.in/api/v1';
 // export const API_BASE_URL = 'https://swiftandvalu.com/api/v1';
+// export const API_BASE_URL = 'https://baytukom.royoorders.com/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
@@ -172,3 +174,6 @@ export const WALLET_CREDIT = getApiUrl('/myWallet/credit');
 export const VENDOR_REGISTER = getApiUrl('/vendor/register');
 export const DRIVER_REGISTER = getApiUrl('/driver/register');
 export const CANCEL_ORDER = getApiUrl('/return-order/vendor-order-for-cancel');
+export const WALLET_USER_VERIFY = getApiUrl('/wallet/transfer/user/verify');
+export const WALLET_TRANSFER_CONFIRM = getApiUrl('/wallet/transfer/confirm');
+export const VENDOR_SLOTS = getApiUrl('/vendor/slots');

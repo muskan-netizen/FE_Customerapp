@@ -449,7 +449,7 @@ export default function AddMoney({navigation}) {
         .then((res) => {
           console.log(res, 'res>>STRIpe');
           if (res && res?.token && res.token?.id) {
-            let selectedMethod = selectedPaymentMethod.title.toLowerCase();
+            let selectedMethod = selectedPaymentMethod.code.toLowerCase();
             // updateState({isLoadingB: true});
             actions
               .openPaymentWebUrl(
