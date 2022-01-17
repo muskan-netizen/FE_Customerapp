@@ -324,6 +324,11 @@ export default function AllPaymentMethods({navigation, route}) {
               });
             }}
             btnTitle={strings.SELECT}
+            isSubmitBtn
+            submitBtnStyle={{
+              width: '100%',
+              height: moderateScale(45),
+            }}
           />
         )}
       </>

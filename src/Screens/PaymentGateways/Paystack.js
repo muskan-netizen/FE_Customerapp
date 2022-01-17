@@ -17,7 +17,7 @@ import imagePath from '../../constants/imagePath';
 
 export default function Paystack({navigation, route}) {
   let paramsData = route?.params;
-  console.log(paramsData, '===>paramsData');
+  console.log(paramsData, '===>paramsDataPaystack');
 
   const {themeToggle, themeColor, appStyle, appData, currencies, languages} =
     useSelector((state) => state?.initBoot);
@@ -54,7 +54,7 @@ export default function Paystack({navigation, route}) {
           language: languages?.primary_language?.id,
         },
       );
-      console.log(res, 'responseMobbex');
+      console.log(res, 'responsePayment');
       updateState({webUrl: res.data});
     } catch (error) {
       updateState({isLoading: false});

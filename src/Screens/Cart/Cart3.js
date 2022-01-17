@@ -641,6 +641,9 @@ export default function Cart({navigation, route}) {
     }
 
     switch (paymentId) {
+      case 5: //Paystack Payment Getway
+        navigation.navigate(navigationStrings.PAYSTACK, paymentData);
+        break;
       case 6: //Payfast Payment Getway
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
         break;

@@ -278,6 +278,11 @@ export default function AddMoney({navigation}) {
                 });
               }}
               btnTitle={strings.ADD}
+              isSubmitBtn
+              submitBtnStyle={{
+                width: '100%',
+                height: moderateScale(40),
+              }}
             />
           )}
       </>
@@ -417,7 +422,7 @@ export default function AddMoney({navigation}) {
       )
       .then((res) => {
         updateState({isLoadingB: false, isRefreshing: false});
-        const URL = queryString.parseUrl(res.data);
+        // const URL = queryString.parseUrl(res.data);
         console.log('res==>>>>', res);
         if (res && res?.status == 'Success' && res?.data) {
           let sendingData = {
