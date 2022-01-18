@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-IGoLux/Pods-IGoLux.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-IGoLux/Pods-available_pods-IGoLux.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1584344487
 PROJECT_BUNDLE_ID = com.igolux

@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-BottomsUp/Pods-BottomsUp.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-BottomsUp/Pods-available_pods-BottomsUp.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1577363194

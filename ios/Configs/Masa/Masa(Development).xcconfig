@@ -1,5 +1,5 @@
 
-#include "Pods/Target Support Files/Pods-Masa/Pods-Masa.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Masa/Pods-available_pods-Masa.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1578703143
 PROJECT_BUNDLE_ID = com.app.masa

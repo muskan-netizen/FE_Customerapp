@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Noki/Pods-Noki.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Noki/Pods-available_pods-Noki.release.xcconfig"
 
 PROJECT_APPLE_ID =1591784972
 PROJECT_BUNDLE_ID = com.customer.noki

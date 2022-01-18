@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Skidoo/Pods-Skidoo.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Skidoo/Pods-available_pods-Skidoo.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1600626181
 PROJECT_BUNDLE_ID = com.skidoo

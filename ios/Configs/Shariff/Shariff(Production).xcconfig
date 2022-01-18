@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Shariff/Pods-Shariff.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Shariff/Pods-available_pods-Shariff.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1579851881

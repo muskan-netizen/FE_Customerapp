@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-SMCompany/Pods-SMCompany.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-SMCompany/Pods-available_pods-SMCompany.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1585115806
 PROJECT_BUNDLE_ID = com.smcompany

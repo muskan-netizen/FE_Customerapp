@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Image, TouchableOpacity, View} from 'react-native';
+import {Image, TouchableOpacity, View, ActivityIndicator} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSelector} from 'react-redux';
@@ -9,6 +9,7 @@ import commonStylesFun from '../styles/commonStyles';
 import {moderateScale, width} from '../styles/responsiveSize';
 import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
 import BrowseMenuButton from './BrowseMenuButton';
+import {MaterialIndicator} from 'react-native-indicators';
 
 const GradientCartView = ({
   containerStyle,
@@ -29,6 +30,7 @@ const GradientCartView = ({
   onMenuTap,
   ifCartShow,
   isMenuBtnShow,
+  isLoading = false,
 }) => {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -146,8 +148,8 @@ const GradientCartView = ({
               borderWidth: 0,
               marginTop,
               marginBottom,
-              height: moderateScale(58),
-              width: moderateScale(58),
+              height: moderateScale(65),
+              width: moderateScale(65),
               borderRadius: 100,
               ...containerStyle,
             }}
@@ -203,12 +205,19 @@ const GradientCartView = ({
                   alignItems: 'center',
                   justifyContent: 'center',
                   position: 'absolute',
-                  right: showText ? moderateScale(5) : 0,
+                  right: showText ? moderateScale(10) : 0,
                 }}>
+                {isLoading && (
+                  <MaterialIndicator
+                    color="#fff"
+                    style={{position: 'absolute', opacity: 0.8}}
+                    size={moderateScale(55)}
+                    trackWidth={moderateScale(4.5)}
+                  />
+                )}
                 <Image source={imagePath.cartIcon} />
               </Animatable.View>
             </LinearGradient>
-          
           </Animatable.View>
         </TouchableOpacity>
       )}

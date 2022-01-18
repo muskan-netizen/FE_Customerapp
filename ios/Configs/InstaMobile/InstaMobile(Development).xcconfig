@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-InstaMobile/Pods-InstaMobile.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-InstaMobile/Pods-available_pods-InstaMobile.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1577181056

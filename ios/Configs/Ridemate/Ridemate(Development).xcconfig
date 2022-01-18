@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Ridemate/Pods-Ridemate.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Ridemate/Pods-available_pods-Ridemate.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1581767917

@@ -435,7 +435,6 @@ export default function Addaddress({navigation, route}) {
 
   const onPressAddress = async (place) => {
     Keyboard.dismiss();
-    console.log('selected item', place);
     // return;
     if (!!place.place_id && !!place?.name) {
       // updateAddress(place.description)
@@ -448,7 +447,7 @@ export default function Addaddress({navigation, route}) {
           profile?.preferences?.map_key,
         );
         const {result} = res;
-    
+
         let addressData = getAddressComponent(result);
         cloneArr[searchResult.currentIndex].latitude =
           result.geometry.location.lat;

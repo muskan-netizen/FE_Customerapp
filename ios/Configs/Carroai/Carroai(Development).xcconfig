@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Carroai/Pods-Carroai.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Carroai/Pods-available_pods-Carroai.debug.xcconfig"
 
 PROJECT_APPLE_ID =1596080605
 PROJECT_BUNDLE_ID =com.carroai

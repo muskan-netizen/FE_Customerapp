@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-RXNow/Pods-RXNow.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-RXNow/Pods-available_pods-RXNow.release.xcconfig"
 
 PROJECT_APPLE_ID =1591786031
 PROJECT_BUNDLE_ID =com.rxnow

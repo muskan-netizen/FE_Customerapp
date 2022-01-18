@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-AfricanVillageMarket/Pods-AfricanVillageMarket.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-AfricanVillageMarket/Pods-available_pods-AfricanVillageMarket.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1600618630
