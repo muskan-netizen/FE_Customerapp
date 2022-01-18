@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-SirVU/Pods-SirVU.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-SirVU/Pods-available_pods-SirVU.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1581722147

@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-SeaEats/Pods-SeaEats.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-SeaEats/Pods-available_pods-SeaEats.release.xcconfig"
 
 PROJECT_APPLE_ID =1597910682
 PROJECT_BUNDLE_ID =com.seaeats

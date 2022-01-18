@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-BakeSale/Pods-BakeSale.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-BakeSale/Pods-available_pods-BakeSale.debug.xcconfig"
 
 PROJECT_APPLE_ID =1590126409
 PROJECT_BUNDLE_ID = com.bakesale

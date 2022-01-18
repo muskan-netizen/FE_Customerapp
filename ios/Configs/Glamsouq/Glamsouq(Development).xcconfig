@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Glamsouq/Pods-Glamsouq.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Glamsouq/Pods-available_pods-Glamsouq.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1580548792

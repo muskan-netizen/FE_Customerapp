@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Click2Deliver/Pods-Click2Deliver.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Click2Deliver/Pods-available_pods-Click2Deliver.debug.xcconfig"
 
 PROJECT_APPLE_ID =1595539256
 PROJECT_BUNDLE_ID =com.click2deliver

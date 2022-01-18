@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Yahu/Pods-Yahu.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Yahu/Pods-available_pods-Yahu.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1581083485

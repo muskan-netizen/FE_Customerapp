@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Taquick/Pods-Taquick.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Taquick/Pods-available_pods-Taquick.release.xcconfig"
 
 PROJECT_APPLE_ID = 1588076308
 PROJECT_BUNDLE_ID = com.taquick

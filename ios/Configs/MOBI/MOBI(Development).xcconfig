@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-MOBI/Pods-MOBI.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-MOBI/Pods-available_pods-MOBI.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1584789488
 PROJECT_BUNDLE_ID = com.mobi.customer

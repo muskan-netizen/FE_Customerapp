@@ -194,14 +194,15 @@ export const printReciept = async (data) => {
               await BluetoothEscposPrinter.printText(
                 `${strings.CUSTOMER}: ${`${detail.user.name}`}\r\n${
                   strings.ORDER_PLACE_ON
-                }: ${`${moment(detail.created_at).format(
-                  'YYYY-MM-DD [at] hh:mm A z',
+                }: ${`${moment(detail.created, 'DD-MM-YYYY hh:mm').format(
+                  'YYYY-MM-DD [at] hh:mm A',
                 )}`}\r\n${strings.TOBE_PREPARED}: ${moment(
                   detail.scheduled_date_time,
-                ).format('YYYY-MM-DD [at] hh:mm A z')}\r\n\r\n${
-                  strings.DELIVERY
-                }:\r\n${
-                  detail.address.address
+                  'DD-MM-YYYY hh:mm',
+                ).format(
+                  'YYYY-MM-DD [at] hh:mm A',
+                )}\r\n\r\n${detail.luxury_option.title.toUpperCase()}\r\n${
+                  detail.address ? detail.address.address : ''
                 }\r\n----------------------------------------------\r\n`,
                 {},
               );
@@ -209,10 +210,10 @@ export const printReciept = async (data) => {
               await BluetoothEscposPrinter.printText(
                 `${strings.CUSTOMER}: ${`${detail.user.name}`}\r\n${
                   strings.ORDER_PLACE_ON
-                }: ${`${moment(detail.created_at).format(
-                  'YYYY-MM-DD [at] hh:mm A z',
-                )}`}\r\n\r\n${strings.DELIVERY}:\r\n${
-                  detail.address.address
+                }: ${`${moment(detail.created, 'DD-MM-YYYY hh:mm').format(
+                  'YYYY-MM-DD [at] hh:mm A',
+                )}`}\r\n\r\n${detail.luxury_option.title.toUpperCase()}\r\n${
+                  detail.address ? detail.address.address : ''
                 }\r\n----------------------------------------------\r\n`,
                 {},
               );

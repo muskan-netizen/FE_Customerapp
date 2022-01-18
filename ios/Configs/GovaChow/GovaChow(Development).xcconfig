@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-GovaChow/Pods-GovaChow.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-GovaChow/Pods-available_pods-GovaChow.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1592252965
 PROJECT_BUNDLE_ID = com.app.govachow

@@ -25,6 +25,8 @@ import {
   AllinonePyments,
   Simplify,
   Square,
+  Checkout,
+  Paystack,
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
 import Pagarme from '../Screens/PaymentGateways/Pagarme';
@@ -140,9 +142,14 @@ export default function () {
         component={Square}
         options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.PAGARME}
         component={Pagarme}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.PAYSTACK}
+        component={Paystack}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

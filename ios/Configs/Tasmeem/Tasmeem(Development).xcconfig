@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Tasmeem/Pods-Tasmeem.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Tasmeem/Pods-available_pods-Tasmeem.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1580361385

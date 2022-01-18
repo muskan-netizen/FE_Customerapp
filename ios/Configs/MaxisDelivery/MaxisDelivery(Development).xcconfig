@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-MaxisDelivery/Pods-MaxisDelivery.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-MaxisDelivery/Pods-available_pods-MaxisDelivery.debug.xcconfig"
 
 PROJECT_APPLE_ID =1592302962
 PROJECT_BUNDLE_ID =com.maxisdelivery

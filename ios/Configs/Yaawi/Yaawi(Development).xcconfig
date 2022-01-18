@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Yaawi/Pods-Yaawi.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Yaawi/Pods-available_pods-Yaawi.debug.xcconfig"
 
 PROJECT_APPLE_ID =1590144018
 PROJECT_BUNDLE_ID = com.yaawi

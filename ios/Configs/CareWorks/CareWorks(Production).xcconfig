@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-CareWorks/Pods-CareWorks.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-CareWorks/Pods-available_pods-CareWorks.release.xcconfig"
 
 PROJECT_APPLE_ID =1592469219
 PROJECT_BUNDLE_ID =com.careworks

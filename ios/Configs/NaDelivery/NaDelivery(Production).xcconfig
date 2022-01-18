@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-NaDelivery/Pods-NaDelivery.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-NaDelivery/Pods-available_pods-NaDelivery.release.xcconfig"
 
 PROJECT_APPLE_ID =1597072099
 PROJECT_BUNDLE_ID =com.nadelivery

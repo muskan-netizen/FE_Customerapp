@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-LaundryOrders/Pods-LaundryOrders.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-LaundryOrders/Pods-available_pods-LaundryOrders.release.xcconfig"
 
 PROJECT_APPLE_ID =1597054339
 PROJECT_BUNDLE_ID =com.laundryorders

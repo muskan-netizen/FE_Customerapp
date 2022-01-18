@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-SamakeeMart/Pods-SamakeeMart.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-SamakeeMart/Pods-available_pods-SamakeeMart.debug.xcconfig"
 
 PROJECT_APPLE_ID =1597882201
 PROJECT_BUNDLE_ID =com.samakeemart

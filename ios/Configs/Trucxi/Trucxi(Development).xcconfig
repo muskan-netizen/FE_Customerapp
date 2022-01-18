@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Trucxi/Pods-Trucxi.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Trucxi/Pods-available_pods-Trucxi.debug.xcconfig"
 
 PROJECT_APPLE_ID =1596869787
 PROJECT_BUNDLE_ID =com.trucxi

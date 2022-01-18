@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Klickmat/Pods-Klickmat.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Klickmat/Pods-available_pods-Klickmat.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1580513940

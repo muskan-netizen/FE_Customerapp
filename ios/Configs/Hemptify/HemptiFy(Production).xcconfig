@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-HemptiFy/Pods-HemptiFy.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-HemptiFy/Pods-available_pods-HemptiFy.release.xcconfig"
 
 PROJECT_APPLE_ID = 1584812722
 PROJECT_BUNDLE_ID = com.hemptyfy

@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Driveree/Pods-Driveree.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Driveree/Pods-available_pods-Driveree.release.xcconfig"
 
 PROJECT_APPLE_ID =1591786846
 PROJECT_BUNDLE_ID =com.driveree

@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-KurbsideKings/Pods-KurbsideKings.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-KurbsideKings/Pods-available_pods-KurbsideKings.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1601163488
 PROJECT_BUNDLE_ID = com.kurbsidekings
