@@ -22,7 +22,10 @@ import strings from '../../constants/lang/index';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {moderateScaleVertical} from '../../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+} from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {
   getColorCodeWithOpactiyNumber,
@@ -270,7 +273,12 @@ export default function TipPaymentOptions({navigation, route}) {
                 isLoading: true,
               });
             }}
-            btnTitle={strings.ADD}
+            btnTitle={strings.SELECT}
+            isSubmitBtn
+            submitBtnStyle={{
+              width: '100%',
+              height: moderateScale(45),
+            }}
           />
         )}
       </>
@@ -302,7 +310,7 @@ export default function TipPaymentOptions({navigation, route}) {
     updateState({isLoading: true});
     actions
       .openPaymentWebUrl(
-        `/${selectedMethod}?amount=${data?.selectedTipAmount}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&payment_option_id=${selectedPaymentMethod?.id}&action=tip&order_number=${data?.order_number}`,
+        `/${selectedMethod}?amount=${data?.selectedTipAmount}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&payment_option_id=${selectedPaymentMethod?.id}&order_number=${data?.order_number}&action=tip`,
         {},
         {
           code: appData?.profile?.code,

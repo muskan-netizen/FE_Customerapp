@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-YourLaundryApp/Pods-YourLaundryApp.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-YourLaundryApp/Pods-available_pods-YourLaundryApp.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1584800732
 PROJECT_BUNDLE_ID = com.yourlaundryapp

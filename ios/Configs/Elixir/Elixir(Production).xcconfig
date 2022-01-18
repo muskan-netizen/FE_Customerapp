@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Elixir/Pods-Elixir.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Elixir/Pods-available_pods-Elixir.release.xcconfig"
 
 PROJECT_APPLE_ID = 1588391540
 PROJECT_BUNDLE_ID = com.elixir

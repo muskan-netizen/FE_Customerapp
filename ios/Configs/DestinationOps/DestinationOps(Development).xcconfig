@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-DestinationOps/Pods-DestinationOps.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-DestinationOps/Pods-available_pods-DestinationOps.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1581966430

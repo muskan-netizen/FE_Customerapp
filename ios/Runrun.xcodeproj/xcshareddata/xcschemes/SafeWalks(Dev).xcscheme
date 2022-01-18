@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "848206B12773106300A5EF06"
-               BuildableName = "Runrun.app"
+               BuildableName = "SafeWalks.app"
                BlueprintName = "SafeWalks"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "848206B12773106300A5EF06"
-            BuildableName = "Runrun.app"
+            BuildableName = "SafeWalks.app"
             BlueprintName = "SafeWalks"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "848206B12773106300A5EF06"
-            BuildableName = "Runrun.app"
+            BuildableName = "SafeWalks.app"
             BlueprintName = "SafeWalks"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

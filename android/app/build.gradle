@@ -198,6 +198,16 @@ android {
     flavorDimensions "appType"
 
     productFlavors {
+         orderchekout{
+            dimension "appType"
+            versionCode 3
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.orderchekout'
+            resValue "string", "app_name", "Order Chekout"
+            resValue "string", "host_name", ""
+         }
         royoorder {
             dimension "appType"
             versionCode 3
@@ -790,6 +800,46 @@ android {
             resValue "string", "host_name", ""
          }
 
+         destinationOps{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.destinationOps'
+            resValue "string", "app_name", "Destination Ops"
+            resValue "string", "host_name", ""
+         }
+          loopwhole{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.loopwhole'
+            resValue "string", "app_name", "LoopWhole"
+            resValue "string", "host_name", ""
+         }
+         vici{
+            dimension "appType"
+            versionCode 5
+            versionName "1.1"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.app.vici'
+            resValue "string", "app_name", "VICI"
+            resValue "string", "host_name", ""
+         }
+         carhop{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.carhop'
+            resValue "string", "app_name", "Car Hop"
+            resValue "string", "host_name", ""
+         }
          destinationOps{
             dimension "appType"
             versionCode 1
@@ -1495,16 +1545,7 @@ android {
             resValue "string", "app_name", "Ored"
             resValue "string", "host_name", ""
          }
-         orderchekout{
-            dimension "appType"
-            versionCode 3
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion         
-            applicationId 'com.orderchekout'
-            resValue "string", "app_name", "Order Chekout"
-            resValue "string", "host_name", ""
-         }
+       
          maxisdelivery{
             dimension "appType"
             versionCode 1

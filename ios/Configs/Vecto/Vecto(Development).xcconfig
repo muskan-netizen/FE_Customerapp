@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Vecto/Pods-Vecto.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Vecto/Pods-available_pods-Vecto.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1588038480
 PROJECT_BUNDLE_ID = com.vecto

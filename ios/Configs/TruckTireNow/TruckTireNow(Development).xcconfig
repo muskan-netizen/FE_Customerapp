@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-TruckTireNow/Pods-TruckTireNow.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-TruckTireNow/Pods-available_pods-TruckTireNow.debug.xcconfig"
 
 PROJECT_APPLE_ID =1595544999
 PROJECT_BUNDLE_ID =com.trucktirenow

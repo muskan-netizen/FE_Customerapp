@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-TwoFinder/Pods-TwoFinder.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-TwoFinder/Pods-available_pods-TwoFinder.debug.xcconfig"
 
 PROJECT_APPLE_ID =1591413863
 PROJECT_BUNDLE_ID = com.twofinder

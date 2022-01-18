@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Runrun/Pods-Runrun.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Runrun/Pods-available_pods-Runrun.release.xcconfig"
 
 PROJECT_APPLE_ID = 1568262767
 PROJECT_BUNDLE_ID = com.codebrew.runrun

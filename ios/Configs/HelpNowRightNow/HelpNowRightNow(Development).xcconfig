@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-HelpNowRightNow/Pods-HelpNowRightNow.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-HelpNowRightNow/Pods-available_pods-HelpNowRightNow.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1578437896

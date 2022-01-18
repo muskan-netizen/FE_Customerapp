@@ -241,7 +241,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
             name: item.dataname,
           },
         });
-      } else if (item?.redirect_to == staticStrings.PRODUCT) {
+      } else if (item?.redirect_to == staticStrings.PRODUCT || item.redirect_to == staticStrings.ONDEMANDSERVICE) {
         navigation.push(navigationStrings.PRODUCT_LIST, {
           data: {
             id: item.id,

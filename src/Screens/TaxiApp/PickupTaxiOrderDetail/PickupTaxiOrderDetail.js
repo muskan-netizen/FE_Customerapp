@@ -759,7 +759,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
           {!isLoading && !!tasks?.length > 0 && (
             <MapView
               provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-              style={{height: height / 2.4, width: '100%'}}
+              style={{height: height / 1.8, width: '100%'}}
               initialRegion={region}
               ref={mapRef}
               // cacheEnabled={true}
@@ -857,7 +857,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
               />
             </MapView>
           )}
-          {!!orderFullDetail && (
+          {/* {!!orderFullDetail && (
             <TouchableOpacity
               style={{
                 position: 'absolute',
@@ -875,13 +875,13 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                 source={imagePath.mapNavigation}
               />
             </TouchableOpacity>
-          )}
+          )} */}
         </View>
 
         <BottomSheet
           ref={bottomSheetRef}
           index={0}
-          snapPoints={[height / 3, height]}
+          snapPoints={[height / 3.4, height]}
           animateOnMount={true}
           // onChange={(inx) => updateState({ hideShowBack: inx })}
           onChange={() => playHapticEffect(hapticEffects.impactMedium)}

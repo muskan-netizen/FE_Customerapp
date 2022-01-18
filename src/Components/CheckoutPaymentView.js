@@ -11,6 +11,7 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
 } from '../styles/responsiveSize';
 import colors from '../styles/colors';
 import {useSelector} from 'react-redux';
@@ -20,6 +21,11 @@ export default function CheckoutPaymentView({
   cardTokenizationFailed = () => {},
   onPressSubmit = () => {},
   btnTitle = '',
+  isSubmitBtn = false,
+  submitBtnStyle = {},
+  renderCustomLeft = () => <></>,
+  btnsMainView = {},
+  mainContainer = {},
 }) {
   const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
@@ -28,7 +34,7 @@ export default function CheckoutPaymentView({
   const styles = stylesFunc({fontFamily, themeColors});
 
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, ...mainContainer}}>
       <Frames
         config={{
           debug: true,
@@ -54,12 +60,25 @@ export default function CheckoutPaymentView({
           />
         </View>
 
-        <SubmitButton
-          title={btnTitle}
-          style={styles.button}
-          textStyle={styles.buttonText}
-          onPress={onPressSubmit}
-        />
+        {isSubmitBtn ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              ...btnsMainView,
+            }}>
+            {renderCustomLeft()}
+
+            <SubmitButton
+              title={btnTitle}
+              style={{...styles.button, ...submitBtnStyle}}
+              textStyle={styles.buttonText}
+              onPress={onPressSubmit}
+            />
+          </View>
+        ) : (
+          <></>
+        )}
       </Frames>
     </View>
   );
@@ -69,7 +88,6 @@ export function stylesFunc({fontFamily, themeColors}) {
     container: {
       alignItems: 'center',
       justifyContent: 'flex-start',
-
       paddingHorizontal: moderateScale(10),
     },
     dateAndCode: {

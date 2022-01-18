@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-MartiniOnWheels/Pods-MartiniOnWheels.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-MartiniOnWheels/Pods-available_pods-MartiniOnWheels.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1578453831

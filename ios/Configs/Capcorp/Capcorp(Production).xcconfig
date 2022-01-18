@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Capcorp/Pods-Capcorp.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Capcorp/Pods-available_pods-Capcorp.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1576341513
