@@ -373,6 +373,15 @@ export default ({themeColors, fontFamily}) => {
       marginBottom: moderateScaleVertical(24),
       marginTop: moderateScaleVertical(15),
     },
+    menuView: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: moderateScale(4),
+      borderWidth: 0.3,
+      borderColor: colors.textGreyB,
+      padding: moderateScale(6),
+    },
     hdrRatingTxtView: {
       flexDirection: 'row',
       alignItems: 'center',

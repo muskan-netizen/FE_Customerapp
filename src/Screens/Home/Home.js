@@ -47,7 +47,7 @@ export default function Home({ route, navigation }) {
     allAddresss,
   } = useSelector((state) => state?.initBoot);
   const { location, appMainData, dineInType } = useSelector((state) => state?.home);
-  
+
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const addressSearch = useSelector((state) => state?.addressSearch.addressSearch,);
   const userData = useSelector((state) => state?.auth?.userData);
@@ -480,9 +480,7 @@ export default function Home({ route, navigation }) {
   };
   useEffect(() => {
     console.log(saveAllUserAddress, 'saveAllUserAddress');
-    if (!saveAllUserAddress) {
       homeData();
-    }
   }, [location, bestSeller, openVendor, closeVendor]);
 
   //On Press banner
@@ -657,6 +655,7 @@ export default function Home({ route, navigation }) {
   };
 
   const onVendorFilterSeletion = (selectedFilter) => {
+    console.log("Selected filter", selectedFilter)
     switch (selectedFilter?.id) {
       case 1:
         updateState({
