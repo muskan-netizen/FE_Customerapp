@@ -1,27 +1,27 @@
-import React from 'react';
-import {StyleSheet, View, Image, Text, Platform} from 'react-native';
 import {
-  createBottomTabNavigator,
   BottomTabBar,
+  createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
+import React from 'react';
+import {Image, Platform, StyleSheet, Text, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import colors from '../styles/colors';
-import imagePath from '../constants/imagePath';
-import fontFamily from '../styles/fontFamily';
+import imagePath from '../../constants/imagePath';
+import colors from '../../styles/colors';
+import fontFamily from '../../styles/fontFamily';
 import {
   moderateScale,
   moderateScaleVertical,
   width,
-} from '../styles/responsiveSize';
-import navigationStrings from './navigationStrings';
-import RoyoOrderScreenStack from './RoyoOrderScreenStack';
-import RoyoOrderProductStack from './RoyoOrderProductStack';
-import RoyoOrderHomeStack from './RoyoOrderHomeStack';
-import RoyoOrderAccountStack from './RoyoOrderAccountStack';
+} from '../../styles/responsiveSize';
+import navigationStrings from '../navigationStrings';
+import AccountStackVendor from './AccountStackVendor';
+import HomeStackVendor from './HomeStackVendor';
+import OrderStackVendor from './OrderStackVendor';
+import ProductStackVendor from './ProductStackVendor';
 
 const Tab = createBottomTabNavigator();
 
-const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
+const TabRoutesVendor = ({barColor = colors.themeColor2}) => {
   const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
@@ -84,6 +84,7 @@ const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
       }}>
       <Tab.Screen
         name={navigationStrings.ROYO_VENDOR_HOME}
+        component={HomeStackVendor}
         options={{
           headerShown: false,
           tabBarIcon: ({focused}) => {
@@ -111,13 +112,11 @@ const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
             );
           },
         }}
-        component={RoyoOrderHomeStack}
       />
 
       <Tab.Screen
         name={navigationStrings.ROYO_VENDOR_ORDER}
-        // component={RoyoOrder}
-        component={RoyoOrderScreenStack}
+        component={OrderStackVendor}
         options={{
           headerShown: false,
           tabBarIcon: ({focused}) => {
@@ -149,8 +148,7 @@ const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
 
       <Tab.Screen
         name={navigationStrings.ROYO_VENDOR_PRODUCTS}
-        // component={RoyoProducts}
-        component={RoyoOrderProductStack}
+        component={ProductStackVendor}
         options={{
           headerShown: false,
           tabBarIcon: ({focused}) => {
@@ -182,7 +180,7 @@ const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
 
       <Tab.Screen
         name={navigationStrings.ROYO_VENDOR_ACCOUNT}
-        component={RoyoOrderAccountStack}
+        component={AccountStackVendor}
         options={{
           headerShown: false,
           tabBarIcon: ({focused}) => {
@@ -215,7 +213,7 @@ const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
   );
 };
 
-export default RoyoVendroAppTabRoute;
+export default TabRoutesVendor;
 
 const styles = StyleSheet.create({
   navigatorContainer: {

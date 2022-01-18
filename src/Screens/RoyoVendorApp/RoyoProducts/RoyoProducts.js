@@ -1,9 +1,25 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
+import {debounce} from 'lodash';
+import React, {useEffect, useState} from 'react';
+import {
+  FlatList,
+  Image,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import HTMLView from 'react-native-htmlview';
 import {SwipeListView} from 'react-native-swipe-list-view';
-import {customMarginBottom} from '../../../utils/constants/constants';
+import {useSelector} from 'react-redux';
+import ButtonWithLoader from '../../../Components/ButtonWithLoader';
+import Header from '../../../Components/Header';
+import MultiScreen from '../../../Components/MultiScreen';
 import WrapperContainer from '../../../Components/WrapperContainer';
+import imagePath from '../../../constants/imagePath';
+import staticStrings from '../../../constants/staticStrings';
+import navigationStrings from '../../../navigation/navigationStrings';
+import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import fontFamily from '../../../styles/fontFamily';
 import {
@@ -11,23 +27,61 @@ import {
   moderateScaleVertical,
   width,
 } from '../../../styles/responsiveSize';
-import MultiScreen from '../../../Components/MultiScreen';
-import imagePath from '../../../constants/imagePath';
-import {useSelector} from 'react-redux';
-import {TouchableOpacity} from 'react-native';
-import ButtonWithLoader from '../../../Components/ButtonWithLoader';
-import navigationStrings from '../../../navigation/navigationStrings';
-import Header from '../../../Components/Header';
-import {FlatList} from 'react-native';
-import staticStrings from '../../../constants/staticStrings';
-import {cloneDeep, debounce} from 'lodash';
-import actions from '../../../redux/actions';
 import {getImageUrl, showError} from '../../../utils/helperFunctions';
-import HTMLView from 'react-native-htmlview';
-import {RefreshControl} from 'react-native';
 
 const RoyoProducts = (props) => {
   const {navigation} = props;
+
+  const {storeSelectedVendor} = useSelector((state) => state?.order);
+  const {
+    appData,
+    themeColors,
+    themeLayouts,
+    currencies,
+    languages,
+    internetConnection,
+    appStyle,
+  } = useSelector((state) => state?.initBoot);
+  const [state, setState] = useState({
+    activeIndex: 0,
+    headerText: 'Products',
+    vendor_list: [],
+    selectedVendor: null,
+    isVisibleModal: false,
+    isLoading: true,
+    pageNo: 1,
+    limit: 12,
+    isRefreshing: false,
+    productListData: [],
+    category_list: [],
+    categoryName: '',
+    gridView: false,
+    topTabs: [
+      'Products',
+      'Categories',
+      'Products',
+      'Categories',
+      'Products',
+      'Categories',
+    ],
+  });
+
+  const {
+    vendor_list,
+    selectedVendor,
+    isLoading,
+    pageNo,
+    limit,
+    isRefreshing,
+    categoryInfo,
+    productListData,
+    category_list,
+    gridView,
+    activeIndex,
+    headerText,
+    categoryName,
+    topTabs,
+  } = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -99,48 +153,6 @@ const RoyoProducts = (props) => {
     else updateState({activeIndex: index, headerText: 'Categories'});
   };
 
-  const {storeSelectedVendor} = useSelector((state) => state?.order);
-  const [state, setState] = useState({
-    activeIndex: 0,
-    headerText: 'Products',
-    vendor_list: [],
-    selectedVendor: null,
-    isVisibleModal: false,
-    isLoading: true,
-    pageNo: 1,
-    limit: 12,
-    isRefreshing: false,
-    productListData: [],
-    category_list: [],
-    categoryName: '',
-    gridView: false,
-  });
-
-  const {
-    appData,
-    themeColors,
-    themeLayouts,
-    currencies,
-    languages,
-    internetConnection,
-    appStyle,
-  } = useSelector((state) => state?.initBoot);
-  const {
-    vendor_list,
-    selectedVendor,
-    isLoading,
-    pageNo,
-    limit,
-    isRefreshing,
-    categoryInfo,
-    productListData,
-    category_list,
-    gridView,
-    activeIndex,
-    headerText,
-    categoryName,
-  } = state;
-
   useEffect(() => {
     if (isLoading || isRefreshing) {
       getAllProducts();
@@ -158,42 +170,44 @@ const RoyoProducts = (props) => {
   /**********Get all list items by store  id and category id */
   const getAllProducts = (id) => {
     console.log(pageNo, 'data at product');
-    if(selectedVendor?.id||storeSelectedVendor?.id)
-    actions
-      .getProductBySpecificId(
-        `?selected_category_id=${
-          id || ''
-        }&limit=${limit}&page=${pageNo}&selected_vendor_id=${
-          selectedVendor?.id || storeSelectedVendor?.id||''
-        }`,
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      )
-      .then((res) => {
-        let categorylist = res.data.category_list.filter((x) => x.is_selected);
-        updateState({
-          isLoading: false,
-          isRefreshing: false,
-          vendor_list: res.data.vendor_list,
-          categoryName: categorylist[0]?.name,
-          selectedVendor: !!storeSelectedVendor?.id
-            ? storeSelectedVendor
-            : !!selectedVendor
-            ? selectedVendor
-            : res.data.vendor_list.find((x) => x.is_selected),
+    if (selectedVendor?.id || storeSelectedVendor?.id)
+      actions
+        .getProductBySpecificId(
+          `?selected_category_id=${
+            id || ''
+          }&limit=${limit}&page=${pageNo}&selected_vendor_id=${
+            selectedVendor?.id || storeSelectedVendor?.id || ''
+          }`,
+          {},
+          {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+          },
+        )
+        .then((res) => {
+          let categorylist = res.data.category_list.filter(
+            (x) => x.is_selected,
+          );
+          updateState({
+            isLoading: false,
+            isRefreshing: false,
+            vendor_list: res.data.vendor_list,
+            categoryName: categorylist[0]?.name,
+            selectedVendor: !!storeSelectedVendor?.id
+              ? storeSelectedVendor
+              : !!selectedVendor
+              ? selectedVendor
+              : res.data.vendor_list.find((x) => x.is_selected),
 
-          category_list: res.data.category_list,
-          productListData:
-            pageNo == 1
-              ? res.data.products.data
-              : [...productListData, ...res.data.products.data],
-        });
-      })
-      .catch(errorMethod);
+            category_list: res.data.category_list,
+            productListData:
+              pageNo == 1
+                ? res.data.products.data
+                : [...productListData, ...res.data.products.data],
+          });
+        })
+        .catch(errorMethod);
     // }
   };
 
@@ -277,12 +291,9 @@ const RoyoProducts = (props) => {
 
   return (
     <WrapperContainer
-      // isLoading={isLoading}
-      bgColor="white"
-      statusBarColor="white"
-      barStyle="dark-content">
+    // isLoading={isLoading}
+    >
       <Header
-        headerStyle={{marginVertical: moderateScaleVertical(16)}}
         centerTitle={`${headerText} | ${selectedVendor?.name} `}
         noLeftIcon
         onPressCenterTitle={() => _reDirectToVendorList()}
@@ -293,9 +304,11 @@ const RoyoProducts = (props) => {
       <View style={styles.container}>
         <MultiScreen
           tabTextStyle={{marginTop: moderateScaleVertical(0)}}
-          screenName={['Products', 'Categories', '', '', '']}
+          screenName={topTabs}
           selectedScreen={(index) => selectedOrder(index)}
           selectedScreenIndex={activeIndex}
+          itemStyle={{marginHorizontal: moderateScale(10)}}
+          scrollEnabled
         />
         {activeIndex == 0 ? (
           <View style={{flex: 1}}>
@@ -389,9 +402,7 @@ const styles = StyleSheet.create({
     marginRight: moderateScale(10),
   },
   container: {
-    // marginTop: moderateScaleVertical(24),
     marginHorizontal: moderateScale(16),
-    marginBottom: customMarginBottom(),
     flex: 1,
   },
   font16medium: {

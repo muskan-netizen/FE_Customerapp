@@ -2,19 +2,17 @@ import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {
-  OrderDetail,
   ProductDetail,
   ProductDetail2,
   RoyoOrder,
   RoyoOrderDetail,
   VendorList,
-} from '../Screens';
-import {shortCodes} from '../utils/constants/DynamicAppKeys';
-import navigationStrings from './navigationStrings';
+} from '../../Screens';
+import navigationStrings from '../navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {
-  const {appData, appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle} = useSelector((state) => state?.initBoot);
 
   return (
     <Stack.Navigator>

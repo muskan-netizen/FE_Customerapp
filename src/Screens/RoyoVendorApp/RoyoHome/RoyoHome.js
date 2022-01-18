@@ -44,7 +44,6 @@ const commonStyle = commonStyles({
 
 const RoyoHome = (props) => {
   const {navigation} = props;
-
   const {storeSelectedVendor} = useSelector((state) => state?.order);
   const {appData, currencies, languages} = useSelector(
     (state) => state.initBoot,
@@ -398,17 +397,13 @@ const RoyoHome = (props) => {
   };
 
   return (
-    <WrapperContainer
-      bgColor={colors.white}
-      statusBarColor={colors.white}
-      barStyle="dark-content">
+    <WrapperContainer bgColor={colors.white} statusBarColor={colors.white}>
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
         onPressLeft={() => {
           navigation.navigate(navigationStrings.TAB_ROUTES);
         }}
-        // leftIcon={imagePath.logoRoyo}
-        leftIcon={imagePath.back}
+        leftIcon={imagePath.backRoyo}
         rightIcon={status ? imagePath.onlineRoyo : imagePath.offlineRoyo}
         onPressRight={toggleStatus}
       />
@@ -450,7 +445,6 @@ const RoyoHome = (props) => {
             </View>
           </View>
 
-          {/* chart */}
           <View style={styles.rowWrapSpace}>
             <View>
               <View style={styles.chartHeader}>
