@@ -173,7 +173,7 @@ const OrderCardVendorComponent2 = ({
           </TouchableOpacity>
         </View>
       ) : null}
-      {console.log('checking ssa', data)}
+      {/* {console.log('checking ssa', data)} */}
       {data?.order_status?.current_status?.title !== strings.DELIVERED &&
         data?.order_status?.current_status?.title !== strings.REJECTED &&
         (!!etaTime || !!data?.scheduled_date_time) && (
