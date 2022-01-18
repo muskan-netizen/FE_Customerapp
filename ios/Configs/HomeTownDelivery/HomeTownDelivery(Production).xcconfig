@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-HomeTownDelivery/Pods-HomeTownDelivery.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-HomeTownDelivery/Pods-available_pods-HomeTownDelivery.release.xcconfig"
 
 PROJECT_APPLE_ID = 1604337590
 PROJECT_BUNDLE_ID =com.homeTownDelivery

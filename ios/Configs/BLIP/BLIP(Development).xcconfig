@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-BLIP/Pods-BLIP.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-BLIP/Pods-available_pods-BLIP.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1578712358

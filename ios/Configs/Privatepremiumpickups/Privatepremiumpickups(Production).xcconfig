@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Privatepremiumpickups/Pods-Privatepremiumpickups.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Privatepremiumpickups/Pods-available_pods-Privatepremiumpickups.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1604772012
 PROJECT_BUNDLE_ID =com.privatepremiumpickups

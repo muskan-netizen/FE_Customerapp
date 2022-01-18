@@ -1,6 +1,6 @@
-import { CardField, createToken, initStripe } from '@stripe/stripe-react-native';
-import React, { useEffect, useState } from 'react';
-import { Alert } from 'react-native';
+import {CardField, createToken, initStripe} from '@stripe/stripe-react-native';
+import React, {useEffect, useState} from 'react';
+import {Alert} from 'react-native';
 import {
   FlatList,
   Image,
@@ -9,37 +9,41 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useSelector } from 'react-redux';
+import {useDarkMode} from 'react-native-dark-mode';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useSelector} from 'react-redux';
+import CheckoutPaymentView from '../../Components/CheckoutPaymentView';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import { moderateScaleVertical } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
+import {
+  moderateScale,
+  moderateScaleVertical,
+} from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
 import {
   getColorCodeWithOpactiyNumber,
   showError,
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
 
-export default function TipPaymentOptions({ navigation, route }) {
+export default function TipPaymentOptions({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { appData, appStyle, themeColors, currencies, languages } = useSelector(
+  const {appData, appStyle, themeColors, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({ fontFamily });
+  const styles = stylesFun({fontFamily});
   const data = route?.params?.data;
   const userData = useSelector((state) => state?.auth?.userData);
   // console.log(selectedPaymentMethodHandler, 'selectedPaymentMethod');
@@ -60,10 +64,10 @@ export default function TipPaymentOptions({ navigation, route }) {
     isLoading,
   } = state;
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   useEffect(() => {
-    updateState({ isLoading: true });
+    updateState({isLoading: true});
     getListOfPaymentMethod();
   }, []);
 
@@ -81,21 +85,20 @@ export default function TipPaymentOptions({ navigation, route }) {
       )
       .then((res) => {
         console.log(res, 'allpayments gate');
-        updateState({ isLoading: false, payementMethods: res?.data });
+        updateState({isLoading: false, payementMethods: res?.data});
       })
       .catch(errorMethod);
   };
 
   //Error handling in screen
   const errorMethod = (error) => {
-    updateState({ isLoading: false, isLoadingB: false });
+    updateState({isLoading: false, isLoadingB: false});
     showError(error?.message || error?.error);
   };
 
   //Change Payment method/ Navigate to payment screen
   const selectPaymentOption = async () => {
     if (selectedPaymentMethod) {
-      // updateState({ isLoading: true });
       if (
         selectedPaymentMethod?.id == 4 &&
         selectedPaymentMethod?.off_site == 0
@@ -104,13 +107,13 @@ export default function TipPaymentOptions({ navigation, route }) {
           await createToken(cardInfo)
             .then((res) => {
               if (res && res?.token && res.token?.id) {
-                updateState({ isLoading: false });
+                updateState({isLoading: false});
                 actions
                   .tipAfterOrder(
                     {
                       tip_amount: data?.selectedTipAmount,
                       order_number: data?.order_number,
-                      transaction_id: res.token?.id
+                      transaction_id: res.token?.id,
                     },
                     {
                       code: appData?.profile?.code,
@@ -119,7 +122,7 @@ export default function TipPaymentOptions({ navigation, route }) {
                     },
                   )
                   .then((res) => {
-                    updateState({ isLoading: false });
+                    updateState({isLoading: false});
                     if (res && res?.status == 'Success' && res?.data) {
                       Alert.alert('', strings.PAYMENT_SUCCESS, [
                         {
@@ -132,20 +135,20 @@ export default function TipPaymentOptions({ navigation, route }) {
                   })
                   .catch(errorMethod);
               } else {
-                updateState({ isLoading: false });
+                updateState({isLoading: false});
               }
             })
             .catch((err) => {
-              updateState({ isLoading: false });
+              updateState({isLoading: false});
               errorMethod;
             });
         } else {
-          updateState({ isLoading: false });
+          updateState({isLoading: false});
           showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
         }
       } else {
         setTimeout(() => {
-          updateState({ isLoading: false });
+          updateState({isLoading: false});
           _webPayment(selectedPaymentMethod);
         }, 1000);
       }
@@ -158,12 +161,43 @@ export default function TipPaymentOptions({ navigation, route }) {
   const selectPaymentMethod = (data, inx) => {
     {
       selectedPaymentMethod && selectedPaymentMethod?.id == data?.id
-        ? updateState({ selectedPaymentMethod: null })
-        : updateState({ selectedPaymentMethod: data });
+        ? updateState({selectedPaymentMethod: null})
+        : updateState({selectedPaymentMethod: data});
     }
   };
 
-  const _renderItemPayments = ({ item, index }) => {
+  const _checkoutPayment = (token) => {
+    console.log(token, 'tokenOfCheckout');
+
+    let selectedMethod = selectedPaymentMethod.code.toLowerCase();
+    actions
+      .openPaymentWebUrl(
+        `/${selectedMethod}?amount=${data?.selectedTipAmount}&payment_option_id=${selectedPaymentMethod?.id}&token=${token}&order_number=${data?.order_number}&action=tip`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'responseFromServer');
+        updateState({isLoading: false, isRefreshing: false});
+        if (res && res?.status == 'Success' && res?.data) {
+          Alert.alert('', strings.PAYMENT_SUCCESS, [
+            {
+              text: strings.OK,
+              onPress: () => console.log('Cancel Pressed'),
+              // style: 'destructive',
+            },
+          ]);
+          navigation.navigate(navigationStrings.ORDER_DETAIL);
+        }
+      })
+      .catch(errorMethod);
+  };
+
+  const _renderItemPayments = ({item, index}) => {
     return (
       <>
         <TouchableOpacity
@@ -180,7 +214,7 @@ export default function TipPaymentOptions({ navigation, route }) {
           <Text
             style={
               isDarkMode
-                ? [styles.caseOnDeliveryText, { color: MyDarkTheme.colors.text }]
+                ? [styles.caseOnDeliveryText, {color: MyDarkTheme.colors.text}]
                 : styles.caseOnDeliveryText
             }>
             {item?.title_lng ? item?.title_lng : item?.title}
@@ -190,32 +224,63 @@ export default function TipPaymentOptions({ navigation, route }) {
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           selectedPaymentMethod?.off_site == 0 &&
-          selectedPaymentMethod?.id != 1
+          selectedPaymentMethod?.id == 4
         ) && (
-            <View>
-              <CardField
-                postalCodeEnabled={true}
-                placeholder={{
-                  number: '4242 4242 4242 4242',
-                }}
-                cardStyle={{
-                  backgroundColor: colors.white,
-                  textColor: colors.black,
-                }}
-                style={{
-                  width: '100%',
-                  height: 50,
-                  marginVertical: 10,
-                }}
-                onCardChange={(cardDetails) => {
-                  _onChangeStripeData(cardDetails);
-                }}
-                onBlur={() => {
-                  Keyboard.dismiss();
-                }}
-              />
-            </View>
-          )}
+          <View>
+            <CardField
+              postalCodeEnabled={true}
+              placeholder={{
+                number: '4242 4242 4242 4242',
+              }}
+              cardStyle={{
+                backgroundColor: colors.white,
+                textColor: colors.black,
+              }}
+              style={{
+                width: '100%',
+                height: 50,
+                marginVertical: 10,
+              }}
+              onCardChange={(cardDetails) => {
+                _onChangeStripeData(cardDetails);
+              }}
+              onBlur={() => {
+                Keyboard.dismiss();
+              }}
+            />
+          </View>
+        )}
+        {!!(
+          selectedPaymentMethod &&
+          selectedPaymentMethod?.id == item.id &&
+          selectedPaymentMethod?.off_site == 0 &&
+          selectedPaymentMethod?.id === 17
+        ) && (
+          <CheckoutPaymentView
+            cardTokenized={(e) => {
+              if (e.token) {
+                _checkoutPayment(e.token);
+              }
+            }}
+            cardTokenizationFailed={(e) => {
+              setTimeout(() => {
+                updateState({isLoading: false});
+                showError(strings.INVALID_CARD_DETAILS);
+              }, 1000);
+            }}
+            onPressSubmit={(res) => {
+              updateState({
+                isLoading: true,
+              });
+            }}
+            btnTitle={strings.SELECT}
+            isSubmitBtn
+            submitBtnStyle={{
+              width: '100%',
+              height: moderateScale(45),
+            }}
+          />
+        )}
       </>
     );
   };
@@ -233,16 +298,16 @@ export default function TipPaymentOptions({ navigation, route }) {
         },
       });
     } else {
-      updateState({ cardInfo: null });
+      updateState({cardInfo: null});
     }
   };
 
   const _webPayment = () => {
-    let selectedMethod = selectedPaymentMethod.title.toLowerCase();
+    let selectedMethod = selectedPaymentMethod.code.toLowerCase();
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
 
-    updateState({ isLoading: true });
+    updateState({isLoading: true});
     actions
       .openPaymentWebUrl(
         `/${selectedMethod}?amount=${data?.selectedTipAmount}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&payment_option_id=${selectedPaymentMethod?.id}&action=tip&order_number=${data?.order_number}`,
@@ -254,9 +319,9 @@ export default function TipPaymentOptions({ navigation, route }) {
         },
       )
       .then((res) => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
         if (res && res?.status == 'Success' && res?.data) {
-          console.log("generate payment url", res.data)
+          console.log('generate payment url', res.data);
           let sendingData = {
             id: selectedPaymentMethod?.id,
             title: selectedPaymentMethod?.title,
@@ -265,8 +330,10 @@ export default function TipPaymentOptions({ navigation, route }) {
             action: 'tip',
             tip_amount: data?.selectedTipAmount,
             order_number: data?.order_number,
-          }
-          navigation.navigate(navigationStrings.ALL_IN_ONE_PAYMENTS, { data: sendingData })
+          };
+          navigation.navigate(navigationStrings.ALL_IN_ONE_PAYMENTS, {
+            data: sendingData,
+          });
           // navigation.navigate(navigationStrings.WEBPAYMENTS, {
           //   paymentUrl: res?.data,
           //   paymentTitle: selectedPaymentMethod?.title,
@@ -292,50 +359,56 @@ export default function TipPaymentOptions({ navigation, route }) {
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3
-              ? imagePath.icBackb
-              : imagePath.back
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={strings.PAYMENT}
         headerStyle={
           isDarkMode
-            ? { backgroundColor: MyDarkTheme.colors.background }
-            : { backgroundColor: colors.backgroundGrey }
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.backgroundGrey}
         }
       />
-      <View style={{ height: 1, backgroundColor: colors.borderLight }} />
+      <View style={{height: 1, backgroundColor: colors.borderLight}} />
       <KeyboardAwareScrollView
         alwaysBounceVertical={true}
         showsVerticalScrollIndicator={false}
-        style={{ marginHorizontal: moderateScaleVertical(20) }}>
+        style={{marginHorizontal: moderateScaleVertical(20)}}>
         <FlatList
           data={payementMethods}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           keyboardShouldPersistTaps={'handled'}
           // horizontal
-          style={{ marginTop: moderateScaleVertical(10) }}
+          style={{marginTop: moderateScaleVertical(10)}}
           keyExtractor={(item, index) => String(index)}
           renderItem={_renderItemPayments}
           ListEmptyComponent={() =>
             !isLoading && (
-              <Text style={{ textAlign: 'center' }}>
+              <Text style={{textAlign: 'center'}}>
                 {strings.NO_PAYMENT_METHOD}
               </Text>
             )
           }
         />
       </KeyboardAwareScrollView>
-
-      <View
-        style={{ marginHorizontal: moderateScaleVertical(20), marginBottom: 65 }}>
-        <GradientButton
-          textStyle={styles.textStyle}
-          onPress={selectPaymentOption}
-          marginTop={moderateScaleVertical(10)}
-          marginBottom={moderateScaleVertical(10)}
-          btnText={strings.SELECT}
-        />
-      </View>
+      {selectedPaymentMethod == null || selectedPaymentMethod.id != 17 ? (
+        <View
+          style={{
+            marginHorizontal: moderateScaleVertical(20),
+            marginBottom: 65,
+          }}>
+          <GradientButton
+            textStyle={styles.textStyle}
+            onPress={selectPaymentOption}
+            marginTop={moderateScaleVertical(10)}
+            marginBottom={moderateScaleVertical(10)}
+            btnText={strings.SELECT}
+          />
+        </View>
+      ) : (
+        <></>
+      )}
     </WrapperContainer>
   );
 }

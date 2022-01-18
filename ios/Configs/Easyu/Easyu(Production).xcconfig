@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Easyu/Pods-Easyu.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Easyu/Pods-available_pods-Easyu.release.xcconfig"
 
 PROJECT_APPLE_ID = 1603816752
 PROJECT_BUNDLE_ID = com.easyu

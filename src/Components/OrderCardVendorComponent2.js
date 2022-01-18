@@ -118,14 +118,12 @@ const OrderCardVendorComponent2 = ({
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       (event) => {
-        console.log('my events', event);
         setKeyboardHeight(event.endCoordinates.height + 10);
       },
     );
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       (event) => {
-        console.log('my events', event);
         setKeyboardHeight(0);
       },
     );
@@ -175,6 +173,7 @@ const OrderCardVendorComponent2 = ({
           </TouchableOpacity>
         </View>
       ) : null}
+      {console.log('checking ssa', data)}
       {data?.order_status?.current_status?.title !== strings.DELIVERED &&
         data?.order_status?.current_status?.title !== strings.REJECTED &&
         (!!etaTime || !!data?.scheduled_date_time) && (
@@ -193,90 +192,78 @@ const OrderCardVendorComponent2 = ({
             </Text>
           </View>
         )}
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          alignItems: 'center',
+          padding: moderateScale(8),
+        }}>
         <View
           style={{
-            flex: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            flex: 0.5,
+            alignItems: 'flex-start',
           }}>
-          <View
+          <Image
+            source={{uri: imageUrl}}
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              padding: moderateScale(15),
-              flex: 1,
-            }}>
-            <Image
-              source={{uri: imageUrl}}
-              style={{
-                height: moderateScale(50),
-                width: moderateScale(50),
-                borderRadius: moderateScale(50 / 2),
-                resizeMode: 'contain',
-                // backgroundColor: 'red',
-              }}
-            />
-
-            <Text
-              numberOfLines={2}
-              style={
-                isDarkMode
-                  ? [styles.userName, {color: MyDarkTheme.colors.text}]
-                  : styles.userName
-              }>
-              {data?.vendor?.name || ''}
-            </Text>
-          </View>
-
-          <View>
-            <View style={{width: moderateScale(130)}}>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.orderLableStyle, {color: MyDarkTheme.colors.text}]
-                    : styles.orderLableStyle
-                }>
-                {`${strings.ORDER_ID}: #${data?.order_number}`}
-              </Text>
-              <Text
-                style={
-                  isDarkMode
-                    ? [
-                        styles.orderLableStyle,
-                        {
-                          color: MyDarkTheme.colors.text,
-                          marginVertical: moderateScaleVertical(5),
-                        },
-                      ]
-                    : [
-                        styles.orderLableStyle,
-                        {
-                          marginVertical: moderateScaleVertical(5),
-                          color: colors.black,
-                        },
-                      ]
-                }>
-                {data?.date_time}
-              </Text>
-            </View>
-          </View>
-        </View>
-
-        {/* <View
-          style={{flex: 0.3, alignItems: 'center', padding: moderateScale(10)}}>
+              height: moderateScale(50),
+              width: moderateScale(50),
+              borderRadius: moderateScale(50 / 2),
+              resizeMode: 'contain',
+              marginRight: moderateScale(8),
+            }}
+          />
           <Text
+            numberOfLines={2}
             style={
               isDarkMode
                 ? [styles.userName, {color: MyDarkTheme.colors.text}]
-                : [styles.userName]
-            }>{`${currencies?.primary_currency?.symbol}${
-            // Number(i?.pvariant?.multiplier) *
-            Number(data?.payable_amount).toFixed(2)
-          }`}</Text>
-        </View> */}
+                : styles.userName
+            }>
+            {data?.vendor?.name || ''}
+          </Text>
+        </View>
+        <View
+          style={{
+            flex: 0.5,
+            justifyContent: 'flex-end',
+            alignItems: 'flex-end',
+          }}>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.orderLableStyle, {color: MyDarkTheme.colors.text}]
+                : styles.orderLableStyle
+            }>
+            {`${strings.ORDER_ID}: #${data?.order_number}`}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.orderLableStyle,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      marginVertical: moderateScaleVertical(5),
+                    },
+                  ]
+                : [
+                    styles.orderLableStyle,
+                    {
+                      marginVertical: moderateScaleVertical(5),
+                      color: colors.black,
+                    },
+                  ]
+            }>
+            {data?.date_time}
+          </Text>
+        </View>
       </View>
+
       <View
         style={[
           styles.borderStyle,
@@ -713,7 +700,6 @@ export function stylesFunc({fontFamily, themeColors}) {
       opacity: 0.6,
     },
     userName: {
-      marginHorizontal: moderateScale(14),
       color: colors.textGreyI,
       fontFamily: fontFamily.medium,
       fontSize: textScale(14),

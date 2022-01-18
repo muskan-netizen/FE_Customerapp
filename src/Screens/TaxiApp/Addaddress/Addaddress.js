@@ -435,7 +435,6 @@ export default function Addaddress({navigation, route}) {
 
   const onPressAddress = async (place) => {
     Keyboard.dismiss();
-    console.log('selected item', place);
     // return;
     if (!!place.place_id && !!place?.name) {
       // updateAddress(place.description)

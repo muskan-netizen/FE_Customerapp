@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-CitySuds/Pods-CitySuds.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-CitySuds/Pods-available_pods-CitySuds.release.xcconfig"
 
 PROJECT_APPLE_ID = 1604332756
 PROJECT_BUNDLE_ID = com.citysuds

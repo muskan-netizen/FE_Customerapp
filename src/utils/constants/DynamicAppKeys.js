@@ -208,6 +208,8 @@ const shortCodes = {
   ullaz: '1b1c0d',
   privatepremiumpickups: '8d559d',
   fidesDelivery: 'd83920',
+  bksTaxi: 'b66295',
+  oxo: '48200b',
 };
 
 const appIds = {
@@ -1038,6 +1040,14 @@ const appIds = {
   fidesDelivery: Platform.select({
     ios: 'com.fidesDelivery',
     android: 'com.fidesDelivery',
+  }),
+  bksTaxi: Platform.select({
+    ios: 'com.bksTaxi',
+    android: 'com.bksTaxi',
+  }),
+  oxo: Platform.select({
+    ios: 'com.oxo',
+    android: 'com.oxo',
   }),
 };
 

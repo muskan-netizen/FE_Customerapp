@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Gorillas/Pods-Gorillas.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Gorillas/Pods-available_pods-Gorillas.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1585823238
 PROJECT_BUNDLE_ID = com.gorillas

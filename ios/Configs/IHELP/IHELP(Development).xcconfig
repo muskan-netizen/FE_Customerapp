@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-IHELP/Pods-IHELP.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-IHELP/Pods-available_pods-IHELP.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1604744077
 PROJECT_BUNDLE_ID =com.customer.Ihelp

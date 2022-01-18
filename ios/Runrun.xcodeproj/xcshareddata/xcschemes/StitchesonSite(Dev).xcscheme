@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "844D9BC8278854E00058A99A"
-               BuildableName = "StitchesonSite.app"
+               BuildableName = "StitchesonSite"
                BlueprintName = "StitchesonSite"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "844D9BC8278854E00058A99A"
-            BuildableName = "StitchesonSite.app"
+            BuildableName = "StitchesonSite"
             BlueprintName = "StitchesonSite"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "844D9BC8278854E00058A99A"
-            BuildableName = "StitchesonSite.app"
+            BuildableName = "StitchesonSite"
             BlueprintName = "StitchesonSite"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

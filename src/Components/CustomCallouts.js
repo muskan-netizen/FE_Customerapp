@@ -1,18 +1,19 @@
 //import liraries
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import {PulseIndicator} from 'react-native-indicators';
-import {Marker} from 'react-native-maps';
-import {useSelector} from 'react-redux';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import { useDarkMode } from 'react-native-dark-mode';
+import { PulseIndicator } from 'react-native-indicators';
+import { Marker } from 'react-native-maps';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
+import strings from '../constants/lang';
 import colors from '../styles/colors';
-import {moderateScale, textScale} from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
+import { moderateScale, textScale } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
 // create a component
-const CustomCallouts = ({data}) => {
+const CustomCallouts = ({ data }) => {
   console.log('custom callouts', data);
-  const {themeToggle, appStyle, themeColor} = useSelector(
+  const { themeToggle, appStyle, themeColor } = useSelector(
     (state) => state?.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
@@ -45,11 +46,22 @@ const CustomCallouts = ({data}) => {
                   }}>
                   <View
                     style={{
-                      backgroundColor: colors.black,
-                      paddingHorizontal: moderateScale(12),
-                      paddingVertical: moderateScale(10),
+                      backgroundColor: '#6B8E23',
+
+                      paddingHorizontal: 12,
+                      paddingVertical: 6,
+                      borderRadius: moderateScale(4)
                     }}>
-                    <PulseIndicator
+                    <Text
+                      style={{
+                        ...styles.pickupDropOff,
+                        color: colors.white,
+                        fontFamily: fontFamily.medium,
+                        textTransform: 'capitalize'
+                      }}>
+                      {strings.PICKUP}
+                    </Text>
+                    {/* <PulseIndicator
                       size={12}
                       color="white"
                       style={{
@@ -57,9 +69,9 @@ const CustomCallouts = ({data}) => {
                         width: moderateScale(8),
                         borderRadius: moderateScale(4),
                       }}
-                    />
+                    /> */}
                   </View>
-                  <View
+                  {/* <View
                     style={{
                       flexDirection: 'row',
                       alignItems: 'center',
@@ -86,7 +98,7 @@ const CustomCallouts = ({data}) => {
                       resizeMode="contain"
                       source={imagePath.icGo}
                     />
-                  </View>
+                  </View> */}
                 </View>
               </View>
             </Marker>
@@ -116,32 +128,43 @@ const CustomCallouts = ({data}) => {
                   }}>
                   <View
                     style={{
-                      backgroundColor: colors.black,
-                      paddingHorizontal: moderateScale(12),
-                      paddingVertical: moderateScale(10),
+                      backgroundColor: '#DC143C',
+                      paddingHorizontal: 12,
+                      paddingVertical: 6,
+                      borderRadius: moderateScale(4)
                     }}>
                     {index == 0 ? (
-                      <PulseIndicator
-                        size={12}
-                        color="white"
+                      <Text
                         style={{
-                          height: moderateScale(8),
-                          width: moderateScale(8),
-                          borderRadius: moderateScale(4),
-                        }}
-                      />
+                          ...styles.pickupDropOff,
+                          color: colors.white,
+                          fontFamily: fontFamily.medium,
+                          textTransform: 'capitalize'
+                        }}>
+                        {strings.PICKUP}
+                      </Text>
+                      // <PulseIndicator
+                      //   size={12}
+                      //   color="white"
+                      //   style={{
+                      //     height: moderateScale(8),
+                      //     width: moderateScale(8),
+                      //     borderRadius: moderateScale(4),
+                      //   }}
+                      // />
                     ) : (
                       <Text
                         style={{
                           ...styles.pickupDropOff,
                           color: colors.white,
                           fontFamily: fontFamily.medium,
+                          textTransform: 'capitalize'
                         }}>
-                        {'D'}
+                        {strings.DROP}
                       </Text>
                     )}
                   </View>
-                  <View
+                  {/* <View
                     style={{
                       flexDirection: 'row',
                       alignItems: 'center',
@@ -168,7 +191,7 @@ const CustomCallouts = ({data}) => {
                       resizeMode="contain"
                       source={imagePath.icGo}
                     />
-                  </View>
+                  </View> */}
                 </View>
               </View>
             </Marker>
@@ -177,12 +200,15 @@ const CustomCallouts = ({data}) => {
         return (
           <Marker
             key={`coordinate_${index}`}
-            image={imagePath.radioLocation}
             coordinate={{
               latitude: Number(val?.latitude),
               longitude: Number(val?.longitude),
             }}
-          />
+          >
+              <Image style={{
+                tintColor: '#DC143C'
+              }} source={imagePath.radioLocation} />
+            </Marker>
         );
       })}
     </>
@@ -196,7 +222,7 @@ const styles = StyleSheet.create({
     // left: 20,
     borderRadius: moderateScale(2),
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 2,

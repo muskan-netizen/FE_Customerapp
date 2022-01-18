@@ -1344,6 +1344,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.bksTaxi:
+          updateState({
+            shortCode: shortCodes.bksTaxi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.oxo:
+          updateState({
+            shortCode: shortCodes.oxo,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

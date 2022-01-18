@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-QuickQuick/Pods-QuickQuick.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-QuickQuick/Pods-available_pods-QuickQuick.debug.xcconfig"
 
 PROJECT_APPLE_ID =1590800276
 PROJECT_BUNDLE_ID = com.quickquick

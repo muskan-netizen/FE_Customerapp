@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Ullaz/Pods-Ullaz.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Ullaz/Pods-available_pods-Ullaz.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1604764852
 PROJECT_BUNDLE_ID =com.ullaz

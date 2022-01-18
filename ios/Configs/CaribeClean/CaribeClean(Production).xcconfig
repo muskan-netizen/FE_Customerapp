@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-CaribeClean/Pods-CaribeClean.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-CaribeClean/Pods-available_pods-CaribeClean.release.xcconfig"
 
 PROJECT_APPLE_ID =1590983291
 PROJECT_BUNDLE_ID = com.caribeclean

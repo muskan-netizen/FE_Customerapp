@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-FoodNests/Pods-FoodNests.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-FoodNests/Pods-available_pods-FoodNests.release.xcconfig"
 
 PROJECT_APPLE_ID = 1598271515
 PROJECT_BUNDLE_ID = com.foodnests
