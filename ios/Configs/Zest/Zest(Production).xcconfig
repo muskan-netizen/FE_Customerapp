@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Zest/Pods-Zest.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Zest/Pods-available_pods-Zest.release.xcconfig"
 
 PROJECT_APPLE_ID = 1588399835
 PROJECT_BUNDLE_ID = com.zest.customer

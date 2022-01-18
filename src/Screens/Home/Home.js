@@ -419,7 +419,7 @@ export default function Home({route, navigation}) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
         fetchOffers: true,
         id: item.id,
-        vendor: true,
+        vendor: item.redirect_to == staticStrings.ONDEMANDSERVICE?false:true,
         name: item.name,
         isVendorList: true,
       })();

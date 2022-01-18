@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-FlyingHorse/Pods-FlyingHorse.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-FlyingHorse/Pods-available_pods-FlyingHorse.release.xcconfig"
 
 PROJECT_APPLE_ID = 1583559381
 PROJECT_BUNDLE_ID = com.flyinghorse

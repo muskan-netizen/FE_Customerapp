@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Ublue/Pods-Ublue.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Ublue/Pods-available_pods-Ublue.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1581728607

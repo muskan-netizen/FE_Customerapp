@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-EquaMD/Pods-EquaMD.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-EquaMD/Pods-available_pods-EquaMD.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1580710222

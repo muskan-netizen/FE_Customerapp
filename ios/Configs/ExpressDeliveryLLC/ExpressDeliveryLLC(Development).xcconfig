@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-ExpressDeliveryLLC/Pods-ExpressDeliveryLLC.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-ExpressDeliveryLLC/Pods-available_pods-ExpressDeliveryLLC.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1589769289
 PROJECT_BUNDLE_ID = com.customer.expressdelivery

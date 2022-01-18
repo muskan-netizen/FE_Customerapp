@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Goody/Pods-Goody.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Goody/Pods-available_pods-Goody.release.xcconfig"
 
 PROJECT_APPLE_ID = 1588241563
 PROJECT_BUNDLE_ID = com.goody.customer

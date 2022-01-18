@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Tranznet/Pods-Tranznet.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Tranznet/Pods-available_pods-Tranznet.debug.xcconfig"
 
 PROJECT_APPLE_ID =1590321039
 PROJECT_BUNDLE_ID = com.tranznet

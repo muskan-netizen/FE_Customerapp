@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-InstaShop/Pods-InstaShop.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-InstaShop/Pods-available_pods-InstaShop.debug.xcconfig"
 
 PROJECT_APPLE_ID =1595084559
 PROJECT_BUNDLE_ID =com.customer.instashop

@@ -63,7 +63,7 @@ export default function DashBoardHeaderFive({
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
   const updateState = (data) => setState((state) => ({...state, ...data}));
-
+  
   const imageURI = getImageUrl(
     profileInfo?.logo?.image_fit,
     profileInfo?.logo?.image_path,

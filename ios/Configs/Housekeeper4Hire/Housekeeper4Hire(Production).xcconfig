@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Housekeeper4Hire/Pods-Housekeeper4Hire.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Housekeeper4Hire/Pods-available_pods-Housekeeper4Hire.release.xcconfig"
 
 PROJECT_APPLE_ID = 1581925256
 PROJECT_BUNDLE_ID = com.housekeeper4hire

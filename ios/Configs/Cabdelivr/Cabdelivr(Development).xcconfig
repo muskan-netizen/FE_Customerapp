@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Cabdelivr/Pods-Cabdelivr.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Cabdelivr/Pods-available_pods-Cabdelivr.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1595027217
 PROJECT_BUNDLE_ID = com.app.cabdelivr
