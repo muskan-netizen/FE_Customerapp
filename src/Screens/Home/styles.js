@@ -363,7 +363,8 @@ export default ({themeColors, fontFamily}) => {
     },
     viewAllText: {
       color: themeColors.primary_color,
-      fontFamily: fontFamily.regular,
+      fontFamily: fontFamily.medium,
+      fontSize:textScale(12)
     },
     viewAllVeiw: {
       flexDirection: 'row',
