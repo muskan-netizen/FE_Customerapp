@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Toda/Pods-Toda.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Toda/Pods-available_pods-Toda.release.xcconfig"
 
 PROJECT_APPLE_ID = 1584629919
 PROJECT_BUNDLE_ID = com.toda.orders

@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-ChipeTaxi/Pods-ChipeTaxi.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-ChipeTaxi/Pods-available_pods-ChipeTaxi.release.xcconfig"
 
 PROJECT_APPLE_ID =1596893698
 PROJECT_BUNDLE_ID =com.chipetaxi

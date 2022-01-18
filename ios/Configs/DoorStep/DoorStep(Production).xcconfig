@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-DoorStep/Pods-DoorStep.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-DoorStep/Pods-available_pods-DoorStep.release.xcconfig"
 
 PROJECT_APPLE_ID = 1583930523
 PROJECT_BUNDLE_ID = com.doorstepone

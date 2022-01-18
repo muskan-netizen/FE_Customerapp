@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-WeGotit/Pods-WeGotit.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-WeGotit/Pods-available_pods-WeGotit.release.xcconfig"
 
 PROJECT_APPLE_ID = 1584323058
 PROJECT_BUNDLE_ID = com.wegotit

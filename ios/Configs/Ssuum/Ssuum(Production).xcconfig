@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Ssuum/Pods-Ssuum.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Ssuum/Pods-available_pods-Ssuum.release.xcconfig"
 
 PROJECT_APPLE_ID =1596257424
 PROJECT_BUNDLE_ID =com.ssuum

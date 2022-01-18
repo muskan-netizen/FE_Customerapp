@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-HoganChef/Pods-HoganChef.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-HoganChef/Pods-available_pods-HoganChef.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1580742422

@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-PaySic/Pods-PaySic.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-PaySic/Pods-available_pods-PaySic.debug.xcconfig"
 
 PROJECT_APPLE_ID =1596871713
 PROJECT_BUNDLE_ID =com.paysic

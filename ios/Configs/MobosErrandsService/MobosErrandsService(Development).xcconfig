@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-MobosErrandsService/Pods-MobosErrandsService.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-MobosErrandsService/Pods-available_pods-MobosErrandsService.debug.xcconfig"
 
 PROJECT_APPLE_ID =1595838343
 PROJECT_BUNDLE_ID =com.moboserrandsservice

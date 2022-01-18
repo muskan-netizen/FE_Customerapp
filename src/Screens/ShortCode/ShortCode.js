@@ -412,6 +412,7 @@ export default function ShortCode({route, navigation}) {
         case appIds.codiner:
           updateState({
             shortCode: shortCodes.codiner,
+            // shortCode: '245bae',
             isShortcodePrefilled: true,
           });
           break;

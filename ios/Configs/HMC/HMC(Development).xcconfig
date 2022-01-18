@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-HMC/Pods-HMC.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-HMC/Pods-available_pods-HMC.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1566548465
 PROJECT_BUNDLE_ID = com.eatkareem.hmchalal

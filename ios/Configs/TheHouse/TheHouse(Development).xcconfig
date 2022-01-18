@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-TheHouse/Pods-TheHouse.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-TheHouse/Pods-available_pods-TheHouse.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1580375581

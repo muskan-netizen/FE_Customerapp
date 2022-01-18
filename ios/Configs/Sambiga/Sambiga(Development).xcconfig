@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Sambiga/Pods-Sambiga.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Sambiga/Pods-available_pods-Sambiga.debug.xcconfig"
 
 PROJECT_APPLE_ID =1590503397
 PROJECT_BUNDLE_ID = com.sambiga

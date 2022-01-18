@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-EnExt/Pods-EnExt.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-EnExt/Pods-available_pods-EnExt.release.xcconfig"
 
 PROJECT_APPLE_ID =1597920881
 PROJECT_BUNDLE_ID =com.enext
