@@ -240,9 +240,11 @@ export default function Cart({ navigation, route }) {
       !!checkCartItem?.data?.products.length
     ) {
       checkforAddressUpdate();
-      console.log('useEffect 1', checkCartItem);
+ 
     }
   }, [selectedAddress, allAddresss]);
+
+  console.log('useEffect 1', checkCartItem);
 
   //check for addreess Update and change
   const checkforAddressUpdate = () => {
@@ -1077,8 +1079,8 @@ export default function Cart({ navigation, route }) {
     console.log(returnUrl, 'returnUrl');
     console.log(cancelUrl, 'cancelUrl');
     let queryData = `/${selectedMethod}?tip=${selectedTipAmount && selectedTipAmount != ''
-        ? Number(selectedTipAmount)
-        : 0
+      ? Number(selectedTipAmount)
+      : 0
       }&amount=${(
         Number(cartData?.total_payable_amount) +
         (selectedTipAmount != null && selectedTipAmount != ''
@@ -1862,9 +1864,9 @@ export default function Cart({ navigation, route }) {
                           color: colors.redFireBrick,
                           marginBottom: moderateScale(3),
                         }}>{`${i?.product.delay_order_hrs > 0 ||
-                            i?.product.delay_order_min > 0
-                            ? strings.PREPARATION_TIME_IS
-                            : ''
+                          i?.product.delay_order_min > 0
+                          ? strings.PREPARATION_TIME_IS
+                          : ''
                           }${i?.product.delay_order_hrs > 0
                             ? ` ${i?.product.delay_order_hrs} hrs`
                             : ''
@@ -4401,24 +4403,26 @@ export default function Cart({ navigation, route }) {
                 )}
               </View>
             )}
+            <View
+              style={{
+                // styles.bottomAddToCartView,
+                // { top: viewHeight - height / 6 },
+                marginHorizontal:moderateScale(24)
+              }}>
+              <GradientButton
+                colorsArray={[
+                  themeColors.primary_color,
+                  themeColors.primary_color,
+                ]}
+                // textStyle={styles.textStyle}
+                onPress={selectOrderDate}
+                marginTop={moderateScaleVertical(10)}
+                marginBottom={moderateScaleVertical(30)}
+                btnText={strings.SELECT}
+              />
+            </View>
           </ScrollView>
-          <View
-            style={[
-              styles.bottomAddToCartView,
-              { top: viewHeight - height / 6 },
-            ]}>
-            <GradientButton
-              colorsArray={[
-                themeColors.primary_color,
-                themeColors.primary_color,
-              ]}
-              // textStyle={styles.textStyle}
-              onPress={selectOrderDate}
-              marginTop={moderateScaleVertical(10)}
-              marginBottom={moderateScaleVertical(30)}
-              btnText={strings.SELECT}
-            />
-          </View>
+
         </View>
       </Modal>
     </WrapperContainer>
