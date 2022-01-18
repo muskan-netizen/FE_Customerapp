@@ -25,9 +25,14 @@ import fontFamily from '../../../styles/fontFamily';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
   width,
 } from '../../../styles/responsiveSize';
 import {getImageUrl, showError} from '../../../utils/helperFunctions';
+import ModalView from '../../../Components/Modal';
+import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
+import GradientButton from '../../../Components/GradientButton';
+import strings from '../../../constants/lang';
 
 const RoyoProducts = (props) => {
   const {navigation} = props;
@@ -56,14 +61,8 @@ const RoyoProducts = (props) => {
     category_list: [],
     categoryName: '',
     gridView: false,
-    topTabs: [
-      'Products',
-      'Categories',
-      'Products',
-      'Categories',
-      'Products',
-      'Categories',
-    ],
+    topTabs: ['Products', 'Categories'],
+    isAddProductModal: false,
   });
 
   const {
@@ -81,6 +80,7 @@ const RoyoProducts = (props) => {
     headerText,
     categoryName,
     topTabs,
+    isAddProductModal,
   } = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -289,6 +289,81 @@ const RoyoProducts = (props) => {
     });
   };
 
+  const onCloseModal = () => {
+    updateState({
+      isAddProductModal: false,
+    });
+  };
+
+  const onAddProduct = () => {
+    updateState({
+      isAddProductModal: false,
+    });
+    navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT, {
+      vendor_list,
+    });
+  };
+
+  const mainViewModal = () => {
+    return (
+      <View
+        style={{
+          minHeight: moderateScale(100),
+          borderTopWidth: 0.7,
+          borderTopColor: colors.blackOpacity43,
+          paddingHorizontal: moderateScale(15),
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginTop: moderateScale(20),
+          }}>
+          <TextInputWithUnderlineAndLabel
+            label={'Product Name'}
+            labelStyle={styles.labelStyle}
+            placeholder={'tshirt'}
+            mainStyle={{flex: 0.46}}
+            placeholderTextColor={colors.black}
+            txtInputStyle={styles.textInputStyle}
+          />
+          <TextInputWithUnderlineAndLabel
+            label={'Category'}
+            placeholder={'Clothing'}
+            mainStyle={{flex: 0.46}}
+            labelStyle={styles.labelStyle}
+            placeholderTextColor={colors.black}
+            txtInputStyle={styles.textInputStyle}
+          />
+        </View>
+        <TextInputWithUnderlineAndLabel
+          label={`SKU ( a-z, A-Z,0-9,-,…)`}
+          labelStyle={styles.labelStyle}
+          placeholder={'xyz.LocalMarket.Tshirt'}
+          placeholderTextColor={colors.black}
+          txtInputStyle={styles.textInputStyle}
+          mainStyle={{marginTop: moderateScale(5)}}
+        />
+        <TextInputWithUnderlineAndLabel
+          label={`Url Slug`}
+          labelStyle={styles.labelStyle}
+          placeholder={'Slug'}
+          placeholderTextColor={colors.black}
+          txtInputStyle={styles.textInputStyle}
+          mainStyle={{marginTop: moderateScale(5)}}
+        />
+        <GradientButton
+          colorsArray={[themeColors.primary_color, themeColors.primary_color]}
+          textStyle={styles.addProductBtn}
+          onPress={onAddProduct}
+          marginTop={moderateScaleVertical(20)}
+          marginBottom={moderateScaleVertical(20)}
+          btnText={strings.ADD_PRODUCT}
+        />
+      </View>
+    );
+  };
+
   return (
     <WrapperContainer
     // isLoading={isLoading}
@@ -307,8 +382,14 @@ const RoyoProducts = (props) => {
           screenName={topTabs}
           selectedScreen={(index) => selectedOrder(index)}
           selectedScreenIndex={activeIndex}
-          itemStyle={{marginHorizontal: moderateScale(10)}}
-          scrollEnabled
+          scrollEnabled={topTabs.length > 4 ? true : false}
+          mainViewStyle={{
+            paddingRight: topTabs.length > 4 ? 0 : moderateScale(20),
+          }}
+          scrollViewStyle={{
+            justifyContent:
+              topTabs.length > 2 ? 'space-between' : 'space-evenly',
+          }}
         />
         {activeIndex == 0 ? (
           <View style={{flex: 1}}>
@@ -352,13 +433,10 @@ const RoyoProducts = (props) => {
               rightOpenValue={-moderateScale(100)}
             />
             <ButtonWithLoader
-              onPress={() =>
-                navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT, {
-                  vendor_list,
-                })
-              }
+              onPress={() => updateState({isAddProductModal: true})}
               btnStyle={styles.productBtn}
-              btnText="+  products"
+              btnTextStyle={{color: colors.black}}
+              btnText="+  Product"
             />
           </View>
         ) : null}
@@ -388,6 +466,21 @@ const RoyoProducts = (props) => {
           </View>
         ) : null}
       </View>
+      <ModalView
+        isVisible={isAddProductModal}
+        onClose={onCloseModal}
+        mainViewStyle={{
+          minHeight: moderateScale(350),
+          backgroundColor: colors.white,
+          paddingTop: moderateScaleVertical(10),
+        }}
+        modalMainContent={mainViewModal}
+        centerTitle={'Add Product'}
+        topCustomComponent={false}
+        leftIcon={false}
+        rightIcon={imagePath.ic_cross}
+        rightIconStyle={{tintColor: colors.black}}
+      />
     </WrapperContainer>
   );
 };
@@ -402,7 +495,6 @@ const styles = StyleSheet.create({
     marginRight: moderateScale(10),
   },
   container: {
-    marginHorizontal: moderateScale(16),
     flex: 1,
   },
   font16medium: {
@@ -455,11 +547,10 @@ const styles = StyleSheet.create({
   },
   productBtn: {
     position: 'absolute',
-    padding: moderateScale(10),
-    bottom: moderateScaleVertical(20),
-    right: moderateScale(10),
+    bottom: moderateScale(75),
     borderRadius: moderateScale(100),
     paddingHorizontal: moderateScale(15),
+    right: 10,
   },
   categoryBtn: {
     position: 'absolute',
@@ -470,9 +561,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: moderateScale(15),
   },
   emptyCartBody: {
-    flex: 1,
     justifyContent: 'center',
-    height: 400,
     alignItems: 'center',
+    height: moderateScale(600),
+  },
+  labelStyle: {
+    fontFamily: fontFamily.bold,
+    color: colors.blackOpacity43,
+    fontSize: textScale(13),
+    marginBottom: moderateScale(5),
+  },
+  addProductBtn: {
+    color: colors.white,
+    fontSize: textScale(14),
+  },
+  textInputStyle: {
+    fontFamily: fontFamily.bold,
+    color: colors.black,
+    fontSize: textScale(13),
   },
 });

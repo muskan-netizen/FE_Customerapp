@@ -51,6 +51,7 @@ const TextInputWithUnderlineAndLabel = ({
   labelIconStyle = {},
   onPressLabel = () => {},
   underlineColor = colors.textGreyB,
+  placeholderTextColor = colors.textGreyB,
   ...props
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -80,6 +81,7 @@ const TextInputWithUnderlineAndLabel = ({
       style={mainStyle}>
       <View style={{flexDirection: 'row', ...lableViewStyle}}>
         <Text
+          numberOfLines={1}
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
             ...labelStyle,
@@ -125,7 +127,7 @@ const TextInputWithUnderlineAndLabel = ({
           selectionColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
           placeholder={placeholder}
           placeholderTextColor={
-            isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB
+            isDarkMode ? MyDarkTheme.colors.text : placeholderTextColor
           }
           style={{
             flex: 1,

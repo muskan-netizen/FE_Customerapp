@@ -165,10 +165,19 @@ export default {
   iconItems: require('../assets/images/VendorAppImages/ic_items.png'),
   iconPayments: require('../assets/images/VendorAppImages/ic_payment.png'),
   myStoreIcon: require('../assets/images/VendorAppImages/ic_my_store.png'),
+  icCheck1: require('../assets/images/VendorAppImages/ic_check1.png'),
+  icCheck2: require('../assets/images/VendorAppImages/ic_check2.png'),
+  icCross2: require('../assets/images/VendorAppImages/ic_cross.png'),
+  icDelete: require('../assets/images/VendorAppImages/ic_del.png'),
+  icDropdown: require('../assets/images/VendorAppImages/ic_down.png'),
+  icImage: require('../assets/images/VendorAppImages/ic_image.png'),
+  icPlaceholder: require('../assets/images/VendorAppImages/ic_placeholder.png'),
+  icToggleoff: require('../assets/images/VendorAppImages/ic_toggleoff.png'),
+  icToggleon: require('../assets/images/VendorAppImages/ic_toggleon.png'),
+  icUpArrow: require('../assets/images/VendorAppImages/ic_up.png'),
+
   icAttachments: require('../assets/images/ic_attachment.png'),
-
   frameorder: require('../assets/images/Courier/Frameorder.png'),
-
   backArrowCourier: require('../assets/images/Courier/Back_Arrow.png'),
   openBox: require('../assets/images/Courier/Open_Box.png'),
   bmi: require('../assets/images/Courier/BMI.png'),
@@ -401,8 +410,6 @@ export default {
   onlineRoyo: require('../assets/images/royoTab/ic_online.png'),
   offlineRoyo: require('../assets/images/royoTab/ic_offline.png'),
 
-
-
   accountActiveRoyo: require('../assets/images/royoTab/ic_account2.png'),
   accountInactiveRoyo: require('../assets/images/royoTab/ic_account1.png'),
   homeActiveRoyo: require('../assets/images/royoTab/ic_home2.png'),
@@ -416,7 +423,6 @@ export default {
   edit1Royo: require('../assets/images/royoTab/Shape.png'),
   paymentSettinRoyo: require('../assets/images/royoTab/ic_paysettings.png'),
   cameraRoyo: require('../assets/images/royoTab/ic_camera2.png'),
-
 
   testingImageRoyo: require('../assets/images/royoTab/Food-Pizza-Basil-Tomato-removebg-preview.png'),
   icAdd: require('../assets/images/RoyoorderNewImages/ic_add3.png'),

@@ -1,4 +1,4 @@
-// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'; // preet
@@ -30,7 +30,7 @@
 // export const API_BASE_URL = 'https://app.vici.la/api/v1';
 // export const API_BASE_URL = 'https://blipdelivery.com/api/v1';
 // export const API_BASE_URL = 'https://africanvillage.market/api/v1';
-export const API_BASE_URL = 'https://govachow.com/api/v1';
+// export const API_BASE_URL = 'https://govachow.com/api/v1';
 // export const API_BASE_URL = 'https://order.drivereeshops.com/api/v1';
 // export const API_BASE_URL = 'https://tranzit.app/api/v1';
 // export const API_BASE_URL = 'https://orders.halalhmc.org/api/v1';

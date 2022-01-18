@@ -9,6 +9,7 @@ import {
 import colors from '../styles/colors';
 import fontFamily from '../styles/fontFamily';
 import {
+  moderateScale,
   moderateScaleVertical,
   textScale,
   width,
@@ -17,7 +18,7 @@ import {
 const MultiScreen = (props) => {
   const {
     screenName,
-    mainViewStyle,
+    mainViewStyle = {},
     selectedScreen,
     selectedScreenIndex,
     activeTintColor = colors.themeColor2,
@@ -26,52 +27,53 @@ const MultiScreen = (props) => {
     tabTextStyle,
     itemStyle = {},
     scrollEnabled = true,
+    scrollViewStyle = {},
   } = props;
   return (
-    <View style={styles.container}>
+    <View style={{...styles.mainView, ...mainViewStyle}}>
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        scrollEnabled={scrollEnabled}>
-        <View style={{...styles.mainView, ...mainViewStyle}}>
-          {screenName.map((value, index) => {
-            return (
-              <TouchableOpacity
-                style={{...itemStyle}}
-                key={index}
-                onPress={() => selectedScreen(index)}>
-                <Text
-                  style={[
-                    styles.activeContractTextStyle,
-                    {
-                      textAlign: 'left',
-                      fontFamily:
-                        selectedScreenIndex == index
-                          ? fontFamily.bold
-                          : fontFamily.regular,
-                      color:
-                        selectedScreenIndex === index
-                          ? activeTintColor
-                          : inActiveTintColor,
-                    },
-                    tabTextStyle,
-                  ]}>
-                  {value}
-                </Text>
-                <View
-                  style={{
-                    marginTop: moderateScaleVertical(5),
-                    borderWidth:
-                      selectedScreenIndex === index ? borderWidth : 0,
-                    borderColor: colors.themeColor2,
-                    // width: 50,
-                    flex: 1,
-                  }}
-                />
-              </TouchableOpacity>
-            );
-          })}
-        </View>
+        scrollEnabled={scrollEnabled}
+        contentContainerStyle={{
+          width: '100%',
+          justifyContent: 'space-evenly',
+          ...scrollViewStyle,
+        }}>
+        {screenName.map((value, index) => {
+          return (
+            <TouchableOpacity
+              style={{...itemStyle}}
+              key={index}
+              onPress={() => selectedScreen(index)}>
+              <Text
+                style={[
+                  styles.activeContractTextStyle,
+                  {
+                    textAlign: 'left',
+                    fontFamily:
+                      selectedScreenIndex == index
+                        ? fontFamily.bold
+                        : fontFamily.regular,
+                    color:
+                      selectedScreenIndex === index
+                        ? activeTintColor
+                        : inActiveTintColor,
+                  },
+                  tabTextStyle,
+                ]}>
+                {value}
+              </Text>
+              <View
+                style={{
+                  marginTop: moderateScaleVertical(5),
+                  borderWidth: selectedScreenIndex === index ? borderWidth : 0,
+                  borderColor: colors.themeColor2,
+                }}
+              />
+            </TouchableOpacity>
+          );
+        })}
       </ScrollView>
     </View>
   );
@@ -86,10 +88,10 @@ const styles = StyleSheet.create({
     marginBottom: moderateScaleVertical(16),
   },
   mainView: {
-    flexDirection: 'row',
-    maxWidth: 500,
-    backgroundColor: colors.white,
-    justifyContent: 'space-between',
+    width: width,
+
+    paddingLeft: moderateScale(20),
+    height: 40,
   },
   activeContractTextStyle: {
     fontSize: textScale(14),

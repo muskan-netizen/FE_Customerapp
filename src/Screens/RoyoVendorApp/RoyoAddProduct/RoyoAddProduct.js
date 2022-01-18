@@ -1,51 +1,45 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {showMessage} from 'react-native-flash-message';
+import React, {useState} from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {ToggleButton} from 'react-native-paper';
+import {useSelector} from 'react-redux';
+import GradientButton from '../../../Components/GradientButton';
+import Header from '../../../Components/Header';
+import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
+import colors from '../../../styles/colors';
+import fontFamily from '../../../styles/fontFamily';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
 } from '../../../styles/responsiveSize';
-import colors from '../../../styles/colors';
-import navigationStrings from '../../../navigation/navigationStrings';
-import strings from '../../../constants/lang';
-import actions from '../../../redux/actions';
-import ButtonWithLoader from '../../../Components/ButtonWithLoader';
-import DropDown from '../../../Components/DropDown';
-import fontFamily from '../../../styles/fontFamily';
-import {boxWidth, customMarginBottom} from '../../../utils/constants/constants';
-import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {androidCameraPermission} from '../../../utils/permissions';
-import ActionSheet from 'react-native-actionsheet';
-import {cameraHandler} from '../../../utils/commonFunction';
-import Header from '../../../Components/Header';
-import { useSelector } from 'react-redux';
-import validations from '../../../utils/validations';
-import { showError } from '../../../utils/helperFunctions';
+import {customMarginBottom} from '../../../utils/constants/constants';
+import ToggleSwitch from 'toggle-switch-react-native';
 
 const RoyoAddProduct = (props) => {
-  const {navigation} = props;
-  const {vendor_list} = props?.route?.params
+  const {themeColors} = useSelector((state) => state?.initBoot);
   const [state, setState] = useState({
-    selectedBuisnessType: '',
-    productName: '',
-    productCategory: '',
-    mrp: '',
-    salePrice: '',
-    productDetail: '',
-    selectedImage: [],
+    stepPoints: [
+      {
+        id: 1,
+        name: 'General  >',
+      },
+      {
+        id: 2,
+        name: 'Pricing   >',
+      },
+      {
+        id: 3,
+        name: 'Other Information',
+      },
+    ],
+    currentStepIndex: 0,
+    isOn: false,
   });
-  const {
-    selectedBuisnessType,
-    productName,
-    mrp,
-    salePrice,
-    productDetail,
-    selectedImage,
-    productCategory
-  } = state;
+  const {stepPoints, currentStepIndex, isOn} = state;
 
   const updateState = (data) => {
     setState((state) => {
@@ -53,283 +47,537 @@ const RoyoAddProduct = (props) => {
     });
   };
 
-  const dropDownData = ['Buisness 1', 'Buisness 2', 'Buisness 3', 'Buisness 4'];
-
-
-
-  const onChangeText = (key) => {
-    return (value) => {
-      updateState({[key]: value});
-    };
+  const customRight = () => {
+    return (
+      <GradientButton
+        colorsArray={[themeColors.primary_color, themeColors.primary_color]}
+        textStyle={styles.addProductBtn}
+        marginTop={moderateScaleVertical(20)}
+        marginBottom={moderateScaleVertical(20)}
+        btnText={strings.SAVE}
+        containerStyle={{height: moderateScale(30), width: moderateScale(60)}}
+        btnStyle={{borderRadius: 5}}
+      />
+    );
   };
 
-  const onSelectBuisnessType = (data) => {
-    updateState({selectedBuisnessType: data});
-  };
-  const {storeSelectedVendor} = useSelector((state) => state?.order);
-  let actionSheet = useRef();
-  const cameraHandle = async (index) => {
-    const permissionStatus = await androidCameraPermission();
-    if (permissionStatus) {
-      if (index == 0 || index == 1) {
-        cameraHandler(index, {
-          width: 300,
-          height: 400,
-          cropping: true,
-          cropperCircleOverlay: false,
-          mediaType: 'photo',
-        })
-          .then((res) => {
-            if (res?.data) {
-              let newSelectedImage = [...selectedImage, res.path];
-              updateState({selectedImage: newSelectedImage});
-            }
-            let data = {
-              type: 'jpg',
-              avatar: res?.data,
-            };
-          })
-          .catch((res) => {});
-      }
-    }
-  };
-
-  const selectImage = () => {
-    selectedImage.length == 5
-      ? alert('More than five image is not allowed')
-      : actionSheet.current.show();
-  };
-
-  const isValidData = () => {
-    const error = validations({
-  //   selectedBuisnessType:selectedBuisnessType,
-  //  productCategory:productCategory,
-  //  productDetail:productDetail,
-  //  productName:productName,
-   mrp:mrp,
-   salePrice:salePrice,
-   });
-    if (error) {
-      showError(error);
-      return;
-    }
-    return true;
-  };
-  
-  const onPressAdd = () => {
-    // if(!selectedImage.length){
-    //   return showError('Please select atleast one image')
-    // }
-    const checkValid = isValidData();
-    if (!checkValid) {
-      return;
-    }
-    let formData=new FormData()
-    formData.append('selectedBuisnessType',selectedBuisnessType)
-    formData.append('productCategory',productCategory)
-    formData.append('productDetail',productDetail)
-    formData.append('productName',productName)
-    formData.append('mrp',mrp)
-    formData.append('salePrice',salePrice)
-    if(selectedImage.length){
-      selectedImage.map((i,inx)=>{
-        formData.append('image[]',i)
-      })
-    }
-    console.log(formData,"formData");
-  
-    // navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT);
-
-    
-  };
-
-  const onPressSave = () => {
-    if(!selectedImage.length){
-      return showError('Please select atleast one image')
-    }
-    const checkValid = isValidData();
-    if (!checkValid) {
-      return;
-    }
-
-    let formData=new FormData()
-    formData.append('selectedBuisnessType',selectedBuisnessType)
-    formData.append('productCategory',productCategory)
-    formData.append('productDetail',productDetail)
-    formData.append('productName',productName)
-    formData.append('mrp',mrp)
-    formData.append('salePrice',salePrice)
-    if(selectedImage.length){
-      selectedImage.map((i,inx)=>{
-        formData.append('image[]',i)
-      })
-    }
-    console.log(formData,"formData");
-  
-    // navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT);
-
-  };
-
-
-  const _reDirectToVendorList = () => {
-    navigation.navigate(navigationStrings.VENDORLIST, {
-      selectedVendor: storeSelectedVendor,
-      allVendors: vendor_list,
-      screenType: navigationStrings.ROYO_VENDOR_ADD_PRODUCT,
+  const onStepChange = (itm, indx) => {
+    updateState({
+      currentStepIndex: indx,
     });
   };
-  const deleteImage = (index) => {
-    let newSelectedImageArary = [...selectedImage];
-    newSelectedImageArary = newSelectedImageArary.filter(
-      (item, key) => key != index,
+
+  const renderStepIndicator = (item, index) => {
+    return (
+      <TouchableOpacity
+        onPress={() => onStepChange(item, index)}
+        style={{marginRight: moderateScale(12)}}>
+        <Text
+          style={{
+            color:
+              currentStepIndex >= index
+                ? themeColors.primary_color
+                : colors.black,
+            fontSize: textScale(14),
+            fontFamily: fontFamily.bold,
+          }}>
+          {item.name}
+        </Text>
+      </TouchableOpacity>
     );
-    updateState({selectedImage: newSelectedImageArary});
   };
+
+  const _toggleOnOff = (isOn) => {
+    updateState({
+      isOn: isOn ? true : false,
+    });
+  };
+
   return (
-    <WrapperContainer
-      bgColor="white"
-      statusBarColor="white"
-      barStyle="dark-content">
+    <WrapperContainer>
       <Header
-      headerStyle={{marginVertical: moderateScaleVertical(16)}}
-        leftIcon={imagePath.backRoyo}
-        centerTitle={`Add product | ${storeSelectedVendor.name}`}
-        showImageAlongwithTitle
-        onPressCenterTitle={() => _reDirectToVendorList()}
-        onPressImageAlongwithTitle={() => _reDirectToVendorList()}
-        imageAlongwithTitle={imagePath.dropdownTriangle}
+        leftIcon={false}
+        centerTitle={`Mango(Fruits)`}
+        customRight={customRight}
       />
+      <View style={{...styles.stepBarView, marginTop: moderateScale(10)}}>
+        {stepPoints.map(renderStepIndicator)}
+      </View>
+
       <KeyboardAwareScrollView
         enableOnAndroid={true}
         showsVerticalScrollIndicator={false}
         style={styles.container}
         bounces={false}>
-        <Text style={styles.addProduct}>{strings.ADD_PRODUCT_IMAGE}</Text>
-        <TouchableOpacity style={styles.camera} onPress={selectImage}>
-          <Image source={imagePath.cameraRoyo} />
-        </TouchableOpacity>
-        <ActionSheet
-          ref={actionSheet}
-          // title={'Choose one option'}
-          options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
-          cancelButtonIndex={2}
-          destructiveButtonIndex={2}
-          onPress={(index) => cameraHandle(index)}
-        />
-        {selectedImage ? (
-          <View style={styles.flexWrapRow}>
-            {selectedImage?.map((val, index) => (
-              <View>
-                <Image
-                  key={index}
-                  source={{uri: val}}
-                  style={styles.selectedImage}
+        {currentStepIndex == 0 ? (
+          <View>
+            <View style={styles.mainViewStyle}>
+              <View
+                style={{
+                  ...styles.flexRowStyle,
+                  marginTop: moderateScale(20),
+                  marginHorizontal: moderateScale(15),
+                }}>
+                <TextInputWithUnderlineAndLabel
+                  label={`SKU ( a-z, A-Z,0-9,-,…)`}
+                  labelStyle={styles.labelStyle}
+                  placeholder={'xyz.LocalMarket.Tshirt'}
+                  mainStyle={{flex: 0.48}}
+                  placeholderTextColor={colors.black}
+                  txtInputStyle={styles.textInputStyle}
                 />
-                <TouchableOpacity
-                  onPress={() => deleteImage(index)}
-                  style={styles.deleteImageBox}>
-                  <Image
-                    style={{height: 15, width: 15}}
-                    source={imagePath.cancelledRoyo}
-                  />
-                </TouchableOpacity>
+                <TextInputWithUnderlineAndLabel
+                  label={'Url Slug'}
+                  placeholder={'tshirt'}
+                  mainStyle={{flex: 0.48}}
+                  labelStyle={styles.labelStyle}
+                  placeholderTextColor={colors.black}
+                  txtInputStyle={styles.textInputStyle}
+                />
               </View>
-            ))}
-          </View>
-        ) : null}
-        <View style={styles.body}>
-          <View style={styles.flexWrapSpace}>
-            <TextInputWithUnderlineAndLabel
-              label={strings.PRODUCT_NAME}
-              labelStyle={styles.labelText}
-              mainStyle={{...styles.textInputView, width: boxWidth(2.22, 32)}}
-              txtInputStyle={styles.textInput}
-              underlineColor="transparent"
-              value={productName}
-              onChangeText={onChangeText('productName')}
-              placeholder={strings.ENTER_BUISNESS_NAME}
-            />
-            <View style={{...styles.textInputView, width: boxWidth(2.22, 32)}}>
-              <Text style={styles.labelText}>{strings.PRODUCT_CATEGORY}</Text>
-              <DropDown
-                value={selectedBuisnessType}
-                inputStyle={styles.textInput}
-                selectedIndexByProps={-1}
-                placeholder={strings.CHOOSE_BUISNESS_TYPE}
-                data={dropDownData}
-                fetchValues={onSelectBuisnessType}
-                marginBottom={0}
-                // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
+            </View>
+            <View
+              style={{
+                ...styles.stepBarView,
+                marginTop: moderateScale(40),
+                justifyContent: 'space-between',
+              }}>
+              <Text
+                style={{
+                  fontFamily: fontFamily.bold,
+                }}>
+                Product Information
+              </Text>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginRight: moderateScale(10),
+                }}>
+                <Text
+                  style={{
+                    fontFamily: fontFamily.regular,
+
+                    marginRight: moderateScale(5),
+                  }}>
+                  English
+                </Text>
+                <Image source={imagePath.dropDownNew} />
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                ...styles.mainViewStyle,
+                paddingHorizontal: moderateScale(15),
+              }}>
+              <TextInputWithUnderlineAndLabel
+                label={'Product Name'}
+                placeholder={'tshirt'}
+                labelStyle={styles.labelStyle}
+                placeholderTextColor={colors.black}
+                txtInputStyle={styles.textInputStyle}
+                mainStyle={{
+                  marginTop: moderateScale(20),
+                }}
               />
+              <TextInputWithUnderlineAndLabel
+                label={'Product Description'}
+                placeholder={'Lorem ipsum'}
+                labelStyle={styles.labelStyle}
+                placeholderTextColor={colors.black}
+                txtInputStyle={styles.textInputStyle}
+              />
+              <View style={styles.seoViewStyle}>
+                <View
+                  style={{
+                    ...styles.flexRowStyle,
+                    alignItems: 'center',
+                  }}>
+                  <Text>SEO</Text>
+                  <Image source={imagePath.icUpArrow} />
+                </View>
+                <View
+                  style={{
+                    ...styles.flexRowStyle,
+                    marginTop: moderateScale(20),
+                  }}>
+                  <TextInputWithUnderlineAndLabel
+                    label={`Meta Title`}
+                    labelStyle={styles.labelStyle}
+                    placeholder={'xyz'}
+                    mainStyle={{flex: 0.48}}
+                    placeholderTextColor={colors.black}
+                    txtInputStyle={styles.textInputStyle}
+                  />
+                  <TextInputWithUnderlineAndLabel
+                    label={'Meta Keyword'}
+                    placeholder={'xyz'}
+                    mainStyle={{flex: 0.48}}
+                    labelStyle={styles.labelStyle}
+                    placeholderTextColor={colors.black}
+                    txtInputStyle={styles.textInputStyle}
+                  />
+                </View>
+                <TextInputWithUnderlineAndLabel
+                  label={'Meta Descripton'}
+                  placeholder={'Lorem ipsum'}
+                  labelStyle={styles.labelStyle}
+                  placeholderTextColor={colors.black}
+                  txtInputStyle={styles.textInputStyle}
+                />
+              </View>
+            </View>
+
+            <View
+              style={{
+                ...styles.stepBarView,
+                marginTop: moderateScale(40),
+              }}>
+              <Text
+                style={{
+                  fontFamily: fontFamily.bold,
+                }}>
+                Product Image
+              </Text>
+            </View>
+            <View
+              style={{
+                ...styles.mainViewStyle,
+                paddingHorizontal: moderateScale(15),
+                paddingVertical: moderateScale(10),
+                alignItems: 'center',
+              }}>
+              <Image source={imagePath.icPlaceholder} />
             </View>
           </View>
+        ) : currentStepIndex == 1 ? (
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              zIndex: -2,
+              ...styles.mainViewStyle,
+              paddingHorizontal: moderateScale(15),
             }}>
-            <TextInputWithUnderlineAndLabel
-              label={strings.MRP}
-              labelStyle={styles.labelText}
-              mainStyle={{...styles.textInputView, flex: 0.48}}
-              containerStyle={{}}
-              txtInputStyle={styles.textInput}
-              underlineColor="transparent"
-              keyboardType="numeric"
-              returnKeyType="done"
-              value={mrp}
-              onChangeText={onChangeText('mrp')}
-              placeholder={strings.ENTER_MARP}
-            />
+            <View
+              style={{
+                ...styles.flexRowStyle,
+                marginTop: moderateScale(20),
+              }}>
+              <TextInputWithUnderlineAndLabel
+                label={`Price`}
+                labelStyle={styles.labelStyle}
+                placeholder={'645'}
+                mainStyle={{flex: 0.2}}
+                placeholderTextColor={colors.black}
+                txtInputStyle={styles.textInputStyle}
+              />
+              <TextInputWithUnderlineAndLabel
+                label={'Compare at price'}
+                placeholder={'890'}
+                mainStyle={{flex: 0.4}}
+                labelStyle={styles.labelStyle}
+                placeholderTextColor={colors.black}
+                txtInputStyle={styles.textInputStyle}
+              />
+              <View style={{flex: 0.31}}>
+                <Text style={styles.labelStyle}>Track inventory</Text>
+                <ToggleSwitch
+                  isOn={isOn}
+                  onColor={themeColors.primary_color}
+                  offColor={colors.textGreyB}
+                  size="medium"
+                  onToggle={(isOn) => _toggleOnOff(isOn)}
+                  animationSpeed={400}
+                />
+              </View>
+            </View>
 
-            <TextInputWithUnderlineAndLabel
-              label={strings.SALE_PRICE}
-              labelStyle={styles.labelText}
-              mainStyle={{...styles.textInputView, flex: 0.48}}
-              containerStyle={{}}
-              txtInputStyle={styles.textInput}
-              underlineColor="transparent"
-              keyboardType="numeric"
-              returnKeyType="done"
-              value={salePrice}
-              onChangeText={onChangeText('salePrice')}
-              placeholder={strings.ENTER_SALE_PRICE}
-            />
-          </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <Text style={styles.labelStyle}>Variant Information</Text>
+              <GradientButton
+                colorsArray={[
+                  themeColors.primary_color,
+                  themeColors.primary_color,
+                ]}
+                textStyle={styles.addProductBtn}
+                marginTop={moderateScaleVertical(20)}
+                marginBottom={moderateScaleVertical(20)}
+                btnText={'Make variant set'}
+                containerStyle={{
+                  height: moderateScale(30),
+                  width: moderateScale(130),
+                }}
+                btnStyle={{borderRadius: 5}}
+              />
+            </View>
+            <Text style={styles.varientName}>Size</Text>
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginTop: moderateScale(5),
+              }}>
+              <Image source={imagePath.icCheck1} />
+              <Text style={styles.varientTypeTxt}>Small</Text>
+            </TouchableOpacity>
 
-          <TextInputWithUnderlineAndLabel
-            label={strings.PRODUCT_DETAILS}
-            labelStyle={styles.labelText}
-            mainStyle={{...styles.textInputView, zIndex: -1}}
-            txtInputStyle={{
-              ...styles.textInput,
-              alignItems: 'baseline',
-              paddingTop: moderateScaleVertical(8),
-              height: moderateScaleVertical(100),
-            }}
-            containerStyle={{height: moderateScaleVertical(100)}}
-            underlineColor="transparent"
-            multiline={true}
-            value={productDetail}
-            onChangeText={onChangeText('productDetail')}
-            placeholder={strings.ENTER_PRODUCT_DETAIL}
-          />
-          <View style={styles.btnbox}>
-            <ButtonWithLoader
-              btnText="Save & Add"
-              btnTextStyle={styles.addBtnText}
-              btnStyle={styles.addBtnContainer}
-              onPress={onPressAdd}
-            />
-            <ButtonWithLoader
-              btnText="Save"
-              btnStyle={styles.SavebtnContainer}
-              onPress={onPressSave}
-            />
+            <View style={{height: 1, backgroundColor: colors.backgroundGrey}} />
+            <View
+              style={{
+                ...styles.seoViewStyle,
+                backgroundColor: 'rgba(68,215,182,0.17)',
+                borderWidth: 0,
+                marginTop: moderateScale(10),
+              }}>
+              <View
+                style={{
+                  ...styles.flexRowStyle,
+                }}>
+                <View style={{flex: 0.2}}>
+                  <Text style={styles.labelStyle}>Image</Text>
+                  <View>
+                    <Image
+                      source={imagePath.icPlaceholder}
+                      style={{height: 20, width: 50}}
+                    />
+                  </View>
+                </View>
+                <TextInputWithUnderlineAndLabel
+                  label={`Name`}
+                  labelStyle={styles.labelStyle}
+                  placeholder={'Tshirt'}
+                  mainStyle={{flex: 0.35}}
+                  placeholderTextColor={colors.black}
+                  txtInputStyle={styles.textInputStyle}
+                />
+                <TextInputWithUnderlineAndLabel
+                  label={'Quantity'}
+                  placeholder={'76'}
+                  mainStyle={{flex: 0.35}}
+                  labelStyle={styles.labelStyle}
+                  placeholderTextColor={colors.black}
+                  txtInputStyle={styles.textInputStyle}
+                />
+              </View>
+              <View
+                style={{
+                  ...styles.flexRowStyle,
+                }}>
+                <TextInputWithUnderlineAndLabel
+                  label={`Price`}
+                  labelStyle={styles.labelStyle}
+                  placeholder={'56'}
+                  mainStyle={{flex: 0.2}}
+                  placeholderTextColor={colors.black}
+                  txtInputStyle={styles.textInputStyle}
+                />
+                <TextInputWithUnderlineAndLabel
+                  label={`Cost price`}
+                  labelStyle={styles.labelStyle}
+                  placeholder={'235'}
+                  mainStyle={{flex: 0.25}}
+                  placeholderTextColor={colors.black}
+                  txtInputStyle={styles.textInputStyle}
+                />
+                <TextInputWithUnderlineAndLabel
+                  label={'Compare at price'}
+                  placeholder={'120'}
+                  mainStyle={{flex: 0.45}}
+                  labelStyle={styles.labelStyle}
+                  placeholderTextColor={colors.black}
+                  txtInputStyle={styles.textInputStyle}
+                />
+              </View>
+            </View>
           </View>
-          {/* <Text style={styles.variant}>{strings.VARIANTS_ADD}</Text> */}
-        </View>
+        ) : (
+          <View
+            style={{
+              ...styles.mainViewStyle,
+              paddingHorizontal: moderateScale(15),
+            }}>
+            <View
+              style={{
+                ...styles.flexRowStyle,
+                marginTop: moderateScale(20),
+              }}>
+              <TextInputWithUnderlineAndLabel
+                label={`Select Add on set`}
+                labelStyle={styles.labelStyle}
+                placeholder={'645'}
+                mainStyle={{flex: 0.45}}
+                placeholderTextColor={colors.black}
+                txtInputStyle={styles.textInputStyle}
+              />
+              <TextInputWithUnderlineAndLabel
+                label={'Up sell products'}
+                placeholder={'890'}
+                mainStyle={{flex: 0.45}}
+                labelStyle={styles.labelStyle}
+                placeholderTextColor={colors.black}
+                txtInputStyle={styles.textInputStyle}
+              />
+            </View>
+            <View
+              style={{
+                ...styles.flexRowStyle,
+                marginTop: moderateScale(10),
+              }}>
+              <TextInputWithUnderlineAndLabel
+                label={`Cross sell products`}
+                labelStyle={styles.labelStyle}
+                placeholder={'645'}
+                mainStyle={{flex: 0.45}}
+                placeholderTextColor={colors.black}
+                txtInputStyle={styles.textInputStyle}
+              />
+              <TextInputWithUnderlineAndLabel
+                label={'Related products'}
+                placeholder={'890'}
+                mainStyle={{flex: 0.45}}
+                labelStyle={styles.labelStyle}
+                placeholderTextColor={colors.black}
+                txtInputStyle={styles.textInputStyle}
+              />
+            </View>
+
+            <View
+              style={{
+                ...styles.seoViewStyle,
+                borderWidth: 0,
+                marginTop: moderateScale(10),
+              }}>
+              <View
+                style={{
+                  ...styles.flexRowStyle,
+                  alignItems: 'center',
+                  marginTop: moderateScale(20),
+                }}>
+                <View style={{width: '32.50%'}}>
+                  <Text style={styles.labelStyle}>New</Text>
+                  <ToggleSwitch
+                    isOn={isOn}
+                    onColor={themeColors.primary_color}
+                    offColor={colors.textGreyB}
+                    size="medium"
+                    onToggle={(isOn) => _toggleOnOff(isOn)}
+                    animationSpeed={400}
+                  />
+                </View>
+                <View style={{width: '32.50%'}}>
+                  <Text style={styles.labelStyle}>Featured</Text>
+                  <ToggleSwitch
+                    isOn={isOn}
+                    onColor={themeColors.primary_color}
+                    offColor={colors.textGreyB}
+                    size="medium"
+                    onToggle={(isOn) => _toggleOnOff(isOn)}
+                    animationSpeed={400}
+                  />
+                </View>
+                <View style={{width: '32.50%'}}>
+                  <Text style={styles.labelStyle}>Inquiry only</Text>
+                  <ToggleSwitch
+                    isOn={isOn}
+                    onColor={themeColors.primary_color}
+                    offColor={colors.textGreyB}
+                    size="medium"
+                    onToggle={(isOn) => _toggleOnOff(isOn)}
+                    animationSpeed={400}
+                  />
+                </View>
+              </View>
+
+              <View
+                style={{
+                  alignItems: 'center',
+                  marginTop: moderateScale(15),
+                  marginBottom: moderateScale(35),
+                  flexDirection: 'row',
+                }}>
+                <View style={{width: '32.50%'}}>
+                  <Text style={styles.labelStyle}>Requires prescription</Text>
+                  <ToggleSwitch
+                    isOn={isOn}
+                    onColor={themeColors.primary_color}
+                    offColor={colors.textGreyB}
+                    size="medium"
+                    onToggle={(isOn) => _toggleOnOff(isOn)}
+                    animationSpeed={400}
+                  />
+                </View>
+                <View style={{width: '32.50%'}}>
+                  <Text style={styles.labelStyle}>
+                    Requires last mile delivery
+                  </Text>
+                  <ToggleSwitch
+                    isOn={isOn}
+                    onColor={themeColors.primary_color}
+                    offColor={colors.textGreyB}
+                    size="medium"
+                    onToggle={(isOn) => _toggleOnOff(isOn)}
+                    animationSpeed={400}
+                  />
+                </View>
+              </View>
+
+              <View
+                style={{
+                  ...styles.flexRowStyle,
+                }}>
+                <TextInputWithUnderlineAndLabel
+                  label={`Live`}
+                  labelStyle={styles.labelStyle}
+                  placeholder={'56'}
+                  mainStyle={{flex: 0.31}}
+                  placeholderTextColor={colors.black}
+                  txtInputStyle={styles.textInputStyle}
+                />
+                <TextInputWithUnderlineAndLabel
+                  label={`Brand`}
+                  labelStyle={styles.labelStyle}
+                  placeholder={'235'}
+                  mainStyle={{flex: 0.31}}
+                  placeholderTextColor={colors.black}
+                  txtInputStyle={styles.textInputStyle}
+                />
+                <TextInputWithUnderlineAndLabel
+                  label={'Tax Category'}
+                  placeholder={'120'}
+                  mainStyle={{flex: 0.31}}
+                  labelStyle={styles.labelStyle}
+                  placeholderTextColor={colors.black}
+                  txtInputStyle={styles.textInputStyle}
+                />
+              </View>
+              <View
+                style={{
+                  ...styles.flexRowStyle,
+                }}>
+                <TextInputWithUnderlineAndLabel
+                  label={`Select delay time`}
+                  labelStyle={styles.labelStyle}
+                  placeholder={'hrs'}
+                  mainStyle={{flex: 0.45}}
+                  placeholderTextColor={colors.black}
+                  txtInputStyle={styles.textInputStyle}
+                />
+                <TextInputWithUnderlineAndLabel
+                  label={'Up sell products'}
+                  placeholder={'minutes'}
+                  mainStyle={{flex: 0.45}}
+                  labelStyle={styles.labelStyle}
+                  placeholderTextColor={colors.black}
+                  txtInputStyle={styles.textInputStyle}
+                />
+              </View>
+            </View>
+          </View>
+        )}
       </KeyboardAwareScrollView>
     </WrapperContainer>
   );
@@ -340,108 +588,52 @@ export default RoyoAddProduct;
 const styles = StyleSheet.create({
   container: {
     marginBottom: customMarginBottom(),
-    marginHorizontal: moderateScale(16),
     flexGrow: 1,
   },
-  addProduct: {
-    fontSize: 14,
-    fontFamily: fontFamily.regular,
-    color: colors.black,
-    marginBottom: moderateScaleVertical(10),
-    marginTop: moderateScaleVertical(14),
+  mainViewStyle: {
+    backgroundColor: colors.blackOpacity05,
+    paddingBottom: moderateScale(20),
   },
-  camera: {
-    maxWidth: moderateScale(69),
-    borderRadius: 6,
-    borderWidth: 1,
-    padding: moderateScale(24),
-    borderColor: colors.borderColorGrey,
-  },
-  selectedImage: {
-    height: moderateScaleVertical(60),
-    width: moderateScale(60),
-    marginRight: moderateScale(8),
-  },
-  labelText: {
-    color: colors.black,
-    marginBottom: moderateScaleVertical(8),
-  },
-  textInputView: {
-    marginTop: moderateScaleVertical(24),
-    // zIndex: 123,
-  },
-  textInput: {
-    backgroundColor: colors.white,
-    borderColor: colors.borderColorGrey,
-    borderWidth: moderateScale(1),
-    borderRadius: moderateScale(6),
-    color: colors.black,
-    height: moderateScaleVertical(48),
-    paddingHorizontal: moderateScale(12),
-    fontSize: 14,
-    fontFamily: fontFamily.medium,
-    marginBottom: 0,
-    marginTop: 0,
-  },
-  body: {
-    // marginTop: moderateScaleVertical(16),
-    marginBottom: moderateScaleVertical(16),
-  },
-  flexWrapRow: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    marginTop: moderateScaleVertical(16),
-  },
-  deleteImageBox: {top: -5, right: 5, position: 'absolute'},
-  dropDown: {
-    backgroundColor: colors.white,
-    borderColor: colors.borderColorGrey,
-    borderWidth: moderateScale(1),
-    borderRadius: moderateScale(6),
-    color: colors.black,
-    // marginTop: moderateScaleVertical(8),
-    padding: moderateScale(9),
-    marginBottom: 0,
-    height: moderateScaleVertical(48),
+  stepBarView: {
+    height: moderateScale(45),
+    backgroundColor: colors.blackOpacity10,
+    paddingHorizontal: moderateScale(15),
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
   },
-  variant: {
-    marginTop: moderateScaleVertical(20),
+
+  labelStyle: {
+    fontFamily: fontFamily.bold,
+    color: colors.blackOpacity43,
+    fontSize: textScale(12),
+    marginBottom: moderateScale(10),
+  },
+  textInputStyle: {
     fontFamily: fontFamily.medium,
-    fontSize: 14,
-    textAlign: 'right',
-    color: colors.themeColor2,
-    zIndex: -1,
+    color: colors.black,
+    fontSize: textScale(13),
   },
-  btnbox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    zIndex: -1,
-  },
-  addBtnContainer: {
-    flex: 0.48,
+  seoViewStyle: {
+    borderWidth: 0.7,
+    borderColor: colors.blackOpacity20,
+    borderRadius: moderateScale(5),
     backgroundColor: colors.white,
-    borderColor: colors.themeColor2,
+    padding: moderateScale(10),
   },
-  addBtnText: {
-    fontSize: 16,
-    fontFamily: fontFamily.semiBold,
-    color: colors.themeColor2,
-  },
-  SavebtnContainer: {
-    flex: 0.48,
-    backgroundColor: colors.themeColor2,
-    borderColor: colors.themeColor2,
-  },
-  saveBtnText: {
-    fontFamily: fontFamily.semiBold,
-    fontSize: 16,
-  },
-  flexWrapSpace: {
+  flexRowStyle: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     justifyContent: 'space-between',
+  },
+  addProductBtn: {
+    textTransform: 'none',
+  },
+  varientTypeTxt: {
+    fontSize: textScale(11),
+    fontFamily: fontFamily.regular,
+    marginLeft: moderateScale(5),
+  },
+  varientName: {
+    fontSize: textScale(12),
+    fontFamily: fontFamily.bold,
   },
 });
