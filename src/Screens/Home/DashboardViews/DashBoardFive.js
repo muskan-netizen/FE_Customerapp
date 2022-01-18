@@ -291,8 +291,7 @@ export default function DashBoardFive({
   };
 
   const onViewAll = (type, data) => {
-    console.log(data,"type+++++",type)
-    return;
+    console.log(data, 'type+++++', type);
     navigation.navigate(navigationStrings.VIEW_ALL_DATA, {
       data: data,
       type: type,
