@@ -1,19 +1,21 @@
 export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'http://192.168.97.160:8000/api/v1';
 
 // export const API_BASE_URL='http://192.168.97.123:8020/api/v1'
 // export const API_BASE_URL = 'http://192.168.96.20:8020/api/v1';
-// export const API_BASE_URL = 'http://192.168.103.73:8005/api/v1'; // preet
+// export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.97.123:8020/api/v1'; // sujata
+// export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1'; //dinesh sir
+// export const API_BASE_URL = 'http://192.168.103.186:8005/api/v1'; // harbans
 
-//export const API_BASE_URL = 'http://192.168.103.186:8005/api/v1'; // harbans
+// export const API_BASE_URL = 'http://192.168.103.186:8005/api/v1'; // harbans
 
 // export const API_BASE_URL = 'http://192.168.96.20:8020/api/v1';
-//export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
+// export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
-//export const API_BASE_URL = 'https://zuzuclean.alerthire.com/api/v1';
+// export const API_BASE_URL = 'https://zuzu.alerthire.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
-// export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1'; //dinesh sir
 // export const API_BASE_URL = 'http://192.168.100.198:8020/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
 // export const API_BASE_URL = 'https://click-eat.com/api/v1';
@@ -21,13 +23,13 @@ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://pinkjettaxi.com/api/v1';
 // export const API_BASE_URL = 'https://snabbhem.se/api/v1';
 // export const API_BASE_URL = 'https://codiner.com/api/v1';
-//export const API_BASE_URL = 'https://somame-247.com/api/v1';
+// export const API_BASE_URL = 'https://somame-247.com/api/v1';
 // export const API_BASE_URL = 'https://order.africanize.co/api/v1';
 // export const API_BASE_URL = 'https://destinationops.com/api/v1';
 // export const API_BASE_URL = 'https://bustanfakieh.com/api/v1';
 // export const API_BASE_URL = 'https://cabdeliv.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
-//export const API_BASE_URL = 'https://orderchekout.com/api/v1';
+// export const API_BASE_URL = 'https://orderchekout.com/api/v1';
 // export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
 // export const API_BASE_URL = 'https://ufood.ca/api/v1';
@@ -40,6 +42,9 @@ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://orders.halalhmc.org/api/v1';
 // export const API_BASE_URL = 'https://tranzonline.com/api/v1';
 // export const API_BASE_URL = 'https://hellodeliver.in/api/v1';
+// export const API_BASE_URL = 'https://yohopartner.com/api/v1'
+// export const API_BASE_URL = 'https://swiftandvalu.com/api/v1';
+// export const API_BASE_URL = 'https://baytukom.royoorders.com/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
@@ -146,6 +151,7 @@ export const GET_RETURN_PRODUCT_DETAIL = getApiUrl(
 );
 
 export const UPLOAD_PRODUCT_IMAGE = getApiUrl('/upload-file');
+export const REPEAT_ORDER = getApiUrl('/repeatOrder');
 
 export const SUBMIT_RETURN_ORDER = getApiUrl(
   '/return-order/update-product-return',
@@ -170,3 +176,6 @@ export const WALLET_CREDIT = getApiUrl('/myWallet/credit');
 export const VENDOR_REGISTER = getApiUrl('/vendor/register');
 export const DRIVER_REGISTER = getApiUrl('/driver/register');
 export const CANCEL_ORDER = getApiUrl('/return-order/vendor-order-for-cancel');
+export const WALLET_USER_VERIFY = getApiUrl('/wallet/transfer/user/verify');
+export const WALLET_TRANSFER_CONFIRM = getApiUrl('/wallet/transfer/confirm');
+export const VENDOR_SLOTS = getApiUrl('/vendor/slots');

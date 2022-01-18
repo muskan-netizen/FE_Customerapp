@@ -3,10 +3,11 @@ import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
   width,
 } from '../../styles/responsiveSize';
 
-export default ({fontFamily}) => {
+export default ({fontFamily, themeColors}) => {
   const styles = StyleSheet.create({
     addMoneyTopCon: {
       paddingHorizontal: moderateScaleVertical(15),

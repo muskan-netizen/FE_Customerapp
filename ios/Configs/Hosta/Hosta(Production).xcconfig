@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Hosta/Pods-Hosta.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Hosta/Pods-available_pods-Hosta.release.xcconfig"
 
 PROJECT_APPLE_ID =1590147222
 PROJECT_BUNDLE_ID = com.hosta

@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Ace/Pods-Ace.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Ace/Pods-available_pods-Ace.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1588399871
 PROJECT_BUNDLE_ID = com.customer.ace

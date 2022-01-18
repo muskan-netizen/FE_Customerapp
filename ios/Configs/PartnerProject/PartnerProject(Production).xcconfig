@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-PartnerProject/Pods-PartnerProject.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-PartnerProject/Pods-available_pods-PartnerProject.release.xcconfig"
 
 PROJECT_APPLE_ID = 1583746670
 PROJECT_BUNDLE_ID = com.partnerproject

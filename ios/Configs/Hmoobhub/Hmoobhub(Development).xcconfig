@@ -1,5 +1,5 @@
 
-#include "Pods/Target Support Files/Pods-Hmoobhub/Pods-Hmoobhub.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Hmoobhub/Pods-available_pods-Hmoobhub.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1561966015
 PROJECT_BUNDLE_ID = com.codebrew.hmoobhub

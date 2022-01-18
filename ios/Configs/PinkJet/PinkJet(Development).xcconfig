@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-PinkJet/Pods-PinkJet.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-PinkJet/Pods-available_pods-PinkJet.debug.xcconfig"
 
 PROJECT_APPLE_ID =1594187374
 PROJECT_BUNDLE_ID =com.pinkjet

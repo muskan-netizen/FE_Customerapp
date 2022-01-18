@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Kel360/Pods-Kel360.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Kel360/Pods-available_pods-Kel360.debug.xcconfig"
 
 PROJECT_APPLE_ID =1595823653
 PROJECT_BUNDLE_ID =com.kel

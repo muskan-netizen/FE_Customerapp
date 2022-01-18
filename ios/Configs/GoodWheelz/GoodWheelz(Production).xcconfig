@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-GoodWheelz/Pods-GoodWheelz.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-GoodWheelz/Pods-available_pods-GoodWheelz.release.xcconfig"
 
 PROJECT_APPLE_ID =1590329987
 PROJECT_BUNDLE_ID = com.goodwheelz

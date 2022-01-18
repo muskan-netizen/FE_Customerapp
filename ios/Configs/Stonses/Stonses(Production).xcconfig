@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Stonses/Pods-Stonses.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Stonses/Pods-available_pods-Stonses.release.xcconfig"
 
 PROJECT_APPLE_ID =1591222048
 PROJECT_BUNDLE_ID = com.stonses

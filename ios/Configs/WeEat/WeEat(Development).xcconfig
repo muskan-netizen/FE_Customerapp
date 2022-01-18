@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-WeEat/Pods-WeEat.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-WeEat/Pods-available_pods-WeEat.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1585626903
 PROJECT_BUNDLE_ID = com.weeat.customer

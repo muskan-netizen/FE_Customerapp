@@ -121,4 +121,5 @@ export default {
   ADD_PRODUCT: 'addProduct',
   ADD_NEW_CUSTOMER: 'addNewCustomer',
   CUSTOMER_EARNING_HISTORY: 'customerEarningHistory',
+  PAYSTACK: 'paystack',
 };

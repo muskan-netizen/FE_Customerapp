@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Sharu/Pods-Sharu.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Sharu/Pods-available_pods-Sharu.release.xcconfig"
 
 PROJECT_APPLE_ID = 1584954302
 PROJECT_BUNDLE_ID = com.sharu

@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-AGBDeliveries/Pods-AGBDeliveries.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-AGBDeliveries/Pods-available_pods-AGBDeliveries.debug.xcconfig"
 
 PROJECT_APPLE_ID =1591407601
 PROJECT_BUNDLE_ID = com.agbdeliveries

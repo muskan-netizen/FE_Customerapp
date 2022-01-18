@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Grub/Pods-Grub.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Grub/Pods-available_pods-Grub.release.xcconfig"
 
 PROJECT_APPLE_ID = 1588362121
 PROJECT_BUNDLE_ID = com.customer.grub

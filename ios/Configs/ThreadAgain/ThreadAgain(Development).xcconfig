@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-ThreadAgain/Pods-ThreadAgain.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-ThreadAgain/Pods-available_pods-ThreadAgain.debug.xcconfig"
 
 PROJECT_APPLE_ID =1596283317
 PROJECT_BUNDLE_ID =com.threadagain

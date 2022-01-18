@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-DoctaTransportation/Pods-DoctaTransportation.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-DoctaTransportation/Pods-available_pods-DoctaTransportation.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1580554367

@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Donepacked/Pods-Donepacked.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Donepacked/Pods-available_pods-Donepacked.debug.xcconfig"
 
 PROJECT_APPLE_ID =1592441052
 PROJECT_BUNDLE_ID =com.donepacked
