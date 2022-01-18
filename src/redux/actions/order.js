@@ -14,6 +14,7 @@ import {
   GET_ORDER_DETAIL_FOR_BILLING,
   DISPATCHER_URL,
   CANCEL_ORDER,
+  REPEAT_ORDER,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -23,7 +24,7 @@ const {dispatch} = store;
 //Get Order Detail For Billing
 export function getOrderDetailForBilling(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
-    apiGet(GET_ORDER_DETAIL_FOR_BILLING+data.order_id, {}, headers)
+    apiGet(GET_ORDER_DETAIL_FOR_BILLING + data.order_id, {}, headers)
       .then((res) => {
         resolve(res);
       })
@@ -35,8 +36,8 @@ export function getOrderDetailForBilling(data = {}, headers = {}) {
 
 //Get Cart Detail
 export function getOrderDetail(data = {}, headers = {}) {
-  console.log("sending+++ data",data)
-  console.log("sending+++ header",headers)
+  console.log('sending+++ data', data);
+  console.log('sending+++ header', headers);
   return new Promise((resolve, reject) => {
     apiPost(GET_ORDER_DETAIL, data, headers)
       .then((res) => {
@@ -160,6 +161,19 @@ export function getOrderDetailPickUp(data = {}, headers = {}) {
 export function getReturnOrderDetailData(url = '', data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiGet(GET_RETURN_ORDER_DETAIL + url, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+// Repeat ORDER
+export function repeatOrder(url = '', data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(REPEAT_ORDER, data, headers)
       .then((res) => {
         resolve(res);
       })

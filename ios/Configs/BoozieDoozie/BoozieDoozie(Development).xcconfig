@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-BoozieDoozie/Pods-BoozieDoozie.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-BoozieDoozie/Pods-available_pods-BoozieDoozie.debug.xcconfig"
 
 PROJECT_APPLE_ID =1589778125
 PROJECT_BUNDLE_ID = com.booziedoozie

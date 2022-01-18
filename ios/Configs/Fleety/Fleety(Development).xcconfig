@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Fleety/Pods-Fleety.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Fleety/Pods-available_pods-Fleety.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1583531580
 PROJECT_BUNDLE_ID = com.fleety

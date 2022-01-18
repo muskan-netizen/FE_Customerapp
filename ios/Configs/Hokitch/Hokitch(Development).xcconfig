@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Hokitch/Pods-Hokitch.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Hokitch/Pods-available_pods-Hokitch.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1598264963
 PROJECT_BUNDLE_ID = com.hokitch

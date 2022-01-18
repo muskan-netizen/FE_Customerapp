@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Skoop/Pods-Skoop.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Skoop/Pods-available_pods-Skoop.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1601945812
 PROJECT_BUNDLE_ID = com.app.skoop

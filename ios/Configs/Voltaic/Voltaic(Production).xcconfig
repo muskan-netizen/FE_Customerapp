@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Voltaic/Pods-Voltaic.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Voltaic/Pods-available_pods-Voltaic.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1588395065

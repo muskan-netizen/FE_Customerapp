@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Spidbi/Pods-Spidbi.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Spidbi/Pods-available_pods-Spidbi.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1561966015

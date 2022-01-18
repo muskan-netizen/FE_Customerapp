@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-YouChillax/Pods-YouChillax.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-YouChillax/Pods-available_pods-YouChillax.release.xcconfig"
 
 PROJECT_APPLE_ID =1595064321
 PROJECT_BUNDLE_ID =com.youchillax

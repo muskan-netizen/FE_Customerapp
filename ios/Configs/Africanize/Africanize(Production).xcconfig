@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Africanize/Pods-Africanize.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Africanize/Pods-available_pods-Africanize.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1581376022

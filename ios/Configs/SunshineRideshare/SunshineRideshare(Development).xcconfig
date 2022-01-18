@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-SunshineRideshare/Pods-SunshineRideshare.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-SunshineRideshare/Pods-available_pods-SunshineRideshare.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1584098377

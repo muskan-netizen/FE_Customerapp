@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Punnet/Pods-Punnet.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Punnet/Pods-available_pods-Punnet.release.xcconfig"
 
 PROJECT_APPLE_ID = 1588383389
 PROJECT_BUNDLE_ID = com.punnet

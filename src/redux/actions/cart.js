@@ -18,7 +18,8 @@ import {
   VALIDATE_PROMO_CODE,
   GET_ALL_PROMO_CODES_FOR_PRODUCTLIST,
   LAST_ADDED,
-  DIFFERENT_ADD_ONS
+  DIFFERENT_ADD_ONS,
+  VENDOR_SLOTS
 } from '../../config/urls';
 import {
   apiGet,
@@ -29,7 +30,7 @@ import {
 } from '../../utils/utils';
 import store from '../store';
 import types from '../types';
-const {dispatch} = store;
+const { dispatch } = store;
 
 export const saveAddress = (data) => {
   saveSelectedAddress(data).then((suc) => {
@@ -212,8 +213,8 @@ export function getListOfPaymentMethod(query = '', data = {}, headers = {}) {
 
 //Get List of payment method
 export function openPaymentWebUrl(query = '', data = {}, headers = {}) {
-  console.log("payment++ query",query)
-  console.log("payment++ data",data)
+  console.log("payment++ query", query)
+  console.log("payment++ data", data)
   return new Promise((resolve, reject) => {
     apiGet(GETWEBURL + query, data, headers)
       .then((res) => {
@@ -290,8 +291,8 @@ export const validatePromocode = (data, headers = {}) => {
 };
 
 
-export const checkLastAdded= (data, headers = {}) => {
-  console.log("data",data)
+export const checkLastAdded = (data, headers = {}) => {
+  console.log("data", data)
   return new Promise((resolve, reject) => {
     apiPost(LAST_ADDED, data, headers)
       .then((res) => {
@@ -303,7 +304,7 @@ export const checkLastAdded= (data, headers = {}) => {
   });
 };
 
-export const differentAddOns= (data, headers = {}) => {
+export const differentAddOns = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(DIFFERENT_ADD_ONS, data, headers)
       .then((res) => {
@@ -314,3 +315,8 @@ export const differentAddOns= (data, headers = {}) => {
       });
   });
 };
+
+
+export const checkVendorSlots = (data, headers ={}) => {
+  return apiGet(VENDOR_SLOTS + data, {}, headers)
+}

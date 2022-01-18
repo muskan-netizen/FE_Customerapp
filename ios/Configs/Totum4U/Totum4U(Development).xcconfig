@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Totum4U/Pods-Totum4U.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Totum4U/Pods-available_pods-Totum4U.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1584629919
 PROJECT_BUNDLE_ID = com.totum4U

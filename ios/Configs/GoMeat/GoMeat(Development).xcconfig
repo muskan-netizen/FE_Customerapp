@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-GoMeat/Pods-GoMeat.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-GoMeat/Pods-available_pods-GoMeat.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1600039073
 PROJECT_BUNDLE_ID =com.app.gomeat

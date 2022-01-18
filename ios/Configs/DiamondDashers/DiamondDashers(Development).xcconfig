@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-DiamondDashers/Pods-DiamondDashers.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-DiamondDashers/Pods-available_pods-DiamondDashers.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1581940857
