@@ -1375,6 +1375,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.cannabisClubSF:
+          updateState({
+            shortCode: shortCodes.cannabisClubSF,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

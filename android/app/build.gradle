@@ -2379,6 +2379,16 @@ android {
             resValue "string", "app_name", "Everywhere"
             resValue "string", "host_name", ""
          }
+         cannabisClubSF{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.cannabisClubSF'
+            resValue "string", "app_name", "Cannabis Club SF"
+            resValue "string", "host_name", ""
+         }
 
     }
 }

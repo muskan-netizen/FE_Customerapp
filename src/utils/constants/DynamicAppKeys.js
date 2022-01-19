@@ -213,6 +213,7 @@ const shortCodes = {
   sijang: '16b184',
   fairex: '1e3e30',
   everywhere: 'bc09ef',
+  cannabisClubSF: '351b2b',
 };
 
 const appIds = {
@@ -1063,6 +1064,10 @@ const appIds = {
   everywhere: Platform.select({
     ios: 'com.everywhere',
     android: 'com.everywhere',
+  }),
+  cannabisClubSF: Platform.select({
+    ios: 'com.cannabisClubSF',
+    android: 'com.cannabisClubSF',
   }),
 };
 
