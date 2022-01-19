@@ -1,5 +1,5 @@
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.97.160:8000/api/v1';
 
 // export const API_BASE_URL='http://192.168.97.123:8020/api/v1'
@@ -29,7 +29,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://bustanfakieh.com/api/v1';
 // export const API_BASE_URL = 'https://cabdeliv.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
-// export const API_BASE_URL = 'https://orderchekout.com/api/v1';
+export const API_BASE_URL = 'https://orderchekout.com/api/v1';
 // export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
 // export const API_BASE_URL = 'https://ufood.ca/api/v1';
@@ -46,6 +46,9 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://swiftandvalu.com/api/v1';
 // export const API_BASE_URL = 'https://baytukom.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://agrionline.ph/api/v1';
+// export const API_BASE_URL = 'https://marketplace.verofax.com/api/v1';
+// export const API_BASE_URL = 'https://order.loopwhole.ca/api/v1';
+// export const API_BASE_URL = 'https://elcheregio.mx/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 export const SEND_OTP = getApiUrl('/auth/sendOtp');

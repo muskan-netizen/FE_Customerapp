@@ -291,7 +291,7 @@ export default function DashBoardFive({
   };
 
   const onViewAll = (type, data) => {
-    console.log(data,"type+++++",type)
+    console.log(data, 'type+++++', type);
     return;
     navigation.navigate(navigationStrings.VIEW_ALL_DATA, {
       data: data,
@@ -478,6 +478,9 @@ export default function DashBoardFive({
                               height: moderateScaleVertical(16),
                               width: moderateScale(16),
                               resizeMode: 'contain',
+                              tintColor: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.black,
                             }}
                             source={imagePath.sort}
                           />
@@ -486,6 +489,9 @@ export default function DashBoardFive({
                               fontSize: textScale(14),
                               marginHorizontal: moderateScale(5),
                               fontFamily: fontFamily.regular,
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.black,
                             }}>
                             {strings.RELEVANCE}
                           </Text>
