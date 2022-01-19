@@ -10,6 +10,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  InteractionManager
 } from 'react-native';
 import { useDarkMode } from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
@@ -478,6 +479,24 @@ const AddressModal3 = ({
     }
   };
 
+  const onPressViaMap = () => {
+    onClose();
+    setTimeout(() => {
+      navigation.navigate(navigationStrings.PINADDRESSONMAP, {
+        onGoBack: async (data) => {
+          updateAddress_(data);
+          onClose();
+        },
+        prevRoute: 'cart',
+        task_id: 1,
+        pickUpLocationLatLng: {
+          latitude: 30.7333,
+          longitude: 76.7794,
+        },
+      });
+    }, 800);
+  }
+
   const renderSearchItem = (item, index) => {
     return (
       <TouchableOpacity
@@ -638,23 +657,7 @@ const AddressModal3 = ({
                   borderRadius: moderateScale(8)
                   // flex:1
                 }}
-                onPress={() => {
-                  onClose();
-                  setTimeout(() => {
-                    navigation.navigate(navigationStrings.PINADDRESSONMAP, {
-                      onGoBack: async (data) => {
-                        updateAddress_(data);
-                        onClose();
-                      },
-                      prevRoute: 'cart',
-                      task_id: 1,
-                      pickUpLocationLatLng: {
-                        latitude: 30.7333,
-                        longitude: 76.7794,
-                      },
-                    });
-                  }, 800);
-                }}
+                onPress={onPressViaMap}
               >
                 <Image
                   source={imagePath.ic_pinIcon}

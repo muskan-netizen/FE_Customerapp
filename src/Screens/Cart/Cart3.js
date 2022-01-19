@@ -239,12 +239,13 @@ export default function Cart({ navigation, route }) {
       !!checkCartItem?.data?.products &&
       !!checkCartItem?.data?.products.length
     ) {
-      checkforAddressUpdate();
+      console.log('useEffect 1', checkCartItem);
+      // checkforAddressUpdate();
  
     }
   }, [selectedAddress, allAddresss]);
 
-  console.log('useEffect 1', checkCartItem);
+
 
   //check for addreess Update and change
   const checkforAddressUpdate = () => {
@@ -454,6 +455,7 @@ export default function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
+  console.log("cartDatacartData",cartData)
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     console.log(item, 'itemitemitemitem');
@@ -946,8 +948,6 @@ export default function Cart({ navigation, route }) {
     // _offineLinePayment();
   };
 
-  console.log('cartDatacartData', cartItems);
-
   //Clear cart
   const placeOrder = () => {
     if (!!userData?.auth_token) {
@@ -1207,7 +1207,7 @@ export default function Cart({ navigation, route }) {
     }
   };
 
-  console.log(paramsData, 'paramsDataparamsDataparamsDataparamsData>>>');
+
 
   const _renderRazor = () => {
     updateState({ isLoadingB: true });
@@ -1467,7 +1467,7 @@ export default function Cart({ navigation, route }) {
                 ...styles.priceItemLabel2,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
-              {console.log('jbbbkhbk', item?.vendor)}
+          
               {item?.vendor?.name}
             </Text>
             {item?.is_vendor_closed && (
@@ -2433,6 +2433,7 @@ export default function Cart({ navigation, route }) {
     }
   };
   const setModalVisibleForAddessModal = (visible, type, id, data) => {
+    
     if (!!userData?.auth_token) {
       updateState({ isVisible: false });
       setTimeout(() => {
@@ -2814,7 +2815,8 @@ export default function Cart({ navigation, route }) {
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ flexGrow: 1 }}>
+                contentContainerStyle={{ flexGrow: 1 }}
+                >
                 {cartData?.total_payable_amount !== 0 &&
                   cartData?.tip.map((j, jnx) => {
                     return (
