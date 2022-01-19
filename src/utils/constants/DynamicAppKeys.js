@@ -212,6 +212,7 @@ const shortCodes = {
   oxo: '48200b',
   sijang: '16b184',
   fairex: '1e3e30',
+  everywhere: 'bc09ef',
 };
 
 const appIds = {
@@ -1058,6 +1059,10 @@ const appIds = {
   fairex: Platform.select({
     ios: 'com.fairex',
     android: 'com.fairex',
+  }),
+  everywhere: Platform.select({
+    ios: 'com.everywhere',
+    android: 'com.everywhere',
   }),
 };
 

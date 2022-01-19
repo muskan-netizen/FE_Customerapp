@@ -2369,6 +2369,16 @@ android {
             resValue "string", "app_name", "Fairex"
             resValue "string", "host_name", ""
          }
+          everywhere{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.app.everywhere'
+            resValue "string", "app_name", "Everywhere"
+            resValue "string", "host_name", ""
+         }
 
     }
 }
