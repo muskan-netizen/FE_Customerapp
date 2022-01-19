@@ -1,27 +1,46 @@
-import React, {useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {cloneDeep} from 'lodash';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  Image,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import ActionSheet from 'react-native-actionsheet';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {ToggleButton} from 'react-native-paper';
 import {useSelector} from 'react-redux';
+import ToggleSwitch from 'toggle-switch-react-native';
+import CustomDropDownWIthLabel from '../../../Components/CustomDropDownWIthLabel';
 import GradientButton from '../../../Components/GradientButton';
 import Header from '../../../Components/Header';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
+import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import fontFamily from '../../../styles/fontFamily';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
 } from '../../../styles/responsiveSize';
-import {customMarginBottom} from '../../../utils/constants/constants';
-import ToggleSwitch from 'toggle-switch-react-native';
+import {cameraHandler} from '../../../utils/commonFunction';
+import {showError} from '../../../utils/helperFunctions';
 
-const RoyoAddProduct = (props) => {
-  const {themeColors} = useSelector((state) => state?.initBoot);
+const RoyoAddProduct = ({route, navigation}) => {
+  const paramData = route.params;
+  const productDetailParam = paramData?.productDetail;
+
+  const {appData, themeColors, currencies, languages} = useSelector(
+    (state) => state?.initBoot,
+  );
   const [state, setState] = useState({
+    isLoading: true,
     stepPoints: [
       {
         id: 1,
@@ -38,8 +57,78 @@ const RoyoAddProduct = (props) => {
     ],
     currentStepIndex: 0,
     isOn: false,
+    productName: productDetailParam?.title || '',
+    productSKU: productDetailParam?.sku || '',
+    productSlug: productDetailParam?.url_slug || '',
+    addons: [],
+    brands: [],
+    celebrities: [],
+    clientLanguages: [],
+    configData: {},
+    productVariants: [],
+    taxCategory: [],
+    productImages: [],
+    isLangugaeDropDown: false,
   });
-  const {stepPoints, currentStepIndex, isOn} = state;
+  const {
+    isLoading,
+    stepPoints,
+    currentStepIndex,
+    isOn,
+    productName,
+    productSKU,
+    productSlug,
+    addons,
+    brands,
+    celebrities,
+    clientLanguages,
+    configData,
+    productVariants,
+    taxCategory,
+    productImages,
+    isLangugaeDropDown,
+  } = state;
+
+  useEffect(() => {
+    if (isLoading) {
+      getVendorProductDetailByID();
+    }
+  }, [isLoading]);
+
+  const getVendorProductDetailByID = () => {
+    actions
+      .getVendorProductDetail(
+        {
+          product_id: productDetailParam?.id || '',
+        },
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'responseFromServer');
+        updateState({
+          isLoading: false,
+          addons: res?.data?.addons,
+          brands: res?.data?.brands,
+          celebrities: res?.data?.celebrities,
+          clientLanguages: res?.data?.client_languages,
+          configData: res?.data?.config_data,
+          productVariants: res?.data?.product_variants,
+          taxCategory: res?.data?.tax_category,
+        });
+      })
+      .catch(errorMethod);
+  };
+
+  const errorMethod = (error) => {
+    updateState({
+      isLoading: false,
+    });
+    showError(error?.message || error?.error);
+  };
 
   const updateState = (data) => {
     setState((state) => {
@@ -93,11 +182,83 @@ const RoyoAddProduct = (props) => {
     });
   };
 
+  //this function use for open actionsheet
+  let actionSheet = useRef();
+  const showActionSheet = () => {
+    // {
+    //  productImages.length == 5
+    //     ? showError(strings.MAXIMUM_PHOTO_SELECTION_LIMIT_REACHED)
+    //     :
+    actionSheet.current.show();
+    // }
+  };
+
+  const cameraHandle = (index) => {
+    if (index == 0 || index == 1) {
+      cameraHandler(index, {
+        width: 300,
+        height: 400,
+        cropping: false,
+        cropperCircleOverlay: false,
+        compressImageQuality: 0.5,
+        mediaType: 'photo',
+      })
+        .then((res) => {
+          if (res && (res?.sourceURL || res?.path)) {
+            let file = {
+              image_id: Math.random(),
+              name: res?.filename,
+              type: res?.mime,
+              uri: res?.sourceURL || res?.path,
+            };
+            let find = productImages.find((x) => x?.name == res?.filename);
+            if (find) {
+              showError(strings.IMAGE_ALREADY_UPLOADED);
+            } else {
+              updateState({productImages: [...productImages, file]});
+            }
+          }
+        })
+        .catch((err) => {});
+    }
+  };
+
+  /***********Remove product images */
+  const _removeImageFromList = (selectdImage) => {
+    if (selectdImage?.id) {
+      let copyArrayImages = cloneDeep(productImages);
+
+      copyArrayImages = copyArrayImages.filter(
+        (x) => x?.id !== selectdImage?.id,
+      );
+      updateState({
+        productImages: copyArrayImages,
+        remove_image_ids: [...remove_image_ids, selectdImage?.id],
+      });
+    } else {
+      let copyArrayImages = cloneDeep(productImages);
+      copyArrayImages = copyArrayImages.filter(
+        (x) => x?.image_id !== selectdImage?.image_id,
+      );
+      updateState({
+        productImages: copyArrayImages,
+      });
+    }
+  };
+
+  const renderLangDropDown = () => {
+    return (
+      <View>
+        <Text>sdhgf</Text>
+      </View>
+    );
+  };
+
   return (
-    <WrapperContainer>
+    <WrapperContainer source={loaderOne} isLoadingB={isLoading}>
       <Header
-        leftIcon={false}
-        centerTitle={`Mango(Fruits)`}
+        leftIcon={imagePath.backRoyo}
+        centerTitle={productDetailParam?.title || ''}
         customRight={customRight}
       />
       <View style={{...styles.stepBarView, marginTop: moderateScale(10)}}>
@@ -122,14 +283,16 @@ const RoyoAddProduct = (props) => {
                   label={`SKU ( a-z, A-Z,0-9,-,…)`}
                   labelStyle={styles.labelStyle}
                   placeholder={'xyz.LocalMarket.Tshirt'}
-                  mainStyle={{flex: 0.48}}
+                  value={productSKU}
+                  mainStyle={{flex: 0.6}}
                   placeholderTextColor={colors.black}
                   txtInputStyle={styles.textInputStyle}
                 />
                 <TextInputWithUnderlineAndLabel
                   label={'Url Slug'}
                   placeholder={'tshirt'}
-                  mainStyle={{flex: 0.48}}
+                  mainStyle={{flex: 0.35}}
+                  value={productSlug}
                   labelStyle={styles.labelStyle}
                   placeholderTextColor={colors.black}
                   txtInputStyle={styles.textInputStyle}
@@ -148,7 +311,28 @@ const RoyoAddProduct = (props) => {
                 }}>
                 Product Information
               </Text>
-              <TouchableOpacity
+              <CustomDropDownWIthLabel
+                placeHolderText={'English'}
+                customPlaceHolderStyle={{borderWidth: 0}}
+                placeHolderTxtStyle={{
+                  marginRight: moderateScale(5),
+                  fontFamily: fontFamily.regular,
+                }}
+                onPicker={() =>
+                  updateState({
+                    isLangugaeDropDown: !isLangugaeDropDown,
+                  })
+                }
+                isDropDown={isLangugaeDropDown}
+                isRenderCustomView={true}
+                renderCustomView={renderLangDropDown}
+                dropDownContainer={{
+                  position: 'absolute',
+                  top: 40,
+                }}
+              />
+              {/* <TouchableOpacity
+              onPress={}
                 activeOpacity={0.7}
                 style={{
                   flexDirection: 'row',
@@ -164,7 +348,7 @@ const RoyoAddProduct = (props) => {
                   English
                 </Text>
                 <Image source={imagePath.dropDownNew} />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <View
               style={{
@@ -175,6 +359,7 @@ const RoyoAddProduct = (props) => {
                 label={'Product Name'}
                 placeholder={'tshirt'}
                 labelStyle={styles.labelStyle}
+                value={productName}
                 placeholderTextColor={colors.black}
                 txtInputStyle={styles.textInputStyle}
                 mainStyle={{
@@ -248,7 +433,35 @@ const RoyoAddProduct = (props) => {
                 paddingVertical: moderateScale(10),
                 alignItems: 'center',
               }}>
-              <Image source={imagePath.icPlaceholder} />
+              {!!(productImages && productImages.length)
+                ? productImages.map((i, inx) => {
+                    return (
+                      <ImageBackground
+                        source={{
+                          uri: i.uri,
+                        }}
+                        style={styles.imageOrderStyle}
+                        imageStyle={styles.imageOrderStyle}>
+                        <View style={styles.viewOverImage}>
+                          <View
+                            style={{
+                              position: 'absolute',
+                              top: -10,
+                              right: -10,
+                            }}>
+                            <TouchableOpacity
+                              onPress={() => _removeImageFromList(i)}>
+                              <Image source={imagePath.icRemoveIcon} />
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                      </ImageBackground>
+                    );
+                  })
+                : null}
+              <TouchableOpacity onPress={showActionSheet} activeOpacity={0.7}>
+                <Image source={imagePath.icPlaceholder} />
+              </TouchableOpacity>
             </View>
           </View>
         ) : currentStepIndex == 1 ? (
@@ -412,6 +625,8 @@ const RoyoAddProduct = (props) => {
                 mainStyle={{flex: 0.45}}
                 placeholderTextColor={colors.black}
                 txtInputStyle={styles.textInputStyle}
+                rightIcon={imagePath.icDropdown}
+                onRightPress={() => {}}
               />
               <TextInputWithUnderlineAndLabel
                 label={'Up sell products'}
@@ -536,6 +751,8 @@ const RoyoAddProduct = (props) => {
                   mainStyle={{flex: 0.31}}
                   placeholderTextColor={colors.black}
                   txtInputStyle={styles.textInputStyle}
+                  rightIcon={imagePath.icDropdown}
+                  onRightPress={() => {}}
                 />
                 <TextInputWithUnderlineAndLabel
                   label={`Brand`}
@@ -544,6 +761,8 @@ const RoyoAddProduct = (props) => {
                   mainStyle={{flex: 0.31}}
                   placeholderTextColor={colors.black}
                   txtInputStyle={styles.textInputStyle}
+                  rightIcon={imagePath.icDropdown}
+                  onRightPress={() => {}}
                 />
                 <TextInputWithUnderlineAndLabel
                   label={'Tax Category'}
@@ -552,6 +771,8 @@ const RoyoAddProduct = (props) => {
                   labelStyle={styles.labelStyle}
                   placeholderTextColor={colors.black}
                   txtInputStyle={styles.textInputStyle}
+                  rightIcon={imagePath.icDropdown}
+                  onRightPress={() => {}}
                 />
               </View>
               <View
@@ -579,6 +800,14 @@ const RoyoAddProduct = (props) => {
           </View>
         )}
       </KeyboardAwareScrollView>
+      <ActionSheet
+        ref={actionSheet}
+        // title={'Choose one option'}
+        options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
+        cancelButtonIndex={2}
+        destructiveButtonIndex={2}
+        onPress={(index) => cameraHandle(index)}
+      />
     </WrapperContainer>
   );
 };
@@ -587,7 +816,6 @@ export default RoyoAddProduct;
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: customMarginBottom(),
     flexGrow: 1,
   },
   mainViewStyle: {
@@ -635,5 +863,17 @@ const styles = StyleSheet.create({
   varientName: {
     fontSize: textScale(12),
     fontFamily: fontFamily.bold,
+  },
+  imageOrderStyle: {
+    height: width / 4,
+    width: '94%',
+    borderRadius: 5,
+    marginBottom: moderateScaleVertical(10),
+    marginLeft: moderateScale(6),
+  },
+  viewOverImage: {
+    height: width / 5,
+    width: '95%',
+    borderRadius: 5,
   },
 });

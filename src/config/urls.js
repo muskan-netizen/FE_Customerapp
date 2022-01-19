@@ -5,6 +5,7 @@ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.97.123:8020/api/v1'; // sujata
 // export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1'; //dinesh sir
 // export const API_BASE_URL = 'http://192.168.103.186:8005/api/v1'; // harbans
+// export const API_BASE_URL = 'http://192.168.102.23:8005/api/v1'; // gourav sir
 // export const API_BASE_URL = 'http://192.168.97.160:8000/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.20:8020/api/v1';
 // export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
@@ -109,8 +110,6 @@ export const GIVE_RATING_REVIEWS = getApiUrl('/rating/update-product-rating');
 export const GET_RATING_DETAIL = getApiUrl('/rating/get-product-rating');
 export const ACCEPT_REJECT_ORDER = getApiUrl('/update/order/status');
 
-export const GET_ALL_VENDOR_ORDERS = getApiUrl('/mystore');
-export const GET_ALL_PRODUCTSBY_STORE_ID = getApiUrl('/mystore/product/list');
 export const GET_ALL_CAR_AND_PRICE = getApiUrl(
   '/pickup-delivery/get-list-of-vehicles',
 );
@@ -173,3 +172,10 @@ export const CANCEL_ORDER = getApiUrl('/return-order/vendor-order-for-cancel');
 export const WALLET_USER_VERIFY = getApiUrl('/wallet/transfer/user/verify');
 export const WALLET_TRANSFER_CONFIRM = getApiUrl('/wallet/transfer/confirm');
 export const VENDOR_SLOTS = getApiUrl('/vendor/slots');
+
+// Vendor App collection
+export const GET_ALL_VENDOR_ORDERS = getApiUrl('/mystore');
+export const GET_ALL_PRODUCTSBY_STORE_ID = getApiUrl('/mystore/product/list');
+export const ADD_VENDOR_PRODUCT = getApiUrl('/mystore/product/add');
+export const GET_VENDOR_CATEGORY = getApiUrl('/mystore/vendor/category');
+export const GET_PRODUCT_DETAIL = getApiUrl('/mystore/product/detail');

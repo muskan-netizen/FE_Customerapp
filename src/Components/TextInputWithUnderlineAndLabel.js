@@ -52,6 +52,8 @@ const TextInputWithUnderlineAndLabel = ({
   onPressLabel = () => {},
   underlineColor = colors.textGreyB,
   placeholderTextColor = colors.textGreyB,
+  onRightPress = () => {},
+  isEditable = true,
   ...props
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -103,6 +105,7 @@ const TextInputWithUnderlineAndLabel = ({
           borderBottomWidth: StyleSheet.hairlineWidth,
           borderBottomColor: underlineColor,
           paddingBottom: 11,
+          alignItems: 'center',
           ...containerStyle,
         }}>
         {/* <TextInput
@@ -150,8 +153,14 @@ const TextInputWithUnderlineAndLabel = ({
           value={value}
           secureTextEntry={secureTextEntry}
           autoCapitalize={'none'}
+          editable={isEditable}
           {...props}
         />
+        {!!rightIcon && (
+          <TouchableOpacity hitSlop={hitSlopProp} onPress={onRightPress}>
+            <Image source={rightIcon} />
+          </TouchableOpacity>
+        )}
       </View>
     </TouchableOpacity>
   );

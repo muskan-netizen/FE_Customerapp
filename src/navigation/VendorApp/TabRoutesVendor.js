@@ -13,6 +13,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
+import {getTabBarVisibility} from '../../utils/helperFunctions';
 import navigationStrings from '../navigationStrings';
 import AccountStackVendor from './AccountStackVendor';
 import HomeStackVendor from './HomeStackVendor';
@@ -149,8 +150,11 @@ const TabRoutesVendor = ({barColor = colors.themeColor2}) => {
       <Tab.Screen
         name={navigationStrings.ROYO_VENDOR_PRODUCTS}
         component={ProductStackVendor}
-        options={{
+        options={({route, navigation}) => ({
           headerShown: false,
+          tabBarVisible: getTabBarVisibility(route, navigation, [
+            navigationStrings.ROYO_VENDOR_ADD_PRODUCT,
+          ]),
           tabBarIcon: ({focused}) => {
             return (
               <Image
@@ -175,7 +179,7 @@ const TabRoutesVendor = ({barColor = colors.themeColor2}) => {
               </Text>
             );
           },
-        }}
+        })}
       />
 
       <Tab.Screen

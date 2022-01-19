@@ -14,6 +14,9 @@ import {
   CHECK_VENDORS,
   GET_PRODUCT_TAGS,
   WALLET_CREDIT,
+  ADD_VENDOR_PRODUCT,
+  GET_VENDOR_CATEGORY,
+  GET_PRODUCT_DETAIL,
 } from '../../config/urls';
 import {apiGet, apiPost, setWalletData} from '../../utils/utils';
 import store from '../store';
@@ -261,6 +264,43 @@ export function checkSingleVendor(data = {}, header = {}) {
 export function walletCredit(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiPost(WALLET_CREDIT, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+// Vendor App
+export function addVendorProduct(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(ADD_VENDOR_PRODUCT, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function getVendorCategories(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_VENDOR_CATEGORY, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function getVendorProductDetail(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_PRODUCT_DETAIL, data, headers)
       .then((res) => {
         resolve(res);
       })

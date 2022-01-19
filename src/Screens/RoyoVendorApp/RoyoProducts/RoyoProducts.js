@@ -1,4 +1,4 @@
-import {debounce} from 'lodash';
+import {cloneDeep, debounce, isEmpty, update} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ScrollView,
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import {SwipeListView} from 'react-native-swipe-list-view';
@@ -28,7 +29,11 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {getImageUrl, showError} from '../../../utils/helperFunctions';
+import {
+  getImageUrl,
+  showError,
+  showSuccess,
+} from '../../../utils/helperFunctions';
 import ModalView from '../../../Components/Modal';
 import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import GradientButton from '../../../Components/GradientButton';
@@ -38,15 +43,9 @@ const RoyoProducts = (props) => {
   const {navigation} = props;
 
   const {storeSelectedVendor} = useSelector((state) => state?.order);
-  const {
-    appData,
-    themeColors,
-    themeLayouts,
-    currencies,
-    languages,
-    internetConnection,
-    appStyle,
-  } = useSelector((state) => state?.initBoot);
+  const {appData, themeColors, currencies, languages} = useSelector(
+    (state) => state?.initBoot,
+  );
   const [state, setState] = useState({
     activeIndex: 0,
     headerText: 'Products',
@@ -60,9 +59,16 @@ const RoyoProducts = (props) => {
     productListData: [],
     category_list: [],
     categoryName: '',
-    gridView: false,
     topTabs: ['Products', 'Categories'],
     isAddProductModal: false,
+    productName: '',
+    productSKU: '',
+    productSlug: '',
+    isVendorCategory: false,
+    vendorCategories: [],
+    selectedVendorCategory: {},
+    isAddProductLoading: false,
+    skuDefault: '',
   });
 
   const {
@@ -72,22 +78,42 @@ const RoyoProducts = (props) => {
     pageNo,
     limit,
     isRefreshing,
-    categoryInfo,
     productListData,
     category_list,
-    gridView,
     activeIndex,
     headerText,
     categoryName,
     topTabs,
     isAddProductModal,
+    productName,
+    productSKU,
+    productSlug,
+    isVendorCategory,
+    vendorCategories,
+    selectedVendorCategory,
+    isAddProductLoading,
+    skuDefault,
   } = state;
+
+  useEffect(() => {
+    if (isLoading || isRefreshing) {
+      getAllProducts();
+      getVendorCategories();
+    }
+  }, [isRefreshing, selectedVendor]);
+
+  useEffect(() => {
+    updateState({
+      selectedVendor: storeSelectedVendor,
+      isLoading: true,
+      pageNo: 1,
+    });
+  }, [storeSelectedVendor]);
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   const renderItem = (data, rowMap) => {
-    const {item, index} = data;
-    console.log(item);
+    const {item} = data;
     return (
       <View style={styles.itemBox}>
         <TouchableOpacity
@@ -153,23 +179,10 @@ const RoyoProducts = (props) => {
     else updateState({activeIndex: index, headerText: 'Categories'});
   };
 
-  useEffect(() => {
-    if (isLoading || isRefreshing) {
-      getAllProducts();
-    }
-  }, [isRefreshing, selectedVendor]);
-
-  useEffect(() => {
-    updateState({
-      selectedVendor: storeSelectedVendor,
-      isLoading: true,
-      pageNo: 1,
-    });
-  }, [storeSelectedVendor]);
+  console.log(selectedVendor, 'selectedVendorselectedVendor');
 
   /**********Get all list items by store  id and category id */
   const getAllProducts = (id) => {
-    console.log(pageNo, 'data at product');
     if (selectedVendor?.id || storeSelectedVendor?.id)
       actions
         .getProductBySpecificId(
@@ -212,7 +225,12 @@ const RoyoProducts = (props) => {
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isRefreshing: false});
+    updateState({
+      isLoading: false,
+      isRefreshing: false,
+      isAddProductLoading: false,
+      isAddProductModal: false,
+    });
     showError(error?.message || error?.error);
   };
 
@@ -236,7 +254,6 @@ const RoyoProducts = (props) => {
     setTimeout(() => getAllProducts(index), 1000);
   };
 
-  console.log(category_list, 'thi si scategoru');
   const renderCatogry = ({item, index}) => (
     <View
       key={index}
@@ -294,14 +311,80 @@ const RoyoProducts = (props) => {
       isAddProductModal: false,
     });
   };
+  const checkValidations = () => {
+    if (productName == '') {
+      alert('Please enter product name');
+      return false;
+    } else if (isEmpty(selectedVendorCategory)) {
+      alert('Please select category');
+      return false;
+    } else if (productSKU == '') {
+      alert('Please enter SKU');
+      return false;
+    } else if (productSlug == '') {
+      alert('Please enter url slug');
+      return false;
+    } else return true;
+  };
 
   const onAddProduct = () => {
+    const isValid = checkValidations();
+    if (!isValid) {
+      return;
+    }
     updateState({
-      isAddProductModal: false,
+      isAddProductLoading: true,
+      isVendorCategory: false,
     });
-    navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT, {
-      vendor_list,
-    });
+
+    const data = {};
+    data['product_name'] = productName;
+    data['category_id'] = selectedVendorCategory?.id;
+    data['sku'] = productSKU;
+    data['url_slug'] = productSlug;
+    data['vendor_id'] = selectedVendor?.id;
+
+    actions
+      .addVendorProduct(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        updateState({
+          isAddProductLoading: false,
+          isAddProductModal: false,
+        });
+        showSuccess(res?.message);
+        setTimeout(() => {
+          navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT, {
+            productDetail: res?.data?.product_detail,
+          });
+        }, 500);
+      })
+      .catch(errorMethod);
+  };
+
+  const getVendorCategories = () => {
+    actions
+      .getVendorCategories(
+        {
+          vendor_id: selectedVendor?.id,
+        },
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        updateState({
+          vendorCategories: res?.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err, 'errerrerrerrWhile');
+      });
   };
 
   const mainViewModal = () => {
@@ -323,23 +406,94 @@ const RoyoProducts = (props) => {
             label={'Product Name'}
             labelStyle={styles.labelStyle}
             placeholder={'tshirt'}
-            mainStyle={{flex: 0.46}}
+            value={productName}
+            onChangeText={(text) => {
+              updateState({
+                productName: text,
+                productSKU: skuDefault.concat(text).replace(/ /g, ''),
+                productSlug: text.replace(/ /g, ''),
+              });
+            }}
+            mainStyle={{flex: 0.4}}
             placeholderTextColor={colors.black}
             txtInputStyle={styles.textInputStyle}
           />
-          <TextInputWithUnderlineAndLabel
-            label={'Category'}
-            placeholder={'Clothing'}
-            mainStyle={{flex: 0.46}}
-            labelStyle={styles.labelStyle}
-            placeholderTextColor={colors.black}
-            txtInputStyle={styles.textInputStyle}
-          />
+          <View style={{flex: 0.56}}>
+            <TextInputWithUnderlineAndLabel
+              label={'Category'}
+              placeholder={'Clothing'}
+              value={
+                !isEmpty(selectedVendorCategory)
+                  ? selectedVendorCategory.hierarchy
+                  : 'Select a category'
+              }
+              isEditable={false}
+              labelStyle={styles.labelStyle}
+              placeholderTextColor={colors.black}
+              txtInputStyle={styles.textInputStyle}
+              rightIcon={imagePath.icDropdown}
+              onRightPress={() => {
+                updateState({
+                  isVendorCategory: !isVendorCategory,
+                });
+              }}
+              marginBottom={0}
+            />
+            {!!isVendorCategory && (
+              <View style={styles.categorySelectDropDownView}>
+                <ScrollView>
+                  {!isEmpty(vendorCategories) ? (
+                    vendorCategories.map((itm, indx) => {
+                      return (
+                        <TouchableOpacity
+                          onPress={() =>
+                            updateState({
+                              selectedVendorCategory: itm,
+                              isVendorCategory: false,
+                            })
+                          }
+                          style={styles.categoryItm}
+                          key={String(indx)}>
+                          <Text>{itm.hierarchy}</Text>
+                          {selectedVendorCategory.id == itm.id && (
+                            <Image
+                              source={imagePath.tick2}
+                              style={{tintColor: themeColors.primary_color}}
+                            />
+                          )}
+                        </TouchableOpacity>
+                      );
+                    })
+                  ) : (
+                    <View
+                      style={{
+                        ...styles.noDataFound,
+                        backgroundColor: colors.white,
+                      }}>
+                      <Text
+                        style={{
+                          fontFamily: fontFamily.medium,
+                          fontSize: moderateScale(13),
+                        }}>
+                        {strings.NODATAFOUND}
+                      </Text>
+                    </View>
+                  )}
+                </ScrollView>
+              </View>
+            )}
+          </View>
         </View>
         <TextInputWithUnderlineAndLabel
           label={`SKU ( a-z, A-Z,0-9,-,…)`}
           labelStyle={styles.labelStyle}
           placeholder={'xyz.LocalMarket.Tshirt'}
+          value={productSKU}
+          onChangeText={(text) => {
+            updateState({
+              productSKU: text,
+            });
+          }}
           placeholderTextColor={colors.black}
           txtInputStyle={styles.textInputStyle}
           mainStyle={{marginTop: moderateScale(5)}}
@@ -348,18 +502,38 @@ const RoyoProducts = (props) => {
           label={`Url Slug`}
           labelStyle={styles.labelStyle}
           placeholder={'Slug'}
+          value={productSlug}
+          onChangeText={(text) => {
+            updateState({
+              productSlug: text,
+            });
+          }}
           placeholderTextColor={colors.black}
           txtInputStyle={styles.textInputStyle}
           mainStyle={{marginTop: moderateScale(5)}}
         />
-        <GradientButton
+        <ButtonWithLoader
+          isLoading={isAddProductLoading}
+          onPress={onAddProduct}
+          btnStyle={{
+            marginBottom: 10,
+            borderWidth: 0,
+            backgroundColor: themeColors.primary_color,
+          }}
+          btnTextStyle={{
+            color: colors.white,
+          }}
+          btnTextStyle={{color: colors.white}}
+          btnText={strings.ADD_PRODUCT}
+        />
+        {/* <GradientButton
           colorsArray={[themeColors.primary_color, themeColors.primary_color]}
           textStyle={styles.addProductBtn}
           onPress={onAddProduct}
           marginTop={moderateScaleVertical(20)}
           marginBottom={moderateScaleVertical(20)}
           btnText={strings.ADD_PRODUCT}
-        />
+        /> */}
       </View>
     );
   };
@@ -376,6 +550,7 @@ const RoyoProducts = (props) => {
         imageAlongwithTitle={imagePath.dropdownTriangle}
         showImageAlongwithTitle
       />
+
       <View style={styles.container}>
         <MultiScreen
           tabTextStyle={{marginTop: moderateScaleVertical(0)}}
@@ -433,10 +608,15 @@ const RoyoProducts = (props) => {
               rightOpenValue={-moderateScale(100)}
             />
             <ButtonWithLoader
-              onPress={() => updateState({isAddProductModal: true})}
+              onPress={() =>
+                updateState({
+                  isAddProductModal: true,
+                  skuDefault: `xyz.${selectedVendor.name.replace(/ /g, '')}.`,
+                })
+              }
               btnStyle={styles.productBtn}
               btnTextStyle={{color: colors.black}}
-              btnText="+  Product"
+              btnText={`+ ${strings.PRODUCT}`}
             />
           </View>
         ) : null}
@@ -475,7 +655,7 @@ const RoyoProducts = (props) => {
           paddingTop: moderateScaleVertical(10),
         }}
         modalMainContent={mainViewModal}
-        centerTitle={'Add Product'}
+        centerTitle={strings.ADD_PRODUCT}
         topCustomComponent={false}
         leftIcon={false}
         rightIcon={imagePath.ic_cross}
@@ -579,5 +759,25 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.bold,
     color: colors.black,
     fontSize: textScale(13),
+  },
+  noDataFound: {
+    width: '100%',
+    height: moderateScale(30),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  categorySelectDropDownView: {
+    borderWidth: 1,
+    borderColor: colors.blackOpacity20,
+    borderRadius: 5,
+    paddingHorizontal: moderateScale(5),
+    paddingVertical: moderateScale(5),
+    maxHeight: moderateScale(100),
+  },
+  categoryItm: {
+    marginBottom: moderateScale(5),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });
