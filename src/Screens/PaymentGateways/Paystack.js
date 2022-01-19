@@ -73,7 +73,7 @@ export default function Paystack({navigation, route}) {
     const URL = queryString.parseUrl(url);
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
-    console.log(props, 'propsMobbex');
+    console.log(props, 'propsPaystack');
 
     setTimeout(() => {
       if (queryParams.status == 200) {

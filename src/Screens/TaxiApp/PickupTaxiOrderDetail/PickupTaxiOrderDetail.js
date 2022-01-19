@@ -278,6 +278,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
           orderStatus: res?.data?.order?.status,
           orderFullDetail: res.data,
           baseUrl: res?.data?.base_url,
+          isLoading: false,
         });
       })
       .catch(errorMethod);
@@ -301,11 +302,11 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       .then((res) => {
         console.log(res, 'agent location2');
 
-        if (JSON.stringify(tasks) !== JSON.stringify(res?.data?.tasks)) {
-          updateState({
-            tasks: res?.data?.tasks,
-          });
-        }
+        // if (JSON.stringify(tasks) !== JSON.stringify(res?.data?.tasks)) {
+        updateState({
+          tasks: res?.data?.tasks,
+        });
+        // }
 
         updateState({
           isLoading: false,
@@ -753,7 +754,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
               : strings.INVOICE}
           </Text>
         </View>
-
+        {console.log('check kro', tasks)}
         <View style={{flex: 1}}>
           {!isLoading && !!tasks?.length > 0 && (
             <MapView
@@ -778,6 +779,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                 !!agent_location?.lat &&
                 orderStatus != 'completed' && (
                   <Marker.Animated
+                    // tracksViewChanges={agent_location == null}
                     coordinate={{
                       latitude: Number(agent_location?.lat),
                       longitude: Number(
@@ -786,6 +788,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     }}>
                     <Image
                       style={{
+                        zIndex: 99,
                         height: 35,
                         width: 35,
                         transform: [

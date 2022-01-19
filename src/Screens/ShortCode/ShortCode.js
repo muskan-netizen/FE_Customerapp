@@ -412,6 +412,7 @@ export default function ShortCode({route, navigation}) {
         case appIds.codiner:
           updateState({
             shortCode: shortCodes.codiner,
+            // shortCode: '245bae',
             isShortcodePrefilled: true,
           });
           break;
@@ -1353,6 +1354,18 @@ export default function ShortCode({route, navigation}) {
         case appIds.oxo:
           updateState({
             shortCode: shortCodes.oxo,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sijang:
+          updateState({
+            shortCode: shortCodes.sijang,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.fairex:
+          updateState({
+            shortCode: shortCodes.fairex,
             isShortcodePrefilled: true,
           });
           break;

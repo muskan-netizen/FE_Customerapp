@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-BharatMove/Pods-BharatMove.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-BharatMove/Pods-available_pods-BharatMove.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1601973910
 PROJECT_BUNDLE_ID = com.bharatMove

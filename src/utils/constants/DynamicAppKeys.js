@@ -210,6 +210,8 @@ const shortCodes = {
   fidesDelivery: 'd83920',
   bksTaxi: 'b66295',
   oxo: '48200b',
+  sijang: '16b184',
+  fairex: '1e3e30',
 };
 
 const appIds = {
@@ -1048,6 +1050,14 @@ const appIds = {
   oxo: Platform.select({
     ios: 'com.oxo',
     android: 'com.oxo',
+  }),
+  sijang: Platform.select({
+    ios: 'com.sijang',
+    android: 'com.sijang',
+  }),
+  fairex: Platform.select({
+    ios: 'com.fairex',
+    android: 'com.fairex',
   }),
 };
 
