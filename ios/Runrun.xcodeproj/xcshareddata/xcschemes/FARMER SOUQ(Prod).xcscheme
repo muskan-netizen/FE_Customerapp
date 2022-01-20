@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "844D7E21278825A00058A99A"
-               BuildableName = "FARMER SOUQ.app"
+               BuildableName = "FARMER SOUQ"
                BlueprintName = "FARMER SOUQ"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "844D7E21278825A00058A99A"
-            BuildableName = "FARMER SOUQ.app"
+            BuildableName = "FARMER SOUQ"
             BlueprintName = "FARMER SOUQ"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "844D7E21278825A00058A99A"
-            BuildableName = "FARMER SOUQ.app"
+            BuildableName = "FARMER SOUQ"
             BlueprintName = "FARMER SOUQ"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

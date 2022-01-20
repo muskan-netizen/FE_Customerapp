@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>704992293815-65ar5mtq0l35dm4ij98adij7sq8h4avn.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.704992293815-65ar5mtq0l35dm4ij98adij7sq8h4avn</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>704992293815-95dtm6m5slok50m1o6o05j89fc0mv4rs.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCav6M_x9pkwFCt36Mqze4lNJ3hwRoFVi8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>704992293815</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.bksTaxi</string>
+	<key>PROJECT_ID</key>
+	<string>bks-taxi</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bks-taxi.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:704992293815:ios:127f564b083066a026ae32</string>
+</dict>
+</plist>

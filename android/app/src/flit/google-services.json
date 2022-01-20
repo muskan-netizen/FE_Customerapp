@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "688364189994",
+    "project_id": "flit-cadf8",
+    "storage_bucket": "flit-cadf8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:688364189994:android:324cd94449dc9f75c10653",
+        "android_client_info": {
+          "package_name": "com.app.flit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "688364189994-5hsi66a4qk4vh4j2rfe9j87ems9oh2ih.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.flit",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "688364189994-6q21sj1mlu4rlhulevm2t8jt4rhnq7dq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.flit",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "688364189994-iir1qi82m5qp3hlnjorilhjv11dnamkt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.flit",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "688364189994-guc89dcp1o19a93nkfi9viu6l4db8572.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW8s8BEMnHpt0a327jlHH0_s2ORKYLepc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "688364189994-guc89dcp1o19a93nkfi9viu6l4db8572.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "688364189994-useibbkereb5falm9sj7nbrhm5bs5agg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.flit"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
