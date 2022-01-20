@@ -850,7 +850,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 waypoints={tasks.length > 2 ? tasks.slice(1, -1) : []}
                 destination={
                   orderFullDetail?.order_details.dispatcher_status_type == 1
-                    ? tasks[0]
+                    ? orderStatus == 'unassigned' ?tasks[tasks.length - 1]:tasks[0]
                     : tasks[tasks.length - 1]
                 }
                 // destination={tasks[tasks.length - 1]}
