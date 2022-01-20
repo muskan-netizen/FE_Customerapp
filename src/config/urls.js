@@ -16,7 +16,7 @@
 // export const API_BASE_URL = 'https://tranzit.app/api/v1';
 // export const API_BASE_URL = 'https://pinkjettaxi.com/api/v1';
 // export const API_BASE_URL = 'https://snabbhem.se/api/v1';
-// export const API_BASE_URL = 'https://codiner.com/api/v1';
+export const API_BASE_URL = 'https://codiner.com/api/v1';
 // export const API_BASE_URL = 'https://somame-247.com/api/v1';
 // export const API_BASE_URL = 'https://order.africanize.co/api/v1';
 // export const API_BASE_URL = 'https://destinationops.com/api/v1';
@@ -45,7 +45,7 @@
 // export const API_BASE_URL = 'https://elcheregio.mx/api/v1';
 // export const API_BASE_URL = 'https://donepacked.com/api/v1';
 // export const API_BASE_URL = 'https://cannabusxpress.com/api/v1';
-export const API_BASE_URL = 'https://test.taquick.com/api/v1';
+// export const API_BASE_URL = 'https://test.taquick.com/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
