@@ -828,7 +828,8 @@ export default function Products({route, navigation}) {
     console.log('checking section >>>', section);
     console.log(item, 'itemitemitemitem=>>>');
     // return;
-    if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot) {
+
+    if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot && !categoryInfo?.closed_store_order_scheduled ) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
     }
