@@ -1062,8 +1062,8 @@ const appIds = {
     android: 'com.fairex',
   }),
   everywhere: Platform.select({
-    ios: 'com.everywhere',
-    android: 'com.everywhere',
+    ios: 'com.app.everywhere',
+    android: 'com.app.everywhere',
   }),
   cannabisClubSF: Platform.select({
     ios: 'com.cannabisClubSF',
