@@ -699,7 +699,9 @@ export default function Addaddress({navigation, route}) {
 
           <ScrollView
             keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}>
+            showsVerticalScrollIndicator={false}
+            onMomentumScrollBegin={()=>Keyboard.dismiss()}
+            >
             {!!searchResult?.data && searchResult?.data.length > 0 ? (
               <View style={{marginTop: moderateScaleVertical(16)}}>
                 <View style={{...styles.savedAddressView}}>

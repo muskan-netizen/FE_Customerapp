@@ -239,10 +239,13 @@ export default function Cart({ navigation, route }) {
       !!checkCartItem?.data?.products &&
       !!checkCartItem?.data?.products.length
     ) {
-      checkforAddressUpdate();
       console.log('useEffect 1', checkCartItem);
+      // checkforAddressUpdate();
+ 
     }
   }, [selectedAddress, allAddresss]);
+
+
 
   //check for addreess Update and change
   const checkforAddressUpdate = () => {
@@ -452,6 +455,7 @@ export default function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
+  console.log("cartDatacartData",cartData)
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     console.log(item, 'itemitemitemitem');
@@ -944,8 +948,6 @@ export default function Cart({ navigation, route }) {
     // _offineLinePayment();
   };
 
-  console.log('cartDatacartData', cartItems);
-
   //Clear cart
   const placeOrder = () => {
     if (!!userData?.auth_token) {
@@ -1077,8 +1079,8 @@ export default function Cart({ navigation, route }) {
     console.log(returnUrl, 'returnUrl');
     console.log(cancelUrl, 'cancelUrl');
     let queryData = `/${selectedMethod}?tip=${selectedTipAmount && selectedTipAmount != ''
-        ? Number(selectedTipAmount)
-        : 0
+      ? Number(selectedTipAmount)
+      : 0
       }&amount=${(
         Number(cartData?.total_payable_amount) +
         (selectedTipAmount != null && selectedTipAmount != ''
@@ -1205,7 +1207,7 @@ export default function Cart({ navigation, route }) {
     }
   };
 
-  console.log(paramsData, 'paramsDataparamsDataparamsDataparamsData>>>');
+
 
   const _renderRazor = () => {
     updateState({ isLoadingB: true });
@@ -1465,7 +1467,7 @@ export default function Cart({ navigation, route }) {
                 ...styles.priceItemLabel2,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
-              {console.log('jbbbkhbk', item?.vendor)}
+          
               {item?.vendor?.name}
             </Text>
             {item?.is_vendor_closed && (
@@ -1862,9 +1864,9 @@ export default function Cart({ navigation, route }) {
                           color: colors.redFireBrick,
                           marginBottom: moderateScale(3),
                         }}>{`${i?.product.delay_order_hrs > 0 ||
-                            i?.product.delay_order_min > 0
-                            ? strings.PREPARATION_TIME_IS
-                            : ''
+                          i?.product.delay_order_min > 0
+                          ? strings.PREPARATION_TIME_IS
+                          : ''
                           }${i?.product.delay_order_hrs > 0
                             ? ` ${i?.product.delay_order_hrs} hrs`
                             : ''
@@ -2431,6 +2433,7 @@ export default function Cart({ navigation, route }) {
     }
   };
   const setModalVisibleForAddessModal = (visible, type, id, data) => {
+    
     if (!!userData?.auth_token) {
       updateState({ isVisible: false });
       setTimeout(() => {
@@ -2812,7 +2815,8 @@ export default function Cart({ navigation, route }) {
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ flexGrow: 1 }}>
+                contentContainerStyle={{ flexGrow: 1 }}
+                >
                 {cartData?.total_payable_amount !== 0 &&
                   cartData?.tip.map((j, jnx) => {
                     return (
@@ -4401,24 +4405,26 @@ export default function Cart({ navigation, route }) {
                 )}
               </View>
             )}
+            <View
+              style={{
+                // styles.bottomAddToCartView,
+                // { top: viewHeight - height / 6 },
+                marginHorizontal:moderateScale(24)
+              }}>
+              <GradientButton
+                colorsArray={[
+                  themeColors.primary_color,
+                  themeColors.primary_color,
+                ]}
+                // textStyle={styles.textStyle}
+                onPress={selectOrderDate}
+                marginTop={moderateScaleVertical(10)}
+                marginBottom={moderateScaleVertical(30)}
+                btnText={strings.SELECT}
+              />
+            </View>
           </ScrollView>
-          <View
-            style={[
-              styles.bottomAddToCartView,
-              { top: viewHeight - height / 6 },
-            ]}>
-            <GradientButton
-              colorsArray={[
-                themeColors.primary_color,
-                themeColors.primary_color,
-              ]}
-              // textStyle={styles.textStyle}
-              onPress={selectOrderDate}
-              marginTop={moderateScaleVertical(10)}
-              marginBottom={moderateScaleVertical(30)}
-              btnText={strings.SELECT}
-            />
-          </View>
+
         </View>
       </Modal>
     </WrapperContainer>

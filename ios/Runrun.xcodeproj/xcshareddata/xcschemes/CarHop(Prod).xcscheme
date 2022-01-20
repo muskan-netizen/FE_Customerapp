@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "843BA4FA26D63B1A0033721D"
-               BuildableName = "CarHop.app"
+               BuildableName = "Runrun.app"
                BlueprintName = "CarHop"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "843BA4FA26D63B1A0033721D"
-            BuildableName = "CarHop.app"
+            BuildableName = "Runrun.app"
             BlueprintName = "CarHop"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "843BA4FA26D63B1A0033721D"
-            BuildableName = "CarHop.app"
+            BuildableName = "Runrun.app"
             BlueprintName = "CarHop"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

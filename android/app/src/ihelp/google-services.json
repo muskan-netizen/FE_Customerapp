@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "312961791041",
+    "project_id": "ihelp-82bfe",
+    "storage_bucket": "ihelp-82bfe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312961791041:android:1648cadd4c6be6c23282c0",
+        "android_client_info": {
+          "package_name": "com.customer.Ihelp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312961791041-0ese1kqi6lma6f9m139lili0112nlns9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.Ihelp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "312961791041-0kab56s87jgk9rv32hc194gun7jm5i43.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.Ihelp",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "312961791041-rhnqigfp2m72gc6a4usgpmloe83tcnke.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.Ihelp",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "312961791041-9t2v1okdl98o7ds83lm2kmnd9bs1dtd8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZrdJTjwlRhQxeZgyPmvdq6XfJetc55g4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "312961791041-9t2v1okdl98o7ds83lm2kmnd9bs1dtd8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "312961791041-s5j56qu4cdnm9lvvet06i7lb63fdh5nd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.customer.Ihelp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
