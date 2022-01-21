@@ -492,4 +492,5 @@ export default {
   ordersucess: require('../assets/images/ordersucess.png'),
   icAdd1: require('../assets/images/RoyoorderNewImages/ic_add1.png'),
   icUp1: require('../assets/images/RoyoorderNewImages/ic_up.png'),
+  icImagePlaceholder: require('../assets/images/VendorAppImages/ic_image1.png'),
 };

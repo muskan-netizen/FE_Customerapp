@@ -886,7 +886,6 @@ export default function WebLinks({navigation, route}) {
                     </Text>
 
                     <View style={styles.imageView}>
-                      {console.log(vendorLogo, 'vendorLogo')}
                       <TouchableOpacity
                         onPress={() => {
                           isVendorLogo = true;

@@ -1,11 +1,11 @@
-export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.97.123:8020/api/v1'; // sujata
 // export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1'; //dinesh sir
 // export const API_BASE_URL = 'http://192.168.103.186:8005/api/v1'; // harbans
-// export const API_BASE_URL = 'http://192.168.102.23:8005/api/v1'; // gourav sir
+export const API_BASE_URL = 'http://192.168.102.23:8005/api/v1'; // gourav sir
 // export const API_BASE_URL = 'http://192.168.97.160:8000/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.20:8020/api/v1';
 // export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
@@ -179,3 +179,10 @@ export const GET_ALL_PRODUCTSBY_STORE_ID = getApiUrl('/mystore/product/list');
 export const ADD_VENDOR_PRODUCT = getApiUrl('/mystore/product/add');
 export const GET_VENDOR_CATEGORY = getApiUrl('/mystore/vendor/category');
 export const GET_PRODUCT_DETAIL = getApiUrl('/mystore/product/detail');
+export const CREATE_PRODUCT_VARIANT = getApiUrl(
+  '/mystore/product/createvariant',
+);
+export const DELETE_PRODUCT_VARIANT = getApiUrl(
+  '/mystore/product/deletevariant',
+);
+export const DELETE_VENDOR_PRODUCT = getApiUrl('/mystore/product/delete');

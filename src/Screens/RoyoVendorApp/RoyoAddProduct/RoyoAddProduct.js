@@ -1,14 +1,17 @@
-import {cloneDeep} from 'lodash';
+import {cloneDeep, isEmpty, update} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Image,
   ImageBackground,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
+  ScrollView,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
+import DropDownPicker from 'react-native-dropdown-picker';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
@@ -19,7 +22,7 @@ import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
-import strings from '../../../constants/lang';
+import strings, {changeLaguage} from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import fontFamily from '../../../styles/fontFamily';
@@ -30,17 +33,21 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 import {cameraHandler} from '../../../utils/commonFunction';
-import {showError} from '../../../utils/helperFunctions';
+import {showError, showSuccess} from '../../../utils/helperFunctions';
+import ModalDropdown from 'react-native-modal-dropdown';
+import {FlatList, TouchableHighlight} from 'react-native-gesture-handler';
+import {hitSlopProp} from '../../../styles/commonStyles';
 
 const RoyoAddProduct = ({route, navigation}) => {
   const paramData = route.params;
   const productDetailParam = paramData?.productDetail;
-
+  console.log(productDetailParam, 'productDetailParamproductDetailParam');
   const {appData, themeColors, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
   const [state, setState] = useState({
     isLoading: true,
+    isLoadingB: false,
     stepPoints: [
       {
         id: 1,
@@ -69,9 +76,17 @@ const RoyoAddProduct = ({route, navigation}) => {
     taxCategory: [],
     productImages: [],
     isLangugaeDropDown: false,
+    selectedLang: {},
+    selectedAddon: {},
+    childVariant: [],
+    variantSet: [],
+    optionsSet: [],
+    createdVariantSets: [],
+    exisitingVariants: [],
   });
   const {
     isLoading,
+    isLoadingB,
     stepPoints,
     currentStepIndex,
     isOn,
@@ -87,6 +102,13 @@ const RoyoAddProduct = ({route, navigation}) => {
     taxCategory,
     productImages,
     isLangugaeDropDown,
+    selectedLang,
+    selectedAddon,
+    childVariant,
+    variantSet,
+    optionsSet,
+    createdVariantSets,
+    exisitingVariants,
   } = state;
 
   useEffect(() => {
@@ -108,7 +130,6 @@ const RoyoAddProduct = ({route, navigation}) => {
         },
       )
       .then((res) => {
-        console.log(res, 'responseFromServer');
         updateState({
           isLoading: false,
           addons: res?.data?.addons,
@@ -118,6 +139,7 @@ const RoyoAddProduct = ({route, navigation}) => {
           configData: res?.data?.config_data,
           productVariants: res?.data?.product_variants,
           taxCategory: res?.data?.tax_category,
+          exisitingVariants: res?.data?.product_detail?.variant,
         });
       })
       .catch(errorMethod);
@@ -126,6 +148,7 @@ const RoyoAddProduct = ({route, navigation}) => {
   const errorMethod = (error) => {
     updateState({
       isLoading: false,
+      isLoadingB: false,
     });
     showError(error?.message || error?.error);
   };
@@ -185,12 +208,7 @@ const RoyoAddProduct = ({route, navigation}) => {
   //this function use for open actionsheet
   let actionSheet = useRef();
   const showActionSheet = () => {
-    // {
-    //  productImages.length == 5
-    //     ? showError(strings.MAXIMUM_PHOTO_SELECTION_LIMIT_REACHED)
-    //     :
     actionSheet.current.show();
-    // }
   };
 
   const cameraHandle = (index) => {
@@ -207,16 +225,14 @@ const RoyoAddProduct = ({route, navigation}) => {
           if (res && (res?.sourceURL || res?.path)) {
             let file = {
               image_id: Math.random(),
-              name: res?.filename,
+              name:
+                Platform.OS == 'ios'
+                  ? res?.filename
+                  : res?.path.substring(res?.path.lastIndexOf('/') + 1),
               type: res?.mime,
               uri: res?.sourceURL || res?.path,
             };
-            let find = productImages.find((x) => x?.name == res?.filename);
-            if (find) {
-              showError(strings.IMAGE_ALREADY_UPLOADED);
-            } else {
-              updateState({productImages: [...productImages, file]});
-            }
+            updateState({productImages: [...productImages, file]});
           }
         })
         .catch((err) => {});
@@ -246,16 +262,230 @@ const RoyoAddProduct = ({route, navigation}) => {
     }
   };
 
-  const renderLangDropDown = () => {
+  const selectLanguage = (item) => {
+    console.log(item, 'sdhfjsdfjsdfjh');
+  };
+
+  const onSelect = (idx, value) => {
+    console.log(idx);
+  };
+
+  const renderRowComponent = (item, sdf) => {
+    console.log(item, 'itemitem', sdf);
     return (
-      <View>
-        <Text>sdhgf</Text>
+      <TouchableHighlight
+        style={{
+          height: moderateScale(35),
+        }}></TouchableHighlight>
+    );
+  };
+
+  const onProductVariant = (parent_variant, child_variant) => {
+    const childVariantAry = [...childVariant];
+    const variantSetAry = [...variantSet];
+    const optionsSetAry = [...optionsSet];
+    let variantSetString = `${parent_variant?.id};${parent_variant?.title}`;
+    const optionsSetString = `${child_variant?.id};${child_variant?.title}`;
+
+    if (
+      childVariantAry.includes(child_variant) ||
+      optionsSetAry.includes(optionsSetString)
+    ) {
+      const filteredChildVariant = childVariantAry.filter(
+        (item) => item.id !== child_variant?.id,
+      );
+      const filteredOptionsSet = optionsSetAry.filter(
+        (item) => item !== optionsSetString,
+      );
+
+      let idx = variantSetAry.indexOf(variantSetString);
+      if (idx >= 0) {
+        variantSetAry.splice(idx, 1);
+      }
+
+      updateState({
+        childVariant: filteredChildVariant,
+        variantSet: variantSetAry,
+        optionsSet: filteredOptionsSet,
+      });
+    } else {
+      updateState({
+        childVariant: [...childVariantAry, child_variant],
+        variantSet: [...variantSetAry, variantSetString],
+        optionsSet: [...optionsSetAry, optionsSetString],
+      });
+    }
+  };
+
+  const isChecked = (itm) => {
+    const childVariantAry = [...childVariant];
+    return childVariantAry.some((item) => item.id === itm.id);
+  };
+
+  const renderProductVariants = (item, index) => {
+    return (
+      <View style={{marginBottom: moderateScale(15)}}>
+        <Text style={styles.variantName}>{item?.title}</Text>
+        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+          {item?.option.map((itm, indx) => {
+            return (
+              <TouchableOpacity
+                onPress={() => onProductVariant(item, itm)}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginTop: moderateScale(5),
+                  marginRight: moderateScale(20),
+                }}>
+                <Image
+                  source={
+                    isChecked(itm) ? imagePath.icCheck1 : imagePath.icCheck2
+                  }
+                />
+                <Text style={styles.variantTypeTxt}>{itm?.title}</Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      </View>
+    );
+  };
+
+  const onMakeVariantSet = () => {
+    updateState({
+      isLoadingB: true,
+    });
+    var formData = new FormData();
+    formData.append('product_id', productDetailParam?.id || '');
+    formData.append('sku', productDetailParam?.sku || '');
+    variantSet.map((itm) => {
+      formData.append('variantIds[]', itm);
+    });
+    optionsSet.map((itm) => {
+      formData.append('optionIds[]', itm);
+    });
+    console.log(variantSet, 'variantSet>>>>');
+    console.log(optionsSet, 'optionsSet>>>>');
+    console.log(formData, 'formData>>>');
+
+    actions
+      .createProductVariant(formData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        console.log(res, '>>>>>responseFromServer');
+        updateState({isLoadingB: false, createdVariantSets: res?.data});
+      })
+      .catch(errorMethod);
+  };
+
+  const onDeleteProductVariant = (item) => {
+    updateState({
+      isLoadingB: true,
+    });
+    actions
+      .deleteProductVariant(
+        {
+          product_id: item?.product_id,
+          variant_id: item?.id,
+        },
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        showSuccess(res?.message);
+        setTimeout(() => {
+          updateState({
+            isLoading: true,
+            isLoadingB: false,
+            createdVariantSets: [],
+          });
+        }, 500);
+      })
+      .catch(errorMethod);
+  };
+
+  const renderCreatedVariants = ({item, indx}) => {
+    return (
+      <View
+        style={{
+          ...styles.seoViewStyle,
+          backgroundColor: colors.lightGreen,
+          borderWidth: 0,
+          marginTop: moderateScale(10),
+        }}>
+        <View
+          style={{
+            ...styles.flexRowStyle,
+          }}>
+          <View style={{alignItems: 'center'}}>
+            <Text style={styles.labelStyle}>Image</Text>
+
+            <Image source={imagePath.icImagePlaceholder} />
+          </View>
+          <TextInputWithUnderlineAndLabel
+            label={`Name`}
+            labelStyle={styles.labelStyle}
+            placeholder={'0'}
+            value={item?.title || item?.sku}
+            mainStyle={{flex: 0.55}}
+            placeholderTextColor={colors.black}
+            txtInputStyle={styles.textInputStyle}
+          />
+          <TextInputWithUnderlineAndLabel
+            label={'Quantity'}
+            placeholder={'0'}
+            mainStyle={{flex: 0.25}}
+            labelStyle={styles.labelStyle}
+            placeholderTextColor={colors.black}
+            txtInputStyle={styles.textInputStyle}
+          />
+          <TouchableOpacity
+            hitSlop={hitSlopProp}
+            onPress={() => onDeleteProductVariant(item)}>
+            <Image source={imagePath.icDelete} />
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            ...styles.flexRowStyle,
+          }}>
+          <TextInputWithUnderlineAndLabel
+            label={`Price`}
+            labelStyle={styles.labelStyle}
+            placeholder={'0'}
+            mainStyle={{flex: 0.2}}
+            placeholderTextColor={colors.black}
+            txtInputStyle={styles.textInputStyle}
+          />
+          <TextInputWithUnderlineAndLabel
+            label={`Cost price`}
+            labelStyle={styles.labelStyle}
+            placeholder={'0'}
+            mainStyle={{flex: 0.25}}
+            placeholderTextColor={colors.black}
+            txtInputStyle={styles.textInputStyle}
+          />
+          <TextInputWithUnderlineAndLabel
+            label={'Compare at price'}
+            placeholder={'0'}
+            mainStyle={{flex: 0.45}}
+            labelStyle={styles.labelStyle}
+            placeholderTextColor={colors.black}
+            txtInputStyle={styles.textInputStyle}
+          />
+        </View>
       </View>
     );
   };
 
   return (
-    <WrapperContainer source={loaderOne} isLoadingB={isLoading}>
+    <WrapperContainer source={loaderOne} isLoadingB={isLoading || isLoadingB}>
       <Header
         leftIcon={imagePath.backRoyo}
         centerTitle={productDetailParam?.title || ''}
@@ -266,7 +496,7 @@ const RoyoAddProduct = ({route, navigation}) => {
       </View>
 
       <KeyboardAwareScrollView
-        enableOnAndroid={true}
+        // scrollEnabled={!isLangugaeDropDown}
         showsVerticalScrollIndicator={false}
         style={styles.container}
         bounces={false}>
@@ -311,49 +541,59 @@ const RoyoAddProduct = ({route, navigation}) => {
                 }}>
                 Product Information
               </Text>
-              <CustomDropDownWIthLabel
-                placeHolderText={'English'}
-                customPlaceHolderStyle={{borderWidth: 0}}
-                placeHolderTxtStyle={{
-                  marginRight: moderateScale(5),
+              <ModalDropdown
+                options={clientLanguages}
+                style={{
+                  alignSelf: 'center',
+                  width: moderateScale(65),
+                }}
+                textStyle={{
+                  fontFamily: fontFamily.regular,
+                  fontSize: textScale(12),
+                }}
+                defaultValue={
+                  isEmpty(clientLanguages) ? '' : clientLanguages[0].langTitle
+                }
+                onSelect={(idx, value) => updateState({selectedLang: value})}
+                renderButtonText={(rowData) => (
+                  <Text>{rowData?.langTitle}</Text>
+                )}
+                renderRow={(rowData) => (
+                  <TouchableHighlight
+                    activeOpacity={0.6}
+                    underlayColor="cornflowerblue"
+                    style={{backgroundColor: colors.white}}>
+                    <Text
+                      style={{
+                        paddingVertical: 10,
+                        marginHorizontal: 10,
+                      }}>{`${rowData.langTitle}`}</Text>
+                  </TouchableHighlight>
+                )}
+                dropdownStyle={{
+                  width: moderateScale(100),
+                  marginTop: moderateScale(10),
+                }}
+                dropdownTextStyle={{
+                  fontSize: textScale(12),
                   fontFamily: fontFamily.regular,
                 }}
-                onPicker={() =>
-                  updateState({
-                    isLangugaeDropDown: !isLangugaeDropDown,
-                  })
-                }
-                isDropDown={isLangugaeDropDown}
-                isRenderCustomView={true}
-                renderCustomView={renderLangDropDown}
-                dropDownContainer={{
-                  position: 'absolute',
-                  top: 40,
-                }}
+                renderRightComponent={() => (
+                  <View
+                    style={{
+                      flex: 1,
+                      alignItems: 'flex-end',
+                    }}>
+                    <Image source={imagePath.icDropdown} />
+                  </View>
+                )}
               />
-              {/* <TouchableOpacity
-              onPress={}
-                activeOpacity={0.7}
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginRight: moderateScale(10),
-                }}>
-                <Text
-                  style={{
-                    fontFamily: fontFamily.regular,
-
-                    marginRight: moderateScale(5),
-                  }}>
-                  English
-                </Text>
-                <Image source={imagePath.dropDownNew} />
-              </TouchableOpacity> */}
             </View>
             <View
               style={{
                 ...styles.mainViewStyle,
                 paddingHorizontal: moderateScale(15),
+                zIndex: -5,
               }}>
               <TextInputWithUnderlineAndLabel
                 label={'Product Name'}
@@ -516,6 +756,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                   themeColors.primary_color,
                   themeColors.primary_color,
                 ]}
+                onPress={onMakeVariantSet}
                 textStyle={styles.addProductBtn}
                 marginTop={moderateScaleVertical(20)}
                 marginBottom={moderateScaleVertical(20)}
@@ -527,85 +768,41 @@ const RoyoAddProduct = ({route, navigation}) => {
                 btnStyle={{borderRadius: 5}}
               />
             </View>
-            <Text style={styles.varientName}>Size</Text>
-            <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginTop: moderateScale(5),
-              }}>
-              <Image source={imagePath.icCheck1} />
-              <Text style={styles.varientTypeTxt}>Small</Text>
-            </TouchableOpacity>
-
-            <View style={{height: 1, backgroundColor: colors.backgroundGrey}} />
-            <View
-              style={{
-                ...styles.seoViewStyle,
-                backgroundColor: 'rgba(68,215,182,0.17)',
-                borderWidth: 0,
-                marginTop: moderateScale(10),
-              }}>
-              <View
-                style={{
-                  ...styles.flexRowStyle,
-                }}>
-                <View style={{flex: 0.2}}>
-                  <Text style={styles.labelStyle}>Image</Text>
-                  <View>
-                    <Image
-                      source={imagePath.icPlaceholder}
-                      style={{height: 20, width: 50}}
-                    />
-                  </View>
-                </View>
-                <TextInputWithUnderlineAndLabel
-                  label={`Name`}
-                  labelStyle={styles.labelStyle}
-                  placeholder={'Tshirt'}
-                  mainStyle={{flex: 0.35}}
-                  placeholderTextColor={colors.black}
-                  txtInputStyle={styles.textInputStyle}
-                />
-                <TextInputWithUnderlineAndLabel
-                  label={'Quantity'}
-                  placeholder={'76'}
-                  mainStyle={{flex: 0.35}}
-                  labelStyle={styles.labelStyle}
-                  placeholderTextColor={colors.black}
-                  txtInputStyle={styles.textInputStyle}
+            {console.log(exisitingVariants, 'exisitingVariants')}
+            {productVariants.map(renderProductVariants)}
+            <View style={{height: 1, backgroundColor: colors.blackOpacity10}} />
+            {!isEmpty(exisitingVariants) && (
+              <View>
+                <Text
+                  style={{
+                    ...styles.labelStyle,
+                    marginTop: moderateScale(20),
+                    color: colors.black,
+                  }}>
+                  Applied Variants Set
+                </Text>
+                <FlatList
+                  data={exisitingVariants}
+                  renderItem={renderCreatedVariants}
                 />
               </View>
-              <View
-                style={{
-                  ...styles.flexRowStyle,
-                }}>
-                <TextInputWithUnderlineAndLabel
-                  label={`Price`}
-                  labelStyle={styles.labelStyle}
-                  placeholder={'56'}
-                  mainStyle={{flex: 0.2}}
-                  placeholderTextColor={colors.black}
-                  txtInputStyle={styles.textInputStyle}
-                />
-                <TextInputWithUnderlineAndLabel
-                  label={`Cost price`}
-                  labelStyle={styles.labelStyle}
-                  placeholder={'235'}
-                  mainStyle={{flex: 0.25}}
-                  placeholderTextColor={colors.black}
-                  txtInputStyle={styles.textInputStyle}
-                />
-                <TextInputWithUnderlineAndLabel
-                  label={'Compare at price'}
-                  placeholder={'120'}
-                  mainStyle={{flex: 0.45}}
-                  labelStyle={styles.labelStyle}
-                  placeholderTextColor={colors.black}
-                  txtInputStyle={styles.textInputStyle}
+            )}
+            {!isEmpty(createdVariantSets) && (
+              <View>
+                <Text
+                  style={{
+                    ...styles.labelStyle,
+                    marginTop: moderateScale(20),
+                    color: colors.black,
+                  }}>
+                  New Variants Set
+                </Text>
+                <FlatList
+                  data={createdVariantSets}
+                  renderItem={renderCreatedVariants}
                 />
               </View>
-            </View>
+            )}
           </View>
         ) : (
           <View
@@ -618,16 +815,52 @@ const RoyoAddProduct = ({route, navigation}) => {
                 ...styles.flexRowStyle,
                 marginTop: moderateScale(20),
               }}>
-              <TextInputWithUnderlineAndLabel
-                label={`Select Add on set`}
-                labelStyle={styles.labelStyle}
-                placeholder={'645'}
-                mainStyle={{flex: 0.45}}
-                placeholderTextColor={colors.black}
-                txtInputStyle={styles.textInputStyle}
-                rightIcon={imagePath.icDropdown}
-                onRightPress={() => {}}
-              />
+              <View
+                style={{
+                  flex: 0.45,
+                  borderBottomWidth: StyleSheet.hairlineWidth,
+                  borderBottomColor: colors.textGreyB,
+                }}>
+                <Text style={{...styles.labelStyle}}>Select Add on set</Text>
+                <ModalDropdown
+                  options={addons}
+                  textStyle={{
+                    fontFamily: fontFamily.regular,
+                    fontSize: textScale(12),
+                  }}
+                  defaultValue={isEmpty(addons) ? '' : addons[0].title}
+                  onSelect={(idx, value) => updateState({selectedAddon: value})}
+                  renderButtonText={(rowData) => <Text>{rowData?.title}</Text>}
+                  renderRow={(rowData) => (
+                    <TouchableHighlight
+                      activeOpacity={0.6}
+                      underlayColor="cornflowerblue"
+                      style={{backgroundColor: colors.white}}>
+                      <Text
+                        style={{
+                          paddingVertical: 10,
+                          marginHorizontal: 10,
+                        }}>{`${rowData.title}`}</Text>
+                    </TouchableHighlight>
+                  )}
+                  dropdownStyle={{
+                    minWidth: moderateScale(100),
+                    marginTop: moderateScale(10),
+                    height: moderateScaleVertical(100),
+                  }}
+                  dropdownTextStyle={{
+                    fontSize: textScale(12),
+                    fontFamily: fontFamily.regular,
+                  }}
+                  renderRightComponent={() => (
+                    <Image
+                      source={imagePath.icDropdown}
+                      style={{marginLeft: moderateScale(65)}}
+                    />
+                  )}
+                />
+              </View>
+
               <TextInputWithUnderlineAndLabel
                 label={'Up sell products'}
                 placeholder={'890'}
@@ -635,6 +868,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                 labelStyle={styles.labelStyle}
                 placeholderTextColor={colors.black}
                 txtInputStyle={styles.textInputStyle}
+                marginBottom={0}
               />
             </View>
             <View
@@ -743,6 +977,7 @@ const RoyoAddProduct = ({route, navigation}) => {
               <View
                 style={{
                   ...styles.flexRowStyle,
+                  marginBottom: moderateScaleVertical(25),
                 }}>
                 <TextInputWithUnderlineAndLabel
                   label={`Live`}
@@ -753,6 +988,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                   txtInputStyle={styles.textInputStyle}
                   rightIcon={imagePath.icDropdown}
                   onRightPress={() => {}}
+                  marginBottom={0}
                 />
                 <TextInputWithUnderlineAndLabel
                   label={`Brand`}
@@ -763,17 +999,62 @@ const RoyoAddProduct = ({route, navigation}) => {
                   txtInputStyle={styles.textInputStyle}
                   rightIcon={imagePath.icDropdown}
                   onRightPress={() => {}}
+                  marginBottom={0}
                 />
-                <TextInputWithUnderlineAndLabel
-                  label={'Tax Category'}
-                  placeholder={'120'}
-                  mainStyle={{flex: 0.31}}
-                  labelStyle={styles.labelStyle}
-                  placeholderTextColor={colors.black}
-                  txtInputStyle={styles.textInputStyle}
-                  rightIcon={imagePath.icDropdown}
-                  onRightPress={() => {}}
-                />
+                <View
+                  style={{
+                    flex: 0.31,
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                    borderBottomColor: colors.textGreyB,
+                  }}>
+                  <Text style={{...styles.labelStyle}}>Tax Category</Text>
+                  <ModalDropdown
+                    options={taxCategory}
+                    textStyle={{
+                      fontFamily: fontFamily.regular,
+                      fontSize: textScale(12),
+                    }}
+                    defaultValue={
+                      isEmpty(taxCategory) ? '' : taxCategory[0].title
+                    }
+                    onSelect={(idx, value) =>
+                      updateState({selectedTaxCategory: value})
+                    }
+                    renderButtonText={(rowData) => (
+                      <Text>{rowData?.title}</Text>
+                    )}
+                    renderRow={(rowData) => (
+                      <TouchableHighlight
+                        activeOpacity={0.6}
+                        underlayColor="cornflowerblue"
+                        style={{backgroundColor: colors.white}}>
+                        <Text
+                          style={{
+                            paddingVertical: 10,
+                            marginHorizontal: 10,
+                          }}>{`${rowData.title}`}</Text>
+                      </TouchableHighlight>
+                    )}
+                    dropdownStyle={{
+                      minWidth: moderateScale(100),
+                      marginTop: moderateScale(10),
+                      height: moderateScaleVertical(80),
+                    }}
+                    dropdownTextStyle={{
+                      fontSize: textScale(12),
+                      fontFamily: fontFamily.regular,
+                    }}
+                    renderRightComponent={() => (
+                      <View
+                        style={{
+                          flex: 1,
+                          alignItems: 'flex-end',
+                        }}>
+                        <Image source={imagePath.icDropdown} style={{}} />
+                      </View>
+                    )}
+                  />
+                </View>
               </View>
               <View
                 style={{
@@ -855,12 +1136,12 @@ const styles = StyleSheet.create({
   addProductBtn: {
     textTransform: 'none',
   },
-  varientTypeTxt: {
+  variantTypeTxt: {
     fontSize: textScale(11),
     fontFamily: fontFamily.regular,
     marginLeft: moderateScale(5),
   },
-  varientName: {
+  variantName: {
     fontSize: textScale(12),
     fontFamily: fontFamily.bold,
   },

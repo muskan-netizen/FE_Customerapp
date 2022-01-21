@@ -58,8 +58,24 @@ export default function CustomDropDownWIthLabel({
       </TouchableOpacity>
 
       {isDropDown && (
-        <View style={{...styles.dropDownContainer, ...dropDownContainer}}>
-          <ScrollView>
+        <View style={{...styles.dropDownContainer, height: 100}}>
+          <ScrollView
+            style={
+              {
+                // position: 'absolute',
+                // right: 0,
+                // borderWidth: 1,
+                // borderColor: colors.borderColorB,
+                // backgroundColor: colors.white,
+                // width: 100,
+                // paddingHorizontal: moderateScale(10),
+                // paddingVertical: moderateScale(5),
+                // // minHeight: moderateScale(50),
+                // borderRadius: moderateScale(5),
+                // maxHeight: moderateScale(100),
+                // zIndex: 5,
+              }
+            }>
             {isRenderCustomView > 0 ? (
               renderCustomView()
             ) : (
@@ -107,16 +123,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   dropDownContainer: {
-    borderWidth: 1,
-    borderColor: colors.borderColorB,
-    backgroundColor: colors.white,
-    width: '100%',
-    paddingHorizontal: moderateScale(10),
-    paddingVertical: moderateScale(5),
-    shadowOffset: {width: 0, height: 1},
-    shadowOpacity: 0.1,
-    minHeight: moderateScale(50),
-    borderRadius: moderateScale(5),
-    maxHeight: moderateScale(150),
+    flex: 1,
+    position: 'absolute',
+    // bottom: -40,
   },
 });

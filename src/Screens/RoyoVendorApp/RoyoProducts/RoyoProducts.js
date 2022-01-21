@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  Platform,
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import {SwipeListView} from 'react-native-swipe-list-view';
@@ -38,6 +39,7 @@ import ModalView from '../../../Components/Modal';
 import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import GradientButton from '../../../Components/GradientButton';
 import strings from '../../../constants/lang';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 
 const RoyoProducts = (props) => {
   const {navigation} = props;
@@ -69,6 +71,7 @@ const RoyoProducts = (props) => {
     selectedVendorCategory: {},
     isAddProductLoading: false,
     skuDefault: '',
+    isLoadingB: false,
   });
 
   const {
@@ -93,12 +96,16 @@ const RoyoProducts = (props) => {
     selectedVendorCategory,
     isAddProductLoading,
     skuDefault,
+    isLoadingB,
   } = state;
 
   useEffect(() => {
     if (isLoading || isRefreshing) {
       getAllProducts();
       getVendorCategories();
+      updateState({
+        selectedVendorCategory: [],
+      });
     }
   }, [isRefreshing, selectedVendor]);
 
@@ -121,16 +128,18 @@ const RoyoProducts = (props) => {
             navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
           }
           style={{alignSelf: 'center'}}>
-          <Image
-            style={styles.imageStyle}
-            source={{
-              uri: getImageUrl(
-                item?.media[0].image?.path?.image_fit,
-                item?.media[0].image?.path?.image_path,
-                '500/500',
-              ),
-            }}
-          />
+          {!isEmpty(item?.media) && (
+            <Image
+              style={styles.imageStyle}
+              source={{
+                uri: getImageUrl(
+                  item?.media[0].image?.path?.image_fit,
+                  item?.media[0].image?.path?.image_path,
+                  '500/500',
+                ),
+              }}
+            />
+          )}
         </TouchableOpacity>
         <View style={{flex: 1}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -179,8 +188,6 @@ const RoyoProducts = (props) => {
     else updateState({activeIndex: index, headerText: 'Categories'});
   };
 
-  console.log(selectedVendor, 'selectedVendorselectedVendor');
-
   /**********Get all list items by store  id and category id */
   const getAllProducts = (id) => {
     if (selectedVendor?.id || storeSelectedVendor?.id)
@@ -226,6 +233,7 @@ const RoyoProducts = (props) => {
 
   const errorMethod = (error) => {
     updateState({
+      isLoadingB: false,
       isLoading: false,
       isRefreshing: false,
       isAddProductLoading: false,
@@ -380,11 +388,10 @@ const RoyoProducts = (props) => {
       .then((res) => {
         updateState({
           vendorCategories: res?.data,
+          isLoading: false,
         });
       })
-      .catch((err) => {
-        console.log(err, 'errerrerrerrWhile');
-      });
+      .catch(errorMethod);
   };
 
   const mainViewModal = () => {
@@ -410,7 +417,9 @@ const RoyoProducts = (props) => {
             onChangeText={(text) => {
               updateState({
                 productName: text,
-                productSKU: skuDefault.concat(text).replace(/ /g, ''),
+                productSKU: !!skuDefault
+                  ? skuDefault.concat(text).replace(/ /g, '')
+                  : '',
                 productSlug: text.replace(/ /g, ''),
               });
             }}
@@ -454,7 +463,9 @@ const RoyoProducts = (props) => {
                           }
                           style={styles.categoryItm}
                           key={String(indx)}>
-                          <Text>{itm.hierarchy}</Text>
+                          <Text style={{flex: 0.95}} numberOfLines={1}>
+                            {itm.hierarchy}
+                          </Text>
                           {selectedVendorCategory.id == itm.id && (
                             <Image
                               source={imagePath.tick2}
@@ -538,10 +549,40 @@ const RoyoProducts = (props) => {
     );
   };
 
+  const onProductDelete = ({item}) => {
+    updateState({
+      isLoadingB: true,
+    });
+
+    actions
+      .deleteVendorProduct(
+        {product_id: item?.id},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        showSuccess(res?.message);
+        setTimeout(() => {
+          updateState({
+            isLoadingB: false,
+            isLoading: true,
+          });
+        }, 500);
+      })
+      .catch(errorMethod);
+  };
+
+  console.log(
+    isLoadingB,
+    isLoading,
+    'isLoadingBisLoadingBisLoadingBisLoadingB',
+  );
+
   return (
-    <WrapperContainer
-    // isLoading={isLoading}
-    >
+    <WrapperContainer source={loaderOne} isLoading={isLoading || isLoadingB}>
       <Header
         centerTitle={`${headerText} | ${selectedVendor?.name} `}
         noLeftIcon
@@ -583,12 +624,13 @@ const RoyoProducts = (props) => {
                   </View>
                 );
               }}
-              data={productListData}
+              data={productListData} //productListData
               renderItem={renderItem}
               showsVerticalScrollIndicator={false}
               renderHiddenItem={(data, rowMap) => (
                 <View style={styles.rowReverse}>
                   <TouchableOpacity
+                    onPress={() => onProductDelete(data)}
                     style={{
                       ...styles.hiddenButton,
                       backgroundColor: '#FFC8C8',
@@ -727,7 +769,7 @@ const styles = StyleSheet.create({
   },
   productBtn: {
     position: 'absolute',
-    bottom: moderateScale(75),
+    bottom: Platform.OS == 'ios' ? moderateScale(75) : moderateScale(5),
     borderRadius: moderateScale(100),
     paddingHorizontal: moderateScale(15),
     right: 10,
@@ -779,5 +821,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    flex: 1,
   },
 });

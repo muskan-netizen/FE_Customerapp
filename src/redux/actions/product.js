@@ -1,22 +1,24 @@
 import {
+  ADD_PRODUCT_TO_CART,
   ADD_REMOVE_TO_WISHLIST,
+  ADD_VENDOR_PRODUCT,
+  CHECK_VENDORS,
+  CREATE_PRODUCT_VARIANT,
+  DELETE_PRODUCT_VARIANT,
+  DELETE_VENDOR_PRODUCT,
+  GET_ALL_PRODUCTSBY_STORE_ID,
   GET_DATA_BY_CATEGORY,
   GET_DATA_BY_CATEGORY_FILTERS,
   GET_DATA_BY_VENDOR_FILTERS,
+  GET_PRODUCT_DATA_BASED_VARIANTS,
   GET_PRODUCT_DATA_BY_PRODUCTID,
   GET_PRODUCT_DATA_BY_VENDORID,
-  GET_PRODUCT_DATA_BASED_VARIANTS,
-  GET_WISHLIST_PRODUCT,
-  TRANSACTION_HISTORY,
-  ADD_PRODUCT_TO_CART,
-  GET_ALL_PRODUCTSBY_STORE_ID,
-  MY_WALLET,
-  CHECK_VENDORS,
-  GET_PRODUCT_TAGS,
-  WALLET_CREDIT,
-  ADD_VENDOR_PRODUCT,
-  GET_VENDOR_CATEGORY,
   GET_PRODUCT_DETAIL,
+  GET_PRODUCT_TAGS,
+  GET_VENDOR_CATEGORY,
+  GET_WISHLIST_PRODUCT,
+  MY_WALLET,
+  WALLET_CREDIT,
 } from '../../config/urls';
 import {apiGet, apiPost, setWalletData} from '../../utils/utils';
 import store from '../store';
@@ -301,6 +303,42 @@ export function getVendorCategories(data = {}, headers = {}) {
 export function getVendorProductDetail(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiPost(GET_PRODUCT_DETAIL, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function createProductVariant(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(CREATE_PRODUCT_VARIANT, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function deleteProductVariant(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(DELETE_PRODUCT_VARIANT, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function deleteVendorProduct(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(DELETE_VENDOR_PRODUCT, data, headers)
       .then((res) => {
         resolve(res);
       })
