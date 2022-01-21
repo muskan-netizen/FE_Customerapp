@@ -827,7 +827,7 @@ export default function Products({ route, navigation }) {
     console.log(item, 'itemitemitemitem=>>>');
     // return;
 
-    if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot && !categoryInfo?.closed_store_order_scheduled) {
+    if (!!categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot && !categoryInfo?.closed_store_order_scheduled) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
     }
@@ -970,7 +970,7 @@ export default function Products({ route, navigation }) {
     differentAddsOnsQty = null,
   ) => {
     console.log("categoryInfocategoryInfo", categoryInfo)
-    if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot && !categoryInfo?.closed_store_order_scheduled) {
+    if (!!categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot && !categoryInfo?.closed_store_order_scheduled) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
     }

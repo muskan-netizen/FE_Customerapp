@@ -442,7 +442,7 @@ const ProductCard3 = ({
                     !!data?.qty ||
                     totalProductQty ? (
                     <View
-                      pointerEvents={categoryInfo?.is_vendor_closed && categoryInfo?.closed_store_order_scheduled !== 1 ? 'none' : 'auto'}
+                      pointerEvents={!!categoryInfo?.is_vendor_closed && !!categoryInfo?.closed_store_order_scheduled !== 1 ? 'none' : 'auto'}
                       style={{
                         ...styles.addBtnStyle,
                         paddingVertical: 0,

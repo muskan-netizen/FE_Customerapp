@@ -1,5 +1,5 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useState } from 'react';
 import {
   Image,
   ScrollView,
@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import actions from '../redux/actions';
@@ -21,10 +21,10 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {showError} from '../utils/helperFunctions';
+import { showError } from '../utils/helperFunctions';
 import TransparentButtonWithTxtAndIcon from './TransparentButtonWithTxtAndIcon';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../styles/theme';
 
 // navigator.geolocation = require('@react-native-community/geolocation');
 navigator.geolocation = require('react-native-geolocation-service');
@@ -51,12 +51,12 @@ const ChooseAddressModal = ({
     isLoading: true,
     viewHeight: 0,
   });
-  const {allAddress, isLoading, viewHeight} = state;
+  const { allAddress, isLoading, viewHeight } = state;
   const userData = useSelector((state) => state?.auth?.userData);
-  const {appData, appStyle} = useSelector((state) => state?.initBoot);
+  const { appData, appStyle } = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesData({fontFamily});
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const styles = stylesData({ fontFamily });
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useFocusEffect(
     React.useCallback(() => {
@@ -78,10 +78,10 @@ const ChooseAddressModal = ({
       .then((res) => {
         console.log(res, 'res>>>>');
         // actions.saveAllUserAddress(res.data);
-        updateState({allAddress: res.data, isLoading: false});
+        updateState({ allAddress: res.data, isLoading: false });
       })
       .catch((error) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         showError(error?.message || error?.error);
       });
   };
@@ -101,7 +101,7 @@ const ChooseAddressModal = ({
         {allAddress &&
           allAddress.map((itm, inx) => {
             return (
-              <TouchableOpacity onPress={() => selectAddress(itm)}>
+              <TouchableOpacity key={String(inx)} onPress={() => selectAddress(itm)}>
                 <View
                   key={inx}
                   style={{
@@ -126,24 +126,24 @@ const ChooseAddressModal = ({
                       }}>
                       <Image
                         style={
-                          isDarkMode && {tintColor: MyDarkTheme.colors.text}
+                          isDarkMode && { tintColor: MyDarkTheme.colors.text }
                         }
                         source={imagePath.home}
                       />
                     </View>
-                    <View style={{flex: 0.8}}>
+                    <View style={{ flex: 0.8 }}>
                       <Text
                         numberOfLines={2}
                         style={
                           isDarkMode
                             ? [
-                                styles.address,
-                                {
-                                  textAlign: 'left',
-                                  color: MyDarkTheme.colors.text,
-                                },
-                              ]
-                            : [styles.address, {textAlign: 'left'}]
+                              styles.address,
+                              {
+                                textAlign: 'left',
+                                color: MyDarkTheme.colors.text,
+                              },
+                            ]
+                            : [styles.address, { textAlign: 'left' }]
                         }>
                         {itm?.address}
                       </Text>
@@ -181,14 +181,14 @@ const ChooseAddressModal = ({
         },
       ]}
       onLayout={(event) => {
-        updateState({viewHeight: event.nativeEvent.layout.height});
+        updateState({ viewHeight: event.nativeEvent.layout.height });
       }}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Image
           style={
             isDarkMode
-              ? {tintColor: MyDarkTheme.colors.text}
-              : {tintColor: colors.black}
+              ? { tintColor: MyDarkTheme.colors.text }
+              : { tintColor: colors.black }
           }
           source={imagePath.crossB}
         />
@@ -209,9 +209,9 @@ const ChooseAddressModal = ({
           style={
             isDarkMode
               ? [
-                  styles.modalMainViewContainer,
-                  {backgroundColor: MyDarkTheme.colors.lightDark},
-                ]
+                styles.modalMainViewContainer,
+                { backgroundColor: MyDarkTheme.colors.lightDark },
+              ]
               : styles.modalMainViewContainer
           }>
           <View style={styles.selectAndAddesssView}>
@@ -219,7 +219,7 @@ const ChooseAddressModal = ({
               numberOfLines={1}
               style={
                 isDarkMode
-                  ? [styles.selectAddressText, {color: MyDarkTheme.colors.text}]
+                  ? [styles.selectAddressText, { color: MyDarkTheme.colors.text }]
                   : styles.selectAddressText
               }>
               {strings.SELECT_AN_ADDRESS}
@@ -231,20 +231,20 @@ const ChooseAddressModal = ({
             onPress={openAddressModal}
             textStyle={
               isDarkMode
-                ? {marginLeft: 10, color: MyDarkTheme.colors.text}
-                : {marginLeft: 10}
+                ? { marginLeft: 10, color: MyDarkTheme.colors.text }
+                : { marginLeft: 10 }
             }
             borderRadius={moderateScale(13)}
-            containerStyle={{marginHorizontal: 20, alignItems: 'flex-start'}}
+            containerStyle={{ marginHorizontal: 20, alignItems: 'flex-start' }}
             marginBottom={moderateScaleVertical(20)}
           />
-          <View style={{height: 1, backgroundColor: colors.lightGreyBg}} />
+          <View style={{ height: 1, backgroundColor: colors.lightGreyBg }} />
           <View style={styles.savedAddressView}>
             <Text
               numberOfLines={1}
               style={
                 isDarkMode
-                  ? [styles.savedAddressText, {color: MyDarkTheme.colors.text}]
+                  ? [styles.savedAddressText, { color: MyDarkTheme.colors.text }]
                   : styles.savedAddressText
               }>
               {strings.SAVED_ADDRESS}
@@ -257,8 +257,8 @@ const ChooseAddressModal = ({
   );
 };
 
-export function stylesData({fontFamily}) {
-  const commonStyles = commonStylesFun({fontFamily});
+export function stylesData({ fontFamily }) {
+  const commonStyles = commonStylesFun({ fontFamily });
 
   const styles = StyleSheet.create({
     modalContainer: {

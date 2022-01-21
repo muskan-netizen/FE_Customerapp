@@ -130,7 +130,8 @@ export default function Cart({ navigation, route }) {
     availableTimeSlots: [],
     selectedTimeSlots: '',
     delayVendorSlotDate: '',
-    minimumDelayVendorDate: null
+    minimumDelayVendorDate: null,
+    selectViaMap: false
   });
   const {
     viewHeight,
@@ -177,7 +178,8 @@ export default function Cart({ navigation, route }) {
     selectedTimeSlots,
     availableTimeSlots,
     delayVendorSlotDate,
-    minimumDelayVendorDate
+    minimumDelayVendorDate,
+    selectViaMap
   } = state;
 
   //Redux store data
@@ -638,7 +640,6 @@ export default function Cart({ navigation, route }) {
   };
 
   const checkPaymentOptions = (res) => {
-    updateState({ placeLoader: false });
     let paymentId = res?.data?.payment_option_id;
     let paymentData = {
       selectedPayment: selectedPayment,
@@ -652,7 +653,6 @@ export default function Cart({ navigation, route }) {
       orderDetail: res.data,
       redirectFrom: 'cart',
     };
-
     if (
       !!paymentId &&
       !!(
@@ -663,35 +663,45 @@ export default function Cart({ navigation, route }) {
       moveToNewScreen(navigationStrings.ORDERSUCESS, {
         orderDetail: res.data,
       })();
+      updateState({ placeLoader: false });
       return;
     }
 
     switch (paymentId) {
       case 5: //Paystack Payment Getway
+        updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PAYSTACK, paymentData);
         break;
       case 6: //Payfast Payment Getway
+        updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
         break;
       case 7: //Mobbex Payment Getway
+        updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.MOBBEX, paymentData);
         break;
       case 8: //Yoco Payment Getway
+        updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.YOCO, paymentData);
         break;
       case 9: //Pyalink Payment Getway
+        updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PAYLINK, paymentData);
         break;
       case 12: //Simplify Payment Getway
+        updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.SIMPLIFY, paymentData);
         break;
       case 13: //Square Payment Getway
+        updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.SQUARE, paymentData);
         break;
       case 15: //Pagarme Payment Getway
+        updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PAGARME, paymentData);
         break;
       case 17: //Checkout Payment Getway
+        updateState({ placeLoader: false });
         checkoutPayment(paymentData);
         break;
       default:
@@ -700,13 +710,12 @@ export default function Cart({ navigation, route }) {
           businessType == 'home_service' &&
           res?.data?.vendors.length == 1
         ) {
-          setTimeout(() => {
-            _getOrderDetail(res.data.vendors[0]);
-          }, 1500);
+          _getOrderDetail(res.data.vendors[0]);
         } else {
           moveToNewScreen(navigationStrings.ORDERSUCESS, {
             orderDetail: res.data,
           })();
+          actions.cartItemQty({});
         }
         break;
     }
@@ -788,13 +797,12 @@ export default function Cart({ navigation, route }) {
           selectedTipvalue: null,
           selectedTipAmount: null,
         });
-        actions.cartItemQty({});
         checkPaymentOptions(res);
         if (paramsData?.selectedMethod?.id != 17) {
-          updateState({
-            cartItems: [],
-            cartData: {},
-          });
+          // updateState({
+          //   cartItems: [],
+          //   cartData: {},
+          // });
           if (
             paramsData?.selectedMethod?.id == 1 ||
             res?.data?.payable_amount == 0
@@ -824,13 +832,6 @@ export default function Cart({ navigation, route }) {
       })
       .then((res) => {
         console.log(res, 'res===> order detail');
-        actions.cartItemQty({});
-        updateState({
-          cartItems: [],
-          cartData: {},
-          isLoadingB: false,
-          placeLoader: false,
-        });
         if (res?.data) {
           if (
             !!businessType &&
@@ -838,6 +839,12 @@ export default function Cart({ navigation, route }) {
             res?.data?.vendors.length == 1 &&
             res?.data?.vendors[0]?.dispatch_traking_url
           ) {
+            updateState({
+              cartItems: [],
+              cartData: {},
+              isLoadingB: false,
+              placeLoader: false,
+            });
             navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
               orderId: order_id,
               fromVendorApp: true,
@@ -848,10 +855,17 @@ export default function Cart({ navigation, route }) {
                   ? false
                   : true,
             });
+            actions.cartItemQty({});
           } else {
             moveToNewScreen(navigationStrings.ORDERSUCESS, {
               orderDetail: res.data,
             })();
+            updateState({
+              cartItems: [],
+              cartData: {},
+              isLoadingB: false,
+              placeLoader: false,
+            });
           }
         }
       })
@@ -2462,7 +2476,7 @@ export default function Cart({ navigation, route }) {
     }
   };
   const setModalVisibleForAddessModal = (visible, type, id, data) => {
-
+    updateState({ selectViaMap: false })
     if (!!userData?.auth_token) {
       updateState({ isVisible: false });
       setTimeout(() => {
@@ -2500,8 +2514,8 @@ export default function Cart({ navigation, route }) {
     return (
       <View style={{}}>
         <TextInput
-          value={instruction}
-          onChangeText={(instruction) => updateState({ instruction })}
+          // value={instruction}
+          // onChangeText={(instruction) => updateState({ instruction })}
           multiline={true}
           numberOfLines={4}
           style={{
@@ -3564,18 +3578,17 @@ export default function Cart({ navigation, route }) {
           isVisible: false,
           isVisibleAddressModal: false,
           placeLoader: false,
+          selectViaMap: false
         });
         getAllAddress();
         setTimeout(() => {
           let address = res.data;
           address['is_primary'] = 1;
-
           updateState({
             selectedAddress: address,
           });
           actions.saveAddress(address);
         });
-
         showSuccess(res.message);
       })
       .catch((error) => {
@@ -3701,9 +3714,10 @@ export default function Cart({ navigation, route }) {
     }
   };
 
-  const renderRecommendedVendors = ({ item }) => {
+  const renderRecommendedVendors = ({ item, index }) => {
     return (
       <View
+        key={String(index)}
         style={{
           width: moderateScale(width / 2),
           marginLeft: moderateScale(5),
@@ -3792,6 +3806,7 @@ export default function Cart({ navigation, route }) {
             <FlatList
               horizontal
               data={recommendedVendorsdata}
+              extraData={recommendedVendorsdata}
               renderItem={renderRecommendedVendors}
               keyExtractor={(item, index) => item?.id.toString()}
               keyboardShouldPersistTaps="always"
@@ -4147,6 +4162,10 @@ export default function Cart({ navigation, route }) {
     checkVendorSlots(day.dateString);
   };
 
+  const openCloseMapAddress = (type) => {
+    updateState({ selectViaMap: type == 1 ? true : false })
+
+  }
   return (
     <WrapperContainer
       bgColor={
@@ -4181,7 +4200,7 @@ export default function Cart({ navigation, route }) {
           useNativeDriver={false}
         /> */}
         <FlatList
-          key={swipeKey + Math.random()}
+          // key={swipeKey + Math.random()}
           data={cartItems}
           extraData={cartItems}
           ListHeaderComponent={cartItems?.length ? getHeader() : null}
@@ -4198,9 +4217,7 @@ export default function Cart({ navigation, route }) {
               tintColor={themeColors.primary_color}
             />
           }
-          contentContainerStyle={{
-            flexGrow: 1,
-          }}
+
           ListEmptyComponent={() => (!isLoadingB ? <ListEmptyComp /> : <></>)}
         />
       </View>
@@ -4232,6 +4249,8 @@ export default function Cart({ navigation, route }) {
         type={type}
         passLocation={(data) => addUpdateLocation(data)}
         navigation={navigation}
+        selectViaMap={selectViaMap}
+        openCloseMapAddress={openCloseMapAddress}
       />
 
       {/* Date time modal */}
