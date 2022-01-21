@@ -4415,20 +4415,18 @@ export default function Cart({ navigation, route }) {
                   <DatePicker
                     locale={selectedLanguage}
                     date={
-                      !!delayVendorSlotDate ?
-                        new Date(delayVendorSlotDate) :
-                        sheduledorderdate
-                          ? new Date(sheduledorderdate)
-                          : new Date('')
+                      !!sheduledorderdate
+                        ? new Date(sheduledorderdate)
+                        : new Date()
                     }
                     textColor={isDarkMode ? colors.white : colors.blackB}
                     mode="datetime"
                     minimumDate={
                       !!cartData?.delay_date
                         ? new Date(cartData?.delay_date)
-                        : new Date('')
+                        : new Date()
                     }
-                    maximumDate={undefined}
+                    // maximumDate={undefined}
                     // style={styles.datetimePickerText}
                     // onDateChange={setDate}
                     onDateChange={(value) => onDateChange(value)}
