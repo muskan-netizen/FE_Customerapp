@@ -792,4 +792,5 @@ montant`,
   ACCEPTING_ORDER_MSG: 'We are not accepting orders less then',
   INVALID_CARD_DETAILS: 'Invalid card details',
   TRANSFER_FUNDS: 'Transfer Funds',
+  WE_ARE_NOT_ACCEPTING:"We are not accepting orders right now. You can schedule this for"
 };

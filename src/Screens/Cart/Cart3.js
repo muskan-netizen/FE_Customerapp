@@ -129,6 +129,8 @@ export default function Cart({ navigation, route }) {
     selectedDateFromCalendar: '',
     availableTimeSlots: [],
     selectedTimeSlots: '',
+    delayVendorSlotDate: '',
+    minimumDelayVendorDate: null
   });
   const {
     viewHeight,
@@ -174,6 +176,8 @@ export default function Cart({ navigation, route }) {
     selectedDateFromCalendar,
     selectedTimeSlots,
     availableTimeSlots,
+    delayVendorSlotDate,
+    minimumDelayVendorDate
   } = state;
 
   //Redux store data
@@ -241,7 +245,7 @@ export default function Cart({ navigation, route }) {
     ) {
       console.log('useEffect 1', checkCartItem);
       // checkforAddressUpdate();
- 
+
     }
   }, [selectedAddress, allAddresss]);
 
@@ -420,6 +424,13 @@ export default function Cart({ navigation, route }) {
             };
             _vendorTableCart(data, tableData[0]);
           }
+
+          if (!!res?.data?.closed_store_order_scheduled) {
+            updateState({
+              minimumDelayVendorDate: res?.data.products[0].delaySlot,
+            });
+          }
+
           updateState({
             cartItems: res.data.products,
             vendorAddress: res.data.address,
@@ -455,7 +466,7 @@ export default function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  console.log("cartDatacartData",cartData)
+  console.log("cartDatacartData", cartData)
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     console.log(item, 'itemitemitemitem');
@@ -493,6 +504,7 @@ export default function Cart({ navigation, route }) {
         .then((res) => {
           console.log('cart detail', res);
           actions.cartItemQty(res);
+
           updateState({
             cartItems: res.data.products,
             cartData: res.data,
@@ -565,7 +577,7 @@ export default function Cart({ navigation, route }) {
           cartData: {},
           isLoadingB: false,
         });
-        getAllWishListData();
+        // getAllWishListData();
         showSuccess(res?.message);
       })
       .catch(errorMethod);
@@ -951,6 +963,10 @@ export default function Cart({ navigation, route }) {
   //Clear cart
   const placeOrder = () => {
     if (!!userData?.auth_token) {
+      if (!!cartData?.closed_store_order_scheduled && !localeSheduledOrderDate) {
+        showInfo(strings.SCHEDULE_DATE_REQUIRED);
+        return;
+      }
       if (!!cartData?.delay_date && !localeSheduledOrderDate) {
         showInfo(strings.SCHEDULE_DATE_REQUIRED);
         return;
@@ -1399,6 +1415,7 @@ export default function Cart({ navigation, route }) {
     }
   };
   const _renderItem = ({ item, index }) => {
+
     return (
       <View>
         {index === 0 && (
@@ -1467,10 +1484,22 @@ export default function Cart({ navigation, route }) {
                 ...styles.priceItemLabel2,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
-          
               {item?.vendor?.name}
             </Text>
-            {item?.is_vendor_closed && (
+
+            {item?.delaySlot ?
+              <Text
+
+                style={{
+                  ...styles.priceItemLabel2,
+                  color: colors.redB,
+                  fontSize: textScale(9),
+                }}>
+                {strings.WE_ARE_NOT_ACCEPTING} {item?.delaySlot}
+              </Text>
+              : null}
+
+            {item?.is_vendor_closed ?
               <Text
                 numberOfLines={1}
                 style={{
@@ -1480,7 +1509,7 @@ export default function Cart({ navigation, route }) {
                 }}>
                 {strings.VENDOR_NOT_ACCEPTING_ORDERS}
               </Text>
-            )}
+              : null}
           </View>
           {/************ start  render cart items *************/}
           {item?.vendor_products.length > 0
@@ -2433,7 +2462,7 @@ export default function Cart({ navigation, route }) {
     }
   };
   const setModalVisibleForAddessModal = (visible, type, id, data) => {
-    
+
     if (!!userData?.auth_token) {
       updateState({ isVisible: false });
       setTimeout(() => {
@@ -2816,7 +2845,7 @@ export default function Cart({ navigation, route }) {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{ flexGrow: 1 }}
-                >
+              >
                 {cartData?.total_payable_amount !== 0 &&
                   cartData?.tip.map((j, jnx) => {
                     return (
@@ -3310,7 +3339,7 @@ export default function Cart({ navigation, route }) {
             </TouchableOpacity>
           )}
 
-        {!!cartData?.deliver_status && (
+        {!!cartData?.deliver_status || cartData?.closed_store_order_scheduled ?
           <View
             pointerEvents={placeLoader ? 'none' : 'auto'}
             style={styles.paymentView}>
@@ -3346,7 +3375,7 @@ export default function Cart({ navigation, route }) {
               placeLoader={placeLoader}
             />
           </View>
-        )}
+          : null}
         {!!cartData &&
           !!cartData?.upSell_products &&
           !!cartData?.upSell_products.length > 0 && (
@@ -4321,7 +4350,7 @@ export default function Cart({ navigation, route }) {
                     <ScrollView>
                       <Calendar
                         current={new Date()}
-                        minDate={new Date()}
+                        minDate={!!minimumDelayVendorDate ? new Date(minimumDelayVendorDate) : new Date()}
                         onDayPress={onSelectDateFromCalendar}
                         markedDates={{
                           [selectedDateFromCalendar]: {
@@ -4386,16 +4415,18 @@ export default function Cart({ navigation, route }) {
                   <DatePicker
                     locale={selectedLanguage}
                     date={
-                      sheduledorderdate
-                        ? new Date(sheduledorderdate)
-                        : new Date()
+                      !!delayVendorSlotDate ?
+                        new Date(delayVendorSlotDate) :
+                        sheduledorderdate
+                          ? new Date(sheduledorderdate)
+                          : new Date('')
                     }
                     textColor={isDarkMode ? colors.white : colors.blackB}
                     mode="datetime"
                     minimumDate={
                       !!cartData?.delay_date
                         ? new Date(cartData?.delay_date)
-                        : new Date()
+                        : new Date('')
                     }
                     maximumDate={undefined}
                     // style={styles.datetimePickerText}
@@ -4409,7 +4440,7 @@ export default function Cart({ navigation, route }) {
               style={{
                 // styles.bottomAddToCartView,
                 // { top: viewHeight - height / 6 },
-                marginHorizontal:moderateScale(24)
+                marginHorizontal: moderateScale(24)
               }}>
               <GradientButton
                 colorsArray={[
