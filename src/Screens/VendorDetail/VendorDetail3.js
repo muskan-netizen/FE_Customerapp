@@ -69,7 +69,6 @@ export default function VendorDetail3({ navigation, route }) {
       date = localTime - localOffset;
     }
     date = new Date(date);
-    console.log('Converted time: ' + date);
     return date;
   };
 
