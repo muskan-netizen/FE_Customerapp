@@ -1,41 +1,32 @@
-import { update } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   I18nManager,
   Image,
-  Keyboard,
-  StatusBar,
-  StyleSheet,
+  Keyboard, StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
-  InteractionManager
+  View
 } from 'react-native';
 import { useDarkMode } from 'react-native-dark-mode';
+import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import Geocoder from 'react-native-geocoding';
 import RNGooglePlaces from 'react-native-google-places';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import MapView, {
-  AnimatedRegion,
-  Marker,
-  PROVIDER_GOOGLE,
-} from 'react-native-maps';
 import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import navigationStrings from '../navigation/navigationStrings';
 import colors from '../styles/colors';
-import commonStyles from '../styles/commonStyles';
 import commonStylesFun from '../styles/commonStyles';
 import {
   height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
 import { appIds } from '../utils/constants/DynamicAppKeys';
@@ -45,10 +36,8 @@ import { chekLocationPermission } from '../utils/permissions';
 import validations from '../utils/validations';
 import BorderTextInput from './BorderTextInput';
 import BorderTextInputWithLable from './BorderTextInputWithLable';
-import GooglePlaceInput from './GooglePlaceInput';
 import GradientButton from './GradientButton';
 import SearchPlaces from './SearchPlaces';
-import DeviceInfo from 'react-native-device-info';
 import SelctFromMap from './SelctFromMap';
 
 // navigator.geolocation = require('@react-native-community/geolocation');

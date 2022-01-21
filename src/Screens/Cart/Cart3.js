@@ -70,6 +70,8 @@ import moment from 'moment';
 import { hitSlopProp } from '../../styles/commonStyles';
 import { CheckBox } from 'react-native-elements';
 import { Calendar } from 'react-native-calendars';
+import SelectPaymentModal from '../../Components/SelectPaymentModal';
+
 
 export default function Cart({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -78,9 +80,10 @@ export default function Cart({ navigation, route }) {
   const location = useSelector((state) => state?.home?.location);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  let paramsData = route?.params;
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const recommendedVendorsdata = appMainData?.vendors;
+  let paramsData = route?.params;
+
 
   const [state, setState] = useState({
     isVisibleTimeModal: false,
@@ -131,7 +134,11 @@ export default function Cart({ navigation, route }) {
     selectedTimeSlots: '',
     delayVendorSlotDate: '',
     minimumDelayVendorDate: null,
-    selectViaMap: false
+    selectViaMap: false,
+    paymentModal: false,
+    cardInfo: null,
+    tokenInfo: null
+
   });
   const {
     viewHeight,
@@ -179,7 +186,10 @@ export default function Cart({ navigation, route }) {
     availableTimeSlots,
     delayVendorSlotDate,
     minimumDelayVendorDate,
-    selectViaMap
+    selectViaMap,
+    paymentModal,
+    cardInfo,
+    tokenInfo
   } = state;
 
   //Redux store data
@@ -210,10 +220,6 @@ export default function Cart({ navigation, route }) {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (paramsData && paramsData?.selectedMethod) {
-        updateState({ selectedPayment: paramsData?.selectedMethod });
-      }
-      // alert('run')
       if (!checkCartItem?.data?.item_count) {
         updateState({ isLoadingB: true });
       }
@@ -233,7 +239,6 @@ export default function Cart({ navigation, route }) {
       route?.params?.promocodeDetail,
       allAddresss,
       selectedAddress,
-      paramsData,
       isRefreshing,
       checkCartItem?.data?.item_count,
     ]),
@@ -535,13 +540,18 @@ export default function Cart({ navigation, route }) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        actions.cartItemQty(res);
-        updateState({
-          cartItems: res.data.products,
-          cartData: res.data,
-          isLoadingB: false,
-          btnLoader: false,
-        });
+        console.log("cart res remove", res)
+        if (!!res?.data && !!res?.data?.products) {
+          actions.cartItemQty(res);
+          updateState({
+            cartItems: res?.data?.products || [],
+            cartData: res.data,
+            isLoadingB: false,
+            btnLoader: false,
+          });
+        }else{
+          actions.cartItemQty({});
+        }
         showSuccess(res?.message);
       })
       .catch(errorMethod);
@@ -724,7 +734,7 @@ export default function Cart({ navigation, route }) {
   const checkoutPayment = (paymentData) => {
     let queryData = `/${paymentData?.selectedPayment?.code?.toLowerCase()}?amount=${paymentData?.total_payable_amount
       }&payment_option_id=${paymentData?.payment_option_id}&order_number=${paymentData?.orderDetail?.order_number
-      }&token=${paramsData?.cardInfo}&action=cart`;
+      }&token=${!!cardInfo ? cardInfo : null}&action=cart`;
     actions
       .openPaymentWebUrl(
         queryData,
@@ -798,13 +808,13 @@ export default function Cart({ navigation, route }) {
           selectedTipAmount: null,
         });
         checkPaymentOptions(res);
-        if (paramsData?.selectedMethod?.id != 17) {
+        if (selectedPayment?.id != 17) {
           // updateState({
           //   cartItems: [],
           //   cartData: {},
           // });
           if (
-            paramsData?.selectedMethod?.id == 1 ||
+            selectedPayment?.id == 1 ||
             res?.data?.payable_amount == 0
           ) {
             showSuccess(res?.message);
@@ -991,7 +1001,8 @@ export default function Cart({ navigation, route }) {
       }
       if (isEmpty(selectedPayment)) {
         // showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
-        moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)();
+        updateState({ paymentModal: true })
+        // moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)();
         return;
       }
 
@@ -1161,7 +1172,7 @@ export default function Cart({ navigation, route }) {
 
   //Offline payments
   const _offineLinePayment = async () => {
-    if (paramsData?.tokenInfo) {
+    if (!!tokenInfo) {
       let selectedMethod = selectedPayment.code.toLowerCase();
       actions
         .openPaymentWebUrl(
@@ -1173,7 +1184,7 @@ export default function Cart({ navigation, route }) {
             ? Number(selectedTipAmount)
             : 0)
           }&auth_token=${userData?.auth_token}&address_id=${selectedAddressData?.id
-          }&payment_option_id=${selectedPayment?.id}&action=cart&stripe_token=${paramsData?.tokenInfo
+          }&payment_option_id=${selectedPayment?.id}&action=cart&stripe_token=${tokenInfo
           }`,
           {},
           {
@@ -3288,7 +3299,8 @@ export default function Cart({ navigation, route }) {
         <TouchableOpacity
           onPress={() =>
             !!userData?.auth_token
-              ? moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
+              ? updateState({ paymentModal: true })
+              //  moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
               : navigation.navigate(navigationStrings.OUTER_SCREEN, {})
           }
           style={styles.paymentMainView}>
@@ -4125,6 +4137,17 @@ export default function Cart({ navigation, route }) {
     updateState({ selectedTimeSlots: item.value });
   };
 
+  const onSelectPayment = (data) => {
+    console.log("my data++++", data)
+    updateState({ selectedPayment: data?.selectedPaymentMethod });
+    if (!!data?.cardInfo) {
+      updateState({ cardInfo: data?.cardInfo });
+    }
+    if (!!data?.tokenInfo) {
+      updateState({ tokenInfo: data?.tokenInfo })
+    }
+  }
+
   const renderTimeSlots = ({ item, index }) => {
     return (
       <TouchableOpacity
@@ -4178,49 +4201,30 @@ export default function Cart({ navigation, route }) {
       <Header
         centerTitle={strings.CART}
         noLeftIcon
-        isRightText={cartItems && cartItems?.length}
+        isRightText={cartItems && !!cartItems?.length}
         onPressRightTxt={() => openClearCartModal()}
       />
-      <View
-        style={
-          isDarkMode
-            ? [
-              styles.mainComponent,
-              { backgroundColor: MyDarkTheme.colors.background },
-            ]
-            : styles.mainComponent
-        }>
-        {/* <SwipeListView
-          disableRightSwipe
-          data={cartItems}
-          renderItem={_renderItem}
-          renderHiddenItem={renderHiddenItem}
-          rightOpenValue={width}
-          // onSwipeValueChange={onSwipeValueChange}
-          useNativeDriver={false}
-        /> */}
-        <FlatList
-          // key={swipeKey + Math.random()}
-          data={cartItems}
-          extraData={cartItems}
-          ListHeaderComponent={cartItems?.length ? getHeader() : null}
-          ListFooterComponent={cartItems?.length ? getFooter() : null}
-          showsVerticalScrollIndicator={false}
-          style={{ backgroundColor: colors.backgroundGrey }}
-          keyExtractor={(item, index) => String(index)}
-          renderItem={_renderItem}
-          style={{ flex: 1 }}
-          refreshControl={
-            <RefreshControl
-              refreshing={isRefreshing}
-              onRefresh={handleRefresh}
-              tintColor={themeColors.primary_color}
-            />
-          }
 
-          ListEmptyComponent={() => (!isLoadingB ? <ListEmptyComp /> : <></>)}
-        />
-      </View>
+      <FlatList
+        data={cartItems}
+        extraData={cartItems}
+        ListHeaderComponent={cartItems?.length ? getHeader() : null}
+        ListFooterComponent={cartItems?.length ? getFooter() : null}
+        showsVerticalScrollIndicator={false}
+        style={{ backgroundColor: colors.backgroundGrey }}
+        keyExtractor={(item, index) => String(index)}
+        renderItem={_renderItem}
+        style={{ flex: 1 }}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
+            tintColor={themeColors.primary_color}
+          />
+        }
+        ListEmptyComponent={() => (!isLoadingB ? <ListEmptyComp /> : <></>)}
+      />
+
       {!!isModalVisibleForClearCart && (
         <ConfirmationModal
           closeModal={() => closeOptionModal()}
@@ -4474,6 +4478,19 @@ export default function Cart({ navigation, route }) {
           </ScrollView>
 
         </View>
+      </Modal>
+      <Modal
+        isVisible={paymentModal}
+        style={{
+          margin: 0
+        }}>
+        <View style={{ flex: 1 }}>
+          <SelectPaymentModal
+            onSelectPayment={onSelectPayment}
+            paymentModalClose={() => updateState({ paymentModal: false })}
+          />
+        </View>
+
       </Modal>
     </WrapperContainer>
   );
