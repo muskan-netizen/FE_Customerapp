@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>185577457283-16bendtcoq1jbg4rs1bcr44ipsjivrub.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.185577457283-16bendtcoq1jbg4rs1bcr44ipsjivrub</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>185577457283-6slihbl0ojerg02odmj54ptjmi2orh4f.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAWQzYNz84E7NNbsZVUfnM-fDMYSfmWhaE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>185577457283</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mozmarcas</string>
+	<key>PROJECT_ID</key>
+	<string>mozmarcas-c51ec</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mozmarcas-c51ec.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:185577457283:ios:9b4ac9589586c9293b3db6</string>
+</dict>
+</plist>

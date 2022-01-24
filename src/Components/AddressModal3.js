@@ -1,47 +1,44 @@
-import { update } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   I18nManager,
   Image,
-  Keyboard,
-  StatusBar,
-  StyleSheet,
+  Keyboard, StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import { useDarkMode } from 'react-native-dark-mode';
+import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import Geocoder from 'react-native-geocoding';
 import RNGooglePlaces from 'react-native-google-places';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import MapView from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import navigationStrings from '../navigation/navigationStrings';
 import colors from '../styles/colors';
-import commonStyles from '../styles/commonStyles';
 import commonStylesFun from '../styles/commonStyles';
 import {
   height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
+import { appIds } from '../utils/constants/DynamicAppKeys';
 import { getPlaceDetails } from '../utils/googlePlaceApi';
 import { getAddressComponent } from '../utils/helperFunctions';
 import { chekLocationPermission } from '../utils/permissions';
 import validations from '../utils/validations';
 import BorderTextInput from './BorderTextInput';
 import BorderTextInputWithLable from './BorderTextInputWithLable';
-import GooglePlaceInput from './GooglePlaceInput';
 import GradientButton from './GradientButton';
 import SearchPlaces from './SearchPlaces';
+import SelctFromMap from './SelctFromMap';
 
 // navigator.geolocation = require('@react-native-community/geolocation');
 navigator.geolocation = require('react-native-geolocation-service');
@@ -60,6 +57,8 @@ const AddressModal3 = ({
   onPress,
   indicator,
   navigation,
+  selectViaMap = false,
+  openCloseMapAddress = () => { }
 }) => {
   const mapRef = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -88,6 +87,7 @@ const AddressModal3 = ({
     phonecode: '',
     is_primary: '',
     country_key: '',
+    extra_instruction: '',
     addressTypeArray: [
       {
         id: 1,
@@ -108,7 +108,7 @@ const AddressModal3 = ({
     },
     customAddress: '',
     houseNo: '',
-    searchResult: []
+    searchResult: [],
   });
 
   const styles = stylesData({ fontFamily, themeColors });
@@ -131,6 +131,9 @@ const AddressModal3 = ({
       is_primary: updateData?.is_primary ? updateData?.is_primary : '',
       address_type: updateData?.type,
       houseNo: updateData?.house_number ? updateData?.house_number : '',
+      extra_instruction: updateData?.extra_instruction
+        ? updateData?.extra_instruction
+        : '',
     });
   }, [updateData]);
 
@@ -154,8 +157,10 @@ const AddressModal3 = ({
     region,
     customAddress,
     houseNo,
-    searchResult
+    searchResult,
+    extra_instruction,
   } = state;
+
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
@@ -301,6 +306,7 @@ const AddressModal3 = ({
       address_type: address_type,
       type_name: address_type === 3 && customAddress,
       house_number: houseNo,
+      extra_instruction: extra_instruction,
     };
     if (type == 'Home1') {
       navigation.navigate(navigationStrings.HOME, {
@@ -357,8 +363,8 @@ const AddressModal3 = ({
 
   //close your modal
   const closeModal = () => {
-    clearState();
     onClose();
+    clearState();
   };
 
   //Get Dyamic textinput style
@@ -372,7 +378,7 @@ const AddressModal3 = ({
   };
 
   const updateAddress_ = async (data_) => {
-    console.log('onGoBackonGoBack>>>>', data_);
+
     let res = await getPlaceDetails(
       data_.place_id,
       profile?.preferences?.map_key,
@@ -380,7 +386,7 @@ const AddressModal3 = ({
     const { result } = res;
 
     let addressData = getAddressComponent(result);
-    console.log('res===onGoBackonGoBack>>>>', addressData);
+
     let data = {};
     if (addressData.address) {
       data['address'] = addressData.address;
@@ -418,7 +424,6 @@ const AddressModal3 = ({
     passLocation(data);
   };
 
-
   const onPressAddress = async (place) => {
     Keyboard.dismiss();
     console.log('selected item', place?.name);
@@ -432,7 +437,7 @@ const AddressModal3 = ({
         const { result } = res;
 
         let addressData = getAddressComponent(result);
-        console.log('res===onGoBackonGoBack>>>>', addressData);
+
         let data = {};
         if (addressData.address) {
           data['address'] = addressData.address;
@@ -467,9 +472,8 @@ const AddressModal3 = ({
         updateState({
           ...state,
           ...data,
-          searchResult: []
-        })
-
+          searchResult: [],
+        });
       } catch (error) {
         console.log("something wen't wrong");
       }
@@ -477,6 +481,13 @@ const AddressModal3 = ({
       alert(strings.PLACE_ID_NOT_FOUND);
     }
   };
+
+
+
+  const addressDone = (data) => {
+    updateAddress_(data);
+  }
+
 
   const renderSearchItem = (item, index) => {
     return (
@@ -521,11 +532,11 @@ const AddressModal3 = ({
       isVisible={isVisible}
       animationType={'none'}
       style={styles.modalContainer}
-      onBackdropPress={onClose}
+      onBackdropPress={closeModal}
       onLayout={(event) => {
         updateState({ viewHeight: event.nativeEvent.layout.height });
       }}>
-      <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+      <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
         <Image
           style={
             isDarkMode ? { tintColor: colors.white } : { tintColor: colors.black }
@@ -545,65 +556,75 @@ const AddressModal3 = ({
             ]
             : [
               styles.modalMainViewContainer,
-              { paddingHorizontal: moderateScale(24) },
+              { paddingHorizontal: selectViaMap ? 0 : moderateScale(24) },
             ]
         }>
-        <KeyboardAwareScrollView
-          keyboardShouldPersistTaps="always"
-          showsVerticalScrollIndicator={false}>
-          <View style={styles.addAddessView}>
-            <Text
-              numberOfLines={1}
-              style={
-                isDarkMode
-                  ? [styles.addNewAddeessText, { color: MyDarkTheme.colors.text }]
-                  : styles.addNewAddeessText
-              }>
-              {strings.ADD_ADDRESS1}
-            </Text>
+        {selectViaMap ?
+          <View style={{ flex: 1 }}>
+            <SelctFromMap
+              addressDone={addressDone}
+              mapClose={() => openCloseMapAddress(2)} //address map close
+            />
           </View>
+          :
+          <KeyboardAwareScrollView
+            keyboardShouldPersistTaps="always"
+            showsVerticalScrollIndicator={false}>
+            <View style={styles.addAddessView}>
+              <Text
+                numberOfLines={1}
+                style={
+                  isDarkMode
+                    ? [styles.addNewAddeessText, { color: MyDarkTheme.colors.text }]
+                    : styles.addNewAddeessText
+                }>
+                {strings.ADD_ADDRESS1}
+              </Text>
+            </View>
 
-          <Text
-            style={{
-              fontFamily: fontFamily.medium,
-              fontSize: textScale(14),
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyD,
-              textAlign: 'left',
-            }}>
-            {strings.YOUR_LOCATION}
-          </Text>
-
-          <View>
-            <View
+            <Text
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginTop: moderateScale(7),
-                // marginHorizontal: moderateScale(7),
-                flex: 1
+                fontFamily: fontFamily.medium,
+                fontSize: textScale(14),
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyD,
+                textAlign: 'left',
               }}>
-              <View style={{ flex: 1 }}>
-                <SearchPlaces
-                  containerStyle={{ backgroundColor: 'transparent' }}
-                  showRightImg={false}
-                  curLatLng={`${constCurrLoc?.latitude}-${constCurrLoc?.longitude}`}
-                  placeHolder={strings.SEARCH_LOCATION}
-                  value={address} // instant update search value
-                  mapKey={profile?.preferences?.map_key} //send here google Key
-                  fetchArrayResult={(data) => updateState({ searchResult: data })}
-                  setValue={(text) => updateState({ address: text })} //return & update on change text value
-                  _moveToNextScreen={() => { }}
-                  placeHolderColor={colors.textGreyB}
-                  onClear={() => updateState({ address: '', searchResult: [] })}
-                  textStyle={{
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7,
-                    fontFamily: fontFamily.medium,
-                    fontSize: textScale(14),
-                  }}
-                />
-              </View>
+              {strings.YOUR_LOCATION}
+            </Text>
 
-              {/* <GooglePlaceInput
+            <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginTop: moderateScale(7),
+                  // marginHorizontal: moderateScale(7),
+                  flex: 1,
+                }}>
+                <View style={{ flex: 1 }}>
+                  <SearchPlaces
+                    containerStyle={{ backgroundColor: 'transparent' }}
+                    showRightImg={false}
+                    curLatLng={`${constCurrLoc?.latitude}-${constCurrLoc?.longitude}`}
+                    placeHolder={strings.SEARCH_LOCATION}
+                    value={address} // instant update search value
+                    mapKey={profile?.preferences?.map_key} //send here google Key
+                    fetchArrayResult={(data) => updateState({ searchResult: data })}
+                    setValue={(text) => updateState({ address: text })} //return & update on change text value
+                    _moveToNextScreen={() => { }}
+                    placeHolderColor={colors.textGreyB}
+                    onClear={() => updateState({ address: '', searchResult: [] })}
+                    textStyle={{
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyOpcaity7,
+                      fontFamily: fontFamily.medium,
+                      fontSize: textScale(14),
+                    }}
+                  />
+                </View>
+
+                {/* <GooglePlaceInput
               getDefaultValue={address}
               type={type}
               navigation={navigation}
@@ -628,104 +649,94 @@ const AddressModal3 = ({
               }
             /> */}
 
-              <View style={{ marginHorizontal: moderateScale(6) }} />
-              <TouchableOpacity
-                style={{
-
-                  borderWidth: 1,
-                  flexDirection: 'row', alignItems: 'center',
-                  padding: moderateScale(6),
-                  borderRadius: moderateScale(8)
-                  // flex:1
-                }}
-                onPress={() => {
-                  onClose();
-                  setTimeout(() => {
-                    navigation.navigate(navigationStrings.PINADDRESSONMAP, {
-                      onGoBack: async (data) => {
-                        updateAddress_(data);
-                        onClose();
-                      },
-                      prevRoute: 'cart',
-                      task_id: 1,
-                      pickUpLocationLatLng: {
-                        latitude: 30.7333,
-                        longitude: 76.7794,
-                      },
-                    });
-                  }, 800);
-                }}
-              >
-                <Image
-                  source={imagePath.ic_pinIcon}
+                <View style={{ marginHorizontal: moderateScale(6) }} />
+                <TouchableOpacity
                   style={{
-                    width: moderateScale(15),
-                    height: moderateScaleVertical(15),
-                    resizeMode: 'contain',
-                    tintColor: themeColors.primary_color,
+                    borderWidth: 1,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    padding: moderateScale(6),
+                    borderRadius: moderateScale(8),
+                    // flex:1
                   }}
-                />
-                <Text style={{
-                  fontSize: textScale(11),
-                  fontFamily: fontFamily.regular,
-                  marginLeft: moderateScale(4),
-                  // color: colors.redB
-                }}>{strings.SELECT_VIA_MAP}</Text>
+                  onPress={() => openCloseMapAddress(1)} //address map open
+                >
+                  <Image
+                    source={imagePath.ic_pinIcon}
+                    style={{
+                      width: moderateScale(15),
+                      height: moderateScaleVertical(15),
+                      resizeMode: 'contain',
+                      tintColor: themeColors.primary_color,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: textScale(11),
+                      fontFamily: fontFamily.regular,
+                      marginLeft: moderateScale(4),
+                      // color: colors.redB
+                    }}>
+                    {strings.SELECT_VIA_MAP}
+                  </Text>
+                </TouchableOpacity>
+              </View>
 
-              </TouchableOpacity>
+              <View style={{ width: '100%' }}>
+                {searchResult?.map((item, i) => {
+                  return renderSearchItem(item, i);
+                })}
+              </View>
             </View>
-
-            <View style={{ width: '100%' }} >
-              {searchResult?.map((item, i) => {
-                return renderSearchItem(item, i);
-              })}
-            </View>
-
-          </View>
-          <View
-            style={{
-              marginBottom: 5,
-              borderBottomWidth: 1,
-              borderColor: isDarkMode
-                ? MyDarkTheme.colors.text
-                : colors.borderLight,
-              marginTop: 4
-            }}></View>
-          <TouchableOpacity
-            onPress={currentLocation}
-            style={{
-              // alignItems: 'center',
-              flexDirection: 'row',
-              marginTop: moderateScaleVertical(8),
-              zIndex: -2000,
-            }}>
-
-            <FastImage
-              source={imagePath.currentLocation}
-              resizeMode="contain"
+            <View
               style={{
-                width: moderateScale(16),
-                height: moderateScale(16),
-              }}
-            />
-            {/* <Image source={imagePath.currentLocation} /> */}
-            <View style={{}}>
-              <Text style={{
-                fontSize: textScale(12),
-                fontFamily: fontFamily.medium,
-                marginLeft: moderateScale(8),
-                color: colors.redB
-              }}>Use Curent Location</Text>
-              <Text style={{
-                fontSize: textScale(12),
-                fontFamily: fontFamily.regular,
-                marginLeft: moderateScale(8),
-                color: colors.blackOpacity66,
-                marginTop: moderateScaleVertical(4)
-              }}>{constCurrLoc?.address}</Text>
-            </View>
-          </TouchableOpacity>
-          {/* <View style={styles.textInputContainerAddress}>
+                marginBottom: 5,
+                borderBottomWidth: 1,
+                borderColor: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.borderLight,
+                marginTop: 4,
+              }}></View>
+            <TouchableOpacity
+              onPress={currentLocation}
+              style={{
+                // alignItems: 'center',
+                flexDirection: 'row',
+                marginTop: moderateScaleVertical(8),
+                zIndex: -2000,
+              }}>
+              <FastImage
+                source={imagePath.currentLocation}
+                resizeMode="contain"
+                style={{
+                  width: moderateScale(16),
+                  height: moderateScale(16),
+                }}
+              />
+              {/* <Image source={imagePath.currentLocation} /> */}
+              <View style={{}}>
+                <Text
+                  style={{
+                    fontSize: textScale(12),
+                    fontFamily: fontFamily.medium,
+                    marginLeft: moderateScale(8),
+                    color: colors.redB,
+                  }}>
+                  Use Curent Location
+                </Text>
+                <Text
+                  style={{
+                    fontSize: textScale(12),
+                    fontFamily: fontFamily.regular,
+                    marginLeft: moderateScale(8),
+                    color: colors.blackOpacity66,
+                    marginTop: moderateScaleVertical(4),
+                  }}>
+                  {constCurrLoc?.address}
+                </Text>
+              </View>
+            </TouchableOpacity>
+            {/* <View style={styles.textInputContainerAddress}>
             <TextInput
               onChangeText={_onChangeText('address')}
               placeholder={strings.SEARCH_LOCATION}
@@ -746,16 +757,16 @@ const AddressModal3 = ({
             />
           </View> */}
 
-          {/* {showDialogBox && dropDownData && dropDownData.length > 0 && (
+            {/* {showDialogBox && dropDownData && dropDownData.length > 0 && (
           <View style={styles.addressDropDownView}>{renderDropDown()}</View>
         )} */}
-          <View
-            style={{
-              zIndex: -1000,
-              // marginTop: moderateScaleVertical(80)
-            }}>
-            {/* <View> */}
-            {/* <View style={styles.useCurrentLocationView}>
+            <View
+              style={{
+                zIndex: -1000,
+                // marginTop: moderateScaleVertical(80)
+              }}>
+              {/* <View> */}
+              {/* <View style={styles.useCurrentLocationView}>
             <Image
               style={{tintColor: themeColors.primary_color}}
               source={imagePath.locationGreen}
@@ -767,184 +778,195 @@ const AddressModal3 = ({
             </TouchableOpacity>
           </View> */}
 
-            <BorderTextInputWithLable
-              onChangeText={_onChangeText('houseNo')}
-              placeholder={strings.HOUSE_NO}
-              label={strings.COMPLETE_ADDRESS}
-              textInputStyle={getTextInputStyle(houseNo)}
-              value={houseNo}
-              multiline={false}
-              borderWidth={0}
-              marginBottomTxt={0}
-              containerStyle={{ borderBottomWidth: 1 }}
-              mainStyle={{ marginTop: 10 }}
-              labelStyle={styles.labelStyle}
-            />
+              <BorderTextInputWithLable
+                onChangeText={_onChangeText('houseNo')}
+                placeholder={strings.HOUSE_NO}
+                label={strings.COMPLETE_ADDRESS}
+                textInputStyle={getTextInputStyle(houseNo)}
+                value={houseNo}
+                multiline={false}
+                borderWidth={0}
+                marginBottomTxt={0}
+                containerStyle={{ borderBottomWidth: 1 }}
+                mainStyle={{ marginTop: 10 }}
+                labelStyle={styles.labelStyle}
+              />
 
-            <BorderTextInputWithLable
-              onChangeText={_onChangeText('street')}
-              placeholder={strings.ENTER_STREET}
-              textInputStyle={getTextInputStyle(city)}
-              value={street}
-              borderWidth={0}
-              marginBottomTxt={0}
-              containerStyle={{ borderBottomWidth: 1 }}
-            />
+              <BorderTextInputWithLable
+                onChangeText={_onChangeText('street')}
+                placeholder={strings.ENTER_STREET}
+                textInputStyle={getTextInputStyle(city)}
+                value={street}
+                borderWidth={0}
+                marginBottomTxt={0}
+                containerStyle={{ borderBottomWidth: 1 }}
+              />
 
-            <BorderTextInputWithLable
-              onChangeText={_onChangeText('city')}
-              placeholder={strings.CITY}
-              textInputStyle={getTextInputStyle(city)}
-              value={city}
-              borderWidth={0}
-              marginBottomTxt={0}
-              containerStyle={{ borderBottomWidth: 1 }}
-            />
+              <BorderTextInputWithLable
+                onChangeText={_onChangeText('city')}
+                placeholder={strings.CITY}
+                textInputStyle={getTextInputStyle(city)}
+                value={city}
+                borderWidth={0}
+                marginBottomTxt={0}
+                containerStyle={{ borderBottomWidth: 1 }}
+              />
 
-            <BorderTextInputWithLable
-              onChangeText={_onChangeText('states')}
-              placeholder={strings.STATE}
-              textInputStyle={getTextInputStyle(states)}
-              value={states}
-              borderWidth={0}
-              marginBottomTxt={0}
-              containerStyle={{ borderBottomWidth: 1 }}
-            />
+              <BorderTextInputWithLable
+                onChangeText={_onChangeText('states')}
+                placeholder={strings.STATE}
+                textInputStyle={getTextInputStyle(states)}
+                value={states}
+                borderWidth={0}
+                marginBottomTxt={0}
+                containerStyle={{ borderBottomWidth: 1 }}
+              />
 
-            <View
-              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              {/* <BorderTextInput
+              <View
+                style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                {/* <BorderTextInput
               containerStyle={{flex: 0.45}}
               onChangeText={_onChangeText('country')}
               placeholder={strings.COUNTRY}
               textInputStyle={getTextInputStyle(country)}
               value={country}
             /> */}
-              <View
-                style={{
-                  flex: 0.48,
-                  height: moderateScaleVertical(49),
-                  borderBottomWidth: 1,
-                  borderRadius: 13,
-                  borderColor: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.borderLight,
-                  marginBottom: 20,
-                  justifyContent: 'center',
-                  paddingHorizontal: 8,
-                }}>
-                <TextInput
-                  selectionColor={
-                    isDarkMode ? MyDarkTheme.colors.text : colors.black
-                  }
-                  placeholderTextColor={
-                    isDarkMode
+                <View
+                  style={{
+                    flex: 0.48,
+                    height: moderateScaleVertical(49),
+                    borderBottomWidth: 1,
+                    borderRadius: 13,
+                    borderColor: isDarkMode
                       ? MyDarkTheme.colors.text
-                      : colors.textGreyOpcaity7
-                  }
-                  onChangeText={_onChangeText('country')}
-                  placeholder={strings.COUNTRY}
-                  // textInputStyle={[getTextInputStyle(country)]}
-                  value={country}
-                  style={
-                    isDarkMode
-                      ? [styles.textInput3, { opacity: 0.7, color: '#fff' }]
-                      : [
-                        styles.textInput3,
-                        { opacity: 0.7, color: colors.textGrey },
-                      ]
-                  }
+                      : colors.borderLight,
+                    marginBottom: 20,
+                    justifyContent: 'center',
+                    paddingHorizontal: 8,
+                  }}>
+                  <TextInput
+                    selectionColor={
+                      isDarkMode ? MyDarkTheme.colors.text : colors.black
+                    }
+                    placeholderTextColor={
+                      isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyOpcaity7
+                    }
+                    onChangeText={_onChangeText('country')}
+                    placeholder={strings.COUNTRY}
+                    // textInputStyle={[getTextInputStyle(country)]}
+                    value={country}
+                    style={
+                      isDarkMode
+                        ? [styles.textInput3, { opacity: 0.7, color: '#fff' }]
+                        : [
+                          styles.textInput3,
+                          { opacity: 0.7, color: colors.textGrey },
+                        ]
+                    }
+                  />
+                </View>
+                <BorderTextInput
+                  containerStyle={{
+                    flex: 0.48,
+                    color: colors.textGrey,
+                    fontFamily: fontFamily.bold,
+                    fontSize: textScale(12),
+                    opacity: 1,
+                    borderBottomWidth: 1,
+                  }}
+                  onChangeText={_onChangeText('pincode')}
+                  placeholder={strings.PINCODE}
+                  textInputStyle={getTextInputStyle(pincode)}
+                  value={pincode}
+                  keyboardType={'numeric'}
+                  borderWidth={0}
+                  borderRadius={0}
                 />
               </View>
-              <BorderTextInput
-                containerStyle={{
-                  flex: 0.48,
-                  color: colors.textGrey,
-                  fontFamily: fontFamily.bold,
-                  fontSize: textScale(12),
-                  opacity: 1,
-                  borderBottomWidth: 1,
-                }}
-                onChangeText={_onChangeText('pincode')}
-                placeholder={strings.PINCODE}
-                textInputStyle={getTextInputStyle(pincode)}
-                value={pincode}
-                keyboardType={'numeric'}
-                borderWidth={0}
-                borderRadius={0}
-              />
-            </View>
-            <Text
-              style={{
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
-                fontFamily: fontFamily.medium,
-                fontSize: textScale(14),
-              }}>
-              {strings.SAVE_AS}
-            </Text>
+              {appIds.snabbhem == DeviceInfo.getBundleId() && (
+                <BorderTextInputWithLable
+                  onChangeText={_onChangeText('extra_instruction')}
+                  placeholder={strings.EXTRA_INSTRUCTION}
+                  textInputStyle={getTextInputStyle(states)}
+                  value={extra_instruction}
+                  borderWidth={0}
+                  marginBottomTxt={0}
+                  containerStyle={{ borderBottomWidth: 1 }}
+                />
+              )}
+              <Text
+                style={{
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+                  fontFamily: fontFamily.medium,
+                  fontSize: textScale(14),
+                }}>
+                {strings.SAVE_AS}
+              </Text>
 
-            <View style={styles.addressTypeView}>
-              {addressTypeArray.map((item, index) => {
-                return (
-                  <View key={index}>
-                    <TouchableOpacity
-                      onPress={() => updateState({ address_type: item.id })}
-                      style={[
-                        styles.addressHomeOrOfficeView,
-                        {
-                          backgroundColor: isDarkMode
-                            ? MyDarkTheme.colors.background
-                            : colors.white,
-                        },
-                      ]}>
-                      <Text
+              <View style={styles.addressTypeView}>
+                {addressTypeArray.map((item, index) => {
+                  return (
+                    <View key={index}>
+                      <TouchableOpacity
+                        onPress={() => updateState({ address_type: item.id })}
                         style={[
+                          styles.addressHomeOrOfficeView,
                           {
-                            color: isDarkMode
-                              ? themeColors.primary_color
-                              : colors.textGreyB,
-                            fontFamily: fontFamily.bold,
+                            backgroundColor: isDarkMode
+                              ? MyDarkTheme.colors.background
+                              : colors.white,
                           },
                         ]}>
-                        {item.lable}
-                      </Text>
-                      {address_type == item.id && (
-                        <Image
-                          source={imagePath.icRedChecked}
-                          style={{ position: 'absolute', right: -8, top: -8 }}
-                        />
-                      )}
-                    </TouchableOpacity>
-                  </View>
-                );
-              })}
+                        <Text
+                          style={[
+                            {
+                              color: isDarkMode
+                                ? themeColors.primary_color
+                                : colors.textGreyB,
+                              fontFamily: fontFamily.bold,
+                            },
+                          ]}>
+                          {item.lable}
+                        </Text>
+                        {address_type == item.id && (
+                          <Image
+                            source={imagePath.icRedChecked}
+                            style={{ position: 'absolute', right: -8, top: -8 }}
+                          />
+                        )}
+                      </TouchableOpacity>
+                    </View>
+                  );
+                })}
+              </View>
+              {address_type === 3 && (
+                <BorderTextInputWithLable
+                  onChangeText={_onChangeText('customAddress')}
+                  placeholder={strings.ENETER_YOUR_ADDRESS}
+                  textInputStyle={getTextInputStyle(city)}
+                  borderWidth={0}
+                  marginBottomTxt={0}
+                  containerStyle={{
+                    borderBottomWidth: 1,
+                    marginTop: moderateScale(5),
+                  }}
+                />
+              )}
             </View>
-            {address_type === 3 && (
-              <BorderTextInputWithLable
-                onChangeText={_onChangeText('customAddress')}
-                placeholder={strings.ENETER_YOUR_ADDRESS}
-                textInputStyle={getTextInputStyle(city)}
-                borderWidth={0}
-                marginBottomTxt={0}
-                containerStyle={{
-                  borderBottomWidth: 1,
-                  marginTop: moderateScale(5),
-                }}
-              />
-            )}
-          </View>
 
-          <GradientButton
-            colorsArray={[themeColors.primary_color, themeColors.primary_color]}
-            textStyle={styles.textStyle}
-            onPress={saveAddress}
-            marginTop={moderateScaleVertical(10)}
-            // marginBottom={moderateScaleVertical(10)}
-            btnText={strings.SAVE_ADDRESS}
-            indicator={indicator}
-            containerStyle={{ marginTop: moderateScale(20) }}
-          />
-        </KeyboardAwareScrollView>
+            <GradientButton
+              colorsArray={[themeColors.primary_color, themeColors.primary_color]}
+              textStyle={styles.textStyle}
+              onPress={saveAddress}
+              marginTop={moderateScaleVertical(10)}
+              // marginBottom={moderateScaleVertical(10)}
+              btnText={strings.SAVE_ADDRESS}
+              indicator={indicator}
+              containerStyle={{ marginTop: moderateScale(20) }}
+            />
+          </KeyboardAwareScrollView>}
       </View>
 
       {/* </View> */}
@@ -1152,7 +1174,7 @@ export function stylesData({ fontFamily, themeColors }) {
     savedAddressView: {
       flexDirection: 'row',
       marginBottom: moderateScaleVertical(8),
-      alignItems: 'center'
+      alignItems: 'center',
     },
     addresssLableName: {
       fontSize: textScale(12),
@@ -1168,7 +1190,7 @@ export function stylesData({ fontFamily, themeColors }) {
       paddingHorizontal: moderateScale(10),
       borderBottomWidth: 0.5,
       marginBottom: moderateScaleVertical(4),
-    }
+    },
   });
   return styles;
 }

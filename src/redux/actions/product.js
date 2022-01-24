@@ -52,10 +52,6 @@ export function getProductByVendorCategoryId(
   headers = {},
 ) {
   return new Promise((resolve, reject) => {
-    console.log(
-      GET_PRODUCT_DATA_BY_VENDORID + query,
-      'GET_PRODUCT_DATA_BY_VENDORID',
-    );
     apiGet(GET_PRODUCT_DATA_BY_VENDORID + query, data, headers)
       .then((res) => {
         resolve(res);

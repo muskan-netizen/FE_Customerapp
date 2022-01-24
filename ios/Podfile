@@ -3,8 +3,6 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
 platform :ios, '11.0'
 
-
-
 abstract_target 'available_pods' do
   
   permissions_path = '../node_modules/react-native-permissions/ios'
@@ -19,7 +17,8 @@ abstract_target 'available_pods' do
    pod 'react-native-contacts', :path => '../node_modules/react-native-contacts'
 
 ##RoyoOrder Target
- target 'RoyoOrder' do
+target 'RoyoOrder' do
+  
     
  end
 
@@ -54,16 +53,15 @@ target 'Yogo Food' do
   
 end
 
-##BottomsUp Target
-target 'BottomsUp' do
-  
-end
-
 ##InstaMobile Target
 target 'InstaMobile' do
   
 end
 
+ ##BottomsUp Target
+ target 'BottomsUp' do
+  
+ end
 
 ##Spidbi Target
 target 'Spidbi' do
@@ -121,6 +119,7 @@ target 'BustanFakieh' do
   
 end
 
+ 
 
 #Getme Target
 target 'Getme' do
@@ -201,7 +200,6 @@ end
 target 'HoganChef' do
   
 end
-
 
 #Servze Target
 target 'Servze' do
@@ -714,7 +712,6 @@ target 'Bilionza' do
   
 end
 
-
 #DoleyPharmacy Target
 target 'DoleyPharmacy' do
   
@@ -954,10 +951,141 @@ end
 target 'PinkyDeli' do
   
 end
+#  #SXM2GO Target
+#  target 'SXM2GO' do
+  
+# end
+
+# #VendorSpot Target
+# target 'VendorSpot' do
+  
+# end
+
+# #GasGiant Target
+# target 'GasGiant' do
+  
+# end
+
+# #Releezer Target
+# target 'Releezer' do
+  
+# end
+
+# #Vendoor Target
+# target 'Vendoor' do
+  
+# end
+
+#FARMER SOUQ Target
+target 'FARMER SOUQ' do
+  
+end
+
+#TMGShops Target
+target 'TMGShops' do
+  
+end
+
+#StitchesonSite Target
+target 'StitchesonSite' do
+  
+end
+
+#Easyu Target
+target 'Easyu' do
+
+end
+
+#Mozmarcas Target
+target 'Mozmarcas' do
+ 
+end
+
+#Myfiji Target
+target 'Myfiji' do
+
+end
+
+
+ #FastMikes Target
+ target 'Fastmikes' do
+   
+ end
+
+#CitySuds Target
+target 'CitySuds' do
+
+end
+
+#HomeTownDelivery Target
+target 'HomeTownDelivery' do
+
+end
+
+#Ritenow Target
+target 'Ritenow' do
+  
+end
+
+#Flit Target
+target 'Flit' do
+ 
+end
+
+#IHELP Target
+target 'IHELP' do
+  
+end
+
+#Ullaz Target
+target 'Ullaz' do
+ 
+end
+
+#Privatepremiumpickups Target
+target 'Privatepremiumpickups' do
+  
+end
+
+#FidesDelivery Target
+target 'FidesDelivery' do
+  
+end
+
+#BKSTaxi Target
+target 'BKSTaxi' do
+  
+end
+
+#OXO Target
+target 'OXO' do
+  
+end
+
+#Sijang Target
+target 'Sijang' do
+  
+end
+
+#Everywhere Target
+target 'Everywhere' do
+  
+end
+
+#Fairex Target
+target 'Fairex' do
+  
+end
+
+#CannabisClubSF Target
+target 'CannabisClubSF' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+    
   end
   installer.pods_project.targets.each do |target|
     if target.name == "React-Core.common-AccessibilityResources"
