@@ -70,6 +70,8 @@ import moment from 'moment';
 import { hitSlopProp } from '../../styles/commonStyles';
 import { CheckBox } from 'react-native-elements';
 import { Calendar } from 'react-native-calendars';
+import SelectPaymentModal from '../../Components/SelectPaymentModal';
+
 
 export default function Cart({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -78,9 +80,10 @@ export default function Cart({ navigation, route }) {
   const location = useSelector((state) => state?.home?.location);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  let paramsData = route?.params;
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const recommendedVendorsdata = appMainData?.vendors;
+  let paramsData = route?.params;
+
 
   const [state, setState] = useState({
     isVisibleTimeModal: false,
@@ -129,6 +132,13 @@ export default function Cart({ navigation, route }) {
     selectedDateFromCalendar: '',
     availableTimeSlots: [],
     selectedTimeSlots: '',
+    delayVendorSlotDate: '',
+    minimumDelayVendorDate: null,
+    selectViaMap: false,
+    paymentModal: false,
+    cardInfo: null,
+    tokenInfo: null
+
   });
   const {
     viewHeight,
@@ -174,6 +184,12 @@ export default function Cart({ navigation, route }) {
     selectedDateFromCalendar,
     selectedTimeSlots,
     availableTimeSlots,
+    delayVendorSlotDate,
+    minimumDelayVendorDate,
+    selectViaMap,
+    paymentModal,
+    cardInfo,
+    tokenInfo
   } = state;
 
   //Redux store data
@@ -204,10 +220,6 @@ export default function Cart({ navigation, route }) {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (paramsData && paramsData?.selectedMethod) {
-        updateState({ selectedPayment: paramsData?.selectedMethod });
-      }
-      // alert('run')
       if (!checkCartItem?.data?.item_count) {
         updateState({ isLoadingB: true });
       }
@@ -227,7 +239,6 @@ export default function Cart({ navigation, route }) {
       route?.params?.promocodeDetail,
       allAddresss,
       selectedAddress,
-      paramsData,
       isRefreshing,
       checkCartItem?.data?.item_count,
     ]),
@@ -239,12 +250,13 @@ export default function Cart({ navigation, route }) {
       !!checkCartItem?.data?.products &&
       !!checkCartItem?.data?.products.length
     ) {
-      checkforAddressUpdate();
- 
+      console.log('useEffect 1', checkCartItem);
+      // checkforAddressUpdate();
+
     }
   }, [selectedAddress, allAddresss]);
 
-  console.log('useEffect 1', checkCartItem);
+
 
   //check for addreess Update and change
   const checkforAddressUpdate = () => {
@@ -419,6 +431,13 @@ export default function Cart({ navigation, route }) {
             };
             _vendorTableCart(data, tableData[0]);
           }
+
+          if (!!res?.data?.closed_store_order_scheduled) {
+            updateState({
+              minimumDelayVendorDate: res?.data.products[0].delaySlot,
+            });
+          }
+
           updateState({
             cartItems: res.data.products,
             vendorAddress: res.data.address,
@@ -454,6 +473,7 @@ export default function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
+  console.log("cartDatacartData", cartData)
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     console.log(item, 'itemitemitemitem');
@@ -491,6 +511,7 @@ export default function Cart({ navigation, route }) {
         .then((res) => {
           console.log('cart detail', res);
           actions.cartItemQty(res);
+
           updateState({
             cartItems: res.data.products,
             cartData: res.data,
@@ -519,13 +540,18 @@ export default function Cart({ navigation, route }) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        actions.cartItemQty(res);
-        updateState({
-          cartItems: res.data.products,
-          cartData: res.data,
-          isLoadingB: false,
-          btnLoader: false,
-        });
+        console.log("cart res remove", res)
+        if (!!res?.data && !!res?.data?.products) {
+          actions.cartItemQty(res);
+          updateState({
+            cartItems: res?.data?.products || [],
+            cartData: res.data,
+            isLoadingB: false,
+            btnLoader: false,
+          });
+        }else{
+          actions.cartItemQty({});
+        }
         showSuccess(res?.message);
       })
       .catch(errorMethod);
@@ -563,7 +589,7 @@ export default function Cart({ navigation, route }) {
           cartData: {},
           isLoadingB: false,
         });
-        getAllWishListData();
+        // getAllWishListData();
         showSuccess(res?.message);
       })
       .catch(errorMethod);
@@ -624,7 +650,6 @@ export default function Cart({ navigation, route }) {
   };
 
   const checkPaymentOptions = (res) => {
-    updateState({ placeLoader: false });
     let paymentId = res?.data?.payment_option_id;
     let paymentData = {
       selectedPayment: selectedPayment,
@@ -638,7 +663,6 @@ export default function Cart({ navigation, route }) {
       orderDetail: res.data,
       redirectFrom: 'cart',
     };
-
     if (
       !!paymentId &&
       !!(
@@ -649,35 +673,45 @@ export default function Cart({ navigation, route }) {
       moveToNewScreen(navigationStrings.ORDERSUCESS, {
         orderDetail: res.data,
       })();
+      updateState({ placeLoader: false });
       return;
     }
 
     switch (paymentId) {
       case 5: //Paystack Payment Getway
+        updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PAYSTACK, paymentData);
         break;
       case 6: //Payfast Payment Getway
+        updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
         break;
       case 7: //Mobbex Payment Getway
+        updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.MOBBEX, paymentData);
         break;
       case 8: //Yoco Payment Getway
+        updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.YOCO, paymentData);
         break;
       case 9: //Pyalink Payment Getway
+        updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PAYLINK, paymentData);
         break;
       case 12: //Simplify Payment Getway
+        updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.SIMPLIFY, paymentData);
         break;
       case 13: //Square Payment Getway
+        updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.SQUARE, paymentData);
         break;
       case 15: //Pagarme Payment Getway
+        updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PAGARME, paymentData);
         break;
       case 17: //Checkout Payment Getway
+        updateState({ placeLoader: false });
         checkoutPayment(paymentData);
         break;
       default:
@@ -686,13 +720,12 @@ export default function Cart({ navigation, route }) {
           businessType == 'home_service' &&
           res?.data?.vendors.length == 1
         ) {
-          setTimeout(() => {
-            _getOrderDetail(res.data.vendors[0]);
-          }, 1500);
+          _getOrderDetail(res.data.vendors[0]);
         } else {
           moveToNewScreen(navigationStrings.ORDERSUCESS, {
             orderDetail: res.data,
           })();
+          actions.cartItemQty({});
         }
         break;
     }
@@ -701,7 +734,7 @@ export default function Cart({ navigation, route }) {
   const checkoutPayment = (paymentData) => {
     let queryData = `/${paymentData?.selectedPayment?.code?.toLowerCase()}?amount=${paymentData?.total_payable_amount
       }&payment_option_id=${paymentData?.payment_option_id}&order_number=${paymentData?.orderDetail?.order_number
-      }&token=${paramsData?.cardInfo}&action=cart`;
+      }&token=${!!cardInfo ? cardInfo : null}&action=cart`;
     actions
       .openPaymentWebUrl(
         queryData,
@@ -774,15 +807,14 @@ export default function Cart({ navigation, route }) {
           selectedTipvalue: null,
           selectedTipAmount: null,
         });
-        actions.cartItemQty({});
         checkPaymentOptions(res);
-        if (paramsData?.selectedMethod?.id != 17) {
-          updateState({
-            cartItems: [],
-            cartData: {},
-          });
+        if (selectedPayment?.id != 17) {
+          // updateState({
+          //   cartItems: [],
+          //   cartData: {},
+          // });
           if (
-            paramsData?.selectedMethod?.id == 1 ||
+            selectedPayment?.id == 1 ||
             res?.data?.payable_amount == 0
           ) {
             showSuccess(res?.message);
@@ -810,13 +842,6 @@ export default function Cart({ navigation, route }) {
       })
       .then((res) => {
         console.log(res, 'res===> order detail');
-        actions.cartItemQty({});
-        updateState({
-          cartItems: [],
-          cartData: {},
-          isLoadingB: false,
-          placeLoader: false,
-        });
         if (res?.data) {
           if (
             !!businessType &&
@@ -824,6 +849,12 @@ export default function Cart({ navigation, route }) {
             res?.data?.vendors.length == 1 &&
             res?.data?.vendors[0]?.dispatch_traking_url
           ) {
+            updateState({
+              cartItems: [],
+              cartData: {},
+              isLoadingB: false,
+              placeLoader: false,
+            });
             navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
               orderId: order_id,
               fromVendorApp: true,
@@ -834,10 +865,17 @@ export default function Cart({ navigation, route }) {
                   ? false
                   : true,
             });
+            actions.cartItemQty({});
           } else {
             moveToNewScreen(navigationStrings.ORDERSUCESS, {
               orderDetail: res.data,
             })();
+            updateState({
+              cartItems: [],
+              cartData: {},
+              isLoadingB: false,
+              placeLoader: false,
+            });
           }
         }
       })
@@ -946,11 +984,13 @@ export default function Cart({ navigation, route }) {
     // _offineLinePayment();
   };
 
-  console.log('cartDatacartData', cartItems);
-
   //Clear cart
   const placeOrder = () => {
     if (!!userData?.auth_token) {
+      if (!!cartData?.closed_store_order_scheduled && !localeSheduledOrderDate) {
+        showInfo(strings.SCHEDULE_DATE_REQUIRED);
+        return;
+      }
       if (!!cartData?.delay_date && !localeSheduledOrderDate) {
         showInfo(strings.SCHEDULE_DATE_REQUIRED);
         return;
@@ -961,7 +1001,8 @@ export default function Cart({ navigation, route }) {
       }
       if (isEmpty(selectedPayment)) {
         // showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
-        moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)();
+        updateState({ paymentModal: true })
+        // moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)();
         return;
       }
 
@@ -1131,7 +1172,7 @@ export default function Cart({ navigation, route }) {
 
   //Offline payments
   const _offineLinePayment = async () => {
-    if (paramsData?.tokenInfo) {
+    if (!!tokenInfo) {
       let selectedMethod = selectedPayment.code.toLowerCase();
       actions
         .openPaymentWebUrl(
@@ -1143,7 +1184,7 @@ export default function Cart({ navigation, route }) {
             ? Number(selectedTipAmount)
             : 0)
           }&auth_token=${userData?.auth_token}&address_id=${selectedAddressData?.id
-          }&payment_option_id=${selectedPayment?.id}&action=cart&stripe_token=${paramsData?.tokenInfo
+          }&payment_option_id=${selectedPayment?.id}&action=cart&stripe_token=${tokenInfo
           }`,
           {},
           {
@@ -1207,7 +1248,7 @@ export default function Cart({ navigation, route }) {
     }
   };
 
-  console.log(paramsData, 'paramsDataparamsDataparamsDataparamsData>>>');
+
 
   const _renderRazor = () => {
     updateState({ isLoadingB: true });
@@ -1399,6 +1440,7 @@ export default function Cart({ navigation, route }) {
     }
   };
   const _renderItem = ({ item, index }) => {
+
     return (
       <View>
         {index === 0 && (
@@ -1467,10 +1509,22 @@ export default function Cart({ navigation, route }) {
                 ...styles.priceItemLabel2,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
-              {console.log('jbbbkhbk', item?.vendor)}
               {item?.vendor?.name}
             </Text>
-            {item?.is_vendor_closed && (
+
+            {item?.delaySlot ?
+              <Text
+
+                style={{
+                  ...styles.priceItemLabel2,
+                  color: colors.redB,
+                  fontSize: textScale(9),
+                }}>
+                {strings.WE_ARE_NOT_ACCEPTING} {item?.delaySlot}
+              </Text>
+              : null}
+
+            {item?.is_vendor_closed ?
               <Text
                 numberOfLines={1}
                 style={{
@@ -1480,7 +1534,7 @@ export default function Cart({ navigation, route }) {
                 }}>
                 {strings.VENDOR_NOT_ACCEPTING_ORDERS}
               </Text>
-            )}
+              : null}
           </View>
           {/************ start  render cart items *************/}
           {item?.vendor_products.length > 0
@@ -2433,6 +2487,7 @@ export default function Cart({ navigation, route }) {
     }
   };
   const setModalVisibleForAddessModal = (visible, type, id, data) => {
+    updateState({ selectViaMap: false })
     if (!!userData?.auth_token) {
       updateState({ isVisible: false });
       setTimeout(() => {
@@ -2470,8 +2525,8 @@ export default function Cart({ navigation, route }) {
     return (
       <View style={{}}>
         <TextInput
-          value={instruction}
-          onChangeText={(instruction) => updateState({ instruction })}
+          // value={instruction}
+          // onChangeText={(instruction) => updateState({ instruction })}
           multiline={true}
           numberOfLines={4}
           style={{
@@ -2814,7 +2869,8 @@ export default function Cart({ navigation, route }) {
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ flexGrow: 1 }}>
+                contentContainerStyle={{ flexGrow: 1 }}
+              >
                 {cartData?.total_payable_amount !== 0 &&
                   cartData?.tip.map((j, jnx) => {
                     return (
@@ -3243,7 +3299,8 @@ export default function Cart({ navigation, route }) {
         <TouchableOpacity
           onPress={() =>
             !!userData?.auth_token
-              ? moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
+              ? updateState({ paymentModal: true })
+              //  moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
               : navigation.navigate(navigationStrings.OUTER_SCREEN, {})
           }
           style={styles.paymentMainView}>
@@ -3308,7 +3365,7 @@ export default function Cart({ navigation, route }) {
             </TouchableOpacity>
           )}
 
-        {!!cartData?.deliver_status && (
+        {!!cartData?.deliver_status || cartData?.closed_store_order_scheduled ?
           <View
             pointerEvents={placeLoader ? 'none' : 'auto'}
             style={styles.paymentView}>
@@ -3344,7 +3401,7 @@ export default function Cart({ navigation, route }) {
               placeLoader={placeLoader}
             />
           </View>
-        )}
+          : null}
         {!!cartData &&
           !!cartData?.upSell_products &&
           !!cartData?.upSell_products.length > 0 && (
@@ -3533,18 +3590,17 @@ export default function Cart({ navigation, route }) {
           isVisible: false,
           isVisibleAddressModal: false,
           placeLoader: false,
+          selectViaMap: false
         });
         getAllAddress();
         setTimeout(() => {
           let address = res.data;
           address['is_primary'] = 1;
-
           updateState({
             selectedAddress: address,
           });
           actions.saveAddress(address);
         });
-
         showSuccess(res.message);
       })
       .catch((error) => {
@@ -3670,9 +3726,10 @@ export default function Cart({ navigation, route }) {
     }
   };
 
-  const renderRecommendedVendors = ({ item }) => {
+  const renderRecommendedVendors = ({ item, index }) => {
     return (
       <View
+        key={String(index)}
         style={{
           width: moderateScale(width / 2),
           marginLeft: moderateScale(5),
@@ -3761,6 +3818,7 @@ export default function Cart({ navigation, route }) {
             <FlatList
               horizontal
               data={recommendedVendorsdata}
+              extraData={recommendedVendorsdata}
               renderItem={renderRecommendedVendors}
               keyExtractor={(item, index) => item?.id.toString()}
               keyboardShouldPersistTaps="always"
@@ -4079,6 +4137,17 @@ export default function Cart({ navigation, route }) {
     updateState({ selectedTimeSlots: item.value });
   };
 
+  const onSelectPayment = (data) => {
+    console.log("my data++++", data)
+    updateState({ selectedPayment: data?.selectedPaymentMethod });
+    if (!!data?.cardInfo) {
+      updateState({ cardInfo: data?.cardInfo });
+    }
+    if (!!data?.tokenInfo) {
+      updateState({ tokenInfo: data?.tokenInfo })
+    }
+  }
+
   const renderTimeSlots = ({ item, index }) => {
     return (
       <TouchableOpacity
@@ -4116,6 +4185,10 @@ export default function Cart({ navigation, route }) {
     checkVendorSlots(day.dateString);
   };
 
+  const openCloseMapAddress = (type) => {
+    updateState({ selectViaMap: type == 1 ? true : false })
+
+  }
   return (
     <WrapperContainer
       bgColor={
@@ -4128,51 +4201,30 @@ export default function Cart({ navigation, route }) {
       <Header
         centerTitle={strings.CART}
         noLeftIcon
-        isRightText={cartItems && cartItems?.length}
+        isRightText={cartItems && !!cartItems?.length}
         onPressRightTxt={() => openClearCartModal()}
       />
-      <View
-        style={
-          isDarkMode
-            ? [
-              styles.mainComponent,
-              { backgroundColor: MyDarkTheme.colors.background },
-            ]
-            : styles.mainComponent
-        }>
-        {/* <SwipeListView
-          disableRightSwipe
-          data={cartItems}
-          renderItem={_renderItem}
-          renderHiddenItem={renderHiddenItem}
-          rightOpenValue={width}
-          // onSwipeValueChange={onSwipeValueChange}
-          useNativeDriver={false}
-        /> */}
-        <FlatList
-          key={swipeKey + Math.random()}
-          data={cartItems}
-          extraData={cartItems}
-          ListHeaderComponent={cartItems?.length ? getHeader() : null}
-          ListFooterComponent={cartItems?.length ? getFooter() : null}
-          showsVerticalScrollIndicator={false}
-          style={{ backgroundColor: colors.backgroundGrey }}
-          keyExtractor={(item, index) => String(index)}
-          renderItem={_renderItem}
-          style={{ flex: 1 }}
-          refreshControl={
-            <RefreshControl
-              refreshing={isRefreshing}
-              onRefresh={handleRefresh}
-              tintColor={themeColors.primary_color}
-            />
-          }
-          contentContainerStyle={{
-            flexGrow: 1,
-          }}
-          ListEmptyComponent={() => (!isLoadingB ? <ListEmptyComp /> : <></>)}
-        />
-      </View>
+
+      <FlatList
+        data={cartItems}
+        extraData={cartItems}
+        ListHeaderComponent={cartItems?.length ? getHeader() : null}
+        ListFooterComponent={cartItems?.length ? getFooter() : null}
+        showsVerticalScrollIndicator={false}
+        style={{ backgroundColor: colors.backgroundGrey }}
+        keyExtractor={(item, index) => String(index)}
+        renderItem={_renderItem}
+        style={{ flex: 1 }}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
+            tintColor={themeColors.primary_color}
+          />
+        }
+        ListEmptyComponent={() => (!isLoadingB ? <ListEmptyComp /> : <></>)}
+      />
+
       {!!isModalVisibleForClearCart && (
         <ConfirmationModal
           closeModal={() => closeOptionModal()}
@@ -4201,6 +4253,8 @@ export default function Cart({ navigation, route }) {
         type={type}
         passLocation={(data) => addUpdateLocation(data)}
         navigation={navigation}
+        selectViaMap={selectViaMap}
+        openCloseMapAddress={openCloseMapAddress}
       />
 
       {/* Date time modal */}
@@ -4319,7 +4373,7 @@ export default function Cart({ navigation, route }) {
                     <ScrollView>
                       <Calendar
                         current={new Date()}
-                        minDate={new Date()}
+                        minDate={!!minimumDelayVendorDate ? new Date(minimumDelayVendorDate) : new Date()}
                         onDayPress={onSelectDateFromCalendar}
                         markedDates={{
                           [selectedDateFromCalendar]: {
@@ -4384,7 +4438,7 @@ export default function Cart({ navigation, route }) {
                   <DatePicker
                     locale={selectedLanguage}
                     date={
-                      sheduledorderdate
+                      !!sheduledorderdate
                         ? new Date(sheduledorderdate)
                         : new Date()
                     }
@@ -4395,7 +4449,7 @@ export default function Cart({ navigation, route }) {
                         ? new Date(cartData?.delay_date)
                         : new Date()
                     }
-                    maximumDate={undefined}
+                    // maximumDate={undefined}
                     // style={styles.datetimePickerText}
                     // onDateChange={setDate}
                     onDateChange={(value) => onDateChange(value)}
@@ -4407,7 +4461,7 @@ export default function Cart({ navigation, route }) {
               style={{
                 // styles.bottomAddToCartView,
                 // { top: viewHeight - height / 6 },
-                marginHorizontal:moderateScale(24)
+                marginHorizontal: moderateScale(24)
               }}>
               <GradientButton
                 colorsArray={[
@@ -4424,6 +4478,19 @@ export default function Cart({ navigation, route }) {
           </ScrollView>
 
         </View>
+      </Modal>
+      <Modal
+        isVisible={paymentModal}
+        style={{
+          margin: 0
+        }}>
+        <View style={{ flex: 1 }}>
+          <SelectPaymentModal
+            onSelectPayment={onSelectPayment}
+            paymentModalClose={() => updateState({ paymentModal: false })}
+          />
+        </View>
+
       </Modal>
     </WrapperContainer>
   );
