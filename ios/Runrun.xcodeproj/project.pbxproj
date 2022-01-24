@@ -47105,7 +47105,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Yeboy/Pods-Yeboy-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Yeboy/Pods-available_pods-Yeboy-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		856688D1B7E5E1BDF6273794 /* [CP] Embed Pods Frameworks */ = {
