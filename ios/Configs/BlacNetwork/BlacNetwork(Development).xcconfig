@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-BlacNetwork/Pods-BlacNetwork.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-BlacNetwork/Pods-available_pods-BlacNetwork.debug.xcconfig"
 
 PROJECT_APPLE_ID =1596271919
 PROJECT_BUNDLE_ID =com.blacnetwork

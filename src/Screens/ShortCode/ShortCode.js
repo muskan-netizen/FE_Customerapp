@@ -412,6 +412,7 @@ export default function ShortCode({route, navigation}) {
         case appIds.codiner:
           updateState({
             shortCode: shortCodes.codiner,
+            // shortCode: '245bae',
             isShortcodePrefilled: true,
           });
           break;
@@ -1217,9 +1218,58 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.vendorspot:
+          updateState({
+            shortCode: shortCodes.vendorspot,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sxm2go:
+          updateState({
+            shortCode: shortCodes.sxm2go,
+          });
+          break;
         case appIds.pinkydeli:
           updateState({
             shortCode: shortCodes.pinkydeli,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.gasgiant:
+          updateState({
+            shortCode: shortCodes.gasgiant,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.releezer:
+          updateState({
+            shortCode: shortCodes.releezer,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.vendoor:
+          updateState({
+            shortCode: shortCodes.vendoor,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.farmersouq:
+          updateState({
+            shortCode: shortCodes.farmersouq,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.tmgShops:
+          updateState({
+            shortCode: shortCodes.tmgShops,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.stitchesonsite:
+          updateState({
+            shortCode: shortCodes.stitchesonsite,
             isShortcodePrefilled: true,
           });
           break;
@@ -1257,14 +1307,14 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        code: shortCode,
-        // code: '245bae',
+        // code: shortCode,
+        code: '245bae',
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '245bae',
-        code: shortCode,
+        code: '245bae',
+        // code: shortCode,
       };
     }
     console.log(header, 'header');

@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-SafeWalks/Pods-SafeWalks.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-SafeWalks/Pods-available_pods-SafeWalks.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1601594716
 PROJECT_BUNDLE_ID = com.safewalks

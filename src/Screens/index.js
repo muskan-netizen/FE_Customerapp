@@ -95,6 +95,7 @@ export {default as PaymentOptions} from './TaxiApp/PaymentOptions/PaymentOptions
 export {default as ChooseCarTypeAndTimeTaxi} from './TaxiApp/ChooseCarTypeAndTime/ChooseCarTypeAndTime';
 export {default as PickupTaxiOrderDetail} from './TaxiApp/PickupTaxiOrderDetail/PickupTaxiOrderDetail';
 export {default as PrinterConnection} from './PrinterConnection/PrinterScreen';
+export {default as PrinterConnectionSunmi} from './PrinterConnection/PrinterScreenSunmi';
 export {default as TaxiHomeScreen} from './Home/TaxiHomeScreen/TaxiHomeScreen';
 export {default as ViewAllData} from './ViewAllData/ViewAllData';
 // royo order
@@ -123,3 +124,4 @@ export {default as UdhaarLedger} from './UdhaarLedger/UdhaarLedger';
 export {default as AddProduct} from './AddProduct/AddProduct';
 export {default as AddNewCustomer} from './AddNewCustomer/AddNewCustomer';
 export {default as CustomerEarningHistory} from './CustomerEarningHistory/CustomerEarningHistory';
+export {default as Paystack} from './PaymentGateways/Paystack';

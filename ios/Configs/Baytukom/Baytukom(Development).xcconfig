@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Baytukom/Pods-Baytukom.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Baytukom/Pods-available_pods-Baytukom.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1586318576
 PROJECT_BUNDLE_ID = com.baytukom

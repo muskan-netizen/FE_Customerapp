@@ -1,10 +1,10 @@
-#include "Pods/Target Support Files/Pods-Drus/Pods-Drus.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Drus/Pods-available_pods-Drus.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1581108891
 PROJECT_BUNDLE_ID = com.drus.customer
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 26
+PROJECT_BUILD_NUMBER = 31
 PROJECT_APP_NAME = Drus
 PROJECT_GOOGLE_CLIENT_ID =663603800114-pm2osrjr3bf9chfsg84grtkb19ngdf99.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.663603800114-pm2osrjr3bf9chfsg84grtkb19ngdf99

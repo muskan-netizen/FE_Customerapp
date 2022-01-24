@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-ClickEat/Pods-ClickEat.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-ClickEat/Pods-available_pods-ClickEat.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1578854955

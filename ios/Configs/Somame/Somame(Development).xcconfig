@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Somame/Pods-Somame.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Somame/Pods-available_pods-Somame.debug.xcconfig"
 
 PROJECT_APPLE_ID =1590286351
 PROJECT_BUNDLE_ID = com.somame

@@ -6,6 +6,7 @@ import {PulseIndicator} from 'react-native-indicators';
 import {Marker} from 'react-native-maps';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
+import strings from '../constants/lang';
 import colors from '../styles/colors';
 import {moderateScale, textScale} from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
@@ -25,6 +26,7 @@ const CustomCallouts = ({data}) => {
           //pickup location
           return (
             <Marker
+              tracksViewChanges={false}
               key={`coordinate_${index}`}
               // calloutOffset={{ x: 0, y: 18 }}
               // calloutAnchor={{ x: 0, y: 10 }}
@@ -45,11 +47,22 @@ const CustomCallouts = ({data}) => {
                   }}>
                   <View
                     style={{
-                      backgroundColor: colors.black,
-                      paddingHorizontal: moderateScale(12),
-                      paddingVertical: moderateScale(10),
+                      backgroundColor: '#6B8E23',
+
+                      paddingHorizontal: 12,
+                      paddingVertical: 6,
+                      borderRadius: moderateScale(4),
                     }}>
-                    <PulseIndicator
+                    <Text
+                      style={{
+                        ...styles.pickupDropOff,
+                        color: colors.white,
+                        fontFamily: fontFamily.medium,
+                        textTransform: 'capitalize',
+                      }}>
+                      {strings.PICKUP}
+                    </Text>
+                    {/* <PulseIndicator
                       size={12}
                       color="white"
                       style={{
@@ -57,9 +70,9 @@ const CustomCallouts = ({data}) => {
                         width: moderateScale(8),
                         borderRadius: moderateScale(4),
                       }}
-                    />
+                    /> */}
                   </View>
-                  <View
+                  {/* <View
                     style={{
                       flexDirection: 'row',
                       alignItems: 'center',
@@ -86,7 +99,7 @@ const CustomCallouts = ({data}) => {
                       resizeMode="contain"
                       source={imagePath.icGo}
                     />
-                  </View>
+                  </View> */}
                 </View>
               </View>
             </Marker>
@@ -96,6 +109,7 @@ const CustomCallouts = ({data}) => {
           //last drop location
           return (
             <Marker
+              tracksViewChanges={false}
               key={`coordinate_${index}`}
               // calloutOffset={{ x: 0, y: 18 }}
               // calloutAnchor={{ x: 0, y: 10 }}
@@ -116,32 +130,43 @@ const CustomCallouts = ({data}) => {
                   }}>
                   <View
                     style={{
-                      backgroundColor: colors.black,
-                      paddingHorizontal: moderateScale(12),
-                      paddingVertical: moderateScale(10),
+                      backgroundColor: '#DC143C',
+                      paddingHorizontal: 12,
+                      paddingVertical: 6,
+                      borderRadius: moderateScale(4),
                     }}>
                     {index == 0 ? (
-                      <PulseIndicator
-                        size={12}
-                        color="white"
-                        style={{
-                          height: moderateScale(8),
-                          width: moderateScale(8),
-                          borderRadius: moderateScale(4),
-                        }}
-                      />
-                    ) : (
                       <Text
                         style={{
                           ...styles.pickupDropOff,
                           color: colors.white,
                           fontFamily: fontFamily.medium,
+                          textTransform: 'capitalize',
                         }}>
-                        {'D'}
+                        {strings.PICKUP}
+                      </Text>
+                    ) : (
+                      // <PulseIndicator
+                      //   size={12}
+                      //   color="white"
+                      //   style={{
+                      //     height: moderateScale(8),
+                      //     width: moderateScale(8),
+                      //     borderRadius: moderateScale(4),
+                      //   }}
+                      // />
+                      <Text
+                        style={{
+                          ...styles.pickupDropOff,
+                          color: colors.white,
+                          fontFamily: fontFamily.medium,
+                          textTransform: 'capitalize',
+                        }}>
+                        {strings.DROP}
                       </Text>
                     )}
                   </View>
-                  <View
+                  {/* <View
                     style={{
                       flexDirection: 'row',
                       alignItems: 'center',
@@ -168,7 +193,7 @@ const CustomCallouts = ({data}) => {
                       resizeMode="contain"
                       source={imagePath.icGo}
                     />
-                  </View>
+                  </View> */}
                 </View>
               </View>
             </Marker>
@@ -176,13 +201,19 @@ const CustomCallouts = ({data}) => {
         }
         return (
           <Marker
+            tracksViewChanges={false}
             key={`coordinate_${index}`}
-            image={imagePath.radioLocation}
             coordinate={{
               latitude: Number(val?.latitude),
               longitude: Number(val?.longitude),
-            }}
-          />
+            }}>
+            <Image
+              style={{
+                tintColor: '#DC143C',
+              }}
+              source={imagePath.radioLocation}
+            />
+          </Marker>
         );
       })}
     </>

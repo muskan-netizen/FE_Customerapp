@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-MsTechy/Pods-MsTechy.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-MsTechy/Pods-available_pods-MsTechy.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1581734326

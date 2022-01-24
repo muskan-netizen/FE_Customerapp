@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Specialhalal/Pods-Specialhalal.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Specialhalal/Pods-available_pods-Specialhalal.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1580390191

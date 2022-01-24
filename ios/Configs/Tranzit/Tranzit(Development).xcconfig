@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Tranzit/Pods-Tranzit.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Tranzit/Pods-available_pods-Tranzit.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1561966015

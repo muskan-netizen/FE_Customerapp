@@ -236,7 +236,6 @@ export default function ReturnOrder({navigation, route}) {
   };
 
   const updateReason = (item) => {
-    console.log(item, 'Selected item');
     updateState({selectedReason: item});
   };
 

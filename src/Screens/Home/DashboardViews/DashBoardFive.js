@@ -75,10 +75,6 @@ export default function DashBoardFive({
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(
-    appData?.profile?.preferences?.is_hyperlocal,
-    'appData?.profile?.preferences?.is_hyperlocal',
-  );
 
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -261,7 +257,6 @@ export default function DashBoardFive({
       '800/600',
     );
     const isSVG = imageURI ? imageURI.includes('.svg') : null;
-    console.log('svg url', imageURI);
     return (
       <TouchableOpacity
         activeOpacity={0.7}
@@ -296,6 +291,7 @@ export default function DashBoardFive({
   };
 
   const onViewAll = (type, data) => {
+    console.log(data, 'type+++++', type);
     navigation.navigate(navigationStrings.VIEW_ALL_DATA, {
       data: data,
       type: type,
@@ -472,7 +468,7 @@ export default function DashBoardFive({
                             borderColor: colors.textGreyB,
                             paddingLeft: moderateScale(5),
                             paddingHorizontal: moderateScale(5),
-                            marginTop: moderateScaleVertical(8),
+                            marginVertical: moderateScaleVertical(4),
                             justifyContent: 'center',
                             alignItems: 'center',
                           }}>
@@ -508,6 +504,7 @@ export default function DashBoardFive({
                           return (
                             <MenuOption
                               onSelect={() => onSelectedFilter(item)}
+                              key={String(index)}
                               text={item?.type}
                               style={{
                                 marginVertical: moderateScaleVertical(5),

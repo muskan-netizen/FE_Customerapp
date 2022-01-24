@@ -143,12 +143,11 @@ export default function VendorOrders({navigation, route}) {
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
           timezone: RNLocalize.getTimeZone(),
-
           // systemuser: DeviceInfo.getUniqueId(),
         },
       )
       .then((res) => {
-        console.log('vendor orders res', res);
+        console.log('vendor', res);
         updateState({
           activeOrders:
             pageActive == 1

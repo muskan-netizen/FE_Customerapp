@@ -335,13 +335,13 @@ export default function Account3({navigation}) {
               />
             ))}
 
-          {DeviceInfo.getBundleId() == appIds.bharatMove ? (
+          {/* {DeviceInfo.getBundleId() == appIds.bharatMove ? (
             <View>
               {!userData?.auth_token && (
                 <View>
                   <ListItemHorizontal
-                    centerContainerStyle={{flexDirection: 'row'}}
-                    leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                    centerContainerStyle={{ flexDirection: 'row' }}
+                    leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                     onPress={moveToNewScreen(navigationStrings.INVENTORY)}
                     iconLeft={imagePath.icInventory}
                     centerHeading={strings.INVENTORY}
@@ -350,12 +350,12 @@ export default function Account3({navigation}) {
                       fontSize: textScale(14),
                       fontFamily: fontFamily.regular,
                     }}
-                    // iconRight={imagePath.goRight}
-                    // rightIconStyle={{tintColor: colors.textGreyLight}}
+                  // iconRight={imagePath.goRight}
+                  // rightIconStyle={{tintColor: colors.textGreyLight}}
                   />
                   <ListItemHorizontal
-                    centerContainerStyle={{flexDirection: 'row'}}
-                    leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                    centerContainerStyle={{ flexDirection: 'row' }}
+                    leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                     onPress={moveToNewScreen(navigationStrings.UDHAARLEDGER)}
                     iconLeft={imagePath.icUdhaarl}
                     centerHeading={strings.UDHAARLEDGER}
@@ -364,12 +364,12 @@ export default function Account3({navigation}) {
                       fontSize: textScale(14),
                       fontFamily: fontFamily.regular,
                     }}
-                    // iconRight={imagePath.goRight}
-                    // rightIconStyle={{tintColor: colors.textGreyLight}}
+                  // iconRight={imagePath.goRight}
+                  // rightIconStyle={{tintColor: colors.textGreyLight}}
                   />
                   <ListItemHorizontal
-                    centerContainerStyle={{flexDirection: 'row'}}
-                    leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                    centerContainerStyle={{ flexDirection: 'row' }}
+                    leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                     onPress={moveToNewScreen(navigationStrings.SALES_EXPENSES)}
                     iconLeft={imagePath.icSales}
                     centerHeading={strings.SALES_EXPENSES}
@@ -378,15 +378,15 @@ export default function Account3({navigation}) {
                       fontSize: textScale(14),
                       fontFamily: fontFamily.regular,
                     }}
-                    // iconRight={imagePath.goRight}
-                    // rightIconStyle={{tintColor: colors.textGreyLight}}
+                  // iconRight={imagePath.goRight}
+                  // rightIconStyle={{tintColor: colors.textGreyLight}}
                   />
                 </View>
               )}
             </View>
           ) : (
             <View></View>
-          )}
+          )} */}
 
           {!!userData?.auth_token &&
             !!appData &&
@@ -546,6 +546,48 @@ export default function Account3({navigation}) {
                 }}
                 iconLeft={imagePath.printer}
                 centerHeading={strings.ATTACH_PRINTER}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+                // iconRight={imagePath.goRight}
+                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              />
+            ))}
+
+          {!!userData?.auth_token &&
+            Platform.OS === 'android' &&
+            !!appMainData?.is_admin &&
+            __DEV__ &&
+            (businessType == 'taxi' ? null : (
+              <ListItemHorizontal
+                centerContainerStyle={{flexDirection: 'row'}}
+                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                onPress={() => {
+                  BluetoothManager.checkBluetoothEnabled().then(
+                    (enabled) => {
+                      if (Boolean(enabled)) {
+                        navigation.navigate(
+                          navigationStrings.ATTACH_PRINTER + 'sunmi',
+                        );
+                      } else {
+                        BluetoothManager.enableBluetooth()
+                          .then(() => {
+                            navigation.navigate(
+                              navigationStrings.ATTACH_PRINTER + 'sunmi',
+                            );
+                          })
+                          .catch((err) => {});
+                      }
+                    },
+                    (err) => {
+                      err;
+                    },
+                  );
+                }}
+                iconLeft={imagePath.printer}
+                centerHeading={strings.ATTACH_PRINTER + ' sunmi'}
                 containerStyle={styles.containerStyle2}
                 centerHeadingStyle={{
                   fontSize: textScale(14),

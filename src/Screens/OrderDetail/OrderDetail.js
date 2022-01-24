@@ -1,8 +1,8 @@
-import {useIsFocused} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
 import LottieView from 'lottie-react-native';
 import moment from 'moment';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -159,14 +159,27 @@ export default function OrderDetail({navigation, route}) {
 
   useInterval(
     () => {
-      if (!!userData?.auth_token) {
-        _getOrderDetailScreen();
-      } else {
-        showError(strings.UNAUTHORIZED_MESSAGE);
+      if (paramData?.orderDetail?.dispatch_traking_url != null) {
+        getOrders();
       }
     },
     isFocused ? 5000 : null,
   );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log('dfshsfjdhjkfhskjfh');
+      getOrders();
+    }, []),
+  );
+
+  const getOrders = () => {
+    if (!!userData?.auth_token) {
+      _getOrderDetailScreen();
+    } else {
+      showError(strings.UNAUTHORIZED_MESSAGE);
+    }
+  };
 
   const new_dispatch_traking_url = paramData?.orderDetail?.dispatch_traking_url
     ? (paramData?.orderDetail?.dispatch_traking_url).replace(
@@ -185,7 +198,7 @@ export default function OrderDetail({navigation, route}) {
       data['vendor_id'] = paramData?.selectedVendor.id;
     }
     data['new_dispatch_traking_url'] = new_dispatch_traking_url;
-    console.log('new dispatch+++', data);
+
     // updateState({ isLoading: true });
     actions
       .getOrderDetail(data, {
@@ -347,6 +360,7 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const _renderItem = ({item, index}) => {
+    console.log('checking timngs>>>', item);
     // return <OffersCard />;
     let {itemCount} = state;
     return (
@@ -1092,7 +1106,7 @@ export default function OrderDetail({navigation, route}) {
           {!!cartData?.scheduled_date_time && (
             <LeftRightText
               leftText={strings.SEHEDLEDFOR}
-              rightText={moment(cartData?.scheduled_date_time).format('lll')}
+              rightText={cartData?.scheduled_date_time}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
               leftTextStyle={{
@@ -1613,6 +1627,7 @@ export default function OrderDetail({navigation, route}) {
               }}
               rotateEnabled={true}>
               <MapViewDirections
+                resetOnChange={false}
                 origin={{
                   latitude: Number(driverStatus.tasks[0]?.latitude),
                   longitude: Number(driverStatus.tasks[0]?.longitude),

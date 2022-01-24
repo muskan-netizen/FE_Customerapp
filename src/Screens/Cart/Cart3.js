@@ -1,6 +1,6 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep, isEmpty, update} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, Fragment} from 'react';
 import {
   Alert,
   Animated,
@@ -69,6 +69,7 @@ import RazorpayCheckout from 'react-native-razorpay';
 import moment from 'moment';
 import {hitSlopProp} from '../../styles/commonStyles';
 import {CheckBox} from 'react-native-elements';
+import {Calendar} from 'react-native-calendars';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -125,6 +126,9 @@ export default function Cart({navigation, route}) {
     modalType: null,
     showTaxFeeArea: false,
     isGiftBoxSelected: false,
+    selectedDateFromCalendar: '',
+    availableTimeSlots: [],
+    selectedTimeSlots: '',
   });
   const {
     viewHeight,
@@ -167,12 +171,16 @@ export default function Cart({navigation, route}) {
     sheduleddropoffdate,
     showTaxFeeArea,
     isGiftBoxSelected,
+    selectedDateFromCalendar,
+    selectedTimeSlots,
+    availableTimeSlots,
   } = state;
 
   //Redux store data
   const userData = useSelector((state) => state?.auth?.userData);
   const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
+    console.log(currencies,"currencies>currencies");
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
@@ -182,9 +190,7 @@ export default function Cart({navigation, route}) {
   );
 
   const dineInType = useSelector((state) => state?.home?.dineInType);
-  console.log(dineInType, 'dineInType');
 
-  console.log('cartData?.delay_date', cartData);
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -207,7 +213,7 @@ export default function Cart({navigation, route}) {
         updateState({isLoadingB: true});
       }
       getCartDetail();
-      getAllWishListData();
+      // getAllWishListData();
       // if (!!checkCartItem?.data) {
       //   getCartDetail();
       // } else {
@@ -229,8 +235,13 @@ export default function Cart({navigation, route}) {
   );
 
   useEffect(() => {
-    if (!!checkCartItem?.data) {
+    if (
+      !!checkCartItem?.data &&
+      !!checkCartItem?.data?.products &&
+      !!checkCartItem?.data?.products.length
+    ) {
       checkforAddressUpdate();
+      console.log('useEffect 1', checkCartItem);
     }
   }, [selectedAddress, allAddresss]);
 
@@ -308,7 +319,7 @@ export default function Cart({navigation, route}) {
       )
       .then((res) => {
         actions.cartItemQty(res);
-        console.log(res.data, 'cart details>>>', cartItems);
+        console.log(res.data, 'cart details>>>', res);
         let checkDate = !!res?.data?.scheduled_date_time;
 
         if (!!checkDate && res.data.schedule_type == 'schedule') {
@@ -415,12 +426,13 @@ export default function Cart({navigation, route}) {
             cartItems: res.data.products,
             vendorAddress: res.data.address,
             cartData: res.data,
+            availableTimeSlots: res.data.slots,
             isLoadingB: false,
             isRefreshing: false,
             selectedTipvalue:
               res?.data?.total_payable_amount == 0 ? 'custom' : null,
           });
-          if (!res?.data?.schedule_type) {
+          if (!res?.data?.schedule_type && res.data.products.length > 0) {
             //if schedule type is null then hit the api again with now option
             setDateAndTimeSchedule();
           }
@@ -584,6 +596,7 @@ export default function Cart({navigation, route}) {
   useEffect(() => {
     if (paramsData?.transactionId && !!checkCartItem?.data) {
       _directOrderPlace();
+      console.log('useEffect 2');
     }
   }, [paramsData?.transactionId]);
 
@@ -643,6 +656,9 @@ export default function Cart({navigation, route}) {
     }
 
     switch (paymentId) {
+      case 5: //Paystack Payment Getway
+        navigation.navigate(navigationStrings.PAYSTACK, paymentData);
+        break;
       case 6: //Payfast Payment Getway
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
         break;
@@ -661,8 +677,11 @@ export default function Cart({navigation, route}) {
       case 13: //Square Payment Getway
         navigation.navigate(navigationStrings.SQUARE, paymentData);
         break;
-        case 15: //Pagarme Payment Getway
+      case 15: //Pagarme Payment Getway
         navigation.navigate(navigationStrings.PAGARME, paymentData);
+        break;
+      case 17: //Checkout Payment Getway
+        checkoutPayment(paymentData);
         break;
       default:
         if (
@@ -680,6 +699,37 @@ export default function Cart({navigation, route}) {
         }
         break;
     }
+  };
+
+  const checkoutPayment = (paymentData) => {
+    let queryData = `/${paymentData?.selectedPayment?.code?.toLowerCase()}?amount=${
+      paymentData?.total_payable_amount
+    }&payment_option_id=${paymentData?.payment_option_id}&order_number=${
+      paymentData?.orderDetail?.order_number
+    }&token=${paramsData?.cardInfo}&action=cart`;
+    actions
+      .openPaymentWebUrl(
+        queryData,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        updateState({
+          cartItems: [],
+          cartData: {},
+        });
+        moveToNewScreen(navigationStrings.ORDERSUCESS, {
+          orderDetail: {
+            order_number: paymentData?.orderDetail?.order_number,
+            id: paymentData?.orderDetail?.id,
+          },
+        })();
+      })
+      .catch(errorMethod);
   };
 
   const _directOrderPlace = () => {
@@ -701,6 +751,7 @@ export default function Cart({navigation, route}) {
     placeOrderData(data);
   };
 
+
   const placeOrderData = (data) => {
     console.log('Sending data', data);
 
@@ -709,14 +760,12 @@ export default function Cart({navigation, route}) {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
-        latitude: location?.latitude.toString() || '',
-        longitude: location?.longitude.toString() || '',
+        latitude: !isEmpty(location) ? location?.latitude.toString() : '',
+        longitude: !isEmpty(location) ? location?.longitude.toString() : '',
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
         updateState({
-          cartItems: [],
-          cartData: {},
           isLoadingB: false,
           placeLoader: false,
           pickupDriverComment: null,
@@ -732,7 +781,20 @@ export default function Cart({navigation, route}) {
         });
         actions.cartItemQty({});
         checkPaymentOptions(res);
-        showSuccess(res?.message);
+        if (paramsData?.selectedMethod?.id != 17) {
+          updateState({
+            cartItems: [],
+            cartData: {},
+          });
+          if (
+            paramsData?.selectedMethod?.id == 1 ||
+            res?.data?.payable_amount == 0
+          ) {
+            showSuccess(res?.message);
+            return;
+          }
+          return;
+        }
       })
       .catch(errorMethod);
   };
@@ -805,12 +867,14 @@ export default function Cart({navigation, route}) {
         ? new Date(sheduleddropoffdate).toISOString()
         : null;
     } else {
-      data['task_type'] = scheduleType;
-      data['schedule_dt'] =
-        scheduleType != 'now' && sheduledorderdate
-          ? new Date(sheduledorderdate).toISOString()
-          : null;
+      data['task_type'] = !!selectedTimeSlots ? 'schedule' : scheduleType;
+      data['schedule_dt'] = !!selectedTimeSlots
+        ? selectedDateFromCalendar
+        : scheduleType != 'now' && sheduledorderdate
+        ? new Date(sheduledorderdate).toISOString()
+        : null;
       data['comment_for_vendor'] = instruction;
+      data['slot'] = selectedTimeSlots;
     }
 
     console.log(data, 'setDateAndTimeSchedule>>>DATA');
@@ -823,7 +887,7 @@ export default function Cart({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'res>>>');
+        console.log(res, 'schedulte api res res>>>');
         if (res && res?.status == 'Success') {
           if (toHitApiForPlaceOrder && businessType == 'laundry') {
             _finalPayment();
@@ -851,7 +915,7 @@ export default function Cart({navigation, route}) {
       return;
     }
     if (
-      (selectedPayment?.id === 3) &&
+      selectedPayment?.id === 3 &&
       selectedPayment?.off_site === 1 &&
       !!(
         Number(cartData?.total_payable_amount) + Number(selectedTipAmount) !==
@@ -887,7 +951,7 @@ export default function Cart({navigation, route}) {
     // _offineLinePayment();
   };
 
-  console.log('cartDatacartData', cartData);
+  console.log('cartDatacartData', cartItems);
 
   //Clear cart
   const placeOrder = () => {
@@ -977,6 +1041,7 @@ export default function Cart({navigation, route}) {
   useEffect(() => {
     if (paramsData?.redirectFrom && !!checkCartItem?.data) {
       _directOrderPlace();
+      console.log('useEffect 3');
     }
   }, [paramsData?.redirectFrom]);
 
@@ -999,7 +1064,14 @@ export default function Cart({navigation, route}) {
         style={{
           ...styles.swipeView,
         }}>
-        <Image source={imagePath.deleteRed} />
+        <FastImage
+          source={imagePath.deleteRed}
+          resizeMode="contain"
+          style={{
+            width: moderateScale(16),
+            height: moderateScale(16),
+          }}
+        />
       </Animated.View>
     );
   };
@@ -1009,8 +1081,8 @@ export default function Cart({navigation, route}) {
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
 
-    console.log(returnUrl,"returnUrl");
-    console.log(cancelUrl,"cancelUrl");
+    console.log(returnUrl, 'returnUrl');
+    console.log(cancelUrl, 'cancelUrl');
     let queryData = `/${selectedMethod}?tip=${
       selectedTipAmount && selectedTipAmount != ''
         ? Number(selectedTipAmount)
@@ -1024,7 +1096,7 @@ export default function Cart({navigation, route}) {
       selectedAddressData?.id
     }&payment_option_id=${selectedPayment?.id}&action=cart`;
 
-    console.log(queryData,"queryData"); 
+    console.log(queryData, 'queryData');
     actions
       .openPaymentWebUrl(
         queryData,
@@ -1075,9 +1147,10 @@ export default function Cart({navigation, route}) {
               ? Number(selectedTipAmount)
               : 0
           }&amount=${
-            cartData?.total_payable_amount == 0
-              ? selectedTipAmount
-              : cartData?.total_payable_amount
+            Number(cartData?.total_payable_amount) +
+            (selectedTipAmount != null && selectedTipAmount != ''
+              ? Number(selectedTipAmount)
+              : 0)
           }&auth_token=${userData?.auth_token}&address_id=${
             selectedAddressData?.id
           }&payment_option_id=${selectedPayment?.id}&action=cart&stripe_token=${
@@ -1145,6 +1218,8 @@ export default function Cart({navigation, route}) {
     }
   };
 
+  console.log(paramsData, 'paramsDataparamsDataparamsDataparamsData>>>');
+
   const _renderRazor = () => {
     updateState({isLoadingB: true});
     let options = {
@@ -1198,9 +1273,11 @@ export default function Cart({navigation, route}) {
     if (
       scheduleType != null &&
       scheduleType == 'now' &&
-      !!checkCartItem?.data
+      !!checkCartItem?.data &&
+      !!checkCartItem?.data.products.length
     ) {
       setDateAndTimeSchedule();
+      console.log('useEffect 4');
     }
   }, [scheduleType]);
 
@@ -1228,8 +1305,26 @@ export default function Cart({navigation, route}) {
   };
 
   const selectOrderDate = () => {
-    onClose();
+    if (availableTimeSlots.length > 0 || cartData.slots.length > 0) {
+      if (selectedDateFromCalendar == '' || selectedTimeSlots == '') {
+        alert('Please select date and time slots');
+        return;
+      } else {
+        // let formatDate = new Date(selectedDateFromCalendar);
+        const date = selectedDateFromCalendar;
+        const time = selectedTimeSlots.split(':')[0];
+        const formatDate = moment(
+          `${date} ${time}`,
+          'YYYY-MM-DD HH:mm:ss',
+        ).format();
+        console.log('formate date', moment(new Date(formatDate)).format('lll'));
+        updateState({
+          localeSheduledOrderDate: moment(new Date(formatDate)).format('lll'),
+        });
+      }
+    }
 
+    onClose();
     if (modalType != 'schedule' && businessType != 'laundry') {
       updateState({
         scheduleType: 'schedule',
@@ -1309,7 +1404,7 @@ export default function Cart({navigation, route}) {
             marginTop: moderateScaleVertical(10),
             paddingHorizontal: moderateScale(5),
           }}>
-          {`We are not accepting orders less then ${currencies?.primary_currency?.symbol}${item?.vendor?.order_min_amount}`}
+          {`${strings.ACCEPTING_ORDER_MSG} ${currencies?.primary_currency?.symbol}${item?.vendor?.order_min_amount}`}
         </Text>
       );
     }
@@ -1761,7 +1856,14 @@ export default function Cart({navigation, route}) {
                               marginTop: moderateScale(6),
                             }}
                             onPress={() => openDeleteView(i)}>
-                            <Image source={imagePath.deleteRed} />
+                            <FastImage
+                              source={imagePath.deleteRed}
+                              resizeMode="contain"
+                              style={{
+                                width: moderateScale(16),
+                                height: moderateScale(16),
+                              }}
+                            />
                           </TouchableOpacity>
                         </View>
                       </View>
@@ -1825,9 +1927,14 @@ export default function Cart({navigation, route}) {
                       flexDirection: 'row',
                       alignItems: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       style={{tintColor: themeColors.primary_color}}
                       source={imagePath.percent}
+                      resizeMode="contain"
+                      style={{
+                        width: moderateScale(16),
+                        height: moderateScale(16),
+                      }}
                     />
                     <Text
                       numberOfLines={1}
@@ -3166,10 +3273,16 @@ export default function Cart({navigation, route}) {
           }
           style={styles.paymentMainView}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Image
-              style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
+            <FastImage
               source={imagePath.paymentMethod}
+              resizeMode="contain"
+              style={{
+                width: moderateScale(32),
+                height: moderateScale(32),
+                tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}
             />
+
             <Text
               style={{
                 ...styles.priceItemLabel2,
@@ -3184,16 +3297,15 @@ export default function Cart({navigation, route}) {
             </Text>
           </View>
           <View>
-            <Image
+            <FastImage
               source={imagePath.goRight}
-              style={
-                isDarkMode
-                  ? {
-                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                      tintColor: MyDarkTheme.colors.text,
-                    }
-                  : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
-              }
+              resizeMode="contain"
+              style={{
+                width: moderateScale(14),
+                height: moderateScale(14),
+                tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+              }}
             />
           </View>
         </TouchableOpacity>
@@ -3264,6 +3376,7 @@ export default function Cart({navigation, route}) {
             <View
               style={{
                 ...styles.suggetionView,
+                marginTop: cartData?.deliver_status ? 0 : moderateScale(10),
               }}>
               <Text
                 style={{
@@ -3346,7 +3459,14 @@ export default function Cart({navigation, route}) {
           justifyContent: 'space-between',
         }}>
         <View style={{flexDirection: 'row', flex: 0.85}}>
-          <Image source={imagePath.mapIcon} />
+          <FastImage
+            source={imagePath.mapIcon}
+            resizeMode="contain"
+            style={{
+              width: moderateScale(50),
+              height: moderateScale(50),
+            }}
+          />
           <View style={styles.addressView}>
             <Text
               style={{
@@ -3378,10 +3498,10 @@ export default function Cart({navigation, route}) {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => setModalVisible(true)}>
-            <Image
+            <FastImage
               source={imagePath.icEdit1}
-              style={styles.editIcon}
               resizeMode="contain"
+              style={styles.editIcon}
             />
           </TouchableOpacity>
         )}
@@ -3471,6 +3591,8 @@ export default function Cart({navigation, route}) {
   const onClose = () => {
     updateState({
       isVisibleTimeModal: false,
+      selectedDateFromCalendar: '',
+      selectedTimeSlots: '',
     });
   };
 
@@ -3503,6 +3625,7 @@ export default function Cart({navigation, route}) {
   };
 
   const onDateChange = (value) => {
+    alert('dfdf');
     updateState({
       scheduleType: 'schedule',
       sheduledorderdate: value,
@@ -3519,6 +3642,7 @@ export default function Cart({navigation, route}) {
 
   useEffect(() => {
     if (!!checkCartItem?.data) {
+      console.log('useEffect 5');
       getItem('deepLinkUrl')
         .then((res) => {
           if (res) {
@@ -3651,7 +3775,7 @@ export default function Cart({navigation, route}) {
         )}
         <View style={{marginVertical: moderateScaleVertical(8)}} />
 
-        {recommendedVendorsdata.length > 0 && (
+        {recommendedVendorsdata && recommendedVendorsdata.length > 0 && (
           <View>
             <Text
               style={{
@@ -3949,6 +4073,75 @@ export default function Cart({navigation, route}) {
     );
   };
 
+  const checkVendorSlots = async (date) => {
+    console.log('vendro slot date', date);
+    try {
+      let vendorId = cartItems[0].vendor.id;
+      // vendor_id,date,delivery
+      const res = await actions.checkVendorSlots(
+        `?vendor_id=${vendorId}&date=${date}&delivery=${dineInType}`,
+        {
+          code: appData?.profile?.code,
+          // currency: currencies?.primary_currency?.id,
+          // language: languages?.primary_language?.id,
+          // systemuser: DeviceInfo.getUniqueId(),
+          timezone: RNLocalize.getTimeZone(),
+          // device_token: DeviceInfo.getUniqueId(),
+        },
+      );
+      console.log('avail slots++', res);
+      updateState({
+        availableTimeSlots: res,
+      });
+      if (res.length == 0) {
+        updateState({selectedTimeSlots: ''});
+      }
+    } catch (error) {
+      console.log('error riased', error);
+    }
+  };
+  const onSelectTime = (item) => {
+    console.log('sleecte time slots', item);
+    updateState({selectedTimeSlots: item.value});
+  };
+
+  const renderTimeSlots = ({item, index}) => {
+    return (
+      <TouchableOpacity
+        key={String(index)}
+        activeOpacity={0.8}
+        onPress={() => onSelectTime(item)}
+        style={{
+          backgroundColor:
+            selectedTimeSlots == item.value
+              ? themeColors.primary_color
+              : colors.white,
+          padding: 8,
+          borderRadius: 8,
+          borderWidth: selectedTimeSlots == item.value ? 0 : 1,
+        }}>
+        <Text
+          style={{
+            color:
+              selectedTimeSlots == item.value ? colors.white : colors.black,
+            fontFamily: fontFamily.regular,
+            fontSize: textScale(11),
+          }}>
+          {item?.value}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const onSelectDateFromCalendar = (day) => {
+    updateState({
+      selectedDateFromCalendar: day.dateString,
+      modalType: 'schedule',
+    });
+    console.log('selected day', day);
+    checkVendorSlots(day.dateString);
+  };
+
   return (
     <WrapperContainer
       bgColor={
@@ -4013,7 +4206,7 @@ export default function Cart({navigation, route}) {
           showBottomButton={true}
           mainText={strings.AREYOUSURE}
           bottomButtonClick={bottomButtonClick}
-          updateStatus={(item) => updateStatus(item)}
+          // updateStatus={(item) => updateStatus(item)}
         />
       )}
       <ChooseAddressModal
@@ -4041,7 +4234,7 @@ export default function Cart({navigation, route}) {
         transparent={true}
         isVisible={isVisibleTimeModal}
         animationType={'none'}
-        style={styles.modalContainer}
+        style={{margin: 0, justifyContent: 'flex-end'}}
         onLayout={(event) => {
           updateState({viewHeight: event.nativeEvent.layout.height});
         }}>
@@ -4092,7 +4285,7 @@ export default function Cart({navigation, route}) {
               <View
                 style={{
                   alignItems: 'center',
-                  height: height / 3.5,
+                  // height: height / 3.5,
                 }}>
                 {modalType == 'pickup' ? (
                   <DatePicker
@@ -4110,7 +4303,7 @@ export default function Cart({navigation, route}) {
                         : new Date()
                     }
                     maximumDate={undefined}
-                    style={styles.datetimePickerText}
+                    // style={styles.datetimePickerText}
                     // onDateChange={setDate}
                     onDateChange={(value) => onDateChangeSecond(value)}
                   />
@@ -4130,7 +4323,7 @@ export default function Cart({navigation, route}) {
                         : new Date()
                     }
                     maximumDate={undefined}
-                    style={styles.datetimePickerText}
+                    // style={styles.datetimePickerText}
                     // onDateChange={setDate}
                     onDateChange={(value) => onDateChangeSecond(value)}
                   />
@@ -4138,27 +4331,102 @@ export default function Cart({navigation, route}) {
               </View>
             ) : (
               <View
-                style={{
-                  alignItems: 'center',
-                  height: height / 3.5,
-                }}>
-                <DatePicker
-                  locale={selectedLanguage}
-                  date={
-                    sheduledorderdate ? new Date(sheduledorderdate) : new Date()
+                style={
+                  {
+                    // alignItems: 'center',
+                    // height: height / 4,
                   }
-                  textColor={isDarkMode ? colors.white : colors.blackB}
-                  mode="datetime"
-                  minimumDate={
-                    !!cartData?.delay_date
-                      ? new Date(cartData?.delay_date)
-                      : new Date()
-                  }
-                  maximumDate={undefined}
-                  style={styles.datetimePickerText}
-                  // onDateChange={setDate}
-                  onDateChange={(value) => onDateChange(value)}
-                />
+                }>
+                {(!!availableTimeSlots && availableTimeSlots.length > 0) ||
+                (!!cartData &&
+                  !!cartData?.slots &&
+                  !!cartData?.slots.length > 0) ? (
+                  <Fragment>
+                    <ScrollView>
+                      <Calendar
+                        current={new Date()}
+                        minDate={new Date()}
+                        onDayPress={onSelectDateFromCalendar}
+                        markedDates={{
+                          [selectedDateFromCalendar]: {
+                            selected: true,
+                            disableTouchEvent: true,
+                            selectedColor: themeColors.primary_color,
+                            selectedTextColor: colors.white,
+                          },
+                        }}
+                        theme={{
+                          arrowColor: themeColors.primary_color,
+                          textDayFontFamily: fontFamily.medium,
+                          textMonthFontFamily: fontFamily.medium,
+                          textDayHeaderFontFamily: fontFamily.bold,
+                          // textDayFontSize: textScale(12),
+                          // textMonthFontSize: textScale(10),
+                          // textDayHeaderFontSize: textScale(10),
+                        }}
+                      />
+
+                      <View>
+                        <Text
+                          style={{
+                            marginHorizontal: moderateScale(24),
+                            fontFamily: fontFamily.medium,
+                            fontSize: textScale(12),
+                            marginBottom: moderateScaleVertical(8),
+                            // height:moderateScale(20)
+                          }}>
+                          Time Slots
+                        </Text>
+                        <FlatList
+                          horizontal
+                          data={availableTimeSlots || []}
+                          renderItem={renderTimeSlots}
+                          keyExtractor={(item) => item.value || ''}
+                          ItemSeparatorComponent={() => (
+                            <View style={{marginRight: moderateScale(12)}} />
+                          )}
+                          ListHeaderComponent={() => (
+                            <View style={{marginLeft: moderateScale(24)}} />
+                          )}
+                          ListFooterComponent={() => (
+                            <View style={{marginRight: moderateScale(24)}} />
+                          )}
+                          ListEmptyComponent={() => (
+                            <View>
+                              <Text
+                                style={{
+                                  fontFamily: fontFamily.medium,
+                                  color: colors.redB,
+                                }}>
+                                Slot not available please select another date
+                              </Text>
+                            </View>
+                          )}
+                        />
+                      </View>
+                    </ScrollView>
+                  </Fragment>
+                ) : (
+                  <DatePicker
+                    locale={selectedLanguage}
+                    date={
+                      sheduledorderdate
+                        ? new Date(sheduledorderdate)
+                        : new Date()
+                    }
+                    textColor={isDarkMode ? colors.white : colors.blackB}
+                    mode="datetime"
+                    minimumDate={
+                      !!cartData?.delay_date
+                        ? new Date(cartData?.delay_date)
+                        : new Date()
+                    }
+                    maximumDate={undefined}
+                    // style={styles.datetimePickerText}
+                    // onDateChange={setDate}
+                    onDateChange={(value) => onDateChange(value)}
+                  />
+                )}
               </View>
             )}
           </ScrollView>

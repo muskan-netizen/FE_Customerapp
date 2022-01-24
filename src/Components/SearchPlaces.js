@@ -23,7 +23,7 @@ const SearchPlaces = ({
     placeHolderColor = colors.black,
     onClear = () => { }
 }) => {
-    // console.log(mapKey, 'in MapPlaceComp map key')
+    console.log(mapKey, 'in MapPlaceComp map key')
 
     const theme = useSelector((state) => state?.initBoot?.themeColor);
 

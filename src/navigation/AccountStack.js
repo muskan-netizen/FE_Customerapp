@@ -22,6 +22,7 @@ import {
   OrderDetail,
   PickupOrderDetail,
   PrinterConnection,
+  PrinterConnectionSunmi,
   ProductDetail,
   ProductDetail2,
   ProductList,
@@ -33,7 +34,6 @@ import {
   SendProduct,
   SendRefferal,
   Settings,
-  Subscriptions,
   Subscriptions2,
   TipPaymentOptions,
   TrackDetail,
@@ -59,8 +59,6 @@ import {
   AddNewCustomer,
   CustomerEarningHistory,
 } from '../Screens';
-import AccountTemplateFive from '../Screens/Account/AccountTemplateFive';
-import AccountTemplateFour from '../Screens/Account/AccountTemplateFour';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
@@ -137,6 +135,11 @@ export default function ({navigation}) {
       <Stack.Screen
         name={navigationStrings.ATTACH_PRINTER}
         component={PrinterConnection}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.ATTACH_PRINTER + 'sunmi'}
+        component={PrinterConnectionSunmi}
         options={{headerShown: false}}
       />
       <Stack.Screen

@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-DimaVega/Pods-DimaVega.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-DimaVega/Pods-available_pods-DimaVega.release.xcconfig"
 
 PROJECT_APPLE_ID = 1601643519
 PROJECT_BUNDLE_ID = com.dimavega

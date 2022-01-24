@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Sponge/Pods-Sponge.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Sponge/Pods-available_pods-Sponge.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1599682429
 PROJECT_BUNDLE_ID = com.app.sponge

@@ -500,8 +500,35 @@ const AddressModal3 = ({
                 isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7
               }
             />
-            <TouchableOpacity onPress={currentLocation}>
-              <Image source={imagePath.currentLocation} />
+
+            <TouchableOpacity
+              onPress={() => {
+                onClose();
+                setTimeout(() => {
+                  navigation.navigate(navigationStrings.PINADDRESSONMAP, {
+                    onGoBack: async (data) => {
+                      updateAddress_(data);
+                      onClose();
+                    },
+                    prevRoute: 'cart',
+                    task_id: 1,
+                    pickUpLocationLatLng: {
+                      latitude: 30.7333,
+                      longitude: 76.7794,
+                    },
+                  });
+                }, 800);
+              }}
+            >
+              <Image
+                source={imagePath.ic_pinIcon}
+                style={{
+                  width: moderateScale(15),
+                  height: moderateScaleVertical(15),
+                  resizeMode: 'contain',
+                  tintColor: themeColors.primary_color,
+                }}
+              />
             </TouchableOpacity>
           </View>
           <View
@@ -513,52 +540,20 @@ const AddressModal3 = ({
                 : colors.borderLight,
             }}></View>
           <TouchableOpacity
-            onPress={() => {
-              onClose();
-              setTimeout(() => {
-                navigation.navigate(navigationStrings.PINADDRESSONMAP, {
-                  onGoBack: async (data) => {
-                    updateAddress_(data);
-                    onClose();
-                  },
-                  prevRoute: 'cart',
-                  task_id: 1,
-                  pickUpLocationLatLng: {
-                    latitude: 30.7333,
-                    longitude: 76.7794,
-                  },
-                });
-              }, 300);
-            }}
+            onPress={currentLocation}
             style={{
-              borderWidth: 1,
-              // padding: 10,
-              borderRadius: 10,
               alignItems: 'center',
               flexDirection: 'row',
-              borderColor: colors.borderColorB,
-              width: moderateScale(120),
-              justifyContent: 'center',
-              height: moderateScaleVertical(30),
-              marginLeft: moderateScale(10),
-              marginTop: moderateScale(10),
-              marginBottom: 15,
+              marginTop: moderateScaleVertical(12),
+              zIndex: -2000
             }}>
-            <Image
-              source={imagePath.ic_pinIcon}
-              style={{
-                width: moderateScale(15),
-                height: moderateScaleVertical(15),
-                resizeMode: 'contain',
-                tintColor: themeColors.primary_color,
-              }}
-            />
-            <Text
-              style={{
-                fontSize: moderateScale(12),
-                fontFamily: fontFamily.regular,
-                marginLeft: moderateScale(5),
-              }}>{strings.HOME}</Text>
+            <Image source={imagePath.currentLocation} />
+            <Text style={{
+              fontSize: textScale(12),
+              fontFamily: fontFamily.medium,
+              marginLeft: moderateScale(8),
+              color: colors.redB
+            }}>Use Curent Location</Text>
           </TouchableOpacity>
           {/* <View style={styles.textInputContainerAddress}>
             <TextInput
