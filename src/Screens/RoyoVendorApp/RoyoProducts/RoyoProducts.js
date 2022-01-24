@@ -105,11 +105,15 @@ const RoyoProducts = (props) => {
 
   useEffect(() => {
     getAllProducts();
-    getVendorCategories();
-    updateState({
-      selectedVendorCategory: [],
-    });
+    if (!!selectedVendor?.id) {
+      getVendorCategories();
+      updateState({
+        selectedVendorCategory: [],
+      });
+    }
   }, [isRefreshing, storeSelectedVendor]);
+
+  console.log(storeSelectedVendor, 'storeSelectedVendor>>>>>');
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -187,9 +191,9 @@ const RoyoProducts = (props) => {
     updateState({
       isLoading: true,
     });
-    let vendordId = !!storeSelectedVendor
+    let vendordId = !isEmpty(storeSelectedVendor)
       ? storeSelectedVendor?.id
-      : !!selectedVendor
+      : !isEmpty(selectedVendor)
       ? selectedVendor?.id
       : '';
     actions
@@ -228,7 +232,6 @@ const RoyoProducts = (props) => {
 
   const errorMethod = (error) => {
     updateState({
-      isLoadingB: false,
       isLoading: false,
       isRefreshing: false,
       isAddProductLoading: false,
@@ -540,21 +543,13 @@ const RoyoProducts = (props) => {
           btnTextStyle={{color: colors.white}}
           btnText={strings.ADD_PRODUCT}
         />
-        {/* <GradientButton
-          colorsArray={[themeColors.primary_color, themeColors.primary_color]}
-          textStyle={styles.addProductBtn}
-          onPress={onAddProduct}
-          marginTop={moderateScaleVertical(20)}
-          marginBottom={moderateScaleVertical(20)}
-          btnText={strings.ADD_PRODUCT}
-        /> */}
       </View>
     );
   };
 
   const onProductDelete = ({item}) => {
     updateState({
-      isLoadingB: true,
+      isLoading: true,
     });
 
     actions
@@ -568,12 +563,10 @@ const RoyoProducts = (props) => {
       )
       .then((res) => {
         showSuccess(res?.message);
-        setTimeout(() => {
-          updateState({
-            isLoadingB: false,
-            isLoading: true,
-          });
-        }, 500);
+        updateState({
+          isLoadingB: true,
+          isLoading: false,
+        });
       })
       .catch(errorMethod);
   };
@@ -592,7 +585,9 @@ const RoyoProducts = (props) => {
   return (
     <WrapperContainer isLoadingB={isLoading} source={loaderOne}>
       <Header
-        centerTitle={`${headerText} | ${selectedVendor?.name} `}
+        centerTitle={`${headerText} ${
+          !isEmpty(selectedVendor) ? `| ${selectedVendor?.name}` : ''
+        } `}
         noLeftIcon
         onPressCenterTitle={() => _reDirectToVendorList()}
         onPressImageAlongwithTitle={() => _reDirectToVendorList()}

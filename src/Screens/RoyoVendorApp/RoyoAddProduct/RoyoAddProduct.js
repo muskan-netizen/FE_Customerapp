@@ -37,6 +37,7 @@ import {showError, showSuccess} from '../../../utils/helperFunctions';
 import ModalDropdown from 'react-native-modal-dropdown';
 import {FlatList, TouchableHighlight} from 'react-native-gesture-handler';
 import {hitSlopProp} from '../../../styles/commonStyles';
+import ModalDropDownComp from '../../../Components/ModalDropDown';
 
 const RoyoAddProduct = ({route, navigation}) => {
   const paramData = route.params;
@@ -62,6 +63,16 @@ const RoyoAddProduct = ({route, navigation}) => {
         name: 'Other Information',
       },
     ],
+    productStatus: [
+      {
+        id: 0,
+        title: 'Draft',
+      },
+      {
+        id: 1,
+        title: 'Published',
+      },
+    ],
     currentStepIndex: 0,
     isOn: false,
     productName: productDetailParam?.title || '',
@@ -83,6 +94,25 @@ const RoyoAddProduct = ({route, navigation}) => {
     optionsSet: [],
     createdVariantSets: [],
     exisitingVariants: [],
+    productDescription: '',
+    metaTitle: '',
+    metaKeyword: '',
+    metaDescription: '',
+    price: '',
+    compareAtPrice: '',
+    isTrackInventory: false,
+    upSellProduct: '',
+    crossSellProduct: '',
+    relatedProduct: '',
+    isNew: false,
+    isFeatured: false,
+    isInquiryOnly: false,
+    isRequiresPrescription: false,
+    isRequiresLastMileDelivery: false,
+    selectedLiveType: {},
+    selectedBrand: {},
+    delayHrs: '',
+    delayMinutes: '',
   });
   const {
     isLoading,
@@ -109,6 +139,27 @@ const RoyoAddProduct = ({route, navigation}) => {
     optionsSet,
     createdVariantSets,
     exisitingVariants,
+    productDescription,
+    metaTitle,
+    metaKeyword,
+    metaDescription,
+    price,
+    compareAtPrice,
+    trackInventory,
+    upSellProduct,
+    crossSellProduct,
+    relatedProduct,
+    isNew,
+    isFeatured,
+    isInquiryOnly,
+    isRequiresPrescription,
+    isRequiresLastMileDelivery,
+    isTrackInventory,
+    selectedLiveType,
+    selectedBrand,
+    delayHrs,
+    delayMinutes,
+    productStatus,
   } = state;
 
   useEffect(() => {
@@ -130,6 +181,7 @@ const RoyoAddProduct = ({route, navigation}) => {
         },
       )
       .then((res) => {
+        console.log(res, 'productDetails<<<<<');
         updateState({
           isLoading: false,
           isLoadingB: false,
@@ -147,6 +199,7 @@ const RoyoAddProduct = ({route, navigation}) => {
   };
 
   const errorMethod = (error) => {
+    console.log(error, 'error>>>Server');
     updateState({
       isLoading: false,
       isLoadingB: false,
@@ -160,6 +213,78 @@ const RoyoAddProduct = ({route, navigation}) => {
     });
   };
 
+  const onUpdateProduct = () => {
+    updateState({isLoading: true});
+    let formData = new FormData();
+    formData.append('product_id', productDetailParam?.id || '');
+    formData.append('product_name', productName);
+    formData.append('sku', productSKU);
+    formData.append('url_slug', productSlug);
+    formData.append('category_id', itm);
+    formData.append('language_id', selectedLang?.id || 1);
+    formData.append('country_origin_id', itm);
+    formData.append('weight', itm);
+    formData.append('weight_unit', itm);
+    formData.append('brand_id', itm);
+    formData.append('is_live', itm);
+    formData.append('tags', itm);
+    formData.append('inquiry_only', isInquiryOnly);
+    formData.append('tax_category', itm);
+    formData.append('is_new', isNew);
+    formData.append('is_featured', isFeatured);
+    formData.append('is_physical', itm);
+    formData.append('pharmacy_check', itm);
+    formData.append('has_inventory', isTrackInventory);
+    formData.append('sell_stock_out', itm);
+    formData.append('require_ship', itm);
+    formData.append('last_mile', itm);
+    formData.append('need_price_from_dispatcher', itm);
+    formData.append('mode_of_service', itm);
+    formData.append('delay_order_hrs', delayHrs);
+    formData.append('delay_order_min', delayMinutes);
+    formData.append('pickup_delay_order_hrs', itm);
+    formData.append('pickup_delay_order_min', itm);
+    formData.append('dropoff_delay_order_hrs', itm);
+    formData.append('dropoff_delay_order_min', itm);
+    formData.append('minimum_order_count', itm);
+    formData.append('batch_count', itm);
+    formData.append('body_html', productDescription);
+    formData.append('meta_title', metaTitle);
+    formData.append('meta_keyword', metaKeyword);
+    formData.append('meta_description', metaDescription);
+    formData.append('addon_sets[]', itm);
+    formData.append('tag_sets[]', itm);
+    formData.append('celebrities[]', itm);
+    formData.append('up_cell[]', itm);
+    formData.append('cross_cell[]', itm);
+    formData.append('releted_product[]', itm);
+    formData.append('variant_ids[]', itm);
+    formData.append('variant_titles[]', itm);
+    formData.append('variant_price[]', itm);
+    formData.append('variant_compare_price[]', itm);
+    formData.append('variant_cost_price[]', itm);
+    formData.append('variant_quantity[]', itm);
+    formData.append('price', price);
+    formData.append('compare_at_price', compareAtPrice);
+    formData.append('cost_price', itm);
+    formData.append('quantity', itm);
+    formData.append('tax_category', itm);
+
+    actions
+      .updateVendorProduct(formData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        console.log(res, 'responseFromServer');
+        updateState({
+          isLoading: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+
   const customRight = () => {
     return (
       <GradientButton
@@ -168,6 +293,7 @@ const RoyoAddProduct = ({route, navigation}) => {
         marginTop={moderateScaleVertical(20)}
         marginBottom={moderateScaleVertical(20)}
         btnText={strings.SAVE}
+        onPress={onUpdateProduct}
         containerStyle={{height: moderateScale(30), width: moderateScale(60)}}
         btnStyle={{borderRadius: 5}}
       />
@@ -198,12 +324,6 @@ const RoyoAddProduct = ({route, navigation}) => {
         </Text>
       </TouchableOpacity>
     );
-  };
-
-  const _toggleOnOff = (isOn) => {
-    updateState({
-      isOn: isOn ? true : false,
-    });
   };
 
   //this function use for open actionsheet
@@ -261,10 +381,6 @@ const RoyoAddProduct = ({route, navigation}) => {
         productImages: copyArrayImages,
       });
     }
-  };
-
-  const selectLanguage = (item) => {
-    console.log(item, 'sdhfjsdfjsdfjh');
   };
 
   const onSelect = (idx, value) => {
@@ -356,7 +472,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     updateState({
       isLoadingB: true,
     });
-    var formData = new FormData();
+    let formData = new FormData();
     formData.append('product_id', productDetailParam?.id || '');
     formData.append('sku', productDetailParam?.sku || '');
     variantSet.map((itm) => {
@@ -542,24 +658,26 @@ const RoyoAddProduct = ({route, navigation}) => {
                 }}>
                 Product Information
               </Text>
-              <ModalDropdown
+              <ModalDropDownComp
                 options={clientLanguages}
-                style={{
-                  alignSelf: 'center',
-                  width: moderateScale(65),
-                }}
-                textStyle={{
-                  fontFamily: fontFamily.regular,
-                  fontSize: textScale(12),
-                }}
                 defaultValue={
                   isEmpty(clientLanguages) ? '' : clientLanguages[0].langTitle
                 }
-                onSelect={(idx, value) => updateState({selectedLang: value})}
-                renderButtonText={(rowData) => (
+                _onSelect={(idx, value) => {
+                  updateState({
+                    selectedLang: value,
+                    productName:
+                      value?.langId == 1 ? productDetailParam?.title : '',
+                    productDescription: '',
+                    metaTitle: '',
+                    metaDescription: '',
+                    metaDescription: '',
+                  });
+                }}
+                _renderButtonText={(rowData) => (
                   <Text>{rowData?.langTitle}</Text>
                 )}
-                renderRow={(rowData) => (
+                _renderRow={(rowData) => (
                   <TouchableHighlight
                     activeOpacity={0.6}
                     underlayColor="cornflowerblue"
@@ -571,15 +689,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                       }}>{`${rowData.langTitle}`}</Text>
                   </TouchableHighlight>
                 )}
-                dropdownStyle={{
-                  width: moderateScale(100),
-                  marginTop: moderateScale(10),
-                }}
-                dropdownTextStyle={{
-                  fontSize: textScale(12),
-                  fontFamily: fontFamily.regular,
-                }}
-                renderRightComponent={() => (
+                _renderRightComponent={() => (
                   <View
                     style={{
                       flex: 1,
@@ -601,6 +711,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                 placeholder={'tshirt'}
                 labelStyle={styles.labelStyle}
                 value={productName}
+                onChangeText={(value) => updateState({productName: value})}
                 placeholderTextColor={colors.black}
                 txtInputStyle={styles.textInputStyle}
                 mainStyle={{
@@ -610,6 +721,10 @@ const RoyoAddProduct = ({route, navigation}) => {
               <TextInputWithUnderlineAndLabel
                 label={'Product Description'}
                 placeholder={'Lorem ipsum'}
+                onChangeText={(value) =>
+                  updateState({productDescription: value})
+                }
+                value={productDescription}
                 labelStyle={styles.labelStyle}
                 placeholderTextColor={colors.black}
                 txtInputStyle={styles.textInputStyle}
@@ -632,6 +747,8 @@ const RoyoAddProduct = ({route, navigation}) => {
                     label={`Meta Title`}
                     labelStyle={styles.labelStyle}
                     placeholder={'xyz'}
+                    value={metaTitle}
+                    onChangeText={(value) => updateState({metaTitle: value})}
                     mainStyle={{flex: 0.48}}
                     placeholderTextColor={colors.black}
                     txtInputStyle={styles.textInputStyle}
@@ -639,6 +756,8 @@ const RoyoAddProduct = ({route, navigation}) => {
                   <TextInputWithUnderlineAndLabel
                     label={'Meta Keyword'}
                     placeholder={'xyz'}
+                    onChangeText={(value) => updateState({metaKeyword: value})}
+                    value={metaKeyword}
                     mainStyle={{flex: 0.48}}
                     labelStyle={styles.labelStyle}
                     placeholderTextColor={colors.black}
@@ -648,6 +767,10 @@ const RoyoAddProduct = ({route, navigation}) => {
                 <TextInputWithUnderlineAndLabel
                   label={'Meta Descripton'}
                   placeholder={'Lorem ipsum'}
+                  onChangeText={(value) =>
+                    updateState({metaDescription: value})
+                  }
+                  value={metaDescription}
                   labelStyle={styles.labelStyle}
                   placeholderTextColor={colors.black}
                   txtInputStyle={styles.textInputStyle}
@@ -720,6 +843,12 @@ const RoyoAddProduct = ({route, navigation}) => {
                 label={`Price`}
                 labelStyle={styles.labelStyle}
                 placeholder={'645'}
+                onChangeText={(value) =>
+                  updateState({
+                    price: value,
+                  })
+                }
+                value={price}
                 mainStyle={{flex: 0.2}}
                 placeholderTextColor={colors.black}
                 txtInputStyle={styles.textInputStyle}
@@ -727,6 +856,12 @@ const RoyoAddProduct = ({route, navigation}) => {
               <TextInputWithUnderlineAndLabel
                 label={'Compare at price'}
                 placeholder={'890'}
+                onChangeText={(value) =>
+                  updateState({
+                    compareAtPrice: value,
+                  })
+                }
+                value={compareAtPrice}
                 mainStyle={{flex: 0.4}}
                 labelStyle={styles.labelStyle}
                 placeholderTextColor={colors.black}
@@ -735,16 +870,19 @@ const RoyoAddProduct = ({route, navigation}) => {
               <View style={{flex: 0.31}}>
                 <Text style={styles.labelStyle}>Track inventory</Text>
                 <ToggleSwitch
-                  isOn={isOn}
+                  isOn={isTrackInventory}
                   onColor={themeColors.primary_color}
                   offColor={colors.textGreyB}
                   size="medium"
-                  onToggle={(isOn) => _toggleOnOff(isOn)}
+                  onToggle={(isOn) =>
+                    updateState({
+                      isTrackInventory: isOn ? true : false,
+                    })
+                  }
                   animationSpeed={400}
                 />
               </View>
             </View>
-
             <View
               style={{
                 flexDirection: 'row',
@@ -910,34 +1048,46 @@ const RoyoAddProduct = ({route, navigation}) => {
                 <View style={{width: '32.50%'}}>
                   <Text style={styles.labelStyle}>New</Text>
                   <ToggleSwitch
-                    isOn={isOn}
+                    isOn={isNew}
                     onColor={themeColors.primary_color}
                     offColor={colors.textGreyB}
                     size="medium"
-                    onToggle={(isOn) => _toggleOnOff(isOn)}
+                    onToggle={(isOn) =>
+                      updateState({
+                        isNew: isOn ? true : false,
+                      })
+                    }
                     animationSpeed={400}
                   />
                 </View>
                 <View style={{width: '32.50%'}}>
                   <Text style={styles.labelStyle}>Featured</Text>
                   <ToggleSwitch
-                    isOn={isOn}
+                    isOn={isFeatured}
                     onColor={themeColors.primary_color}
                     offColor={colors.textGreyB}
                     size="medium"
-                    onToggle={(isOn) => _toggleOnOff(isOn)}
+                    onToggle={(isOn) =>
+                      updateState({
+                        isFeatured: isOn ? true : false,
+                      })
+                    }
                     animationSpeed={400}
                   />
                 </View>
                 <View style={{width: '32.50%'}}>
                   <Text style={styles.labelStyle}>Inquiry only</Text>
                   <ToggleSwitch
-                    isOn={isOn}
+                    isOn={isInquiryOnly}
                     onColor={themeColors.primary_color}
                     offColor={colors.textGreyB}
                     size="medium"
-                    onToggle={(isOn) => _toggleOnOff(isOn)}
-                    animationSpeed={400}
+                    onToggle={(isOn) =>
+                      updateState({
+                        isInquiryOnly: isOn ? true : false,
+                      })
+                    }
+                    nimationSpeed={400}
                   />
                 </View>
               </View>
@@ -952,11 +1102,15 @@ const RoyoAddProduct = ({route, navigation}) => {
                 <View style={{width: '32.50%'}}>
                   <Text style={styles.labelStyle}>Requires prescription</Text>
                   <ToggleSwitch
-                    isOn={isOn}
+                    isOn={isRequiresPrescription}
                     onColor={themeColors.primary_color}
                     offColor={colors.textGreyB}
                     size="medium"
-                    onToggle={(isOn) => _toggleOnOff(isOn)}
+                    onToggle={(isOn) =>
+                      updateState({
+                        isRequiresPrescription: isOn ? true : false,
+                      })
+                    }
                     animationSpeed={400}
                   />
                 </View>
@@ -965,11 +1119,15 @@ const RoyoAddProduct = ({route, navigation}) => {
                     Requires last mile delivery
                   </Text>
                   <ToggleSwitch
-                    isOn={isOn}
+                    isOn={isRequiresLastMileDelivery}
                     onColor={themeColors.primary_color}
                     offColor={colors.textGreyB}
                     size="medium"
-                    onToggle={(isOn) => _toggleOnOff(isOn)}
+                    onToggle={(isOn) =>
+                      updateState({
+                        isRequiresLastMileDelivery: isOn ? true : false,
+                      })
+                    }
                     animationSpeed={400}
                   />
                 </View>
@@ -991,7 +1149,93 @@ const RoyoAddProduct = ({route, navigation}) => {
                   onRightPress={() => {}}
                   marginBottom={0}
                 />
-                <TextInputWithUnderlineAndLabel
+                <View
+                  style={{
+                    flex: 0.31,
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                    borderBottomColor: colors.textGreyB,
+                  }}>
+                  <Text style={{...styles.labelStyle}}>Brands</Text>
+                  <ModalDropDownComp
+                    options={addons}
+                    defaultValue={isEmpty(addons) ? '' : addons[0].title}
+                    _onSelect={(idx, value) =>
+                      updateState({selectedAddon: value})
+                    }
+                    _renderButtonText={(rowData) => (
+                      <Text>{rowData?.title}</Text>
+                    )}
+                    _renderRow={(rowData) => (
+                      <TouchableHighlight
+                        activeOpacity={0.6}
+                        underlayColor="cornflowerblue"
+                        style={{backgroundColor: colors.white}}>
+                        <Text
+                          style={{
+                            paddingVertical: 10,
+                            marginHorizontal: 10,
+                          }}>{`${rowData.title}`}</Text>
+                      </TouchableHighlight>
+                    )}
+                    _renderRightComponent={() => (
+                      <View
+                        style={{
+                          flex: 1,
+                          alignItems: 'flex-end',
+                        }}>
+                        <Image source={imagePath.icDropdown} />
+                      </View>
+                    )}
+                    dropdownStyle={{
+                      minWidth: moderateScale(100),
+                      marginTop: moderateScale(10),
+                      height: moderateScaleVertical(100),
+                    }}
+                  />
+                  {/* <ModalDropdown
+                    options={addons}
+                    textStyle={{
+                      fontFamily: fontFamily.regular,
+                      fontSize: textScale(12),
+                    }}
+                    defaultValue={isEmpty(addons) ? '' : addons[0].title}
+                    onSelect={(idx, value) =>
+                      updateState({selectedAddon: value})
+                    }
+                    renderButtonText={(rowData) => (
+                      <Text>{rowData?.title}</Text>
+                    )}
+                    renderRow={(rowData) => (
+                      <TouchableHighlight
+                        activeOpacity={0.6}
+                        underlayColor="cornflowerblue"
+                        style={{backgroundColor: colors.white}}>
+                        <Text
+                          style={{
+                            paddingVertical: 10,
+                            marginHorizontal: 10,
+                          }}>{`${rowData.title}`}</Text>
+                      </TouchableHighlight>
+                    )}
+                    dropdownStyle={{
+                      minWidth: moderateScale(100),
+                      marginTop: moderateScale(10),
+                      height: moderateScaleVertical(100),
+                    }}
+                    dropdownTextStyle={{
+                      fontSize: textScale(12),
+                      fontFamily: fontFamily.regular,
+                    }}
+                    renderRightComponent={() => (
+                      <Image
+                        source={imagePath.icDropdown}
+                        style={{marginLeft: moderateScale(10)}}
+                      />
+                    )}
+                  /> */}
+                </View>
+
+                {/* <TextInputWithUnderlineAndLabel
                   label={`Brand`}
                   labelStyle={styles.labelStyle}
                   placeholder={'235'}
@@ -1001,7 +1245,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                   rightIcon={imagePath.icDropdown}
                   onRightPress={() => {}}
                   marginBottom={0}
-                />
+                /> */}
                 <View
                   style={{
                     flex: 0.31,
@@ -1062,16 +1306,20 @@ const RoyoAddProduct = ({route, navigation}) => {
                   ...styles.flexRowStyle,
                 }}>
                 <TextInputWithUnderlineAndLabel
-                  label={`Select delay time`}
+                  label={`Delay hours`}
                   labelStyle={styles.labelStyle}
                   placeholder={'hrs'}
+                  onChangeText={(value) => updateState({delayHrs: value})}
+                  value={delayHrs}
                   mainStyle={{flex: 0.45}}
                   placeholderTextColor={colors.black}
                   txtInputStyle={styles.textInputStyle}
                 />
                 <TextInputWithUnderlineAndLabel
-                  label={'Up sell products'}
+                  label={'Delay minutes'}
                   placeholder={'minutes'}
+                  onChangeText={(value) => updateState({delayMinutes: value})}
+                  value={delayMinutes}
                   mainStyle={{flex: 0.45}}
                   labelStyle={styles.labelStyle}
                   placeholderTextColor={colors.black}

@@ -195,3 +195,4 @@ export const DELETE_PRODUCT_VARIANT = getApiUrl(
   '/mystore/product/deletevariant',
 );
 export const DELETE_VENDOR_PRODUCT = getApiUrl('/mystore/product/delete');
+export const UPDATE_VENDOR_PRODUCT = getApiUrl('/mystore/product/update');

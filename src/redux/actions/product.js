@@ -18,6 +18,7 @@ import {
   GET_VENDOR_CATEGORY,
   GET_WISHLIST_PRODUCT,
   MY_WALLET,
+  UPDATE_VENDOR_PRODUCT,
   WALLET_CREDIT,
 } from '../../config/urls';
 import {apiGet, apiPost, setWalletData} from '../../utils/utils';
@@ -335,6 +336,18 @@ export function deleteProductVariant(data = {}, headers = {}) {
 export function deleteVendorProduct(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiPost(DELETE_VENDOR_PRODUCT, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function updateVendorProduct(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(UPDATE_VENDOR_PRODUCT, data, headers)
       .then((res) => {
         resolve(res);
       })
