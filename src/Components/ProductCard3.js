@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Animated,
   Image,
@@ -9,20 +9,20 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FastImage from 'react-native-fast-image';
-import {UIActivityIndicator} from 'react-native-indicators';
+import { UIActivityIndicator } from 'react-native-indicators';
 import StarRating from 'react-native-star-rating';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import commonStylesFunc, {hitSlopProp} from '../styles/commonStyles';
+import commonStylesFunc, { hitSlopProp } from '../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {currencyNumberFormatter} from '../utils/commonFunction';
+import { MyDarkTheme } from '../styles/theme';
+import { currencyNumberFormatter } from '../utils/commonFunction';
 import {
   getImageUrl,
   pressInAnimation,
@@ -33,8 +33,8 @@ let numberOfHits = [];
 
 const ProductCard3 = ({
   data = {},
-  onPress = () => {},
-  addToCart = () => {},
+  onPress = () => { },
+  addToCart = () => { },
   index,
   onIncrement,
   onDecrement,
@@ -74,20 +74,20 @@ const ProductCard3 = ({
     });
   }
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const isDarkMode = theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = styleData({themeColors, fontFamily});
+  const styles = styleData({ themeColors, fontFamily });
 
-  const {themeLayouts} = currentTheme;
-  const commonStyles = commonStylesFunc({fontFamily});
+  const { themeLayouts } = currentTheme;
+  const commonStyles = commonStylesFunc({ fontFamily });
 
   const url1 = data?.media[0]?.image?.path.image_fit;
   const url2 = data?.media[0]?.image?.path.image_path;
@@ -99,20 +99,20 @@ const ProductCard3 = ({
 
   const changePosition = () => {
     let i = selectedIndex == -1 ? index : -1;
-    updateState({selectedIndex: i});
+    updateState({ selectedIndex: i });
   };
 
   useEffect(() => {
-    updateState({qtyText: data?.qty || totalProductQty});
+    updateState({ qtyText: data?.qty || totalProductQty });
   }, []);
 
   useEffect(() => {
-    updateState({qtyText: data?.qty || totalProductQty});
+    updateState({ qtyText: data?.qty || totalProductQty });
   }, [data?.qty]);
 
   const changePositionForCartIcon = () => {
     let i = selectedIndexForCartIcon == -1 ? index : -1;
-    updateState({selectedIndexForCartIcon: i});
+    updateState({ selectedIndexForCartIcon: i });
   };
 
   const textAnimateForIncrement = {
@@ -175,14 +175,14 @@ const ProductCard3 = ({
   };
 
   const initAnimation = async () => {
-    updateState({disabledBtn: true});
+    updateState({ disabledBtn: true });
     console.log('checking text >>>>', numberOfHits[0]);
-    updateState({isVisibleTextSlideUp: true});
-    updateState({qtyText: Number(numberOfHits[0]) + 1});
+    updateState({ isVisibleTextSlideUp: true });
+    updateState({ qtyText: Number(numberOfHits[0]) + 1 });
 
     await setTimeout(() => {
-      updateState({isVisibleText: false, isVisibleTextSlideUp: false});
-      updateState({isVisibleText: true});
+      updateState({ isVisibleText: false, isVisibleTextSlideUp: false });
+      updateState({ isVisibleText: true });
     }, 250);
     await setTimeout(() => {
       numberOfHits.shift();
@@ -193,19 +193,19 @@ const ProductCard3 = ({
       }
     }, 800);
     setTimeout(() => {
-      updateState({disabledBtn: false});
+      updateState({ disabledBtn: false });
     }, 300);
 
     return;
     numberOfHits.forEach((el, index) => {
       console.log('checking text >>>>', el);
-      updateState({isVisibleTextSlideUp: true});
-      updateState({qtyText: el});
+      updateState({ isVisibleTextSlideUp: true });
+      updateState({ qtyText: el });
 
       setTimeout(() => {
-        updateState({isVisibleText: false});
-        updateState({isVisibleText: true});
-        updateState({isVisibleTextSlideUp: false});
+        updateState({ isVisibleText: false });
+        updateState({ isVisibleText: true });
+        updateState({ isVisibleTextSlideUp: false });
       }, 500);
       if (numberOfHits.length === index + 1) {
         numberOfHits = [];
@@ -249,7 +249,7 @@ const ProductCard3 = ({
               flex: 1,
               marginTop: selectedIndex == index ? moderateScaleVertical(8) : 0,
             }}
-            // animation={selectedIndex == index ? 'fadeInDown' : 'fadeInLeft'}
+          // animation={selectedIndex == index ? 'fadeInDown' : 'fadeInLeft'}
           >
             {/* Title View */}
             <View>
@@ -322,7 +322,7 @@ const ProductCard3 = ({
                   rating={Number(parseInt(data?.averageRating).toFixed(1))}
                   fullStarColor={colors.yellowB}
                   starSize={8}
-                  containerStyle={{width: width / 9}}
+                  containerStyle={{ width: width / 9 }}
                 />
               </View>
             )}
@@ -341,18 +341,17 @@ const ProductCard3 = ({
                   fontSize: textScale(12),
                   fontFamily: fontFamily.regular,
                 }}>
-                {`${
-                  currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
-                  (
-                    Number(
-                      data?.variant[0]?.multiplier || data?.variant_multiplier,
-                    ) * Number(data?.variant[0]?.price)
-                  ).toFixed(2),
-                )}`}
+                {`${currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
+                    (
+                      Number(
+                        data?.variant[0]?.multiplier || data?.variant_multiplier,
+                      ) * Number(data?.variant[0]?.price)
+                    ).toFixed(2),
+                  )}`}
               </Text>
             </View>
-            <View style={{width: width / 2}}>
+            <View style={{ width: width / 2 }}>
               <Text
                 style={{
                   fontSize: textScale(10),
@@ -380,7 +379,7 @@ const ProductCard3 = ({
             style={{
               paddingBottom:
                 (!!data?.add_on && data?.add_on.length !== 0) ||
-                (!!data?.variantSet && data?.variantSet.length !== 0)
+                  (!!data?.variantSet && data?.variantSet.length !== 0)
                   ? moderateScale(30)
                   : moderateScale(15),
               alignItems: 'center',
@@ -414,7 +413,7 @@ const ProductCard3 = ({
                         : colors.greyColor,
                       borderRadius: moderateScale(7),
                     }}
-                    source={{uri: getImage('800/400')}}
+                    source={{ uri: getImage('800/400') }}
                   />
                 </TouchableOpacity>
               </Animatable.View>
@@ -428,9 +427,9 @@ const ProductCard3 = ({
                 justifyContent: url1 ? 'flex-start' : 'center',
               }}>
               {!!data?.variant[0]?.quantity ||
-              (!!typeId && typeId == 8) ||
-              (!!businessType && businessType == 'laundry') ||
-              data?.has_inventory == 0 ? (
+                (!!typeId && typeId == 8) ||
+                (!!businessType && businessType == 'laundry') ||
+                data?.has_inventory == 0 ? (
                 <View
                   style={{
                     marginTop:
@@ -440,9 +439,10 @@ const ProductCard3 = ({
                   }}>
                   {(!!data?.check_if_in_cart_app &&
                     data?.check_if_in_cart_app.length > 0) ||
-                  !!data?.qty ||
-                  totalProductQty ? (
+                    !!data?.qty ||
+                    totalProductQty ? (
                     <View
+                      pointerEvents={!!categoryInfo?.is_vendor_closed && !!categoryInfo?.closed_store_order_scheduled !== 1 ? 'none' : 'auto'}
                       style={{
                         ...styles.addBtnStyle,
                         paddingVertical: 0,
@@ -459,7 +459,7 @@ const ProductCard3 = ({
                       <TouchableOpacity
                         disabled={selectedItemID == data?.id}
                         onPress={() => {
-                          updateState({...state, isIncrement: false});
+                          updateState({ ...state, isIncrement: false });
                           if (!disabledBtn) {
                             const isEnabled = numberOfHits.length === 0;
                             numberOfHits.push(data?.qty || totalProductQty);
@@ -499,7 +499,7 @@ const ProductCard3 = ({
                           //     size={moderateScale(18)}
                           //     color={themeColors.primary_color}
                           //   /> */}
-                          <Animatable.View style={{flex: 1}}>
+                          <Animatable.View style={{ flex: 1 }}>
                             {isVisibleText ? (
                               <Animatable.Text
                                 animation={
@@ -508,8 +508,8 @@ const ProductCard3 = ({
                                       ? textAnimateForIncrement
                                       : textAnimateForIncrement_
                                     : isVisibleTextSlideUp
-                                    ? textAnimateForDecrement
-                                    : textAnimateForDecrement_
+                                      ? textAnimateForDecrement
+                                      : textAnimateForDecrement_
                                 }
                                 duration={150}
                                 style={{
@@ -530,7 +530,7 @@ const ProductCard3 = ({
                         activeOpacity={0.8}
                         hitSlop={hitSlopProp}
                         onPress={() => {
-                          updateState({...state, isIncrement: true});
+                          updateState({ ...state, isIncrement: true });
                           if (!disabledBtn) {
                             const isEnabled = numberOfHits.length === 0;
                             numberOfHits.push(data?.qty || totalProductQty);
@@ -581,7 +581,7 @@ const ProductCard3 = ({
                     </>
                   )}
                   {(!!data?.add_on && data?.add_on.length !== 0) ||
-                  (!!data?.variantSet && data?.variantSet.length !== 0) ? (
+                    (!!data?.variantSet && data?.variantSet.length !== 0) ? (
                     <Text
                       style={{
                         ...styles.customTextStyle,
@@ -603,7 +603,7 @@ const ProductCard3 = ({
   );
 };
 
-function styleData({themeColors, fontFamily}) {
+function styleData({ themeColors, fontFamily }) {
   const styles = StyleSheet.create({
     outOfStock: {
       color: colors.orangeB,

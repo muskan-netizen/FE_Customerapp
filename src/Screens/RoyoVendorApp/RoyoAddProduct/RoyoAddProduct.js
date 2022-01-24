@@ -486,7 +486,7 @@ const RoyoAddProduct = ({route, navigation}) => {
   };
 
   return (
-    <WrapperContainer source={loaderOne} isLoading={isLoading || isLoadingB}>
+    <WrapperContainer source={loaderOne} isLoadingB={isLoading || isLoadingB}>
       <Header
         leftIcon={imagePath.backRoyo}
         centerTitle={productDetailParam?.title || ''}

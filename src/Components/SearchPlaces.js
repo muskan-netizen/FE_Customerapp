@@ -21,7 +21,9 @@ const SearchPlaces = ({
     _moveToNextScreen = () => { },
     curLatLng = {},
     placeHolderColor = colors.black,
-    onClear = () => { }
+    onClear = () => { },
+    showRightImg = true,
+    textStyle = {}
 }) => {
     console.log(mapKey, 'in MapPlaceComp map key')
 
@@ -45,8 +47,8 @@ const SearchPlaces = ({
     return (
         <View style={{
             ...styles.container,
-            ...containerStyle,
             backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
+            ...containerStyle,
         }}>
             <TextInput
                 // multiline
@@ -56,7 +58,8 @@ const SearchPlaces = ({
                 onChangeText={textChangeHandler}
                 style={{
                     ...styles.text,
-                    color: isDarkMode ? colors.textGreyB : colors.black
+                    color: isDarkMode ? colors.textGreyB : colors.black,
+                    ...textStyle
                 }}
                 onSubmitEditing={Keyboard.dismiss}
                 onFocus={onFocus}
@@ -78,7 +81,7 @@ const SearchPlaces = ({
                         source={imagePath.closeButton}
                     />
                 </TouchableOpacity>)}
-            <TouchableOpacity
+            {!!showRightImg ? <TouchableOpacity
                 onPress={_moveToNextScreen}
             >
                 <Image
@@ -89,7 +92,7 @@ const SearchPlaces = ({
                     }}
                     source={imagePath.blackNav}
                 />
-            </TouchableOpacity>
+            </TouchableOpacity>: null}
         </View>
     );
 }

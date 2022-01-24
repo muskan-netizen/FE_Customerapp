@@ -95,7 +95,6 @@ export async function apiReq(
   requestOptions = {},
 ) {
   console.log(endPoint, 'endPoint');
-
   return new Promise(async (res, rej) => {
     const getTokenHeader = await getHeaders();
 
@@ -103,7 +102,6 @@ export async function apiReq(
       ...getTokenHeader,
       ...headers,
     };
-    console.log(headers, 'headers');
 
     if (method === 'get' || method === 'delete') {
       data = {

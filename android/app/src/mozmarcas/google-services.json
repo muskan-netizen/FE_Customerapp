@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "185577457283",
+    "project_id": "mozmarcas-c51ec",
+    "storage_bucket": "mozmarcas-c51ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185577457283:android:39c668f48091b1073b3db6",
+        "android_client_info": {
+          "package_name": "com.mozmarcas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "185577457283-6slihbl0ojerg02odmj54ptjmi2orh4f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mozmarcas",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "185577457283-g29ljtftvc8vjt046461qj7i437sc7hc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mozmarcas",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "185577457283-iv42sslo3s4k156v80t2n1a556l2ep4i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mozmarcas",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "185577457283-09jpmv67rsaj8i6m5qr8h8tjt258igoa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1-lLMSZRvR96VovhjHzSTUosqdurLf4g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "185577457283-09jpmv67rsaj8i6m5qr8h8tjt258igoa.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "185577457283-16bendtcoq1jbg4rs1bcr44ipsjivrub.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mozmarcas"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

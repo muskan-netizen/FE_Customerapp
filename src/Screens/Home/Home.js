@@ -1,26 +1,26 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
-import {Alert, BackHandler, Linking} from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, BackHandler, Linking } from 'react-native';
 import AppLink from 'react-native-app-link';
-import {useDarkMode} from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
 import strings from '../../constants/lang';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {MyDarkTheme} from '../../styles/theme';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../styles/theme';
+import { shortCodes } from '../../utils/constants/DynamicAppKeys';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
   getNearestLocation,
   showError,
 } from '../../utils/helperFunctions';
-import {chekLocationPermission} from '../../utils/permissions';
+import { chekLocationPermission } from '../../utils/permissions';
 import {
   DashBoardFive,
   DashBoardFour,
@@ -33,7 +33,7 @@ import {
 
 // navigator.geolocation = require('react-native-geolocation-service');
 
-export default function Home({route, navigation}) {
+export default function Home({ route, navigation }) {
   const paramData = route?.params;
 
   const {
@@ -46,13 +46,10 @@ export default function Home({route, navigation}) {
     themeToggle,
     allAddresss,
   } = useSelector((state) => state?.initBoot);
-  const {location, appMainData, dineInType} = useSelector(
-    (state) => state?.home,
-  );
+  const { location, appMainData, dineInType } = useSelector((state) => state?.home);
+
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
-  const addressSearch = useSelector(
-    (state) => state?.addressSearch.addressSearch,
-  );
+  const addressSearch = useSelector((state) => state?.addressSearch.addressSearch,);
   const userData = useSelector((state) => state?.auth?.userData);
   const pendingNotifications = useSelector(
     (state) => state?.pendingNotifications?.pendingNotifications,
@@ -94,7 +91,7 @@ export default function Home({route, navigation}) {
     nearMe,
   } = state;
 
-  const {profile} = appData;
+  const { profile } = appData;
   useFocusEffect(
     React.useCallback(() => {
       const backHandler = BackHandler.addEventListener(
@@ -106,7 +103,7 @@ export default function Home({route, navigation}) {
   );
 
   useEffect(() => {
-    updateState({updatedData: appMainData?.categories});
+    updateState({ updatedData: appMainData?.categories });
   }, [appMainData]);
 
   useEffect(() => {
@@ -149,7 +146,7 @@ export default function Home({route, navigation}) {
         onPress: () => console.log('Cancel Pressed'),
         // style: 'destructive',
       },
-      {text: strings.CLEAR_CART2, onPress: () => clearCart(res)},
+      { text: strings.CLEAR_CART2, onPress: () => clearCart(res) },
     ]);
   };
 
@@ -173,8 +170,9 @@ export default function Home({route, navigation}) {
   };
 
   const updateLatLang = (res) => {
-    updateState({updateTime: Math.random()});
+    updateState({ updateTime: Math.random() });
     actions.locationData(res);
+
   };
   useEffect(() => {
     if (updateTime) {
@@ -182,7 +180,7 @@ export default function Home({route, navigation}) {
     }
   }, [updateTime]);
   useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+    Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
   }, []);
 
   useEffect(() => {
@@ -192,6 +190,7 @@ export default function Home({route, navigation}) {
           getCurrentLocation('home')
             .then((res) => {
               console.log(res, 'userCurrentLocation');
+              actions.constLocationData(res)
               if (
                 appMainData &&
                 typeof appMainData?.reqData == 'object' &&
@@ -230,7 +229,7 @@ export default function Home({route, navigation}) {
                 return;
               }
             })
-            .catch((err) => {});
+            .catch((err) => { });
         }
       })
       .catch((error) => console.log('error while accessing location', error));
@@ -262,7 +261,7 @@ export default function Home({route, navigation}) {
         .then((res) => {
           if (res.data) {
             actions.saveAllUserAddress(res.data);
-            updateState({saveAllUserAddress: res?.data});
+            updateState({ saveAllUserAddress: res?.data });
           }
         })
         .catch(errorMethod);
@@ -272,7 +271,7 @@ export default function Home({route, navigation}) {
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
     if (!!paramData) {
-      updateState({searchDataLoader: true});
+      updateState({ searchDataLoader: true });
     }
     let latlongObj = {};
     if (appData?.profile?.preferences?.is_hyperlocal) {
@@ -298,64 +297,64 @@ export default function Home({route, navigation}) {
     {
       selectedTabType
         ? actions
-            .homeData(
-              {
-                type: dineInType ? dineInType : dineInType,
-                ...latlongObj,
-                ...vendorFilterData,
-              },
-              {
-                code: appData?.profile?.code,
-                currency: currencies?.primary_currency?.id,
-                language: languages?.primary_language?.id,
-                // ...latlongObj,
-              },
-            )
-            .then((res) => {
-              console.log('Home data++++++', res);
-              updateState({searchDataLoader: false});
+          .homeData(
+            {
+              type: dineInType ? dineInType : dineInType,
+              ...latlongObj,
+              ...vendorFilterData,
+            },
+            {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+              // ...latlongObj,
+            },
+          )
+          .then((res) => {
+            console.log('Home data++++++', res);
+            updateState({ searchDataLoader: false });
+            if (
+              appData?.profile?.preferences?.is_hyperlocal &&
+              location?.latitude == '' &&
+              location?.longitude == ''
+            ) {
+              if (
+                typeof res?.data?.reqData == 'object' &&
+                res?.data?.reqData?.latitude &&
+                res?.data?.reqData?.longitude
+              ) {
+                const data = {
+                  address: res?.data?.reqData?.address,
+                  latitude: res?.data?.reqData?.latitude,
+                  longitude: res?.data?.reqData?.longitude,
+                };
+
+                actions.locationData(data);
+              }
+            } else {
               if (
                 appData?.profile?.preferences?.is_hyperlocal &&
-                location?.latitude == '' &&
-                location?.longitude == ''
+                location?.latitude != '' &&
+                location?.longitude != ''
               ) {
-                if (
-                  typeof res?.data?.reqData == 'object' &&
-                  res?.data?.reqData?.latitude &&
-                  res?.data?.reqData?.longitude
-                ) {
-                  const data = {
-                    address: res?.data?.reqData?.address,
-                    latitude: res?.data?.reqData?.latitude,
-                    longitude: res?.data?.reqData?.longitude,
-                  };
-
-                  actions.locationData(data);
-                }
               } else {
-                if (
-                  appData?.profile?.preferences?.is_hyperlocal &&
-                  location?.latitude != '' &&
-                  location?.longitude != ''
-                ) {
-                } else {
-                  const data = {
-                    address: '',
-                    latitude: '',
-                    longitude: '',
-                  };
-                  // actions.locationData(data);
-                }
+                const data = {
+                  address: '',
+                  latitude: '',
+                  longitude: '',
+                };
+                // actions.locationData(data);
               }
-              setTimeout(() => {
-                updateState({
-                  isLoading: false,
-                  isLoadingB: false,
-                  searchDataLoader: false,
-                });
-              }, 1000);
-            })
-            .catch(errorMethod)
+            }
+            setTimeout(() => {
+              updateState({
+                isLoading: false,
+                isLoadingB: false,
+                searchDataLoader: false,
+              });
+            }, 1000);
+          })
+          .catch(errorMethod)
         : null;
     }
   };
@@ -375,16 +374,16 @@ export default function Home({route, navigation}) {
   };
 
   //update state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
-  const {viewRef2, viewRef3, bannerRef} = useRef();
+  const { viewRef2, viewRef3, bannerRef } = useRef();
 
   const openUber = () => {
     let appName = 'Uber - Easy affordable trips';
@@ -397,7 +396,7 @@ export default function Home({route, navigation}) {
       appStoreLocale: appStoreLocale,
       playStoreId: playStoreId,
     })
-      .then((res) => {})
+      .then((res) => { })
       .catch((err) => {
         Linking.openURL('https://www.uber.com/in/en/');
         console.log('errro raised', err);
@@ -419,7 +418,7 @@ export default function Home({route, navigation}) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
         fetchOffers: true,
         id: item.id,
-        vendor: item.redirect_to == staticStrings.ONDEMANDSERVICE?false:true,
+        vendor: item.redirect_to == staticStrings.ONDEMANDSERVICE ? false : true,
         name: item.name,
         isVendorList: true,
       })();
@@ -460,30 +459,28 @@ export default function Home({route, navigation}) {
       moveToNewScreen(navigationStrings.CATEGORY_BRANDS, item)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { item })();
     } else if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: item?.id,
-            vendor: true,
-            name: item?.name,
-            isVendorList: true,
-            fetchOffers: true,
-          })();
+          id: item?.id,
+          vendor: true,
+          name: item?.name,
+          isVendorList: true,
+          fetchOffers: true,
+        })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
   useEffect(() => {
     console.log(saveAllUserAddress, 'saveAllUserAddress');
-    if (!saveAllUserAddress) {
       homeData();
-    }
   }, [location, bestSeller, openVendor, closeVendor]);
 
   //On Press banner
@@ -517,16 +514,16 @@ export default function Home({route, navigation}) {
       if (data.redirect_to == staticStrings.VENDOR) {
         data?.is_show_category
           ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-              item,
-              rootProducts: true,
-              // categoryData: data,
-            })()
+            item,
+            rootProducts: true,
+            // categoryData: data,
+          })()
           : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-              id: data.redirect_id,
-              vendor: true,
-              name: data.redirect_name,
-              fetchOffers: true,
-            })();
+            id: data.redirect_id,
+            vendor: true,
+            name: data.redirect_name,
+            fetchOffers: true,
+          })();
       } else if (data.redirect_to == staticStrings.CATEGORY) {
         if (data?.category?.type?.title == staticStrings.VENDOR) {
           let dat2 = data;
@@ -562,21 +559,21 @@ export default function Home({route, navigation}) {
       )
       .then((res) => {
         console.log(res, 'initApp');
-        updateState({isRefreshing: false});
+        updateState({ isRefreshing: false });
       })
       .catch((error) => {
-        updateState({isRefreshing: false});
+        updateState({ isRefreshing: false });
       });
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({isRefreshing: true});
+    updateState({ isRefreshing: true });
     initApiHit();
     // homeData();
   };
   const updateCircleData = (data) => {
-    updateState({updatedData: data});
+    updateState({ updatedData: data });
   };
 
   const selcetedToggle = (type) => {
@@ -637,27 +634,28 @@ export default function Home({route, navigation}) {
     } else if (data.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, data)();
 
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {data})();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { data })();
     } else if (!data.is_show_category || data.is_show_category) {
       let item = data;
       data?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: data?.id,
-            vendor: true,
-            name: data?.name,
-            fetchOffers: true,
-          })();
+          id: data?.id,
+          vendor: true,
+          name: data?.name,
+          fetchOffers: true,
+        })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
 
   const onVendorFilterSeletion = (selectedFilter) => {
+    console.log("Selected filter", selectedFilter)
     switch (selectedFilter?.id) {
       case 1:
         updateState({
@@ -848,7 +846,7 @@ export default function Home({route, navigation}) {
   }, []);
   // console.log(appMainData, 'appMainData');
 
-  const {blurRef} = useRef();
+  const { blurRef } = useRef();
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}

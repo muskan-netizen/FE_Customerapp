@@ -40,6 +40,8 @@ import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnd
 import GradientButton from '../../../Components/GradientButton';
 import strings from '../../../constants/lang';
 import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import Modal from 'react-native-modal';
+import SelectVendorListModal from '../../../Components/SelectVendorListModal';
 
 const RoyoProducts = (props) => {
   const {navigation} = props;
@@ -52,11 +54,11 @@ const RoyoProducts = (props) => {
     activeIndex: 0,
     headerText: 'Products',
     vendor_list: [],
-    selectedVendor: null,
+    selectedVendor: {},
     isVisibleModal: false,
     isLoading: true,
     pageNo: 1,
-    limit: 12,
+    limit: 20,
     isRefreshing: false,
     productListData: [],
     category_list: [],
@@ -72,9 +74,9 @@ const RoyoProducts = (props) => {
     isAddProductLoading: false,
     skuDefault: '',
     isLoadingB: false,
+    isVendorSelectModal: false,
   });
 
-  console.log(storeSelectedVendor, 'storeSelectedVendor');
   const {
     vendor_list,
     selectedVendor,
@@ -98,24 +100,16 @@ const RoyoProducts = (props) => {
     isAddProductLoading,
     skuDefault,
     isLoadingB,
+    isVendorSelectModal,
   } = state;
 
   useEffect(() => {
-    if (isLoading || isRefreshing) {
-      getAllProducts();
-      updateState({
-        selectedVendorCategory: [],
-      });
-    }
-  }, [isRefreshing, selectedVendor]);
-
-  // useEffect(() => {
-  //   updateState({
-  //     selectedVendor: storeSelectedVendor,
-  //     isLoading: true,
-  //     pageNo: 1,
-  //   });
-  // }, [storeSelectedVendor]);
+    getAllProducts();
+    getVendorCategories();
+    updateState({
+      selectedVendorCategory: [],
+    });
+  }, [isRefreshing, storeSelectedVendor]);
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -190,7 +184,14 @@ const RoyoProducts = (props) => {
 
   /**********Get all list items by store  id and category id */
   const getAllProducts = (id) => {
-    let vendordId = selectedVendor?.id ? selectedVendor?.id : '';
+    updateState({
+      isLoading: true,
+    });
+    let vendordId = !!storeSelectedVendor
+      ? storeSelectedVendor?.id
+      : !!selectedVendor
+      ? selectedVendor?.id
+      : '';
     actions
       .getProductBySpecificId(
         `?selected_category_id=${
@@ -204,15 +205,14 @@ const RoyoProducts = (props) => {
         },
       )
       .then((res) => {
+        console.log(res.data, 'res.data>>>>>');
         let categorylist = res.data.category_list.filter((x) => x.is_selected);
         updateState({
           isLoading: false,
           isRefreshing: false,
           vendor_list: res.data.vendor_list,
           categoryName: categorylist[0]?.name,
-          selectedVendor: !!selectedVendor
-            ? selectedVendor
-            : res.data.vendor_list.find((x) => x.is_selected),
+          selectedVendor: res.data.vendor_list.find((x) => x.is_selected),
 
           category_list: res.data.category_list,
           productListData:
@@ -222,7 +222,7 @@ const RoyoProducts = (props) => {
         });
         // getVendorCategories();
       })
-      .catch((err) => console.log(err, 'sdfsdf'));
+      .catch(errorMethod);
     // }
   };
 
@@ -244,7 +244,7 @@ const RoyoProducts = (props) => {
 
   //pagination of data
   const onEndReached = ({distanceFromEnd}) => {
-    updateState({pageNo: pageNo + 1, isLoading: true});
+    updateState({pageNo: pageNo + 1});
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -301,19 +301,25 @@ const RoyoProducts = (props) => {
       </Text>
     </View>
   );
+
   const _reDirectToVendorList = () => {
-    navigation.navigate(navigationStrings.VENDORLIST, {
-      selectedVendor: selectedVendor,
-      allVendors: vendor_list,
-      screenType: staticStrings.PRODUCTS,
+    updateState({
+      isVendorSelectModal: true,
     });
+    // navigation.navigate(navigationStrings.VENDORLIST, {
+    //   selectedVendor: selectedVendor,
+    //   allVendors: vendor_list,
+    //   screenType: staticStrings.PRODUCTS,
+    // });
   };
 
   const onCloseModal = () => {
     updateState({
       isAddProductModal: false,
+      isVendorSelectModal: false,
     });
   };
+
   const checkValidations = () => {
     if (productName == '') {
       alert('Please enter product name');
@@ -369,10 +375,15 @@ const RoyoProducts = (props) => {
   };
 
   const getVendorCategories = () => {
+    let vendordId = !!storeSelectedVendor
+      ? storeSelectedVendor?.id
+      : !!selectedVendor
+      ? selectedVendor?.id
+      : '';
     actions
       .getVendorCategories(
         {
-          vendor_id: selectedVendor?.id,
+          vendor_id: vendordId,
         },
         {
           code: appData?.profile?.code,
@@ -567,8 +578,19 @@ const RoyoProducts = (props) => {
       .catch(errorMethod);
   };
 
+  const onVendorSelect = (item) => {
+    updateState({
+      selectedVendor: item,
+      isVendorSelectModal: false,
+      pageNo: 1,
+    });
+    setTimeout(() => {
+      actions.savedSelectedVendor(item);
+    }, 300);
+  };
+
   return (
-    <WrapperContainer>
+    <WrapperContainer isLoadingB={isLoading} source={loaderOne}>
       <Header
         centerTitle={`${headerText} | ${selectedVendor?.name} `}
         noLeftIcon
@@ -689,6 +711,21 @@ const RoyoProducts = (props) => {
         rightIcon={imagePath.ic_cross}
         rightIconStyle={{tintColor: colors.black}}
       />
+
+      <Modal
+        isVisible={isVendorSelectModal}
+        style={{
+          margin: 0,
+        }}>
+        <View style={{flex: 1, backgroundColor: colors.white}}>
+          <SelectVendorListModal
+            vendorList={vendor_list}
+            onCloseModal={() => updateState({isVendorSelectModal: false})}
+            onVendorSelect={onVendorSelect}
+            selectedVendor={selectedVendor}
+          />
+        </View>
+      </Modal>
     </WrapperContainer>
   );
 };

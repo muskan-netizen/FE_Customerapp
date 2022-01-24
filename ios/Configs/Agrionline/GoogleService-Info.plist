@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>710110279617-ab4fo7doevds5c0s85quj1guc1gku7p9.apps.googleusercontent.com</string>
+	<string>216675295184-fopqra8vcgt9of46tjao9l3ep595ha0n.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.710110279617-ab4fo7doevds5c0s85quj1guc1gku7p9</string>
+	<string>com.googleusercontent.apps.216675295184-fopqra8vcgt9of46tjao9l3ep595ha0n</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>710110279617-417sf0b67dm88uppgtsntt65q1ra7tk3.apps.googleusercontent.com</string>
+	<string>216675295184-0e1u79lrev2gq2mb53q2ocmbqpfr4i77.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBbH6w4A9vTX8XgSr88-bxA2N08-4wqk6s</string>
+	<string>AIzaSyBsW9hWiGEq5XKVMwyNQGlHM8zD8qAXiG0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>710110279617</string>
+	<string>216675295184</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.agrionline</string>
+	<string>com.app.agrionline</string>
 	<key>PROJECT_ID</key>
-	<string>agrionline-2e073</string>
+	<string>agrionline-b87e9</string>
 	<key>STORAGE_BUCKET</key>
-	<string>agrionline-2e073.appspot.com</string>
+	<string>agrionline-b87e9.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:710110279617:ios:7482fe1be55174d4a26140</string>
+	<string>1:216675295184:ios:f43e57b0997950c432e3d5</string>
 </dict>
 </plist>
