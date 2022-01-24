@@ -132,6 +132,7 @@ const RoyoAddProduct = ({route, navigation}) => {
       .then((res) => {
         updateState({
           isLoading: false,
+          isLoadingB: false,
           addons: res?.data?.addons,
           brands: res?.data?.brands,
           celebrities: res?.data?.celebrities,
@@ -485,7 +486,7 @@ const RoyoAddProduct = ({route, navigation}) => {
   };
 
   return (
-    <WrapperContainer source={loaderOne} isLoadingB={isLoading || isLoadingB}>
+    <WrapperContainer source={loaderOne} isLoading={isLoading || isLoadingB}>
       <Header
         leftIcon={imagePath.backRoyo}
         centerTitle={productDetailParam?.title || ''}

@@ -74,6 +74,7 @@ const RoyoProducts = (props) => {
     isLoadingB: false,
   });
 
+  console.log(storeSelectedVendor, 'storeSelectedVendor');
   const {
     vendor_list,
     selectedVendor,
@@ -102,20 +103,19 @@ const RoyoProducts = (props) => {
   useEffect(() => {
     if (isLoading || isRefreshing) {
       getAllProducts();
-      getVendorCategories();
       updateState({
         selectedVendorCategory: [],
       });
     }
   }, [isRefreshing, selectedVendor]);
 
-  useEffect(() => {
-    updateState({
-      selectedVendor: storeSelectedVendor,
-      isLoading: true,
-      pageNo: 1,
-    });
-  }, [storeSelectedVendor]);
+  // useEffect(() => {
+  //   updateState({
+  //     selectedVendor: storeSelectedVendor,
+  //     isLoading: true,
+  //     pageNo: 1,
+  //   });
+  // }, [storeSelectedVendor]);
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -190,44 +190,39 @@ const RoyoProducts = (props) => {
 
   /**********Get all list items by store  id and category id */
   const getAllProducts = (id) => {
-    if (selectedVendor?.id || storeSelectedVendor?.id)
-      actions
-        .getProductBySpecificId(
-          `?selected_category_id=${
-            id || ''
-          }&limit=${limit}&page=${pageNo}&selected_vendor_id=${
-            selectedVendor?.id || storeSelectedVendor?.id || ''
-          }`,
-          {},
-          {
-            code: appData?.profile?.code,
-            currency: currencies?.primary_currency?.id,
-            language: languages?.primary_language?.id,
-          },
-        )
-        .then((res) => {
-          let categorylist = res.data.category_list.filter(
-            (x) => x.is_selected,
-          );
-          updateState({
-            isLoading: false,
-            isRefreshing: false,
-            vendor_list: res.data.vendor_list,
-            categoryName: categorylist[0]?.name,
-            selectedVendor: !!storeSelectedVendor?.id
-              ? storeSelectedVendor
-              : !!selectedVendor
-              ? selectedVendor
-              : res.data.vendor_list.find((x) => x.is_selected),
+    let vendordId = selectedVendor?.id ? selectedVendor?.id : '';
+    actions
+      .getProductBySpecificId(
+        `?selected_category_id=${
+          id || ''
+        }&limit=${limit}&page=${pageNo}&selected_vendor_id=${vendordId}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        let categorylist = res.data.category_list.filter((x) => x.is_selected);
+        updateState({
+          isLoading: false,
+          isRefreshing: false,
+          vendor_list: res.data.vendor_list,
+          categoryName: categorylist[0]?.name,
+          selectedVendor: !!selectedVendor
+            ? selectedVendor
+            : res.data.vendor_list.find((x) => x.is_selected),
 
-            category_list: res.data.category_list,
-            productListData:
-              pageNo == 1
-                ? res.data.products.data
-                : [...productListData, ...res.data.products.data],
-          });
-        })
-        .catch(errorMethod);
+          category_list: res.data.category_list,
+          productListData:
+            pageNo == 1
+              ? res.data.products.data
+              : [...productListData, ...res.data.products.data],
+        });
+        // getVendorCategories();
+      })
+      .catch((err) => console.log(err, 'sdfsdf'));
     // }
   };
 
@@ -428,26 +423,23 @@ const RoyoProducts = (props) => {
             txtInputStyle={styles.textInputStyle}
           />
           <View style={{flex: 0.56}}>
-            <TextInputWithUnderlineAndLabel
-              label={'Category'}
-              placeholder={'Clothing'}
-              value={
-                !isEmpty(selectedVendorCategory)
-                  ? selectedVendorCategory.hierarchy
-                  : 'Select a category'
-              }
-              isEditable={false}
-              labelStyle={styles.labelStyle}
-              placeholderTextColor={colors.black}
-              txtInputStyle={styles.textInputStyle}
-              rightIcon={imagePath.icDropdown}
-              onRightPress={() => {
+            <Text style={styles.labelStyle}>Category</Text>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => {
                 updateState({
                   isVendorCategory: !isVendorCategory,
                 });
               }}
-              marginBottom={0}
-            />
+              style={styles.selectedCategory}>
+              <Text style={styles.labelStyle}>
+                {!isEmpty(selectedVendorCategory)
+                  ? selectedVendorCategory.hierarchy
+                  : 'Select a category'}
+              </Text>
+              <Image source={imagePath.icDropdown} />
+            </TouchableOpacity>
+
             {!!isVendorCategory && (
               <View style={styles.categorySelectDropDownView}>
                 <ScrollView>
@@ -575,14 +567,8 @@ const RoyoProducts = (props) => {
       .catch(errorMethod);
   };
 
-  console.log(
-    isLoadingB,
-    isLoading,
-    'isLoadingBisLoadingBisLoadingBisLoadingB',
-  );
-
   return (
-    <WrapperContainer source={loaderOne} isLoading={isLoading || isLoadingB}>
+    <WrapperContainer>
       <Header
         centerTitle={`${headerText} | ${selectedVendor?.name} `}
         noLeftIcon
@@ -822,5 +808,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flex: 1,
+  },
+  selectedCategory: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.textGreyB,
+    paddingBottom: 8,
   },
 });
