@@ -3,8 +3,6 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
 platform :ios, '11.0'
 
-
-
 abstract_target 'available_pods' do
   
   permissions_path = '../node_modules/react-native-permissions/ios'
