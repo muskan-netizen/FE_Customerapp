@@ -27,17 +27,23 @@ import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import fontFamily from '../../../styles/fontFamily';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../../../styles/responsiveSize';
 import {cameraHandler} from '../../../utils/commonFunction';
-import {showError, showSuccess} from '../../../utils/helperFunctions';
+import {
+  getImageUrl,
+  showError,
+  showSuccess,
+} from '../../../utils/helperFunctions';
 import ModalDropdown from 'react-native-modal-dropdown';
 import {FlatList, TouchableHighlight} from 'react-native-gesture-handler';
 import {hitSlopProp} from '../../../styles/commonStyles';
 import ModalDropDownComp from '../../../Components/ModalDropDown';
+import ModalView from '../../../Components/Modal';
 
 const RoyoAddProduct = ({route, navigation}) => {
   const paramData = route.params;
@@ -88,7 +94,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     productImages: [],
     isLangugaeDropDown: false,
     selectedLang: {},
-    selectedAddon: {},
+    selectedAddons: [],
     childVariant: [],
     variantSet: [],
     optionsSet: [],
@@ -101,9 +107,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     price: '',
     compareAtPrice: '',
     isTrackInventory: false,
-    upSellProduct: '',
-    crossSellProduct: '',
-    relatedProduct: '',
+
     isNew: false,
     isFeatured: false,
     isInquiryOnly: false,
@@ -113,6 +117,25 @@ const RoyoAddProduct = ({route, navigation}) => {
     selectedBrand: {},
     delayHrs: '',
     delayMinutes: '',
+    selectedProductStatus: {},
+    selectedUpSellProducts: [],
+    selectedCrossSellProducts: [],
+    selectedRelatedProducts: [],
+    isImagePickerModal: false,
+    quantity: null,
+    isSellWhenOutOfStock: false,
+    minimumOrderCount: '',
+    batchCount: '',
+    otherProducts: [],
+    selectedTaxCategory: {},
+    variantIds: [],
+    variantName: [],
+    variantQuantity: [],
+    variantPrice: [],
+    variantCostPrice: [],
+    variantCompareAtPrice: [],
+    selectedVariant: {},
+    varientImages: [],
   });
   const {
     isLoading,
@@ -133,7 +156,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     productImages,
     isLangugaeDropDown,
     selectedLang,
-    selectedAddon,
+    selectedAddons,
     childVariant,
     variantSet,
     optionsSet,
@@ -145,10 +168,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     metaDescription,
     price,
     compareAtPrice,
-    trackInventory,
-    upSellProduct,
-    crossSellProduct,
-    relatedProduct,
     isNew,
     isFeatured,
     isInquiryOnly,
@@ -160,7 +179,32 @@ const RoyoAddProduct = ({route, navigation}) => {
     delayHrs,
     delayMinutes,
     productStatus,
+    selectedProductStatus,
+    selectedUpSellProducts,
+    selectedCrossSellProducts,
+    selectedRelatedProducts,
+    isImagePickerModal,
+    quantity,
+    isSellWhenOutOfStock,
+    minimumOrderCount,
+    batchCount,
+    otherProducts,
+    selectedTaxCategory,
+    variantIds,
+    variantName,
+    variantQuantity,
+    variantPrice,
+    variantCostPrice,
+    variantCompareAtPrice,
+    selectedVariant,
+    varientImages,
   } = state;
+  console.log(variantIds, 'variantIds>>');
+  console.log(variantName, 'variantName>>');
+  console.log(variantQuantity, 'variantQuantity>>>');
+  console.log(variantPrice, 'variantPrice>>>');
+  console.log(variantCostPrice, 'variantCostPrice>>>');
+  console.log(variantCompareAtPrice, 'variantCompareAtPrice>>>');
 
   useEffect(() => {
     if (isLoading) {
@@ -172,7 +216,8 @@ const RoyoAddProduct = ({route, navigation}) => {
     actions
       .getVendorProductDetail(
         {
-          product_id: productDetailParam?.id || '',
+          // product_id: productDetailParam?.id || '',
+          product_id: '233',
         },
         {
           code: appData?.profile?.code,
@@ -193,6 +238,7 @@ const RoyoAddProduct = ({route, navigation}) => {
           productVariants: res?.data?.product_variants,
           taxCategory: res?.data?.tax_category,
           exisitingVariants: res?.data?.product_detail?.variant,
+          otherProducts: res?.data?.other_products,
         });
       })
       .catch(errorMethod);
@@ -214,61 +260,84 @@ const RoyoAddProduct = ({route, navigation}) => {
   };
 
   const onUpdateProduct = () => {
-    updateState({isLoading: true});
+    updateState({isLoadingB: true});
     let formData = new FormData();
-    formData.append('product_id', productDetailParam?.id || '');
+    // formData.append('product_id', productDetailParam?.id || '');
+    formData.append('product_id', '233');
+    formData.append('sku', 'sfkdfj2348');
+    formData.append('url_slug', 'fsld23879y98');
     formData.append('product_name', productName);
-    formData.append('sku', productSKU);
-    formData.append('url_slug', productSlug);
-    formData.append('category_id', itm);
-    formData.append('language_id', selectedLang?.id || 1);
-    formData.append('country_origin_id', itm);
-    formData.append('weight', itm);
-    formData.append('weight_unit', itm);
-    formData.append('brand_id', itm);
-    formData.append('is_live', itm);
-    formData.append('tags', itm);
-    formData.append('inquiry_only', isInquiryOnly);
-    formData.append('tax_category', itm);
-    formData.append('is_new', isNew);
-    formData.append('is_featured', isFeatured);
-    formData.append('is_physical', itm);
-    formData.append('pharmacy_check', itm);
-    formData.append('has_inventory', isTrackInventory);
-    formData.append('sell_stock_out', itm);
-    formData.append('require_ship', itm);
-    formData.append('last_mile', itm);
-    formData.append('need_price_from_dispatcher', itm);
-    formData.append('mode_of_service', itm);
-    formData.append('delay_order_hrs', delayHrs);
-    formData.append('delay_order_min', delayMinutes);
-    formData.append('pickup_delay_order_hrs', itm);
-    formData.append('pickup_delay_order_min', itm);
-    formData.append('dropoff_delay_order_hrs', itm);
-    formData.append('dropoff_delay_order_min', itm);
-    formData.append('minimum_order_count', itm);
-    formData.append('batch_count', itm);
     formData.append('body_html', productDescription);
+    formData.append('language_id', selectedLang?.id || 1);
     formData.append('meta_title', metaTitle);
     formData.append('meta_keyword', metaKeyword);
     formData.append('meta_description', metaDescription);
-    formData.append('addon_sets[]', itm);
-    formData.append('tag_sets[]', itm);
-    formData.append('celebrities[]', itm);
-    formData.append('up_cell[]', itm);
-    formData.append('cross_cell[]', itm);
-    formData.append('releted_product[]', itm);
-    formData.append('variant_ids[]', itm);
-    formData.append('variant_titles[]', itm);
-    formData.append('variant_price[]', itm);
-    formData.append('variant_compare_price[]', itm);
-    formData.append('variant_cost_price[]', itm);
-    formData.append('variant_quantity[]', itm);
     formData.append('price', price);
     formData.append('compare_at_price', compareAtPrice);
-    formData.append('cost_price', itm);
-    formData.append('quantity', itm);
-    formData.append('tax_category', itm);
+    formData.append('has_inventory', isTrackInventory);
+    formData.append('quantity', quantity);
+    formData.append('sell_stock_out', isSellWhenOutOfStock);
+    formData.append('minimum_order_count', minimumOrderCount);
+    formData.append('batch_count', batchCount);
+    variantIds.map((item) => {
+      formData.append('variant_ids[]', item);
+    });
+    variantName.map((item) => {
+      formData.append('variant_titles[]', item);
+    });
+    variantQuantity.map((item) => {
+      formData.append('variant_quantity[]', item);
+    });
+    variantPrice.map((item) => {
+      formData.append('variant_price[]', item);
+    });
+    variantCostPrice.map((item) => {
+      formData.append('variant_cost_price[]', item);
+    });
+    variantCompareAtPrice.map((item) => {
+      formData.append('variant_compare_price[]', item);
+    });
+    selectedAddons.map((item) => {
+      formData.append('addon_sets[]', item?.id);
+    });
+    selectedUpSellProducts.map((item) => {
+      formData.append('up_cell[]', item?.id);
+    });
+    selectedCrossSellProducts.map((item) => {
+      formData.append('cross_cell[]', item?.id);
+    });
+    selectedRelatedProducts.map((item) => {
+      formData.append('releted_product[]', item?.id);
+    });
+    formData.append('is_new', isNew);
+    formData.append('is_featured', isFeatured);
+    formData.append('inquiry_only', isInquiryOnly);
+    formData.append('pharmacy_check', isRequiresPrescription);
+    formData.append('last_mile', isRequiresLastMileDelivery);
+    formData.append('is_live', selectedProductStatus?.id);
+    formData.append('brand_id', selectedBrand?.id || '');
+    formData.append('tax_category', selectedTaxCategory?.id || '');
+    formData.append('delay_order_hrs', delayHrs);
+    formData.append('delay_order_min', delayMinutes);
+
+    // formData.append('category_id', itm);
+    // formData.append('country_origin_id', itm);
+    // formData.append('weight', itm);
+    // formData.append('weight_unit', itm);
+    // formData.append('tags', itm);
+    // formData.append('is_physical', itm);
+    // formData.append('require_ship', itm);
+    // formData.append('need_price_from_dispatcher', itm);
+    // formData.append('mode_of_service', itm);
+    // formData.append('pickup_delay_order_hrs', itm);
+    // formData.append('pickup_delay_order_min', itm);
+    // formData.append('dropoff_delay_order_hrs', itm);
+    // formData.append('dropoff_delay_order_min', itm);
+    // formData.append('tag_sets[]', itm);
+    // formData.append('celebrities[]', itm);
+    // formData.append('cost_price', itm);
+
+    console.log(formData, 'formData>>>Sending');
 
     actions
       .updateVendorProduct(formData, {
@@ -277,10 +346,11 @@ const RoyoAddProduct = ({route, navigation}) => {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res, 'responseFromServer');
+        showSuccess(res?.message);
         updateState({
-          isLoading: false,
+          isLoadingB: false,
         });
+        navigation.goBack();
       })
       .catch(errorMethod);
   };
@@ -332,6 +402,8 @@ const RoyoAddProduct = ({route, navigation}) => {
     actionSheet.current.show();
   };
 
+  console.log(varientImages, 'varientImagesvarientImages>>>');
+
   const cameraHandle = (index) => {
     if (index == 0 || index == 1) {
       cameraHandler(index, {
@@ -350,10 +422,20 @@ const RoyoAddProduct = ({route, navigation}) => {
                 Platform.OS == 'ios'
                   ? res?.filename
                   : res?.path.substring(res?.path.lastIndexOf('/') + 1),
-              type: res?.mime,
+              mime: res?.mime,
               uri: res?.sourceURL || res?.path,
             };
-            updateState({productImages: [...productImages, file]});
+
+            if (isImagePickerModal) {
+              updateState({
+                varientImages: [...varientImages, file],
+              });
+              return;
+            }
+            let formData = new FormData();
+            formData.append('product_id', '233');
+            formData.append('file[]', file);
+            addProductImages(formData);
           }
         })
         .catch((err) => {});
@@ -362,25 +444,27 @@ const RoyoAddProduct = ({route, navigation}) => {
 
   /***********Remove product images */
   const _removeImageFromList = (selectdImage) => {
-    if (selectdImage?.id) {
-      let copyArrayImages = cloneDeep(productImages);
-
-      copyArrayImages = copyArrayImages.filter(
-        (x) => x?.id !== selectdImage?.id,
-      );
-      updateState({
-        productImages: copyArrayImages,
-        remove_image_ids: [...remove_image_ids, selectdImage?.id],
-      });
-    } else {
-      let copyArrayImages = cloneDeep(productImages);
-      copyArrayImages = copyArrayImages.filter(
-        (x) => x?.image_id !== selectdImage?.image_id,
-      );
-      updateState({
-        productImages: copyArrayImages,
-      });
-    }
+    updateState({
+      isLoadingB: true,
+    });
+    let formData = new FormData();
+    formData.append('product_id', '233');
+    formData.append('media_id', selectdImage?.media_id);
+    actions
+      .deleteProductImage(formData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        console.log(res, 'resresresres>>>');
+        showSuccess(res?.message);
+        updateState({
+          isLoadingB: false,
+          productImages: res?.data,
+        });
+      })
+      .catch(errorMethod);
   };
 
   const onSelect = (idx, value) => {
@@ -434,9 +518,9 @@ const RoyoAddProduct = ({route, navigation}) => {
     }
   };
 
-  const isChecked = (itm) => {
-    const childVariantAry = [...childVariant];
-    return childVariantAry.some((item) => item.id === itm.id);
+  const isChecked = (itm, aryToCheck) => {
+    const newAryToCheck = [...aryToCheck];
+    return newAryToCheck.some((item) => item.id === itm.id);
   };
 
   const renderProductVariants = (item, index) => {
@@ -456,7 +540,9 @@ const RoyoAddProduct = ({route, navigation}) => {
                 }}>
                 <Image
                   source={
-                    isChecked(itm) ? imagePath.icCheck1 : imagePath.icCheck2
+                    isChecked(itm, childVariant)
+                      ? imagePath.icCheck1
+                      : imagePath.icCheck2
                   }
                 />
                 <Text style={styles.variantTypeTxt}>{itm?.title}</Text>
@@ -467,6 +553,8 @@ const RoyoAddProduct = ({route, navigation}) => {
       </View>
     );
   };
+
+  console.log(selectedAddons, 'selectedAddons>>>>');
 
   const onMakeVariantSet = () => {
     updateState({
@@ -527,6 +615,34 @@ const RoyoAddProduct = ({route, navigation}) => {
       .catch(errorMethod);
   };
 
+  const onMultipleItemSelect = (item, ary, key) => {
+    const availableAry = state[key];
+    if (availableAry.includes(item)) {
+      const filteredAddons = availableAry.filter((itm) => itm?.id !== item?.id);
+      updateState({
+        [key]: filteredAddons,
+      });
+    } else {
+      updateState({[key]: [...ary, item]});
+    }
+  };
+
+  const onVarientFieldChange = (value, item, key) => {
+    let stateOfKey = state[key];
+    if (variantIds.includes(item?.id)) {
+      let indx = variantIds.findIndex((itm) => itm == item?.id);
+      stateOfKey[indx] = value;
+      updateState({
+        [key]: [...stateOfKey],
+      });
+    } else {
+      updateState({
+        variantIds: [...variantIds, item?.id],
+        [key]: [...stateOfKey, value],
+      });
+    }
+  };
+
   const renderCreatedVariants = ({item, indx}) => {
     return (
       <View
@@ -540,24 +656,35 @@ const RoyoAddProduct = ({route, navigation}) => {
           style={{
             ...styles.flexRowStyle,
           }}>
-          <View style={{alignItems: 'center'}}>
+          <TouchableOpacity
+            style={{alignItems: 'center'}}
+            onPress={() =>
+              updateState({
+                isImagePickerModal: true,
+                selectedVariant: item,
+              })
+            }>
             <Text style={styles.labelStyle}>Image</Text>
-
             <Image source={imagePath.icImagePlaceholder} />
-          </View>
+          </TouchableOpacity>
           <TextInputWithUnderlineAndLabel
             label={`Name`}
             labelStyle={styles.labelStyle}
-            placeholder={'0'}
-            value={item?.title || item?.sku}
+            onChangeText={(value) =>
+              onVarientFieldChange(value, item, 'variantName')
+            }
             mainStyle={{flex: 0.55}}
             placeholderTextColor={colors.black}
             txtInputStyle={styles.textInputStyle}
+            defaultValue={item?.title || item?.sku}
           />
           <TextInputWithUnderlineAndLabel
             label={'Quantity'}
             placeholder={'0'}
             mainStyle={{flex: 0.25}}
+            onChangeText={(value) =>
+              onVarientFieldChange(value, item, 'variantQuantity')
+            }
             labelStyle={styles.labelStyle}
             placeholderTextColor={colors.black}
             txtInputStyle={styles.textInputStyle}
@@ -576,6 +703,9 @@ const RoyoAddProduct = ({route, navigation}) => {
             label={`Price`}
             labelStyle={styles.labelStyle}
             placeholder={'0'}
+            onChangeText={(value) =>
+              onVarientFieldChange(value, item, 'variantPrice')
+            }
             mainStyle={{flex: 0.2}}
             placeholderTextColor={colors.black}
             txtInputStyle={styles.textInputStyle}
@@ -585,6 +715,9 @@ const RoyoAddProduct = ({route, navigation}) => {
             labelStyle={styles.labelStyle}
             placeholder={'0'}
             mainStyle={{flex: 0.25}}
+            onChangeText={(value) =>
+              onVarientFieldChange(value, item, 'variantCostPrice')
+            }
             placeholderTextColor={colors.black}
             txtInputStyle={styles.textInputStyle}
           />
@@ -593,10 +726,135 @@ const RoyoAddProduct = ({route, navigation}) => {
             placeholder={'0'}
             mainStyle={{flex: 0.45}}
             labelStyle={styles.labelStyle}
+            onChangeText={(value) =>
+              onVarientFieldChange(value, item, 'variantCompareAtPrice')
+            }
             placeholderTextColor={colors.black}
             txtInputStyle={styles.textInputStyle}
           />
         </View>
+      </View>
+    );
+  };
+
+  const renderDropDownTitle = (item, index) => {
+    return <Text>{`${item?.primary?.title || item?.title}, `}</Text>;
+  };
+
+  const onCloseModal = () => {
+    updateState({
+      isImagePickerModal: false,
+    });
+  };
+
+  const topCustomComponent = () => {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          borderBottomWidth: StyleSheet.hairlineWidth,
+          borderColor: colors.textGreyB,
+          paddingHorizontal: moderateScale(20),
+          paddingBottom: moderateScale(10),
+        }}>
+        <Text style={{fontFamily: fontFamily.bold, fontSize: textScale(13)}}>
+          Add Product Image
+        </Text>
+        <TouchableOpacity activeOpacity={0.7} onPress={onCloseModal}>
+          <Image source={imagePath.icCross2} />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const _onVarientImageUpload = () => {
+    updateState({
+      isImagePickerModal: false,
+    });
+    let formData = new FormData();
+    formData.append('product_id', '233');
+    formData.append('variant_id', selectedVariant?.id);
+    varientImages.map((item) => {
+      formData.append('file[]', item);
+    });
+
+    setTimeout(() => {
+      addProductImages(formData);
+    }, 300);
+  };
+
+  const addProductImages = (formData) => {
+    console.log(formData, 'formData>>>>');
+    updateState({isLoadingB: true});
+    actions
+      .addProductImage(formData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        updateState({
+          isLoadingB: false,
+          productImages: res?.data,
+        });
+        console.log(res, 'responseFromServer');
+      })
+      .catch(errorMethod);
+  };
+
+  const mainViewModal = () => {
+    return (
+      <View
+        style={{
+          paddingVertical: moderateScale(10),
+          paddingHorizontal: moderateScale(20),
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+          }}>
+          {varientImages.map((item) => (
+            <Image
+              source={{uri: item?.uri}}
+              style={{
+                height: moderateScaleVertical(100),
+                width: moderateScale(90),
+                marginRight: moderateScale(10),
+              }}
+              resizeMode="contain"
+            />
+          ))}
+          <TouchableOpacity onPress={showActionSheet} activeOpacity={0.7}>
+            <Image
+              source={imagePath.icImagePlaceholder}
+              style={{
+                height: moderateScaleVertical(70),
+                width: 80,
+                marginRight: moderateScale(10),
+              }}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity
+          onPress={_onVarientImageUpload}
+          style={{
+            backgroundColor: themeColors.primary_color,
+            width: '100%',
+            alignItems: 'center',
+            paddingVertical: moderateScale(10),
+            borderRadius: moderateScale(5),
+            marginTop: moderateScaleVertical(20),
+          }}>
+          <Text style={{fontFamily: fontFamily.bold, color: colors.white}}>
+            Select
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -802,7 +1060,11 @@ const RoyoAddProduct = ({route, navigation}) => {
                     return (
                       <ImageBackground
                         source={{
-                          uri: i.uri,
+                          uri: getImageUrl(
+                            i.image?.path?.image_fit,
+                            i.image?.path?.image_path,
+                            '1000/1000',
+                          ),
                         }}
                         style={styles.imageOrderStyle}
                         imageStyle={styles.imageOrderStyle}>
@@ -883,6 +1145,89 @@ const RoyoAddProduct = ({route, navigation}) => {
                 />
               </View>
             </View>
+            {!!isTrackInventory && (
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    flex: 1,
+                  }}>
+                  <TextInputWithUnderlineAndLabel
+                    label={'Quantity'}
+                    placeholder={'0'}
+                    onChangeText={(value) =>
+                      updateState({
+                        quantity: value,
+                      })
+                    }
+                    keyboardType="number-pad"
+                    value={quantity}
+                    mainStyle={{flex: 0.3}}
+                    labelStyle={styles.labelStyle}
+                    placeholderTextColor={colors.black}
+                    txtInputStyle={styles.textInputStyle}
+                  />
+                  <View style={{flex: 0.48}}>
+                    <Text numberOfLines={1} style={styles.labelStyle}>
+                      Sell When Out Of Stock
+                    </Text>
+                    <ToggleSwitch
+                      isOn={isSellWhenOutOfStock}
+                      onColor={themeColors.primary_color}
+                      offColor={colors.textGreyB}
+                      size="medium"
+                      onToggle={(isOn) =>
+                        updateState({
+                          isSellWhenOutOfStock: isOn ? true : false,
+                        })
+                      }
+                      animationSpeed={400}
+                    />
+                  </View>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    flex: 1,
+                  }}>
+                  <TextInputWithUnderlineAndLabel
+                    label={'Minimum Order Count'}
+                    placeholder={'1'}
+                    keyboardType="number-pad"
+                    onChangeText={(value) =>
+                      updateState({
+                        minimumOrderCount: value,
+                      })
+                    }
+                    value={minimumOrderCount}
+                    mainStyle={{flex: 0.48}}
+                    labelStyle={styles.labelStyle}
+                    placeholderTextColor={colors.black}
+                    txtInputStyle={styles.textInputStyle}
+                  />
+                  <TextInputWithUnderlineAndLabel
+                    label={'Batch Count'}
+                    placeholder={'1'}
+                    onChangeText={(value) =>
+                      updateState({
+                        batchCount: value,
+                      })
+                    }
+                    keyboardType="number-pad"
+                    value={batchCount}
+                    mainStyle={{flex: 0.28}}
+                    labelStyle={styles.labelStyle}
+                    placeholderTextColor={colors.black}
+                    txtInputStyle={styles.textInputStyle}
+                  />
+                </View>
+              </View>
+            )}
+
             <View
               style={{
                 flexDirection: 'row',
@@ -907,7 +1252,6 @@ const RoyoAddProduct = ({route, navigation}) => {
                 btnStyle={{borderRadius: 5}}
               />
             </View>
-            {console.log(exisitingVariants, 'exisitingVariants')}
             {productVariants.map(renderProductVariants)}
             <View style={{height: 1, backgroundColor: colors.blackOpacity10}} />
             {!isEmpty(exisitingVariants) && (
@@ -959,27 +1303,58 @@ const RoyoAddProduct = ({route, navigation}) => {
                   flex: 0.45,
                   borderBottomWidth: StyleSheet.hairlineWidth,
                   borderBottomColor: colors.textGreyB,
+                  paddingBottom: 5,
                 }}>
                 <Text style={{...styles.labelStyle}}>Select Add on set</Text>
                 <ModalDropdown
                   options={addons}
+                  multipleSelect={true}
                   textStyle={{
                     fontFamily: fontFamily.regular,
                     fontSize: textScale(12),
                   }}
                   defaultValue={isEmpty(addons) ? '' : addons[0].title}
-                  onSelect={(idx, value) => updateState({selectedAddon: value})}
-                  renderButtonText={(rowData) => <Text>{rowData?.title}</Text>}
+                  onSelect={(idx, value) =>
+                    onMultipleItemSelect(
+                      value,
+                      selectedAddons,
+                      'selectedAddons',
+                    )
+                  }
                   renderRow={(rowData) => (
                     <TouchableHighlight
                       activeOpacity={0.6}
                       underlayColor="cornflowerblue"
                       style={{backgroundColor: colors.white}}>
-                      <Text
-                        style={{
-                          paddingVertical: 10,
-                          marginHorizontal: 10,
-                        }}>{`${rowData.title}`}</Text>
+                      {isEmpty(addons) ? (
+                        <View
+                          style={{
+                            ...styles.noDataFound,
+                            backgroundColor: colors.white,
+                          }}>
+                          <Text
+                            style={{
+                              fontFamily: fontFamily.medium,
+                              fontSize: moderateScale(13),
+                            }}>
+                            {strings.NODATAFOUND}
+                          </Text>
+                        </View>
+                      ) : (
+                        <View
+                          style={{flexDirection: 'row', alignItems: 'center'}}>
+                          <Text
+                            style={{
+                              paddingVertical: 10,
+                              marginHorizontal: 10,
+                            }}>
+                            {`${rowData.title}`}
+                          </Text>
+                          {isChecked(rowData, selectedAddons) && (
+                            <Image source={imagePath.tick2} />
+                          )}
+                        </View>
+                      )}
                     </TouchableHighlight>
                   )}
                   dropdownStyle={{
@@ -990,47 +1365,276 @@ const RoyoAddProduct = ({route, navigation}) => {
                   dropdownTextStyle={{
                     fontSize: textScale(12),
                     fontFamily: fontFamily.regular,
-                  }}
-                  renderRightComponent={() => (
-                    <Image
-                      source={imagePath.icDropdown}
-                      style={{marginLeft: moderateScale(65)}}
-                    />
-                  )}
-                />
+                  }}>
+                  <View style={{flexDirection: 'row'}}>
+                    {isEmpty(selectedAddons) ? (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                        }}>
+                        <Text>Select</Text>
+                        <Image
+                          source={imagePath.icDropdown}
+                          style={{marginLeft: moderateScale(65)}}
+                        />
+                      </View>
+                    ) : (
+                      <View style={{}}>
+                        {selectedAddons.map(renderDropDownTitle)}
+                      </View>
+                    )}
+                  </View>
+                </ModalDropdown>
               </View>
 
-              <TextInputWithUnderlineAndLabel
-                label={'Up sell products'}
-                placeholder={'890'}
-                mainStyle={{flex: 0.45}}
-                labelStyle={styles.labelStyle}
-                placeholderTextColor={colors.black}
-                txtInputStyle={styles.textInputStyle}
-                marginBottom={0}
-              />
+              <View
+                style={{
+                  flex: 0.45,
+                  borderBottomWidth: StyleSheet.hairlineWidth,
+                  borderBottomColor: colors.textGreyB,
+                  overflow: 'hidden',
+                }}>
+                <Text style={{...styles.labelStyle}}>Up sell products</Text>
+                <ModalDropdown
+                  options={otherProducts}
+                  multipleSelect={true}
+                  textStyle={{
+                    fontFamily: fontFamily.regular,
+                    fontSize: textScale(12),
+                  }}
+                  defaultValue={
+                    isEmpty(selectedUpSellProducts)
+                      ? ''
+                      : selectedUpSellProducts[0].title
+                  }
+                  onSelect={(idx, value) =>
+                    onMultipleItemSelect(
+                      value,
+                      selectedUpSellProducts,
+                      'selectedUpSellProducts',
+                    )
+                  }
+                  renderRow={(rowData) => (
+                    <TouchableHighlight
+                      activeOpacity={0.6}
+                      underlayColor="cornflowerblue"
+                      style={{backgroundColor: colors.white}}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                        }}>
+                        <Text
+                          style={{
+                            paddingVertical: 10,
+                            marginHorizontal: 10,
+                          }}>
+                          {`${rowData?.primary?.title}`}
+                        </Text>
+                        {isChecked(rowData, selectedUpSellProducts) && (
+                          <Image source={imagePath.tick2} />
+                        )}
+                      </View>
+                    </TouchableHighlight>
+                  )}
+                  dropdownStyle={{
+                    minWidth: moderateScale(100),
+                    marginTop: moderateScale(10),
+                    height: moderateScaleVertical(100),
+                  }}
+                  dropdownTextStyle={{
+                    fontSize: textScale(12),
+                    fontFamily: fontFamily.regular,
+                  }}>
+                  <View style={{flexDirection: 'row'}}>
+                    {isEmpty(selectedUpSellProducts) ? (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                        }}>
+                        <Text>Select</Text>
+                        <Image
+                          source={imagePath.icDropdown}
+                          style={{marginLeft: moderateScale(65)}}
+                        />
+                      </View>
+                    ) : (
+                      <View>
+                        {selectedUpSellProducts.map(renderDropDownTitle)}
+                      </View>
+                    )}
+                  </View>
+                </ModalDropdown>
+              </View>
             </View>
             <View
               style={{
                 ...styles.flexRowStyle,
                 marginTop: moderateScale(10),
               }}>
-              <TextInputWithUnderlineAndLabel
-                label={`Cross sell products`}
-                labelStyle={styles.labelStyle}
-                placeholder={'645'}
-                mainStyle={{flex: 0.45}}
-                placeholderTextColor={colors.black}
-                txtInputStyle={styles.textInputStyle}
-              />
-              <TextInputWithUnderlineAndLabel
-                label={'Related products'}
-                placeholder={'890'}
-                mainStyle={{flex: 0.45}}
-                labelStyle={styles.labelStyle}
-                placeholderTextColor={colors.black}
-                txtInputStyle={styles.textInputStyle}
-              />
+              <View
+                style={{
+                  flex: 0.45,
+                  borderBottomWidth: StyleSheet.hairlineWidth,
+                  borderBottomColor: colors.textGreyB,
+                  overflow: 'hidden',
+                }}>
+                <Text style={{...styles.labelStyle}}>Cross sell products</Text>
+                <ModalDropdown
+                  options={otherProducts}
+                  multipleSelect={true}
+                  textStyle={{
+                    fontFamily: fontFamily.regular,
+                    fontSize: textScale(12),
+                  }}
+                  defaultValue={
+                    isEmpty(selectedCrossSellProducts)
+                      ? ''
+                      : selectedCrossSellProducts[0].title
+                  }
+                  onSelect={(idx, value) =>
+                    onMultipleItemSelect(
+                      value,
+                      selectedCrossSellProducts,
+                      'selectedCrossSellProducts',
+                    )
+                  }
+                  renderRow={(rowData) => (
+                    <TouchableHighlight
+                      activeOpacity={0.6}
+                      underlayColor="cornflowerblue"
+                      style={{backgroundColor: colors.white}}>
+                      <View
+                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Text
+                          style={{
+                            paddingVertical: 10,
+                            marginHorizontal: 10,
+                          }}>
+                          {`${rowData?.primary?.title}`}
+                        </Text>
+                        {isChecked(rowData, selectedCrossSellProducts) && (
+                          <Image source={imagePath.tick2} />
+                        )}
+                      </View>
+                    </TouchableHighlight>
+                  )}
+                  dropdownStyle={{
+                    minWidth: moderateScale(100),
+                    marginTop: moderateScale(10),
+                    height: moderateScaleVertical(100),
+                  }}
+                  dropdownTextStyle={{
+                    fontSize: textScale(12),
+                    fontFamily: fontFamily.regular,
+                  }}>
+                  <View style={{flexDirection: 'row'}}>
+                    {isEmpty(selectedCrossSellProducts) ? (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                        }}>
+                        <Text>Select</Text>
+                        <Image
+                          source={imagePath.icDropdown}
+                          style={{marginLeft: moderateScale(65)}}
+                        />
+                      </View>
+                    ) : (
+                      <View style={{}}>
+                        {selectedCrossSellProducts.map(renderDropDownTitle)}
+                      </View>
+                    )}
+                  </View>
+                </ModalDropdown>
+              </View>
+
+              <View
+                style={{
+                  flex: 0.45,
+                  borderBottomWidth: StyleSheet.hairlineWidth,
+                  borderBottomColor: colors.textGreyB,
+                  overflow: 'hidden',
+                  paddingBottom: 5,
+                }}>
+                <Text style={{...styles.labelStyle}}>Related products</Text>
+                <ModalDropdown
+                  options={otherProducts}
+                  multipleSelect={true}
+                  textStyle={{
+                    fontFamily: fontFamily.regular,
+                    fontSize: textScale(12),
+                  }}
+                  defaultValue={
+                    isEmpty(selectedRelatedProducts)
+                      ? ''
+                      : selectedRelatedProducts[0].title
+                  }
+                  onSelect={(idx, value) =>
+                    onMultipleItemSelect(
+                      value,
+                      selectedRelatedProducts,
+                      'selectedRelatedProducts',
+                    )
+                  }
+                  renderRow={(rowData) => (
+                    <TouchableHighlight
+                      activeOpacity={0.6}
+                      underlayColor="cornflowerblue"
+                      style={{backgroundColor: colors.white}}>
+                      <View
+                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Text
+                          style={{
+                            paddingVertical: 10,
+                            marginHorizontal: 10,
+                          }}>
+                          {`${rowData?.primary?.title}`}
+                        </Text>
+                        {isChecked(rowData, selectedRelatedProducts) && (
+                          <Image source={imagePath.tick2} />
+                        )}
+                      </View>
+                    </TouchableHighlight>
+                  )}
+                  dropdownStyle={{
+                    minWidth: moderateScale(100),
+                    marginTop: moderateScale(10),
+                    height: moderateScaleVertical(100),
+                  }}
+                  dropdownTextStyle={{
+                    fontSize: textScale(12),
+                    fontFamily: fontFamily.regular,
+                  }}>
+                  <View style={{flexDirection: 'row'}}>
+                    {isEmpty(selectedRelatedProducts) ? (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                        }}>
+                        <Text>Select</Text>
+                        <Image
+                          source={imagePath.icDropdown}
+                          style={{marginLeft: moderateScale(65)}}
+                        />
+                      </View>
+                    ) : (
+                      <View style={{}}>
+                        {selectedRelatedProducts.map(renderDropDownTitle)}
+                      </View>
+                    )}
+                  </View>
+                </ModalDropdown>
+              </View>
             </View>
 
             <View
@@ -1138,29 +1742,21 @@ const RoyoAddProduct = ({route, navigation}) => {
                   ...styles.flexRowStyle,
                   marginBottom: moderateScaleVertical(25),
                 }}>
-                <TextInputWithUnderlineAndLabel
-                  label={`Live`}
-                  labelStyle={styles.labelStyle}
-                  placeholder={'56'}
-                  mainStyle={{flex: 0.31}}
-                  placeholderTextColor={colors.black}
-                  txtInputStyle={styles.textInputStyle}
-                  rightIcon={imagePath.icDropdown}
-                  onRightPress={() => {}}
-                  marginBottom={0}
-                />
                 <View
                   style={{
-                    flex: 0.31,
+                    flex: 0.2,
                     borderBottomWidth: StyleSheet.hairlineWidth,
                     borderBottomColor: colors.textGreyB,
+                    paddingBottom: moderateScale(10),
                   }}>
-                  <Text style={{...styles.labelStyle}}>Brands</Text>
+                  <Text style={{...styles.labelStyle}}>Live</Text>
                   <ModalDropDownComp
-                    options={addons}
-                    defaultValue={isEmpty(addons) ? '' : addons[0].title}
+                    options={productStatus}
+                    defaultValue={
+                      isEmpty(productStatus) ? 'Select' : productStatus[0].title
+                    }
                     _onSelect={(idx, value) =>
-                      updateState({selectedAddon: value})
+                      updateState({selectedProductStatus: value})
                     }
                     _renderButtonText={(rowData) => (
                       <Text>{rowData?.title}</Text>
@@ -1192,20 +1788,25 @@ const RoyoAddProduct = ({route, navigation}) => {
                       height: moderateScaleVertical(100),
                     }}
                   />
-                  {/* <ModalDropdown
-                    options={addons}
-                    textStyle={{
-                      fontFamily: fontFamily.regular,
-                      fontSize: textScale(12),
-                    }}
-                    defaultValue={isEmpty(addons) ? '' : addons[0].title}
-                    onSelect={(idx, value) =>
-                      updateState({selectedAddon: value})
+                </View>
+
+                <View
+                  style={{
+                    flex: 0.25,
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                    borderBottomColor: colors.textGreyB,
+                  }}>
+                  <Text style={{...styles.labelStyle}}>Brands</Text>
+                  <ModalDropDownComp
+                    options={brands}
+                    defaultValue={'Select'}
+                    _onSelect={(idx, value) =>
+                      updateState({selectedBrand: value})
                     }
-                    renderButtonText={(rowData) => (
+                    _renderButtonText={(rowData) => (
                       <Text>{rowData?.title}</Text>
                     )}
-                    renderRow={(rowData) => (
+                    _renderRow={(rowData) => (
                       <TouchableHighlight
                         activeOpacity={0.6}
                         underlayColor="cornflowerblue"
@@ -1213,42 +1814,30 @@ const RoyoAddProduct = ({route, navigation}) => {
                         <Text
                           style={{
                             paddingVertical: 10,
-                            marginHorizontal: 10,
+                            marginHorizontal: 30,
                           }}>{`${rowData.title}`}</Text>
                       </TouchableHighlight>
+                    )}
+                    _renderRightComponent={() => (
+                      <View
+                        style={{
+                          flex: 1,
+                          alignItems: 'flex-end',
+                        }}>
+                        <Image source={imagePath.icDropdown} />
+                      </View>
                     )}
                     dropdownStyle={{
                       minWidth: moderateScale(100),
                       marginTop: moderateScale(10),
                       height: moderateScaleVertical(100),
                     }}
-                    dropdownTextStyle={{
-                      fontSize: textScale(12),
-                      fontFamily: fontFamily.regular,
-                    }}
-                    renderRightComponent={() => (
-                      <Image
-                        source={imagePath.icDropdown}
-                        style={{marginLeft: moderateScale(10)}}
-                      />
-                    )}
-                  /> */}
+                  />
                 </View>
 
-                {/* <TextInputWithUnderlineAndLabel
-                  label={`Brand`}
-                  labelStyle={styles.labelStyle}
-                  placeholder={'235'}
-                  mainStyle={{flex: 0.31}}
-                  placeholderTextColor={colors.black}
-                  txtInputStyle={styles.textInputStyle}
-                  rightIcon={imagePath.icDropdown}
-                  onRightPress={() => {}}
-                  marginBottom={0}
-                /> */}
                 <View
                   style={{
-                    flex: 0.31,
+                    flex: 0.3,
                     borderBottomWidth: StyleSheet.hairlineWidth,
                     borderBottomColor: colors.textGreyB,
                   }}>
@@ -1259,9 +1848,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                       fontFamily: fontFamily.regular,
                       fontSize: textScale(12),
                     }}
-                    defaultValue={
-                      isEmpty(taxCategory) ? '' : taxCategory[0].title
-                    }
+                    defaultValue={'Select'}
                     onSelect={(idx, value) =>
                       updateState({selectedTaxCategory: value})
                     }
@@ -1330,6 +1917,20 @@ const RoyoAddProduct = ({route, navigation}) => {
           </View>
         )}
       </KeyboardAwareScrollView>
+      <ModalView
+        isVisible={isImagePickerModal}
+        onClose={onCloseModal}
+        mainViewStyle={{
+          backgroundColor: colors.white,
+          paddingTop: moderateScaleVertical(10),
+          maxHeight: moderateScale(height),
+        }}
+        modalMainContent={mainViewModal}
+        topCustomComponent={topCustomComponent}
+        leftIcon={false}
+        rightIcon={imagePath.ic_cross}
+        rightIconStyle={{tintColor: colors.black}}
+      />
       <ActionSheet
         ref={actionSheet}
         // title={'Choose one option'}
@@ -1405,5 +2006,11 @@ const styles = StyleSheet.create({
     height: width / 5,
     width: '95%',
     borderRadius: 5,
+  },
+  noDataFound: {
+    width: '100%',
+    height: moderateScale(30),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

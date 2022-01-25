@@ -54,6 +54,8 @@ const TextInputWithUnderlineAndLabel = ({
   placeholderTextColor = colors.textGreyB,
   onRightPress = () => {},
   isEditable = true,
+  keyboardType = '',
+  defaultValue = '',
   ...props
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -152,8 +154,10 @@ const TextInputWithUnderlineAndLabel = ({
           onChangeText={onChangeText}
           value={value}
           secureTextEntry={secureTextEntry}
+          keyboardType={keyboardType}
           autoCapitalize={'none'}
           editable={isEditable}
+          defaultValue={defaultValue}
           {...props}
         />
         {!!rightIcon && (

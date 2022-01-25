@@ -196,3 +196,6 @@ export const DELETE_PRODUCT_VARIANT = getApiUrl(
 );
 export const DELETE_VENDOR_PRODUCT = getApiUrl('/mystore/product/delete');
 export const UPDATE_VENDOR_PRODUCT = getApiUrl('/mystore/product/update');
+export const ADD_PRODUCT_IMAGE = getApiUrl('/mystore/product/addProductImage');
+export const GET_PRODUCT_IMAGE = getApiUrl('/mystore/product/getProductImages');
+export const DELETE_PRODUCT_IMAGE = getApiUrl('/mystore/product/deleteimage');

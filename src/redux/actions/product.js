@@ -1,9 +1,11 @@
 import {
+  ADD_PRODUCT_IMAGE,
   ADD_PRODUCT_TO_CART,
   ADD_REMOVE_TO_WISHLIST,
   ADD_VENDOR_PRODUCT,
   CHECK_VENDORS,
   CREATE_PRODUCT_VARIANT,
+  DELETE_PRODUCT_IMAGE,
   DELETE_PRODUCT_VARIANT,
   DELETE_VENDOR_PRODUCT,
   GET_ALL_PRODUCTSBY_STORE_ID,
@@ -14,6 +16,7 @@ import {
   GET_PRODUCT_DATA_BY_PRODUCTID,
   GET_PRODUCT_DATA_BY_VENDORID,
   GET_PRODUCT_DETAIL,
+  GET_PRODUCT_IMAGE,
   GET_PRODUCT_TAGS,
   GET_VENDOR_CATEGORY,
   GET_WISHLIST_PRODUCT,
@@ -348,6 +351,42 @@ export function deleteVendorProduct(data = {}, headers = {}) {
 export function updateVendorProduct(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiPost(UPDATE_VENDOR_PRODUCT, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function addProductImage(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(ADD_PRODUCT_IMAGE, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function getProductImage(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_PRODUCT_IMAGE, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function deleteProductImage(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(DELETE_PRODUCT_IMAGE, data, headers)
       .then((res) => {
         resolve(res);
       })
