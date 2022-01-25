@@ -26,6 +26,7 @@ import { MyDarkTheme } from '../styles/theme';
 import BlurImages from './BlurImages';
 import {
   checkEvenOdd,
+  getColorCodeWithOpactiyNumber,
   getImageUrl,
   getScaleTransformationStyle,
   pressInAnimation,
@@ -75,22 +76,41 @@ const MarketCard3 = ({
     <TouchableOpacity
       activeOpacity={1}
       onPress={onPress}
-      style={{
-        ...styles.mainTouchContainer,
-        ...getScaleTransformationStyle(scaleInAnimated),
-      }}
+      style={
+        !!data?.is_vendor_closed
+          ? {
+              ...styles.mainTouchContainer,
+              ...getScaleTransformationStyle(scaleInAnimated),
+              backgroundColor: isDarkMode
+                ? colors.whiteOpacity15
+                : getColorCodeWithOpactiyNumber(
+                    colors.textGreyLight.substring(1),
+                    20,
+                  ),
+            }
+          : {
+              ...styles.mainTouchContainer,
+              ...getScaleTransformationStyle(scaleInAnimated),
+            }
+      }
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       <View>
         {!!data?.is_vendor_closed ? (
           <Grayscale>
-            <FastImage
-              source={{ uri: imageUrl, priority: FastImage.priority.high }}
-              style={{
-                ...styles.mainImage,
-                ...fastImageStyle,
-              }}
-              resizeMode={FastImage.resizeMode.cover}></FastImage>
+            <View style={{justifyContent: 'center'}}>
+              <FastImage
+                source={{uri: imageUrl, priority: FastImage.priority.high}}
+                style={{
+                  ...styles.mainImage,
+                  ...fastImageStyle,
+                  opacity: 0.8,
+                }}
+                resizeMode={FastImage.resizeMode.cover}></FastImage>
+              <Text style={styles.currentlyUnavailable}>
+                {strings.CURRENTLYUNAVAILABLE}
+              </Text>
+            </View>
           </Grayscale>
         ) : (
           <FastImage
@@ -205,9 +225,12 @@ const MarketCard3 = ({
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Image
                     style={{
-                      tintColor: themeColors.primary_color,
+                      tintColor: data?.is_vendor_closed
+                        ? colors.black
+                        : themeColors.primary_color,
                       width: moderateScale(12),
                       height: moderateScale(12),
+                      opacity: data?.is_vendor_closed ? 0.5 : 1,
                     }}
                     resizeMode="contain"
                     source={imagePath.location2}
@@ -231,9 +254,12 @@ const MarketCard3 = ({
                     }}>
                     <Image
                       style={{
-                        tintColor: themeColors.primary_color,
+                        tintColor: data?.is_vendor_closed
+                          ? colors.black
+                          : themeColors.primary_color,
                         width: moderateScale(12),
                         height: moderateScale(12),
+                        opacity: data?.is_vendor_closed ? 0.5 : 1,
                       }}
                       resizeMode="contain"
                       source={imagePath.icTime2}
@@ -330,6 +356,13 @@ export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme })
       fontFamily: fontFamily.regular,
       marginHorizontal: moderateScale(5),
       textAlign: 'left',
+    },
+    currentlyUnavailable: {
+      position: 'absolute',
+      alignSelf: 'center',
+      fontSize: textScale(16),
+      color: colors.white,
+      fontFamily: fontFamily?.bold,
     },
   });
   return styles;
