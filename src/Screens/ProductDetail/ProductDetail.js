@@ -124,7 +124,6 @@ export default function ProductDetail({route, navigation}) {
       </View>
     );
   };
-  console.log(productDetailData, 'productDetailData');
 
   let plainHtml = productDetailData?.translation[0]?.body_html || null;
   //Naviagtion to specific screen
@@ -723,7 +722,7 @@ export default function ProductDetail({route, navigation}) {
     );
   };
 
-  console.log('product detail+++', productDetailData?.product_media);
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -934,7 +933,7 @@ export default function ProductDetail({route, navigation}) {
                   </View>
                 )}
               </View>
-
+{/* 
                {!!productDetailData?.delaySlot ?
                     <Text style={{
                       ...commonStyles.mediumFont14Normal,
@@ -944,7 +943,7 @@ export default function ProductDetail({route, navigation}) {
                       marginTop: moderateScaleVertical(8)
                     }}>{strings.WE_ARE_NOT_ACCEPTING} {productDetailData?.delaySlot}</Text>
                     : null
-                  }           
+                  }            */}
          
 
               <HorizontalLine
