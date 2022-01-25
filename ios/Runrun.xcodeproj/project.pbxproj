@@ -54376,7 +54376,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ZuzuClean/Pods-ZuzuClean-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-ZuzuClean/Pods-available_pods-ZuzuClean-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BF082A93D0889CD1FF9798EE /* [CP] Copy Pods Resources */ = {
