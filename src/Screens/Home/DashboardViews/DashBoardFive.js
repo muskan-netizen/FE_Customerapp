@@ -429,7 +429,7 @@ export default function DashBoardFive({
 
   const vendorHeader = () => {
     return (
-      <View>
+      <View key={Math.random()}>
         <View style={styles.viewAllVeiw}>
           <Text
             style={{
@@ -481,7 +481,7 @@ export default function DashBoardFive({
               }}>
               {homeAllFilters()?.map((item, index) => {
                 return (
-                  <View>
+                  <View key={index}>
                     <MenuOption
                       onSelect={() => onSelectedFilter(item)}
                       key={String(index)}
