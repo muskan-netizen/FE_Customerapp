@@ -811,9 +811,7 @@ Amount`,
   INSUFFICIENT_FUNDS_IN_WALLET: 'Insufficient funds in wallet',
   USER_DOES_NOT_EXIST: 'User doest not exist',
   INVALID_CARD_DETAILS: 'Invalid card details',
-  TRANSFER_FUNDS: 'Transfer Funds',
-  WE_ARE_NOT_ACCEPTING:
-    'We are not accepting orders right now. You can schedule this for',
+  WE_ARE_NOT_ACCEPTING:"We are not accepting orders right now. You can schedule this for",
+  CURRENTLYUNAVAILABLE:'Currently Unavailable',
   EXTRA_INSTRUCTION: 'Extra Instruction',
-  CURRENTLYUNAVAILABLE: 'Currently Unavailable',
 };

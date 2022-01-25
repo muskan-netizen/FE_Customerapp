@@ -467,8 +467,8 @@ const stylesFun = ({ fontFamily, themeColors }) => {
         },
         caseOnDeliveryText: {
             marginHorizontal: moderateScaleVertical(10),
-            fontFamily: fontFamily.bold,
-            fontSize: textScale(12),
+            fontFamily: fontFamily.medium,
+            fontSize: textScale(16),
         },
         price: {
             color: colors.textGrey,
