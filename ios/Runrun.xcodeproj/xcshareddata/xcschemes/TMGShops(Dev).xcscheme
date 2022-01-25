@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "844D900A278849DA0058A99A"
-               BuildableName = "TMGShops.app"
+               BuildableName = "TMGShops"
                BlueprintName = "TMGShops"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "844D900A278849DA0058A99A"
-            BuildableName = "TMGShops.app"
+            BuildableName = "TMGShops"
             BlueprintName = "TMGShops"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "844D900A278849DA0058A99A"
-            BuildableName = "TMGShops.app"
+            BuildableName = "TMGShops"
             BlueprintName = "TMGShops"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
