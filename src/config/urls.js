@@ -1,4 +1,4 @@
-export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://runrun.ae/api/v1';
 
@@ -19,7 +19,7 @@ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://tranzit.app/api/v1';
 // export const API_BASE_URL = 'https://pinkjettaxi.com/api/v1';
 // export const API_BASE_URL = 'https://snabbhem.se/api/v1';
-// export const API_BASE_URL = 'https://codiner.com/api/v1';
+export const API_BASE_URL = 'https://codiner.com/api/v1';
 // export const API_BASE_URL = 'https://somame-247.com/api/v1';
 // export const API_BASE_URL = 'https://order.africanize.co/api/v1';
 // export const API_BASE_URL = 'https://destinationops.com/api/v1';
