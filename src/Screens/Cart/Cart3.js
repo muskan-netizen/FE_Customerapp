@@ -196,6 +196,7 @@ export default function Cart({ navigation, route }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const { appData, allAddresss, themeColors, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
+    console.log(currencies,"currencies>currencies");
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors, isDarkMode, MyDarkTheme });

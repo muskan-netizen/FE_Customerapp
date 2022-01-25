@@ -814,4 +814,5 @@ Amount`,
   TRANSFER_FUNDS: 'Transfer Funds',
   WE_ARE_NOT_ACCEPTING:"We are not accepting orders right now. You can schedule this for",
   EXTRA_INSTRUCTION: 'Extra Instruction',
+  CURRENTLYUNAVAILABLE:'Currently Unavailable'
 };
