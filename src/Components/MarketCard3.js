@@ -122,7 +122,7 @@ const MarketCard3 = ({
             resizeMode={FastImage.resizeMode.cover}></FastImage>
         )}
 
-        {!appData?.profile?.preferences?.is_hyperlocal && (
+        {!!appData?.profile?.preferences?.is_hyperlocal && (
           <View
             style={{
               ...styles.ratingView,
@@ -163,7 +163,7 @@ const MarketCard3 = ({
             {data.name}
           </Text>
 
-          {data?.product_avg_average_rating && (
+          {!!data?.product_avg_average_rating && (
             <View style={styles.ratingView}>
               <Text
                 style={{
@@ -186,7 +186,7 @@ const MarketCard3 = ({
             </View>
           )}
         </View>
-        {data?.categoriesList ? (
+        {!!data?.categoriesList ? (
           <Text
             numberOfLines={1}
             style={{
@@ -285,27 +285,19 @@ const MarketCard3 = ({
               </Text>
             ) : null} */}
           </View>
-
-          {!!appData?.profile?.preferences?.is_hyperlocal && (
-            <Text
-              style={{
-                ...commonStyles.mediumFont14Normal,
-                fontSize: textScale(10),
-                textAlign: 'left',
-                color: data?.show_slot
-                  ? colors.green
-                  : data?.is_vendor_closed
-                  ? colors.redB
-                  : colors.green,
-              }}>
-              {data?.show_slot
-                ? strings.OPEN
-                : data?.is_vendor_closed
-                ? strings.CLOSE
-                : strings.OPEN}
-            </Text>
-          )}
         </View>
+        {!!data?.closed_store_order_scheduled ? (
+          <Text
+            style={{
+              ...commonStyles.mediumFont14Normal,
+              fontSize: textScale(10),
+              textAlign: 'left',
+              color: colors.redB,
+              marginTop: moderateScaleVertical(4),
+            }}>
+            {strings.WE_ARE_NOT_ACCEPTING} {data?.delaySlot}{' '}
+          </Text>
+        ) : null}
       </View>
     </TouchableOpacity>
   );

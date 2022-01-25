@@ -153,6 +153,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     productFaqQuestionAnswers: [],
     allSubmittedAnswers: null,
     indicatorLoader: false,
+
   });
   const {
     selectedPayment,
@@ -328,13 +329,15 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
   const _finalPayment = (data) => {
     if (isEmpty(selectedPayment)) {
-      showError(strings.PLEASE_SELECT_A_PAYMENT_METHOD);
+      // showError(strings.PLEASE_SELECT_A_PAYMENT_METHOD);
+      _redirectToPayement()
       return;
     }
 
     updateState({
       isLoading: true,
       indicatorLoader: true,
+
     });
 
     actions
@@ -351,6 +354,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             isLoading: false,
             isRefreshing: false,
             indicatorLoader: false,
+
           });
           // navigation.navigate(navigationStrings.CABDRIVERLOCATIONANDDETAIL, {
           //   orderDetail: res?.data,
@@ -799,6 +803,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         updateInstruction={updateInstruction}
         productFaqQuestionAnswers={selectedCarOption}
         onQuestionAnswerSubmit={(item) => onQuestionAnswerSubmit(item)}
+        indicatorLoader={indicatorLoader}
       />
     );
   };
