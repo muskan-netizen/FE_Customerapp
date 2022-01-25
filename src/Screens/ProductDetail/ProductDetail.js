@@ -761,7 +761,7 @@ export default function ProductDetail({route, navigation}) {
             <>
               {/* //Top section slider */}
 
-              <View
+              {!!productDetailData?.product_media.length ?<View
                 style={{
                   flexDirection: 'row',
                   marginTop: moderateScaleVertical(20),
@@ -828,7 +828,7 @@ export default function ProductDetail({route, navigation}) {
                     />
                   </View>
                 </View>
-              </View>
+              </View>: null}
 
               {/* Product Name and Branc detail */}
 
@@ -868,7 +868,7 @@ export default function ProductDetail({route, navigation}) {
                       Number(productPriceData?.price)
                     ).toFixed(2)}`}</Text>
                   </View>
-                </View>
+                </View> 
 
                 <View style={styles.flexView}>
                   <Text
@@ -910,6 +910,9 @@ export default function ProductDetail({route, navigation}) {
                   )}
                 </View>
 
+
+            
+
                 {productTotalQuantity == 0 && !!typeId && typeId !== 8 && (
                   <View style={{justifyContent: 'center'}}>
                     <Text
@@ -931,6 +934,18 @@ export default function ProductDetail({route, navigation}) {
                   </View>
                 )}
               </View>
+
+               {!!productDetailData?.delaySlot ?
+                    <Text style={{
+                      ...commonStyles.mediumFont14Normal,
+                      fontSize: textScale(10),
+                      textAlign: 'left',
+                      color: colors.redB,
+                      marginTop: moderateScaleVertical(8)
+                    }}>{strings.WE_ARE_NOT_ACCEPTING} {productDetailData?.delaySlot}</Text>
+                    : null
+                  }           
+         
 
               <HorizontalLine
                 lineStyle={{marginVertical: moderateScaleVertical(16)}}

@@ -196,7 +196,7 @@ export default function Cart({ navigation, route }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const { appData, allAddresss, themeColors, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
-    console.log(currencies,"currencies>currencies");
+    console.log(appData,"core appData");
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors, isDarkMode, MyDarkTheme });
@@ -2526,8 +2526,8 @@ export default function Cart({ navigation, route }) {
     return (
       <View style={{}}>
         <TextInput
-          // value={instruction}
-          // onChangeText={(instruction) => updateState({ instruction })}
+          value={instruction}
+          onChangeText={(instruction) => updateState({ instruction })}
           multiline={true}
           numberOfLines={4}
           style={{
