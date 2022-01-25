@@ -561,7 +561,7 @@ export default function MyOrders({navigation}) {
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
-      noLeftIcon
+        noLeftIcon
         // leftIcon={
         //   appStyle?.homePageLayout === 2
         //     ? imagePath.backArrow
