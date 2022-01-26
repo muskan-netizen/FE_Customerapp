@@ -95,6 +95,7 @@ export {default as PaymentOptions} from './TaxiApp/PaymentOptions/PaymentOptions
 export {default as ChooseCarTypeAndTimeTaxi} from './TaxiApp/ChooseCarTypeAndTime/ChooseCarTypeAndTime';
 export {default as PickupTaxiOrderDetail} from './TaxiApp/PickupTaxiOrderDetail/PickupTaxiOrderDetail';
 export {default as PrinterConnection} from './PrinterConnection/PrinterScreen';
+export {default as PrinterConnectionSunmi} from './PrinterConnection/PrinterScreenSunmi';
 export {default as TaxiHomeScreen} from './Home/TaxiHomeScreen/TaxiHomeScreen';
 export {default as ViewAllData} from './ViewAllData/ViewAllData';
 

@@ -22,6 +22,7 @@ import {
   OrderDetail,
   PickupOrderDetail,
   PrinterConnection,
+  PrinterConnectionSunmi,
   ProductDetail,
   ProductDetail2,
   ProductList,
@@ -134,6 +135,11 @@ export default function ({navigation}) {
       <Stack.Screen
         name={navigationStrings.ATTACH_PRINTER}
         component={PrinterConnection}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.ATTACH_PRINTER + 'sunmi'}
+        component={PrinterConnectionSunmi}
         options={{headerShown: false}}
       />
       <Stack.Screen
