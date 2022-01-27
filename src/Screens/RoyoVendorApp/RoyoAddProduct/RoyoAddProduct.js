@@ -135,7 +135,8 @@ const RoyoAddProduct = ({route, navigation}) => {
     variantCostPrice: [],
     variantCompareAtPrice: [],
     selectedVariant: {},
-    varientImages: [],
+    variantImages: [],
+    isVarientImageDeleted: false,
   });
   const {
     isLoading,
@@ -197,7 +198,8 @@ const RoyoAddProduct = ({route, navigation}) => {
     variantCostPrice,
     variantCompareAtPrice,
     selectedVariant,
-    varientImages,
+    variantImages,
+    isVarientImageDeleted,
   } = state;
   console.log(variantIds, 'variantIds>>');
   console.log(variantName, 'variantName>>');
@@ -207,10 +209,10 @@ const RoyoAddProduct = ({route, navigation}) => {
   console.log(variantCompareAtPrice, 'variantCompareAtPrice>>>');
 
   useEffect(() => {
-    if (isLoading) {
+    if (isLoading || isVarientImageDeleted) {
       getVendorProductDetailByID();
     }
-  }, [isLoading]);
+  }, [isLoading, isVarientImageDeleted]);
 
   const getVendorProductDetailByID = () => {
     actions
@@ -402,7 +404,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     actionSheet.current.show();
   };
 
-  console.log(varientImages, 'varientImagesvarientImages>>>');
+  console.log(variantImages, 'variantImagesvariantImages>>>');
 
   const cameraHandle = (index) => {
     if (index == 0 || index == 1) {
@@ -428,7 +430,7 @@ const RoyoAddProduct = ({route, navigation}) => {
 
             if (isImagePickerModal) {
               updateState({
-                varientImages: [...varientImages, file],
+                variantImages: [...variantImages, file],
               });
               return;
             }
@@ -450,6 +452,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     let formData = new FormData();
     formData.append('product_id', '233');
     formData.append('media_id', selectdImage?.media_id);
+    console.log(formData, 'formData>>>removeImage');
     actions
       .deleteProductImage(formData, {
         code: appData?.profile?.code,
@@ -457,11 +460,11 @@ const RoyoAddProduct = ({route, navigation}) => {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res, 'resresresres>>>');
         showSuccess(res?.message);
         updateState({
           isLoadingB: false,
           productImages: res?.data,
+          isVarientImageDeleted: true,
         });
       })
       .catch(errorMethod);
@@ -627,7 +630,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     }
   };
 
-  const onVarientFieldChange = (value, item, key) => {
+  const onVariantFieldChange = (value, item, key) => {
     let stateOfKey = state[key];
     if (variantIds.includes(item?.id)) {
       let indx = variantIds.findIndex((itm) => itm == item?.id);
@@ -656,7 +659,10 @@ const RoyoAddProduct = ({route, navigation}) => {
           style={{
             ...styles.flexRowStyle,
           }}>
+          {console.log(item, 'itemitemitem>>')}
+
           <TouchableOpacity
+            activeOpacity={0.7}
             style={{alignItems: 'center'}}
             onPress={() =>
               updateState({
@@ -665,13 +671,30 @@ const RoyoAddProduct = ({route, navigation}) => {
               })
             }>
             <Text style={styles.labelStyle}>Image</Text>
-            <Image source={imagePath.icImagePlaceholder} />
+            {!!item?.vimage ? (
+              <Image
+                style={{
+                  height: moderateScale(35),
+                  width: moderateScale(35),
+                  borderRadius: moderateScale(3),
+                }}
+                source={{
+                  uri: getImageUrl(
+                    item?.vimage?.pimage?.image?.path?.image_fit,
+                    item?.vimage?.pimage?.image?.path?.image_path,
+                    '400/400',
+                  ),
+                }}
+              />
+            ) : (
+              <Image source={imagePath.icImagePlaceholder} />
+            )}
           </TouchableOpacity>
           <TextInputWithUnderlineAndLabel
             label={`Name`}
             labelStyle={styles.labelStyle}
             onChangeText={(value) =>
-              onVarientFieldChange(value, item, 'variantName')
+              onVariantFieldChange(value, item, 'variantName')
             }
             mainStyle={{flex: 0.55}}
             placeholderTextColor={colors.black}
@@ -683,7 +706,7 @@ const RoyoAddProduct = ({route, navigation}) => {
             placeholder={'0'}
             mainStyle={{flex: 0.25}}
             onChangeText={(value) =>
-              onVarientFieldChange(value, item, 'variantQuantity')
+              onVariantFieldChange(value, item, 'variantQuantity')
             }
             labelStyle={styles.labelStyle}
             placeholderTextColor={colors.black}
@@ -704,7 +727,7 @@ const RoyoAddProduct = ({route, navigation}) => {
             labelStyle={styles.labelStyle}
             placeholder={'0'}
             onChangeText={(value) =>
-              onVarientFieldChange(value, item, 'variantPrice')
+              onVariantFieldChange(value, item, 'variantPrice')
             }
             mainStyle={{flex: 0.2}}
             placeholderTextColor={colors.black}
@@ -716,7 +739,7 @@ const RoyoAddProduct = ({route, navigation}) => {
             placeholder={'0'}
             mainStyle={{flex: 0.25}}
             onChangeText={(value) =>
-              onVarientFieldChange(value, item, 'variantCostPrice')
+              onVariantFieldChange(value, item, 'variantCostPrice')
             }
             placeholderTextColor={colors.black}
             txtInputStyle={styles.textInputStyle}
@@ -727,7 +750,7 @@ const RoyoAddProduct = ({route, navigation}) => {
             mainStyle={{flex: 0.45}}
             labelStyle={styles.labelStyle}
             onChangeText={(value) =>
-              onVarientFieldChange(value, item, 'variantCompareAtPrice')
+              onVariantFieldChange(value, item, 'variantCompareAtPrice')
             }
             placeholderTextColor={colors.black}
             txtInputStyle={styles.textInputStyle}
@@ -769,20 +792,20 @@ const RoyoAddProduct = ({route, navigation}) => {
     );
   };
 
-  const _onVarientImageUpload = () => {
+  const _onVariantImageUpload = () => {
     updateState({
       isImagePickerModal: false,
     });
     let formData = new FormData();
     formData.append('product_id', '233');
     formData.append('variant_id', selectedVariant?.id);
-    varientImages.map((item) => {
+    variantImages.map((item) => {
       formData.append('file[]', item);
     });
 
     setTimeout(() => {
       addProductImages(formData);
-    }, 300);
+    }, 500);
   };
 
   const addProductImages = (formData) => {
@@ -795,6 +818,7 @@ const RoyoAddProduct = ({route, navigation}) => {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
+        showSuccess(res?.message);
         updateState({
           isLoadingB: false,
           productImages: res?.data,
@@ -802,6 +826,18 @@ const RoyoAddProduct = ({route, navigation}) => {
         console.log(res, 'responseFromServer');
       })
       .catch(errorMethod);
+  };
+
+  const _removeImageFromLocalList = (localImage) => {
+    console.log(localImage, 'localImage>>');
+    const variantImagesAry = [...variantImages];
+    const filteredVariantImages = variantImagesAry.filter(
+      (itm) => itm?.image_id != localImage?.image_id,
+    );
+    updateState({
+      variantImages: filteredVariantImages,
+      isVarientImageDeleted: false,
+    });
   };
 
   const mainViewModal = () => {
@@ -817,23 +853,56 @@ const RoyoAddProduct = ({route, navigation}) => {
             alignItems: 'center',
             flexWrap: 'wrap',
           }}>
-          {varientImages.map((item) => (
-            <Image
-              source={{uri: item?.uri}}
+          {!!selectedVariant.vimage && (
+            <ImageBackground
               style={{
-                height: moderateScaleVertical(100),
-                width: moderateScale(90),
+                height: moderateScaleVertical(70),
+                width: moderateScale(80),
                 marginRight: moderateScale(10),
               }}
-              resizeMode="contain"
-            />
+              source={{
+                uri: getImageUrl(
+                  selectedVariant.vimage?.pimage?.image?.path?.image_fit,
+                  selectedVariant.vimage?.pimage?.image?.path?.image_path,
+                  '400/400',
+                ),
+              }}>
+              <TouchableOpacity
+                hitSlop={hitSlopProp}
+                onPress={() => {
+                  updateState({isImagePickerModal: false});
+                  setTimeout(() => {
+                    _removeImageFromList(selectedVariant.vimage?.pimage);
+                  }, 500);
+                }}
+                style={{position: 'absolute', right: -5, top: -5}}>
+                <Image source={imagePath.icRemoveIcon} />
+              </TouchableOpacity>
+            </ImageBackground>
+          )}
+          {variantImages.map((item) => (
+            <ImageBackground
+              style={{
+                height: moderateScaleVertical(70),
+                width: moderateScale(80),
+                marginRight: moderateScale(10),
+                marginBottom: moderateScale(10),
+              }}
+              source={{uri: item?.uri}}>
+              <TouchableOpacity
+                hitSlop={hitSlopProp}
+                onPress={() => _removeImageFromLocalList(item)}
+                style={{position: 'absolute', right: -5, top: -5}}>
+                <Image source={imagePath.icRemoveIcon} />
+              </TouchableOpacity>
+            </ImageBackground>
           ))}
           <TouchableOpacity onPress={showActionSheet} activeOpacity={0.7}>
             <Image
               source={imagePath.icImagePlaceholder}
               style={{
                 height: moderateScaleVertical(70),
-                width: 80,
+                width: moderateScale(80),
                 marginRight: moderateScale(10),
               }}
               resizeMode="contain"
@@ -842,7 +911,7 @@ const RoyoAddProduct = ({route, navigation}) => {
         </View>
 
         <TouchableOpacity
-          onPress={_onVarientImageUpload}
+          onPress={_onVariantImageUpload}
           style={{
             backgroundColor: themeColors.primary_color,
             width: '100%',
@@ -858,7 +927,7 @@ const RoyoAddProduct = ({route, navigation}) => {
       </View>
     );
   };
-
+  console.log(isLoadingB, 'isLoadingB>>>');
   return (
     <WrapperContainer source={loaderOne} isLoadingB={isLoading || isLoadingB}>
       <Header

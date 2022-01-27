@@ -105,12 +105,12 @@ const RoyoProducts = (props) => {
 
   useEffect(() => {
     getAllProducts();
-    if (!!selectedVendor?.id) {
-      getVendorCategories();
-      updateState({
-        selectedVendorCategory: [],
-      });
-    }
+    // if (!!selectedVendor?.id) {
+
+    updateState({
+      selectedVendorCategory: [],
+    });
+    // }
   }, [isRefreshing, storeSelectedVendor]);
 
   console.log(storeSelectedVendor, 'storeSelectedVendor>>>>>');
@@ -211,20 +211,22 @@ const RoyoProducts = (props) => {
       .then((res) => {
         console.log(res.data, 'res.data>>>>>');
         let categorylist = res.data.category_list.filter((x) => x.is_selected);
+        let selectedVendor = res.data.vendor_list.find((x) => x.is_selected);
+        if (!isEmpty(res.data.vendor_list)) {
+          getVendorCategories(selectedVendor);
+        }
         updateState({
           isLoading: false,
           isRefreshing: false,
           vendor_list: res.data.vendor_list,
           categoryName: categorylist[0]?.name,
-          selectedVendor: res.data.vendor_list.find((x) => x.is_selected),
-
+          selectedVendor: selectedVendor,
           category_list: res.data.category_list,
           productListData:
             pageNo == 1
               ? res.data.products.data
               : [...productListData, ...res.data.products.data],
         });
-        // getVendorCategories();
       })
       .catch(errorMethod);
     // }
@@ -377,16 +379,11 @@ const RoyoProducts = (props) => {
       .catch(errorMethod);
   };
 
-  const getVendorCategories = () => {
-    let vendordId = !!storeSelectedVendor
-      ? storeSelectedVendor?.id
-      : !!selectedVendor
-      ? selectedVendor?.id
-      : '';
+  const getVendorCategories = (selectedVendor) => {
     actions
       .getVendorCategories(
         {
-          vendor_id: vendordId,
+          vendor_id: selectedVendor?.id,
         },
         {
           code: appData?.profile?.code,

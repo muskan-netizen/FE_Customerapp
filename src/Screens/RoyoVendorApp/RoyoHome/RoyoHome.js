@@ -33,9 +33,12 @@ import actions from '../../../redux/actions';
 import moment from 'moment';
 import {showError} from '../../../utils/helperFunctions';
 import debounce from 'lodash.debounce';
-import {cloneDeep} from 'lodash';
+import {cloneDeep, isEmpty} from 'lodash';
 import {TouchableOpacity} from 'react-native';
 import MonthPicker from 'react-native-month-year-picker';
+import Modal from 'react-native-modal';
+import SelectVendorListModal from '../../../Components/SelectVendorListModal';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 
 const commonStyle = commonStyles({
   fontFamily,
@@ -59,7 +62,7 @@ const RoyoHome = (props) => {
     limit: 10,
     isLoading: true,
     isRefreshing: false,
-    vendor_list: [],
+    vendorList: [],
     selectedVendor: null,
     startDate: null,
     endDate: null,
@@ -77,6 +80,7 @@ const RoyoHome = (props) => {
     showOrderDate: false,
     revenueDate: new Date(),
     orderDate: new Date(),
+    isVendorSelectModal: false,
   });
 
   const {
@@ -97,10 +101,23 @@ const RoyoHome = (props) => {
     showRevenueDate,
     orderDate,
     revenueDate,
+    isVendorSelectModal,
+    vendorList,
+    isLoading,
   } = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
+
+  useEffect(() => {
+    _getListOfVendorOrders();
+  }, [storeSelectedVendor]);
+
+  console.log(isLoading, 'isLoading>>>');
+
   const _getListOfVendorOrders = () => {
+    updateState({
+      isLoading: true,
+    });
     let vendordId = !!storeSelectedVendor?.id
       ? storeSelectedVendor?.id
       : selectedVendor?.id
@@ -119,16 +136,20 @@ const RoyoHome = (props) => {
       .then((res) => {
         console.log('vendor orders res', res);
 
-        let newVendor = res.data.vendor_list.find((x) => x.is_selected);
+        let selectedVendorData = res.data.vendor_list.find(
+          (x) => x.is_selected,
+        );
         // if (!storeSelectedVendor?.id) actions.savedSelectedVendor(newVendor);
         updateState({
           activeOrders: res.data.order_list.data,
           selectedVendor: !!storeSelectedVendor?.id
             ? storeSelectedVendor
             : res.data.vendor_list.find((x) => x.is_selected),
+          vendorList: res.data.vendor_list,
           isLoading: false,
           isRefreshing: false,
         });
+        _getRevnueData(selectedVendorData);
       })
       .catch(errorMethod);
   };
@@ -158,16 +179,12 @@ const RoyoHome = (props) => {
     });
   }, [activeOrders]);
 
-  useEffect(() => {
-    _getListOfVendorOrders();
-  }, []);
-
-  useEffect(() => {
-    if (selectedVendor != null) {
-      console.log();
-      _getRevnueData();
-    }
-  }, [selectedVendor, pageActive]);
+  // useEffect(() => {
+  //   if (selectedVendor != null) {
+  //     console.log();
+  //     _getRevnueData();
+  //   }
+  // }, [selectedVendor, pageActive]);
 
   const toggleRevenueDate = () => {
     updateState({
@@ -201,12 +218,12 @@ const RoyoHome = (props) => {
         showRevenueDate: false,
       });
   };
-  const _getRevnueData = () => {
+  const _getRevnueData = (selectedVendorData) => {
     let data = {};
     data['type'] = 'monthly';
     data['month'] = 'july';
     data['year'] = '2021';
-    data['vendor_id'] = selectedVendor ? selectedVendor?.id : '';
+    data['vendor_id'] = selectedVendorData ? selectedVendorData?.id : '';
     actions
       .getRevenueData(data, {
         code: appData?.profile?.code,
@@ -245,13 +262,13 @@ const RoyoHome = (props) => {
     showError(error?.message || error?.error);
   };
 
-  useEffect(() => {
-    updateState({
-      selectedVendor: storeSelectedVendor,
-      isLoading: true,
-      pageActive: 1,
-    });
-  }, [storeSelectedVendor]);
+  // useEffect(() => {
+  //   updateState({
+  //     selectedVendor: storeSelectedVendor,
+  //     isLoading: true,
+  //     pageActive: 1,
+  //   });
+  // }, [storeSelectedVendor]);
 
   const barData = {
     labels: labels,
@@ -355,7 +372,6 @@ const RoyoHome = (props) => {
     let clonedArrayOrderList = cloneDeep(activeOrders);
 
     updateState({
-      isLoadingB: false,
       activeOrders: clonedArrayOrderList.map((i, inx) => {
         if (i?.id == acceptRejectData?.id) {
           i.order_status = res.order_status;
@@ -395,18 +411,47 @@ const RoyoHome = (props) => {
       </View>
     );
   };
+  const _reDirectToVendorList = () => {
+    updateState({
+      isVendorSelectModal: true,
+    });
+  };
+
+  const onVendorSelect = (item) => {
+    updateState({
+      selectedVendor: item,
+      isVendorSelectModal: false,
+      pageNo: 1,
+    });
+    setTimeout(() => {
+      actions.savedSelectedVendor(item);
+    }, 500);
+  };
 
   return (
-    <WrapperContainer bgColor={colors.white} statusBarColor={colors.white}>
+    <WrapperContainer
+      bgColor={colors.white}
+      statusBarColor={colors.white}
+      isLoadingB={isLoading}
+      source={loaderOne}>
       <Header
-        headerStyle={{marginVertical: moderateScaleVertical(16)}}
+        centerTitle={`${
+          !isEmpty(selectedVendor)
+            ? `${selectedVendor?.name}`
+            : 'Select a vendor'
+        } `}
         onPressLeft={() => {
           navigation.navigate(navigationStrings.TAB_ROUTES);
         }}
         leftIcon={imagePath.backRoyo}
+        onPressCenterTitle={() => _reDirectToVendorList()}
+        onPressImageAlongwithTitle={() => _reDirectToVendorList()}
+        imageAlongwithTitle={imagePath.dropdownTriangle}
+        showImageAlongwithTitle
         rightIcon={status ? imagePath.onlineRoyo : imagePath.offlineRoyo}
         onPressRight={toggleStatus}
       />
+
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}
         refreshControl={
@@ -588,6 +633,20 @@ const RoyoHome = (props) => {
           </View>
         </View>
       </ScrollView>
+      <Modal
+        isVisible={isVendorSelectModal}
+        style={{
+          margin: 0,
+        }}>
+        <View style={{flex: 1, backgroundColor: colors.white}}>
+          <SelectVendorListModal
+            vendorList={vendorList}
+            onCloseModal={() => updateState({isVendorSelectModal: false})}
+            onVendorSelect={onVendorSelect}
+            selectedVendor={selectedVendor}
+          />
+        </View>
+      </Modal>
     </WrapperContainer>
   );
 };
