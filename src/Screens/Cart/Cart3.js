@@ -4222,7 +4222,7 @@ export default function Cart({ navigation, route }) {
     >
       <Header
         centerTitle={strings.CART}
-        noLeftIcon
+        leftIcon={imagePath.icBackb}
         isRightText={cartItems && !!cartItems?.length}
         onPressRightTxt={() => openClearCartModal()}
       />
