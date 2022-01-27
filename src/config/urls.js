@@ -33,7 +33,7 @@
 // export const API_BASE_URL = 'https://app.vici.la/api/v1';
 // export const API_BASE_URL = 'https://blipdelivery.com/api/v1';
 // export const API_BASE_URL = 'https://africanvillage.market/api/v1';
-export const API_BASE_URL = 'https://govachow.com/api/v1';
+// export const API_BASE_URL = 'https://govachow.com/api/v1';
 // export const API_BASE_URL = 'https://order.drivereeshops.com/api/v1';
 // export const API_BASE_URL = 'https://tranzit.app/api/v1';
 // export const API_BASE_URL = 'https://orders.halalhmc.org/api/v1';
@@ -50,6 +50,7 @@ export const API_BASE_URL = 'https://govachow.com/api/v1';
 // export const API_BASE_URL = 'https://cannabusxpress.com/api/v1';
 // export const API_BASE_URL = 'https://test.taquick.com/api/v1';
 // export const API_BASE_URL = 'https://yeboy.mx/api/v1';
+export const API_BASE_URL = 'https://nadeliver.com/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
