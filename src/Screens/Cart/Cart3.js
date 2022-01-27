@@ -219,6 +219,9 @@ export default function Cart({ navigation, route }) {
 
   let businessType = appData?.profile?.preferences?.business_type || null;
 
+
+  console.log("cart items",cartItems)
+
   useFocusEffect(
     React.useCallback(() => {
       if (!checkCartItem?.data?.item_count) {
@@ -1634,7 +1637,7 @@ export default function Cart({ navigation, route }) {
 
                               <View
                                 pointerEvents={btnLoader ? 'none' : 'auto'}
-                                style={{ flex: 0.3 }}>
+                                style={{minWidth:moderateScale(74)}}>
                                 <View style={styles.incDecBtnContainer}>
                                   <TouchableOpacity
                                     style={{ alignItems: 'center' }}
@@ -1648,7 +1651,7 @@ export default function Cart({ navigation, route }) {
                                   <View
                                     style={{
                                       alignItems: 'center',
-                                      width: moderateScale(20),
+                                      // width: moderateScale(20),
                                       height: moderateScale(20),
                                       justifyContent: 'center',
                                     }}>
@@ -4219,7 +4222,7 @@ export default function Cart({ navigation, route }) {
     >
       <Header
         centerTitle={strings.CART}
-        noLeftIcon
+        leftIcon={imagePath.icBackb}
         isRightText={cartItems && !!cartItems?.length}
         onPressRightTxt={() => openClearCartModal()}
       />

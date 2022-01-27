@@ -220,7 +220,9 @@ const ProductCard3 = ({
     <Animatable.View
       // animation={index > 8 ? '' : 'fadeInUp'}
       // delay={index > 8 ? 1 * 100 : index * 10}
-      pointerEvents={btnLoader ? 'none' : 'auto'}>
+      pointerEvents={btnLoader ? 'none' : 'auto'}
+      style={{flex:1}}
+      >
       <TouchableOpacity
         // disabled
         activeOpacity={0.6}
@@ -233,23 +235,16 @@ const ProductCard3 = ({
           justifyContent: 'space-between',
           marginVertical: moderateScaleVertical(10),
           paddingHorizontal: 16,
+          overflow: 'hidden',
+          justifyContent: 'space-between',
+          flexDirection: 'row',
         }}>
-        <View
-          style={{
-            marginLeft: moderateScale(10),
-            overflow: 'hidden',
-            justifyContent: 'space-between',
-            flexDirection: 'row',
-            flex: 1,
-            // alignItems: 'center',
-          }}>
+     
           <Animatable.View
-            key={selectedIndex}
             style={{
               flex: 1,
               marginTop: selectedIndex == index ? moderateScaleVertical(8) : 0,
             }}
-          // animation={selectedIndex == index ? 'fadeInDown' : 'fadeInLeft'}
           >
             {/* Title View */}
             <View>
@@ -383,11 +378,12 @@ const ProductCard3 = ({
                   ? moderateScale(30)
                   : moderateScale(15),
               alignItems: 'center',
+              // flex:1,
               // marginRight: url1 ? 0 :  moderateScale(60)
             }}>
             {url1 && (
               <Animatable.View
-                key={selectedIndex}
+             
                 animation={
                   selectedIndex == index ? 'slideInLeft' : 'slideInRight'
                 }
@@ -446,8 +442,7 @@ const ProductCard3 = ({
                       style={{
                         ...styles.addBtnStyle,
                         paddingVertical: 0,
-
-                        height: 35,
+                        minHeight: moderateScale(34),
                         // backgroundColor: themeColors.primary_color,
                         backgroundColor: colors.greyColor2,
                         alignItems: 'center',
@@ -516,10 +511,11 @@ const ProductCard3 = ({
                                   fontFamily: fontFamily.bold,
                                   fontSize: moderateScale(16),
                                   color: themeColors.primary_color,
-                                  height: 100,
+                                  // height: moderateScale(100),
+                                  marginHorizontal:moderateScale(4)
                                 }}>
                                 {/* {qtyText || data?.qty || totalProductQty} */}
-                                {qtyText}
+                                {qtyText} 
                               </Animatable.Text>
                             ) : null}
                           </Animatable.View>
@@ -597,7 +593,7 @@ const ProductCard3 = ({
               )}
             </View>
           </View>
-        </View>
+ 
       </TouchableOpacity>
     </Animatable.View>
   );
@@ -630,7 +626,7 @@ function styleData({ themeColors, fontFamily }) {
       borderColor: themeColors.primary_color,
       justifyContent: 'center',
       alignItems: 'center',
-      width: moderateScale(73),
+      minWidth: moderateScale(74),
       height: moderateScaleVertical(35),
 
       // flexDirection:"row"
