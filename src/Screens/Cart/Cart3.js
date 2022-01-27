@@ -196,7 +196,7 @@ export default function Cart({ navigation, route }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const { appData, allAddresss, themeColors, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
-    console.log(currencies,"currencies>currencies");
+  console.log(appData, "core appData");
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors, isDarkMode, MyDarkTheme });
@@ -218,6 +218,9 @@ export default function Cart({ navigation, route }) {
       };
 
   let businessType = appData?.profile?.preferences?.business_type || null;
+
+
+  console.log("cart items",cartItems)
 
   useFocusEffect(
     React.useCallback(() => {
@@ -335,7 +338,7 @@ export default function Cart({ navigation, route }) {
       )
       .then((res) => {
         actions.cartItemQty(res);
-        console.log(res.data, 'cart details>>>', res);
+        console.log('cart details>>>', res);
         let checkDate = !!res?.data?.scheduled_date_time;
 
         if (!!checkDate && res.data.schedule_type == 'schedule') {
@@ -433,7 +436,7 @@ export default function Cart({ navigation, route }) {
             _vendorTableCart(data, tableData[0]);
           }
 
-          if (!!res?.data?.closed_store_order_scheduled) {
+          if (!!res?.data.products.length && res?.data.products[0].delaySlot) {
             updateState({
               minimumDelayVendorDate: res?.data.products[0].delaySlot,
             });
@@ -474,7 +477,6 @@ export default function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  console.log("cartDatacartData", cartData)
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     console.log(item, 'itemitemitemitem');
@@ -550,7 +552,7 @@ export default function Cart({ navigation, route }) {
             isLoadingB: false,
             btnLoader: false,
           });
-        }else{
+        } else {
           actions.cartItemQty({});
         }
         showSuccess(res?.message);
@@ -762,6 +764,7 @@ export default function Cart({ navigation, route }) {
   };
 
   const _directOrderPlace = () => {
+
     let data = {};
     data['address_id'] =
       paramsData?.selectedAddressData?.id || selectedAddressData?.id;
@@ -902,11 +905,20 @@ export default function Cart({ navigation, route }) {
         : null;
     } else {
       data['task_type'] = !!selectedTimeSlots ? 'schedule' : scheduleType;
-      data['schedule_dt'] = !!selectedTimeSlots
-        ? selectedDateFromCalendar
-        : scheduleType != 'now' && sheduledorderdate
-          ? new Date(sheduledorderdate).toISOString()
-          : null;
+
+      if(!!selectedTimeSlots){
+        const date = selectedDateFromCalendar;
+        const time = selectedTimeSlots.split(':')[0];
+        const formatDate = moment(
+          `${date} ${time}`,
+          'YYYY-MM-DD HH:mm:ss',
+        ).format();
+        data['schedule_dt'] = formatDate
+      }else{
+        data['schedule_dt'] = scheduleType != 'now' && sheduledorderdate
+        ? new Date(sheduledorderdate).toISOString()
+        : null;
+      }
       data['comment_for_vendor'] = instruction;
       data['slot'] = selectedTimeSlots;
     }
@@ -1009,7 +1021,15 @@ export default function Cart({ navigation, route }) {
 
       updateState({ placeLoader: true });
       var d1 = new Date();
-      var d2 = new Date(sheduledorderdate);
+      var d2 = new Date(sheduledorderdate)
+      // if (!!selectedTimeSlots) {
+      //   d2 = new Date(localeSheduledOrderDate)
+      // } else {
+      //   d2 = new Date(sheduledorderdate);
+      // }
+
+
+      console.log("shceduleORderdata", sheduledorderdate)
       if (!selectedAddressData) {
         // showError(strings.PLEASE_SELECT_ADDRESS);
         setModalVisible(true);
@@ -1030,7 +1050,7 @@ export default function Cart({ navigation, route }) {
                 !!userData?.verify_details?.is_email_verified &&
                 !!userData?.verify_details?.is_phone_verified
               ) {
-                setDateAndTimeSchedule(true);
+                // setDateAndTimeSchedule(true);
                 setTimeout(() => {
                   _finalPayment();
                 }, 500);
@@ -1047,7 +1067,7 @@ export default function Cart({ navigation, route }) {
                 !!userData?.verify_details?.is_email_verified ||
                 !!userData?.verify_details?.is_phone_verified
               ) {
-                setDateAndTimeSchedule(true);
+                // setDateAndTimeSchedule(true);
                 setTimeout(() => {
                   _finalPayment();
                 }, 500);
@@ -1059,7 +1079,7 @@ export default function Cart({ navigation, route }) {
                 })();
               }
             } else {
-              setDateAndTimeSchedule(true);
+              // setDateAndTimeSchedule(true);
               setTimeout(() => {
                 _finalPayment();
               }, 500);
@@ -1617,7 +1637,7 @@ export default function Cart({ navigation, route }) {
 
                               <View
                                 pointerEvents={btnLoader ? 'none' : 'auto'}
-                                style={{ flex: 0.3 }}>
+                                style={{minWidth:moderateScale(74)}}>
                                 <View style={styles.incDecBtnContainer}>
                                   <TouchableOpacity
                                     style={{ alignItems: 'center' }}
@@ -1631,7 +1651,7 @@ export default function Cart({ navigation, route }) {
                                   <View
                                     style={{
                                       alignItems: 'center',
-                                      width: moderateScale(20),
+                                      // width: moderateScale(20),
                                       height: moderateScale(20),
                                       justifyContent: 'center',
                                     }}>
@@ -2526,8 +2546,8 @@ export default function Cart({ navigation, route }) {
     return (
       <View style={{}}>
         <TextInput
-          // value={instruction}
-          // onChangeText={(instruction) => updateState({ instruction })}
+          value={instruction}
+          onChangeText={(instruction) => updateState({ instruction })}
           multiline={true}
           numberOfLines={4}
           style={{
@@ -4181,6 +4201,7 @@ export default function Cart({ navigation, route }) {
     updateState({
       selectedDateFromCalendar: day.dateString,
       modalType: 'schedule',
+      sheduledorderdate: day.dateString
     });
     console.log('selected day', day);
     checkVendorSlots(day.dateString);
@@ -4201,7 +4222,7 @@ export default function Cart({ navigation, route }) {
     >
       <Header
         centerTitle={strings.CART}
-        noLeftIcon
+        leftIcon={imagePath.icBackb}
         isRightText={cartItems && !!cartItems?.length}
         onPressRightTxt={() => openClearCartModal()}
       />

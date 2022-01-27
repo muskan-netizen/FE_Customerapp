@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import DashedLine from 'react-native-dashed-line';
 import FastImage from 'react-native-fast-image';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -21,8 +21,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 import BlurImages from './BlurImages';
 import {
   checkEvenOdd,
@@ -49,7 +49,7 @@ const greyColor = ['rgba(0,0,0,0.52)', 'rgba(0,0,0,0.52)'];
 
 const MarketCard3 = ({
   data = {},
-  onPress = () => { },
+  onPress = () => {},
   extraStyles = {},
   fastImageStyle = {},
   imageResizeMode = 'cover',
@@ -58,12 +58,12 @@ const MarketCard3 = ({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { appStyle, themeColors, appData } = useSelector(
+  const {appStyle, themeColors, appData} = useSelector(
     (state) => state?.initBoot,
   );
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ fontFamily, extraStyles, MyDarkTheme, isDarkMode });
+  const styles = stylesFunc({fontFamily, extraStyles, MyDarkTheme, isDarkMode});
   const scaleInAnimated = new Animated.Value(0);
 
   let imageUrl = getImageUrl(
@@ -114,7 +114,7 @@ const MarketCard3 = ({
           </Grayscale>
         ) : (
           <FastImage
-            source={{ uri: imageUrl, priority: FastImage.priority.high }}
+            source={{uri: imageUrl, priority: FastImage.priority.high}}
             style={{
               ...styles.mainImage,
               ...fastImageStyle,
@@ -139,25 +139,25 @@ const MarketCard3 = ({
                 color: data?.show_slot
                   ? colors.green
                   : data?.is_vendor_closed
-                    ? colors.redB
-                    : colors.green,
+                  ? colors.redB
+                  : colors.green,
               }}>
               {data?.show_slot
                 ? strings.OPEN
                 : data?.is_vendor_closed
-                  ? strings.CLOSE
-                  : strings.OPEN}
+                ? strings.CLOSE
+                : strings.OPEN}
             </Text>
           </View>
         )}
       </View>
-      <View style={{ padding: moderateScale(8) }}>
+      <View style={{padding: moderateScale(8)}}>
         <View style={styles.descView}>
           <Text
             numberOfLines={1}
             style={
               isDarkMode
-                ? [styles.categoryText, { color: MyDarkTheme.colors.text }]
+                ? [styles.categoryText, {color: MyDarkTheme.colors.text}]
                 : styles.categoryText
             }>
             {data.name}
@@ -222,7 +222,7 @@ const MarketCard3 = ({
                   flexDirection: 'row',
                   alignItems: 'center',
                 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Image
                     style={{
                       tintColor: data?.is_vendor_closed
@@ -286,26 +286,29 @@ const MarketCard3 = ({
             ) : null} */}
           </View>
         </View>
-        {!!data?.closed_store_order_scheduled ? <Text
-          style={{
-            ...commonStyles.mediumFont14Normal,
-            fontSize: textScale(10),
-            textAlign: 'left',
-            color: colors.redB,
-            marginTop: moderateScaleVertical(4)
-          }}
-        >{strings.WE_ARE_NOT_ACCEPTING} {data?.delaySlot} </Text> : null}
+        {!!data?.closed_store_order_scheduled ? (
+          <Text
+            style={{
+              ...commonStyles.mediumFont14Normal,
+              fontSize: textScale(10),
+              textAlign: 'left',
+              color: colors.redB,
+              marginTop: moderateScaleVertical(4),
+            }}>
+            {strings.WE_ARE_NOT_ACCEPTING} {data?.delaySlot}{' '}
+          </Text>
+        ) : null}
       </View>
     </TouchableOpacity>
   );
 };
 
-export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme }) {
+export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
   const styles = StyleSheet.create({
     mainTouchContainer: {
       borderRadius: moderateScale(10),
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 0 },
+      shadowOffset: {width: 0, height: 0},
       shadowOpacity: 0.15,
       shadowRadius: 1.84,
       elevation: 2,

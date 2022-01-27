@@ -2364,7 +2364,6 @@ export default function Products({ route, navigation }) {
                         }}>
                         {checkEvenOdd(categoryInfo.timeofLineOfSightDistance)}-
                         {checkEvenOdd(categoryInfo.timeofLineOfSightDistance + 5)}
-                        {' mins'}
                       </Text>
                     ) : null}
                   </View>
