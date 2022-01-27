@@ -133,7 +133,7 @@ const App = () => {
 
   const checkExistChannel = () => {
     PushNotification.getChannels(function (channel_ids) {
-      console.log('exist channels', channel_ids); // ['channel_id_1']
+     
     });
   };
   useEffect(() => {
