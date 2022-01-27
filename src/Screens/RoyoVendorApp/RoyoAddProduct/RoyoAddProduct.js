@@ -218,8 +218,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     actions
       .getVendorProductDetail(
         {
-          // product_id: productDetailParam?.id || '',
-          product_id: '233',
+          product_id: productDetailParam?.id || '',
         },
         {
           code: appData?.profile?.code,
@@ -264,8 +263,7 @@ const RoyoAddProduct = ({route, navigation}) => {
   const onUpdateProduct = () => {
     updateState({isLoadingB: true});
     let formData = new FormData();
-    // formData.append('product_id', productDetailParam?.id || '');
-    formData.append('product_id', '233');
+    formData.append('product_id', productDetailParam?.id || '');
     formData.append('sku', 'sfkdfj2348');
     formData.append('url_slug', 'fsld23879y98');
     formData.append('product_name', productName);
@@ -435,7 +433,7 @@ const RoyoAddProduct = ({route, navigation}) => {
               return;
             }
             let formData = new FormData();
-            formData.append('product_id', '233');
+            formData.append('product_id', productDetailParam?.id || '');
             formData.append('file[]', file);
             addProductImages(formData);
           }
@@ -450,7 +448,7 @@ const RoyoAddProduct = ({route, navigation}) => {
       isLoadingB: true,
     });
     let formData = new FormData();
-    formData.append('product_id', '233');
+    formData.append('product_id', productDetailParam?.id || '');
     formData.append('media_id', selectdImage?.media_id);
     console.log(formData, 'formData>>>removeImage');
     actions
@@ -797,7 +795,7 @@ const RoyoAddProduct = ({route, navigation}) => {
       isImagePickerModal: false,
     });
     let formData = new FormData();
-    formData.append('product_id', '233');
+    formData.append('product_id', productDetailParam?.id || '');
     formData.append('variant_id', selectedVariant?.id);
     variantImages.map((item) => {
       formData.append('file[]', item);
