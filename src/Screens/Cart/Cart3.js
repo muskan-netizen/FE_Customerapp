@@ -1637,7 +1637,7 @@ export default function Cart({ navigation, route }) {
 
                               <View
                                 pointerEvents={btnLoader ? 'none' : 'auto'}
-                                style={{flex:0.3 }}>
+                                style={{minWidth:moderateScale(74)}}>
                                 <View style={styles.incDecBtnContainer}>
                                   <TouchableOpacity
                                     style={{ alignItems: 'center' }}
