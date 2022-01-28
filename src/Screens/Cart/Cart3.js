@@ -4219,6 +4219,7 @@ export default function Cart({navigation, route}) {
       selectedDateFromCalendar: day.dateString,
       modalType: 'schedule',
       sheduledorderdate: day.dateString,
+      scheduleType: 'schedule',
     });
     console.log('selected day', day);
     checkVendorSlots(day.dateString);

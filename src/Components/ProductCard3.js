@@ -468,7 +468,7 @@ const ProductCard3 = ({
                         hitSlop={hitSlopProp}>
                         <Text
                           style={{
-                            fontFamily: fontFamily.bold,
+                            fontFamily: fontFamily.medium,
                             fontSize: moderateScale(16),
                             color: themeColors.primary_color,
                           }}>
@@ -508,8 +508,8 @@ const ProductCard3 = ({
                                 }
                                 duration={150}
                                 style={{
-                                  fontFamily: fontFamily.bold,
-                                  fontSize: moderateScale(16),
+                                  fontFamily: fontFamily.medium,
+                                  fontSize: moderateScale(14),
                                   color: themeColors.primary_color,
                                   // height: moderateScale(100),
                                   marginHorizontal:moderateScale(4)
@@ -538,8 +538,8 @@ const ProductCard3 = ({
                         }}>
                         <Text
                           style={{
-                            fontFamily: fontFamily.bold,
-                            fontSize: moderateScale(20),
+                            fontFamily: fontFamily.medium,
+                            fontSize: moderateScale(16),
                             color: themeColors.primary_color,
                           }}>
                           +
