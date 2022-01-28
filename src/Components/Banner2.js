@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   ImageBackground,
   StyleSheet,
@@ -6,13 +6,13 @@ import {
   View,
 } from 'react-native';
 import CardView from 'react-native-cardview';
-import {BackgroundImage} from 'react-native-elements/dist/config';
+import { BackgroundImage } from 'react-native-elements/dist/config';
 import FastImage from 'react-native-fast-image';
-import {UIActivityIndicator} from 'react-native-indicators';
-import Carousel, {Pagination} from 'react-native-snap-carousel';
-import {useSelector} from 'react-redux';
-import {moderateScale, width} from '../styles/responsiveSize';
-import {getImageUrl} from '../utils/helperFunctions';
+import { UIActivityIndicator } from 'react-native-indicators';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
+import { useSelector } from 'react-redux';
+import { moderateScale, width } from '../styles/responsiveSize';
+import { getImageUrl } from '../utils/helperFunctions';
 
 const Banner2 = ({
   imagestyle = {},
@@ -26,14 +26,14 @@ const Banner2 = ({
   onSnapToItem,
   pagination = true,
   resizeMode = 'cover',
-  setActiveState = () => {},
-  onPress = () => {},
+  setActiveState = () => { },
+  onPress = () => { },
   childView = null,
   showLightbox = false,
   BackgroundImageStyle = {},
   autoPlay = true,
 }) => {
-  const {themeColors} = useSelector((state) => state?.initBoot);
+  const { themeColors } = useSelector((state) => state?.initBoot);
 
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -41,19 +41,19 @@ const Banner2 = ({
     imageLoader: true,
     // profileInfo: null
   });
-  const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {slider1ActiveSlide, showLightboxView} = state;
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const { slider1ActiveSlide, showLightboxView } = state;
   const setSnapState = (index) => {
-    updateState({slider1ActiveSlide: index});
+    updateState({ slider1ActiveSlide: index });
     setActiveState(index);
   };
-  const bannerDataImages = ({item, index}) => {
+  const bannerDataImages = ({ item, index }) => {
     const imageUrl = item?.image?.path
       ? getImageUrl(
-          item.image.path.image_fit,
-          item.image.path.image_path,
-          '1000/1000',
-        )
+        item.image.path.image_fit,
+        item.image.path.image_path,
+        '1000/1000',
+      )
       : getImageUrl(item.image.image_fi, item.image.image_path, '1000/1000');
 
     return (
@@ -66,10 +66,14 @@ const Banner2 = ({
             underlayColor={'black'}
             renderContent={() => renderCarousel(imageUrl)}> */}
 
-          <ImageBackground
-            source={{uri: imageUrl, priority: FastImage.priority.high}}
+          <FastImage
+            source={{
+              uri: imageUrl, 
+              priority: FastImage.priority.high,
+              cache: FastImage.cacheControl.web
+            }}
             //  onLoadStart={()=>}
-            onLoadEnd={() => updateState({imageLoader: false})}
+            onLoadEnd={() => updateState({ imageLoader: false })}
             style={{
               height: moderateScale(180),
               width: '100%',
@@ -84,16 +88,16 @@ const Banner2 = ({
               />
             )}
             {childView}
-          </ImageBackground>
+          </FastImage>
 
           {/* </Lightbox> */}
 
           {pagination && (
-            <View style={{justifyContent: 'flex-end', height: 200}}>
+            <View style={{ justifyContent: 'flex-end', height: 200 }}>
               <Pagination
                 dotsLength={bannerData.length}
                 activeDotIndex={slider1ActiveSlide}
-                containerStyle={{paddingTop: 5}}
+                containerStyle={{ paddingTop: 5 }}
                 dotColor={'grey'}
                 dotStyle={[styles.dotStyle, dotStyle]}
                 inactiveDotColor={'black'}
@@ -133,7 +137,7 @@ const styles = StyleSheet.create({
     // height: 180,
     // width: width - 20,
   },
-  dotStyle: {height: 12, width: 12, borderRadius: 12 / 2},
+  dotStyle: { height: 12, width: 12, borderRadius: 12 / 2 },
   cardViewStyle: {
     alignItems: 'center',
     height: 200,

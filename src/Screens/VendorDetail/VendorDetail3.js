@@ -26,6 +26,7 @@ import BrandCard2 from '../../Components/BrandCard2';
 import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
 import { trim } from 'lodash';
 import NoDataFound from '../../Components/NoDataFound';
+import * as Animatable from 'react-native-animatable';
 
 export default function VendorDetail3({ navigation, route }) {
   let vendorParams = route?.params?.data;
@@ -175,13 +176,18 @@ export default function VendorDetail3({ navigation, route }) {
 
   const _renderItem = ({ item, index }) => {
     return (
-      <BrandCard2
-        onPress={() => moveToNewScreen(item)}
-        // onPress={() => navigation.navigate(navigationStrings.PRODUCT_LIST)}
-        data={item}
-        withTextBG
-        cardIndex={index}
-      />
+      <Animatable.View
+      animation={'fadeInLeft'}
+      delay={index*40}
+      >
+        <BrandCard2
+          onPress={() => moveToNewScreen(item)}
+          // onPress={() => navigation.navigate(navigationStrings.PRODUCT_LIST)}
+          data={item}
+          withTextBG
+          cardIndex={index}
+        />
+      </Animatable.View>
     );
   };
 

@@ -73,6 +73,7 @@ import { Calendar } from 'react-native-calendars';
 import SelectPaymentModal from '../../Components/SelectPaymentModal';
 
 
+
 export default function Cart({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
@@ -220,7 +221,7 @@ export default function Cart({ navigation, route }) {
   let businessType = appData?.profile?.preferences?.business_type || null;
 
 
-  console.log("cart items",cartItems)
+  console.log("cart items", cartItems)
 
   useFocusEffect(
     React.useCallback(() => {
@@ -318,6 +319,20 @@ export default function Cart({ navigation, route }) {
         .catch(errorMethod);
     }
   };
+
+
+  // function formatDate(date) {
+  //   var year = date.getFullYear().toString();
+  //   var month = (date.getMonth() + 101).toString().substring(1);
+  //   var day = (date.getDate() + 100).toString().substring(1);
+  //   return year + "-" + month + "-" + day;
+  // }
+
+  const getDate = date => {
+    const local = moment.utc(date).local().format('DD MMM YYYY hh🇲🇲a');
+    return local;
+    };
+
 
   //get the entire cart detail
   const getCartDetail = () => {
@@ -437,8 +452,10 @@ export default function Cart({ navigation, route }) {
           }
 
           if (!!res?.data.products.length && res?.data.products[0].delaySlot) {
+            var timeSlot = res?.data.products[0].delaySlot
+            console.log("netxt festilval2",new Date(timeSlot.replace(' ')))
             updateState({
-              minimumDelayVendorDate: res?.data.products[0].delaySlot,
+              minimumDelayVendorDate: timeSlot,
             });
           }
 
@@ -680,6 +697,7 @@ export default function Cart({ navigation, route }) {
       return;
     }
 
+
     switch (paymentId) {
       case 5: //Paystack Payment Getway
         updateState({ placeLoader: false });
@@ -906,7 +924,7 @@ export default function Cart({ navigation, route }) {
     } else {
       data['task_type'] = !!selectedTimeSlots ? 'schedule' : scheduleType;
 
-      if(!!selectedTimeSlots){
+      if (!!selectedTimeSlots) {
         const date = selectedDateFromCalendar;
         const time = selectedTimeSlots.split(':')[0];
         const formatDate = moment(
@@ -914,10 +932,10 @@ export default function Cart({ navigation, route }) {
           'YYYY-MM-DD HH:mm:ss',
         ).format();
         data['schedule_dt'] = formatDate
-      }else{
+      } else {
         data['schedule_dt'] = scheduleType != 'now' && sheduledorderdate
-        ? new Date(sheduledorderdate).toISOString()
-        : null;
+          ? new Date(sheduledorderdate).toISOString()
+          : null;
       }
       data['comment_for_vendor'] = instruction;
       data['slot'] = selectedTimeSlots;
@@ -1601,8 +1619,10 @@ export default function Cart({ navigation, route }) {
                                   '300/300',
                                 ),
                                 priority: FastImage.priority.high,
+                                cache: FastImage.cacheControl.web,
                               }
                               : imagePath.patternOne
+                              
                           }
                           style={styles.imageStyle}
                         />
@@ -1637,7 +1657,7 @@ export default function Cart({ navigation, route }) {
 
                               <View
                                 pointerEvents={btnLoader ? 'none' : 'auto'}
-                                style={{minWidth:moderateScale(74)}}>
+                                style={{ minWidth: moderateScale(74) }}>
                                 <View style={styles.incDecBtnContainer}>
                                   <TouchableOpacity
                                     style={{ alignItems: 'center' }}
@@ -3779,7 +3799,11 @@ export default function Cart({ navigation, route }) {
             // backgroundColor: '#fff',
           }}>
           <FastImage
-            source={{ uri: Image.resolveAssetSource(imagePath.icEmptyCartD).uri }}
+            source={{ 
+              uri: Image.resolveAssetSource(imagePath.icEmptyCartD).uri,
+              cache: FastImage.cacheControl.web,
+              priority: FastImage.priority.high,
+             }}
             style={{
               marginVertical: moderateScaleVertical(20),
               height: moderateScale(120),
@@ -4201,7 +4225,8 @@ export default function Cart({ navigation, route }) {
     updateState({
       selectedDateFromCalendar: day.dateString,
       modalType: 'schedule',
-      sheduledorderdate: day.dateString
+      sheduledorderdate: day.dateString,
+      scheduleType: 'schedule',
     });
     console.log('selected day', day);
     checkVendorSlots(day.dateString);
@@ -4395,7 +4420,7 @@ export default function Cart({ navigation, route }) {
                     <ScrollView>
                       <Calendar
                         current={new Date()}
-                        minDate={!!minimumDelayVendorDate ? new Date(minimumDelayVendorDate) : new Date()}
+                        minDate={!!minimumDelayVendorDate ? minimumDelayVendorDate : new Date()}
                         onDayPress={onSelectDateFromCalendar}
                         markedDates={{
                           [selectedDateFromCalendar]: {

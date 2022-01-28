@@ -221,8 +221,8 @@ const ProductCard3 = ({
       // animation={index > 8 ? '' : 'fadeInUp'}
       // delay={index > 8 ? 1 * 100 : index * 10}
       pointerEvents={btnLoader ? 'none' : 'auto'}
-      style={{flex:1}}
-      >
+      style={{ flex: 1 }}
+    >
       <TouchableOpacity
         // disabled
         activeOpacity={0.6}
@@ -239,127 +239,127 @@ const ProductCard3 = ({
           justifyContent: 'space-between',
           flexDirection: 'row',
         }}>
-     
-          <Animatable.View
-            style={{
-              flex: 1,
-              marginTop: selectedIndex == index ? moderateScaleVertical(8) : 0,
-            }}
-          >
-            {/* Title View */}
-            <View>
-              {data && !!data?.tags && data?.tags.length > 0 ? (
-                <View>
-                  {!!data.tags[0]?.tag?.icon ? (
-                    <Image
-                      source={{
-                        uri: getIconImage(
-                          data.tags[0]?.tag?.icon?.image_fit,
-                          data?.tags[0]?.tag?.icon?.image_path,
-                          '50/50',
-                        ),
-                      }}
-                      style={{
-                        marginLeft: moderateScale(1),
-                        marginBottom: moderateScale(5),
-                        width: moderateScale(17),
-                        height: moderateScale(17),
-                      }}
-                    />
-                  ) : null}
-                </View>
-              ) : null}
-              <Text
-                // numberOfLines={1}
-                style={{
-                  ...commonStyles.futuraBtHeavyFont14,
-                  width: moderateScaleVertical(220),
-                  // fontFamily: 'Eina02-SemiBold',
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  fontFamily: fontFamily.regular,
-                  fontSize: textScale(12),
-                  width: width / 2.5,
-                  textTransform: 'capitalize',
-                  // flex:1
-                }}>
-                {data?.translation[0]?.title}
-              </Text>
-              {!!data?.category?.category_detail?.translation && (
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    ...styles.inTextStyle,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.blackOpacity40,
-                  }}>
-                  {strings.IN}
-                  {` ${data?.category?.category_detail?.translation[0]?.name}`}
-                </Text>
-              )}
-            </View>
 
-            {/* rating View */}
-            {!!data?.averageRating && (
-              <View
-                style={{
-                  borderWidth: 0.5,
-                  alignSelf: 'flex-start',
-                  padding: 2,
-                  borderRadius: 2,
-                  marginVertical: moderateScaleVertical(4),
-                  borderColor: colors.yellowB,
-                  backgroundColor: colors.yellowOpacity10,
-                }}>
-                <StarRating
-                  disabled={false}
-                  maxStars={5}
-                  rating={Number(parseInt(data?.averageRating).toFixed(1))}
-                  fullStarColor={colors.yellowB}
-                  starSize={8}
-                  containerStyle={{ width: width / 9 }}
-                />
+        <Animatable.View
+          style={{
+            flex: 1,
+            marginTop: selectedIndex == index ? moderateScaleVertical(8) : 0,
+          }}
+        >
+          {/* Title View */}
+          <View>
+            {data && !!data?.tags && data?.tags.length > 0 ? (
+              <View>
+                {!!data.tags[0]?.tag?.icon ? (
+                  <Image
+                    source={{
+                      uri: getIconImage(
+                        data.tags[0]?.tag?.icon?.image_fit,
+                        data?.tags[0]?.tag?.icon?.image_path,
+                        '50/50',
+                      ),
+                    }}
+                    style={{
+                      marginLeft: moderateScale(1),
+                      marginBottom: moderateScale(5),
+                      width: moderateScale(17),
+                      height: moderateScale(17),
+                    }}
+                  />
+                ) : null}
               </View>
-            )}
-
-            {/* Price view */}
-            <View
+            ) : null}
+            <Text
+              // numberOfLines={1}
               style={{
-                paddingTop: moderateScale(5),
-                paddingBottom: moderateScale(5),
+                ...commonStyles.futuraBtHeavyFont14,
+                width: moderateScaleVertical(220),
+                // fontFamily: 'Eina02-SemiBold',
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                fontFamily: fontFamily.regular,
+                fontSize: textScale(12),
+                width: width / 2.5,
+                textTransform: 'capitalize',
+                // flex:1
               }}>
+              {data?.translation[0]?.title}
+            </Text>
+            {!!data?.category?.category_detail?.translation && (
               <Text
                 numberOfLines={1}
                 style={{
-                  ...commonStyles.mediumFont14,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  fontSize: textScale(12),
-                  fontFamily: fontFamily.regular,
-                }}>
-                {`${currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
-                    (
-                      Number(
-                        data?.variant[0]?.multiplier || data?.variant_multiplier,
-                      ) * Number(data?.variant[0]?.price)
-                    ).toFixed(2),
-                  )}`}
-              </Text>
-            </View>
-            <View style={{ width: width / 2 }}>
-              <Text
-                style={{
-                  fontSize: textScale(10),
-                  fontFamily: fontFamily.regular,
-                  lineHeight: moderateScale(14),
+                  ...styles.inTextStyle,
                   color: isDarkMode
                     ? MyDarkTheme.colors.text
-                    : colors.blackOpacity66,
-                  textAlign: 'left',
+                    : colors.blackOpacity40,
                 }}>
-                {data?.translation_description}
+                {strings.IN}
+                {` ${data?.category?.category_detail?.translation[0]?.name}`}
               </Text>
-              {/* {!!htmlText && (
+            )}
+          </View>
+
+          {/* rating View */}
+          {!!data?.averageRating && (
+            <View
+              style={{
+                borderWidth: 0.5,
+                alignSelf: 'flex-start',
+                padding: 2,
+                borderRadius: 2,
+                marginVertical: moderateScaleVertical(4),
+                borderColor: colors.yellowB,
+                backgroundColor: colors.yellowOpacity10,
+              }}>
+              <StarRating
+                disabled={false}
+                maxStars={5}
+                rating={Number(parseInt(data?.averageRating).toFixed(1))}
+                fullStarColor={colors.yellowB}
+                starSize={8}
+                containerStyle={{ width: width / 9 }}
+              />
+            </View>
+          )}
+
+          {/* Price view */}
+          <View
+            style={{
+              paddingTop: moderateScale(5),
+              paddingBottom: moderateScale(5),
+            }}>
+            <Text
+              numberOfLines={1}
+              style={{
+                ...commonStyles.mediumFont14,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                fontSize: textScale(12),
+                fontFamily: fontFamily.regular,
+              }}>
+              {`${currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  (
+                    Number(
+                      data?.variant[0]?.multiplier || data?.variant_multiplier,
+                    ) * Number(data?.variant[0]?.price)
+                  ).toFixed(2),
+                )}`}
+            </Text>
+          </View>
+          <View style={{ width: width / 2 }}>
+            <Text
+              style={{
+                fontSize: textScale(10),
+                fontFamily: fontFamily.regular,
+                lineHeight: moderateScale(14),
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity66,
+                textAlign: 'left',
+              }}>
+              {data?.translation_description}
+            </Text>
+            {/* {!!htmlText && (
                 <HtmlViewComp
                   plainHtml={htmlText}
                   nodeComponentProps={{
@@ -367,233 +367,237 @@ const ProductCard3 = ({
                   }}
                 />
               )} */}
-            </View>
-          </Animatable.View>
+          </View>
+        </Animatable.View>
+
+        <View
+          style={{
+            paddingBottom:
+              (!!data?.add_on && data?.add_on.length !== 0) ||
+                (!!data?.variantSet && data?.variantSet.length !== 0)
+                ? moderateScale(30)
+                : moderateScale(15),
+            alignItems: 'center',
+            // flex:1,
+            // marginRight: url1 ? 0 :  moderateScale(60)
+          }}>
+          {url1 && (
+            <Animatable.View
+
+              animation={
+                selectedIndex == index ? 'slideInLeft' : 'slideInRight'
+              }
+              duration={100}>
+              <TouchableOpacity
+                disabled
+                onPress={changePosition}
+                activeOpacity={1}
+                style={{
+                  ...commonStyles.shadowStyle,
+                  margin: 2,
+                  borderRadius: moderateScale(15),
+                  height: moderateScale(100),
+                  width: moderateScale(100),
+                  // backgroundColor: 'red',
+                  // padding:5
+                }}>
+                <FastImage
+                  style={{
+                    ...styles.imgStyle,
+                    backgroundColor: isDarkMode
+                      ? colors.whiteOpacity15
+                      : colors.greyColor,
+                    borderRadius: moderateScale(7),
+                  }}
+                  source={{
+                    uri: getImage('200/200'),
+                    cache: FastImage.cacheControl.web,
+                    priority: FastImage.priority.high,
+                  }}
+                />
+              </TouchableOpacity>
+            </Animatable.View>
+          )}
 
           <View
             style={{
-              paddingBottom:
-                (!!data?.add_on && data?.add_on.length !== 0) ||
-                  (!!data?.variantSet && data?.variantSet.length !== 0)
-                  ? moderateScale(30)
-                  : moderateScale(15),
-              alignItems: 'center',
-              // flex:1,
-              // marginRight: url1 ? 0 :  moderateScale(60)
+              position: url1 ? 'absolute' : 'relative',
+              bottom: 0,
+              flex: 1,
+              justifyContent: url1 ? 'flex-start' : 'center',
             }}>
-            {url1 && (
-              <Animatable.View
-             
-                animation={
-                  selectedIndex == index ? 'slideInLeft' : 'slideInRight'
-                }
-                duration={100}>
-                <TouchableOpacity
-                  disabled
-                  onPress={changePosition}
-                  activeOpacity={1}
-                  style={{
-                    ...commonStyles.shadowStyle,
-                    margin: 2,
-                    borderRadius: moderateScale(15),
-                    height: moderateScale(100),
-                    width: moderateScale(100),
-                    // backgroundColor: 'red',
-                    // padding:5
-                  }}>
-                  <FastImage
+            {!!data?.variant[0]?.quantity ||
+              (!!typeId && typeId == 8) ||
+              (!!businessType && businessType == 'laundry') ||
+              data?.has_inventory == 0 ? (
+              <View
+                style={{
+                  marginTop:
+                    selectedIndex == index ? moderateScaleVertical(8) : 0,
+                  alignItems: 'center',
+                  // backgroundColor: 'red',
+                }}>
+                {(!!data?.check_if_in_cart_app &&
+                  data?.check_if_in_cart_app.length > 0) ||
+                  !!data?.qty ||
+                  totalProductQty ? (
+                  <View
+                    pointerEvents={!!categoryInfo?.is_vendor_closed && !!categoryInfo?.closed_store_order_scheduled !== 1 ? 'none' : 'auto'}
                     style={{
-                      ...styles.imgStyle,
-                      backgroundColor: isDarkMode
-                        ? colors.whiteOpacity15
-                        : colors.greyColor,
-                      borderRadius: moderateScale(7),
-                    }}
-                    source={{ uri: getImage('800/400') }}
-                  />
-                </TouchableOpacity>
-              </Animatable.View>
-            )}
-
-            <View
-              style={{
-                position: url1 ? 'absolute' : 'relative',
-                bottom: 0,
-                flex: 1,
-                justifyContent: url1 ? 'flex-start' : 'center',
-              }}>
-              {!!data?.variant[0]?.quantity ||
-                (!!typeId && typeId == 8) ||
-                (!!businessType && businessType == 'laundry') ||
-                data?.has_inventory == 0 ? (
-                <View
-                  style={{
-                    marginTop:
-                      selectedIndex == index ? moderateScaleVertical(8) : 0,
-                    alignItems: 'center',
-                    // backgroundColor: 'red',
-                  }}>
-                  {(!!data?.check_if_in_cart_app &&
-                    data?.check_if_in_cart_app.length > 0) ||
-                    !!data?.qty ||
-                    totalProductQty ? (
-                    <View
-                      pointerEvents={!!categoryInfo?.is_vendor_closed && !!categoryInfo?.closed_store_order_scheduled !== 1 ? 'none' : 'auto'}
+                      ...styles.addBtnStyle,
+                      paddingVertical: 0,
+                      minHeight: moderateScale(34),
+                      // backgroundColor: themeColors.primary_color,
+                      backgroundColor: colors.greyColor2,
+                      alignItems: 'center',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      borderRadius: moderateScale(8),
+                      paddingHorizontal: moderateScale(8),
+                    }}>
+                    <TouchableOpacity
+                      disabled={selectedItemID == data?.id}
+                      onPress={() => {
+                        updateState({ ...state, isIncrement: false });
+                        if (!disabledBtn) {
+                          const isEnabled = numberOfHits.length === 0;
+                          numberOfHits.push(data?.qty || totalProductQty);
+                          if (isEnabled) {
+                            initAnimation();
+                          }
+                          onDecrement();
+                        }
+                      }}
+                      activeOpacity={0.8}
+                      hitSlop={hitSlopProp}>
+                      <Text
+                        style={{
+                          fontFamily: fontFamily.medium,
+                          fontSize: moderateScale(16),
+                          color: themeColors.primary_color,
+                        }}>
+                        -
+                      </Text>
+                    </TouchableOpacity>
+                    <Animatable.View
+                      style={{
+                        // backgroundColor: 'red',
+                        // height: 30,
+                        overflow: 'hidden',
+                      }}>
+                      {selectedItemID == data?.id && btnLoader ? (
+                        <UIActivityIndicator
+                          size={moderateScale(18)}
+                          color={themeColors.primary_color}
+                        />
+                      ) : (
+                        // {/* {selectedItemIndx === index &&
+                        //   selectedItemID == data?.id &&
+                        //   btnLoader ? (
+                        //   <UIActivityIndicator
+                        //     size={moderateScale(18)}
+                        //     color={themeColors.primary_color}
+                        //   /> */}
+                        <Animatable.View style={{ flex: 1 }}>
+                          {isVisibleText ? (
+                            <Animatable.Text
+                              animation={
+                                isIncrement
+                                  ? isVisibleTextSlideUp
+                                    ? textAnimateForIncrement
+                                    : textAnimateForIncrement_
+                                  : isVisibleTextSlideUp
+                                    ? textAnimateForDecrement
+                                    : textAnimateForDecrement_
+                              }
+                              duration={150}
+                              style={{
+                                fontFamily: fontFamily.medium,
+                                fontSize: moderateScale(14),
+                                color: themeColors.primary_color,
+                                // height: moderateScale(100),
+                                marginHorizontal: moderateScale(4)
+                              }}>
+                              {/* {qtyText || data?.qty || totalProductQty} */}
+                              {qtyText}
+                            </Animatable.Text>
+                          ) : null}
+                        </Animatable.View>
+                      )}
+                    </Animatable.View>
+                    <TouchableOpacity
+                      disabled={selectedItemID == data?.id}
+                      activeOpacity={0.8}
+                      hitSlop={hitSlopProp}
+                      onPress={() => {
+                        updateState({ ...state, isIncrement: true });
+                        if (!disabledBtn) {
+                          const isEnabled = numberOfHits.length === 0;
+                          numberOfHits.push(data?.qty || totalProductQty);
+                          if (isEnabled) {
+                            initAnimation();
+                          }
+                          onIncrement();
+                        }
+                      }}>
+                      <Text
+                        style={{
+                          fontFamily: fontFamily.medium,
+                          fontSize: moderateScale(16),
+                          color: themeColors.primary_color,
+                        }}>
+                        +
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : (
+                  <>
+                    <TouchableOpacity
+                      disabled={selectedItemID == data?.id}
+                      onPress={addToCart}
                       style={{
                         ...styles.addBtnStyle,
-                        paddingVertical: 0,
-                        minHeight: moderateScale(34),
-                        // backgroundColor: themeColors.primary_color,
                         backgroundColor: colors.greyColor2,
-                        alignItems: 'center',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        borderRadius: moderateScale(8),
-                        paddingHorizontal: moderateScale(8),
+                        // marginBottom: 1,
                       }}>
-                      <TouchableOpacity
-                        disabled={selectedItemID == data?.id}
-                        onPress={() => {
-                          updateState({ ...state, isIncrement: false });
-                          if (!disabledBtn) {
-                            const isEnabled = numberOfHits.length === 0;
-                            numberOfHits.push(data?.qty || totalProductQty);
-                            if (isEnabled) {
-                              initAnimation();
-                            }
-                            onDecrement();
-                          }
-                        }}
-                        activeOpacity={0.8}
-                        hitSlop={hitSlopProp}>
-                        <Text
-                          style={{
-                            fontFamily: fontFamily.bold,
-                            fontSize: moderateScale(16),
-                            color: themeColors.primary_color,
-                          }}>
-                          -
-                        </Text>
-                      </TouchableOpacity>
-                      <Animatable.View
-                        style={{
-                          // backgroundColor: 'red',
-                          // height: 30,
-                          overflow: 'hidden',
-                        }}>
-                        {selectedItemID == data?.id && btnLoader ? (
-                          <UIActivityIndicator
-                            size={moderateScale(18)}
-                            color={themeColors.primary_color}
-                          />
-                        ) : (
-                          // {/* {selectedItemIndx === index &&
-                          //   selectedItemID == data?.id &&
-                          //   btnLoader ? (
-                          //   <UIActivityIndicator
-                          //     size={moderateScale(18)}
-                          //     color={themeColors.primary_color}
-                          //   /> */}
-                          <Animatable.View style={{ flex: 1 }}>
-                            {isVisibleText ? (
-                              <Animatable.Text
-                                animation={
-                                  isIncrement
-                                    ? isVisibleTextSlideUp
-                                      ? textAnimateForIncrement
-                                      : textAnimateForIncrement_
-                                    : isVisibleTextSlideUp
-                                      ? textAnimateForDecrement
-                                      : textAnimateForDecrement_
-                                }
-                                duration={150}
-                                style={{
-                                  fontFamily: fontFamily.bold,
-                                  fontSize: moderateScale(16),
-                                  color: themeColors.primary_color,
-                                  // height: moderateScale(100),
-                                  marginHorizontal:moderateScale(4)
-                                }}>
-                                {/* {qtyText || data?.qty || totalProductQty} */}
-                                {qtyText} 
-                              </Animatable.Text>
-                            ) : null}
-                          </Animatable.View>
-                        )}
-                      </Animatable.View>
-                      <TouchableOpacity
-                        disabled={selectedItemID == data?.id}
-                        activeOpacity={0.8}
-                        hitSlop={hitSlopProp}
-                        onPress={() => {
-                          updateState({ ...state, isIncrement: true });
-                          if (!disabledBtn) {
-                            const isEnabled = numberOfHits.length === 0;
-                            numberOfHits.push(data?.qty || totalProductQty);
-                            if (isEnabled) {
-                              initAnimation();
-                            }
-                            onIncrement();
-                          }
-                        }}>
-                        <Text
-                          style={{
-                            fontFamily: fontFamily.bold,
-                            fontSize: moderateScale(20),
-                            color: themeColors.primary_color,
-                          }}>
-                          +
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  ) : (
-                    <>
-                      <TouchableOpacity
-                        disabled={selectedItemID == data?.id}
-                        onPress={addToCart}
-                        style={{
-                          ...styles.addBtnStyle,
-                          backgroundColor: colors.greyColor2,
-                          // marginBottom: 1,
-                        }}>
-                        {selectedItemID == data?.id ? (
-                          <UIActivityIndicator
-                            size={moderateScale(18)}
-                            color={themeColors.primary_color}
-                          />
-                        ) : (
-                          <View>
-                            <Text style={styles.addStyleText}>
-                              {strings.ADD}{' '}
-                              {data?.minimum_order_count > 1
-                                ? `(${data?.minimum_order_count})`
-                                : ''}
-                            </Text>
-                          </View>
-                        )}
+                      {selectedItemID == data?.id ? (
+                        <UIActivityIndicator
+                          size={moderateScale(18)}
+                          color={themeColors.primary_color}
+                        />
+                      ) : (
+                        <View>
+                          <Text style={styles.addStyleText}>
+                            {strings.ADD}{' '}
+                            {data?.minimum_order_count > 1
+                              ? `(${data?.minimum_order_count})`
+                              : ''}
+                          </Text>
+                        </View>
+                      )}
 
-                        {/* <Image source={imagePath.greyRoundPlus} /> */}
-                      </TouchableOpacity>
-                    </>
-                  )}
-                  {(!!data?.add_on && data?.add_on.length !== 0) ||
-                    (!!data?.variantSet && data?.variantSet.length !== 0) ? (
-                    <Text
-                      style={{
-                        ...styles.customTextStyle,
-                        textTransform: 'lowercase',
-                        color: colors.blackOpacity40,
-                      }}>
-                      {strings.CUSTOMISABLE}
-                    </Text>
-                  ) : null}
-                </View>
-              ) : (
-                <Text style={styles.outOfStock}>{strings.OUT_OF_STOCK}</Text>
-              )}
-            </View>
+                      {/* <Image source={imagePath.greyRoundPlus} /> */}
+                    </TouchableOpacity>
+                  </>
+                )}
+                {(!!data?.add_on && data?.add_on.length !== 0) ||
+                  (!!data?.variantSet && data?.variantSet.length !== 0) ? (
+                  <Text
+                    style={{
+                      ...styles.customTextStyle,
+                      textTransform: 'lowercase',
+                      color: colors.blackOpacity40,
+                    }}>
+                    {strings.CUSTOMISABLE}
+                  </Text>
+                ) : null}
+              </View>
+            ) : (
+              <Text style={styles.outOfStock}>{strings.OUT_OF_STOCK}</Text>
+            )}
           </View>
- 
+        </View>
+
       </TouchableOpacity>
     </Animatable.View>
   );

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import DashedLine from 'react-native-dashed-line';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -21,8 +21,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../styles/theme';
 import BlurImages from './BlurImages';
 import {
   checkEvenOdd,
@@ -49,7 +49,7 @@ const greyColor = ['rgba(0,0,0,0.52)', 'rgba(0,0,0,0.52)'];
 
 const MarketCard3 = ({
   data = {},
-  onPress = () => {},
+  onPress = () => { },
   extraStyles = {},
   fastImageStyle = {},
   imageResizeMode = 'cover',
@@ -58,18 +58,18 @@ const MarketCard3 = ({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appStyle, themeColors, appData} = useSelector(
+  const { appStyle, themeColors, appData } = useSelector(
     (state) => state?.initBoot,
   );
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, extraStyles, MyDarkTheme, isDarkMode});
+  const styles = stylesFunc({ fontFamily, extraStyles, MyDarkTheme, isDarkMode });
   const scaleInAnimated = new Animated.Value(0);
 
   let imageUrl = getImageUrl(
     data.banner.proxy_url || data.image.proxy_url,
     data.banner.image_path || data.image.image_path,
-    '800/400',
+    '700/300',
   );
 
   return (
@@ -79,34 +79,39 @@ const MarketCard3 = ({
       style={
         !!data?.is_vendor_closed
           ? {
-              ...styles.mainTouchContainer,
-              ...getScaleTransformationStyle(scaleInAnimated),
-              backgroundColor: isDarkMode
-                ? colors.whiteOpacity15
-                : getColorCodeWithOpactiyNumber(
-                    colors.textGreyLight.substring(1),
-                    20,
-                  ),
-            }
+            ...styles.mainTouchContainer,
+            ...getScaleTransformationStyle(scaleInAnimated),
+            backgroundColor: isDarkMode
+              ? colors.whiteOpacity15
+              : getColorCodeWithOpactiyNumber(
+                colors.textGreyLight.substring(1),
+                20,
+              ),
+          }
           : {
-              ...styles.mainTouchContainer,
-              ...getScaleTransformationStyle(scaleInAnimated),
-            }
+            ...styles.mainTouchContainer,
+            ...getScaleTransformationStyle(scaleInAnimated),
+          }
       }
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       <View>
         {!!data?.is_vendor_closed ? (
           <Grayscale>
-            <View style={{justifyContent: 'center'}}>
+            <View style={{ justifyContent: 'center' }}>
               <FastImage
-                source={{uri: imageUrl, priority: FastImage.priority.high}}
+                source={{
+                  uri: imageUrl, 
+                  priority: FastImage.priority.high,
+                  cache: FastImage.cacheControl.web,
+                }}
                 style={{
                   ...styles.mainImage,
                   ...fastImageStyle,
                   opacity: 0.8,
                 }}
-                resizeMode={FastImage.resizeMode.cover}></FastImage>
+                resizeMode={FastImage.resizeMode.cover}
+                />
               <Text style={styles.currentlyUnavailable}>
                 {strings.CURRENTLYUNAVAILABLE}
               </Text>
@@ -114,12 +119,17 @@ const MarketCard3 = ({
           </Grayscale>
         ) : (
           <FastImage
-            source={{uri: imageUrl, priority: FastImage.priority.high}}
+            source={{
+              uri: imageUrl, 
+              priority: FastImage.priority.high,
+              cache: FastImage.cacheControl.web
+            }}
             style={{
               ...styles.mainImage,
               ...fastImageStyle,
             }}
-            resizeMode={FastImage.resizeMode.cover}></FastImage>
+            resizeMode={FastImage.resizeMode.cover}
+            />
         )}
 
         {!!appData?.profile?.preferences?.is_hyperlocal && (
@@ -139,25 +149,25 @@ const MarketCard3 = ({
                 color: data?.show_slot
                   ? colors.green
                   : data?.is_vendor_closed
-                  ? colors.redB
-                  : colors.green,
+                    ? colors.redB
+                    : colors.green,
               }}>
               {data?.show_slot
                 ? strings.OPEN
                 : data?.is_vendor_closed
-                ? strings.CLOSE
-                : strings.OPEN}
+                  ? strings.CLOSE
+                  : strings.OPEN}
             </Text>
           </View>
         )}
       </View>
-      <View style={{padding: moderateScale(8)}}>
+      <View style={{ padding: moderateScale(8) }}>
         <View style={styles.descView}>
           <Text
             numberOfLines={1}
             style={
               isDarkMode
-                ? [styles.categoryText, {color: MyDarkTheme.colors.text}]
+                ? [styles.categoryText, { color: MyDarkTheme.colors.text }]
                 : styles.categoryText
             }>
             {data.name}
@@ -222,7 +232,7 @@ const MarketCard3 = ({
                   flexDirection: 'row',
                   alignItems: 'center',
                 }}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Image
                     style={{
                       tintColor: data?.is_vendor_closed
@@ -303,12 +313,12 @@ const MarketCard3 = ({
   );
 };
 
-export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
+export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme }) {
   const styles = StyleSheet.create({
     mainTouchContainer: {
       borderRadius: moderateScale(10),
       shadowColor: '#000',
-      shadowOffset: {width: 0, height: 0},
+      shadowOffset: { width: 0, height: 0 },
       shadowOpacity: 0.15,
       shadowRadius: 1.84,
       elevation: 2,
