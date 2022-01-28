@@ -37,6 +37,7 @@ export function homeData(data = {}, headers = {}, isShortCode = false) {
 }
 
 export function onGlobalSearch(query = '', data = {}, headers = {}) {
+  console.log("search global")
   return new Promise((resolve, reject) => {
     apiPost(SEARCH + query, data, headers)
       .then((response) => {
@@ -49,6 +50,7 @@ export function onGlobalSearch(query = '', data = {}, headers = {}) {
 }
 
 export function onSearchByCategory(query = '', data = {}, headers = {}) {
+  console.log("search by category")
   return new Promise((resolve, reject) => {
     apiPost(SEARCH_BY_CATEGORY + query, data, headers)
       .then((response) => {
@@ -61,6 +63,7 @@ export function onSearchByCategory(query = '', data = {}, headers = {}) {
 }
 
 export function onSearchByVendor(query = '', data = {}, headers = {}) {
+  console.log("search by vendor")
   return new Promise((resolve, reject) => {
     apiPost(SEARCH_BY_VENDOR + query, data, headers)
       .then((response) => {
@@ -73,6 +76,7 @@ export function onSearchByVendor(query = '', data = {}, headers = {}) {
 }
 
 export function onSearchByBrand(query = '', data = {}, headers = {}) {
+  console.log("search by brand")
   return new Promise((resolve, reject) => {
     apiPost(SEARCH_BY_BRAND + query, data, headers)
       .then((response) => {

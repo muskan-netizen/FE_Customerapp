@@ -1538,7 +1538,10 @@ export default function Products({ route, navigation }) {
 
   const renderProduct = ({ item, index }) => {
     return (
-      <>
+      <Animatable.View
+        animation={'slideInUp'}
+        delay={index * 5}
+      >
         <ProductCard3
           data={item}
           index={index}
@@ -1555,7 +1558,7 @@ export default function Products({ route, navigation }) {
           categoryInfo={categoryInfo}
         />
         <View style={styles.horizontalLine} />
-      </>
+      </Animatable.View>
     );
   };
 
@@ -2039,7 +2042,7 @@ export default function Products({ route, navigation }) {
                           color: isDarkMode
                             ? MyDarkTheme.colors.text
                             : colors.white,
-                          // width: width / 1.5,
+                          width: width / 1.5,
                         }}>
                         {categoryInfo?.address || ''}
                       </Text>
@@ -2679,7 +2682,7 @@ export default function Products({ route, navigation }) {
     }
     return (
       <Animatable.View
-        animation={'fadeIn'}
+        animation={'fadeInUp'}
         style={{
           marginTop: moderateScaleVertical(4),
           marginLeft: moderateScale(12),
@@ -2755,7 +2758,10 @@ export default function Products({ route, navigation }) {
   };
   const renderSectionItem = ({ item, index, section }) => {
     return (
-      <View>
+      <Animatable.View
+        animation={'slideInUp'}
+        delay={index * 5}
+      >
         <ProductCard3
           data={item}
           index={index}
@@ -2771,7 +2777,7 @@ export default function Products({ route, navigation }) {
           categoryInfo={categoryInfo}
         />
         <View style={styles.horizontalLine} />
-      </View>
+      </Animatable.View>
     );
   };
 
@@ -3060,7 +3066,9 @@ export default function Products({ route, navigation }) {
           )}
         {/* <View style={{height: moderateScale(10)}} /> */}
         {!!categoryInfo?.is_show_products_with_category ? (
-          <View style={{ flex: 1 }}>
+          <Animatable.View
+
+            style={{ flex: 1 }}>
             <SectionList
               ref={sectionListRef}
               showsVerticalScrollIndicator={false}
@@ -3094,7 +3102,7 @@ export default function Products({ route, navigation }) {
                 <NoDataFound isLoading={state.isLoading} containerStyle={{}} />
               }
             />
-          </View>
+          </Animatable.View>
         ) : (
           <FlatList
             onScroll={onScroll}
