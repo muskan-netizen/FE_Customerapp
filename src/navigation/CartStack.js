@@ -1,6 +1,6 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   AllPaymentMethods,
   Cart,
@@ -27,66 +27,61 @@ import {
   Square,
   Checkout,
   Paystack,
+  ScrollableCategory
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
 import Pagarme from '../Screens/PaymentGateways/Pagarme';
-import {shortCodes} from '../utils/constants/DynamicAppKeys';
+import { shortCodes } from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {
-  const {appData, appStyle} = useSelector((state) => state?.initBoot);
+  const { appData, appStyle } = useSelector((state) => state?.initBoot);
 
   return (
     <Stack.Navigator>
       <Stack.Screen
         name={navigationStrings.CART}
-        component={
-          appStyle?.homePageLayout === 2
-            ? Cart2
-            : appStyle?.homePageLayout === 3
-            ? Cart3
-            : Cart
-        }
-        options={{headerShown: false}}
+        component={Cart3}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.OFFERS}
         component={Offers}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.ALL_PAYMENT_METHODS}
         component={AllPaymentMethods}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.ORDERSUCESS}
         component={OrderSuccess}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.ORDER_DETAIL}
         component={OrderDetail}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.WEBPAYMENTS}
         component={WebPayment}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.VERIFY_ACCOUNT}
         component={VerifyAccount}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.WISHLIST}
         component={appStyle?.homePageLayout === 3 ? Wishlist2 : Wishlist}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
@@ -94,63 +89,68 @@ export default function () {
           appStyle?.homePageLayout === 2
             ? ProductList2
             : appStyle?.homePageLayout === 3
-            ? ProductList3
-            : ProductList
+              ? ProductList3
+              : ProductList
         }
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={
           appStyle?.homePageLayout === 2 ? ProductDetail2 : ProductDetail
         }
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.MOBBEX}
         component={Mobbex}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.PAYFAST}
         component={Payfast}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.YOCO}
         component={Yoco}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.PAYLINK}
         component={Paylink}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.ALL_IN_ONE_PAYMENTS}
         component={AllinonePyments}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.SIMPLIFY}
         component={Simplify}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.SQUARE}
         component={Square}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.PAGARME}
         component={Pagarme}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.PAYSTACK}
         component={Paystack}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={navigationStrings.SCROLLABLE_CATEGORY}
+        component={ScrollableCategory}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

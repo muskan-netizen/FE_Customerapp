@@ -262,6 +262,7 @@ export default function OuterScreen({navigation}) {
 
   useEffect(() => {
     const all_languages = [...languages.all_languages];
+    
     all_languages.forEach((itm, indx) => {
       if (languages?.primary_language?.id === itm?.id) {
         all_languages[indx].isActive = true;
