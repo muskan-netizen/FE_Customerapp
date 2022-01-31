@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Carlitoo/Pods-Carlitoo.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Carlitoo/Pods-available_pods-Carlitoo.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1580076142

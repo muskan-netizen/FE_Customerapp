@@ -34,6 +34,7 @@ export default function VendorDetail3({ navigation, route }) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const userData = useSelector((state) => state?.auth?.userData);
   const [state, setState] = useState({
     vendorId: vendorParams?.item?.id || vendorParams?.id,
     vendordName: vendorParams.name || '',
@@ -68,7 +69,6 @@ export default function VendorDetail3({ navigation, route }) {
       date = localTime - localOffset;
     }
     date = new Date(date);
-    console.log('Converted time: ' + date);
     return date;
   };
 
@@ -87,12 +87,16 @@ export default function VendorDetail3({ navigation, route }) {
   //Naviagtion to specific screen
   const moveToNewScreen = (item) => {
     console.log('item++++ upper', item);
-    
+
     if (!!item?.type && item?.type?.id == 7) {
-      item['pickup_taxi'] = true
-      item['redirect_to'] = item.type.redirect_to
-      navigation.navigate(navigationStrings.ADDADDRESS, {data: item})
-      return;
+      if (!!userData?.auth_token) {
+        item['pickup_taxi'] = true
+        item['redirect_to'] = item.type.redirect_to
+        navigation.navigate(navigationStrings.ADDADDRESS, { data: item })
+        return;
+      }
+      navigation.navigate(navigationStrings.OUTER_SCREEN, {})
+      return
     }
     navigation.navigate(navigationStrings.PRODUCT_LIST, {
       data: {

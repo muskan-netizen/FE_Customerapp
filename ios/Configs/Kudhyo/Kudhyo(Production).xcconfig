@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Kudhyo/Pods-Kudhyo.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Kudhyo/Pods-available_pods-Kudhyo.release.xcconfig"
 
 PROJECT_APPLE_ID = 1601952308
 PROJECT_BUNDLE_ID = com.kudhyo

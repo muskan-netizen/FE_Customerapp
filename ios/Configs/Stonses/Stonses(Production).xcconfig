@@ -1,9 +1,9 @@
-#include "Pods/Target Support Files/Pods-Stonses/Pods-Stonses.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Stonses/Pods-available_pods-Stonses.release.xcconfig"
 
 PROJECT_APPLE_ID =1591222048
 PROJECT_BUNDLE_ID = com.stonses
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 1
+PROJECT_BUILD_NUMBER = 6
 PROJECT_APP_NAME = Stonses
 PROJECT_GOOGLE_CLIENT_ID =183404154774-dgehpa66f420q8doifkj5n8siuq6f5r6.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.183404154774-dgehpa66f420q8doifkj5n8siuq6f5r6

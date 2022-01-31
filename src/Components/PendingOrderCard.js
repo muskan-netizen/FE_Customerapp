@@ -110,9 +110,7 @@ const PendingOrderCard = ({
                   isDarkMode
                     ? [styles.orderLableStyle, {color: MyDarkTheme.colors.text}]
                     : styles.orderLableStyle
-                }>{`${moment(data?.date_time).format('DD MMM,YYYY')} ${moment(
-                data?.date_time,
-              ).format('LT')} `}</Text>
+                }>{`${data?.date_time} `}</Text>
             </View>
           </View>
         </View>

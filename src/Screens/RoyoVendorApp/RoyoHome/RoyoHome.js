@@ -258,7 +258,14 @@ const RoyoHome = (props) => {
     labels: labels,
     datasets: [
       {
-        data: datasets,
+        data: [
+          Math.random() * 100,
+          Math.random() * 100,
+          Math.random() * 100,
+          Math.random() * 100,
+          Math.random() * 100,
+          Math.random() * 100,
+        ],
         colors: [
           (opacity = 1) => `rgba(4, 14, 22, ${opacity})`,
           (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
@@ -363,7 +370,7 @@ const RoyoHome = (props) => {
   const toggleStatus = () => updateState({status: !status});
 
   const handleRefresh = () => {
-    updateState({pageActive: 1, isRefreshing: true});
+    updateState({pageActive: 1, isRefreshing: false});
   };
   const dashboard = (item, index) => {
     const {image, header, text} = item;

@@ -526,9 +526,11 @@ export default function VerifyAccountSecond({navigation, route}) {
                     marginTop: moderateScaleVertical(40),
                     marginHorizontal: moderateScale(20),
                   }}>
-                  <Text style={styles.header}>{'Verify Phone number'}</Text>
+                  <Text style={styles.header}>
+                    {strings.VERIFY_PHONE_NUMBER}
+                  </Text>
                   <Text style={styles.txtSmall}>
-                    {'Enter the code we just sent you on your mobile'}
+                    {strings.ENTER_CODE_SENT_TO_MOBILE}
                   </Text>
                 </View>
                 <View

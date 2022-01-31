@@ -363,14 +363,25 @@ export default ({themeColors, fontFamily}) => {
     },
     viewAllText: {
       color: themeColors.primary_color,
-      fontFamily: fontFamily.regular,
+      fontFamily: fontFamily.medium,
+      fontSize:textScale(12)
     },
     viewAllVeiw: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
       marginHorizontal: moderateScale(16),
-      marginVertical: moderateScaleVertical(24),
+      marginBottom: moderateScaleVertical(24),
+      marginTop: moderateScaleVertical(15),
+    },
+    menuView: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: moderateScale(4),
+      borderWidth: 0.3,
+      borderColor: colors.textGreyB,
+      padding: moderateScale(6),
     },
     hdrRatingTxtView: {
       flexDirection: 'row',

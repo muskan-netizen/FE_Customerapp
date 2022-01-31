@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-UFood/Pods-UFood.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-UFood/Pods-available_pods-UFood.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1577693770

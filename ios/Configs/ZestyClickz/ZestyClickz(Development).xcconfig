@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-ZestyClickz/Pods-ZestyClickz.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-ZestyClickz/Pods-available_pods-ZestyClickz.debug.xcconfig"
 
 PROJECT_APPLE_ID =1589777517
 PROJECT_BUNDLE_ID = com.zestyclickz

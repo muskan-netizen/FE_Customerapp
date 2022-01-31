@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>CodePushDeploymentKey</key>
+    <string>$(CODE_PUSH_KEY)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -20,6 +22,8 @@
 	<string>$(PROJECT_APP_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+    <key>CodePushDeploymentKey</key>
+    <string>$(CODE_PUSH_KEY)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -87,8 +91,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSContactsUsageDescription</key>
+	<string>$(PRODUCT_NAME) requires contacts access to function properly.</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play using while you are hiking</string>
+	<key>NSContactsUsageDescription</key>
+	<string>$(PRODUCT_NAME) requires contacts access to function properly.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like access to your photo gallery to upload photos and set profile picture</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

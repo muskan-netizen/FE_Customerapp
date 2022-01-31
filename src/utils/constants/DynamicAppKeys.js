@@ -184,6 +184,36 @@ const shortCodes = {
   skoop: 'ff2327',
   kudhyo: '300420',
   bharatMove: 'e2ec5e',
+  sofia: 'e2ef1a',
+  mml: '348045',
+  bimol: '94fc5b',
+  vendorspot: 'dfa952',
+  sxm2go: 'b6e6e8',
+  pinkydeli: '66c095',
+  gasgiant: 'e6c73a',
+  releezer: 'c2a130',
+  vendoor: '203685',
+  farmersouq: 'cc6a32',
+  tmgShops: '6da47f',
+  stitchesonsite: '5bdfee',
+  easyu: '20b62b',
+  mozmarcas: '649832',
+  myfiji: 'a69fda',
+  fastmikes: 'd89823',
+  citysuds: 'aaedee',
+  homeTownDelivery: 'c49349',
+  ritenow: '4b0d72',
+  flit: '20c702',
+  ihelp: '6c74a0',
+  ullaz: '1b1c0d',
+  privatepremiumpickups: '8d559d',
+  fidesDelivery: 'd83920',
+  bksTaxi: 'b66295',
+  oxo: '48200b',
+  sijang: '16b184',
+  fairex: '1e3e30',
+  everywhere: 'bc09ef',
+  cannabisClubSF: '351b2b',
 };
 
 const appIds = {
@@ -312,7 +342,7 @@ const appIds = {
     android: 'com.app.yummiidash',
   }),
   yoho: Platform.select({
-    ios: 'com.codebrewlab.yoho',
+    ios: 'com.codebrew.yoho',
     android: 'com.codebrew.yoho',
   }),
   glamsouq: Platform.select({
@@ -512,8 +542,8 @@ const appIds = {
     android: 'com.totum4U',
   }),
   hmc: Platform.select({
-    ios: 'com.hmc.customer',
-    android: 'com.hmc',
+    ios: 'com.eatkareem.hmchalal',
+    android: 'com.eatkareem.hmchalal',
   }),
   groupy: Platform.select({
     ios: 'com.groupy',
@@ -644,7 +674,7 @@ const appIds = {
     android: 'com.sambiga',
   }),
   agrionline: Platform.select({
-    ios: 'com.agrionline',
+    ios: 'com.app.agrionline',
     android: 'com.agrionline',
   }),
   quickquick: Platform.select({
@@ -918,6 +948,126 @@ const appIds = {
   bharatMove: Platform.select({
     ios: 'com.bharatMove',
     android: 'com.bharatMove',
+  }),
+  sofia: Platform.select({
+    ios: 'com.app.sofia',
+    android: 'com.app.sofia',
+  }),
+  mml: Platform.select({
+    ios: 'com.mml',
+    android: 'com.mml',
+  }),
+  bimol: Platform.select({
+    ios: 'com.bimol',
+    android: 'com.bimol',
+  }),
+  vendorspot: Platform.select({
+    ios: 'com.vendorspot',
+    android: 'com.vendorspot',
+  }),
+  sxm2go: Platform.select({
+    ios: 'com.sxm2go',
+    android: 'com.sxm2go',
+  }),
+  pinkydeli: Platform.select({
+    ios: 'com.codebrew.pinkydeli',
+    android: 'com.app.pinkydeli',
+  }),
+  gasgiant: Platform.select({
+    ios: 'com.gasgiant',
+    android: 'com.gasgiant',
+  }),
+  releezer: Platform.select({
+    ios: 'com.releezer',
+    android: 'com.releezer',
+  }),
+  vendoor: Platform.select({
+    ios: 'com.vendoor',
+    android: 'com.vendoor',
+  }),
+  farmersouq: Platform.select({
+    ios: 'com.farmersouq',
+    android: 'com.farmersouq',
+  }),
+  tmgShops: Platform.select({
+    ios: 'com.tmgShops',
+    android: 'com.tmgShops',
+  }),
+  stitchesonsite: Platform.select({
+    ios: 'com.stitchesonsite',
+    android: 'com.stitchesonsite',
+  }),
+  easyu: Platform.select({
+    ios: 'com.easyu',
+    android: 'com.easyu',
+  }),
+  mozmarcas: Platform.select({
+    ios: 'com.mozmarcas',
+    android: 'com.mozmarcas',
+  }),
+  myfiji: Platform.select({
+    ios: 'com.myfiji',
+    android: 'com.myfiji',
+  }),
+  fastmikes: Platform.select({
+    ios: 'com.fastmikes',
+    android: 'com.fastmikes',
+  }),
+  citysuds: Platform.select({
+    ios: 'com.citysuds',
+    android: 'com.citysuds',
+  }),
+  homeTownDelivery: Platform.select({
+    ios: 'com.homeTownDelivery',
+    android: 'com.homeTownDelivery',
+  }),
+  ritenow: Platform.select({
+    ios: 'com.ritenow',
+    android: 'com.ritenow',
+  }),
+  flit: Platform.select({
+    ios: 'com.app.flit',
+    android: 'com.app.flit',
+  }),
+  ihelp: Platform.select({
+    ios: 'com.customer.Ihelp',
+    android: 'com.customer.Ihelp',
+  }),
+  ullaz: Platform.select({
+    ios: 'com.ullaz',
+    android: 'com.ullaz',
+  }),
+  privatepremiumpickups: Platform.select({
+    ios: 'com.privatepremiumpickups',
+    android: 'com.privatepremiumpickups',
+  }),
+  fidesDelivery: Platform.select({
+    ios: 'com.fidesDelivery',
+    android: 'com.fidesDelivery',
+  }),
+  bksTaxi: Platform.select({
+    ios: 'com.bksTaxi',
+    android: 'com.bksTaxi',
+  }),
+  oxo: Platform.select({
+    ios: 'com.oxo',
+    android: 'com.oxo',
+  }),
+  sijang: Platform.select({
+    ios: 'com.sijang',
+    android: 'com.sijang',
+  }),
+  fairex: Platform.select({
+    ios: 'com.fairex',
+    android: 'com.fairex',
+  }),
+  everywhere: Platform.select({
+    ios: 'com.app.everywhere',
+    android: 'com.app.everywhere',
+  }),
+  cannabisClubSF: Platform.select({
+    ios: 'com.cannabisClubSF',
+    android: 'com.cannabisClubSF',
   }),
 };
 

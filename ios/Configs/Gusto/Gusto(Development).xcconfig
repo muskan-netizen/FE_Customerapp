@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Gusto/Pods-Gusto.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Gusto/Pods-available_pods-Gusto.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1588362486
 PROJECT_BUNDLE_ID = com.gusto

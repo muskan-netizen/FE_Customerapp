@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Yogo Food/Pods-Yogo Food.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Yogo Food/Pods-available_pods-Yogo Food.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1576503727

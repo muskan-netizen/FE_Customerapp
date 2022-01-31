@@ -1,8 +1,8 @@
-#include "Pods/Target Support Files/Pods-Somame/Pods-Somame.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Somame/Pods-available_pods-Somame.debug.xcconfig"
 
 PROJECT_APPLE_ID =1590286351
 PROJECT_BUNDLE_ID = com.somame
-PROJECT_APP_VERSION = 1.1
+PROJECT_APP_VERSION = 1.2
 PROJECT_BUILD_NUMBER = 1
 PROJECT_APP_NAME = Somame
 PROJECT_GOOGLE_CLIENT_ID =734430110059-qnnnl8pkvj4gachvgo5glg25dkpifdi9.apps.googleusercontent.com

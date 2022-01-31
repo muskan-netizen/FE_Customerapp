@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Groupy/Pods-Groupy.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Groupy/Pods-available_pods-Groupy.release.xcconfig"
 
 PROJECT_APPLE_ID = 1585359307
 PROJECT_BUNDLE_ID = com.groupy

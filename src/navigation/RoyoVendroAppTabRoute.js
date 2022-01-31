@@ -8,7 +8,11 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import colors from '../styles/colors';
 import imagePath from '../constants/imagePath';
 import fontFamily from '../styles/fontFamily';
-import {moderateScale, moderateScaleVertical, width} from '../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  width,
+} from '../styles/responsiveSize';
 import navigationStrings from './navigationStrings';
 import RoyoOrderScreenStack from './RoyoOrderScreenStack';
 import RoyoOrderProductStack from './RoyoOrderProductStack';
@@ -26,8 +30,11 @@ const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
           <View style={styles.navigatorContainer}>
             <BottomTabBar
               {...props}
-              style={{height: moderateScaleVertical(70) + insets.bottom,paddingHorizontal: width>500?100: 0 }}
-            //   tabStyle={{backgroundColor: barColor,height: moderateScaleVertical(80) + insets.bottom,}}
+              style={{
+                height: moderateScaleVertical(70) + insets.bottom,
+                paddingHorizontal: width > 500 ? 100 : 0,
+              }}
+              //   tabStyle={{backgroundColor: barColor,height: moderateScaleVertical(80) + insets.bottom,}}
               labelPosition="below-icon"
             />
             <View
@@ -83,7 +90,9 @@ const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
             return (
               <Image
                 source={
-                  focused ? imagePath.homeActiveRoyo : imagePath.homeInactiveRoyo
+                  focused
+                    ? imagePath.homeActiveRoyo
+                    : imagePath.homeInactiveRoyo
                 }
               />
             );
@@ -94,9 +103,7 @@ const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
                 style={{
                   color: colors.white,
                   fontSize: 14,
-                  fontFamily: focused
-                    ? fontFamily.bold
-                    : fontFamily.regular,
+                  fontFamily: focused ? fontFamily.bold : fontFamily.regular,
                   paddingVertical: moderateScale(8),
                 }}>
                 Home
@@ -110,14 +117,16 @@ const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
       <Tab.Screen
         name={navigationStrings.ROYO_VENDOR_ORDER}
         // component={RoyoOrder}
-        component = {RoyoOrderScreenStack}
+        component={RoyoOrderScreenStack}
         options={{
           headerShown: false,
           tabBarIcon: ({focused}) => {
             return (
               <Image
                 source={
-                  focused ? imagePath.orderActiveRoyo : imagePath.orderInActiveRoyo
+                  focused
+                    ? imagePath.orderActiveRoyo
+                    : imagePath.orderInActiveRoyo
                 }
               />
             );
@@ -128,9 +137,7 @@ const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
                 style={{
                   color: colors.white,
                   fontSize: 14,
-                  fontFamily: focused
-                    ? fontFamily.bold
-                    : fontFamily.regular,
+                  fontFamily: focused ? fontFamily.bold : fontFamily.regular,
                   paddingVertical: moderateScale(8),
                 }}>
                 Orders
@@ -163,9 +170,7 @@ const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
                 style={{
                   color: colors.white,
                   fontSize: 14,
-                  fontFamily: focused
-                    ? fontFamily.bold
-                    : fontFamily.regular,
+                  fontFamily: focused ? fontFamily.bold : fontFamily.regular,
                   paddingVertical: moderateScale(8),
                 }}>
                 Product
@@ -184,7 +189,9 @@ const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
             return (
               <Image
                 source={
-                  focused ? imagePath.accountActiveRoyo : imagePath.accountInactiveRoyo
+                  focused
+                    ? imagePath.accountActiveRoyo
+                    : imagePath.accountInactiveRoyo
                 }
               />
             );
@@ -195,9 +202,7 @@ const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
                 style={{
                   color: colors.white,
                   fontSize: 14,
-                  fontFamily: focused
-                    ? fontFamily.bold
-                    : fontFamily.regular,
+                  fontFamily: focused ? fontFamily.bold : fontFamily.regular,
                   paddingVertical: moderateScale(8),
                 }}>
                 Account
@@ -226,7 +231,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     // backgroundColor: 'transparent',
-    backgroundColor: colors.themeColor2
+    backgroundColor: colors.themeColor2,
   },
 
   navigator: {

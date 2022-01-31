@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Yeboy/Pods-Yeboy.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Yeboy/Pods-available_pods-Yeboy.release.xcconfig"
 
 PROJECT_APPLE_ID =1595573444
 PROJECT_BUNDLE_ID =com.yeboy

@@ -26,6 +26,7 @@ import {MyDarkTheme} from '../styles/theme';
 import BlurImages from './BlurImages';
 import {
   checkEvenOdd,
+  getColorCodeWithOpactiyNumber,
   getImageUrl,
   getScaleTransformationStyle,
   pressInAnimation,
@@ -70,26 +71,46 @@ const MarketCard3 = ({
     data.banner.image_path || data.image.image_path,
     '800/400',
   );
+
   return (
     <TouchableOpacity
       activeOpacity={1}
       onPress={onPress}
-      style={{
-        ...styles.mainTouchContainer,
-        ...getScaleTransformationStyle(scaleInAnimated),
-      }}
+      style={
+        !!data?.is_vendor_closed
+          ? {
+              ...styles.mainTouchContainer,
+              ...getScaleTransformationStyle(scaleInAnimated),
+              backgroundColor: isDarkMode
+                ? colors.whiteOpacity15
+                : getColorCodeWithOpactiyNumber(
+                    colors.textGreyLight.substring(1),
+                    20,
+                  ),
+            }
+          : {
+              ...styles.mainTouchContainer,
+              ...getScaleTransformationStyle(scaleInAnimated),
+            }
+      }
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       <View>
         {!!data?.is_vendor_closed ? (
           <Grayscale>
-            <FastImage
-              source={{uri: imageUrl, priority: FastImage.priority.high}}
-              style={{
-                ...styles.mainImage,
-                ...fastImageStyle,
-              }}
-              resizeMode={FastImage.resizeMode.cover}></FastImage>
+            <View style={{justifyContent: 'center'}}>
+              <FastImage
+                source={{uri: imageUrl, priority: FastImage.priority.high}}
+                style={{
+                  ...styles.mainImage,
+                  ...fastImageStyle,
+                  opacity: 0.8,
+                }}
+                resizeMode={FastImage.resizeMode.cover}></FastImage>
+              <Text style={styles.currentlyUnavailable}>
+                {strings.CURRENTLYUNAVAILABLE}
+              </Text>
+            </View>
           </Grayscale>
         ) : (
           <FastImage
@@ -101,7 +122,7 @@ const MarketCard3 = ({
             resizeMode={FastImage.resizeMode.cover}></FastImage>
         )}
 
-        {!appData?.profile?.preferences?.is_hyperlocal && (
+        {!!appData?.profile?.preferences?.is_hyperlocal && (
           <View
             style={{
               ...styles.ratingView,
@@ -142,7 +163,7 @@ const MarketCard3 = ({
             {data.name}
           </Text>
 
-          {data?.product_avg_average_rating && (
+          {!!data?.product_avg_average_rating && (
             <View style={styles.ratingView}>
               <Text
                 style={{
@@ -165,7 +186,7 @@ const MarketCard3 = ({
             </View>
           )}
         </View>
-        {data?.categoriesList ? (
+        {!!data?.categoriesList ? (
           <Text
             numberOfLines={1}
             style={{
@@ -204,9 +225,12 @@ const MarketCard3 = ({
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Image
                     style={{
-                      tintColor: themeColors.primary_color,
+                      tintColor: data?.is_vendor_closed
+                        ? colors.black
+                        : themeColors.primary_color,
                       width: moderateScale(12),
                       height: moderateScale(12),
+                      opacity: data?.is_vendor_closed ? 0.5 : 1,
                     }}
                     resizeMode="contain"
                     source={imagePath.location2}
@@ -230,9 +254,12 @@ const MarketCard3 = ({
                     }}>
                     <Image
                       style={{
-                        tintColor: themeColors.primary_color,
+                        tintColor: data?.is_vendor_closed
+                          ? colors.black
+                          : themeColors.primary_color,
                         width: moderateScale(12),
                         height: moderateScale(12),
+                        opacity: data?.is_vendor_closed ? 0.5 : 1,
                       }}
                       resizeMode="contain"
                       source={imagePath.icTime2}
@@ -240,8 +267,6 @@ const MarketCard3 = ({
                     <Text numberOfLines={1} style={styles.distanceTimeStyle}>
                       {checkEvenOdd(data?.timeofLineOfSightDistance)}-
                       {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
-                      {''}
-                      {strings.MINS}
                     </Text>
                   </View>
                 )}
@@ -260,27 +285,19 @@ const MarketCard3 = ({
               </Text>
             ) : null} */}
           </View>
-
-          {!!appData?.profile?.preferences?.is_hyperlocal && (
-            <Text
-              style={{
-                ...commonStyles.mediumFont14Normal,
-                fontSize: textScale(10),
-                textAlign: 'left',
-                color: data?.show_slot
-                  ? colors.green
-                  : data?.is_vendor_closed
-                  ? colors.redB
-                  : colors.green,
-              }}>
-              {data?.show_slot
-                ? strings.OPEN
-                : data?.is_vendor_closed
-                ? strings.CLOSE
-                : strings.OPEN}
-            </Text>
-          )}
         </View>
+        {!!data?.closed_store_order_scheduled ? (
+          <Text
+            style={{
+              ...commonStyles.mediumFont14Normal,
+              fontSize: textScale(10),
+              textAlign: 'left',
+              color: colors.redB,
+              marginTop: moderateScaleVertical(4),
+            }}>
+            {strings.WE_ARE_NOT_ACCEPTING} {data?.delaySlot}{' '}
+          </Text>
+        ) : null}
       </View>
     </TouchableOpacity>
   );
@@ -342,6 +359,13 @@ export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
       fontFamily: fontFamily.regular,
       marginHorizontal: moderateScale(5),
       textAlign: 'left',
+    },
+    currentlyUnavailable: {
+      position: 'absolute',
+      alignSelf: 'center',
+      fontSize: textScale(16),
+      color: colors.white,
+      fontFamily: fontFamily?.bold,
     },
   });
   return styles;

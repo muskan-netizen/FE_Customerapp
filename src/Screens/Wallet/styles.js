@@ -1,14 +1,15 @@
-import {StyleSheet} from 'react-native';
-import {color} from 'react-native-reanimated';
+import { I18nManager, StyleSheet } from 'react-native';
+import { color } from 'react-native-reanimated';
 import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
 } from '../../styles/responsiveSize';
 import commonStylesFun from '../../styles/commonStyles';
 
-export default ({fontFamily, themeColors}) => {
-  const commonStyles = commonStylesFun({fontFamily});
+export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
+  const commonStyles = commonStylesFun({ fontFamily });
   const styles = StyleSheet.create({
     availableBalanceCon: {
       flexDirection: 'row',
@@ -40,15 +41,15 @@ export default ({fontFamily, themeColors}) => {
     addMoneybtn: {
       width: moderateScale(100),
       backgroundColor: themeColors?.primary_color,
-      padding: moderateScaleVertical(10),
-      marginHorizontal: moderateScaleVertical(10),
+      padding: moderateScaleVertical(8),
+      marginHorizontal: moderateScaleVertical(8),
       borderRadius: moderateScale(20),
       marginTop: moderateScale(18),
       justifyContent: 'center',
       flexDirection: 'row',
     },
     addMoneyText: {
-      fontSize: moderateScale(12),
+      fontSize: moderateScale(11),
       fontFamily: fontFamily.medium,
       color: themeColors?.secondary_color,
     },
@@ -109,6 +110,39 @@ export default ({fontFamily, themeColors}) => {
       flex: 0.2,
       justifyContent: 'center',
     },
+    nameTextStyle: {
+      fontSize: textScale(12),
+      marginLeft: moderateScale(14),
+      fontFamily: fontFamily.medium
+    },
+    textInputStyle: {
+      flex: 1,
+      opacity: 0.7,
+      color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7,
+      fontFamily: fontFamily.medium,
+      fontSize: textScale(14),
+      paddingHorizontal: 10,
+      paddingTop: 0,
+      paddingBottom: 0,
+      textAlign: I18nManager.isRTL ? 'right' : 'left',
+    },
+    textInputView: {
+      flexDirection: 'row',
+      height: moderateScaleVertical(49),
+      color: colors.white,
+      borderWidth: 1,
+      borderRadius: 13,
+      borderColor: colors.borderLight,
+      borderBottomColor: isDarkMode
+        ? MyDarkTheme.colors.text
+        : colors.lightGreyBorder,
+      paddingHorizontal: moderateScale(12)
+    },
+    headingStyle: {
+      fontSize: textScale(14),
+      fontFamily: fontFamily.medium,
+      marginBottom: moderateScaleVertical(6)
+    }
   });
   return styles;
 };

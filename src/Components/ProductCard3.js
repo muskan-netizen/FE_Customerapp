@@ -29,6 +29,8 @@ import {
   pressOutAnimation,
 } from '../utils/helperFunctions';
 
+let numberOfHits = [];
+
 const ProductCard3 = ({
   data = {},
   onPress = () => { },
@@ -44,13 +46,26 @@ const ProductCard3 = ({
   categoryInfo = '',
   businessType,
 }) => {
-  console.log("item data++", data)
+  // console.log('item data++', data);
   // data['qty'] = 1
   const [state, setState] = useState({
     selectedIndex: -1,
     selectedIndexForCartIcon: -1,
+    isVisibleTextSlideUp: false,
+    qtyText: '1',
+    isVisibleText: true,
+    disabledBtn: false,
+    isIncrement: true,
   });
-  const { selectedIndex, selectedIndexForCartIcon } = state;
+  const {
+    selectedIndex,
+    selectedIndexForCartIcon,
+    isVisibleText,
+    qtyText,
+    isVisibleTextSlideUp,
+    disabledBtn,
+    isIncrement,
+  } = state;
 
   var totalProductQty = 0;
   if (data?.check_if_in_cart_app) {
@@ -87,15 +102,120 @@ const ProductCard3 = ({
     updateState({ selectedIndex: i });
   };
 
+  useEffect(() => {
+    updateState({ qtyText: data?.qty || totalProductQty });
+  }, []);
+
+  useEffect(() => {
+    updateState({ qtyText: data?.qty || totalProductQty });
+  }, [data?.qty]);
+
   const changePositionForCartIcon = () => {
     let i = selectedIndexForCartIcon == -1 ? index : -1;
     updateState({ selectedIndexForCartIcon: i });
   };
 
+  const textAnimateForIncrement = {
+    0: {
+      top: 0,
+    },
+    0.5: {
+      top: -3,
+      height: 20,
+    },
+    1: {
+      top: -50,
+      height: 20,
+    },
+  };
+
+  const textAnimateForIncrement_ = {
+    0: {
+      top: 50,
+      height: 0,
+    },
+    0.5: {
+      top: 30,
+      height: 0,
+    },
+    1: {
+      top: 9,
+      height: 20,
+    },
+  };
+
+  const textAnimateForDecrement = {
+    0: {
+      top: 9,
+      height: 0,
+    },
+    0.5: {
+      top: 20,
+      height: 0,
+    },
+    1: {
+      top: 35,
+      height: 20,
+    },
+  };
+
+  const textAnimateForDecrement_ = {
+    0: {
+      top: -50,
+      height: 0,
+    },
+    0.5: {
+      top: -3,
+      height: 0,
+    },
+    1: {
+      top: 9,
+      height: 20,
+    },
+  };
+
+  const initAnimation = async () => {
+    updateState({ disabledBtn: true });
+    console.log('checking text >>>>', numberOfHits[0]);
+    updateState({ isVisibleTextSlideUp: true });
+    updateState({ qtyText: Number(numberOfHits[0]) + 1 });
+
+    await setTimeout(() => {
+      updateState({ isVisibleText: false, isVisibleTextSlideUp: false });
+      updateState({ isVisibleText: true });
+    }, 250);
+    await setTimeout(() => {
+      numberOfHits.shift();
+    }, 200);
+    setTimeout(() => {
+      if (numberOfHits.length > 0) {
+        initAnimation();
+      }
+    }, 800);
+    setTimeout(() => {
+      updateState({ disabledBtn: false });
+    }, 300);
+
+    return;
+    numberOfHits.forEach((el, index) => {
+      console.log('checking text >>>>', el);
+      updateState({ isVisibleTextSlideUp: true });
+      updateState({ qtyText: el });
+
+      setTimeout(() => {
+        updateState({ isVisibleText: false });
+        updateState({ isVisibleText: true });
+        updateState({ isVisibleTextSlideUp: false });
+      }, 500);
+      if (numberOfHits.length === index + 1) {
+        numberOfHits = [];
+      }
+    });
+  };
+
   let htmlText = data?.translation[0]?.body_html || null;
 
   let typeId = data?.category?.category_detail?.type_id;
-
   return (
     <Animatable.View
       // animation={index > 8 ? '' : 'fadeInUp'}
@@ -133,26 +253,27 @@ const ProductCard3 = ({
           >
             {/* Title View */}
             <View>
-              {data && !!data?.tags && data?.tags.length > 0 ?
+              {data && !!data?.tags && data?.tags.length > 0 ? (
                 <View>
-                  {!!data.tags[0]?.tag?.icon ? <Image
-                    source={{
-                      uri: getIconImage(
-                        data.tags[0]?.tag?.icon?.image_fit,
-                        data?.tags[0]?.tag?.icon?.image_path,
-                        '50/50',
-                      ),
-                    }}
-                    style={{
-                      marginLeft: moderateScale(1),
-                      marginBottom: moderateScale(5),
-                      width: moderateScale(17),
-                      height: moderateScale(17),
-                    }}
-                  /> : null}
+                  {!!data.tags[0]?.tag?.icon ? (
+                    <Image
+                      source={{
+                        uri: getIconImage(
+                          data.tags[0]?.tag?.icon?.image_fit,
+                          data?.tags[0]?.tag?.icon?.image_path,
+                          '50/50',
+                        ),
+                      }}
+                      style={{
+                        marginLeft: moderateScale(1),
+                        marginBottom: moderateScale(5),
+                        width: moderateScale(17),
+                        height: moderateScale(17),
+                      }}
+                    />
+                  ) : null}
                 </View>
-                : null
-              }
+              ) : null}
               <Text
                 // numberOfLines={1}
                 style={{
@@ -314,12 +435,14 @@ const ProductCard3 = ({
                     marginTop:
                       selectedIndex == index ? moderateScaleVertical(8) : 0,
                     alignItems: 'center',
+                    // backgroundColor: 'red',
                   }}>
                   {(!!data?.check_if_in_cart_app &&
                     data?.check_if_in_cart_app.length > 0) ||
                     !!data?.qty ||
                     totalProductQty ? (
                     <View
+                      pointerEvents={!!categoryInfo?.is_vendor_closed && !!categoryInfo?.closed_store_order_scheduled !== 1 ? 'none' : 'auto'}
                       style={{
                         ...styles.addBtnStyle,
                         paddingVertical: 0,
@@ -335,7 +458,17 @@ const ProductCard3 = ({
                       }}>
                       <TouchableOpacity
                         disabled={selectedItemID == data?.id}
-                        onPress={onDecrement}
+                        onPress={() => {
+                          updateState({ ...state, isIncrement: false });
+                          if (!disabledBtn) {
+                            const isEnabled = numberOfHits.length === 0;
+                            numberOfHits.push(data?.qty || totalProductQty);
+                            if (isEnabled) {
+                              initAnimation();
+                            }
+                            onDecrement();
+                          }
+                        }}
                         activeOpacity={0.8}
                         hitSlop={hitSlopProp}>
                         <Text
@@ -347,7 +480,12 @@ const ProductCard3 = ({
                           -
                         </Text>
                       </TouchableOpacity>
-                      <View>
+                      <Animatable.View
+                        style={{
+                          // backgroundColor: 'red',
+                          // height: 30,
+                          overflow: 'hidden',
+                        }}>
                         {selectedItemID == data?.id && btnLoader ? (
                           <UIActivityIndicator
                             size={moderateScale(18)}
@@ -361,21 +499,47 @@ const ProductCard3 = ({
                           //     size={moderateScale(18)}
                           //     color={themeColors.primary_color}
                           //   /> */}
-                          <Text
-                            style={{
-                              fontFamily: fontFamily.bold,
-                              fontSize: moderateScale(16),
-                              color: themeColors.primary_color,
-                            }}>
-                            {data?.qty || totalProductQty}
-                          </Text>
+                          <Animatable.View style={{ flex: 1 }}>
+                            {isVisibleText ? (
+                              <Animatable.Text
+                                animation={
+                                  isIncrement
+                                    ? isVisibleTextSlideUp
+                                      ? textAnimateForIncrement
+                                      : textAnimateForIncrement_
+                                    : isVisibleTextSlideUp
+                                      ? textAnimateForDecrement
+                                      : textAnimateForDecrement_
+                                }
+                                duration={150}
+                                style={{
+                                  fontFamily: fontFamily.bold,
+                                  fontSize: moderateScale(16),
+                                  color: themeColors.primary_color,
+                                  height: 100,
+                                }}>
+                                {/* {qtyText || data?.qty || totalProductQty} */}
+                                {qtyText}
+                              </Animatable.Text>
+                            ) : null}
+                          </Animatable.View>
                         )}
-                      </View>
+                      </Animatable.View>
                       <TouchableOpacity
                         disabled={selectedItemID == data?.id}
                         activeOpacity={0.8}
                         hitSlop={hitSlopProp}
-                        onPress={onIncrement}>
+                        onPress={() => {
+                          updateState({ ...state, isIncrement: true });
+                          if (!disabledBtn) {
+                            const isEnabled = numberOfHits.length === 0;
+                            numberOfHits.push(data?.qty || totalProductQty);
+                            if (isEnabled) {
+                              initAnimation();
+                            }
+                            onIncrement();
+                          }
+                        }}>
                         <Text
                           style={{
                             fontFamily: fontFamily.bold,
@@ -404,7 +568,10 @@ const ProductCard3 = ({
                         ) : (
                           <View>
                             <Text style={styles.addStyleText}>
-                              {strings.ADD}
+                              {strings.ADD}{' '}
+                              {data?.minimum_order_count > 1
+                                ? `(${data?.minimum_order_count})`
+                                : ''}
                             </Text>
                           </View>
                         )}

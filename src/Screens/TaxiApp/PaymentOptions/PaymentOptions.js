@@ -3,7 +3,6 @@ import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
 import Header from '../../../Components/Header';
-import OffersCard2 from '../../../Components/OffersCard2';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';

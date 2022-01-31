@@ -12,13 +12,6 @@ export const hitSlopProp = {
 
 export default ({fontFamily, buttonTextColor}) => {
   const styles = StyleSheet.create({
-    boldFont14: {
-      fontSize: 14,
-      fontFamily: fontFamily.bold,
-    },
-    regularFont13: {fontSize: 13, fontFamily: fontFamily.regular},
-    regularFont16: {fontSize: 16, fontFamily: fontFamily.regular},
-    boldFont16: {fontSize: 16, fontFamily: fontFamily.bold},
     loader: {
       position: 'absolute',
       left: 0,
@@ -90,16 +83,16 @@ export default ({fontFamily, buttonTextColor}) => {
       height: moderateScaleVertical(46),
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: colors.themeColor,
+      backgroundColor: colors.themeMain,
       borderWidth: 1,
-      borderColor: colors.themeColor,
+      borderColor: colors.themeMain,
       borderRadius: 13,
     },
     buttonRectTransparent: {
       height: moderateScaleVertical(46),
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: colors.themeColor,
+      backgroundColor: colors.themeMain,
       borderWidth: 1,
       borderColor: getColorCodeWithOpactiyNumber('1E2428', 20),
       borderRadius: 13,

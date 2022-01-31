@@ -20,8 +20,7 @@ const MultiScreen = (props) => {
     tabTextStyle,
   } = props;
   return (
-    <View
-      style={styles.container}>
+    <View style={styles.container}>
       <View style={{...styles.mainView, ...mainViewStyle}}>
         {screenName.map((value, index) => {
           return (

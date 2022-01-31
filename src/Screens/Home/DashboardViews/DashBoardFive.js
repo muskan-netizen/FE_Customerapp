@@ -48,6 +48,13 @@ import staticStrings from '../../../constants/staticStrings';
 import imagePath from '../../../constants/imagePath';
 import {appIds} from '../../../utils/constants/DynamicAppKeys';
 import DeviceInfo from 'react-native-device-info';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+import {string} from 'is_js';
 
 export default function DashBoardFive({
   handleRefresh = () => {},
@@ -57,23 +64,29 @@ export default function DashBoardFive({
   onPressCategory = () => {},
   navigation = {},
   toggleData = {},
+  onVendorFilterSeletion = () => {},
 }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+
+  const {appData, themeColors, appStyle} = useSelector(
+    (state) => state?.initBoot,
+  );
+
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
     isVendorColumnList: false,
     vendorsData: [],
+    showMenu: false,
+    currSelectedFilter: null,
   });
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  const {appData, themeColors, appStyle} = useSelector(
-    (state) => state?.initBoot,
-  );
+
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   const allCategory = appMainData?.categories;
@@ -81,7 +94,7 @@ export default function DashBoardFive({
     allCategory &&
     allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
   // const {bannerRef} = useRef();
-  const {slider1ActiveSlide, vendorsData} = state;
+  const {slider1ActiveSlide, vendorsData, showMenu} = state;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
 
@@ -99,8 +112,30 @@ export default function DashBoardFive({
       vendorsData: [],
     });
   }, [appMainData?.vendors]);
+  const {currSelectedFilter} = state;
 
   console.log('app main data', appMainData);
+
+  const onSelectedFilter = (selectedFilter) => {
+    updateState({showMenu: false, currSelectedFilter: selectedFilter});
+    onVendorFilterSeletion(selectedFilter);
+  };
+
+  const homeAllFilters = () => {
+    let homeFilter = [
+      {id: 1, type: strings.OPEN},
+      {id: 2, type: strings.CLOSE},
+      {id: 3, type: strings.BESTSELLER},
+    ];
+    if (appData?.profile?.preferences?.is_hyperlocal) {
+      homeFilter.push({id: 4, type: strings.NEAR_BY});
+    } else {
+      if (homeFilter.length > 3) {
+        homeFilter.pop();
+      }
+    }
+    return homeFilter;
+  };
 
   const _renderItem = ({item, index}) => {
     return (
@@ -222,7 +257,6 @@ export default function DashBoardFive({
       '800/600',
     );
     const isSVG = imageURI ? imageURI.includes('.svg') : null;
-    console.log("svg url",imageURI)
     return (
       <TouchableOpacity
         activeOpacity={0.7}
@@ -257,6 +291,7 @@ export default function DashBoardFive({
   };
 
   const onViewAll = (type, data) => {
+    console.log(data, 'type+++++', type);
     navigation.navigate(navigationStrings.VIEW_ALL_DATA, {
       data: data,
       type: type,
@@ -274,6 +309,7 @@ export default function DashBoardFive({
           }}>
           {type}
         </Text>
+
         {!!isViewAll && !!vendorsData && vendorsData.length > 1 && (
           <TouchableOpacity onPress={() => onViewAll(type, data)}>
             <Text style={styles.viewAllText}>{strings.VIEW_ALL}</Text>
@@ -391,10 +427,84 @@ export default function DashBoardFive({
     );
   }
 
-  console.log(
-    'themeColors.primary_colorthemeColors.primary_color',
-    themeColors.primary_color,
-  );
+  const vendorHeader = () => {
+    return (
+      <View>
+        <View style={styles.viewAllVeiw}>
+          <Text
+            style={{
+              ...styles.exploreStoresTxt,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              marginTop: 0,
+            }}>
+            {strings.EXPLORE_STORES}{' '}
+            {appData?.profile?.preferences?.vendors_nomenclature}
+          </Text>
+
+          {!!vendorsData && vendorsData.length > 1 && (
+            <TouchableOpacity
+              onPress={() => onViewAll('vendor', appMainData.vendors)}>
+              <Text style={styles.viewAllText}>{strings.VIEW_ALL}</Text>
+            </TouchableOpacity>
+          )}
+          <Menu style={{alignSelf: 'flex-end'}}>
+            <MenuTrigger>
+              <View style={styles.menuView}>
+                <Image
+                  style={{
+                    height: moderateScaleVertical(16),
+                    width: moderateScale(16),
+                    tintColor: themeColors.primary_color,
+                  }}
+                  resizeMode="contain"
+                  source={imagePath.sort}
+                />
+                <Text
+                  style={{
+                    fontSize: textScale(12),
+                    marginHorizontal: moderateScale(5),
+                    fontFamily: fontFamily.regular,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  }}>
+                  {!currSelectedFilter
+                    ? strings.RELEVANCE
+                    : currSelectedFilter?.type}
+                </Text>
+              </View>
+            </MenuTrigger>
+            <MenuOptions
+              customStyles={{
+                optionsContainer: {
+                  marginTop: moderateScaleVertical(36),
+                  width: moderateScale(100),
+                },
+              }}>
+              {homeAllFilters()?.map((item, index) => {
+                return (
+                  <View>
+                    <MenuOption
+                      onSelect={() => onSelectedFilter(item)}
+                      key={String(index)}
+                      text={item?.type}
+                      style={{
+                        marginVertical: moderateScaleVertical(5),
+                      }}
+                    />
+                    <View
+                      style={{
+                        borderBottomWidth: 1,
+                        borderBottomColor: colors.greyColor,
+                      }}
+                    />
+                  </View>
+                );
+              })}
+            </MenuOptions>
+          </Menu>
+        </View>
+      </View>
+    );
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -418,17 +528,11 @@ export default function DashBoardFive({
         }>
         <Animatable.View animation={'fadeInUp'} delay={200}>
           {categoriesBanners()}
-          {vendorsData && !!vendorsData?.length && (
+          {
             <>
               <FlatList
                 scrollEnabled={false}
-                ListHeaderComponent={() =>
-                  listHeader(
-                    `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}`,
-                    appMainData.vendors,
-                    true,
-                  )
-                }
+                ListHeaderComponent={vendorHeader}
                 showsVerticalScrollIndicator={false}
                 alwaysBounceVertical={true}
                 // ref={ref}
@@ -469,7 +573,7 @@ export default function DashBoardFive({
                 </View>
               )}
             </>
-          )}
+          }
 
           {businessType !== 'laundry' && (
             <View style={{}}>

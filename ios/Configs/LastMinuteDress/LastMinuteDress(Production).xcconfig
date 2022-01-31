@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-LastMinuteDress/Pods-LastMinuteDress.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-LastMinuteDress/Pods-available_pods-LastMinuteDress.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1580382365

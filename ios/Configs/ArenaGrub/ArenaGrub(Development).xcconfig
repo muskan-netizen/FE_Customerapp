@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-ArenaGrub/Pods-ArenaGrub.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-ArenaGrub/Pods-available_pods-ArenaGrub.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1581101664

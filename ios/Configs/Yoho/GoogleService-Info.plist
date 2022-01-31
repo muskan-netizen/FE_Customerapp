@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>833873568733-f6ta5810bjh6dudnmq0ajqfiapo7ktta.apps.googleusercontent.com</string>
+	<string>986092175873-qlu88gs8bovcapfks82v09rrlcudgcjn.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.833873568733-f6ta5810bjh6dudnmq0ajqfiapo7ktta</string>
+	<string>com.googleusercontent.apps.986092175873-qlu88gs8bovcapfks82v09rrlcudgcjn</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>833873568733-0el1pv9rbqh2hf3i5quotahnd4oi1p08.apps.googleusercontent.com</string>
+	<string>986092175873-c805cd8jtu5vncf9vr3jvh640avdaqe8.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBp8dkvkumAA5jc1qYlSlpUgG78jEPMimI</string>
+	<string>AIzaSyApIXDHi6K55vbjjSJjXIcJyc8_7rbGlfM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>833873568733</string>
+	<string>986092175873</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.codebrewlab.yoho</string>
+	<string>com.codebrew.yoho</string>
 	<key>PROJECT_ID</key>
-	<string>rerak-da539</string>
+	<string>global-incline-313406</string>
 	<key>STORAGE_BUCKET</key>
-	<string>rerak-da539.appspot.com</string>
+	<string>global-incline-313406.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:833873568733:ios:f24ffead590f81a3208c34</string>
+	<string>1:986092175873:ios:d09bcdc33ca9db3c7fb600</string>
 </dict>
 </plist>

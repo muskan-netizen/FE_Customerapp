@@ -1,10 +1,10 @@
-#include "Pods/Target Support Files/Pods-RIDETCI/Pods-RIDETCI.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-RIDETCI/Pods-available_pods-RIDETCI.debug.xcconfig"
 
 PROJECT_APPLE_ID =1591607480
 PROJECT_BUNDLE_ID = com.ridetci
 PROJECT_APP_VERSION = 1.0
 PROJECT_BUILD_NUMBER = 1
-PROJECT_APP_NAME = RIDE TCI
+PROJECT_APP_NAME = TRIP TCI
 PROJECT_GOOGLE_CLIENT_ID =689186019166-4n8s4s58bhddb6tt7i8s2kp3g2a6dk06.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.689186019166-4n8s4s58bhddb6tt7i8s2kp3g2a6dk06
 PROJECT_FACEBOOK_ID =628009495306347

@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-SeaChangeVending/Pods-SeaChangeVending.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-SeaChangeVending/Pods-available_pods-SeaChangeVending.release.xcconfig"
 
 PROJECT_APPLE_ID =1591874254
 PROJECT_BUNDLE_ID = com.customer.seachangevending

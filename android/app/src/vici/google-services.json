@@ -14,27 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "713200187855-ki8l1ks4sb9s20l72b6ub5d5p93bfae1.apps.googleusercontent.com",
+          "client_id": "713200187855-i0ddllvlljo3r4rt568g67ea10co587m.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.app.vici",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "713200187855-od1uv2rb9l0fdumse2nbvdms4c7b5v1f.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.app.vici",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "713200187855-r6cg0r605tmq8odu8e7md5lvi4605f5f.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.app.vici",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
@@ -55,10 +39,11 @@
               "client_type": 3
             },
             {
-              "client_id": "713200187855-qfu9ctfuejrrrmfgd0nggavkh1e4ka4s.apps.googleusercontent.com",
+              "client_id": "713200187855-7f296cvv3dm44pofmh85gkernfio5ied.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.app.vici"
+                "bundle_id": "com.customer.vici",
+                "app_store_id": "1591928191"
               }
             }
           ]

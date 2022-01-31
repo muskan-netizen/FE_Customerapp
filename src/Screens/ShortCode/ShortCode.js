@@ -412,6 +412,7 @@ export default function ShortCode({route, navigation}) {
         case appIds.codiner:
           updateState({
             shortCode: shortCodes.codiner,
+            // shortCode: '245bae',
             isShortcodePrefilled: true,
           });
           break;
@@ -1199,6 +1200,187 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.sofia:
+          updateState({
+            shortCode: shortCodes.sofia,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mml:
+          updateState({
+            shortCode: shortCodes.mml,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bimol:
+          updateState({
+            shortCode: shortCodes.bimol,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.vendorspot:
+          updateState({
+            shortCode: shortCodes.vendorspot,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sxm2go:
+          updateState({
+            shortCode: shortCodes.sxm2go,
+          });
+          break;
+        case appIds.pinkydeli:
+          updateState({
+            shortCode: shortCodes.pinkydeli,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.gasgiant:
+          updateState({
+            shortCode: shortCodes.gasgiant,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.releezer:
+          updateState({
+            shortCode: shortCodes.releezer,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.vendoor:
+          updateState({
+            shortCode: shortCodes.vendoor,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.farmersouq:
+          updateState({
+            shortCode: shortCodes.farmersouq,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.tmgShops:
+          updateState({
+            shortCode: shortCodes.tmgShops,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.stitchesonsite:
+          updateState({
+            shortCode: shortCodes.stitchesonsite,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.easyu:
+          updateState({
+            shortCode: shortCodes.easyu,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mozmarcas:
+          updateState({
+            shortCode: shortCodes.mozmarcas,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.myfiji:
+          updateState({
+            shortCode: shortCodes.myfiji,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.fastmikes:
+          updateState({
+            shortCode: shortCodes.fastmikes,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.citysuds:
+          updateState({
+            shortCode: shortCodes.citysuds,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.homeTownDelivery:
+          updateState({
+            shortCode: shortCodes.homeTownDelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ritenow:
+          updateState({
+            shortCode: shortCodes.ritenow,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.flit:
+          updateState({
+            shortCode: shortCodes.flit,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ihelp:
+          updateState({
+            shortCode: shortCodes.ihelp,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ullaz:
+          updateState({
+            shortCode: shortCodes.ullaz,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.privatepremiumpickups:
+          updateState({
+            shortCode: shortCodes.privatepremiumpickups,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.fidesDelivery:
+          updateState({
+            shortCode: shortCodes.fidesDelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bksTaxi:
+          updateState({
+            shortCode: shortCodes.bksTaxi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.oxo:
+          updateState({
+            shortCode: shortCodes.oxo,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sijang:
+          updateState({
+            shortCode: shortCodes.sijang,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.fairex:
+          updateState({
+            shortCode: shortCodes.fairex,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.everywhere:
+          updateState({
+            shortCode: shortCodes.everywhere,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.cannabisClubSF:
+          updateState({
+            shortCode: shortCodes.cannabisClubSF,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -1234,14 +1416,16 @@ export default function ShortCode({route, navigation}) {
     if (!!res?.primary_language?.id) {
       header = {
         code: shortCode,
+        // code: '245bae',
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        code: shortCode,
+        code: '245bae',
+        // code: shortCode,
       };
     }
-
+    console.log(header, 'header');
     actions
       .initApp({}, header, false, null, null, true)
       .then((res) => {
@@ -1254,6 +1438,8 @@ export default function ShortCode({route, navigation}) {
         homeData(res.data);
       })
       .catch((error) => {
+        console.log(error, 'error>>>error>>error');
+
         updateState({
           isLoading: false,
           changeInShortCode: false,
@@ -1334,6 +1520,7 @@ export default function ShortCode({route, navigation}) {
           currency: res?.currencies?.find((x) => x.is_primary).currency_id,
           language: res?.languages?.find((x) => x.is_primary).language_id,
         },
+        true,
       )
       .then(() => {
         updateState({isLoading: false, LoadingScreen: false});

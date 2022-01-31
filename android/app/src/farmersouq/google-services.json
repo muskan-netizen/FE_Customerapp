@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "45427673518",
+    "project_id": "farmer-souq",
+    "storage_bucket": "farmer-souq.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:45427673518:android:011148e1e5b2e3b6a4a03f",
+        "android_client_info": {
+          "package_name": "com.farmersouq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "45427673518-44siafiq9fbi98di4prhc1lkuokrrs7p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.farmersouq",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "45427673518-iu3barp2vsh10h4ag84bn1aps5baqaaq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.farmersouq",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "45427673518-uiflce7ojph4n8jpd6e967gne02a8a1h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.farmersouq",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "45427673518-b33t4staseh8sstevue3cf5718053fhh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmPcZsCh-oEzv4pTZgdb5o2JlIvpEcPT8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "45427673518-b33t4staseh8sstevue3cf5718053fhh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "45427673518-bsesgspncn7bqvv12lgh4h94us93ss7s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.farmersouq"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

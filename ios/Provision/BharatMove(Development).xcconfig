@@ -1,9 +1,9 @@
-#include "Pods/Target Support Files/Pods-BharatMove/Pods-BharatMove.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-BharatMove/Pods-available_pods-BharatMove.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1601973910
 PROJECT_BUNDLE_ID = com.bharatMove
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 1
+PROJECT_BUILD_NUMBER = 3
 PROJECT_APP_NAME = BharatMove
 PROJECT_GOOGLE_CLIENT_ID = 849310702710-n2i1tu5cgtf829drclcu8f4cv85ohmht.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.849310702710-n2i1tu5cgtf829drclcu8f4cv85ohmht
