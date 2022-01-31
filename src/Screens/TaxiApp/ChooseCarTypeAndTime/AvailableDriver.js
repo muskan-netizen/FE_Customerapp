@@ -31,6 +31,7 @@ export default function AvailableDriver({
   _select,
   onPressAvailableVendor,
 }) {
+  console.log(availableCarList, 'availableCarListavailableCarList');
   const viewRef2 = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -126,7 +127,7 @@ export default function AvailableDriver({
                 fontSize: textScale(10),
                 textAlign: 'left',
               }}>
-              {item?.translation[0]?.title} ride{' '}
+              {item?.translation[0]?.meta_description}
             </Text>
           </View>
         </View>

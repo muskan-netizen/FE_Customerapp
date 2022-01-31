@@ -168,7 +168,6 @@ export default function SelectCarModalView({
                             fontSize: textScale(12),
                           },
                         ]
-
                     // isDarkMode
                     //   ? [styles.priceStyle, {color: MyDarkTheme.colors.text}]
                     //   : styles.priceStyle
