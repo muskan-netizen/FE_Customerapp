@@ -54,7 +54,6 @@ export default function VendorDetail({ navigation, route }) {
   const convertLocalDateToUTCDate = (date, toUTC) => {
     date = new Date(date);
     //Local time converted to UTC
-    console.log('Time: ' + date);
     var localOffset = date.getTimezoneOffset() * 60000;
     var localTime = date.getTime();
     if (toUTC) {
@@ -63,7 +62,6 @@ export default function VendorDetail({ navigation, route }) {
       date = localTime - localOffset;
     }
     date = new Date(date);
-    console.log('Converted time: ' + date);
     return date;
   };
 

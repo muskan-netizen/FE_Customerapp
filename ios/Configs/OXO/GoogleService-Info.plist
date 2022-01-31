@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>684011809494-ir8g5otnsji5frmocb4s35fiktihhhmc.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.684011809494-ir8g5otnsji5frmocb4s35fiktihhhmc</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>684011809494-faet2q42npjhdho4fdqru3umk48b7bmf.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD69Fva1SXHUV6MZZiiqGU8ZEfB8zpJhT4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>684011809494</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.oxo</string>
+	<key>PROJECT_ID</key>
+	<string>oxo-app-28325</string>
+	<key>STORAGE_BUCKET</key>
+	<string>oxo-app-28325.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:684011809494:ios:ba648e7ae8c3ea7a52b777</string>
+</dict>
+</plist>

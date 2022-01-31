@@ -561,13 +561,14 @@ export default function MyOrders({navigation}) {
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
-        leftIcon={
-          appStyle?.homePageLayout === 2
-            ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3
-            ? imagePath.icBackb
-            : imagePath.backArrowCourier
-        }
+        noLeftIcon
+        // leftIcon={
+        //   appStyle?.homePageLayout === 2
+        //     ? imagePath.backArrow
+        //     : appStyle?.homePageLayout === 3
+        //     ? imagePath.icBackb
+        //     : imagePath.backArrowCourier
+        // }
         centerTitle={businessType === 4 ? strings.MYRIDES : strings.MY_ORDERS}
         headerStyle={
           isDarkMode
