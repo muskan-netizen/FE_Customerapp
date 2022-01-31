@@ -814,4 +814,9 @@ Amount`,
   WE_ARE_NOT_ACCEPTING:"We are not accepting orders right now. You can schedule this for",
   CURRENTLYUNAVAILABLE:'Currently Unavailable',
   EXTRA_INSTRUCTION: 'Extra Instruction',
+  YOURDRIVERHASMODIFIED:"Your driver has modified your order",
+  DIFFERENCEAMOUNT:'Difference Amount',
+  APPROVE:'APPROVE',
+  INSUFFICIENT_FUNDS_IN_WALLET_PLEASERECHARGE: 'Insufficient funds in wallet. Please recharge to continue',
+
 };

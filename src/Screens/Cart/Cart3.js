@@ -2564,7 +2564,7 @@ export default function Cart({ navigation, route }) {
   //get footer start
   const getFooter = () => {
     return (
-      <View style={{}}>
+      <View>
         <TextInput
           value={instruction}
           onChangeText={(instruction) => updateState({ instruction })}
