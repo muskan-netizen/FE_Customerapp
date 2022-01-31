@@ -2402,10 +2402,6 @@ dependencies {
     implementation 'com.facebook.fresco:webpsupport:1.+'
     implementation project(':react-native-charts-wrapper')
     
-    // zendesk initalize 
-     api group: 'com.zendesk', name: 'chat', version: '2.2.0'
-     api group: 'com.zendesk', name: 'messaging', version: '4.3.1'
-
 
 
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'

@@ -290,7 +290,7 @@ export default function SearchProductVendorItem({navigation, route}) {
             marginHorizontal: moderateScale(20),
             // backgroundColor: 'black',
           }}
-          // ListEmptyComponent={_listEmptyComponent}
+          //ListEmptyComponent={_listEmptyComponent}
           ItemSeparatorComponent={() => <View style={{height: 30}} />}
         />
       </View>

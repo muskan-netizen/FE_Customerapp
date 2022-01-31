@@ -129,6 +129,11 @@ export default function OrderDetail({navigation, route}) {
   const mapRef = useRef(null);
   const markerRef = useRef(null);
 
+  console.log(
+    cartData?.taxable_amount,
+    'cartData?.taxable_amountcartData?.taxable_amount +++++++',
+  );
+
   const moveToNewScreen =
     (screenName, data = {}) =>
     () => {
@@ -927,6 +932,27 @@ export default function OrderDetail({navigation, route}) {
     );
   };
 
+  // console.log(
+  //   cartData?.total_service_fee,
+  //   'total_service_fee',
+  //   cartData?.total_amount,
+  //   'cartData?.total_amount',
+  //   cartData?.total_delivery_fee,
+  //   'cartData?.total_delivery_fee',
+  //   cartData?.wallet_amount_used,
+  //   'cartData?.wallet_amount_used',
+  //   cartData?.taxable_amount,
+  //   'cartData?.taxable_amount',
+  //   cartData?.loyalty_amount_saved,
+  //   'cartData?.loyalty_amount_saved',
+  //   cartData?.tip_amount,
+  //   'cartData?.tip_amount',
+  //   cartData?.total_discount,
+  //   'cartData?.total_discount',
+  //   cartData?.payable_amount,
+  //   'cartData?.payable_amount',
+  // );
+  Number(cartData?.total_service_fee) + Number(cartData?.taxable_amount);
   const getFooter = () => {
     return (
       <View

@@ -765,7 +765,6 @@ montant`,
   DRIVER: 'Chauffeuse',
   ENETER_YOUR_ADDRESS: "Entrer le nom de l'adresse",
   SUPPORT: 'Support',
-
   NO_CARS_AVAILABLE: 'Aucun livreur n’est disponible pour le moment',
   ORDERACCEPTED: 'Commande acceptée',
   PROCCESSING: 'Votre livreur se dirige vers le restaurant',
@@ -796,4 +795,6 @@ montant`,
   TRANSFER_FUNDS: 'Transfert de crédits',
   WE_ARE_NOT_ACCEPTING:
     "Nous n'acceptons pas de commandes pour le moment. Vous pouvez en programmer pour",
+  CURRENTLYUNAVAILABLE: 'Currently Unavailable',
+
 };
