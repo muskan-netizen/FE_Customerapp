@@ -214,6 +214,8 @@ const shortCodes = {
   fairex: '1e3e30',
   everywhere: 'bc09ef',
   cannabisClubSF: '351b2b',
+  halaTalabat: 'ccc32e',
+  palmettoplus: '007b7b',
 };
 
 const appIds = {
@@ -1068,6 +1070,14 @@ const appIds = {
   cannabisClubSF: Platform.select({
     ios: 'com.cannabisClubSF',
     android: 'com.cannabisClubSF',
+  }),
+  cannabisClubSF: Platform.select({
+    ios: 'com.halaTalabat',
+    android: 'com.halaTalabat',
+  }),
+  palmettoplus: Platform.select({
+    ios: 'com.palmettoplus',
+    android: 'com.palmettoplus',
   }),
 };
 
