@@ -16,6 +16,7 @@ import {
   Vibration,
   View,
   ScrollView,
+  Modal
 } from 'react-native';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import * as Animatable from 'react-native-animatable';
@@ -77,6 +78,7 @@ import Toast from 'react-native-simple-toast';
 import RepeatModal from '../../Components/RepeatModal';
 import DifferentAddOns from '../../Components/DifferentAddOns ';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import FilterComp from '../../Components/FilterComp';
 
 let timeOut = undefined;
 
@@ -86,6 +88,7 @@ let activeIdx = 0;
 
 export default function Products({ route, navigation }) {
   const bottomSheetRef = useRef(null);
+  let selectedFilters = useRef(null)
   // console.log(route.params, 'route.params');
   const { data } = route.params;
   // console.log(data, 'datadatadata');
@@ -194,6 +197,7 @@ export default function Products({ route, navigation }) {
     storeLocalQty: null,
     differentAddsOnsModal: false,
     selectedDiffAdsOnId: 0,
+    isShowFilter: false,
   });
 
   const {
@@ -268,6 +272,7 @@ export default function Products({ route, navigation }) {
     storeLocalQty,
     differentAddsOnsModal,
     selectedDiffAdsOnId,
+    isShowFilter,
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -300,7 +305,7 @@ export default function Products({ route, navigation }) {
         fetchOffers();
       }
       if (isLoadingC) {
-        getAllProducts(true);
+        getAllProductsByCategoryId(true);
       }
     });
     return unsubscribe;
@@ -314,6 +319,8 @@ export default function Products({ route, navigation }) {
   // useEffect(() => {
   //   getAllListItems();
   // }, [pageNo, isRefreshing]);
+
+
 
   const getAllProductTags = () => {
     actions
@@ -351,33 +358,19 @@ export default function Products({ route, navigation }) {
       });
   };
 
-  const getAllListItems = () => {
-    let filterExist =
-      sleectdBrands.length ||
-      selectedVariants.length ||
-      selectedOptions.length ||
-      slectedSortBy.length ||
-      minimumPrice != 0 ||
-      maximumPrice != 50000 ||
-      checkForMaximumPriceChange ||
-      checkForMinimumPriceChange;
-    {
-      filterExist
-        ? updateState({ showFilterSlectedIcon: true })
-        : updateState({ showFilterSlectedIcon: false });
-    }
-
+  const getAllListItems = (pageNo = 1) => {
+    console.log("selected filter", selectedFilters)
     if (data?.vendor) {
       {
-        filterExist
-          ? getAllProductsVendorFilter()
-          : data?.vendorData
-            ? getAllProductsByVendorCategory()
-            : getAllProductsByVendor();
+        !!selectedFilters.current ?
+          newVendorFilter(pageNo) :
+          data?.vendorData
+            ? getAllProductsByVendorCategory(pageNo)
+            : getAllProductsByVendor(pageNo);
       }
     } else {
       {
-        filterExist ? getAllProductsCategoryFilter() : getAllProducts();
+        getAllProductsByCategoryId(pageNo);
       }
     }
   };
@@ -483,6 +476,107 @@ export default function Products({ route, navigation }) {
     });
   };
 
+
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     newVendorFilter()
+  //   }, 5000);
+  // }, [pageNo])
+
+  /**********Get all list items by category filters */
+
+  const onFilterApply = (
+    filterData = {},
+  ) => {
+    selectedFilters.current = filterData
+    updateState({ pageNo: 1 })
+    getAllListItems(1)
+  }
+
+  const allClearFilters = () => {
+    selectedFilters.current = null
+    updateState({ pageNo: 1 })
+    getAllListItems(1)
+  }
+
+  const newVendorFilter = () => {
+    console.log('api hit new vendorFilter', selectedFilters);
+    let data = {};
+    data['variants'] = selectedFilters?.current?.selectedVariants || [];
+    data['options'] = selectedFilters?.current?.selectedOptions || [];
+    data['brands'] = selectedFilters?.current?.sleectdBrands || [];
+    data['order_type'] = selectedFilters?.current?.selectedSorting || 0;
+    data['range'] = `${minimumPrice};${maximumPrice}`;
+    data['vendor_id'] = productListId.id
+    data['limit'] = limit
+    data['page'] = pageNo
+    actions
+      .newVendorFilters(
+        data,
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        console.log('filter vendor res', res);
+        if (res?.data?.vendor?.is_show_products_with_category) {
+          var totalProduct = 1;
+          let filterArray = res?.data?.categories?.map((val) => {
+            let newKey = {
+              ...val,
+              ['data']: val?.products && val.products,
+              title: val?.category && val.category?.translation[0]?.name,
+              totalProduct: totalProduct + val.products.length,
+            };
+            delete newKey['products'];
+            return newKey;
+          });
+          updateState({
+            sectionListData: filterArray,
+            cloneSectionList: filterArray,
+            isLoading: false,
+            isRefreshing: false,
+            categoryInfo: res?.data?.vendor,
+            filterData: res?.data?.filterData,
+            vendorCategories: res?.data?.categories,
+          });
+          console.log(filterArray, 'filterArrayfilterArray');
+          fetchTags(filterArray);
+        } else {
+          // console.log('get product list by vendor id >>>> ', res);
+          if (res?.data) {
+            updateState({
+              isLoading: false,
+              isRefreshing: false,
+              categoryInfo: res?.data?.vendor,
+              filterData: res?.data?.filterData,
+              productListData: res?.data?.vendor?.is_show_products_with_category
+                ? res?.data?.categories[0]?.products
+                : pageNo == 1
+                  ? res.data.products.data
+                  : [...productListData, ...res.data.products.data],
+              vendorCategories: res?.data?.categories,
+              // vendorCategoryItms: res?.data?.categories[0]?.products,
+            });
+          } else {
+            updateState({
+              isLoading: false,
+              isRefreshing: false,
+            });
+          }
+        }
+        if (res?.data) {
+          updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        }
+      })
+      .catch(errorMethod);
+    // }
+  };
+
   /**********Get all list items by category filters */
   const getAllProductsVendorFilter = () => {
     console.log('api hit getAllProductsVendorFilter');
@@ -554,7 +648,7 @@ export default function Products({ route, navigation }) {
   };
 
   /****Get all list items by vendor id */
-  const getAllProductsByVendor = () => {
+  const getAllProductsByVendor = (pageNo) => {
     console.log('api hit getAllProductsByVendor');
     actions
       .getProductByVendorId(
@@ -648,7 +742,7 @@ export default function Products({ route, navigation }) {
   };
 
   /**********Get all list items by category id */
-  const getAllProducts = () => {
+  const getAllProductsByCategoryId = () => {
     console.log('api hit getProductByCategoryId', data);
     actions
       .getProductByCategoryId(
@@ -759,6 +853,7 @@ export default function Products({ route, navigation }) {
     showError(error?.message || error?.error);
   };
 
+  console.log("pageNopageNo", pageNo)
   //Pull to refresh
   const handleRefresh = () => {
     updateState({ pageNo: 1, isRefreshing: true });
@@ -767,6 +862,7 @@ export default function Products({ route, navigation }) {
   //pagination of data
   const onEndReached = ({ distanceFromEnd }) => {
     updateState({ pageNo: pageNo + 1 });
+    getAllListItems(pageNo + 1)
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -823,9 +919,6 @@ export default function Products({ route, navigation }) {
   };
 
   const addSingleItem = async (item, section = null) => {
-    console.log('checking section >>>', section);
-    console.log(item, 'itemitemitemitem=>>>');
-    // return;
 
     if (!!categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot && !categoryInfo?.closed_store_order_scheduled) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
@@ -1619,7 +1712,7 @@ export default function Products({ route, navigation }) {
 
   useEffect(() => {
     if (isLoadingC) {
-      getAllProducts(true);
+      getAllProductsByCategoryId(true);
       if (productListId?.vendor && routeData) {
         fetchOffers();
       }
@@ -2537,6 +2630,17 @@ export default function Products({ route, navigation }) {
             </ScrollView>
           </View>
         )}
+        <View>
+          {/* <TouchableOpacity
+            onPress={onShowHideFilter}
+            style={{
+              alignSelf: 'flex-end',
+              marginRight: moderateScale(16)
+
+            }}>
+            <Image source={imagePath.filter} />
+          </TouchableOpacity> */}
+        </View>
       </View>
     );
   };
@@ -2650,6 +2754,10 @@ export default function Products({ route, navigation }) {
         </SafeAreaView>
       </View>
     );
+  }
+
+  const onShowHideFilter = () => {
+    updateState({ isShowFilter: !isShowFilter })
   }
 
   const onShare = async () => {
@@ -3314,16 +3422,16 @@ export default function Products({ route, navigation }) {
       />
 
       {/* Add new addons and repeat item view */}
-      {!!repeatItems && (
+      {!!repeatItems ?
         <RepeatModal
           data={repeatItems?.item}
           modalHide={() => updateState({ repeatItems: null })}
           onRepeat={onRepeat}
           onAddNew={onAddNew}
         />
-      )}
+        : null}
 
-      {!!differentAddsOns && differentAddsOns.length > 1 && (
+      {!!differentAddsOns && differentAddsOns.length > 1 ?
         <DifferentAddOns
           differentAddsOnsModal={differentAddsOnsModal}
           data={differentAddsOns}
@@ -3335,7 +3443,18 @@ export default function Products({ route, navigation }) {
           btnLoader={btnLoader}
           selectedDiffAdsOnId={selectedDiffAdsOnId}
         />
-      )}
+        : null}
+
+      {isShowFilter ?
+        <FilterComp
+          isDarkMode={isDarkMode}
+          themeColors={themeColors}
+          onFilterApply={onFilterApply}
+          onShowHideFilter={onShowHideFilter}
+          allClearFilters={allClearFilters}
+        /> : null}
+
+
     </View>
   );
 }

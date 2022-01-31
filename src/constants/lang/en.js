@@ -814,4 +814,5 @@ Amount`,
   WE_ARE_NOT_ACCEPTING:"We are not accepting orders right now. You can schedule this for",
   CURRENTLYUNAVAILABLE:'Currently Unavailable',
   EXTRA_INSTRUCTION: 'Extra Instruction',
+  RATING:"Rating",
 };

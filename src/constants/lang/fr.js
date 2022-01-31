@@ -796,5 +796,5 @@ montant`,
   WE_ARE_NOT_ACCEPTING:
     "Nous n'acceptons pas de commandes pour le moment. Vous pouvez en programmer pour",
   CURRENTLYUNAVAILABLE: 'Currently Unavailable',
-
+  RATING:"Rating",
 };
