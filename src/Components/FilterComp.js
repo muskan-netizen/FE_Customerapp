@@ -1,8 +1,8 @@
 //import liraries
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
-
-import { height, moderateScale, moderateScaleVertical } from '../styles/responsiveSize';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import { height, moderateScale, moderateScaleVertical, width } from '../styles/responsiveSize';
 import Modal from 'react-native-modal';
 import strings from '../constants/lang';
 import fontFamily from '../styles/fontFamily';
@@ -51,20 +51,23 @@ const FilterComp = ({
     themeColors,
     onFilterApply = () => { },
     onShowHideFilter = () => { },
-    allClearFilters = () => {}
+    allClearFilters = () => { },
+    selectedSortFilter,
+    onSelectedSortFilter,
+    minimumPrice = 0,
+    maximumPrice = 50000,
+    updateMinMax
 }) => {
 
     const [state, setState] = useState({
-        selectedSorting: null,
         minPrice: 0,
         maxPrice: 50000
     })
-    const { selectedSorting } = state
     const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
     const onDone = () => {
-        let filterData  = {
-            selectedSorting: selectedSorting.labelValue,
+        let filterData = {
+            selectedSorting: selectedSortFilter?.labelValue || 0,
             selectedVariants: [],
             selectedOptions: [],
             sleectdBrands: []
@@ -79,19 +82,24 @@ const FilterComp = ({
         allClearFilters()
     }
 
+    //price range slider functions
+    const _priceChangeHandler = (val) => {
+        updateMinMax(val[0], val[1])
+    };
+
     const sortingView = (val, i) => {
         return (
             <TouchableOpacity
                 activeOpacity={0.6}
                 style={styles.sortingView}
-                onPress={() => updateState({ selectedSorting: val })}
+                onPress={() => onSelectedSortFilter(val)}
             >
                 <Text style={{
                     fontSize: moderateScale(14),
                     fontFamily: fontFamily.medium
                 }}>{val.label}</Text>
                 <Image
-                    source={selectedSorting?.id == val?.id ? imagePath.radioActive : imagePath.radioInActive}
+                    source={selectedSortFilter?.id == val?.id ? imagePath.radioActive : imagePath.radioInActive}
                 />
             </TouchableOpacity>
         )
@@ -141,6 +149,50 @@ const FilterComp = ({
                         {sortFilters.map((val, i) => {
                             return sortingView(val, i)
                         })}
+                        <View style={{
+                            ...styles.horizontalLine,
+                            borderBottomColor: isDarkMode
+                                ? colors.whiteOpacity22
+                                : colors.lightGreyBg,
+                        }} />
+                        <Text style={{
+                            fontSize: moderateScale(16),
+                            fontFamily: fontFamily.bold
+                        }}>Price Range</Text>
+
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: moderateScaleVertical(8) }}>
+                            <Text style={{
+                                fontSize: moderateScale(14),
+                                fontFamily: fontFamily.medium
+                            }}>{minimumPrice}</Text>
+                            <Text style={{
+                                fontSize: moderateScale(14),
+                                fontFamily: fontFamily.medium
+                            }}>{maximumPrice}</Text>
+                        </View>
+                        <View style={{ marginHorizontal: moderateScale(12) }}>
+                            <MultiSlider
+                                values={[minimumPrice, maximumPrice]}
+                                sliderLength={width / 1.2}
+                                onValuesChange={_priceChangeHandler}
+                                containerStyle={{ height: moderateScale(30) }}
+                                min={0}
+                                max={50000}
+                                step={1}
+                                allowOverlap={false}
+                                selectedStyle={{
+                                    ...styles.selectedStyle,
+                                    backgroundColor: themeColors.primary_color,
+                                }}
+                                // Style={{height:40}}
+                                customMarker={() => <View style={{
+                                    ...styles.customMarker,
+                                    backgroundColor: themeColors.primary_color,
+                                }}
+                                />
+                                }
+                            />
+                        </View>
                     </ScrollView>
                     <GradientButton
                         colorsArray={[
@@ -174,6 +226,17 @@ const styles = StyleSheet.create({
         width: '100%',
         borderBottomWidth: 0.5,
         marginVertical: moderateScaleVertical(8)
+    },
+    selectedStyle: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 3,
+    },
+    customMarker: {
+        alignItems: 'center',
+        height: 15,
+        width: 15,
+        borderRadius: 15 / 2,
     },
 });
 

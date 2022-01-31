@@ -198,6 +198,7 @@ export default function Products({ route, navigation }) {
     differentAddsOnsModal: false,
     selectedDiffAdsOnId: 0,
     isShowFilter: false,
+    selectedSortFilter: null,
   });
 
   const {
@@ -273,6 +274,7 @@ export default function Products({ route, navigation }) {
     differentAddsOnsModal,
     selectedDiffAdsOnId,
     isShowFilter,
+    selectedSortFilter
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -298,7 +300,7 @@ export default function Products({ route, navigation }) {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       updateState({ pageNo: 1 });
-      getAllListItems();
+      getAllListItems(1);
       console.log('checking route params >>>>1', productListId);
       console.log(routeData, 'routeData');
       if (productListId?.vendor && routeData) {
@@ -493,14 +495,18 @@ export default function Products({ route, navigation }) {
     updateState({ pageNo: 1 })
     getAllListItems(1)
   }
-
   const allClearFilters = () => {
     selectedFilters.current = null
-    updateState({ pageNo: 1 })
+    updateState({ 
+      pageNo: 1, 
+      selectedSortFilter: null,
+      minimumPrice: 0,
+      maximumPrice: 50000
+     })
     getAllListItems(1)
   }
 
-  const newVendorFilter = () => {
+  const newVendorFilter = (pageNo) => {
     console.log('api hit new vendorFilter', selectedFilters);
     let data = {};
     data['variants'] = selectedFilters?.current?.selectedVariants || [];
@@ -511,8 +517,8 @@ export default function Products({ route, navigation }) {
     data['vendor_id'] = productListId.id
     data['limit'] = limit
     data['page'] = pageNo
-    actions
-      .newVendorFilters(
+    console.log("sending data",data)
+    actions.newVendorFilters(
         data,
         {
           code: appData?.profile?.code,
@@ -712,11 +718,13 @@ export default function Products({ route, navigation }) {
           }
         }
         if (res?.data) {
-          updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+          // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
         }
       })
       .catch(errorMethod);
   };
+
+  console.log("productListData length+++++++", productListData.length)
 
   const fetchTags = (filterArray) => {
     if (filterArray && filterArray.length > 0) {
@@ -2327,6 +2335,7 @@ export default function Products({ route, navigation }) {
                       ? colors.whiteOpacity15
                       : colors.greyColor,
                     height: moderateScaleVertical(37),
+
                   }}
                   searchValue={searchInput}
                   placeholder={strings.SEARCH_ITEM}
@@ -2574,6 +2583,7 @@ export default function Products({ route, navigation }) {
                 ? colors.whiteOpacity15
                 : colors.greyColor,
               height: moderateScaleVertical(37),
+              marginBottom: moderateScaleVertical(16)
             }}
             searchValue={searchInput}
             placeholder={strings.SEARCH_WITHIN_MENU}
@@ -2631,7 +2641,7 @@ export default function Products({ route, navigation }) {
           </View>
         )}
         <View>
-          {/* <TouchableOpacity
+          <TouchableOpacity
             onPress={onShowHideFilter}
             style={{
               alignSelf: 'flex-end',
@@ -2639,7 +2649,7 @@ export default function Products({ route, navigation }) {
 
             }}>
             <Image source={imagePath.filter} />
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -2754,6 +2764,11 @@ export default function Products({ route, navigation }) {
         </SafeAreaView>
       </View>
     );
+  }
+
+
+  const updateMinMax = (min, max) => {
+    updateState({ minimumPrice: min, maximumPrice: max })
   }
 
   const onShowHideFilter = () => {
@@ -3452,6 +3467,11 @@ export default function Products({ route, navigation }) {
           onFilterApply={onFilterApply}
           onShowHideFilter={onShowHideFilter}
           allClearFilters={allClearFilters}
+          selectedSortFilter={selectedSortFilter}
+          onSelectedSortFilter={(val) => updateState({ selectedSortFilter: val })}
+          maximumPrice={maximumPrice}
+          minimumPrice={minimumPrice}
+          updateMinMax={updateMinMax}
         /> : null}
 
 
