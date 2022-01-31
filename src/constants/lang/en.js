@@ -801,19 +801,16 @@ Amount`,
   UNITS_SET: 'Units per Set',
   PRODUCTS_DETAIL: 'Products Details',
   SEARCH_FOR_PRODUCT: 'Search for customer',
-<<<<<<< HEAD
-  CURRENTLYUNAVAILABLE: ' Currently Unavailable',
-=======
-  TRANSFER_FUNDS:"Transfer Funds",
-  AMOUNT_TO_TRANSFER:"Amount to transfer",
-  ENTER_AMOUNT:"Enter amount",
-  TRANSFER_TO:"Transfer to",
-  ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE:"Enter email or phone number with country code",
-  INVALID_AMOUNT:"Invalid Amount",
-  INSUFFICIENT_FUNDS_IN_WALLET:"Insufficient funds in wallet",
-  USER_DOES_NOT_EXIST:"User doest not exist",
+  TRANSFER_FUNDS: 'Transfer Funds',
+  AMOUNT_TO_TRANSFER: 'Amount to transfer',
+  ENTER_AMOUNT: 'Enter amount',
+  TRANSFER_TO: 'Transfer to',
+  ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE:
+    'Enter email or phone number with country code',
+  INVALID_AMOUNT: 'Invalid Amount',
+  INSUFFICIENT_FUNDS_IN_WALLET: 'Insufficient funds in wallet',
+  USER_DOES_NOT_EXIST: 'User doest not exist',
   INVALID_CARD_DETAILS: 'Invalid card details',
   TRANSFER_FUNDS: 'Transfer Funds',
-  CURRENTLYUNAVAILABLE:'Currently Unavailable'
->>>>>>> a189019fe4f78f6b1280330c7b7ce3a43407b68f
+  CURRENTLYUNAVAILABLE: 'Currently Unavailable',
 };

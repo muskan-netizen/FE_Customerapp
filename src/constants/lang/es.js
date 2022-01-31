@@ -750,4 +750,5 @@ export default {
   USER_DOES_NOT_EXIST: 'User doest not exist',
   INVALID_CARD_DETAILS: 'Invalid card details',
   TRANSFER_FUNDS: 'Transfer Funds',
+  CURRENTLYUNAVAILABLE: 'Currently Unavailable',
 };
