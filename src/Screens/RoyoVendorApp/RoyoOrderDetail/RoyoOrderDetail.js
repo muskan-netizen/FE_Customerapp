@@ -281,10 +281,7 @@ const RoyoOrderDetail = (props) => {
           </View>
 
           <View style={styles.locationBox}>
-            <Image
-              style={styles.locationImage}
-              source={imagePath.icMap}
-            />
+            <Image style={styles.locationImage} source={imagePath.icMap} />
             <View style={{justifyContent: 'space-evenly'}}>
               <Text style={{fontFamily: fontFamily.semiBold, fontSize: 16}}>
                 {data.user_name}
@@ -296,7 +293,9 @@ const RoyoOrderDetail = (props) => {
                 }}>
                 {address?.street}
               </Text>
-              <Text style={styles.font13Regular}>{address?.city+", "+address?.country}</Text>
+              <Text style={styles.font13Regular}>
+                {address?.city + ', ' + address?.country}
+              </Text>
             </View>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>

@@ -15,6 +15,8 @@ import {
   DISPATCHER_URL,
   CANCEL_ORDER,
   REPEAT_ORDER,
+  GET_VENDOR_REVENUE_DASHBOARD_DATA,
+  GET_VENDOR_PROFILE,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -108,6 +110,7 @@ export const updateOrderStatus = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(ACCEPT_REJECT_ORDER, data, headers)
       .then((res) => {
+        console.log('checking update status response>>>', res);
         resolve(res);
       })
       .catch((error) => {
@@ -135,6 +138,32 @@ export const getRating = (query = '', data = {}, headers = {}) => {
 export const getRevenueData = (data = {}, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(GET_VENDOR_REVENUE, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+// Get revenue dashboard data
+export const getRevenueDashboardData = (data = {}, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_VENDOR_REVENUE_DASHBOARD_DATA, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+// Get Vendor Profile
+export const getVendorProfile = (data = {}, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_VENDOR_PROFILE, data, headers)
       .then((res) => {
         resolve(res);
       })

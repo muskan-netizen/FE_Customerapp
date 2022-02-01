@@ -496,8 +496,17 @@ export const printRecieptWithSunmi = async (data) => {
             ? `${el.product_name}(${el.pvariant.title})`
             : `${el.product_name}`;
         // const title = `${el.product_name}`
-        listArr.push([`${el.quantity} X ${title}`, '', '']);
-        listArr.push(['', '', JSON.stringify(el.quantity * el.price)]);
+
+        listArr.push([
+          'price',
+          el.image_base64,
+          JSON.stringify(el.quantity * el.price),
+        ]);
+        listArr.push([
+          `${el.quantity} X ${title}`,
+          '',
+          JSON.stringify(el.quantity * el.price),
+        ]);
         // await SunmiV2Printer.printColumnsText(
         //   [`${el.quantity} X ${title}`, '', ''],
         //   columnWidth,
@@ -527,11 +536,24 @@ export const printRecieptWithSunmi = async (data) => {
         console.log(listArr[i]);
         console.log(columnWidth);
         console.log(columnAliment);
-        await SunmiV2Printer.printColumnsText(
-          listArr[i],
-          columnWidth,
-          columnAliment,
-        );
+        if (listArr[i][0] === 'price') {
+          await SunmiV2Printer.setAlignment(0);
+          await SunmiV2Printer.printBitmap(
+            listArr[i][1],
+            100 /*width*/,
+            100 /*height*/,
+          );
+          // await SunmiV2Printer.setAlignment(1);
+          // await SunmiV2Printer.printOriginalText(listArr[i][2]);
+        } else {
+          await SunmiV2Printer.printOriginalText('\r\n\r');
+          await SunmiV2Printer.printColumnsText(
+            listArr[i],
+            columnWidth,
+            columnAliment,
+          );
+          await SunmiV2Printer.printOriginalText('\r\n\r');
+        }
       }
       await SunmiV2Printer.setFontSize(25);
       await SunmiV2Printer.printOriginalText('\r\n----------------\r\n');
@@ -575,10 +597,11 @@ export const printRecieptWithSunmi = async (data) => {
           [15, 1, 15],
           columnAliment,
         );
+        await SunmiV2Printer.printOriginalText(`---------\r\n`);
         await SunmiV2Printer.setFontSize(25);
         await SunmiV2Printer.printColumnsText(
           [`${strings.PAID_AMOUNT}`, '', detail.payable_amount],
-          [15, 1, 15],
+          [15, 1, 10],
           columnAliment,
         );
       }

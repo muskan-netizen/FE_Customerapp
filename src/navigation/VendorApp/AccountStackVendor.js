@@ -1,7 +1,12 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {RoyoAccounts,  RoyoPaymentSetting,  RoyoTransactions,  VendorList} from '../Screens';
-import navigationStrings from './navigationStrings';
+import {
+  RoyoAccounts,
+  RoyoPaymentSetting,
+  RoyoTransactions,
+  VendorList,
+} from '../../Screens';
+import navigationStrings from '../navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {
@@ -17,7 +22,7 @@ export default function () {
         component={VendorList}
         options={{headerShown: false}}
       />
-      
+
       <Stack.Screen
         name={navigationStrings.ROYO_VENDOR_TRANSACTIONS}
         component={RoyoTransactions}
@@ -28,8 +33,6 @@ export default function () {
         component={RoyoPaymentSetting}
         options={{headerShown: false}}
       />
-      
-      
     </Stack.Navigator>
   );
 }
