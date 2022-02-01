@@ -331,7 +331,7 @@ export default function Cart({ navigation, route }) {
   const getDate = date => {
     const local = moment.utc(date).local().format('DD MMM YYYY hh🇲🇲a');
     return local;
-    };
+  };
 
 
   //get the entire cart detail
@@ -453,7 +453,7 @@ export default function Cart({ navigation, route }) {
 
           if (!!res?.data.products.length && res?.data.products[0].delaySlot) {
             var timeSlot = res?.data.products[0].delaySlot
-            console.log("netxt festilval2",new Date(timeSlot.replace(' ')))
+            console.log("netxt festilval2", new Date(timeSlot.replace(' ')))
             updateState({
               minimumDelayVendorDate: timeSlot,
             });
@@ -494,6 +494,7 @@ export default function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
+  console.log("cart data_++++++++",cartData)
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     console.log(item, 'itemitemitemitem');
@@ -1622,7 +1623,7 @@ export default function Cart({ navigation, route }) {
                                 cache: FastImage.cacheControl.web,
                               }
                               : imagePath.patternOne
-                              
+
                           }
                           style={styles.imageStyle}
                         />
@@ -3799,11 +3800,11 @@ export default function Cart({ navigation, route }) {
             // backgroundColor: '#fff',
           }}>
           <FastImage
-            source={{ 
+            source={{
               uri: Image.resolveAssetSource(imagePath.icEmptyCartD).uri,
               cache: FastImage.cacheControl.web,
               priority: FastImage.priority.high,
-             }}
+            }}
             style={{
               marginVertical: moderateScaleVertical(20),
               height: moderateScale(120),

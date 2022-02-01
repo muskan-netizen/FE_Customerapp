@@ -342,25 +342,16 @@ export default function Products({route, navigation}) {
       slectedSortBy: slectedSortBy,
     });
   };
-  console.log(
-    slectedSortBy.length,
-    slectedSortBy[0],
-    'api hit getAllProductsCategoryFilter',
-  );
-
   /**********Get all list items by category filters */
   const getAllProductsVendorFilter = () => {
-    console.log(
-      slectedSortBy.length,
-      slectedSortBy[0],
-      'api hit getAllProductsCategoryFilter ++++++',
-    );
+    console.log('api hit getAllProductsVendorFilter++++++',);
     let data = {};
     data['variants'] = selectedVariants;
     data['options'] = selectedOptions;
     data['brands'] = sleectdBrands;
     data['order_type'] = slectedSortBy.length ? slectedSortBy[0] : '';
     data['range'] = `${minimumPrice};${maximumPrice}`;
+    console.log("sending filter data",data)
     actions
       .getProductByVendorFilters(
         `/${productListId.id}?limit=${limit}&page=${pageNo}`,
@@ -388,11 +379,7 @@ export default function Products({route, navigation}) {
   console.log(languages?.primary_language?.id, 'data in category product');
   /**********Get all list items by category filters */
   const getAllProductsCategoryFilter = () => {
-    console.log(
-      slectedSortBy.length,
-      slectedSortBy[0],
-      'api hit getAllProductsCategoryFilter',
-    );
+    console.log('api hit getAllProductsCategoryFilter');
 
     let data = {};
     data['variants'] = selectedVariants;
@@ -400,7 +387,7 @@ export default function Products({route, navigation}) {
     data['brands'] = sleectdBrands;
     data['order_type'] = slectedSortBy.length ? slectedSortBy[0] : '';
     data['range'] = `${minimumPrice};${maximumPrice}`;
-
+console.log("sending filter data",data)
     actions
       .getProductByCategoryFilters(
         `/${productListId.id}?limit=${limit}&page=${pageNo}`,
@@ -430,7 +417,7 @@ export default function Products({route, navigation}) {
   const getAllProductsByVendorCategory = () => {
     // alert("21312")
 
-    console.log('api hit getAllProductsByVendorCategory', data);
+    console.log('api hit getAllProductsByVendorCategory vendor ++++', data);
     actions
       .getProductByVendorCategoryId(
         `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
@@ -442,7 +429,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res.data.filterData, 'getAllProductsByVendorCategory');
+        console.log(res.data.filterData, 'getAllProductsByVendorCategory vendor +++');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -453,7 +440,7 @@ export default function Products({route, navigation}) {
               ? res.data.products.data
               : [...productListData, ...res?.data?.products?.data],
         });
-        console.log(res.data.filterData, 'res.data.filterData');
+        console.log(res.data.filterData, 'res.data.filterData vendor +++');
         updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
       .catch(errorMethod);

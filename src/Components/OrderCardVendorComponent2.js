@@ -527,8 +527,7 @@ const OrderCardVendorComponent2 = ({
             )}
           </View>
         )}
-        {data?.order_status?.current_status?.title !== strings.DELIVERED &&
-          data?.order_status?.current_status?.title !== strings.REJECTED && (
+        {data?.order_status?.current_status?.title == strings.ACCEPTED  || data?.order_status?.current_status?.title == 'Placed' ?
             <TouchableOpacity
               onPress={() => setCancellationItem(data)}
               activeOpacity={0.8}
@@ -546,7 +545,7 @@ const OrderCardVendorComponent2 = ({
                 {strings.CANCEL_ORDER}
               </Text>
             </TouchableOpacity>
-          )}
+          :null}
       </View>
 
       <Modal
