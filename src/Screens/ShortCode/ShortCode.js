@@ -1393,6 +1393,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.allotaxi:
+          updateState({
+            shortCode: shortCodes.allotaxi,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

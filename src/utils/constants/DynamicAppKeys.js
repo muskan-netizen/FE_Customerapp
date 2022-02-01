@@ -216,6 +216,7 @@ const shortCodes = {
   cannabisClubSF: '351b2b',
   halaTalabat: 'ccc32e',
   palmettoplus: '007b7b',
+  allotaxi: '2142db',
 };
 
 const appIds = {
@@ -1078,6 +1079,10 @@ const appIds = {
   palmettoplus: Platform.select({
     ios: 'com.palmettoplus',
     android: 'com.palmettoplus',
+  }),
+  allotaxi: Platform.select({
+    ios: 'com.allotaxi',
+    android: 'com.allotaxi',
   }),
 };
 
