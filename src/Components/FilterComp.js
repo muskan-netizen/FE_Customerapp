@@ -60,7 +60,7 @@ const FilterComp = ({
 }) => {
 
 
-    console.log("filter data", filterData)
+
 
     const [state, setState] = useState({
         minPrice: 0,
@@ -74,7 +74,7 @@ const FilterComp = ({
     }, [])
     const { filterTypes } = state
 
-    console.log("filter types", filterTypes)
+ 
 
     const onDone = () => {
         let allFilterData = cloneDeep(filterTypes);

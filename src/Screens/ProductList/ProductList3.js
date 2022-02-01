@@ -110,7 +110,7 @@ export default function Products({ route, navigation }) {
     isLoading: true,
     isLoadingB: false,
     pageNo: 1,
-    limit: 12,
+    limit: 30,
     isRefreshing: false,
     selectedSbCategoryID: -1,
     productListId: data,
@@ -301,8 +301,6 @@ export default function Products({ route, navigation }) {
     const unsubscribe = navigation.addListener('focus', () => {
       updateState({ pageNo: 1 });
       getAllListItems(1);
-      console.log('checking route params >>>>1', productListId);
-      console.log(routeData, 'routeData');
       if (productListId?.vendor && routeData) {
         fetchOffers();
       }
@@ -361,7 +359,6 @@ export default function Products({ route, navigation }) {
   };
 
   const getAllListItems = (pageNo = 1) => {
-    console.log("selected filter", selectedFilters)
     if (data?.vendor) {
       {
         !!selectedFilters.current ?
@@ -656,7 +653,7 @@ export default function Products({ route, navigation }) {
               selectedCategory: res.data.category.childs[0],
               productListId: res.data.category.childs[0],
               pageNo: 1,
-              limit: 12,
+              limit: 30,
               isLoadingC: true,
             })
             : null;
@@ -673,14 +670,14 @@ export default function Products({ route, navigation }) {
 
   /**********Get all list items category filters */
   const getAllProductsCategoryFilter = (pageNo) => {
-    console.log('api hit getAllProductsCategoryFilter');
+
     let data = {};
     data['variants'] = selectedFilters?.current?.selectedVariants || [];
     data['options'] = selectedFilters?.current?.selectedOptions || [];
     data['brands'] = selectedFilters?.current?.sleectdBrands || [];
     data['order_type'] = selectedFilters?.current?.selectedSorting || 0;
     data['range'] = `${minimumPrice};${maximumPrice}`;
-
+    console.log('api hit getAllProductsCategoryFilter',data);
     actions
       .getProductByCategoryFilters(
         `/${productListId.id}?limit=${limit}&page=${pageNo}`,
@@ -1704,7 +1701,7 @@ export default function Products({ route, navigation }) {
       // productListData: [],
       productListId: item,
       pageNo: 1,
-      limit: 12,
+      limit: 30,
       isLoadingC: true,
     });
 
@@ -3173,6 +3170,7 @@ export default function Products({ route, navigation }) {
             contentContainerStyle={{
               flexGrow: 1,
             }}
+            extraData={productListData}
             ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
             // refreshing={isRefreshing}
             // initialNumToRender={12}
@@ -3185,10 +3183,10 @@ export default function Products({ route, navigation }) {
             //     tintColor={themeColors.primary_color}
             //   />
             // }
-            onEndReached={
-              !categoryInfo?.is_show_products_with_category &&
-              onEndReachedDelayed
-            }
+            // onEndReached={
+            //   !categoryInfo?.is_show_products_with_category &&
+            //   onEndReachedDelayed
+            // }
             onEndReachedThreshold={0.5}
             ListFooterComponent={() => (
               <View style={{ height: moderateScale(60) }} />
