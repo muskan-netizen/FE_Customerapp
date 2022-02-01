@@ -4,7 +4,7 @@ import {sessionHandler} from './helperFunctions';
 
 export async function getHeaders() {
   let userData = await AsyncStorage.getItem('userData');
-
+  console.log(userData.auth_token,"userData.auth_token");
   if (userData) {
     userData = JSON.parse(userData);
     return {

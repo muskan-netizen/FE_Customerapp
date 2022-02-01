@@ -188,3 +188,4 @@ export const WALLET_USER_VERIFY = getApiUrl('/wallet/transfer/user/verify');
 export const WALLET_TRANSFER_CONFIRM = getApiUrl('/wallet/transfer/confirm');
 export const VENDOR_SLOTS = getApiUrl('/vendor/slots');
 export const GETALLTEMPLCARDS=  getApiUrl('/get/edited-orders');
+export const ACCEPTREJECTDRIVERUPDATE=  getApiUrl('/edit-order/approve/reject');

@@ -19,6 +19,7 @@ import {
 import Communications from 'react-native-communications';
 import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
+// import { showMessage } from 'react-native-flash-message';
 import * as RNLocalize from 'react-native-localize';
 import MapView, {AnimatedRegion, Marker} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
@@ -46,7 +47,7 @@ import {
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {currencyNumberFormatter} from '../../utils/commonFunction';
-import {getImageUrl, showError} from '../../utils/helperFunctions';
+import {getImageUrl,showSuccess, showError} from '../../utils/helperFunctions';
 import useInterval from '../../utils/useInterval';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
@@ -184,6 +185,7 @@ export default function OrderDetail({navigation, route}) {
     React.useCallback(() => {
       console.log('dfshsfjdhjkfhskjfh');
       getOrders();
+      getUpdatedCartDetail();
     }, []),
   );
 
@@ -203,6 +205,38 @@ export default function OrderDetail({navigation, route}) {
     : null;
 
   console.log(new_dispatch_traking_url, 'new_dispatch_traking_url');
+
+  const getUpdatedCartDetail = () => {
+    let data = {};
+    data['order_id'] = paramData?.orderId;
+    if (paramData?.selectedVendor) {
+      data['vendor_id'] = paramData?.selectedVendor.id;
+    }
+    data['new_dispatch_traking_url'] = new_dispatch_traking_url;
+
+    // updateState({ isLoading: true });
+    actions
+      .getOrderDetail(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        timezone: RNLocalize.getTimeZone(),
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res.data, 'order detail res===>');
+        updateState({isLoading: false});
+        if (res?.data) {
+          if (res?.data?.vendors[0]?.tempCart) {
+            updateState({
+              updatedcartData: res?.data?.vendors[0]?.tempCart,
+              updatedcartItems: res?.data?.vendors[0]?.tempCart?.products,
+            });
+          }
+        }
+      })
+      .catch(errorMethod);
+  };
 
   /*********Get order detail screen********* */
   const _getOrderDetailScreen = () => {
@@ -230,6 +264,11 @@ export default function OrderDetail({navigation, route}) {
             updateState({
               updatedcartData: res?.data?.vendors[0]?.tempCart,
               updatedcartItems: res?.data?.vendors[0]?.tempCart?.products,
+            });
+          }else{
+            updateState({
+              updatedcartData: null,
+              updatedcartItems: [],
             });
           }
           if (res?.data?.luxury_option_name !== strings.DELIVERY) {
@@ -309,6 +348,7 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const errorMethod = (error) => {
+    console.log(error,"Error>>>>>>");
     updateState({isLoading: false, isLoading: false, isLoadingC: false});
     showError(error?.message || error?.error);
   };
@@ -381,9 +421,9 @@ export default function OrderDetail({navigation, route}) {
 
   const _renderItem2 = ({item, index}) => {
     return (
-      <View>
+      <View key={index}>
         <View
-          key={swipeKey + Math.random()}
+          // key={swipeKey + Math.random()}
           style={{
             ...styles2.mainViewRednderItem,
             backgroundColor: isDarkMode
@@ -2035,20 +2075,40 @@ export default function OrderDetail({navigation, route}) {
   const acceptRejectDriverUpdation = (status) => {
     console.log(updatedcartData, 'updatedcartData');
 
-    if(status==1 && updatedcartData && Number(updatedcartData?.user_wallet_balance)<Number( updatedcartData?.difference_to_be_paid)){
-      showError(strings.INSUFFICIENT_FUNDS_IN_WALLET_PLEASERECHARGE)
-    }else{
+    if (
+      status == 1 &&
+      updatedcartData &&
+      Number(updatedcartData?.user_wallet_balance) <
+        Number(updatedcartData?.difference_to_be_paid)
+    ) {
+      showError(strings.INSUFFICIENT_FUNDS_IN_WALLET_PLEASERECHARGE);
+    } else {
       let data = {};
       data['cart_id'] = updatedcartData?.id;
       data['address_id'] = updatedcartData?.address_id;
       data['order_vendor_id'] =
-        updatedcartData?.vendor_details?.vendor_address?.id;
+        updatedcartData?.order_vendor_id;
       data['status'] = status;
       data['total_payable_amount'] = updatedcartData?.difference_to_be_paid;
 
       console.log(data, 'upadted cart data');
+      updateState({isLoading: true});
+      actions.acceptRejectDriveUpdate(data, {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          timezone: RNLocalize.getTimeZone(),
+          // systemuser: DeviceInfo.getUniqueId(),
+        })
+        .then((res) => {
+          showSuccess(res?.message)
+          console.log(res,"acceptRejectDriveUpdate");
+          // updateState({isLoading: false});
+          _getOrderDetailScreen()
+          
+        })
+        .catch(errorMethod);
     }
-    
   };
 
   //get footer start
@@ -2713,14 +2773,16 @@ export default function OrderDetail({navigation, route}) {
               />
             </View>
           )} */}
+
         <FlatList
           data={updatedcartItems}
           extraData={updatedcartItems}
-          ListHeaderComponent={updatedcartItems?.length ? getHeader2() : null}
+          ListHeaderComponent={getHeader2()}
           ListFooterComponent={updatedcartItems?.length ? getFooter2() : null}
           showsVerticalScrollIndicator={false}
           style={{backgroundColor: colors.backgroundGrey}}
-          keyExtractor={(item, index) => String(index)}
+          // keyExtractor={(item, index) => String(index)}
+          keyExtractor={(item) => item.id}
           renderItem={_renderItem2}
           style={{
             flex: 1,
@@ -2827,7 +2889,7 @@ export default function OrderDetail({navigation, route}) {
         <FlatList
           data={cartItems}
           extraData={cartItems}
-          ListHeaderComponent={getHeader()}
+          ListHeaderComponent={cartItems.length ? getHeader() : null}
           ListFooterComponent={cartItems.length ? getFooter() : null}
           showsVerticalScrollIndicator={false}
           style={{backgroundColor: colors.backgroundGrey}}
