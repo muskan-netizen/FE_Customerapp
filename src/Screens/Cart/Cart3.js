@@ -494,6 +494,7 @@ export default function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
+  console.log("cart data_++++++++",cartData)
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     console.log(item, 'itemitemitemitem');
