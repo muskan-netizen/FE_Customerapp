@@ -218,6 +218,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     actions
       .getVendorProductDetail(
         {
+          // product_id: '233',
           product_id: productDetailParam?.id || '',
         },
         {
@@ -228,6 +229,7 @@ const RoyoAddProduct = ({route, navigation}) => {
       )
       .then((res) => {
         console.log(res, 'productDetails<<<<<');
+        const productInfo = res?.data?.product_detail;
         updateState({
           isLoading: false,
           isLoadingB: false,
@@ -240,6 +242,16 @@ const RoyoAddProduct = ({route, navigation}) => {
           taxCategory: res?.data?.tax_category,
           exisitingVariants: res?.data?.product_detail?.variant,
           otherProducts: res?.data?.other_products,
+          productName: productInfo?.title,
+          price: productInfo?.variant[0].price
+            ? productInfo?.variant[0].price
+            : '',
+          // compareAtPrice: productInfo?.variant[0].cost_price
+          //   ? productInfo?.variant[0].cost_price
+          //   : '',
+          compareAtPrice: productInfo?.variant[0].compare_at_price
+            ? productInfo?.variant[0].compare_at_price
+            : '',
         });
       })
       .catch(errorMethod);
@@ -350,6 +362,8 @@ const RoyoAddProduct = ({route, navigation}) => {
         updateState({
           isLoadingB: false,
         });
+        console.log('asdasdsd', productDetailParam);
+        paramData?.onCallBack();
         navigation.goBack();
       })
       .catch(errorMethod);
@@ -730,6 +744,7 @@ const RoyoAddProduct = ({route, navigation}) => {
             mainStyle={{flex: 0.2}}
             placeholderTextColor={colors.black}
             txtInputStyle={styles.textInputStyle}
+            value={item.price ? item.price : ''}
           />
           <TextInputWithUnderlineAndLabel
             label={`Cost price`}
@@ -741,6 +756,7 @@ const RoyoAddProduct = ({route, navigation}) => {
             }
             placeholderTextColor={colors.black}
             txtInputStyle={styles.textInputStyle}
+            value={item.cost_price ? item.cost_price : ''}
           />
           <TextInputWithUnderlineAndLabel
             label={'Compare at price'}
@@ -752,6 +768,7 @@ const RoyoAddProduct = ({route, navigation}) => {
             }
             placeholderTextColor={colors.black}
             txtInputStyle={styles.textInputStyle}
+            value={item.compare_at_price ? item.compare_at_price : ''}
           />
         </View>
       </View>
@@ -1171,7 +1188,7 @@ const RoyoAddProduct = ({route, navigation}) => {
               <TextInputWithUnderlineAndLabel
                 label={`Price`}
                 labelStyle={styles.labelStyle}
-                placeholder={'645'}
+                placeholder={''}
                 onChangeText={(value) =>
                   updateState({
                     price: value,
@@ -1184,7 +1201,7 @@ const RoyoAddProduct = ({route, navigation}) => {
               />
               <TextInputWithUnderlineAndLabel
                 label={'Compare at price'}
-                placeholder={'890'}
+                placeholder={''}
                 onChangeText={(value) =>
                   updateState({
                     compareAtPrice: value,

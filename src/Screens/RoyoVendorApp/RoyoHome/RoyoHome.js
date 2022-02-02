@@ -157,7 +157,7 @@ const RoyoHome = (props) => {
           selectedVendorData: selectedVendorData,
         });
         // _getRevnueData(selectedVendorData, new Date());
-        _getRevenueDashboardData(selectedVendorData, new Date());
+        _getRevenueDashboardData(selectedVendorData, new Date(), 0);
         _getVendorProfile(selectedVendorData);
       })
       .catch(errorMethod);
@@ -206,12 +206,13 @@ const RoyoHome = (props) => {
     });
   };
   const onChangeOrderDate = (value, newDate) => {
-    if (newDate)
+    if (newDate) {
       updateState({
         orderDate: newDate,
         showOrderDate: false,
       });
-    else
+      _getRevenueDashboardData(selectedVendorData, newDate, 2);
+    } else
       updateState({
         showOrderDate: false,
       });
@@ -225,7 +226,7 @@ const RoyoHome = (props) => {
         showRevenueDate: false,
       });
       // _getRevnueData(selectedVendorData, newDate);
-      _getRevenueDashboardData(selectedVendorData, newDate);
+      _getRevenueDashboardData(selectedVendorData, newDate, 1);
     } else
       updateState({
         showRevenueDate: false,
@@ -289,7 +290,7 @@ const RoyoHome = (props) => {
       .catch(errorMethod);
   };
 
-  const _getRevenueDashboardData = (selectedVendorData, date) => {
+  const _getRevenueDashboardData = (selectedVendorData, date, ...params) => {
     let data = {};
     data['type'] = 'monthly';
     data['vendor_id'] = selectedVendorData ? selectedVendorData?.id : '';
@@ -309,7 +310,7 @@ const RoyoHome = (props) => {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res, 'res__getRevnueData>>>dashboard');
+        console.log(res, 'res__getRevnueData>>>dashboard', params);
 
         const dates = res.data.dates.map(
           (el) =>
@@ -325,18 +326,27 @@ const RoyoHome = (props) => {
             isRefreshing: false,
             isLoading: false,
             labels: dates,
-            datasets: res.data.revenue,
+            datasets: params[0] == 2 ? datasets : res.data.revenue,
             totalRevenue,
-            sales: res.data.sales.map((el) => el.toString()),
-            totalPendingOrder: res.data.total_pending_order,
-            totalCancelledOrder: res.data.total_rejected_order,
-            totalActiveOrder: res.data.total_active_order,
-            totalCompletedOrder: res.data.total_delivered_order,
+            sales:
+              params[0] == 1
+                ? sales
+                : res.data.sales.map((el) => el.toString()),
+            // totalPendingOrder: res.data.total_pending_order,
+            // totalCancelledOrder: res.data.total_rejected_order,
+            // totalActiveOrder: res.data.total_active_order,
+            // totalCompletedOrder: res.data.total_delivered_order,
           });
         } else {
           updateState({
             isLoading: false,
             isRefreshing: false,
+            labels: dates,
+            datasets: params[0] == 2 ? datasets : res.data.revenue,
+            sales:
+              params[0] == 1
+                ? sales
+                : res.data.sales.map((el) => el.toString()),
           });
         }
       })
@@ -548,6 +558,9 @@ const RoyoHome = (props) => {
     }, 500);
   };
 
+  const BarWidth = () => moderateScale(labels.length * 65);
+
+  console.log('BarWidthBarWidth', BarWidth());
   return (
     <WrapperContainer
       bgColor={colors.white}
@@ -643,23 +656,25 @@ const RoyoHome = (props) => {
                   </Text>
                   <Text style={styles.font16Bold}>${totalRevenue}</Text>
                 </View>
-                <BarChart
-                  withCustomBarColorFromData={true}
-                  style={{margin: 0, padding: 0, flex: 1, marginLeft: 0}}
-                  // yLabelsOffset={30}
-                  data={barData}
-                  width={boxWidth()}
-                  height={moderateScaleVertical(220)}
-                  yAxisLabel="$"
-                  yAxisInterval={2}
-                  chartConfig={chartConfig}
-                  verticalLabelRotation={0}
-                  horizontalLabelRotation={0}
-                  withInnerLines={false}
-                  showBarTops={false}
-                  fromZero={true}
-                  flatColor={true}
-                />
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  <BarChart
+                    withCustomBarColorFromData={true}
+                    style={{margin: 0, padding: 0, flex: 1, marginLeft: 0}}
+                    // yLabelsOffset={30}
+                    data={barData}
+                    width={labels.length > 0 ? BarWidth() : boxWidth()}
+                    height={moderateScaleVertical(250)}
+                    yAxisLabel="$"
+                    yAxisInterval={2}
+                    chartConfig={chartConfig}
+                    verticalLabelRotation={0}
+                    horizontalLabelRotation={0}
+                    withInnerLines={false}
+                    showBarTops={false}
+                    fromZero={true}
+                    flatColor={true}
+                  />
+                </ScrollView>
               </View>
             </View>
             <View>
@@ -689,20 +704,22 @@ const RoyoHome = (props) => {
                   <Text style={styles.font13Regular}>Total orders placed</Text>
                   <Text style={styles.font16Bold}>34565</Text>
                 </View>
-                <BarChart
-                  withCustomBarColorFromData={true}
-                  data={salesBarData}
-                  width={boxWidth()}
-                  height={moderateScaleVertical(220)}
-                  yAxisLabel=""
-                  chartConfig={chartConfig}
-                  verticalLabelRotation={0}
-                  horizontalLabelRotation={0}
-                  withInnerLines={false}
-                  showBarTops={false}
-                  fromZero={true}
-                  flatColor={true}
-                />
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  <BarChart
+                    withCustomBarColorFromData={true}
+                    data={salesBarData}
+                    width={labels.length > 0 ? BarWidth() : boxWidth()}
+                    height={moderateScaleVertical(220)}
+                    yAxisLabel=""
+                    chartConfig={chartConfig}
+                    verticalLabelRotation={0}
+                    horizontalLabelRotation={0}
+                    withInnerLines={false}
+                    showBarTops={false}
+                    fromZero={true}
+                    flatColor={true}
+                  />
+                </ScrollView>
               </View>
             </View>
           </View>

@@ -22,6 +22,7 @@ import {
   GET_VENDOR_CATEGORY,
   GET_WISHLIST_PRODUCT,
   MY_WALLET,
+  UPDATE_PRODUCT_STATUS,
   UPDATE_VENDOR_PRODUCT,
   WALLET_CREDIT,
 } from '../../config/urls';
@@ -317,6 +318,18 @@ export function getVendorCategories(data = {}, headers = {}) {
 export function getVendorProductDetail(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiPost(GET_PRODUCT_DETAIL, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function postVendorProductStatusUpdate(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(UPDATE_PRODUCT_STATUS, data, headers)
       .then((res) => {
         resolve(res);
       })

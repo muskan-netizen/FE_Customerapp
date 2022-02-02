@@ -1,5 +1,5 @@
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.97.123:8020/api/v1'; // sujata
@@ -12,7 +12,7 @@
 // export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.100.198:8020/api/v1';
 // export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
-export const API_BASE_URL = 'https://b724-103-72-170-243.ngrok.io/api/v1';
+// export const API_BASE_URL = 'https://b724-103-72-170-243.ngrok.io/api/v1';
 // export const API_BASE_URL = 'https://zuzu.alerthire.com/api/v1';
 // export const API_BASE_URL = 'https://click-eat.com/api/v1';
 // export const API_BASE_URL = 'https://tranzit.app/api/v1';
@@ -191,6 +191,9 @@ export const CREATE_PRODUCT_VARIANT = getApiUrl(
 );
 export const DELETE_PRODUCT_VARIANT = getApiUrl(
   '/mystore/product/deletevariant',
+);
+export const UPDATE_PRODUCT_STATUS = getApiUrl(
+  '/mystore/product/status-update',
 );
 export const DELETE_VENDOR_PRODUCT = getApiUrl('/mystore/product/delete');
 export const UPDATE_VENDOR_PRODUCT = getApiUrl('/mystore/product/update');

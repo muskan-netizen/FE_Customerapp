@@ -94,7 +94,11 @@ const OrderCard = (props) => {
               ))}
             </View>
             <Text style={styles.font16Regular}>
-              Salt {count == 0 ? '' : 'x' + ' ' + count + ' more'}
+              {item.order_number == '31642578' && console.log('>>><<<<<', item)}
+              {item.product_details && item.product_details[0]
+                ? item.product_details[0].title
+                : ''}{' '}
+              {count == 0 ? '' : 'x' + ' ' + count + ' more'}
             </Text>
           </View>
           <Text

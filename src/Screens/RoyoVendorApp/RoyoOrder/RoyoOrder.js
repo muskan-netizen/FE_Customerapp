@@ -100,7 +100,6 @@ const RoyoOrder = (props) => {
   const _getBleDevice = async () => {
     const res = await getItem('BleDevice');
     const sunmiPrinterAvail = await SunmiV2Printer.hasPrinter;
-    console.log('sunmiPrinterAvailsunmiPrinterAvail', sunmiPrinterAvail);
     if (!!res || sunmiPrinterAvail) {
       updateState({
         isBleDevice: true,
@@ -180,7 +179,6 @@ const RoyoOrder = (props) => {
     data['order_id'] = acceptRejectData?.id;
     data['vendor_id'] = selectedVendor?.id;
     data['order_status_option_id'] = status;
-    console.log(data, 'data>>data');
     updateState({isLoadingB: true});
     actions
       .updateOrderStatus(data, {
@@ -190,7 +188,6 @@ const RoyoOrder = (props) => {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'res>>>acceptRejectOrder');
         if (res && res.status == 'success') {
           updateStatus(res, acceptRejectData);
         }
@@ -199,20 +196,18 @@ const RoyoOrder = (props) => {
   };
 
   const updateStatus = (res, acceptRejectData) => {
-    let clonedArrayOrderList = cloneDeep(activeOrders);
-
+    let clonedArrayOrderList = [...activeOrders];
+    clonedArrayOrderList = clonedArrayOrderList.map((i, inx) => {
+      if (i?.id == acceptRejectData?.id) {
+        i.order_status = res.order_status;
+        return i;
+      } else {
+        return i;
+      }
+    });
     updateState({
       isLoadingB: false,
-      activeOrders: clonedArrayOrderList.map((i, inx) => {
-        if (i?.id == acceptRejectData?.id) {
-          console.log('checking updated status>>>>1', i);
-          i.order_status = res.order_status;
-          console.log('checking updated status>>>>1', i);
-          return i;
-        } else {
-          return i;
-        }
-      }),
+      activeOrders: clonedArrayOrderList,
     });
   };
 
@@ -226,7 +221,6 @@ const RoyoOrder = (props) => {
   }, [pageActive, isRefreshing]);
 
   useEffect(() => {
-    console.log('checking update callback');
     updateOrderList();
   }, [activeOrders]);
 
@@ -246,11 +240,12 @@ const RoyoOrder = (props) => {
     const newcompleted = activeOrders.filter(
       (value, index) => value?.order_status?.current_status?.id == 6,
     );
+
     updateState({
-      newOrder: [...newOrder, ...newnewOrder],
-      confirmed: [...confirmed, ...newconfirmed],
-      cancelled: [...cancelled, ...newcancelled],
-      completed: [...completed, ...newcompleted],
+      newOrder: _.unionBy([...newnewOrder], 'id'),
+      confirmed: _.unionBy([...newconfirmed], 'id'),
+      cancelled: _.unionBy([...newcancelled], 'id'),
+      completed: _.unionBy([...newcompleted], 'id'),
     });
   };
   //Refresh screen
@@ -277,7 +272,6 @@ const RoyoOrder = (props) => {
       screenType: staticStrings.ORDERS,
     });
   };
-  console.log('isLoadingBisLoadingB', isLoadingB);
   return (
     <WrapperContainer
       bgColor="white"
@@ -414,7 +408,6 @@ const RoyoOrder = (props) => {
               );
             }}
             renderItem={({item, index}) => {
-              console.log(item, 'cancelled');
               return (
                 <View
                   style={{
@@ -461,7 +454,6 @@ const RoyoOrder = (props) => {
               );
             }}
             renderItem={({item, index}) => {
-              console.log(item, 'cancelled');
               return (
                 <View
                   style={{

@@ -117,8 +117,41 @@ const RoyoProducts = (props) => {
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
+  const updateIsLiveStatus = (id, status) => {
+    console.log('statusstatus', status);
+    console.log('statusstatus', status == 1 ? 0 : 1);
+    actions
+      .postVendorProductStatusUpdate(
+        {
+          is_live: status == 1 ? 0 : 1,
+          product_id: id,
+        },
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        let temp = cloneDeep(productListData);
+        temp = temp.map((el) => {
+          if (el.id == id) {
+            console.log('sdfksjdhfksdh', el);
+            el.is_live = status == 1 ? 0 : 1;
+            console.log('sdfksjdhfksdh', el);
+            return el;
+          } else {
+            return el;
+          }
+        });
+        updateState({productListData: temp});
+      })
+      .catch(errorMethod);
+  };
+
   const renderItem = (data, rowMap) => {
     const {item} = data;
+    console.log(item, 'itemitem>>>>>');
     return (
       <View style={styles.itemBox}>
         <TouchableOpacity
@@ -149,7 +182,8 @@ const RoyoProducts = (props) => {
             {/* </View> */}
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text style={styles.font16Semibold}>In Stock</Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => updateIsLiveStatus(item.id, item.is_live)}>
                 <Image
                   source={
                     item.is_live
@@ -161,10 +195,20 @@ const RoyoProducts = (props) => {
             </View>
             {/* <Image style={{alignSelf: 'flex-end'}} source={imagePath.share} /> */}
           </View>
-          <Text style={styles.font13Regular}>in {categoryName}</Text>
+          {item?.category_name?.name ? (
+            <Text style={styles.font13Regular}>
+              in {item.category_name.name}
+            </Text>
+          ) : null}
 
           <View style={{marginTop: 10}}>
-            <HTMLView value={item?.translation[0]?.body_html} />
+            <HTMLView
+              value={
+                item?.translation[0]?.body_html
+                  ? item?.translation[0]?.body_html
+                  : ''
+              }
+            />
             <View />
           </View>
           <Text
@@ -375,6 +419,7 @@ const RoyoProducts = (props) => {
         setTimeout(() => {
           navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT, {
             productDetail: res?.data?.product_detail,
+            onCallBack: getAllProducts,
           });
         }, 500);
       })
@@ -562,9 +607,12 @@ const RoyoProducts = (props) => {
       )
       .then((res) => {
         showSuccess(res?.message);
+        let temp = cloneDeep(productListData);
+        temp = temp.filter((el) => el.id != item?.id);
         updateState({
           isLoadingB: true,
           isLoading: false,
+          productListData: temp,
         });
       })
       .catch(errorMethod);
@@ -644,6 +692,17 @@ const RoyoProducts = (props) => {
                     <Image source={imagePath.deleteRoyo} />
                   </TouchableOpacity>
                   <TouchableOpacity
+                    onPress={() => {
+                      console.log('check product data', data);
+                      // return;
+                      navigation.navigate(
+                        navigationStrings.ROYO_VENDOR_ADD_PRODUCT,
+                        {
+                          productDetail: data.item,
+                          onCallBack: getAllProducts,
+                        },
+                      );
+                    }}
                     style={{
                       ...styles.hiddenButton,
                       backgroundColor: '#C8F3FF',
@@ -672,7 +731,7 @@ const RoyoProducts = (props) => {
           <View
             style={{
               flex: 1,
-              marginBottom: moderateScaleVertical(100),
+              alignItems: 'center',
             }}>
             <FlatList
               data={category_list}
