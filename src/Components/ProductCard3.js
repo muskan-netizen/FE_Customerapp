@@ -213,7 +213,44 @@ const ProductCard3 = ({
     });
   };
 
-  let htmlText = data?.translation[0]?.body_html || null;
+  const onIncrementQty = () => {
+    console.log("categoryInfo",categoryInfo)
+    if (!!categoryInfo?.is_vendor_closed && categoryInfo?.closed_store_order_scheduled !== 1) {
+      alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
+      return;
+    }
+    if ((!!data?.add_on && data?.add_on.length !== 0) ||
+      (!!data?.variantSet && data?.variantSet.length !== 0)) {
+      onIncrement();
+    } else {
+      updateState({ ...state, isIncrement: true });
+      if (!disabledBtn) {
+        const isEnabled = numberOfHits.length === 0;
+        numberOfHits.push(data?.qty || totalProductQty);
+        if (isEnabled) {
+          initAnimation();
+        }
+      }
+      onIncrement();
+    }
+  }
+
+  const onDecrementQty = () => {
+    if ((!!data?.add_on && data?.add_on.length !== 0) ||
+      (!!data?.variantSet && data?.variantSet.length !== 0)) {
+      onDecrement();
+    } else {
+      updateState({ ...state, isIncrement: false });
+      if (!disabledBtn) {
+        const isEnabled = numberOfHits.length === 0;
+        numberOfHits.push(data?.qty || totalProductQty);
+        if (isEnabled) {
+          initAnimation();
+        }
+      }
+      onDecrement();
+    }
+  }
 
   let typeId = data?.category?.category_detail?.type_id;
   return (
@@ -442,7 +479,7 @@ const ProductCard3 = ({
                   !!data?.qty ||
                   totalProductQty ? (
                   <View
-                    pointerEvents={!!categoryInfo?.is_vendor_closed && !!categoryInfo?.closed_store_order_scheduled !== 1 ? 'none' : 'auto'}
+                    // pointerEvents={!!categoryInfo?.is_vendor_closed && !!categoryInfo?.closed_store_order_scheduled !== 1 ? 'none' : 'auto'}
                     style={{
                       ...styles.addBtnStyle,
                       paddingVertical: 0,
@@ -457,17 +494,7 @@ const ProductCard3 = ({
                     }}>
                     <TouchableOpacity
                       disabled={selectedItemID == data?.id}
-                      onPress={() => {
-                        updateState({ ...state, isIncrement: false });
-                        if (!disabledBtn) {
-                          const isEnabled = numberOfHits.length === 0;
-                          numberOfHits.push(data?.qty || totalProductQty);
-                          if (isEnabled) {
-                            initAnimation();
-                          }
-                          onDecrement();
-                        }
-                      }}
+                      onPress={onDecrementQty}
                       activeOpacity={0.8}
                       hitSlop={hitSlopProp}>
                       <Text
@@ -529,17 +556,7 @@ const ProductCard3 = ({
                       disabled={selectedItemID == data?.id}
                       activeOpacity={0.8}
                       hitSlop={hitSlopProp}
-                      onPress={() => {
-                        updateState({ ...state, isIncrement: true });
-                        if (!disabledBtn) {
-                          const isEnabled = numberOfHits.length === 0;
-                          numberOfHits.push(data?.qty || totalProductQty);
-                          if (isEnabled) {
-                            initAnimation();
-                          }
-                          onIncrement();
-                        }
-                      }}>
+                      onPress={onIncrementQty}>
                       <Text
                         style={{
                           fontFamily: fontFamily.medium,

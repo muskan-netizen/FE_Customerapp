@@ -442,11 +442,11 @@ export default function Products({ route, navigation }) {
           }),
         };
       });
-      updateState({ allFilters:filterDataNew });
+      updateState({ allFilters: filterDataNew });
     }
   };
 
-  console.log("allFilters",allFilters)
+  console.log("allFilters", allFilters)
   const onFilterApply = (
     filterData = {},
   ) => {
@@ -677,7 +677,7 @@ export default function Products({ route, navigation }) {
     data['brands'] = selectedFilters?.current?.sleectdBrands || [];
     data['order_type'] = selectedFilters?.current?.selectedSorting || 0;
     data['range'] = `${minimumPrice};${maximumPrice}`;
-    console.log('api hit getAllProductsCategoryFilter',data);
+    console.log('api hit getAllProductsCategoryFilter', data);
     actions
       .getProductByCategoryFilters(
         `/${productListId.id}?limit=${limit}&page=${pageNo}`,
@@ -1002,8 +1002,10 @@ export default function Products({ route, navigation }) {
   ) => {
     console.log("categoryInfocategoryInfo", categoryInfo)
     if (!!categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot && !categoryInfo?.closed_store_order_scheduled) {
-      alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
-      return;
+      if (type == 1) {//user can remove item if vendor closed
+        alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
+        return;
+      } 
     }
     let quantityToIncreaseDecrease = !!item?.batch_count
       ? Number(item?.batch_count)
@@ -1344,6 +1346,10 @@ export default function Products({ route, navigation }) {
   };
 
   const onAddNew = () => {
+    if (!!categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot && !categoryInfo?.closed_store_order_scheduled) {
+        alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
+        return;
+    }
     let getTypeId =
       !!repeatItems?.item?.category &&
       repeatItems?.item?.category.category_detail?.type_id;
