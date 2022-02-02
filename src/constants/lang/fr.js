@@ -799,4 +799,5 @@ montant`,
   SLOT_NOT_AVAILABAL:
     'Créneau non disponible merci de sélectionner une autre date',
   TIME_SLOT: 'Créneaux horaires',
+  RATING: 'Rating',
 };

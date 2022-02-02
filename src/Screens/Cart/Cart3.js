@@ -492,6 +492,7 @@ export default function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
+  console.log('cart data_++++++++', cartData);
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     console.log(item, 'itemitemitemitem');
@@ -4465,7 +4466,7 @@ export default function Cart({navigation, route}) {
                             marginBottom: moderateScaleVertical(8),
                             // height:moderateScale(20)
                           }}>
-                          {strings.TIME_SLOT}
+                          Time Slots
                         </Text>
                         <FlatList
                           horizontal
@@ -4488,7 +4489,7 @@ export default function Cart({navigation, route}) {
                                   fontFamily: fontFamily.medium,
                                   color: colors.redB,
                                 }}>
-                                {strings.SLOT_NOT_AVAILABAL}
+                                Slot not available please select another date
                               </Text>
                             </View>
                           )}

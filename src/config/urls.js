@@ -189,3 +189,4 @@ export const CANCEL_ORDER = getApiUrl('/return-order/vendor-order-for-cancel');
 export const WALLET_USER_VERIFY = getApiUrl('/wallet/transfer/user/verify');
 export const WALLET_TRANSFER_CONFIRM = getApiUrl('/wallet/transfer/confirm');
 export const VENDOR_SLOTS = getApiUrl('/vendor/slots');
+export const NEW_VENDOR_FILTER = getApiUrl('/vendor/vendorProductsFilter');

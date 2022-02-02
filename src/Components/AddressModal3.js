@@ -114,6 +114,8 @@ const AddressModal3 = ({
 
   const styles = stylesData({fontFamily, themeColors});
 
+  console.log("constCurrLoc",constCurrLoc)
+
   //To update the states
   useEffect(() => {
     updateState({
@@ -561,6 +563,7 @@ const AddressModal3 = ({
             <SelctFromMap
               addressDone={addressDone}
               mapClose={() => openCloseMapAddress(2)} //address map close
+              constCurrLoc={constCurrLoc}
             />
           </View>
         ) : (

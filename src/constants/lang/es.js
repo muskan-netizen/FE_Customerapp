@@ -765,4 +765,5 @@ export default {
     'Nuestro socio compadre mandó a su equipo a descansar, pero puedes programar el pedido para',
   SLOT_NOT_AVAILABAL: 'Slot no disponible por favor selecciona otra fecha',
   TIME_SLOT: 'Ranuras de tiempo',
+  RATING: 'Rating',
 };

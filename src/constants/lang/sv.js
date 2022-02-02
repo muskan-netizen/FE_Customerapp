@@ -808,4 +808,5 @@ export default {
   EXTRA_INSTRUCTION: 'Extra instruktion',
   SLOT_NOT_AVAILABAL: 'Slot not available please select another date',
   TIME_SLOT: 'Time Slots',
+  RATING: 'Rating',
 };

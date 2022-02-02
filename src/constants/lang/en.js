@@ -817,4 +817,5 @@ Amount`,
   EXTRA_INSTRUCTION: 'Extra Instruction',
   SLOT_NOT_AVAILABAL: 'Slot not available please select another date',
   TIME_SLOT: 'Time Slots',
+  RATING: 'Rating',
 };
