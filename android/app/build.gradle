@@ -2226,7 +2226,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.mozmarcas'
-            resValue "string", "app_name", "Mozmarcas"
+            resValue "string", "app_name", "Pakela"
             resValue "string", "host_name", ""
          } 
           myfiji{

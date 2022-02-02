@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-available_pods-HalaTalabat/Pods-available_pods-HalaTalabat.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-HalaTalabat/Pods-available_pods-HalaTalabat.release.xcconfig"
 
 PROJECT_APPLE_ID = 1607807589
 PROJECT_BUNDLE_ID =com.halaTalabat

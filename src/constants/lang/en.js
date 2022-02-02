@@ -175,7 +175,7 @@ export default {
   MOST_PURCHASED: 'Most purchased',
   NEWLY_ADDED: 'Newly Added',
   HOME: 'Home',
-  HOME_1: 'Home',
+  HOME_1: 'Address',
   HOLD_ON: 'Hold On',
   EXIT_WARNING: 'Are you sure you want to quit?',
   YES: 'Yes',

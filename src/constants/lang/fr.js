@@ -373,7 +373,7 @@ export default {
   AUTOMATIC: 'AUTOMATIQUE',
   APPEARANCE: 'APPARENCE',
   HOME: 'Accueil',
-  HOME_1: 'Domicile',
+  HOME_1: 'Adresse du vendeur',
   WISHLIST: 'Favoris',
   LIGHT: 'Clair',
   DARK: 'Sombre',

@@ -873,7 +873,7 @@ const appIds = {
     android: 'com.customer.ineed',
   }),
   nadelivery: Platform.select({
-    ios: 'com.nadelivery',
+    ios: 'com.app.nadelivery',
     android: 'com.nadelivery',
   }),
   marasym: Platform.select({
