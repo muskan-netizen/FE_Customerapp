@@ -174,7 +174,8 @@ export default function Account3({navigation}) {
         }
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
       /> */}
-        {shortCodeStatus ? (
+          <Header centerTitle={strings.MY_ACCOUNT} noLeftIcon={true} />
+        {/* {shortCodeStatus ? (
           <Header
             noLeftIcon={false}
             customLeft={() => (
@@ -196,7 +197,7 @@ export default function Account3({navigation}) {
           />
         ) : (
           <Header centerTitle={strings.MY_ACCOUNT} noLeftIcon={true} />
-        )}
+        )} */}
 
         {/* <View style={{...commonStyles.headerTopLine}} /> */}
 

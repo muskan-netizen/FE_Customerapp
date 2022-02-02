@@ -561,7 +561,7 @@ export default function Products({ route, navigation }) {
     )
       .then((res) => {
         console.log('filter vendor res', res);
-        if (res?.data?.vendor?.is_show_products_with_category) {
+        if (!!res?.data?.vendor?.is_show_products_with_category) {
           var totalProduct = 1;
           let filterArray = res?.data?.categories?.map((val) => {
             let newKey = {
@@ -586,13 +586,13 @@ export default function Products({ route, navigation }) {
           fetchTags(filterArray);
         } else {
           // console.log('get product list by vendor id >>>> ', res);
-          if (res?.data) {
+          if (!!res?.data?.products?.data) {
             updateState({
               isLoading: false,
               isRefreshing: false,
               categoryInfo: res?.data?.vendor,
               filterData: res?.data?.filterData,
-              productListData: res?.data?.vendor?.is_show_products_with_category
+              productListData: !!res?.data?.vendor?.is_show_products_with_category
                 ? res?.data?.categories[0]?.products
                 : pageNo == 1
                   ? res.data.products.data
