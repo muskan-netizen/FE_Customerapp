@@ -134,8 +134,6 @@ export default function Account3({navigation}) {
     );
   }, []);
 
-  console.log(userData, 'userData?.nameuserData?.name');
-
   const onStartSupportChat = () => {
     ZendeskChat.setVisitorInfo({
       name: userData?.name,
