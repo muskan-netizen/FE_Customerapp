@@ -28,6 +28,7 @@ import {
 import {customMarginBottom} from '../../../utils/constants/constants';
 import {getImageUrl, showError} from '../../../utils/helperFunctions';
 import {dialCall} from '../../../utils/openNativeApp';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 
 const RoyoOrderDetail = (props) => {
   const {data, selectedVendor} = props.route.params;
@@ -64,7 +65,7 @@ const RoyoOrderDetail = (props) => {
       collectedData['vendor_id'] = selectedVendor?.id;
     }
     console.log(data, '=====res');
-    updateState({isLoading: true});
+    updateState({isLoadingB: true});
     actions
       .getOrderDetail(collectedData, {
         code: appData?.profile?.code,
@@ -72,12 +73,13 @@ const RoyoOrderDetail = (props) => {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res.data.address, '=====res');
-        updateState({isLoading: false});
+        console.log(res.data, '=====res');
+        updateState({isLoadingB: false});
         if (res?.data) {
           updateState({
             address: res.data.address,
-            isLoading: false,
+            isLoadingB: false,
+            orderInfo: res.data,
           });
         }
       })
@@ -126,6 +128,7 @@ const RoyoOrderDetail = (props) => {
     showUpcomingStatus: false,
     current_status: data?.order_status.current_status,
     upcoming_status: data?.order_status.upcoming_status,
+    orderInfo: {},
   });
   const {
     showUpcomingStatus,
@@ -133,6 +136,7 @@ const RoyoOrderDetail = (props) => {
     upcoming_status,
     isLoadingB,
     address,
+    orderInfo,
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const toggleUpcomingStatus = () => {
@@ -145,7 +149,8 @@ const RoyoOrderDetail = (props) => {
       isLoading={isLoadingB}
       bgColor="white"
       statusBarColor="white"
-      barStyle="dark-content">
+      barStyle="dark-content"
+      source={loaderOne}>
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
         leftIcon={imagePath.backRoyo}
@@ -193,9 +198,16 @@ const RoyoOrderDetail = (props) => {
         <FlatList
           bounces={false}
           showsVerticalScrollIndicator={false}
-          data={data?.product_details}
+          data={
+            orderInfo.vendors && orderInfo.vendors[0]
+              ? orderInfo.vendors[0].products
+              : []
+          }
           keyExtractor={(val, index) => index}
           renderItem={({item, index}) => {
+            {
+              console.log('checkhheck', data);
+            }
             return (
               <View style={styles.itemBox}>
                 <Image
@@ -209,14 +221,16 @@ const RoyoOrderDetail = (props) => {
                   }}
                 />
                 <View style={{flex: 1, justifyContent: 'space-around'}}>
-                  <Text style={styles.font16Medium}>Pizza</Text>
-                  <Text style={styles.font13Regular}>{item.qty} Unit</Text>
+                  <Text style={styles.font16Medium}>
+                    {item?.translation?.title}
+                  </Text>
+                  <Text style={styles.font13Regular}>{item.quantity} Unit</Text>
                   <Text style={styles.font14Regular}>
                     $ {item.price} dollar
                   </Text>
                 </View>
                 <Text style={styles.font16Semibold}>
-                  {`$ ${item.qty * item.price}`}{' '}
+                  {`$ ${item.quantity * item.price}`}{' '}
                 </Text>
               </View>
             );
@@ -232,13 +246,18 @@ const RoyoOrderDetail = (props) => {
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>Delivery fee</Text>
-            <Text style={styles.font15Semibold}>$23</Text>
+            <Text style={styles.font15Semibold}>
+              ${data.total_delivery_fee}
+            </Text>
           </View>
           <View style={styles.dashLine} />
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>Total</Text>
             <Text style={{...styles.font15Semibold, color: colors.themeColor2}}>
-              {`$ ${parseFloat(data.payable_amount) + parseFloat(23)}`}
+              {`$ ${
+                parseFloat(data.payable_amount) +
+                parseFloat(data.total_delivery_fee)
+              }`}
             </Text>
           </View>
         </View>
@@ -281,10 +300,7 @@ const RoyoOrderDetail = (props) => {
           </View>
 
           <View style={styles.locationBox}>
-            <Image
-              style={styles.locationImage}
-              source={imagePath.icMap}
-            />
+            <Image style={styles.locationImage} source={imagePath.icMap} />
             <View style={{justifyContent: 'space-evenly'}}>
               <Text style={{fontFamily: fontFamily.semiBold, fontSize: 16}}>
                 {data.user_name}
@@ -296,7 +312,9 @@ const RoyoOrderDetail = (props) => {
                 }}>
                 {address?.street}
               </Text>
-              <Text style={styles.font13Regular}>{address?.city+", "+address?.country}</Text>
+              <Text style={styles.font13Regular}>
+                {address?.city + ', ' + address?.country}
+              </Text>
             </View>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>

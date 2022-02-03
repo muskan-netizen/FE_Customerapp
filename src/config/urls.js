@@ -6,12 +6,15 @@ export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.97.123:8020/api/v1'; // sujata
 // export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1'; //dinesh sir
 // export const API_BASE_URL = 'http://192.168.103.186:8005/api/v1'; // harbans
+// export const API_BASE_URL = 'https://6de6-103-72-170-243.ngrok.io/api/v1'; // gourav sir
 // export const API_BASE_URL = 'http://192.168.97.160:8000/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.100.198:8020/api/v1';
 // export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
+// export const API_BASE_URL = 'https://b724-103-72-170-243.ngrok.io/api/v1';
+// export const API_BASE_URL = 'https://zuzu.alerthire.com/api/v1';
 // export const API_BASE_URL = 'https://click-eat.com/api/v1';
 // export const API_BASE_URL = 'https://tranzit.app/api/v1';
 // export const API_BASE_URL = 'https://pinkjettaxi.com/api/v1';
@@ -121,8 +124,6 @@ export const GIVE_RATING_REVIEWS = getApiUrl('/rating/update-product-rating');
 export const GET_RATING_DETAIL = getApiUrl('/rating/get-product-rating');
 export const ACCEPT_REJECT_ORDER = getApiUrl('/update/order/status');
 
-export const GET_ALL_VENDOR_ORDERS = getApiUrl('/mystore');
-export const GET_ALL_PRODUCTSBY_STORE_ID = getApiUrl('/mystore/product/list');
 export const GET_ALL_CAR_AND_PRICE = getApiUrl(
   '/pickup-delivery/get-list-of-vehicles',
 );
@@ -133,7 +134,10 @@ export const LIST_OF_CMS = getApiUrl('/cms/page/list');
 export const CMS_PAGE_DETAIL = getApiUrl('/cms/page/detail');
 
 export const GET_VENDOR_REVENUE = getApiUrl('/store/revenue');
-
+export const GET_VENDOR_REVENUE_DASHBOARD_DATA = getApiUrl(
+  '/vendor-dasboard-data',
+);
+export const GET_VENDOR_PROFILE = getApiUrl('/get-vendor-profile');
 export const GETWEBURL = getApiUrl('/payment');
 export const GET_ALL_PROMO_CODES_CAB_ORDER = getApiUrl(
   '/pickup-delivery/promo-code/list',
@@ -187,3 +191,27 @@ export const WALLET_TRANSFER_CONFIRM = getApiUrl('/wallet/transfer/confirm');
 export const VENDOR_SLOTS = getApiUrl('/vendor/slots');
 export const GETALLTEMPLCARDS=  getApiUrl('/get/edited-orders');
 export const ACCEPTREJECTDRIVERUPDATE=  getApiUrl('/edit-order/approve/reject');
+
+// Vendor App collection
+export const GET_ALL_VENDOR_ORDERS = getApiUrl('/mystore');
+export const GET_ALL_PRODUCTSBY_STORE_ID = getApiUrl('/mystore/product/list');
+export const GET_ALL_PRODUCTSBY_VENDOR_ID = getApiUrl(
+  '/mystore/vendor/product/list',
+);
+export const ADD_VENDOR_PRODUCT = getApiUrl('/mystore/product/add');
+export const GET_VENDOR_CATEGORY = getApiUrl('/mystore/vendor/category');
+export const GET_PRODUCT_DETAIL = getApiUrl('/mystore/product/detail');
+export const CREATE_PRODUCT_VARIANT = getApiUrl(
+  '/mystore/product/createvariant',
+);
+export const DELETE_PRODUCT_VARIANT = getApiUrl(
+  '/mystore/product/deletevariant',
+);
+export const UPDATE_PRODUCT_STATUS = getApiUrl(
+  '/mystore/product/status-update',
+);
+export const DELETE_VENDOR_PRODUCT = getApiUrl('/mystore/product/delete');
+export const UPDATE_VENDOR_PRODUCT = getApiUrl('/mystore/product/update');
+export const ADD_PRODUCT_IMAGE = getApiUrl('/mystore/product/addProductImage');
+export const GET_PRODUCT_IMAGE = getApiUrl('/mystore/product/getProductImages');
+export const DELETE_PRODUCT_IMAGE = getApiUrl('/mystore/product/deleteimage');

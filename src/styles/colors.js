@@ -93,7 +93,6 @@ export default {
   greyNew: '#EFEFEF',
   yellowC: '#F7B500',
   greenA: '#71C94B',
-  greyColor: '#D8D8D8',
   iconGrey: '#A5A5A5',
   yellowOpacity10: 'rgba(247,215,123,0.1)',
   greyColor: '#F1F1F1',
@@ -105,6 +104,7 @@ export default {
   textGreyNew: '#1E2E4D',
   greyColor1: '#fafafa',
   greyColor2: '#EEEEEE',
+  greyColor3: '#D8D8D8',
   grayOpacity51: 'rgba(42,46,54,0.51)',
   whiteOpacity4: 'rgba(255,255,255,0.4)',
   whiteOpacity15: 'rgba(255,255,255,0.15)',
@@ -121,4 +121,6 @@ export default {
   redE: '#E02020',
   greyC: '#D0021B',
   greyD: '#9898A0',
+  greyColor4: '#B0B0B0',
+  lightGreen: 'rgba(68,215,182,0.17)',
 };

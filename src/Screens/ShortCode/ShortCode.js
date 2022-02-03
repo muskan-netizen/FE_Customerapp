@@ -245,6 +245,7 @@ export default function ShortCode({route, navigation}) {
         case appIds.snabbhem:
           updateState({
             shortCode: shortCodes.snabbhem,
+            // shortCode: '98f085',
             isShortcodePrefilled: true,
           });
           break;

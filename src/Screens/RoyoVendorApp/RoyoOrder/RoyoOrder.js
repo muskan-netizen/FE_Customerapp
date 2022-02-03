@@ -27,6 +27,10 @@ import strings from '../../../constants/lang';
 import {RefreshControl} from 'react-native';
 import staticStrings from '../../../constants/staticStrings';
 import {showError} from '../../../utils/helperFunctions';
+import SunmiV2Printer from 'react-native-sunmi-v2-printer';
+import {getItem} from '../../../utils/utils';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import _ from 'lodash';
 
 const RoyoOrder = (props) => {
   const {navigation} = props;
@@ -57,6 +61,7 @@ const RoyoOrder = (props) => {
     vendor_list: [],
     selectedVendor: null,
     activeIndex: 0,
+    isBleDevice: false,
   });
   const {
     newOrder,
@@ -72,6 +77,7 @@ const RoyoOrder = (props) => {
     vendor_list,
     selectedVendor,
     activeIndex,
+    isBleDevice,
   } = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -90,6 +96,20 @@ const RoyoOrder = (props) => {
       _getListOfVendorOrders();
     }
   }, [isLoading]);
+
+  const _getBleDevice = async () => {
+    const res = await getItem('BleDevice');
+    const sunmiPrinterAvail = await SunmiV2Printer.hasPrinter;
+    if (!!res || sunmiPrinterAvail) {
+      updateState({
+        isBleDevice: true,
+      });
+    } else {
+      updateState({
+        isBleDevice: false,
+      });
+    }
+  };
 
   useEffect(() => {
     updateState({
@@ -124,16 +144,19 @@ const RoyoOrder = (props) => {
         console.log('vendor orders res', res);
         const data = res.data.order_list.data;
 
+        const uniqueList = _.unionBy(
+          [...activeOrders, ...res.data.order_list.data],
+          'id',
+        );
+
         updateState({
-          activeOrders:
-            pageActive == 1
-              ? res.data.order_list.data
-              : [...activeOrders, ...res.data.order_list.data],
+          activeOrders: pageActive == 1 ? res.data.order_list.data : uniqueList,
           vendor_list: res.data.vendor_list,
           selectedVendor: !!storeSelectedVendor?.id
             ? storeSelectedVendor
             : res.data.vendor_list.find((x) => x.is_selected),
           isLoading: false,
+          isLoadingB: false,
           isRefreshing: false,
         });
       })
@@ -151,13 +174,11 @@ const RoyoOrder = (props) => {
     showError(error?.message || error?.error);
   };
 
-
   const updateOrderStatus = (acceptRejectData, status) => {
     let data = {};
     data['order_id'] = acceptRejectData?.id;
     data['vendor_id'] = selectedVendor?.id;
     data['order_status_option_id'] = status;
-    console.log(data, 'data>>data');
     updateState({isLoadingB: true});
     actions
       .updateOrderStatus(data, {
@@ -167,7 +188,6 @@ const RoyoOrder = (props) => {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'res>>>acceptRejectOrder');
         if (res && res.status == 'success') {
           updateStatus(res, acceptRejectData);
         }
@@ -176,25 +196,35 @@ const RoyoOrder = (props) => {
   };
 
   const updateStatus = (res, acceptRejectData) => {
-    let clonedArrayOrderList = cloneDeep(activeOrders);
-
+    let clonedArrayOrderList = [...activeOrders];
+    clonedArrayOrderList = clonedArrayOrderList.map((i, inx) => {
+      if (i?.id == acceptRejectData?.id) {
+        i.order_status = res.order_status;
+        return i;
+      } else {
+        return i;
+      }
+    });
     updateState({
       isLoadingB: false,
-      activeOrders: clonedArrayOrderList.map((i, inx) => {
-        if (i?.id == acceptRejectData?.id) {
-          i.order_status = res.order_status;
-          return i;
-        } else {
-          return i;
-        }
-      }),
+      activeOrders: clonedArrayOrderList,
     });
   };
+
+  useEffect(() => {
+    _getBleDevice();
+  }, []);
+
   useEffect(() => {
     _getListOfVendorOrders();
+    _getBleDevice();
   }, [pageActive, isRefreshing]);
 
   useEffect(() => {
+    updateOrderList();
+  }, [activeOrders]);
+
+  const updateOrderList = () => {
     const newnewOrder = activeOrders.filter(
       (value, index) => value?.order_status?.current_status?.id == 1,
     );
@@ -210,13 +240,14 @@ const RoyoOrder = (props) => {
     const newcompleted = activeOrders.filter(
       (value, index) => value?.order_status?.current_status?.id == 6,
     );
+
     updateState({
-      newOrder: [...newOrder, ...newnewOrder],
-      confirmed: [...confirmed, ...newconfirmed],
-      cancelled: [...cancelled, ...newcancelled],
-      completed: [...completed, ...newcompleted],
+      newOrder: _.unionBy([...newnewOrder], 'id'),
+      confirmed: _.unionBy([...newconfirmed], 'id'),
+      cancelled: _.unionBy([...newcancelled], 'id'),
+      completed: _.unionBy([...newcompleted], 'id'),
     });
-  }, [activeOrders]);
+  };
   //Refresh screen
 
   //Pull to refresh
@@ -245,7 +276,9 @@ const RoyoOrder = (props) => {
     <WrapperContainer
       bgColor="white"
       statusBarColor="white"
-      barStyle="dark-content">
+      barStyle="dark-content"
+      isLoadingB={isLoadingB}
+      source={loaderOne}>
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
         // centerTitle="Orders | Foodies hub  "
@@ -300,6 +333,7 @@ const RoyoOrder = (props) => {
                     })
                   }
                   item={item}
+                  isBleDevice={isBleDevice}
                 />
               </View>
             )}
@@ -374,7 +408,6 @@ const RoyoOrder = (props) => {
               );
             }}
             renderItem={({item, index}) => {
-              console.log(item, 'cancelled');
               return (
                 <View
                   style={{
@@ -421,7 +454,6 @@ const RoyoOrder = (props) => {
               );
             }}
             renderItem={({item, index}) => {
-              console.log(item, 'cancelled');
               return (
                 <View
                   style={{
