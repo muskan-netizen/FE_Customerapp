@@ -51,6 +51,11 @@ const TextInputWithUnderlineAndLabel = ({
   labelIconStyle = {},
   onPressLabel = () => {},
   underlineColor = colors.textGreyB,
+  placeholderTextColor = colors.textGreyB,
+  onRightPress = () => {},
+  isEditable = true,
+  keyboardType = '',
+  defaultValue = '',
   ...props
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -80,6 +85,7 @@ const TextInputWithUnderlineAndLabel = ({
       style={mainStyle}>
       <View style={{flexDirection: 'row', ...lableViewStyle}}>
         <Text
+          numberOfLines={1}
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
             ...labelStyle,
@@ -101,6 +107,7 @@ const TextInputWithUnderlineAndLabel = ({
           borderBottomWidth: StyleSheet.hairlineWidth,
           borderBottomColor: underlineColor,
           paddingBottom: 11,
+          alignItems: 'center',
           ...containerStyle,
         }}>
         {/* <TextInput
@@ -125,7 +132,7 @@ const TextInputWithUnderlineAndLabel = ({
           selectionColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
           placeholder={placeholder}
           placeholderTextColor={
-            isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB
+            isDarkMode ? MyDarkTheme.colors.text : placeholderTextColor
           }
           style={{
             flex: 1,
@@ -147,9 +154,17 @@ const TextInputWithUnderlineAndLabel = ({
           onChangeText={onChangeText}
           value={value}
           secureTextEntry={secureTextEntry}
+          keyboardType={keyboardType}
           autoCapitalize={'none'}
+          editable={isEditable}
+          defaultValue={defaultValue}
           {...props}
         />
+        {!!rightIcon && (
+          <TouchableOpacity hitSlop={hitSlopProp} onPress={onRightPress}>
+            <Image source={rightIcon} />
+          </TouchableOpacity>
+        )}
       </View>
     </TouchableOpacity>
   );

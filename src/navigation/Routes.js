@@ -1,30 +1,19 @@
-import {
-  NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
-} from '@react-navigation/native';
+import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
+import {AppearanceProvider} from 'react-native-appearance';
 import {useSelector} from 'react-redux';
+import AppIntro from '../Screens/AppIntro';
 import ShortCode from '../Screens/ShortCode/ShortCode';
+import colors from '../styles/colors';
 import AuthStack from './AuthStack';
 import CourierStack from './CourierStack';
-
+import {navigationRef} from './NavigationService';
 import navigationStrings from './navigationStrings';
 import TabRoutes from './TabRoutes';
-import {navigationRef} from './NavigationService';
-import DrawerRoutes from './DrawerRoutes';
-import TabRoutesVendor from './TabRoutesVendor';
-import {AppearanceProvider, useColorScheme} from 'react-native-appearance';
-import UserInterfaceStyle from 'react-native-user-interface-style';
-import colors from '../styles/colors';
 import TaxiAppStack from './TaxiAppStack';
-import RoyoOrderStack from './RoyoOrderStack';
-import RoyoVendroAppTabRoute from './RoyoVendroAppTabRoute';
-import AsyncStorage from '@react-native-community/async-storage';
-import AppIntro from '../Screens/AppIntro';
-import {getItem} from '../utils/utils';
 import TaxiTabRoutes from './TaxiTabRoutes';
+import TabRoutesVendor from './VendorApp/TabRoutesVendor';
 
 const Stack = createStackNavigator();
 
@@ -117,8 +106,8 @@ export default function Routes() {
 
           <Stack.Screen
             name={navigationStrings.TABROUTESVENDOR}
+            // component={TabRoutesVendor}
             component={TabRoutesVendor}
-            // component={RoyoVendroAppTabRoute}
             options={{headerShown: false, gestureEnabled: false}}
           />
         </Stack.Navigator>

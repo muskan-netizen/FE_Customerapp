@@ -23,6 +23,7 @@ const ModalView = ({
   modalBottomContent = () => {},
   mainViewStyle = {},
   topCustomComponent = () => {},
+  rightIconStyle = {},
 }) => {
   return (
     <Modal
@@ -48,7 +49,9 @@ const ModalView = ({
             leftIcon={leftIcon}
             centerTitle={centerTitle}
             rightIcon={rightIcon}
+            rightIconStyle={rightIconStyle}
             onPressLeft={onPressLeft}
+            onPressRight={onClose}
           />
         )}
 

@@ -547,6 +547,7 @@
     "react-native-maps-directions": "^1.8.0",
     "react-native-material-tabs": "^4.2.0",
     "react-native-modal": "^11.10.0",
+    "react-native-modal-dropdown": "^1.0.2",
     "react-native-month-year-picker": "^1.8.0",
     "react-native-otp-inputs": "^6.0.0",
     "react-native-pager-view": "^5.1.8",

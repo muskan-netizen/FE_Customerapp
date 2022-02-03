@@ -33,9 +33,12 @@ import actions from '../../../redux/actions';
 import moment from 'moment';
 import {showError} from '../../../utils/helperFunctions';
 import debounce from 'lodash.debounce';
-import {cloneDeep} from 'lodash';
+import {cloneDeep, isEmpty} from 'lodash';
 import {TouchableOpacity} from 'react-native';
 import MonthPicker from 'react-native-month-year-picker';
+import Modal from 'react-native-modal';
+import SelectVendorListModal from '../../../Components/SelectVendorListModal';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 
 const commonStyle = commonStyles({
   fontFamily,
@@ -44,7 +47,6 @@ const commonStyle = commonStyles({
 
 const RoyoHome = (props) => {
   const {navigation} = props;
-
   const {storeSelectedVendor} = useSelector((state) => state?.order);
   const {appData, currencies, languages} = useSelector(
     (state) => state.initBoot,
@@ -60,7 +62,7 @@ const RoyoHome = (props) => {
     limit: 10,
     isLoading: true,
     isRefreshing: false,
-    vendor_list: [],
+    vendorList: [],
     selectedVendor: null,
     startDate: null,
     endDate: null,
@@ -78,6 +80,10 @@ const RoyoHome = (props) => {
     showOrderDate: false,
     revenueDate: new Date(),
     orderDate: new Date(),
+    isVendorSelectModal: false,
+    selectedVendorData: {},
+    sales: [],
+    isProfileCompleted: 0,
   });
 
   const {
@@ -98,10 +104,26 @@ const RoyoHome = (props) => {
     showRevenueDate,
     orderDate,
     revenueDate,
+    isVendorSelectModal,
+    vendorList,
+    isLoading,
+    selectedVendorData,
+    sales,
+    isProfileCompleted,
   } = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
+
+  useEffect(() => {
+    _getListOfVendorOrders();
+  }, [storeSelectedVendor]);
+
+  console.log(isLoading, 'isLoading>>>');
+
   const _getListOfVendorOrders = () => {
+    updateState({
+      isLoading: true,
+    });
     let vendordId = !!storeSelectedVendor?.id
       ? storeSelectedVendor?.id
       : selectedVendor?.id
@@ -120,16 +142,23 @@ const RoyoHome = (props) => {
       .then((res) => {
         console.log('vendor orders res', res);
 
-        let newVendor = res.data.vendor_list.find((x) => x.is_selected);
-        if (!storeSelectedVendor?.id) actions.savedSelectedVendor(newVendor);
+        let selectedVendorData = res.data.vendor_list.find(
+          (x) => x.is_selected,
+        );
+        // if (!storeSelectedVendor?.id) actions.savedSelectedVendor(newVendor);
         updateState({
           activeOrders: res.data.order_list.data,
           selectedVendor: !!storeSelectedVendor?.id
             ? storeSelectedVendor
             : res.data.vendor_list.find((x) => x.is_selected),
+          vendorList: res.data.vendor_list,
           isLoading: false,
           isRefreshing: false,
+          selectedVendorData: selectedVendorData,
         });
+        // _getRevnueData(selectedVendorData, new Date());
+        _getRevenueDashboardData(selectedVendorData, new Date(), 0);
+        _getVendorProfile(selectedVendorData);
       })
       .catch(errorMethod);
   };
@@ -159,16 +188,12 @@ const RoyoHome = (props) => {
     });
   }, [activeOrders]);
 
-  useEffect(() => {
-    _getListOfVendorOrders();
-  }, []);
-
-  useEffect(() => {
-    if (selectedVendor != null) {
-      console.log();
-      _getRevnueData();
-    }
-  }, [selectedVendor, pageActive]);
+  // useEffect(() => {
+  //   if (selectedVendor != null) {
+  //     console.log();
+  //     _getRevnueData();
+  //   }
+  // }, [selectedVendor, pageActive]);
 
   const toggleRevenueDate = () => {
     updateState({
@@ -181,33 +206,38 @@ const RoyoHome = (props) => {
     });
   };
   const onChangeOrderDate = (value, newDate) => {
-    if (newDate)
+    if (newDate) {
       updateState({
         orderDate: newDate,
         showOrderDate: false,
       });
-    else
+      _getRevenueDashboardData(selectedVendorData, newDate, 2);
+    } else
       updateState({
         showOrderDate: false,
       });
   };
   const onChageRevenueDate = (value, newDate) => {
-    if (newDate)
+    console.log('new datae', moment(newDate).startOf('month').format('MMMM'));
+
+    if (newDate) {
       updateState({
         revenueDate: newDate,
         showRevenueDate: false,
       });
-    else
+      // _getRevnueData(selectedVendorData, newDate);
+      _getRevenueDashboardData(selectedVendorData, newDate, 1);
+    } else
       updateState({
         showRevenueDate: false,
       });
   };
-  const _getRevnueData = () => {
+  const _getRevnueData = (selectedVendorData, date) => {
     let data = {};
     data['type'] = 'monthly';
-    data['month'] = 'july';
-    data['year'] = '2021';
-    data['vendor_id'] = selectedVendor ? selectedVendor?.id : '';
+    data['month'] = moment(date).startOf('month').format('MMMM');
+    data['year'] = moment().startOf('year').format('YYYY');
+    data['vendor_id'] = selectedVendorData ? selectedVendorData?.id : '';
     actions
       .getRevenueData(data, {
         code: appData?.profile?.code,
@@ -221,10 +251,11 @@ const RoyoHome = (props) => {
             (partial_sum, a) => parseFloat(partial_sum) + parseFloat(a),
             parseFloat(0),
           );
+          const dates = res.data.dates.map((el) => el);
           updateState({
             isRefreshing: false,
             isLoading: false,
-            labels: res.data.dates,
+            labels: dates,
             datasets: res.data.revenue,
             totalRevenue,
           });
@@ -232,6 +263,90 @@ const RoyoHome = (props) => {
           updateState({
             isLoading: false,
             isRefreshing: false,
+          });
+        }
+      })
+      .catch(errorMethod);
+  };
+
+  const _getVendorProfile = (selectedVendorData) => {
+    let data = {};
+    data['vendor_id'] = selectedVendorData ? selectedVendorData?.id : '';
+    actions
+      .getVendorProfile(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        console.log(res, 'res__getRevnueData>>>profile');
+
+        updateState({
+          isRefreshing: false,
+          isLoading: false,
+          isProfileCompleted: res?.data?.profile_status,
+        });
+      })
+      .catch(errorMethod);
+  };
+
+  const _getRevenueDashboardData = (selectedVendorData, date, ...params) => {
+    let data = {};
+    data['type'] = 'monthly';
+    data['vendor_id'] = selectedVendorData ? selectedVendorData?.id : '';
+    data['start_date'] = `${moment(date)
+      .startOf('year')
+      .format('YYYY')}-${moment(date).startOf('month').format('MM')}-01`;
+    data['end_date'] = `${moment(date).startOf('year').format('YYYY')}-${moment(
+      date,
+    )
+      .startOf('month')
+      .format('MM')}-${moment(date).endOf('month').format('DD')}`;
+
+    actions
+      .getRevenueDashboardData(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        console.log(res, 'res__getRevnueData>>>dashboard', params);
+
+        const dates = res.data.dates.map(
+          (el) =>
+            `${moment(el).startOf('month').format('MMM')}-${el.slice(8, 11)}`,
+        );
+        console.log('checking selected vendor data', dates);
+        if (res?.data?.dates.length) {
+          let totalRevenue = res.data.revenue.reduce(
+            (partial_sum, a) => parseFloat(partial_sum) + parseFloat(a),
+            parseFloat(0),
+          );
+          updateState({
+            isRefreshing: false,
+            isLoading: false,
+            labels: dates,
+            datasets: params[0] == 2 ? datasets : res.data.revenue,
+            totalRevenue,
+            sales:
+              params[0] == 1
+                ? sales
+                : res.data.sales.map((el) => el.toString()),
+            // totalPendingOrder: res.data.total_pending_order,
+            // totalCancelledOrder: res.data.total_rejected_order,
+            // totalActiveOrder: res.data.total_active_order,
+            // totalCompletedOrder: res.data.total_delivered_order,
+          });
+        } else {
+          updateState({
+            isLoading: false,
+            isRefreshing: false,
+            labels: dates,
+            datasets: params[0] == 2 ? datasets : res.data.revenue,
+            sales:
+              params[0] == 1
+                ? sales
+                : res.data.sales.map((el) => el.toString()),
           });
         }
       })
@@ -246,26 +361,57 @@ const RoyoHome = (props) => {
     showError(error?.message || error?.error);
   };
 
-  useEffect(() => {
-    updateState({
-      selectedVendor: storeSelectedVendor,
-      isLoading: true,
-      pageActive: 1,
-    });
-  }, [storeSelectedVendor]);
+  // useEffect(() => {
+  //   updateState({
+  //     selectedVendor: storeSelectedVendor,
+  //     isLoading: true,
+  //     pageActive: 1,
+  //   });
+  // }, [storeSelectedVendor]);
 
   const barData = {
     labels: labels,
     datasets: [
       {
-        data: [
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
+        // data: [
+        //   Math.random() * 100,
+        //   Math.random() * 100,
+        //   Math.random() * 100,
+        //   Math.random() * 100,
+        //   Math.random() * 100,
+        //   Math.random() * 100,
+        // ],
+        data: datasets,
+        colors: [
+          (opacity = 1) => `rgba(4, 14, 22, ${opacity})`,
+          (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
+          (opacity = 1) => `rgba(174, 44, 242, ${opacity})`,
+          (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
+          (opacity = 1) => `rgba(7, 14, 242, ${opacity})`,
+          (opacity = 1) => `rgba(174, 144, 22, ${opacity})`,
+          (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
+          (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
+          (opacity = 1) => `rgba(174, 44, 242, ${opacity})`,
+          (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
+          (opacity = 1) => `rgba(7, 14, 242, ${opacity})`,
         ],
+      },
+    ],
+  };
+  console.log('salessales', sales);
+  const salesBarData = {
+    labels: labels,
+    datasets: [
+      {
+        // data: [
+        //   Math.random() * 100,
+        //   Math.random() * 100,
+        //   Math.random() * 100,
+        //   Math.random() * 100,
+        //   Math.random() * 100,
+        //   Math.random() * 100,
+        // ],
+        data: sales,
         colors: [
           (opacity = 1) => `rgba(4, 14, 22, ${opacity})`,
           (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
@@ -356,7 +502,6 @@ const RoyoHome = (props) => {
     let clonedArrayOrderList = cloneDeep(activeOrders);
 
     updateState({
-      isLoadingB: false,
       activeOrders: clonedArrayOrderList.map((i, inx) => {
         if (i?.id == acceptRejectData?.id) {
           i.order_status = res.order_status;
@@ -396,22 +541,50 @@ const RoyoHome = (props) => {
       </View>
     );
   };
+  const _reDirectToVendorList = () => {
+    updateState({
+      isVendorSelectModal: true,
+    });
+  };
 
+  const onVendorSelect = (item) => {
+    updateState({
+      selectedVendor: item,
+      isVendorSelectModal: false,
+      pageNo: 1,
+    });
+    setTimeout(() => {
+      actions.savedSelectedVendor(item);
+    }, 500);
+  };
+
+  const BarWidth = () => moderateScale(labels.length * 65);
+
+  console.log('BarWidthBarWidth', BarWidth());
   return (
     <WrapperContainer
       bgColor={colors.white}
       statusBarColor={colors.white}
-      barStyle="dark-content">
+      isLoadingB={isLoading}
+      source={loaderOne}>
       <Header
-        headerStyle={{marginVertical: moderateScaleVertical(16)}}
+        centerTitle={`${
+          !isEmpty(selectedVendor)
+            ? `${selectedVendor?.name}`
+            : 'Select a vendor'
+        } `}
         onPressLeft={() => {
           navigation.navigate(navigationStrings.TAB_ROUTES);
         }}
-        // leftIcon={imagePath.logoRoyo}
-        leftIcon={imagePath.back}
+        leftIcon={imagePath.backRoyo}
+        onPressCenterTitle={() => _reDirectToVendorList()}
+        onPressImageAlongwithTitle={() => _reDirectToVendorList()}
+        imageAlongwithTitle={imagePath.dropdownTriangle}
+        showImageAlongwithTitle
         rightIcon={status ? imagePath.onlineRoyo : imagePath.offlineRoyo}
         onPressRight={toggleStatus}
       />
+
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}
         refreshControl={
@@ -425,32 +598,33 @@ const RoyoHome = (props) => {
         showsVerticalScrollIndicator={false}>
         <View>
           <View style={styles.dashboard}>{dashboardData.map(dashboard)}</View>
-          <View style={styles.warningBox}>
-            <Image
-              source={imagePath.warningRoyo}
-              style={{marginTop: moderateScaleVertical(5)}}
-            />
-            <View style={{flex: 1, marginLeft: moderateScale(16)}}>
-              <Text
-                style={{
-                  ...commonStyle.boldFont16,
-                  color: colors.black,
-                }}>
-                Complete your profile
-              </Text>
-              <Text
-                style={{
-                  ...commonStyle.regularFont13,
-                  color: colors.black,
-                  letterSpacing: 1,
-                }}>
-                you have missing profile imformation.{' '}
-                <Text style={styles.span}>Tap here</Text> to complete.
-              </Text>
+          {isProfileCompleted ? (
+            <View style={styles.warningBox}>
+              <Image
+                source={imagePath.warningRoyo}
+                style={{marginTop: moderateScaleVertical(5)}}
+              />
+              <View style={{flex: 1, marginLeft: moderateScale(16)}}>
+                <Text
+                  style={{
+                    ...commonStyle.boldFont16,
+                    color: colors.black,
+                  }}>
+                  Complete your profile
+                </Text>
+                <Text
+                  style={{
+                    ...commonStyle.regularFont13,
+                    color: colors.black,
+                    letterSpacing: 1,
+                  }}>
+                  you have missing profile imformation.{' '}
+                  <Text style={styles.span}>Tap here</Text> to complete.
+                </Text>
+              </View>
             </View>
-          </View>
+          ) : null}
 
-          {/* chart */}
           <View style={styles.rowWrapSpace}>
             <View>
               <View style={styles.chartHeader}>
@@ -482,23 +656,25 @@ const RoyoHome = (props) => {
                   </Text>
                   <Text style={styles.font16Bold}>${totalRevenue}</Text>
                 </View>
-                <BarChart
-                  withCustomBarColorFromData={true}
-                  style={{margin: 0, padding: 0, flex: 1, marginLeft: 0}}
-                  // yLabelsOffset={30}
-                  data={barData}
-                  width={boxWidth()}
-                  height={moderateScaleVertical(220)}
-                  yAxisLabel="$"
-                  yAxisInterval={2}
-                  chartConfig={chartConfig}
-                  verticalLabelRotation={0}
-                  horizontalLabelRotation={0}
-                  withInnerLines={false}
-                  showBarTops={false}
-                  fromZero={true}
-                  flatColor={true}
-                />
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  <BarChart
+                    withCustomBarColorFromData={true}
+                    style={{margin: 0, padding: 0, flex: 1, marginLeft: 0}}
+                    // yLabelsOffset={30}
+                    data={barData}
+                    width={labels.length > 0 ? BarWidth() : boxWidth()}
+                    height={moderateScaleVertical(250)}
+                    yAxisLabel="$"
+                    yAxisInterval={2}
+                    chartConfig={chartConfig}
+                    verticalLabelRotation={0}
+                    horizontalLabelRotation={0}
+                    withInnerLines={false}
+                    showBarTops={false}
+                    fromZero={true}
+                    flatColor={true}
+                  />
+                </ScrollView>
               </View>
             </View>
             <View>
@@ -528,20 +704,22 @@ const RoyoHome = (props) => {
                   <Text style={styles.font13Regular}>Total orders placed</Text>
                   <Text style={styles.font16Bold}>34565</Text>
                 </View>
-                <BarChart
-                  withCustomBarColorFromData={true}
-                  data={barData}
-                  width={boxWidth()}
-                  height={moderateScaleVertical(220)}
-                  yAxisLabel="$"
-                  chartConfig={chartConfig}
-                  verticalLabelRotation={0}
-                  horizontalLabelRotation={0}
-                  withInnerLines={false}
-                  showBarTops={false}
-                  fromZero={true}
-                  flatColor={true}
-                />
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  <BarChart
+                    withCustomBarColorFromData={true}
+                    data={salesBarData}
+                    width={labels.length > 0 ? BarWidth() : boxWidth()}
+                    height={moderateScaleVertical(220)}
+                    yAxisLabel=""
+                    chartConfig={chartConfig}
+                    verticalLabelRotation={0}
+                    horizontalLabelRotation={0}
+                    withInnerLines={false}
+                    showBarTops={false}
+                    fromZero={true}
+                    flatColor={true}
+                  />
+                </ScrollView>
               </View>
             </View>
           </View>
@@ -589,11 +767,25 @@ const RoyoHome = (props) => {
                   </View>
                 );
               }}
-              keyExtractor={(item, key) => key}
+              keyExtractor={(item, key) => key.toString()}
             />
           </View>
         </View>
       </ScrollView>
+      <Modal
+        isVisible={isVendorSelectModal}
+        style={{
+          margin: 0,
+        }}>
+        <View style={{flex: 1, backgroundColor: colors.white}}>
+          <SelectVendorListModal
+            vendorList={vendorList}
+            onCloseModal={() => updateState({isVendorSelectModal: false})}
+            onVendorSelect={onVendorSelect}
+            selectedVendor={selectedVendor}
+          />
+        </View>
+      </Modal>
     </WrapperContainer>
   );
 };
@@ -673,6 +865,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: moderateScaleVertical(16),
     backgroundColor: '#D8D8D81f',
+    width: width - moderateScale(30),
+    borderRadius: moderateScale(5),
+    paddingHorizontal: moderateScale(15),
   },
   btnContainer: {
     backgroundColor: colors.white,

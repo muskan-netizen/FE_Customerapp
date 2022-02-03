@@ -758,4 +758,6 @@ export default {
   WE_ARE_NOT_ACCEPTING:
     'We are not accepting orders right now. You can schedule this for',
   RATING: 'Rating',
+  YOURDRIVERHASMODIFIED:"Your driver has modified your order"
+
 };
