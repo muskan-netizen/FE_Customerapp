@@ -756,4 +756,6 @@ export default {
   SLOT_NOT_AVAILABAL: 'Slot not available please select another date',
   TIME_SLOT: 'Time Slots',
   RATING: 'Rating',
+  YOURDRIVERHASMODIFIED:"Your driver has modified your order"
+
 };

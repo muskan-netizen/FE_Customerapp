@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import Header from '../../../Components/Header';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
@@ -32,9 +33,11 @@ const RoyoAccounts = (props) => {
     vendor_list: [],
     isLoading: false,
     isRefreshing: false,
+    vendorDetail: {},
   });
 
-  const {selectedVendor, vendor_list, isLoading, isRefreshing} = state;
+  const {selectedVendor, vendor_list, isLoading, isRefreshing, vendorDetail} =
+    state;
   const {appData, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
@@ -50,7 +53,45 @@ const RoyoAccounts = (props) => {
 
   useEffect(() => {
     _getListOfVendor();
+    // _getVendorProfile(selectedVendor);
   }, []);
+
+  useEffect(() => {
+    console.log('check selectedVendor', selectedVendor);
+    updateState({isLoading: true});
+    _getVendorProfile(selectedVendor);
+  }, [selectedVendor]);
+
+  const _getVendorProfile = () => {
+    let vendordId = !!storeSelectedVendor?.id
+      ? storeSelectedVendor?.id
+      : selectedVendor?.id
+      ? selectedVendor?.id
+      : '';
+    console.log('res__getRevnueData>>>profile>>account', vendordId);
+    let data = {};
+    data['vendor_id'] = vendordId;
+    if (!data.vendor_id) {
+      return false;
+    }
+    console.log('res__getRevnueData>>>profile>>account', vendordId);
+    actions
+      .getVendorProfile(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        console.log(res, 'res__getRevnueData>>>profile>>account');
+
+        updateState({
+          isRefreshing: false,
+          isLoading: false,
+          vendorDetail: res?.data,
+        });
+      })
+      .catch(errorMethod);
+  };
 
   const _reDirectToVendorList = () => {
     navigation.navigate(navigationStrings.VENDORLIST, {
@@ -118,7 +159,8 @@ const RoyoAccounts = (props) => {
     {
       text: 'Transactions',
       image: imagePath.transactionsRoyo,
-      onPress: () => navigation.navigate(navigationStrings.ROYO_VENDOR_TRANSACTIONS),
+      onPress: () =>
+        navigation.navigate(navigationStrings.ROYO_VENDOR_TRANSACTIONS),
     },
     {
       text: 'Payment Settings',
@@ -136,12 +178,14 @@ const RoyoAccounts = (props) => {
   return (
     <WrapperContainer
       bgColor="white"
+      isLoadingB={isLoading}
+      source={loaderOne}
       statusBarColor="white"
       barStyle="dark-content">
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
-        centerTitle="Accounts | Foodies hub  "
-        centerTitle={`Accounts | ${selectedVendor?.name} `}
+        // centerTitle="Accounts | Foodies hub  "
+        centerTitle={`Accounts | ${vendorDetail?.name} `}
         noLeftIcon
         imageAlongwithTitle={imagePath.dropdownTriangle}
         showImageAlongwithTitle
@@ -150,13 +194,23 @@ const RoyoAccounts = (props) => {
       />
       <View style={styles.container}>
         <View style={styles.header}>
-          <View style={styles.cameraBox}>
-            <Image source={imagePath.cameraRoyo} />
-            <Text
-              style={styles.addLogo}>
-              Add Logo
-            </Text>
-          </View>
+          {vendorDetail?.logo?.proxy_url ? (
+            <Image
+              source={{
+                uri: `${vendorDetail?.logo?.proxy_url}100/100${vendorDetail?.logo?.image_path}`,
+              }}
+              style={{
+                width: moderateScale(50),
+                height: moderateScale(50),
+                marginRight: moderateScale(10),
+              }}
+            />
+          ) : (
+            <View style={styles.cameraBox}>
+              <Image source={imagePath.cameraRoyo} />
+              <Text style={styles.addLogo}>Add Logo</Text>
+            </View>
+          )}
           <View style={{flex: 1, justifyContent: 'center'}}>
             <Text style={styles.font16Semibold}>{selectedVendor?.name}</Text>
             <Text
@@ -165,7 +219,7 @@ const RoyoAccounts = (props) => {
                 fontFamily: fontFamily.regular,
                 color: colors.blackOpacity66,
               }}>
-              CDCL, Sector 28b, Chandigarh
+              {vendorDetail?.address}
             </Text>
           </View>
           <Image style={{alignSelf: 'center'}} source={imagePath.edit1Royo} />

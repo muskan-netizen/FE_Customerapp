@@ -8,14 +8,18 @@ import {
 } from 'react-native';
 
 import SunmiV2Printer from 'react-native-sunmi-v2-printer';
+import {useSelector} from 'react-redux';
+import {moderateScaleVertical, textScale} from '../../styles/responsiveSize';
 
 let listener = null;
 const App = () => {
+  const {themeColors, appStyle} = useSelector((state) => state.initBoot);
+  const fontFamily = appStyle?.fontSizeData;
   const [status, setStatus] = useState('');
-
   useEffect(() => {
     try {
       listener = DeviceEventEmitter.addListener('PrinterStatus', (action) => {
+        console.log('Printer Status Update >>>>', action);
         switch (action) {
           case SunmiV2Printer.Constants.NORMAL_ACTION:
             setStatus(() => 'printer normal');
@@ -109,9 +113,26 @@ const App = () => {
 
   return (
     <View style={styles.container}>
+      <Text
+        style={{
+          fontSize: textScale(18),
+          fontFamily: fontFamily.medium,
+        }}>{`Modal: ${SunmiV2Printer.printerModal}`}</Text>
+      <Text
+        style={{
+          fontSize: textScale(16),
+          fontFamily: fontFamily.regular,
+          marginBottom: moderateScaleVertical(15),
+        }}>{`Serial no: ${SunmiV2Printer.printerSerialNo}`}</Text>
+      <Text
+        style={{
+          fontSize: textScale(16),
+          fontFamily: fontFamily.regular,
+          // marginBottom: moderateScaleVertical(15),
+        }}>{`Version: ${SunmiV2Printer.printerVersion}`}</Text>
       <Text>{`Printer Status: ${status}`}</Text>
       <TouchableOpacity style={styles.button} onPress={() => print()}>
-        <Text style={styles.buttonText}>Print</Text>
+        <Text style={styles.buttonText}>Print Demo</Text>
       </TouchableOpacity>
     </View>
   );
