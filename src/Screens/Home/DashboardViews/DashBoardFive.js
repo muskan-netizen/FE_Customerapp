@@ -38,6 +38,7 @@ import {MyDarkTheme} from '../../../styles/theme';
 import stylesFunc from '../styles';
 import {SvgUri} from 'react-native-svg';
 import {
+  getColorCodeWithOpactiyNumber,
   getImageUrl,
   getScaleTransformationStyle,
   pressInAnimation,
@@ -65,6 +66,7 @@ export default function DashBoardFive({
   navigation = {},
   toggleData = {},
   onVendorFilterSeletion = () => {},
+  tempCartData=null
 }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -75,6 +77,8 @@ export default function DashBoardFive({
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+
+  console.log('appDataappData', appData);
 
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -177,7 +181,11 @@ export default function DashBoardFive({
         // onPressOut={() => pressOutAnimation(scaleInAnimated)}
       >
         <FastImage
-          source={{uri: imageUrl, priority: FastImage.priority.high}}
+          source={{
+            uri: imageUrl,
+            priority: FastImage.priority.high,
+            cache: FastImage.cacheControl.web,
+          }}
           style={{
             height: height / 3.8,
             width: moderateScale(160),
@@ -506,6 +514,57 @@ export default function DashBoardFive({
     );
   };
 
+  const onPressViewEditAndReplace = (item) => {
+    navigation.navigate(navigationStrings.ORDER_DETAIL, {
+      orderId: item?.vendors[0].order_id,
+      // fromVendorApp: true,
+      orderDetail: {
+        dispatch_traking_url:item?.vendors[0].dispatch_traking_url
+            },
+      selectedVendor: {id: item?.vendors[0].vendor_id},
+    });
+  }
+  
+  const showAllTempCartOrders = () => {
+    return (
+      <View>
+        {
+       tempCartData &&
+       tempCartData.length
+          ?tempCartData.map((item, index) => {
+              return (
+                <TouchableOpacity
+                onPress={()=>onPressViewEditAndReplace(item)}
+                  style={{
+                    padding: moderateScale(8),
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    // alignItems: 'center',
+                    backgroundColor:getColorCodeWithOpactiyNumber(
+                      themeColors?.primary_color.substr(1),
+                      20,
+                    ),
+                    marginHorizontal:moderateScale(15),
+                    marginTop:moderateScale(15),
+                    borderRadius:moderateScale(5),
+                    borderWidth:moderateScale(0.5),
+                    borderColor:themeColors?.primary_color
+                  }}>
+                  <View style={{flex:0.7}}>
+                    <Text style={{fontSize:textScale(12),fontFamily:fontFamily.medium}}>{strings.YOURDRIVERHASMODIFIED}</Text>
+                    <Text style={{fontSize:textScale(12),paddingTop:moderateScale(5), fontFamily:fontFamily.bold}}>{strings.VIEW_DETAIL}</Text>
+                  </View>
+                  <View style={{flex:0.3,alignItems:'flex-end'}}>
+                    <Text style={{fontSize:textScale(14),fontFamily:fontFamily.medium}}>{`#${item?.order_number}`}</Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            })
+          : null}
+      </View>
+    );
+  };
+
   return (
     <View style={{flex: 1}}>
       {/* <SearchBar2
@@ -526,6 +585,7 @@ export default function DashBoardFive({
             tintColor={themeColors.primary_color}
           />
         }>
+        {showAllTempCartOrders()}
         <Animatable.View animation={'fadeInUp'} delay={200}>
           {categoriesBanners()}
           {

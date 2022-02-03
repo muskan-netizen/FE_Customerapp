@@ -1538,7 +1538,10 @@ export default function Products({ route, navigation }) {
 
   const renderProduct = ({ item, index }) => {
     return (
-      <>
+      <Animatable.View
+        animation={'slideInUp'}
+        delay={index * 5}
+      >
         <ProductCard3
           data={item}
           index={index}
@@ -1555,7 +1558,7 @@ export default function Products({ route, navigation }) {
           categoryInfo={categoryInfo}
         />
         <View style={styles.horizontalLine} />
-      </>
+      </Animatable.View>
     );
   };
 
@@ -1928,30 +1931,30 @@ export default function Products({ route, navigation }) {
     return (
       <View>
         {!!categoryInfo?.categoriesList ? (
-          <View style={{ ...styles.header2, height: height * 0.31 }}>
-            <View style={{ height: '80%' }}>
-              <ImageBackground
-                source={{
-                  uri: getImageUrl(
-                    // data?.item?.banner.image_fit ||
-                    categoryInfo?.banner?.image_fit ||
-                    categoryInfo?.image?.image_fit,
-                    // data?.item?.banner.image_path ||
-                    categoryInfo?.banner?.image_path ||
-                    categoryInfo?.image?.image_path,
-                    '400/400',
-                  ),
-                }}
-                style={{
-                  ...styles.imageBackgroundHdr,
-                  backgroundColor: isDarkMode
-                    ? colors.whiteOpacity15
-                    : colors.greyColor,
-                }}
-                resizeMode="cover">
-                <LinearGradient
-                  style={styles.linearGradientHdr}
-                  colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0.7)']}>
+          <View style={{ marginBottom: moderateScaleVertical(16) }}>
+            <ImageBackground
+              source={{
+                uri: getImageUrl(
+                  // data?.item?.banner.image_fit ||
+                  categoryInfo?.banner?.image_fit ||
+                  categoryInfo?.image?.image_fit,
+                  // data?.item?.banner.image_path ||
+                  categoryInfo?.banner?.image_path ||
+                  categoryInfo?.image?.image_path,
+                  '400/400',
+                ),
+              }}
+              style={{
+                // ...styles.imageBackgroundHdr,
+                backgroundColor: isDarkMode
+                  ? colors.whiteOpacity15
+                  : colors.greyColor,
+              }}
+              resizeMode="cover">
+              <LinearGradient
+                style={{}}
+                colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0.7)']}>
+                <SafeAreaView>
                   <TouchableOpacity
                     hitSlop={styles.hitSlopProp}
                     activeOpacity={0.7}
@@ -1972,7 +1975,7 @@ export default function Products({ route, navigation }) {
                     />
                   </TouchableOpacity>
 
-                  <View style={{ width: width, paddingLeft: moderateScale(13) }}>
+                  <View style={{ width: width, paddingLeft: moderateScale(13), marginBottom: moderateScaleVertical(8) }}>
                     <View
                       style={{
                         marginTop: moderateScale(10),
@@ -2029,7 +2032,7 @@ export default function Products({ route, navigation }) {
                         justifyContent: 'space-between',
                       }}>
                       <Text
-                        numberOfLines={2}
+                        // numberOfLines={2}
                         style={{
                           ...styles.hdrTitleTxt,
                           flex: 0,
@@ -2100,69 +2103,68 @@ export default function Products({ route, navigation }) {
                       </View>
                     ) : null}
                   </View>
-                </LinearGradient>
+                </SafeAreaView>
+              </LinearGradient>
 
-                {/* ****************************************/}
-                <View
-                  style={{
-                    ...styles.hdrAbsoluteView,
-                    backgroundColor: isDarkMode
-                      ? MyDarkTheme.colors.lightDark
-                      : colors.white,
-                    // minHeight: moderateScale(80),
-                    bottom: !!desc
-                      ? moderateScaleVertical(-34)
-                      : moderateScaleVertical(-20),
-                  }}>
-                  {!!categoryInfo && !!categoryInfo?.categoriesList ? (
-                    <View>
+              {/* ****************************************/}
+              <View
+                style={{
+                  // backgroundColor: 'pink'
+                  ...styles.hdrAbsoluteView,
+                  backgroundColor: isDarkMode
+                    ? MyDarkTheme.colors.lightDark
+                    : colors.white,
+                  // // minHeight: moderateScale(80),
+
+                }}>
+                {!!categoryInfo && !!categoryInfo?.categoriesList ? (
+                  <View>
+                    <Text
+                      numberOfLines={1}
+                      style={{
+                        ...styles.milesTxt,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        marginRight: moderateScale(40),
+                        marginVertical: moderateScale(1),
+                        marginLeft: 0,
+                        fontSize: textScale(13),
+                        opacity: 0.8,
+                        fontFamily: fontFamily.medium,
+                      }}>
+                      {categoryInfo?.categoriesList || ''}
+                    </Text>
+                    {!!desc && (
                       <Text
-                        numberOfLines={1}
+                        numberOfLines={2}
                         style={{
                           ...styles.milesTxt,
+                          marginLeft: 0,
                           color: isDarkMode
                             ? MyDarkTheme.colors.text
                             : colors.black,
-                          marginRight: moderateScale(40),
-                          marginVertical: moderateScale(1),
-                          marginLeft: 0,
-                          fontSize: textScale(13),
-                          opacity: 0.8,
-                          fontFamily: fontFamily.medium,
+                          marginVertical: moderateScaleVertical(4),
+                          fontSize: textScale(10.5),
+                          opacity: 0.6,
                         }}>
-                        {categoryInfo?.categoriesList || ''}
+                        {desc}
                       </Text>
-                      {!!desc && (
-                        <Text
-                          numberOfLines={2}
-                          style={{
-                            ...styles.milesTxt,
-                            marginLeft: 0,
-                            color: isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.black,
-                            marginVertical: moderateScaleVertical(4),
-                            fontSize: textScale(10.5),
-                            opacity: 0.6,
-                          }}>
-                          {desc}
-                        </Text>
-                      )}
-                    </View>
-                  ) : null}
-                  {!!categoryInfo?.closed_store_order_scheduled ?
-                    <Text style={{
-                      ...commonStyles.mediumFont14Normal,
-                      fontSize: textScale(10),
-                      textAlign: 'left',
-                      color: colors.redB,
-                      // marginTop: moderateScaleVertical(4)
-                    }}>{strings.WE_ARE_NOT_ACCEPTING} {categoryInfo?.delaySlot}</Text>
-                    : null
-                  }
-                </View>
-              </ImageBackground>
-            </View>
+                    )}
+                  </View>
+                ) : null}
+                {!!categoryInfo?.closed_store_order_scheduled ?
+                  <Text style={{
+                    ...commonStyles.mediumFont14Normal,
+                    fontSize: textScale(10),
+                    textAlign: 'left',
+                    color: colors.redB,
+                    // marginTop: moderateScaleVertical(4)
+                  }}>{strings.WE_ARE_NOT_ACCEPTING} {categoryInfo?.delaySlot}</Text>
+                  : null
+                }
+              </View>
+            </ImageBackground>
           </View>
         ) : (
           <Animatable.View
@@ -2364,7 +2366,6 @@ export default function Products({ route, navigation }) {
                         }}>
                         {checkEvenOdd(categoryInfo.timeofLineOfSightDistance)}-
                         {checkEvenOdd(categoryInfo.timeofLineOfSightDistance + 5)}
-                        {' mins'}
                       </Text>
                     ) : null}
                   </View>
@@ -2681,7 +2682,7 @@ export default function Products({ route, navigation }) {
     }
     return (
       <Animatable.View
-        animation={'fadeIn'}
+        animation={'fadeInUp'}
         style={{
           marginTop: moderateScaleVertical(4),
           marginLeft: moderateScale(12),
@@ -2757,7 +2758,10 @@ export default function Products({ route, navigation }) {
   };
   const renderSectionItem = ({ item, index, section }) => {
     return (
-      <View>
+      <Animatable.View
+        animation={'slideInUp'}
+        delay={index * 5}
+      >
         <ProductCard3
           data={item}
           index={index}
@@ -2773,7 +2777,7 @@ export default function Products({ route, navigation }) {
           categoryInfo={categoryInfo}
         />
         <View style={styles.horizontalLine} />
-      </View>
+      </Animatable.View>
     );
   };
 
@@ -3062,7 +3066,9 @@ export default function Products({ route, navigation }) {
           )}
         {/* <View style={{height: moderateScale(10)}} /> */}
         {!!categoryInfo?.is_show_products_with_category ? (
-          <View style={{ flex: 1 }}>
+          <Animatable.View
+
+            style={{ flex: 1 }}>
             <SectionList
               ref={sectionListRef}
               showsVerticalScrollIndicator={false}
@@ -3096,7 +3102,7 @@ export default function Products({ route, navigation }) {
                 <NoDataFound isLoading={state.isLoading} containerStyle={{}} />
               }
             />
-          </View>
+          </Animatable.View>
         ) : (
           <FlatList
             onScroll={onScroll}

@@ -133,7 +133,7 @@ const App = () => {
 
   const checkExistChannel = () => {
     PushNotification.getChannels(function (channel_ids) {
-      console.log('exist channels', channel_ids); // ['channel_id_1']
+     
     });
   };
   useEffect(() => {
@@ -148,7 +148,7 @@ const App = () => {
         });
       }
       const getAppData = await getItem('appData');
-      console.log('app data_', getAppData);
+     
       if (!!getAppData) {
         setPrimaryColor(getAppData.themeColors.primary_color);
       }
@@ -239,7 +239,7 @@ const App = () => {
       }
 
       const searchResult = await getItem('searchResult');
-      console.log(searchResult, 'searchResult');
+
       if (searchResult) {
         dispatch({
           type: types.ALL_RECENT_SEARCH,

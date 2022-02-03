@@ -71,7 +71,11 @@ const BrandCard2 = ({data = {}, onPress = () => {}}) => {
           />
         ) : (
           <FastImage
-            source={{uri: imageURI, priority: FastImage.priority.high}}
+            source={{
+              uri: imageURI, 
+              priority: FastImage.priority.high,
+              cache: FastImage.cacheControl.web
+            }}
             style={{
               ...styles.imgStyle,
               backgroundColor: isDarkMode

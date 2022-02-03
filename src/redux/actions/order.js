@@ -15,6 +15,7 @@ import {
   DISPATCHER_URL,
   CANCEL_ORDER,
   REPEAT_ORDER,
+  ACCEPTREJECTDRIVERUPDATE,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -238,6 +239,18 @@ export function cancelOrder(data = {}, headers = {}) {
 export function allPendingOrders(query, data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiGet(MY_PENDING_ORDERS + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function acceptRejectDriveUpdate(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(ACCEPTREJECTDRIVERUPDATE, data, headers)
       .then((res) => {
         resolve(res);
       })

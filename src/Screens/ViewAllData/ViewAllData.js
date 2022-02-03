@@ -19,6 +19,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
+import * as Animatable from 'react-native-animatable';
 
 export default function ViewAllData({route, navigation}) {
   console.log('route', route);
@@ -79,9 +80,13 @@ export default function ViewAllData({route, navigation}) {
 
   const _renderItem = ({item, index}) => {
     return (
-      <View style={{marginHorizontal: moderateScale(15)}}>
+      <Animatable.View 
+      style={{marginHorizontal: moderateScale(15)}}
+      animation={'fadeInUp'}
+      delay={index*60}
+      >
         <MarketCard3 onPress={() => _checkRedirectScreen(item)} data={item} />
-      </View>
+      </Animatable.View>
     );
   };
 

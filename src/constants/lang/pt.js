@@ -708,16 +708,21 @@ export default {
   SELECT_VIA_MAP: 'Select via map',
   HOUSE_NO: 'House No',
   CUSTOMIZZATION_FOR: 'Customizations for',
-  TRANSFER_FUNDS:"Transfer Funds",
-  AMOUNT_TO_TRANSFER:"Amount to transfer",
-  ENTER_AMOUNT:"Enter amount",
-  TRANSFER_TO:"Transfer to",
-  ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE:"Enter email or phone number with country code",
-  INVALID_AMOUNT:"Invalid Amount",
-  INSUFFICIENT_FUNDS_IN_WALLET:"Insufficient funds in wallet",
-  USER_DOES_NOT_EXIST:"User doest not exist",
+  CURRENTLYUNAVAILABLE: 'Currently Unavailable',
+  TRANSFER_FUNDS: 'Transfer Funds',
+  AMOUNT_TO_TRANSFER: 'Amount to transfer',
+  ENTER_AMOUNT: 'Enter amount',
+  TRANSFER_TO: 'Transfer to',
+  ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE:
+    'Enter email or phone number with country code',
+  INVALID_AMOUNT: 'Invalid Amount',
+  INSUFFICIENT_FUNDS_IN_WALLET: 'Insufficient funds in wallet',
+  USER_DOES_NOT_EXIST: 'User doest not exist',
   ACCEPTING_ORDER_MSG: 'We are not accepting orders less then',
   INVALID_CARD_DETAILS: 'Invalid card details',
   TRANSFER_FUNDS: 'Transfer Funds',
-  WE_ARE_NOT_ACCEPTING:"We are not accepting orders right now. You can schedule this for"
+  CURRENTLYUNAVAILABLE: 'Currently Unavailable',
+  WE_ARE_NOT_ACCEPTING:"We are not accepting orders right now. You can schedule this for",
+  YOURDRIVERHASMODIFIED:"Your driver has modified your order"
+
 };

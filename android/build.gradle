@@ -35,10 +35,11 @@ allprojects {
             // Android JSC is installed from npm
             url("$rootDir/../node_modules/jsc-android/dist")
         }
+          //zendesk Repo
+        maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
         google()
         maven { url 'https://www.jitpack.io' }
         
-        //zendesk Repo
-        maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
+      
     }
 }
