@@ -198,17 +198,7 @@ android {
     flavorDimensions "appType"
 
     productFlavors {
-         orderchekout{
-            dimension "appType"
-            versionCode 5
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion         
-            applicationId 'com.orderchekout'
-            resValue "string", "app_name", "Order Chekout"
-            resValue "string", "host_name", ""
-         }
-        royoorder {
+           royoorder {
             dimension "appType"
             versionCode 3
             versionName "1.0"
@@ -219,6 +209,17 @@ android {
             resValue "string", "app_name", "RoyoOrder"
             resValue "string", "host_name", "sales.royoorders.com"
         }
+         orderchekout{
+            dimension "appType"
+            versionCode 5
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.orderchekout'
+            resValue "string", "app_name", "Order Chekout"
+            resValue "string", "host_name", ""
+         }
+    
         runrun {
             dimension "appType"
             versionCode 1
