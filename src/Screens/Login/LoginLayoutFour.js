@@ -46,8 +46,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {mobile} from 'is_js';
 import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
 import PhoneNumberInputWithUnderline from '../../Components/PhoneNumberInputWithUnderline';
+import {useNavigation} from '@react-navigation/native';
+import {checkIsAdmin} from '../../utils/utils';
 
 export default function LoginLayoutFour({navigation}) {
+  const navigation_ = useNavigation();
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
@@ -169,9 +172,9 @@ export default function LoginLayoutFour({navigation}) {
               !!res.data?.client_preference?.verify_phone
             ? !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
-              ? navigation.push(navigationStrings.TAB_ROUTES)
+              ? checkIsAdmin(navigation_, navigation, res.data)
               : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : navigation.push(navigationStrings.TAB_ROUTES);
+            : checkIsAdmin(navigation_, navigation, res.data);
         }
         updateState({isLoading: false});
         getCartDetail();
@@ -246,9 +249,9 @@ export default function LoginLayoutFour({navigation}) {
           !!res.data?.client_preference?.verify_phone
             ? !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
-              ? navigation.push(navigationStrings.TAB_ROUTES)
+              ? checkIsAdmin(navigation_, navigation, res.data)
               : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : navigation.push(navigationStrings.TAB_ROUTES);
+            : checkIsAdmin(navigation_, navigation, res.data);
         }
         updateState({isLoading: false});
         getCartDetail();
@@ -812,7 +815,9 @@ export default function LoginLayoutFour({navigation}) {
                 alignItems: 'center',
               }}
               // onPress={_onLogin}>
-              onPress={() => navigation.navigate(navigationStrings.OTP_VERIFICATION)}>
+              onPress={() =>
+                navigation.navigate(navigationStrings.OTP_VERIFICATION)
+              }>
               <Image
                 style={{
                   tintColor: colors.white,

@@ -518,6 +518,7 @@ export default function Account3({navigation}) {
             // iconRight={imagePath.goRight}
             // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
+          {console.log('appMainDataappMainDataappMainData', appMainData)}
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&
             !!appMainData?.is_admin &&

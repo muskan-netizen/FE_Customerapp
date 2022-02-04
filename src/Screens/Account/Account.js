@@ -27,10 +27,7 @@ import {MyDarkTheme} from '../../styles/theme';
 import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
 import Share from 'react-native-share';
 
-
 export default function Account({navigation}) {
-
-  
   const [state, setState] = useState({
     isLoading: false,
   });
@@ -66,10 +63,10 @@ export default function Account({navigation}) {
 
   //Share your app
   const onShare = () => {
-    console.log("onShare",appData)
+    console.log('onShare', appData);
     if (!!appData?.domain_link) {
-      let hyperLink = appData?.domain_link + '/share'
-      let options = { url: hyperLink }
+      let hyperLink = appData?.domain_link + '/share';
+      let options = {url: hyperLink};
       Share.open(options)
         .then((res) => {
           console.log(res);
@@ -79,7 +76,7 @@ export default function Account({navigation}) {
         });
       return;
     }
-    alert('link not found')
+    alert('link not found');
   };
   //Logout function
   const userlogout = () => {

@@ -1,5 +1,5 @@
-import { useFocusEffect } from '@react-navigation/native';
-import React, { useRef, useState } from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useRef, useState} from 'react';
 import {
   Alert,
   I18nManager,
@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import ListItemHorizontal from '../../Components/ListItemHorizontalWithImage';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -25,15 +25,14 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
-import { getImageUrl } from '../../utils/helperFunctions';
+import {getImageUrl} from '../../utils/helperFunctions';
 import stylesFun from './styles';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../styles/theme';
-import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
+import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
 import Share from 'react-native-share';
 
-
-export default function Account2({ navigation }) {
+export default function Account2({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -41,20 +40,20 @@ export default function Account2({ navigation }) {
   const [state, setState] = useState({
     isLoading: false,
   });
-  const { shortCodeStatus, themeColors, appStyle, appData } = useSelector(
+  const {shortCodeStatus, themeColors, appStyle, appData} = useSelector(
     (state) => state?.initBoot,
   );
   const businessType = appStyle?.homePageLayout;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({ fontFamily, themeColors });
-  const commonStyles = commonStylesFun({ fontFamily });
+  const styles = stylesFun({fontFamily, themeColors});
+  const commonStyles = commonStylesFun({fontFamily});
 
   //Navigation to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   const userData = useSelector((state) => state.auth.userData);
   const appMainData = useSelector((state) => state?.home?.appMainData);
@@ -67,10 +66,10 @@ export default function Account2({ navigation }) {
 
   //Share your app
   const onShare = () => {
-    console.log("onShare",appData)
+    console.log('onShare', appData);
     if (!!appData?.domain_link) {
-      let hyperLink = appData?.domain_link + '/share'
-      let options = { url: hyperLink }
+      let hyperLink = appData?.domain_link + '/share';
+      let options = {url: hyperLink};
       Share.open(options)
         .then((res) => {
           console.log(res);
@@ -80,7 +79,7 @@ export default function Account2({ navigation }) {
         });
       return;
     }
-    alert('link not found')
+    alert('link not found');
   };
   //Logout function
   const userlogout = () => {
@@ -105,8 +104,6 @@ export default function Account2({ navigation }) {
     }
   };
   const _scrollRef = useRef();
-
-  
 
   return (
     <WrapperContainer
@@ -138,9 +135,9 @@ export default function Account2({ navigation }) {
         <Header centerTitle={strings.MY_ACCOUNT} noLeftIcon={true} />
       )}
 
-      <View style={{ ...commonStyles.headerTopLine }} />
+      <View style={{...commonStyles.headerTopLine}} />
 
-      <ScrollView style={{ flex: 1 }} ref={_scrollRef}>
+      <ScrollView style={{flex: 1}} ref={_scrollRef}>
         {!!userData?.auth_token && (
           <>
             <TouchableOpacity
@@ -156,12 +153,12 @@ export default function Account2({ navigation }) {
                 source={
                   userData?.source?.image_path
                     ? {
-                      uri: getImageUrl(
-                        userData?.source?.proxy_url,
-                        userData?.source?.image_path,
-                        '200/200',
-                      ),
-                    }
+                        uri: getImageUrl(
+                          userData?.source?.proxy_url,
+                          userData?.source?.image_path,
+                          '200/200',
+                        ),
+                      }
                     : userData?.source
                 }
                 style={{
@@ -226,43 +223,46 @@ export default function Account2({ navigation }) {
         {!!userData?.auth_token &&
           (businessType == 4 ? null : (
             <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
               onPress={moveToNewScreen(navigationStrings.MY_ORDERS)}
               iconLeft={imagePath.myOrder}
               centerHeading={strings.MY_ORDERS}
               containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{ fontSize: textScale(15) }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+              centerHeadingStyle={{fontSize: textScale(15)}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ))}
 
-        {!!userData?.auth_token && !!appData && !!appData?.profile && appData?.profile?.preferences?.subscription_mode == 1 && (
-          <ListItemHorizontal
-            centerContainerStyle={{ flexDirection: 'row' }}
-            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-            onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
-            iconLeft={imagePath.myOrder}
-            centerHeading={strings.SUBSCRIPTION}
-            containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{ fontSize: textScale(15) }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
-        )}
+        {!!userData?.auth_token &&
+          !!appData &&
+          !!appData?.profile &&
+          appData?.profile?.preferences?.subscription_mode == 1 && (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
+              iconLeft={imagePath.myOrder}
+              centerHeading={strings.SUBSCRIPTION}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{fontSize: textScale(15)}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
 
         {!!userData?.auth_token && (
           <ListItemHorizontal
-            centerContainerStyle={{ flexDirection: 'row' }}
-            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+            centerContainerStyle={{flexDirection: 'row'}}
+            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             onPress={moveToNewScreen(navigationStrings.LOYALTY)}
             iconLeft={imagePath.myOrder}
             centerHeading={strings.LOYALTYPOINTS}
             containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{ fontSize: textScale(15) }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
+            centerHeadingStyle={{fontSize: textScale(15)}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )}
 
@@ -281,67 +281,67 @@ export default function Account2({ navigation }) {
         )} */}
         {!!userData?.auth_token && (
           <ListItemHorizontal
-            centerContainerStyle={{ flexDirection: 'row' }}
-            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+            centerContainerStyle={{flexDirection: 'row'}}
+            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             onPress={moveToNewScreen(navigationStrings.WALLET)}
             iconLeft={imagePath.wallet}
             centerHeading={strings.WALLET}
             containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{ fontSize: textScale(15) }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
+            centerHeadingStyle={{fontSize: textScale(15)}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )}
         {!!userData?.auth_token &&
           (businessType == 4 ? null : (
             <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
               onPress={moveToNewScreen(navigationStrings.WISHLIST)}
               iconLeft={imagePath.fav}
               centerHeading={strings.WISHLIST}
               containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{ fontSize: textScale(15) }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+              centerHeadingStyle={{fontSize: textScale(15)}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ))}
 
         <ListItemHorizontal
-          centerContainerStyle={{ flexDirection: 'row' }}
-          leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+          centerContainerStyle={{flexDirection: 'row'}}
+          leftIconStyle={{flex: 0.1, alignItems: 'center'}}
           onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
           iconLeft={imagePath.about}
           centerHeading={strings.LINKS}
           containerStyle={styles.containerStyle2}
-          centerHeadingStyle={{ fontSize: textScale(15) }}
-        // iconRight={imagePath.goRight}
-        // rightIconStyle={{tintColor: colors.textGreyLight}}
+          centerHeadingStyle={{fontSize: textScale(15)}}
+          // iconRight={imagePath.goRight}
+          // rightIconStyle={{tintColor: colors.textGreyLight}}
         />
         {!!userData?.auth_token && (
           <ListItemHorizontal
-            centerContainerStyle={{ flexDirection: 'row' }}
-            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+            centerContainerStyle={{flexDirection: 'row'}}
+            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             onPress={onShare}
             iconLeft={imagePath.share}
             centerHeading={strings.SHARE_APP}
             containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{ fontSize: textScale(15) }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
+            centerHeadingStyle={{fontSize: textScale(15)}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )}
 
         <ListItemHorizontal
-          centerContainerStyle={{ flexDirection: 'row' }}
-          leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+          centerContainerStyle={{flexDirection: 'row'}}
+          leftIconStyle={{flex: 0.1, alignItems: 'center'}}
           onPress={moveToNewScreen(navigationStrings.SETTIGS)}
           iconLeft={imagePath.settings}
           centerHeading={strings.SETTINGS}
           containerStyle={styles.containerStyle2}
-          centerHeadingStyle={{ fontSize: textScale(15) }}
-        // iconRight={imagePath.goRight}
-        // rightIconStyle={{tintColor: colors.textGreyLight}}
+          centerHeadingStyle={{fontSize: textScale(15)}}
+          // iconRight={imagePath.goRight}
+          // rightIconStyle={{tintColor: colors.textGreyLight}}
         />
         {/* {!!userData?.auth_token && (
           <ListItemHorizontal
@@ -356,23 +356,23 @@ export default function Account2({ navigation }) {
           />
         )} */}
         <ListItemHorizontal
-          centerContainerStyle={{ flexDirection: 'row' }}
-          leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+          centerContainerStyle={{flexDirection: 'row'}}
+          leftIconStyle={{flex: 0.1, alignItems: 'center'}}
           onPress={moveToNewScreen(navigationStrings.CONTACT_US)}
           iconLeft={imagePath.message}
           centerHeading={strings.CONTACT_US}
           containerStyle={styles.containerStyle2}
-          centerHeadingStyle={{ fontSize: textScale(15) }}
-        // iconRight={imagePath.goRight}
-        // rightIconStyle={{tintColor: colors.textGreyLight}}
+          centerHeadingStyle={{fontSize: textScale(15)}}
+          // iconRight={imagePath.goRight}
+          // rightIconStyle={{tintColor: colors.textGreyLight}}
         />
 
         {!!userData?.auth_token &&
           Platform.OS === 'android' &&
           (businessType == 'taxi' ? null : (
             <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
               onPress={() => {
                 BluetoothManager.checkBluetoothEnabled().then(
                   (enabled) => {
@@ -381,11 +381,9 @@ export default function Account2({ navigation }) {
                     } else {
                       BluetoothManager.enableBluetooth()
                         .then(() => {
-                          navigation.navigate(
-                            navigationStrings.ATTACH_PRINTER,
-                          );
+                          navigation.navigate(navigationStrings.ATTACH_PRINTER);
                         })
-                        .catch((err) => { });
+                        .catch((err) => {});
                     }
                   },
                   (err) => {
@@ -400,26 +398,26 @@ export default function Account2({ navigation }) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ))}
 
         {!!userData?.auth_token &&
           !!appMainData?.is_admin &&
-          businessType != 4 &&  (
-          <ListItemHorizontal
-            centerContainerStyle={{ flexDirection: 'row' }}
-            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-            onPress={moveToNewScreen(navigationStrings.TABROUTESVENDOR)}
-            iconLeft={imagePath.myStoreIcon}
-            centerHeading={strings.MYSTORES}
-            containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{ fontSize: textScale(15) }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
-        )}
+          businessType != 4 && (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.TABROUTESVENDOR)}
+              iconLeft={imagePath.myStoreIcon}
+              centerHeading={strings.MYSTORES}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{fontSize: textScale(15)}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
 
         <View style={styles.loginView}>
           <TouchableOpacity
@@ -430,11 +428,11 @@ export default function Account2({ navigation }) {
             </Text>
             <Image
               source={imagePath.rightBlue}
-              style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
+              style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
             />
           </TouchableOpacity>
         </View>
-        <View style={{ height: 100 }} />
+        <View style={{height: 100}} />
       </ScrollView>
     </WrapperContainer>
   );

@@ -971,6 +971,7 @@ export default function Cart({ navigation, route }) {
   };
 
   const _finalPayment = () => {
+    console.log(selectedPayment,"selectedPayment");
     if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
       _offineLinePayment();
       return;
@@ -1316,6 +1317,7 @@ export default function Cart({ navigation, route }) {
       theme: { color: themeColors.primary_color },
     };
 
+    console.log(options,"optios");
     RazorpayCheckout.open(options)
       .then((res) => {
         console.log(`Success for razor: `, res);
@@ -1326,6 +1328,8 @@ export default function Cart({ navigation, route }) {
           data['type'] = dineInType || '';
           data['transaction_id'] = res?.razorpay_payment_id;
           placeOrderData(data); // placeOrder
+        }else{
+          console.log(res,"razorpay_payment_id>>>>res");
         }
       })
       .catch(errorMethod);

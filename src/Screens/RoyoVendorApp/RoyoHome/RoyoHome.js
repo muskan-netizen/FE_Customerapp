@@ -39,6 +39,7 @@ import MonthPicker from 'react-native-month-year-picker';
 import Modal from 'react-native-modal';
 import SelectVendorListModal from '../../../Components/SelectVendorListModal';
 import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import {enums} from '../../../utils/enums';
 
 const commonStyle = commonStyles({
   fontFamily,
@@ -576,6 +577,7 @@ const RoyoHome = (props) => {
         onPressLeft={() => {
           navigation.navigate(navigationStrings.TAB_ROUTES);
         }}
+        noLeftIcon={enums.isVendorStandloneApp}
         leftIcon={imagePath.backRoyo}
         onPressCenterTitle={() => _reDirectToVendorList()}
         onPressImageAlongwithTitle={() => _reDirectToVendorList()}
@@ -657,12 +659,13 @@ const RoyoHome = (props) => {
                   <Text style={styles.font16Bold}>${totalRevenue}</Text>
                 </View>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  {console.log('labelslabelslabels', labels)}
                   <BarChart
                     withCustomBarColorFromData={true}
                     style={{margin: 0, padding: 0, flex: 1, marginLeft: 0}}
                     // yLabelsOffset={30}
                     data={barData}
-                    width={labels.length > 0 ? BarWidth() : boxWidth()}
+                    width={labels.length > 6 ? BarWidth() : boxWidth()}
                     height={moderateScaleVertical(250)}
                     yAxisLabel="$"
                     yAxisInterval={2}
@@ -708,7 +711,7 @@ const RoyoHome = (props) => {
                   <BarChart
                     withCustomBarColorFromData={true}
                     data={salesBarData}
-                    width={labels.length > 0 ? BarWidth() : boxWidth()}
+                    width={labels.length > 6 ? BarWidth() : boxWidth()}
                     height={moderateScaleVertical(220)}
                     yAxisLabel=""
                     chartConfig={chartConfig}
