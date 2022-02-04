@@ -47,7 +47,7 @@ export default function Home({ route, navigation }) {
     allAddresss,
   } = useSelector((state) => state?.initBoot);
   const { location, appMainData, dineInType } = useSelector((state) => state?.home);
-
+  console.log(appMainData,"appMainData>appMainData");
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const addressSearch = useSelector((state) => state?.addressSearch.addressSearch,);
   const userData = useSelector((state) => state?.auth?.userData);
@@ -73,9 +73,11 @@ export default function Home({ route, navigation }) {
     closeVendor: 0,
     bestSeller: 0,
     nearMe: 1,
+    tempCartData:null
   });
 
   const {
+    tempCartData,
     updateTime,
     isLoading,
     isRefreshing,
@@ -240,6 +242,7 @@ export default function Home({ route, navigation }) {
       // homeData();
       if (!!userData?.auth_token) {
         getAllAddress();
+        getAllTempOrders()
       }
     }, []),
   );
@@ -267,6 +270,28 @@ export default function Home({ route, navigation }) {
         .catch(errorMethod);
     }
   };
+
+   const getAllTempOrders=()=>{
+   
+    actions
+    .getAllTempOrders(
+      {},
+      {
+        code: appData?.profile?.code,
+      },
+    )
+    .then((res) => {
+      console.log('getAllTempOrders data++++++', res);
+      if(res && res?.data){
+        updateState({
+          tempCartData:res?.data
+        })
+      }
+     
+    })
+    .catch(errorMethod)
+ 
+   }
 
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
@@ -361,6 +386,7 @@ export default function Home({ route, navigation }) {
 
   //Error handling in screen
   const errorMethod = (error) => {
+    console.log(error,"erro>>>>>>errorerrorr");
     updateState({
       isLoading: false,
       isRefreshing: false,
@@ -700,6 +726,7 @@ export default function Home({ route, navigation }) {
 
   const renderHomeScreen = () => {
     const case_ = 5;
+    // alert(appStyle?.homePageLayout)
     switch (appStyle?.homePageLayout) {
       // switch (case_) {
       case 1:
@@ -712,9 +739,11 @@ export default function Home({ route, navigation }) {
               isLoading={isLoading}
               isRefreshing={isRefreshing}
               appMainData={appMainData}
+              tempCartData={tempCartData}
               onPressCategory={(item) => onPressCategory(item)}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
+              navigation={navigation}
             />
           </>
         );
@@ -732,8 +761,10 @@ export default function Home({ route, navigation }) {
               onPressCategory={(item) => {
                 onPressCategory(item);
               }}
+              tempCartData={tempCartData}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
+              navigation={navigation}
             />
           </>
         );
@@ -761,6 +792,7 @@ export default function Home({ route, navigation }) {
               }}
               isDineInSelected={isDineInSelected}
               selcetedToggle={selcetedToggle}
+              tempCartData={tempCartData}
               toggleData={appData}
               navigation={navigation}
               onVendorFilterSeletion={onVendorFilterSeletion}
@@ -788,6 +820,7 @@ export default function Home({ route, navigation }) {
               onPressCategory={(item) => {
                 onPressCategory(item);
               }}
+              tempCartData={tempCartData}
               isDineInSelected={isDineInSelected}
               selcetedToggle={selcetedToggle}
               toggleData={appData}

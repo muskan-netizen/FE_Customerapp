@@ -951,10 +951,37 @@ end
 target 'PinkyDeli' do
   
 end
-#  #SXM2GO Target
-#  target 'SXM2GO' do
+
+#SXM2GO Target
+target 'SXM2GO' do
   
-# end
+end
+
+#JadorDrive Target
+target 'JadorDrive' do
+  
+end
+
+#Kongafood Target
+target 'Kongafood' do
+  
+end
+
+#UBERCANN Target
+target 'UBERCANN' do
+  
+end
+
+#Launch Target
+target 'Launch' do
+  
+end
+
+#Kampick Target
+target 'Kampick' do
+  
+end
+
 
 # #VendorSpot Target
 # target 'VendorSpot' do
@@ -1079,6 +1106,21 @@ end
 
 #CannabisClubSF Target
 target 'CannabisClubSF' do
+  
+end
+
+#HalaTalabat Target
+target 'HalaTalabat' do
+  
+end
+
+#PalmettoPlus Target
+target 'PalmettoPlus' do
+  
+end
+
+#Allotaxi Target
+target 'Allotaxi' do
   
 end
 

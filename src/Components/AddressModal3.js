@@ -92,7 +92,7 @@ const AddressModal3 = ({
     addressTypeArray: [
       {
         id: 1,
-        lable: strings.HOME_1,
+        lable: strings.HOME,
         icon: imagePath.home,
       },
       {id: 2, lable: strings.WORK, icon: imagePath.workInActive},
@@ -114,7 +114,7 @@ const AddressModal3 = ({
 
   const styles = stylesData({fontFamily, themeColors});
 
-  console.log("constCurrLoc",constCurrLoc)
+  console.log('constCurrLoc', constCurrLoc);
 
   //To update the states
   useEffect(() => {
@@ -199,7 +199,7 @@ const AddressModal3 = ({
         addressTypeArray: [
           {
             id: 1,
-            lable: strings.HOME_1,
+            lable: strings.HOME,
             icon: imagePath.home,
           },
           {id: 2, lable: strings.WORK, icon: imagePath.workInActive},

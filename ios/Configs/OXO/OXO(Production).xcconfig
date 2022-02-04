@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-available_pods-OXO/Pods-available_pods-OXO.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-OXO/Pods-available_pods-OXO.release.xcconfig"
 
 PROJECT_APPLE_ID = 1605753748
 PROJECT_BUNDLE_ID =com.oxo

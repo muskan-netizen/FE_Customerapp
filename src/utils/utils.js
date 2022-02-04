@@ -1,10 +1,12 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import {resetStackAndNavigate} from '../navigation/NavigationService';
+import navigationStrings from '../navigation/navigationStrings';
+import {enums} from './enums';
 import {sessionHandler} from './helperFunctions';
 
 export async function getHeaders() {
   let userData = await AsyncStorage.getItem('userData');
-
   if (userData) {
     userData = JSON.parse(userData);
     return {
@@ -187,4 +189,15 @@ export const verticalAnimation = {
       },
     };
   },
+};
+
+export const checkIsAdmin = (navigation_, navigation, userData) => {
+  console.log('check userdata', userData.is_admin);
+
+  // navigation.push(navigationStrings.TABROUTESVENDOR);
+  if (userData.is_admin && enums.isVendorStandloneApp) {
+    resetStackAndNavigate(navigation_, navigationStrings.TABROUTESVENDOR);
+  } else {
+    navigation.push(navigationStrings.TAB_ROUTES);
+  }
 };

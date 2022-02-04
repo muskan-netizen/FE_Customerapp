@@ -477,6 +477,8 @@ export default function AddMoney({navigation}) {
                 }
               })
               .catch(errorMethod);
+          }else{
+            updateState({isLoadingB: false});
           }
         })
         .catch(errorMethod);

@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "713200187855-lp7e3cq7hdqsu87aqr656d4hht0bm8jo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.vici",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
           "client_id": "713200187855-18hvhm6d64o5nqqj5nkfr63fhqmi4dfd.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-available_pods-Everywhere/Pods-available_pods-Everywhere.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Everywhere/Pods-available_pods-Everywhere.release.xcconfig"
 
 PROJECT_APPLE_ID = 1605942655
 PROJECT_BUNDLE_ID =com.app.everywhere

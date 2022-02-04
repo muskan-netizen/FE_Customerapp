@@ -14,6 +14,7 @@ import {StatusBarHeight} from '../styles/responsiveSize';
 import {getDistance} from 'geolib';
 import {min} from 'moment';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/core';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {
@@ -466,6 +467,18 @@ const hapticEffects = {
 //   );
 // }
 
+const getTabBarVisibility = (route, navigation, screen) => {
+  if (navigation && navigation.isFocused && navigation.isFocused()) {
+    const route_name = getFocusedRouteNameFromRoute(route);
+    if (screen.includes(route_name)) {
+      showBottomBar_ = false;
+      return false;
+    }
+    showBottomBar_ = true;
+    return true;
+  }
+};
+
 export {
   showError,
   showSuccess,
@@ -481,4 +494,5 @@ export {
   playVibration,
   playHapticEffect,
   hapticEffects,
+  getTabBarVisibility,
 };

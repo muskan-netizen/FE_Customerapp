@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>808327059058-fegd7hegs6pkcsids7sc9r2vboak5hsg.apps.googleusercontent.com</string>
+	<string>808327059058-3ig3t6j6vg3ksc9g117d4qra63118lk7.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.808327059058-fegd7hegs6pkcsids7sc9r2vboak5hsg</string>
+	<string>com.googleusercontent.apps.808327059058-3ig3t6j6vg3ksc9g117d4qra63118lk7</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>808327059058-8htf0hc7pae43m3k35rrq914iijn6o78.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.yeboy</string>
+	<string>com.app.yeboy</string>
 	<key>PROJECT_ID</key>
 	<string>yeboy-6818c</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:808327059058:ios:802ead149ea1601c8614eb</string>
+	<string>1:808327059058:ios:179005bc3947af238614eb</string>
 </dict>
 </plist>

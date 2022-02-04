@@ -722,7 +722,6 @@ export default function ProductDetail({route, navigation}) {
     );
   };
 
-
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -760,74 +759,76 @@ export default function ProductDetail({route, navigation}) {
             <>
               {/* //Top section slider */}
 
-              {!!productDetailData?.product_media.length ?<View
-                style={{
-                  flexDirection: 'row',
-                  marginTop: moderateScaleVertical(20),
-                  justifyContent: 'space-between',
-                }}>
-                {/* <View style={{ flex: 0.2 }}><Image source={imagePath.fav} /></View> */}
-                <View style={{flex: 1, alignItems: 'center'}}>
-                  <Banner2
-                    autoPlay={false}
-                    resizeMode="contain"
-                    bannerRef={bannerRef}
-                    bannerData={productDetailData?.product_media}
-                    sliderWidth={width}
-                    itemWidth={width / 1.1}
-                    pagination={false}
-                    setActiveState={(index) =>
-                      updateState({slider1ActiveSlide: index})
-                    }
-                    imagestyle={{
-                      borderRadius: 8,
-                    }}
-                    showLightbox={true}
-                    cardViewStyle={styles.cardViewStyle}
-                    childView={
-                      <TouchableOpacity
-                        onPress={() => _onAddtoWishlist(productDetailData)}>
-                        {productDetailData?.is_wishlist ? (
-                          <View style={{alignSelf: 'flex-end', padding: 8}}>
-                            {!!productDetailData?.inwishlist ? (
-                              <Image
-                                style={{
-                                  tintColor: isDarkMode
-                                    ? MyDarkTheme.colors.text
-                                    : themeColors.primary_color,
-                                }}
-                                source={imagePath.whiteFilledHeart}
-                              />
-                            ) : (
-                              <Image
-                                style={{
-                                  tintColor: isDarkMode
-                                    ? MyDarkTheme.colors.text
-                                    : themeColors.primary_color,
-                                }}
-                                source={imagePath.heart2}
-                              />
-                            )}
-                          </View>
-                        ) : null}
-                      </TouchableOpacity>
-                    }
-                    onPress={onImageLargeView}
-                  />
-
-                  <View style={{paddingTop: 5}}>
-                    <Pagination
-                      dotsLength={productDetailData?.product_media?.length}
-                      activeDotIndex={state.slider1ActiveSlide}
-                      dotColor={'grey'}
-                      dotStyle={[styles.dotStyle]}
-                      inactiveDotColor={colors.black}
-                      inactiveDotOpacity={0.4}
-                      inactiveDotScale={0.8}
+              {!!productDetailData?.product_media.length ? (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: moderateScaleVertical(20),
+                    justifyContent: 'space-between',
+                  }}>
+                  {/* <View style={{ flex: 0.2 }}><Image source={imagePath.fav} /></View> */}
+                  <View style={{flex: 1, alignItems: 'center'}}>
+                    <Banner2
+                      autoPlay={false}
+                      resizeMode="contain"
+                      bannerRef={bannerRef}
+                      bannerData={productDetailData?.product_media}
+                      sliderWidth={width}
+                      itemWidth={width / 1.1}
+                      pagination={false}
+                      setActiveState={(index) =>
+                        updateState({slider1ActiveSlide: index})
+                      }
+                      imagestyle={{
+                        borderRadius: 8,
+                      }}
+                      showLightbox={true}
+                      cardViewStyle={styles.cardViewStyle}
+                      childView={
+                        <TouchableOpacity
+                          onPress={() => _onAddtoWishlist(productDetailData)}>
+                          {productDetailData?.is_wishlist ? (
+                            <View style={{alignSelf: 'flex-end', padding: 8}}>
+                              {!!productDetailData?.inwishlist ? (
+                                <Image
+                                  style={{
+                                    tintColor: isDarkMode
+                                      ? MyDarkTheme.colors.text
+                                      : themeColors.primary_color,
+                                  }}
+                                  source={imagePath.whiteFilledHeart}
+                                />
+                              ) : (
+                                <Image
+                                  style={{
+                                    tintColor: isDarkMode
+                                      ? MyDarkTheme.colors.text
+                                      : themeColors.primary_color,
+                                  }}
+                                  source={imagePath.heart2}
+                                />
+                              )}
+                            </View>
+                          ) : null}
+                        </TouchableOpacity>
+                      }
+                      onPress={onImageLargeView}
                     />
+
+                    <View style={{paddingTop: 5}}>
+                      <Pagination
+                        dotsLength={productDetailData?.product_media?.length}
+                        activeDotIndex={state.slider1ActiveSlide}
+                        dotColor={'grey'}
+                        dotStyle={[styles.dotStyle]}
+                        inactiveDotColor={colors.black}
+                        inactiveDotOpacity={0.4}
+                        inactiveDotScale={0.8}
+                      />
+                    </View>
                   </View>
                 </View>
-              </View>: null}
+              ) : null}
 
               {/* Product Name and Branc detail */}
 
@@ -867,7 +868,7 @@ export default function ProductDetail({route, navigation}) {
                       Number(productPriceData?.price)
                     ).toFixed(2)}`}</Text>
                   </View>
-                </View> 
+                </View>
 
                 <View style={styles.flexView}>
                   <Text
@@ -909,9 +910,6 @@ export default function ProductDetail({route, navigation}) {
                   )}
                 </View>
 
-
-            
-
                 {productTotalQuantity == 0 && !!typeId && typeId !== 8 && (
                   <View style={{justifyContent: 'center'}}>
                     <Text
@@ -922,18 +920,17 @@ export default function ProductDetail({route, navigation}) {
                           productTotalQuantity,
                         }).productTypeAndBrandValue
                       }>
-                      {(!!productTotalQuantity &&
-                        !!productTotalQuantity != 0) ||
+                      {productDetailData?.has_inventory == 0 ||
+                      (!!productTotalQuantity && !!productTotalQuantity != 0) ||
                       (!!typeId && typeId == 8) ||
-                      !!productDetailData?.sell_when_out_of_stock ||
-                      productDetailData?.has_inventory == 0
+                      !!productDetailData?.sell_when_out_of_stock
                         ? ''
                         : strings.OUT_OF_STOCK}
                     </Text>
                   </View>
                 )}
               </View>
-{/* 
+              {/* 
                {!!productDetailData?.delaySlot ?
                     <Text style={{
                       ...commonStyles.mediumFont14Normal,
@@ -944,7 +941,6 @@ export default function ProductDetail({route, navigation}) {
                     }}>{strings.WE_ARE_NOT_ACCEPTING} {productDetailData?.delaySlot}</Text>
                     : null
                   }            */}
-         
 
               <HorizontalLine
                 lineStyle={{marginVertical: moderateScaleVertical(16)}}
@@ -999,9 +995,9 @@ export default function ProductDetail({route, navigation}) {
                 </Text>
               ) : null}
               {/* Add to Cart button */}
-              {((!!productTotalQuantity && !!productTotalQuantity != 0) ||
+              {(productDetailData?.has_inventory == 0 ||
+                (!!productTotalQuantity && !!productTotalQuantity != 0) ||
                 (!!typeId && typeId == 8) ||
-                productDetailData?.has_inventory == 0 ||
                 !!productDetailData?.sell_when_out_of_stock) &&
                 (!!data?.showAddToCart ? null : showErrorMessageTitle ? null : (
                   <View

@@ -95,7 +95,7 @@ export default function Offer({route, navigation}) {
         console.log(res, 'res');
         updateState({isLoading: false});
 
-        if (res && res.data) {
+        if (res && res?.data) {
           updateState({allAvailableCoupons: res.data});
         }
       })
