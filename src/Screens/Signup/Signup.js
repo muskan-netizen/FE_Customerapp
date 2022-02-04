@@ -32,8 +32,11 @@ import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import AsyncStorage from '@react-native-community/async-storage';
+import {checkIsAdmin} from '../../utils/utils';
+import {useNavigation} from '@react-navigation/native';
 
 export default function Signup({navigation}) {
+  const navigation_ = useNavigation();
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const userData = useSelector((state) => state.auth.userData);
   const {appData, themeColors, themeLayouts, currencies, languages} =
@@ -137,7 +140,7 @@ export default function Signup({navigation}) {
               !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
             ) {
-              navigation.push(navigationStrings.TAB_ROUTES);
+              checkIsAdmin(navigation_, navigation, res.data);
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
@@ -149,12 +152,12 @@ export default function Signup({navigation}) {
               !!res.data?.verify_details?.is_email_verified ||
               !!res.data?.verify_details?.is_phone_verified
             ) {
-              navigation.push(navigationStrings.TAB_ROUTES);
+              checkIsAdmin(navigation_, navigation, res.data);
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
           } else {
-            navigation.push(navigationStrings.TAB_ROUTES);
+            checkIsAdmin(navigation_, navigation, res.data);
           }
         }
       })

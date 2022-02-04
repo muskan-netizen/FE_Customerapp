@@ -16,6 +16,7 @@ import {
   Vibration,
   View,
   ScrollView,
+  Modal,
 } from 'react-native';
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import * as Animatable from 'react-native-animatable';
@@ -77,6 +78,7 @@ import Toast from 'react-native-simple-toast';
 import RepeatModal from '../../Components/RepeatModal';
 import DifferentAddOns from '../../Components/DifferentAddOns ';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import FilterComp from '../../Components/FilterComp';
 
 let timeOut = undefined;
 
@@ -86,6 +88,7 @@ let activeIdx = 0;
 
 export default function Products({route, navigation}) {
   const bottomSheetRef = useRef(null);
+  let selectedFilters = useRef(null);
   // console.log(route.params, 'route.params');
   const {data} = route.params;
   // console.log(data, 'datadatadata');
@@ -107,7 +110,7 @@ export default function Products({route, navigation}) {
     isLoading: true,
     isLoadingB: false,
     pageNo: 1,
-    limit: 12,
+    limit: 30,
     isRefreshing: false,
     selectedSbCategoryID: -1,
     productListId: data,
@@ -194,6 +197,8 @@ export default function Products({route, navigation}) {
     storeLocalQty: null,
     differentAddsOnsModal: false,
     selectedDiffAdsOnId: 0,
+    isShowFilter: false,
+    selectedSortFilter: null,
   });
 
   const {
@@ -268,6 +273,8 @@ export default function Products({route, navigation}) {
     storeLocalQty,
     differentAddsOnsModal,
     selectedDiffAdsOnId,
+    isShowFilter,
+    selectedSortFilter,
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -293,14 +300,12 @@ export default function Products({route, navigation}) {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       updateState({pageNo: 1});
-      getAllListItems();
-      console.log('checking route params >>>>1', productListId);
-      console.log(routeData, 'routeData');
+      getAllListItems(1);
       if (productListId?.vendor && routeData) {
         fetchOffers();
       }
       if (isLoadingC) {
-        getAllProducts(true);
+        getAllProductsByCategoryId(true);
       }
     });
     return unsubscribe;
@@ -351,33 +356,20 @@ export default function Products({route, navigation}) {
       });
   };
 
-  const getAllListItems = () => {
-    let filterExist =
-      sleectdBrands.length ||
-      selectedVariants.length ||
-      selectedOptions.length ||
-      slectedSortBy.length ||
-      minimumPrice != 0 ||
-      maximumPrice != 50000 ||
-      checkForMaximumPriceChange ||
-      checkForMinimumPriceChange;
-    {
-      filterExist
-        ? updateState({showFilterSlectedIcon: true})
-        : updateState({showFilterSlectedIcon: false});
-    }
-
+  const getAllListItems = (pageNo = 1) => {
     if (data?.vendor) {
       {
-        filterExist
-          ? getAllProductsVendorFilter()
+        !!selectedFilters.current
+          ? newVendorFilter(pageNo)
           : data?.vendorData
-          ? getAllProductsByVendorCategory()
-          : getAllProductsByVendor();
+          ? getAllProductsByVendorCategory(pageNo)
+          : getAllProductsByVendor(pageNo);
       }
     } else {
       {
-        filterExist ? getAllProductsCategoryFilter() : getAllProducts();
+        !!selectedFilters.current
+          ? getAllProductsCategoryFilter(pageNo)
+          : getAllProductsByCategoryId(pageNo);
       }
     }
   };
@@ -416,27 +408,26 @@ export default function Products({route, navigation}) {
   const updateBrandAndCategoryFilter = (filterData, allBrands) => {
     var brandDatas = [];
     var filterDataNew = [];
+    // if (allBrands.length) {
+    //   brandDatas = [
+    //     {
+    //       id: -1,
+    //       label: strings.BRANDS,
+    //       value: allBrands.map((i, inx) => {
+    //         return {
+    //           id: i?.translation[0]?.brand_id,
+    //           label: i?.translation[0]?.title,
+    //           parent: strings.BRANDS,
+    //         };
+    //       }),
+    //     },
+    //   ];
 
-    if (allBrands.length) {
-      brandDatas = [
-        {
-          id: -1,
-          label: strings.BRANDS,
-          value: allBrands.map((i, inx) => {
-            return {
-              id: i?.translation[0]?.brand_id,
-              label: i?.translation[0]?.title,
-              parent: strings.BRANDS,
-            };
-          }),
-        },
-      ];
-
-      // updateState({allFilters: [...allFilters,...brandDatas]});
-    }
+    //   updateState({allFilters: [...allFilters,...brandDatas]});
+    // }
 
     // Price filter
-    if (filterData.length) {
+    if (!!filterData?.length) {
       filterDataNew = filterData.map((i, inx) => {
         return {
           id: i.variant_type_id,
@@ -451,110 +442,29 @@ export default function Products({route, navigation}) {
           }),
         };
       });
-      // updateState({allFilters: [...allFilters,...filterDataNew]});
+      updateState({allFilters: filterDataNew});
     }
+  };
 
+  console.log('allFilters', allFilters);
+  const onFilterApply = (filterData = {}) => {
+    selectedFilters.current = filterData;
+    updateState({pageNo: 1});
+    getAllListItems(1);
+  };
+  const allClearFilters = () => {
+    selectedFilters.current = null;
     updateState({
-      allFilters: [...brandDatas, ...sortFilters, ...filterDataNew],
+      pageNo: 1,
+      selectedSortFilter: null,
+      minimumPrice: 0,
+      maximumPrice: 50000,
     });
-  };
-
-  const getProductBasedOnFilter = (
-    minimumPrice,
-    maximumPrice,
-    checkForMinimumPriceChange,
-    checkForMaximumPriceChange,
-    slectedSortBy,
-    sleectdBrands,
-    selectedVariants,
-    selectedOptions,
-    allSelectdFilters,
-  ) => {
-    updateState({
-      minimumPrice: minimumPrice,
-      maximumPrice: maximumPrice,
-      checkForMinimumPriceChange: checkForMinimumPriceChange,
-      checkForMaximumPriceChange: checkForMaximumPriceChange,
-      allFilters: allSelectdFilters,
-      sleectdBrands: sleectdBrands,
-      selectedVariants: selectedVariants,
-      selectedOptions: selectedOptions,
-      slectedSortBy: slectedSortBy,
-    });
-  };
-
-  /**********Get all list items by category filters */
-  const getAllProductsVendorFilter = () => {
-    console.log('api hit getAllProductsVendorFilter');
-    let data = {};
-    data['variants'] = selectedVariants;
-    data['options'] = selectedOptions;
-    data['brands'] = sleectdBrands;
-    data['order_type'] = slectedSortBy.length ? slectedSortBy[0] : '';
-    data['range'] = `${minimumPrice};${maximumPrice}`;
-    actions
-      .getProductByVendorFilters(
-        `/${productListId.id}?limit=${limit}&page=${pageNo}`,
-        data,
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        },
-      )
-      .then((res) => {
-        console.log(res, 'getProductByVendorFilters');
-        updateState({
-          isLoading: false,
-          isRefreshing: false,
-          productListData:
-            pageNo == 1
-              ? res.data.data
-              : [...productListData, ...res.data.data],
-        });
-      })
-      .catch(errorMethod);
-    // }
-  };
-
-  /**********Get all list items category filters */
-  const getAllProductsCategoryFilter = () => {
-    console.log('api hit getAllProductsCategoryFilter');
-    let data = {};
-    data['variants'] = selectedVariants;
-    data['options'] = selectedOptions;
-    data['brands'] = sleectdBrands;
-    data['order_type'] = slectedSortBy.length ? slectedSortBy[0] : '';
-    data['range'] = `${minimumPrice};${maximumPrice}`;
-    actions
-      .getProductByCategoryFilters(
-        `/${productListId.id}?limit=${limit}&page=${pageNo}`,
-        data,
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        },
-      )
-      .then((res) => {
-        console.log(res, 'getProductByVendorFilters');
-        updateState({
-          isLoading: false,
-          isRefreshing: false,
-          productListData:
-            pageNo == 1
-              ? res.data.data
-              : [...productListData, ...res.data.data],
-        });
-      })
-      .catch(errorMethod);
-    // }
+    getAllListItems(1);
   };
 
   /****Get all list items by vendor id */
-  const getAllProductsByVendor = () => {
+  const getAllProductsByVendor = (pageNo) => {
     console.log('api hit getAllProductsByVendor');
     actions
       .getProductByVendorId(
@@ -624,31 +534,85 @@ export default function Products({route, navigation}) {
       .catch(errorMethod);
   };
 
-  const fetchTags = (filterArray) => {
-    if (filterArray && filterArray.length > 0) {
-      let tagsArr = [];
-      filterArray.forEach((el) => {
-        // console.log('checking data for tags >>>', el);
-        el.data.forEach((data_) => {
-          if (data_ && data_.tags) {
-            tagsArr.push(...data_.tags);
+  //***************get products by vendor filter**************
+  const newVendorFilter = (pageNo) => {
+    console.log('api hit new vendorFilter', selectedFilters);
+    let data = {};
+    data['variants'] = selectedFilters?.current?.selectedVariants || [];
+    data['options'] = selectedFilters?.current?.selectedOptions || [];
+    data['brands'] = selectedFilters?.current?.sleectdBrands || [];
+    data['order_type'] = selectedFilters?.current?.selectedSorting || 0;
+    data['range'] = `${minimumPrice};${maximumPrice}`;
+    data['vendor_id'] = productListId.id;
+    data['limit'] = limit;
+    data['page'] = pageNo;
+    console.log('sending data', data);
+    actions
+      .newVendorFilters(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log('filter vendor res', res);
+        if (!!res?.data?.vendor?.is_show_products_with_category) {
+          var totalProduct = 1;
+          let filterArray = res?.data?.categories?.map((val) => {
+            let newKey = {
+              ...val,
+              ['data']: val?.products && val.products,
+              title: val?.category && val.category?.translation[0]?.name,
+              totalProduct: totalProduct + val.products.length,
+            };
+            delete newKey['products'];
+            return newKey;
+          });
+          updateState({
+            sectionListData: filterArray,
+            cloneSectionList: filterArray,
+            isLoading: false,
+            isRefreshing: false,
+            categoryInfo: res?.data?.vendor,
+            filterData: res?.data?.filterData,
+            vendorCategories: res?.data?.categories,
+          });
+          console.log(filterArray, 'filterArrayfilterArray');
+          fetchTags(filterArray);
+        } else {
+          // console.log('get product list by vendor id >>>> ', res);
+          if (!!res?.data?.products?.data) {
+            updateState({
+              isLoading: false,
+              isRefreshing: false,
+              categoryInfo: res?.data?.vendor,
+              filterData: res?.data?.filterData,
+              productListData: !!res?.data?.vendor
+                ?.is_show_products_with_category
+                ? res?.data?.categories[0]?.products
+                : pageNo == 1
+                ? res.data.products.data
+                : [...productListData, ...res.data.products.data],
+              vendorCategories: res?.data?.categories,
+              // vendorCategoryItms: res?.data?.categories[0]?.products,
+            });
+          } else {
+            updateState({
+              isLoading: false,
+              isRefreshing: false,
+            });
           }
-        });
-      });
-      tagsArr = _.uniqBy(tagsArr, 'tag_id');
-      updateState({
-        ProductTags: tagsArr.map((el) => {
-          return {
-            ...el.tag,
-            isSelected: false,
-          };
-        }),
-      });
-    }
+        }
+        if (res?.data) {
+          updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        }
+      })
+      .catch(errorMethod);
+    // }
   };
 
   /**********Get all list items by category id */
-  const getAllProducts = () => {
+  const getAllProductsByCategoryId = (pageNo) => {
     console.log('api hit getProductByCategoryId', data);
     actions
       .getProductByCategoryId(
@@ -685,7 +649,7 @@ export default function Products({route, navigation}) {
                 selectedCategory: res.data.category.childs[0],
                 productListId: res.data.category.childs[0],
                 pageNo: 1,
-                limit: 12,
+                limit: 30,
                 isLoadingC: true,
               })
             : null;
@@ -697,6 +661,66 @@ export default function Products({route, navigation}) {
       })
       .catch(errorMethod);
     // }
+  };
+
+  /**********Get all list items category filters */
+  const getAllProductsCategoryFilter = (pageNo) => {
+    let data = {};
+    data['variants'] = selectedFilters?.current?.selectedVariants || [];
+    data['options'] = selectedFilters?.current?.selectedOptions || [];
+    data['brands'] = selectedFilters?.current?.sleectdBrands || [];
+    data['order_type'] = selectedFilters?.current?.selectedSorting || 0;
+    data['range'] = `${minimumPrice};${maximumPrice}`;
+    console.log('api hit getAllProductsCategoryFilter', data);
+    actions
+      .getProductByCategoryFilters(
+        `/${productListId.id}?limit=${limit}&page=${pageNo}`,
+        data,
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'getAllProductsCategoryFilter  res ++++++');
+
+        updateState({
+          isLoading: false,
+          isRefreshing: false,
+          productListData:
+            pageNo == 1
+              ? res.data.data
+              : [...productListData, ...res.data.data],
+        });
+      })
+      .catch(errorMethod);
+    // }
+  };
+
+  console.log('productListData length+++++++', productListData.length);
+
+  const fetchTags = (filterArray) => {
+    if (filterArray && filterArray.length > 0) {
+      let tagsArr = [];
+      filterArray.forEach((el) => {
+        // console.log('checking data for tags >>>', el);
+        el.data.forEach((data_) => {
+          if (data_ && data_.tags) {
+            tagsArr.push(...data_.tags);
+          }
+        });
+      });
+      tagsArr = _.uniqBy(tagsArr, 'tag_id');
+      updateState({
+        ProductTags: tagsArr.map((el) => {
+          return {
+            ...el.tag,
+            isSelected: false,
+          };
+        }),
+      });
+    }
   };
 
   /*********Add product to wish list******* */
@@ -760,6 +784,7 @@ export default function Products({route, navigation}) {
     showError(error?.message || error?.error);
   };
 
+  console.log('pageNopageNo', pageNo);
   //Pull to refresh
   const handleRefresh = () => {
     updateState({pageNo: 1, isRefreshing: true});
@@ -768,6 +793,7 @@ export default function Products({route, navigation}) {
   //pagination of data
   const onEndReached = ({distanceFromEnd}) => {
     updateState({pageNo: pageNo + 1});
+    getAllListItems(pageNo + 1);
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -824,9 +850,7 @@ export default function Products({route, navigation}) {
   };
 
   const addSingleItem = async (item, section = null) => {
-    console.log('checking section >>>', section);
-    console.log(item, 'itemitemitemitem=>>>');
-    // return;
+    console.log('checking item info >>>', item);
 
     if (
       !!categoryInfo?.is_vendor_closed &&
@@ -980,8 +1004,12 @@ export default function Products({route, navigation}) {
       !categoryInfo?.show_slot &&
       !categoryInfo?.closed_store_order_scheduled
     ) {
-      alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
-      return;
+
+      if (type == 1) {
+        //user can remove item if vendor closed
+        alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
+        return;
+      }
     }
     let quantityToIncreaseDecrease = !!item?.batch_count
       ? Number(item?.batch_count)
@@ -1321,6 +1349,14 @@ export default function Products({route, navigation}) {
   };
 
   const onAddNew = () => {
+    if (
+      !!categoryInfo?.is_vendor_closed &&
+      !categoryInfo?.show_slot &&
+      !categoryInfo?.closed_store_order_scheduled
+    ) {
+      alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
+      return;
+    }
     let getTypeId =
       !!repeatItems?.item?.category &&
       repeatItems?.item?.category.category_detail?.type_id;
@@ -1624,7 +1660,7 @@ export default function Products({route, navigation}) {
 
   useEffect(() => {
     if (isLoadingC) {
-      getAllProducts(true);
+      getAllProductsByCategoryId(true);
       if (productListId?.vendor && routeData) {
         fetchOffers();
       }
@@ -1675,7 +1711,7 @@ export default function Products({route, navigation}) {
       // productListData: [],
       productListId: item,
       pageNo: 1,
-      limit: 12,
+      limit: 30,
       isLoadingC: true,
     });
 
@@ -2493,6 +2529,7 @@ export default function Products({route, navigation}) {
                 ? colors.whiteOpacity15
                 : colors.greyColor,
               height: moderateScaleVertical(37),
+              marginBottom: moderateScaleVertical(16),
             }}
             searchValue={searchInput}
             placeholder={strings.SEARCH_WITHIN_MENU}
@@ -2549,6 +2586,16 @@ export default function Products({route, navigation}) {
             </ScrollView>
           </View>
         )}
+        <View>
+          <TouchableOpacity
+            onPress={onShowHideFilter}
+            style={{
+              alignSelf: 'flex-end',
+              marginRight: moderateScale(16),
+            }}>
+            <Image source={imagePath.filter} />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   };
@@ -2663,6 +2710,14 @@ export default function Products({route, navigation}) {
       </View>
     );
   }
+
+  const updateMinMax = (min, max) => {
+    updateState({minimumPrice: min, maximumPrice: max});
+  };
+
+  const onShowHideFilter = () => {
+    updateState({isShowFilter: !isShowFilter});
+  };
 
   const onShare = async () => {
     let convertJson = JSON.stringify(data);
@@ -3102,7 +3157,7 @@ export default function Products({route, navigation}) {
               renderTab={renderSectionTab}
               renderItem={renderSectionItem}
               ListFooterComponent={() => (
-                <View style={{height: moderateScale(60)}} />
+                <View style={{height: moderateScale(80)}} />
               )}
               renderSectionHeader={renderSectionHeader}
               ListEmptyComponent={
@@ -3124,6 +3179,7 @@ export default function Products({route, navigation}) {
             contentContainerStyle={{
               flexGrow: 1,
             }}
+            extraData={productListData}
             ItemSeparatorComponent={() => <View style={{height: 10}} />}
             // refreshing={isRefreshing}
             // initialNumToRender={12}
@@ -3136,10 +3192,10 @@ export default function Products({route, navigation}) {
             //     tintColor={themeColors.primary_color}
             //   />
             // }
-            onEndReached={
-              !categoryInfo?.is_show_products_with_category &&
-              onEndReachedDelayed
-            }
+            // onEndReached={
+            //   !categoryInfo?.is_show_products_with_category &&
+            //   onEndReachedDelayed
+            // }
             onEndReachedThreshold={0.5}
             ListFooterComponent={() => (
               <View style={{height: moderateScale(60)}} />
@@ -3323,16 +3379,16 @@ export default function Products({route, navigation}) {
       />
 
       {/* Add new addons and repeat item view */}
-      {!!repeatItems && (
+      {!!repeatItems ? (
         <RepeatModal
           data={repeatItems?.item}
           modalHide={() => updateState({repeatItems: null})}
           onRepeat={onRepeat}
           onAddNew={onAddNew}
         />
-      )}
+      ) : null}
 
-      {!!differentAddsOns && differentAddsOns.length > 1 && (
+      {!!differentAddsOns && differentAddsOns.length > 1 ? (
         <DifferentAddOns
           differentAddsOnsModal={differentAddsOnsModal}
           data={differentAddsOns}
@@ -3344,7 +3400,23 @@ export default function Products({route, navigation}) {
           btnLoader={btnLoader}
           selectedDiffAdsOnId={selectedDiffAdsOnId}
         />
-      )}
+      ) : null}
+
+      {isShowFilter ? (
+        <FilterComp
+          isDarkMode={isDarkMode}
+          themeColors={themeColors}
+          onFilterApply={onFilterApply}
+          onShowHideFilter={onShowHideFilter}
+          allClearFilters={allClearFilters}
+          selectedSortFilter={selectedSortFilter}
+          onSelectedSortFilter={(val) => updateState({selectedSortFilter: val})}
+          maximumPrice={maximumPrice}
+          minimumPrice={minimumPrice}
+          updateMinMax={updateMinMax}
+          filterData={allFilters}
+        />
+      ) : null}
     </View>
   );
 }

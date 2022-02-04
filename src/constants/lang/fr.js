@@ -373,7 +373,7 @@ export default {
   AUTOMATIC: 'AUTOMATIQUE',
   APPEARANCE: 'APPARENCE',
   HOME: 'Accueil',
-  HOME_1: 'Domicile',
+  HOME_1: 'Adresse du vendeur',
   WISHLIST: 'Favoris',
   LIGHT: 'Clair',
   DARK: 'Sombre',
@@ -796,7 +796,8 @@ montant`,
   WE_ARE_NOT_ACCEPTING:
     "Nous n'acceptons pas de commandes pour le moment. Vous pouvez en programmer pour",
   CURRENTLYUNAVAILABLE: 'Currently Unavailable',
-  YOURDRIVERHASMODIFIED:"Your driver has modified your order"
-
-
+  SLOT_NOT_AVAILABAL:
+    'Créneau non disponible merci de sélectionner une autre date',
+  TIME_SLOT: 'Créneaux horaires',
+  RATING: 'Rating',
 };

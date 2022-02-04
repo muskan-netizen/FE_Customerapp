@@ -1,6 +1,7 @@
-//export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
-//export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
+// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
+// export const API_BASE_URL = 'https://ca3e-112-196-88-218.ngrok.io/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.97.123:8020/api/v1'; // sujata
@@ -30,11 +31,11 @@
 // export const API_BASE_URL = 'https://bustanfakieh.com/api/v1';
 // export const API_BASE_URL = 'https://cabdeliv.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
-export const API_BASE_URL = 'https://orderchekout.com/api/v1';
+// export const API_BASE_URL = 'https://orderchekout.com/api/v1';
 // export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
 // export const API_BASE_URL = 'https://ufood.ca/api/v1';
-//export const API_BASE_URL = 'https://app.vici.la/api/v1';
+// export const API_BASE_URL = 'https://app.vici.la/api/v1';
 // export const API_BASE_URL = 'https://blipdelivery.com/api/v1';
 // export const API_BASE_URL = 'https://africanvillage.market/api/v1';
 // export const API_BASE_URL = 'https://govachow.com/api/v1';
@@ -53,11 +54,13 @@ export const API_BASE_URL = 'https://orderchekout.com/api/v1';
 // export const API_BASE_URL = 'https://elcheregio.mx/api/v1';
 // export const API_BASE_URL = 'https://donepacked.com/api/v1';
 // export const API_BASE_URL = 'https://cannabusxpress.com/api/v1';
-// export const API_BASE_URL = 'https://test.taquick.com/api/v1';
+// export const API_BASE_URL = 'https://order-dev.taquick.com/api/v1';
 // export const API_BASE_URL = 'https://yeboy.mx/api/v1';
 // export const API_BASE_URL = 'https://nadeliver.com/api/v1';
-// export const API_BASE_URL = 'https://sirvu.ca/api/v1';
+// export const API_BASE_URL = 'https://order-dev.taquick.com/api/v1';
 // export const API_BASE_URL = 'https://ritenowdelivery.com/api/v1';
+// export const API_BASE_URL = 'https://drusdeliveries.com/api/v1';
+// export const API_BASE_URL = 'https://empirehub.com/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
@@ -193,6 +196,7 @@ export const CANCEL_ORDER = getApiUrl('/return-order/vendor-order-for-cancel');
 export const WALLET_USER_VERIFY = getApiUrl('/wallet/transfer/user/verify');
 export const WALLET_TRANSFER_CONFIRM = getApiUrl('/wallet/transfer/confirm');
 export const VENDOR_SLOTS = getApiUrl('/vendor/slots');
+export const NEW_VENDOR_FILTER = getApiUrl('/vendor/vendorProductsFilter');
 export const GETALLTEMPLCARDS = getApiUrl('/get/edited-orders');
 export const ACCEPTREJECTDRIVERUPDATE = getApiUrl('/edit-order/approve/reject');
 

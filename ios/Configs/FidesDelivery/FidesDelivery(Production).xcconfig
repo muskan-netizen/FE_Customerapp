@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-available_pods-FidesDelivery/Pods-available_pods-FidesDelivery.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-FidesDelivery/Pods-available_pods-FidesDelivery.release.xcconfig"
 
 PROJECT_APPLE_ID = 1604778454
 PROJECT_BUNDLE_ID =com.fidesDelivery

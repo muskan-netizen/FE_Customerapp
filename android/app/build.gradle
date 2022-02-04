@@ -198,17 +198,7 @@ android {
     flavorDimensions "appType"
 
     productFlavors {
-         orderchekout{
-            dimension "appType"
-            versionCode 5
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion         
-            applicationId 'com.orderchekout'
-            resValue "string", "app_name", "Order Chekout"
-            resValue "string", "host_name", ""
-         }
-        royoorder {
+           royoorder {
             dimension "appType"
             versionCode 3
             versionName "1.0"
@@ -219,6 +209,17 @@ android {
             resValue "string", "app_name", "RoyoOrder"
             resValue "string", "host_name", "sales.royoorders.com"
         }
+         orderchekout{
+            dimension "appType"
+            versionCode 5
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.orderchekout'
+            resValue "string", "app_name", "Order Chekout"
+            resValue "string", "host_name", ""
+         }
+    
         runrun {
             dimension "appType"
             versionCode 1
@@ -760,7 +761,7 @@ android {
          }
           codiner{
             dimension "appType"
-            versionCode 5
+            versionCode 6
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -1558,7 +1559,7 @@ android {
          }
           donepacked{
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -1889,7 +1890,7 @@ android {
          }
           nadelivery{
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -2226,7 +2227,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.mozmarcas'
-            resValue "string", "app_name", "Mozmarcas"
+            resValue "string", "app_name", "Pakela"
             resValue "string", "host_name", ""
          } 
           myfiji{
@@ -2389,7 +2390,86 @@ android {
             resValue "string", "app_name", "Cannabis Club SF"
             resValue "string", "host_name", ""
          }
-         
+         halaTalabat{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.halaTalabat'
+            resValue "string", "app_name", "Hala Talabat"
+            resValue "string", "host_name", ""
+         }
+       jadorDrive{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.jadorDrive'
+            resValue "string", "app_name", "Jador Drive"
+            resValue "string", "host_name", ""
+         }
+         palmettoplus{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.palmettoplus'
+            resValue "string", "app_name", "Palmetto Plus"
+            resValue "string", "host_name", ""
+         }
+          ubercann{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ubercann'
+            resValue "string", "app_name", "UBERCANN"
+            resValue "string", "host_name", ""
+         }
+         kongafood{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.kongafood'
+            resValue "string", "app_name", "KONGA FOOD"
+            resValue "string", "host_name", ""
+         }
+         allotaxi{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.allotaxi'
+            resValue "string", "app_name", "Allo taxi"
+            resValue "string", "host_name", ""
+         }
+         launch{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.customer.launch'
+            resValue "string", "app_name", "Launch"
+            resValue "string", "host_name", ""
+         }
+         kampick{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.kampick'
+            resValue "string", "app_name", "kampick"
+            resValue "string", "host_name", ""
+         }
 
     }
 }

@@ -2750,8 +2750,8 @@ export default function OrderDetail({navigation, route}) {
                         color: colors.blackC,
                       }}>
                       {strings.YOUR_ORDER_WILL_ARRIVE_BY}{' '}
-                      {cartData?.vendors[0]?.scheduled_date_time
-                        ? cartData?.vendors[0]?.scheduled_date_time
+                      {cartData?.scheduled_date_time
+                        ? cartData?.scheduled_date_time
                         : cartData?.vendors[0]?.ETA}
                     </Text>
                   </View>

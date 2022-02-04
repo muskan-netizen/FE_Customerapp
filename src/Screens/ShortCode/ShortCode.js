@@ -24,6 +24,7 @@ import styles from './styles';
 import RNFetchBlob from 'rn-fetch-blob-v2';
 import {MaterialIndicator} from 'react-native-indicators';
 import * as NavigationService from '../../navigation/NavigationService';
+import {enums} from '../../utils/enums';
 
 const fs = RNFetchBlob.fs;
 
@@ -33,7 +34,7 @@ export default function ShortCode({route, navigation}) {
   const [state, setState] = useState({
     email: '',
     password: '',
-    shortCode: null,
+    shortCode: '',
     isShortcodePrefilled: true,
     isBtnDisabled: true,
     isLoading: false,
@@ -54,6 +55,7 @@ export default function ShortCode({route, navigation}) {
   const {appData, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
+  const userData = useSelector((state) => state.auth.userData);
 
   useEffect(() => {
     (async () => {
@@ -1382,6 +1384,54 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.halaTalabat:
+          updateState({
+            shortCode: shortCodes.halaTalabat,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.palmettoplus:
+          updateState({
+            shortCode: shortCodes.palmettoplus,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.allotaxi:
+          updateState({
+            shortCode: shortCodes.allotaxi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.jadorDrive:
+          updateState({
+            shortCode: shortCodes.jadorDrive,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ubercann:
+          updateState({
+            shortCode: shortCodes.ubercann,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kongafood:
+          updateState({
+            shortCode: shortCodes.kongafood,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.launch:
+          updateState({
+            shortCode: shortCodes.launch,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kampick:
+          updateState({
+            shortCode: shortCodes.kampick,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -1493,23 +1543,32 @@ export default function ShortCode({route, navigation}) {
     }
   }
 
-  const navigateToNextScreen = (res) => {
-    getItem('firstTime').then((el) => {
-      if (!el && res.dynamic_tutorial && res.dynamic_tutorial.length > 0) {
-        navigation.push(navigationStrings.APP_INTRO, {
-          images: res.dynamic_tutorial,
-        });
+  const navigateToNextScreen = (res, homeData) => {
+    // return;
+    if (enums.isVendorStandloneApp) {
+      if (!!userData?.auth_token) {
+        navigation.navigate(navigationStrings.TABROUTESVENDOR);
       } else {
-        // navigation.push(navigationStrings.TAB_ROUTES);
-        Linking.getInitialURL()
-          .then((link) => {
-            handleDynamicLink(link);
-          })
-          .catch((err) => {
-            console.log('checking deep link >>> 3232sdsd', err);
-          });
+        navigation.navigate(navigationStrings.OUTER_SCREEN);
       }
-    });
+    } else {
+      getItem('firstTime').then((el) => {
+        if (!el && res.dynamic_tutorial && res.dynamic_tutorial.length > 0) {
+          navigation.push(navigationStrings.APP_INTRO, {
+            images: res.dynamic_tutorial,
+          });
+        } else {
+          // navigation.push(navigationStrings.TAB_ROUTES);
+          Linking.getInitialURL()
+            .then((link) => {
+              handleDynamicLink(link);
+            })
+            .catch((err) => {
+              console.log('checking deep link >>> 3232sdsd', err);
+            });
+        }
+      });
+    }
   };
 
   const homeData = (res) => {
@@ -1523,13 +1582,13 @@ export default function ShortCode({route, navigation}) {
         },
         true,
       )
-      .then(() => {
+      .then((homeData) => {
         updateState({isLoading: false, LoadingScreen: false});
-        navigateToNextScreen(res);
+        navigateToNextScreen(res, homeData.data);
       })
       .catch((error) => {
         updateState({isLoading: false});
-        navigateToNextScreen(res);
+        navigateToNextScreen(res, homeData.data);
       });
   };
 

@@ -62,6 +62,7 @@ const OrderCardVendorComponent2 = ({
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
+  console.log(data, 'Orderdatatata');
   const businessType = appStyle?.homePageLayout;
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -420,7 +421,8 @@ const OrderCardVendorComponent2 = ({
               </View>
             </View>
 
-            {data?.order_status?.current_status?.title !== strings.REJECTED ? (
+            {data?.vendor?.return_request &&
+            data?.order_status?.current_status?.title !== strings.REJECTED ? (
               <TouchableOpacity
                 // onPress={onPressRateOrder}
                 onPress={onPressReturnOrder}
@@ -527,26 +529,26 @@ const OrderCardVendorComponent2 = ({
             )}
           </View>
         )}
-        {data?.order_status?.current_status?.title !== strings.DELIVERED &&
-          data?.order_status?.current_status?.title !== strings.REJECTED && (
-            <TouchableOpacity
-              onPress={() => setCancellationItem(data)}
-              activeOpacity={0.8}
+        {data?.order_status?.current_status?.title == strings.ACCEPTED ||
+        data?.order_status?.current_status?.title == 'Placed' ? (
+          <TouchableOpacity
+            onPress={() => setCancellationItem(data)}
+            activeOpacity={0.8}
+            style={{
+              alignSelf: 'flex-start',
+              marginLeft: moderateScale(10),
+              marginTop: moderateScaleVertical(8),
+            }}>
+            <Text
               style={{
-                alignSelf: 'flex-start',
-                marginLeft: moderateScale(10),
-                marginTop: moderateScaleVertical(8),
+                ...styles.orderStatusStyle,
+                color: colors.redB,
+                fontFamily: fontFamily.medium,
               }}>
-              <Text
-                style={{
-                  ...styles.orderStatusStyle,
-                  color: colors.redB,
-                  fontFamily: fontFamily.medium,
-                }}>
-                {strings.CANCEL_ORDER}
-              </Text>
-            </TouchableOpacity>
-          )}
+              {strings.CANCEL_ORDER}
+            </Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
 
       <Modal

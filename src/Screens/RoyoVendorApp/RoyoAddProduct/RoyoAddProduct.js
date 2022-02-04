@@ -228,8 +228,8 @@ const RoyoAddProduct = ({route, navigation}) => {
         },
       )
       .then((res) => {
-        console.log(res, 'productDetails<<<<<');
         const productInfo = res?.data?.product_detail;
+        console.log(productInfo, 'productDetails<<<<<');
         updateState({
           isLoading: false,
           isLoadingB: false,
@@ -240,7 +240,7 @@ const RoyoAddProduct = ({route, navigation}) => {
           configData: res?.data?.config_data,
           productVariants: res?.data?.product_variants,
           taxCategory: res?.data?.tax_category,
-          exisitingVariants: res?.data?.product_detail?.variant,
+          exisitingVariants: productInfo?.variant,
           otherProducts: res?.data?.other_products,
           productName: productInfo?.title,
           price: productInfo?.variant[0].price
@@ -252,6 +252,20 @@ const RoyoAddProduct = ({route, navigation}) => {
           compareAtPrice: productInfo?.variant[0].compare_at_price
             ? productInfo?.variant[0].compare_at_price
             : '',
+          batchCount:
+            productInfo?.batch_count > 0
+              ? productInfo?.batch_count.toString()
+              : '',
+          isTrackInventory: productInfo?.has_inventory,
+          minimumOrderCount:
+            productInfo?.minimum_order_count > 0
+              ? productInfo?.minimum_order_count.toString()
+              : '',
+          isSellWhenOutOfStock: productInfo?.sell_when_out_of_stock,
+          quantity:
+            productInfo?.variant[0] && productInfo?.variant[0].quantity > 0
+              ? productInfo?.variant[0].quantity.toString()
+              : 0,
         });
       })
       .catch(errorMethod);
@@ -274,6 +288,7 @@ const RoyoAddProduct = ({route, navigation}) => {
 
   const onUpdateProduct = () => {
     console.log('paramDataparamData', productDetailParam);
+    console.log('paramDataparamData', productDetailParam);
     updateState({isLoadingB: true});
     let formData = new FormData();
     formData.append('product_id', productDetailParam?.id || '');
@@ -287,7 +302,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     formData.append('meta_description', metaDescription);
     formData.append('price', price);
     formData.append('compare_at_price', compareAtPrice);
-    formData.append('has_inventory', isTrackInventory);
+    formData.append('has_inventory', isTrackInventory ? 1 : 0);
     formData.append('quantity', quantity);
     formData.append('sell_stock_out', isSellWhenOutOfStock);
     formData.append('minimum_order_count', minimumOrderCount);
@@ -322,12 +337,12 @@ const RoyoAddProduct = ({route, navigation}) => {
     selectedRelatedProducts.map((item) => {
       formData.append('releted_product[]', item?.id);
     });
-    formData.append('is_new', isNew);
-    formData.append('is_featured', isFeatured);
-    formData.append('inquiry_only', isInquiryOnly);
-    formData.append('pharmacy_check', isRequiresPrescription);
-    formData.append('last_mile', isRequiresLastMileDelivery);
-    formData.append('is_live', selectedProductStatus?.id);
+    formData.append('is_new', isNew ? 1 : 0);
+    formData.append('is_featured', isFeatured ? 1 : 0);
+    formData.append('inquiry_only', isInquiryOnly ? 1 : 0);
+    formData.append('pharmacy_check', isRequiresPrescription ? 1 : 0);
+    formData.append('last_mile', isRequiresLastMileDelivery ? 1 : 0);
+    formData.append('is_live', productDetailParam?.is_live);
     formData.append('brand_id', selectedBrand?.id || '');
     formData.append('tax_category', selectedTaxCategory?.id || '');
     formData.append('delay_order_hrs', delayHrs);

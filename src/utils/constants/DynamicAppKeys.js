@@ -197,7 +197,7 @@ const shortCodes = {
   tmgShops: '6da47f',
   stitchesonsite: '5bdfee',
   easyu: '20b62b',
-  mozmarcas: '649832',
+  mozmarcas: '53ea8a',
   myfiji: 'a69fda',
   fastmikes: 'd89823',
   citysuds: 'aaedee',
@@ -214,6 +214,14 @@ const shortCodes = {
   fairex: '1e3e30',
   everywhere: 'bc09ef',
   cannabisClubSF: '351b2b',
+  halaTalabat: 'ccc32e',
+  palmettoplus: '007b7b',
+  allotaxi: '2142db',
+  jadorDrive: 'a001aa',
+  ubercann: '3a99ad',
+  kongafood: 'c08eab',
+  launch: '88cccf',
+  kampick: 'd12c28',
 };
 
 const appIds = {
@@ -802,7 +810,7 @@ const appIds = {
     android: 'com.trucktirenow',
   }),
   yeboy: Platform.select({
-    ios: 'com.yeboy',
+    ios: 'com.app.yeboy',
     android: 'com.yeboy',
   }),
   kel360: Platform.select({
@@ -870,7 +878,7 @@ const appIds = {
     android: 'com.customer.ineed',
   }),
   nadelivery: Platform.select({
-    ios: 'com.nadelivery',
+    ios: 'com.app.nadelivery',
     android: 'com.nadelivery',
   }),
   marasym: Platform.select({
@@ -1068,6 +1076,38 @@ const appIds = {
   cannabisClubSF: Platform.select({
     ios: 'com.cannabisClubSF',
     android: 'com.cannabisClubSF',
+  }),
+  cannabisClubSF: Platform.select({
+    ios: 'com.halaTalabat',
+    android: 'com.halaTalabat',
+  }),
+  palmettoplus: Platform.select({
+    ios: 'com.palmettoplus',
+    android: 'com.palmettoplus',
+  }),
+  allotaxi: Platform.select({
+    ios: 'com.allotaxi',
+    android: 'com.allotaxi',
+  }),
+  jadorDrive: Platform.select({
+    ios: 'com.jadorDrive',
+    android: 'com.jadorDrive',
+  }),
+  ubercann: Platform.select({
+    ios: 'com.ubercann',
+    android: 'com.ubercann',
+  }),
+  kongafood: Platform.select({
+    ios: 'com.kongafood',
+    android: 'com.kongafood',
+  }),
+  launch: Platform.select({
+    ios: 'com.customer.launch',
+    android: 'com.customer.launch',
+  }),
+  kampick: Platform.select({
+    ios: 'com.kampick',
+    android: 'com.kampick',
   }),
 };
 

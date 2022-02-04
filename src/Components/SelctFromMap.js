@@ -25,7 +25,8 @@ import stylesFun from './styles';
 
 export default function SelctFromMap({
     addressDone = () => { },
-    mapClose = () => { }
+    mapClose = () => { },
+    constCurrLoc
 }) {
     const navigation = useNavigation()
     const mapRef = React.createRef();
@@ -36,14 +37,14 @@ export default function SelctFromMap({
     const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
     const [state, setState] = useState({
         region: {
-            latitude: 30.7333,
-            longitude: 76.7794,
+            latitude: constCurrLoc?.latitude || 30.7333,
+            longitude: constCurrLoc?.longitude || 76.7794,
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
         },
         coordinate: {
-            latitude: 30.7333,
-            longitude: 76.7794,
+            latitude: constCurrLoc?.latitude || 30.7333,
+            longitude: constCurrLoc?.longitude || 76.7794,
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
         },

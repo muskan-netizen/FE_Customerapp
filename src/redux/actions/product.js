@@ -25,6 +25,7 @@ import {
   UPDATE_PRODUCT_STATUS,
   UPDATE_VENDOR_PRODUCT,
   WALLET_CREDIT,
+  NEW_VENDOR_FILTER,
 } from '../../config/urls';
 import {apiGet, apiPost, setWalletData} from '../../utils/utils';
 import store from '../store';
@@ -137,6 +138,21 @@ export const getProductByVendorFilters = (
 ) => {
   return new Promise((resolve, reject) => {
     apiPost(GET_DATA_BY_VENDOR_FILTERS + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const newVendorFilters = (
+  data = {},
+  headers = {},
+) => {
+  return new Promise((resolve, reject) => {
+    apiPost(NEW_VENDOR_FILTER, data, headers)
       .then((res) => {
         resolve(res);
       })
