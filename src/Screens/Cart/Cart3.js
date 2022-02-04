@@ -211,6 +211,8 @@ export default function Cart({ navigation, route }) {
   //Update states on screens
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
+  console.log("closed_store_order_scheduled", cartData)
+
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
@@ -494,7 +496,7 @@ export default function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  console.log("cart data_++++++++",cartData)
+  console.log("cart data_++++++++", cartData)
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     console.log(item, 'itemitemitemitem');
@@ -927,11 +929,13 @@ export default function Cart({ navigation, route }) {
 
       if (!!selectedTimeSlots) {
         const date = selectedDateFromCalendar;
-        const time = selectedTimeSlots.split(':')[0];
+        const time = selectedTimeSlots.split('-')[0];
+
         const formatDate = moment(
           `${date} ${time}`,
           'YYYY-MM-DD HH:mm:ss',
         ).format();
+        console.log("formatDate", formatDate)
         data['schedule_dt'] = formatDate
       } else {
         data['schedule_dt'] = scheduleType != 'now' && sheduledorderdate
@@ -1382,7 +1386,7 @@ export default function Cart({ navigation, route }) {
       } else {
         // let formatDate = new Date(selectedDateFromCalendar);
         const date = selectedDateFromCalendar;
-        const time = selectedTimeSlots.split(':')[0];
+        const time = selectedTimeSlots.split('-')[0];
         const formatDate = moment(
           `${date} ${time}`,
           'YYYY-MM-DD HH:mm:ss',
@@ -1552,7 +1556,7 @@ export default function Cart({ navigation, route }) {
               {item?.vendor?.name}
             </Text>
 
-            {item?.delaySlot ?
+            {!!cartData?.closed_store_order_scheduled ?
               <Text
 
                 style={{

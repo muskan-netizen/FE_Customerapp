@@ -2584,7 +2584,9 @@ export default function Products({ route, navigation }) {
               marginRight: moderateScale(16)
 
             }}>
-            <Image source={imagePath.filter} />
+            <Image style={{
+              tintColor: isDarkMode ? colors.white: colors.black
+            }} source={imagePath.filter} />
           </TouchableOpacity>
         </View>
       </View>

@@ -603,7 +603,7 @@ const ProductCard3 = ({
                     style={{
                       ...styles.customTextStyle,
                       textTransform: 'lowercase',
-                      color: colors.blackOpacity40,
+                      color: isDarkMode? colors.whiteOpacity77: colors.blackOpacity40,
                     }}>
                     {strings.CUSTOMISABLE}
                   </Text>

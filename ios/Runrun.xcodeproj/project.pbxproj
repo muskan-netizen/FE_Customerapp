@@ -16586,11 +16586,10 @@
 				8490329626EB749E00E4AE5A /* Frameworks */,
 				849032C226EB749E00E4AE5A /* Resources */,
 				849032D926EB749E00E4AE5A /* Bundle React Native code and images */,
-				69AB62FC3A0C693B0A6725CC /* ShellScript */,
-				6DDF4D2D045355FD083ED0C8 /* ShellScript */,
 				03286CE96B2D5359AB38C3D9 /* ShellScript */,
 				0DC5C58FA2DE3D9A3F4C066E /* [CP] Embed Pods Frameworks */,
 				270759969528571C9A7F3E65 /* [CP] Copy Pods Resources */,
+				FE694DFA27ABF86200328FBC /* Start Packager */,
 			);
 			buildRules = (
 			);
@@ -17748,6 +17747,8 @@
 				84D47CEC26C1349700EE9EB5 /* Resources */,
 				B9C9E86C57BC07EB712A025D /* [CP] Embed Pods Frameworks */,
 				CB43F3DC523815082771C5AF /* [CP] Copy Pods Resources */,
+				FE8F94A927ACEB6100EEFF8F /* Start Packager */,
+				FE8F94AA27ACEB8200EEFF8F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -38880,50 +38881,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ThreadAgain/Pods-ThreadAgain-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		69AB62FC3A0C693B0A6725CC /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HMC/Pods-HMC-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core.common-CoreModulesHeaders/AccessibilityResources.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit/FacebookSDKStrings.bundle",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/RNImageCropPicker/QBImagePicker.bundle",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
-				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe3DS2.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
-				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework/TwitterKitResources.bundle",
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-WashValley-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HMC/Pods-HMC-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		69BDB68EE045B3D0999EF144 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -39208,33 +39165,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6DDF4D2D045355FD083ED0C8 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-available_pods-HMC/Pods-available_pods-HMC-frameworks.sh",
-				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
-				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework",
-				"${PODS_ROOT}/razorpay-pod/Pod/Razorpay.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatProvidersSDK/ChatProvidersSDK.framework/ChatProvidersSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatSDK/ChatSDK.framework/ChatSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCommonUISDK/CommonUISDK.framework/CommonUISDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingAPISDK/MessagingAPI.framework/MessagingAPI",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingSDK/MessagingSDK.framework/MessagingSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework/SDKConfigurations",
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Gumastas-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-HMC/Pods-available_pods-HMC-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6DF810E74750A95188F3EA79 /* Start Packager */ = {
@@ -63561,6 +63491,24 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n\nexport RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\nif nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\nif ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\necho \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\nexit 2\nfi\nelse\nopen \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\nfi\nfi\n";
 		};
+		FE694DFA27ABF86200328FBC /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n\nexport RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\nif nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\nif ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\necho \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\nexit 2\nfi\nelse\nopen \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\nfi\nfi\n";
+		};
 		FE6E0AD811A0F575F9FC77EF /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -63632,6 +63580,41 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-MartiniOnWheels/Pods-available_pods-MartiniOnWheels-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		FE8F94A927ACEB6100EEFF8F /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n\nexport RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\nif nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\nif ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\necho \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\nexit 2\nfi\nelse\nopen \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\nfi\nfi\n";
+		};
+		FE8F94AA27ACEB8200EEFF8F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Tasmeem/Pods-available_pods-Tasmeem-resources.sh\"\n";
 		};
 		FECB2DBC056CC4A7B0B2087F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -76608,13 +76591,16 @@
 		};
 		84BA36A927969D9F006CD402 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2A17FD0A256965BCF80825D4 /* Pods-available_pods-Ace.debug.xcconfig */;
+			baseConfigurationReference = 84C85486270747AA00D6B750 /* Ace(Development).xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 6FXUMT5X23;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.customer.ace;
+				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
+				MARKETING_VERSION = "$(PROJECT_APP_VERSION)";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
 				PRODUCT_NAME = Runrun;
 				SWIFT_VERSION = 5.0;
 			};
