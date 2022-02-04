@@ -39,6 +39,7 @@ import ZendeskChat from '../../library/react-native-zendesk-chat';
 import Share from 'react-native-share';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
 import DeviceInfo from 'react-native-device-info';
+import SunmiV2Printer from 'react-native-sunmi-v2-printer';
 
 export default function Account3({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -556,7 +557,7 @@ export default function Account3({navigation}) {
 
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&
-            !!appMainData?.is_admin &&
+            SunmiV2Printer.hasPrinter &&
             __DEV__ &&
             (businessType == 'taxi' ? null : (
               <ListItemHorizontal
@@ -585,7 +586,7 @@ export default function Account3({navigation}) {
                   );
                 }}
                 iconLeft={imagePath.printer}
-                centerHeading={strings.ATTACH_PRINTER + ' sunmi'}
+                centerHeading={'Sunmi ' + SunmiV2Printer.printerModal}
                 containerStyle={styles.containerStyle2}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
@@ -595,7 +596,7 @@ export default function Account3({navigation}) {
                 // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             ))}
-
+          {console.log('check platform >>> ', Platform)}
           {/* {!!userData?.auth_token && (
           <ListItemHorizontal
             centerContainerStyle={{flexDirection: 'row'}}

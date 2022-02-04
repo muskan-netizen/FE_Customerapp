@@ -1,8 +1,15 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import colors from '../styles/colors';
 import fontFamily from '../styles/fontFamily';
 import {
+  moderateScale,
   moderateScaleVertical,
   textScale,
   width,
@@ -11,20 +18,34 @@ import {
 const MultiScreen = (props) => {
   const {
     screenName,
-    mainViewStyle,
+    mainViewStyle = {},
     selectedScreen,
     selectedScreenIndex,
     activeTintColor = colors.themeColor2,
     inActiveTintColor = colors.blackOpacity66,
     borderWidth = 1,
     tabTextStyle,
+    itemStyle = {},
+    scrollEnabled = true,
+    scrollViewStyle = {},
   } = props;
   return (
-    <View style={styles.container}>
-      <View style={{...styles.mainView, ...mainViewStyle}}>
+    <View style={{...styles.mainView, ...mainViewStyle}}>
+      <ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        scrollEnabled={scrollEnabled}
+        contentContainerStyle={{
+          width: '100%',
+          justifyContent: 'space-evenly',
+          ...scrollViewStyle,
+        }}>
         {screenName.map((value, index) => {
           return (
-            <TouchableOpacity key={index} onPress={() => selectedScreen(index)}>
+            <TouchableOpacity
+              style={{...itemStyle}}
+              key={index}
+              onPress={() => selectedScreen(index)}>
               <Text
                 style={[
                   styles.activeContractTextStyle,
@@ -48,14 +69,12 @@ const MultiScreen = (props) => {
                   marginTop: moderateScaleVertical(5),
                   borderWidth: selectedScreenIndex === index ? borderWidth : 0,
                   borderColor: colors.themeColor2,
-                  // width: 50,
-                  flex: 1,
                 }}
               />
             </TouchableOpacity>
           );
         })}
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -69,10 +88,10 @@ const styles = StyleSheet.create({
     marginBottom: moderateScaleVertical(16),
   },
   mainView: {
-    flexDirection: 'row',
-    maxWidth: 500,
-    backgroundColor: colors.white,
-    justifyContent: 'space-between',
+    width: width,
+
+    paddingLeft: moderateScale(20),
+    height: 40,
   },
   activeContractTextStyle: {
     fontSize: textScale(14),

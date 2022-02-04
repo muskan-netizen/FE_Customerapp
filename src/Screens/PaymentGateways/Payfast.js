@@ -53,9 +53,8 @@ export default function Payfast({navigation, route}) {
           language: languages?.primary_language?.id,
         },
       );
-      console.log(res?.data, 'responseData===>');
 
-      updateState({webData: res?.data, isLoading: false});
+      updateState({webData: res?.data});
     } catch (error) {
       updateState({isLoading: false});
       showError(error.message || error);
@@ -90,6 +89,8 @@ export default function Payfast({navigation, route}) {
       }
     }, 200);
   };
+
+  console.log(isLoading, 'isLoadingisLoadingisLoading');
 
   return (
     <WrapperContainer

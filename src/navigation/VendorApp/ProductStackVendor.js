@@ -8,9 +8,8 @@ import {
   RoyoAddProduct,
   RoyoProducts,
   VendorList,
-} from '../Screens';
-import {shortCodes} from '../utils/constants/DynamicAppKeys';
-import navigationStrings from './navigationStrings';
+} from '../../Screens';
+import navigationStrings from '../navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {

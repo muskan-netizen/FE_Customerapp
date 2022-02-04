@@ -245,6 +245,7 @@ export default function ShortCode({route, navigation}) {
         case appIds.snabbhem:
           updateState({
             shortCode: shortCodes.snabbhem,
+            // shortCode: '98f085',
             isShortcodePrefilled: true,
           });
           break;
@@ -1415,6 +1416,7 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
+        // code: '245bae',
         code: shortCode,
         language: res?.primary_language?.id,
       };
