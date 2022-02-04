@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import {resetStackAndNavigate} from '../navigation/NavigationService';
 import navigationStrings from '../navigation/navigationStrings';
+import {enums} from './enums';
 import {sessionHandler} from './helperFunctions';
 
 export async function getHeaders() {

@@ -150,6 +150,7 @@ export default function Login({navigation}) {
       countryData: mobilNo.focus ? mobilNo.cca2 : '',
     };
     updateState({isLoading: true});
+    console.log('chck login data >>>', data);
     actions
       .loginUsername(data, {
         code: appData?.profile?.code,
