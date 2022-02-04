@@ -1,6 +1,6 @@
-// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1';
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.97.160:8000/api/v1'; // inder
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'; // preet

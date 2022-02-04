@@ -628,7 +628,7 @@ const VariantAddons = ({
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            marginBottom: moderateScaleVertical(8)
+            marginBottom: moderateScaleVertical(16)
           }}>
             <Text style={{
               fontSize: moderateScale(18),
@@ -694,7 +694,7 @@ const VariantAddons = ({
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            marginBottom: moderateScaleVertical(8)
+            marginBottom: moderateScaleVertical(16)
           }}>
             <Text style={{
               fontSize: moderateScale(18),
@@ -1527,7 +1527,9 @@ const styles = StyleSheet.create({
     paddingVertical: moderateScaleVertical(2),
   },
   modalView: {
-    padding: moderateScale(8),
+    paddingHorizontal: moderateScale(16),
+    paddingTop:moderateScaleVertical(16),
+    paddingBottom:moderateScaleVertical(56),
     borderTopLeftRadius: moderateScale(12),
     borderTopRightRadius: moderateScale(12),
   }
