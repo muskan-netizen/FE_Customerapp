@@ -2420,6 +2420,26 @@ android {
             resValue "string", "app_name", "Palmetto Plus"
             resValue "string", "host_name", ""
          }
+          ubercann{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ubercann'
+            resValue "string", "app_name", "UBERCANN"
+            resValue "string", "host_name", ""
+         }
+         kongafood{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.kongafood'
+            resValue "string", "app_name", "KONGA FOOD"
+            resValue "string", "host_name", ""
+         }
          allotaxi{
             dimension "appType"
             versionCode 1
@@ -2428,6 +2448,26 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.allotaxi'
             resValue "string", "app_name", "Allo taxi"
+            resValue "string", "host_name", ""
+         }
+         launch{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.customer.launch'
+            resValue "string", "app_name", "Launch"
+            resValue "string", "host_name", ""
+         }
+         kampick{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.kampick'
+            resValue "string", "app_name", "kampick"
             resValue "string", "host_name", ""
          }
 

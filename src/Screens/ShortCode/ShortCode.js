@@ -1406,6 +1406,30 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.ubercann:
+          updateState({
+            shortCode: shortCodes.ubercann,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kongafood:
+          updateState({
+            shortCode: shortCodes.kongafood,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.launch:
+          updateState({
+            shortCode: shortCodes.launch,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kampick:
+          updateState({
+            shortCode: shortCodes.kampick,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

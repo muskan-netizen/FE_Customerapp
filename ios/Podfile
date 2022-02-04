@@ -962,6 +962,26 @@ target 'JadorDrive' do
   
 end
 
+#Kongafood Target
+target 'Kongafood' do
+  
+end
+
+#UBERCANN Target
+target 'UBERCANN' do
+  
+end
+
+#Launch Target
+target 'Launch' do
+  
+end
+
+#Kampick Target
+target 'Kampick' do
+  
+end
+
 
 # #VendorSpot Target
 # target 'VendorSpot' do

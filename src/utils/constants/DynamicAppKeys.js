@@ -197,7 +197,7 @@ const shortCodes = {
   tmgShops: '6da47f',
   stitchesonsite: '5bdfee',
   easyu: '20b62b',
-  mozmarcas: '649832',
+  mozmarcas: '53ea8a',
   myfiji: 'a69fda',
   fastmikes: 'd89823',
   citysuds: 'aaedee',
@@ -218,6 +218,10 @@ const shortCodes = {
   palmettoplus: '007b7b',
   allotaxi: '2142db',
   jadorDrive: 'a001aa',
+  ubercann: '3a99ad',
+  kongafood: 'c08eab',
+  launch: '88cccf',
+  kampick: 'd12c28',
 };
 
 const appIds = {
@@ -1088,6 +1092,22 @@ const appIds = {
   jadorDrive: Platform.select({
     ios: 'com.jadorDrive',
     android: 'com.jadorDrive',
+  }),
+  ubercann: Platform.select({
+    ios: 'com.ubercann',
+    android: 'com.ubercann',
+  }),
+  kongafood: Platform.select({
+    ios: 'com.kongafood',
+    android: 'com.kongafood',
+  }),
+  launch: Platform.select({
+    ios: 'com.customer.launch',
+    android: 'com.customer.launch',
+  }),
+  kampick: Platform.select({
+    ios: 'com.kampick',
+    android: 'com.kampick',
   }),
 };
 
