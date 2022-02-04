@@ -217,6 +217,7 @@ const shortCodes = {
   halaTalabat: 'ccc32e',
   palmettoplus: '007b7b',
   allotaxi: '2142db',
+  jadorDrive: 'a001aa',
 };
 
 const appIds = {
@@ -805,7 +806,7 @@ const appIds = {
     android: 'com.trucktirenow',
   }),
   yeboy: Platform.select({
-    ios: 'com.yeboy',
+    ios: 'com.app.yeboy',
     android: 'com.yeboy',
   }),
   kel360: Platform.select({
@@ -1083,6 +1084,10 @@ const appIds = {
   allotaxi: Platform.select({
     ios: 'com.allotaxi',
     android: 'com.allotaxi',
+  }),
+  jadorDrive: Platform.select({
+    ios: 'com.jadorDrive',
+    android: 'com.jadorDrive',
   }),
 };
 

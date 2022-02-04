@@ -1400,6 +1400,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.jadorDrive:
+          updateState({
+            shortCode: shortCodes.jadorDrive,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -1434,14 +1440,14 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        code: '245bae',
-        // code: shortCode,
+        // code: '245bae',
+        code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        code: '245bae',
-        // code: shortCode,
+        // code: '245bae',
+        code: shortCode,
       };
     }
     console.log(header, 'header');

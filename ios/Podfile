@@ -951,10 +951,17 @@ end
 target 'PinkyDeli' do
   
 end
-#  #SXM2GO Target
-#  target 'SXM2GO' do
+
+#SXM2GO Target
+target 'SXM2GO' do
   
-# end
+end
+
+#JadorDrive Target
+target 'JadorDrive' do
+  
+end
+
 
 # #VendorSpot Target
 # target 'VendorSpot' do

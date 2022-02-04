@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-available_pods-Fairex/Pods-available_pods-Fairex.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Fairex/Pods-available_pods-Fairex.release.xcconfig"
 
 PROJECT_APPLE_ID = 1605938563
 PROJECT_BUNDLE_ID =com.fairex
