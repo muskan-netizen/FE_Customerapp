@@ -1130,10 +1130,10 @@ const VariantAddons = ({
           </ScrollView>
 
           {!!(
+            productDetailData?.has_inventory == 0 ||
             (!showErrorMessageTitle && productTotalQuantity > 0) ||
             (!!typeId && typeId == 8) ||
-            !!productDetailData?.sell_when_out_of_stock ||
-            productDetailData?.has_inventory == 0
+            !!productDetailData?.sell_when_out_of_stock
           ) && (
             <View
               style={{

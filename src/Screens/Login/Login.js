@@ -42,8 +42,11 @@ import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-community/async-storage';
 import {mobile} from 'is_js';
+import {useNavigation} from '@react-navigation/native';
+import {checkIsAdmin} from '../../utils/utils';
 
 export default function Login({navigation}) {
+  const navigation_ = useNavigation();
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
@@ -166,9 +169,9 @@ export default function Login({navigation}) {
               !!res.data?.client_preference?.verify_phone
             ? !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
-              ? navigation.push(navigationStrings.TAB_ROUTES)
+              ? checkIsAdmin(navigation_, navigation, res.data)
               : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : navigation.push(navigationStrings.TAB_ROUTES);
+            : checkIsAdmin(navigation_, navigation, res.data);
         }
         updateState({isLoading: false});
         getCartDetail();
@@ -242,9 +245,9 @@ export default function Login({navigation}) {
           !!res.data?.client_preference?.verify_phone
             ? !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
-              ? navigation.push(navigationStrings.TAB_ROUTES)
+              ? checkIsAdmin()
               : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : navigation.push(navigationStrings.TAB_ROUTES);
+            : checkIsAdmin();
         }
         updateState({isLoading: false});
         getCartDetail();

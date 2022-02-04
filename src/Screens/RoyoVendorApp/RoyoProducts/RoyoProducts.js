@@ -136,9 +136,7 @@ const RoyoProducts = (props) => {
         let temp = cloneDeep(productListData);
         temp = temp.map((el) => {
           if (el.id == id) {
-            console.log('sdfksjdhfksdh', el);
             el.is_live = status == 1 ? 0 : 1;
-            console.log('sdfksjdhfksdh', el);
             return el;
           } else {
             return el;
@@ -151,7 +149,6 @@ const RoyoProducts = (props) => {
 
   const renderItem = (data, rowMap) => {
     const {item} = data;
-    console.log(item, 'itemitem>>>>>');
     return (
       <View style={styles.itemBox}>
         <TouchableOpacity

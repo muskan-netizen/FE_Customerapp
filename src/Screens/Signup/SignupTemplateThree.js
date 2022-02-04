@@ -37,8 +37,11 @@ import {MyDarkTheme} from '../../styles/theme';
 import AsyncStorage from '@react-native-community/async-storage';
 import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
 import PhoneNumberInputWithUnderline from '../../Components/PhoneNumberInputWithUnderline';
+import {checkIsAdmin} from '../../utils/utils';
+import {useNavigation} from '@react-navigation/native';
 
 export default function SignupTemplateThree({navigation}) {
+  const navigation_ = useNavigation();
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const userData = useSelector((state) => state.auth.userData);
   const {appData, themeColors, themeLayouts, currencies, languages} =
@@ -142,7 +145,7 @@ export default function SignupTemplateThree({navigation}) {
               !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
             ) {
-              navigation.push(navigationStrings.TAB_ROUTES);
+              checkIsAdmin(navigation_, navigation, res.data);
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
@@ -154,12 +157,12 @@ export default function SignupTemplateThree({navigation}) {
               !!res.data?.verify_details?.is_email_verified ||
               !!res.data?.verify_details?.is_phone_verified
             ) {
-              navigation.push(navigationStrings.TAB_ROUTES);
+              checkIsAdmin(navigation_, navigation, res.data);
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
           } else {
-            navigation.push(navigationStrings.TAB_ROUTES);
+            checkIsAdmin(navigation_, navigation, res.data);
           }
         }
       })
@@ -204,7 +207,6 @@ export default function SignupTemplateThree({navigation}) {
       });
     }
   };
-
 
   const {
     phoneNumber,
@@ -306,7 +308,7 @@ export default function SignupTemplateThree({navigation}) {
                 }}
               />
               <TextInputWithUnderlineAndLabel
-                onChangeText={(data) => updateState({ email: data })}
+                onChangeText={(data) => updateState({email: data})}
                 value={email}
                 label={`${strings.EMAIL} *`}
                 autoCapitalize={'none'}
@@ -347,7 +349,7 @@ export default function SignupTemplateThree({navigation}) {
               </View>
               <View style={{marginVertical: moderateScaleVertical(25)}}>
                 <TextInputWithUnderlineAndLabel
-                  onChangeText={(data) => updateState({ referralCode: data })}
+                  onChangeText={(data) => updateState({referralCode: data})}
                   value={referralCode}
                   label={strings.REFERRAL_CODE_OPTIONAL}
                   autoCapitalize={'none'}
