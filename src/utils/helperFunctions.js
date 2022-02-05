@@ -97,7 +97,6 @@ const getLocation = async (lat, lng, type) => {
 
 const showError = (message) => {
   console.log(message, 'THIS IS MESSAGE');
-
   showMessage({
     type: 'danger',
     icon: 'danger',

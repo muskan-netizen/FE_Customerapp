@@ -176,15 +176,7 @@ export const getVendorProfile = (data = {}, headers = {}) => {
 
 //Get Cart Detail
 export function getOrderDetailPickUp(data = {}, headers = {}) {
-  return new Promise((resolve, reject) => {
-    apiPost(DISPATCHER_URL, data, headers)
-      .then((res) => {
-        resolve(res);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
+  return apiPost(DISPATCHER_URL, data, headers)
 }
 
 //Get RETUREN ORDER Detail

@@ -1,3 +1,3 @@
 export const enums = {
-  isVendorStandloneApp: 1,
+  isVendorStandloneApp: 0,
 };
