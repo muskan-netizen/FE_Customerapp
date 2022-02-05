@@ -452,7 +452,7 @@ const ProductCard3 = ({
                   }}
                   source={{
                     uri: getImage('200/200'),
-                    cache: FastImage.cacheControl.web,
+                    cache: FastImage.cacheControl.immutable,
                     priority: FastImage.priority.high,
                   }}
                 />

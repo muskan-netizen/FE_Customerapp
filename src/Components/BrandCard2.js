@@ -74,7 +74,7 @@ const BrandCard2 = ({data = {}, onPress = () => {}}) => {
             source={{
               uri: imageURI, 
               priority: FastImage.priority.high,
-              cache: FastImage.cacheControl.web
+              cache: FastImage.cacheControl.immutable
             }}
             style={{
               ...styles.imgStyle,

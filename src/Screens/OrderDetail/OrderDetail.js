@@ -482,7 +482,7 @@ export default function OrderDetail({navigation, route}) {
                                     '300/300',
                                   ),
                                   priority: FastImage.priority.high,
-                                  cache: FastImage.cacheControl.web,
+                                  cache: FastImage.cacheControl.immutable,
                                 }
                               : imagePath.patternOne
                           }

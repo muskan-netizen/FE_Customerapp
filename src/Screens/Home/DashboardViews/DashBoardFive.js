@@ -184,7 +184,7 @@ export default function DashBoardFive({
           source={{
             uri: imageUrl,
             priority: FastImage.priority.high,
-            cache: FastImage.cacheControl.web,
+            cache: FastImage.cacheControl.immutable,
           }}
           style={{
             height: height / 3.8,

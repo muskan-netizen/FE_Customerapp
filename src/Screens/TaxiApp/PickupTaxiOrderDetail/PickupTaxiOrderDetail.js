@@ -61,7 +61,7 @@ import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import { FlatList } from 'react-native';
 import CustomCallouts from '../../../Components/CustomCallouts';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -280,7 +280,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       order_id: !!paramData?.orderId ? paramData?.orderId : null,
       new_dispatch_traking_url: !!new_dispatch_traking_url ? new_dispatch_traking_url : null,
     }
-    if (!!paramData?.orderId && !!new_dispatch_traking_url && !!currencies?.primary_currency?.id && !!appData?.profile?.code && !!languages?.primary_language?.id) {
+    if (!!paramData?.orderId && !!new_dispatch_traking_url) {
       try {
         const res = await actions.getOrderDetailPickUp(apiData, {
           code: appData?.profile?.code,

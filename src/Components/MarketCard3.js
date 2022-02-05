@@ -103,7 +103,7 @@ const MarketCard3 = ({
                 source={{
                   uri: imageUrl, 
                   priority: FastImage.priority.high,
-                  cache: FastImage.cacheControl.web,
+                  cache: FastImage.cacheControl.immutable,
                 }}
                 style={{
                   ...styles.mainImage,
@@ -122,7 +122,7 @@ const MarketCard3 = ({
             source={{
               uri: imageUrl, 
               priority: FastImage.priority.high,
-              cache: FastImage.cacheControl.web
+              cache: FastImage.cacheControl.immutable
             }}
             style={{
               ...styles.mainImage,
