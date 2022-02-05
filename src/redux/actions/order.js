@@ -15,6 +15,9 @@ import {
   DISPATCHER_URL,
   CANCEL_ORDER,
   REPEAT_ORDER,
+  ACCEPTREJECTDRIVERUPDATE,
+  GET_VENDOR_REVENUE_DASHBOARD_DATA,
+  GET_VENDOR_PROFILE,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -108,6 +111,7 @@ export const updateOrderStatus = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(ACCEPT_REJECT_ORDER, data, headers)
       .then((res) => {
+        console.log('checking update status response>>>', res);
         resolve(res);
       })
       .catch((error) => {
@@ -144,10 +148,10 @@ export const getRevenueData = (data = {}, headers = {}) => {
   });
 };
 
-//Get Cart Detail
-export function getOrderDetailPickUp(data = {}, headers = {}) {
+// Get revenue dashboard data
+export const getRevenueDashboardData = (data = {}, headers = {}) => {
   return new Promise((resolve, reject) => {
-    apiPost(DISPATCHER_URL, data, headers)
+    apiPost(GET_VENDOR_REVENUE_DASHBOARD_DATA, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -155,6 +159,24 @@ export function getOrderDetailPickUp(data = {}, headers = {}) {
         reject(error);
       });
   });
+};
+
+// Get Vendor Profile
+export const getVendorProfile = (data = {}, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_VENDOR_PROFILE, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+//Get Cart Detail
+export function getOrderDetailPickUp(data = {}, headers = {}) {
+  return apiPost(DISPATCHER_URL, data, headers)
 }
 
 //Get RETUREN ORDER Detail
@@ -238,6 +260,18 @@ export function cancelOrder(data = {}, headers = {}) {
 export function allPendingOrders(query, data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiGet(MY_PENDING_ORDERS + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function acceptRejectDriveUpdate(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(ACCEPTREJECTDRIVERUPDATE, data, headers)
       .then((res) => {
         resolve(res);
       })

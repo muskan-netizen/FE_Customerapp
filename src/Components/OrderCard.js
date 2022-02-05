@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {Platform, TouchableOpacity} from 'react-native';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import colors from '../styles/colors';
 import fontFamily from '../styles/fontFamily';
@@ -9,25 +9,63 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import { getImageUrl } from '../utils/helperFunctions';
+import {getImageUrl} from '../utils/helperFunctions';
 import ButtonWithLoader from './ButtonWithLoader';
+import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
+import strings from '../constants/lang';
 
 const OrderCard = (props) => {
-  
-  const {item={},  onPress = () => {}, updateOrderStatus} = props;
-  // console.log(item)
-  let count=item.item_count-1;
+  const {
+    item = {},
+    onPress = () => {},
+    updateOrderStatus,
+    isBleDevice = false,
+  } = props;
+  let count = item.item_count - 1;
   return (
     <View style={styles.container}>
+      {!!(Platform.OS === 'android' && isBleDevice) && (
+        <View
+          style={{
+            alignSelf: 'flex-end',
+            marginBottom: moderateScaleVertical(10),
+          }}>
+          <ButtonWithLoader
+            btnText={strings.PRINT}
+            btnTextStyle={{
+              ...styles.btnText,
+              color: colors.white,
+              fontSize: textScale(12),
+            }}
+            btnStyle={{
+              ...styles.btnContainer,
+              backgroundColor: colors.themeColor2,
+              marginLeft: moderateScale(10),
+              height: moderateScaleVertical(25),
+            }}
+            onPress={() => StartPrinting({id: item?.id})}
+          />
+          {/* <TouchableOpacity
+                  onPress={() => StartPrinting({id: item?.id})}
+                  style={styles.orderPrint}>
+                  <Text
+                    style={{
+                      ...styles.btnText,
+                      ...styles.orderStatusStyleSecond,
+                    }}>
+                    {strings.PRINT}
+                  </Text>
+                </TouchableOpacity> */}
+        </View>
+      )}
       <TouchableOpacity onPress={onPress}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.font13Regular}>Order {item?.order_number}</Text>
-          <Text style={styles.date}>{`${moment(item?.date_time).format('DD MMM,YYYY')} ${moment(
-                  item?.date_time,
-                ).format('LT')} `}</Text>
+          <Text style={styles.date}>{`${moment(item?.date_time).format(
+            'DD MMM,YYYY',
+          )} ${moment(item?.date_time).format('LT')} `}</Text>
         </View>
-        <View
-          style={styles.rowSapce}>
+        <View style={styles.rowSapce}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <View
               style={{
@@ -35,27 +73,33 @@ const OrderCard = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 flexDirection: 'row',
-                marginRight: moderateScale(8)
+                marginRight: moderateScale(8),
               }}>
               {item?.product_details?.map((val, index) => (
                 <Image
-                key={index}
-                source={{
-                  uri: getImageUrl(
-                    val?.image_path?.image_fit,
-                    val?.image_path?.image_path,
-                    '500/500',
-                  ),
-                }}
-                style={{
-                  ...styles.image,
-                  zIndex: -index,
-                  marginLeft: index!=0?-moderateScale(20):0,
-                }}
-              />
+                  key={index}
+                  source={{
+                    uri: getImageUrl(
+                      val?.image_path?.image_fit,
+                      val?.image_path?.image_path,
+                      '500/500',
+                    ),
+                  }}
+                  style={{
+                    ...styles.image,
+                    zIndex: -index,
+                    marginLeft: index != 0 ? -moderateScale(20) : 0,
+                  }}
+                />
               ))}
             </View>
-            <Text style={styles.font16Regular}>Salt {count==0?'':'x' +" "+count+" more"}</Text>
+            <Text style={styles.font16Regular}>
+              {item.order_number == '31642578' && console.log('>>><<<<<', item)}
+              {item.product_details && item.product_details[0]
+                ? item.product_details[0].title
+                : ''}{' '}
+              {count == 0 ? '' : 'x' + ' ' + count + ' more'}
+            </Text>
           </View>
           <Text
             style={{
@@ -68,17 +112,13 @@ const OrderCard = (props) => {
         </View>
       </TouchableOpacity>
       <View style={styles.line} />
-      <View
-        style={{...styles.rowSapce,
-          marginTop: moderateScaleVertical(12),
-          
-        }}>
+      <View style={{...styles.rowSapce, marginTop: moderateScaleVertical(12)}}>
         <View>
           <Text style={styles.orderText}>Order Total</Text>
           <Text style={styles.totalPrice}>${item?.payable_amount}</Text>
         </View>
 
-        {item?.order_status?.current_status?.id != 1  ? (
+        {item?.order_status?.current_status?.id != 1 ? (
           <View>
             <Text
               style={{
@@ -91,7 +131,10 @@ const OrderCard = (props) => {
             <Text
               style={{
                 ...styles.font14Regular,
-                color: item?.order_status?.current_status?.id ==  3? '#E02020' : colors.black,
+                color:
+                  item?.order_status?.current_status?.id == 3
+                    ? '#E02020'
+                    : colors.black,
               }}>
               {item?.order_status?.current_status?.title}
             </Text>
@@ -190,5 +233,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  orderStatusStyleSecond: {
+    // color: colors.white,
+    fontFamily: fontFamily.medium,
+    fontSize: textScale(10),
+    textAlign: 'center',
   },
 });

@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "509829946693",
+    "project_id": "launch-6ff90",
+    "storage_bucket": "launch-6ff90.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:509829946693:android:f55d9f87a349213350f22c",
+        "android_client_info": {
+          "package_name": "com.customer.launch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "509829946693-bkn16h36p14hk9oml0lsqj8p7n8mv4ii.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.launch",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "509829946693-n5e73vk4bsoph9sifd7ko8qnuboi7hqk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.launch",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "509829946693-ql5kkjm2g0cb7e82tkgsj72daqg5kbs3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.launch",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "509829946693-10ahkoqe2k7grv06gksoku7fni9hovgd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoSmPCHTYKsTSoRtrdqW5KrPSp0ofOtIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "509829946693-10ahkoqe2k7grv06gksoku7fni9hovgd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "509829946693-kgql010u78tpo1ktg92lpglbm2of2gp6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.customer.launch"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

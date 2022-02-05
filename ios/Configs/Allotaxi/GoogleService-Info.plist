@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>715538188774-mj5m9barebljfv8femgou2bn6q8o83ma.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.715538188774-mj5m9barebljfv8femgou2bn6q8o83ma</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>715538188774-7vjebgm7nc383a3bia8d0e47d3bcg5lr.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAj10WQa4CXtnTpJm48HmW7ugPkmUmkXwc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>715538188774</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.allotaxi</string>
+	<key>PROJECT_ID</key>
+	<string>allo-taxi-d0c24</string>
+	<key>STORAGE_BUCKET</key>
+	<string>allo-taxi-d0c24.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:715538188774:ios:2b0c41a9450698854a2e27</string>
+</dict>
+</plist>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   Platform,
@@ -11,10 +11,10 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import AppLink from 'react-native-app-link';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
 import BlurImages from '../../../Components/BlurImages';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 import BannerLoader from '../../../Components/Loaders/BannerLoader';
@@ -34,19 +34,20 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import { MyDarkTheme } from '../../../styles/theme';
+import {MyDarkTheme} from '../../../styles/theme';
 import stylesFunc from '../styles';
-import { SvgUri } from 'react-native-svg';
+import {SvgUri} from 'react-native-svg';
 import {
+  getColorCodeWithOpactiyNumber,
   getImageUrl,
   getScaleTransformationStyle,
   pressInAnimation,
   pressOutAnimation,
 } from '../../../utils/helperFunctions';
-import { useScrollToTop } from '@react-navigation/native';
+import {useScrollToTop} from '@react-navigation/native';
 import staticStrings from '../../../constants/staticStrings';
 import imagePath from '../../../constants/imagePath';
-import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
 import DeviceInfo from 'react-native-device-info';
 import {
   Menu,
@@ -54,17 +55,18 @@ import {
   MenuOption,
   MenuTrigger,
 } from 'react-native-popup-menu';
-import { string } from 'is_js';
+import {string} from 'is_js';
 
 export default function DashBoardFive({
-  handleRefresh = () => { },
-  bannerPress = () => { },
+  handleRefresh = () => {},
+  bannerPress = () => {},
   isLoading = true,
   isRefreshing = false,
-  onPressCategory = () => { },
+  onPressCategory = () => {},
   navigation = {},
   toggleData = {},
-  onVendorFilterSeletion = () => { },
+  onVendorFilterSeletion = () => {},
+  tempCartData=null
 }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -72,11 +74,11 @@ export default function DashBoardFive({
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
-  const { appData, themeColors, appStyle } = useSelector(
+  const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
 
-  console.log("appDataappData", appData)
+  console.log('appDataappData', appData);
 
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -96,12 +98,12 @@ export default function DashBoardFive({
     allCategory &&
     allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
   // const {bannerRef} = useRef();
-  const { slider1ActiveSlide, vendorsData, showMenu } = state;
+  const {slider1ActiveSlide, vendorsData, showMenu} = state;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ themeColors, fontFamily });
+  const styles = stylesFunc({themeColors, fontFamily});
 
   //update state
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   useEffect(() => {
     if (appMainData?.vendors && appMainData?.vendors.length) {
@@ -114,23 +116,23 @@ export default function DashBoardFive({
       vendorsData: [],
     });
   }, [appMainData?.vendors]);
-  const { currSelectedFilter } = state;
+  const {currSelectedFilter} = state;
 
   console.log('app main data', appMainData);
 
   const onSelectedFilter = (selectedFilter) => {
-    updateState({ showMenu: false, currSelectedFilter: selectedFilter });
+    updateState({showMenu: false, currSelectedFilter: selectedFilter});
     onVendorFilterSeletion(selectedFilter);
   };
 
   const homeAllFilters = () => {
     let homeFilter = [
-      { id: 1, type: strings.OPEN },
-      { id: 2, type: strings.CLOSE },
-      { id: 3, type: strings.BESTSELLER },
+      {id: 1, type: strings.OPEN},
+      {id: 2, type: strings.CLOSE},
+      {id: 3, type: strings.BESTSELLER},
     ];
     if (appData?.profile?.preferences?.is_hyperlocal) {
-      homeFilter.push({ id: 4, type: strings.NEAR_BY });
+      homeFilter.push({id: 4, type: strings.NEAR_BY});
     } else {
       if (homeFilter.length > 3) {
         homeFilter.pop();
@@ -139,9 +141,9 @@ export default function DashBoardFive({
     return homeFilter;
   };
 
-  const _renderItem = ({ item, index }) => {
+  const _renderItem = ({item, index}) => {
     return (
-      <View style={{ marginRight: moderateScale(8), width: width / 6.2 }}>
+      <View style={{marginRight: moderateScale(8), width: width / 6.2}}>
         <HomeCategoryCard2
           data={item}
           onPress={() => onPressCategory(item)}
@@ -151,19 +153,19 @@ export default function DashBoardFive({
     );
   };
 
-  const _renderVendors = ({ item, index }) => (
-    <View style={{ marginHorizontal: moderateScale(16) }}>
+  const _renderVendors = ({item, index}) => (
+    <View style={{marginHorizontal: moderateScale(16)}}>
       <MarketCard3
         data={item}
         onPress={() => onPressCategory(item)}
-        extraStyles={{ margin: 2 }}
+        extraStyles={{margin: 2}}
       />
     </View>
   );
 
   const scaleInAnimated = new Animated.Value(0);
 
-  const renderBanners = ({ item }) => {
+  const renderBanners = ({item}) => {
     const imageUrl = getImageUrl(
       item.image.image_fit,
       item.image.image_path,
@@ -174,16 +176,16 @@ export default function DashBoardFive({
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => bannerPress(item)}
-      // style={getScaleTransformationStyle(scaleInAnimated)}
-      // onPressIn={() => pressInAnimation(scaleInAnimated)}
-      // onPressOut={() => pressOutAnimation(scaleInAnimated)}
+        // style={getScaleTransformationStyle(scaleInAnimated)}
+        // onPressIn={() => pressInAnimation(scaleInAnimated)}
+        // onPressOut={() => pressOutAnimation(scaleInAnimated)}
       >
         <FastImage
-          source={{ 
-            uri: imageUrl, 
+          source={{
+            uri: imageUrl,
             priority: FastImage.priority.high,
-            cache: FastImage.cacheControl.web
-           }}
+            cache: FastImage.cacheControl.immutable,
+          }}
           style={{
             height: height / 3.8,
             width: moderateScale(160),
@@ -213,18 +215,18 @@ export default function DashBoardFive({
                 showsHorizontalScrollIndicator={false}
                 renderItem={_renderItem}
                 ItemSeparatorComponent={() => (
-                  <View style={{ marginRight: moderateScale(12) }} />
+                  <View style={{marginRight: moderateScale(12)}} />
                 )}
                 ListHeaderComponent={() => (
-                  <View style={{ marginLeft: moderateScale(12) }} />
+                  <View style={{marginLeft: moderateScale(12)}} />
                 )}
                 ListFooterComponent={() => (
-                  <View style={{ marginRight: moderateScale(12) }} />
+                  <View style={{marginRight: moderateScale(12)}} />
                 )}
               />
             </View>
           )}
-        <View style={{ marginTop: moderateScaleVertical(16) }}>
+        <View style={{marginTop: moderateScaleVertical(16)}}>
           {!!appData?.mobile_banners?.length && (
             <View>
               <FlatList
@@ -234,13 +236,13 @@ export default function DashBoardFive({
                 showsHorizontalScrollIndicator={false}
                 renderItem={renderBanners}
                 ItemSeparatorComponent={() => (
-                  <View style={{ marginRight: moderateScale(12) }} />
+                  <View style={{marginRight: moderateScale(12)}} />
                 )}
                 ListHeaderComponent={() => (
-                  <View style={{ marginLeft: moderateScale(16) }} />
+                  <View style={{marginLeft: moderateScale(16)}} />
                 )}
                 ListFooterComponent={() => (
-                  <View style={{ marginRight: moderateScale(16) }} />
+                  <View style={{marginRight: moderateScale(16)}} />
                 )}
               />
             </View>
@@ -252,10 +254,10 @@ export default function DashBoardFive({
 
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
-  const renderBrands = ({ item }) => {
+    () => {
+      navigation.navigate(screenName, {data});
+    };
+  const renderBrands = ({item}) => {
     // const imageUrl = getImageUrl(item.image.proxy_url, item.image.image_path, '800/600');
     const imageURI = getImageUrl(
       item.image.proxy_url,
@@ -267,11 +269,11 @@ export default function DashBoardFive({
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={moveToNewScreen(navigationStrings.BRANDDETAIL, item)}
-      // style={{
-      //   ...getScaleTransformationStyle(scaleInAnimated),
-      // }}
-      // onPressIn={() => pressInAnimation(scaleInAnimated)}
-      // onPressOut={() => pressOutAnimation(scaleInAnimated)}
+        // style={{
+        //   ...getScaleTransformationStyle(scaleInAnimated),
+        // }}
+        // onPressIn={() => pressInAnimation(scaleInAnimated)}
+        // onPressOut={() => pressOutAnimation(scaleInAnimated)}
       >
         {isSVG ? (
           <SvgUri
@@ -281,7 +283,7 @@ export default function DashBoardFive({
           />
         ) : (
           <FastImage
-            source={{ uri: imageURI, priority: FastImage.priority.high }}
+            source={{uri: imageURI, priority: FastImage.priority.high}}
             style={{
               height: moderateScale(96),
               width: moderateScale(96),
@@ -325,25 +327,25 @@ export default function DashBoardFive({
     );
   };
 
-  const renderFeaturedProducts = ({ item }) => {
+  const renderFeaturedProducts = ({item}) => {
     return (
       <ProductsComp
         item={item}
         onPress={() =>
-          navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+          navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
         }
       />
     );
   };
 
-  const renderSale = ({ item }) => {
+  const renderSale = ({item}) => {
     return (
       <ProductsComp
         // isDiscount
         item={item}
-        imageStyle={{ height: moderateScale(186) }}
+        imageStyle={{height: moderateScale(186)}}
         onPress={() =>
-          navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+          navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
         }
       />
     );
@@ -356,14 +358,14 @@ export default function DashBoardFive({
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1 }}>
+        contentContainerStyle={{flexGrow: 1}}>
         {/* <SearchLoader viewStyles={{marginTop: moderateScale(15)}} /> */}
-        <CategoryLoader2 viewStyles={{ marginTop: moderateScale(20) }} />
+        <CategoryLoader2 viewStyles={{marginTop: moderateScale(20)}} />
         {/* <CategoryLoader2 viewStyles={{marginTop: moderateScale(35)}} /> */}
 
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{flexDirection: 'row'}}>
           <HeaderLoader
-            viewStyles={{ marginVertical: 30 }}
+            viewStyles={{marginVertical: 30}}
             widthLeft={moderateScale(150)}
             rectWidthLeft={moderateScale(150)}
             heightLeft={moderateScaleVertical(240)}
@@ -373,7 +375,7 @@ export default function DashBoardFive({
             ry={15}
           />
           <HeaderLoader
-            viewStyles={{ marginVertical: 30, marginLeft: 0 }}
+            viewStyles={{marginVertical: 30, marginLeft: 0}}
             widthLeft={moderateScale(150)}
             rectWidthLeft={moderateScale(150)}
             heightLeft={moderateScaleVertical(240)}
@@ -383,7 +385,7 @@ export default function DashBoardFive({
             ry={15}
           />
           <HeaderLoader
-            viewStyles={{ marginVertical: 30, marginLeft: 0 }}
+            viewStyles={{marginVertical: 30, marginLeft: 0}}
             widthLeft={moderateScale(150)}
             rectWidthLeft={moderateScale(150)}
             heightLeft={moderateScaleVertical(240)}
@@ -393,9 +395,9 @@ export default function DashBoardFive({
             ry={15}
           />
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <HeaderLoader
-            viewStyles={{ marginTop: 5 }}
+            viewStyles={{marginTop: 5}}
             widthLeft={moderateScale(150)}
             rectWidthLeft={moderateScale(150)}
             heightLeft={moderateScaleVertical(20)}
@@ -405,7 +407,7 @@ export default function DashBoardFive({
             ry={15}
           />
           <HeaderLoader
-            viewStyles={{ marginTop: 5 }}
+            viewStyles={{marginTop: 5}}
             widthLeft={moderateScale(60)}
             rectWidthLeft={moderateScale(60)}
             heightLeft={moderateScaleVertical(20)}
@@ -418,15 +420,15 @@ export default function DashBoardFive({
 
         <BannerLoader
           isVendorLoader
-          viewStyles={{ marginTop: moderateScale(20) }}
+          viewStyles={{marginTop: moderateScale(20)}}
         />
         <BannerLoader
           isVendorLoader
-          viewStyles={{ marginTop: moderateScale(25) }}
+          viewStyles={{marginTop: moderateScale(25)}}
         />
         <BannerLoader
           isVendorLoader
-          viewStyles={{ marginTop: moderateScale(25) }}
+          viewStyles={{marginTop: moderateScale(25)}}
         />
         {/* <HomeLoader /> */}
       </ScrollView>
@@ -435,7 +437,7 @@ export default function DashBoardFive({
 
   const vendorHeader = () => {
     return (
-      <View>
+      <View key={Math.random()}>
         <View style={styles.viewAllVeiw}>
           <Text
             style={{
@@ -453,7 +455,7 @@ export default function DashBoardFive({
               <Text style={styles.viewAllText}>{strings.VIEW_ALL}</Text>
             </TouchableOpacity>
           )}
-          <Menu style={{ alignSelf: 'flex-end' }}>
+          <Menu style={{alignSelf: 'flex-end'}}>
             <MenuTrigger>
               <View style={styles.menuView}>
                 <Image
@@ -487,7 +489,7 @@ export default function DashBoardFive({
               }}>
               {homeAllFilters()?.map((item, index) => {
                 return (
-                  <View>
+                  <View key={index}>
                     <MenuOption
                       onSelect={() => onSelectedFilter(item)}
                       key={String(index)}
@@ -512,8 +514,59 @@ export default function DashBoardFive({
     );
   };
 
+  const onPressViewEditAndReplace = (item) => {
+    navigation.navigate(navigationStrings.ORDER_DETAIL, {
+      orderId: item?.vendors[0].order_id,
+      // fromVendorApp: true,
+      orderDetail: {
+        dispatch_traking_url:item?.vendors[0].dispatch_traking_url
+            },
+      selectedVendor: {id: item?.vendors[0].vendor_id},
+    });
+  }
+  
+  const showAllTempCartOrders = () => {
+    return (
+      <View>
+        {
+       tempCartData &&
+       tempCartData.length
+          ?tempCartData.map((item, index) => {
+              return (
+                <TouchableOpacity
+                onPress={()=>onPressViewEditAndReplace(item)}
+                  style={{
+                    padding: moderateScale(8),
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    // alignItems: 'center',
+                    backgroundColor:getColorCodeWithOpactiyNumber(
+                      themeColors?.primary_color.substr(1),
+                      20,
+                    ),
+                    marginHorizontal:moderateScale(15),
+                    marginTop:moderateScale(15),
+                    borderRadius:moderateScale(5),
+                    borderWidth:moderateScale(0.5),
+                    borderColor:themeColors?.primary_color
+                  }}>
+                  <View style={{flex:0.7}}>
+                    <Text style={{fontSize:textScale(12),fontFamily:fontFamily.medium}}>{strings.YOURDRIVERHASMODIFIED}</Text>
+                    <Text style={{fontSize:textScale(12),paddingTop:moderateScale(5), fontFamily:fontFamily.bold}}>{strings.VIEW_DETAIL}</Text>
+                  </View>
+                  <View style={{flex:0.3,alignItems:'flex-end'}}>
+                    <Text style={{fontSize:textScale(14),fontFamily:fontFamily.medium}}>{`#${item?.order_number}`}</Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            })
+          : null}
+      </View>
+    );
+  };
+
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       {/* <SearchBar2
         placeHolderTxt={
           toggleData?.profile?.preferences?.search_nomenclature ||
@@ -524,7 +577,7 @@ export default function DashBoardFive({
       <ScrollView
         ref={scrollRef}
         showsVerticalScrollIndicator={false}
-        style={{ flex: 1 }}
+        style={{flex: 1}}
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}
@@ -532,6 +585,7 @@ export default function DashBoardFive({
             tintColor={themeColors.primary_color}
           />
         }>
+        {showAllTempCartOrders()}
         <Animatable.View animation={'fadeInUp'} delay={200}>
           {categoriesBanners()}
           {
@@ -547,7 +601,7 @@ export default function DashBoardFive({
                 showsHorizontalScrollIndicator={false}
                 renderItem={_renderVendors}
                 ItemSeparatorComponent={() => (
-                  <View style={{ height: moderateScale(10) }} />
+                  <View style={{height: moderateScale(10)}} />
                 )}
               />
 
@@ -565,13 +619,13 @@ export default function DashBoardFive({
                           renderItem={renderBrands}
                           keyExtractor={(item) => item.id.toString()}
                           ItemSeparatorComponent={() => (
-                            <View style={{ marginRight: moderateScale(12) }} />
+                            <View style={{marginRight: moderateScale(12)}} />
                           )}
                           ListHeaderComponent={() => (
-                            <View style={{ marginLeft: moderateScale(16) }} />
+                            <View style={{marginLeft: moderateScale(16)}} />
                           )}
                           ListFooterComponent={() => (
-                            <View style={{ marginRight: moderateScale(16) }} />
+                            <View style={{marginRight: moderateScale(16)}} />
                           )}
                         />
                       </>
@@ -600,13 +654,13 @@ export default function DashBoardFive({
                       renderItem={renderFeaturedProducts}
                       keyExtractor={(item) => item.id.toString()}
                       ItemSeparatorComponent={() => (
-                        <View style={{ marginRight: moderateScale(16) }} />
+                        <View style={{marginRight: moderateScale(16)}} />
                       )}
                       ListHeaderComponent={() => (
-                        <View style={{ marginLeft: moderateScale(16) }} />
+                        <View style={{marginLeft: moderateScale(16)}} />
                       )}
                       ListFooterComponent={() => (
-                        <View style={{ marginRight: moderateScale(16) }} />
+                        <View style={{marginRight: moderateScale(16)}} />
                       )}
                     />
                   </>
@@ -629,13 +683,13 @@ export default function DashBoardFive({
                         renderItem={renderFeaturedProducts}
                         keyExtractor={(item) => item.id.toString()}
                         ItemSeparatorComponent={() => (
-                          <View style={{ marginRight: moderateScale(16) }} />
+                          <View style={{marginRight: moderateScale(16)}} />
                         )}
                         ListHeaderComponent={() => (
-                          <View style={{ marginLeft: moderateScale(16) }} />
+                          <View style={{marginLeft: moderateScale(16)}} />
                         )}
                         ListFooterComponent={() => (
-                          <View style={{ marginRight: moderateScale(16) }} />
+                          <View style={{marginRight: moderateScale(16)}} />
                         )}
                       />
                     </>

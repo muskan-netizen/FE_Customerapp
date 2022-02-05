@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "741738669971",
+    "project_id": "hala-talabat",
+    "storage_bucket": "hala-talabat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741738669971:android:cf463dcc0e162c456baa66",
+        "android_client_info": {
+          "package_name": "com.halaTalabat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "741738669971-7nrjv9t5si9vshs87k5o094udj8u7rj7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.halaTalabat",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "741738669971-96bncs0a0vq2mhqf9ame3ssd87hqgjii.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.halaTalabat",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "741738669971-apg28r1a8ln93bgt0932h7bbmm4c20nf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.halaTalabat",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "741738669971-0bl26a8igut4rrg5ujq0lh2hg7oc52q5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDa-IH7aA8gTQzMHKV4sxTiIjRccFYb4JY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "741738669971-0bl26a8igut4rrg5ujq0lh2hg7oc52q5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "741738669971-ic9stk1rgemm1dfpmlklinvcn1r688f2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.halaTalabat"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

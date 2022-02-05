@@ -752,6 +752,12 @@ export default {
   INVALID_CARD_DETAILS: 'Invalid card details',
   TRANSFER_FUNDS: 'Transfer Funds',
   CURRENTLYUNAVAILABLE: 'Currently Unavailable',
-  WE_ARE_NOT_ACCEPTING:"We are not accepting orders right now. You can schedule this for",
-  RATING:"Rating",
+
+  SLOT_NOT_AVAILABAL: 'Slot not available please select another date',
+  TIME_SLOT: 'Time Slots',
+  WE_ARE_NOT_ACCEPTING:
+    'We are not accepting orders right now. You can schedule this for',
+  RATING: 'Rating',
+  YOURDRIVERHASMODIFIED:"Your driver has modified your order"
+
 };

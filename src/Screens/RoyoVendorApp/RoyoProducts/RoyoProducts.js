@@ -1,39 +1,154 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
+import {cloneDeep, debounce, isEmpty, update} from 'lodash';
+import React, {useEffect, useState} from 'react';
+import {
+  FlatList,
+  Image,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  Platform,
+} from 'react-native';
+import HTMLView from 'react-native-htmlview';
 import {SwipeListView} from 'react-native-swipe-list-view';
-import {customMarginBottom} from '../../../utils/constants/constants';
+import {useSelector} from 'react-redux';
+import ButtonWithLoader from '../../../Components/ButtonWithLoader';
+import Header from '../../../Components/Header';
+import MultiScreen from '../../../Components/MultiScreen';
 import WrapperContainer from '../../../Components/WrapperContainer';
+import imagePath from '../../../constants/imagePath';
+import staticStrings from '../../../constants/staticStrings';
+import navigationStrings from '../../../navigation/navigationStrings';
+import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import fontFamily from '../../../styles/fontFamily';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
   width,
 } from '../../../styles/responsiveSize';
-import MultiScreen from '../../../Components/MultiScreen';
-import imagePath from '../../../constants/imagePath';
-import {useSelector} from 'react-redux';
-import {TouchableOpacity} from 'react-native';
-import ButtonWithLoader from '../../../Components/ButtonWithLoader';
-import navigationStrings from '../../../navigation/navigationStrings';
-import Header from '../../../Components/Header';
-import {FlatList} from 'react-native';
-import staticStrings from '../../../constants/staticStrings';
-import {cloneDeep, debounce} from 'lodash';
-import actions from '../../../redux/actions';
-import {getImageUrl, showError} from '../../../utils/helperFunctions';
-import HTMLView from 'react-native-htmlview';
-import {RefreshControl} from 'react-native';
+import {
+  getImageUrl,
+  showError,
+  showSuccess,
+} from '../../../utils/helperFunctions';
+import ModalView from '../../../Components/Modal';
+import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
+import GradientButton from '../../../Components/GradientButton';
+import strings from '../../../constants/lang';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import Modal from 'react-native-modal';
+import SelectVendorListModal from '../../../Components/SelectVendorListModal';
 
 const RoyoProducts = (props) => {
   const {navigation} = props;
 
+  const {storeSelectedVendor} = useSelector((state) => state?.order);
+  const {appData, themeColors, currencies, languages} = useSelector(
+    (state) => state?.initBoot,
+  );
+  const [state, setState] = useState({
+    activeIndex: 0,
+    headerText: 'Products',
+    vendor_list: [],
+    selectedVendor: {},
+    isVisibleModal: false,
+    isLoading: true,
+    pageNo: 1,
+    limit: 100,
+    isRefreshing: false,
+    productListData: [],
+    category_list: [],
+    categoryName: '',
+    topTabs: ['Products', 'Categories'],
+    isAddProductModal: false,
+    productName: '',
+    productSKU: '',
+    productSlug: '',
+    isVendorCategory: false,
+    vendorCategories: [],
+    selectedVendorCategory: {},
+    isAddProductLoading: false,
+    skuDefault: '',
+    isLoadingB: false,
+    isVendorSelectModal: false,
+  });
+
+  const {
+    vendor_list,
+    selectedVendor,
+    isLoading,
+    pageNo,
+    limit,
+    isRefreshing,
+    productListData,
+    category_list,
+    activeIndex,
+    headerText,
+    categoryName,
+    topTabs,
+    isAddProductModal,
+    productName,
+    productSKU,
+    productSlug,
+    isVendorCategory,
+    vendorCategories,
+    selectedVendorCategory,
+    isAddProductLoading,
+    skuDefault,
+    isLoadingB,
+    isVendorSelectModal,
+  } = state;
+
+  useEffect(() => {
+    getAllProducts();
+    // if (!!selectedVendor?.id) {
+
+    updateState({
+      selectedVendorCategory: [],
+    });
+    // }
+  }, [isRefreshing, storeSelectedVendor]);
+
+  console.log(storeSelectedVendor, 'storeSelectedVendor>>>>>');
+
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
+  const updateIsLiveStatus = (id, status) => {
+    console.log('statusstatus', status);
+    console.log('statusstatus', status == 1 ? 0 : 1);
+    actions
+      .postVendorProductStatusUpdate(
+        {
+          is_live: status == 1 ? 0 : 1,
+          product_id: id,
+        },
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        let temp = cloneDeep(productListData);
+        temp = temp.map((el) => {
+          if (el.id == id) {
+            el.is_live = status == 1 ? 0 : 1;
+            return el;
+          } else {
+            return el;
+          }
+        });
+        updateState({productListData: temp});
+      })
+      .catch(errorMethod);
+  };
+
   const renderItem = (data, rowMap) => {
-    const {item, index} = data;
-    console.log(item);
+    const {item} = data;
     return (
       <View style={styles.itemBox}>
         <TouchableOpacity
@@ -41,16 +156,18 @@ const RoyoProducts = (props) => {
             navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
           }
           style={{alignSelf: 'center'}}>
-          <Image
-            style={styles.imageStyle}
-            source={{
-              uri: getImageUrl(
-                item?.media[0].image?.path?.image_fit,
-                item?.media[0].image?.path?.image_path,
-                '500/500',
-              ),
-            }}
-          />
+          {!isEmpty(item?.media) && (
+            <Image
+              style={styles.imageStyle}
+              source={{
+                uri: getImageUrl(
+                  item?.media[0].image?.path?.image_fit,
+                  item?.media[0].image?.path?.image_path,
+                  '500/500',
+                ),
+              }}
+            />
+          )}
         </TouchableOpacity>
         <View style={{flex: 1}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -62,7 +179,8 @@ const RoyoProducts = (props) => {
             {/* </View> */}
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text style={styles.font16Semibold}>In Stock</Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => updateIsLiveStatus(item.id, item.is_live)}>
                 <Image
                   source={
                     item.is_live
@@ -74,10 +192,20 @@ const RoyoProducts = (props) => {
             </View>
             {/* <Image style={{alignSelf: 'flex-end'}} source={imagePath.share} /> */}
           </View>
-          <Text style={styles.font13Regular}>in {categoryName}</Text>
+          {item?.category_name?.name ? (
+            <Text style={styles.font13Regular}>
+              in {item.category_name.name}
+            </Text>
+          ) : null}
 
           <View style={{marginTop: 10}}>
-            <HTMLView value={item?.translation[0]?.body_html} />
+            <HTMLView
+              value={
+                item?.translation[0]?.body_html
+                  ? item?.translation[0]?.body_html
+                  : ''
+              }
+            />
             <View />
           </View>
           <Text
@@ -99,93 +227,42 @@ const RoyoProducts = (props) => {
     else updateState({activeIndex: index, headerText: 'Categories'});
   };
 
-  const {storeSelectedVendor} = useSelector((state) => state?.order);
-  const [state, setState] = useState({
-    activeIndex: 0,
-    headerText: 'Products',
-    vendor_list: [],
-    selectedVendor: null,
-    isVisibleModal: false,
-    isLoading: true,
-    pageNo: 1,
-    limit: 12,
-    isRefreshing: false,
-    productListData: [],
-    category_list: [],
-    categoryName: '',
-    gridView: false,
-  });
-
-  const {
-    appData,
-    themeColors,
-    themeLayouts,
-    currencies,
-    languages,
-    internetConnection,
-    appStyle,
-  } = useSelector((state) => state?.initBoot);
-  const {
-    vendor_list,
-    selectedVendor,
-    isLoading,
-    pageNo,
-    limit,
-    isRefreshing,
-    categoryInfo,
-    productListData,
-    category_list,
-    gridView,
-    activeIndex,
-    headerText,
-    categoryName,
-  } = state;
-
-  useEffect(() => {
-    if (isLoading || isRefreshing) {
-      getAllProducts();
-    }
-  }, [isRefreshing, selectedVendor]);
-
-  useEffect(() => {
-    updateState({
-      selectedVendor: storeSelectedVendor,
-      isLoading: true,
-      pageNo: 1,
-    });
-  }, [storeSelectedVendor]);
-
   /**********Get all list items by store  id and category id */
   const getAllProducts = (id) => {
-    console.log(pageNo, 'data at product');
-    if(selectedVendor?.id||storeSelectedVendor?.id)
+    updateState({
+      isLoading: true,
+    });
+    let vendordId = !isEmpty(storeSelectedVendor)
+      ? storeSelectedVendor?.id
+      : !isEmpty(selectedVendor)
+      ? selectedVendor?.id
+      : '';
+    console.log(vendordId, 'res.data>>>>>');
+    const data = {};
+
+    data['selected_vendor_id'] = vendordId;
+    data['limit'] = limit;
+    data['type'] = 'all';
+    data['page'] = pageNo;
     actions
-      .getProductBySpecificId(
-        `?selected_category_id=${
-          id || ''
-        }&limit=${limit}&page=${pageNo}&selected_vendor_id=${
-          selectedVendor?.id || storeSelectedVendor?.id||''
-        }`,
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      )
+      .getAllProductByVendorId(``, data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
       .then((res) => {
+        console.log(res.data, 'res.data>>>>>');
         let categorylist = res.data.category_list.filter((x) => x.is_selected);
+        let selectedVendor = res.data.vendor_list.find((x) => x.is_selected);
+        if (!isEmpty(res.data.vendor_list)) {
+          getVendorCategories(selectedVendor);
+        }
         updateState({
           isLoading: false,
           isRefreshing: false,
           vendor_list: res.data.vendor_list,
           categoryName: categorylist[0]?.name,
-          selectedVendor: !!storeSelectedVendor?.id
-            ? storeSelectedVendor
-            : !!selectedVendor
-            ? selectedVendor
-            : res.data.vendor_list.find((x) => x.is_selected),
-
+          selectedVendor: selectedVendor,
           category_list: res.data.category_list,
           productListData:
             pageNo == 1
@@ -198,7 +275,12 @@ const RoyoProducts = (props) => {
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isRefreshing: false});
+    updateState({
+      isLoading: false,
+      isRefreshing: false,
+      isAddProductLoading: false,
+      isAddProductModal: false,
+    });
     showError(error?.message || error?.error);
   };
 
@@ -209,7 +291,7 @@ const RoyoProducts = (props) => {
 
   //pagination of data
   const onEndReached = ({distanceFromEnd}) => {
-    updateState({pageNo: pageNo + 1, isLoading: true});
+    updateState({pageNo: pageNo + 1});
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -222,7 +304,6 @@ const RoyoProducts = (props) => {
     setTimeout(() => getAllProducts(index), 1000);
   };
 
-  console.log(category_list, 'thi si scategoru');
   const renderCatogry = ({item, index}) => (
     <View
       key={index}
@@ -267,38 +348,318 @@ const RoyoProducts = (props) => {
       </Text>
     </View>
   );
+
   const _reDirectToVendorList = () => {
-    navigation.navigate(navigationStrings.VENDORLIST, {
-      selectedVendor: selectedVendor,
-      allVendors: vendor_list,
-      screenType: staticStrings.PRODUCTS,
+    updateState({
+      isVendorSelectModal: true,
+    });
+    // navigation.navigate(navigationStrings.VENDORLIST, {
+    //   selectedVendor: selectedVendor,
+    //   allVendors: vendor_list,
+    //   screenType: staticStrings.PRODUCTS,
+    // });
+  };
+
+  const onCloseModal = () => {
+    updateState({
+      isAddProductModal: false,
+      isVendorSelectModal: false,
     });
   };
 
+  const checkValidations = () => {
+    if (productName == '') {
+      alert('Please enter product name');
+      return false;
+    } else if (isEmpty(selectedVendorCategory)) {
+      alert('Please select category');
+      return false;
+    } else if (productSKU == '') {
+      alert('Please enter SKU');
+      return false;
+    } else if (productSlug == '') {
+      alert('Please enter url slug');
+      return false;
+    } else return true;
+  };
+
+  const onAddProduct = () => {
+    const isValid = checkValidations();
+    if (!isValid) {
+      return;
+    }
+    updateState({
+      isAddProductLoading: true,
+      isVendorCategory: false,
+    });
+
+    const data = {};
+    data['product_name'] = productName;
+    data['category_id'] = selectedVendorCategory?.id;
+    data['sku'] = productSKU;
+    data['url_slug'] = productSlug;
+    data['vendor_id'] = selectedVendor?.id;
+
+    console.log('check add product api data >>', data);
+    actions
+      .addVendorProduct(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        updateState({
+          isAddProductLoading: false,
+          isAddProductModal: false,
+        });
+        showSuccess(res?.message);
+        setTimeout(() => {
+          navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT, {
+            productDetail: res?.data?.product_detail,
+            onCallBack: getAllProducts,
+          });
+        }, 500);
+      })
+      .catch(errorMethod);
+  };
+
+  const getVendorCategories = (selectedVendor) => {
+    actions
+      .getVendorCategories(
+        {
+          vendor_id: selectedVendor?.id,
+        },
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        updateState({
+          vendorCategories: res?.data,
+          isLoading: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+
+  const mainViewModal = () => {
+    return (
+      <View
+        style={{
+          minHeight: moderateScale(100),
+          borderTopWidth: 0.7,
+          borderTopColor: colors.blackOpacity43,
+          paddingHorizontal: moderateScale(15),
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginTop: moderateScale(20),
+          }}>
+          <TextInputWithUnderlineAndLabel
+            label={'Product Name'}
+            labelStyle={styles.labelStyle}
+            placeholder={'tshirt'}
+            value={productName}
+            onChangeText={(text) => {
+              updateState({
+                productName: text,
+                productSKU: !!skuDefault
+                  ? skuDefault.concat(text).replace(/ /g, '')
+                  : '',
+                productSlug: text.replace(/ /g, ''),
+              });
+            }}
+            mainStyle={{flex: 0.4}}
+            placeholderTextColor={colors.black}
+            txtInputStyle={styles.textInputStyle}
+          />
+          <View style={{flex: 0.56}}>
+            <Text style={styles.labelStyle}>Category</Text>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => {
+                updateState({
+                  isVendorCategory: !isVendorCategory,
+                });
+              }}
+              style={styles.selectedCategory}>
+              <Text style={styles.labelStyle}>
+                {!isEmpty(selectedVendorCategory)
+                  ? selectedVendorCategory.hierarchy
+                  : 'Select a category'}
+              </Text>
+              <Image source={imagePath.icDropdown} />
+            </TouchableOpacity>
+
+            {!!isVendorCategory && (
+              <View style={styles.categorySelectDropDownView}>
+                <ScrollView>
+                  {!isEmpty(vendorCategories) ? (
+                    vendorCategories.map((itm, indx) => {
+                      return (
+                        <TouchableOpacity
+                          onPress={() =>
+                            updateState({
+                              selectedVendorCategory: itm,
+                              isVendorCategory: false,
+                            })
+                          }
+                          style={styles.categoryItm}
+                          key={String(indx)}>
+                          <Text style={{flex: 0.95}} numberOfLines={1}>
+                            {itm.hierarchy}
+                          </Text>
+                          {selectedVendorCategory.id == itm.id && (
+                            <Image
+                              source={imagePath.tick2}
+                              style={{tintColor: themeColors.primary_color}}
+                            />
+                          )}
+                        </TouchableOpacity>
+                      );
+                    })
+                  ) : (
+                    <View
+                      style={{
+                        ...styles.noDataFound,
+                        backgroundColor: colors.white,
+                      }}>
+                      <Text
+                        style={{
+                          fontFamily: fontFamily.medium,
+                          fontSize: moderateScale(13),
+                        }}>
+                        {strings.NODATAFOUND}
+                      </Text>
+                    </View>
+                  )}
+                </ScrollView>
+              </View>
+            )}
+          </View>
+        </View>
+        <TextInputWithUnderlineAndLabel
+          label={`SKU ( a-z, A-Z,0-9,-,…)`}
+          labelStyle={styles.labelStyle}
+          placeholder={'xyz.LocalMarket.Tshirt'}
+          value={productSKU}
+          onChangeText={(text) => {
+            updateState({
+              productSKU: text,
+            });
+          }}
+          placeholderTextColor={colors.black}
+          txtInputStyle={styles.textInputStyle}
+          mainStyle={{marginTop: moderateScale(5)}}
+        />
+        <TextInputWithUnderlineAndLabel
+          label={`Url Slug`}
+          labelStyle={styles.labelStyle}
+          placeholder={'Slug'}
+          value={productSlug}
+          onChangeText={(text) => {
+            updateState({
+              productSlug: text,
+            });
+          }}
+          placeholderTextColor={colors.black}
+          txtInputStyle={styles.textInputStyle}
+          mainStyle={{marginTop: moderateScale(5)}}
+        />
+        <ButtonWithLoader
+          isLoading={isAddProductLoading}
+          onPress={onAddProduct}
+          btnStyle={{
+            marginBottom: 10,
+            borderWidth: 0,
+            backgroundColor: themeColors.primary_color,
+          }}
+          btnTextStyle={{
+            color: colors.white,
+          }}
+          btnTextStyle={{color: colors.white}}
+          btnText={strings.ADD_PRODUCT}
+        />
+      </View>
+    );
+  };
+
+  const onProductDelete = ({item}) => {
+    updateState({
+      isLoading: true,
+    });
+
+    actions
+      .deleteVendorProduct(
+        {product_id: item?.id},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        showSuccess(res?.message);
+        let temp = cloneDeep(productListData);
+        temp = temp.filter((el) => el.id != item?.id);
+        updateState({
+          isLoadingB: true,
+          isLoading: false,
+          productListData: temp,
+        });
+      })
+      .catch(errorMethod);
+  };
+
+  const onVendorSelect = (item) => {
+    updateState({
+      selectedVendor: item,
+      isVendorSelectModal: false,
+      pageNo: 1,
+    });
+    setTimeout(() => {
+      actions.savedSelectedVendor(item);
+    }, 300);
+  };
+
   return (
-    <WrapperContainer
-      // isLoading={isLoading}
-      bgColor="white"
-      statusBarColor="white"
-      barStyle="dark-content">
+    <WrapperContainer isLoadingB={isLoading} source={loaderOne}>
       <Header
-        headerStyle={{marginVertical: moderateScaleVertical(16)}}
-        centerTitle={`${headerText} | ${selectedVendor?.name} `}
+        centerTitle={`${headerText} ${
+          !isEmpty(selectedVendor) ? `| ${selectedVendor?.name}` : ''
+        } `}
         noLeftIcon
         onPressCenterTitle={() => _reDirectToVendorList()}
         onPressImageAlongwithTitle={() => _reDirectToVendorList()}
         imageAlongwithTitle={imagePath.dropdownTriangle}
         showImageAlongwithTitle
       />
+
       <View style={styles.container}>
         <MultiScreen
           tabTextStyle={{marginTop: moderateScaleVertical(0)}}
-          screenName={['Products', 'Categories', '', '', '']}
+          screenName={topTabs}
           selectedScreen={(index) => selectedOrder(index)}
           selectedScreenIndex={activeIndex}
+          scrollEnabled={topTabs.length > 4 ? true : false}
+          mainViewStyle={{
+            paddingRight: topTabs.length > 4 ? 0 : moderateScale(20),
+          }}
+          scrollViewStyle={{
+            justifyContent:
+              topTabs.length > 2 ? 'space-between' : 'space-evenly',
+          }}
         />
         {activeIndex == 0 ? (
-          <View style={{flex: 1}}>
+          <View
+            style={{
+              flex: 1,
+              paddingBottom: moderateScaleVertical(70),
+            }}>
             <SwipeListView
               refreshControl={
                 <RefreshControl
@@ -314,12 +675,13 @@ const RoyoProducts = (props) => {
                   </View>
                 );
               }}
-              data={productListData}
+              data={productListData} //productListData
               renderItem={renderItem}
               showsVerticalScrollIndicator={false}
               renderHiddenItem={(data, rowMap) => (
                 <View style={styles.rowReverse}>
                   <TouchableOpacity
+                    onPress={() => onProductDelete(data)}
                     style={{
                       ...styles.hiddenButton,
                       backgroundColor: '#FFC8C8',
@@ -327,6 +689,17 @@ const RoyoProducts = (props) => {
                     <Image source={imagePath.deleteRoyo} />
                   </TouchableOpacity>
                   <TouchableOpacity
+                    onPress={() => {
+                      console.log('check product data', data);
+                      // return;
+                      navigation.navigate(
+                        navigationStrings.ROYO_VENDOR_ADD_PRODUCT,
+                        {
+                          productDetail: data.item,
+                          onCallBack: getAllProducts,
+                        },
+                      );
+                    }}
                     style={{
                       ...styles.hiddenButton,
                       backgroundColor: '#C8F3FF',
@@ -340,12 +713,14 @@ const RoyoProducts = (props) => {
             />
             <ButtonWithLoader
               onPress={() =>
-                navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT, {
-                  vendor_list,
+                updateState({
+                  isAddProductModal: true,
+                  skuDefault: `xyz.${selectedVendor.name.replace(/ /g, '')}.`,
                 })
               }
               btnStyle={styles.productBtn}
-              btnText="+  products"
+              btnTextStyle={{color: colors.black}}
+              btnText={`+ ${strings.PRODUCT}`}
             />
           </View>
         ) : null}
@@ -353,6 +728,7 @@ const RoyoProducts = (props) => {
           <View
             style={{
               flex: 1,
+              alignItems: 'center',
             }}>
             <FlatList
               data={category_list}
@@ -375,6 +751,36 @@ const RoyoProducts = (props) => {
           </View>
         ) : null}
       </View>
+      <ModalView
+        isVisible={isAddProductModal}
+        onClose={onCloseModal}
+        mainViewStyle={{
+          minHeight: moderateScale(350),
+          backgroundColor: colors.white,
+          paddingTop: moderateScaleVertical(10),
+        }}
+        modalMainContent={mainViewModal}
+        centerTitle={strings.ADD_PRODUCT}
+        topCustomComponent={false}
+        leftIcon={false}
+        rightIcon={imagePath.ic_cross}
+        rightIconStyle={{tintColor: colors.black}}
+      />
+
+      <Modal
+        isVisible={isVendorSelectModal}
+        style={{
+          margin: 0,
+        }}>
+        <View style={{flex: 1, backgroundColor: colors.white}}>
+          <SelectVendorListModal
+            vendorList={vendor_list}
+            onCloseModal={() => updateState({isVendorSelectModal: false})}
+            onVendorSelect={onVendorSelect}
+            selectedVendor={selectedVendor}
+          />
+        </View>
+      </Modal>
     </WrapperContainer>
   );
 };
@@ -389,9 +795,6 @@ const styles = StyleSheet.create({
     marginRight: moderateScale(10),
   },
   container: {
-    // marginTop: moderateScaleVertical(24),
-    marginHorizontal: moderateScale(16),
-    marginBottom: customMarginBottom(),
     flex: 1,
   },
   font16medium: {
@@ -444,11 +847,11 @@ const styles = StyleSheet.create({
   },
   productBtn: {
     position: 'absolute',
-    padding: moderateScale(10),
-    bottom: moderateScaleVertical(20),
-    right: moderateScale(10),
+    bottom: Platform.OS == 'ios' ? moderateScale(75) : moderateScale(5),
     borderRadius: moderateScale(100),
     paddingHorizontal: moderateScale(15),
+    right: 10,
+    backgroundColor: colors.white,
   },
   categoryBtn: {
     position: 'absolute',
@@ -459,9 +862,52 @@ const styles = StyleSheet.create({
     paddingHorizontal: moderateScale(15),
   },
   emptyCartBody: {
-    flex: 1,
     justifyContent: 'center',
-    height: 400,
     alignItems: 'center',
+    height: moderateScale(600),
+  },
+  labelStyle: {
+    fontFamily: fontFamily.bold,
+    color: colors.blackOpacity43,
+    fontSize: textScale(13),
+    marginBottom: moderateScale(5),
+  },
+  addProductBtn: {
+    color: colors.white,
+    fontSize: textScale(14),
+  },
+  textInputStyle: {
+    fontFamily: fontFamily.bold,
+    color: colors.black,
+    fontSize: textScale(13),
+  },
+  noDataFound: {
+    width: '100%',
+    height: moderateScale(30),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  categorySelectDropDownView: {
+    borderWidth: 1,
+    borderColor: colors.blackOpacity20,
+    borderRadius: 5,
+    paddingHorizontal: moderateScale(5),
+    paddingVertical: moderateScale(5),
+    maxHeight: moderateScale(100),
+  },
+  categoryItm: {
+    marginBottom: moderateScale(5),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flex: 1,
+  },
+  selectedCategory: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.textGreyB,
+    paddingBottom: 8,
   },
 });

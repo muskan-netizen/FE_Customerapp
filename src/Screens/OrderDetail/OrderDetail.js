@@ -14,10 +14,12 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Animated,
 } from 'react-native';
 import Communications from 'react-native-communications';
 import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
+// import { showMessage } from 'react-native-flash-message';
 import * as RNLocalize from 'react-native-localize';
 import MapView, {AnimatedRegion, Marker} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
@@ -37,6 +39,7 @@ import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
+import {hitSlopProp} from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -44,10 +47,12 @@ import {
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {currencyNumberFormatter} from '../../utils/commonFunction';
-import {getImageUrl, showError} from '../../utils/helperFunctions';
+import {getImageUrl,showSuccess, showError} from '../../utils/helperFunctions';
 import useInterval from '../../utils/useInterval';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
+import stylesFun from './stylesCart';
+
 const {height, width} = Dimensions.get('window');
 
 export default function OrderDetail({navigation, route}) {
@@ -58,6 +63,7 @@ export default function OrderDetail({navigation, route}) {
   const paramData = route?.params;
   console.log(paramData, 'paramData');
   const dineInType = useSelector((state) => state?.home?.dineInType);
+  let businessType = appData?.profile?.preferences?.business_type || null;
 
   const [state, setState] = useState({
     isLoading: true,
@@ -71,6 +77,8 @@ export default function OrderDetail({navigation, route}) {
       strings.OUT_FOR_DELIVERY,
       strings.DELIVERED,
     ],
+    updatedcartItems: [],
+    updatedcartData: {},
 
     // labels: [
     //   {lable: 'Accepted', orderDate: '12/12/1233'},
@@ -102,8 +110,13 @@ export default function OrderDetail({navigation, route}) {
       longitudeDelta: 0.032,
     }),
     driverStatus: null,
+    swipeKey: 'randomStrings',
+    showTaxFeeArea: false,
   });
   const {
+    showTaxFeeArea,
+    updatedcartItems,
+    updatedcartData,
     isLoading,
     cartItems,
     cartData,
@@ -115,6 +128,7 @@ export default function OrderDetail({navigation, route}) {
     coordinate,
     curLoc,
     driverStatus,
+    swipeKey,
     dispatcherStatus,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
@@ -125,6 +139,7 @@ export default function OrderDetail({navigation, route}) {
   );
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
+  const styles2 = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
 
   const mapRef = useRef(null);
   const markerRef = useRef(null);
@@ -170,6 +185,7 @@ export default function OrderDetail({navigation, route}) {
     React.useCallback(() => {
       console.log('dfshsfjdhjkfhskjfh');
       getOrders();
+      getUpdatedCartDetail();
     }, []),
   );
 
@@ -189,6 +205,38 @@ export default function OrderDetail({navigation, route}) {
     : null;
 
   console.log(new_dispatch_traking_url, 'new_dispatch_traking_url');
+
+  const getUpdatedCartDetail = () => {
+    let data = {};
+    data['order_id'] = paramData?.orderId;
+    if (paramData?.selectedVendor) {
+      data['vendor_id'] = paramData?.selectedVendor.id;
+    }
+    data['new_dispatch_traking_url'] = new_dispatch_traking_url;
+
+    // updateState({ isLoading: true });
+    actions
+      .getOrderDetail(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        timezone: RNLocalize.getTimeZone(),
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res.data, 'order detail res===>');
+        updateState({isLoading: false});
+        if (res?.data) {
+          if (res?.data?.vendors[0]?.tempCart) {
+            updateState({
+              updatedcartData: res?.data?.vendors[0]?.tempCart,
+              updatedcartItems: res?.data?.vendors[0]?.tempCart?.products,
+            });
+          }
+        }
+      })
+      .catch(errorMethod);
+  };
 
   /*********Get order detail screen********* */
   const _getOrderDetailScreen = () => {
@@ -212,6 +260,17 @@ export default function OrderDetail({navigation, route}) {
         console.log(res.data, 'order detail res===>');
         updateState({isLoading: false});
         if (res?.data) {
+          if (res?.data?.vendors[0]?.tempCart) {
+            updateState({
+              updatedcartData: res?.data?.vendors[0]?.tempCart,
+              updatedcartItems: res?.data?.vendors[0]?.tempCart?.products,
+            });
+          }else{
+            updateState({
+              updatedcartData: null,
+              updatedcartItems: [],
+            });
+          }
           if (res?.data?.luxury_option_name !== strings.DELIVERY) {
             updateState({
               labels: [
@@ -289,6 +348,7 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const errorMethod = (error) => {
+    console.log(error,"Error>>>>>>");
     updateState({isLoading: false, isLoading: false, isLoadingC: false});
     showError(error?.message || error?.error);
   };
@@ -357,6 +417,421 @@ export default function OrderDetail({navigation, route}) {
       default:
         break;
     }
+  };
+
+  const _renderItem2 = ({item, index}) => {
+    return (
+      <View key={index}>
+        <View
+          // key={swipeKey + Math.random()}
+          style={{
+            ...styles2.mainViewRednderItem,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.white,
+          }}>
+          <View
+            style={{
+              ...styles2.vendorView,
+              paddingHorizontal: moderateScale(8),
+              flexDirection: 'column',
+            }}>
+            <Text
+              numberOfLines={1}
+              style={{
+                ...styles2.priceItemLabel2,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                fontFamily: fontFamily.medium,
+              }}>
+              {item?.vendor?.name}
+            </Text>
+          </View>
+          {/************ start  render cart items *************/}
+          {item?.vendor_products.length > 0
+            ? item?.vendor_products.map((i, inx) => {
+                return (
+                  <Animated.View
+                    style={{
+                      backgroundColor: isDarkMode
+                        ? MyDarkTheme.colors.lightDark
+                        : colors.transactionHistoryBg,
+                      marginBottom: moderateScaleVertical(12),
+                      marginRight: moderateScale(8),
+                      borderRadius: moderateScale(10),
+                      transform: [],
+                      minHeight: height * 0.125,
+                    }}
+                    key={inx}>
+                    <View style={[styles2.cartItemMainContainer]}>
+                      <View
+                        style={[
+                          styles2.cartItemImage,
+                          {
+                            backgroundColor: isDarkMode
+                              ? MyDarkTheme.colors.lightDark
+                              : colors.white,
+                          },
+                        ]}>
+                        <FastImage
+                          source={
+                            i?.cartImg != '' && i?.cartImg != null
+                              ? {
+                                  uri: getImageUrl(
+                                    i?.cartImg?.path?.proxy_url,
+                                    i?.cartImg?.path?.image_path,
+                                    '300/300',
+                                  ),
+                                  priority: FastImage.priority.high,
+                                  cache: FastImage.cacheControl.immutable,
+                                }
+                              : imagePath.patternOne
+                          }
+                          style={styles2.imageStyle}
+                        />
+                      </View>
+
+                      <View style={styles2.cartItemDetailsCon}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                          }}>
+                          <View style={{flex: 1}}>
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                flex: 1,
+                              }}>
+                              <Text
+                                numberOfLines={1}
+                                style={{
+                                  ...styles2.priceItemLabel2,
+                                  color: isDarkMode
+                                    ? MyDarkTheme.colors.text
+                                    : colors.blackOpacity86,
+                                  fontSize: textScale(12),
+                                  fontFamily: fontFamily.medium,
+                                  flex: 0.7,
+                                }}>
+                                {i?.product?.translation[0]?.title},
+                              </Text>
+                            </View>
+                            <Text
+                              style={{
+                                ...styles2.priceItemLabel2,
+                                fontSize: textScale(12),
+                                color: isDarkMode
+                                  ? MyDarkTheme.colors.text
+                                  : '#B3B3B3',
+                                marginTop: moderateScaleVertical(4),
+                                fontFamily: fontFamily.regular,
+                              }}>
+                              <Text style={{}}>
+                                {`${currencies?.primary_currency?.symbol}${
+                                  // Number(i?.pvariant?.multiplier) *
+                                  currencyNumberFormatter(
+                                    Number(i?.variants?.price).toFixed(2),
+                                  )
+                                }`}
+                              </Text>{' '}
+                              X {i?.quantity} ={' '}
+                              <Text
+                                style={{
+                                  color: isDarkMode
+                                    ? MyDarkTheme.colors.text
+                                    : colors.black,
+                                }}>
+                                {`${currencies?.primary_currency?.symbol}${
+                                  // Number(i?.pvariant?.multiplier) *
+                                  currencyNumberFormatter(
+                                    Number(i?.variants?.quantity_price).toFixed(
+                                      2,
+                                    ),
+                                  )
+                                }`}
+                              </Text>
+                            </Text>
+
+                            {i?.variant_options.length > 0
+                              ? i?.variant_options.map((j, jnx) => {
+                                  return (
+                                    <View style={{flexDirection: 'row'}}>
+                                      <Text
+                                        style={
+                                          isDarkMode
+                                            ? [
+                                                styles2.cartItemWeight2,
+                                                {
+                                                  color:
+                                                    MyDarkTheme.colors.text,
+                                                },
+                                              ]
+                                            : styles2.cartItemWeight2
+                                        }
+                                        numberOfLines={1}>
+                                        {j.title}{' '}
+                                      </Text>
+                                      <Text
+                                        style={
+                                          isDarkMode
+                                            ? [
+                                                styles2.cartItemWeight2,
+                                                {
+                                                  color:
+                                                    MyDarkTheme.colors.text,
+                                                },
+                                              ]
+                                            : styles2.cartItemWeight2
+                                        }
+                                        numberOfLines={
+                                          1
+                                        }>{`(${j.option})`}</Text>
+                                    </View>
+                                  );
+                                })
+                              : null}
+                          </View>
+                        </View>
+
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                          }}>
+                          <View
+                            style={{
+                              flex: 1,
+                              justifyContent: 'center',
+                            }}>
+                            {!!i?.product_addons.length > 0 && (
+                              <View>
+                                <Text
+                                  style={{
+                                    ...styles2.cartItemWeight2,
+                                    color: isDarkMode
+                                      ? MyDarkTheme.colors.text
+                                      : colors.textGreyB,
+                                    marginVertical: moderateScale(2),
+                                  }}>
+                                  {strings.EXTRA}
+                                </Text>
+                              </View>
+                            )}
+                            <View>
+                              {i?.product_addons.length > 0
+                                ? i?.product_addons.map((j, jnx) => {
+                                    return (
+                                      <View
+                                        style={{
+                                          marginBottom:
+                                            moderateScaleVertical(4),
+                                        }}>
+                                        <View
+                                          style={{
+                                            marginRight: moderateScale(10),
+                                          }}>
+                                          <Text
+                                            style={
+                                              isDarkMode
+                                                ? [
+                                                    styles2.cartItemWeight2,
+                                                    {
+                                                      color:
+                                                        MyDarkTheme.colors.text,
+                                                    },
+                                                  ]
+                                                : styles2.cartItemWeight2
+                                            }
+                                            numberOfLines={1}>
+                                            {j.addon_title}:
+                                          </Text>
+                                          <Text
+                                            style={
+                                              isDarkMode
+                                                ? [
+                                                    styles2.cartItemWeight2,
+                                                    {
+                                                      color:
+                                                        MyDarkTheme.colors.text,
+                                                    },
+                                                  ]
+                                                : styles2.cartItemWeight2
+                                            }
+                                            numberOfLines={
+                                              1
+                                            }>{`(${j.option_title})`}</Text>
+                                        </View>
+                                      </View>
+                                    );
+                                  })
+                                : null}
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                    {!!cartData?.delay_date && (
+                      <Text
+                        style={{
+                          fontSize: moderateScale(12),
+                          fontFamily: fontFamily.medium,
+                          color: colors.redFireBrick,
+                          marginBottom: moderateScale(3),
+                        }}>{`${
+                        i?.product.delay_order_hrs > 0 ||
+                        i?.product.delay_order_min > 0
+                          ? strings.PREPARATION_TIME_IS
+                          : ''
+                      }${
+                        i?.product.delay_order_hrs > 0
+                          ? ` ${i?.product.delay_order_hrs} hrs`
+                          : ''
+                      }${
+                        i?.product.delay_order_min > 0
+                          ? ` ${i?.product.delay_order_min} mins`
+                          : ''
+                      }`}</Text>
+                    )}
+
+                    {/* <View style={styles2.dashedLine} /> */}
+                  </Animated.View>
+                );
+              })
+            : null}
+          {/************ end render cart items *************/}
+
+          {/* start amount view       */}
+          <View
+            style={{
+              marginHorizontal: moderateScale(4),
+              marginTop: moderateScaleVertical(8),
+            }}>
+            {!!item?.discount_amount && (
+              <View style={styles2.itemPriceDiscountTaxView}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles2.priceItemLabel,
+                          {
+                            color: MyDarkTheme.colors.text,
+                          },
+                        ]
+                      : styles2.priceItemLabel
+                  }>
+                  {strings.COUPON_DISCOUNT}
+                </Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles2.priceItemLabel,
+                          {
+                            color: MyDarkTheme.colors.text,
+                          },
+                        ]
+                      : styles2.priceItemLabel
+                  }>{`- ${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(
+                    item?.discount_amount ? item?.discount_amount : 0,
+                  ).toFixed(2),
+                )}`}</Text>
+              </View>
+            )}
+            {!!item?.deliver_charge && (
+              <View style={styles2.itemPriceDiscountTaxView}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles2.priceItemLabel,
+                          {
+                            color: MyDarkTheme.colors.text,
+                          },
+                        ]
+                      : styles.priceItemLabel
+                  }>
+                  {strings.DELIVERY_CHARGES}
+                </Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.priceItemLabel,
+                          {
+                            color: MyDarkTheme.colors.text,
+                          },
+                        ]
+                      : styles.priceItemLabel
+                  }>{`${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(
+                    item?.deliver_charge ? item?.deliver_charge : 0,
+                  ).toFixed(2),
+                )}`}</Text>
+              </View>
+            )}
+            <View style={styles.itemPriceDiscountTaxView}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    : styles.priceItemLabel
+                }>
+                {strings.AMOUNT}
+              </Text>
+
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                        styles.priceItemLabel2,
+                        {
+                          color: MyDarkTheme.colors.text,
+                        },
+                      ]
+                    : styles.priceItemLabel2
+                }>
+                {currencies?.primary_currency?.symbol}
+                {currencyNumberFormatter(
+                  Number(
+                    item?.payable_amount ? item?.payable_amount : 0,
+                  ).toFixed(2),
+                )}
+              </Text>
+
+              {/* <NumberFormat
+                thousandsGroupStyle="thousand"
+                value={2456981}
+                prefix="$"
+                decimalSeparator="."
+                displayType="input"
+                type="text"
+                thousandSeparator={true}
+                allowNegative={true}
+              /> */}
+              {/* <Text
+                style={
+                  isDarkMode
+                    ? [
+                        styles.priceItemLabel2,
+                        {
+                          color: MyDarkTheme.colors.text,
+                        },
+                      ]
+                    : styles.priceItemLabel2
+                }>{`${currencies?.primary_currency?.symbol}${Number(
+                item?.payable_amount ? item?.payable_amount : 0,
+              ).toFixed(2)}`}</Text> */}
+            </View>
+          </View>
+        </View>
+      </View>
+    );
   };
 
   const _renderItem = ({item, index}) => {
@@ -1597,6 +2072,424 @@ export default function OrderDetail({navigation, route}) {
     );
   };
 
+  const acceptRejectDriverUpdation = (status) => {
+    console.log(updatedcartData, 'updatedcartData');
+
+    if (
+      status == 1 &&
+      updatedcartData &&
+      Number(updatedcartData?.user_wallet_balance) <
+        Number(updatedcartData?.difference_to_be_paid)
+    ) {
+      showError(strings.INSUFFICIENT_FUNDS_IN_WALLET_PLEASERECHARGE);
+    } else {
+      let data = {};
+      data['cart_id'] = updatedcartData?.id;
+      data['address_id'] = updatedcartData?.address_id;
+      data['order_vendor_id'] =
+        updatedcartData?.order_vendor_id;
+      data['status'] = status;
+      data['total_payable_amount'] = updatedcartData?.difference_to_be_paid;
+
+      console.log(data, 'upadted cart data');
+      updateState({isLoading: true});
+      actions.acceptRejectDriveUpdate(data, {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          timezone: RNLocalize.getTimeZone(),
+          // systemuser: DeviceInfo.getUniqueId(),
+        })
+        .then((res) => {
+          showSuccess(res?.message)
+          console.log(res,"acceptRejectDriveUpdate");
+          // updateState({isLoading: false});
+          _getOrderDetailScreen()
+          
+        })
+        .catch(errorMethod);
+    }
+  };
+
+  //get footer start
+  const getFooter2 = () => {
+    return (
+      <View style={{marginHorizontal: moderateScale(5)}}>
+        <View style={styles2.bottomTabLableValue}>
+          <Text
+            style={
+              isDarkMode
+                ? [styles2.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                : styles2.priceItemLabel
+            }>
+            {strings.SUBTOTAL}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [styles2.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                : styles2.priceItemLabel
+            }>{`${
+            currencies?.primary_currency?.symbol
+          }${currencyNumberFormatter(
+            Number(updatedcartData?.gross_paybale_amount).toFixed(2),
+          )}`}</Text>
+        </View>
+        {!!updatedcartData?.wallet_amount && (
+          <View style={styles2.bottomTabLableValue}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles2.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles2.priceItemLabel
+              }>
+              {strings.WALLET}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles2.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles2.priceItemLabel
+              }>{`${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(
+                updatedcartData?.wallet_amount
+                  ? updatedcartData?.wallet_amount
+                  : 0,
+              ).toFixed(2),
+            )}`}</Text>
+          </View>
+        )}
+        {!!updatedcartData?.loyalty_amount && (
+          <View style={styles2.bottomTabLableValue}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles2.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles2.priceItemLabel
+              }>
+              {strings.LOYALTY}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles2.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles2.priceItemLabel
+              }>{`-${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(
+                updatedcartData?.loyalty_amount
+                  ? updatedcartData?.loyalty_amount
+                  : 0,
+              ).toFixed(2),
+            )}`}</Text>
+          </View>
+        )}
+
+        {!!updatedcartData?.wallet_amount_used && (
+          <View style={styles2.bottomTabLableValue}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles2.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles2.priceItemLabel
+              }>
+              {strings.WALLET}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles2.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles2.priceItemLabel
+              }>{`-${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(
+                updatedcartData?.wallet_amount_used
+                  ? updatedcartData?.wallet_amount_used
+                  : 0,
+              ).toFixed(2),
+            )}`}</Text>
+          </View>
+        )}
+        {!!updatedcartData?.total_subscription_discount && (
+          <View style={styles2.bottomTabLableValue}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles2.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles2.priceItemLabel
+              }>
+              {strings.TOTALSUBSCRIPTION}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles2.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles2.priceItemLabel
+              }>{`-${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(updatedcartData?.total_subscription_discount).toFixed(2),
+            )}`}</Text>
+          </View>
+        )}
+        {(updatedcartData?.total_tax > 0 ||
+          updatedcartData?.total_service_fee > 0) && (
+          <Animatable.View
+            style={{
+              ...styles2.bottomTabLableValue,
+              marginTop: moderateScale(8),
+              marginBottom: moderateScale(2),
+            }}>
+            <TouchableOpacity
+              activeOpacity={0.9}
+              hitSlop={hitSlopProp}
+              onPress={() => updateState({showTaxFeeArea: !showTaxFeeArea})}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text
+                  style={{
+                    ...styles2.priceItemLabel,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyB,
+                  }}>
+                  {strings.TAXES_FEES}
+                </Text>
+
+                <Image
+                  source={imagePath.dropDownNew}
+                  style={{
+                    transform: [{scaleY: showTaxFeeArea ? -1 : 1}],
+                    marginHorizontal: moderateScale(2),
+                  }}
+                />
+              </View>
+            </TouchableOpacity>
+
+            <Text
+              style={
+                isDarkMode
+                  ? [styles2.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles2.priceItemLabel
+              }>{`${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              (
+                Number(
+                  updatedcartData?.total_tax ? updatedcartData?.total_tax : 0,
+                ) +
+                Number(
+                  updatedcartData?.total_service_fee
+                    ? updatedcartData?.total_service_fee
+                    : 0,
+                )
+              ).toFixed(2),
+            )}`}</Text>
+          </Animatable.View>
+        )}
+        {showTaxFeeArea && (
+          <View>
+            <Animatable.View
+              animation="fadeIn"
+              style={{marginLeft: moderateScale(15)}}>
+              {updatedcartData?.total_service_fee > 0 && (
+                <View
+                  style={{...styles2.bottomTabLableValue, marginVertical: 1}}>
+                  <Text
+                    style={{
+                      ...styles2.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      fontSize: textScale(11),
+                    }}>
+                    {strings.TOTAL_SERVICE_FEE}
+                  </Text>
+
+                  <Text
+                    style={{
+                      ...styles2.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      fontSize: textScale(11),
+                    }}>{`${
+                    currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
+                    Number(
+                      updatedcartData?.total_service_fee
+                        ? updatedcartData?.total_service_fee
+                        : 0,
+                    ).toFixed(2),
+                  )}`}</Text>
+                </View>
+              )}
+              {updatedcartData?.total_tax > 0 && (
+                <View
+                  style={{...styles2.bottomTabLableValue, marginVertical: 1}}>
+                  <Text
+                    style={{
+                      ...styles2.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      fontSize: textScale(11),
+                    }}>
+                    {strings.TAX_AMOUNT}
+                  </Text>
+
+                  <Text
+                    style={{
+                      ...styles2.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      fontSize: textScale(11),
+                    }}>{`${
+                    currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
+                    Number(
+                      updatedcartData?.total_tax
+                        ? updatedcartData?.total_tax
+                        : 0,
+                    ).toFixed(2),
+                  )}`}</Text>
+                </View>
+              )}
+            </Animatable.View>
+          </View>
+        )}
+
+        <View style={styles2.amountPayable}>
+          <Text
+            style={{
+              ...styles2.priceItemLabel2,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}>
+            {strings.TOTAL_AMOUNT}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [styles2.priceItemLabel2, {color: MyDarkTheme.colors.text}]
+                : styles2.priceItemLabel2
+            }>{`${
+            currencies?.primary_currency?.symbol
+          }${currencyNumberFormatter(
+            (
+              Number(updatedcartData?.total_payable_amount) +
+              (selectedTipAmount != null && selectedTipAmount != ''
+                ? Number(selectedTipAmount)
+                : 0)
+            ).toFixed(2),
+          )}`}</Text>
+        </View>
+        <View style={styles2.amountPayable}>
+          <View>
+            <Text
+              style={{
+                ...styles2.priceItemLabel2,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
+              {`${strings.AMOUNT_PAYABLE}`}
+            </Text>
+            <Text
+              style={{
+                ...styles2.priceItemLabel2,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
+                fontSize: textScale(10),
+              }}>
+              {`(${strings.DIFFERENCEAMOUNT})`}
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles2.priceItemLabel2,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        textDecorationLine: 'line-through',
+                      },
+                    ]
+                  : [
+                      styles2.priceItemLabel2,
+                      {textDecorationLine: 'line-through'},
+                    ]
+              }>{`${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(updatedcartData?.total_payable_amount).toFixed(2),
+            )}`}</Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles2.priceItemLabel2, {color: MyDarkTheme.colors.text}]
+                  : styles2.priceItemLabel2
+              }>{`${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(updatedcartData?.difference_to_be_paid).toFixed(2),
+            )}`}</Text>
+          </View>
+        </View>
+
+        <View
+          style={{
+            marginVertical: moderateScale(10),
+            marginHorizontal: moderateScale(10),
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          <TouchableOpacity
+            onPress={() => acceptRejectDriverUpdation(2)}
+            style={{
+              backgroundColor: colors?.redB,
+              borderRadius: 50,
+              alignItems: 'center',
+              width: width / 4,
+              borderColor: colors.redB,
+              borderWidth: 1,
+              padding: moderateScale(5),
+            }}>
+            <Text
+              style={{
+                color: colors?.white,
+                fontFamily: fontFamily?.medium,
+                fontSize: textScale(14),
+              }}>
+              {strings.REJECT}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => acceptRejectDriverUpdation(1)}
+            style={{
+              borderRadius: 50,
+              alignItems: 'center',
+              backgroundColor: themeColors?.primary_color,
+              width: width / 4,
+              borderColor: themeColors?.primary_color,
+              borderWidth: 1,
+              padding: moderateScale(5),
+            }}>
+            <Text
+              style={{
+                color: colors?.white,
+                fontFamily: fontFamily?.medium,
+                fontSize: textScale(14),
+              }}>
+              {strings.APPROVE}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
+
   const getHeader = () => {
     let getUserImage = getImageUrl(
       cartData?.user_image?.image_fit,
@@ -1857,8 +2750,8 @@ export default function OrderDetail({navigation, route}) {
                         color: colors.blackC,
                       }}>
                       {strings.YOUR_ORDER_WILL_ARRIVE_BY}{' '}
-                      {cartData?.vendors[0]?.scheduled_date_time
-                        ? cartData?.vendors[0]?.scheduled_date_time
+                      {cartData?.scheduled_date_time
+                        ? cartData?.scheduled_date_time
                         : cartData?.vendors[0]?.ETA}
                     </Text>
                   </View>
@@ -1880,10 +2773,42 @@ export default function OrderDetail({navigation, route}) {
               />
             </View>
           )} */}
+
+        <FlatList
+          data={updatedcartItems}
+          extraData={updatedcartItems}
+          ListHeaderComponent={getHeader2()}
+          ListFooterComponent={updatedcartItems?.length ? getFooter2() : null}
+          showsVerticalScrollIndicator={false}
+          style={{backgroundColor: colors.backgroundGrey}}
+          // keyExtractor={(item, index) => String(index)}
+          keyExtractor={(item) => item.id}
+          renderItem={_renderItem2}
+          style={{
+            flex: 1,
+            borderColor: themeColors?.primary_color,
+            borderWidth: 2,
+            marginHorizontal: moderateScale(10),
+          }}
+        />
       </View>
     );
   };
 
+  const getHeader2 = () => {
+    return (
+      <View style={{margin: moderateScale(15)}}>
+        <Text
+          style={{
+            color: colors?.black,
+            fontSize: textScale(14),
+            fontFamily: fontFamily.medium,
+          }}>
+          {strings.YOURDRIVERHASMODIFIED}
+        </Text>
+      </View>
+    );
+  };
   // useEffect(() => {
   //   const _watchId = Geolocation.watchPosition(
   //     position => {
@@ -1964,7 +2889,7 @@ export default function OrderDetail({navigation, route}) {
         <FlatList
           data={cartItems}
           extraData={cartItems}
-          ListHeaderComponent={getHeader()}
+          ListHeaderComponent={cartItems.length ? getHeader() : null}
           ListFooterComponent={cartItems.length ? getFooter() : null}
           showsVerticalScrollIndicator={false}
           style={{backgroundColor: colors.backgroundGrey}}

@@ -1,12 +1,13 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, Dimensions, StatusBar } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
+import FastImage from 'react-native-fast-image';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import GradientButton from '../../Components/GradientButton';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import colors from '../../styles/colors';
-import { moderateScale } from '../../styles/responsiveSize';
+import { height, moderateScale, width } from '../../styles/responsiveSize';
 import { setItem } from '../../utils/utils';
 
 const styles = StyleSheet.create({
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
         // width: Dimensions.get('screen').width,
         // height: Dimensions.get('screen').height,
         width: '100%',
-        height: '90%'
+        height: '100%'
         // marginVertical: 32,
     },
     text: {
@@ -35,8 +36,8 @@ const styles = StyleSheet.create({
     activeDotStyle: {
         backgroundColor: colors.themeColor
     },
-    buttonCircle:{
-        marginBottom: moderateScale(35),
+    buttonCircle: {
+        marginBottom: moderateScale(25),
         marginHorizontal: moderateScale(25)
     }
 });
@@ -49,14 +50,14 @@ export default class AppIntro extends React.Component {
     }
 
     componentDidMount = () => {
-        
+
         const temp = this.props.route.params.images.map((el, index) => {
             return {
                 key: index + 1,
                 title: '',
                 text: '',
                 // image: {uri: `${el.file_name.image_fit}${Math.round(Dimensions.get('screen').width)}/${Math.round(Dimensions.get('screen').height)}${el.file_name.image_path}`},
-                image: {uri: `${el.file_name.image_fit}1000/1000${el.file_name.image_path}`},
+                image: `${el.file_name.image_fit}2000/3000${el.file_name.image_path}`,
                 backgroundColor: '#22bcb5',
             }
         })
@@ -67,8 +68,20 @@ export default class AppIntro extends React.Component {
 
     _renderItem = ({ item }) => {
         return (
-            <View style={[styles.slide, {backgroundColor: 'white'  }]}>
-                <Image source={item.image} style={styles.image} resizeMode={'cover'} />
+            <View style={[styles.slide, { backgroundColor: 'white' }]}>
+                <FastImage
+                    source={{
+                        uri: item.image,
+                        priority: FastImage.priority.high,
+                        cache: FastImage.cacheControl.immutable
+                    }}
+                    style={{
+                        height:height,
+                        width:width
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
+
+                />
             </View>
         );
     }
@@ -91,19 +104,21 @@ export default class AppIntro extends React.Component {
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <StatusBar translucent backgroundColor="transparent" />
-                <AppIntroSlider
-                    data={this.state.slides}
-                    renderDoneButton={() => <View></View>}
-                    onEndReached={(el) => console.log(el)}
-                    renderItem={this._renderItem}
-                    activeDotStyle={styles.activeDotStyle}
-                    onSlideChange={(el, i) => this.onSlideChange(el, i)}
-                    onScroll={() => this.onScroll()}
-                    renderNextButton={() => <View></View>}
-                />
-                {
-                    this._renderDoneButton()
-                }
+                <View style={{ flex: 0.9 }}>
+                    <AppIntroSlider
+                        data={this.state.slides}
+                        renderDoneButton={() => <View></View>}
+                        onEndReached={(el) => console.log(el)}
+                        renderItem={this._renderItem}
+                        activeDotStyle={styles.activeDotStyle}
+                        onSlideChange={(el, i) => this.onSlideChange(el, i)}
+                        onScroll={() => this.onScroll()}
+                        renderNextButton={() => <View></View>}
+                    />
+                </View>
+                <View style={{ flex: 0.1 }}>
+                    {this._renderDoneButton()}
+                </View>
             </View>
         );
     }

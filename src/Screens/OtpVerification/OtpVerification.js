@@ -24,8 +24,11 @@ import {
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import {checkIsAdmin} from '../../utils/utils';
+import {useNavigation} from '@react-navigation/native';
 
 export default function OtpVerification({navigation, route}) {
+  const navigation_ = useNavigation();
   const paramData = route?.params;
 
   const [state, setState] = useState({
@@ -119,7 +122,7 @@ export default function OtpVerification({navigation, route}) {
       fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
     };
     updateState({isLoading: true});
-    console.log("sending data",data)
+    console.log('sending data', data);
     actions
       .phoneloginOtp(data, {
         code: appData?.profile?.code,
@@ -128,7 +131,7 @@ export default function OtpVerification({navigation, route}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        navigation.push(navigationStrings.TAB_ROUTES);
+        checkIsAdmin(navigation_, navigation, res.data);
         // if (userData) {
         //   userData?.client_preference?.verify_email ||
         //   userData?.client_preference?.verify_phone

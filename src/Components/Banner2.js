@@ -70,7 +70,7 @@ const Banner2 = ({
             source={{
               uri: imageUrl, 
               priority: FastImage.priority.high,
-              cache: FastImage.cacheControl.web
+              cache: FastImage.cacheControl.immutable
             }}
             //  onLoadStart={()=>}
             onLoadEnd={() => updateState({ imageLoader: false })}
