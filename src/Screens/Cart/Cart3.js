@@ -1629,7 +1629,7 @@ export default function Cart({navigation, route}) {
                                       '300/300',
                                     ),
                                     priority: FastImage.priority.high,
-                                    cache: FastImage.cacheControl.web,
+                                    cache: FastImage.cacheControl.immutable,
                                   }
                                 : imagePath.patternOne
                             }
@@ -3824,7 +3824,7 @@ export default function Cart({navigation, route}) {
           <FastImage
             source={{
               uri: Image.resolveAssetSource(imagePath.icEmptyCartD).uri,
-              cache: FastImage.cacheControl.web,
+              cache: FastImage.cacheControl.immutable,
               priority: FastImage.priority.high,
             }}
             style={{

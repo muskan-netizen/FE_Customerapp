@@ -64,7 +64,7 @@ const HomeCategoryCard2 = ({
             }}
             source={{
               uri: imageURI,
-              cache: FastImage.cacheControl.web,
+              cache: FastImage.cacheControl.immutable,
               priority: FastImage.priority.high,
             }}
             resizeMode="cover"

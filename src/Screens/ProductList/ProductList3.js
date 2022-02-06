@@ -211,6 +211,8 @@ export default function Products({route, navigation}) {
     appStyle,
   } = useSelector((state) => state?.initBoot);
 
+  console.log(appStyle, 'appStyleeee');
+
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   const {
@@ -1004,7 +1006,6 @@ export default function Products({route, navigation}) {
       !categoryInfo?.show_slot &&
       !categoryInfo?.closed_store_order_scheduled
     ) {
-
       if (type == 1) {
         //user can remove item if vendor closed
         alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
@@ -2593,9 +2594,12 @@ export default function Products({route, navigation}) {
               alignSelf: 'flex-end',
               marginRight: moderateScale(16),
             }}>
-            <Image style={{
-              tintColor: isDarkMode ? colors.white: colors.black
-            }} source={imagePath.filter} />
+            <Image
+              style={{
+                tintColor: isDarkMode ? colors.white : colors.black,
+              }}
+              source={imagePath.filter}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -3336,6 +3340,9 @@ export default function Products({route, navigation}) {
             updateState({MenuModalVisible: !MenuModalVisible});
           }}
           isLoading={btnLoader}
+          btnStyle={
+            appStyle?.tabBarLayout == 4 && {marginBottom: moderateScale(160)}
+          }
         />
       )}
 

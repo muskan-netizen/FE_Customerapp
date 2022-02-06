@@ -13,7 +13,7 @@ import navigationStrings from './navigationStrings';
 import TabRoutes from './TabRoutes';
 import TaxiAppStack from './TaxiAppStack';
 import TaxiTabRoutes from './TaxiTabRoutes';
-import TabRoutesVendor from './VendorApp/TabRoutesVendor';
+import TabRoutesVendor from './TabRoutesVendor';
 
 const Stack = createStackNavigator();
 

@@ -66,7 +66,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { } }) => 
       <FastImage
         source={{
           uri: imageUrl,
-          cache: FastImage.cacheControl.web,
+          cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.high,
         }}
         style={{

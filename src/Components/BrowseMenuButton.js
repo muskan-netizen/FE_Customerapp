@@ -5,8 +5,11 @@ import strings from '../constants/lang';
 import colors from '../styles/colors';
 import {moderateScale, textScale} from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
+import {useSelector} from 'react-redux';
 
 const BrowseMenuButton = ({fontFamily, containerStyle, onMenuTap}) => {
+  const {appStyle} = useSelector((state) => state?.initBoot);
+  console.log(appStyle, 'appstyleapppppppppp');
   return (
     <TouchableOpacity
       onPress={onMenuTap}
@@ -16,7 +19,7 @@ const BrowseMenuButton = ({fontFamily, containerStyle, onMenuTap}) => {
           ? MyDarkTheme.colors.lightDark
           : colors.black,
         position: 'absolute',
-        bottom: 40,
+        bottom: appStyle?.tabBarLayout == 4 ? 90 : 40,
         paddingHorizontal: moderateScale(15),
         paddingVertical: moderateScale(10),
         borderRadius: 50,
