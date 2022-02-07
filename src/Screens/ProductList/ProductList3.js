@@ -3312,7 +3312,7 @@ export default function Products({route, navigation}) {
       <View
         style={
           appStyle?.tabBarLayout == 2
-            ? {position: 'absolute', bottom: moderateScaleVertical(50)}
+            ? {position: 'absolute', bottom: moderateScaleVertical(58)}
             : {marginBottom: 0}
         }>
         {!searchInput && (
