@@ -22,7 +22,7 @@ import ProductStackVendor from './ProductStackVendor';
 
 const Tab = createBottomTabNavigator();
 
-const TabRoutesVendor = ({barColor = colors.themeColor2}) => {
+const TabRoutesVendorNewTemplate = ({barColor = colors.themeColor2}) => {
   const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
@@ -217,7 +217,7 @@ const TabRoutesVendor = ({barColor = colors.themeColor2}) => {
   );
 };
 
-export default TabRoutesVendor;
+export default TabRoutesVendorNewTemplate;
 
 const styles = StyleSheet.create({
   navigatorContainer: {

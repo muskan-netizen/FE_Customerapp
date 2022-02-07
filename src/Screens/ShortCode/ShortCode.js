@@ -1547,7 +1547,7 @@ export default function ShortCode({route, navigation}) {
     // return;
     if (enums.isVendorStandloneApp) {
       if (!!userData?.auth_token) {
-        navigation.navigate(navigationStrings.TABROUTESVENDOR);
+        navigation.navigate(navigationStrings.TABROUTESVENDORNEW);
       } else {
         navigation.navigate(navigationStrings.OUTER_SCREEN);
       }
