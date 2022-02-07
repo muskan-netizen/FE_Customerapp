@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>292107643273-nr18irkc9n590p1776om6986kbjljiph.apps.googleusercontent.com</string>
+	<string>252020596505-vqs0fh7aevt59uv82kichqc1qfci0b1o.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.292107643273-nr18irkc9n590p1776om6986kbjljiph</string>
+	<string>com.googleusercontent.apps.252020596505-vqs0fh7aevt59uv82kichqc1qfci0b1o</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>292107643273-1ngb6305u3jld82ros4bopii0sdgcbqj.apps.googleusercontent.com</string>
+	<string>252020596505-0a4g30icil34aidmgrt7qcj9dajdn4rd.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCJZPtdDinaXIwaBr45YJFyP5LtRX6Kqig</string>
+	<string>AIzaSyAWMjKnhhDNLq7ue1bAgWxm2CWCirKqRY0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>292107643273</string>
+	<string>252020596505</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.app.rxnow</string>
+	<string>com.tumbak</string>
 	<key>PROJECT_ID</key>
-	<string>rx-now</string>
+	<string>tumbak-d5ceb</string>
 	<key>STORAGE_BUCKET</key>
-	<string>rx-now.appspot.com</string>
+	<string>tumbak-d5ceb.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:292107643273:ios:7437e2373ca88a17f85958</string>
+	<string>1:252020596505:ios:e9877768cd35ee6b8eef88</string>
 </dict>
 </plist>
