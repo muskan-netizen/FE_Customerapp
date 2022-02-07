@@ -222,6 +222,7 @@ const shortCodes = {
   kongafood: 'c08eab',
   launch: '88cccf',
   kampick: 'd12c28',
+  cabio: '476cf3',
 };
 
 const appIds = {
@@ -1108,6 +1109,10 @@ const appIds = {
   kampick: Platform.select({
     ios: 'com.kampick',
     android: 'com.kampick',
+  }),
+  cabio: Platform.select({
+    ios: 'com.cabio',
+    android: 'com.cabio',
   }),
 };
 

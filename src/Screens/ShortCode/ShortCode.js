@@ -1432,6 +1432,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.cabio:
+          updateState({
+            shortCode: shortCodes.cabio,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
