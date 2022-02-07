@@ -756,6 +756,13 @@ export default {
   SLOT_NOT_AVAILABAL: 'Slot not available please select another date',
   TIME_SLOT: 'Time Slots',
   RATING: 'Rating',
-  YOURDRIVERHASMODIFIED:"Your driver has modified your order"
+  YOURDRIVERHASMODIFIED:"Your driver has modified your order",
+  DIFFERENCEAMOUNT:'Difference Amount',
+  APPROVE:'APPROVE',
+  INSUFFICIENT_FUNDS_IN_WALLET_PLEASERECHARGE: 'Insufficient funds in wallet. Please recharge to continue',
+  ACTIVEDELEIVERIES:'Active Deliveries',
+  PASTDELEIVERIES:'Past Deliveries',
+  MYDELIERIES:"My Deliveries",
+  NODELIVERIESFOUND:'No Deliveries Found'
 
 };

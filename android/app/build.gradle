@@ -197,6 +197,18 @@ android {
 
     flavorDimensions "appType"
 
+// productFlavors{
+//      mml{
+//             dimension "appType"
+//             versionCode 1
+//             versionName "1.0"
+//             minSdkVersion rootProject.ext.minSdkVersion
+//             targetSdkVersion rootProject.ext.targetSdkVersion         
+//             applicationId 'com.mml'
+//             resValue "string", "app_name", "MML"
+//             resValue "string", "host_name", ""
+//          }
+// }
     productFlavors {
            royoorder {
             dimension "appType"
@@ -2026,7 +2038,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.kurbsidekings'
-            resValue "string", "app_name", "Kurbside Kings"
+            resValue "string", "app_name", "Instaride user"
             resValue "string", "host_name", ""
          }
           movingwheelsdelivery{
