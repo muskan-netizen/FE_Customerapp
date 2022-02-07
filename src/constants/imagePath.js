@@ -493,4 +493,12 @@ export default {
   icAdd1: require('../assets/images/RoyoorderNewImages/ic_add1.png'),
   icUp1: require('../assets/images/RoyoorderNewImages/ic_up.png'),
   icImagePlaceholder: require('../assets/images/VendorAppImages/ic_image1.png'),
+  notrcukImage: require('../assets/images/ic_notrucks.png'),
+  activeTruck: require('../assets/images/ic_truck1.png'),
+  inactiveTruck: require('../assets/images/ic_truck2.png'),
+
+
+  
+  
+  
 };

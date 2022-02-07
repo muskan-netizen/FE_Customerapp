@@ -40,6 +40,8 @@ import {MyDarkTheme} from '../../styles/theme';
 import {getImageUrl, showError} from '../../utils/helperFunctions';
 import stylesFun from './styles';
 import useInterval from '../../utils/useInterval';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {getBundleId} from 'react-native-device-info';
 
 export default function MyOrders({navigation}) {
   const {
@@ -630,7 +632,9 @@ export default function MyOrders({navigation}) {
               <NoDataFound
                 image={
                   businessType === 4
-                    ? imagePath.noRides
+                    ? appIds.mml == getBundleId()
+                      ? imagePath.notrcukImage
+                      : imagePath.noRides
                     : imagePath.noDataFound2
                 }
                 isLoading={state.isLoading}

@@ -2,7 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import {Image, StyleSheet} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import CustomBottomTabBar from '../Components/CustomBottomTabBar';
 import CustomBottomTabBarFive from '../Components/CustomBottomTabBarFive';
@@ -148,10 +148,18 @@ export default function TaxiTabRoutes(props) {
                       : imagePath.settings_icon
                     : appStyle?.tabBarLayout === 5
                     ? focused
-                      ? imagePath.icMyRideActive
+                      ? appIds.mml == getBundleId()
+                        ? imagePath?.activeTruck
+                        : imagePath.icMyRideActive
+                      : appIds.mml == getBundleId()
+                      ? imagePath?.inactiveTruck
                       : imagePath.icMyRideInActive
                     : focused
-                    ? imagePath.rideFilled
+                    ? appIds.mml == getBundleId()
+                      ? imagePath?.activeTruck
+                      : imagePath.rideFilled
+                    : appIds.mml == getBundleId()
+                    ? imagePath?.inactiveTruck
                     : imagePath.ride
                 }
               />
