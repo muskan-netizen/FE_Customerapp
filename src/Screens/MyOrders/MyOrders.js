@@ -63,15 +63,31 @@ export default function MyOrders({navigation}) {
   const [state, setState] = useState({
     tabBarData: [
       businessType == 4
-        ? {title: strings.ACTIVERIDES, isActive: true}
+        ? {
+            title:
+              appIds.mml == getBundleId()
+                ? strings.ACTIVEDELEIVERIES
+                : strings.ACTIVERIDES,
+            isActive: true,
+          }
         : {title: strings.ACTIVE_ORDERS, isActive: true},
       businessType == 4
-        ? {title: strings.PASTRIDES, isActive: false}
+        ? {
+            title:
+              appIds.mml == getBundleId()
+                ? strings.PASTDELEIVERIES
+                : strings.PASTRIDES,
+            isActive: false,
+          }
         : {title: strings.PAST_ORDERS, isActive: false},
       // {title: strings.SCHEDULED_ORDERS, isActive: false},
     ],
     selectedTab:
-      businessType == 4 ? strings.ACTIVERIDES : strings.ACTIVE_ORDERS,
+      businessType == 4
+        ? appIds.mml == getBundleId()
+          ? strings.ACTIVEDELEIVERIES
+          : strings.ACTIVERIDES
+        : strings.ACTIVE_ORDERS,
     orders: [],
     activeOrders: [],
     pastOrders: [],
@@ -231,10 +247,12 @@ export default function MyOrders({navigation}) {
         selectedTab: tabData.title,
         tabType:
           tabData.title == strings.ACTIVE_ORDERS ||
-          tabData.title == strings.ACTIVERIDES
+          tabData.title == strings.ACTIVERIDES ||
+          tabData.title == strings?.ACTIVEDELEIVERIES
             ? staticStrings.ACTIVE
             : tabData.title == strings.PAST_ORDERS ||
-              tabData.title == strings.PASTRIDES
+              tabData.title == strings.PASTRIDES ||
+              tabData.title == strings?.PASTDELEIVERIES
             ? staticStrings.PAST
             : staticStrings.SCHEDULE,
         pageActive: 1,
@@ -438,7 +456,8 @@ export default function MyOrders({navigation}) {
     if (userData && userData?.auth_token) {
       if (
         selectedTab == strings.ACTIVE_ORDERS ||
-        selectedTab == strings.ACTIVERIDES
+        selectedTab == strings.ACTIVERIDES ||
+        selectedTab == strings.ACTIVEDELEIVERIES
       ) {
         updateState({
           pageActive: 1,
@@ -448,7 +467,8 @@ export default function MyOrders({navigation}) {
       }
       if (
         selectedTab == strings.PAST_ORDERS ||
-        selectedTab == strings.PASTRIDES
+        selectedTab == strings.PASTRIDES ||
+        selectedTab == strings.PASTDELEIVERIES
       ) {
         updateState({
           pageActive: 1,
@@ -470,13 +490,15 @@ export default function MyOrders({navigation}) {
   const onEndReached = ({distanceFromEnd}) => {
     if (
       selectedTab == strings.ACTIVE_ORDERS ||
-      selectedTab == strings.ACTIVERIDES
+      selectedTab == strings.ACTIVERIDES ||
+      selectedTab == strings.ACTIVEDELEIVERIES
     ) {
       updateState({pageActive: pageActive + 1, tabType: staticStrings.ACTIVE});
     }
     if (
       selectedTab == strings.PAST_ORDERS ||
-      selectedTab == strings.PASTRIDES
+      selectedTab == strings.PASTRIDES ||
+      selectedTab == strings.PASTDELEIVERIES
     ) {
       updateState({pageActive: pagePastOrder + 1, tabType: staticStrings.PAST});
     }
@@ -571,7 +593,13 @@ export default function MyOrders({navigation}) {
         //     ? imagePath.icBackb
         //     : imagePath.backArrowCourier
         // }
-        centerTitle={businessType === 4 ? strings.MYRIDES : strings.MY_ORDERS}
+        centerTitle={
+          businessType === 4
+            ? appIds.mml == getBundleId()
+              ? strings.MYDELIERIES
+              : strings.MYRIDES
+            : strings.MY_ORDERS
+        }
         headerStyle={
           isDarkMode
             ? {backgroundColor: MyDarkTheme.colors.background}
@@ -640,7 +668,9 @@ export default function MyOrders({navigation}) {
                 isLoading={state.isLoading}
                 text={
                   businessType === 4
-                    ? strings.NO_ORDERS_FOUND
+                    ? appIds.mml == getBundleId()
+                      ? strings.NODELIVERIESFOUND
+                      : strings.NO_ORDERS_FOUND
                     : strings.NODATAFOUND
                 }
               />

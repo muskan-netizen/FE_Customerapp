@@ -823,5 +823,10 @@ Amount`,
   DIFFERENCEAMOUNT:'Difference Amount',
   APPROVE:'APPROVE',
   INSUFFICIENT_FUNDS_IN_WALLET_PLEASERECHARGE: 'Insufficient funds in wallet. Please recharge to continue',
+  ACTIVEDELEIVERIES:'Active Deliveries',
+  PASTDELEIVERIES:'Past Deliveries',
+  MYDELIERIES:"My Deliveries",
+  NODELIVERIESFOUND:'No Deliveries Found',
+  
 
 };

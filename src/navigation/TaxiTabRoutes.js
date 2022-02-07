@@ -2,7 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import {Image, StyleSheet} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import CustomBottomTabBar from '../Components/CustomBottomTabBar';
 import CustomBottomTabBarFive from '../Components/CustomBottomTabBarFive';
@@ -109,7 +109,11 @@ export default function TaxiTabRoutes(props) {
         name={navigationStrings.MY_ORDERS}
         options={{
           tabBarLabel:
-            appStyle?.tabBarLayout === 6 ? strings.SERVICES : strings.MYRIDES,
+            appStyle?.tabBarLayout === 6
+              ? strings.SERVICES
+              : appIds.mml == getBundleId()
+              ? strings.MYDELIERIES
+              : strings.MYRIDES,
           tabBarIcon: ({focused, tintColor}) => {
             let tabIconColor =
               appStyle?.tabBarLayout == 4
