@@ -1432,6 +1432,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.cabio:
+          updateState({
+            shortCode: shortCodes.cabio,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.tumbak:
+          updateState({
+            shortCode: shortCodes.tumbak,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -1547,13 +1559,13 @@ export default function ShortCode({route, navigation}) {
     // return;
     if (enums.isVendorStandloneApp) {
       if (!!userData?.auth_token) {
-        navigation.navigate(navigationStrings.TABROUTESVENDOR);
+        navigation.navigate(navigationStrings.TABROUTESVENDORNEW);
       } else {
         navigation.navigate(navigationStrings.OUTER_SCREEN);
       }
     } else {
       getItem('firstTime').then((el) => {
-        if (!el && res.dynamic_tutorial && res.dynamic_tutorial.length > 0) {
+        if (true) {
           navigation.push(navigationStrings.APP_INTRO, {
             images: res.dynamic_tutorial,
           });

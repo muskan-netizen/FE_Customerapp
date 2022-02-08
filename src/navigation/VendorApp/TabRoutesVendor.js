@@ -13,7 +13,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {getTabBarVisibility} from '../../utils/helperFunctions';
+// import {getTabBarVisibility} from '../../utils/helperFunctions';
 import navigationStrings from '../navigationStrings';
 import AccountStackVendor from './AccountStackVendor';
 import HomeStackVendor from './HomeStackVendor';
@@ -21,8 +21,21 @@ import OrderStackVendor from './OrderStackVendor';
 import ProductStackVendor from './ProductStackVendor';
 
 const Tab = createBottomTabNavigator();
+let showBottomBar_ = true;
 
-const TabRoutesVendor = ({barColor = colors.themeColor2}) => {
+const getTabBarVisibility = (route, navigation, screen) => {
+  if (navigation && navigation.isFocused && navigation.isFocused()) {
+    const route_name = getFocusedRouteNameFromRoute(route);
+    if (screen.includes(route_name)) {
+      showBottomBar_ = false;
+      return false;
+    }
+    showBottomBar_ = true;
+    return true;
+  }
+};
+
+const TabRoutesVendorNewTemplate = ({barColor = colors.themeColor2}) => {
   const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
@@ -217,7 +230,7 @@ const TabRoutesVendor = ({barColor = colors.themeColor2}) => {
   );
 };
 
-export default TabRoutesVendor;
+export default TabRoutesVendorNewTemplate;
 
 const styles = StyleSheet.create({
   navigatorContainer: {

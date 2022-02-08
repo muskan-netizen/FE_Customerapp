@@ -209,7 +209,7 @@ export default function Cart({navigation, route}) {
 
   console.log('closed_store_order_scheduled', cartData);
 
-  console.log("closed_store_order_scheduled", cartData)
+  console.log('closed_store_order_scheduled', cartData);
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -496,7 +496,7 @@ export default function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
-  console.log("cart data_++++++++", cartData)
+  console.log('cart data_++++++++', cartData);
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     console.log(item, 'itemitemitemitem');
@@ -700,6 +700,8 @@ export default function Cart({navigation, route}) {
       return;
     }
 
+    console.log(paymentId, 'paymentIdpaymentId');
+
     switch (paymentId) {
       case 5: //Paystack Payment Getway
         updateState({placeLoader: false});
@@ -736,6 +738,10 @@ export default function Cart({navigation, route}) {
       case 17: //Checkout Payment Getway
         updateState({placeLoader: false});
         checkoutPayment(paymentData);
+        break;
+      case 18: //AuthorizeNet Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.AuthorizeNet, paymentData);
         break;
       default:
         if (
@@ -931,8 +937,8 @@ export default function Cart({navigation, route}) {
           `${date} ${time}`,
           'YYYY-MM-DD HH:mm:ss',
         ).format();
-        console.log("formatDate", formatDate)
-        data['schedule_dt'] = formatDate
+        console.log('formatDate', formatDate);
+        data['schedule_dt'] = formatDate;
       } else {
         data['schedule_dt'] =
           scheduleType != 'now' && sheduledorderdate
@@ -972,7 +978,7 @@ export default function Cart({navigation, route}) {
   };
 
   const _finalPayment = () => {
-    console.log(selectedPayment,"selectedPayment");
+    console.log(selectedPayment, 'selectedPayment');
     if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
       _offineLinePayment();
       return;
@@ -1017,7 +1023,7 @@ export default function Cart({navigation, route}) {
     // }
     // _offineLinePayment();
   };
-
+  console.log(selectedPayment, 'selectedPaymentselectedPayment');
   //Clear cart
   const placeOrder = () => {
     if (!!userData?.auth_token) {
@@ -1038,6 +1044,7 @@ export default function Cart({navigation, route}) {
       }
       if (isEmpty(selectedPayment)) {
         // showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
+
         updateState({paymentModal: true});
         // moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)();
         return;
@@ -1324,7 +1331,7 @@ export default function Cart({navigation, route}) {
       theme: {color: themeColors.primary_color},
     };
 
-    console.log(options,"optios");
+    console.log(options, 'optios');
     RazorpayCheckout.open(options)
       .then((res) => {
         console.log(`Success for razor: `, res);
@@ -1335,8 +1342,8 @@ export default function Cart({navigation, route}) {
           data['type'] = dineInType || '';
           data['transaction_id'] = res?.razorpay_payment_id;
           placeOrderData(data); // placeOrder
-        }else{
-          console.log(res,"razorpay_payment_id>>>>res");
+        } else {
+          console.log(res, 'razorpay_payment_id>>>>res');
         }
       })
       .catch(errorMethod);

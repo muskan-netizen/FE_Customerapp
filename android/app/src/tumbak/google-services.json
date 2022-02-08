@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "252020596505",
+    "project_id": "tumbak-d5ceb",
+    "storage_bucket": "tumbak-d5ceb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252020596505:android:1eaf8ef6c588fbcf8eef88",
+        "android_client_info": {
+          "package_name": "com.tumbak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252020596505-0a4g30icil34aidmgrt7qcj9dajdn4rd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tumbak",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "252020596505-hn4pa9dl7f32eovvj044gmjucsb3pe75.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tumbak",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "252020596505-rie9j8gl2gp9ca7joi4do6v3n2ac6bg4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tumbak",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "252020596505-jvd3mk7lb86p10f6osf0nr46lft2dnvh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcAn-CHmWfggHRXa5oDiJ11kbTB--XCgc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252020596505-jvd3mk7lb86p10f6osf0nr46lft2dnvh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "252020596505-vqs0fh7aevt59uv82kichqc1qfci0b1o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tumbak"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
