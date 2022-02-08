@@ -3311,40 +3311,42 @@ export default function Products({route, navigation}) {
         ]}
         visible={updateQtyLoader}
       />
-
-      {!searchInput && (
-        <GradientCartView
-          onPress={() => {
-            playHapticEffect(hapticEffects.notificationSuccess);
-            navigation.navigate(navigationStrings.CART);
-          }}
-          btnText={
-            CartItems && CartItems.data && CartItems.data.item_count
-              ? `${CartItems.data.item_count} ${
-                  CartItems.data.item_count == 1 ? strings.ITEM : strings.ITEMS
-                } | ${
-                  currencies.primary_currency.symbol
-                }${currencyNumberFormatter(
-                  Number(CartItems.data.total_payable_amount).toFixed(2),
-                )}`
-              : ''
-          }
-          ifCartShow={
-            CartItems && CartItems.data && CartItems.data.item_count > 0
-              ? true
-              : false
-          }
-          isMenuBtnShow={categoryInfo?.is_show_products_with_category}
-          onMenuTap={() => {
-            playHapticEffect(hapticEffects.impactLight);
-            updateState({MenuModalVisible: !MenuModalVisible});
-          }}
-          isLoading={btnLoader}
-          btnStyle={
-            appStyle?.tabBarLayout == 4 && {marginBottom: moderateScale(160)}
-          }
-        />
-      )}
+     
+        {!searchInput && (
+          <GradientCartView
+            onPress={() => {
+              playHapticEffect(hapticEffects.notificationSuccess);
+              navigation.navigate(navigationStrings.CART);
+            }}
+            btnText={
+              CartItems && CartItems.data && CartItems.data.item_count
+                ? `${CartItems.data.item_count} ${
+                    CartItems.data.item_count == 1
+                      ? strings.ITEM
+                      : strings.ITEMS
+                  } | ${
+                    currencies.primary_currency.symbol
+                  }${currencyNumberFormatter(
+                    Number(CartItems.data.total_payable_amount).toFixed(2),
+                  )}`
+                : ''
+            }
+            ifCartShow={
+              CartItems && CartItems.data && CartItems.data.item_count > 0
+                ? true
+                : false
+            }
+            isMenuBtnShow={categoryInfo?.is_show_products_with_category}
+            onMenuTap={() => {
+              playHapticEffect(hapticEffects.impactLight);
+              updateState({MenuModalVisible: !MenuModalVisible});
+            }}
+            isLoading={btnLoader}
+            // btnStyle={
+            //   appStyle?.tabBarLayout == 4 && {marginBottom: moderateScale(160)}
+            // }
+          />
+        )}
 
       <BottomSlideModal
         mainContainView={RenderOfferView}

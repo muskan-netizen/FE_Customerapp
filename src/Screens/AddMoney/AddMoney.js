@@ -405,7 +405,7 @@ export default function AddMoney({navigation}) {
   };
 
   const _webPayment = () => {
-    let selectedMethod = selectedPaymentMethod.title.toLowerCase();
+    let selectedMethod = selectedPaymentMethod.code;
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
 
@@ -477,7 +477,7 @@ export default function AddMoney({navigation}) {
                 }
               })
               .catch(errorMethod);
-          }else{
+          } else {
             updateState({isLoadingB: false});
           }
         })
