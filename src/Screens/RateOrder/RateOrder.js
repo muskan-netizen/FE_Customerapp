@@ -31,7 +31,6 @@ import {cameraHandler} from '../../utils/commonFunction';
 import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
 // import OrderCardComponent from './OrderCardComponent';
 import stylesFunc from './styles';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export default function RateOrder({navigation, route}) {
   const ratingData = route?.params?.item?.product_rating;
@@ -275,8 +274,7 @@ export default function RateOrder({navigation, route}) {
         headerStyle={{backgroundColor: colors.white}}
       />
       <View style={{...commonStyles.headerTopLine}} />
-      <KeyboardAwareScrollView
-        keyboardShouldPersistTaps="always"
+      <ScrollView
         refreshing={isRefreshing}
         refreshControl={
           <RefreshControl
@@ -284,9 +282,7 @@ export default function RateOrder({navigation, route}) {
             onRefresh={handleRefresh}
             tintColor={themeColors.primary_color}
           />
-        }
-        >
-  
+        }>
         <View
           style={{
             marginHorizontal: moderateScale(20),
@@ -392,7 +388,7 @@ export default function RateOrder({navigation, route}) {
           destructiveButtonIndex={2}
           onPress={(index) => cameraHandle(index)}
         />
-      </KeyboardAwareScrollView>
+      </ScrollView>
     </WrapperContainer>
   );
 }

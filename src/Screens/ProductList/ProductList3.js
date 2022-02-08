@@ -211,6 +211,8 @@ export default function Products({route, navigation}) {
     appStyle,
   } = useSelector((state) => state?.initBoot);
 
+  console.log(appStyle, 'appStyleeee');
+
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   const {
@@ -3345,6 +3347,9 @@ export default function Products({route, navigation}) {
               updateState({MenuModalVisible: !MenuModalVisible});
             }}
             isLoading={btnLoader}
+            btnStyle={
+              appStyle?.tabBarLayout == 4 && {marginBottom: moderateScale(160)}
+            }
           />
         )}
       </View>
