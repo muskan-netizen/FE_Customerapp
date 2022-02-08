@@ -122,6 +122,7 @@ export default {
   ADD_NEW_CUSTOMER: 'addNewCustomer',
   CUSTOMER_EARNING_HISTORY: 'customerEarningHistory',
   PAYSTACK: 'paystack',
-  SCROLLABLE_CATEGORY:"ScrollableCategory",
-  TABROUTESVENDORNEW:"TabRoutesVendorNewTemplate"
+  SCROLLABLE_CATEGORY: 'ScrollableCategory',
+  TABROUTESVENDORNEW: 'TabRoutesVendorNewTemplate',
+  AuthorizeNet: 'AuthorizeNet',
 };
