@@ -222,6 +222,8 @@ const shortCodes = {
   kongafood: 'c08eab',
   launch: '88cccf',
   kampick: 'd12c28',
+  cabio: '476cf3',
+  tumbak: '59944a',
 };
 
 const appIds = {
@@ -726,7 +728,7 @@ const appIds = {
     android: 'com.driveree',
   }),
   rxnow: Platform.select({
-    ios: 'com.rxnow',
+    ios: 'com.app.rxnow',
     android: 'com.rxnow',
   }),
   seachangevending: Platform.select({
@@ -1108,6 +1110,14 @@ const appIds = {
   kampick: Platform.select({
     ios: 'com.kampick',
     android: 'com.kampick',
+  }),
+  cabio: Platform.select({
+    ios: 'com.cabio',
+    android: 'com.cabio',
+  }),
+  tumbak: Platform.select({
+    ios: 'com.tumbak',
+    android: 'com.tumbak',
   }),
 };
 
