@@ -47,7 +47,7 @@ import {
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {currencyNumberFormatter} from '../../utils/commonFunction';
-import {getImageUrl,showSuccess, showError} from '../../utils/helperFunctions';
+import {getImageUrl, showSuccess, showError} from '../../utils/helperFunctions';
 import useInterval from '../../utils/useInterval';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
@@ -265,7 +265,7 @@ export default function OrderDetail({navigation, route}) {
               updatedcartData: res?.data?.vendors[0]?.tempCart,
               updatedcartItems: res?.data?.vendors[0]?.tempCart?.products,
             });
-          }else{
+          } else {
             updateState({
               updatedcartData: null,
               updatedcartItems: [],
@@ -348,7 +348,7 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const errorMethod = (error) => {
-    console.log(error,"Error>>>>>>");
+    console.log(error, 'Error>>>>>>');
     updateState({isLoading: false, isLoading: false, isLoadingC: false});
     showError(error?.message || error?.error);
   };
@@ -2086,14 +2086,14 @@ export default function OrderDetail({navigation, route}) {
       let data = {};
       data['cart_id'] = updatedcartData?.id;
       data['address_id'] = updatedcartData?.address_id;
-      data['order_vendor_id'] =
-        updatedcartData?.order_vendor_id;
+      data['order_vendor_id'] = updatedcartData?.order_vendor_id;
       data['status'] = status;
       data['total_payable_amount'] = updatedcartData?.difference_to_be_paid;
 
       console.log(data, 'upadted cart data');
       updateState({isLoading: true});
-      actions.acceptRejectDriveUpdate(data, {
+      actions
+        .acceptRejectDriveUpdate(data, {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
@@ -2101,11 +2101,10 @@ export default function OrderDetail({navigation, route}) {
           // systemuser: DeviceInfo.getUniqueId(),
         })
         .then((res) => {
-          showSuccess(res?.message)
-          console.log(res,"acceptRejectDriveUpdate");
+          showSuccess(res?.message);
+          console.log(res, 'acceptRejectDriveUpdate');
           // updateState({isLoading: false});
-          _getOrderDetailScreen()
-          
+          _getOrderDetailScreen();
         })
         .catch(errorMethod);
     }
@@ -2774,23 +2773,25 @@ export default function OrderDetail({navigation, route}) {
             </View>
           )} */}
 
-        <FlatList
-          data={updatedcartItems}
-          extraData={updatedcartItems}
-          ListHeaderComponent={getHeader2()}
-          ListFooterComponent={updatedcartItems?.length ? getFooter2() : null}
-          showsVerticalScrollIndicator={false}
-          style={{backgroundColor: colors.backgroundGrey}}
-          // keyExtractor={(item, index) => String(index)}
-          keyExtractor={(item) => item.id}
-          renderItem={_renderItem2}
-          style={{
-            flex: 1,
-            borderColor: themeColors?.primary_color,
-            borderWidth: 2,
-            marginHorizontal: moderateScale(10),
-          }}
-        />
+        {!!(updatedcartItems && updatedcartItems.length) && (
+          <FlatList
+            data={updatedcartItems}
+            extraData={updatedcartItems}
+            ListHeaderComponent={getHeader2()}
+            ListFooterComponent={updatedcartItems?.length ? getFooter2() : null}
+            showsVerticalScrollIndicator={false}
+            style={{backgroundColor: colors.backgroundGrey}}
+            // keyExtractor={(item, index) => String(index)}
+            keyExtractor={(item) => item.id}
+            renderItem={_renderItem2}
+            style={{
+              flex: 1,
+              borderColor: themeColors?.primary_color,
+              borderWidth: 2,
+              marginHorizontal: moderateScale(10),
+            }}
+          />
+        )}
       </View>
     );
   };

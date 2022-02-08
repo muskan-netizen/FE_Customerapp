@@ -79,6 +79,7 @@ import RepeatModal from '../../Components/RepeatModal';
 import DifferentAddOns from '../../Components/DifferentAddOns ';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import FilterComp from '../../Components/FilterComp';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 
 let timeOut = undefined;
 
@@ -2587,21 +2588,23 @@ export default function Products({route, navigation}) {
             </ScrollView>
           </View>
         )}
-        <View>
-          <TouchableOpacity
-            onPress={onShowHideFilter}
-            style={{
-              alignSelf: 'flex-end',
-              marginRight: moderateScale(16),
-            }}>
-            <Image
+        {appIds.codiner == DeviceInfo.getBundleId() ? null : (
+          <View>
+            <TouchableOpacity
+              onPress={onShowHideFilter}
               style={{
-                tintColor: isDarkMode ? colors.white : colors.black,
-              }}
-              source={imagePath.filter}
-            />
-          </TouchableOpacity>
-        </View>
+                alignSelf: 'flex-end',
+                marginRight: moderateScale(16),
+              }}>
+              <Image
+                style={{
+                  tintColor: isDarkMode ? colors.white : colors.black,
+                }}
+                source={imagePath.filter}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     );
   };
@@ -3311,42 +3314,40 @@ export default function Products({route, navigation}) {
         ]}
         visible={updateQtyLoader}
       />
-     
-        {!searchInput && (
-          <GradientCartView
-            onPress={() => {
-              playHapticEffect(hapticEffects.notificationSuccess);
-              navigation.navigate(navigationStrings.CART);
-            }}
-            btnText={
-              CartItems && CartItems.data && CartItems.data.item_count
-                ? `${CartItems.data.item_count} ${
-                    CartItems.data.item_count == 1
-                      ? strings.ITEM
-                      : strings.ITEMS
-                  } | ${
-                    currencies.primary_currency.symbol
-                  }${currencyNumberFormatter(
-                    Number(CartItems.data.total_payable_amount).toFixed(2),
-                  )}`
-                : ''
-            }
-            ifCartShow={
-              CartItems && CartItems.data && CartItems.data.item_count > 0
-                ? true
-                : false
-            }
-            isMenuBtnShow={categoryInfo?.is_show_products_with_category}
-            onMenuTap={() => {
-              playHapticEffect(hapticEffects.impactLight);
-              updateState({MenuModalVisible: !MenuModalVisible});
-            }}
-            isLoading={btnLoader}
-            // btnStyle={
-            //   appStyle?.tabBarLayout == 4 && {marginBottom: moderateScale(160)}
-            // }
-          />
-        )}
+
+      {!searchInput && (
+        <GradientCartView
+          onPress={() => {
+            playHapticEffect(hapticEffects.notificationSuccess);
+            navigation.navigate(navigationStrings.CART);
+          }}
+          btnText={
+            CartItems && CartItems.data && CartItems.data.item_count
+              ? `${CartItems.data.item_count} ${
+                  CartItems.data.item_count == 1 ? strings.ITEM : strings.ITEMS
+                } | ${
+                  currencies.primary_currency.symbol
+                }${currencyNumberFormatter(
+                  Number(CartItems.data.total_payable_amount).toFixed(2),
+                )}`
+              : ''
+          }
+          ifCartShow={
+            CartItems && CartItems.data && CartItems.data.item_count > 0
+              ? true
+              : false
+          }
+          isMenuBtnShow={categoryInfo?.is_show_products_with_category}
+          onMenuTap={() => {
+            playHapticEffect(hapticEffects.impactLight);
+            updateState({MenuModalVisible: !MenuModalVisible});
+          }}
+          isLoading={btnLoader}
+          // btnStyle={
+          //   appStyle?.tabBarLayout == 4 && {marginBottom: moderateScale(160)}
+          // }
+        />
+      )}
 
       <BottomSlideModal
         mainContainView={RenderOfferView}

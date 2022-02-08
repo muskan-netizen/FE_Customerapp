@@ -18,7 +18,7 @@ import {
 import {useDarkMode} from 'react-native-dark-mode';
 import * as Animatable from 'react-native-animatable';
 import DatePicker from 'react-native-date-picker';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -71,6 +71,7 @@ import {hitSlopProp} from '../../styles/commonStyles';
 import {CheckBox} from 'react-native-elements';
 import {Calendar} from 'react-native-calendars';
 import SelectPaymentModal from '../../Components/SelectPaymentModal';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -3828,20 +3829,37 @@ export default function Cart({navigation, route}) {
             alignItems: 'center',
             // backgroundColor: '#fff',
           }}>
-          <FastImage
-            source={{
-              uri: Image.resolveAssetSource(imagePath.icEmptyCartD).uri,
-              cache: FastImage.cacheControl.immutable,
-              priority: FastImage.priority.high,
-            }}
-            style={{
-              marginVertical: moderateScaleVertical(20),
-              height: moderateScale(120),
-              width: moderateScale(120),
-            }}
+          {appIds.codiner == DeviceInfo.getBundleId() ? (
+            <FastImage
+              source={{
+                uri: Image.resolveAssetSource(imagePath.emptyCart3).uri,
+                cache: FastImage.cacheControl.immutable,
+                priority: FastImage.priority.high,
+              }}
+              style={{
+                marginVertical: moderateScaleVertical(20),
+                height: moderateScale(120),
+                width: moderateScale(140),
+              }}
+              resizeMode="contain"
+            />
+          ) : (
+            <FastImage
+              source={{
+                uri: Image.resolveAssetSource(imagePath.icEmptyCartD).uri,
+                cache: FastImage.cacheControl.immutable,
+                priority: FastImage.priority.high,
+              }}
+              style={{
+                marginVertical: moderateScaleVertical(20),
+                height: moderateScale(120),
+                width: moderateScale(120),
+              }}
 
-            // resizeMode="contain"s
-          />
+              // resizeMode="contain"s
+            />
+          )}
+
           <Text style={{...styles.textStyle}}>
             {strings.YOUR_CART_EMPTY_ADD_ITEMS}
           </Text>
@@ -4483,7 +4501,7 @@ export default function Cart({navigation, route}) {
                             marginBottom: moderateScaleVertical(8),
                             // height:moderateScale(20)
                           }}>
-                          Time Slots
+                          {strings.TIME_SLOT}
                         </Text>
                         <FlatList
                           horizontal

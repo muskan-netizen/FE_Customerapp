@@ -479,6 +479,7 @@ export default {
   checkBox2InActive: require('../assets/images/ic_check1.png'),
   emptyCart3: require('../assets/images/emptyCart3.png'),
   markerPin: require('../assets/images/markerPin.png'),
+  emptycartco: require('../assets/images/emptycartco.png'),
 
   icContactus: require('../assets/images/RoyoorderNewImages/ic_contactus.png'),
   icInventory: require('../assets/images/RoyoorderNewImages/ic_inventory.png'),
@@ -496,9 +497,4 @@ export default {
   notrcukImage: require('../assets/images/ic_notrucks.png'),
   activeTruck: require('../assets/images/ic_truck2.png'),
   inactiveTruck: require('../assets/images/ic_truck1.png'),
-
-
-  
-  
-  
 };
