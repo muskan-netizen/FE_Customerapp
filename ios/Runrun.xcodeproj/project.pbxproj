@@ -82113,10 +82113,11 @@
 		};
 		84BA36A727969D9F006CD402 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 346CEC3B340D004AB13297E5 /* Pods-available_pods-Elixir.release.xcconfig */;
+			baseConfigurationReference = 8424649427073AA3005473D3 /* Elixir(Production).xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
 				PRODUCT_NAME = Runrun;
 				SWIFT_VERSION = 5.0;
 			};
