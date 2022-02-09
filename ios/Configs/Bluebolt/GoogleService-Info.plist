@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>703721486107-m8i4t86s9mgh3mj00pesmfei4hdj6vps.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.703721486107-m8i4t86s9mgh3mj00pesmfei4hdj6vps</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>703721486107-6kjjdkdil4tgtam6hq9qeelvroki59t0.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCBrp-5N-hyc6SkyByKrxZvr_MBrG1Cvks</string>
+	<key>GCM_SENDER_ID</key>
+	<string>703721486107</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.app.bluebolt</string>
+	<key>PROJECT_ID</key>
+	<string>bluebolt-4a226</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bluebolt-4a226.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:703721486107:ios:44dfece6f9fbc0cca845be</string>
+</dict>
+</plist>

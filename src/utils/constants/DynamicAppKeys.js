@@ -224,6 +224,8 @@ const shortCodes = {
   kampick: 'd12c28',
   cabio: '476cf3',
   tumbak: '59944a',
+  iPicknDrop: 'f9cf93',
+  bluebolt: 'e5a64c',
 };
 
 const appIds = {
@@ -1118,6 +1120,14 @@ const appIds = {
   tumbak: Platform.select({
     ios: 'com.tumbak',
     android: 'com.tumbak',
+  }),
+  iPicknDrop: Platform.select({
+    ios: 'com.iPicknDrop',
+    android: 'com.iPicknDrop',
+  }),
+  bluebolt: Platform.select({
+    ios: 'com.app.bluebolt',
+    android: 'com.app.bluebolt',
   }),
 };
 

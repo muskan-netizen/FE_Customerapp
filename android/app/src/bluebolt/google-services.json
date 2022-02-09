@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "703721486107",
+    "project_id": "bluebolt-4a226",
+    "storage_bucket": "bluebolt-4a226.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:703721486107:android:369c52151cdfab10a845be",
+        "android_client_info": {
+          "package_name": "com.app.bluebolt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "703721486107-6kjjdkdil4tgtam6hq9qeelvroki59t0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.bluebolt",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "703721486107-a7ksnk6j56d13mri2bi33efci1hncpn1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.bluebolt",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "703721486107-ab3n0v7rgvfip75q1q082ri4811gmqb8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.bluebolt",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "703721486107-d83mtia5oqhnp2f3rg324c8cpqa7edag.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG3A-6dYva_psyrJJTC--M5qPIJBQPJdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "703721486107-d83mtia5oqhnp2f3rg324c8cpqa7edag.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "703721486107-m8i4t86s9mgh3mj00pesmfei4hdj6vps.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.bluebolt"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

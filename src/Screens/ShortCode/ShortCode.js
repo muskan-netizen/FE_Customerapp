@@ -1444,6 +1444,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.iPicknDrop:
+          updateState({
+            shortCode: shortCodes.iPicknDrop,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bluebolt:
+          updateState({
+            shortCode: shortCodes.bluebolt,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

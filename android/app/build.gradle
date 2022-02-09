@@ -861,16 +861,7 @@ android {
             resValue "string", "app_name", "Destination Ops"
             resValue "string", "host_name", ""
          }
-          loopwhole{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.loopwhole'
-            resValue "string", "app_name", "LoopWhole"
-            resValue "string", "host_name", ""
-         }
+
          vici{
             dimension "appType"
             versionCode 4
@@ -2489,6 +2480,26 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.tumbak'
             resValue "string", "app_name", "Tumbak"
+            resValue "string", "host_name", ""
+         }
+          iPicknDrop{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.iPicknDrop'
+            resValue "string", "app_name", "iPicknDrop"
+            resValue "string", "host_name", ""
+         }
+          bluebolt{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.app.bluebolt'
+            resValue "string", "app_name", "Bluebolt"
             resValue "string", "host_name", ""
          }
 
