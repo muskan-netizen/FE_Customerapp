@@ -1565,7 +1565,7 @@ export default function ShortCode({route, navigation}) {
       }
     } else {
       getItem('firstTime').then((el) => {
-        if (true) {
+        if (!el && res.dynamic_tutorial && res.dynamic_tutorial.length > 0) {
           navigation.push(navigationStrings.APP_INTRO, {
             images: res.dynamic_tutorial,
           });

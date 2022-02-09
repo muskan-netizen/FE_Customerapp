@@ -128,7 +128,7 @@ export default function MyOrders({navigation}) {
 
   //Update state in screen
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const _scrollRef = createRef();
+  // const _scrollRef = createRef();
   //Reduc store data
   const userData = useSelector((state) => state.auth.userData);
 
@@ -258,7 +258,7 @@ export default function MyOrders({navigation}) {
         pageActive: 1,
         orders: selectedTab != tabData.title ? [] : orders,
       });
-      _scrollRef.current.scrollToOffset({animated: true, offset: 0});
+      // _scrollRef.current.scrollToOffset({animated: true, offset: 0});
     } else {
       navigation.navigate(navigationStrings.LOGIN);
     }
@@ -622,7 +622,7 @@ export default function MyOrders({navigation}) {
       />
 
       <FlatList
-        ref={_scrollRef}
+        // ref={_scrollRef}
         data={orders}
         extraData={orders}
         // data={activeOrders || pastOrders || scheduledOrders}

@@ -110,7 +110,7 @@ export default function Products({route, navigation}) {
     isLoading: true,
     isLoadingB: false,
     pageNo: 1,
-    limit: 30,
+    limit: 2,
     isRefreshing: false,
     selectedSbCategoryID: -1,
     productListId: data,
@@ -3202,7 +3202,7 @@ export default function Products({route, navigation}) {
             //   !categoryInfo?.is_show_products_with_category &&
             //   onEndReachedDelayed
             // }
-            onEndReachedThreshold={0.5}
+            // onEndReachedThreshold={0.5}
             ListFooterComponent={() => (
               <View style={{height: moderateScale(60)}} />
             )}

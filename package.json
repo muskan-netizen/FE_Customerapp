@@ -463,7 +463,7 @@
     "@gorhom/bottom-sheet": "^2.3.0",
     "@invertase/react-native-apple-authentication": "^2.1.2",
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
-    "@react-native-community/async-storage": "^1.12.1",
+    "@react-native-async-storage/async-storage": "^1.15.17",
     "@react-native-community/blur": "https://github.com/flyingSAP/react-native-blur",
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.10",
