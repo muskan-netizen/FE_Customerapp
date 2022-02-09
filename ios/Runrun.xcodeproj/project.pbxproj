@@ -1249,6 +1249,7 @@
 		84349CCB26CD076B00DB8C18 /* Senshive(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84349CCA26CD076B00DB8C18 /* Senshive(Production).xcconfig */; };
 		84349D0626CD078800DB8C18 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84349D0526CD078800DB8C18 /* Images.xcassets */; };
 		84349D4126CD09E800DB8C18 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84349D4026CD09E800DB8C18 /* GoogleService-Info.plist */; };
+		84384AC027B3C36500593C38 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84384ABF27B3C36400593C38 /* GoogleService-Info.plist */; };
 		84397939272689DA00080A72 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84397938272689D900080A72 /* GoogleService-Info.plist */; };
 		843992912757402900CBF3B6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		843992922757402900CBF3B6 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -2376,7 +2377,6 @@
 		846D93BC278EECC100980345 /* Ritenow(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 846D93BB278EECC100980345 /* Ritenow(Development).xcconfig */; };
 		846D948B278EECDD00980345 /* Ritenow(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 846D948A278EECDD00980345 /* Ritenow(Production).xcconfig */; };
 		846D955A278EECF100980345 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 846D9559278EECF100980345 /* Images.xcassets */; };
-		846D9629278EEDA800980345 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 846D9628278EEDA700980345 /* GoogleService-Info.plist */; };
 		846D9BC9278EF54A00980345 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		846D9BCA278EF54A00980345 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		846D9BCB278EF54A00980345 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -7229,6 +7229,7 @@
 		84349D0526CD078800DB8C18 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84349D4026CD09E800DB8C18 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84349DED26CD0D1F00DB8C18 /* SenshiveRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SenshiveRelease.entitlements; sourceTree = "<group>"; };
+		84384ABF27B3C36400593C38 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84397938272689D900080A72 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		843992D02757402900CBF3B6 /* EnExt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnExt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		843994DA275740E100CBF3B6 /* EnExt(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "EnExt(Development).xcconfig"; sourceTree = "<group>"; };
@@ -7452,7 +7453,6 @@
 		846D93BB278EECC100980345 /* Ritenow(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Ritenow(Development).xcconfig"; sourceTree = "<group>"; };
 		846D948A278EECDD00980345 /* Ritenow(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Ritenow(Production).xcconfig"; sourceTree = "<group>"; };
 		846D9559278EECF100980345 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		846D9628278EEDA700980345 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		846D9A2B278EEEEA00980345 /* Ritenow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ritenow.entitlements; sourceTree = "<group>"; };
 		846D9BED278EF54A00980345 /* Flit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		846DA0C4278EF5E900980345 /* Flit(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Flit(Development).xcconfig"; sourceTree = "<group>"; };
@@ -12761,7 +12761,7 @@
 		846D9220278EEC9900980345 /* Ritenow */ = {
 			isa = PBXGroup;
 			children = (
-				846D9628278EEDA700980345 /* GoogleService-Info.plist */,
+				84384ABF27B3C36400593C38 /* GoogleService-Info.plist */,
 				846D93BB278EECC100980345 /* Ritenow(Development).xcconfig */,
 				846D948A278EECDD00980345 /* Ritenow(Production).xcconfig */,
 				846D9559278EECF100980345 /* Images.xcassets */,
@@ -17983,6 +17983,8 @@
 				849F7443272A7BFB001F2F79 /* Bundle React Native code and images */,
 				863A1EFCB2CF4E6A3F2C705D /* [CP] Embed Pods Frameworks */,
 				348D05C78F1C345FE027696D /* [CP] Copy Pods Resources */,
+				8438465327B3887D00593C38 /* ShellScript */,
+				8438481827B3894800593C38 /* Start Packager */,
 			);
 			buildRules = (
 			);
@@ -23156,7 +23158,7 @@
 				846D8FA0278EEC0600980345 /* SFProText-SemiBold.ttf in Resources */,
 				846D8FA1278EEC0600980345 /* SFProText-Medium.ttf in Resources */,
 				846D8FA3278EEC0600980345 /* notification.wav in Resources */,
-				846D9629278EEDA800980345 /* GoogleService-Info.plist in Resources */,
+				84384AC027B3C36500593C38 /* GoogleService-Info.plist in Resources */,
 				846D8FA5278EEC0600980345 /* Plists in Resources */,
 				846D8FA6278EEC0600980345 /* Futura-Normal.ttf in Resources */,
 				846D8FA7278EEC0600980345 /* Eina02-Bold.ttf in Resources */,
@@ -46774,6 +46776,41 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		8438465327B3887D00593C38 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Donepacked/Pods-available_pods-Donepacked-frameworks.sh\"\n";
+		};
+		8438481827B3894800593C38 /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
 		};
 		8439341127A4127F006C4A39 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -76572,7 +76609,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = 34FK88DY6H;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
