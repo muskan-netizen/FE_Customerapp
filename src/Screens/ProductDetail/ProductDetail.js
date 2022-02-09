@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
-  Share
 } from 'react-native';
 import { useDarkMode } from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
@@ -56,6 +55,7 @@ import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
 import Modal from 'react-native-modal';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import Share from 'react-native-share';
 
 export default function ProductDetail({ route, navigation }) {
   console.log("my route", route)
@@ -179,28 +179,24 @@ export default function ProductDetail({ route, navigation }) {
   }, [state.productId, state.isLoadingB]);
 
 
-  const onShare = async () => {
-    let shareLink = `?data=${state.productId}`;
-    try {
-      const result = await Share.share({
-        url: shareLink,
-      });
-
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-        } else {
-        }
-      } else if (result.action === Share.dismissedAction) {
-      }
-    } catch (error) {
-      alert(error.message);
+  const onShare = () => {
+    console.log('onShare', appData);
+    if (!!productDetailData?.share_link) {
+      let hyperLink = productDetailData?.share_link;
+      let options = {url: hyperLink};
+      Share.open(options)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          err && console.log(err);
+        });
+      return;
     }
+    alert('link not found');
   };
 
-  // const onShare = () => {
-  //   navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: { id: state.productId} });
-  // }
-
+ 
   const getProductDetail = () => {
     console.log("api hit getProductDetail")
     actions
@@ -979,15 +975,16 @@ export default function ProductDetail({ route, navigation }) {
               ? imagePath.icSearchb
               : imagePath.search
         }
-        // onPressRight={() =>
-        //   navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-        // }
-        onPressRight={onShare}
+        onPressRight={() =>
+          navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+        }
         headerStyle={{
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.background
             : colors.white,
         }}
+        isShareIcon={imagePath.icShareb}
+        onShare={onShare}
       />
 
       <KeyboardAwareScrollView ref={myRef} showsVerticalScrollIndicator={false}>

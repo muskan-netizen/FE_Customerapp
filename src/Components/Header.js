@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
   I18nManager,
@@ -8,17 +8,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
-import {hitSlopProp} from '../styles/commonStyles';
+import { hitSlopProp } from '../styles/commonStyles';
 import {
   moderateScale,
   StatusBarHeight,
   textScale,
 } from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../styles/theme';
 import strings from '../constants/lang';
 
 const Header = ({
@@ -38,24 +38,27 @@ const Header = ({
   rightIconStyle = {},
   showImageAlongwithTitle = false,
   imageAlongwithTitle = imagePath.dropDownSingle,
-  imageAlongwithTitleStyle = {tintColor: colors.black},
+  imageAlongwithTitleStyle = { tintColor: colors.black },
   onPressImageAlongwithTitle,
   onPressCenterTitle,
   leftIconStyle,
   isRightText = false,
-  onPressRightTxt = () => {},
+  onPressRightTxt = () => { },
   rightTxt = strings.CLEAR_CART2,
   rightTxtContainerStyle = {},
   rightTxtStyle = {},
+  isShareIcon,
+  onShare,
+  shareIconStyle = {}
 }) => {
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily});
+  const styles = stylesFunc({ fontFamily });
   const navigation = useNavigation();
   return (
     <>
@@ -89,15 +92,15 @@ const Header = ({
                   !!onPressLeft
                     ? onPressLeft
                     : () => {
-                        navigation.goBack();
-                      }
+                      navigation.goBack();
+                    }
                 }>
                 <Image
                   resizeMode="contain"
                   source={leftIcon}
                   style={{
                     ...leftIconStyle,
-                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                     tintColor: isDarkMode
                       ? MyDarkTheme.colors.text
                       : colors.black,
@@ -107,7 +110,7 @@ const Header = ({
             ))}
         </View>
         <View
-          style={{flex: 0.8, alignItems: 'center', justifyContent: 'center'}}>
+          style={{ flex: 0.8, alignItems: 'center', justifyContent: 'center' }}>
           <View
             style={{
               flexDirection: 'row',
@@ -135,12 +138,12 @@ const Header = ({
           </View>
         </View>
 
-        <View style={{flex: 0.3, alignItems: 'flex-end'}}>
+        <View style={{ flex: 0.3, alignItems: 'flex-end' }}>
           {isRightText ? (
             <TouchableOpacity
               activeOpacity={0.7}
               onPress={onPressRightTxt}
-              style={{...rightTxtContainerStyle}}>
+              style={{ ...rightTxtContainerStyle }}>
               <Text
                 style={{
                   fontFamily: fontFamily.medium,
@@ -152,24 +155,47 @@ const Header = ({
               </Text>
             </TouchableOpacity>
           ) : !!rightIcon ? (
-            <TouchableOpacity onPress={onPressRight}>
-              <Image
-                style={
-                  isDarkMode
-                    ? {
-                        transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <TouchableOpacity onPress={onPressRight}>
+                <Image
+                  style={
+                    isDarkMode
+                      ? {
+                        transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                         ...leftIconStyle,
                         tintColor: MyDarkTheme.colors.text,
                       }
-                    : rightIconStyle
-                }
-                source={rightIcon}
-              />
-            </TouchableOpacity>
+                      : rightIconStyle
+                  }
+                  source={rightIcon}
+                />
+              </TouchableOpacity>
+              {!!isShareIcon ?
+               <TouchableOpacity 
+               onPress={onShare}
+               activeOpacity={0.8}
+              //  hitSlop={{
+              //   top: 50,
+              //   right: 50,
+              //   left: 50,
+              //   bottom: 50,
+              // }}
+               >
+                <Image
+                  style={{
+                    ...shareIconStyle,
+                    tintColor: isDarkMode? MyDarkTheme.colors.text: colors.black,
+                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    marginLeft:moderateScale(16)
+                  }}
+                  source={isShareIcon}
+                />
+              </TouchableOpacity> : null}
+            </View>
           ) : !!customRight ? (
             customRight()
           ) : hideRight ? (
-            <View style={{width: 25}} />
+            <View style={{ width: 25 }} />
           ) : (
             <Image source={imagePath.cartShop} />
           )}
@@ -179,7 +205,7 @@ const Header = ({
   );
 };
 
-export function stylesFunc({fontFamily}) {
+export function stylesFunc({ fontFamily }) {
   const styles = StyleSheet.create({
     headerStyle: {
       // padding: moderateScaleVertical(16),
