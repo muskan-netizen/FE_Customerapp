@@ -19360,6 +19360,7 @@
 				84FFF3FF26D6520700F2B059 /* Bundle React Native code and images */,
 				50252BFAA2241D19628A75DB /* [CP] Embed Pods Frameworks */,
 				8719C6E21A5EA23FDB502DF9 /* [CP] Copy Pods Resources */,
+				8499894727B5207900F5CA8F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -50441,6 +50442,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-RoyoOrder/Pods-available_pods-RoyoOrder-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		8499894727B5207900F5CA8F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Tumbak/Pods-available_pods-Tumbak-frameworks.sh\"\n\n";
 		};
 		849AE08C26C5245800B6C20D /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
