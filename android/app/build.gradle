@@ -625,16 +625,16 @@ android {
       //       resValue "string", "app_name", "Cabdelivr"
       //       resValue "string", "host_name", ""
       //    }
-           drus{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.app.drus'
-            resValue "string", "app_name", "Drus"
-            resValue "string", "host_name", ""
-         }
+        //    drus{
+        //     dimension "appType"
+        //     versionCode 1
+        //     versionName "1.0"
+        //     minSdkVersion rootProject.ext.minSdkVersion
+        //     targetSdkVersion rootProject.ext.targetSdkVersion
+        //     applicationId 'com.app.drus'
+        //     resValue "string", "app_name", "Drus"
+        //     resValue "string", "host_name", ""
+        //  }
     
       //   arenagrub{
       //       dimension "appType"
@@ -759,16 +759,16 @@ android {
       //       resValue "string", "app_name", "Ridemate"
       //       resValue "string", "host_name", ""
       //    }
-          codiner{
-            dimension "appType"
-            versionCode 9
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.app.codiner'
-            resValue "string", "app_name", "Codiner"
-            resValue "string", "host_name", "codiner.royoorders.com"
-         }
+        //   codiner{
+        //     dimension "appType"
+        //     versionCode 9
+        //     versionName "1.0"
+        //     minSdkVersion rootProject.ext.minSdkVersion
+        //     targetSdkVersion rootProject.ext.targetSdkVersion
+        //     applicationId 'com.app.codiner'
+        //     resValue "string", "app_name", "Codiner"
+        //     resValue "string", "host_name", "codiner.royoorders.com"
+        //  }
       //    housekeeper{
       //       dimension "appType"
       //       versionCode 1
@@ -823,7 +823,7 @@ android {
          // }
          vici{
             dimension "appType"
-            versionCode 5
+            versionCode 7
             versionName "1.1"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -852,16 +852,6 @@ android {
       //       resValue "string", "host_name", ""
       //    }
 
-         vici{
-            dimension "appType"
-            versionCode 4
-            versionName "1.1"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.app.vici'
-            resValue "string", "app_name", "VICI"
-            resValue "string", "host_name", ""
-         }
       //    carhop{
       //       dimension "appType"
       //       versionCode 1
@@ -1548,16 +1538,16 @@ android {
       //       resValue "string", "app_name", "Maxis Delivery"
       //       resValue "string", "host_name", ""
       //    }
-      //     donepacked{
-      //       dimension "appType"
-      //       versionCode 2
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.donepacked'
-      //       resValue "string", "app_name", "Donepacked"
-      //       resValue "string", "host_name", ""
-      //    }
+          donepacked{
+            dimension "appType"
+            versionCode 4
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.donepacked'
+            resValue "string", "app_name", "Donepacked"
+            resValue "string", "host_name", ""
+         }
       //    careworks{
       //       dimension "appType"
       //       versionCode 1

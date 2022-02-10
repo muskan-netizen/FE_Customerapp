@@ -10,7 +10,7 @@
 // export const API_BASE_URL = 'https://6de6-103-72-170-243.ngrok.io/api/v1'; // gourav sir
 // export const API_BASE_URL = 'http://192.168.97.160:8000/api/v1';
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';  //tasmeem url
-export const API_BASE_URL = 'https://tasmeem.alerthire.com/api/v1';  //tasmeem url
+// export const API_BASE_URL = 'https://tasmeem.alerthire.com/api/v1'; //tasmeem url
 
 //export const API_BASE_URL = 'https://1d48-103-72-170-243.ngrok.io/api/v1';
 
@@ -37,7 +37,7 @@ export const API_BASE_URL = 'https://tasmeem.alerthire.com/api/v1';  //tasmeem u
 // export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
 // export const API_BASE_URL = 'https://ufood.ca/api/v1';
-export const API_BASE_URL = 'https://app.vici.la/api/v1';
+// export const API_BASE_URL = 'https://app.vici.la/api/v1';
 // export const API_BASE_URL = 'https://blipdelivery.com/api/v1';
 // export const API_BASE_URL = 'https://africanvillage.market/api/v1';
 // export const API_BASE_URL = 'https://govachow.com/api/v1';
@@ -54,7 +54,7 @@ export const API_BASE_URL = 'https://app.vici.la/api/v1';
 // export const API_BASE_URL = 'https://marketplace.verofax.com/api/v1';
 // export const API_BASE_URL = 'https://order.loopwhole.ca/api/v1';
 // export const API_BASE_URL = 'https://elcheregio.mx/api/v1';
-// export const API_BASE_URL = 'https://donepacked.com/api/v1';
+export const API_BASE_URL = 'https://donepacked.com/api/v1';
 // export const API_BASE_URL = 'https://cannabusxpress.com/api/v1';
 // export const API_BASE_URL = 'https://order-dev.taquick.com/api/v1';
 // export const API_BASE_URL = 'https://yeboy.mx/api/v1';
