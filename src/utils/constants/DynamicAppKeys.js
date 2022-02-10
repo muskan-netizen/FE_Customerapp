@@ -1034,7 +1034,7 @@ const appIds = {
     android: 'com.homeTownDelivery',
   }),
   ritenow: Platform.select({
-    ios: 'com.ritenow',
+    ios: 'com.app.ritenow',
     android: 'com.ritenow',
   }),
   flit: Platform.select({
