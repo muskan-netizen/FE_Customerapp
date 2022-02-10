@@ -42,10 +42,10 @@ const HomeCategoryCard2 = ({
       <View
         style={{
           flex: 0.8,
-          // backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
+       
           borderRadius: moderateScale(30),
-          // width: moderateScale(70),
-          // height: moderateScale(70),
+          width: moderateScale(70),
+          height: moderateScale(70),
           justifyContent: 'center',
           alignItems: 'center',
         }}>
@@ -54,6 +54,9 @@ const HomeCategoryCard2 = ({
             height={moderateScale(80)}
             width={moderateScale(80)}
             uri={imageURI}
+            style={{
+
+            }}
           />
         ) : (
           <FastImage
@@ -61,6 +64,7 @@ const HomeCategoryCard2 = ({
               height: moderateScale(80),
               width: moderateScale(80),
               borderRadius: moderateScale(25),
+              
             }}
             source={{
               uri: imageURI,

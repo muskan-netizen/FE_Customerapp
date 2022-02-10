@@ -302,7 +302,7 @@ const MarketCard3 = ({
             marginTop: moderateScaleVertical(2),
           }}
         />
-        <Text>Max saftety</Text>
+        {/* <Text>Max saftety</Text> */}
         {!!data?.closed_store_order_scheduled ? (
           <Text
             style={{
