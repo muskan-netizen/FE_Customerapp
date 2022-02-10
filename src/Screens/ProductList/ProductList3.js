@@ -3327,7 +3327,7 @@ export default function Products({route, navigation}) {
                   CartItems.data.item_count == 1 ? strings.ITEM : strings.ITEMS
                 } | ${
                   currencies.primary_currency.symbol
-                }${currencyNumberFormatter(
+                } ${currencyNumberFormatter(
                   Number(CartItems.data.total_payable_amount).toFixed(2),
                 )}`
               : ''

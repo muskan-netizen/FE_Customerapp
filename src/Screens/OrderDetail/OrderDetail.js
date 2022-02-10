@@ -347,7 +347,7 @@ export default function OrderDetail({navigation, route}) {
   const errorMethod = (error) => {
     console.log(error, 'Error>>>>>>');
     updateState({isLoading: false, isLoading: false, isLoadingC: false});
-    showError(error?.message || error?.error);
+    // showError(error?.message || error?.error);
   };
 
   const onStarRatingPress = (i, rating) => {

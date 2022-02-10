@@ -545,7 +545,7 @@ export default function AddMoney({navigation}) {
                         styles.addMoneyInputField,
                         {
                           marginLeft: moderateScale(10),
-                          // width: width - 50,
+                          width: width - 50,
                           color: MyDarkTheme.colors.text,
                         },
                       ]
