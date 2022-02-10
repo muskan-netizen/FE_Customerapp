@@ -12,6 +12,8 @@ import colors from '../styles/colors';
 import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import {voiceListen} from './Loaders/AnimatedLoaderFiles';
+import LottieView from 'lottie-react-native';
 
 const SearchBar = ({
   containerStyle = {},
@@ -22,6 +24,9 @@ const SearchBar = ({
   searchValue = '',
   rightIconStyle,
   autoFocus,
+  isVoiceRecord = false,
+  onVoiceStop = () => {},
+  onVoiceListen = () => {},
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
@@ -67,11 +72,41 @@ const SearchBar = ({
           }
         />
       </View>
-      {showRightIcon && (
-        <TouchableOpacity onPress={rightIconPress}>
-          <Image source={imagePath.crossBlueB} style={{...rightIconStyle}} />
-        </TouchableOpacity>
-      )}
+      {
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          {isVoiceRecord ? (
+            <TouchableOpacity onPress={onVoiceStop}>
+              <LottieView
+                style={{
+                  height: 45,
+                  width: 45,
+                  marginLeft: 3,
+                }}
+                source={voiceListen}
+                autoPlay
+                loop
+              />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={onVoiceListen}>
+              <Image
+                source={imagePath.icMic}
+                style={{height: 30, width: 30, tintColor: '#2A9CD7'}}
+              />
+            </TouchableOpacity>
+          )}
+          {showRightIcon && (
+            <TouchableOpacity
+              style={{marginLeft: moderateScale(5)}}
+              onPress={rightIconPress}>
+              <Image
+                source={imagePath.crossBlueB}
+                style={{...rightIconStyle}}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
+      }
     </View>
   );
 };

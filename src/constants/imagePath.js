@@ -497,4 +497,5 @@ export default {
   notrcukImage: require('../assets/images/ic_notrucks.png'),
   activeTruck: require('../assets/images/ic_truck2.png'),
   inactiveTruck: require('../assets/images/ic_truck1.png'),
+  icMic: require('../assets/images/ic_mic.png'),
 };
