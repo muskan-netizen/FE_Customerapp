@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {resetStackAndNavigate} from '../navigation/NavigationService';
 import navigationStrings from '../navigation/navigationStrings';

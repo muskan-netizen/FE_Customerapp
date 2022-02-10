@@ -29,7 +29,11 @@ import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import ScaledImage from 'react-native-scalable-image';
 import {useNavigation} from '@react-navigation/native';
 import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import {
+  loaderOne,
+  voiceListen,
+} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import LottieView from 'lottie-react-native';
 
 export default function DashBoardHeaderFive({
   // navigation = {},
@@ -38,6 +42,9 @@ export default function DashBoardHeaderFive({
   toggleData,
   isLoading = false,
   isLoadingB = false,
+  _onVoiceListen = () => {},
+  isVoiceRecord = false,
+  _onVoiceStop = () => {},
 }) {
   const navigation = useNavigation();
   const pickerRef = createRef();
@@ -63,7 +70,7 @@ export default function DashBoardHeaderFive({
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  
+
   const imageURI = getImageUrl(
     profileInfo?.logo?.image_fit,
     profileInfo?.logo?.image_path,
@@ -513,6 +520,32 @@ export default function DashBoardHeaderFive({
             source={imagePath.search1}
           />
         </TouchableOpacity>
+        {isVoiceRecord ? (
+          <TouchableOpacity onPress={_onVoiceStop}>
+            <LottieView
+              style={{
+                height: moderateScale(43),
+                width: moderateScale(30),
+              }}
+              source={voiceListen}
+              autoPlay
+              loop
+            />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={{marginHorizontal: moderateScale(8)}}
+            onPress={_onVoiceListen}>
+            <Image
+              style={{
+                tintColor: '#2A9CD7',
+                height: moderateScale(25),
+                width: moderateScale(25),
+              }}
+              source={imagePath.icMic}
+            />
+          </TouchableOpacity>
+        )}
         {/* {tabs.length > 1 && (
           <TouchableOpacity
             activeOpacity={0.7}

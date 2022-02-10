@@ -1,48 +1,29 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
-  I18nManager,
   Image,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useDarkMode } from 'react-native-dark-mode';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import navigationStrings from '../navigation/navigationStrings';
 import colors from '../styles/colors';
-import {hitSlopProp} from '../styles/commonStyles';
 import {
   moderateScale,
   StatusBarHeight,
-  textScale,
+  textScale
 } from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
+import { MyDarkTheme } from '../styles/theme';
 
 const Header3 = ({
   leftIcon = imagePath.back,
   location = [],
-  centerTitle,
-  textStyle,
-  horizontLine = true,
-  rightIcon = '',
-  onPressLeft,
-  onPressRight,
-  customRight,
-  hideRight = true,
-  headerStyle,
-  noLeftIcon = false,
-  rightViewStyle = {},
-  customLeft,
-  rightIconStyle = {},
-  showImageAlongwithTitle = false,
-  imageAlongwithTitle = imagePath.dropDownSingle,
-  imageAlongwithTitleStyle = {tintColor: colors.black},
-  onPressImageAlongwithTitle,
-  onPressCenterTitle,
-  leftIconStyle,
+  conatinerStyle = {},
+
 }) => {
   const {appStyle, appData} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -59,6 +40,7 @@ const Header3 = ({
         paddingHorizontal: moderateScale(15),
         flexDirection: 'row',
         alignItems: 'center',
+        ...conatinerStyle
       }}>
       <TouchableOpacity
         onPress={() => {
