@@ -80,6 +80,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import FilterComp from '../../Components/FilterComp';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
 import Share from 'react-native-share';
+import { BlurView } from '@react-native-community/blur';
 
 let timeOut = undefined;
 
@@ -2360,7 +2361,7 @@ export default function Products({ route, navigation }) {
                 // marginBottom: moderateScale(15),
                 paddingBottom: moderateScaleVertical(10),
                 paddingHorizontal: moderateScale(12),
-             
+
               }}>
               {categoryInfo?.lineOfSightDistance != undefined &&
                 categoryInfo.lineOfSightDistance != null ? (
@@ -2475,9 +2476,11 @@ export default function Products({ route, navigation }) {
               return (
                 <View
                   key={index}
-                  style={{ flexDirection: 'row',
-                   marginTop: moderateScale(20) }}
-                   >
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: moderateScale(20)
+                  }}
+                >
                   <ToggleSwitch
                     isOn={el.isSelected}
                     onColor={colors.green}
@@ -2551,7 +2554,7 @@ export default function Products({ route, navigation }) {
             />
 
             {appIds.codiner == DeviceInfo.getBundleId() ? null : (
-              <View style={{ flex: 0.14}}>
+              <View style={{ flex: 0.14 }}>
                 <TouchableOpacity
                   onPress={onShowHideFilter}
                   style={{
@@ -2738,6 +2741,18 @@ export default function Products({ route, navigation }) {
   const onShowHideFilter = () => {
     updateState({ isShowFilter: !isShowFilter });
   };
+
+  const bottomSheetHeader = () => {
+    return (
+      <View
+        style={{
+          height: 0,
+          borderTopLeftRadius: 20,
+          backgroundColor: 'rgba(0,0,0,0)',
+        }}
+      /> 
+    )
+  }
 
 
 
@@ -3245,7 +3260,7 @@ export default function Products({ route, navigation }) {
           />
         )}
 
-        {/* {!!repeatItems && (<BlurView
+        {isVisibleModal ? <BlurView
           style={{
             position: 'absolute',
             left: 0,
@@ -3254,11 +3269,11 @@ export default function Products({ route, navigation }) {
             bottom: 0,
           }}
           viewRef={blurRef}
-          blurType="light"
+          blurType="dark"
           blurAmount={10}
           blurRadius={10}
-        />)} */}
-        {/* <View style={{ height: moderateScale(height * 0.070) }} /> */}
+        /> : null}
+
       </View>
 
       {!!typeId && typeId == 8 ? (
@@ -3288,15 +3303,7 @@ export default function Products({ route, navigation }) {
             activeOffsetY={[-1, 1]}
             failOffsetX={[-5, 5]}
             animateOnMount={true}
-            handleComponent={() => (
-              <View
-                style={{
-                  height: 0,
-                  borderTopLeftRadius: 20,
-                  backgroundColor: 'rgba(0,0,0,0)',
-                }}
-              />
-            )}
+            handleComponent={bottomSheetHeader}
             onChange={(index) => {
               if (index === 0) {
                 updateState({ isVisibleModal: false, showShimmer: true });
@@ -3457,6 +3464,7 @@ export default function Products({ route, navigation }) {
           filterData={allFilters}
         />
       ) : null}
+
     </View>
   );
 }

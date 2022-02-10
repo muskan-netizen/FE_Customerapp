@@ -1,7 +1,7 @@
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1';  //sales demo
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'https://fee4-112-196-88-218.ngrok.io/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.97.123:8020/api/v1'; // sujata
@@ -10,7 +10,7 @@
 // export const API_BASE_URL = 'https://6de6-103-72-170-243.ngrok.io/api/v1'; // gourav sir
 // export const API_BASE_URL = 'http://192.168.97.160:8000/api/v1';
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';  //tasmeem url
-export const API_BASE_URL = 'https://tasmeem.alerthire.com/api/v1';  //tasmeem url
+// export const API_BASE_URL = 'https://tasmeem.alerthire.com/api/v1';  //tasmeem url
 
 //export const API_BASE_URL = 'https://1d48-103-72-170-243.ngrok.io/api/v1';
 

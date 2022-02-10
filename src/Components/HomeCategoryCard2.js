@@ -42,24 +42,24 @@ const HomeCategoryCard2 = ({
       <View
         style={{
           flex: 0.8,
-          backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
+          // backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
           borderRadius: moderateScale(30),
-          width: moderateScale(60),
-          height: moderateScale(60),
+          // width: moderateScale(70),
+          // height: moderateScale(70),
           justifyContent: 'center',
           alignItems: 'center',
         }}>
         {isSVG ? (
           <SvgUri
-            height={moderateScale(50)}
-            width={moderateScale(50)}
+            height={moderateScale(80)}
+            width={moderateScale(80)}
             uri={imageURI}
           />
         ) : (
           <FastImage
             style={{
-              height: moderateScale(50),
-              width: moderateScale(50),
+              height: moderateScale(80),
+              width: moderateScale(80),
               borderRadius: moderateScale(25),
             }}
             source={{

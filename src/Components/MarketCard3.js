@@ -72,6 +72,110 @@ const MarketCard3 = ({
     '700/300',
   );
 
+  const distanceView = () => {
+    return (
+      <View style={{ flex: 1, justifyContent: 'space-between' }}>
+        {!!appData?.profile?.preferences?.is_hyperlocal ?
+          <View
+            style={{
+              ...styles.ratingView,
+              backgroundColor: colors.white,
+            }}>
+            <Text
+              style={{
+                fontSize: textScale(10),
+                textAlign: 'left',
+                color: data?.show_slot
+                  ? colors.green
+                  : data?.is_vendor_closed
+                    ? colors.redB
+                    : colors.green,
+              }}>
+              {data?.show_slot
+                ? strings.OPEN
+                : data?.is_vendor_closed
+                  ? strings.CLOSE
+                  : strings.OPEN}
+            </Text>
+          </View> : <View />}
+
+        <View
+          style={{
+            ...styles.ratingView,
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: 'white',
+
+          }}>
+          {!!data?.lineOfSightDistance && (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Image
+                  style={{
+                    tintColor: data?.is_vendor_closed
+                      ? colors.black
+                      : themeColors.primary_color,
+                    width: moderateScale(12),
+                    height: moderateScale(12),
+                    opacity: data?.is_vendor_closed ? 0.5 : 1,
+                  }}
+                  resizeMode="contain"
+                  source={imagePath.location2}
+                />
+                <Text
+                  numberOfLines={1}
+                  style={{
+                    ...styles.distanceTimeStyle,
+
+                  }}>
+                  {data?.lineOfSightDistance}
+                </Text>
+              </View>
+              {/* !!data?.timeofLineOfSightDistance */}
+
+              {!!data?.timeofLineOfSightDistance && (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+
+                  }}>
+                  <View style={{
+                    height: moderateScale(12),
+                    borderRightWidth: 0.8,
+                    marginHorizontal: moderateScale(8),
+                    borderRightColor: colors.black
+                  }}
+                  />
+                  <Image
+                    style={{
+                      tintColor: data?.is_vendor_closed
+                        ? colors.black
+                        : themeColors.primary_color,
+                      width: moderateScale(12),
+                      height: moderateScale(12),
+                      opacity: data?.is_vendor_closed ? 0.5 : 1,
+                    }}
+                    resizeMode="contain"
+                    source={imagePath.icTime2}
+                  />
+                  <Text numberOfLines={1} style={styles.distanceTimeStyle}>
+                    {checkEvenOdd(data?.timeofLineOfSightDistance)}-
+                    {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
+                  </Text>
+                </View>
+              )}
+            </View>
+          )}
+        </View>
+      </View>
+    )
+  }
+
   return (
     <TouchableOpacity
       activeOpacity={1}
@@ -101,7 +205,7 @@ const MarketCard3 = ({
             <View style={{ justifyContent: 'center' }}>
               <FastImage
                 source={{
-                  uri: imageUrl, 
+                  uri: imageUrl,
                   priority: FastImage.priority.high,
                   cache: FastImage.cacheControl.immutable,
                 }}
@@ -111,55 +215,34 @@ const MarketCard3 = ({
                   opacity: 0.8,
                 }}
                 resizeMode={FastImage.resizeMode.cover}
-                />
+              />
               <Text style={styles.currentlyUnavailable}>
                 {strings.CURRENTLYUNAVAILABLE}
               </Text>
             </View>
           </Grayscale>
         ) : (
-          <FastImage
-            source={{
-              uri: imageUrl, 
-              priority: FastImage.priority.high,
-              cache: FastImage.cacheControl.immutable
-            }}
-            style={{
-              ...styles.mainImage,
-              ...fastImageStyle,
-            }}
-            resizeMode={FastImage.resizeMode.cover}
-            />
-        )}
-
-        {!!appData?.profile?.preferences?.is_hyperlocal && (
-          <View
-            style={{
-              ...styles.ratingView,
-              position: 'absolute',
-              right: 10,
-              top: 10,
-              backgroundColor: colors.white,
-            }}>
-            <Text
+          <View>
+            <FastImage
+              source={{
+                uri: imageUrl,
+                priority: FastImage.priority.high,
+                cache: FastImage.cacheControl.immutable
+              }}
               style={{
-                ...commonStyles.mediumFont14Normal,
-                fontSize: textScale(10),
-                textAlign: 'left',
-                color: data?.show_slot
-                  ? colors.green
-                  : data?.is_vendor_closed
-                    ? colors.redB
-                    : colors.green,
-              }}>
-              {data?.show_slot
-                ? strings.OPEN
-                : data?.is_vendor_closed
-                  ? strings.CLOSE
-                  : strings.OPEN}
-            </Text>
+                ...styles.mainImage,
+                ...fastImageStyle,
+
+              }}
+              resizeMode={FastImage.resizeMode.cover}
+            >
+              {distanceView()}
+
+            </FastImage>
           </View>
         )}
+
+
       </View>
       <View style={{ padding: moderateScale(8) }}>
         <View style={styles.descView}>
@@ -219,83 +302,7 @@ const MarketCard3 = ({
             marginTop: moderateScaleVertical(2),
           }}
         />
-        <View style={styles.distanceView}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              flex: 1,
-            }}>
-            {!!data?.lineOfSightDistance && (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Image
-                    style={{
-                      tintColor: data?.is_vendor_closed
-                        ? colors.black
-                        : themeColors.primary_color,
-                      width: moderateScale(12),
-                      height: moderateScale(12),
-                      opacity: data?.is_vendor_closed ? 0.5 : 1,
-                    }}
-                    resizeMode="contain"
-                    source={imagePath.location2}
-                  />
-                  <Text
-                    numberOfLines={1}
-                    style={{
-                      ...styles.distanceTimeStyle,
-                      color: colors.greyLight,
-                    }}>
-                    {data?.lineOfSightDistance}
-                  </Text>
-                </View>
-
-                {!!data?.timeofLineOfSightDistance && (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      flex: 0.96,
-                    }}>
-                    <Image
-                      style={{
-                        tintColor: data?.is_vendor_closed
-                          ? colors.black
-                          : themeColors.primary_color,
-                        width: moderateScale(12),
-                        height: moderateScale(12),
-                        opacity: data?.is_vendor_closed ? 0.5 : 1,
-                      }}
-                      resizeMode="contain"
-                      source={imagePath.icTime2}
-                    />
-                    <Text numberOfLines={1} style={styles.distanceTimeStyle}>
-                      {checkEvenOdd(data?.timeofLineOfSightDistance)}-
-                      {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
-                    </Text>
-                  </View>
-                )}
-              </View>
-            )}
-            {/* {!!data?.timeofLineOfSightDistance ? (
-              <Text
-                numberOfLines={1}
-                style={{
-                  color: colors.greyLight,
-                  fontSize: textScale(10),
-                  fontFamily: fontFamily.regular,
-                  textAlign: 'left',
-                }}>
-                {`| ${data?.timeofLineOfSightDistance} mins`}
-              </Text>
-            ) : null} */}
-          </View>
-        </View>
+        <Text>Max saftety</Text>
         {!!data?.closed_store_order_scheduled ? (
           <Text
             style={{
@@ -334,10 +341,11 @@ export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme })
       textAlign: 'left',
     },
     mainImage: {
-      height: moderateScaleVertical(140),
+      height: moderateScaleVertical(180),
       width: '100%',
       borderTopRightRadius: moderateScale(9),
       borderTopLeftRadius: moderateScale(9),
+      padding: moderateScale(12)
     },
     descView: {
       marginTop: moderateScale(8),
@@ -355,8 +363,9 @@ export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme })
       alignItems: 'center',
       backgroundColor: colors.green,
       borderRadius: moderateScale(4),
-      paddingVertical: moderateScale(2),
-      paddingHorizontal: moderateScale(4),
+      paddingVertical: moderateScale(4),
+      paddingHorizontal: moderateScale(8),
+      alignSelf: 'flex-end'
     },
     distanceView: {
       marginTop: moderateScale(5),
@@ -364,11 +373,11 @@ export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme })
       justifyContent: 'space-between',
     },
     distanceTimeStyle: {
-      color: colors.greyLight,
-      fontSize: textScale(9),
+      color: colors.black,
+      fontSize: textScale(8),
       fontFamily: fontFamily.regular,
-      marginHorizontal: moderateScale(5),
       textAlign: 'left',
+      marginLeft: moderateScale(4)
     },
     currentlyUnavailable: {
       position: 'absolute',
