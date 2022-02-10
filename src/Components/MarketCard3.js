@@ -241,8 +241,6 @@ const MarketCard3 = ({
             </FastImage>
           </View>
         )}
-
-
       </View>
       <View style={{ padding: moderateScale(8) }}>
         <View style={styles.descView}>
@@ -257,7 +255,14 @@ const MarketCard3 = ({
           </Text>
 
           {!!data?.product_avg_average_rating && (
-            <View style={styles.ratingView}>
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              backgroundColor: colors.green,
+              borderRadius: moderateScale(4),
+              padding: 2,
+              paddingHorizontal: 6
+            }}>
               <Text
                 style={{
                   ...styles.ratingTxt,
@@ -302,7 +307,27 @@ const MarketCard3 = ({
             marginTop: moderateScaleVertical(2),
           }}
         />
-        {/* <Text>Max saftety</Text> */}
+
+        <View style={{
+          flexDirection: 'row', alignItems: 'center'
+        }}>
+          <Image style={{
+            width:50,
+            height:25,
+            marginTop:4
+          }} 
+          resizeMode='contain'
+          source={imagePath.icMegaSafe} 
+          />
+          <Text style={{
+            color: colors.greyLight,
+            fontSize: textScale(10),
+            fontFamily: fontFamily.regular,
+            marginTop: moderateScaleVertical(6),
+            marginLeft: moderateScale(8),
+            flex: 1
+          }}>Follow all Max Safety measures to ensure your food is safe</Text>
+        </View>
         {!!data?.closed_store_order_scheduled ? (
           <Text
             style={{
@@ -341,7 +366,7 @@ export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme })
       textAlign: 'left',
     },
     mainImage: {
-      height: moderateScaleVertical(180),
+      height: moderateScaleVertical(200),
       width: '100%',
       borderTopRightRadius: moderateScale(9),
       borderTopLeftRadius: moderateScale(9),

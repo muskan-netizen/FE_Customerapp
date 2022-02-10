@@ -187,7 +187,7 @@ export default function DashBoardFive({
     const imageUrl = getImageUrl(
       item.image.image_fit,
       item.image.image_path,
-      '400/600',
+      '800/600',
     );
 
     return (
@@ -205,9 +205,12 @@ export default function DashBoardFive({
             cache: FastImage.cacheControl.immutable,
           }}
           style={{
-            height: height / 3.8,
-            width: moderateScale(160),
+            height: moderateScale(140),
+            width: width / 1.2,
             borderRadius: moderateScale(16),
+            backgroundColor: isDarkMode
+              ? colors.whiteOpacity15
+              : colors.greyColor,
           }}
           resizeMode={FastImage.resizeMode.cover}
         />
@@ -268,10 +271,10 @@ export default function DashBoardFive({
                     <Text style={{
                       fontSize: textScale(10),
                       fontFamily: fontFamily.regular,
-         
+
                     }}>see more</Text>
                     <Image
-                      source={imagePath.icDropdown}
+                      source={imagePath.icDropdown4}
                       style={{
                         transform: [{ rotate: seeMore ? '180deg' : '0deg' }],
                         marginLeft: moderateScale(4)

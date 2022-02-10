@@ -1,4 +1,4 @@
-import {requireNativeComponent} from 'react-native';
+import { requireNativeComponent } from 'react-native';
 
 export default {
   dropdownTriangle: require('../assets/images/ic_dropdown.png'),
@@ -498,4 +498,6 @@ export default {
   activeTruck: require('../assets/images/ic_truck2.png'),
   inactiveTruck: require('../assets/images/ic_truck1.png'),
   icMic: require('../assets/images/ic_mic.png'),
+  icDropdown4: require('../assets/images/ic_drpdwn4.png'),
+  icMegaSafe: require('../assets/images/ic_label.png'),
 };
