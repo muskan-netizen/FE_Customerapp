@@ -210,8 +210,6 @@ export default function Cart({navigation, route}) {
 
   console.log('closed_store_order_scheduled', cartData);
 
-  console.log('closed_store_order_scheduled', cartData);
-
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
@@ -1054,6 +1052,7 @@ export default function Cart({navigation, route}) {
       updateState({placeLoader: true});
       var d1 = new Date();
       var d2 = new Date(sheduledorderdate);
+      console.log(d1, d2, 'Timetimetime');
       // if (!!selectedTimeSlots) {
       //   d2 = new Date(localeSheduledOrderDate)
       // } else {

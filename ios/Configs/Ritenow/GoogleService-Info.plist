@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>670215806874-326kki566s4svocf6otkkhv2vgb20koe.apps.googleusercontent.com</string>
+	<string>670215806874-iu4e3k5062fvbfp10tg5na4n6frsrb2k.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.670215806874-326kki566s4svocf6otkkhv2vgb20koe</string>
+	<string>com.googleusercontent.apps.670215806874-iu4e3k5062fvbfp10tg5na4n6frsrb2k</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>670215806874-4gpgq3k0jg6hbdtklsmr7dojaep56ja1.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.ritenow</string>
+	<string>com.app.ritenow</string>
 	<key>PROJECT_ID</key>
 	<string>ritenow-4c79c</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:670215806874:ios:66dcaac6daa3df9deca423</string>
+	<string>1:670215806874:ios:d3286a8f0445873beca423</string>
 </dict>
 </plist>
