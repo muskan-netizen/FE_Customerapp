@@ -18491,6 +18491,8 @@
 				84D47CEC26C1349700EE9EB5 /* Resources */,
 				A0D703590274267693FB14A7 /* [CP] Embed Pods Frameworks */,
 				6A8FB74B146D8323D4CE2A1C /* [CP] Copy Pods Resources */,
+				FE1CA21227B409560035FB6C /* Run Script */,
+				FE1CA21327B4095A0035FB6C /* Start Packager */,
 			);
 			buildRules = (
 			);
@@ -68130,6 +68132,42 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Yeboy/Pods-available_pods-Yeboy-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		FE1CA21227B409560035FB6C /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Tasmeem/Pods-available_pods-Tasmeem-frameworks.sh\"\n";
+		};
+		FE1CA21327B4095A0035FB6C /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n\nexport RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\nif nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\nif ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\necho \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\nexit 2\nfi\nelse\nopen \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\nfi\nfi\n";
 		};
 		FE593F0D27B3FF8D00FEFA45 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

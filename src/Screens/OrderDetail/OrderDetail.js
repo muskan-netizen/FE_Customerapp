@@ -144,18 +144,15 @@ export default function OrderDetail({navigation, route}) {
   const mapRef = useRef(null);
   const markerRef = useRef(null);
 
-  console.log(
-    cartData?.taxable_amount,
-    'cartData?.taxable_amountcartData?.taxable_amount +++++++',
-  );
+
 
   const moveToNewScreen =
     (screenName, data = {}) =>
     () => {
       navigation.navigate(screenName, {data});
     };
+
   const dialCall = (number, type = 'phone') => {
-    console.log(number, 'number');
     type === 'phone'
       ? Communications.phonecall(number.toString(), true)
       : Communications.text(number.toString());
@@ -172,9 +169,10 @@ export default function OrderDetail({navigation, route}) {
   //   }, [currencies, languages, paramData]),
   // );
 
+
   useInterval(
     () => {
-      if (paramData?.orderDetail?.dispatch_traking_url != null) {
+      if (paramData?.fromActive) {
         getOrders();
       }
     },
@@ -183,7 +181,6 @@ export default function OrderDetail({navigation, route}) {
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log('dfshsfjdhjkfhskjfh');
       getOrders();
       getUpdatedCartDetail();
     }, []),
@@ -204,7 +201,7 @@ export default function OrderDetail({navigation, route}) {
       )
     : null;
 
-  console.log(new_dispatch_traking_url, 'new_dispatch_traking_url');
+  // console.log(new_dispatch_traking_url, 'new_dispatch_traking_url');
 
   const getUpdatedCartDetail = () => {
     let data = {};
@@ -528,7 +525,7 @@ export default function OrderDetail({navigation, route}) {
                                 fontFamily: fontFamily.regular,
                               }}>
                               <Text style={{}}>
-                                {`${currencies?.primary_currency?.symbol}${
+                                {`${currencies?.primary_currency?.symbol} ${
                                   // Number(i?.pvariant?.multiplier) *
                                   currencyNumberFormatter(
                                     Number(i?.variants?.price).toFixed(2),
@@ -542,7 +539,7 @@ export default function OrderDetail({navigation, route}) {
                                     ? MyDarkTheme.colors.text
                                     : colors.black,
                                 }}>
-                                {`${currencies?.primary_currency?.symbol}${
+                                {`${currencies?.primary_currency?.symbol} ${
                                   // Number(i?.pvariant?.multiplier) *
                                   currencyNumberFormatter(
                                     Number(i?.variants?.quantity_price).toFixed(
@@ -734,7 +731,7 @@ export default function OrderDetail({navigation, route}) {
                       : styles2.priceItemLabel
                   }>{`- ${
                   currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
+                } ${currencyNumberFormatter(
                   Number(
                     item?.discount_amount ? item?.discount_amount : 0,
                   ).toFixed(2),
@@ -768,7 +765,7 @@ export default function OrderDetail({navigation, route}) {
                       : styles.priceItemLabel
                   }>{`${
                   currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
+                } ${currencyNumberFormatter(
                   Number(
                     item?.deliver_charge ? item?.deliver_charge : 0,
                   ).toFixed(2),
@@ -796,8 +793,7 @@ export default function OrderDetail({navigation, route}) {
                       ]
                     : styles.priceItemLabel2
                 }>
-                {currencies?.primary_currency?.symbol}
-                {currencyNumberFormatter(
+                {currencies?.primary_currency?.symbol} {currencyNumberFormatter(
                   Number(
                     item?.payable_amount ? item?.payable_amount : 0,
                   ).toFixed(2),
@@ -835,9 +831,7 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const _renderItem = ({item, index}) => {
-    console.log('checking timngs>>>', item);
-    // return <OffersCard />;
-    let {itemCount} = state;
+    
     return (
       <View
         style={{
@@ -954,7 +948,7 @@ export default function OrderDetail({navigation, route}) {
                                 alignItems: 'flex-end',
                               }}>
                               <Text style={styles.cartItemPrice}>
-                                {`${currencies?.primary_currency?.symbol}${
+                                {`${currencies?.primary_currency?.symbol} ${
                                   // Number(i?.pvariant?.multiplier) *
                                   currencyNumberFormatter(
                                     Number(i?.price).toFixed(2),
@@ -1089,7 +1083,7 @@ export default function OrderDetail({navigation, route}) {
                     : styles.priceItemLabel
                 }>{`- ${
                 currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
+              } ${currencyNumberFormatter(
                 Number(
                   item?.discount_amount ? item?.discount_amount : 0,
                 ).toFixed(2),
@@ -1150,7 +1144,7 @@ export default function OrderDetail({navigation, route}) {
                     : styles.priceItemLabel
                 }>{`${
                 currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
+              } ${currencyNumberFormatter(
                 Number(item?.delivery_fee ? item?.delivery_fee : 0).toFixed(2),
               )}`}</Text>
             </View>
@@ -1175,7 +1169,7 @@ export default function OrderDetail({navigation, route}) {
                   : colors.blackOpacity86,
               }}>{`${
               currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
+            } ${currencyNumberFormatter(
               Number(item?.payable_amount ? item?.payable_amount : 0).toFixed(
                 2,
               ),
@@ -1254,7 +1248,7 @@ export default function OrderDetail({navigation, route}) {
                   : styles.priceItemLabel
               }>{`-${
               currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
+            } ${currencyNumberFormatter(
               Number(
                 cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
               ).toFixed(2),
@@ -1290,7 +1284,7 @@ export default function OrderDetail({navigation, route}) {
                   : styles.priceItemLabel
               }>{`-${
               currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
+            } ${currencyNumberFormatter(
               Number(
                 cartData?.loyalty_amount_saved
                   ? cartData?.loyalty_amount_saved
@@ -1329,7 +1323,7 @@ export default function OrderDetail({navigation, route}) {
                   : styles.priceItemLabel
               }>{`-${
               currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
+            } ${currencyNumberFormatter(
               Number(cartData?.total_discount).toFixed(2),
             )}`}</Text>
           </View>
@@ -1399,7 +1393,7 @@ export default function OrderDetail({navigation, route}) {
                 : styles.priceItemLabel2
             }>{`${
             currencies?.primary_currency?.symbol
-          }${currencyNumberFormatter(
+          } ${currencyNumberFormatter(
             Number(cartData?.payable_amount).toFixed(2),
           )}`}</Text>
         </View>
@@ -1407,26 +1401,7 @@ export default function OrderDetail({navigation, route}) {
     );
   };
 
-  // console.log(
-  //   cartData?.total_service_fee,
-  //   'total_service_fee',
-  //   cartData?.total_amount,
-  //   'cartData?.total_amount',
-  //   cartData?.total_delivery_fee,
-  //   'cartData?.total_delivery_fee',
-  //   cartData?.wallet_amount_used,
-  //   'cartData?.wallet_amount_used',
-  //   cartData?.taxable_amount,
-  //   'cartData?.taxable_amount',
-  //   cartData?.loyalty_amount_saved,
-  //   'cartData?.loyalty_amount_saved',
-  //   cartData?.tip_amount,
-  //   'cartData?.tip_amount',
-  //   cartData?.total_discount,
-  //   'cartData?.total_discount',
-  //   cartData?.payable_amount,
-  //   'cartData?.payable_amount',
-  // );
+
   Number(cartData?.total_service_fee) + Number(cartData?.taxable_amount);
   const getFooter = () => {
     return (
@@ -1714,7 +1689,7 @@ export default function OrderDetail({navigation, route}) {
               leftText={strings.SUBTOTAL}
               rightText={`${
                 currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
+              } ${currencyNumberFormatter(
                 Number(cartData?.total_amount).toFixed(2),
               )}`}
               isDarkMode={isDarkMode}
@@ -1727,7 +1702,7 @@ export default function OrderDetail({navigation, route}) {
                 leftText={strings.DELIVERY_FEE}
                 rightText={`${
                   currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
+                } ${currencyNumberFormatter(
                   Number(cartData?.total_delivery_fee).toFixed(2),
                 )}`}
                 isDarkMode={isDarkMode}
@@ -1740,7 +1715,7 @@ export default function OrderDetail({navigation, route}) {
                 leftText={strings.WALLET}
                 rightText={`${
                   currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
+                } ${currencyNumberFormatter(
                   Number(cartData?.wallet_amount_used).toFixed(2),
                 )}`}
                 isDarkMode={isDarkMode}
@@ -1753,7 +1728,7 @@ export default function OrderDetail({navigation, route}) {
               leftText={strings.TAXES_FEES}
               rightText={`${
                 currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
+              } ${currencyNumberFormatter(
                 (
                   Number(cartData?.total_service_fee) +
                   Number(cartData?.taxable_amount)
@@ -1769,7 +1744,7 @@ export default function OrderDetail({navigation, route}) {
                 leftText={strings.LOYALTY}
                 rightText={`${
                   currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
+                } ${currencyNumberFormatter(
                   Number(cartData?.loyalty_amount_saved).toFixed(2),
                 )}`}
                 isDarkMode={isDarkMode}
@@ -1781,7 +1756,7 @@ export default function OrderDetail({navigation, route}) {
               leftText={strings.TIP_AMOUNT}
               rightText={`${
                 currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
+              } ${currencyNumberFormatter(
                 Number(cartData?.tip_amount).toFixed(2),
               )}`}
               isDarkMode={isDarkMode}
@@ -1794,7 +1769,7 @@ export default function OrderDetail({navigation, route}) {
                 leftText={strings.DISCOUNT}
                 rightText={`-${
                   currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
+                } ${currencyNumberFormatter(
                   Number(cartData?.total_discount).toFixed(2),
                 )}`}
                 isDarkMode={isDarkMode}
@@ -1813,7 +1788,7 @@ export default function OrderDetail({navigation, route}) {
             leftText={strings.TOTAL}
             rightText={`${
               currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
+            } ${currencyNumberFormatter(
               Number(cartData?.payable_amount).toFixed(2),
             )}`}
             isDarkMode={isDarkMode}
@@ -2047,7 +2022,7 @@ export default function OrderDetail({navigation, route}) {
     }
   };
 
-  console.log('order status+++', orderStatus);
+
 
   const onCenter = () => {
     mapRef.current.fitToCoordinates(
@@ -2073,8 +2048,6 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const acceptRejectDriverUpdation = (status) => {
-    console.log(updatedcartData, 'updatedcartData');
-
     if (
       status == 1 &&
       updatedcartData &&
@@ -2090,7 +2063,7 @@ export default function OrderDetail({navigation, route}) {
       data['status'] = status;
       data['total_payable_amount'] = updatedcartData?.difference_to_be_paid;
 
-      console.log(data, 'upadted cart data');
+
       updateState({isLoading: true});
       actions
         .acceptRejectDriveUpdate(data, {
@@ -2102,7 +2075,6 @@ export default function OrderDetail({navigation, route}) {
         })
         .then((res) => {
           showSuccess(res?.message);
-          console.log(res, 'acceptRejectDriveUpdate');
           // updateState({isLoading: false});
           _getOrderDetailScreen();
         })
@@ -2130,7 +2102,7 @@ export default function OrderDetail({navigation, route}) {
                 : styles2.priceItemLabel
             }>{`${
             currencies?.primary_currency?.symbol
-          }${currencyNumberFormatter(
+          } ${currencyNumberFormatter(
             Number(updatedcartData?.gross_paybale_amount).toFixed(2),
           )}`}</Text>
         </View>
@@ -2151,7 +2123,7 @@ export default function OrderDetail({navigation, route}) {
                   : styles2.priceItemLabel
               }>{`${
               currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
+            } ${currencyNumberFormatter(
               Number(
                 updatedcartData?.wallet_amount
                   ? updatedcartData?.wallet_amount
@@ -2177,7 +2149,7 @@ export default function OrderDetail({navigation, route}) {
                   : styles2.priceItemLabel
               }>{`-${
               currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
+            } ${currencyNumberFormatter(
               Number(
                 updatedcartData?.loyalty_amount
                   ? updatedcartData?.loyalty_amount
@@ -2204,7 +2176,7 @@ export default function OrderDetail({navigation, route}) {
                   : styles2.priceItemLabel
               }>{`-${
               currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
+            } ${currencyNumberFormatter(
               Number(
                 updatedcartData?.wallet_amount_used
                   ? updatedcartData?.wallet_amount_used
@@ -2230,7 +2202,7 @@ export default function OrderDetail({navigation, route}) {
                   : styles2.priceItemLabel
               }>{`-${
               currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
+            } ${currencyNumberFormatter(
               Number(updatedcartData?.total_subscription_discount).toFixed(2),
             )}`}</Text>
           </View>
@@ -2275,7 +2247,7 @@ export default function OrderDetail({navigation, route}) {
                   : styles2.priceItemLabel
               }>{`${
               currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
+            } ${currencyNumberFormatter(
               (
                 Number(
                   updatedcartData?.total_tax ? updatedcartData?.total_tax : 0,
@@ -2317,7 +2289,7 @@ export default function OrderDetail({navigation, route}) {
                       fontSize: textScale(11),
                     }}>{`${
                     currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
+                  } ${currencyNumberFormatter(
                     Number(
                       updatedcartData?.total_service_fee
                         ? updatedcartData?.total_service_fee
@@ -2349,7 +2321,7 @@ export default function OrderDetail({navigation, route}) {
                       fontSize: textScale(11),
                     }}>{`${
                     currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
+                  } ${currencyNumberFormatter(
                     Number(
                       updatedcartData?.total_tax
                         ? updatedcartData?.total_tax
@@ -2377,7 +2349,7 @@ export default function OrderDetail({navigation, route}) {
                 : styles2.priceItemLabel2
             }>{`${
             currencies?.primary_currency?.symbol
-          }${currencyNumberFormatter(
+          } ${currencyNumberFormatter(
             (
               Number(updatedcartData?.total_payable_amount) +
               (selectedTipAmount != null && selectedTipAmount != ''
@@ -2421,7 +2393,7 @@ export default function OrderDetail({navigation, route}) {
                     ]
               }>{`${
               currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
+            } ${currencyNumberFormatter(
               Number(updatedcartData?.total_payable_amount).toFixed(2),
             )}`}</Text>
             <Text
@@ -2431,7 +2403,7 @@ export default function OrderDetail({navigation, route}) {
                   : styles2.priceItemLabel2
               }>{`${
               currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
+            } ${currencyNumberFormatter(
               Number(updatedcartData?.difference_to_be_paid).toFixed(2),
             )}`}</Text>
           </View>
@@ -2846,7 +2818,6 @@ export default function OrderDetail({navigation, route}) {
 
   const animate = (latitude, longitude) => {
     const newCoordinate = {latitude, longitude};
-    console.log('animated coorindate ++++', state.animateDriver);
     if (Platform.OS == 'android') {
       if (markerRef.current) {
         markerRef.current.animateMarkerToCoordinate(newCoordinate, 3000);

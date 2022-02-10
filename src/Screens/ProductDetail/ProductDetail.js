@@ -1099,7 +1099,7 @@ export default function ProductDetail({ route, navigation }) {
                         color: isDarkMode
                           ? MyDarkTheme.colors.text
                           : colors.black,
-                      }}>{`${currencies?.primary_currency.symbol}${(
+                      }}>{`${currencies?.primary_currency.symbol} ${(
                         Number(productPriceData?.multiplier) *
                         Number(productPriceData?.price)
                       ).toFixed(2)}`}</Text>
@@ -1329,7 +1329,7 @@ export default function ProductDetail({ route, navigation }) {
                           }}
                           onPress={addToCart}
                           btnText={`${strings.ADD}  ${currencies?.primary_currency?.symbol
-                            }${currencyNumberFormatter(
+                            } ${currencyNumberFormatter(
                               (
                                 Number(productPriceData?.multiplier) *
                                 Number(productPriceData?.price) *

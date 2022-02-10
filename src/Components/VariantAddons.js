@@ -1497,7 +1497,7 @@ const VariantAddons = ({
                       }}
                       onPress={() => addToCart(addonSet)}
                       btnText={`${strings.ADD_ITEM} - ${currencies?.primary_currency?.symbol
-                        }${getAdditionalPriceOfAddons()}`}
+                        } ${getAdditionalPriceOfAddons()}`}
                       btnStyle={{
                         borderRadius: moderateScale(4),
                         height: moderateScale(38),

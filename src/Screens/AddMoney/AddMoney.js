@@ -530,11 +530,12 @@ export default function AddMoney({navigation}) {
                   : colors.textGreyJ,
               }}>
               <Text
-                style={
-                  isDarkMode
-                    ? [styles.currencySymble, {color: MyDarkTheme.colors.text}]
-                    : styles.currencySymble
-                }>
+                style={{
+                  ...styles.currencySymble,
+                  color: isDarkMode? MyDarkTheme.colors.text: colors.black
+                 
+               } }
+                >
                 {currencies?.primary_currency?.symbol}
               </Text>
               <TextInput
@@ -544,7 +545,7 @@ export default function AddMoney({navigation}) {
                         styles.addMoneyInputField,
                         {
                           marginLeft: moderateScale(10),
-                          width: width - 50,
+                          // width: width - 50,
                           color: MyDarkTheme.colors.text,
                         },
                       ]
