@@ -510,6 +510,15 @@ export default function DashBoardHeaderFive({
           )}
         </View>
 
+               <View 
+               style={{
+                 flexDirection:'row',
+                 alignItems:'center',
+                 height:moderateScale(30),
+                 width:moderateScale(80),
+           
+                }}
+               >    
         <TouchableOpacity
           style={{marginHorizontal: moderateScale(8)}}
           onPress={() =>
@@ -526,29 +535,39 @@ export default function DashBoardHeaderFive({
               style={{
                 height: moderateScale(43),
                 width: moderateScale(30),
+                marginLeft:moderateScale(-2)
               }}
               source={voiceListen}
               autoPlay
               loop
-              // colorFilters={[
-              //   { keypath: "pill top", color:  themeColors.primary_color },
-              //   { keypath: "pill down", color:  themeColors.primary_color },
-              //   { keypath: "layers", color: themeColors.primary_color },
-              //   { keypath: "Rectangle Path 1", color: themeColors.primary_color },
-              //   { keypath: "Trim Paths 1", color: themeColors.primary_color },
-              //   { keypath: "Ellipse Path 1", color: themeColors.primary_color },
-              //   { keypath: "Fill 1", color: themeColors.primary_color },
-              //   { keypath: "Ellipse 1", color: themeColors.primary_color },
-              //   { keypath: "ADBE Vector Graphic - Fill", color: themeColors.primary_color },
-              //   { keypath: "shapes", color: themeColors.primary_color },
-              //   { keypath: "Shape Layer 7", color: themeColors.primary_color },
-              //   { keypath: "Shape Layer 6", color: themeColors.primary_color },
-              //   { keypath: "Shape Layer 5", color: themeColors.primary_color },
-              //   { keypath: "Shape Layer 20", color: themeColors.primary_color },
-              //   { keypath: "Shape Layer 19", color: themeColors.primary_color },
-              //   { keypath: "Shape Layer 18", color: themeColors.primary_color },
-              //   { keypath: "Shape Layer 17", color: themeColors.primary_color },
-              // ]}
+              colorFilters={[
+                // { keypath: "pill top", color:  themeColors.primary_color },
+                // { keypath: "pill down", color:  themeColors.primary_color },
+                // { keypath: "layers", color: themeColors.primary_color },
+                // { keypath: "Rectangle Path 1", color: themeColors.primary_color },
+                // { keypath: "Trim Paths 1", color: themeColors.primary_color },
+                // { keypath: "Ellipse Path 1", color: themeColors.primary_color },
+                // { keypath: "Fill 1", color: themeColors.primary_color },
+                // { keypath: "Ellipse 1", color: themeColors.primary_color },
+                // { keypath: "ADBE Vector Graphic - Fill", color: themeColors.primary_color },
+                // { keypath: "shapes", color: themeColors.primary_color },
+                // { keypath: "Stroke 1", color: themeColors.primary_color },
+                // { keypath: "Rectangle 1", color: themeColors.primary_color },
+                // { keypath: "ADBE Vector Filter - Trim", color: themeColors.primary_color },
+                // { keypath: "ADBE Vector Graphic - Stroke", color: themeColors.primary_color },
+                // { keypath: "ADBE Vector Group", color: themeColors.primary_color },
+                // { keypath: "Transform", color: 'rgba(237,220,75,0)' },
+                // { keypath: "Rectangle 1", color: themeColors.primary_color },
+                // { keypath: "transparent2", color: themeColors.primary_color },
+                // { keypath: "Shape Layer 18", color: themeColors.primary_color },
+                // { keypath: "Shape Layer 17", color: themeColors.primary_color },
+                // { keypath: "Shape Layer 19", color: themeColors.primary_color },
+                // { keypath: "Shape Layer 18", color: themeColors.primary_color },
+                // { keypath: "Shape Layer 17", color: themeColors.primary_color },
+                // { keypath: "Shape Layer 19", color: themeColors.primary_color },
+                // { keypath: "Shape Layer 18", color: themeColors.primary_color },
+                // { keypath: "Shape Layer 17", color: themeColors.primary_color },
+              ]}
             />
           </TouchableOpacity>
         ) : (
@@ -557,11 +576,17 @@ export default function DashBoardHeaderFive({
             onPress={_onVoiceListen}>
             <Image
                 source={imagePath.icVoice}
-                style={{ height: 20, width: 20, borderRadius:10, tintColor: themeColors.primary_color}}
+                style={{ 
+                  height: moderateScale(20), 
+                  width: moderateScale(20), 
+                  borderRadius:moderateScale(10),
+                   tintColor: themeColors.primary_color
+                  }}
                 resizeMode='contain'
               />
           </TouchableOpacity>
         )}
+        </View> 
         {/* {tabs.length > 1 && (
           <TouchableOpacity
             activeOpacity={0.7}

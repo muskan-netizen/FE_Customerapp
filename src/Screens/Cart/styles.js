@@ -157,10 +157,8 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     // cart item design start from here
     cartItemMainContainer: {
       flexDirection: 'row',
-      paddingTop: moderateScaleVertical(10),
-      paddingHorizontal: moderateScale(10),
-      paddingBottom: moderateScale(2),
-      // backgroundColor: colors.white,
+      padding: moderateScaleVertical(8),
+      borderRadius:moderateScale(10),
     },
     cartItemImage: {
       height: width / 4.5,

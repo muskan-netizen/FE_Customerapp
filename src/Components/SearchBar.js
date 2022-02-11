@@ -93,7 +93,7 @@ const SearchBar = ({
             <TouchableOpacity onPress={onVoiceListen}>
               <Image
                 source={imagePath.icVoice}
-                style={{ height: 20, width: 20, borderRadius:10, tintColor: themeColors.primary_color}}
+                style={{ height: moderateScale(20), width: moderateScale(20), borderRadius:moderateScale(10), tintColor: themeColors.primary_color}}
                 resizeMode='contain'
               />
             </TouchableOpacity>

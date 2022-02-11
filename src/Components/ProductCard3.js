@@ -496,8 +496,11 @@ const ProductCard3 = ({
                       }}>
                       {selectedItemID == data?.id && btnLoader ? (
                         <UIActivityIndicator
-                          size={moderateScale(18)}
+                          size={moderateScale(16)}
                           color={themeColors.primary_color}
+                          style={{
+                            marginHorizontal: moderateScale(8),
+                          }}
                         />
                       ) : (
                         // {/* {selectedItemIndx === index &&
@@ -525,7 +528,7 @@ const ProductCard3 = ({
                                 fontSize: moderateScale(14),
                                 color: themeColors.primary_color,
                                 // height: moderateScale(100),
-                                marginHorizontal: moderateScale(4),
+                                marginHorizontal: moderateScale(12),
                               }}>
                               {/* {qtyText || data?.qty || totalProductQty} */}
                               {qtyText}
@@ -620,6 +623,7 @@ function styleData({ themeColors, fontFamily }) {
       fontSize: textScale(10),
       color: themeColors.primary_color,
       fontFamily: fontFamily.bold,
+      marginHorizontal: moderateScale(16),
     },
     addBtnStyle: {
       borderWidth: StyleSheet.hairlineWidth,
@@ -628,7 +632,7 @@ function styleData({ themeColors, fontFamily }) {
       borderColor: themeColors.primary_color,
       justifyContent: 'center',
       alignItems: 'center',
-      minWidth: moderateScale(74),
+      minWidth: moderateScale(50),
       height: moderateScaleVertical(35),
 
       // flexDirection:"row"

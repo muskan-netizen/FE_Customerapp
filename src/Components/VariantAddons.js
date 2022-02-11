@@ -1267,7 +1267,6 @@ const VariantAddons = ({
             bounces={false}
             // onScroll={onScroll}
             style={{
-              ...styles.modalMainViewContainer,
               backgroundColor: isDarkMode
                 ? MyDarkTheme.colors.background
                 : '#fff',
@@ -1556,8 +1555,8 @@ const styles = StyleSheet.create({
   modalMainViewContainer: {
     flex: 1,
     backgroundColor: colors.white,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderTopLeftRadius: moderateScale(8),
+    borderTopRightRadius: moderateScale(8),
     // overflow: 'hidden',
     // paddingHorizontal: moderateScale(24),
   },

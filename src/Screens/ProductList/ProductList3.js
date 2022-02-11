@@ -81,6 +81,7 @@ import FilterComp from '../../Components/FilterComp';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
 import Share from 'react-native-share';
 import { BlurView } from '@react-native-community/blur';
+import HomeLoader from '../../Components/Loaders/HomeLoader';
 
 let timeOut = undefined;
 
@@ -2358,7 +2359,7 @@ export default function Products({ route, navigation }) {
                 alignSelf: 'center',
                 borderBottomWidth: 1,
                 borderBottomColor: colors.greyMedium,
-                // marginBottom: moderateScale(15),
+                marginBottom: moderateScale(16),
                 paddingBottom: moderateScaleVertical(10),
                 paddingHorizontal: moderateScale(12),
 
@@ -2676,41 +2677,96 @@ export default function Products({ route, navigation }) {
             ? MyDarkTheme.colors.background
             : colors.white,
         }}>
-        <SafeAreaView>
-          <HeaderLoader
-            widthLeft={20}
-            rectWidthLeft={20}
-            widthRight={20}
-            rectWidthRight={20}
-            heightLeft={20}
-            rectHeightLeft={20}
-            heightRight={20}
-            rectHeightRight={20}
-            rx={5}
-            ry={5}
-            viewStyles={{ marginTop: moderateScale(10) }}
-          />
+
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+        >
           {true ? (
             <View>
               <View style={{ height: moderateScale(16) }} />
               <HeaderLoader
                 viewStyles={{
-                  marginHorizontal: moderateScale(20),
-                  marginBottom: moderateScale(10),
+                  // marginHorizontal: moderateScale(20),
+                  // marginBottom: moderateScale(10),
+                  marginHorizontal: 0,
                 }}
-                widthLeft={width - moderateScale(40)}
-                rectWidthLeft={width - moderateScale(40)}
+                widthLeft={width}
+                rectWidthLeft={width}
                 heightLeft={moderateScaleVertical(100)}
                 rectHeightLeft={moderateScaleVertical(100)}
                 isRight={false}
-                rx={8}
-                ry={8}
+                rx={4}
+                ry={4}
               />
+
+              <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginHorizontal: moderateScale(16),
+                marginTop: moderateScaleVertical(16)
+              }}>
+                <HomeLoader
+                  height={20}
+                  rectHeight={20}
+                  rectWidth={60}
+                  width={60}
+                />
+                <HomeLoader
+                  height={20}
+                  rectHeight={20}
+                  rectWidth={60}
+                  width={60}
+                />
+              </View>
+              <View style={{
+                ...styles.horizontalLine,
+                marginVertical: 16
+              }} />
+
+              <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginHorizontal: moderateScale(16),
+                marginBottom: moderateScaleVertical(16)
+              }}>
+                <HomeLoader
+                  height={20}
+                  rectHeight={20}
+                  rectWidth={60}
+                  width={60}
+                />
+                <View style={{ marginRight: moderateScale(16) }} />
+                <HomeLoader
+                  height={20}
+                  rectHeight={20}
+                  rectWidth={60}
+                  width={60}
+                />
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <HomeLoader
+                  width={width / 1.2}
+                  height={34}
+                  rectHeight={34}
+                  rectWidth={width / 1.2}
+                  viewStyles={{
+                    marginHorizontal: 16
+                  }}
+                />
+                {/* <View style={{ marginHorizontal: moderateScale(16) }} /> */}
+                <HomeLoader
+                  height={25}
+                  width={25}
+                  rectHeight={25}
+                  rectWidth={25}
+                />
+              </View>
             </View>
           ) : (
             <View style={{ marginBottom: moderateScaleVertical(16) }} />
           )}
-          <View style={{ marginHorizontal: moderateScale(16) }}>
+          <View style={{ marginHorizontal: moderateScale(16), marginTop: moderateScaleVertical(16) }}>
             <ProductListLoader3 />
             <View style={{ marginBottom: moderateScaleVertical(12) }} />
             <ProductListLoader3 />
@@ -2730,7 +2786,7 @@ export default function Products({ route, navigation }) {
               <View style={{ marginBottom: moderateScaleVertical(12) }} />
             </View>
           )}
-        </SafeAreaView>
+        </ScrollView>
       </View>
     );
   }
@@ -2748,8 +2804,7 @@ export default function Products({ route, navigation }) {
       <View
         style={{
           height: 0,
-          borderTopLeftRadius: 20,
-          backgroundColor: 'rgba(0,0,0,0)',
+          backgroundColor: 'transparent',
         }}
       />
     )
@@ -2897,8 +2952,8 @@ export default function Products({ route, navigation }) {
         />
         <View style={{
           ...styles.horizontalLine,
-          marginBottom:moderateScaleVertical(16)
-          }} />
+          marginBottom: moderateScaleVertical(16)
+        }} />
       </Animatable.View>
     );
   };
@@ -3318,11 +3373,8 @@ export default function Products({ route, navigation }) {
               keyboardShouldPersistTaps="handled"
               showsVerticalScrollIndicator={false}
               style={{
-                borderTopLeftRadius: moderateScale(15),
-                borderTopRightRadius: moderateScale(15),
-                backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.background
-                  : colors.white,
+
+
               }}>
               <VariantAddons
                 addonSet={selectedCartItem?.add_on}

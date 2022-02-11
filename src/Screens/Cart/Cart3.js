@@ -1542,7 +1542,7 @@ export default function Cart({ navigation, route }) {
           <View
             style={{
               ...styles.vendorView,
-              paddingHorizontal: moderateScale(8),
+              // paddingHorizontal: moderateScale(8),
               flexDirection: 'column',
             }}>
             <Text
@@ -1595,13 +1595,15 @@ export default function Cart({ navigation, route }) {
                         ? MyDarkTheme.colors.lightDark
                         : colors.transactionHistoryBg,
                       marginBottom: moderateScaleVertical(12),
-                      marginRight: moderateScale(8),
+                      // marginRight: moderateScale(8),
                       borderRadius: moderateScale(10),
                       transform: [],
-                      minHeight: height * 0.125,
+                      // minHeight: height * 0.125,
                     }}
                     key={inx}>
-                    <View style={[styles.cartItemMainContainer]}>
+                    <View style={{
+                      ...styles.cartItemMainContainer
+                      }}>
                       <View
                         style={[
                           styles.cartItemImage,
