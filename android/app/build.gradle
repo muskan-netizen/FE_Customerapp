@@ -329,16 +329,16 @@ android {
       //       resValue "string", "app_name", "Bottoms Up"
       //       resValue "string", "host_name", ""
       //   }
-      //    ufood{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion
-      //       applicationId 'com.ufood'
-      //       resValue "string", "app_name", "UFood"
-      //       resValue "string", "host_name", ""
-      //   }
+         ufood{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.order.ufood'
+            resValue "string", "app_name", "UFood"
+            resValue "string", "host_name", ""
+        }
       //   martinionwheels{
       //       dimension "appType"
       //       versionCode 1
@@ -1939,16 +1939,16 @@ android {
       //       resValue "string", "app_name", "Hokitch"
       //       resValue "string", "host_name", ""
       //    }
-      //     foodnests{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.foodnests'
-      //       resValue "string", "app_name", "FoodNests"
-      //       resValue "string", "host_name", ""
-      //    }
+        //   foodnests{
+        //     dimension "appType"
+        //     versionCode 1
+        //     versionName "1.0"
+        //     minSdkVersion rootProject.ext.minSdkVersion
+        //     targetSdkVersion rootProject.ext.targetSdkVersion         
+        //     applicationId 'com.foodnests'
+        //     resValue "string", "app_name", "FoodNests"
+        //     resValue "string", "host_name", ""
+        //  }
       //    sponge{
       //       dimension "appType"
       //       versionCode 1
@@ -2491,6 +2491,26 @@ android {
       //       resValue "string", "app_name", "Bluebolt"
       //       resValue "string", "host_name", ""
       //    }
+    //    meatEasy{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion         
+    //         applicationId 'com.meatEasy'
+    //         resValue "string", "app_name", "Meat Easy"
+    //         resValue "string", "host_name", ""
+    //      }
+    //      boltDelivery{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion         
+    //         applicationId 'com.boltDelivery'
+    //         resValue "string", "app_name", "Bolt Delivery Services"
+    //         resValue "string", "host_name", ""
+    //      }
 
     }
 }

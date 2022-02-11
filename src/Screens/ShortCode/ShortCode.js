@@ -1456,6 +1456,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.meatEasy:
+          updateState({
+            shortCode: shortCodes.meatEasy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.boltDelivery:
+          updateState({
+            shortCode: shortCodes.boltDelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
