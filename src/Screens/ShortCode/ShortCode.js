@@ -25,6 +25,8 @@ import RNFetchBlob from 'rn-fetch-blob-v2';
 import {MaterialIndicator} from 'react-native-indicators';
 import * as NavigationService from '../../navigation/NavigationService';
 import {enums} from '../../utils/enums';
+import {MyDarkTheme} from '../../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
 
 const fs = RNFetchBlob.fs;
 
@@ -56,6 +58,13 @@ export default function ShortCode({route, navigation}) {
     (state) => state?.initBoot,
   );
   const userData = useSelector((state) => state.auth.userData);
+  const {themeColors} = useSelector((state) => state?.initBoot);
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+
+  const customColor =  themeColors.primary_color;
 
   useEffect(() => {
     (async () => {
@@ -1662,11 +1671,14 @@ export default function ShortCode({route, navigation}) {
   // }
 
   return (
-    <WrapperContainer
-      statusBarColor={colors.white}
-      bgColor={colors.white}
-      isLoadingB={isLoading}
-      source={loaderOne}>
+    <View
+    style={{
+      flex: 1,
+      backgroundColor: isDarkMode
+        ? MyDarkTheme.colors.background
+        : colors.white,
+    }}
+      >
       {isShortcodePrefilled ? (
         <View style={{flex: 1}}>
           <View
@@ -1689,6 +1701,12 @@ export default function ShortCode({route, navigation}) {
           <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
         </View>
       ) : (
+        <WrapperContainer
+        statusBarColor={colors.white}
+        bgColor={colors.white}
+        isLoadingB={isLoading}
+        source={loaderOne}
+        >
         <View
           style={{
             paddingHorizontal: moderateScale(24),
@@ -1704,26 +1722,6 @@ export default function ShortCode({route, navigation}) {
           </Text>
 
           <View style={{height: 10}} />
-
-          {/* <CodeInput
-            // ref="codeInputRef2"
-            secureTextEntry
-            activeColor={colors.blueBackGroudB}
-            inactiveColor={colors.blueBackGroudB}
-            autoFocus={false}
-            inputPosition="center"
-            size={moderateScale(40)}
-            keyboardType={'default'}
-            codeLength={6}
-            borderType={'underline'}
-            onFulfill={(code) => onOtpInput(code)}
-            containerStyle={{margin: 10}}
-            codeInputStyle={{
-              borderBottomWidth: 1,
-              color: colors.blueBackGroudB,
-            }}
-          /> */}
-
           <SmoothPinCodeInput
             containerStyle={{alignSelf: 'center'}}
             password
@@ -1791,10 +1789,11 @@ export default function ShortCode({route, navigation}) {
 
           <View style={{height: 20}} />
         </View>
+        </WrapperContainer>
         // </KeyboardAwareScrollView>
       )}
 
       {/* </ScrollView> */}
-    </WrapperContainer>
+    </View>
   );
 }
