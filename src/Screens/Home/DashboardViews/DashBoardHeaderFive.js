@@ -530,6 +530,25 @@ export default function DashBoardHeaderFive({
               source={voiceListen}
               autoPlay
               loop
+              // colorFilters={[
+              //   { keypath: "pill top", color:  themeColors.primary_color },
+              //   { keypath: "pill down", color:  themeColors.primary_color },
+              //   { keypath: "layers", color: themeColors.primary_color },
+              //   { keypath: "Rectangle Path 1", color: themeColors.primary_color },
+              //   { keypath: "Trim Paths 1", color: themeColors.primary_color },
+              //   { keypath: "Ellipse Path 1", color: themeColors.primary_color },
+              //   { keypath: "Fill 1", color: themeColors.primary_color },
+              //   { keypath: "Ellipse 1", color: themeColors.primary_color },
+              //   { keypath: "ADBE Vector Graphic - Fill", color: themeColors.primary_color },
+              //   { keypath: "shapes", color: themeColors.primary_color },
+              //   { keypath: "Shape Layer 7", color: themeColors.primary_color },
+              //   { keypath: "Shape Layer 6", color: themeColors.primary_color },
+              //   { keypath: "Shape Layer 5", color: themeColors.primary_color },
+              //   { keypath: "Shape Layer 20", color: themeColors.primary_color },
+              //   { keypath: "Shape Layer 19", color: themeColors.primary_color },
+              //   { keypath: "Shape Layer 18", color: themeColors.primary_color },
+              //   { keypath: "Shape Layer 17", color: themeColors.primary_color },
+              // ]}
             />
           </TouchableOpacity>
         ) : (
@@ -537,13 +556,10 @@ export default function DashBoardHeaderFive({
             style={{marginHorizontal: moderateScale(8)}}
             onPress={_onVoiceListen}>
             <Image
-              style={{
-                tintColor: '#2A9CD7',
-                height: moderateScale(25),
-                width: moderateScale(25),
-              }}
-              source={imagePath.icMic}
-            />
+                source={imagePath.icVoice}
+                style={{ height: 20, width: 20, borderRadius:10, tintColor: themeColors.primary_color}}
+                resizeMode='contain'
+              />
           </TouchableOpacity>
         )}
         {/* {tabs.length > 1 && (

@@ -2473,12 +2473,13 @@ export default function Products({ route, navigation }) {
           contentContainerStyle={{ alignItems: 'center' }}>
           {ProductTags &&
             ProductTags.map((el, index) => {
+              console.log("elelelelel", el)
               return (
                 <View
                   key={index}
                   style={{
                     flexDirection: 'row',
-                    marginTop: moderateScale(20)
+                    // marginTop: moderateScale(20)
                   }}
                 >
                   <ToggleSwitch
@@ -2528,7 +2529,7 @@ export default function Products({ route, navigation }) {
           <View style={{
             flexDirection: "row",
             alignItems: 'center',
-            marginBottom: moderateScaleVertical(16),
+            marginBottom: moderateScaleVertical(8),
             marginHorizontal: moderateScale(12),
           }}>
 
@@ -2750,7 +2751,7 @@ export default function Products({ route, navigation }) {
           borderTopLeftRadius: 20,
           backgroundColor: 'rgba(0,0,0,0)',
         }}
-      /> 
+      />
     )
   }
 
@@ -2894,7 +2895,10 @@ export default function Products({ route, navigation }) {
           businessType={businessType}
           categoryInfo={categoryInfo}
         />
-        <View style={styles.horizontalLine} />
+        <View style={{
+          ...styles.horizontalLine,
+          marginBottom:moderateScaleVertical(16)
+          }} />
       </Animatable.View>
     );
   };

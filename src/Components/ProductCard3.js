@@ -279,9 +279,10 @@ const ProductCard3 = ({
         <View
           style={{
             flex: 0.8,
+
           }}>
           {/* Title View */}
-          <View>
+          <View style={{}}>
             {data && !!data?.tags && data?.tags.length > 0 ? (
               <View>
                 {!!data.tags[0]?.tag?.icon ? (
@@ -344,6 +345,7 @@ const ProductCard3 = ({
                 marginVertical: moderateScaleVertical(4),
                 borderColor: colors.yellowB,
                 backgroundColor: colors.yellowOpacity10,
+           
               }}>
               <StarRating
                 disabled={false}
@@ -361,6 +363,7 @@ const ProductCard3 = ({
             style={{
               paddingTop: moderateScale(5),
               paddingBottom: moderateScale(5),
+              
             }}>
             <Text
               numberOfLines={1}
@@ -369,6 +372,7 @@ const ProductCard3 = ({
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 fontSize: textScale(12),
                 fontFamily: fontFamily.regular,
+                
               }}>
               {`${currencies?.primary_currency?.symbol
                 } ${currencyNumberFormatter(
@@ -390,22 +394,17 @@ const ProductCard3 = ({
                   ? MyDarkTheme.colors.text
                   : colors.blackOpacity66,
                 textAlign: 'left',
+                
               }}>
               {data?.translation_description}
             </Text>
           </View>
         </View>
-
         <View
           style={{  
-            paddingBottom:
-              (!!data?.add_on && data?.add_on.length !== 0) ||
-                (!!data?.variantSet && data?.variantSet.length !== 0)
-                ? moderateScale(30)
-                : moderateScale(15),
             alignItems: 'center',
             flex:0.35,
-            marginRight: url1 ? 0 :  moderateScale(60)
+            marginRight: url1 ? 0 :  moderateScale(60),
           }}>
 
           {!!url1 ?
@@ -419,7 +418,7 @@ const ProductCard3 = ({
                 borderRadius: moderateScale(15),
                 height: moderateScale(100),
                 width: moderateScale(100),
-                // backgroundColor: 'red',
+
                 // padding:5
               }}>
               <FastImage
@@ -455,7 +454,7 @@ const ProductCard3 = ({
                   marginTop:
                     selectedIndex == index ? moderateScaleVertical(8) : 0,
                   alignItems: 'center',
-                  // backgroundColor: 'red',
+           
                 }}>
                 {(!!data?.check_if_in_cart_app &&
                   data?.check_if_in_cart_app.length > 0) ||
@@ -491,7 +490,7 @@ const ProductCard3 = ({
                     </TouchableOpacity>
                     <Animatable.View
                       style={{
-                        // backgroundColor: 'red',
+               
                         // height: 30,
                         overflow: 'hidden',
                       }}>

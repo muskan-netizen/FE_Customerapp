@@ -53,6 +53,7 @@ const MarketCard3 = ({
   extraStyles = {},
   fastImageStyle = {},
   imageResizeMode = 'cover',
+  isMaxSaftey = true
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -299,35 +300,38 @@ const MarketCard3 = ({
           </Text>
         ) : null}
 
-        <View
-          style={{
-            height: 1,
-            borderWidth: 0.5,
-            borderColor: 'rgba(1,1,1,0.05)',
-            marginTop: moderateScaleVertical(2),
-          }}
-        />
-
-        <View style={{
-          flexDirection: 'row', alignItems: 'center'
-        }}>
-          <Image style={{
-            width:50,
-            height:25,
-            marginTop:4
-          }} 
-          resizeMode='contain'
-          source={imagePath.icMegaSafe} 
-          />
-          <Text style={{
-            color: colors.greyLight,
-            fontSize: textScale(10),
-            fontFamily: fontFamily.regular,
-            marginTop: moderateScaleVertical(6),
-            marginLeft: moderateScale(8),
-            flex: 1
-          }}>Follow all Max Safety measures to ensure your food is safe</Text>
-        </View>
+        {isMaxSaftey ?
+          <View>
+            <View
+              style={{
+                height: 1,
+                borderWidth: 0.5,
+                borderColor: 'rgba(1,1,1,0.05)',
+                marginTop: moderateScaleVertical(2),
+              }}
+            />
+            <View style={{
+              flexDirection: 'row', alignItems: 'center'
+            }}>
+              <Image style={{
+                width: 50,
+                height: 25,
+                marginTop: 4
+              }}
+                resizeMode='contain'
+                source={imagePath.icMegaSafe}
+              />
+              <Text style={{
+                color: colors.greyLight,
+                fontSize: textScale(10),
+                fontFamily: fontFamily.regular,
+                marginTop: moderateScaleVertical(6),
+                marginLeft: moderateScale(8),
+                flex: 1
+              }}>Follow all Max Safety measures to ensure your food is safe</Text>
+            </View>
+          </View>
+          : null}
         {!!data?.closed_store_order_scheduled ? (
           <Text
             style={{

@@ -34,7 +34,7 @@ const SearchBar = ({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { appStyle } = useSelector((state) => state?.initBoot);
+  const { appStyle,themeColors } = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
   return (
@@ -92,8 +92,9 @@ const SearchBar = ({
           ) : (
             <TouchableOpacity onPress={onVoiceListen}>
               <Image
-                source={imagePath.icMic}
-                style={{ height: 30, width: 30, tintColor: '#2A9CD7' }}
+                source={imagePath.icVoice}
+                style={{ height: 20, width: 20, borderRadius:10, tintColor: themeColors.primary_color}}
+                resizeMode='contain'
               />
             </TouchableOpacity>
           )}
