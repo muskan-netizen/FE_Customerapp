@@ -2341,16 +2341,16 @@ android {
       //       resValue "string", "app_name", "Sijang"
       //       resValue "string", "host_name", ""
       //    }
-      //     fairex{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.fairex'
-      //       resValue "string", "app_name", "Fairex"
-      //       resValue "string", "host_name", ""
-      //    }
+          fairex{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.fairex'
+            resValue "string", "app_name", "Fairex"
+            resValue "string", "host_name", ""
+         }
       //     everywhere{
       //       dimension "appType"
       //       versionCode 1
@@ -2491,6 +2491,26 @@ android {
       //       resValue "string", "app_name", "Bluebolt"
       //       resValue "string", "host_name", ""
       //    }
+        onthego{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.customer.onthego'
+            resValue "string", "app_name", "ONTHEGO"
+            resValue "string", "host_name", ""
+         }
+        mylaglobal{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.mylaglobal'
+            resValue "string", "app_name", "Myla Global"
+            resValue "string", "host_name", ""
+         }
 
     }
 }

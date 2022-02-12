@@ -226,6 +226,8 @@ const shortCodes = {
   tumbak: '59944a',
   iPicknDrop: 'f9cf93',
   bluebolt: 'e5a64c',
+  onthego: '5e0900',
+  mylaglobal: 'a35cd8',
 };
 
 const appIds = {
@@ -1128,6 +1130,14 @@ const appIds = {
   bluebolt: Platform.select({
     ios: 'com.app.bluebolt',
     android: 'com.app.bluebolt',
+  }),
+  onthego: Platform.select({
+    ios: 'com.customer.onthego',
+    android: 'com.customer.onthego',
+  }),
+  mylaglobal: Platform.select({
+    ios: 'com.mylaglobal',
+    android: 'com.mylaglobal',
   }),
 };
 

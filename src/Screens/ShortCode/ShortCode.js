@@ -1456,6 +1456,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.onthego:
+          updateState({
+            shortCode: shortCodes.onthego,
+            isShortcodePrefilled: true,
+          });
+          break;
+          case appIds.mylaglobal:
+            updateState({
+              shortCode: shortCodes.mylaglobal,
+              isShortcodePrefilled: true,
+            });
+            break;
       }
     })();
   }, []);
