@@ -2218,7 +2218,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.myfiji'
-            resValue "string", "app_name", "My fiji"
+            resValue "string", "app_name", "Fiji eats"
             resValue "string", "host_name", ""
          } 
           fastmikes{
@@ -2519,6 +2519,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.gamaDelivery'
             resValue "string", "app_name", "Gama Delivery"
+            resValue "string", "host_name", ""
+         }
+     hivefair{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.hivefair'
+            resValue "string", "app_name", "Hivefair"
             resValue "string", "host_name", ""
          }
 

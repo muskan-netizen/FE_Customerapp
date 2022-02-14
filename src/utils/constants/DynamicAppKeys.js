@@ -229,6 +229,7 @@ const shortCodes = {
   meatEasy: '3e89e5',
   boltDelivery: '07a31a',
   gamaDelivery: 'b77561',
+  hivefair: 'f0cede',
 };
 
 const appIds = {
@@ -1143,6 +1144,10 @@ const appIds = {
   gamaDelivery: Platform.select({
     ios: 'com.gamaDelivery',
     android: 'com.gamaDelivery',
+  }),
+  hivefair: Platform.select({
+    ios: 'com.hivefair',
+    android: 'com.hivefair',
   }),
 };
 
