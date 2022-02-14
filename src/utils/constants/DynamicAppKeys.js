@@ -228,6 +228,7 @@ const shortCodes = {
   bluebolt: 'e5a64c',
   meatEasy: '3e89e5',
   boltDelivery: '07a31a',
+  gamaDelivery: 'b77561',
 };
 
 const appIds = {
@@ -1138,6 +1139,10 @@ const appIds = {
   boltDelivery: Platform.select({
     ios: 'com.boltDelivery',
     android: 'com.boltDelivery',
+  }),
+  gamaDelivery: Platform.select({
+    ios: 'com.gamaDelivery',
+    android: 'com.gamaDelivery',
   }),
 };
 

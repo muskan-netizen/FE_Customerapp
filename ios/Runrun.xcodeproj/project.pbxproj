@@ -3161,7 +3161,7 @@
 		847F6E2427203FDA00C7A32F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847F6E2327203FDA00C7A32F /* Images.xcassets */; };
 		847F6F1A2720428800C7A32F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847F6F192720428700C7A32F /* GoogleService-Info.plist */; };
 		8480076A26CE20340014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		8480076B26CE20340014F500 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		8480076B26CE20340014F500 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8480076C26CE20340014F500 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8480076D26CE20340014F500 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848007AD26CE260D0014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -3843,7 +3843,7 @@
 		848CB12D278D662700DD824C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848CB12C278D662700DD824C /* Images.xcassets */; };
 		848CB1FB278D66F400DD824C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848CB1FA278D66F300DD824C /* GoogleService-Info.plist */; };
 		848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		848CEF8126CE229D0077C918 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		848CEF8126CE229D0077C918 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		848CEF8226CE229D0077C918 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848CEF8326CE229D0077C918 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848D76B92748F70100FE87AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -4028,6 +4028,35 @@
 		8490391026EB865C00E4AE5A /* Groupy(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8490390F26EB865C00E4AE5A /* Groupy(Production).xcconfig */; };
 		8490396926EB866E00E4AE5A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8490396826EB866E00E4AE5A /* Images.xcassets */; };
 		849039C226EB86AF00E4AE5A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849039C126EB86AE00E4AE5A /* GoogleService-Info.plist */; };
+		8490F77927BA2EFC0094C373 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		8490F77A27BA2EFC0094C373 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
+		8490F77B27BA2EFC0094C373 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		8490F77E27BA2EFC0094C373 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8490F77F27BA2EFC0094C373 /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78C2681E47000CC5BA2 /* SFProDisplay-Regular.ttf */; };
+		8490F78027BA2EFC0094C373 /* Futura-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7902681E47100CC5BA2 /* Futura-Medium.ttf */; };
+		8490F78127BA2EFC0094C373 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8490F78227BA2EFC0094C373 /* CircularStd-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 844FDD1E2673989300C16835 /* CircularStd-Book.otf */; };
+		8490F78327BA2EFC0094C373 /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8490F78427BA2EFC0094C373 /* Futura Hv BT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78E2681E47100CC5BA2 /* Futura Hv BT.ttf */; };
+		8490F78527BA2EFC0094C373 /* SFProText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78D2681E47000CC5BA2 /* SFProText-Regular.ttf */; };
+		8490F78627BA2EFC0094C373 /* SFProText-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78F2681E47100CC5BA2 /* SFProText-SemiBold.ttf */; };
+		8490F78727BA2EFC0094C373 /* SFProText-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7942681E47100CC5BA2 /* SFProText-Medium.ttf */; };
+		8490F78927BA2EFC0094C373 /* notification.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84D1CDDD2703529C00C05E36 /* notification.wav */; };
+		8490F78B27BA2EFC0094C373 /* Plists in Resources */ = {isa = PBXBuildFile; fileRef = 84DD36D82653D9EF00E2097D /* Plists */; };
+		8490F78C27BA2EFC0094C373 /* Futura-Normal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7922681E47100CC5BA2 /* Futura-Normal.ttf */; };
+		8490F78D27BA2EFC0094C373 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8490F78E27BA2EFC0094C373 /* Futura-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7932681E47100CC5BA2 /* Futura-Book.ttf */; };
+		8490F78F27BA2EFC0094C373 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 844FDD1D2673989300C16835 /* CircularStd-Medium.otf */; };
+		8490F79027BA2EFC0094C373 /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8490F79127BA2EFC0094C373 /* FuturaBT-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78B2681E47000CC5BA2 /* FuturaBT-Heavy.ttf */; };
+		8490F79227BA2EFC0094C373 /* CircularStd-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844FDD1C2673989300C16835 /* CircularStd-Bold.ttf */; };
+		8490F79327BA2EFC0094C373 /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8490F79627BA2EFC0094C373 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
+		8490F79727BA2EFC0094C373 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8490FA5127BA30440094C373 /* GamaDelivery(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8490FA5027BA30440094C373 /* GamaDelivery(Development).xcconfig */; };
+		8490FB3827BA306A0094C373 /* GamaDelivery(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8490FB3727BA306A0094C373 /* GamaDelivery(Production).xcconfig */; };
+		8490FB3A27BA30860094C373 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8490FB3927BA30860094C373 /* Images.xcassets */; };
+		8490FC2127BA311E0094C373 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8490FC2027BA311D0094C373 /* GoogleService-Info.plist */; };
 		8491383926CB837E00AD4105 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		8491383A26CB837E00AD4105 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8491383B26CB837E00AD4105 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -6430,8 +6459,6 @@
 		84FFFFE426D6745600F2B059 /* YogoLift(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84FFFFE326D6745600F2B059 /* YogoLift(Production).xcconfig */; };
 		84FFFFE626D6747700F2B059 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84FFFFE526D6747700F2B059 /* Images.xcassets */; };
 		84FFFFE826D6754300F2B059 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84FFFFE726D6754200F2B059 /* GoogleService-Info.plist */; };
-		C11DF342D01E092404CA2912 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		EBE7375BB66D593DDBEFD9A9 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -7324,6 +7351,12 @@
 		8490396826EB866E00E4AE5A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		849039C126EB86AE00E4AE5A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84903B7626EB882F00E4AE5A /* Groupy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Groupy.entitlements; sourceTree = "<group>"; };
+		8490F79D27BA2EFC0094C373 /* GamaDelivery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GamaDelivery.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8490FA5027BA30440094C373 /* GamaDelivery(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "GamaDelivery(Development).xcconfig"; sourceTree = "<group>"; };
+		8490FB3727BA306A0094C373 /* GamaDelivery(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "GamaDelivery(Production).xcconfig"; sourceTree = "<group>"; };
+		8490FB3927BA30860094C373 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		8490FC2027BA311D0094C373 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8490FD0727BA320B0094C373 /* GamaDelivery.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GamaDelivery.entitlements; sourceTree = "<group>"; };
 		8491386A26CB837E00AD4105 /* Yummiidash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yummiidash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8493F5E826CB85F3006AD6AD /* Yummiidash(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Yummiidash(Development).xcconfig"; sourceTree = "<group>"; };
 		8493F65226CB861E006AD6AD /* Yummiidash(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Yummiidash(Production).xcconfig"; sourceTree = "<group>"; };
@@ -8865,6 +8898,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8490F77C27BA2EFC0094C373 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8491383C26CB837E00AD4105 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -9511,6 +9551,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				8490FD0727BA320B0094C373 /* GamaDelivery.entitlements */,
 				84F9602927B8C1BD001CA0B1 /* BoltDelivery.entitlements */,
 				8473132427B673E9006565B8 /* MeatEasy.entitlements */,
 				84B6DE3527B256DC00DBBF51 /* Bluebolt.entitlements */,
@@ -9981,6 +10022,7 @@
 				84B6D55627B252B900DBBF51 /* Bluebolt.app */,
 				8480CF4227B6346200F90362 /* MeatEasy.app */,
 				84F95AC627B8BD45001CA0B1 /* BoltDelivery.app */,
+				8490F79D27BA2EFC0094C373 /* GamaDelivery.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -10546,6 +10588,7 @@
 		844804B42653CF490050AA67 /* Configs */ = {
 			isa = PBXGroup;
 			children = (
+				8490F96A27BA300E0094C373 /* Gama Delivery */,
 				84F95AC827B8BE34001CA0B1 /* BoltDelivery */,
 				84730F8F27B6712A006565B8 /* MeatEasy */,
 				84B6D8E027B253B300DBBF51 /* Bluebolt */,
@@ -11774,6 +11817,17 @@
 				8490396826EB866E00E4AE5A /* Images.xcassets */,
 			);
 			path = Groupy;
+			sourceTree = "<group>";
+		};
+		8490F96A27BA300E0094C373 /* Gama Delivery */ = {
+			isa = PBXGroup;
+			children = (
+				8490FC2027BA311D0094C373 /* GoogleService-Info.plist */,
+				8490FA5027BA30440094C373 /* GamaDelivery(Development).xcconfig */,
+				8490FB3727BA306A0094C373 /* GamaDelivery(Production).xcconfig */,
+				8490FB3927BA30860094C373 /* Images.xcassets */,
+			);
+			path = "Gama Delivery";
 			sourceTree = "<group>";
 		};
 		8493F5B326CB85C3006AD6AD /* Yummiidash */ = {
@@ -15594,6 +15648,26 @@
 			productReference = 8490370026EB855600E4AE5A /* Groupy.app */;
 			productType = "com.apple.product-type.application";
 		};
+		8490F77627BA2EFC0094C373 /* GamaDelivery */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8490F79A27BA2EFC0094C373 /* Build configuration list for PBXNativeTarget "GamaDelivery" */;
+			buildPhases = (
+				8490F77727BA2EFC0094C373 /* Start Packager */,
+				8490F77827BA2EFC0094C373 /* Sources */,
+				8490F77C27BA2EFC0094C373 /* Frameworks */,
+				8490F77D27BA2EFC0094C373 /* Resources */,
+				8490F79827BA2EFC0094C373 /* Bundle React Native code and images */,
+				8490F79927BA2EFC0094C373 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GamaDelivery;
+			productName = Runrun;
+			productReference = 8490F79D27BA2EFC0094C373 /* GamaDelivery.app */;
+			productType = "com.apple.product-type.application";
+		};
 		8491383526CB837E00AD4105 /* Yummiidash */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8491386726CB837E00AD4105 /* Build configuration list for PBXNativeTarget "Yummiidash" */;
@@ -17719,6 +17793,10 @@
 						DevelopmentTeam = 6FXUMT5X23;
 						ProvisioningStyle = Automatic;
 					};
+					8490F77627BA2EFC0094C373 = {
+						DevelopmentTeam = 6FXUMT5X23;
+						ProvisioningStyle = Automatic;
+					};
 					8491383526CB837E00AD4105 = {
 						DevelopmentTeam = SK88RSGS75;
 						ProvisioningStyle = Automatic;
@@ -18278,6 +18356,7 @@
 				84B6D52827B252B900DBBF51 /* Bluebolt */,
 				8480CF1727B6346200F90362 /* MeatEasy */,
 				84F95A9A27B8BD45001CA0B1 /* BoltDelivery */,
+				8490F77627BA2EFC0094C373 /* GamaDelivery */,
 			);
 		};
 /* End PBXProject section */
@@ -23006,6 +23085,39 @@
 				849039C226EB86AF00E4AE5A /* GoogleService-Info.plist in Resources */,
 				849036F726EB855500E4AE5A /* SFProText-Bold.ttf in Resources */,
 				849036F826EB855500E4AE5A /* Eina02-SemiBold.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8490F77D27BA2EFC0094C373 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8490F77E27BA2EFC0094C373 /* Eina02-Regular.ttf in Resources */,
+				8490FB3A27BA30860094C373 /* Images.xcassets in Resources */,
+				8490F77F27BA2EFC0094C373 /* SFProDisplay-Regular.ttf in Resources */,
+				8490F78027BA2EFC0094C373 /* Futura-Medium.ttf in Resources */,
+				8490F78127BA2EFC0094C373 /* LaunchScreen.storyboard in Resources */,
+				8490F78227BA2EFC0094C373 /* CircularStd-Book.otf in Resources */,
+				8490F78327BA2EFC0094C373 /* Metropolis-Bold.otf in Resources */,
+				8490FB3827BA306A0094C373 /* GamaDelivery(Production).xcconfig in Resources */,
+				8490F78427BA2EFC0094C373 /* Futura Hv BT.ttf in Resources */,
+				8490F78527BA2EFC0094C373 /* SFProText-Regular.ttf in Resources */,
+				8490F78627BA2EFC0094C373 /* SFProText-SemiBold.ttf in Resources */,
+				8490F78727BA2EFC0094C373 /* SFProText-Medium.ttf in Resources */,
+				8490F78927BA2EFC0094C373 /* notification.wav in Resources */,
+				8490FC2127BA311E0094C373 /* GoogleService-Info.plist in Resources */,
+				8490F78B27BA2EFC0094C373 /* Plists in Resources */,
+				8490F78C27BA2EFC0094C373 /* Futura-Normal.ttf in Resources */,
+				8490F78D27BA2EFC0094C373 /* Eina02-Bold.ttf in Resources */,
+				8490FA5127BA30440094C373 /* GamaDelivery(Development).xcconfig in Resources */,
+				8490F78E27BA2EFC0094C373 /* Futura-Book.ttf in Resources */,
+				8490F78F27BA2EFC0094C373 /* CircularStd-Medium.otf in Resources */,
+				8490F79027BA2EFC0094C373 /* Metropolis-SemiBold.otf in Resources */,
+				8490F79127BA2EFC0094C373 /* FuturaBT-Heavy.ttf in Resources */,
+				8490F79227BA2EFC0094C373 /* CircularStd-Bold.ttf in Resources */,
+				8490F79327BA2EFC0094C373 /* Metropolis-Regular.otf in Resources */,
+				8490F79627BA2EFC0094C373 /* SFProText-Bold.ttf in Resources */,
+				8490F79727BA2EFC0094C373 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -33980,6 +34092,56 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Elixir/Pods-available_pods-Elixir-frameworks.sh\"\n";
 		};
+		8490F77727BA2EFC0094C373 /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8490F79827BA2EFC0094C373 /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		8490F79927BA2EFC0094C373 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-RoyoOrder/Pods-available_pods-RoyoOrder-frameworks.sh\"\n";
+		};
 		8491383726CB837E00AD4105 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -40171,6 +40333,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8490F77827BA2EFC0094C373 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8490F77927BA2EFC0094C373 /* AppDelegate.m in Sources */,
+				8490F77A27BA2EFC0094C373 /* Royo.swift in Sources */,
+				8490F77B27BA2EFC0094C373 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8491383826CB837E00AD4105 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -40876,7 +41048,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */,
-				848CEF8126CE229D0077C918 /* BuildFile in Sources */,
+				848CEF8126CE229D0077C918 /* (null) in Sources */,
 				848CEF8226CE229D0077C918 /* Royo.swift in Sources */,
 				848CEF8326CE229D0077C918 /* main.m in Sources */,
 			);
@@ -40960,7 +41132,7 @@
 				84FFFF2026D672E600F2B059 /* Royo.swift in Sources */,
 				84FFFF2126D672E600F2B059 /* main.m in Sources */,
 				8480076A26CE20340014F500 /* AppDelegate.m in Sources */,
-				8480076B26CE20340014F500 /* BuildFile in Sources */,
+				8480076B26CE20340014F500 /* (null) in Sources */,
 				8480076C26CE20340014F500 /* Royo.swift in Sources */,
 				8480076D26CE20340014F500 /* main.m in Sources */,
 			);
@@ -50384,6 +50556,72 @@
 			};
 			name = Release;
 		};
+		8490F79B27BA2EFC0094C373 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8490FA5027BA30440094C373 /* GamaDelivery(Development).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = GamaDelivery.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = "$(PROJECT_APP_VERSION)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
+				PROJECT_ENTITLEMENT = "";
+				PROJECT_PLIST = "$(PROJECT_PLIST)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		8490F79C27BA2EFC0094C373 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8490FB3727BA306A0094C373 /* GamaDelivery(Production).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = GamaDelivery.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = "$(PROJECT_APP_VERSION)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
+				PROJECT_ENTITLEMENT = "";
+				PROJECT_PLIST = "$(PROJECT_PLIST)";
+				PROVISIONING_PROFILE_SPECIFIER = "Gama Delivery";
+				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
 		8491386826CB837E00AD4105 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8493F5E826CB85F3006AD6AD /* Yummiidash(Development).xcconfig */;
@@ -56952,6 +57190,15 @@
 			buildConfigurations = (
 				849036FE26EB855500E4AE5A /* Debug */,
 				849036FF26EB855500E4AE5A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8490F79A27BA2EFC0094C373 /* Build configuration list for PBXNativeTarget "GamaDelivery" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8490F79B27BA2EFC0094C373 /* Debug */,
+				8490F79C27BA2EFC0094C373 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

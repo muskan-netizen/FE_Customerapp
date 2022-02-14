@@ -1468,6 +1468,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.gamaDelivery:
+          updateState({
+            shortCode: shortCodes.gamaDelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
