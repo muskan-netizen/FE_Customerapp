@@ -579,6 +579,7 @@
     "react-native-ratings": "github:vinaygoyal20/react-native-ratings",
     "react-native-razorpay": "^2.2.8",
     "react-native-reanimated": "^1.13.2",
+    "react-native-render-html": "^6.3.4",
     "react-native-responsive-fontsize": "^0.5.0",
     "react-native-restart": "^0.0.22",
     "react-native-safe-area-context": "^3.1.9",
