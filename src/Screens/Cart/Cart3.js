@@ -18,7 +18,7 @@ import {
 import {useDarkMode} from 'react-native-dark-mode';
 import * as Animatable from 'react-native-animatable';
 import DatePicker from 'react-native-date-picker';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -71,6 +71,7 @@ import {hitSlopProp} from '../../styles/commonStyles';
 import {CheckBox} from 'react-native-elements';
 import {Calendar} from 'react-native-calendars';
 import SelectPaymentModal from '../../Components/SelectPaymentModal';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -208,8 +209,6 @@ export default function Cart({navigation, route}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   console.log('closed_store_order_scheduled', cartData);
-
-  console.log("closed_store_order_scheduled", cartData)
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -496,7 +495,7 @@ export default function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
-  console.log("cart data_++++++++", cartData)
+  console.log('cart data_++++++++', cartData);
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     console.log(item, 'itemitemitemitem');
@@ -700,6 +699,8 @@ export default function Cart({navigation, route}) {
       return;
     }
 
+    console.log(paymentId, 'paymentIdpaymentId');
+
     switch (paymentId) {
       case 5: //Paystack Payment Getway
         updateState({placeLoader: false});
@@ -736,6 +737,10 @@ export default function Cart({navigation, route}) {
       case 17: //Checkout Payment Getway
         updateState({placeLoader: false});
         checkoutPayment(paymentData);
+        break;
+      case 18: //AuthorizeNet Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.AuthorizeNet, paymentData);
         break;
       default:
         if (
@@ -931,8 +936,8 @@ export default function Cart({navigation, route}) {
           `${date} ${time}`,
           'YYYY-MM-DD HH:mm:ss',
         ).format();
-        console.log("formatDate", formatDate)
-        data['schedule_dt'] = formatDate
+        console.log('formatDate', formatDate);
+        data['schedule_dt'] = formatDate;
       } else {
         data['schedule_dt'] =
           scheduleType != 'now' && sheduledorderdate
@@ -972,7 +977,7 @@ export default function Cart({navigation, route}) {
   };
 
   const _finalPayment = () => {
-    console.log(selectedPayment,"selectedPayment");
+    console.log(selectedPayment, 'selectedPayment');
     if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
       _offineLinePayment();
       return;
@@ -1017,7 +1022,7 @@ export default function Cart({navigation, route}) {
     // }
     // _offineLinePayment();
   };
-
+  console.log(selectedPayment, 'selectedPaymentselectedPayment');
   //Clear cart
   const placeOrder = () => {
     if (!!userData?.auth_token) {
@@ -1038,6 +1043,7 @@ export default function Cart({navigation, route}) {
       }
       if (isEmpty(selectedPayment)) {
         // showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
+
         updateState({paymentModal: true});
         // moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)();
         return;
@@ -1046,6 +1052,7 @@ export default function Cart({navigation, route}) {
       updateState({placeLoader: true});
       var d1 = new Date();
       var d2 = new Date(sheduledorderdate);
+      console.log(d1, d2, 'Timetimetime');
       // if (!!selectedTimeSlots) {
       //   d2 = new Date(localeSheduledOrderDate)
       // } else {
@@ -1324,7 +1331,7 @@ export default function Cart({navigation, route}) {
       theme: {color: themeColors.primary_color},
     };
 
-    console.log(options,"optios");
+    console.log(options, 'optios');
     RazorpayCheckout.open(options)
       .then((res) => {
         console.log(`Success for razor: `, res);
@@ -1335,8 +1342,8 @@ export default function Cart({navigation, route}) {
           data['type'] = dineInType || '';
           data['transaction_id'] = res?.razorpay_payment_id;
           placeOrderData(data); // placeOrder
-        }else{
-          console.log(res,"razorpay_payment_id>>>>res");
+        } else {
+          console.log(res, 'razorpay_payment_id>>>>res');
         }
       })
       .catch(errorMethod);
@@ -3821,20 +3828,37 @@ export default function Cart({navigation, route}) {
             alignItems: 'center',
             // backgroundColor: '#fff',
           }}>
-          <FastImage
-            source={{
-              uri: Image.resolveAssetSource(imagePath.icEmptyCartD).uri,
-              cache: FastImage.cacheControl.immutable,
-              priority: FastImage.priority.high,
-            }}
-            style={{
-              marginVertical: moderateScaleVertical(20),
-              height: moderateScale(120),
-              width: moderateScale(120),
-            }}
+          {appIds.codiner == DeviceInfo.getBundleId() ? (
+            <FastImage
+              source={{
+                uri: Image.resolveAssetSource(imagePath.emptyCart3).uri,
+                cache: FastImage.cacheControl.immutable,
+                priority: FastImage.priority.high,
+              }}
+              style={{
+                marginVertical: moderateScaleVertical(20),
+                height: moderateScale(120),
+                width: moderateScale(140),
+              }}
+              resizeMode="contain"
+            />
+          ) : (
+            <FastImage
+              source={{
+                uri: Image.resolveAssetSource(imagePath.icEmptyCartD).uri,
+                cache: FastImage.cacheControl.immutable,
+                priority: FastImage.priority.high,
+              }}
+              style={{
+                marginVertical: moderateScaleVertical(20),
+                height: moderateScale(120),
+                width: moderateScale(120),
+              }}
 
-            // resizeMode="contain"s
-          />
+              // resizeMode="contain"s
+            />
+          )}
+
           <Text style={{...styles.textStyle}}>
             {strings.YOUR_CART_EMPTY_ADD_ITEMS}
           </Text>
@@ -4476,7 +4500,7 @@ export default function Cart({navigation, route}) {
                             marginBottom: moderateScaleVertical(8),
                             // height:moderateScale(20)
                           }}>
-                          Time Slots
+                          {strings.TIME_SLOT}
                         </Text>
                         <FlatList
                           horizontal

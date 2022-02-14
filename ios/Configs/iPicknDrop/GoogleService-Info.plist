@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>792310717333-hh3ghi30fvcde6ktbbs9surotk0t5ebu.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.792310717333-hh3ghi30fvcde6ktbbs9surotk0t5ebu</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>792310717333-ag36sf58onojjj41d9j9dm9sc24p42au.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCzKym5nwmwfVX_18-UJK_DCekZRHxzbBc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>792310717333</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.iPicknDrop</string>
+	<key>PROJECT_ID</key>
+	<string>ipickndrop-3ffe2</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ipickndrop-3ffe2.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:792310717333:ios:5e0420737fe0a0b9f2749c</string>
+</dict>
+</plist>

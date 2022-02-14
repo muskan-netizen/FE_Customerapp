@@ -79,6 +79,7 @@ import RepeatModal from '../../Components/RepeatModal';
 import DifferentAddOns from '../../Components/DifferentAddOns ';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import FilterComp from '../../Components/FilterComp';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 
 let timeOut = undefined;
 
@@ -2587,21 +2588,23 @@ export default function Products({route, navigation}) {
             </ScrollView>
           </View>
         )}
-        <View>
-          <TouchableOpacity
-            onPress={onShowHideFilter}
-            style={{
-              alignSelf: 'flex-end',
-              marginRight: moderateScale(16),
-            }}>
-            <Image
+        {appIds.codiner == DeviceInfo.getBundleId() ? null : (
+          <View>
+            <TouchableOpacity
+              onPress={onShowHideFilter}
               style={{
-                tintColor: isDarkMode ? colors.white : colors.black,
-              }}
-              source={imagePath.filter}
-            />
-          </TouchableOpacity>
-        </View>
+                alignSelf: 'flex-end',
+                marginRight: moderateScale(16),
+              }}>
+              <Image
+                style={{
+                  tintColor: isDarkMode ? colors.white : colors.black,
+                }}
+                source={imagePath.filter}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     );
   };
@@ -3340,9 +3343,9 @@ export default function Products({route, navigation}) {
             updateState({MenuModalVisible: !MenuModalVisible});
           }}
           isLoading={btnLoader}
-          btnStyle={
-            appStyle?.tabBarLayout == 4 && {marginBottom: moderateScale(160)}
-          }
+          // btnStyle={
+          //   appStyle?.tabBarLayout == 4 && {marginBottom: moderateScale(160)}
+          // }
         />
       )}
 

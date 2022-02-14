@@ -758,6 +758,14 @@ export default {
   WE_ARE_NOT_ACCEPTING:
     'We are not accepting orders right now. You can schedule this for',
   RATING: 'Rating',
-  YOURDRIVERHASMODIFIED:"Your driver has modified your order"
+  YOURDRIVERHASMODIFIED:"Your driver has modified your order",
+  DIFFERENCEAMOUNT:'Difference Amount',
+  APPROVE:'APPROVE',
+  INSUFFICIENT_FUNDS_IN_WALLET_PLEASERECHARGE: 'Insufficient funds in wallet. Please recharge to continue',
+  ACTIVEDELEIVERIES:'Active Deliveries',
+  PASTDELEIVERIES:'Past Deliveries',
+  MYDELIERIES:"My Deliveries",
+  NODELIVERIESFOUND:'No Deliveries Found'
+
 
 };

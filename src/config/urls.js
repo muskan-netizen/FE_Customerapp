@@ -1,8 +1,7 @@
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1';  //sales demo
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
-export const API_BASE_URL = 'https://sales.rostaging.com/api/v1';
+\export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.97.123:8020/api/v1'; // sujata
@@ -18,7 +17,7 @@ export const API_BASE_URL = 'https://sales.rostaging.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.100.198:8020/api/v1';
-// export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
+//export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
 // export const API_BASE_URL = 'https://b724-103-72-170-243.ngrok.io/api/v1';
 // export const API_BASE_URL = 'https://zuzu.alerthire.com/api/v1';
 // export const API_BASE_URL = 'https://click-eat.com/api/v1';
@@ -32,7 +31,7 @@ export const API_BASE_URL = 'https://sales.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://bustanfakieh.com/api/v1';
 // export const API_BASE_URL = 'https://cabdeliv.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
-// export const API_BASE_URL = 'https://orderchekout.com/api/v1';
+//export const API_BASE_URL = 'https://orderchekout.com/api/v1';
 // export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
 // export const API_BASE_URL = 'https://ufood.ca/api/v1';
@@ -62,6 +61,8 @@ export const API_BASE_URL = 'https://sales.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://ritenowdelivery.com/api/v1';
 // export const API_BASE_URL = 'https://drusdeliveries.com/api/v1';
 // export const API_BASE_URL = 'https://empirehub.com/api/v1';
+// export const API_BASE_URL = 'https://rxnowweb.com/api/v1';
+// export const API_BASE_URL = 'https://36kel.com.ph/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 export const SEND_OTP = getApiUrl('/auth/sendOtp');

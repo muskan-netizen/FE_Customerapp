@@ -3,7 +3,7 @@ import {Image, Text, TouchableOpacity} from 'react-native';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import {moderateScale, textScale} from '../styles/responsiveSize';
+import {moderateScale,moderateScaleVertical, textScale} from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
 import {useSelector} from 'react-redux';
 
@@ -19,7 +19,7 @@ const BrowseMenuButton = ({fontFamily, containerStyle, onMenuTap}) => {
           ? MyDarkTheme.colors.lightDark
           : colors.black,
         position: 'absolute',
-        bottom: appStyle?.tabBarLayout == 4 ? 90 : 40,
+        bottom: moderateScaleVertical(50),
         paddingHorizontal: moderateScale(15),
         paddingVertical: moderateScale(10),
         borderRadius: 50,

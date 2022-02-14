@@ -222,6 +222,10 @@ const shortCodes = {
   kongafood: 'c08eab',
   launch: '88cccf',
   kampick: 'd12c28',
+  cabio: '476cf3',
+  tumbak: '59944a',
+  iPicknDrop: 'f9cf93',
+  bluebolt: 'e5a64c',
 };
 
 const appIds = {
@@ -726,7 +730,7 @@ const appIds = {
     android: 'com.driveree',
   }),
   rxnow: Platform.select({
-    ios: 'com.rxnow',
+    ios: 'com.app.rxnow',
     android: 'com.rxnow',
   }),
   seachangevending: Platform.select({
@@ -1030,7 +1034,7 @@ const appIds = {
     android: 'com.homeTownDelivery',
   }),
   ritenow: Platform.select({
-    ios: 'com.ritenow',
+    ios: 'com.app.ritenow',
     android: 'com.ritenow',
   }),
   flit: Platform.select({
@@ -1108,6 +1112,22 @@ const appIds = {
   kampick: Platform.select({
     ios: 'com.kampick',
     android: 'com.kampick',
+  }),
+  cabio: Platform.select({
+    ios: 'com.cabio',
+    android: 'com.cabio',
+  }),
+  tumbak: Platform.select({
+    ios: 'com.tumbak',
+    android: 'com.tumbak',
+  }),
+  iPicknDrop: Platform.select({
+    ios: 'com.iPicknDrop',
+    android: 'com.iPicknDrop',
+  }),
+  bluebolt: Platform.select({
+    ios: 'com.app.bluebolt',
+    android: 'com.app.bluebolt',
   }),
 };
 
