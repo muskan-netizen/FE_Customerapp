@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-available_pods-GamaDelivery/Pods-available_pods-BoltDelivery.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-GamaDelivery/Pods-available_pods-GamaDelivery.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1609904784
 PROJECT_BUNDLE_ID =com.gamaDelivery

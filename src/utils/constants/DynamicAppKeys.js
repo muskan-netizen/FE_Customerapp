@@ -198,7 +198,7 @@ const shortCodes = {
   stitchesonsite: '5bdfee',
   easyu: '20b62b',
   mozmarcas: '53ea8a',
-  myfiji: 'a69fda',
+  myfiji: 'a0c80e',
   fastmikes: 'd89823',
   citysuds: 'aaedee',
   homeTownDelivery: 'c49349',
