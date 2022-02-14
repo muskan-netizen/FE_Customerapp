@@ -146,7 +146,8 @@ const RoyoHome = (props) => {
         let selectedVendorData = res.data.vendor_list.find(
           (x) => x.is_selected,
         );
-        // if (!storeSelectedVendor?.id) actions.savedSelectedVendor(newVendor);
+        if (!storeSelectedVendor?.id)
+          actions.savedSelectedVendor(selectedVendorData);
         updateState({
           activeOrders: res.data.order_list.data,
           selectedVendor: !!storeSelectedVendor?.id
@@ -158,6 +159,7 @@ const RoyoHome = (props) => {
           selectedVendorData: selectedVendorData,
         });
         // _getRevnueData(selectedVendorData, new Date());
+        _getAllOrdersData(selectedVendorData);
         _getRevenueDashboardData(selectedVendorData, new Date(), 0);
         _getVendorProfile(selectedVendorData);
       })
@@ -182,8 +184,8 @@ const RoyoHome = (props) => {
     );
     updateState({
       newOrder: newnewOrder,
-      totalPendingOrder: newconfirmed.length,
-      totalActiveOrder: newnewOrder.length,
+      totalPendingOrder: newnewOrder.length,
+      totalActiveOrder: newconfirmed.length,
       totalCancelledOrder: newcancelled.length,
       totalCompletedOrder: newcompleted.length,
     });
@@ -233,6 +235,38 @@ const RoyoHome = (props) => {
         showRevenueDate: false,
       });
   };
+
+  const _getAllOrdersData = (selectedVendorData) => {
+    let data = {};
+    data['vendor_id'] = selectedVendorData ? selectedVendorData?.id : '';
+    actions
+      .getRevenueDashboardData(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        console.log('_getAllOrdersData >>> _getAllOrdersData >>>', data);
+        console.log('_getAllOrdersData >>> _getAllOrdersData >>>', res?.data);
+        if (res?.data) {
+          updateState({
+            isRefreshing: false,
+            isLoading: false,
+            // totalPendingOrder: res.data.total_pending_order,
+            // totalCancelledOrder: res.data.total_rejected_order,
+            // totalActiveOrder: res.data.total_active_order,
+            // totalCompletedOrder: res.data.total_delivered_order,
+          });
+        } else {
+          updateState({
+            isLoading: false,
+            isRefreshing: false,
+          });
+        }
+      })
+      .catch(errorMethod);
+  };
+
   const _getRevnueData = (selectedVendorData, date) => {
     let data = {};
     data['type'] = 'monthly';
@@ -448,15 +482,16 @@ const RoyoHome = (props) => {
       header: 'Active order',
       text: `${totalActiveOrder} active orders`,
     },
-    {
-      image: imagePath.deliveredRoyo,
-      header: 'Delivered order',
-      text: `${totalCompletedOrder} orders delivered`,
-    },
+
     {
       image: imagePath.cancelledRoyo,
       header: 'Cancelled order',
       text: `${totalCancelledOrder} orders cancelled`,
+    },
+    {
+      image: imagePath.deliveredRoyo,
+      header: 'Delivered order',
+      text: `${totalCompletedOrder} orders delivered`,
     },
   ];
   const chartConfig = {
@@ -513,7 +548,9 @@ const RoyoHome = (props) => {
       }),
     });
   };
-  const toggleStatus = () => updateState({status: !status});
+  const toggleStatus = () => {
+    updateState({status: !status});
+  };
 
   const handleRefresh = () => {
     updateState({pageActive: 1, isRefreshing: false});
@@ -521,7 +558,16 @@ const RoyoHome = (props) => {
   const dashboard = (item, index) => {
     const {image, header, text} = item;
     return (
-      <View key={String(index)} style={styles.dashboardBox}>
+      <TouchableOpacity
+        onPress={() =>
+          // navigation.navigate(navigationStrings.VENDOR_ORDER, {index: index})
+          navigation.navigate(navigationStrings.ROYO_VENDOR_ORDER, {
+            screen: navigationStrings.VENDOR_ORDER,
+            params: {index: index},
+          })
+        }
+        key={String(index)}
+        style={styles.dashboardBox}>
         <View style={styles.dashboardImage}>
           <Image source={image} />
         </View>
@@ -539,7 +585,7 @@ const RoyoHome = (props) => {
           }}>
           {text}
         </Text>
-      </View>
+      </TouchableOpacity>
     );
   };
   const _reDirectToVendorList = () => {
@@ -561,7 +607,6 @@ const RoyoHome = (props) => {
 
   const BarWidth = () => moderateScale(labels.length * 65);
 
-  console.log('BarWidthBarWidth', BarWidth());
   return (
     <WrapperContainer
       bgColor={colors.white}
@@ -583,8 +628,8 @@ const RoyoHome = (props) => {
         onPressImageAlongwithTitle={() => _reDirectToVendorList()}
         imageAlongwithTitle={imagePath.dropdownTriangle}
         showImageAlongwithTitle
-        rightIcon={status ? imagePath.onlineRoyo : imagePath.offlineRoyo}
-        onPressRight={toggleStatus}
+        // rightIcon={status ? imagePath.onlineRoyo : imagePath.offlineRoyo}
+        // onPressRight={toggleStatus}
       />
 
       <ScrollView
@@ -600,7 +645,7 @@ const RoyoHome = (props) => {
         showsVerticalScrollIndicator={false}>
         <View>
           <View style={styles.dashboard}>{dashboardData.map(dashboard)}</View>
-          {isProfileCompleted ? (
+          {/* {isProfileCompleted ? (
             <View style={styles.warningBox}>
               <Image
                 source={imagePath.warningRoyo}
@@ -625,7 +670,7 @@ const RoyoHome = (props) => {
                 </Text>
               </View>
             </View>
-          ) : null}
+          ) : null} */}
 
           <View style={styles.rowWrapSpace}>
             <View>

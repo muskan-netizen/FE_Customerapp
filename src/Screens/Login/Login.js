@@ -131,6 +131,33 @@ export default function Login({navigation}) {
     return true;
   };
 
+  const checkIfEmailVerification = (_data) => {
+    if (
+      !!_data?.client_preference?.verify_email ||
+      !!_data?.client_preference?.verify_phone
+    ) {
+      if (
+        !_data?.verify_details?.is_email_verified &&
+        !!_data?.client_preference?.verify_email
+      ) {
+        moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+          data: _data,
+        })();
+      } else if (
+        !_data?.verify_details?.is_phone_verified &&
+        !!_data?.client_preference?.verify_phone
+      ) {
+        moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+          data: _data,
+        })();
+      } else {
+        checkIsAdmin(navigation_, navigation, _data);
+      }
+    } else {
+      checkIsAdmin(navigation_, navigation, _data);
+    }
+  };
+
   //Login api fucntion
   const _onLogin = async () => {
     let fcmToken = await AsyncStorage.getItem('fcmToken');
@@ -165,14 +192,9 @@ export default function Login({navigation}) {
                 username: mobilNo?.phoneNo,
                 dialCode: mobilNo?.callingCode,
                 countryData: mobilNo?.cca2,
+                data: res.data,
               })
-            : !!res.data?.client_preference?.verify_email ||
-              !!res.data?.client_preference?.verify_phone
-            ? !!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified
-              ? checkIsAdmin(navigation_, navigation, res.data)
-              : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : checkIsAdmin(navigation_, navigation, res.data);
+            : checkIfEmailVerification(res.data);
         }
         updateState({isLoading: false});
         getCartDetail();

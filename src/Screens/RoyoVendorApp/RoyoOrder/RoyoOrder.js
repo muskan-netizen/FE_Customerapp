@@ -33,7 +33,15 @@ import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import _ from 'lodash';
 
 const RoyoOrder = (props) => {
-  const {navigation} = props;
+  const {navigation, route} = props;
+  const {params} = route;
+
+  useEffect(() => {
+    if (params) {
+      console.log('focused order screen >>>> ', params);
+      updateState({activeIndex: params?.index});
+    }
+  }, [params]);
 
   const selectedOrder = (index) => {
     updateState({activeIndex: index});
