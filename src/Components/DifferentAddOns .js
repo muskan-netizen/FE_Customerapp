@@ -1,5 +1,5 @@
 //import liraries
-import React, {Component, useState} from 'react';
+import React, { Component, useState } from 'react';
 import Modal from 'react-native-modal';
 import {
   View,
@@ -9,9 +9,9 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
-import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
+import { useSelector } from 'react-redux';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../styles/theme';
 import {
   height,
   moderateScale,
@@ -19,17 +19,17 @@ import {
   textScale,
 } from '../styles/responsiveSize';
 import colors from '../styles/colors';
-import {UIActivityIndicator} from 'react-native-indicators';
-import {hitSlopProp} from '../styles/commonStyles';
+import { UIActivityIndicator } from 'react-native-indicators';
+import { hitSlopProp } from '../styles/commonStyles';
 import strings from '../constants/lang';
 
 // create a component
 const DifferentAddOns = ({
   data = [],
   selectedDiffAdsOnItem = {},
-  hideDifferentAddOns = () => {},
+  hideDifferentAddOns = () => { },
   difAddOnsLoader = false,
-  difAddOnsAdded = () => {},
+  difAddOnsAdded = () => { },
   selectedDiffAdsOnSection = null,
   storeLocalQty = null,
   differentAddsOnsModal = false,
@@ -47,7 +47,7 @@ const DifferentAddOns = ({
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, themeColors, isDarkMode});
+  const styles = stylesFunc({ fontFamily, themeColors, isDarkMode });
 
   const [selectedItem, setSelectedItem] = useState(false);
 
@@ -85,14 +85,14 @@ const DifferentAddOns = ({
 
   console.log('selectedDiffAdsOnItem', selectedDiffAdsOnItem);
   console.log('selectedDiffAdsOnItem datadata', data);
-  const renderItem = ({item, index}) => {
-    const {product, pvariant, addon_set} = item;
+  const renderItem = ({ item, index }) => {
+    const { product, pvariant, addon_set } = item;
     // console.log("item++++", item)
     return (
       <View pointerEvents={btnLoader ? 'none' : 'auto'} style={{}}>
         <View style={styles.flexView}>
           <View>
-            <Text style={styles.titleText}>{product?.title.trim() || ''}</Text>
+            <Text style={styles.titleText}>{!!product?.title ? product?.title.trim() : ''}</Text>
             <Text style={styles.titleText}>
               {currencies?.primary_currency.symbol}
               {pvariant?.price}
@@ -173,7 +173,7 @@ const DifferentAddOns = ({
               </Text>
               {val.options.map((values, inx) => {
                 return (
-                  <View style={{marginVertical: 2}} key={String(inx)}>
+                  <View style={{ marginVertical: 2 }} key={String(inx)}>
                     <Text
                       style={{
                         ...styles.titleText,
@@ -194,10 +194,11 @@ const DifferentAddOns = ({
     );
   };
 
+  console.log("diff adds data", data)
   return (
     <Modal
       isVisible={differentAddsOnsModal}
-      style={{margin: 0, justifyContent: 'flex-end'}}
+      style={{ margin: 0, justifyContent: 'flex-end' }}
       onBackdropPress={hideDifferentAddOns}>
       <View style={styles.mainContainer}>
         <Text
@@ -210,10 +211,10 @@ const DifferentAddOns = ({
           {selectedDiffAdsOnItem?.translation_title}
         </Text>
         <View style={styles.horizontaLine} />
-        <View style={{paddingHorizontal: moderateScale(12)}}>
+        <View style={{ paddingHorizontal: moderateScale(12) }}>
           <FlatList
             showsVerticalScrollIndicator={false}
-            data={data}
+            data={!!data ? data : []}
             renderItem={renderItem}
             ItemSeparatorComponent={() => (
               <View
@@ -224,10 +225,10 @@ const DifferentAddOns = ({
               />
             )}
             ListHeaderComponent={() => (
-              <View style={{height: moderateScale(8)}} />
+              <View style={{ height: moderateScale(8) }} />
             )}
             ListFooterComponent={() => (
-              <View style={{height: moderateScale(40)}} />
+              <View style={{ height: moderateScale(40) }} />
             )}
           />
         </View>
@@ -236,7 +237,7 @@ const DifferentAddOns = ({
   );
 };
 
-export function stylesFunc({fontFamily, themeColors, isDarkMode}) {
+export function stylesFunc({ fontFamily, themeColors, isDarkMode }) {
   const styles = StyleSheet.create({
     mainContainer: {
       borderTopLeftRadius: moderateScaleVertical(15),

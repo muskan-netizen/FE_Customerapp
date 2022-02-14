@@ -34,7 +34,7 @@ import {setItem} from '../../utils/utils';
 import stylesFunc from './styles';
 import DeviceInfo from 'react-native-device-info';
 import {API_BASE_URL} from '../../config/urls';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
 import BackgroundService from 'react-native-background-actions';
 import {

@@ -3,11 +3,12 @@ import { StyleSheet, View, Text, Image, Dimensions, StatusBar } from 'react-nati
 import AppIntroSlider from 'react-native-app-intro-slider';
 import FastImage from 'react-native-fast-image';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
 import GradientButton from '../../Components/GradientButton';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import colors from '../../styles/colors';
-import { height, moderateScale, width } from '../../styles/responsiveSize';
+import { height, moderateScale, moderateScaleVertical, width } from '../../styles/responsiveSize';
 import { setItem } from '../../utils/utils';
 
 const styles = StyleSheet.create({
@@ -37,27 +38,32 @@ const styles = StyleSheet.create({
         backgroundColor: colors.themeColor
     },
     buttonCircle: {
-        marginBottom: moderateScale(25),
+        marginBottom: moderateScale(8),
         marginHorizontal: moderateScale(25)
     }
 });
 
-export default class AppIntro extends React.Component {
-    state = {
-        index: 0,
-        lastIndex: -1,
-        slides: []
+class AppIntro extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            index: 0,
+            lastIndex: -1,
+            slides: []
+        }
     }
+
 
     componentDidMount = () => {
 
         const temp = this.props.route.params.images.map((el, index) => {
+            console.log("this.props.route.params.images",this.props.route.params.images)
             return {
                 key: index + 1,
                 title: '',
                 text: '',
                 // image: {uri: `${el.file_name.image_fit}${Math.round(Dimensions.get('screen').width)}/${Math.round(Dimensions.get('screen').height)}${el.file_name.image_path}`},
-                image: `${el.file_name.image_fit}2000/3000${el.file_name.image_path}`,
+                image: `${el.file_name.image_fit}6000/10000${el.file_name.image_path}`,
                 backgroundColor: '#22bcb5',
             }
         })
@@ -73,11 +79,11 @@ export default class AppIntro extends React.Component {
                     source={{
                         uri: item.image,
                         priority: FastImage.priority.high,
-                        cache: FastImage.cacheControl.immutable
+                        cache: FastImage.cacheControl.immutable,
                     }}
                     style={{
-                        height:height,
-                        width:width
+                        height: height,
+                        width: width
                     }}
                     resizeMode={FastImage.resizeMode.cover}
 
@@ -100,7 +106,31 @@ export default class AppIntro extends React.Component {
     onScroll = () => {
     }
 
+    renderPagination = (index) => {
+        const {mainData} = this.props
+        console.log("pagination prosp", mainData)
+        return (
+            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                {this.state.slides.map((val, i) => {
+                    return (
+                        <View
+                            style={{
+                                width: moderateScale(10),
+                                height: moderateScale(10),
+                                borderRadius: moderateScale(5),
+                                backgroundColor: index == i ? mainData?.themeColors.primary_color : colors.blackOpacity30,
+                                marginBottom: moderateScaleVertical(12),
+                                marginLeft: moderateScale(4)
+                            }}
+                        />
+                    )
+                })}
+            </View>
+        )
+    }
+
     render() {
+        console.log("slides",this.state.slides)
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <StatusBar translucent backgroundColor="transparent" />
@@ -114,12 +144,23 @@ export default class AppIntro extends React.Component {
                         onSlideChange={(el, i) => this.onSlideChange(el, i)}
                         onScroll={() => this.onScroll()}
                         renderNextButton={() => <View></View>}
+                        renderPagination={this.renderPagination}
+
                     />
                 </View>
-                <View style={{ flex: 0.1 }}>
+                <View style={{ flex: 0.1}}>
                     {this._renderDoneButton()}
                 </View>
             </View>
         );
     }
 }
+
+
+const mapStateToProps = state => {
+    return {
+        mainData: state?.initBoot,
+    };
+};
+
+export default connect(mapStateToProps)(AppIntro)

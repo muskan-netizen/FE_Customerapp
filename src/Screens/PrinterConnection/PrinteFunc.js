@@ -2,7 +2,7 @@ import {
   BluetoothEscposPrinter,
   BluetoothManager,
 } from '@brooons/react-native-bluetooth-escpos-printer';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Platform} from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob-v2';
 import {appData, language} from './PrinterScreen';

@@ -38,7 +38,7 @@ import Header from '../../Components/Header';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import LanguageModal from '../../Components/LanguageModal';
 import {setItem} from '../../utils/utils';
 

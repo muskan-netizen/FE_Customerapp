@@ -27,7 +27,6 @@ export default ({fontFamily, themeColors}) => {
     currencySymble: {
       fontFamily: fontFamily.bold,
       fontSize: moderateScale(17),
-      position: 'absolute',
     },
     selectAmountCon: {
       borderWidth: 0.5,
