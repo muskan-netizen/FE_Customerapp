@@ -26,9 +26,9 @@ const Banner = ({
   pagination = true,
   resizeMode = 'cover',
   setActiveState = () => {},
-  onPress = () => {},
   childView = null,
   showLightbox = false,
+  onPressImage = () => {}
 }) => {
   const {themeColors} = useSelector((state) => state?.initBoot);
 
@@ -58,7 +58,7 @@ const Banner = ({
         <TouchableOpacity
           activeOpacity={1}
           style={[styles.imageStyle, imagestyle]}
-          onPress={() => onPress(item)}>
+          onPress={onPressImage}>
           {/* <Lightbox
             underlayColor={'black'}
             renderContent={() => renderCarousel(imageUrl)}> */}

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   FlatList,
   I18nManager,
@@ -42,14 +42,19 @@ import CircularLoader from '../../Components/Loaders/CircularLoader';
 import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
 import ContentLoader, {Rect, Circle} from 'react-content-loader/native';
 import {getCurrentLocation} from '../../utils/helperFunctions';
+import {useFocusEffect} from '@react-navigation/native';
+import Voice from '@react-native-voice/voice';
 
 let isNoMore = false;
 let onEndReachedCalledDuringMomentum = false;
 
 export default function SearchProductVendorItem2({navigation, route}) {
+  //route params
+  const paramData = route?.params?.data;
+  console.log('param data', paramData);
   const [state, setState] = useState({
     isLoading: true,
-    searchInput: '',
+    searchInput: !!paramData?.voiceInput ? paramData?.voiceInput : '',
     searchData: [],
     showRightIcon: false,
     pageCount: 1,
@@ -57,6 +62,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
     showShimmer: false,
     userCurrentLatitude: null,
     userCurrentLongitude: null,
+    isVoiceRecord: false,
   });
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -78,13 +84,11 @@ export default function SearchProductVendorItem2({navigation, route}) {
     showShimmer,
     userCurrentLatitude,
     userCurrentLongitude,
+    isVoiceRecord,
   } = state;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
 
-  //route params
-  const paramData = route?.params?.data;
-  console.log('param data', paramData);
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const recommendedVendorsdata = appMainData?.vendors;
   const fontFamily = appStyle?.fontSizeData;
@@ -107,6 +111,56 @@ export default function SearchProductVendorItem2({navigation, route}) {
   };
   console.log(paramData, 'paramData');
   userCurrentLatitude, userCurrentLongitude;
+
+  useFocusEffect(
+    useCallback(() => {
+      Voice.onSpeechStart = onSpeechStartHandler;
+      Voice.onSpeechEnd = onSpeechEndHandler;
+      Voice.onSpeechResults = onSpeechResultsHandler;
+      return () => {
+        Voice.destroy().then(Voice.removeAllListeners);
+      };
+    }, []),
+  );
+
+  const onSpeechStartHandler = (e) => {};
+  const onSpeechEndHandler = (e) => {
+    updateState({
+      isVoiceRecord: false,
+    });
+  };
+
+  const onSpeechResultsHandler = (e) => {
+    let text = e.value[0];
+    updateState({
+      searchInput: text,
+    });
+    onVoiceStop();
+  };
+
+  const onVoiceListen = async () => {
+    updateState({
+      isVoiceRecord: true,
+    });
+    const langType = languages?.primary_language?.sort_code;
+
+    try {
+      await Voice.start(langType);
+    } catch (error) {
+      console.log('error raised', error);
+    }
+  };
+
+  const onVoiceStop = async () => {
+    updateState({
+      isVoiceRecord: false,
+    });
+    try {
+      await Voice.stop();
+    } catch (error) {
+      console.log('error raised', error);
+    }
+  };
 
   //Global searching of data
   const globalSearch = (pageCount, searchAgain = false) => {
@@ -241,7 +295,10 @@ export default function SearchProductVendorItem2({navigation, route}) {
             name: item.dataname,
           },
         });
-      } else if (item?.redirect_to == staticStrings.PRODUCT || item.redirect_to == staticStrings.ONDEMANDSERVICE) {
+      } else if (
+        item?.redirect_to == staticStrings.PRODUCT ||
+        item.redirect_to == staticStrings.ONDEMANDSERVICE
+      ) {
         navigation.push(navigationStrings.PRODUCT_LIST, {
           data: {
             id: item.id,
@@ -589,6 +646,9 @@ export default function SearchProductVendorItem2({navigation, route}) {
               updateState({searchInput: '', isLoading: false})
             }
             autoFocus={true}
+            isVoiceRecord={isVoiceRecord}
+            onVoiceStop={onVoiceStop}
+            onVoiceListen={onVoiceListen}
           />
         </View>
 

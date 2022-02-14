@@ -8,6 +8,7 @@ import loaderSix from './Files/66934-tumbleweed-rolling.json';
 import searchLoader from './Files/searchloader.json';
 import noDataFound from './Files/nodatafound.json';
 import searchingLoader from './Files/8428-loader.json';
+import voiceListen from './Files/2887-listen-state.json';
 
 export {
   defaultLoader,
@@ -20,4 +21,5 @@ export {
   searchLoader,
   noDataFound,
   searchingLoader,
+  voiceListen,
 };

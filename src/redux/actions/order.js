@@ -40,8 +40,6 @@ export function getOrderDetailForBilling(data = {}, headers = {}) {
 
 //Get Cart Detail
 export function getOrderDetail(data = {}, headers = {}) {
-  console.log('sending+++ data', data);
-  console.log('sending+++ header', headers);
   return new Promise((resolve, reject) => {
     apiPost(GET_ORDER_DETAIL, data, headers)
       .then((res) => {
