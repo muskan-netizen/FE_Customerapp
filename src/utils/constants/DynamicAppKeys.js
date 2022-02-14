@@ -228,6 +228,7 @@ const shortCodes = {
   bluebolt: 'e5a64c',
   onthego: '5e0900',
   mylaglobal: 'a35cd8',
+  ambutap: 'b436bb',
 };
 
 const appIds = {
@@ -1138,6 +1139,10 @@ const appIds = {
   mylaglobal: Platform.select({
     ios: 'com.mylaglobal',
     android: 'com.mylaglobal',
+  }),
+  ambutap: Platform.select({
+    ios: 'com.ambutap',
+    android: 'com.ambutap',
   }),
 };
 

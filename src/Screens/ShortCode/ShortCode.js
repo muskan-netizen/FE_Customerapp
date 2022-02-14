@@ -1462,12 +1462,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.mylaglobal:
-            updateState({
-              shortCode: shortCodes.mylaglobal,
-              isShortcodePrefilled: true,
-            });
-            break;
+        case appIds.mylaglobal:
+          updateState({
+            shortCode: shortCodes.mylaglobal,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ambutap:
+          updateState({
+            shortCode: shortCodes.ambutap,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
