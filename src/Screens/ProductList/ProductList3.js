@@ -1819,7 +1819,7 @@ export default function Products({route, navigation}) {
             return (
               <TouchableOpacity
                 key={index}
-                onPress={(index) => onPressMenuOption(index)}
+                onPress={() => onPressMenuOption(index)}
                 style={{
                   borderBottomWidth: 0,
                   paddingHorizontal: moderateScale(15),
@@ -2768,7 +2768,7 @@ export default function Products({route, navigation}) {
   //   }
   // };
 
-  const onPressSectionTab = () => {
+  const onPressSectionTab = (props) => {
     const newArr = cloneSectionList.map((el, indx) => {
       if (indx == props.index) {
         let temp = el;
@@ -2823,7 +2823,7 @@ export default function Products({route, navigation}) {
               ? themeColors.primary_color
               : colors.transparent,
         }}>
-        <TouchableOpacity onPress={onPressSectionTab}>
+        <TouchableOpacity onPress={() => onPressSectionTab(props)}>
           <Text
             style={{
               fontFamily: fontFamily.medium,
