@@ -289,6 +289,7 @@ export default function MyOrders({navigation}) {
         showRating: item?.order_status?.current_status?.id != 6 ? false : true,
       });
     }
+
     // (item?.dispatch_traking_url &&
     //   item?.product_details[0]?.category_type ==
     //     staticStrings.PICKUPANDDELIEVRY) ||

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Image } from 'react-native';
+import {Image} from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 import imagePath from '../constants/imagePath';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
-import { moderateScale } from '../styles/responsiveSize';
+import {moderateScale} from '../styles/responsiveSize';
 
 const StepIndicators_ = ({
   containerStyle = {},
@@ -13,11 +13,13 @@ const StepIndicators_ = ({
   currentPosition,
   themeColor,
   labelSize = 13,
-  dispatcherStatus
+  dispatcherStatus,
 }) => {
-  const { appData, themeColors, currencies, languages, appStyle } = useSelector((state) => state.initBoot);
+  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
+    (state) => state.initBoot,
+  );
   const fontFamily = appStyle?.fontSizeData;
-  console.log("dispatcher status", dispatcherStatus)
+  console.log('dispatcher status', dispatcherStatus);
 
   const thirdIndicatorStyles = {
     stepIndicatorSize: 30,
@@ -44,7 +46,7 @@ const StepIndicators_ = ({
     labelFontFamily: fontFamily.regular,
   };
 
-  const getSourceImage = ({ position, stepStatus }) => {
+  const getSourceImage = ({position, stepStatus}) => {
     let iconConfig = null;
     switch (position) {
       case 0: {
@@ -85,20 +87,22 @@ const StepIndicators_ = ({
     // }
   };
 
-  const renderStepIndicator = ({ position, stepStatus }) => {
+  const renderStepIndicator = ({position, stepStatus}) => {
     //console.log(position, 'position', stepStatus, 'stepStatus');
-    return <Image
-      style={{
-        width: moderateScale(30),
-        height: moderateScale(30),
-      }}
-      source={{ uri: dispatcherStatus.dispatcher_status_icons[position] }}
-    />;
+    return (
+      <Image
+        style={{
+          width: moderateScale(30),
+          height: moderateScale(30),
+        }}
+        source={{uri: dispatcherStatus.dispatcher_status_icons[position]}}
+      />
+    );
   };
 
-  const renderLabel = ({ position, stepStatus, label, currentPosition }) => {
+  const renderLabel = ({position, stepStatus, label, currentPosition}) => {
     //console.log(position, 'position', stepStatus, 'stepStatus');
-    return <Image source={getSourceImage({ position, stepStatus })} />;
+    return <Image source={getSourceImage({position, stepStatus})} />;
   };
 
   const allLables = labels.map((i, inx) => {
@@ -107,12 +111,12 @@ const StepIndicators_ = ({
 
   return (
     <StepIndicator
-      stepCount={dispatcherStatus.vendor_dispatcher_status_count}//showing step indicators dynamically
+      stepCount={dispatcherStatus.vendor_dispatcher_status_count} //showing step indicators dynamically
       customStyles={thirdIndicatorStyles}
       currentPosition={dispatcherStatus.vendor_dispatcher_status.length - 1}
       renderStepIndicator={renderStepIndicator}
-    // renderLabel={renderLabel}
-    //labels={labels}
+      // renderLabel={renderLabel}
+      //labels={labels}
     />
   );
 };
