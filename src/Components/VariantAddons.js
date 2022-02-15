@@ -192,12 +192,12 @@ const VariantAddons = ({
           selectedVariant: null,
         });
       } else {
-        updateState({
-          isLoading: false,
+        updateState({ 
+          isLoading: false, 
           isLoadingB: false,
-          isLoadingC: false,
-          selectedVariant: null,
-        });
+           isLoadingC: false,
+           selectedVariant: null,
+         });
         showError(error?.message || error?.error);
       }
     }
@@ -1267,9 +1267,10 @@ const VariantAddons = ({
             bounces={false}
             // onScroll={onScroll}
             style={{
+              ...styles.modalMainViewContainer,
               backgroundColor: isDarkMode
                 ? MyDarkTheme.colors.background
-                : colors.white
+                : '#fff',
             }}>
             <View style={{ flex: 1, alignItems: 'center' }}>
               <Banner
@@ -1423,7 +1424,7 @@ const VariantAddons = ({
                   paddingBottom: moderateScaleVertical(16),
                   backgroundColor: isDarkMode
                     ? MyDarkTheme.colors.background
-                    : colors.white,
+                    : '#fff',
                 }}>
                 {!showErrorMessageTitle && (
                   <View style={{ flex: 0.25 }}>
@@ -1504,9 +1505,10 @@ const VariantAddons = ({
                     />
                   </View>
                 )}
-              </View> : null}
+              </View>: null}
             </View>
             : null}
+          <View style={{ height: moderateScale(100) }} />
         </Animatable.View>
       )}
       <Modal
@@ -1519,7 +1521,6 @@ const VariantAddons = ({
         animationInTiming={600}>
         {renderImageZoomingView()}
       </Modal>
-
     </View>
   );
 };
@@ -1555,8 +1556,8 @@ const styles = StyleSheet.create({
   modalMainViewContainer: {
     flex: 1,
     backgroundColor: colors.white,
-    borderTopLeftRadius: moderateScale(8),
-    borderTopRightRadius: moderateScale(8),
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     // overflow: 'hidden',
     // paddingHorizontal: moderateScale(24),
   },

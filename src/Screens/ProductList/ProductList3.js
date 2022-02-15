@@ -16,6 +16,7 @@ import {
   View,
   ScrollView,
   Modal,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import * as Animatable from 'react-native-animatable';
@@ -82,6 +83,7 @@ import { appIds } from '../../utils/constants/DynamicAppKeys';
 import Share from 'react-native-share';
 import { BlurView } from '@react-native-community/blur';
 import HomeLoader from '../../Components/Loaders/HomeLoader';
+import { screenWidth } from 'react-native-calendars/src/expandableCalendar/commons';
 
 let timeOut = undefined;
 
@@ -2739,11 +2741,21 @@ export default function Products({ route, navigation }) {
                 }}
                 widthLeft={width}
                 rectWidthLeft={width}
-                heightLeft={moderateScaleVertical(190)}
-                rectHeightLeft={moderateScaleVertical(190)}
+                heightLeft={moderateScaleVertical(152)}
+                rectHeightLeft={moderateScaleVertical(152)}
                 isRight={false}
                 rx={4}
                 ry={4}
+              />
+              <HomeLoader
+                width={width / 1.1}
+                height={18}
+                rectHeight={18}
+                rectWidth={screenWidth / 1.1}
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginHorizontal: moderateScale(16)
+                }}
               />
 
               <View style={{
@@ -2754,14 +2766,14 @@ export default function Products({ route, navigation }) {
                 marginTop: moderateScaleVertical(16)
               }}>
                 <HomeLoader
-                  height={20}
-                  rectHeight={20}
+                  height={40}
+                  rectHeight={40}
                   rectWidth={60}
                   width={60}
                 />
                 <HomeLoader
-                  height={20}
-                  rectHeight={20}
+                  height={40}
+                  rectHeight={40}
                   rectWidth={60}
                   width={60}
                 />
@@ -3377,7 +3389,11 @@ export default function Products({ route, navigation }) {
           />
         )}
 
-        {isVisibleModal ? <BlurView
+        {isVisibleModal ? 
+        <TouchableWithoutFeedback
+        onPress={() => updateState({ isVisibleModal: false })}
+        >
+        <BlurView
           style={{
             position: 'absolute',
             left: 0,
@@ -3389,7 +3405,9 @@ export default function Products({ route, navigation }) {
           blurType="dark"
           blurAmount={10}
           blurRadius={10}
-        /> : null}
+        /> 
+        </TouchableWithoutFeedback>
+        : null}
 
       </View>
 
