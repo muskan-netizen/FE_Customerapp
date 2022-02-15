@@ -371,17 +371,31 @@ export default function OrderDetail({navigation, route}) {
                             {i?.product_addons.length
                               ? i?.product_addons.map((j, jnx) => {
                                   return (
-                                    <View style={{flexDirection: 'row'}}>
+                                    <View>
                                       <Text
                                         style={styles.cartItemWeight2}
                                         numberOfLines={1}>
                                         {j.addon_title}{' '}
                                       </Text>
-                                      <Text
-                                        style={styles.cartItemWeight2}
-                                        numberOfLines={
-                                          1
-                                        }>{`(${j.option_title})`}</Text>
+                                      <View style={{flexDirection: 'row'}}>
+                                        <Text
+                                          style={styles.cartItemWeight2}
+                                          numberOfLines={
+                                            1
+                                          }>{`(${j.option_title})`}</Text>
+                                           <Text
+                                          style={styles.cartItemWeight2}
+                                          numberOfLines={
+                                            1
+                                          }>{` ${
+                                            currencies?.primary_currency?.symbol
+                                          } ${currencyNumberFormatter(
+                                            Number(
+                                              j?.price
+                                            ).toFixed(2),
+                                          )}`}
+                                         </Text>
+                                        </View>
                                     </View>
                                   );
                                 })

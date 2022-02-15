@@ -138,11 +138,11 @@ export default function Account3({navigation}) {
   const onStartSupportChat = () => {
     ZendeskChat.setVisitorInfo({
       name: userData?.name,
-      phone: userData?.phone_number,
+      phone: userData?.phone_number ? userData?.phone_number : '',
     });
     ZendeskChat.startChat({
       name: userData?.name,
-      phone: userData?.phone_number,
+      phone: userData?.phone_number ? userData?.phone_number : '',
       withChat: true,
       color: '#000',
     });

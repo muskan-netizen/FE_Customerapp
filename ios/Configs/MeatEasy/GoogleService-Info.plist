@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>90330505780-7lm5egvbio82tikmar28vkb4cnj2ihhb.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.90330505780-7lm5egvbio82tikmar28vkb4cnj2ihhb</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>90330505780-0684babelhitshj20h749ubtju8teps5.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBMIuG7Y29-nqzEidLFo69PXtEqQOOXOXQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>90330505780</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.meatEasy</string>
+	<key>PROJECT_ID</key>
+	<string>meat-easy-e8947</string>
+	<key>STORAGE_BUCKET</key>
+	<string>meat-easy-e8947.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:90330505780:ios:daef5722027a96aad0e061</string>
+</dict>
+</plist>
