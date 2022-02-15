@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
-import {moderateScale, textScale, width} from '../styles/responsiveSize';
+import {moderateScale, moderateScaleVertical, textScale, width} from '../styles/responsiveSize';
 import {getImageUrl} from '../utils/helperFunctions';
 import {SvgUri} from 'react-native-svg';
 import Elevations from 'react-native-elevation';
@@ -25,10 +25,15 @@ const HomeCategoryCard2 = ({
   const imageURI = getImageUrl(
     data?.icon?.image_fit,
     data?.icon?.image_path,
-    '150/150',
+    '120/120',
   );
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
+
+  const onLoad = (evl) =>{
+
+  }
+
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -42,10 +47,9 @@ const HomeCategoryCard2 = ({
       <View
         style={{
           flex: 0.8,
-       
-          borderRadius: moderateScale(30),
-          width: moderateScale(70),
-          height: moderateScale(70),
+          borderRadius: moderateScale(40),
+          width: moderateScale(80),
+          height: moderateScale(80),
           justifyContent: 'center',
           alignItems: 'center',
         }}>
@@ -59,11 +63,12 @@ const HomeCategoryCard2 = ({
             }}
           />
         ) : (
+          <View>
           <FastImage
             style={{
               height: moderateScale(80),
               width: moderateScale(80),
-              borderRadius: moderateScale(25),
+              borderRadius: moderateScale(40),
               
             }}
             source={{
@@ -72,7 +77,9 @@ const HomeCategoryCard2 = ({
               priority: FastImage.priority.high,
             }}
             resizeMode="cover"
+            onLoad={onLoad}
           />
+          </View>
         )}
       </View>
       <View style={{flex: 0.2}}>
@@ -83,6 +90,7 @@ const HomeCategoryCard2 = ({
             fontFamily: fontFamily.regular,
             fontSize: textScale(9),
             textAlign: 'center',
+            marginTop:moderateScaleVertical(4)
           }}>
           {data.name}
         </Text>

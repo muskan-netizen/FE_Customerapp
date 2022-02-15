@@ -80,13 +80,22 @@ const SearchBar = ({
             <TouchableOpacity onPress={onVoiceStop}>
               <LottieView
                 style={{
-                  height: 45,
-                  width: 45,
-                  marginLeft: 3,
+                  height: moderateScale(34),
+                  width: moderateScale(34),
+                  marginLeft: moderateScale(3),
                 }}
                 source={voiceListen}
                 autoPlay
                 loop
+                colorFilters={[
+                  { keypath: "layers", color: themeColors.primary_color },
+                  { keypath: "transparent2", color: themeColors.primary_color },
+                  { keypath: "transparent1", color: themeColors.primary_color },
+                  { keypath: "01", color: themeColors.primary_color },
+                  { keypath: "02", color: themeColors.primary_color },
+                  { keypath: "03", color: themeColors.primary_color },
+                  { keypath: "04", color: themeColors.primary_color },
+                ]}
               />
             </TouchableOpacity>
           ) : (

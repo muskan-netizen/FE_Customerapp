@@ -1603,7 +1603,7 @@ export default function Cart({ navigation, route }) {
                     key={inx}>
                     <View style={{
                       ...styles.cartItemMainContainer
-                      }}>
+                    }}>
                       <View
                         style={[
                           styles.cartItemImage,
@@ -1796,7 +1796,8 @@ export default function Cart({ navigation, route }) {
                                     color: isDarkMode
                                       ? MyDarkTheme.colors.text
                                       : colors.textGreyB,
-                                    marginVertical: moderateScale(2),
+                                    marginBottom: moderateScale(2),
+                                    marginTop: moderateScaleVertical(6)
                                   }}>
                                   {strings.EXTRA}
                                 </Text>
@@ -1828,108 +1829,13 @@ export default function Cart({ navigation, route }) {
                                               ]
                                               : styles.cartItemWeight2
                                           }
-                                          numberOfLines={1}>
-                                          {j.addon_title}:
-                                        </Text>
-                                        <Text
-                                          style={
-                                            isDarkMode
-                                              ? [
-                                                styles.cartItemWeight2,
-                                                {
-                                                  color:
-                                                    MyDarkTheme.colors
-                                                      .text,
-                                                },
-                                              ]
-                                              : styles.cartItemWeight2
-                                          }
-                                          numberOfLines={
-                                            1
-                                          }>{`(${j.option_title})`}</Text>
+                                        // numberOfLines={1}
+                                        >
+                                          {j.addon_title} {`(${j.option_title})`} = {`${currencies?.primary_currency?.symbol
+                                            }${currencyNumberFormatter(Number(j.price).toFixed(2),
+                                            )}`}</Text>
                                       </View>
-                                    </View>
-                                    // <View
-                                    //   style={{
-                                    //     flexDirection: 'row',
-                                    //   }}>
-                                    //   <View
-                                    //     style={{
-                                    //       flexDirection: 'row',
-                                    //       width: '52%',
-                                    //       justifyContent: 'space-between',
-                                    //     }}>
-                                    //     <View
-                                    //       style={{
-                                    //         flexDirection: 'row',
-                                    //         flex: 0.8,
-                                    //       }}>
-                                    //       <Text
-                                    //   style={
-                                    //     isDarkMode
-                                    //       ? [
-                                    //           styles.cartItemWeight2,
-                                    //           {
-                                    //             color:
-                                    //               MyDarkTheme.colors
-                                    //                 .text,
-                                    //           },
-                                    //         ]
-                                    //       : styles.cartItemWeight2
-                                    //   }
-                                    //   numberOfLines={1}>
-                                    //   {j.addon_title}
-                                    // </Text>
-                                    //       <Text
-                                    //         style={
-                                    //           {
-                                    //             ...styles.cartItemWeight2,
-                                    //             color: isDarkMode
-                                    //               ? MyDarkTheme.colors.text
-                                    //               : colors.textGreyB,
-                                    //           }
-
-                                    //           // colors.textGreyB
-                                    //         }
-                                    //         numberOfLines={1}>
-                                    //         {` (${j.option_title})`}
-                                    //       </Text>
-                                    //     </View>
-                                    //     <Text>:</Text>
-                                    //   </View>
-
-                                    // <Text
-                                    //   style={
-                                    //     isDarkMode
-                                    //       ? [
-                                    //           styles.cartItemWeight2,
-                                    //           {
-                                    //             color:
-                                    //               MyDarkTheme.colors.text,
-                                    //           },
-                                    //         ]
-                                    //       : [
-                                    //           styles.cartItemWeight2,
-                                    //           {color: colors.textGrey},
-                                    //         ]
-                                    //   }
-                                    //   numberOfLines={1}>{` ${
-                                    //   currencies?.primary_currency?.symbol
-                                    // }${currencyNumberFormatter(
-                                    //   (
-                                    //     Number(j.price) *
-                                    //     Number(j.multiplier)
-                                    //   ).toFixed(2),
-                                    // )} x ${Number(j.quantity)} =  ${
-                                    //   currencies?.primary_currency?.symbol
-                                    // }${currencyNumberFormatter(
-                                    //   (
-                                    //     Number(j.price) *
-                                    //     Number(j.quantity)
-                                    //   ).toFixed(2),
-                                    // )}`}</Text>
-                                    // </View>
-                                  );
+                                    </View>);
                                 })
                                 : null}
                             </View>

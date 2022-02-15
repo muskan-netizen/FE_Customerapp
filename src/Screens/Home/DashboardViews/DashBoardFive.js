@@ -78,7 +78,7 @@ export default function DashBoardFive({
     (state) => state?.initBoot,
   );
 
-  console.log('appDataappData', appData);
+
 
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -133,7 +133,7 @@ export default function DashBoardFive({
 
   const { currSelectedFilter } = state;
 
-  console.log('app main data', appMainData);
+  // console.log('app main data', appMainData);
 
   const onSelectedFilter = (selectedFilter) => {
     updateState({ showMenu: false, currSelectedFilter: selectedFilter });
@@ -287,7 +287,7 @@ export default function DashBoardFive({
           )}
         <View style={{}}>
           {!!appData?.mobile_banners?.length && (
-            <View>
+            <View style={{marginTop:moderateScaleVertical(16)}}>
               <FlatList
                 horizontal
                 data={appData?.mobile_banners}
@@ -419,36 +419,24 @@ export default function DashBoardFive({
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1 }}>
         {/* <SearchLoader viewStyles={{marginTop: moderateScale(15)}} /> */}
-        <CategoryLoader2 viewStyles={{ marginTop: moderateScale(20) }} />
+        <CategoryLoader2 viewStyles={{ marginVertical: moderateScale(16) }} />
         {/* <CategoryLoader2 viewStyles={{marginTop: moderateScale(35)}} /> */}
 
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row', marginBottom: moderateScaleVertical(16) }}>
           <HeaderLoader
-            viewStyles={{ marginVertical: 30 }}
-            widthLeft={moderateScale(150)}
-            rectWidthLeft={moderateScale(150)}
-            heightLeft={moderateScaleVertical(240)}
-            rectHeightLeft={moderateScaleVertical(240)}
+            widthLeft={moderateScale(width / 1.2)}
+            rectWidthLeft={moderateScale(width / 1.2)}
+            heightLeft={moderateScaleVertical(140)}
+            rectHeightLeft={moderateScaleVertical(140)}
             isRight={false}
             rx={15}
             ry={15}
           />
           <HeaderLoader
-            viewStyles={{ marginVertical: 30, marginLeft: 0 }}
-            widthLeft={moderateScale(150)}
-            rectWidthLeft={moderateScale(150)}
-            heightLeft={moderateScaleVertical(240)}
-            rectHeightLeft={moderateScaleVertical(240)}
-            isRight={false}
-            rx={15}
-            ry={15}
-          />
-          <HeaderLoader
-            viewStyles={{ marginVertical: 30, marginLeft: 0 }}
-            widthLeft={moderateScale(150)}
-            rectWidthLeft={moderateScale(150)}
-            heightLeft={moderateScaleVertical(240)}
-            rectHeightLeft={moderateScaleVertical(240)}
+            widthLeft={moderateScale(width / 1.2)}
+            rectWidthLeft={moderateScale(width / 1.2)}
+            heightLeft={moderateScaleVertical(140)}
+            rectHeightLeft={moderateScaleVertical(140)}
             isRight={false}
             rx={15}
             ry={15}
@@ -456,40 +444,38 @@ export default function DashBoardFive({
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <HeaderLoader
-            viewStyles={{ marginTop: 5 }}
-            widthLeft={moderateScale(150)}
-            rectWidthLeft={moderateScale(150)}
-            heightLeft={moderateScaleVertical(20)}
-            rectHeightLeft={moderateScaleVertical(20)}
+            widthLeft={moderateScale(180)}
+            rectWidthLeft={moderateScale(180)}
+            rectHeightLeft={moderateScaleVertical(60)}
+            rectHeightLeft={moderateScaleVertical(60)}
             isRight={false}
-            rx={15}
-            ry={15}
+            rx={4}
+            ry={4}
           />
           <HeaderLoader
-            viewStyles={{ marginTop: 5 }}
-            widthLeft={moderateScale(60)}
-            rectWidthLeft={moderateScale(60)}
-            heightLeft={moderateScaleVertical(20)}
-            rectHeightLeft={moderateScaleVertical(20)}
+            widthLeft={moderateScale(100)}
+            rectWidthLeft={moderateScale(100)}
+            rectHeightLeft={moderateScaleVertical(60)}
+            rectHeightLeft={moderateScaleVertical(60)}
             isRight={false}
-            rx={15}
-            ry={15}
+            rx={4}
+            ry={4}
           />
         </View>
 
         <BannerLoader
-          isVendorLoader
-          viewStyles={{ marginTop: moderateScale(20) }}
+          // isVendorLoader
+          viewStyles={{ marginTop: moderateScale(12) }}
         />
         <BannerLoader
-          isVendorLoader
-          viewStyles={{ marginTop: moderateScale(25) }}
+          // isVendorLoader
+          viewStyles={{ marginTop: moderateScale(12) }}
         />
         <BannerLoader
-          isVendorLoader
-          viewStyles={{ marginTop: moderateScale(25) }}
+          // isVendorLoader
+          viewStyles={{ marginTop: moderateScale(12) }}
         />
-        {/* <HomeLoader /> */}
+  
       </ScrollView>
     );
   }

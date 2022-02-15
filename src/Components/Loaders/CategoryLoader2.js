@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import {
   height,
   moderateScale,
@@ -10,13 +10,14 @@ import HomeLoader from './HomeLoader';
 
 const CategoryLoader2 = ({
   viewStyles = {},
-  widthTop = (width - moderateScale(50)) / 4,
-  heightTop = moderateScaleVertical(70),
-  rectWidthTop = (width - moderateScale(50)) / 4,
-  rectHeightTop = moderateScaleVertical(70),
+  widthTop = moderateScale(80),
+  heightTop = moderateScale(80),
+  rectWidthTop = moderateScale(80),
+  rectHeightTop = moderateScale(80),
   rectWidthBottom = moderateScaleVertical(15),
   isFourthItem = true,
   isSubCategory = false,
+  radius = moderateScale(40),
 }) => {
   const _categoryView = () => {
     return (
@@ -26,15 +27,16 @@ const CategoryLoader2 = ({
           height={heightTop}
           rectWidth={rectWidthTop}
           rectHeight={rectHeightTop}
+          rx={radius}
+          ry={radius}
         />
         <HomeLoader
           width={widthTop}
           height={rectWidthBottom}
           rectWidth={widthTop}
           rectHeight={rectWidthBottom}
-          viewStyles={{marginTop: 5}}
-          ry={10}
-          rx={10}
+          viewStyles={{ marginTop: 5 }}
+        
         />
       </View>
     );

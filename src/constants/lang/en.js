@@ -827,6 +827,7 @@ Amount`,
   PASTDELEIVERIES:'Past Deliveries',
   MYDELIERIES:"My Deliveries",
   NODELIVERIESFOUND:'No Deliveries Found',
-  
+  CLEAR_FILTER:"Clear Filter",
+  PRICE_RANGE:"Price Range",
 
 };

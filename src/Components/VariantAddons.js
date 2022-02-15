@@ -192,12 +192,12 @@ const VariantAddons = ({
           selectedVariant: null,
         });
       } else {
-        updateState({ 
-          isLoading: false, 
+        updateState({
+          isLoading: false,
           isLoadingB: false,
-           isLoadingC: false,
-           selectedVariant: null,
-         });
+          isLoadingC: false,
+          selectedVariant: null,
+        });
         showError(error?.message || error?.error);
       }
     }
@@ -1269,7 +1269,7 @@ const VariantAddons = ({
             style={{
               backgroundColor: isDarkMode
                 ? MyDarkTheme.colors.background
-                : '#fff',
+                : colors.white
             }}>
             <View style={{ flex: 1, alignItems: 'center' }}>
               <Banner
@@ -1423,7 +1423,7 @@ const VariantAddons = ({
                   paddingBottom: moderateScaleVertical(16),
                   backgroundColor: isDarkMode
                     ? MyDarkTheme.colors.background
-                    : '#fff',
+                    : colors.white,
                 }}>
                 {!showErrorMessageTitle && (
                   <View style={{ flex: 0.25 }}>
@@ -1504,10 +1504,9 @@ const VariantAddons = ({
                     />
                   </View>
                 )}
-              </View>: null}
+              </View> : null}
             </View>
             : null}
-          <View style={{ height: moderateScale(100) }} />
         </Animatable.View>
       )}
       <Modal
@@ -1520,6 +1519,7 @@ const VariantAddons = ({
         animationInTiming={600}>
         {renderImageZoomingView()}
       </Modal>
+
     </View>
   );
 };

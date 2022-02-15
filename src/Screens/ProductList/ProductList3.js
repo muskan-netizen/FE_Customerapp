@@ -468,6 +468,8 @@ export default function Products({ route, navigation }) {
     getAllListItems(1);
   };
 
+
+
   /****Get all list items by vendor id */
   const getAllProductsByVendor = (pageNo) => {
     console.log('api hit getAllProductsByVendor');
@@ -486,7 +488,29 @@ export default function Products({ route, navigation }) {
       )
       .then((res) => {
         console.log('get all products by vendor res', res);
+        if (res?.data?.vendor) {
+          FastImage.preload([{
+            uri:
+              getImageUrl(
+                res?.data?.vendor?.banner?.image_fit ||
+                res?.data?.vendor?.image?.image_fit,
+                res?.data?.vendor?.banner?.image_path ||
+                res?.data?.vendor?.image?.image_path,
+                '400/400',
+              )
+          }])//category banner preload
+        }
+
         if (res?.data?.vendor?.is_show_products_with_category) {
+
+          res.data.categories.map((item) => {
+            item?.products.map((val) => {
+              const url1 = val?.media[0]?.image?.path.image_fit;
+              const url2 = val?.media[0]?.image?.path.image_path;
+              FastImage.preload([{ uri: getImageUrl(url1, url2, '200/200') }])
+            })
+          })
+
           var totalProduct = 1;
           let filterArray = res?.data?.categories?.map((val) => {
             let newKey = {
@@ -501,7 +525,6 @@ export default function Products({ route, navigation }) {
           updateState({
             sectionListData: filterArray,
             cloneSectionList: filterArray,
-            isLoading: false,
             isRefreshing: false,
             categoryInfo: res?.data?.vendor,
             filterData: res?.data?.filterData,
@@ -509,6 +532,9 @@ export default function Products({ route, navigation }) {
           });
           console.log(filterArray, 'filterArrayfilterArray');
           fetchTags(filterArray);
+          setTimeout(() => {
+            updateState({ isLoading: false, })
+          }, 400);
         } else {
           // console.log('get product list by vendor id >>>> ', res);
           if (res?.data) {
@@ -1973,7 +1999,9 @@ export default function Products({ route, navigation }) {
 
   const listHeaderComponent2 = () => {
     return (
-      <View>
+      <Animatable.View
+      // animation={'fadeInUp'}
+      >
         {!!categoryInfo?.categoriesList ? (
           <View style={{ marginBottom: moderateScaleVertical(16) }}>
             <ImageBackground
@@ -1999,25 +2027,45 @@ export default function Products({ route, navigation }) {
                 style={{}}
                 colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0.7)']}>
                 <SafeAreaView>
-                  <TouchableOpacity
-                    hitSlop={styles.hitSlopProp}
-                    activeOpacity={0.7}
-                    style={{
-                      width: moderateScale(30),
-                      height: moderateScale(30),
-                      justifyContent: 'center',
-                      marginLeft: moderateScale(10),
-                      paddding: 10,
-                    }}
-                    onPress={() => navigation.goBack()}>
-                    <Image
-                      source={imagePath.icBackb}
+                  <View style={{
+                    flexDirection: 'row',
+                    alignItems: "center",
+                    justifyContent: 'space-between',
+                    marginHorizontal: moderateScale(16),
+                    marginTop: moderateScaleVertical(16),
+                    marginBottom: moderateScaleVertical(8)
+                  }}>
+                    <TouchableOpacity
+                      hitSlop={styles.hitSlopProp}
+                      activeOpacity={0.7}
                       style={{
-                        tintColor: colors.white,
-                        transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+
                       }}
-                    />
-                  </TouchableOpacity>
+                      onPress={() => navigation.goBack()}>
+                      <Image
+                        source={imagePath.icBackb}
+                        style={{
+                          tintColor: colors.white,
+                          transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                        }}
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      hitSlop={styles.hitSlopProp}
+                      activeOpacity={0.7}
+                      style={{
+
+                      }}
+                      onPress={onShare}>
+                      <Image
+                        source={imagePath.icShareb}
+                        style={{
+                          tintColor: colors.white,
+                          transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View>
 
                   <View
                     style={{
@@ -2480,6 +2528,7 @@ export default function Products({ route, navigation }) {
                   key={index}
                   style={{
                     flexDirection: 'row',
+                    alignItems: 'center',
                     // marginTop: moderateScale(20)
                   }}
                 >
@@ -2620,8 +2669,7 @@ export default function Products({ route, navigation }) {
             </ScrollView>
           </View>
         )}
-
-      </View>
+      </Animatable.View>
     );
   };
 
@@ -2683,7 +2731,6 @@ export default function Products({ route, navigation }) {
         >
           {true ? (
             <View>
-              <View style={{ height: moderateScale(16) }} />
               <HeaderLoader
                 viewStyles={{
                   // marginHorizontal: moderateScale(20),
@@ -2692,8 +2739,8 @@ export default function Products({ route, navigation }) {
                 }}
                 widthLeft={width}
                 rectWidthLeft={width}
-                heightLeft={moderateScaleVertical(100)}
-                rectHeightLeft={moderateScaleVertical(100)}
+                heightLeft={moderateScaleVertical(190)}
+                rectHeightLeft={moderateScaleVertical(190)}
                 isRight={false}
                 rx={4}
                 ry={4}
@@ -2971,13 +3018,13 @@ export default function Products({ route, navigation }) {
     let offset = nativeEvent.contentOffset.y;
     let index = parseInt(offset / 8); // your cell height
     /** cell heihgt 167 */
-    let num = [];
-    const hej = cloneSectionList.map((el, index) => {
-      if (offset > Number(num.length) * 167) {
-        num.push(...el.data);
-        activeIdx = index;
-      }
-    });
+    // let num = [];
+    // const hej = cloneSectionList.map((el, index) => {
+    //   if (offset > Number(num.length) * 167) {
+    //     num.push(...el.data);
+    //     activeIdx = index;
+    //   }
+    // });
     if (index > moderateScale(36)) {
       if (!AnimatedHeaderValue) {
         updateState({ AnimatedHeaderValue: true });
@@ -3013,6 +3060,17 @@ export default function Products({ route, navigation }) {
     console.log('l++++offset', offset);
     return { length, offset, index };
   };
+
+  const backgroundComponent = () => {
+    return (
+      <TouchableOpacity
+        onPress={() => updateState({ isVisibleModal: false })}
+        style={{ alignSelf: 'center', marginBottom: moderateScaleVertical(16) }}
+      >
+        <Image source={imagePath.icClose4} />
+      </TouchableOpacity>
+    )
+  }
 
   return (
     <View
@@ -3368,13 +3426,18 @@ export default function Products({ route, navigation }) {
                 updateState({ isVisibleModal: false, showShimmer: true });
               }
               playHapticEffect(hapticEffects.impactMedium);
-            }}>
+            }}
+            backdropComponent={() => <View style={{ height: 0 }}><Text>dfdf</Text></View>}
+            backgroundComponent={backgroundComponent}
+          >
             <BottomSheetScrollView
               keyboardShouldPersistTaps="handled"
               showsVerticalScrollIndicator={false}
               style={{
-
-
+                flex: 1,
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.lightDark
+                  : colors.white,
               }}>
               <VariantAddons
                 addonSet={selectedCartItem?.add_on}
@@ -3408,7 +3471,7 @@ export default function Products({ route, navigation }) {
         visible={updateQtyLoader}
       />
 
-      {!searchInput && (
+      {!searchInput && !isVisibleModal && (
         <GradientCartView
           onPress={() => {
             playHapticEffect(hapticEffects.notificationSuccess);
@@ -3434,6 +3497,7 @@ export default function Products({ route, navigation }) {
             updateState({ MenuModalVisible: !MenuModalVisible });
           }}
           isLoading={btnLoader}
+          sectionListData={sectionListData}
         // btnStyle={
         //   appStyle?.tabBarLayout == 4 && {marginBottom: moderateScale(160)}
         // }

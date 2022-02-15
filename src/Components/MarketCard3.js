@@ -1,48 +1,34 @@
 import React from 'react';
 import {
-  Image,
+  Animated, Image,
   StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Animated,
+  Text, TouchableOpacity, View
 } from 'react-native';
-import DashedLine from 'react-native-dashed-line';
+import {
+  Grayscale
+} from 'react-native-color-matrix-image-filters';
+import { useDarkMode } from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import commonStyles from '../styles/commonStyles';
-
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
-  textScale,
+  textScale
 } from '../styles/responsiveSize';
-import { useDarkMode } from 'react-native-dark-mode';
 import { MyDarkTheme } from '../styles/theme';
-import BlurImages from './BlurImages';
 import {
   checkEvenOdd,
   getColorCodeWithOpactiyNumber,
   getImageUrl,
   getScaleTransformationStyle,
   pressInAnimation,
-  pressOutAnimation,
+  pressOutAnimation
 } from '../utils/helperFunctions';
-import LinearGradient from 'react-native-linear-gradient';
-import {
-  Grayscale,
-  Sepia,
-  Tint,
-  ColorMatrix,
-  concatColorMatrices,
-  invert,
-  contrast,
-  saturate,
-} from 'react-native-color-matrix-image-filters';
+
 
 const transparentColor = ['transparent', 'transparent'];
 const greyColor = ['rgba(0,0,0,0.52)', 'rgba(0,0,0,0.52)'];
@@ -100,7 +86,7 @@ const MarketCard3 = ({
             </Text>
           </View> : <View />}
 
-        <View
+        {!!data?.lineOfSightDistance || !!data?.timeofLineOfSightDistance ? <View
           style={{
             ...styles.ratingView,
             flexDirection: 'row',
@@ -136,7 +122,7 @@ const MarketCard3 = ({
                   {data?.lineOfSightDistance}
                 </Text>
               </View>
-              {/* !!data?.timeofLineOfSightDistance */}
+
 
               {!!data?.timeofLineOfSightDistance && (
                 <View
@@ -172,7 +158,7 @@ const MarketCard3 = ({
               )}
             </View>
           )}
-        </View>
+        </View>: null}
       </View>
     )
   }
@@ -300,7 +286,7 @@ const MarketCard3 = ({
           </Text>
         ) : null}
 
-        {isMaxSaftey ?
+        {!!appData?.profile?.preferences?.max_safety_mod && isMaxSaftey ?
           <View>
             <View
               style={{
