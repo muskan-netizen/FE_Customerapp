@@ -379,7 +379,7 @@ const ProductCard3 = ({
               }}>
               {`${
                 currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
+              } ${currencyNumberFormatter(
                 (
                   Number(
                     data?.variant[0]?.multiplier || data?.variant_multiplier,

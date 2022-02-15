@@ -210,8 +210,6 @@ export default function Cart({navigation, route}) {
 
   console.log('closed_store_order_scheduled', cartData);
 
-  console.log('closed_store_order_scheduled', cartData);
-
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
@@ -246,6 +244,7 @@ export default function Cart({navigation, route}) {
       selectedAddress,
       isRefreshing,
       checkCartItem?.data?.item_count,
+      sheduledorderdate,
     ]),
   );
 
@@ -355,6 +354,7 @@ export default function Cart({navigation, route}) {
 
         if (!!checkDate && res.data.schedule_type == 'schedule') {
           let formatDate = new Date(res?.data?.scheduled_date_time);
+          console.log(res?.data?.scheduled_date_time, 'dateeeeeeeee');
           updateState({
             localeSheduledOrderDate: timeInLocalLangauge(
               formatDate,
@@ -1054,6 +1054,7 @@ export default function Cart({navigation, route}) {
       updateState({placeLoader: true});
       var d1 = new Date();
       var d2 = new Date(sheduledorderdate);
+      console.log(sheduledorderdate, 'Timetimetime');
       // if (!!selectedTimeSlots) {
       //   d2 = new Date(localeSheduledOrderDate)
       // } else {

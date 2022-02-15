@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
 import BackgroundService from 'react-native-background-actions';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import stylesFun from './styles';
 import colors from '../../styles/colors';
 import commonStyles from '../../styles/commonStyles';
