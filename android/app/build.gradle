@@ -2371,16 +2371,16 @@ android {
       //       resValue "string", "app_name", "Cannabis Club SF"
       //       resValue "string", "host_name", ""
       //    }
-      //    halaTalabat{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.halaTalabat'
-      //       resValue "string", "app_name", "Hala Talabat"
-      //       resValue "string", "host_name", ""
-      //    }
+         halaTalabat{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.halaTalabat'
+            resValue "string", "app_name", "Hala Talabat"
+            resValue "string", "host_name", ""
+         }
       //  jadorDrive{
       //       dimension "appType"
       //       versionCode 1
@@ -2521,7 +2521,26 @@ android {
             resValue "string", "app_name", "AmbuTap"
             resValue "string", "host_name", ""
          }
-
+         sabroson{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.sabroson'
+            resValue "string", "app_name", "Sabroson"
+            resValue "string", "host_name", ""
+         }
+         swiffyllc{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.swiffyllc'
+            resValue "string", "app_name", "Swiffy LLC"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

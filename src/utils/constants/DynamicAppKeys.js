@@ -229,6 +229,8 @@ const shortCodes = {
   onthego: '5e0900',
   mylaglobal: 'a35cd8',
   ambutap: 'b436bb',
+  sabroson: 'af268c',
+  swiffyllc: 'da7ecb',
 };
 
 const appIds = {
@@ -1084,7 +1086,7 @@ const appIds = {
     ios: 'com.cannabisClubSF',
     android: 'com.cannabisClubSF',
   }),
-  cannabisClubSF: Platform.select({
+  halaTalabat: Platform.select({
     ios: 'com.halaTalabat',
     android: 'com.halaTalabat',
   }),
@@ -1143,6 +1145,14 @@ const appIds = {
   ambutap: Platform.select({
     ios: 'com.ambutap',
     android: 'com.ambutap',
+  }),
+  sabroson: Platform.select({
+    ios: 'com.sabroson',
+    android: 'com.sabroson',
+  }),
+  swiffyllc: Platform.select({
+    ios: 'com.swiffyllc',
+    android: 'com.swiffyllc',
   }),
 };
 
