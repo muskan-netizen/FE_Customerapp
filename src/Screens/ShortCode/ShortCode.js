@@ -1456,6 +1456,36 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.onthego:
+          updateState({
+            shortCode: shortCodes.onthego,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mylaglobal:
+          updateState({
+            shortCode: shortCodes.mylaglobal,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ambutap:
+          updateState({
+            shortCode: shortCodes.ambutap,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sabroson:
+          updateState({
+            shortCode: shortCodes.sabroson,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.swiffyllc:
+          updateState({
+            shortCode: shortCodes.swiffyllc,
+            isShortcodePrefilled: true,
+          });
+          break;
         case appIds.meatEasy:
           updateState({
             shortCode: shortCodes.meatEasy,
