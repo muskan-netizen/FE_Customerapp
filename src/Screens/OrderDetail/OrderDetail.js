@@ -144,8 +144,6 @@ export default function OrderDetail({navigation, route}) {
   const mapRef = useRef(null);
   const markerRef = useRef(null);
 
-
-
   const moveToNewScreen =
     (screenName, data = {}) =>
     () => {
@@ -168,7 +166,6 @@ export default function OrderDetail({navigation, route}) {
   //     }
   //   }, [currencies, languages, paramData]),
   // );
-
 
   useInterval(
     () => {
@@ -244,6 +241,7 @@ export default function OrderDetail({navigation, route}) {
     }
     data['new_dispatch_traking_url'] = new_dispatch_traking_url;
 
+    console.log(data, '_getOrderDetailScreen>data>');
     // updateState({ isLoading: true });
     actions
       .getOrderDetail(data, {
@@ -254,7 +252,7 @@ export default function OrderDetail({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res.data, 'order detail res===>');
+        console.log(res, 'order detail res===>');
         updateState({isLoading: false});
         if (res?.data) {
           if (res?.data?.vendors[0]?.tempCart) {
@@ -643,21 +641,46 @@ export default function OrderDetail({navigation, route}) {
                                             numberOfLines={1}>
                                             {j.addon_title}:
                                           </Text>
-                                          <Text
-                                            style={
-                                              isDarkMode
-                                                ? [
-                                                    styles2.cartItemWeight2,
-                                                    {
-                                                      color:
-                                                        MyDarkTheme.colors.text,
-                                                    },
-                                                  ]
-                                                : styles2.cartItemWeight2
-                                            }
-                                            numberOfLines={
-                                              1
-                                            }>{`(${j.option_title})`}</Text>
+
+                                          <View style={{flexDirection: 'row'}}>
+                                            <Text
+                                              style={
+                                                isDarkMode
+                                                  ? [
+                                                      styles2.cartItemWeight2,
+                                                      {
+                                                        color:
+                                                          MyDarkTheme.colors
+                                                            .text,
+                                                      },
+                                                    ]
+                                                  : styles2.cartItemWeight2
+                                              }
+                                              numberOfLines={
+                                                1
+                                              }>{`(${j.option_title})`}</Text>
+                                            <Text
+                                              style={
+                                                isDarkMode
+                                                  ? [
+                                                      styles2.cartItemWeight2,
+                                                      {
+                                                        color:
+                                                          MyDarkTheme.colors
+                                                            .text,
+                                                      },
+                                                    ]
+                                                  : styles2.cartItemWeight2
+                                              }
+                                              numberOfLines={1}>
+                                              {` ${
+                                                currencies?.primary_currency
+                                                  ?.symbol
+                                              } ${currencyNumberFormatter(
+                                                Number(j?.quantity_price).toFixed(2),
+                                              )}`}
+                                            </Text>
+                                          </View>
                                         </View>
                                       </View>
                                     );
@@ -793,7 +816,8 @@ export default function OrderDetail({navigation, route}) {
                       ]
                     : styles.priceItemLabel2
                 }>
-                {currencies?.primary_currency?.symbol} {currencyNumberFormatter(
+                {currencies?.primary_currency?.symbol}{' '}
+                {currencyNumberFormatter(
                   Number(
                     item?.payable_amount ? item?.payable_amount : 0,
                   ).toFixed(2),
@@ -831,7 +855,6 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const _renderItem = ({item, index}) => {
-    
     return (
       <View
         style={{
@@ -994,17 +1017,29 @@ export default function OrderDetail({navigation, route}) {
                               {i?.product_addons.length
                                 ? i?.product_addons.map((j, jnx) => {
                                     return (
-                                      <View style={{flexDirection: 'row'}}>
+                                      <View>
                                         <Text
                                           style={styles.cartItemWeight2}
                                           numberOfLines={1}>
                                           {j.addon_title}{' '}
                                         </Text>
-                                        <Text
-                                          style={styles.cartItemWeight2}
-                                          numberOfLines={
-                                            1
-                                          }>{`(${j.option_title})`}</Text>
+                                        <View style={{flexDirection: 'row'}}>
+                                          <Text
+                                            style={styles.cartItemWeight2}
+                                            numberOfLines={
+                                              1
+                                            }>{`(${j.option_title})`}</Text>
+                                          <Text
+                                            style={styles.cartItemWeight2}
+                                            numberOfLines={1}>
+                                            {` ${
+                                              currencies?.primary_currency
+                                                ?.symbol
+                                            } ${currencyNumberFormatter(
+                                              Number(j?.price).toFixed(2),
+                                            )}`}
+                                          </Text>
+                                        </View>
                                       </View>
                                     );
                                   })
@@ -1400,7 +1435,6 @@ export default function OrderDetail({navigation, route}) {
       </View>
     );
   };
-
 
   Number(cartData?.total_service_fee) + Number(cartData?.taxable_amount);
   const getFooter = () => {
@@ -2022,8 +2056,6 @@ export default function OrderDetail({navigation, route}) {
     }
   };
 
-
-
   const onCenter = () => {
     mapRef.current.fitToCoordinates(
       [
@@ -2062,7 +2094,6 @@ export default function OrderDetail({navigation, route}) {
       data['order_vendor_id'] = updatedcartData?.order_vendor_id;
       data['status'] = status;
       data['total_payable_amount'] = updatedcartData?.difference_to_be_paid;
-
 
       updateState({isLoading: true});
       actions
@@ -2414,9 +2445,9 @@ export default function OrderDetail({navigation, route}) {
             marginVertical: moderateScale(10),
             marginHorizontal: moderateScale(10),
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end',
           }}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => acceptRejectDriverUpdation(2)}
             style={{
               backgroundColor: colors?.redB,
@@ -2435,7 +2466,7 @@ export default function OrderDetail({navigation, route}) {
               }}>
               {strings.REJECT}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity
             onPress={() => acceptRejectDriverUpdation(1)}
             style={{

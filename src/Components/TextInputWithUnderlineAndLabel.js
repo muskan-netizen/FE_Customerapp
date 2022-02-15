@@ -56,6 +56,7 @@ const TextInputWithUnderlineAndLabel = ({
   isEditable = true,
   keyboardType = '',
   defaultValue = '',
+  autoFocus = false,
   ...props
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -88,6 +89,8 @@ const TextInputWithUnderlineAndLabel = ({
           numberOfLines={1}
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
+            // backgroundColor: 'red',
+            flex: 1,
             ...labelStyle,
           }}>
           {label}
@@ -101,7 +104,7 @@ const TextInputWithUnderlineAndLabel = ({
       <View
         style={{
           flexDirection: 'row',
-          height: moderateScaleVertical(30),
+          minHeight: moderateScaleVertical(30),
           color: colors.white,
           marginBottom,
           borderBottomWidth: StyleSheet.hairlineWidth,
@@ -129,6 +132,7 @@ const TextInputWithUnderlineAndLabel = ({
           }}
         /> */}
         <TextInput
+          autoFocus={autoFocus || false}
           selectionColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
           placeholder={placeholder}
           placeholderTextColor={

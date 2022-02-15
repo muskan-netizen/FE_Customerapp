@@ -16,10 +16,10 @@ import {TouchableOpacity} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import Header from '../../../Components/Header';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import actions from '../../../redux/actions';
 import navigationStrings from '../../../navigation/navigationStrings';
-import { showMessage } from 'react-native-flash-message';
+import {showMessage} from 'react-native-flash-message';
 
 const PaymentSettings = (props) => {
   const {navigation} = props;
@@ -132,6 +132,106 @@ const PaymentSettings = (props) => {
     updateState({accountType: data});
   };
 
+  const renderAddAccountModal = () => {
+    return (
+      <KeyboardAwareScrollView
+        bounces={false}
+        style={styles.modalContainerStyle}>
+        <TouchableOpacity
+          onPress={toggleAccountModal}
+          style={{
+            alignSelf: 'center',
+            marginVertical: moderateScaleVertical(24),
+          }}>
+          <Image source={imagePath.closeRoyo} />
+        </TouchableOpacity>
+        <View style={styles.modalBody}>
+          <Text style={styles.modalHeaderText}>Add new account</Text>
+
+          <TextInputWithUnderlineAndLabel
+            labelStyle={styles.labelText}
+            mainStyle={{
+              ...styles.textInputView,
+              flex: 0.48,
+              // backgroundColor: 'red',
+            }}
+            containerStyle={{}}
+            txtInputStyle={styles.textInput}
+            underlineColor="transparent"
+            label="Account Holder name"
+            value={AccountHolderName}
+            onChangeText={onChangeText('AccountHolderName')}
+            placeholder="Example"
+            marginBottom={0}
+          />
+          {/* <View style={{...styles.textInputView}}>
+          <Text style={styles.labelText}>Account Type</Text>
+          <DropDown
+            value={accountType}
+            inputStyle={{
+              ...styles.dropDown,
+            }}
+            selectedIndexByProps={-1}
+            placeholder="Choose Accouont type"
+            data={dropDownData}
+            fetchValues={onSelectAccountType}
+            marginBottom={2}
+            // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
+          />
+        </View> */}
+          <View
+            style={{
+              ...styles.textInputView,
+              marginTop: moderateScaleVertical(10),
+            }}>
+            <Text style={styles.labelText}>Account Type</Text>
+            <DropDown
+              value={accountType}
+              inputStyle={styles.textInput}
+              selectedIndexByProps={-1}
+              placeholder="Choose Accouont type"
+              data={dropDownData}
+              fetchValues={onSelectAccountType}
+              marginBottom={0}
+              // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
+            />
+          </View>
+          <TextInputWithUnderlineAndLabel
+            labelStyle={styles.labelText}
+            mainStyle={{
+              ...styles.textInputView,
+              zIndex: -9,
+              // marginTop: moderateScaleVertical(10),
+            }}
+            containerStyle={{}}
+            txtInputStyle={styles.textInput}
+            underlineColor="transparent"
+            label="Account Number"
+            value={accouontNumber}
+            onChangeText={onChangeText('accouontNumber')}
+            placeholder="xxxxxxxxxxxxxx"
+            marginBottom={0}
+          />
+
+          <TextInputWithUnderlineAndLabel
+            labelStyle={styles.labelText}
+            mainStyle={{
+              ...styles.textInputView,
+              zIndex: -9,
+              marginTop: moderateScaleVertical(10),
+            }}
+            txtInputStyle={styles.textInput}
+            underlineColor="transparent"
+            label="IFSC"
+            value={ifsc}
+            onChangeText={onChangeText('ifsc')}
+            placeholder="Enter branch ifsc code"
+          />
+        </View>
+      </KeyboardAwareScrollView>
+    );
+  };
+
   return (
     <WrapperContainer
       bgColor="white"
@@ -147,27 +247,45 @@ const PaymentSettings = (props) => {
         imageAlongwithTitle={imagePath.dropdownTriangle}
       />
       <View style={styles.container}>
-        <View style={styles.cashBox}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          style={[styles.cashBox, {alignItems: 'center'}]}>
           <Image source={imagePath.selectedRoyo} />
           <Text style={styles.cashOnDeliver}>{strings.CASH_ON_DELIVERY}</Text>
-        </View>
+        </TouchableOpacity>
         <View
           style={{borderWidth: 0.5, borderColor: colors.lightGreyBgColor}}
         />
-        <View style={styles.cardBox}>
-          <Image source={imagePath.deselectedRoyo} />
-          <View style={{marginLeft: moderateScale(12), flex: 1}}>
-            <Text style={styles.accouontTransfer}>
+
+        <View
+          style={[styles.cardBox, {flexDirection: 'column', width: '100%'}]}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Image source={imagePath.deselectedRoyo} />
+            <Text
+              style={[
+                styles.accouontTransfer,
+                {marginLeft: moderateScale(10)},
+              ]}>
               {strings.BANK_ACCOUNT_TRANSFER}
             </Text>
+          </TouchableOpacity>
+          <View style={{width: '100%'}}>
             {[1, 2].map((val, index) => (
-              <View key={index} style={styles.paymentCardBox}>
+              <View
+                key={index}
+                style={[
+                  styles.paymentCardBox,
+                  {width: '95%', alignSelf: 'flex-end'},
+                ]}>
                 <Image source={imagePath.masterCardRoyo} />
                 <View
                   style={{
-                    flex: 1,
+                    // flex: 1,
+                    width: '100%',
                     marginLeft: moderateScale(12),
-                    justifyContent: 'space-around',
+                    // justifyContent: 'space-around',
                   }}>
                   <Text style={styles.cardNumber}>1234 5678 9234 2345</Text>
                   <Text style={styles.cardName}>master Card</Text>
@@ -175,93 +293,19 @@ const PaymentSettings = (props) => {
               </View>
             ))}
           </View>
+          <View style={{alignSelf: 'flex-end'}}>
+            <Text onPress={toggleAccountModal} style={styles.addAccount}>
+              {strings.ADD_ACCOUNT}
+            </Text>
+          </View>
         </View>
-        <Text onPress={toggleAccountModal} style={styles.addAccount}>
-          {strings.ADD_ACCOUNT}
-        </Text>
       </View>
       <Modal
         isVisible={accountModalVisible}
         onBackButtonPress={toggleAccountModal}
         onBackdropPress={toggleAccountModal}
         style={styles.modalStyle}>
-        <KeyboardAwareScrollView
-          bounces={false}
-          style={styles.modalContainerStyle}>
-          <TouchableOpacity
-            onPress={toggleAccountModal}
-            style={{
-              alignSelf: 'center',
-              marginVertical: moderateScaleVertical(24),
-            }}>
-            <Image source={imagePath.closeRoyo} />
-          </TouchableOpacity>
-          <View style={styles.modalBody}>
-            <Text style={styles.modalHeaderText}>Add new account</Text>
-
-            <TextInputWithUnderlineAndLabel
-              labelStyle={styles.labelText}
-              mainStyle={{...styles.textInputView, flex: 0.48}}
-              containerStyle={{}}
-              txtInputStyle={styles.textInput}
-              underlineColor="transparent"
-              label="Accouont Holeder name"
-              value={AccountHolderName}
-              onChangeText={onChangeText('AccountHolderName')}
-              placeholder="Example"
-            />
-            {/* <View style={{...styles.textInputView}}>
-              <Text style={styles.labelText}>Account Type</Text>
-              <DropDown
-                value={accountType}
-                inputStyle={{
-                  ...styles.dropDown,
-                }}
-                selectedIndexByProps={-1}
-                placeholder="Choose Accouont type"
-                data={dropDownData}
-                fetchValues={onSelectAccountType}
-                marginBottom={2}
-                // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
-              />
-            </View> */}
-            <View style={{...styles.textInputView}}>
-              <Text style={styles.labelText}>Account Type</Text>
-              <DropDown
-                value={accountType}
-                inputStyle={styles.textInput}
-                selectedIndexByProps={-1}
-                placeholder="Choose Accouont type"
-                data={dropDownData}
-                fetchValues={onSelectAccountType}
-                marginBottom={2}
-                // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
-              />
-            </View>
-            <TextInputWithUnderlineAndLabel
-              labelStyle={styles.labelText}
-              mainStyle={{...styles.textInputView, zIndex: -9}}
-              containerStyle={{}}
-              txtInputStyle={styles.textInput}
-              underlineColor="transparent"
-              label="Account Number"
-              value={accouontNumber}
-              onChangeText={onChangeText('accouontNumber')}
-              placeholder="xxxxxxxxxxxxxx"
-            />
-
-            <TextInputWithUnderlineAndLabel
-              labelStyle={styles.labelText}
-              mainStyle={{...styles.textInputView, zIndex: -9}}
-              txtInputStyle={styles.textInput}
-              underlineColor="transparent"
-              label="IFSC"
-              value={ifsc}
-              onChangeText={onChangeText('ifsc')}
-              placeholder="Enter branch ifsc code"
-            />
-          </View>
-        </KeyboardAwareScrollView>
+        {renderAddAccountModal()}
       </Modal>
     </WrapperContainer>
   );

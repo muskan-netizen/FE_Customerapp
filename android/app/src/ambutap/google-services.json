@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1054630506952",
+    "project_id": "ambutap-aabb0",
+    "storage_bucket": "ambutap-aabb0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054630506952:android:b7b770b917ef9745e8d0fd",
+        "android_client_info": {
+          "package_name": "com.ambutap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1054630506952-1fk92cv2j86ti6mgd7ide9ef6rj2adpr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE-yeeRx_9AAy9icZS0c_cRTJWq_Q4M4U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1054630506952-1fk92cv2j86ti6mgd7ide9ef6rj2adpr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

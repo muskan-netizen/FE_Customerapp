@@ -65,7 +65,11 @@ const OrderCard = (props) => {
             'DD MMM,YYYY',
           )} ${moment(item?.date_time).format('LT')} `}</Text>
         </View>
-        <View style={styles.rowSapce}>
+        <View
+          style={[
+            styles.rowSapce,
+            {flexDirection: 'column', alignItems: 'flex-start'},
+          ]}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <View
               style={{
@@ -93,8 +97,7 @@ const OrderCard = (props) => {
                 />
               ))}
             </View>
-            <Text style={styles.font16Regular}>
-              {item.order_number == '31642578' && console.log('>>><<<<<', item)}
+            <Text style={[styles.font16Regular, {flex: 1}]}>
               {item.product_details && item.product_details[0]
                 ? item.product_details[0].title
                 : ''}{' '}
@@ -106,6 +109,7 @@ const OrderCard = (props) => {
               ...styles.font14Regular,
               color: '#35B300',
               textAlign: 'right',
+              alignSelf: 'flex-end',
             }}>
             {item?.payment_option_title}
           </Text>

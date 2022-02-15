@@ -629,7 +629,13 @@ export default function Cart({navigation, route}) {
       btnLoader: false,
       placeLoader: false,
     });
-    showError(error?.description || error?.message || error?.error || error);
+    showError(
+      error?.error?.description ||
+        error?.description ||
+        error?.message ||
+        error?.error ||
+        error,
+    );
   };
 
   //Get list of all offers
@@ -979,12 +985,18 @@ export default function Cart({navigation, route}) {
   };
 
   const _finalPayment = () => {
-    console.log(selectedPayment, 'selectedPayment');
     if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
       _offineLinePayment();
       return;
     }
-    if (selectedPayment?.id == 10 && selectedPayment?.off_site == 0) {
+    if (
+      selectedPayment?.id == 10 &&
+      selectedPayment?.off_site == 0 &&
+      !!(
+        Number(cartData?.total_payable_amount) + Number(selectedTipAmount) !==
+        0
+      )
+    ) {
       _renderRazor();
       return;
     }
@@ -1318,12 +1330,13 @@ export default function Cart({navigation, route}) {
       ),
       currency: currencies?.primary_currency?.iso_code,
       key: appData?.profile?.preferences?.razorpay_api_key, // Your api key
-      amount:
+      amount: (
         (Number(cartData?.total_payable_amount) +
           (selectedTipAmount != null && selectedTipAmount != ''
             ? Number(selectedTipAmount)
             : 0)) *
-        100,
+        100
+      ).toFixed(0),
       name: appData?.profile?.company_name,
       prefill: {
         email: userData?.email,

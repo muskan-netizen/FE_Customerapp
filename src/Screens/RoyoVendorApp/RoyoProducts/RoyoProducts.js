@@ -215,7 +215,9 @@ const RoyoProducts = (props) => {
               color: colors.black,
               marginTop: moderateScaleVertical(4),
             }}>
-            $ {item.variant[0]?.price}
+            {item.variant[0]?.price
+              ? `$ ${Number(item.variant[0]?.price).toFixed(2)}`
+              : ''}
           </Text>
         </View>
       </View>
@@ -228,7 +230,7 @@ const RoyoProducts = (props) => {
   };
 
   /**********Get all list items by store  id and category id */
-  const getAllProducts = (id) => {
+  const getAllProducts = async () => {
     updateState({
       isLoading: true,
     });
@@ -237,13 +239,21 @@ const RoyoProducts = (props) => {
       : !isEmpty(selectedVendor)
       ? selectedVendor?.id
       : '';
-    console.log(vendordId, 'res.data>>>>>');
+
+    // if (!vendordId) {
+    //   setTimeout(() => {
+    //     getAllProducts();
+    //   }, 2000);
+    //   return false;
+    // }
     const data = {};
 
-    data['selected_vendor_id'] = vendordId;
+    data['selected_vendor_id'] = vendordId.toString();
     data['limit'] = limit;
     data['type'] = 'all';
     data['page'] = pageNo;
+
+    console.log(data, 'data>>>>>');
     actions
       .getAllProductByVendorId(``, data, {
         code: appData?.profile?.code,
@@ -251,12 +261,13 @@ const RoyoProducts = (props) => {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res.data, 'res.data>>>>>');
+        console.log(res.data, 'res.data>>>>>', pageNo);
         let categorylist = res.data.category_list.filter((x) => x.is_selected);
         let selectedVendor = res.data.vendor_list.find((x) => x.is_selected);
         if (!isEmpty(res.data.vendor_list)) {
-          getVendorCategories(selectedVendor);
+          _getVendorCategories({id: vendordId});
         }
+
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -270,7 +281,10 @@ const RoyoProducts = (props) => {
               : [...productListData, ...res.data.products.data],
         });
       })
-      .catch(errorMethod);
+      .catch((err) => {
+        console.log(err);
+        errorMethod(err);
+      });
     // }
   };
 
@@ -319,6 +333,7 @@ const RoyoProducts = (props) => {
             : 0,
       }}>
       <TouchableOpacity
+        disabled
         onPress={() => selectedCategory(item.id)}
         style={styles.categoryItem}>
         <Image
@@ -364,6 +379,9 @@ const RoyoProducts = (props) => {
     updateState({
       isAddProductModal: false,
       isVendorSelectModal: false,
+      productName: '',
+      productSKU: '',
+      productSlug: '',
     });
   };
 
@@ -416,14 +434,21 @@ const RoyoProducts = (props) => {
         setTimeout(() => {
           navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT, {
             productDetail: res?.data?.product_detail,
-            onCallBack: getAllProducts,
+            onCallBack: () => {
+              updateState({pageNo: 1});
+              getAllProducts();
+            },
           });
         }, 500);
       })
-      .catch(errorMethod);
+      .catch((err) => {
+        console.log(err);
+        errorMethod(err);
+      });
   };
 
-  const getVendorCategories = (selectedVendor) => {
+  const _getVendorCategories = (selectedVendor) => {
+    console.log('selectedVendorselectedVendor', selectedVendor);
     actions
       .getVendorCategories(
         {
@@ -441,7 +466,10 @@ const RoyoProducts = (props) => {
           isLoading: false,
         });
       })
-      .catch(errorMethod);
+      .catch((err) => {
+        console.log(selectedVendor, err);
+        // errorMethod(err);
+      });
   };
 
   const mainViewModal = () => {
@@ -462,7 +490,7 @@ const RoyoProducts = (props) => {
           <TextInputWithUnderlineAndLabel
             label={'Product Name'}
             labelStyle={styles.labelStyle}
-            placeholder={'tshirt'}
+            placeholder={''}
             value={productName}
             onChangeText={(text) => {
               updateState({
@@ -474,8 +502,9 @@ const RoyoProducts = (props) => {
               });
             }}
             mainStyle={{flex: 0.4}}
-            placeholderTextColor={colors.black}
+            placeholderTextColor={colors.textGreyB}
             txtInputStyle={styles.textInputStyle}
+            autoFocus
           />
           <View style={{flex: 0.56}}>
             <Text style={styles.labelStyle}>Category</Text>
@@ -552,7 +581,7 @@ const RoyoProducts = (props) => {
               productSKU: text,
             });
           }}
-          placeholderTextColor={colors.black}
+          placeholderTextColor={colors.textGreyB}
           txtInputStyle={styles.textInputStyle}
           mainStyle={{marginTop: moderateScale(5)}}
         />
@@ -566,7 +595,7 @@ const RoyoProducts = (props) => {
               productSlug: text,
             });
           }}
-          placeholderTextColor={colors.black}
+          placeholderTextColor={colors.textGreyB}
           txtInputStyle={styles.textInputStyle}
           mainStyle={{marginTop: moderateScale(5)}}
         />
@@ -616,6 +645,7 @@ const RoyoProducts = (props) => {
   };
 
   const onVendorSelect = (item) => {
+    console.log('selectedVendorselectedVendor', selectedVendor);
     updateState({
       selectedVendor: item,
       isVendorSelectModal: false,
@@ -658,7 +688,8 @@ const RoyoProducts = (props) => {
           <View
             style={{
               flex: 1,
-              paddingBottom: moderateScaleVertical(70),
+              paddingBottom:
+                Platform.OS === 'ios' ? moderateScaleVertical(70) : 0,
             }}>
             <SwipeListView
               refreshControl={
@@ -728,7 +759,9 @@ const RoyoProducts = (props) => {
           <View
             style={{
               flex: 1,
-              alignItems: 'center',
+              // alignItems: 'center',
+              paddingBottom:
+                Platform.OS === 'ios' ? moderateScaleVertical(70) : 0,
             }}>
             <FlatList
               data={category_list}
@@ -737,9 +770,13 @@ const RoyoProducts = (props) => {
               showsVerticalScrollIndicator={false}
               numColumns={width > 600 ? 5 : 3}
               renderItem={renderCatogry}
+              style={{
+                alignSelf: category_list.length > 2 ? 'center' : 'flex-start',
+                marginLeft: category_list.length > 2 ? 0 : moderateScale(20),
+              }}
             />
 
-            <ButtonWithLoader
+            {/* <ButtonWithLoader
               onPress={() =>
                 navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT, {
                   vendor_list,
@@ -747,7 +784,8 @@ const RoyoProducts = (props) => {
               }
               btnStyle={styles.categoryBtn}
               btnText="+  category"
-            />
+              btnTextStyle={{color: colors.black}}
+            /> */}
           </View>
         ) : null}
       </View>
@@ -776,7 +814,7 @@ const RoyoProducts = (props) => {
           <SelectVendorListModal
             vendorList={vendor_list}
             onCloseModal={() => updateState({isVendorSelectModal: false})}
-            onVendorSelect={onVendorSelect}
+            onVendorSelect={(item) => onVendorSelect(item)}
             selectedVendor={selectedVendor}
           />
         </View>
