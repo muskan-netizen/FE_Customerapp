@@ -444,7 +444,7 @@ export default function Home({ route, navigation }) {
           uri: getImageUrl(
             item?.icon?.image_fit,
             item?.icon?.image_path,
-            '120/120',
+            '160/160',
           )
         }
       })

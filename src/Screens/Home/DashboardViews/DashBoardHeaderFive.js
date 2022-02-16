@@ -565,7 +565,7 @@ export default function DashBoardHeaderFive({
                     {
                       color: isDarkMode
                         ? MyDarkTheme.colors.text
-                        : colors.blackOpacity66,
+                        : colors.blackOpacity43,
                         fontFamily:fontFamily.regular
                     },
                   ]}>

@@ -25,7 +25,7 @@ const HomeCategoryCard2 = ({
   const imageURI = getImageUrl(
     data?.icon?.image_fit,
     data?.icon?.image_path,
-    '120/120',
+    '160/160',
   );
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
