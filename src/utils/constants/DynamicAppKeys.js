@@ -231,6 +231,8 @@ const shortCodes = {
   ambutap: 'b436bb',
   sabroson: 'af268c',
   swiffyllc: 'da7ecb',
+  meatEasy: '3e89e5',
+  boltDelivery: '07a31a',
 };
 
 const appIds = {
@@ -284,7 +286,7 @@ const appIds = {
   }),
   ufood: Platform.select({
     ios: 'com.ufood',
-    android: 'com.ufood',
+    android: 'com.order.ufood',
   }),
   martinionwheels: Platform.select({
     ios: 'com.martinionwheels',
@@ -1153,6 +1155,13 @@ const appIds = {
   swiffyllc: Platform.select({
     ios: 'com.swiffyllc',
     android: 'com.swiffyllc',
+  meatEasy: Platform.select({
+    ios: 'com.meatEasy',
+    android: 'com.meatEasy',
+  }),
+  boltDelivery: Platform.select({
+    ios: 'com.boltDelivery',
+    android: 'com.boltDelivery',
   }),
 };
 

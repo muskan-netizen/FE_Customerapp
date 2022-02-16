@@ -33,7 +33,15 @@ import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import _ from 'lodash';
 
 const RoyoOrder = (props) => {
-  const {navigation} = props;
+  const {navigation, route} = props;
+  const {params} = route;
+
+  useEffect(() => {
+    if (params) {
+      console.log('focused order screen >>>> ', params);
+      updateState({activeIndex: params?.index});
+    }
+  }, [params]);
 
   const selectedOrder = (index) => {
     updateState({activeIndex: index});
@@ -291,7 +299,9 @@ const RoyoOrder = (props) => {
       />
       <View style={styles.container}>
         <MultiScreen
-          tabTextStyle={{marginTop: moderateScaleVertical(0)}}
+          tabTextStyle={{
+            marginTop: moderateScaleVertical(0),
+          }}
           screenName={['New', 'Confirmed', 'Cancelled', 'Completed']}
           selectedScreen={(index) => selectedOrder(index)}
           selectedScreenIndex={activeIndex}
@@ -321,8 +331,9 @@ const RoyoOrder = (props) => {
             renderItem={({item, index}) => (
               <View
                 style={{
-                  marginLeft: customMarginLeftForBox(index),
+                  // marginLeft: customMarginLeftForBox(index),
                   flex: 1,
+                  paddingHorizontal: moderateScale(20),
                 }}>
                 <OrderCard
                   updateOrderStatus={updateOrderStatus}
@@ -368,6 +379,7 @@ const RoyoOrder = (props) => {
                 style={{
                   marginLeft: customMarginLeftForBox(index),
                   flex: 1,
+                  paddingHorizontal: moderateScale(20),
                 }}>
                 <OrderCard
                   onPress={() =>
@@ -413,6 +425,7 @@ const RoyoOrder = (props) => {
                   style={{
                     marginLeft: customMarginLeftForBox(index),
                     flex: 1,
+                    paddingHorizontal: moderateScale(20),
                   }}>
                   <OrderCard
                     updateOrderStatus={updateOrderStatus}
@@ -459,6 +472,7 @@ const RoyoOrder = (props) => {
                   style={{
                     marginLeft: customMarginLeftForBox(index),
                     flex: 1,
+                    paddingHorizontal: moderateScale(20),
                   }}>
                   <OrderCard
                     updateOrderStatus={updateOrderStatus}
@@ -486,7 +500,7 @@ export default RoyoOrder;
 const styles = StyleSheet.create({
   container: {
     // marginTop: moderateScaleVertical(24),
-    marginHorizontal: moderateScale(16),
+    // marginHorizontal: moderateScale(16),
     marginBottom: customMarginBottom(),
     flex: 1,
   },

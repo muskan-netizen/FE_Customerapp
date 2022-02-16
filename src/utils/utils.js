@@ -112,6 +112,7 @@ export async function apiReq(
         headers,
       };
     }
+    console.log('check data in api generator>>>', headers);
     //
     axios[method](endPoint, data, {headers})
       .then((result) => {
