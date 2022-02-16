@@ -1466,6 +1466,60 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.onthego:
+          updateState({
+            shortCode: shortCodes.onthego,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mylaglobal:
+          updateState({
+            shortCode: shortCodes.mylaglobal,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ambutap:
+          updateState({
+            shortCode: shortCodes.ambutap,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sabroson:
+          updateState({
+            shortCode: shortCodes.sabroson,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.swiffyllc:
+          updateState({
+            shortCode: shortCodes.swiffyllc,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.meatEasy:
+          updateState({
+            shortCode: shortCodes.meatEasy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.boltDelivery:
+          updateState({
+            shortCode: shortCodes.boltDelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.gamaDelivery:
+          updateState({
+            shortCode: shortCodes.gamaDelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hivefair:
+          updateState({
+            shortCode: shortCodes.hivefair,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -1500,7 +1554,6 @@ export default function ShortCode({ route, navigation }) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '245bae',
         code: shortCode,
         language: res?.primary_language?.id,
       };

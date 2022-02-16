@@ -66,7 +66,8 @@ export default function DashBoardFive({
   navigation = {},
   toggleData = {},
   onVendorFilterSeletion = () => { },
-  tempCartData = null
+  tempCartData = null,
+  singleVendor = false
 }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -146,13 +147,13 @@ export default function DashBoardFive({
       { id: 2, type: strings.CLOSE },
       { id: 3, type: strings.BESTSELLER },
     ];
-    if (appData?.profile?.preferences?.is_hyperlocal) {
-      homeFilter.push({ id: 4, type: strings.NEAR_BY });
-    } else {
-      if (homeFilter.length > 3) {
-        homeFilter.pop();
-      }
-    }
+    // if (appData?.profile?.preferences?.is_hyperlocal) {
+    //   homeFilter.push({ id: 4, type: strings.NEAR_BY });
+    // } else {
+    //   if (homeFilter.length > 3) {
+    //     homeFilter.pop();
+    //   }
+    // }
     return homeFilter;
   };
 
@@ -286,7 +287,7 @@ export default function DashBoardFive({
             </View>
           )}
         <View style={{}}>
-          {!!appData?.mobile_banners?.length && (
+          {!!appData?.mobile_banners?.length &&  (
             <View style={{marginTop:moderateScaleVertical(16)}}>
               <FlatList
                 horizontal
@@ -420,6 +421,7 @@ export default function DashBoardFive({
         contentContainerStyle={{ flexGrow: 1 }}>
         {/* <SearchLoader viewStyles={{marginTop: moderateScale(15)}} /> */}
         <CategoryLoader2 viewStyles={{ marginVertical: moderateScale(16) }} />
+        <CategoryLoader2 viewStyles={{ marginBottom: moderateScale(16) }} />
         {/* <CategoryLoader2 viewStyles={{marginTop: moderateScale(35)}} /> */}
 
         <View style={{ flexDirection: 'row', marginBottom: moderateScaleVertical(16) }}>
@@ -635,7 +637,7 @@ export default function DashBoardFive({
           {categoriesBanners()}
           {
             <>
-              <FlatList
+              {vendorsData.length > 1 || !singleVendor ?<FlatList
                 scrollEnabled={false}
                 ListHeaderComponent={vendorHeader}
                 showsVerticalScrollIndicator={false}
@@ -648,7 +650,7 @@ export default function DashBoardFive({
                 ItemSeparatorComponent={() => (
                   <View style={{ height: moderateScale(10) }} />
                 )}
-              />
+              />: null}
 
               {checkForBrand && (
                 <View style={{}}>

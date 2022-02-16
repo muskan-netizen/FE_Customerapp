@@ -154,8 +154,11 @@ const RoyoOrderDetail = (props) => {
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
         leftIcon={imagePath.backRoyo}
-        centerTitle="Order details"
+        centerTitle={`Order #${data.order_number}`}
       />
+      {/* <View style={{...styles.orderNumberBox, zIndex: -1}}>
+        <Text style={styles.orderNumber}>Order #{data.order_number}</Text>
+      </View> */}
       <ScrollView
         style={styles.container}
         bounces={false}
@@ -190,7 +193,8 @@ const RoyoOrderDetail = (props) => {
           </View>
         ) : null}
         <View style={{...styles.orderNumberBox, zIndex: -1}}>
-          <Text style={styles.orderNumber}>Order #{data.order_number}</Text>
+          {/* <Text style={styles.orderNumber}>Order #{data.order_number}</Text> */}
+          <Text style={styles.orderNumber}>Ordered at:</Text>
           <Text style={styles.orderTime}>{`${moment(data?.date_time).format(
             'DD MMM,YYYY',
           )} ${moment(data?.date_time).format('LT')} `}</Text>

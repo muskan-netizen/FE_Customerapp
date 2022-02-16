@@ -2609,6 +2609,7 @@ export default function Products({ route, navigation }) {
             {appIds.codiner == DeviceInfo.getBundleId() ? null : (
               <View style={{ flex: 0.14 }}>
                 <TouchableOpacity
+                hitSlop={hitSlopProp}
                   onPress={onShowHideFilter}
                   style={{
                     alignSelf: 'flex-end'

@@ -198,7 +198,7 @@ const shortCodes = {
   stitchesonsite: '5bdfee',
   easyu: '20b62b',
   mozmarcas: '53ea8a',
-  myfiji: 'a69fda',
+  myfiji: 'a0c80e',
   fastmikes: 'd89823',
   citysuds: 'aaedee',
   homeTownDelivery: 'c49349',
@@ -226,6 +226,15 @@ const shortCodes = {
   tumbak: '59944a',
   iPicknDrop: 'f9cf93',
   bluebolt: 'e5a64c',
+  onthego: '5e0900',
+  mylaglobal: 'a35cd8',
+  ambutap: 'b436bb',
+  sabroson: 'af268c',
+  swiffyllc: 'da7ecb',
+  meatEasy: '3e89e5',
+  boltDelivery: '07a31a',
+  gamaDelivery: 'b77561',
+  hivefair: 'f0cede',
 };
 
 const appIds = {
@@ -279,7 +288,7 @@ const appIds = {
   }),
   ufood: Platform.select({
     ios: 'com.ufood',
-    android: 'com.ufood',
+    android: 'com.order.ufood',
   }),
   martinionwheels: Platform.select({
     ios: 'com.martinionwheels',
@@ -1081,7 +1090,7 @@ const appIds = {
     ios: 'com.cannabisClubSF',
     android: 'com.cannabisClubSF',
   }),
-  cannabisClubSF: Platform.select({
+  halaTalabat: Platform.select({
     ios: 'com.halaTalabat',
     android: 'com.halaTalabat',
   }),
@@ -1128,6 +1137,42 @@ const appIds = {
   bluebolt: Platform.select({
     ios: 'com.app.bluebolt',
     android: 'com.app.bluebolt',
+  }),
+  onthego: Platform.select({
+    ios: 'com.customer.onthego',
+    android: 'com.customer.onthego',
+  }),
+  mylaglobal: Platform.select({
+    ios: 'com.mylaglobal',
+    android: 'com.mylaglobal',
+  }),
+  ambutap: Platform.select({
+    ios: 'com.ambutap',
+    android: 'com.ambutap',
+  }),
+  sabroson: Platform.select({
+    ios: 'com.sabroson',
+    android: 'com.sabroson',
+  }),
+  swiffyllc: Platform.select({
+    ios: 'com.swiffyllc',
+    android: 'com.swiffyllc',
+  }),
+  meatEasy: Platform.select({
+    ios: 'com.meatEasy',
+    android: 'com.meatEasy',
+  }),
+  boltDelivery: Platform.select({
+    ios: 'com.boltDelivery',
+    android: 'com.boltDelivery',
+  }),
+  gamaDelivery: Platform.select({
+    ios: 'com.gamaDelivery',
+    android: 'com.gamaDelivery',
+  }),
+  hivefair: Platform.select({
+    ios: 'com.hivefair',
+    android: 'com.hivefair',
   }),
 };
 

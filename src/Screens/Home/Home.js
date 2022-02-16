@@ -82,6 +82,7 @@ export default function Home({ route, navigation }) {
     nearMe: 1,
     tempCartData: null,
     isVoiceRecord: false,
+    singleVendor: false
   });
 
   const {
@@ -100,6 +101,7 @@ export default function Home({ route, navigation }) {
     bestSeller,
     nearMe,
     isVoiceRecord,
+    singleVendor
   } = state;
 
   const { profile } = appData;
@@ -332,9 +334,16 @@ export default function Home({ route, navigation }) {
       close_vendor: closeVendor,
       open_vendor: openVendor,
       best_vendor: bestSeller,
-      near_me: nearMe,
+      // near_me: nearMe,
     };
     console.log(vendorFilterData, 'vendorFilterData');
+
+    if(closeVendor == 0 && openVendor == 0 && bestSeller == 0 ){
+      updateState({singleVendor: true})
+    }else{
+      updateState({singleVendor: false})
+    }
+
     {
       selectedTabType
         ? actions
@@ -885,6 +894,7 @@ export default function Home({ route, navigation }) {
               toggleData={appData}
               navigation={navigation}
               onVendorFilterSeletion={onVendorFilterSeletion}
+              singleVendor={singleVendor}
             />
           </>
         );

@@ -1,6 +1,6 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {RoyoHome, RoyoOrderDetail} from '../../Screens';
+import {RoyoHome, RoyoOrder, RoyoOrderDetail} from '../../Screens';
 import navigationStrings from '../navigationStrings';
 
 const Stack = createStackNavigator();

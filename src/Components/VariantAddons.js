@@ -192,12 +192,12 @@ const VariantAddons = ({
           selectedVariant: null,
         });
       } else {
-        updateState({ 
-          isLoading: false, 
+        updateState({
+          isLoading: false,
           isLoadingB: false,
-           isLoadingC: false,
-           selectedVariant: null,
-         });
+          isLoadingC: false,
+          selectedVariant: null,
+        });
         showError(error?.message || error?.error);
       }
     }
@@ -350,6 +350,7 @@ const VariantAddons = ({
         {setoptions.map((i, inx) => {
           return (
             <TouchableOpacity
+              hitSlop={hitSlopProp}
               key={inx}
               activeOpacity={1}
               onPress={() => {
@@ -1255,9 +1256,7 @@ const VariantAddons = ({
 
   return (
     <View style={{ flex: 1 }}>
-      {/* <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-        <Image source={imagePath.crossC} />
-      </TouchableOpacity> */}
+
       {showShimmer ? (
         shimmerShow()
       ) : (
@@ -1505,7 +1504,7 @@ const VariantAddons = ({
                     />
                   </View>
                 )}
-              </View>: null}
+              </View> : null}
             </View>
             : null}
           <View style={{ height: moderateScale(100) }} />
@@ -1556,8 +1555,6 @@ const styles = StyleSheet.create({
   modalMainViewContainer: {
     flex: 1,
     backgroundColor: colors.white,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
     // overflow: 'hidden',
     // paddingHorizontal: moderateScale(24),
   },

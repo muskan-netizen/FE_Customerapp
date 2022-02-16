@@ -198,9 +198,13 @@ android {
     flavorDimensions "appType"
 
     productFlavors {
+<<<<<<< HEAD
            ace{
+=======
+           royoorder {
+>>>>>>> f61d67e8461555a563fba0db55a2da57acd78b78
             dimension "appType"
-            versionCode 1
+            versionCode 3
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -345,7 +349,11 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
+<<<<<<< HEAD
             applicationId 'com.ufood'
+=======
+            applicationId 'com.order.ufood'
+>>>>>>> f61d67e8461555a563fba0db55a2da57acd78b78
             resValue "string", "app_name", "UFood"
             resValue "string", "host_name", ""
         }
@@ -833,7 +841,7 @@ android {
          }
          vici{
             dimension "appType"
-            versionCode 5
+            versionCode 7
             versionName "1.1"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -862,6 +870,7 @@ android {
             resValue "string", "host_name", ""
          }
 
+<<<<<<< HEAD
          vici{
             dimension "appType"
             versionCode 4
@@ -872,6 +881,8 @@ android {
             resValue "string", "app_name", "VICI"
             resValue "string", "host_name", ""
          }
+=======
+>>>>>>> f61d67e8461555a563fba0db55a2da57acd78b78
          carhop{
             dimension "appType"
             versionCode 1
@@ -1277,7 +1288,20 @@ android {
             resValue "string", "host_name", ""
 
          }
+<<<<<<< HEAD
     
+=======
+        ace{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.customer.ace'
+            resValue "string", "app_name", "Ace"
+            resValue "string", "host_name", ""
+         }
+>>>>>>> f61d67e8461555a563fba0db55a2da57acd78b78
          empire{
             dimension "appType"
             versionCode 1
@@ -1551,7 +1575,11 @@ android {
          }
           donepacked{
             dimension "appType"
+<<<<<<< HEAD
             versionCode 2
+=======
+            versionCode 4
+>>>>>>> f61d67e8461555a563fba0db55a2da57acd78b78
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -2502,7 +2530,80 @@ android {
             resValue "string", "app_name", "Bluebolt"
             resValue "string", "host_name", ""
          }
+<<<<<<< HEAD
 
+=======
+       meatEasy{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.meatEasy'
+            resValue "string", "app_name", "Meat Easy"
+            resValue "string", "host_name", ""
+         }
+         boltDelivery{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.boltDelivery'
+            resValue "string", "app_name", "Bolt Delivery Services"
+            resValue "string", "host_name", ""
+         }
+         onthego{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.customer.onthego'
+            resValue "string", "app_name", "ONTHEGO"
+            resValue "string", "host_name", ""
+         }
+        mylaglobal{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.mylaglobal'
+            resValue "string", "app_name", "Myla Global"
+            resValue "string", "host_name", ""
+         }
+         ambutap{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ambutap'
+            resValue "string", "app_name", "AmbuTap"
+            resValue "string", "host_name", ""
+         }
+         sabroson{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.sabroson'
+            resValue "string", "app_name", "Sabroson"
+            resValue "string", "host_name", ""
+         }
+         swiffyllc{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.swiffyllc'
+            resValue "string", "app_name", "Swiffy LLC"
+            resValue "string", "host_name", ""
+         }
+>>>>>>> f61d67e8461555a563fba0db55a2da57acd78b78
     }
 }
 

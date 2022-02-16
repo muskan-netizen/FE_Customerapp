@@ -396,7 +396,7 @@ export default function DashBoardHeaderFive({
     });
   };
 
-  if (isLoading) {
+  if (false) {
     return (
       <View>
         <View style={{
@@ -454,7 +454,7 @@ export default function DashBoardHeaderFive({
           alignItems: 'center',
           justifyContent: 'space-between',
           marginHorizontal: moderateScale(16),
-          marginVertical: moderateScaleVertical(16)
+          marginVertical: moderateScaleVertical(12)
         }}>
           <HomeLoader
             rectWidth={100}
@@ -565,7 +565,8 @@ export default function DashBoardHeaderFive({
                     {
                       color: isDarkMode
                         ? MyDarkTheme.colors.text
-                        : colors.textGrey,
+                        : colors.blackOpacity66,
+                        fontFamily:fontFamily.regular
                     },
                   ]}>
                   {location?.address}
