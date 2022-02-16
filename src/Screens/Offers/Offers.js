@@ -359,7 +359,7 @@ export default function Offer({ route, navigation }) {
           ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
           keyExtractor={(item, index) => String(index)}
           ListEmptyComponent={<ListEmptyOffers isLoading={isLoading} />}
-          ListFooterComponent={() => <View style={{ height: appStyle?.tabBarLayout == 4 ? moderateScale(60) : moderateScale(20) }} />}
+          ListFooterComponent={() => <View style={{ height: appStyle?.tabBarLayout == 4 ? moderateScale(80) : moderateScale(20) }} />}
           renderItem={_renderItem}
         />
       </View>

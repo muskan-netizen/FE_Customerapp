@@ -311,6 +311,8 @@ export default function Home({ route, navigation }) {
       .catch(errorMethod);
   };
 
+  console.log("selectedTabTypeselectedTabType",selectedTabType)
+
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
     if (!!paramData) {
@@ -931,7 +933,20 @@ export default function Home({ route, navigation }) {
       case 5:
         return (
           <>
-            {/* <DashBoardSeven
+              <DashBoardHeaderFive
+              navigation={navigation}
+              location={location}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              isLoading={isLoading}
+              currentLocation={currentLocation}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+            />
+
+            <DashBoardFive
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}
               isLoading={isLoading}
@@ -942,9 +957,12 @@ export default function Home({ route, navigation }) {
               }}
               isDineInSelected={isDineInSelected}
               selcetedToggle={selcetedToggle}
+              tempCartData={tempCartData}
               toggleData={appData}
               navigation={navigation}
-            /> */}
+              onVendorFilterSeletion={onVendorFilterSeletion}
+              singleVendor={singleVendor}
+            />
           </>
         );
     }

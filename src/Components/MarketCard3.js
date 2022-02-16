@@ -286,7 +286,7 @@ const MarketCard3 = ({
           </Text>
         ) : null}
 
-        {!!appData?.profile?.preferences?.max_safety_mod && isMaxSaftey ?
+        {!!appData?.profile?.preferences?.max_safety_mod && isMaxSaftey && appStyle?.homePageLayout === 5 ?
           <View>
             <View
               style={{
