@@ -1157,6 +1157,7 @@ const appIds = {
   swiffyllc: Platform.select({
     ios: 'com.swiffyllc',
     android: 'com.swiffyllc',
+  }),
   meatEasy: Platform.select({
     ios: 'com.meatEasy',
     android: 'com.meatEasy',
