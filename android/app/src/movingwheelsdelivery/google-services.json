@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "480971606443",
+    "project_id": "moving-wheels-delivery",
+    "storage_bucket": "moving-wheels-delivery.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480971606443:android:33ee84468bb863faf9aaee",
+        "android_client_info": {
+          "package_name": "com.movingwheelsdelivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "480971606443-e88u8l04oqv0ds3avoeioq4uma87gul8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.movingwheelsdelivery",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "480971606443-g9nhg115la41ib0fjliudidkn4hgsl2e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.movingwheelsdelivery",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "480971606443-vo944holpg4g1uqdr2o8khu1bbi9e0e0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.movingwheelsdelivery",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "480971606443-nr5eafkoptmbbt8mj18updsreqd05emq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmgA0gvBfKoGT3GXMCrevjs-bRiPDv6XE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "480971606443-nr5eafkoptmbbt8mj18updsreqd05emq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "480971606443-lnlqjf6hpd25drvkpcm6rqlk7oh60tob.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.movingwheelsdelivery"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

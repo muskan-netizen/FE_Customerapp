@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "459562959416",
+    "project_id": "pinkjet-9df47",
+    "storage_bucket": "pinkjet-9df47.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:459562959416:android:b6ad212c134ed29c4edccd",
+        "android_client_info": {
+          "package_name": "com.customer.pinkjet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "459562959416-4sm2rvf0qtsd3h489j3c0bp6g96tgap4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVD8COTOqWzD_ZZHQrC45xl_AyHUVVwtw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "459562959416-4sm2rvf0qtsd3h489j3c0bp6g96tgap4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "459562959416-gk3tqm2a88ie21797q69rjvqq9nh69sa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pinkjet"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

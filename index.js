@@ -1,25 +1,26 @@
-/**
- * @format
- */
-
-import { AppRegistry } from 'react-native';
+import 'react-native-gesture-handler';
+import {AppRegistry, Platform} from 'react-native';
 import App from './App';
-import { name as appName } from './app.json';
+import {name as appName} from './app.json';
 console.disableYellowBox = true;
 import messaging from '@react-native-firebase/messaging';
-import { Component } from 'react';
+import {StartPrinting} from './src/Screens/PrinterConnection/PrinteFunc';
+import actions from './src/redux/actions';
+
 // Register background handler
-messaging().setBackgroundMessageHandler(async remoteMessage => {
-    console.log('Message handled in the background!', remoteMessage);
-});
-class Index extends Component {
-    render() {
-        return (
-            <App/>
-        );
+messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+  const {data, notification} = remoteMessage;
+
+  if (
+    Platform.OS == 'android' &&
+    notification.android.sound == 'notification'
+  ) {
+    let _data = JSON.parse(data.data);
+    if (_data.vendors[0].vendor.auto_accept_order == 1) {
+      StartPrinting(_data);
+    } else {
+      actions.isVendorNotification(true);
     }
-}
-
-export default Index;
-
+  }
+});
 AppRegistry.registerComponent(appName, () => App);

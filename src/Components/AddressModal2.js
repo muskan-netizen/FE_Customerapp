@@ -35,7 +35,7 @@ import AutoUpLabelTxtInput from './AutoUpLabelTxtInput';
 // navigator.geolocation = require('@react-native-community/geolocation');
 navigator.geolocation = require('react-native-geolocation-service');
 
-export default function AddressModal2({
+const AddressModal2 = ({
   updateData,
   isVisible = false,
   onClose,
@@ -45,7 +45,7 @@ export default function AddressModal2({
   onPress,
   indicator,
   navigation,
-}) {
+}) => {
   const appData = useSelector((state) => state?.initBoot?.appData);
   const currentTheme = useSelector((state) => state.initBoot);
   const {themeColors, themeLayouts, appStyle} = currentTheme;
@@ -69,7 +69,7 @@ export default function AddressModal2({
     addressTypeArray: [
       {
         id: 1,
-        lable: strings.HOME,
+        lable: strings.HOME_1,
         icon: imagePath.home,
       },
       {id: 2, lable: 'Work', icon: imagePath.workInActive},
@@ -230,7 +230,7 @@ export default function AddressModal2({
       city: city ? city : '',
       states: states ? states : '',
       country: country ? country : '',
-      pincode: pincode ? pincode : '',
+      // pincode: pincode ? pincode : '',
     });
     if (error) {
       // showError(error);
@@ -296,7 +296,6 @@ export default function AddressModal2({
           longitude: position.coords.longitude,
         })
           .then((json) => {
-            console.log(json, 'json?>>>>>>>');
             let addressData = getAddressComponent(json?.results[0]);
             console.log(addressData, 'addressData?>>>>>>>');
             addressHelper(addressData);
@@ -336,13 +335,6 @@ export default function AddressModal2({
           style={{tintColor: themeColors.secondary_color}}
         />
       </TouchableOpacity>
-      {/* <ScrollView
-        showsVerticalScrollIndicator={false}
-        bounces={false}
-        style={[
-          styles.modalMainViewContainer,
-          {paddingHorizontal: moderateScale(24)},
-        ]}> */}
 
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps="always"
@@ -356,18 +348,6 @@ export default function AddressModal2({
           </Text>
         </View>
 
-        {/* <BorderTextInput
-          containerStyle={styles.textInputContainer}
-          onChangeText={_onChangeText('address')}
-          placeholder={strings.SEARCH_LOCATION}
-          textInputStyle={getTextInputStyle(address, 2)}
-          numberOfLines={1}
-          value={address}
-          onFocus={() => {
-            updateState({showDialogBox: true});
-          }}
-        /> */}
-
         <GooglePlaceInput
           getDefaultValue={address}
           type={type}
@@ -380,36 +360,10 @@ export default function AddressModal2({
           handleAddressOnKeyUp={(text) => handleAddressOnKeyUp(text)}
         />
 
-        {/* <View style={styles.textInputContainerAddress}>
-            <TextInput
-              onChangeText={_onChangeText('address')}
-              placeholder={strings.SEARCH_LOCATION}
-              style={[
-                styles.addressTextStyle,
-                {
-                  textAlign: I18nManager.isRTL ? 'right' : 'left',
-                  ...getTextInputStyle(address, 2),
-                },
-              ]}
-              multiline={false}
-              // style={getTextInputStyle(address, 2)}
-              numberOfLines={2}
-              value={address}
-              onFocus={() => {
-                updateState({showDialogBox: true});
-              }}
-            />
-          </View> */}
-
-        {/* {showDialogBox && dropDownData && dropDownData.length > 0 && (
-          <View style={styles.addressDropDownView}>{renderDropDown()}</View>
-        )} */}
         <View
           style={{
             zIndex: -1000,
-            // marginTop: moderateScaleVertical(80)
           }}>
-          {/* <View> */}
           <View style={styles.useCurrentLocationView}>
             <Image
               style={{tintColor: themeColors.primary_color}}
@@ -473,7 +427,7 @@ export default function AddressModal2({
           </View>
           <Text
             style={{fontFamily: fontFamily.bold, marginTop: moderateScale(15)}}>
-            Save as
+            {strings.SAVE_AS}
           </Text>
           <View style={styles.addressTypeView}>
             {addressTypeArray.map((item, index) => {
@@ -520,11 +474,9 @@ export default function AddressModal2({
           />
         </View>
       </KeyboardAwareScrollView>
-      {/* </View> */}
-      {/* </ScrollView> */}
     </Modal>
   );
-}
+};
 
 export function stylesData({fontFamily, themeColors}) {
   const commonStyles = commonStylesFun({fontFamily});
@@ -683,3 +635,4 @@ export function stylesData({fontFamily, themeColors}) {
   });
   return styles;
 }
+export default React.memo(AddressModal2);

@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "704992293815",
+    "project_id": "bks-taxi",
+    "storage_bucket": "bks-taxi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:704992293815:android:7d757b3fc12c8ac726ae32",
+        "android_client_info": {
+          "package_name": "com.bksTaxi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "704992293815-95dtm6m5slok50m1o6o05j89fc0mv4rs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bksTaxi",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "704992293815-ccgqrg7lmqlqfrpk7mei9kt7vr86ka9a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bksTaxi",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "704992293815-kcodrcou19g7penlm1uv4qinnch2ae5f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bksTaxi",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "704992293815-kj8mipom7rp6frapgkhv6rnbqqj3iqed.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwzuKPPm9bI3dZkbM_o1S_37pt_BcNuYU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "704992293815-kj8mipom7rp6frapgkhv6rnbqqj3iqed.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "704992293815-65ar5mtq0l35dm4ij98adij7sq8h4avn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bksTaxi"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

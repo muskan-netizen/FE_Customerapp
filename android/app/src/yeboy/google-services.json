@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "808327059058",
+    "project_id": "yeboy-6818c",
+    "storage_bucket": "yeboy-6818c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:808327059058:android:4cf1e4cead2eaebe8614eb",
+        "android_client_info": {
+          "package_name": "com.yeboy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "808327059058-8htf0hc7pae43m3k35rrq914iijn6o78.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yeboy",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "808327059058-gkrl37ivt7omq7lk3avj8bgjbe9sbqam.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yeboy",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "808327059058-jqc8gjgbstrrrv18ev74kr6icbpp2m6s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yeboy",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "808327059058-6f6cdqabvvvgn04qsua5503nlkp077o8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkzs4_EqTTM017TQ1eN4kefrc-sJn5jNM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "808327059058-6f6cdqabvvvgn04qsua5503nlkp077o8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "808327059058-fegd7hegs6pkcsids7sc9r2vboak5hsg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.yeboy"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

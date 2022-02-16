@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   I18nManager,
   Platform,
@@ -9,19 +9,19 @@ import {
   View,
   Image,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
-import {hitSlopProp} from '../styles/commonStyles';
+import { hitSlopProp } from '../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../styles/theme';
 // import styles from '../Screens/Tracking/styles';
 
-export default function BorderTextInputWithLable({
+const BorderTextInputWithLable = ({
   label,
   labelStyle,
   lableViewStyle,
@@ -34,7 +34,7 @@ export default function BorderTextInputWithLable({
   value,
   placeholder,
   marginBottom = 20,
-  onPressRight = () => {},
+  onPressRight = () => { },
   withRef = false,
   secureTextEntry = false,
   disabled = true,
@@ -43,26 +43,26 @@ export default function BorderTextInputWithLable({
   subLabel = null,
   sublabelStyle,
   mainStyle,
-  onPress = () => {},
+  onPress = () => { },
   borderWidth = 1,
   marginBottomTxt = 10,
   ...props
-}) {
+}) => {
   const inputRef = useRef();
-  const {appStyle} = useSelector((state) => state.initBoot);
+  const { appStyle } = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   // const theme = useSelector((state) => state?.initBoot?.themeColor);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const styles = stylesData({fontFamily});
+  const styles = stylesData({ fontFamily });
 
   useEffect(() => {
     if (withRef && Platform.OS === 'android') {
       if (inputRef.current) {
         inputRef.current.setNativeProps({
-          style: {fontFamily: fontFamily.regular},
+          style: { fontFamily: fontFamily.regular },
         });
       }
     }
@@ -85,10 +85,10 @@ export default function BorderTextInputWithLable({
             style={
               isDarkMode
                 ? [
-                    styles.labelStyle,
-                    labelStyle,
-                    {color: MyDarkTheme.colors.text},
-                  ]
+                  styles.labelStyle,
+                  labelStyle,
+                  { color: MyDarkTheme.colors.text },
+                ]
                 : [styles.labelStyle, labelStyle]
             }>
             {label}
@@ -115,7 +115,7 @@ export default function BorderTextInputWithLable({
             : colors.lightGreyBorder,
         }}>
         {leftIcon && (
-          <View style={{justifyContent: 'center', marginLeft: 10}}>
+          <View style={{ justifyContent: 'center', marginLeft: 10 }}>
             <Image source={leftIcon} />
           </View>
         )}
@@ -161,11 +161,11 @@ export default function BorderTextInputWithLable({
 
         {rightIcon && (
           <TouchableOpacity
-            style={{justifyContent: 'center', marginRight: 10}}
+            style={{ justifyContent: 'center', marginRight: 10 }}
             hitSlop={hitSlopProp}
             onPress={onPressRight}>
             <Image
-              style={{tintColor: tintColor ? tintColor : colors.white}}
+              style={{ tintColor: tintColor ? tintColor : colors.white }}
               source={rightIcon}
             />
           </TouchableOpacity>
@@ -173,9 +173,9 @@ export default function BorderTextInputWithLable({
       </View>
     </TouchableOpacity>
   );
-}
+};
 
-export function stylesData({fontFamily}) {
+export function stylesData({ fontFamily }) {
   const styles = StyleSheet.create({
     containerStyle: {
       paddingVertical: 0,
@@ -241,3 +241,4 @@ export function stylesData({fontFamily}) {
   });
   return styles;
 }
+export default React.memo(BorderTextInputWithLable);

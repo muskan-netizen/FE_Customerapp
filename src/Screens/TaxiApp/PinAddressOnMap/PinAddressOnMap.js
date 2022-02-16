@@ -1,45 +1,71 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import React, {useState, useRef, useEffect} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  FlatList,
+} from 'react-native';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import stylesFun from './styles';
 import {useSelector} from 'react-redux';
-import MapView, {AnimatedRegion, PROVIDER_GOOGLE} from 'react-native-maps';
-import {mapStyleGrey} from '../../../utils/constants/MapStyle';
-import Geolocation from 'react-native-geolocation-service';
+import MapView, {
+  AnimatedRegion,
+  Marker,
+  PROVIDER_GOOGLE,
+} from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
-import {chekLocationPermission} from '../../../utils/permissions';
-import {getCurrentLocation} from '../../../utils/helperFunctions';
-import GradientButton from '../../../Components/GradientButton';
+import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
+  StatusBarHeightSecond,
+  textScale,
   width,
 } from '../../../styles/responsiveSize';
-import imagePath from '../../../constants/imagePath';
-import {colors} from 'react-native-elements';
+import colors from '../../../styles/colors';
+import AutoUpLabelTxtInput from '../../../Components/AutoUpLabelTxtInput';
+import {BlurView} from '@react-native-community/blur';
+import {mapStyleGrey} from '../../../utils/constants/MapStyle';
 import navigationStrings from '../../../navigation/navigationStrings';
-import strings from '../../../constants/lang';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
+import Geolocation from 'react-native-geolocation-service';
+import {chekLocationPermission} from '../../../utils/permissions';
+import {getCurrentLocation} from '../../../utils/helperFunctions';
+import BottomViewModal from '../../../Components/BottomViewModal';
+import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
+import GradientButton from '../../../Components/GradientButton';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import DeviceInfo from 'react-native-device-info';
 
-export default function PinAddressOnMap(props) {
-  const {navigation, route} = props;
+export default function HomeScreenTaxi({navigation, route}) {
+  const mapRef = React.createRef();
+  const paramData = route?.params;
+
+  console.log('param data+++', paramData.pickUpLocationLatLng);
+
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const paramData = route?.params;
-  const mapRef = React.createRef();
   const [state, setState] = useState({
     region: {
-      latitude: 30.7191,
-      longitude: 76.8107,
+      latitude:
+        parseFloat(paramData?.pickUpLocationLatLng?.latitude) || 30.7333,
+      longitude:
+        parseFloat(paramData?.pickUpLocationLatLng?.longitude) || 76.7794,
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
     coordinate: {
-      latitude: 30.7191,
-      longitude: 76.8107,
+      latitude:
+        parseFloat(paramData?.pickUpLocationLatLng?.latitude) || 30.7333,
+      longitude:
+        parseFloat(paramData?.pickUpLocationLatLng?.longitude) || 76.7794,
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
@@ -47,152 +73,77 @@ export default function PinAddressOnMap(props) {
     details: {},
     addressLabel: 'Glenpark',
     formattedAddress: '8502 Preston Rd. Inglewood, Maine 98380',
-    locationListData: [
-      {id: 1, location: 'ISBT,Sector43'},
-      {id: 1, location: 'Shukna Lake'},
-      {id: 1, location: 'Green View Tower'},
-      {id: 1, location: 'Sector 28'},
-    ],
+
     userCurrentLongitude: null,
     userCurrentLatitude: null,
-    marker: null,
-    markers: [],
-    formattedAddress1: null,
-    formattedAddress2: null,
-    pickuplocationlat: null,
-    pickuplocationlong: null,
-    pickuplocationshortname: null,
-    droplocationshortname: null,
-    pickup_post_code: null,
-    drop_post_code: null,
+    isVisible: false,
     task_type_id: null,
-    task_type_id1: null,
   });
 
   const {
     isLoading,
     addressLabel,
-    details,
+
     formattedAddress,
     region,
     coordinate,
-    locationListData,
     userCurrentLongitude,
     userCurrentLatitude,
-    marker,
-    markers,
-    formattedAddress1,
-    formattedAddress2,
-    pickuplocationlat,
-    pickuplocationlong,
-    droplocationlat,
-    droplocationlong,
-    pickuplocationshortname,
-    droplocationshortname,
-    pickup_post_code,
-    drop_post_code,
+    isVisible,
     task_type_id,
-    task_type_id1,
+    details,
   } = state;
 
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-
+  const businessType = appStyle?.homePageLayout;
+  const appMainData = useSelector((state) => state?.home?.appMainData);
   const updateState = (data) => setState((state) => ({...state, ...data}));
+  const userData = useSelector((state) => state.auth.userData);
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
 
-  const _getAddressBasedOnCoordinates = (region, id) => {
-    console.log(region, 'region');
-    if (id == 1) {
-      Geocoder.from({
-        latitude: region.latitude,
-        longitude: region.longitude,
-      })
-        .then((json) => {
-          console.log(
-            json.results[0].address_components[
-              json.results[0].address_components.length - 3
-            ],
-            'json.results[0]',
-          );
-          // console.log(json, 'json');
-          updateState({
-            formattedAddress1: json.results[0]?.formatted_address,
-            pickuplocationlat: region.latitude,
-            pickuplocationlong: region.longitude,
-            pickuplocationshortname:
-              json.results[0]?.address_components[
-                json.results[0]?.address_components.length - 3
-              ]?.short_name,
-            pickup_post_code:
-              json.results[0]?.address_components[
-                json.results[0]?.address_components.length - 1
-              ].short_name,
-            task_type_id: id,
-          });
-          let detail = {};
-          detail = {
-            formatted_address: json.results[0].formatted_address,
-            geometry: {
-              location: {
-                lat: region.latitude,
-                lng: region.longitude,
-              },
-            },
-            address_components: json.results[0].address_components,
-          };
-          updateState({
-            details: detail,
-          });
-        })
-        .catch((error) => console.log(error, 'errro geocode'));
-    } else {
-      Geocoder.from({
-        latitude: region.latitude,
-        longitude: region.longitude,
-      })
-        .then((json) => {
-          console.log(json.results[0], 'json.results[0]1');
-          // console.log(json, 'json');
-          updateState({
-            formattedAddress2: json.results[0].formatted_address,
-            droplocationlat: region.latitude,
-            droplocationlong: region.longitude,
-            droplocationshortname:
-              json.results[0]?.address_components[
-                json.results[0]?.address_components.length - 3
-              ]?.short_name,
-            drop_post_code:
-              json.results[0]?.address_components[
-                json.results[0]?.address_components.length - 1
-              ].short_name,
-            task_type_id1: id,
-          });
-          let detail = {};
-          detail = {
-            formatted_address: json.results[0].formatted_address,
-            geometry: {
-              location: {
-                lat: region.latitude,
-                lng: region.longitude,
-              },
-            },
-            address_components: json.results[0].address_components,
-          };
-          updateState({
-            details: detail,
-          });
-        })
-        .catch((error) => console.log(error, 'errro geocode'));
-    }
+  const _onRegionChange = (region) => {
+    updateState({region: region});
+    _getAddressBasedOnCoordinates(region);
+    // animate(region);
   };
 
-  const onDragMarker = (e) => {
-    updateState({marker: e.nativeEvent.coordinate});
+  console.log(region, 'regionregion');
+
+  const _getAddressBasedOnCoordinates = (region) => {
+    Geocoder.from({
+      latitude: region.latitude,
+      longitude: region.longitude,
+    })
+      .then((json) => {
+        // console.log(json, 'json');
+        updateState({
+          formattedAddress: json.results[0].formatted_address,
+        });
+        let detail = {};
+        console.log('scroll detail', json.results[0]);
+        detail = {
+          formatted_address: json.results[0].formatted_address,
+          geometry: {
+            location: {
+              lat: region.latitude,
+              lng: region.longitude,
+            },
+          },
+          address_components: json.results[0].address_components,
+          place_id: json.results[0].place_id,
+        };
+        updateState({
+          details: detail,
+        });
+      })
+      .catch((error) => console.log(error, 'errro geocode'));
   };
+
+  console.log(details, 'detaildetaildetail');
 
   useEffect(() => {
     chekLocationPermission()
@@ -212,39 +163,12 @@ export default function PinAddressOnMap(props) {
                   const currentLatitude = JSON.stringify(
                     position.coords.latitude,
                   );
-
                   updateState({
                     userCurrentLongitude: currentLongitude,
                     userCurrentLatitude: currentLatitude,
-                    markers: [
-                      {
-                        id: 1,
-                        title: 'Current Location',
-                        position: {
-                          lat: currentLatitude,
-                          lng: currentLongitude,
-                        },
-                        draggable: true,
-                        markerImage: imagePath.locationpinGreen,
-                        formattedAddress: formattedAddress1,
-                      },
-                      {
-                        id: 2,
-                        title: 'Drop Location',
-                        position: {
-                          lat: currentLatitude,
-                          lng: currentLongitude,
-                        },
-                        draggable: true,
-                        markerImage: imagePath.locationpin3,
-                        formattedAddress: formattedAddress2,
-                      },
-                    ],
-                    // formattedAddress1: formattedAddress1,
-                    // formattedAddress2: formattedAddress2,
                   });
                 },
-                (error) => console.log(error.message),
+                (error) => alert(error.message),
                 {
                   enableHighAccuracy: true,
                   timeout: 20000,
@@ -258,258 +182,112 @@ export default function PinAddressOnMap(props) {
       .catch((error) => console.log('error while accessing location', error));
   }, []);
 
-  useEffect(() => {
-    Geolocation.getCurrentPosition(
-      //Will give you the current location
-      (position) => {
-        //getting the Longitude from the location json
-        const currentLongitude = JSON.stringify(position.coords.longitude);
-
-        //getting the Latitude from the location json
-        const currentLatitude = JSON.stringify(position.coords.latitude);
-
-        updateState({
-          userCurrentLongitude: currentLongitude,
-          userCurrentLatitude: currentLatitude,
-          markers: [
-            {
-              id: 1,
-              title: 'Current Location',
-              position: {
-                lat: currentLatitude,
-                lng: currentLongitude,
-              },
-              draggable: true,
-
-              markerImage: imagePath.locationpinGreen,
-              formattedAddress: formattedAddress1,
-            },
-            {
-              id: 2,
-              title: 'Drop Location',
-              position: {
-                lat: currentLatitude,
-                lng: currentLongitude,
-              },
-              draggable: true,
-              markerImage: imagePath.locationpin3,
-              formattedAddress: formattedAddress2,
-            },
-          ],
-        });
-      },
-      (error) => console.log(error.message),
-      {
-        enableHighAccuracy: true,
-        timeout: 20000,
-        maximumAge: 1000,
-      },
-    );
-  }, [formattedAddress1, formattedAddress2]);
-  const onMarkerDragEnd = (coordinate, id) => {
-    if (id == 1) {
-      _getAddressBasedOnCoordinates(coordinate, id);
-      Geolocation.getCurrentPosition(
-        //Will give you the current location
-        (position) => {
-          //getting the Longitude from the location json
-          const currentLongitude = JSON.stringify(position.coords.longitude);
-
-          //getting the Latitude from the location json
-          const currentLatitude = JSON.stringify(position.coords.latitude);
-
-          updateState({
-            userCurrentLongitude: currentLongitude,
-            userCurrentLatitude: currentLatitude,
-            markers: [
-              {
-                id: 1,
-                title: 'Current Location',
-                position: {
-                  lat: currentLatitude,
-                  lng: currentLongitude,
-                },
-                draggable: true,
-                markerImage: imagePath.locationpinGreen,
-                formattedAddress: formattedAddress1,
-              },
-              {
-                id: 2,
-                title: 'Drop Location',
-                position: {
-                  lat: currentLatitude,
-                  lng: currentLongitude,
-                },
-                draggable: true,
-                markerImage: imagePath.locationpin3,
-                formattedAddress: formattedAddress2,
-              },
-            ],
-            // formattedAddress1: formattedAddress1,
-            // formattedAddress2: formattedAddress2,
-          });
-        },
-        (error) => console.log(error),
-        {
-          enableHighAccuracy: true,
-          timeout: 20000,
-          maximumAge: 1000,
-        },
-      );
-    } else if (id == 2) {
-      _getAddressBasedOnCoordinates(coordinate, id);
-      Geolocation.getCurrentPosition(
-        //Will give you the current location
-        (position) => {
-          //getting the Longitude from the location json
-          const currentLongitude = JSON.stringify(position.coords.longitude);
-
-          //getting the Latitude from the location json
-          const currentLatitude = JSON.stringify(position.coords.latitude);
-
-          updateState({
-            userCurrentLongitude: currentLongitude,
-            userCurrentLatitude: currentLatitude,
-            markers: [
-              {
-                id: 1,
-                title: 'Current Location',
-                position: {
-                  lat: currentLatitude,
-                  lng: currentLongitude,
-                },
-                draggable: true,
-                markerImage: imagePath.locationpinGreen,
-                formattedAddress: formattedAddress1,
-              },
-              {
-                id: 2,
-                title: 'Drop Location',
-                position: {
-                  lat: currentLatitude,
-                  lng: currentLongitude,
-                },
-                draggable: true,
-                markerImage: imagePath.locationpin3,
-                formattedAddress: formattedAddress2,
-              },
-            ],
-            // formattedAddress1: formattedAddress1,
-            // formattedAddress2: formattedAddress2,
-          });
-        },
-        (error) => console.log(error),
-        {
-          enableHighAccuracy: true,
-          timeout: 20000,
-          maximumAge: 1000,
-        },
-      );
+  //Animating the marker
+  const animate = (region) => {
+    const {coordinate} = state;
+    const newCoordinate = {
+      ...region,
+    };
+    if (Platform.OS === 'android') {
+      if (markerRef.current) {
+        markerRef.current._component.animateMarkerToCoordinate(
+          newCoordinate,
+          500,
+        );
+      }
+      updateState({region: new AnimatedRegion(region)});
+      _getAddressBasedOnCoordinates(region);
+    } else {
+      coordinate.timing(newCoordinate).start();
+      updateState({region: new AnimatedRegion(region)});
+      _getAddressBasedOnCoordinates(region);
     }
   };
 
+  //On Dragging the marker
+  const _onDragEnd = (e) => {
+    console.log('onDragEnd', e.nativeEvent);
+    updateState({
+      coordinate: new AnimatedRegion({
+        ...e.nativeEvent.coordinate,
+        latitudeDelta: 0.015,
+        longitudeDelta: 0.0121,
+      }),
+      region: {
+        ...region,
+        ...e.nativeEvent.coordinate,
+      },
+    });
+    _getAddressBasedOnCoordinates({
+      ...e.nativeEvent.coordinate,
+      latitudeDelta: 0.015,
+      longitudeDelta: 0.0121,
+    });
+  };
+
   const _modeToNextScreen = () => {
-    Geocoder.from({
+    const {params} = route;
+    const pickuplocationAllData = {
+      longitude: details?.geometry?.location?.lng,
+      latitude: details?.geometry?.location?.lat,
+      address: details?.formatted_address,
+      task_type_id: paramData?.task_id,
+      pre_address: details?.formatted_address,
+      place_id: details?.place_id,
+    };
+
+    console.log(pickuplocationAllData, 'pickuplocationAllData');
+    if (params?.prevRoute === 'cart') {
+      params?.onGoBack(pickuplocationAllData);
+      navigation.goBack();
+    } else {
+      navigation.navigate(navigationStrings.ADDADDRESS, {
+        prefillAdress: pickuplocationAllData,
+      });
+    }
+
+    //   }
+  };
+
+  const markerRef = useRef();
+
+  const currentLocationOnMap = () => {
+    mapRef.current.animateToRegion({
       latitude: userCurrentLatitude,
       longitude: userCurrentLongitude,
-    })
-      .then((json) => {
-        const pickuplocationAllData = [
-          {
-            longitude: pickuplocationlong
-              ? pickuplocationlong
-              : Number(userCurrentLongitude),
-            latitude: pickuplocationlat
-              ? pickuplocationlat
-              : Number(userCurrentLatitude),
-            address: formattedAddress1
-              ? formattedAddress1
-              : json.results[0].formatted_address,
-            short_name: pickuplocationshortname
-              ? pickuplocationshortname
-              : json.results[0]?.address_components[
-                  json.results[0]?.address_components.length - 3
-                ]?.short_name,
-            post_code: pickup_post_code
-              ? pickup_post_code
-              : json.results[0]?.address_components[
-                  json.results[0]?.address_components.length - 1
-                ].short_name,
-            task_type_id: task_type_id ? task_type_id : 1,
-          },
-          {
-            longitude: droplocationlong
-              ? droplocationlong
-              : Number(userCurrentLongitude),
-            latitude: droplocationlat
-              ? droplocationlat
-              : Number(userCurrentLatitude),
-            address: formattedAddress2
-              ? formattedAddress2
-              : json.results[0].formatted_address,
-            short_name: droplocationshortname
-              ? droplocationshortname
-              : json.results[0]?.address_components[
-                  json.results[0]?.address_components.length - 3
-                ]?.short_name,
-            post_code: drop_post_code
-              ? drop_post_code
-              : json.results[0]?.address_components[
-                  json.results[0]?.address_components.length - 1
-                ].short_name,
-            task_type_id: task_type_id1 ? task_type_id1 : 2,
-          },
-        ];
-        console.log(pickuplocationAllData, 'pickuplocationAllData');
-        navigation.navigate(navigationStrings.ADDADDRESS, {
-          data: {pickuplocationAllData, id: paramData?.data?.id},
-        });
-      })
-      .catch((error) => console.log(error, 'errro geocode'));
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    });
   };
-  const _onRegionChange = (region) => {
-    updateState({region: region});
-    _getAddressBasedOnCoordinates(region);
-    // animate(region);
-  };
+
   return (
     <>
       <MapView
         ref={mapRef}
-        // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-        // customMapStyle={mapStyleGrey}
+        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={styles.map}
-        region={region}
+        // region={region}
         initialRegion={region}
-        // onRegionChangeComplete={() =>
-        //   _onRegionChange(region, {isGesture: true})
-        // }
-      >
-        {markers?.map((marker, index) => (
-          <MapView.Marker
-            coordinate={{
-              latitude: Number(marker?.position?.lat),
-              longitude: Number(marker?.position?.lng),
-            }}
-            draggable={marker?.draggable}
-            onDragEnd={(e) =>
-              onMarkerDragEnd(e.nativeEvent.coordinate, marker?.id)
-            }
-            title={marker?.title}
-            description={marker?.formattedAddress}
-            image={marker?.markerImage}></MapView.Marker>
-        ))}
-      </MapView>
+        // pointerEvents={'none'}
+        onRegionChangeComplete={_onRegionChange}
+      />
+      {/* <Marker
+          ref={markerRef}
+          // pointerEvents={'none'}
+          coordinate={coordinate}
+          image={imagePath.mapPin2}
+          // onDrag={(e) => _onDrag(e)}
+          // onDragEnd={(e) => _onDragEnd(e)}
+          // onPress={(e) => console.log('onPress', e)}
+          // draggable
+        /> */}
+
       <View style={[styles.backbutton, {marginHorizontal: moderateScale(15)}]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <View
             style={{
               paddingHorizontal: moderateScale(15),
               paddingVertical: moderateScaleVertical(15),
-              borderRadius: 15,
-              backgroundColor: isDarkMode
-                ? MyDarkTheme.colors.lightDark
-                : colors.grey5,
             }}>
             <Image
               style={{
@@ -520,7 +298,27 @@ export default function PinAddressOnMap(props) {
           </View>
         </TouchableOpacity>
       </View>
-
+      {/* {businessType === 4 ? null : (
+        <View style={styles.userAccountImageStyle}>
+          <Image source={imagePath.taxiUserAccount} />
+        </View>
+      )} */}
+      <View
+        style={{
+          position: 'absolute',
+          top: height / 2 - StatusBarHeightSecond,
+          right: width / 2,
+          left: width / 2,
+          bottom: height / 2,
+          alignItems: 'center',
+          justifyContent: 'center',
+          // marginTop: height / 2,
+        }}>
+        <Image
+          source={imagePath.icLocationPin_}
+          style={{tintColor: themeColors.primary_color}}
+        />
+      </View>
       <View
         style={{
           position: 'absolute',

@@ -1,10 +1,12 @@
 import {CardField, createToken, initStripe} from '@stripe/stripe-react-native';
+
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
   Keyboard,
   Text,
+  TouchableHighlight,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -19,7 +21,10 @@ import strings from '../../constants/lang/index';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {moderateScaleVertical} from '../../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+} from '../../styles/responsiveSize';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
@@ -28,6 +33,14 @@ import {
 import stylesFun from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import {
+  Frames,
+  CardNumber,
+  ExpiryDate,
+  Cvv,
+  SubmitButton,
+} from 'frames-react-native';
+import CheckoutPaymentView from '../../Components/CheckoutPaymentView';
 
 export default function AllPaymentMethods({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -38,9 +51,11 @@ export default function AllPaymentMethods({navigation, route}) {
   const {appData, appStyle, themeColors, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
+  console.log(appData, 'appDataappDataappData');
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily});
+  const styles = stylesFun({fontFamily, themeColors});
   const selectedPaymentMethodHandler = route?.params?.data;
+
   // console.log(selectedPaymentMethodHandler, 'selectedPaymentMethod');
 
   const [state, setState] = useState({
@@ -56,6 +71,7 @@ export default function AllPaymentMethods({navigation, route}) {
     selectedPaymentMethod: null,
     cardInfo: null,
     tokenInfo: null,
+    keyboardHeight: 0,
   });
   const {
     payementMethods,
@@ -63,6 +79,7 @@ export default function AllPaymentMethods({navigation, route}) {
     tokenInfo,
     selectedPaymentMethod,
     isLoading,
+    keyboardHeight,
   } = state;
 
   useEffect(() => {
@@ -78,11 +95,36 @@ export default function AllPaymentMethods({navigation, route}) {
       preferences?.stripe_publishable_key != '' &&
       preferences?.stripe_publishable_key != null
     ) {
-      initStripe({
-        publishableKey: preferences?.stripe_publishable_key,
-        merchantIdentifier: 'merchant.identifier',
-      });
+      (async () => {
+        try {
+          let res = await initStripe({
+            publishableKey: preferences?.stripe_publishable_key,
+            merchantIdentifier: 'merchant.identifier',
+          });
+        } catch (error) {
+          console.log('error raised');
+        }
+      })();
     }
+  }, []);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      (event) => {
+        updateState({keyboardHeight: event.endCoordinates.height});
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      (event) => {
+        updateState({keyboardHeight: 0});
+      },
+    );
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
   }, []);
 
   useEffect(() => {
@@ -103,7 +145,7 @@ export default function AllPaymentMethods({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res, 'res>>pay');
+        console.log(res, 'allpayments gate');
         updateState({isLoading: false, isRefreshing: false});
         if (res && res?.data) {
           updateState({payementMethods: res?.data});
@@ -131,7 +173,12 @@ export default function AllPaymentMethods({navigation, route}) {
         if (cardInfo) {
           await createToken(cardInfo)
             .then((res) => {
-              console.log(res, 'res>>');
+              console.log(res, 'stripeTokenres>>');
+              if (!!res?.error) {
+                alert(res.error.localizedMessage);
+                updateState({isLoading: false});
+                return;
+              }
               if (res && res?.token && res.token?.id) {
                 updateState({isLoading: false});
                 navigation.navigate(navigationStrings.CART, {
@@ -220,31 +267,67 @@ export default function AllPaymentMethods({navigation, route}) {
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           selectedPaymentMethod?.off_site == 0 &&
-          selectedPaymentMethod?.id != 1
+          selectedPaymentMethod?.id === 4
         ) && (
-          <CardField
-            postalCodeEnabled={true}
-            placeholder={{
-              number: '4242 4242 4242 4242',
+          <View>
+            <CardField
+              postalCodeEnabled={false}
+              placeholder={{
+                number: '4242 4242 4242 4242',
+              }}
+              cardStyle={{
+                backgroundColor: colors.white,
+                textColor: colors.black,
+              }}
+              style={{
+                width: '100%',
+                height: 50,
+                marginVertical: 10,
+              }}
+              onCardChange={(cardDetails) => {
+                _onChangeStripeData(cardDetails);
+              }}
+              onFocus={(focusedField) => {
+                console.log('focusField', focusedField);
+              }}
+              onBlur={() => {
+                Keyboard.dismiss();
+              }}
+            />
+          </View>
+        )}
+        {!!(
+          selectedPaymentMethod &&
+          selectedPaymentMethod?.id == item.id &&
+          selectedPaymentMethod?.off_site == 0 &&
+          selectedPaymentMethod?.id === 17
+        ) && (
+          <CheckoutPaymentView
+            cardTokenized={(e) => {
+              updateState({isLoading: false});
+              if (e.token) {
+                navigation.navigate(navigationStrings.CART, {
+                  selectedMethod: selectedPaymentMethod,
+                  cardInfo: e.token,
+                });
+              }
             }}
-            cardStyle={{
-              backgroundColor: '#FFFFFF',
-              textColor: '#000000',
+            cardTokenizationFailed={(e) => {
+              setTimeout(() => {
+                updateState({isLoading: false});
+                showError(strings.INVALID_CARD_DETAILS);
+              }, 1000);
             }}
-            style={{
+            onPressSubmit={(res) => {
+              updateState({
+                isLoading: true,
+              });
+            }}
+            btnTitle={strings.SELECT}
+            isSubmitBtn
+            submitBtnStyle={{
               width: '100%',
-              height: 50,
-              marginVertical: 10,
-            }}
-            onCardChange={(cardDetails) => {
-              console.log('cardDetails', cardDetails);
-              _onChangeStripeData(cardDetails);
-            }}
-            onFocus={(focusedField) => {
-              console.log('focusField', focusedField);
-            }}
-            onBlur={() => {
-              Keyboard.dismiss();
+              height: moderateScale(45),
             }}
           />
         )}
@@ -296,7 +379,9 @@ export default function AllPaymentMethods({navigation, route}) {
       <KeyboardAwareScrollView
         alwaysBounceVertical={true}
         showsVerticalScrollIndicator={false}
-        style={{marginHorizontal: moderateScaleVertical(20)}}>
+        style={{
+          marginHorizontal: moderateScaleVertical(20),
+        }}>
         <FlatList
           data={payementMethods}
           showsVerticalScrollIndicator={false}
@@ -317,14 +402,24 @@ export default function AllPaymentMethods({navigation, route}) {
       </KeyboardAwareScrollView>
 
       <View
-        style={{marginHorizontal: moderateScaleVertical(20), marginBottom: 65}}>
-        <GradientButton
-          textStyle={styles.textStyle}
-          onPress={selectPaymentOption}
-          marginTop={moderateScaleVertical(10)}
-          marginBottom={moderateScaleVertical(10)}
-          btnText={strings.SELECT}
-        />
+        style={{
+          marginHorizontal: moderateScaleVertical(20),
+          marginBottom:
+            moderateScaleVertical(80) +
+            (keyboardHeight == 0
+              ? keyboardHeight
+              : moderateScale(keyboardHeight - 80)),
+        }}>
+        {selectedPaymentMethod == null || selectedPaymentMethod.id != 17 ? (
+          <GradientButton
+            onPress={selectPaymentOption}
+            marginTop={moderateScaleVertical(10)}
+            marginBottom={moderateScaleVertical(10)}
+            btnText={strings.SELECT}
+          />
+        ) : (
+          <></>
+        )}
       </View>
     </WrapperContainer>
   );

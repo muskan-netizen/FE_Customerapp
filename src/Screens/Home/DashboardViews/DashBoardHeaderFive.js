@@ -7,6 +7,7 @@ import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
+import FastImage from 'react-native-fast-image';
 import {
   height,
   moderateScale,
@@ -27,6 +28,12 @@ import {BlurView} from '@react-native-community/blur';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import ScaledImage from 'react-native-scalable-image';
 import {useNavigation} from '@react-navigation/native';
+import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
+import {
+  loaderOne,
+  voiceListen,
+} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import LottieView from 'lottie-react-native';
 
 export default function DashBoardHeaderFive({
   // navigation = {},
@@ -34,6 +41,10 @@ export default function DashBoardHeaderFive({
   selcetedToggle,
   toggleData,
   isLoading = false,
+  isLoadingB = false,
+  _onVoiceListen = () => {},
+  isVoiceRecord = false,
+  _onVoiceStop = () => {},
 }) {
   const navigation = useNavigation();
   const pickerRef = createRef();
@@ -59,10 +70,11 @@ export default function DashBoardHeaderFive({
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
   const updateState = (data) => setState((state) => ({...state, ...data}));
+
   const imageURI = getImageUrl(
     profileInfo?.logo?.image_fit,
     profileInfo?.logo?.image_path,
-    '800/400',
+    '1000/1000',
   );
 
   useEffect(() => {
@@ -70,34 +82,18 @@ export default function DashBoardHeaderFive({
     userSelectedtab();
   }, [appData]);
 
-  const checkSelectedTab = () => {
-    const newTabs = [...tabs];
-    newTabs.forEach((item, index) => {
-      console.log(item.label, dine_In_Type, 'dine_In_Type2');
-      if (item.label === dine_In_Type) {
-        newTabs[index].isActive = true;
-        updateState({
-          tabs: [...newTabs],
-        });
-      } else {
-        newTabs[index].isActive = false;
-        updateState({
-          tabs: [...newTabs],
-        });
-      }
-    });
-  };
-
   const addAllTabs = () => {
     const localTabsArray = [];
 
     if (toggleData?.profile?.preferences?.delivery_check == 1) {
       localTabsArray.push({
-        value: strings.DELIVERY,
+        value:
+          toggleData?.profile?.preferences?.delivery_nomenclature ||
+          strings.DELIVERY,
         label: 'delivery',
         icon: imagePath.delivery,
         iconInActive: imagePath.deliveryInActive,
-        isActive: true,
+        isActive: dine_In_Type === 'delivery' ? true : false,
       });
       if (
         toggleData?.profile?.preferences?.dinein_check == 0 &&
@@ -108,10 +104,12 @@ export default function DashBoardHeaderFive({
     }
     if (toggleData?.profile?.preferences?.dinein_check == 1) {
       localTabsArray.push({
-        value: strings.DINE_IN,
+        value:
+          toggleData?.profile?.preferences?.dinein_nomenclature ||
+          strings.DINE_IN,
         label: 'dine_in',
         icon: imagePath.dineIn,
-        isActive: false,
+        isActive: dine_In_Type === 'dine_in' ? true : false,
       });
       if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
@@ -127,7 +125,7 @@ export default function DashBoardHeaderFive({
           strings.TAKEAWAY,
         label: 'takeaway',
         icon: imagePath.takeaway,
-        isActive: false,
+        isActive: dine_In_Type === 'takeaway' ? true : false,
       });
       if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
@@ -144,10 +142,24 @@ export default function DashBoardHeaderFive({
 
   const setUserSelectedTab = (label, value) => {
     selcetedToggle(value);
-    updateState({
-      checked: label,
-    });
   };
+
+  // const checkSelectedTab = () => {
+  //   const newTabs = [...tabs];
+  //   newTabs.forEach((item, index) => {
+  //     if (item.label === dine_In_Type) {
+  //       newTabs[index].isActive = true;
+  //       updateState({
+  //         tabs: [...newTabs],
+  //       });
+  //     } else {
+  //       newTabs[index].isActive = false;
+  //       updateState({
+  //         tabs: [...newTabs],
+  //       });
+  //     }
+  //   });
+  // };
 
   const userSelectedtab = () => {
     if (dine_In_Type === 'delivery') {
@@ -156,7 +168,11 @@ export default function DashBoardHeaderFive({
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        setUserSelectedTab(strings.DINE_IN, 'dine_in');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.dinein_nomenclature ||
+            strings.DINE_IN,
+          'dine_in',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
@@ -172,9 +188,17 @@ export default function DashBoardHeaderFive({
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        setUserSelectedTab(strings.DINE_IN, 'dine_in');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.dinein_nomenclature ||
+            strings.DINE_IN,
+          'dine_in',
+        );
       } else {
-        setUserSelectedTab(strings.DELIVERY, 'delivery');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.delivery_nomenclature ||
+            strings.DELIVERY,
+          'delivery',
+        );
       }
     } else if (dine_In_Type === 'dine_in') {
       if (
@@ -182,7 +206,11 @@ export default function DashBoardHeaderFive({
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        setUserSelectedTab(strings.DINE_IN, 'dine_in');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.dinein_nomenclature ||
+            strings.DINE_IN,
+          'dine_in',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
@@ -198,27 +226,47 @@ export default function DashBoardHeaderFive({
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        setUserSelectedTab(strings.DINE_IN, 'dine_in');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.dinein_nomenclature ||
+            strings.DINE_IN,
+          'dine_in',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 1 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        setUserSelectedTab(strings.DELIVERY, 'delivery');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.delivery_nomenclature ||
+            strings.DELIVERY,
+          'delivery',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 1 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        setUserSelectedTab(strings.DELIVERY, 'delivery');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.delivery_nomenclature ||
+            strings.DELIVERY,
+          'delivery',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 1 &&
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        setUserSelectedTab(strings.DELIVERY, 'delivery');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.delivery_nomenclature ||
+            strings.DELIVERY,
+          'delivery',
+        );
       } else {
-        setUserSelectedTab(strings.DINE_IN, 'dine_in');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.dinein_nomenclature ||
+            strings.DINE_IN,
+          'dine_in',
+        );
       }
     } else {
       if (
@@ -256,19 +304,31 @@ export default function DashBoardHeaderFive({
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        setUserSelectedTab(strings.DINE_IN, 'dine_in');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.dinein_nomenclature ||
+            strings.DINE_IN,
+          'dine_in',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 1 &&
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        setUserSelectedTab(strings.DELIVERY, 'delivery');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.delivery_nomenclature ||
+            strings.DELIVERY,
+          'delivery',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 1 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        setUserSelectedTab(strings.DELIVERY, 'delivery');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.delivery_nomenclature ||
+            strings.DELIVERY,
+          'delivery',
+        );
       } else {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
@@ -279,17 +339,17 @@ export default function DashBoardHeaderFive({
     }
   };
 
-  const dineInFunction = () => {
+  const dineInFunction = (item, indx) => {
     Alert.alert('', strings.REMOVE_CART_MSG, [
       {
         text: strings.CANCEL,
         onPress: () => console.log('Cancel Pressed'),
       },
-      {text: strings.CLEAR_CART2, onPress: clearCart},
+      {text: strings.CLEAR_CART2, onPress: () => clearCart(item, indx)},
     ]);
   };
 
-  const clearCart = () => {
+  const clearCart = (item, indx) => {
     actions
       .clearCart(
         {},
@@ -303,18 +363,20 @@ export default function DashBoardHeaderFive({
       .then((res) => {
         showSuccess(res?.message);
         actions.cartItemQty(res);
+        _onTableItm(item, indx);
         updateState({isModalVisible: false});
       })
       .catch(errorMethod);
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({isLoading: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
 
   const _onTableItm = (item, indx) => {
     const newTabs = [...tabs];
+
     newTabs.forEach((item, index) => {
       if (index === indx) {
         selcetedToggle(item.label);
@@ -333,13 +395,6 @@ export default function DashBoardHeaderFive({
     });
   };
 
-  const _onTableLabel = () => {
-    checkSelectedTab();
-    updateState({isModalVisible: true});
-  };
-
-  const viewRef2 = useRef();
-
   if (isLoading) {
     return (
       <HeaderLoader
@@ -354,13 +409,21 @@ export default function DashBoardHeaderFive({
   }
 
   return (
-    <>
+    <View
+      style={{
+        borderBottomWidth: tabs.length > 1 ? 0.8 : 0,
+        borderBottomColor: isDarkMode
+          ? colors.whiteOpacity22
+          : colors.borderColorD,
+        // paddingBottom: moderateScale(5),
+      }}>
       <View
         style={{
           ...styles.headerContainer,
           borderBottomColor: isDarkMode
             ? colors.whiteOpacity22
             : colors.borderColorD,
+          // borderBottomWidth: 0,
         }}>
         <View
           style={{
@@ -369,9 +432,11 @@ export default function DashBoardHeaderFive({
             alignItems: 'center',
           }}>
           {!!(profileInfo && profileInfo?.logo) ? (
-            <ScaledImage
-              width={width / 6}
-              height={moderateScaleVertical(50)}
+            <Image
+              style={{
+                width: width / 6,
+                height: moderateScaleVertical(50),
+              }}
               resizeMode="contain"
               source={
                 profileInfo && profileInfo?.logo
@@ -385,7 +450,18 @@ export default function DashBoardHeaderFive({
                   : imagePath.logo
               }
             />
-          ) : null}
+          ) : // <FastImage
+          //   source={{
+          //     uri: imageURI,
+          //     priority: FastImage.priority.high,
+          //   }}
+          //   style={{
+          //     height: moderateScaleVertical(50),
+          //     width: width / 6,
+          //   }}
+          //   resizeMode={FastImage.resizeMode.contain}
+          // />
+          null}
           {!!appData?.profile?.preferences?.is_hyperlocal && (
             <TouchableOpacity
               activeOpacity={1}
@@ -405,19 +481,31 @@ export default function DashBoardHeaderFive({
                 source={imagePath.redLocation}
                 resizeMode="contain"
               />
-
-              <Text
-                numberOfLines={1}
-                style={[
-                  styles.locationTxt,
-                  {
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGrey,
-                  },
-                ]}>
-                {location?.address}
-              </Text>
+              <View>
+                {!!location?.type && (
+                  <Text numberOfLines={1} style={styles.locationTypeTxt}>
+                    {location?.type === 3
+                      ? !!location?.type_name
+                        ? location?.type_name
+                        : strings.UNKNOWN
+                      : location?.type === 2
+                      ? strings.WORK
+                      : strings.HOME}
+                  </Text>
+                )}
+                <Text
+                  numberOfLines={1}
+                  style={[
+                    styles.locationTxt,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGrey,
+                    },
+                  ]}>
+                  {location?.address}
+                </Text>
+              </View>
             </TouchableOpacity>
           )}
         </View>
@@ -432,7 +520,33 @@ export default function DashBoardHeaderFive({
             source={imagePath.search1}
           />
         </TouchableOpacity>
-        {tabs.length > 1 && (
+        {isVoiceRecord ? (
+          <TouchableOpacity onPress={_onVoiceStop}>
+            <LottieView
+              style={{
+                height: moderateScale(43),
+                width: moderateScale(30),
+              }}
+              source={voiceListen}
+              autoPlay
+              loop
+            />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={{marginHorizontal: moderateScale(8)}}
+            onPress={_onVoiceListen}>
+            <Image
+              style={{
+                tintColor: '#2A9CD7',
+                height: moderateScale(25),
+                width: moderateScale(25),
+              }}
+              source={imagePath.icMic}
+            />
+          </TouchableOpacity>
+        )}
+        {/* {tabs.length > 1 && (
           <TouchableOpacity
             activeOpacity={0.7}
             style={{
@@ -443,11 +557,19 @@ export default function DashBoardHeaderFive({
             onPress={_onTableLabel}>
             <Image
               source={
-                checked === strings.DELIVERY
+                !!(
+                  checked ==
+                  toggleData?.profile?.preferences?.delivery_nomenclature ||
+                  checked == strings.DELIVERY
+                )
                   ? imagePath.delivery
-                  : checked === strings.DINE_IN
-                  ? imagePath.dineIn
-                  : imagePath.takeaway
+                  : !!(
+                    checked ==
+                    toggleData?.profile?.preferences?.dinein_nomenclature ||
+                    checked == strings.DINE_IN
+                  )
+                    ? imagePath.dineIn
+                    : imagePath.takeaway
               }
               style={styles.deliveryIcon}
               resizeMode="contain"
@@ -461,7 +583,7 @@ export default function DashBoardHeaderFive({
               resizeMode="contain"
             />
           </TouchableOpacity>
-        )}
+        )} */}
         <Modal
           isVisible={isModalVisible}
           style={{
@@ -485,94 +607,186 @@ export default function DashBoardHeaderFive({
                     : colors.white,
                 },
               ]}>
-              {/* <BlurView
-                blurType="light"
-                style={styles.blurView}
-                blurAmount={32}
-              /> */}
-
               <View style={{padding: moderateScale(10)}}>
-                {tabs.map((item, indx) => {
-                  return (
-                    <TouchableOpacity
-                      key={indx}
-                      style={{
-                        borderColor: item.isActive
-                          ? themeColors.primary_color
-                          : colors.transparent,
-                        borderWidth: 0.7,
-                        flexDirection: 'row',
-                        paddingVertical: moderateScaleVertical(15),
-                        margin: moderateScale(5),
-                        borderRadius: moderateScale(10),
-                        alignItems: 'center',
-                        paddingHorizontal: moderateScale(20),
-                        justifyContent: 'space-between',
-                      }}
-                      onPress={() =>
-                        !(
-                          cartItemCount?.message == null &&
-                          cartItemCount?.data?.item_count > 0
-                        )
-                          ? _onTableItm(item, indx)
-                          : dineInFunction()
-                      }>
-                      <View
+                {tabs.length > 1 &&
+                  tabs.map((item, indx) => {
+                    return (
+                      <TouchableOpacity
+                        key={indx}
+                        disabled={!!item.isActive}
                         style={{
+                          borderColor: item.isActive
+                            ? themeColors.primary_color
+                            : colors.transparent,
+                          borderWidth: 0.7,
                           flexDirection: 'row',
-                          justifyContent: 'center',
+                          paddingVertical: moderateScaleVertical(15),
+                          margin: moderateScale(5),
+                          borderRadius: moderateScale(10),
                           alignItems: 'center',
-                        }}>
+                          paddingHorizontal: moderateScale(20),
+                          justifyContent: 'space-between',
+                        }}
+                        onPress={() =>
+                          !(
+                            cartItemCount?.message == null &&
+                            cartItemCount?.data?.item_count > 0
+                          )
+                            ? _onTableItm(item, indx)
+                            : dineInFunction(item, indx)
+                        }>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          <Image
+                            source={
+                              item.isActive
+                                ? imagePath.radioNewActive
+                                : imagePath.radioNewInActive
+                            }
+                            style={{
+                              height: moderateScale(20),
+                              width: moderateScale(20),
+                              tintColor: item.isActive
+                                ? themeColors.primary_color
+                                : colors.blackOpacity43,
+                            }}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: fontFamily.medium,
+                              color: item.isActive
+                                ? themeColors.primary_color
+                                : isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.blackOpacity43,
+                              fontSize: textScale(12),
+                              marginHorizontal: moderateScale(10),
+                            }}>
+                            {item.value}
+                          </Text>
+                        </View>
                         <Image
-                          source={
-                            item.isActive
-                              ? imagePath.radioNewActive
-                              : imagePath.radioNewInActive
-                          }
+                          source={item.icon}
                           style={{
-                            height: moderateScale(20),
-                            width: moderateScale(20),
+                            height: moderateScale(22),
+                            width: moderateScale(22),
                             tintColor: item.isActive
-                              ? themeColors.primary_color
-                              : colors.blackOpacity43,
-                          }}
-                        />
-                        <Text
-                          style={{
-                            fontFamily: fontFamily.medium,
-                            color: item.isActive
                               ? themeColors.primary_color
                               : isDarkMode
                               ? MyDarkTheme.colors.text
-                              : colors.blackOpacity43,
-                            fontSize: textScale(12),
-                            marginHorizontal: moderateScale(10),
-                          }}>
-                          {item.value}
-                        </Text>
-                      </View>
-                      <Image
-                        source={item.icon}
-                        style={{
-                          height: moderateScale(22),
-                          width: moderateScale(22),
-                          tintColor: item.isActive
-                            ? themeColors.primary_color
-                            : isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.blackOpacity66,
-                          alignSelf: 'flex-end',
-                        }}
-                        resizeMode="contain"
-                      />
-                    </TouchableOpacity>
-                  );
-                })}
+                              : colors.blackOpacity66,
+                            alignSelf: 'flex-end',
+                          }}
+                          resizeMode="contain"
+                        />
+                      </TouchableOpacity>
+                    );
+                  })}
               </View>
             </View>
           </View>
         </Modal>
       </View>
-    </>
+      <View
+        style={{
+          // alignSelf: 'center',
+          borderRadius: moderateScale(10),
+          flexDirection: 'row',
+          marginTop: moderateScale(10),
+        }}>
+        {tabs.length > 1 &&
+          tabs.map((item, indx) => {
+            return (
+              <TouchableOpacity
+                activeOpacity={1}
+                disabled={item.isActive}
+                onPress={() =>
+                  !(
+                    cartItemCount?.message == null &&
+                    cartItemCount?.data?.item_count > 0
+                  )
+                    ? _onTableItm(item, indx)
+                    : dineInFunction(item, indx)
+                }
+                key={indx}
+                style={{
+                  // width: width / 3 - 8,
+                  width: tabs.length == 2 ? '50%' : '33.6%',
+                  borderBottomColor:
+                    item.isActive && isDarkMode
+                      ? MyDarkTheme.colors.white
+                      : item.isActive && !isDarkMode
+                      ? themeColors.primary_color
+                      : isDarkMode
+                      ? colors.blackOpacity0
+                      : colors.greyColor1,
+                  borderBottomWidth: 2,
+                  height: moderateScale(40),
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexDirection: 'row',
+                }}>
+                <Image
+                  source={item.icon}
+                  style={{
+                    height: moderateScale(16),
+                    width: moderateScale(16),
+                    tintColor:
+                      item.isActive && isDarkMode
+                        ? MyDarkTheme.colors.white
+                        : item.isActive && !isDarkMode
+                        ? themeColors.primary_color
+                        : colors.greyLight,
+                    // ? themeColors.primary_color
+                    // : isDarkMode
+                    // ? MyDarkTheme.colors.text
+                    // : colors.blackOpacity66,
+                    marginRight: moderateScale(3),
+                    // tintColor: item.isActive
+                    //   ? themeColors.primary_color
+                    //   : colors.textGreyOpcaity7,
+                    // alignSelf: 'flex-end',
+                  }}
+                  resizeMode="contain"
+                />
+                <Text
+                  style={{
+                    marginLeft: moderateScale(3),
+                    fontSize: textScale(14),
+                    fontFamily: fontFamily.regular,
+                    color:
+                      item.isActive && isDarkMode
+                        ? MyDarkTheme.colors.white
+                        : item.isActive && !isDarkMode
+                        ? themeColors.primary_color
+                        : colors.greyLight,
+                    textTransform: 'capitalize',
+                  }}>
+                  {item.value}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+      </View>
+      <CustomAnimatedLoader
+        source={loaderOne}
+        loaderTitle={strings.LOADING}
+        containerColor={
+          isDarkMode ? MyDarkTheme.colors.lightDark : colors.white
+        }
+        loadercolor={themeColors.primary_color}
+        animationStyle={[
+          {
+            height: moderateScaleVertical(40),
+            width: moderateScale(40),
+          },
+        ]}
+        visible={isLoadingB}
+      />
+    </View>
   );
 }

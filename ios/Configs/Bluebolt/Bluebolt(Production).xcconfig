@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-available_pods-Bluebolt/Pods-available_pods-Bluebolt.release.xcconfig"
+
+PROJECT_APPLE_ID = 1609028612
+PROJECT_BUNDLE_ID =com.app.bluebolt
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = Bluebolt
+PROJECT_GOOGLE_CLIENT_ID =703721486107-m8i4t86s9mgh3mj00pesmfei4hdj6vps.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.703721486107-m8i4t86s9mgh3mj00pesmfei4hdj6vps
+PROJECT_FACEBOOK_ID = 626225851793823
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =BlueboltInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

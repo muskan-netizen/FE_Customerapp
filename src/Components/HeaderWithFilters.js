@@ -115,8 +115,7 @@ const HeaderWithFilters = ({
     </>
   );
 };
-
-export default HeaderWithFilters;
+export default React.memo(HeaderWithFilters);
 
 export function stylesFunc({fontFamily}) {
   const styles = StyleSheet.create({

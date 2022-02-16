@@ -135,4 +135,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BlurImages;
+export default React.memo(BlurImages);

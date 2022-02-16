@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import DashedLine from 'react-native-dashed-line';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -21,93 +21,159 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../styles/theme';
 import BlurImages from './BlurImages';
 import {
+  checkEvenOdd,
+  getColorCodeWithOpactiyNumber,
   getImageUrl,
   getScaleTransformationStyle,
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
+import LinearGradient from 'react-native-linear-gradient';
+import {
+  Grayscale,
+  Sepia,
+  Tint,
+  ColorMatrix,
+  concatColorMatrices,
+  invert,
+  contrast,
+  saturate,
+} from 'react-native-color-matrix-image-filters';
 
-export default function MarketCard3({
+const transparentColor = ['transparent', 'transparent'];
+const greyColor = ['rgba(0,0,0,0.52)', 'rgba(0,0,0,0.52)'];
+
+const MarketCard3 = ({
   data = {},
-  onPress = () => {},
+  onPress = () => { },
   extraStyles = {},
   fastImageStyle = {},
   imageResizeMode = 'cover',
-}) {
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const { appStyle, themeColors, appData } = useSelector(
+    (state) => state?.initBoot,
+  );
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, extraStyles, MyDarkTheme, isDarkMode});
+  const styles = stylesFunc({ fontFamily, extraStyles, MyDarkTheme, isDarkMode });
   const scaleInAnimated = new Animated.Value(0);
 
   let imageUrl = getImageUrl(
     data.banner.proxy_url || data.image.proxy_url,
     data.banner.image_path || data.image.image_path,
-    '800/400',
+    '700/300',
   );
 
   return (
     <TouchableOpacity
       activeOpacity={1}
       onPress={onPress}
-      style={{
-        ...styles.mainTouchContainer,
-        ...getScaleTransformationStyle(scaleInAnimated),
-      }}
+      style={
+        !!data?.is_vendor_closed
+          ? {
+            ...styles.mainTouchContainer,
+            ...getScaleTransformationStyle(scaleInAnimated),
+            backgroundColor: isDarkMode
+              ? colors.whiteOpacity15
+              : getColorCodeWithOpactiyNumber(
+                colors.textGreyLight.substring(1),
+                20,
+              ),
+          }
+          : {
+            ...styles.mainTouchContainer,
+            ...getScaleTransformationStyle(scaleInAnimated),
+          }
+      }
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
-      <FastImage
-        source={{uri: imageUrl, priority: FastImage.priority.high}}
-        style={{
-          ...styles.mainImage,
-          ...fastImageStyle,
-        }}
-        resizeMode={FastImage.resizeMode.cover}
-      />
-      {/* <BlurImages
-        isDarkMode={isDarkMode}
-        themeColor={themeColors.primary_color}
-        thumnailUrl={{
-          uri: getImageUrl(
-            data.banner.proxy_url || data.image.proxy_url,
-            data.banner.image_path || data.image.image_path,
-            '20/20',
-          ),
-        }}
-        originalUrl={{
-          uri: getImageUrl(
-            data.banner.proxy_url || data.image.proxy_url,
-            data.banner.image_path || data.image.image_path,
-            '800/400',
-          ),
-        }}
-        style={[styles.mainImage, {...fastImageStyle}]}
-      /> */}
+      <View>
+        {!!data?.is_vendor_closed ? (
+          <Grayscale>
+            <View style={{ justifyContent: 'center' }}>
+              <FastImage
+                source={{
+                  uri: imageUrl, 
+                  priority: FastImage.priority.high,
+                  cache: FastImage.cacheControl.immutable,
+                }}
+                style={{
+                  ...styles.mainImage,
+                  ...fastImageStyle,
+                  opacity: 0.8,
+                }}
+                resizeMode={FastImage.resizeMode.cover}
+                />
+              <Text style={styles.currentlyUnavailable}>
+                {strings.CURRENTLYUNAVAILABLE}
+              </Text>
+            </View>
+          </Grayscale>
+        ) : (
+          <FastImage
+            source={{
+              uri: imageUrl, 
+              priority: FastImage.priority.high,
+              cache: FastImage.cacheControl.immutable
+            }}
+            style={{
+              ...styles.mainImage,
+              ...fastImageStyle,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
+            />
+        )}
 
-      <View
-        style={{
-          padding: 8,
-        }}>
+        {!!appData?.profile?.preferences?.is_hyperlocal && (
+          <View
+            style={{
+              ...styles.ratingView,
+              position: 'absolute',
+              right: 10,
+              top: 10,
+              backgroundColor: colors.white,
+            }}>
+            <Text
+              style={{
+                ...commonStyles.mediumFont14Normal,
+                fontSize: textScale(10),
+                textAlign: 'left',
+                color: data?.show_slot
+                  ? colors.green
+                  : data?.is_vendor_closed
+                    ? colors.redB
+                    : colors.green,
+              }}>
+              {data?.show_slot
+                ? strings.OPEN
+                : data?.is_vendor_closed
+                  ? strings.CLOSE
+                  : strings.OPEN}
+            </Text>
+          </View>
+        )}
+      </View>
+      <View style={{ padding: moderateScale(8) }}>
         <View style={styles.descView}>
           <Text
             numberOfLines={1}
             style={
               isDarkMode
-                ? [styles.categoryText, {color: MyDarkTheme.colors.text}]
+                ? [styles.categoryText, { color: MyDarkTheme.colors.text }]
                 : styles.categoryText
             }>
             {data.name}
           </Text>
 
-          {data?.product_avg_average_rating && (
+          {!!data?.product_avg_average_rating && (
             <View style={styles.ratingView}>
               <Text
                 style={{
@@ -130,7 +196,7 @@ export default function MarketCard3({
             </View>
           )}
         </View>
-        {data?.categoriesList ? (
+        {!!data?.categoriesList ? (
           <Text
             numberOfLines={1}
             style={{
@@ -164,26 +230,56 @@ export default function MarketCard3({
               <View
                 style={{
                   flexDirection: 'row',
+                  alignItems: 'center',
                 }}>
-                <Image
-                  style={{tintColor: themeColors.primary_color}}
-                  source={imagePath.location2}
-                />
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    color: colors.greyLight,
-                    fontSize: textScale(10),
-                    fontFamily: fontFamily.regular,
-                    marginHorizontal: moderateScale(5),
-                    textAlign: 'left',
-                  }}>
-                  {data?.lineOfSightDistance && data?.lineOfSightDistance}
-                  {` | ${
-                    data?.timeofLineOfSightDistance &&
-                    data?.timeofLineOfSightDistance
-                  } mins`}
-                </Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Image
+                    style={{
+                      tintColor: data?.is_vendor_closed
+                        ? colors.black
+                        : themeColors.primary_color,
+                      width: moderateScale(12),
+                      height: moderateScale(12),
+                      opacity: data?.is_vendor_closed ? 0.5 : 1,
+                    }}
+                    resizeMode="contain"
+                    source={imagePath.location2}
+                  />
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      ...styles.distanceTimeStyle,
+                      color: colors.greyLight,
+                    }}>
+                    {data?.lineOfSightDistance}
+                  </Text>
+                </View>
+
+                {!!data?.timeofLineOfSightDistance && (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      flex: 0.96,
+                    }}>
+                    <Image
+                      style={{
+                        tintColor: data?.is_vendor_closed
+                          ? colors.black
+                          : themeColors.primary_color,
+                        width: moderateScale(12),
+                        height: moderateScale(12),
+                        opacity: data?.is_vendor_closed ? 0.5 : 1,
+                      }}
+                      resizeMode="contain"
+                      source={imagePath.icTime2}
+                    />
+                    <Text numberOfLines={1} style={styles.distanceTimeStyle}>
+                      {checkEvenOdd(data?.timeofLineOfSightDistance)}-
+                      {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
+                    </Text>
+                  </View>
+                )}
               </View>
             )}
             {/* {!!data?.timeofLineOfSightDistance ? (
@@ -199,36 +295,30 @@ export default function MarketCard3({
               </Text>
             ) : null} */}
           </View>
-
+        </View>
+        {!!data?.closed_store_order_scheduled ? (
           <Text
             style={{
               ...commonStyles.mediumFont14Normal,
-              fontSize: textScale(12),
+              fontSize: textScale(10),
               textAlign: 'left',
-              color: data?.show_slot
-                ? colors.green
-                : data?.is_vendor_closed
-                ? colors.redB
-                : colors.green,
+              color: colors.redB,
+              marginTop: moderateScaleVertical(4),
             }}>
-            {data?.show_slot
-              ? strings.OPEN
-              : data?.is_vendor_closed
-              ? strings.CLOSE
-              : strings.OPEN}
+            {strings.WE_ARE_NOT_ACCEPTING} {data?.delaySlot}{' '}
           </Text>
-        </View>
+        ) : null}
       </View>
     </TouchableOpacity>
   );
-}
+};
 
-export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
+export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme }) {
   const styles = StyleSheet.create({
     mainTouchContainer: {
       borderRadius: moderateScale(10),
       shadowColor: '#000',
-      shadowOffset: {width: 0, height: 0},
+      shadowOffset: { width: 0, height: 0 },
       shadowOpacity: 0.15,
       shadowRadius: 1.84,
       elevation: 2,
@@ -273,6 +363,21 @@ export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
       flexDirection: 'row',
       justifyContent: 'space-between',
     },
+    distanceTimeStyle: {
+      color: colors.greyLight,
+      fontSize: textScale(9),
+      fontFamily: fontFamily.regular,
+      marginHorizontal: moderateScale(5),
+      textAlign: 'left',
+    },
+    currentlyUnavailable: {
+      position: 'absolute',
+      alignSelf: 'center',
+      fontSize: textScale(16),
+      color: colors.white,
+      fontFamily: fontFamily?.bold,
+    },
   });
   return styles;
 }
+export default React.memo(MarketCard3);

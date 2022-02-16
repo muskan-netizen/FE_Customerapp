@@ -7,12 +7,7 @@ import fontFamily from '../styles/fontFamily';
 import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
 import WrapperContainer from './WrapperContainer';
 
-export default function CustomTopTabView({
-  state,
-  descriptors,
-  navigation,
-  position,
-}) {
+const CustomTopTabView = ({state, descriptors, navigation, position}) => {
   const {themeColors} = useSelector((state) => state.initBoot);
   return (
     <View
@@ -93,4 +88,5 @@ export default function CustomTopTabView({
       })}
     </View>
   );
-}
+};
+export default React.memo(CustomTopTabView);

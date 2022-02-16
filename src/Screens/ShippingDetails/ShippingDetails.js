@@ -1,27 +1,28 @@
 import {cloneDeep} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+  FlatList,
   I18nManager,
   Image,
+  ScrollView,
   Text,
   TouchableOpacity,
   View,
-  FlatList,
-  Keyboard,
-  ScrollView,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import * as RNLocalize from 'react-native-localize';
 import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
-import StepIndicators from '../../Components/StepIndicator';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
 import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
 import {
@@ -29,16 +30,14 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
+import {currencyNumberFormatter} from '../../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
   showError,
 } from '../../utils/helperFunctions';
-import stylesFunc from './styles';
 import validator from '../../utils/validations';
-import actions from '../../redux/actions';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import * as RNLocalize from 'react-native-localize';
+import stylesFunc from './styles';
 
 export default function ShippingDetails({navigation, route}) {
   const paramData = route?.params;
@@ -641,25 +640,31 @@ export default function ShippingDetails({navigation, route}) {
                   },
                 ]}>
                 {selectedCarOption
-                  ? `${currencies?.primary_currency?.symbol}${(
-                      Number(selectedCarOption?.variant[0]?.multiplier) *
-                      Number(selectedCarOption?.variant[0]?.price)
-                    ).toFixed(2)}`
+                  ? `${
+                      currencies?.primary_currency?.symbol
+                    }${currencyNumberFormatter(
+                      (
+                        Number(selectedCarOption?.variant[0]?.multiplier) *
+                        Number(selectedCarOption?.variant[0]?.price)
+                      ).toFixed(2),
+                    )}`
                   : ''}
               </Text>
 
               {updatedAmount && (
                 <Text style={[styles.totalPayableValue, {paddingLeft: 5}]}>
-                  {`${currencies?.primary_currency?.symbol}${
+                  {`${
+                    currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
                     Number(selectedCarOption.tags_price) -
                       Number(updatedAmount) >
-                    0
+                      0
                       ? (
                           Number(selectedCarOption.tags_price) -
                           Number(updatedAmount)
                         ).toFixed(2)
-                      : 0
-                  }`}
+                      : 0,
+                  )}`}
                 </Text>
               )}
             </View>
@@ -678,10 +683,12 @@ export default function ShippingDetails({navigation, route}) {
             </Text>
             <Text style={styles.distanceDurationDeliveryValue}>{`-${
               currencies?.primary_currency?.symbol
-            }${(
-              Number(selectedCarOption?.variant[0]?.multiplier) *
-              Number(loyalityAmount)
-            ).toFixed(2)}`}</Text>
+            }${currencyNumberFormatter(
+              (
+                Number(selectedCarOption?.variant[0]?.multiplier) *
+                Number(loyalityAmount)
+              ).toFixed(2),
+            )}`}</Text>
           </View>
         )}
 
@@ -828,9 +835,9 @@ export default function ShippingDetails({navigation, route}) {
             {item?.translation[0]?.title}
           </Text>
           <Text numberOfLines={2} style={styles.boxTitle2}>
-            {`${currencies?.primary_currency?.symbol}${Number(
-              item.tags_price,
-            ).toFixed(2)}`}
+            {`${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
+              Number(item.tags_price).toFixed(2),
+            )}`}
           </Text>
         </View>
       </TouchableOpacity>

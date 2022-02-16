@@ -9,14 +9,14 @@ import {
 import HeaderLoader from './HeaderLoader';
 import HomeLoader from './HomeLoader';
 
-export default function BannerLoader({
+const BannerLoader = ({
   viewStyles = {},
   isBannerDots = false,
   isVendorLoader = false,
   vendorTxtStyles = {},
   homeLoaderWidth = width - moderateScale(30),
   homeLoaderHeight = moderateScaleVertical(130),
-}) {
+}) => {
   const renderDots = () => {
     return (
       <HomeLoader
@@ -79,6 +79,7 @@ export default function BannerLoader({
       )}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({});
+export default React.memo(BannerLoader);

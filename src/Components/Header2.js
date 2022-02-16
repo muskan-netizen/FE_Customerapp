@@ -12,8 +12,7 @@ import {
 } from '../styles/responsiveSize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
-
-export default function Header2({
+const Header2 = ({
   centerTitle = '',
   textStyle,
   onPressRight,
@@ -21,7 +20,7 @@ export default function Header2({
   leftIcon,
   rightIcon,
   headerContainerStyle = {},
-}) {
+}) => {
   const {appStyle} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -86,7 +85,7 @@ export default function Header2({
       </TouchableOpacity>
     </View>
   );
-}
+};
 
 export function stylesFunc({fontFamily}) {
   const styles = StyleSheet.create({
@@ -109,3 +108,4 @@ export function stylesFunc({fontFamily}) {
   });
   return styles;
 }
+export default React.memo(Header2);

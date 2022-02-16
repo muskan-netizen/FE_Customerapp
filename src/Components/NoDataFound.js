@@ -4,17 +4,22 @@ import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import commonStylesFunc from '../styles/commonStyles';
-import {textScale} from '../styles/responsiveSize';
+import {moderateScaleVertical, textScale} from '../styles/responsiveSize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 import colors from '../styles/colors';
+import {appIds} from '../utils/constants/DynamicAppKeys';
+import DeviceInfo from 'react-native-device-info';
 
-export default function NoDataFound({
+const NoDataFound = ({
   isLoading = false,
   containerStyle = {},
   text = strings.NODATAFOUND,
   textStyle = {},
-}) {
+  image = appIds.codiner == DeviceInfo.getBundleId()
+    ? imagePath.noDataFound3
+    : imagePath.noDataFound2,
+}) => {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -25,7 +30,7 @@ export default function NoDataFound({
     return (
       <SafeAreaView style={{flex: 1}}>
         <View style={[styles.containerStyle, containerStyle]}>
-          <Image source={imagePath.noDataFound2} />
+          <Image source={image} />
           <Text
             style={{
               ...styles.textStyle,
@@ -39,7 +44,7 @@ export default function NoDataFound({
     );
   }
   return null;
-}
+};
 export function stylesData(params) {
   const {themeColors, appStyle} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -54,8 +59,11 @@ export function stylesData(params) {
     },
     textStyle: {
       ...commonStyles.mediumFont16,
-      fontSize: textScale(18),
+      fontSize: textScale(16),
+      fontFamily: fontFamily?.regular,
+      marginTop: moderateScaleVertical(5),
     },
   });
   return styles;
 }
+export default React.memo(NoDataFound);

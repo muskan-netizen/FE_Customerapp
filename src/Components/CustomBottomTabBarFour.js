@@ -11,14 +11,13 @@ import {
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 
-export default function CustomBottomTabBarFour({
+const CustomBottomTabBarFour = ({
   state,
   descriptors,
   navigation,
   bottomTabNotify,
-
   ...props
-}) {
+}) => {
   const insets = useSafeAreaInsets();
 
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
@@ -100,7 +99,7 @@ export default function CustomBottomTabBarFour({
       })}
     </View>
   );
-}
+};
 
 export function stylesData({fontFamily}) {
   const currentTheme = useSelector((state) => state.initBoot);
@@ -137,3 +136,4 @@ export function stylesData({fontFamily}) {
   });
   return styles;
 }
+export default React.memo(CustomBottomTabBarFour);

@@ -1,28 +1,20 @@
 import React from 'react';
-import {Animated, Text, TouchableOpacity, View, Image} from 'react-native';
+import {Animated, Text, TouchableOpacity, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
-import {transparentProductImage} from '../constants/constants';
-import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
-import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
-import {
-  moderateScale,
-  moderateScaleVertical,
-  textScale,
-  width,
-} from '../styles/responsiveSize';
+import {moderateScale, textScale, width} from '../styles/responsiveSize';
+import {MyDarkTheme} from '../styles/theme';
+import {currencyNumberFormatter} from '../utils/commonFunction';
 import {
   getImageUrl,
-  getScaleTransformationStyle,
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
 
-export default function ProductCard4({
+const ProductCard4 = ({
   data = {},
   onPress = () => {},
   cardWidth,
@@ -31,7 +23,7 @@ export default function ProductCard4({
   addToCart = () => {},
   activeOpacity = 1,
   bottomText = strings.BUY_NOW,
-}) {
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -39,9 +31,9 @@ export default function ProductCard4({
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
-  const {themeColors, themeLayouts} = currentTheme;
+  const {themeLayouts} = currentTheme;
   const commonStyles = commonStylesFunc({fontFamily});
   const cardWidthNew = cardWidth ? cardWidth : width * 0.5 - 21.5;
   const url1 = data?.media[0]?.image?.path.proxy_url;
@@ -51,7 +43,6 @@ export default function ProductCard4({
     data?.variant[0]?.price *
     (data?.variant[0]?.multiplier ? data?.variant[0]?.multiplier : 1);
   const scaleInAnimated = new Animated.Value(0);
-  console.log(data, 'dataaaaaaa');
   return (
     <TouchableOpacity
       activeOpacity={activeOpacity}
@@ -61,7 +52,6 @@ export default function ProductCard4({
       style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
         flex: 1,
         marginHorizontal: moderateScale(16),
       }}>
@@ -88,8 +78,7 @@ export default function ProductCard4({
             style={{
               // height: 30,
               marginHorizontal: moderateScale(16),
-              marginTop: moderateScale(6),
-              width: width - moderateScale(180),
+              width: width - moderateScale(220),
             }}>
             <Text
               numberOfLines={1}
@@ -115,30 +104,42 @@ export default function ProductCard4({
                 fontSize: textScale(13),
                 fontFamily: fontFamily.medium,
               }}>
-              {`${currencies?.primary_currency?.symbol}${(
-                Number(data?.variant[0]?.multiplier) *
-                Number(data?.variant[0]?.price)
-              ).toFixed(2)}`}
+              {`${
+                currencies?.primary_currency?.symbol
+              }${currencyNumberFormatter(
+                (
+                  Number(data?.variant[0]?.multiplier) *
+                  Number(data?.variant[0]?.price)
+                ).toFixed(2),
+              )}`}
             </Text>
           </View>
         </View>
       </View>
-      {/* <View
+
+      {/* <TouchableOpacity
         style={{
-          height: moderateScale(30),
-          width: moderateScale(30),
-          borderRadius: moderateScale(15),
-          backgroundColor: '#E8E8E8',
-          justifyContent: 'center',
+          borderColor: themeColors.primary_color,
+          borderRadius: 10,
           alignItems: 'center',
+          borderWidth: 0.6,
+          width: 79,
+          height: 35,
+          paddingVertical: 10,
         }}>
-        <Image
-          source={imagePath.add}
+        
+        <Text
           style={{
-            tintColor: colors.white,
-          }}
-        />
-      </View> */}
+            fontSize: textScale(10),
+            color: themeColors.primary_color,
+            fontFamily: fontFamily.bold,
+            alignSelf: 'center',
+          }}>
+          ADD
+        </Text>
+        
+      </TouchableOpacity> */}
     </TouchableOpacity>
   );
-}
+};
+export default React.memo(ProductCard4);

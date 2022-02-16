@@ -6,13 +6,13 @@ import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 import {height, moderateScale, textScale} from '../styles/responsiveSize';
 
-export default function CustomDrawerContent({
+const CustomDrawerContent = ({
   state,
   descriptors,
   navigation,
   progress,
   ...props
-}) {
+}) => {
   const insets = useSafeAreaInsets();
   const currentTheme = useSelector((state) => state.initBoot);
   const {themeColors, themeLayouts, appStyle} = currentTheme;
@@ -84,4 +84,5 @@ export default function CustomDrawerContent({
       })}
     </Animated.View>
   );
-}
+};
+export default React.memo(CustomDrawerContent);

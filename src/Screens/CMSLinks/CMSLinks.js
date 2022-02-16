@@ -125,10 +125,11 @@ export default function CMSLinks({navigation}) {
       source={loaderOne}>
       <Header
         leftIcon={
-        appStyle?.homePageLayout === 2 ? 
-          imagePath.backArrow:appStyle?.homePageLayout === 3?
-          imagePath.icBackb :
-           imagePath.back
+          appStyle?.homePageLayout === 2
+            ? imagePath.backArrow
+            : appStyle?.homePageLayout === 3
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={strings.LINKS}
         headerStyle={
@@ -144,6 +145,7 @@ export default function CMSLinks({navigation}) {
           <View
             style={{
               marginTop: moderateScaleVertical(20),
+              marginBottom: moderateScaleVertical(80),
               marginHorizontal: moderateScale(20),
             }}>
             <FlatList

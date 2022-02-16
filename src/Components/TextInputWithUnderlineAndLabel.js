@@ -23,7 +23,7 @@ import imagePath from '../constants/imagePath';
 
 // import styles from '../Screens/Tracking/styles';
 
-export default function TextInputWithUnderlineAndLabel({
+const TextInputWithUnderlineAndLabel = ({
   label,
   labelStyle,
   lableViewStyle,
@@ -50,8 +50,15 @@ export default function TextInputWithUnderlineAndLabel({
   labelIconPath = '',
   labelIconStyle = {},
   onPressLabel = () => {},
+  underlineColor = colors.textGreyB,
+  placeholderTextColor = colors.textGreyB,
+  onRightPress = () => {},
+  isEditable = true,
+  keyboardType = '',
+  defaultValue = '',
+  autoFocus = false,
   ...props
-}) {
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -79,8 +86,11 @@ export default function TextInputWithUnderlineAndLabel({
       style={mainStyle}>
       <View style={{flexDirection: 'row', ...lableViewStyle}}>
         <Text
+          numberOfLines={1}
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
+            // backgroundColor: 'red',
+            flex: 1,
             ...labelStyle,
           }}>
           {label}
@@ -94,12 +104,13 @@ export default function TextInputWithUnderlineAndLabel({
       <View
         style={{
           flexDirection: 'row',
-          height: moderateScaleVertical(30),
+          minHeight: moderateScaleVertical(30),
           color: colors.white,
           marginBottom,
           borderBottomWidth: StyleSheet.hairlineWidth,
-          borderBottomColor: colors.textGreyB,
+          borderBottomColor: underlineColor,
           paddingBottom: 11,
+          alignItems: 'center',
           ...containerStyle,
         }}>
         {/* <TextInput
@@ -121,10 +132,11 @@ export default function TextInputWithUnderlineAndLabel({
           }}
         /> */}
         <TextInput
+          autoFocus={autoFocus || false}
           selectionColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
           placeholder={placeholder}
           placeholderTextColor={
-            isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB
+            isDarkMode ? MyDarkTheme.colors.text : placeholderTextColor
           }
           style={{
             flex: 1,
@@ -146,13 +158,21 @@ export default function TextInputWithUnderlineAndLabel({
           onChangeText={onChangeText}
           value={value}
           secureTextEntry={secureTextEntry}
+          keyboardType={keyboardType}
           autoCapitalize={'none'}
+          editable={isEditable}
+          defaultValue={defaultValue}
           {...props}
         />
+        {!!rightIcon && (
+          <TouchableOpacity hitSlop={hitSlopProp} onPress={onRightPress}>
+            <Image source={rightIcon} />
+          </TouchableOpacity>
+        )}
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 export function stylesData({fontFamily}) {
   const styles = StyleSheet.create({
@@ -218,3 +238,4 @@ export function stylesData({fontFamily}) {
   });
   return styles;
 }
+export default React.memo(TextInputWithUnderlineAndLabel);

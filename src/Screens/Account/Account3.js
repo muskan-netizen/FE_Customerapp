@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   I18nManager,
   Image,
+  Platform,
   ScrollView,
-  Share,
   Text,
   TouchableOpacity,
+  Vibration,
   View,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
@@ -33,6 +35,11 @@ import {
   getRandomColor,
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
+import ZendeskChat from '../../library/react-native-zendesk-chat';
+import Share from 'react-native-share';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
+import DeviceInfo from 'react-native-device-info';
+import SunmiV2Printer from 'react-native-sunmi-v2-printer';
 
 export default function Account3({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -42,11 +49,17 @@ export default function Account3({navigation}) {
   const {themeColors, appStyle, appData, shortCodeStatus} = useSelector(
     (state) => state?.initBoot,
   );
-
-  const businessType = appStyle?.homePageLayout; 
-   const [state, setState] = useState({
+  const businessType = appStyle?.homePageLayout;
+  const [state, setState] = useState({
     isLoading: false,
   });
+
+  const {preferences} = appData?.profile;
+
+  // const profileInfo = appData?.profile;
+  // console.log("account profile info",profileInfo)
+
+  const [isVisible, setIsVisible] = useState(false);
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
@@ -62,8 +75,10 @@ export default function Account3({navigation}) {
   const userData = useSelector((state) => state.auth.userData);
   const appMainData = useSelector((state) => state?.home?.appMainData);
 
-  console.log(userData, 'userData');
-
+  console.log(
+    appData?.profile?.preferences?.customer_support_application_id,
+    'userDAta',
+  );
   // useFocusEffect(
   //   React.useCallback(() => {
   //     _scrollRef.current.scrollTo(0);
@@ -71,22 +86,23 @@ export default function Account3({navigation}) {
   // );
 
   //Share your app
-  const onShare = async () => {
-    try {
-      const result = await Share.share({
-        url: 'https://play.google.com/store/apps/details?id=com.codebrew.customer',
-      });
-
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-        } else {
-        }
-      } else if (result.action === Share.dismissedAction) {
-      }
-    } catch (error) {
-      alert(error.message);
+  const onShare = () => {
+    console.log('onShare', appData);
+    if (!!appData?.domain_link) {
+      let hyperLink = appData?.domain_link + '/share';
+      let options = {url: hyperLink};
+      Share.open(options)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          err && console.log(err);
+        });
+      return;
     }
+    alert('link not found');
   };
+
   //Logout function
   const userlogout = () => {
     if (!!userData?.auth_token) {
@@ -108,6 +124,28 @@ export default function Account3({navigation}) {
     } else {
       moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     }
+  };
+
+  // initalize Zendesk
+
+  useEffect(() => {
+    ZendeskChat.init(
+      `${appData?.profile?.preferences?.customer_support_key}`,
+      `${appData?.profile?.preferences?.customer_support_application_id}`,
+    );
+  }, []);
+
+  const onStartSupportChat = () => {
+    ZendeskChat.setVisitorInfo({
+      name: userData?.name,
+      phone: userData?.phone_number ? userData?.phone_number : '',
+    });
+    ZendeskChat.startChat({
+      name: userData?.name,
+      phone: userData?.phone_number ? userData?.phone_number : '',
+      withChat: true,
+      color: '#000',
+    });
   };
 
   const usernameFirstlater = !!userData?.name && userData?.name?.charAt(0);
@@ -177,6 +215,7 @@ export default function Account3({navigation}) {
                     : colors.white,
                   paddingVertical: moderateScaleVertical(12),
                   borderRadius: 12,
+                  // flex: 1,
                 }}>
                 {userData?.source ? (
                   <FastImage
@@ -225,7 +264,7 @@ export default function Account3({navigation}) {
                 <View
                   style={{
                     flexDirection: 'column',
-                    marginHorizontal: moderateScale(25),
+                    flex: 1,
                   }}>
                   <Text
                     style={{
@@ -234,6 +273,7 @@ export default function Account3({navigation}) {
                         : colors.textGreyJ,
                       fontFamily: fontFamily.medium,
                       fontSize: textScale(14),
+                      textAlign: 'left',
                     }}>
                     {userData?.name}
                   </Text>
@@ -245,6 +285,7 @@ export default function Account3({navigation}) {
                         ? MyDarkTheme.colors.text
                         : colors.textGreyJ,
                       marginTop: moderateScaleVertical(5),
+                      textAlign: 'left',
                     }}>
                     {userData?.email}
                   </Text>
@@ -293,22 +334,78 @@ export default function Account3({navigation}) {
               />
             ))}
 
-          {!!userData?.auth_token && (
-            <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-              onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
-              iconLeft={imagePath.subscription}
-              centerHeading={strings.SUBSCRIPTION}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
-            />
-          )}
+          {/* {DeviceInfo.getBundleId() == appIds.bharatMove ? (
+            <View>
+              {!userData?.auth_token && (
+                <View>
+                  <ListItemHorizontal
+                    centerContainerStyle={{ flexDirection: 'row' }}
+                    leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+                    onPress={moveToNewScreen(navigationStrings.INVENTORY)}
+                    iconLeft={imagePath.icInventory}
+                    centerHeading={strings.INVENTORY}
+                    containerStyle={styles.containerStyle2}
+                    centerHeadingStyle={{
+                      fontSize: textScale(14),
+                      fontFamily: fontFamily.regular,
+                    }}
+                  // iconRight={imagePath.goRight}
+                  // rightIconStyle={{tintColor: colors.textGreyLight}}
+                  />
+                  <ListItemHorizontal
+                    centerContainerStyle={{ flexDirection: 'row' }}
+                    leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+                    onPress={moveToNewScreen(navigationStrings.UDHAARLEDGER)}
+                    iconLeft={imagePath.icUdhaarl}
+                    centerHeading={strings.UDHAARLEDGER}
+                    containerStyle={styles.containerStyle2}
+                    centerHeadingStyle={{
+                      fontSize: textScale(14),
+                      fontFamily: fontFamily.regular,
+                    }}
+                  // iconRight={imagePath.goRight}
+                  // rightIconStyle={{tintColor: colors.textGreyLight}}
+                  />
+                  <ListItemHorizontal
+                    centerContainerStyle={{ flexDirection: 'row' }}
+                    leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+                    onPress={moveToNewScreen(navigationStrings.SALES_EXPENSES)}
+                    iconLeft={imagePath.icSales}
+                    centerHeading={strings.SALES_EXPENSES}
+                    containerStyle={styles.containerStyle2}
+                    centerHeadingStyle={{
+                      fontSize: textScale(14),
+                      fontFamily: fontFamily.regular,
+                    }}
+                  // iconRight={imagePath.goRight}
+                  // rightIconStyle={{tintColor: colors.textGreyLight}}
+                  />
+                </View>
+              )}
+            </View>
+          ) : (
+            <View></View>
+          )} */}
+
+          {!!userData?.auth_token &&
+            !!appData &&
+            !!appData?.profile &&
+            appData?.profile?.preferences?.subscription_mode == 1 && (
+              <ListItemHorizontal
+                centerContainerStyle={{flexDirection: 'row'}}
+                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
+                iconLeft={imagePath.subscription}
+                centerHeading={strings.SUBSCRIPTION}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+                // iconRight={imagePath.goRight}
+                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              />
+            )}
 
           {!!userData?.auth_token && (
             <ListItemHorizontal
@@ -419,6 +516,88 @@ export default function Account3({navigation}) {
             // iconRight={imagePath.goRight}
             // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
+          {console.log('appMainDataappMainDataappMainData', appMainData)}
+          {!!userData?.auth_token &&
+            Platform.OS === 'android' &&
+            !!appMainData?.is_admin &&
+            (businessType == 'taxi' ? null : (
+              <ListItemHorizontal
+                centerContainerStyle={{flexDirection: 'row'}}
+                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                onPress={() => {
+                  BluetoothManager.checkBluetoothEnabled().then(
+                    (enabled) => {
+                      if (Boolean(enabled)) {
+                        navigation.navigate(navigationStrings.ATTACH_PRINTER);
+                      } else {
+                        BluetoothManager.enableBluetooth()
+                          .then(() => {
+                            navigation.navigate(
+                              navigationStrings.ATTACH_PRINTER,
+                            );
+                          })
+                          .catch((err) => {});
+                      }
+                    },
+                    (err) => {
+                      err;
+                    },
+                  );
+                }}
+                iconLeft={imagePath.printer}
+                centerHeading={strings.ATTACH_PRINTER}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+                // iconRight={imagePath.goRight}
+                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              />
+            ))}
+
+          {!!userData?.auth_token &&
+            Platform.OS === 'android' &&
+            SunmiV2Printer.hasPrinter &&
+            __DEV__ &&
+            (businessType == 'taxi' ? null : (
+              <ListItemHorizontal
+                centerContainerStyle={{flexDirection: 'row'}}
+                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                onPress={() => {
+                  BluetoothManager.checkBluetoothEnabled().then(
+                    (enabled) => {
+                      if (Boolean(enabled)) {
+                        navigation.navigate(
+                          navigationStrings.ATTACH_PRINTER + 'sunmi',
+                        );
+                      } else {
+                        BluetoothManager.enableBluetooth()
+                          .then(() => {
+                            navigation.navigate(
+                              navigationStrings.ATTACH_PRINTER + 'sunmi',
+                            );
+                          })
+                          .catch((err) => {});
+                      }
+                    },
+                    (err) => {
+                      err;
+                    },
+                  );
+                }}
+                iconLeft={imagePath.printer}
+                centerHeading={'Sunmi ' + SunmiV2Printer.printerModal}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+                // iconRight={imagePath.goRight}
+                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              />
+            ))}
+          {console.log('check platform >>> ', Platform)}
           {/* {!!userData?.auth_token && (
           <ListItemHorizontal
             centerContainerStyle={{flexDirection: 'row'}}
@@ -445,10 +624,26 @@ export default function Account3({navigation}) {
             // iconRight={imagePath.goRight}
             // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
+          {!!userData?.auth_token && (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={() => onStartSupportChat()}
+              iconLeft={imagePath.support}
+              centerHeading={strings.SUPPORT}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
 
           {!!userData?.auth_token &&
             !!appMainData?.is_admin &&
-            businessType === 4 && (
+            businessType != 4 && (
               <ListItemHorizontal
                 centerContainerStyle={{flexDirection: 'row'}}
                 leftIconStyle={{flex: 0.1, alignItems: 'center'}}

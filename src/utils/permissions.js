@@ -85,7 +85,7 @@ export const locationPermission = () =>
     }
   });
 
-export const chekLocationPermission = () =>
+export const chekLocationPermission = (showAlert = true) =>
   new Promise(async (resolve, reject) => {
     try {
       check(
@@ -117,23 +117,23 @@ export const chekLocationPermission = () =>
               break;
             case RESULTS.GRANTED:
               return resolve(result);
-              break;
             case RESULTS.BLOCKED:
-              Alert.alert('', strings.LOCATION_DISABLED_MSG, [
-                {
-                  text: strings.CANCEL,
-                  onPress: () => resolve('goback'),
-                },
-                {
-                  text: strings.CONFIRM,
-                  onPress: () => {
-                    const locationPath = 'LOCATION_SERVICES';
-                    openAppSetting(locationPath);
+              if (showAlert) {
+                Alert.alert('', strings.LOCATION_DISABLED_MSG, [
+                  {
+                    text: strings.CANCEL,
+                    onPress: () => resolve('goback'),
                   },
-                },
-              ]);
-
-              break;
+                  {
+                    text: strings.CONFIRM,
+                    onPress: () => {
+                      const locationPath = 'LOCATION_SERVICES';
+                      openAppSetting(locationPath);
+                    },
+                  },
+                ]);
+              }
+              return resolve(result);
           }
         })
         .catch((error) => {
@@ -143,3 +143,63 @@ export const chekLocationPermission = () =>
       return reject(error);
     }
   });
+
+export const checkContactPermission = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      check(
+        Platform.OS === 'ios'
+          ? PERMISSIONS.IOS.CONTACTS
+          : PERMISSIONS.ANDROID.READ_CONTACTS,
+      )
+        .then((result) => {
+          switch (result) {
+            case RESULTS.UNAVAILABLE:
+              showError(strings.LOCATION_UNAVAILABLE);
+              break;
+            case RESULTS.DENIED:
+              request(
+                Platform.OS === 'ios'
+                  ? PERMISSIONS.IOS.CONTACTS
+                  : PERMISSIONS.ANDROID.READ_CONTACTS,
+              )
+                .then((result) => {
+                  return reject(result);
+                })
+                .catch((error) => {
+                  return reject(error);
+                });
+
+              break;
+            case RESULTS.LIMITED:
+              showError('The permission is limited: some actions are possible');
+              break;
+            case RESULTS.GRANTED:
+              return resolve(result);
+            case RESULTS.BLOCKED:
+              Alert.alert('', 'Contact permission permanantly disabled!!', [
+                {
+                  text: strings.CANCEL,
+                  onPress: () => console.log('Cancle pressed'),
+                },
+                {
+                  text: strings.CONFIRM,
+                  onPress: () => {
+                    // const locationPath = 'LOCATION_SERVICES';
+                    // openAppSetting(locationPath);
+                    console.log('Confirm pressed');
+                  },
+                },
+              ]);
+
+              return reject(result);
+          }
+        })
+        .catch((error) => {
+          return reject(error);
+        });
+    } catch (error) {
+      return reject(error);
+    }
+  });
+};

@@ -29,8 +29,11 @@ import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import validations from '../../utils/validations';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import {useNavigation} from '@react-navigation/native';
+import {checkIsAdmin} from '../../utils/utils';
 
 export default function VerifyAccount({navigation, route}) {
+  const navigation_ = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -42,10 +45,14 @@ export default function VerifyAccount({navigation, route}) {
     timer2: 0,
     timer: 0,
     isLoading: false,
-    callingCode: appData?.profile?.country?.phonecode
+    callingCode: userData?.dial_code
+      ? userData?.dial_code
+      : appData?.profile?.country?.phonecode
       ? appData?.profile?.country?.phonecode
       : '91',
-    cca2: appData?.profile?.country?.code
+    cca2: userData?.cca2
+      ? userData?.cca2
+      : appData?.profile?.country?.code
       ? appData?.profile?.country?.code
       : 'IN',
     name: '',
@@ -96,17 +103,18 @@ export default function VerifyAccount({navigation, route}) {
       data['email'] = email;
       data['type'] = type;
     }
-    console.log(data, '>>>data');
     updateState({isLoading: true});
     actions
       .resendOTP(data, {
         code: appData?.profile?.code,
       })
       .then((res) => {
-        console.log(res, 'res>>>');
+        console.log(res, 'resresres');
         showSuccess(res.message);
         if (type == 'phone') {
-          updateState({editablePhone: false});
+          updateState({
+            editablePhone: false,
+          });
         } else {
           updateState({editableEmail: false});
         }
@@ -130,7 +138,6 @@ export default function VerifyAccount({navigation, route}) {
       data['email'] = email;
       data['type'] = type;
     }
-    console.log(data, '>>>data');
     updateState({isLoading: true});
     actions
       .resendOTP(data, {
@@ -220,7 +227,7 @@ export default function VerifyAccount({navigation, route}) {
               ) {
                 navigation.goBack();
               } else {
-                navigation.push(navigationStrings.DRAWER_ROUTES);
+                navigation.push(navigationStrings.TAB_ROUTES);
               }
             }
           } else if (res?.data?.client_preference?.verify_email) {
@@ -232,7 +239,7 @@ export default function VerifyAccount({navigation, route}) {
               ) {
                 navigation.goBack();
               } else {
-                navigation.push(navigationStrings.DRAWER_ROUTES);
+                navigation.push(navigationStrings.TAB_ROUTES);
               }
             }
           } else if (res?.data?.client_preference?.verify_phone) {
@@ -244,7 +251,7 @@ export default function VerifyAccount({navigation, route}) {
               ) {
                 navigation.goBack();
               } else {
-                navigation.push(navigationStrings.DRAWER_ROUTES);
+                navigation.push(navigationStrings.TAB_ROUTES);
               }
             }
           }
@@ -257,7 +264,6 @@ export default function VerifyAccount({navigation, route}) {
   const errorMethod = (error) => {
     updateState({isLoading: false});
     showError(error?.message || error?.error);
-    console.log(error);
   };
 
   //On change textinput
@@ -285,7 +291,6 @@ export default function VerifyAccount({navigation, route}) {
     }
   };
 
-  console.log("verify account+++")
   const otpView = (type, value) => {
     return (
       <SmoothPinCodeInput
@@ -360,7 +365,11 @@ export default function VerifyAccount({navigation, route}) {
           onPress={() => navigation.goBack(null)}
           style={{alignSelf: 'flex-start'}}>
           <Image
-            source={imagePath.back}
+            source={
+              appStyle?.homePageLayout === 3
+                ? imagePath.icBackb
+                : imagePath.back
+            }
             style={
               isDarkMode
                 ? {
@@ -378,7 +387,11 @@ export default function VerifyAccount({navigation, route}) {
         ) ? null : (
           <TouchableOpacity
             // onPress={() => navigation.push(navigationStrings.TAB_ROUTES)}>
-            onPress={() => navigation.push(navigationStrings.DRAWER_ROUTES)}>
+            onPress={() => {
+              // console.log(route.params.data.data);
+              checkIsAdmin(navigation_, navigation, route.params.data.data);
+              // navigation.push(navigationStrings.TAB_ROUTES)
+            }}>
             <Text style={styles.skipText}>{strings.SKIP}</Text>
           </TouchableOpacity>
         )}
@@ -416,7 +429,7 @@ export default function VerifyAccount({navigation, route}) {
                         ? [styles.header, {color: MyDarkTheme.colors.text}]
                         : styles.header
                     }>
-                    {'Verify Email Address'}
+                    {strings.VERIFY_EMAIL_ADDRESS}
                   </Text>
                   <Text
                     style={
@@ -424,7 +437,7 @@ export default function VerifyAccount({navigation, route}) {
                         ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
                         : styles.txtSmall
                     }>
-                    {'Enter the code we just sent you on your email address'}
+                    {strings.ENTER_CODE_SENT_TO_EMAIL}
                   </Text>
                 </View>
                 <View
@@ -483,7 +496,7 @@ export default function VerifyAccount({navigation, route}) {
                           fontSize: textScale(12),
                           color: themeColors.primary_color,
                         }}>
-                        {editableEmail ? 'Save & Send' : 'Edit'}
+                        {editableEmail ? strings.SAVE_SEND : strings.EDIT}
                       </Text>
                     </View>
                   </View>
@@ -516,11 +529,11 @@ export default function VerifyAccount({navigation, route}) {
                               ]
                             : styles.didintRecieveCode
                         }>
-                        {"If you didn't receive a code? "}
+                        {strings.DONT_RECEIVE_CODE}{' '}
                         <Text
                           onPress={() => resendOtpData('email')}
                           style={styles.resend}>
-                          {'RESEND'}
+                          {strings.RESEND}
                         </Text>
                       </Text>
                     )}
@@ -550,7 +563,7 @@ export default function VerifyAccount({navigation, route}) {
                             },
                           ]}>
                           {!userData?.verify_details?.is_email_verified
-                            ? 'VERIFY'
+                            ? strings.VERIFY_CAPITAL
                             : strings.VERIFIED}
                         </Text>
                       </TouchableOpacity>
@@ -577,7 +590,7 @@ export default function VerifyAccount({navigation, route}) {
                         ? [styles.header, {color: MyDarkTheme.colors.text}]
                         : styles.header
                     }>
-                    {'Verify Phone number'}
+                    {strings.VERIFY_PHONE_NUMBER}
                   </Text>
                   <Text
                     style={
@@ -585,7 +598,7 @@ export default function VerifyAccount({navigation, route}) {
                         ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
                         : styles.txtSmall
                     }>
-                    {'Enter the code we just sent you on your mobile'}
+                    {strings.ENTER_CODE_SENT_TO_MOBILE}
                   </Text>
                 </View>
                 <View
@@ -686,11 +699,11 @@ export default function VerifyAccount({navigation, route}) {
                               ]
                             : styles.didintRecieveCode
                         }>
-                        {"If you didn't receive a code? "}
+                        {strings.DONT_RECEIVE_CODE}{' '}
                         <Text
                           onPress={() => resendOtpData('phone')}
                           style={styles.resend}>
-                          {'RESEND'}
+                          {strings.RESEND}
                         </Text>
                       </Text>
                     )}
@@ -720,7 +733,7 @@ export default function VerifyAccount({navigation, route}) {
                             },
                           ]}>
                           {!userData?.verify_details?.is_phone_verified
-                            ? 'VERIFY'
+                            ? strings.VERIFY_CAPITAL
                             : strings.VERIFIED}
                         </Text>
                       </TouchableOpacity>

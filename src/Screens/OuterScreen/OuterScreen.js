@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
+  I18nManager,
   Image,
   Platform,
   ScrollView,
@@ -13,11 +14,12 @@ import GradientButton from '../../Components/GradientButton';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
-import strings from '../../constants/lang/index';
+import strings, {changeLaguage} from '../../constants/lang/index';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {hitSlopProp} from '../../styles/commonStyles';
+import RNRestart from 'react-native-restart';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -36,7 +38,9 @@ import Header from '../../Components/Header';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LanguageModal from '../../Components/LanguageModal';
+import {setItem} from '../../utils/utils';
 
 export default function OuterScreen({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -46,6 +50,9 @@ export default function OuterScreen({navigation}) {
   const [state, setState] = useState({
     getLanguage: '',
     isLoading: false,
+    isSelectLanguageModal: false,
+    isLangSelected: false,
+    allLangs: [],
   });
   const {
     appData,
@@ -59,7 +66,13 @@ export default function OuterScreen({navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors});
 
-  const {getLanguage, isLoading} = state;
+  const {
+    getLanguage,
+    isLoading,
+    isSelectLanguageModal,
+    isLangSelected,
+    allLangs,
+  } = state;
   const {apple_login, fb_login, twitter_login, google_login} =
     appData?.profile?.preferences;
 
@@ -69,15 +82,18 @@ export default function OuterScreen({navigation}) {
     () => {
       navigation.navigate(screenName, {data});
     };
-
   //Saving login user to backend
   const _saveSocailLogin = async (socialLoginData, type) => {
+    let userStaticName = DeviceInfo.getBundleId();
+    userStaticName = userStaticName.split('.');
+
     let fcmToken = await AsyncStorage.getItem('fcmToken');
     let data = {};
     data['name'] =
       socialLoginData?.name ||
       socialLoginData?.userName ||
-      socialLoginData?.fullName?.givenName;
+      socialLoginData?.fullName?.givenName ||
+      `${userStaticName[userStaticName.length - 1]} user`;
     data['auth_id'] =
       socialLoginData?.id ||
       socialLoginData?.userID ||
@@ -107,26 +123,32 @@ export default function OuterScreen({navigation}) {
       .then((res) => {
         console.log(res, 'res>>>SOCIAL');
         if (!!res.data) {
-          if (!!res.data?.client_preference?.verify_email &&
-            !!res.data?.client_preference?.verify_phone) {
-            if (!!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified) {
-              navigation.push(navigationStrings.DRAWER_ROUTES)
+          if (
+            !!res.data?.client_preference?.verify_email &&
+            !!res.data?.client_preference?.verify_phone
+          ) {
+            if (
+              !!res.data?.verify_details?.is_email_verified &&
+              !!res.data?.verify_details?.is_phone_verified
+            ) {
+              navigation.push(navigationStrings.TAB_ROUTES);
             } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
+              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
-          }
-          else if (!!res.data?.client_preference?.verify_email ||
-            !!res.data?.client_preference?.verify_phone) {
-            if (!!res.data?.verify_details?.is_email_verified ||
-              !!res.data?.verify_details?.is_phone_verified) {
-              navigation.push(navigationStrings.DRAWER_ROUTES)
+          } else if (
+            !!res.data?.client_preference?.verify_email ||
+            !!res.data?.client_preference?.verify_phone
+          ) {
+            if (
+              !!res.data?.verify_details?.is_email_verified ||
+              !!res.data?.verify_details?.is_phone_verified
+            ) {
+              navigation.push(navigationStrings.TAB_ROUTES);
             } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
+              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
-          }
-          else {
-            navigation.push(navigationStrings.DRAWER_ROUTES)
+          } else {
+            navigation.push(navigationStrings.TAB_ROUTES);
           }
         }
         updateState({isLoading: false});
@@ -165,8 +187,11 @@ export default function OuterScreen({navigation}) {
       .then((res) => {
         _saveSocailLogin(res, 'apple');
         // updateState({isLoading: false});
+
+        console.log(res, 'appleappleappleappleappleapple');
       })
       .catch((err) => {
+        console.log(err, 'error');
         updateState({isLoading: false});
       });
   };
@@ -177,6 +202,7 @@ export default function OuterScreen({navigation}) {
     googleLogin()
       .then((res) => {
         if (res?.user) {
+          console.log(res, 'googlegooogle');
           _saveSocailLogin(res.user, 'google');
         } else {
           updateState({isLoading: false});
@@ -223,14 +249,104 @@ export default function OuterScreen({navigation}) {
   const onGuestLogin = () => {
     actions.userLogout();
     getCartDetail();
-    navigation.push(navigationStrings.DRAWER_ROUTES);
+    navigation.push(navigationStrings.TAB_ROUTES);
   };
+
+  const _selectLang = () => {
+    updateState({isSelectLanguageModal: true});
+  };
+
+  const _onBackdropPress = () => {
+    updateState({isSelectLanguageModal: false});
+  };
+
+  useEffect(() => {
+    const all_languages = [...languages.all_languages];
+    
+    all_languages.forEach((itm, indx) => {
+      if (languages?.primary_language?.id === itm?.id) {
+        all_languages[indx].isActive = true;
+        updateState({
+          allLangs: [...all_languages],
+        });
+      } else {
+        all_languages[indx].isActive = false;
+        updateState({
+          allLangs: [...all_languages],
+        });
+      }
+    });
+  }, []);
+
+  const _onLangSelect = (item, indx) => {
+    const langs = [...allLangs];
+    langs.forEach((item, index) => {
+      if (index === indx) {
+        langs[index].isActive = true;
+        updateState({
+          allLangs: [...langs],
+        });
+      } else {
+        langs[index].isActive = false;
+        updateState({
+          allLangs: [...langs],
+        });
+      }
+    });
+  };
+
+  const selectedLangTitle = allLangs.find((itm) => itm.isActive === true);
+
+  //Update language
+  const updateLanguage = (item) => {
+    const data = languages.all_languages.filter((x) => x.id == item.id)[0];
+
+    if (data.sort_code !== languages.primary_language.sort_code) {
+      let languagesData = {
+        ...languages,
+        primary_language: data,
+      };
+
+      // updateState({isLoading: true});
+      setItem('setPrimaryLanguage', languagesData);
+      setTimeout(() => {
+        actions.updateLanguage(data);
+        onSubmitLang(data.sort_code, languagesData);
+      }, 1000);
+    }
+  };
+
+  //update language all over the app
+  const onSubmitLang = async (lang, languagesData) => {
+    if (lang == '') {
+      showAlertMessageError(strings.SELECT);
+      return;
+    } else {
+      if (lang === 'ar') {
+        I18nManager.forceRTL(true);
+        setItem('language', lang);
+        changeLaguage(lang);
+        RNRestart.Restart();
+      } else {
+        I18nManager.forceRTL(false);
+        setItem('language', lang);
+        changeLaguage(lang);
+        RNRestart.Restart();
+      }
+    }
+  };
+
+  const _updateLang = (selectedLangTitle) => {
+    updateState({isSelectLanguageModal: false});
+    updateLanguage(selectedLangTitle);
+  };
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       isLoadingB={isLoading}
       source={loaderOne}>
-      {shortCodeStatus && (
+      {shortCodeStatus ? (
         <Header
           leftIcon={
             appStyle?.homePageLayout === 2
@@ -245,7 +361,47 @@ export default function OuterScreen({navigation}) {
             // })
             navigation.goBack()
           }
-          // rightIcon={imagePath.cartShop}
+          isRightText
+          rightTxt={
+            !!selectedLangTitle
+              ? selectedLangTitle.sort_code
+              : languages?.primary_language?.sort_code
+          }
+          rightTxtContainerStyle={{
+            backgroundColor: themeColors.primary_color,
+            height: moderateScale(30),
+            width: moderateScale(30),
+            borderRadius: moderateScale(30),
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onPressRightTxt={_selectLang}
+          rightTxtStyle={{color: colors.white, textTransform: 'uppercase'}}
+          headerStyle={
+            isDarkMode
+              ? {backgroundColor: MyDarkTheme.colors.background}
+              : {backgroundColor: colors.white}
+          }
+        />
+      ) : (
+        <Header
+          noLeftIcon
+          isRightText
+          rightTxt={
+            !!selectedLangTitle
+              ? selectedLangTitle.sort_code
+              : languages?.primary_language?.sort_code
+          }
+          rightTxtContainerStyle={{
+            backgroundColor: themeColors.primary_color,
+            height: moderateScale(30),
+            width: moderateScale(30),
+            borderRadius: moderateScale(30),
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onPressRightTxt={_selectLang}
+          rightTxtStyle={{color: colors.white, textTransform: 'uppercase'}}
           headerStyle={
             isDarkMode
               ? {backgroundColor: MyDarkTheme.colors.background}
@@ -334,7 +490,7 @@ export default function OuterScreen({navigation}) {
                 </View>
               )}
               {!!fb_login && (
-                <View style={{marginVertical: moderateScaleVertical(15)}}>
+                <View style={{marginTop: moderateScaleVertical(15)}}>
                   <TransparentButtonWithTxtAndIcon
                     icon={imagePath.ic_fb2}
                     btnText={strings.CONTINUE_FACEBOOK}
@@ -354,26 +510,28 @@ export default function OuterScreen({navigation}) {
                 </View>
               )}
               {!!twitter_login && (
-                <TransparentButtonWithTxtAndIcon
-                  icon={imagePath.ic_twitter2}
-                  btnText={strings.CONTINUE_TWITTER}
-                  containerStyle={{
-                    backgroundColor: isDarkMode
-                      ? MyDarkTheme.colors.lightDark
-                      : colors.white,
-                    borderColor: colors.borderColorD,
-                    borderWidth: 1,
-                  }}
-                  textStyle={{
-                    color: isDarkMode ? colors.white : colors.textGreyB,
-                    marginHorizontal: moderateScale(10),
-                  }}
-                  nPress={() => openTwitterLogin()}
-                />
+                <View style={{marginTop: moderateScaleVertical(15)}}>
+                  <TransparentButtonWithTxtAndIcon
+                    icon={imagePath.ic_twitter2}
+                    btnText={strings.CONTINUE_TWITTER}
+                    containerStyle={{
+                      backgroundColor: isDarkMode
+                        ? MyDarkTheme.colors.lightDark
+                        : colors.white,
+                      borderColor: colors.borderColorD,
+                      borderWidth: 1,
+                    }}
+                    textStyle={{
+                      color: isDarkMode ? colors.white : colors.textGreyB,
+                      marginHorizontal: moderateScale(10),
+                    }}
+                    nPress={() => openTwitterLogin()}
+                  />
+                </View>
               )}
 
               {!!apple_login && Platform.OS == 'ios' && (
-                <View style={{marginVertical: moderateScaleVertical(15)}}>
+                <View style={{marginTop: moderateScaleVertical(15)}}>
                   <TransparentButtonWithTxtAndIcon
                     icon={isDarkMode ? imagePath.ic_apple : imagePath.ic_apple2}
                     btnText={strings.CONTINUE_APPLE}
@@ -425,6 +583,16 @@ export default function OuterScreen({navigation}) {
           </View>
         </View>
       </ScrollView>
+      {isSelectLanguageModal && (
+        <LanguageModal
+          isSelectLanguageModal={isSelectLanguageModal}
+          onBackdropPress={_onBackdropPress}
+          _onLangSelect={_onLangSelect}
+          isLangSelected={isLangSelected}
+          allLangs={allLangs}
+          _updateLang={_updateLang}
+        />
+      )}
     </WrapperContainer>
   );
 }

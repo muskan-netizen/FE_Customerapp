@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "914884434861",
+    "project_id": "enext-5e60e",
+    "storage_bucket": "enext-5e60e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:914884434861:android:40e0b2df57e541e9219f24",
+        "android_client_info": {
+          "package_name": "com.enext"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "914884434861-8rc9rpqq0qk9hu961ruksg56tmpk5855.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.enext",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "914884434861-r9lh96oaaunudssj0onren72r72o0cki.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.enext",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "914884434861-uo40cu4ctdg0fpe1ogov5eaqi8o2d6li.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.enext",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "914884434861-e0ttuhtjr3p5ejrqpe2j99fobd8j9edl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKVenXE2RoAzkdHKpNXDcerX_DNyZj0UE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "914884434861-e0ttuhtjr3p5ejrqpe2j99fobd8j9edl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

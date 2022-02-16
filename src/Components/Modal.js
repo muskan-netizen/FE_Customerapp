@@ -6,7 +6,7 @@ import colors from '../styles/colors';
 import {moderateScaleVertical} from '../styles/responsiveSize';
 import Header from './Header';
 
-export default function ModalView({
+const ModalView = ({
   isVisible = false,
   onClose,
   modalStyle,
@@ -23,7 +23,8 @@ export default function ModalView({
   modalBottomContent = () => {},
   mainViewStyle = {},
   topCustomComponent = () => {},
-}) {
+  rightIconStyle = {},
+}) => {
   return (
     <Modal
       isVisible={isVisible}
@@ -48,7 +49,9 @@ export default function ModalView({
             leftIcon={leftIcon}
             centerTitle={centerTitle}
             rightIcon={rightIcon}
+            rightIconStyle={rightIconStyle}
             onPressLeft={onPressLeft}
+            onPressRight={onClose}
           />
         )}
 
@@ -60,7 +63,7 @@ export default function ModalView({
       </View>
     </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   modalStyle: {
@@ -70,3 +73,4 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
 });
+export default React.memo(ModalView);

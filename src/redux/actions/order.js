@@ -11,12 +11,32 @@ import {
   UPLOAD_PRODUCT_IMAGE,
   SUBMIT_RETURN_ORDER,
   MY_PENDING_ORDERS,
+  GET_ORDER_DETAIL_FOR_BILLING,
   DISPATCHER_URL,
+  CANCEL_ORDER,
+  REPEAT_ORDER,
+  ACCEPTREJECTDRIVERUPDATE,
+  GET_VENDOR_REVENUE_DASHBOARD_DATA,
+  GET_VENDOR_PROFILE,
+  GET_VENDOR_TRANSACTIONS,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
 import types from '../types';
 const {dispatch} = store;
+
+//Get Order Detail For Billing
+export function getOrderDetailForBilling(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiGet(GET_ORDER_DETAIL_FOR_BILLING + data.order_id, {}, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
 
 //Get Cart Detail
 export function getOrderDetail(data = {}, headers = {}) {
@@ -71,6 +91,19 @@ export const _getListOfVendorOrders = (query = '', data, headers = {}) => {
   });
 };
 
+//Get Vendor Transactions
+export const getVendorTransactions = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_VENDOR_TRANSACTIONS, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
 //give order rating
 export const giveRating = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
@@ -90,6 +123,7 @@ export const updateOrderStatus = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(ACCEPT_REJECT_ORDER, data, headers)
       .then((res) => {
+        console.log('checking update status response>>>', res);
         resolve(res);
       })
       .catch((error) => {
@@ -126,10 +160,41 @@ export const getRevenueData = (data = {}, headers = {}) => {
   });
 };
 
+// Get revenue dashboard data
+export const getRevenueDashboardData = (data = {}, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_VENDOR_REVENUE_DASHBOARD_DATA, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+// Get Vendor Profile
+export const getVendorProfile = (data = {}, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_VENDOR_PROFILE, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
 //Get Cart Detail
 export function getOrderDetailPickUp(data = {}, headers = {}) {
+  return apiPost(DISPATCHER_URL, data, headers);
+}
+
+//Get RETUREN ORDER Detail
+export function getReturnOrderDetailData(url = '', data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
-    apiPost(DISPATCHER_URL, data, headers)
+    apiGet(GET_RETURN_ORDER_DETAIL + url, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -139,10 +204,10 @@ export function getOrderDetailPickUp(data = {}, headers = {}) {
   });
 }
 
-//Get RETUREN ORDER Detail
-export function getReturnOrderDetailData(url = '', data = {}, headers = {}) {
+// Repeat ORDER
+export function repeatOrder(url = '', data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
-    apiGet(GET_RETURN_ORDER_DETAIL + url, data, headers)
+    apiPost(REPEAT_ORDER, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -180,9 +245,21 @@ export function uploadReturnOrderImage(data = {}, headers = {}) {
 
 //Submit return order
 export function submitReturnOrder(data = {}, headers = {}) {
-  console.log('headers ++', headers);
   return new Promise((resolve, reject) => {
     apiPost(SUBMIT_RETURN_ORDER, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+//Submit return order
+export function cancelOrder(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(CANCEL_ORDER, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -195,6 +272,18 @@ export function submitReturnOrder(data = {}, headers = {}) {
 export function allPendingOrders(query, data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiGet(MY_PENDING_ORDERS + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function acceptRejectDriveUpdate(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(ACCEPTREJECTDRIVERUPDATE, data, headers)
       .then((res) => {
         resolve(res);
       })

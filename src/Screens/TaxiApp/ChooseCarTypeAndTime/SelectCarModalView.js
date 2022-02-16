@@ -31,6 +31,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import LinearGradient from 'react-native-linear-gradient';
 import {BlurView} from '@react-native-community/blur';
+import {currencyNumberFormatter} from '../../../utils/commonFunction';
 
 export default function SelectCarModalView({
   isLoading = false,
@@ -53,6 +54,10 @@ export default function SelectCarModalView({
     (state) => state?.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
+  console.log(
+    selectedCarOption?.variant[0]?.price,
+    'selectedCarOptionselectedCarOptionselectedCarOption',
+  );
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({fontFamily, themeColors});
@@ -163,14 +168,15 @@ export default function SelectCarModalView({
                             fontSize: textScale(12),
                           },
                         ]
-
                     // isDarkMode
                     //   ? [styles.priceStyle, {color: MyDarkTheme.colors.text}]
                     //   : styles.priceStyle
                   }>
-                  {`${currencies?.primary_currency?.symbol}${Number(
-                    item.tags_price,
-                  ).toFixed(2)}`}
+                  {`${
+                    currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
+                    Number(item.tags_price).toFixed(2),
+                  )}`}
                 </Text>
               </View>
 
@@ -205,7 +211,9 @@ export default function SelectCarModalView({
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={styles.noCarsAvailable}>{'No cars available'}</Text>
+            <Text style={styles.noCarsAvailable}>
+              {strings.NO_CARS_AVAILABLE}
+            </Text>
           </View>
         )}
       </>
@@ -214,35 +222,24 @@ export default function SelectCarModalView({
 
   return (
     <View
-      style={
-        isDarkMode
-          ? [
-              styles.bottomView,
-              {backgroundColor: MyDarkTheme.colors.background},
-            ]
-          : [
-              styles.bottomView,
-              {
-                borderTopLeftRadius: moderateScale(0),
-                borderTopRightRadius: moderateScale(0),
-                height: height / 2.2,
-              },
-            ]
-      }>
+      style={{
+        ...styles.bottomView,
+        backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.background
+          : colors.white,
+      }}>
       <View
-        style={
-          availableCarList.length
-            ? {padding: moderateScale(0)}
-            : {padding: moderateScale(20)}
-        }>
-        {/* <Text style={styles.addressMainTitle}>{addressLabel}</Text> */}
-
+        style={{
+          padding: availableCarList.length
+            ? moderateScale(0)
+            : moderateScale(20),
+        }}>
         <View
           style={{
             width: moderateScale(40),
             height: moderateScaleVertical(2),
             backgroundColor: colors.textGreyJ,
-            marginTop: moderateScaleVertical(10),
+            marginVertical: moderateScaleVertical(10),
             alignSelf: 'center',
           }}></View>
 
@@ -305,77 +302,78 @@ export default function SelectCarModalView({
           </ScrollView>
         ) : null}
 
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <FlatList
-            data={availableCarList}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            style={{
-              marginVertical: isLoading
-                ? moderateScaleVertical(10)
-                : availableVendors.length == 1
-                ? moderateScaleVertical(10)
-                : moderateScaleVertical(20),
-              height: isLoading
-                ? height / 3
-                : availableVendors.length == 1
-                ? height / 3
-                : height / 4,
-              marginTop: moderateScaleVertical(10),
-            }}
-            keyExtractor={(item, index) => String(index)}
-            renderItem={_renderItem}
-            ListEmptyComponent={_listEmptyComponent}
-          />
-        </ScrollView>
-
-        {availableCarList.length ? (
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginHorizontal: 20,
-            }}>
-            <GradientButton
-              // endcolor={{x: 0.0, y: 0.25}}
-              // startcolor={{x: 0.0, y: 0.0}}
-              colorsArray={[
-                themeColors.primary_color,
-                getColorCodeWithOpactiyNumber(
-                  themeColors.primary_color.substr(1),
-                  70,
-                ),
-                getColorCodeWithOpactiyNumber(
-                  themeColors.primary_color.substr(1),
-                  70,
-                ),
-                themeColors.primary_color,
-              ]}
-              textStyle={{textTransform: 'none', fontSize: textScale(14)}}
-              onPress={onPressPickUpNow}
-              btnText={strings.BOOK_NOW}
-              containerStyle={{flex: 1}}
-            />
-            {/* <TouchableOpacity
-              style={{
-                flex: 0.14,
-                borderRadius: moderateScaleVertical(15),
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderWidth: 1,
-                borderColor: themeColors.primary_color,
-              }}
-              onPress={onPressPickUplater}>
-              <Image
-                source={imagePath.calendarA}
+        {/* <ScrollView showsVerticalScrollIndicator={false}> */}
+        <FlatList
+          // scrollEnabled={false}
+          data={availableCarList}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item, index) => String(index)}
+          renderItem={_renderItem}
+          ListEmptyComponent={_listEmptyComponent}
+          ListFooterComponent={() => {
+            if (availableCarList.length)
+              return (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginHorizontal: 20,
+                    marginBottom: moderateScaleVertical(24),
+                  }}>
+                  <GradientButton
+                    // endcolor={{x: 0.0, y: 0.25}}
+                    // startcolor={{x: 0.0, y: 0.0}}
+                    colorsArray={[
+                      themeColors.primary_color,
+                      getColorCodeWithOpactiyNumber(
+                        themeColors.primary_color.substr(1),
+                        70,
+                      ),
+                      getColorCodeWithOpactiyNumber(
+                        themeColors.primary_color.substr(1),
+                        70,
+                      ),
+                      themeColors.primary_color,
+                    ]}
+                    textStyle={{textTransform: 'none', fontSize: textScale(14)}}
+                    onPress={
+                      selectedCarOption?.variant[0]?.price > 0
+                        ? onPressPickUpNow
+                        : () => {}
+                    }
+                    btnText={
+                      selectedCarOption?.variant[0]?.price > 0
+                        ? strings.CONFIRM
+                        : strings.NORIDEAVAILABLE
+                    }
+                    containerStyle={{flex: 1}}
+                  />
+                  {/* <TouchableOpacity
                 style={{
-                  tintColor: themeColors.primary_color,
+                  flex: 0.14,
+                  borderRadius: moderateScaleVertical(15),
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderWidth: 1,
+                  borderColor: themeColors.primary_color,
                 }}
-                resizeMode="contain"
-              />
-            </TouchableOpacity> */}
-          </View>
-        ) : null}
+                onPress={onPressPickUplater}>
+                <Image
+                  source={imagePath.calendarA}
+                  style={{
+                    tintColor: themeColors.primary_color,
+                  }}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity> */}
+                </View>
+              );
+            else return <></>;
+          }}
+        />
+
+        {/* </ScrollView> */}
       </View>
     </View>
   );

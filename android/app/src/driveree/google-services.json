@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "481074980509",
+    "project_id": "driveree-9b6a1",
+    "storage_bucket": "driveree-9b6a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:481074980509:android:7ff35262e09f59a6f05674",
+        "android_client_info": {
+          "package_name": "com.driveree"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "481074980509-2dk7oecf0g6da5as2qjg98lfpiu0iq2a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.driveree",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "481074980509-85rrleu7iv2gps316vcoi472k6nhn6ka.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.driveree",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "481074980509-ojvqedprhlb5u7413tejnniv3290vhbn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.driveree",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "481074980509-h9fse4sakpav4caem3s6vp28ccsr0qh2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE4l8rr6Hk6ExBR8HTOxkPea-LkfV31_U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "481074980509-h9fse4sakpav4caem3s6vp28ccsr0qh2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "481074980509-8a3vta3ng7si3e1jsaomi4itsb2pngdh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.driveree"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

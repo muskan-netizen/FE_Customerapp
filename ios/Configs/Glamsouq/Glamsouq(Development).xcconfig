@@ -1,10 +1,10 @@
-#include "Pods/Target Support Files/Pods-Glamsouq/Pods-Glamsouq.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Glamsouq/Pods-available_pods-Glamsouq.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1580548792
 PROJECT_BUNDLE_ID = com.codebrew.glamsouq
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 4
+PROJECT_BUILD_NUMBER = 9
 PROJECT_APP_NAME = Glamsouq
 PROJECT_GOOGLE_CLIENT_ID = 833873568733-0f9k6lp2qb719nqr7f9oc33rnqd70tkd.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.833873568733-0f9k6lp2qb719nqr7f9oc33rnqd70tkd

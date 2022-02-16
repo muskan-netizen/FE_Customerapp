@@ -1,10 +1,10 @@
-#include "Pods/Target Support Files/Pods-Yogo Food/Pods-Yogo Food.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Yogo Food/Pods-available_pods-Yogo Food.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1576503727
 PROJECT_BUNDLE_ID = com.yogofood
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 2
+PROJECT_BUILD_NUMBER = 4
 PROJECT_APP_NAME = Yogo Food
 PROJECT_GOOGLE_CLIENT_ID = 459000183441-j3194gjgtae832n809mppliojejqrkt5.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.459000183441-j3194gjgtae832n809mppliojejqrkt5

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Image, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
@@ -16,6 +16,7 @@ import commonStylesFun from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
 } from '../../styles/responsiveSize';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError, showSuccess} from '../../utils/helperFunctions';
@@ -34,7 +35,6 @@ export default function ContactUs({navigation}) {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state.appTheme);
   const userData = useSelector((state) => state?.auth?.userData);
-  console.log(userData, 'userData>>>userData');
   console.log(appData, 'appDataa');
   const [state, setState] = useState({
     callingCode: appData?.profile?.country?.phonecode
@@ -189,6 +189,55 @@ export default function ContactUs({navigation}) {
     );
   };
 
+    // Basic information tab
+    const basicInfoViewTemplateTwo = () => {
+      return (
+        <View
+          style={{
+            marginTop: moderateScaleVertical(40),
+            marginHorizontal: moderateScale(24),
+          }}>
+          
+          <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+            <Text  style={{ fontSize: textScale(13), color: colors.textGreyLight }}>Call Us: </Text>
+            <TouchableOpacity>
+              <Text style={{ fontSize: textScale(15), color: themeColors?.primary_color, fontFamily: fontFamily.medium }}>{'+1 6535489657'}</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center', justifyContent: 'center', marginTop: moderateScale(10) }}>
+            <Text  style={{ fontSize: textScale(13), color: themeColors?.primary_color }}>Email: </Text>
+            <TouchableOpacity>
+              <Text style={{ fontSize: textScale(15), color: themeColors?.primary_color, fontFamily: fontFamily.medium }}>
+                {'towfinder@example.com'}
+                </Text>
+            </TouchableOpacity>
+          </View>
+          
+          <View style={{height: moderateScaleVertical(20)}} />
+
+          <BorderTextInput
+            onChangeText={_onChangeText('message')}
+            placeholder={'Write something here'}
+            value={message}
+            containerStyle={{height: moderateScaleVertical(108), padding: 10, borderRadius: 5, borderWidth: 0, backgroundColor: colors.greyColor1}}
+            // textInputStyle={{height:moderateScaleVertical(108)}}
+            textAlignVertical={'top'}
+            multiline={true}
+            textInputStyle={{ fontFamily: fontFamily.regular }}
+          />
+          <GradientButton
+            textStyle={styles.textStyle}
+            onPress={saveUserInfo}
+            marginTop={moderateScaleVertical(50)}
+            marginBottom={moderateScaleVertical(50)}
+            btnText={strings.SUBMIT}
+          />
+        </View>
+      );
+    };
+  
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -221,6 +270,7 @@ export default function ContactUs({navigation}) {
           </View>
         </View>
         <View style={styles.bottomSection}>{basicInfoView()}</View>
+        {/* <View style={styles.bottomSection}>{basicInfoViewTemplateTwo()}</View> */}
       </KeyboardAwareScrollView>
     </WrapperContainer>
   );

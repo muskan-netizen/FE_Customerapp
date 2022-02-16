@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>162956506595-gi0f4uv242qef66116fkq9tsstnnlr5i.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.162956506595-gi0f4uv242qef66116fkq9tsstnnlr5i</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>162956506595-ktrcmutd82nl5frcti4j5rdigfrg06lh.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAwgILU7LY6-aJw51-dFXa-852wiaJYW4E</string>
+	<key>GCM_SENDER_ID</key>
+	<string>162956506595</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.stitchesonsite</string>
+	<key>PROJECT_ID</key>
+	<string>stitches-on-site-bf070</string>
+	<key>STORAGE_BUCKET</key>
+	<string>stitches-on-site-bf070.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:162956506595:ios:6858eb44e7f1402c2a5cd6</string>
+</dict>
+</plist>

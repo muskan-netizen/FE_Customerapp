@@ -1,9 +1,9 @@
-#include "Pods/Target Support Files/Pods-Empire/Pods-Empire.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Empire/Pods-available_pods-Empire.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1589765705
 PROJECT_BUNDLE_ID = com.customer.empire
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 1
+PROJECT_BUILD_NUMBER = 4
 PROJECT_APP_NAME =Empire
 PROJECT_GOOGLE_CLIENT_ID =359996128665-n4n7vu7p26p519ablnechqvbuvme6vo3.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.359996128665-n4n7vu7p26p519ablnechqvbuvme6vo3

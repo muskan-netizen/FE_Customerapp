@@ -1,4 +1,9 @@
-import {GET_DATA_BY_CATEGORY, GET_VENDOR_DETAIL} from '../../config/urls';
+import {
+  DRIVER_REGISTER,
+  GET_DATA_BY_CATEGORY,
+  GET_VENDOR_DETAIL,
+  VENDOR_REGISTER,
+} from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
 import types from '../types';
@@ -15,7 +20,7 @@ export function saveVendorListingAndCategoryInfo(data) {
 
 //Get vendor info and Category data
 export function getDataByCategoryId(query = '', data = {}, headers = {}) {
-  console.log(data, 'data');
+  console.log(data, 'data>>>>>>>>>');
   return new Promise((resolve, reject) => {
     apiGet(GET_DATA_BY_CATEGORY + query, data, headers)
       .then((res) => {
@@ -44,6 +49,30 @@ export function getVendorDetail(data = {}, headers = {}) {
 export function getSubcategoryDetail(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiPost(GET_VENDOR_DETAIL, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function vendorRegisteration(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(VENDOR_REGISTER, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function driverRegisteration(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(DRIVER_REGISTER, data, headers)
       .then((res) => {
         resolve(res);
       })

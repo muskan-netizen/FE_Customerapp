@@ -1,3 +1,4 @@
+import {useFocusEffect} from '@react-navigation/native';
 import {CardField, createToken, initStripe} from '@stripe/stripe-react-native';
 import React, {createRef, useEffect, useState} from 'react';
 import {
@@ -9,7 +10,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
+import CheckoutPaymentView from '../../Components/CheckoutPaymentView';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
@@ -18,6 +21,7 @@ import SubscriptionComponent2 from '../../Components/SubscriptionComponent2';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
+import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
@@ -29,13 +33,10 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import {MyDarkTheme} from '../../styles/theme';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptySubscriptions from './ListEmptySubscriptions';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
-import SubscriptionComponent from '../../Components/SubscriptionComponent';
 
 export default function Subscriptions2({navigation, route}) {
   //   console.log(route, 'route>>>');
@@ -57,6 +58,7 @@ export default function Subscriptions2({navigation, route}) {
     paymentOptions: [],
     selectedPaymentMethod: null,
     cardInfo: null,
+    planPrice: 0,
   });
 
   const {
@@ -71,6 +73,7 @@ export default function Subscriptions2({navigation, route}) {
     paymentOptions,
     selectedPaymentMethod,
     cardInfo,
+    planPrice,
   } = state;
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -92,11 +95,19 @@ export default function Subscriptions2({navigation, route}) {
 
   const explosion = createRef();
 
-  useEffect(() => {
-    updateState({isLoadingB: true});
-    getAllSubscriptions();
-    console.log(explosion, 'explosion');
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      updateState({isLoadingB: true});
+      getAllSubscriptions();
+      console.log(explosion, 'explosion');
+    }, []),
+  );
+
+  // useEffect(() => {
+  //   updateState({isLoadingB: true});
+  //   getAllSubscriptions();
+  //   console.log(explosion, 'explosion');
+  // }, []);
 
   useEffect(() => {
     if (
@@ -138,7 +149,7 @@ export default function Subscriptions2({navigation, route}) {
   //Subscribe for specific plan
   const selectSpecificSubscriptionPlan = (item) => {
     console.log(item, '>>>>>>>>>>>>>selectSpecificSubscriptionPlan');
-    updateState({isLoading: true});
+    updateState({isLoading: true, planPrice: item?.price});
     actions
       .selectSpecificSubscriptionPlan(
         `/${item?.slug}`,
@@ -205,19 +216,36 @@ export default function Subscriptions2({navigation, route}) {
 
   const renderProduct = ({item, index}) => {
     const {isSelectItem} = state;
+    if (item?.id == currentSubscription?.subscription_id) {
+      return null;
+    }
     return (
-      <SubscriptionComponent2
-        data={item}
-        clientCurrency={clientCurrency}
-        onPress={(item) => selectSpecificSubscriptionPlan(item)}
-        payNowUpcoming={() =>
-          selectSpecificSubscriptionPlan(currentSubscription?.plan)
-        }
-        // cancelSubscription={()=>cancelSubscription(item)}
-        // onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-        // onAddtoWishlist={() => _onAddtoWishlist(item)}
-        // addToCart={() => _addToCart(item)}
-      />
+      <View>
+        {!!allSubscriptions.length && index == 0 && (
+          <View
+            style={{
+              marginTop: currentSubscription ? moderateScale(40) : null,
+              marginBottom: moderateScale(20),
+            }}>
+            <Text style={styles.subscriptionTitle}>
+              {currentSubscription
+                ? strings.OTHERSUBSCRIPTION
+                : strings.ALLSUBSCRIPTION}
+            </Text>
+          </View>
+        )}
+        <SubscriptionComponent2
+          data={item}
+          clientCurrency={clientCurrency}
+          onPress={(item) => selectSpecificSubscriptionPlan(item)}
+          payNowUpcoming={() =>
+            selectSpecificSubscriptionPlan(currentSubscription?.plan)
+          }
+          subscriptionData={currentSubscription}
+          currentSubscription={item?.id == currentSubscription?.subscription_id}
+          // cancelSubscription={()=>cancelSubscription(item)}
+        />
+      </View>
     );
   };
 
@@ -271,6 +299,33 @@ export default function Subscriptions2({navigation, route}) {
     }
   };
 
+  const _checkoutPayment = (token) => {
+    let selectedMethod = selectedPaymentMethod.code.toLowerCase();
+    actions
+      .openPaymentWebUrl(
+        `/${selectedMethod}?amount=${planPrice}&token=${token}&subscription_id=${selectedPlan?.slug}&payment_option_id=${selectedPaymentMethod?.id}&action=subscription`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'responseFromServer');
+        getAllSubscriptions(true);
+        if (res && res?.status == 'Success' && res?.data) {
+          updateState({
+            isLoadingB: false,
+            isLoading: false,
+            isModalVisibleForPayment: false,
+            isRefreshing: false,
+          });
+        }
+      })
+      .catch(errorMethod);
+  };
+
   //render pyaments icons
   const _renderItemPayments = ({item, index}) => {
     return (
@@ -307,35 +362,98 @@ export default function Subscriptions2({navigation, route}) {
         </TouchableOpacity>
 
         {selectedPaymentMethod &&
-          selectedPaymentMethod?.id == item.id &&
-          selectedPaymentMethod?.off_site != 1 && (
-            <CardField
-              postalCodeEnabled={true}
-              placeholder={{
-                number: '4242 4242 4242 4242',
-              }}
-              cardStyle={{
-                backgroundColor: '#FFFFFF',
-                textColor: '#000000',
-              }}
-              style={{
-                width: '100%',
-                height: 50,
-                marginVertical: 10,
-              }}
-              onCardChange={(cardDetails) => {
-                // console.log('cardDetails', cardDetails);
-                _onChangeStripeData(cardDetails);
-              }}
-              onBlur={() => {
-                Keyboard.dismiss();
-              }}
-            />
+          selectedPaymentMethod?.id == item?.id &&
+          selectedPaymentMethod?.id == 4 && (
+            <View>
+              <CardField
+                postalCodeEnabled={false}
+                placeholder={{
+                  number: '4242 4242 4242 4242',
+                }}
+                cardStyle={{
+                  backgroundColor: '#FFFFFF',
+                  textColor: '#000000',
+                }}
+                style={{
+                  width: '100%',
+                  height: 50,
+                  marginVertical: 10,
+                }}
+                onCardChange={(cardDetails) => {
+                  // console.log('cardDetails', cardDetails);
+                  _onChangeStripeData(cardDetails);
+                }}
+                onBlur={() => {
+                  Keyboard.dismiss();
+                }}
+              />
+            </View>
           )}
+        {!!(
+          selectedPaymentMethod &&
+          selectedPaymentMethod?.id == item.id &&
+          selectedPaymentMethod?.id === 17
+        ) && (
+          <CheckoutPaymentView
+            cardTokenized={(e) => {
+              if (e.token) {
+                _checkoutPayment(e.token);
+              }
+            }}
+            cardTokenizationFailed={(e) => {
+              setTimeout(() => {
+                updateState({isLoading: false});
+                showError(strings.INVALID_CARD_DETAILS);
+              }, 1000);
+            }}
+            onPressSubmit={(res) => {
+              updateState({
+                isModalVisibleForPayment: false,
+              });
+              setTimeout(() => {
+                updateState({
+                  isLoading: true,
+                });
+              }, 500);
+            }}
+            isSubmitBtn={selectedPaymentMethod?.id == 17 ? true : false}
+            btnTitle={strings.PAY}
+            submitBtnStyle={{
+              width: width / 3,
+              marginTop: 0,
+              height: moderateScale(45),
+              borderRadius: 5,
+            }}
+            renderCustomLeft={renderCustomLeft}
+            btnsMainView={{
+              marginTop: moderateScale(10),
+            }}
+            mainContainer={{
+              paddingHorizontal: 0,
+            }}
+          />
+        )}
       </>
     );
   };
 
+  const renderCustomLeft = () => {
+    return (
+      <GradientButton
+        colorsArray={[themeColors.primary_color, themeColors.primary_color]}
+        textStyle={styles.textStyle}
+        onPress={() => updateState({isModalVisibleForPayment: false})}
+        borderRadius={moderateScale(5)}
+        containerStyle={{
+          marginHorizontal: moderateScale(10),
+          width: paymentOptions.length ? width / 3 : width - 60,
+        }}
+        btnText={strings.CANCEL}
+      />
+    );
+  };
+
+  console.log(isLoading, 'isLoadingisLoadingisLoading');
   //Modal main component
   const modalMainContent = () => {
     return (
@@ -419,20 +537,65 @@ export default function Subscriptions2({navigation, route}) {
 
   const payAmount = () => {
     updateState({isModalVisibleForPayment: false});
-    if (selectedPaymentMethod?.code == 'stripe') {
-      _offineLinePayment();
+    if (!!selectedPaymentMethod) {
+      if (selectedPaymentMethod?.id == 4) {
+        _offineLinePayment();
+      } else {
+        _webPayment();
+      }
     } else {
-      _webPayment();
+      alert(strings.PLEASE_SELECT_PAYMENT_METHOD);
     }
   };
 
-  const _webPayment = () => {};
+  const _webPayment = () => {
+    let selectedMethod = selectedPaymentMethod.title.toLowerCase();
+    let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/`;
+    let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/subscription`;
+    let queryData = `/${selectedMethod}?amount=${planPrice}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&subscription_id=${selectedPlan?.slug}&payment_option_id=${selectedPaymentMethod?.id}&action=subscription`;
+    updateState({isLoading: true});
+    console.log('query data', queryData);
+    actions
+      .openPaymentWebUrl(
+        queryData,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        updateState({isLoading: false});
+        if (res && res?.status == 'Success' && res?.data) {
+          console.log('generate payment url', res.data);
+          let sendingData = {
+            id: selectedPaymentMethod.id,
+            title: selectedPaymentMethod.title,
+            screenName: navigationStrings.SUBSCRIPTION,
+            paymentUrl: res?.data,
+            action: 'subscription',
+            selectedPlanSlug: selectedPlan?.slug,
+          };
+          navigation.navigate(navigationStrings.ALL_IN_ONE_PAYMENTS, {
+            data: sendingData,
+          });
+          // navigation.navigate(navigationStrings.WEBPAYMENTS, {
+          //   paymentUrl: res?.data,
+          //   paymentTitle: selectedPaymentMethod?.title,
+          //   redirectFrom: 'subscription',
+          //   selectedPaymentMethod: selectedPaymentMethod,
+          // selectedPlanSlug: selectedPlan?.slug
+          // });
+        }
+      })
+      .catch(errorMethod);
+  };
 
   //Offline payments
   const _offineLinePayment = async () => {
     if (cardInfo) {
       updateState({isModalVisibleForPayment: false});
-
       await createToken(cardInfo)
         .then((res) => {
           if (res && res?.token && res.token?.id) {
@@ -482,40 +645,47 @@ export default function Subscriptions2({navigation, route}) {
   const modalBottomContent = () => {
     return (
       <>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: moderateScale(10),
-          }}>
-          <GradientButton
-            colorsArray={[themeColors.primary_color, themeColors.primary_color]}
-            textStyle={styles.textStyle}
-            onPress={() => updateState({isModalVisibleForPayment: false})}
-            borderRadius={moderateScale(5)}
-            containerStyle={{
-              marginHorizontal: moderateScale(10),
-              width: paymentOptions.length ? width / 3 : width - 60,
-            }}
-            btnText={strings.CANCEL}
-          />
-          {paymentOptions.length ? (
+        {selectedPaymentMethod?.id != 17 ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginBottom: moderateScale(10),
+            }}>
             <GradientButton
               colorsArray={[
                 themeColors.primary_color,
                 themeColors.primary_color,
               ]}
               textStyle={styles.textStyle}
-              onPress={payAmount}
+              onPress={() => updateState({isModalVisibleForPayment: false})}
               borderRadius={moderateScale(5)}
               containerStyle={{
                 marginHorizontal: moderateScale(10),
-                width: width / 3,
+                width: paymentOptions.length ? width / 3 : width - 60,
               }}
-              btnText={strings.PAY}
+              btnText={strings.CANCEL}
             />
-          ) : null}
-        </View>
+            {paymentOptions.length ? (
+              <GradientButton
+                colorsArray={[
+                  themeColors.primary_color,
+                  themeColors.primary_color,
+                ]}
+                textStyle={styles.textStyle}
+                onPress={payAmount}
+                borderRadius={moderateScale(5)}
+                containerStyle={{
+                  marginHorizontal: moderateScale(10),
+                  width: width / 3,
+                }}
+                btnText={strings.PAY}
+              />
+            ) : null}
+          </View>
+        ) : (
+          <></>
+        )}
       </>
     );
   };
@@ -563,6 +733,17 @@ export default function Subscriptions2({navigation, route}) {
                 {strings.MYSUBSCRIPTION}
               </Text>
             </View>
+            <SubscriptionComponent2
+              data={currentSubscription?.plan}
+              subscriptionData={currentSubscription}
+              clientCurrency={clientCurrency}
+              allSubscriptions={allSubscriptions}
+              currentSubscription={true}
+              payNowUpcoming={() =>
+                selectSpecificSubscriptionPlan(currentSubscription?.plan)
+              }
+              cancelSubscription={() => cancelSubscription(currentSubscription)}
+            />
           </>
         )}
       </>
@@ -597,7 +778,7 @@ export default function Subscriptions2({navigation, route}) {
         <FlatList
           data={(!isLoadingB && allSubscriptions) || []}
           renderItem={renderProduct}
-          // ListHeaderComponent={listHeaderComponent()}
+          ListHeaderComponent={listHeaderComponent()}
           keyExtractor={(item, index) => String(index)}
           keyboardShouldPersistTaps="always"
           showsVerticalScrollIndicator={false}

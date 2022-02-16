@@ -2,32 +2,32 @@ import moment from 'moment';
 import React from 'react';
 import {
   Image,
+  ImageBackground,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  ImageBackground,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
+import {currencyNumberFormatter} from '../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../utils/helperFunctions';
 import GradientButton from './GradientButton';
-import {useDarkMode} from 'react-native-dark-mode';
-export default function SubscriptionComponent2({
+const SubscriptionComponent2 = ({
   data = {},
   onPress = () => {},
   cardWidth,
@@ -42,7 +42,7 @@ export default function SubscriptionComponent2({
   cancelSubscription = () => {},
   subscriptionData,
   allSubscriptions = [],
-}) {
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -91,7 +91,8 @@ export default function SubscriptionComponent2({
           ...styles.imageBackground,
           // backgroundColor: MyDarkTheme.colors.lightDark,
         }}
-        resizeMode="contain">
+        borderRadius={10}
+        resizeMode="cover">
         <View style={styles.titleBagView}>
           <Text
             style={
@@ -125,9 +126,13 @@ export default function SubscriptionComponent2({
                 {`${currencies?.primary_currency?.symbol} `}
               </Text>
               <Text style={styles.title}>
-                {currentSubscription
-                  ? `${Number(subscriptionData?.subscription_amount)}`
-                  : `${Number(data?.price)}`}
+                {currencyNumberFormatter(
+                  currentSubscription
+                    ? `${Number(subscriptionData?.subscription_amount).toFixed(
+                        2,
+                      )}`
+                    : `${Number(data?.price).toFixed(2)}`,
+                )}
               </Text>
             </View>
 
@@ -234,71 +239,69 @@ export default function SubscriptionComponent2({
                   </Text>
                 </View>
               )}
-
-              {/* {
-                // !currentSubscription ? null : (
-                <>
-                  {subscriptionData?.cancelled_at ||
-                  currentDateValue == subscriptionEndDateValue ||
-                  currentTimeValue > subscriptionEndTimeValue ? null : (
-                  <View
-                    style={{
-                      marginTop: moderateScale(10),
-                      flexDirection: 'row',
-                    }}>
-                    <GradientButton
-                      colorsArray={[
-                        themeColors.primary_color,
-                        themeColors.primary_color,
-                      ]}
-                      textStyle={styles.textStyle}
-                      onPress={() => onPress(data)}
-                      marginTop={moderateScaleVertical(10)}
-                      marginBottom={moderateScaleVertical(10)}
-                      borderRadius={moderateScale(5)}
-                      containerStyle={{
-                        marginHorizontal: moderateScale(10),
-                        width: width / 2,
-                      }}
-                      onPress={payNowUpcoming}
-                      btnText={`${strings.PAYNOW} (${data?.price})`}
-                    />
-                    <GradientButton
-                      colorsArray={[
-                        getColorCodeWithOpactiyNumber(
-                          themeColors?.primary_color.substr(1),
-                          20,
-                        ),
-                        getColorCodeWithOpactiyNumber(
-                          themeColors?.primary_color.substr(1),
-                          20,
-                        ),
-                      ]}
-                      textStyle={styles.textStyle2}
-                      onPress={() => onPress(data)}
-                      marginTop={moderateScaleVertical(10)}
-                      marginBottom={moderateScaleVertical(10)}
-                      borderRadius={moderateScale(5)}
-                      containerStyle={{
-                        marginHorizontal: moderateScale(10),
-                        width: width / 3,
-                        backgroundColor: 'white',
-                      }}
-                      onPress={cancelSubscription}
-                      btnText={strings.CANCEL}
-                    />
-                  </View>
-                 )} 
-                </>
-                // )
-              } */}
             </View>
           )}
         </View>
       </ImageBackground>
+
+      {subscriptionData?.subscription_id === data?.id && (
+        <View>
+          {subscriptionData?.cancelled_at ||
+          currentDateValue == subscriptionEndDateValue ||
+          currentTimeValue > subscriptionEndTimeValue ? null : (
+            <View
+              style={{
+                marginTop: moderateScale(10),
+                flexDirection: 'row',
+              }}>
+              <GradientButton
+                colorsArray={[
+                  themeColors.primary_color,
+                  themeColors.primary_color,
+                ]}
+                textStyle={styles.textStyle}
+                onPress={() => onPress(data)}
+                marginTop={moderateScaleVertical(10)}
+                marginBottom={moderateScaleVertical(10)}
+                borderRadius={moderateScale(5)}
+                containerStyle={{
+                  marginHorizontal: moderateScale(10),
+                  width: width / 2,
+                }}
+                onPress={payNowUpcoming}
+                btnText={`${strings.PAYNOW} (${data?.price})`}
+              />
+              <GradientButton
+                colorsArray={[
+                  getColorCodeWithOpactiyNumber(
+                    themeColors?.primary_color.substr(1),
+                    20,
+                  ),
+                  getColorCodeWithOpactiyNumber(
+                    themeColors?.primary_color.substr(1),
+                    20,
+                  ),
+                ]}
+                textStyle={styles.textStyle2}
+                onPress={() => onPress(data)}
+                marginTop={moderateScaleVertical(10)}
+                marginBottom={moderateScaleVertical(10)}
+                borderRadius={moderateScale(5)}
+                containerStyle={{
+                  marginHorizontal: moderateScale(10),
+                  width: width / 3,
+                  backgroundColor: 'white',
+                }}
+                onPress={cancelSubscription}
+                btnText={strings.CANCEL}
+              />
+            </View>
+          )}
+        </View>
+      )}
     </TouchableOpacity>
   );
-}
+};
 
 export function stylesFunc({fontFamily, themeColors}) {
   const styles = StyleSheet.create({
@@ -346,7 +349,7 @@ export function stylesFunc({fontFamily, themeColors}) {
     },
     imageBackground: {
       width: '100%',
-      height: moderateScaleVertical(166),
+      minHeight: moderateScaleVertical(166),
       borderRadius: moderateScale(15),
     },
     titleBagView: {
@@ -375,3 +378,4 @@ export function stylesFunc({fontFamily, themeColors}) {
   });
   return styles;
 }
+export default React.memo(SubscriptionComponent2);

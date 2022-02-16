@@ -7,13 +7,13 @@ import {
   width,
 } from '../../styles/responsiveSize';
 
-export default function VendorDetailLoader({
+const VendorDetailLoader = ({
   listSize = 1,
   cardWidth = width * 0.297,
   height = moderateScaleVertical(128),
   containerStyle = {},
   isRow = false,
-}) {
+}) => {
   const contentCard = () => {
     return (
       <View style={{...containerStyle, width: cardWidth, padding: 0}}>
@@ -52,4 +52,5 @@ export default function VendorDetailLoader({
     );
   }
   return contentCard();
-}
+};
+export default React.memo(VendorDetailLoader);

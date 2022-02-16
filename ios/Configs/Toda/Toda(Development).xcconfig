@@ -1,9 +1,9 @@
-#include "Pods/Target Support Files/Pods-Toda/Pods-Toda.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Toda/Pods-available_pods-Toda.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1584629919
 PROJECT_BUNDLE_ID = com.toda.orders
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 2
+PROJECT_BUILD_NUMBER = 10
 PROJECT_APP_NAME = Toda
 PROJECT_GOOGLE_CLIENT_ID =450567746106-71ijiv4btiflroemr9e9v2r46tgbhqaf.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.450567746106-71ijiv4btiflroemr9e9v2r46tgbhqaf

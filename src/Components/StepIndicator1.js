@@ -5,7 +5,7 @@ import imagePath from '../constants/imagePath';
 import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 
-export default function StepIndicators1({
+const StepIndicators1 = ({
   containerStyle = {},
   placeholder = '',
   labels = [],
@@ -13,7 +13,7 @@ export default function StepIndicators1({
   themeColor,
   stepCount = 4,
   labelSize = 13,
-}) {
+}) => {
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
@@ -109,4 +109,5 @@ export default function StepIndicators1({
       labels={labels}
     />
   );
-}
+};
+export default React.memo(StepIndicators1);

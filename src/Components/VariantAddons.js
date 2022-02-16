@@ -1,27 +1,30 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import {
+  Alert,
   Image,
-  Keyboard,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableNativeFeedback,
   TouchableOpacity,
   View,
-  ImageBackground,
-  TouchableNativeFeedback,
-  Alert,
+  FlatList
 } from 'react-native';
-import Modal from 'react-native-modal';
+import * as Animatable from 'react-native-animatable';
+import DeviceInfo from 'react-native-device-info';
+import { Pagination } from 'react-native-snap-carousel';
+import StarRating from 'react-native-star-rating';
 import { useSelector } from 'react-redux';
+import Banner from '../Components/Banner';
 import GradientButton from '../Components/GradientButton';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
+import actions from '../redux/actions';
 import colors from '../styles/colors';
 import commonStylesFun, { hitSlopProp } from '../styles/commonStyles';
 import fontFamily from '../styles/fontFamily';
-import Banner from '../Components/Banner';
-import DeviceInfo from 'react-native-device-info';
 import {
   height,
   moderateScale,
@@ -29,26 +32,23 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
+import { currencyNumberFormatter } from '../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
+  hapticEffects,
+  playHapticEffect,
   showError,
   showSuccess,
 } from '../utils/helperFunctions';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import navigationStrings from '../navigation/navigationStrings';
-import HTMLView from 'react-native-htmlview';
 import HtmlViewComp from './HtmlViewComp';
-import { MyDarkTheme } from '../styles/theme';
-import * as Animatable from 'react-native-animatable';
-import actions from '../redux/actions';
-import { Pagination } from 'react-native-snap-carousel';
-import CardLoader from './Loaders/CardLoader';
-import StarRating from 'react-native-star-rating';
 import BannerLoader from './Loaders/BannerLoader';
 import HeaderLoader from './Loaders/HeaderLoader';
+import Modal from 'react-native-modal';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
-export default function VariantAddons({
+const VariantAddons = ({
   productdetail = {},
   isVisible = false,
   onClose,
@@ -57,10 +57,8 @@ export default function VariantAddons({
   showShimmer,
   shimmerClose = () => { },
   updateCartItems,
-}) {
+}) => {
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
-
-
 
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -80,7 +78,11 @@ export default function VariantAddons({
     productQuantityForCart: 1,
     showErrorMessageTitle: false,
     btnLoader: false,
-    typeId: null
+    typeId: null,
+    selectedVariant: null,
+    selectedOption: null,
+    isProductImageLargeViewVisible: false,
+    isLoadingC: false
   });
 
   const {
@@ -94,7 +96,11 @@ export default function VariantAddons({
     productVariantId,
     productQuantityForCart,
     btnLoader,
-    typeId
+    typeId,
+    selectedVariant,
+    selectedOption,
+    isProductImageLargeViewVisible,
+    isLoadingC
   } = state;
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -104,8 +110,9 @@ export default function VariantAddons({
   const fontFamily = appStyle?.fontSizeData;
   const buttonTextColor = themeColors;
   const commonStyles = commonStylesFun({ fontFamily, buttonTextColor });
-
-
+  // let typeId = productdetail?.category?.category_detail?.type_id;
+  console.log(typeId, 'typeId>typeId');
+  // !!data?.variant[0]?.quantity || (!!typeId && typeId == 8) ||  !!data?.sell_when_out_of_stock?
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useFocusEffect(
@@ -129,20 +136,19 @@ export default function VariantAddons({
           getProductDetail();
         }
       }
-    }, [variantSet, productdetail, isVisible]),
+    }, [productdetail, isVisible]),
   );
 
   const getProductDetailBasedOnFilter = (variantSetData) => {
-    updateState({ isLoadingC: true });
+    console.log("api hit getProductDetailBasedOnFilter")
     let data = {};
     data['variants'] = variantSetData.map((i) => i.variant_id);
     data['options'] = variantSetData.map((i) => i.optionId);
-    actions
-      .getProductDetailByVariants(`/${productDetailData.sku}`, data, {
-        code: appData.profile.code,
-        currency: currencies.primary_currency.id,
-        language: languages.primary_language.id,
-      })
+    actions.getProductDetailByVariants(`/${productDetailData.sku}`, data, {
+      code: appData.profile.code,
+      currency: currencies.primary_currency.id,
+      language: languages.primary_language.id,
+    })
       .then((res) => {
         console.log(res.data, 'res.data by vendor id ');
         updateState({
@@ -155,6 +161,8 @@ export default function VariantAddons({
           productVariantId: res.data.id,
           showErrorMessageTitle: false,
           typeId: res?.data?.products?.category?.category_detail?.type_id,
+          isLoadingC: false,
+          selectedVariant: null,
         });
       })
       .catch(errorMethod);
@@ -181,15 +189,22 @@ export default function VariantAddons({
           showErrorMessageTitle: true,
           isLoadingB: false,
           isLoadingC: false,
+          selectedVariant: null,
         });
       } else {
-        updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
+        updateState({ 
+          isLoading: false, 
+          isLoadingB: false,
+           isLoadingC: false,
+           selectedVariant: null,
+         });
         showError(error?.message || error?.error);
       }
     }
   };
 
-  console.log("type id++", typeId)
+  console.log('type id++', typeId);
+
   const clearCart = (addonSet) => {
     // actions
     //   .clearCart(
@@ -220,12 +235,13 @@ export default function VariantAddons({
     //   .catch(errorMethod);
   };
 
-  console.log("typeId++",typeId)
+  console.log('typeId++', typeId);
   useEffect(() => {
     getProductDetail();
   }, [productdetail, isVisible]);
 
   const getProductDetail = () => {
+    console.log("api hit getProductDetail")
     actions
       .getProductDetailByProductId(
         `/${productdetail?.id}`,
@@ -249,15 +265,24 @@ export default function VariantAddons({
           productSku: res.data.products.sku,
           variantSet: res.data.products.variant_set,
           typeId: res?.data?.products?.category?.category_detail?.type_id,
+          isLoadingC: false,
+          selectedVariant: null,
+          productQuantityForCart: !!res.data.products?.minimum_order_count
+            ? Number(res.data.products?.minimum_order_count)
+            : 1,
         });
         shimmerClose(false);
       })
       .catch((error) => {
         console.log('error raised', error);
+        updateState({
+          selectedVariant: null,
+          isLoadingC: false,
+        })
       });
   };
 
-  let productImage = productdetail?.media[0];
+
 
   const selectSpecificOptionsForAddions = (options, i, inx) => {
     let newArray = cloneDeep(options);
@@ -325,8 +350,10 @@ export default function VariantAddons({
         {setoptions.map((i, inx) => {
           return (
             <TouchableOpacity
+              key={inx}
               activeOpacity={1}
               onPress={() => {
+                playHapticEffect(hapticEffects.rigid);
                 selectSpecificOptionsForAddions(setoptions, i, inx);
               }}
               style={{
@@ -337,14 +364,13 @@ export default function VariantAddons({
               }}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text
-                  style={[
-                    styles.variantValue,
-                    {
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    },
-                  ]}>
+                  style={{
+                    ...styles.variantValue,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
+                >
                   {i?.title
                     ? i.title.charAt(0).toUpperCase() + i.title.slice(1)
                     : ''}
@@ -361,16 +387,18 @@ export default function VariantAddons({
                         : colors.black,
                     },
                   ]}>
-                  {`${currencies?.primary_currency?.symbol}${(
-                    Number(i?.multiplier) * Number(i?.price)
-                  ).toFixed(2)}`}
+                  {`${currencies?.primary_currency?.symbol
+                    }${currencyNumberFormatter(
+                      (Number(i?.multiplier) * Number(i?.price)).toFixed(2),
+                    )}`}
                 </Text>
                 <View style={{ paddingLeft: moderateScale(5) }}>
                   <Image
+                    style={{ tintColor: themeColors.primary_color }}
                     source={
                       i?.value
-                        ? imagePath.icCheckBoxActive
-                        : imagePath.icCheckBoxInactive
+                        ? imagePath.checkBox2Active
+                        : imagePath.checkBox2InActive
                     }
                   />
                 </View>
@@ -403,16 +431,33 @@ export default function VariantAddons({
                     color: isDarkMode
                       ? MyDarkTheme.colors.text
                       : colors.textGrey,
-                  }}>{`${strings.CHOICE_OF} ${i?.title}`}</Text>
+                  }}>
+                  {i?.title}
+                </Text>
+
                 <Text
                   style={{
                     ...styles.chooseOption,
                     color: isDarkMode
                       ? MyDarkTheme.colors.text
                       : colors.grayOpacity51,
+                    fontSize: textScale(10),
                   }}>
-                  {strings.PLS_SELECT_ONE}
+                  {`${strings.MIN} ${i?.min_select} ${strings.AND_MAX} ${i?.max_select} ${strings.SELECTION_ALLOWED}`}
                 </Text>
+
+                {!!i.errorShow && (
+                  <Text
+                    style={{
+                      color: colors.redColor,
+                      fontSize: textScale(8),
+                      fontFamily: fontFamily.medium,
+                      textAlign: 'left',
+                    }}>
+                    {`${strings.MIN} ${i?.min_select} ${strings.REQUIRED}`}
+                  </Text>
+                )}
+
                 {i?.setoptions ? checkBoxButtonViewAddons(i) : null}
                 <View
                   style={{
@@ -449,7 +494,9 @@ export default function VariantAddons({
                     color: isDarkMode
                       ? MyDarkTheme.colors.text
                       : colors.textGrey,
-                  }}>{`Choice of ${i?.title}`}</Text>
+                  }}>
+                  {i?.title}
+                </Text>
                 <Text
                   style={{
                     ...styles.chooseOption,
@@ -475,12 +522,7 @@ export default function VariantAddons({
   };
 
   const selectSpecificOptions = (options, i, inx) => {
-    // console.log("im allVariants", allVariants)
-    // console.log("im options iiiiii", options)
-
-    // return;
     let newArray = cloneDeep(options);
-
     let modifyVariants = variantSet.map((vi, vnx) => {
       if (vi.variant_type_id == i.variant_id) {
         return {
@@ -489,7 +531,7 @@ export default function VariantAddons({
             if (j.id == i.id) {
               return {
                 ...j,
-                value: i?.value ? false : true,
+                value: true,
               };
             }
             return {
@@ -502,174 +544,425 @@ export default function VariantAddons({
         return vi;
       }
     });
-
-    updateState({ variantSet: modifyVariants });
-
-    // console.log(modifyVariants, 'im newArray>>>>>');
+    updateState({
+      variantSet: modifyVariants,
+      selectedOption: i
+    });
   };
 
-  const variantSetValue = ({ options, type }) => {
-    if (type == 1) {
-      return <>{radioButtonView(options)}</>;
+  const onSelect = () => {
+    if (variantSet.length) {
+      let variantSetData = variantSet
+        .map((i, inx) => {
+          let find = i.options.filter((x) => x.value);
+          if (find.length) {
+            return {
+              variant_id: find[0].variant_id,
+              optionId: find[0].id,
+            };
+          }
+        })
+        .filter((x) => x != undefined);
+      console.log(variantSetData, 'variantSetData callback');
+      if (variantSetData.length) {
+        updateState({ isLoadingC: true });
+        getProductDetailBasedOnFilter(variantSetData);
+      } else {
+        getProductDetail();
+      }
     }
-    return <>{circularView(options)}</>;
+  }
+
+  const variantSetValue = (item) => {
+    const { options, type, variant_type_id } = item
+    console.log("variantSetValuevariantSetValue", variant_type_id)
+    if (type == 1) {
+      return <View>
+        <TouchableOpacity
+          onPress={() => updateState({ selectedVariant: item })}
+          style={{
+            ...styles.dropDownStyle,
+            backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.blackOpacity05,
+          }}
+        >
+          <Text style={{
+            fontSize: moderateScale(12),
+            fontFamily: fontFamily.medium,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+          }}>{
+              (options.filter((val) => {
+                if (val?.value) {
+                  return val
+                }
+              }))[0]?.title || strings.SELECT + " " + item?.title
+            }
+          </Text>
+          <Image source={imagePath.dropDownSingle} />
+        </TouchableOpacity>
+        {selectedVariant?.variant_type_id == variant_type_id ? radioButtonView(options) : null}
+      </View>;
+    }
+    return <View>
+      <TouchableOpacity
+        onPress={() => updateState({ selectedVariant: item })}
+        style={{
+          ...styles.dropDownStyle,
+          backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.blackOpacity05,
+        }}
+      >
+        <Text style={{
+          fontSize: moderateScale(12),
+          fontFamily: fontFamily.medium,
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+        }}>{
+            (options.filter((val) => {
+              if (val?.value) {
+                return val
+              }
+            }))[0]?.title || strings.SELECT + " " + item?.title
+          }
+        </Text>
+        <Image source={imagePath.dropDownSingle} />
+      </TouchableOpacity>
+
+      {selectedVariant?.variant_type_id == variant_type_id ? circularView(options) : null}
+    </View>
   };
 
   const radioButtonView = (options) => {
     return (
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-        {options.map((i, inx) => {
-          return (
+      <Modal
+        key={'1'}
+        isVisible
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end'
+        }}
+        onBackdropPress={() => updateState({ selectedVariant: null })}
+      >
+        <View style={{
+          ...styles.modalView,
+          backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
+        }}>
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+
+          }}>
+            <Text style={{
+              fontSize: moderateScale(18),
+              fontFamily: fontFamily.medium,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+            }}>{strings.SELECT} {selectedVariant?.title}</Text>
             <TouchableOpacity
-              // disabled={options && options.length == 1 ? true : false}
-              onPress={() => selectSpecificOptions(options, i, inx)}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginRight: moderateScale(16),
-                marginBottom: moderateScaleVertical(10),
-              }}>
-              <Text
-                style={{
-                  ...styles.variantValue,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                {i?.title}
-              </Text>
-              <Image
-                source={
-                  i?.value ? imagePath.icActiveRadio : imagePath.icInActiveRadio
-                }
-              />
+              activeOpacity={0.8}
+              onPress={() => updateState({ selectedVariant: null })}
+            >
+              <Image source={imagePath.closeButton} />
             </TouchableOpacity>
-          );
-        })}
-      </View>
+          </View>
+          <View style={{
+            ...styles.horizontalLine,
+            borderBottomColor: isDarkMode
+              ? colors.whiteOpacity22
+              : colors.lightGreyBg,
+          }} />
+          <ScrollView showsVerticalScrollIndicator={false} >
+            {options.map((i, inx) => {
+              return (
+                <TouchableOpacity
+                  key={inx}
+                  // disabled={options && options.length == 1 ? true : false}
+                  onPress={() => selectSpecificOptions(options, i, inx)}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    // marginRight: moderateScale(16),
+                    marginBottom: moderateScaleVertical(10),
+
+                  }}>
+                  <Image
+                    source={i?.value ? imagePath.icActiveRadio : imagePath.icInActiveRadio}
+                    style={{
+                      tintColor: themeColors.primary_color,
+                      marginRight: moderateScale(16)
+                    }}
+                  />
+                  <Text
+                    style={{
+                      ...styles.variantValue,
+                      color: i?.value ? themeColors.primary_color : isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity43,
+                      fontSize: textScale(14),
+                      fontFamily: i.value ? fontFamily.bold : fontFamily.regular
+                    }}>
+                    {i?.title}
+                  </Text>
+
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+          <GradientButton
+            indicator={isLoadingC}
+            indicatorColor={colors.white}
+            colorsArray={[
+              themeColors.primary_color,
+              themeColors.primary_color,
+            ]}
+            textStyle={{
+              fontFamily: fontFamily.medium,
+              textTransform: 'capitalize',
+              color: colors.white,
+            }}
+            onPress={onSelect}
+            btnText={strings.SELECT}
+            btnStyle={{
+              borderRadius: moderateScale(4),
+              height: moderateScale(38),
+            }}
+          />
+        </View>
+      </Modal>
     );
   };
 
   const circularView = (options) => {
     return (
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-        {options.map((i, inx) => {
-          return (
-            <TouchableNativeFeedback
-              // disabled={options && options.length == 1 ? true : false}
-              onPress={() => selectSpecificOptions(options, i, inx)}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginRight: moderateScale(5),
-                marginBottom: moderateScaleVertical(10),
-              }}>
-              <View
-                style={[
-                  styles.variantSizeViewTwo,
-                  {
-                    backgroundColor: colors.white,
-                    borderWidth: i?.value ? 1 : 0,
+      <Modal
+        key={'2'}
+        isVisible
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end'
+        }}
+        onBackdropPress={() => updateState({ selectedVariant: null })}
+      >
+        <View style={{
+          ...styles.modalView,
+          backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
+        }}>
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+            <Text style={{
+              fontSize: moderateScale(18),
+              fontFamily: fontFamily.medium,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+            }}>{strings.SELECT} {selectedVariant?.title}</Text>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => updateState({ selectedVariant: null })}
+            >
+              <Image source={imagePath.closeButton} />
+            </TouchableOpacity>
+          </View>
+          <View style={{
+            ...styles.horizontalLine,
+            borderBottomColor: isDarkMode
+              ? colors.whiteOpacity22
+              : colors.lightGreyBg,
+          }} />
+          <ScrollView showsVerticalScrollIndicator={false} >
+            {options.map((i, inx) => {
+              return (
+                <TouchableOpacity
+                  key={inx}
+                  // disabled={options && options.length == 1 ? true : false}
+                  onPress={() => selectSpecificOptions(options, i, inx)}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginRight: moderateScale(5),
+                    marginBottom: moderateScaleVertical(10),
+                  }}
+                  activeOpacity={0.8}
+                >
 
-                    borderColor:
-                      i?.value &&
-                        (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
-                        ? colors.textGrey
-                        : i.hexacode,
-                  },
-                ]}>
-                <View
-                  style={[
-                    styles.variantSizeViewOne,
-                    {
-                      backgroundColor: i.hexacode,
-                      borderWidth:
-                        i.hexacode == '#FFFFFF' || i.hexacode == '#FFF'
-                          ? StyleSheet.hairlineWidth
-                          : 0,
-                    },
-                  ]}></View>
-              </View>
-            </TouchableNativeFeedback>
-          );
-        })}
-      </View>
+                  <View
+                    style={[
+                      styles.variantSizeViewTwo,
+                      {
+                        backgroundColor: colors.white,
+                        borderWidth: i?.value ? 1 : 0,
+
+                        borderColor:
+                          i?.value &&
+                            (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
+                            ? colors.textGrey
+                            : i.hexacode,
+                      },
+                    ]}>
+                    <View
+                      style={[
+                        styles.variantSizeViewOne,
+                        {
+                          backgroundColor: i.hexacode,
+                          borderWidth:
+                            i.hexacode == '#FFFFFF' || i.hexacode == '#FFF'
+                              ? StyleSheet.hairlineWidth
+                              : 0,
+                        },
+                      ]}></View>
+                  </View>
+                  <Text
+                    style={{
+                      ...styles.variantValue,
+                      color: i?.value ? themeColors.primary_color : isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity43,
+                      fontSize: textScale(14),
+                      fontFamily: i.value ? fontFamily.bold : fontFamily.regular,
+                      marginLeft: moderateScale(8)
+                    }}>
+                    {i?.title}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+          <GradientButton
+            indicator={isLoadingC}
+            indicatorColor={colors.white}
+            colorsArray={[
+              themeColors.primary_color,
+              themeColors.primary_color,
+            ]}
+            textStyle={{
+              fontFamily: fontFamily.medium,
+              textTransform: 'capitalize',
+              color: colors.white,
+            }}
+            onPress={onSelect}
+            btnText={strings.SELECT}
+            btnStyle={{
+              borderRadius: moderateScale(4),
+              height: moderateScale(38),
+            }}
+          />
+        </View>
+      </Modal>
     );
   };
 
   const { bannerRef } = useRef();
 
+  console.log("variantSetvariantSet", variantSet)
+
+  const renderVariantSet = ({ item, index }) => {
+    return (
+      <View
+        key={String(index)}
+        style={{
+          flex: 1,
+          marginRight: moderateScale(8)
+        }}>
+        <Text
+          style={{
+            ...styles.variantLable,
+            marginBottom: moderateScale(5),
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          }}>{`${item?.title}`}</Text>
+        {item?.options ? variantSetValue(item) : null}
+      </View>
+    )
+  }
+
   const showAllVariants = () => {
     let variantSetData = cloneDeep(variantSet);
     return (
-      <View style={{ marginBottom: 10, paddingHorizontal: moderateScale(0) }}>
-        {variantSetData.map((i, inx) => {
-          return (
-            <View
-              key={inx}
-              style={{
-                marginVertical: moderateScaleVertical(5),
-              }}>
-              <Text
-                style={{
-                  ...styles.variantLable,
-                  marginBottom: moderateScale(5),
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>{`${i?.title}`}</Text>
-              {i?.options ? variantSetValue(i) : null}
-            </View>
-          );
-        })}
+      <View style={{ marginVertical: moderateScaleVertical(12), paddingHorizontal: moderateScale(0) }}>
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
+          numColumns={2}
+          data={!!variantSetData ? variantSetData : []}
+          renderItem={renderVariantSet}
+          keyExtractor={item => item?.variant_type_id.toString()}
+        />
       </View>
     );
   };
 
+  const checkIfMaxReached = (minVal, Arr) => {
+    const SelectedItems = Arr.filter((el) => el.value);
+    if (SelectedItems.length >= minVal) {
+      return true;
+    }
+    return false;
+  };
+
+
+
+  var totalProductQty = 0;
+  if (!!productdetail?.check_if_in_cart_app) {
+    productdetail?.check_if_in_cart_app.map((val) => {
+      totalProductQty = totalProductQty + val.quantity;
+    });
+  }
+
   const addToCart = (addonSet) => {
+    playHapticEffect(hapticEffects.rigid);
     console.log('add on set', addonSet);
     const addon_ids = [];
     const addon_options = [];
+
     addonSet.map((i, inx) => {
-      i.setoptions.map((j, jnx) => {
-        console.log(j, 'J');
-        if (j?.value == true) {
-          addon_ids.push(j?.addon_id);
-          addon_options.push(j?.id);
-        }
-      });
+      const temp = checkIfMaxReached(i.min_select, i.setoptions);
+      console.log('temp value', temp);
+      if (temp) {
+        i.setoptions.map((j, jnx) => {
+          if (j?.value == true) {
+            addon_ids.push(j?.addon_id);
+            addon_options.push(j?.id);
+          }
+        });
+        let CloneArr = addonSet;
+        CloneArr[inx] = { ...CloneArr[inx], errorShow: false };
+        updateState({ addonSet: CloneArr });
+      } else {
+        let CloneArr = addonSet;
+        CloneArr[inx] = { ...CloneArr[inx], errorShow: true };
+        updateState({ addonSet: CloneArr });
+      }
     });
-    console.log(addonSet, 'addonSet');
+
+    const checkIsError = addonSet.findIndex((el) => el.errorShow);
     let data = {};
-    data['sku'] = productSku;
-    data['quantity'] = productQuantityForCart;
-    data['product_variant_id'] = productVariantId;
-    data['type'] = dine_In_Type;
-    console.log(addon_ids, 'addon_ids');
-    console.log(addon_options, 'addon_options');
-    if (addonSet && addonSet.length) {
-      // console.log(addonSetData, 'addonSetData');
-      data['addon_ids'] = addon_ids;
-      data['addon_options'] = addon_options;
+    if (checkIsError == -1) {
+      data['sku'] = productSku;
+      data['quantity'] = productQuantityForCart;
+      data['product_variant_id'] = productVariantId;
+      data['type'] = dine_In_Type;
+      if (addonSet && addonSet.length) {
+        // console.log(addonSetData, 'addonSetData');
+        data['addon_ids'] = addon_ids;
+        data['addon_options'] = addon_options;
+      }
+      console.log(data, 'data for cart');
+      updateState({ btnLoader: true });
+      actions
+        .addProductsToCart(data, {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        })
+        .then(async (res) => {
+          actions.cartItemQty(res);
+          showSuccess(strings.PRODUCT_ADDED_SUCCESS);
+          updateCartItems(
+            productdetail,
+            res.data.product_total_qty_in_cart, ////localy update cart quanity
+            res.data.cart_product_id,
+            res.data.id,
+          );
+          updateState({ isLoadingC: false, btnLoader: false });
+          // onClose();
+        })
+        .catch((error) => errorMethodSecond(error, addonSet));
+      return;
     }
-    console.log(data, 'data for cart');
-    updateState({ btnLoader: true });
-    actions
-      .addProductsToCart(data, {
-        code: appData.profile.code,
-        currency: currencies.primary_currency.id,
-        language: languages.primary_language.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      })
-      .then((res) => {
-        actions.cartItemQty(res);
-        showSuccess(strings.PRODUCT_ADDED_SUCCESS);
-        updateState({ isLoadingC: false, btnLoader: false });
-        updateCartItems(
-          productdetail,
-          productQuantityForCart,
-          res.data.cart_product_id,
-          res.data.id,
-        );
-        onClose();
-      })
-      .catch((error) => errorMethodSecond(error, addonSet));
   };
 
   const errorMethodSecond = (error, addonSet) => {
@@ -846,12 +1139,21 @@ export default function VariantAddons({
   };
 
   const productIncrDecreamentForCart = (type) => {
+    playHapticEffect(hapticEffects.rigid);
+    let quantityToIncreaseDecrease = !!productDetailData?.batch_count
+      ? Number(productDetailData?.batch_count)
+      : 1;
+
     if (type == 2) {
-      if (productQuantityForCart <= 1) {
+      let limitOfMinimumQuantity = !!productDetailData?.minimum_order_count
+        ? Number(productDetailData?.minimum_order_count)
+        : 1;
+      if (productQuantityForCart <= limitOfMinimumQuantity) {
         onClose();
       } else {
         updateState({
-          productQuantityForCart: productQuantityForCart - 1,
+          productQuantityForCart:
+            productQuantityForCart - quantityToIncreaseDecrease,
         });
       }
     } else if (type == 1) {
@@ -859,24 +1161,103 @@ export default function VariantAddons({
         showError(strings.MAXIMUM_LIMIT_REACHED);
       } else {
         updateState({
-          productQuantityForCart: productQuantityForCart + 1,
+          productQuantityForCart:
+            productQuantityForCart + quantityToIncreaseDecrease,
         });
       }
     }
   };
 
+  const getAdditionalPriceOfAddons = () => {
+    // console.log(
+    //   'productPriceDataproductPriceDataproductPriceData>>>',
+    //   productQuantityForCart,
+    // );
+    let addOnsAdditionalPrice = 0;
+    if (addonSet && addonSet[0]) {
+      addonSet[0].setoptions.forEach((el) => {
+        if (el.value) {
+          addOnsAdditionalPrice = addOnsAdditionalPrice + Number(el.price);
+        }
+      });
+    }
+    addOnsAdditionalPrice = currencyNumberFormatter(
+      (
+        Number(productPriceData?.multiplier) *
+        Number(productPriceData?.price) *
+        productQuantityForCart +
+        addOnsAdditionalPrice
+      ).toFixed(2),
+    );
+    return addOnsAdditionalPrice;
+  };
+
+
+  const allImagesArrayForZoom = [];
+  productDetailData?.product_media
+    ? productDetailData?.product_media?.map((item, index) => {
+      return (allImagesArrayForZoom[index] = {
+        url: getImageUrl(
+          item?.image.path.image_fit,
+          item?.image.path.image_path,
+          '1000/1000',
+        ),
+      });
+    })
+    : getImageUrl(
+      productDetailData?.product_media[0]?.image?.path?.image_fit,
+      productDetailData?.product_media[0]?.image?.path?.image_path,
+      '1000/1000',
+    );
+
+  const renderImageZoomingView = () => {
+    return (
+      <View
+        style={{
+          height: moderateScaleVertical(height),
+          width: moderateScale(width),
+        }}>
+        <ImageViewer
+          renderHeader={() => <View style={{ backgroundColor: 'red' }}></View>}
+          renderIndicator={(currentIndex, allSize) => (
+            <View
+              style={{
+                position: 'absolute',
+                top: 100,
+                width: width / 2,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <TouchableOpacity
+                onPress={() =>
+                  updateState({
+                    isProductImageLargeViewVisible: false,
+                  })
+                }>
+                <Image
+                  style={{
+                    tintColor: colors.white,
+                    marginHorizontal: moderateScale(20),
+                  }}
+                  source={imagePath.backArrow}
+                />
+              </TouchableOpacity>
+              <Text style={{ color: colors.white }}>
+                {currentIndex + '/' + allSize}
+              </Text>
+            </View>
+          )}
+          imageUrls={allImagesArrayForZoom}
+        />
+      </View>
+    );
+  };
+
   return (
-    <Modal
-      transparent={false}
-      isVisible={isVisible}
-      animationType={'none'}
-      style={styles.modalContainer}
-      onLayout={(event) => {
-        updateState({ viewHeight: event.nativeEvent.layout.height });
-      }}>
-      <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+    <View style={{ flex: 1 }}>
+      {/* <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Image source={imagePath.crossC} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       {showShimmer ? (
         shimmerShow()
       ) : (
@@ -903,7 +1284,10 @@ export default function VariantAddons({
                 }
                 showLightbox={true}
                 cardViewStyle={styles.cardViewStyle}
-                resizeMode="contain"
+                onPressImage={() => updateState({
+                  isProductImageLargeViewVisible: true,
+                })}
+              // resizeMode="contain"
               />
               <View style={{ paddingTop: 5 }}>
                 <Pagination
@@ -969,19 +1353,24 @@ export default function VariantAddons({
                 )}
               </View>
               <View style={{ justifyContent: 'center' }}>
-                {!!typeId && typeId !== 8 && (<Text
-                  style={{
-                    color:
-                      productTotalQuantity && productTotalQuantity != 0
-                        ? colors.green
-                        : colors.orangeB,
-                    fontSize: textScale(10),
-                    fontFamily: fontFamily.medium,
-                  }}>
-                  {productTotalQuantity && productTotalQuantity != 0
-                    ? ''
-                    : strings.OUT_OF_STOCK}
-                </Text>)}
+                {!!typeId && typeId !== 8 && (
+                  <Text
+                    style={{
+                      color:
+                        (productTotalQuantity && productTotalQuantity != 0) ||
+                          !!productDetailData?.sell_when_out_of_stock
+                          ? colors.green
+                          : colors.orangeB,
+                      fontSize: textScale(10),
+                      fontFamily: fontFamily.medium,
+                    }}>
+                    {(productTotalQuantity && productTotalQuantity != 0) ||
+                      !!productDetailData?.sell_when_out_of_stock ||
+                      productDetailData?.has_inventory == 0
+                      ? ''
+                      : strings.OUT_OF_STOCK}
+                  </Text>
+                )}
               </View>
 
               {productdetail?.translation[0]?.body_html != null && (
@@ -996,7 +1385,7 @@ export default function VariantAddons({
               <View
                 style={{
                   ...commonStyles.headerTopLine,
-                  marginTop: moderateScaleVertical(8)
+                  marginTop: moderateScaleVertical(8),
                   // marginVertical: moderateScaleVertical(10),
                 }}
               />
@@ -1019,102 +1408,122 @@ export default function VariantAddons({
             ) : null}
           </ScrollView>
 
-          {((!showErrorMessageTitle && productTotalQuantity != 0) || ((!!typeId) && (typeId == 8))) && (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                paddingHorizontal: moderateScale(16),
-                paddingBottom: moderateScaleVertical(16),
-                backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.background
-                  : '#fff',
-              }}>
-              <View style={{ flex: 0.25 }}>
-                <View
-                  style={{
-                    ...commonStyles.buttonRect,
-                    ...styles.incDecBtnStyle,
-                    backgroundColor: getColorCodeWithOpactiyNumber(
-                      themeColors.primary_color.substr(1),
-                      15,
-                    ),
-                    borderColor: themeColors?.primary_color,
-                    height: moderateScale(38),
-                  }}
-                // onPress={onPress}
-                >
-                  <TouchableOpacity
-                    onPress={() => productIncrDecreamentForCart(2)}
-                    hitSlop={hitSlopProp}>
-                    <Text
+          {!!(
+            productDetailData?.has_inventory == 0 ||
+            (!showErrorMessageTitle && productTotalQuantity > 0) ||
+            (!!typeId && typeId == 8) ||
+            !!productDetailData?.sell_when_out_of_stock
+          ) ?
+            <View>
+              {true ? <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  paddingHorizontal: moderateScale(16),
+                  paddingBottom: moderateScaleVertical(16),
+                  backgroundColor: isDarkMode
+                    ? MyDarkTheme.colors.background
+                    : '#fff',
+                }}>
+                {!showErrorMessageTitle && (
+                  <View style={{ flex: 0.25 }}>
+                    <View
                       style={{
-                        ...commonStyles.mediumFont14,
-                        color: themeColors?.primary_color,
-                        fontFamily: fontFamily.bold,
-                      }}>
-                      -
-                    </Text>
-                  </TouchableOpacity>
-                  <Text
-                    style={{
-                      ...commonStyles.mediumFont14,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}>
-                    {productQuantityForCart}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => productIncrDecreamentForCart(1)}
-                    hitSlop={hitSlopProp}>
-                    <Text
-                      style={{
-                        ...commonStyles.mediumFont14,
-                        color: themeColors?.primary_color,
-                        fontFamily: fontFamily.bold,
-                      }}>
-                      +
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
+                        ...commonStyles.buttonRect,
+                        ...styles.incDecBtnStyle,
+                        backgroundColor: getColorCodeWithOpactiyNumber(
+                          themeColors.primary_color.substr(1),
+                          15,
+                        ),
+                        borderColor: themeColors?.primary_color,
+                        height: moderateScale(38),
+                      }}
+                    // onPress={onPress}
+                    >
+                      <TouchableOpacity
+                        onPress={() => productIncrDecreamentForCart(2)}
+                        hitSlop={hitSlopProp}>
+                        <Text
+                          style={{
+                            ...commonStyles.mediumFont14,
+                            color: themeColors?.primary_color,
+                            fontFamily: fontFamily.bold,
+                          }}>
+                          -
+                        </Text>
+                      </TouchableOpacity>
+                      <Text
+                        style={{
+                          ...commonStyles.mediumFont14,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                        }}>
+                        {productQuantityForCart}
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => productIncrDecreamentForCart(1)}
+                        hitSlop={hitSlopProp}>
+                        <Text
+                          style={{
+                            ...commonStyles.mediumFont14,
+                            color: themeColors?.primary_color,
+                            fontFamily: fontFamily.bold,
+                          }}>
+                          +
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                )}
 
-              <View style={{ marginHorizontal: 8 }} />
-              <View
-                pointerEvents={btnLoader ? 'none' : 'auto'}
-                style={{ flex: 0.75 }}>
-                <GradientButton
-                  indicator={btnLoader}
-                  indicatorColor={colors.white}
-                  colorsArray={[
-                    themeColors.primary_color,
-                    themeColors.primary_color,
-                  ]}
-                  textStyle={{
-                    fontFamily: fontFamily.medium,
-                    textTransform: 'capitalize',
-                  }}
-                  onPress={() => addToCart(addonSet)}
-                  btnText={`${strings.ADD_ITEM} - ${currencies?.primary_currency?.symbol
-                    }${(
-                      Number(productPriceData?.multiplier) *
-                      Number(productPriceData?.price)
-                    ).toFixed(2)}`}
-                  btnStyle={{
-                    borderRadius: moderateScale(4),
-                    height: moderateScale(38),
-                  }}
-                />
-              </View>
+                <View style={{ marginHorizontal: 8 }} />
+                {!showErrorMessageTitle && (
+                  <View
+                    pointerEvents={btnLoader ? 'none' : 'auto'}
+                    style={{ flex: 0.75 }}>
+                    <GradientButton
+                      indicator={btnLoader}
+                      indicatorColor={colors.white}
+                      colorsArray={[
+                        themeColors.primary_color,
+                        themeColors.primary_color,
+                      ]}
+                      textStyle={{
+                        fontFamily: fontFamily.medium,
+                        textTransform: 'capitalize',
+                        color: colors.white,
+                      }}
+                      onPress={() => addToCart(addonSet)}
+                      btnText={`${strings.ADD_ITEM} - ${currencies?.primary_currency?.symbol
+                        } ${getAdditionalPriceOfAddons()}`}
+                      btnStyle={{
+                        borderRadius: moderateScale(4),
+                        height: moderateScale(38),
+                      }}
+                    />
+                  </View>
+                )}
+              </View>: null}
             </View>
-          )}
+            : null}
+          <View style={{ height: moderateScale(100) }} />
         </Animatable.View>
       )}
-    </Modal>
+      <Modal
+        isVisible={isProductImageLargeViewVisible}
+        style={{
+          height: height,
+          width: width,
+          margin: 0,
+        }}
+        animationInTiming={600}>
+        {renderImageZoomingView()}
+      </Modal>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   productName: {
@@ -1233,7 +1642,7 @@ const styles = StyleSheet.create({
   },
   cardViewStyle: {
     alignItems: 'center',
-    height: width * 0.7,
+    height: width * 0.6,
     width: width,
     // marginRight: 20
   },
@@ -1244,4 +1653,25 @@ const styles = StyleSheet.create({
     fontSize: textScale(12),
     fontFamily: fontFamily.medium,
   },
+  dropDownStyle: {
+    paddingHorizontal: moderateScale(8),
+    borderRadius: moderateScale(4),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: moderateScaleVertical(2),
+  },
+  modalView: {
+    paddingHorizontal: moderateScale(16),
+    paddingTop: moderateScaleVertical(16),
+    paddingBottom: moderateScaleVertical(16),
+    borderTopLeftRadius: moderateScale(12),
+    borderTopRightRadius: moderateScale(12),
+  },
+  horizontalLine: {
+    width: '100%',
+    borderBottomWidth: 1.5,
+    marginVertical: moderateScaleVertical(8)
+  },
 });
+export default React.memo(VariantAddons);

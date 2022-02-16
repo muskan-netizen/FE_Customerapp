@@ -35,8 +35,12 @@ import PhoneNumberInput2 from '../../Components/PhoneNumberInput2';
 import AutoUpLabelTxtInput from '../../Components/AutoUpLabelTxtInput';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {checkIsAdmin} from '../../utils/utils';
+import {useNavigation} from '@react-navigation/native';
+
 export default function Signup2({navigation}) {
+  const navigation_ = useNavigation();
   const {appData, themeColors, themeLayouts, currencies, languages} =
     useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -89,8 +93,8 @@ export default function Signup2({navigation}) {
   };
 
   /** SIGNUP API FUNCTION **/
-  const onSignup = async() => {
-    let fcmToken = await AsyncStorage.getItem('fcmToken')
+  const onSignup = async () => {
+    let fcmToken = await AsyncStorage.getItem('fcmToken');
     let {callingCode} = state;
     const checkValid = isValidData();
     if (!checkValid) {
@@ -108,7 +112,7 @@ export default function Signup2({navigation}) {
       device_type: Platform.OS,
       device_token: DeviceInfo.getUniqueId(),
       refferal_code: referralCode,
-      fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId()
+      fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
       // country_id: '1',
     };
     console.log(data, 'signup--data');
@@ -126,26 +130,32 @@ export default function Signup2({navigation}) {
         updateState({isLoading: false});
 
         if (!!res.data) {
-          if (!!res.data?.client_preference?.verify_email &&
-            !!res.data?.client_preference?.verify_phone) {
-            if (!!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified) {
-              navigation.push(navigationStrings.DRAWER_ROUTES)
+          if (
+            !!res.data?.client_preference?.verify_email &&
+            !!res.data?.client_preference?.verify_phone
+          ) {
+            if (
+              !!res.data?.verify_details?.is_email_verified &&
+              !!res.data?.verify_details?.is_phone_verified
+            ) {
+              checkIsAdmin(navigation_, navigation, res.data);
             } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
+              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
-          }
-          else if (!!res.data?.client_preference?.verify_email ||
-            !!res.data?.client_preference?.verify_phone) {
-            if (!!res.data?.verify_details?.is_email_verified ||
-              !!res.data?.verify_details?.is_phone_verified) {
-              navigation.push(navigationStrings.DRAWER_ROUTES)
+          } else if (
+            !!res.data?.client_preference?.verify_email ||
+            !!res.data?.client_preference?.verify_phone
+          ) {
+            if (
+              !!res.data?.verify_details?.is_email_verified ||
+              !!res.data?.verify_details?.is_phone_verified
+            ) {
+              checkIsAdmin(navigation_, navigation, res.data);
             } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
+              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
-          }
-          else {
-            navigation.push(navigationStrings.DRAWER_ROUTES)
+          } else {
+            checkIsAdmin(navigation_, navigation, res.data);
           }
         }
       })

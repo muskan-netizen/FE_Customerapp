@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import colors from '../../../styles/colors';
 import commonStylesFunc from '../../../styles/commonStyles';
 import {
@@ -9,8 +9,8 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 
-export default ({fontFamily}) => {
-  const commonStyles = commonStylesFunc({fontFamily});
+export default ({ fontFamily, isDarkMode, MyDarkTheme }) => {
+  const commonStyles = commonStylesFunc({ fontFamily });
   const styles = StyleSheet.create({
     scrollviewHorizontal: {
       borderTopWidth: 1,
@@ -157,15 +157,20 @@ export default ({fontFamily}) => {
     plainView: {
       alignItems: 'center',
       justifyContent: 'center',
-
-      width: width / 2.5,
-      maxWidth: width / 2.5,
+      // left: 20,
+      borderRadius: moderateScale(2),
+      shadowColor: '#000',
+      shadowOffset: {width: 0, height: 1},
+      shadowOpacity: 0.1,
+      shadowRadius: 2,
+      elevation: 2,
     },
     pickupDropOff: {
-      textAlign: 'left',
-      color: colors.themeColor,
+      textAlign: 'center',
+      alignItems: 'center',
       fontFamily: fontFamily.regular,
-      fontSize: textScale(12),
+      fontSize: textScale(10),
+      // padding:
     },
     pickupDropOffAddress: {
       textAlign: 'left',
@@ -334,7 +339,7 @@ export default ({fontFamily}) => {
       color: colors.lightGreyBgColor,
       fontSize: textScale(10),
     },
-    imageStyle: {height: width / 4.5, width: width / 4.5},
+    imageStyle: { height: width / 4.5, width: width / 4.5 },
     writeAReview: {
       fontFamily: fontFamily.bold,
       color: colors.lightGreyBgColor,
@@ -373,6 +378,35 @@ export default ({fontFamily}) => {
       color: colors.blackC,
       fontFamily: fontFamily.regular,
     },
+    datePriceText: {
+      fontSize: textScale(14),
+      fontFamily: fontFamily.medium,
+      color: isDarkMode
+        ? MyDarkTheme.colors.text
+        : colors.black,
+      textAlign: 'left'
+    },
+    statusText: {
+      fontSize: textScale(12),
+      fontFamily: fontFamily.regular,
+      color: isDarkMode
+        ? MyDarkTheme.colors.text
+        : colors.blackOpacity40,
+      textAlign: 'left'
+    },
+    deliveryProof: {
+      fontSize: textScale(12),
+      fontFamily: fontFamily.medium,
+      marginBottom: moderateScaleVertical(4),
+      color: isDarkMode
+        ? MyDarkTheme.colors.text
+        : colors.blackOpacity86,
+    },
+    horizontalLine: {
+      borderBottomWidth: 0.8,
+      borderBottomColor: isDarkMode ? colors.whiteOpacity22 : colors.lightGreyBg,
+      marginVertical: moderateScaleVertical(10)
+    }
   });
   return styles;
 };

@@ -32,6 +32,16 @@ import {
 import {MyDarkTheme} from '../../styles/theme';
 import {setItem} from '../../utils/utils';
 import stylesFunc from './styles';
+import DeviceInfo from 'react-native-device-info';
+import {API_BASE_URL} from '../../config/urls';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
+import BackgroundService from 'react-native-background-actions';
+import {
+  hapticEffects,
+  playHapticEffect,
+  playVibration,
+} from '../../utils/helperFunctions';
 
 export default function Settings({route, navigation}) {
   // const appData = useSelector(state => state?.initBoot?.appData);
@@ -43,7 +53,7 @@ export default function Settings({route, navigation}) {
   const {currencies, appData, languages, appStyle, themeColors} = useSelector(
     (state) => state?.initBoot,
   );
-
+  console.log(languages, 'languageslanguages');
   const [state, setState] = useState({
     isLoading: false,
     country: 'uk',
@@ -162,23 +172,50 @@ export default function Settings({route, navigation}) {
       showAlertMessageError(strings.SELECT);
       return;
     } else {
-      if (lang === 'ar') {
-        I18nManager.forceRTL(true);
-        setItem('language', lang);
-        changeLaguage(lang);
-        RNRestart.Restart();
-      } else {
-        I18nManager.forceRTL(false);
-        setItem('language', lang);
-        changeLaguage(lang);
-        RNRestart.Restart();
-      }
+      let btData = {};
+      AsyncStorage.getItem('BleDevice').then(async (res) => {
+        if (res !== null) {
+          btData = res;
+          await AsyncStorage.setItem('autoConnectEnabled', 'true');
+          await AsyncStorage.setItem('BleDevice2', btData);
+          console.log('++++++22', btData);
+          if (lang === 'ar') {
+            I18nManager.forceRTL(true);
+            setItem('language', lang);
+            changeLaguage(lang);
+            RNRestart.Restart();
+          } else {
+            I18nManager.forceRTL(false);
+            setItem('language', lang);
+            changeLaguage(lang);
+            RNRestart.Restart();
+          }
+          BluetoothManager.disconnect(JSON.parse(res).boundAddress).then(
+            (s) => {},
+          );
+        } else {
+          if (lang === 'ar') {
+            I18nManager.forceRTL(true);
+            setItem('language', lang);
+            changeLaguage(lang);
+            RNRestart.Restart();
+          } else {
+            I18nManager.forceRTL(false);
+            setItem('language', lang);
+            changeLaguage(lang);
+            RNRestart.Restart();
+          }
+        }
+      });
+      // await BackgroundService.removeAllListeners();
+      // await BackgroundService.stop().then((res) => {});
+      // await AsyncStorage.removeItem('BleDevice');
     }
   };
 
   const _toggleOnOff = (isOn) => {
     actions.setToggle(isOn);
-    Vibration.vibrate(40);
+    playHapticEffect(hapticEffects.rigid);
     updateState({
       isOn: isOn ? true : false,
     });
@@ -224,6 +261,11 @@ export default function Settings({route, navigation}) {
           });
     }
   };
+
+  // useEffect(()=>{
+  //   API_BASE_URL
+  //   console.log("API_BASE_URL")
+  // },[])
 
   return (
     <WrapperContainer
@@ -293,8 +335,10 @@ export default function Settings({route, navigation}) {
           {selectedThemeOptions.map((i, inx) => {
             return (
               <TouchableOpacity
+                key={String(inx)}
                 onPress={() => {
                   _setApperance(i);
+                  playHapticEffect(hapticEffects.rigid);
                 }}>
                 <Image source={i.image} />
                 <Text
@@ -449,6 +493,7 @@ export default function Settings({route, navigation}) {
           <DropDownPicker
             items={appLanguages.all_languages}
             defaultValue={
+              appLanguages?.primary_language?.nativeName ||
               appLanguages?.primary_language?.name ||
               appLanguages?.primary_language?.label ||
               ''
@@ -576,6 +621,7 @@ export default function Settings({route, navigation}) {
           <DropDownPicker
             items={appLanguages.all_languages}
             defaultValue={
+              appLanguages?.primary_language?.nativeName ||
               appLanguages?.primary_language?.name ||
               appLanguages?.primary_language?.label ||
               ''
@@ -616,6 +662,33 @@ export default function Settings({route, navigation}) {
         </View>
       )}
       {/* </KeyboardAwareScrollView> */}
+      <View
+        style={{
+          zIndex: -1,
+          flexDirection: 'row',
+          alignSelf: 'center',
+          marginVertical: moderateScaleVertical(24),
+        }}>
+        <Text
+          style={{
+            ...commonStyles.regularFont11,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+          }}>
+          App Version{' '}
+        </Text>
+        <Text
+          numberOfLines={2}
+          style={{
+            ...commonStyles.regularFont11,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+          }}>
+          {`${DeviceInfo.getVersion()}`}
+          <Text>{`(${DeviceInfo.getBuildNumber()})`}</Text>
+          <Text>
+            {API_BASE_URL == 'https://api.rostaging.com/api/v1' ? 'S' : ''}
+          </Text>
+        </Text>
+      </View>
     </WrapperContainer>
   );
 }

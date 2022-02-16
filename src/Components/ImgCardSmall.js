@@ -15,13 +15,13 @@ import {
   pressOutAnimation,
 } from '../utils/helperFunctions';
 
-export default function ImgCardSmall({
+const ImgCardSmall = ({
   rectImage,
   text,
   onPress = () => {},
   containerStyle = {},
   imageStyle = {},
-}) {
+}) => {
   const {themeColors, appStyle} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const scaleInAnimated = new Animated.Value(0);
@@ -57,7 +57,7 @@ export default function ImgCardSmall({
       </Animated.View>
     </TouchableOpacity>
   );
-}
+};
 
 export function stylesData({fontFamily}) {
   const styles = StyleSheet.create({
@@ -106,3 +106,4 @@ export function stylesData({fontFamily}) {
 }
 
 const styles = StyleSheet.create({});
+export default React.memo(ImgCardSmall);

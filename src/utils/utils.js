@@ -1,16 +1,12 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
-import {PermissionsAndroid, Platform} from 'react-native';
-import store from '../redux/store';
-import types from '../redux/types';
-import {sessionHandler} from './helperFunctions';
-import actions from '../redux/actions';
+import {resetStackAndNavigate} from '../navigation/NavigationService';
 import navigationStrings from '../navigation/navigationStrings';
-import * as NavigationService from '../navigation/NavigationService';
+import {enums} from './enums';
+import {sessionHandler} from './helperFunctions';
 
 export async function getHeaders() {
   let userData = await AsyncStorage.getItem('userData');
-
   if (userData) {
     userData = JSON.parse(userData);
     return {
@@ -101,7 +97,6 @@ export async function apiReq(
   requestOptions = {},
 ) {
   console.log(endPoint, 'endPoint');
-
   return new Promise(async (res, rej) => {
     const getTokenHeader = await getHeaders();
 
@@ -109,7 +104,6 @@ export async function apiReq(
       ...getTokenHeader,
       ...headers,
     };
-    console.log(headers, 'headers');
 
     if (method === 'get' || method === 'delete') {
       data = {
@@ -118,6 +112,7 @@ export async function apiReq(
         headers,
       };
     }
+    console.log('check data in api generator>>>', headers);
     //
     axios[method](endPoint, data, {headers})
       .then((result) => {
@@ -131,7 +126,6 @@ export async function apiReq(
       })
       .catch((error) => {
         if (error && error.response && error.response.status === 401) {
-          console.log('erro raised', error);
           sessionHandler(error.response.data.message);
           return rej(error);
         }
@@ -196,4 +190,15 @@ export const verticalAnimation = {
       },
     };
   },
+};
+
+export const checkIsAdmin = (navigation_, navigation, userData) => {
+  console.log('check userdata', userData.is_admin);
+
+  // navigation.push(navigationStrings.TABROUTESVENDOR);
+  if (userData.is_admin && enums.isVendorStandloneApp) {
+    resetStackAndNavigate(navigation_, navigationStrings.TABROUTESVENDORNEW);
+  } else {
+    navigation.push(navigationStrings.TAB_ROUTES);
+  }
 };

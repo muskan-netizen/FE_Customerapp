@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Getme/Pods-Getme.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Getme/Pods-available_pods-Getme.release.xcconfig"
 
 
 PROJECT_APPLE_ID = 1579695562

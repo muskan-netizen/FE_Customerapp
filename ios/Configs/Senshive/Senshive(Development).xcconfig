@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Senshive/Pods-Senshive.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Senshive/Pods-available_pods-Senshive.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1581757352

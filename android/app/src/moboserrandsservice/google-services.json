@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "100781249200",
+    "project_id": "mobo-s-errands-service",
+    "storage_bucket": "mobo-s-errands-service.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100781249200:android:117096e8ad78aacb276175",
+        "android_client_info": {
+          "package_name": "com.moboserrandsservice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100781249200-35sbjb1iu9ett3hrnu8jp1j5kilsjkhr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moboserrandsservice",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "100781249200-si990hc684q3952pkfvjrehtcvv0nnkq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moboserrandsservice",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "100781249200-v5bmi2a6u1u44dribc0femfrkeq567k3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moboserrandsservice",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "100781249200-t9lv7b0ad6t5forjq2t6uhsld39bftdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW1GdaPsMI_X9uzDlizNc2RcOB2-zP774"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "100781249200-t9lv7b0ad6t5forjq2t6uhsld39bftdk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "100781249200-k32nglpau4qmhue8s35thrfmti6ai2d2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.moboserrandsservice"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

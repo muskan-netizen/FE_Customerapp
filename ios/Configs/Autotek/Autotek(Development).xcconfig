@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Autotek/Pods-Autotek.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Autotek/Pods-available_pods-Autotek.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1584119864

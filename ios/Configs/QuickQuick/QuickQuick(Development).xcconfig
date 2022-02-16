@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-available_pods-QuickQuick/Pods-available_pods-QuickQuick.debug.xcconfig"
+
+PROJECT_APPLE_ID =1590800276
+PROJECT_BUNDLE_ID = com.quickquick
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = QuickQuick
+PROJECT_GOOGLE_CLIENT_ID =308578824333-s6rj3qep58s5u3o2glnlc1na449ue30t.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.308578824333-s6rj3qep58s5u3o2glnlc1na449ue30t
+PROJECT_FACEBOOK_ID =906493406910757
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =QuickQuickInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

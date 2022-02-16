@@ -8,7 +8,7 @@ import {
 } from '../../styles/responsiveSize';
 import HomeLoader from './HomeLoader';
 
-export default function SearchLoader({viewStyles = {}}) {
+const SearchLoader = ({viewStyles = {}}) => {
   return (
     <View style={{marginHorizontal: moderateScale(15), ...viewStyles}}>
       <HomeLoader
@@ -19,6 +19,7 @@ export default function SearchLoader({viewStyles = {}}) {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({});
+export default React.memo(SearchLoader);

@@ -22,6 +22,7 @@ import PendingOrderCard from './PendingOrderCard';
 import {cloneDeep, debounce} from 'lodash';
 import Modal from 'react-native-modal';
 import imagePath from '../constants/imagePath';
+import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
 
 const NotificationModal = () => {
   const pendingNotifications = useSelector(
@@ -112,6 +113,9 @@ const NotificationModal = () => {
       .then((res) => {
         console.log(res, 'res>>>acceptRejectOrder');
         if (res && res.status == 'success') {
+          if (status == 7) {
+            StartPrinting({id: acceptRejectData?.id});
+          }
           updateLocalStatus(res, acceptRejectData);
           return;
         }
@@ -183,7 +187,7 @@ const NotificationModal = () => {
       />
     </View>
   );
- 
+
   return (
     <Modal
       isVisible={!!pendingNotifications.length && isVendorNotification}
@@ -238,4 +242,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NotificationModal;
+export default React.memo(NotificationModal);

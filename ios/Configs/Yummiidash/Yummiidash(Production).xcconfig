@@ -1,14 +1,14 @@
-#include "Pods/Target Support Files/Pods-Yummiidash/Pods-Yummiidash.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Yummiidash/Pods-available_pods-Yummiidash.release.xcconfig"
 
 
-PROJECT_APPLE_ID = 1581541154
-PROJECT_BUNDLE_ID = com.yummiidash
-PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 6
+PROJECT_APPLE_ID = 1592084747
+PROJECT_BUNDLE_ID = com.app.yummiidash
+PROJECT_APP_VERSION = 1.1
+PROJECT_BUILD_NUMBER = 1
 PROJECT_APP_NAME = Yummiidash
-PROJECT_GOOGLE_CLIENT_ID = 32567487439-n5p0jbuasubvjg8sf54rv1mgtifj6oog.apps.googleusercontent.com
-PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.32567487439-n5p0jbuasubvjg8sf54rv1mgtifj6oog
-PROJECT_FACEBOOK_ID = 669400547351615
+PROJECT_GOOGLE_CLIENT_ID = 913631928039-ofbu9dia952lffe6c3kvhstumq0kuv85.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.913631928039-ofbu9dia952lffe6c3kvhstumq0kuv85
+PROJECT_FACEBOOK_ID = 719459019448918
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST = YummiidashInfo
 PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

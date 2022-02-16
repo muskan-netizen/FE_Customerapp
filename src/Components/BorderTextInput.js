@@ -7,19 +7,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
+import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import {hitSlopProp} from '../styles/commonStyles';
-import {
-  moderateScaleVertical,
-  textScale,
-  width,
-} from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dark-mode';
+import {moderateScaleVertical, textScale} from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
 
-export default function BorderTextInput({
+const BorderTextInput = ({
   containerStyle,
   textInputStyle,
   leftIcon,
@@ -34,8 +30,10 @@ export default function BorderTextInput({
   secureTextEntry = false,
   borderWidth = 1,
   borderRadius = 13,
+  isShowPassword,
+  rightIconStyle = {},
   ...props
-}) {
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -65,6 +63,7 @@ export default function BorderTextInput({
         borderColor: isDarkMode ? MyDarkTheme.colors.text : colors.borderLight,
         marginBottom,
         overflow: 'hidden',
+
         ...containerStyle,
       }}>
       {leftIcon && (
@@ -106,9 +105,11 @@ export default function BorderTextInput({
           style={{justifyContent: 'center', marginRight: 10}}
           hitSlop={hitSlopProp}
           onPress={onPressRight}>
-          <Image style={{tintColor: colors.white}} source={rightIcon} />
+          <Image style={{...rightIconStyle}} source={rightIcon} />
         </TouchableOpacity>
       )}
     </View>
   );
-}
+};
+
+export default React.memo(BorderTextInput);

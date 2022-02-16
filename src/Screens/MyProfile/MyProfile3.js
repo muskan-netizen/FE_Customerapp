@@ -7,6 +7,7 @@ import {
   Text,
   TouchableWithoutFeedback,
   View,
+  ImageBackground,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import FastImage from 'react-native-fast-image';
@@ -61,6 +62,7 @@ export default function MyProfile3({route, navigation}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state?.initBoot);
+  const {languages} = useSelector((state) => state?.initBoot);
 
   const {themeColors, themeLayouts, appStyle} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
@@ -249,11 +251,12 @@ export default function MyProfile3({route, navigation}) {
       actions
         .addAddress(childData, {
           code: appData?.profile?.code,
+          language: languages?.primary_language?.id,
         })
         .then((res) => {
           updateState({del: del ? false : true});
           showSuccess(res.message);
-          console.log(res.message, 'jsdkfjhsdjfhkjsdfh');
+          console.log(res.message, 'responseSave');
 
           // setTimeout(() => {
           //   getAllAddress();
@@ -270,6 +273,7 @@ export default function MyProfile3({route, navigation}) {
       actions
         .updateAddress(query, childData, {
           code: appData?.profile?.code,
+          language: languages?.primary_language?.id,
         })
         .then((res) => {
           updateState({del: del ? false : true});
@@ -380,6 +384,7 @@ export default function MyProfile3({route, navigation}) {
                 code: appData?.profile?.code,
               })
               .then((res) => {
+                console.log(res, 'resresres');
                 const source = {
                   uri: getImageUrl(
                     res.data.proxy_url,
@@ -451,6 +456,7 @@ export default function MyProfile3({route, navigation}) {
     actions
       .deleteAddress(query, data, {
         code: appData?.profile?.code,
+        language: languages?.primary_language?.id,
       })
       .then((res) => {
         updateState({del: del ? false : true});
@@ -916,11 +922,21 @@ export default function MyProfile3({route, navigation}) {
                 borderRadius: moderateScale(12),
               }}
             />
-            <View style={{position: 'absolute', right: -15}}>
-              <Image
-                style={{height: 30, width: 30}}
-                source={imagePath?.camera}
-              />
+            <View style={styles.cameraView}>
+              <View
+                style={styles.roundViewCamera}
+                resizeMode="contain"
+                source={imagePath?.camera}>
+                <Image
+                  source={imagePath.ic_cameraColored}
+                  resizeMode="contain"
+                  style={{
+                    height: moderateScale(20),
+                    width: moderateScale(20),
+                    tintColor: colors.white,
+                  }}
+                />
+              </View>
             </View>
           </View>
         </TouchableWithoutFeedback>

@@ -1,9 +1,9 @@
-#include "Pods/Target Support Files/Pods-Taquick/Pods-Taquick.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Taquick/Pods-available_pods-Taquick.release.xcconfig"
 
 PROJECT_APPLE_ID = 1588076308
 PROJECT_BUNDLE_ID = com.taquick
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 1
+PROJECT_BUILD_NUMBER = 10
 PROJECT_APP_NAME =Taquick
 PROJECT_GOOGLE_CLIENT_ID =908277900153-nf2rkb2ria375db77o7omh3vje9m3rmd.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.908277900153-nf2rkb2ria375db77o7omh3vje9m3rmd

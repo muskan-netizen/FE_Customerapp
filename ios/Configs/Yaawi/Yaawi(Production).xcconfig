@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-available_pods-Yaawi/Pods-available_pods-Yaawi.release.xcconfig"
+
+PROJECT_APPLE_ID =1590144018
+PROJECT_BUNDLE_ID = com.yaawi
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = Yaawi
+PROJECT_GOOGLE_CLIENT_ID =694040596651-eib5uiec0in6qn3an5r5e25ajh50hlt9.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.694040596651-eib5uiec0in6qn3an5r5e25ajh50hlt9
+PROJECT_FACEBOOK_ID =617255976304234
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =YaawiInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

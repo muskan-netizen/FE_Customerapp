@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>325903388369-ana8qfgpqhm1g1ohrda2nj67mjp1c1cq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.325903388369-ana8qfgpqhm1g1ohrda2nj67mjp1c1cq</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>325903388369-7et52h9au30j4jjln3o9j3etrddokrn2.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCulfMJvbe5DsbYjDM8GAoEPRF3HyZoDoE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>325903388369</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.seaeats</string>
+	<key>PROJECT_ID</key>
+	<string>sea-eats</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sea-eats.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:325903388369:ios:9a67f12264d300e8043ff0</string>
+</dict>
+</plist>

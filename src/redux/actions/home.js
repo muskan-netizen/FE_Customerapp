@@ -9,23 +9,27 @@ import {
   UPDATE_ADDRESS,
   DELETE_ADDRESS,
   SET_PRIMARY_ADDRESS,
+  GETALLTEMPLCARDS,
+  VENDOR_ALL,
 } from '../../config/urls';
-import {apiPost, setItem, getItem, apiGet} from '../../utils/utils';
+import { apiPost, setItem, getItem, apiGet } from '../../utils/utils';
 import store from '../store';
 import types from '../types';
 
-const {dispatch} = store;
+const { dispatch } = store;
 
 //Get Homme banners and Category data
-export function homeData(data = {}, headers = {}) {
- 
+export function homeData(data = {}, headers = {}, isShortCode = false) {
   return new Promise((resolve, reject) => {
     apiPost(HOMEPAGE_DATA_URL, data, headers)
       .then((res) => {
-        dispatch({
-          type: types.HOME_DATA,
-          payload: res.data,
-        });
+        if (!isShortCode) {
+          console.log('goesHere', res);
+          dispatch({
+            type: types.HOME_DATA,
+            payload: res.data,
+          });
+        }
         resolve(res);
       })
       .catch((error) => {
@@ -35,6 +39,7 @@ export function homeData(data = {}, headers = {}) {
 }
 
 export function onGlobalSearch(query = '', data = {}, headers = {}) {
+  console.log('search global');
   return new Promise((resolve, reject) => {
     apiPost(SEARCH + query, data, headers)
       .then((response) => {
@@ -47,6 +52,7 @@ export function onGlobalSearch(query = '', data = {}, headers = {}) {
 }
 
 export function onSearchByCategory(query = '', data = {}, headers = {}) {
+  console.log('search by category');
   return new Promise((resolve, reject) => {
     apiPost(SEARCH_BY_CATEGORY + query, data, headers)
       .then((response) => {
@@ -59,6 +65,7 @@ export function onSearchByCategory(query = '', data = {}, headers = {}) {
 }
 
 export function onSearchByVendor(query = '', data = {}, headers = {}) {
+  console.log('search by vendor');
   return new Promise((resolve, reject) => {
     apiPost(SEARCH_BY_VENDOR + query, data, headers)
       .then((response) => {
@@ -71,6 +78,7 @@ export function onSearchByVendor(query = '', data = {}, headers = {}) {
 }
 
 export function onSearchByBrand(query = '', data = {}, headers = {}) {
+  console.log('search by brand');
   return new Promise((resolve, reject) => {
     apiPost(SEARCH_BY_BRAND + query, data, headers)
       .then((response) => {
@@ -89,6 +97,12 @@ export function locationData(res) {
     payload: res,
   });
 }
+export function constLocationData(res) {
+  dispatch({
+    type: types.CONST_CUR_LOC,
+    payload: res,
+  });
+}
 export function profileAddress(res) {
   setItem('profileAddress', res)
     .then((suc) => {
@@ -97,7 +111,7 @@ export function profileAddress(res) {
         payload: res,
       });
     })
-    .catch((err) => {});
+    .catch((err) => { });
 }
 
 // export function updateProfileAddress(res) {
@@ -177,4 +191,22 @@ export function dineInData(res) {
     type: types.DINE_IN_DATA,
     payload: res,
   });
+}
+
+//Get all temp ordres from driver
+export const getAllTempOrders = (data = {}, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiGet(GETALLTEMPLCARDS, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export function vendorAll(query, data, headers = {}){
+  console.log("sending headers",data)
+  return apiGet(VENDOR_ALL, data, headers)
 }

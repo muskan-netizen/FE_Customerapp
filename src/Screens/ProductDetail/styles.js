@@ -241,9 +241,10 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
     },
     descriptionStyle: {
       color: colors.textGreyE,
-      fontSize: textScale(11),
+      fontSize: textScale(10),
       fontFamily: fontFamily.regular,
-      lineHeight: moderateScale(22),
+      textAlign: 'left',
+      // lineHeight: moderateScale(22),
     },
     flexView: {
       flexDirection: 'row',
@@ -270,4 +271,24 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
       paddingHorizontal: 10,
       paddingVertical: 6,
     },
+    dropDownStyle: {
+      paddingHorizontal: moderateScale(8),
+      borderRadius: moderateScale(4),
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingVertical: moderateScaleVertical(2),
+    },
+    modalView: {
+      paddingHorizontal: moderateScale(16),
+      paddingTop: moderateScaleVertical(16),
+      paddingBottom: moderateScaleVertical(56),
+      borderTopLeftRadius: moderateScale(12),
+      borderTopRightRadius: moderateScale(12),
+    },
+    horizontalLine: {
+      width: '100%',
+      borderBottomWidth: 0.5,
+      marginVertical: moderateScaleVertical(8)
+  },
   });

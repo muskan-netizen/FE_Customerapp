@@ -1,32 +1,33 @@
+import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  Alert,
+  FlatList,
+  I18nManager,
   Image,
-  Keyboard,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableNativeFeedback,
   TouchableOpacity,
   View,
-  ImageBackground,
-  TouchableNativeFeedback,
-  Alert,
-  TextInput,
-  I18nManager,
-  FlatList,
 } from 'react-native';
-import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
-import GradientButton from './GradientButton';
-import imagePath from '../constants/imagePath';
-import strings from '../constants/lang';
-import colors from '../styles/colors';
-import commonStylesFun, {hitSlopProp} from '../styles/commonStyles';
-import fontFamily from '../styles/fontFamily';
-import Banner from './Banner';
+import * as Animatable from 'react-native-animatable';
+import CalanderStrip from 'react-native-calendar-strip';
 import DeviceInfo from 'react-native-device-info';
 import * as RNLocalize from 'react-native-localize';
-import moment from 'moment';
+import Modal from 'react-native-modal';
+import Toast from 'react-native-simple-toast';
+import {Pagination} from 'react-native-snap-carousel';
+import StarRating from 'react-native-star-rating';
+import {useSelector} from 'react-redux';
+import imagePath from '../constants/imagePath';
+import strings from '../constants/lang';
+import actions from '../redux/actions';
+import colors from '../styles/colors';
+import commonStylesFun from '../styles/commonStyles';
+import fontFamily from '../styles/fontFamily';
 import {
   height,
   moderateScale,
@@ -34,33 +35,23 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {
-  getColorCodeWithOpactiyNumber,
-  getImageUrl,
-  showError,
-  showSuccess,
-} from '../utils/helperFunctions';
-import {useNavigation, useFocusEffect} from '@react-navigation/native';
-import navigationStrings from '../navigation/navigationStrings';
-import HTMLView from 'react-native-htmlview';
-import HtmlViewComp from './HtmlViewComp';
 import {MyDarkTheme} from '../styles/theme';
-import * as Animatable from 'react-native-animatable';
-import actions from '../redux/actions';
-import {Pagination} from 'react-native-snap-carousel';
-import CardLoader from './Loaders/CardLoader';
-import StarRating from 'react-native-star-rating';
-import CalanderStrip from 'react-native-calendar-strip';
 import {timeforMarkedQuestion} from '../utils/constants/ConstantValues';
+import {showError, showSuccess} from '../utils/helperFunctions';
+import Banner from './Banner';
+import GradientButton from './GradientButton';
+import HtmlViewComp from './HtmlViewComp';
+import CardLoader from './Loaders/CardLoader';
 
-export default function HomeServiceVariantAddons({
+const HomeServiceVariantAddons = ({
   productdetail = {},
   isVisible = false,
   onClose,
   showShimmer,
   shimmerClose = () => {},
-  updateCartItems,
-}) {
+  updateCartItems = () => {},
+}) => {
+  console.log(productdetail, 'productdetailproductdetailproductdetail');
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
 
   const [state, setState] = useState({
@@ -92,13 +83,22 @@ export default function HomeServiceVariantAddons({
     selectedDate: null,
     calendarMarkedDates: null,
     selectedTime: null,
-    timeModalVisable: false,
+    timeModalVisable:
+      productdetail?.mode_of_service == 'schedule' &&
+      productdetail?.add_on?.length === 0
+        ? true
+        : false,
     mode_of_service: productdetail?.mode_of_service,
     scheduleItemDateList: [],
     userSelectedTimeForSchedule: null,
+    timeMarkedQuestion: [],
+    verticalTimeListIndex: null,
+    horizonatalTimelistIndex: null,
+    calanderMinumamDate: new Date(),
   });
 
   const {
+    timeMarkedQuestion,
     totalItemsPrice,
     variantSet,
     addonSet,
@@ -122,6 +122,9 @@ export default function HomeServiceVariantAddons({
     mode_of_service,
     scheduleItemDateList,
     userSelectedTimeForSchedule,
+    verticalTimeListIndex,
+    horizonatalTimelistIndex,
+    calanderMinumamDate,
   } = state;
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -266,13 +269,45 @@ export default function HomeServiceVariantAddons({
         },
       )
       .then((res) => {
-        console.log(res?.data, 'resssssDatatatatat');
+        console.log(res, 'res?.data?.products[0]');
+
+        let myTimeArray = res?.data?.products[0]?.vendor_products.map(
+          (i, inx) => {
+            return {
+              ...i,
+              horizontalindex: null,
+              selectedTime: res?.data?.products[0]?.vendor_products[inx]
+                .scheduled_date_time
+                ? res?.data?.products[0]?.vendor_products[
+                    inx
+                  ]?.scheduled_date_time
+                    ?.split(' ')[1]
+                    .slice(0, 5)
+                : null,
+              selectedDate: res?.data?.products[0]?.vendor_products[inx]
+                .scheduled_date_time
+                ? res?.data?.products[0]?.vendor_products[
+                    inx
+                  ]?.scheduled_date_time.split(' ')[0]
+                : null,
+            };
+          },
+        );
+
         updateState({
-          scheduleItemDateList: res?.data?.products[0]?.vendor_products,
+          scheduleItemDateList: myTimeArray,
+          timeMarkedQuestion: res?.data?.products[0]?.vendor_products.map(
+            (i, inx) => {
+              return timeforMarkedQuestion;
+            },
+          ),
         });
       })
       .catch(errorMethod);
   };
+  useEffect(() => {
+    console.log(timeMarkedQuestion, 'timeMarkedQuestion>timeMarkedQuestion');
+  }, [timeMarkedQuestion]);
 
   console.log(
     scheduleItemDateList,
@@ -374,11 +409,15 @@ export default function HomeServiceVariantAddons({
   };
   /// cart Product Schedule
 
-  const productShedule = () => {
+  const productShedule = (userSelectedDateTime, ProductId) => {
+    console.log(
+      userSelectedDateTime,
+      'userSelectedDateTimeuserSelectedDateTimeuserSelectedDateTime',
+    );
     let data = {
       task_type: 'later',
-      schedule_dt: '2021-10-22 23:22:22',
-      cart_product_id: productdetail?.id,
+      schedule_dt: userSelectedDateTime,
+      cart_product_id: ProductId,
     };
     actions
       .cartProductSchedule(data, {
@@ -388,7 +427,7 @@ export default function HomeServiceVariantAddons({
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'ressssss');
+        console.log(res, 'responseeeeeeeeee');
       })
       .catch(console.log());
   };
@@ -436,9 +475,11 @@ export default function HomeServiceVariantAddons({
                         : colors.black,
                     },
                   ]}>
-                  {`${currencies?.primary_currency?.symbol}${(
-                    Number(i?.multiplier) * Number(i?.price)
-                  ).toFixed(2)}`}
+                  {`${
+                    currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
+                    (Number(i?.multiplier) * Number(i?.price)).toFixed(2),
+                  )}`}
                 </Text>
                 <View style={{paddingLeft: moderateScale(5)}}>
                   <Image
@@ -791,6 +832,12 @@ export default function HomeServiceVariantAddons({
   };
 
   const addToCart = (addonSet) => {
+    let updateQty =
+      productdetail?.qty + 1 || //localy update cart quanity
+      productdetail?.check_if_in_cart_app[0]?.quantity + 1 ||
+      productQuantityForCart;
+    console.log('update qty', updateQty);
+
     const addon_ids = [];
     const addon_options = [];
     addonSet.map((i, inx) => {
@@ -831,7 +878,7 @@ export default function HomeServiceVariantAddons({
         });
         updateCartItems(
           productdetail,
-          productQuantityForCart,
+          res.data.product_total_qty_in_cart, ////localy update cart quanity
           res.data.cart_product_id,
           res.data.id,
         );
@@ -870,6 +917,18 @@ export default function HomeServiceVariantAddons({
       showError(error?.message || error?.error);
     }
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (
+        productdetail?.mode_of_service == 'schedule' &&
+        productdetail?.add_on?.length === 0
+      ) {
+        addItemCart(addonSet);
+      }
+    }, [addonSet]),
+  );
+
   const addItemCart = (addonSet) => {
     console.log(mode_of_service, 'mode_of_servicemode_of_service');
     if (mode_of_service === 'schedule') {
@@ -885,28 +944,18 @@ export default function HomeServiceVariantAddons({
       });
       onClose();
     }
-
-    // if (modeOfService && timeModalVisable) {
-    //   addToCart(addonSet);
-    //   updateState({
-    //     isVisible: false,
-    //   });
-    // } else {
-    //   updateState({
-    //     timeModalVisable: true,
-    //   });
-    // }
   };
   const addTimeDate = (selectedDate, selectedTime) => {
     // productShedule();
-    // onClose();
-    console.log(selectedDate, selectedTime, 'timeeeeeee');
+    onClose();
+
     updateState({
       timeModalVisable: false,
     });
   };
 
   const _renderScheduleDateList = ({item, index}) => {
+    console.log(item, 'item?.iditem?.iditem?.iditem?.iditem?.id');
     return item?.product?.mode_of_service === 'schedule' ? (
       <>
         <Text
@@ -917,8 +966,8 @@ export default function HomeServiceVariantAddons({
           }}>
           {item?.product?.translation[0]?.title}
         </Text>
-        <View>{showScheduleCalenderView()}</View>
-        {selectedDate ? <View>{showScheduleTimeView()}</View> : null}
+        <View>{showScheduleCalenderView(item, index)}</View>
+        <View>{showScheduleTimeView(item, index)}</View>
       </>
     ) : null;
   };
@@ -1032,11 +1081,20 @@ export default function HomeServiceVariantAddons({
     });
   };
 
-  const onDayPress = (date) => {
-    console.log(date, 'date');
+  const onDayPress = (date, item, index) => {
+    console.log(date, item, index, 'date, item, index');
 
     const selectedCalendarDate = date;
 
+    console.log(selectedCalendarDate.format('YYYY-MM-DD'), 'inxinxinxinx');
+
+    let newInsrtedIndexItemArr = scheduleItemDateList;
+    newInsrtedIndexItemArr[index].selectedDate =
+      selectedCalendarDate.format('YYYY-MM-DD');
+
+    updateState({
+      scheduleItemDateList: newInsrtedIndexItemArr,
+    });
     if (
       selectedDate &&
       selectedDate == selectedCalendarDate.format('MM/DD/YYYY')
@@ -1078,25 +1136,34 @@ export default function HomeServiceVariantAddons({
     }
   };
 
-  console.log(
-    moment(selectedDate).format('YYYY-MM-DD'),
-    'selectedDateselectedDate',
-  );
   const showAddonsAndSehedule = () => {};
-  const dateSelected = (item, selecteduserTime) => {
-    updateState({
-      selectedTime: item,
-      userSelectedTimeForSchedule: item?.selectedTime,
-    });
-  };
-  console.log(selectedTime, 'selecteTime');
-  const renderCardComponentSecond = ({item, index}) => {
-    // let {visible, selectedTime, searchArray, selectService, cartItems} =
-    //   this.state;
+  const dateSelected = (item, index, i, inx) => {
+    if (i?.selectedDate == null) {
+      Toast.show(strings.PLEASE_SELECT_DATE_FIRST);
+    } else {
+      let newInsrtedIndexItemArr = scheduleItemDateList;
+      newInsrtedIndexItemArr[inx].horizontalindex = index;
+      newInsrtedIndexItemArr[inx].selectedTime = item?.selectedTime;
 
+      const userSelectedDateTime = `${newInsrtedIndexItemArr[inx].selectedDate} ${newInsrtedIndexItemArr[inx].selectedTime}`;
+      const ProductId = newInsrtedIndexItemArr[inx].id;
+
+      updateState({
+        scheduleItemDateList: newInsrtedIndexItemArr,
+      });
+      productShedule(userSelectedDateTime, ProductId);
+    }
+  };
+
+  const renderCardComponentSecond = (item, index, i, inx) => {
+    console.log(
+      i?.selectedTime,
+      item?.selectedTime,
+      'i?.selectedTime == item?.selectedTime',
+    );
     return (
       <TouchableOpacity
-        onPress={() => dateSelected(item)}
+        onPress={() => dateSelected(item, index, i, inx)}
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
@@ -1106,7 +1173,7 @@ export default function HomeServiceVariantAddons({
 
           height: moderateScale(30),
           backgroundColor:
-            selectedTime && selectedTime == item
+            i.horizontalindex === index || i?.selectedTime == item?.selectedTime
               ? themeColors.primary_color
               : colors.grey2,
         }}>
@@ -1115,7 +1182,8 @@ export default function HomeServiceVariantAddons({
             styles.value,
             {
               color:
-                selectedTime && selectedTime == item
+                i.horizontalindex === index ||
+                i?.selectedTime == item?.selectedTime
                   ? colors.white
                   : colors.textGrey,
               fontSize: textScale(14),
@@ -1128,20 +1196,18 @@ export default function HomeServiceVariantAddons({
     );
   };
 
-  const showScheduleCalenderView = () => {
+  const showScheduleCalenderView = (item, index) => {
     return (
       <CalanderStrip
         scrollable
         highlightDateContainerStyle={{
-          backgroundColor: selectedDate
-            ? themeColors.primary_color
-            : colors.white,
+          backgroundColor: themeColors.primary_color,
         }}
         highlightDateNameStyle={{
-          color: selectedDate ? colors.white : colors.black,
+          color: colors.white,
         }}
         highlightDateNumberStyle={{
-          color: selectedDate ? colors.white : colors.black,
+          color: colors.white,
         }}
         dateNameStyle={{
           color: colors.black,
@@ -1149,24 +1215,20 @@ export default function HomeServiceVariantAddons({
         dateNumberStyle={{
           color: colors.black,
         }}
+        useIsoWeekday={false}
         minDate={new Date()}
-        onDateSelected={onDayPress}
+        onDateSelected={(date) => onDayPress(date, item, index)}
         style={{
           height: moderateScaleVertical(100),
           backgroundColor: colors.WHITE,
           paddingVertical: 12,
         }}
-        // selectedDate={(selectedDate && selectedDate) || undefined}
+        selectedDate={item?.selectedDate || undefined}
       />
     );
   };
 
-  const showScheduleTimeView = () => {
-    console.log(
-      timeforMarkedQuestion.length,
-      timeforMarkedQuestion,
-      'timeforMarkedQuestion.length',
-    );
+  const showScheduleTimeView = (i, inx) => {
     return (
       <View>
         {timeforMarkedQuestion && timeforMarkedQuestion.length ? (
@@ -1180,14 +1242,16 @@ export default function HomeServiceVariantAddons({
             }}>
             <View style={{marginBottom: moderateScale(12)}}>
               <Text style={{fontSize: textScale(14)}}>
-                What Time Would You Like Us To Start?
+                {strings.WHAT_TIME_WOULD_YOU_LIKE_US_TO_START}
               </Text>
             </View>
             <FlatList
               keyExtractor={(item, index) => String(index)}
-              extraData={timeforMarkedQuestion ? timeforMarkedQuestion : []}
-              data={timeforMarkedQuestion}
-              renderItem={renderCardComponentSecond}
+              extraData={[timeMarkedQuestion, scheduleItemDateList]}
+              data={timeMarkedQuestion[inx]}
+              renderItem={({item, index}) =>
+                renderCardComponentSecond(item, index, i, inx)
+              }
               // ref={(ref) => (this.timingRef = ref)}
               removeClippedSubviews={false}
               enableEmptySections={false}
@@ -1337,6 +1401,7 @@ export default function HomeServiceVariantAddons({
               />
               {timeModalVisable ? (
                 <FlatList
+                  extraData={[scheduleItemDateList]}
                   data={scheduleItemDateList}
                   renderItem={_renderScheduleDateList}
                   ItemSeparatorComponent={() => (
@@ -1422,7 +1487,9 @@ export default function HomeServiceVariantAddons({
                       : addItemCart(addonSet)
                   }
                   btnText={
-                    timeModalVisable && mode_of_service
+                    timeModalVisable
+                      ? strings.ADD_ITEM
+                      : mode_of_service === 'schedule'
                       ? 'Countinue'
                       : strings.ADD_ITEM
                   }
@@ -1438,7 +1505,7 @@ export default function HomeServiceVariantAddons({
       )}
     </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   productName: {
@@ -1584,3 +1651,4 @@ const styles = StyleSheet.create({
     marginVertical: moderateScale(10),
   },
 });
+export default React.memo(HomeServiceVariantAddons);

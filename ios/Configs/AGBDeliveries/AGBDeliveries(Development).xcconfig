@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-available_pods-AGBDeliveries/Pods-available_pods-AGBDeliveries.debug.xcconfig"
+
+PROJECT_APPLE_ID =1591407601
+PROJECT_BUNDLE_ID = com.agbdeliveries
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = AGBDeliveries
+PROJECT_GOOGLE_CLIENT_ID =576101925240-j0c2rigg6dleo08877nkdifb8jnp521b.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.576101925240-j0c2rigg6dleo08877nkdifb8jnp521b
+PROJECT_FACEBOOK_ID =2745156759110917
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =AGBDeliveriesInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

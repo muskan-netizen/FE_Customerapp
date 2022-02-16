@@ -10,7 +10,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 
-export default ({themeColors, fontFamily}) =>
+export default ({themeColors, fontFamily, isDarkMode, MyDarkTheme}) =>
   StyleSheet.create({
     topHeaderView: {
       flexDirection: 'row',
@@ -87,7 +87,7 @@ export default ({themeColors, fontFamily}) =>
       alignItems: 'center',
       paddingHorizontal: moderateScale(8),
       // height: 42,
-      marginTop: StatusBarHeight - 10,
+      marginTop: Platform.OS === 'ios' ? StatusBarHeight : 5,
     },
 
     HeaderInsideTextStyle: {
@@ -113,20 +113,22 @@ export default ({themeColors, fontFamily}) =>
       height: moderateScale(42),
     },
     hitSlopProp: {
-      top: 50,
-      right: 50,
-      left: 50,
-      bottom: 50,
+      top: 100,
+      right: 100,
+      left: 100,
+      bottom: 100,
     },
     header2: {height: height * 0.3},
     imageBackgroundHdr: {width: width, height: '100%'},
-    linearGradientHdr: {alignItems: 'center', height: '100%', width: width},
+    linearGradientHdr: {
+      height: '100%',
+      width: width,
+      paddingVertical: moderateScale(30),
+    },
     hdrCompHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       width: width - moderateScale(20),
-      marginTop: StatusBarHeight + 5,
-      flex: 1,
     },
     hdrCompRoundImg: {
       height: moderateScale(70),
@@ -138,20 +140,19 @@ export default ({themeColors, fontFamily}) =>
       flex: 0.2,
     },
     hdrAbsoluteView: {
-      marginHorizontal: moderateScale(15),
-      position: 'absolute',
-      width: width - moderateScale(30),
-      bottom: -42,
-      height: moderateScale(90),
+      // marginHorizontal: moderateScale(15),
+      // position: 'relative',
+      // minHeight: moderateScale(90),
       shadowOpacity: 0.3,
       shadowColor: '#000',
       shadowOffset: {height: 0, width: 0},
-
-      borderRadius: moderateScale(12),
-      paddingVertical: moderateScale(5),
+      borderTopRightRadius: moderateScale(2),
+      borderTopLeftRadius:moderateScale(2),
+      paddingVertical: moderateScale(8),
       paddingLeft: moderateScale(15),
       justifyContent: 'center',
       elevation: 0.9,
+      // alignItems:'center'
     },
     hdrNameRatingView: {
       flexDirection: 'row',
@@ -200,5 +201,76 @@ export default ({themeColors, fontFamily}) =>
       paddingLeft: moderateScale(8),
       paddingRight: moderateScale(8),
       marginTop: moderateScaleVertical(5),
-    }
+    },
+
+    ///section list style
+    tabBar: {
+      backgroundColor: '#fff',
+      borderBottomColor: '#f4f4f4',
+      borderBottomWidth: 1,
+    },
+    tabContainer: {
+      borderBottomColor: '#090909',
+    },
+    tabText: {
+      padding: 15,
+      color: '#9e9e9e',
+      fontSize: 18,
+      fontWeight: '500',
+    },
+    separator: {
+      height: 0.5,
+      width: '96%',
+      alignSelf: 'flex-end',
+      backgroundColor: '#eaeaea',
+    },
+    sectionHeaderContainer: {
+      height: 10,
+      backgroundColor: '#f6f6f6',
+      borderTopColor: '#f4f4f4',
+      borderTopWidth: 1,
+      borderBottomColor: '#f4f4f4',
+      borderBottomWidth: 1,
+    },
+    sectionHeaderText: {
+      color: '#010101',
+      backgroundColor: '#fff',
+      fontSize: 23,
+      fontWeight: 'bold',
+      paddingTop: 25,
+      paddingBottom: 5,
+      paddingHorizontal: 15,
+    },
+    itemContainer: {
+      paddingVertical: 20,
+      paddingHorizontal: 15,
+      backgroundColor: '#fff',
+    },
+    itemTitle: {
+      flex: 1,
+      fontSize: 20,
+      color: '#131313',
+    },
+    itemPrice: {
+      fontSize: 18,
+      color: '#131313',
+    },
+    itemDescription: {
+      marginTop: 10,
+      color: '#b6b6b6',
+      fontSize: 16,
+    },
+    itemRow: {
+      flexDirection: 'row',
+    },
+    locTimeIcon: {
+      tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51,
+    },
+    horizontalLine: {
+      width: '100%',
+      borderBottomWidth: 0.5,
+      borderBottomColor: isDarkMode
+        ? colors.whiteOpacity22
+        : colors.lightGreyBg,
+    },
   });

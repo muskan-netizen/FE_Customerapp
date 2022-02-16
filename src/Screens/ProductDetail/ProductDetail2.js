@@ -76,6 +76,7 @@ export default function ProductDetail2({route, navigation}) {
     isVisibleAddonModal: false,
     lightBox: false,
     productQuantityForCart: 1,
+    typeId: null,
   });
   //Saving the initial state
   const initialState = cloneDeep(state);
@@ -100,6 +101,7 @@ export default function ProductDetail2({route, navigation}) {
     productQuantityForCart,
     isLoading,
     slider1ActiveSlide,
+    typeId,
   } = state;
 
   const customRight = () => {
@@ -189,7 +191,7 @@ export default function ProductDetail2({route, navigation}) {
           relatedProducts: res.data.relatedProducts,
           productPriceData: res.data.products.variant[0],
           addonSet: res.data.products.add_on,
-
+          typeId: res.data.products.category.category_detail.type_id,
           venderDetail: res.data.products.vendor,
           productTotalQuantity: res.data.products.variant[0].quantity,
           productVariantId: res.data.products.variant[0].id,
@@ -713,18 +715,17 @@ export default function ProductDetail2({route, navigation}) {
                     </View>
                   </View>
                 )}
-                <TouchableNativeFeedback
+                <TouchableOpacity
+                  activeOpacity={0.9}
                   onPress={() => _onAddtoWishlist(productDetailData)}>
-                  {productDetailData?.is_wishlist ? (
-                    <View>
-                      {!!productDetailData?.inwishlist ? (
-                        <Image source={imagePath.blackFilledHeart} />
-                      ) : (
-                        <Image source={imagePath.fav} />
-                      )}
-                    </View>
-                  ) : null}
-                </TouchableNativeFeedback>
+                  <View>
+                    {!!productDetailData?.inwishlist ? (
+                      <Image source={imagePath.blackFilledHeart} />
+                    ) : (
+                      <Image source={imagePath.fav} />
+                    )}
+                  </View>
+                </TouchableOpacity>
               </View>
             </>
           }
@@ -876,7 +877,9 @@ export default function ProductDetail2({route, navigation}) {
               <Text
                 style={{
                   color:
-                    productTotalQuantity && productTotalQuantity != 0
+                    (!!productTotalQuantity && !!productTotalQuantity != 0) ||
+                    (!!typeId && typeId == 8) ||
+                    !!productDetailData?.sell_when_out_of_stock
                       ? colors.green
                       : colors.orangeB,
                   fontSize: textScale(10),
@@ -884,14 +887,17 @@ export default function ProductDetail2({route, navigation}) {
                   fontFamily: fontFamily.medium,
                   textAlign: 'center',
                 }}>
-                {productTotalQuantity && productTotalQuantity != 0
+                {(!!productTotalQuantity && !!productTotalQuantity != 0) ||
+                (!!typeId && typeId == 8) ||
+                !!productDetailData?.sell_when_out_of_stock
                   ? ''
                   : strings.OUT_OF_STOCK}
               </Text>
             </View>
 
-            {!!productTotalQuantity &&
-              !!productTotalQuantity != 0 &&
+            {((!!productTotalQuantity && !!productTotalQuantity != 0) ||
+              (!!typeId && typeId == 8) ||
+              !!productDetailData?.sell_when_out_of_stock) &&
               (!!data?.showAddToCart ? null : (
                 <View
                   style={{

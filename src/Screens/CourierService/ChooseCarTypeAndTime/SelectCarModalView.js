@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
 import TransparentButtonWithTxtAndIcon from '../../../Components/TransparentButtonWithTxtAndIcon';
@@ -21,14 +22,14 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
+import {MyDarkTheme} from '../../../styles/theme';
+import {currencyNumberFormatter} from '../../../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../../../utils/helperFunctions';
 import ListEmptyCar from './ListEmptyCar';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../../styles/theme';
 
 export default function SelectCarModalView({
   isLoading = false,
@@ -158,9 +159,11 @@ export default function SelectCarModalView({
                   //   ? [styles.priceStyle, {color: MyDarkTheme.colors.text}]
                   //   : styles.priceStyle
                 }>
-                {`${currencies?.primary_currency?.symbol}${Number(
-                  item.tags_price,
-                ).toFixed(2)}`}
+                {`${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(item.tags_price).toFixed(2),
+                )}`}
               </Text>
             </View>
 
@@ -194,7 +197,9 @@ export default function SelectCarModalView({
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={styles.noCarsAvailable}>{'No cars available'}</Text>
+            <Text style={styles.noCarsAvailable}>
+              {strings.NO_CARS_AVAILABLE}
+            </Text>
           </View>
         )}
       </>

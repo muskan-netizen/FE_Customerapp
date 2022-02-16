@@ -1,25 +1,25 @@
 import React, {Fragment} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
-
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
+import {MyDarkTheme} from '../styles/theme';
+import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
 
-export default function CustomBottomTabBarTwo({
+const CustomBottomTabBarTwo = ({
   state,
   descriptors,
   navigation,
   bottomTabNotify,
 
   ...props
-}) {
+}) => {
   const insets = useSafeAreaInsets();
 
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
@@ -73,7 +73,12 @@ export default function CustomBottomTabBarTwo({
                 style={{
                   ...props.labelStyle,
                   ...styles.labelStyle,
-                  color: isFocused ? colors.white : colors.white,
+                  color: isFocused
+                    ? themeColors.secondary_color
+                    : getColorCodeWithOpactiyNumber(
+                        themeColors?.secondary_color.substr(1),
+                        70,
+                      ),
                   opacity: isFocused ? 1 : 0.6,
                 }}>
                 {label}
@@ -84,7 +89,7 @@ export default function CustomBottomTabBarTwo({
       })}
     </View>
   );
-}
+};
 
 export function stylesData({fontFamily, themeColors}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -120,3 +125,4 @@ export function stylesData({fontFamily, themeColors}) {
   });
   return styles;
 }
+export default React.memo(CustomBottomTabBarTwo);

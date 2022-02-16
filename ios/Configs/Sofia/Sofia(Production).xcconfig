@@ -1,0 +1,15 @@
+#include "Pods/Target Support Files/Pods-available_pods-Sofia/Pods-available_pods-Sofia.release.xcconfig"
+
+PROJECT_APPLE_ID = 1602213678
+PROJECT_BUNDLE_ID = com.app.sofia
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = Sofia
+PROJECT_GOOGLE_CLIENT_ID = 532815471833-49ppk38ojvncnriad2761c0ied8o3sgv.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.532815471833-49ppk38ojvncnriad2761c0ied8o3sgv
+PROJECT_FACEBOOK_ID = 627214048622015
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =SofiaInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4
+
+    

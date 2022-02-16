@@ -1,9 +1,9 @@
-#include "Pods/Target Support Files/Pods-Groupy/Pods-Groupy.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Groupy/Pods-available_pods-Groupy.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1585359307
 PROJECT_BUNDLE_ID = com.groupy
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 1
+PROJECT_BUILD_NUMBER = 6
 PROJECT_APP_NAME =Groupy
 PROJECT_GOOGLE_CLIENT_ID =943338871565-94kfndcrdpspt1fkhve683khk9g87kld.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.943338871565-94kfndcrdpspt1fkhve683khk9g87kld

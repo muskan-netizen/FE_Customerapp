@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 
-export default function BlurButton({con}) {
+const BlurButton = ({con}) => {
   const {appStyle, themeColors} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
 
@@ -30,4 +30,5 @@ export default function BlurButton({con}) {
       </Text>
     </View>
   );
-}
+};
+export default React.memo(BlurButton);

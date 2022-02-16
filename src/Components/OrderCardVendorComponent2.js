@@ -1,37 +1,37 @@
-import moment from 'moment';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Image,
-  ImageBackground,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
+  TextInput,
+  I18nManager,
+  Keyboard,
 } from 'react-native';
+import { useDarkMode } from 'react-native-dark-mode';
+import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
 import { dummyUser } from '../constants/constants';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
-import staticStrings from '../constants/staticStrings';
-import navigationStrings from '../navigation/navigationStrings';
+import actions from '../redux/actions';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {
-  getColorCodeWithOpactiyNumber,
-  getImageUrl,
-} from '../utils/helperFunctions';
-import { useDarkMode } from 'react-native-dark-mode';
 import { MyDarkTheme } from '../styles/theme';
-import { color } from 'react-native-reanimated';
+import { currencyNumberFormatter } from '../utils/commonFunction';
+import { getImageUrl, showError } from '../utils/helperFunctions';
+import ButtonWithLoader from './ButtonWithLoader';
 
-export default function OrderCardVendorComponent2({
+const OrderCardVendorComponent2 = ({
   data = {},
   titlestyle,
   selectedTab,
@@ -42,16 +42,29 @@ export default function OrderCardVendorComponent2({
   onPressReturnOrder,
   etaTime = null,
   cardStyle,
-}) {
+  updateLocalItem,
+  showRepeatOrderButton,
+  onRepeatOrderPress,
+}) => {
   let cardWidth = width - 21.5;
-
-  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
-    useSelector((state) => state?.initBoot);
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const businessType = appStyle?.homePageLayout; 
-   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const [reason, setReason] = useState('');
+  const [cancellationItem, setCancellationItem] = useState(null);
+  const [reasonError, setReasonError] = useState(false);
+  const [cancelLoader, setLoader] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const {
+    appData,
+    themeColors,
+    themeLayouts,
+    currencies,
+    languages,
+    appStyle,
+    themeToggle,
+    themeColor,
+  } = useSelector((state) => state?.initBoot);
+  const businessType = appStyle?.homePageLayout;
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const imageUrl =
     data && data.vendor
       ? getImageUrl(
@@ -64,6 +77,61 @@ export default function OrderCardVendorComponent2({
 
   const styles = stylesFunc({ fontFamily, themeColors });
 
+  const onCancel = async () => {
+    if (reason == '') {
+      setReasonError(true);
+      return;
+    }
+    setLoader(true);
+    const apiData = {
+      order_id: cancellationItem.order_id,
+      vendor_id: cancellationItem.vendor.id,
+      reject_reason: reason,
+    };
+    console.log('sendingapi data', apiData);
+    try {
+      const res = await actions.cancelOrder(apiData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      });
+      setLoader(false);
+      updateLocalItem(data);
+      hideModal();
+      console.log('cancellation res+++++', res);
+    } catch (error) {
+      // showError(error?.message || error?.error)
+      alert(error?.message || error?.error);
+      console.log('error raised', error);
+      setLoader(false);
+    }
+  };
+
+  const hideModal = () => {
+    setReason('');
+    setCancellationItem(null);
+    setReasonError(false);
+  };
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      (event) => {
+        setKeyboardHeight(event.endCoordinates.height + 10);
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      (event) => {
+        setKeyboardHeight(0);
+      },
+    );
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -75,103 +143,126 @@ export default function OrderCardVendorComponent2({
           : colors.white,
         ...cardStyle,
       }}>
-      {(!!etaTime || !!data?.scheduled_date_time) && (
+      {showRepeatOrderButton ? (
         <View
           style={{
-            ...styles.ariveView,
-            backgroundColor: themeColors?.primary_color,
+            marginTop: moderateScale(10),
+            marginRight: moderateScale(10),
           }}>
-          <Text
-            style={{
-              ...styles.ariveTextStyle,
-              color: colors.white,
-            }}>
-            {strings.YOUR_ORDER_WILL_ARRIVE_BY} {data?.scheduled_date_time ? data?.scheduled_date_time : etaTime}
-          </Text>
+          <TouchableOpacity
+            onPress={onRepeatOrderPress}
+            style={[
+              styles.orderAcceptAndReadyStyleSecond,
+              {
+                // backgroundColor: themeColor.primary_color,
+                paddingHorizontal: moderateScale(10),
+                paddingVertical: moderateScale(5),
+                borderRadius: moderateScale(3),
+                alignSelf: 'flex-end',
+              },
+            ]}>
+            <Text
+              style={{
+                fontSize: textScale(10),
+                color: colors.white,
+                fontFamily: fontFamily.bold,
+              }}>
+              Repeat Order
+            </Text>
+          </TouchableOpacity>
         </View>
-      )}
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}>
+      ) : null}
+      {/* {console.log('checking ssa', data)} */}
+      {data?.order_status?.current_status?.title !== strings.DELIVERED &&
+        data?.order_status?.current_status?.title !== strings.REJECTED &&
+        (!!etaTime || !!data?.scheduled_date_time) && (
           <View
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              padding: moderateScale(15),
-              flex: 1,
+              ...styles.ariveView,
+              backgroundColor: themeColors?.primary_color,
             }}>
-            <Image
-              source={{ uri: imageUrl }}
-              style={{
-                height: moderateScale(35),
-                width: moderateScale(35),
-                borderRadius: moderateScale(40 / 2),
-              }}
-            />
-
             <Text
-              numberOfLines={2}
-              style={
-                isDarkMode
-                  ? [styles.userName, { color: MyDarkTheme.colors.text }]
-                  : styles.userName
-              }>
-              {data?.vendor?.name || ''}
+              style={{
+                ...styles.ariveTextStyle,
+                color: colors.white,
+              }}>
+              {strings.YOUR_ORDER_WILL_ARRIVE_BY}{' '}
+              {data?.scheduled_date_time ? data?.scheduled_date_time : etaTime}
             </Text>
           </View>
+        )}
 
-          <View>
-            <View style={{ width: moderateScale(130) }}>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.orderLableStyle, { color: MyDarkTheme.colors.text }]
-                    : styles.orderLableStyle
-                }>
-                {`${strings.ORDER_ID}: #${data?.order_number}`}
-              </Text>
-              <Text
-                style={
-                  isDarkMode
-                    ? [
-                      styles.orderLableStyle,
-                      {
-                        color: MyDarkTheme.colors.text,
-                        marginVertical: moderateScaleVertical(5),
-                      },
-                    ]
-                    : [
-                      styles.orderLableStyle,
-                      {
-                        marginVertical: moderateScaleVertical(5),
-                        color: colors.black,
-                      },
-                    ]
-                }>{`${moment(data?.date_time).format('DD MMM, YYYY')} ${moment(
-                  data?.date_time,
-                ).format('LT')} `}</Text>
-            </View>
-          </View>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          alignItems: 'center',
+          padding: moderateScale(8),
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            flex: 0.5,
+            alignItems: 'flex-start',
+          }}>
+          <Image
+            source={{ uri: imageUrl }}
+            style={{
+              height: moderateScale(50),
+              width: moderateScale(50),
+              borderRadius: moderateScale(50 / 2),
+              resizeMode: 'contain',
+              marginRight: moderateScale(8),
+            }}
+          />
+          <Text
+            numberOfLines={2}
+            style={
+              isDarkMode
+                ? [styles.userName, { color: MyDarkTheme.colors.text }]
+                : styles.userName
+            }>
+            {data?.vendor?.name || ''}
+          </Text>
         </View>
-
-        {/* <View
-          style={{flex: 0.3, alignItems: 'center', padding: moderateScale(10)}}>
+        <View
+          style={{
+            flex: 0.5,
+            justifyContent: 'flex-end',
+            alignItems: 'flex-end',
+          }}>
           <Text
             style={
               isDarkMode
-                ? [styles.userName, {color: MyDarkTheme.colors.text}]
-                : [styles.userName]
-            }>{`${currencies?.primary_currency?.symbol}${
-            // Number(i?.pvariant?.multiplier) *
-            Number(data?.payable_amount).toFixed(2)
-          }`}</Text>
-        </View> */}
+                ? [styles.orderLableStyle, { color: MyDarkTheme.colors.text }]
+                : styles.orderLableStyle
+            }>
+            {`${strings.ORDER_ID}: #${data?.order_number}`}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                  styles.orderLableStyle,
+                  {
+                    color: MyDarkTheme.colors.text,
+                    marginVertical: moderateScaleVertical(5),
+                  },
+                ]
+                : [
+                  styles.orderLableStyle,
+                  {
+                    marginVertical: moderateScaleVertical(5),
+                    color: colors.black,
+                  },
+                ]
+            }>
+            {data?.date_time}
+          </Text>
+        </View>
       </View>
+
       <View
         style={[
           styles.borderStyle,
@@ -182,15 +273,36 @@ export default function OrderCardVendorComponent2({
           borderColor: colors.borderColorB,
           padding: moderateScale(10),
         }}>
-        <Text
+        <View
           style={{
-            fontFamily: fontFamily.semiBold,
-            fontSize: textScale(14),
+            flexDirection: 'row',
+            justifyContent: 'space-between',
             marginVertical: moderateScaleVertical(10),
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           }}>
-          {`${strings.TOTAL_ITEMS}: ${data?.product_details?.length}`}
-        </Text>
+          {businessType !== 4 ? (
+            <Text
+              style={{
+                fontFamily: fontFamily.semiBold,
+                fontSize: textScale(14),
+
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
+              {`${strings.TOTAL_ITEMS}: ${data?.product_details?.length}`}
+            </Text>
+          ) : (
+            <></>
+          )}
+          {/* {data?.order_status?.current_status?.title == strings.DELIVERED && (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => setModal(true)}>
+              <Image
+                style={{tintColor: themeColors.primary_color}}
+                source={imagePath.icAttachments}
+              />
+            </TouchableOpacity>
+          )} */}
+        </View>
         <ScrollView bounces={true}>
           {data?.product_details.map((i, inx) => {
             return (
@@ -277,7 +389,7 @@ export default function OrderCardVendorComponent2({
                 marginHorizontal: moderateScale(10),
               }}>{`${currencies?.primary_currency?.symbol}${
                 // Number(i?.pvariant?.multiplier) *
-                Number(data?.payable_amount).toFixed(2)
+                currencyNumberFormatter(Number(data?.payable_amount).toFixed(2))
                 }`}</Text>
           </View>
         </View>
@@ -308,19 +420,24 @@ export default function OrderCardVendorComponent2({
               </View>
             </View>
 
-            <TouchableOpacity
-              // onPress={onPressRateOrder}
-              onPress={onPressReturnOrder}
-              // style={{flex:0.6}}
-              style={styles.bottomSecondHalf}>
-              {businessType === 4 ? null : (
-                <View style={styles.orderAcceptAndReadyStyleSecond}>
-                  <Text style={styles.orderStatusStyleSecond}>
-                    {strings.RETURNORDER}
-                  </Text>
-                </View>
-              )}
-            </TouchableOpacity>
+            {data?.vendor?.return_request &&
+              data?.order_status?.current_status?.title !== strings.REJECTED ? (
+              <TouchableOpacity
+                // onPress={onPressRateOrder}
+                onPress={onPressReturnOrder}
+                // style={{flex:0.6}}
+                style={styles.bottomSecondHalf}>
+                {businessType === 4 ? null : (
+                  <View style={styles.orderAcceptAndReadyStyleSecond}>
+                    <Text style={styles.orderStatusStyleSecond}>
+                      {strings.RETURNORDER}
+                    </Text>
+                  </View>
+                )}
+              </TouchableOpacity>
+            ) : (
+              <View style={{ flex: 0.6 }} />
+            )}
           </View>
         ) : (
           <View
@@ -345,12 +462,12 @@ export default function OrderCardVendorComponent2({
                 </Text>
               </View>
             </View>
-            {selectedTab &&
-              data?.dispatch_traking_url &&
-              data?.product_details[0]?.category_type !=
+            {/* {selectedTab &&
+            data?.dispatch_traking_url &&
+            data?.product_details[0]?.category_type !=
               staticStrings.PICKUPANDDELIEVRY &&
-              (selectedTab == strings.ACTIVE_ORDERS ||
-                selectedTab == strings.SCHEDULED_ORDERS) ? (
+            (selectedTab == strings.ACTIVE_ORDERS ||
+              selectedTab == strings.SCHEDULED_ORDERS) ? (
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate(navigationStrings.WEBVIEWSCREEN, {
@@ -369,7 +486,7 @@ export default function OrderCardVendorComponent2({
                   </Text>
                 </View>
               </TouchableOpacity>
-            ) : null}
+            ) : null} */}
 
             {selectedTab &&
               (selectedTab != strings.ACTIVE_ORDERS ||
@@ -411,10 +528,126 @@ export default function OrderCardVendorComponent2({
             )}
           </View>
         )}
+        {data?.order_status?.current_status?.id == 1 ? (
+          <TouchableOpacity
+            onPress={() => setCancellationItem(data)}
+            activeOpacity={0.8}
+            style={{
+              alignSelf: 'flex-start',
+              marginLeft: moderateScale(10),
+              marginTop: moderateScaleVertical(8),
+            }}>
+            <Text
+              style={{
+                ...styles.orderStatusStyle,
+                color: colors.redB,
+                fontFamily: fontFamily.medium,
+              }}>
+              {strings.CANCEL_ORDER}
+            </Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
+
+      <Modal
+        isVisible={!!cancellationItem ? true : false}
+        onBackdropPress={hideModal}
+        // animationIn="zoomIn"
+        // animationOut="zoomOut"
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end',
+          marginBottom: moderateScale(keyboardHeight),
+        }}>
+        <View
+          style={{
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : colors.white,
+            borderRadius: moderateScale(8),
+            overflow: 'hidden',
+            paddingHorizontal: moderateScale(16),
+            paddingVertical: moderateScale(12),
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <Text />
+            <Text
+              style={{
+                fontSize: textScale(16),
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                alignSelf: 'center',
+                fontFamily: fontFamily.medium,
+              }}>
+              {strings.CANCELLATION_REASON}
+            </Text>
+            <TouchableOpacity onPress={hideModal}>
+              <Image
+                style={isDarkMode && { tintColor: colors.white }}
+                source={imagePath.closeButton}
+              />
+            </TouchableOpacity>
+          </View>
+
+          {!!reasonError && (
+            <Text
+              style={{
+                fontSize: textScale(12),
+                color: colors.redB,
+                fontFamily: fontFamily.medium,
+                marginTop: moderateScaleVertical(8),
+              }}>
+              {strings.REQUIRED}*{' '}
+            </Text>
+          )}
+
+          <View
+            style={{
+              // marginVertical: moderateScaleVertical(16),
+              backgroundColor: isDarkMode
+                ? colors.whiteOpacity15
+                : colors.greyNew,
+              height: moderateScale(82),
+              borderRadius: moderateScale(4),
+              paddingHorizontal: moderateScale(8),
+              marginTop: reasonError
+                ? moderateScaleVertical(8)
+                : moderateScaleVertical(16),
+            }}>
+            <TextInput
+              multiline
+              value={reason}
+              placeholder={strings.WRITE_YOUR_REASON_HERE}
+              onChangeText={(val) => setReason(val)}
+              style={{
+                ...styles.reasonText,
+                color: isDarkMode ? colors.textGreyB : colors.black,
+                textAlignVertical: 'top',
+              }}
+              onSubmitEditing={Keyboard.dismiss}
+              placeholderTextColor={
+                isDarkMode ? colors.textGreyB : colors.blackOpacity40
+              }
+            />
+          </View>
+          <ButtonWithLoader
+            isLoading={cancelLoader}
+            btnText={strings.CANCEL}
+            btnStyle={{
+              backgroundColor: themeColors.primary_color,
+              borderWidth: 0,
+            }}
+            onPress={onCancel}
+          />
+        </View>
+      </Modal>
     </TouchableOpacity>
   );
-}
+};
 export function stylesFunc({ fontFamily, themeColors }) {
   const commonStyles = commonStylesFunc({ fontFamily });
 
@@ -466,7 +699,6 @@ export function stylesFunc({ fontFamily, themeColors }) {
       opacity: 0.6,
     },
     userName: {
-      marginHorizontal: moderateScale(14),
       color: colors.textGreyI,
       fontFamily: fontFamily.medium,
       fontSize: textScale(14),
@@ -566,7 +798,7 @@ export function stylesFunc({ fontFamily, themeColors }) {
     trackStatusView: {
       paddingHorizontal: moderateScale(20),
       paddingVertical: moderateScale(8),
-      borderRadius: moderateScale(8.5),
+      borderRadius: moderateScale(8),
       alignItems: 'center',
     },
     bottomFirstHalf: {
@@ -591,6 +823,13 @@ export function stylesFunc({ fontFamily, themeColors }) {
       borderTopRightRadius: moderateScale(6),
       borderTopLeftRadius: moderateScale(6),
     },
+    reasonText: {
+      flex: 1,
+      fontFamily: fontFamily.medium,
+      textAlign: I18nManager.isRTL ? 'right' : 'left',
+      fontSize: textScale(11),
+    },
   });
   return styles;
 }
+export default React.memo(OrderCardVendorComponent2);

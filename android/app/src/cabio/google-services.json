@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "927603963989",
+    "project_id": "cabio-be8d8",
+    "storage_bucket": "cabio-be8d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:927603963989:android:4f550b67d44900850fbcdc",
+        "android_client_info": {
+          "package_name": "com.cabio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "927603963989-6dlu61fumav998eq75iajnd0kcc67a7q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cabio",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "927603963989-f85ge6j8sclt7f8q3j9euj033c3nh4kh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cabio",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "927603963989-hboes4u3bh1f1bph8uomenh464qsl9be.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cabio",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "927603963989-8611g2i2uqh1pjv78clo6da4fqm538fd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5z4MV_kFR0TAtJb--ji5S-tROldIMGUU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "927603963989-8611g2i2uqh1pjv78clo6da4fqm538fd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "927603963989-v65be4bsnl6a7rrim3jd5ophmlbgn8m9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cabio"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

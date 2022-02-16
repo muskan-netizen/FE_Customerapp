@@ -44,6 +44,16 @@ export default function Filter({route, navigation}) {
     showSortBy = true,
   } = route.params.data;
 
+  console.log(
+    allFilters,
+    getProductBasedOnFilter,
+    minPrice,
+    maxPrice,
+    checkForMinimumPriceChange,
+    checkForMaximumPriceChange,
+    'show all filter data',
+  );
+
   const [state, setState] = useState({
     isLoading: false,
     filterTypes: [],
@@ -257,23 +267,23 @@ export default function Filter({route, navigation}) {
     var allSelectedVariantOptionsPairs = allFilterData
       .filter((i) => i?.id != -1 && i?.id != -2)
       .map((itm, inx) => {
-        return itm.value;
+        return itm?.value;
       })
       .map((j, jnx) => {
         if (j.length) return j.filter((x) => x?.value?.selected);
       })
-      .filter((final) => final.length)
+      .filter((final) => final?.length)
       .map((finalArray, finalIndex) => {
-        finalArray.map((z, znx) => {
-          newData.push(z);
+        finalArray?.map((z, znx) => {
+          newData?.push(z);
         });
         return finalArray;
       });
 
     if (newData.length) {
       newData.map((i) => {
-        variants.push(i.variant_type_id);
-        options.push(i.id);
+        variants.push(i?.variant_type_id);
+        options.push(i?.id);
       });
       allSelectedVariantOptionsPairs = newData;
     }
@@ -405,6 +415,8 @@ export default function Filter({route, navigation}) {
       </View>
     );
   };
+
+  console.log(filterTypes, 'filterTypes');
 
   return (
     <WrapperContainer

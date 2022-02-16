@@ -26,9 +26,9 @@ const Banner = ({
   pagination = true,
   resizeMode = 'cover',
   setActiveState = () => {},
-  onPress = () => {},
   childView = null,
   showLightbox = false,
+  onPressImage = () => {}
 }) => {
   const {themeColors} = useSelector((state) => state?.initBoot);
 
@@ -51,14 +51,14 @@ const Banner = ({
           item.image.path.image_path,
           '1000/1000',
         )
-      : getImageUrl(item.image.image_fi, item.image.image_path, '1000/1000');
+      : getImageUrl(item.image.image_fit, item.image.image_path, '1000/1000');
 
     return (
       <>
         <TouchableOpacity
           activeOpacity={1}
           style={[styles.imageStyle, imagestyle]}
-          onPress={() => onPress(item)}>
+          onPress={onPressImage}>
           {/* <Lightbox
             underlayColor={'black'}
             renderContent={() => renderCarousel(imageUrl)}> */}
@@ -134,5 +134,4 @@ const styles = StyleSheet.create({
     // marginRight: 20
   },
 });
-
-export default Banner;
+export default React.memo(Banner);

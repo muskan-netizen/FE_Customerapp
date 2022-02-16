@@ -26,6 +26,7 @@ import BrandCard2 from '../../Components/BrandCard2';
 import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
 import { trim } from 'lodash';
 import NoDataFound from '../../Components/NoDataFound';
+import * as Animatable from 'react-native-animatable';
 
 export default function VendorDetail3({ navigation, route }) {
   let vendorParams = route?.params?.data;
@@ -34,8 +35,9 @@ export default function VendorDetail3({ navigation, route }) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const userData = useSelector((state) => state?.auth?.userData);
   const [state, setState] = useState({
-    vendorId: vendorParams?.item?.id || vendorParams.id,
+    vendorId: vendorParams?.item?.id || vendorParams?.id,
     vendordName: vendorParams.name || '',
     vendorData: [],
     isLoading: true,
@@ -68,7 +70,6 @@ export default function VendorDetail3({ navigation, route }) {
       date = localTime - localOffset;
     }
     date = new Date(date);
-    console.log('Converted time: ' + date);
     return date;
   };
 
@@ -85,11 +86,32 @@ export default function VendorDetail3({ navigation, route }) {
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Naviagtion to specific screen
-  const moveToNewScreen =
-    (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+  const moveToNewScreen = (item) => {
+    console.log('item++++ upper', item);
+
+    if (!!item?.type && item?.type?.id == 7) {
+      if (!!userData?.auth_token) {
+        item['pickup_taxi'] = true
+        item['redirect_to'] = item.type.redirect_to
+        navigation.navigate(navigationStrings.ADDADDRESS, { data: item })
+        return;
+      }
+      navigation.navigate(navigationStrings.OUTER_SCREEN, {})
+      return
+    }
+    navigation.navigate(navigationStrings.PRODUCT_LIST, {
+      data: {
+        id: item.id,
+        rootProducts: vendorParams?.rootProducts,
+        vendor: vendorParams?.rootProducts ? true : false,
+        vendorData: vendorParams?.item,
+        categoryInfo: item,
+        name: item.name,
+        isVendorList: false,
+        category_slug: item?.slug,
+      },
+    });
+  };
 
   /***********GET SUBCATEGORY  DETAIL DATA******** */
 
@@ -154,23 +176,18 @@ export default function VendorDetail3({ navigation, route }) {
 
   const _renderItem = ({ item, index }) => {
     return (
-   
+      <Animatable.View
+      animation={'fadeInLeft'}
+      delay={index*40}
+      >
         <BrandCard2
-          onPress={moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: item.id,
-            rootProducts: vendorParams?.rootProducts,
-            vendor: vendorParams?.rootProducts ? true : false,
-            vendorData: vendorParams?.item,
-            categoryInfo: item,
-            name: item.name,
-            isVendorList: false,
-          })}
+          onPress={() => moveToNewScreen(item)}
           // onPress={() => navigation.navigate(navigationStrings.PRODUCT_LIST)}
           data={item}
           withTextBG
           cardIndex={index}
         />
-   
+      </Animatable.View>
     );
   };
 
@@ -259,7 +276,9 @@ export default function VendorDetail3({ navigation, route }) {
           numColumns={3}
           ListHeaderComponent={<View style={{ height: 10 }} />}
           // columnWrapperStyle={{justifyContent: 'space-between'}}
-          ItemSeparatorComponent={() => <View style={{ height: moderateScale(4) }} />}
+          ItemSeparatorComponent={() => (
+            <View style={{ height: moderateScale(4) }} />
+          )}
           renderItem={_renderItem}
           ListEmptyComponent={
             !isLoading && (

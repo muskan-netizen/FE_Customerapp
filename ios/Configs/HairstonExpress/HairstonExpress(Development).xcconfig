@@ -1,8 +1,8 @@
-#include "Pods/Target Support Files/Pods-HairstonExpress/Pods-HairstonExpress.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-HairstonExpress/Pods-available_pods-HairstonExpress.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1581935552
 PROJECT_BUNDLE_ID = com.hairstonexpress
-PROJECT_APP_VERSION = 1.0
+PROJECT_APP_VERSION = 1.1
 PROJECT_BUILD_NUMBER = 1
 PROJECT_APP_NAME = HairstonExpress
 PROJECT_GOOGLE_CLIENT_ID = 681369500057-dih3ffn1dn3jnh7qko6k3ntd05uagiuv.apps.googleusercontent.com

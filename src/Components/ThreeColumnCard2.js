@@ -17,12 +17,12 @@ import {MyDarkTheme} from '../styles/theme';
 import {getImageUrl} from '../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
-export default function ThreeColumnCard2({
+const ThreeColumnCard2 = ({
   data = {},
   cardIndex,
   withTextBG = false,
   onPress = () => {},
-}) {
+}) => {
   //MarginHorizontal is 16 which is total 32
   //marginHorizontal for center item is 8 which is toal 16
   //total spcaing required is width-32+16 or 48
@@ -95,4 +95,5 @@ export default function ThreeColumnCard2({
       </Text>
     </TouchableOpacity>
   );
-}
+};
+export default React.memo(ThreeColumnCard2);

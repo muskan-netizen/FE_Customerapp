@@ -21,7 +21,7 @@ import {TextInput} from 'react-native-paper';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 
-export default function PhoneNumberInputWithUnderline({
+const PhoneNumberInputWithUnderline = ({
   cca2 = '',
   callingCode = '',
   onChangePhone,
@@ -31,7 +31,7 @@ export default function PhoneNumberInputWithUnderline({
   textInputStyle = {},
   undnerlineColor = colors.transparent,
   labelStyle = {},
-}) {
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -189,4 +189,5 @@ export default function PhoneNumberInputWithUnderline({
       )}
     </View>
   );
-}
+};
+export default React.memo(PhoneNumberInputWithUnderline);

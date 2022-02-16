@@ -207,7 +207,7 @@ export default function SearchProductVendorItem({navigation, route}) {
     );
   };
 
-  const _listEmptyComponent = () => {
+  const _listComponent = () => {
     return (
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
         <LottieView
@@ -290,7 +290,7 @@ export default function SearchProductVendorItem({navigation, route}) {
             marginHorizontal: moderateScale(20),
             // backgroundColor: 'black',
           }}
-          ListEmptyComponent={_listEmptyComponent}
+          //ListEmptyComponent={_listEmptyComponent}
           ItemSeparatorComponent={() => <View style={{height: 30}} />}
         />
       </View>

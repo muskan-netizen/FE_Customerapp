@@ -1,9 +1,17 @@
 import validator from 'is_js';
 import strings from '../constants/lang';
 import {parsePhoneNumber, isValidPhoneNumber} from 'libphonenumber-js';
-const checkEmpty = (val, key) => {
+const checkEmpty = (val, key, key2 = true) => {
   if (validator.empty(val.trim())) {
-    return `${strings.PLEASE_ENTER} ${key}`;
+    return `${strings.PLEASE_ENTER} ${key2 ? `${strings.YOUR} ` : ''}${key}`;
+  } else {
+    return '';
+  }
+};
+
+const checkEmptyForSelection = (val, key, key2 = true) => {
+  if (validator.empty(val)) {
+    return `${strings.PLEASE_SELECT} ${key2 ? `${strings.YOUR} ` : ''}${key}`;
   } else {
     return '';
   }
@@ -14,6 +22,14 @@ const checkMinLength = (val, minLength, key) => {
     return `${strings.PLEASE_ENTER_VALID} ${key}`;
   } else {
     return '';
+  }
+};
+
+const checkNumeric = (val, key) => {
+  if (isNaN(val)) {
+    return false;
+  } else {
+    return `${strings.PLEASE_ENTER_VALID_NUMERIC} ${key}`;
   }
 };
 
@@ -36,6 +52,26 @@ export default function (data) {
     states,
     country,
     callingCode,
+    promocode,
+    vendorName,
+    vendorAddress,
+    driverType,
+    driverTeam,
+    driverTransportDetails,
+    driverUID,
+    driverLicencePlate,
+    driverColor,
+    driverTransportType,
+    selectedBuisnessType,
+    productCategory,
+    productDetail,
+    productName,
+    mrp,
+    salePrice,
+    vendorLogo,
+    vendorTitle,
+    vendorDesc,
+    isTermsConditions,
   } = data;
   console.log(message, 'message');
   if (username !== undefined) {
@@ -59,6 +95,61 @@ export default function (data) {
       if (minLengthValidation !== '') {
         return minLengthValidation;
       }
+    }
+  }
+  if (selectedBuisnessType !== undefined) {
+    let emptyValidationText = checkEmpty(
+      selectedBuisnessType,
+      strings.ENTER_NEW_ADDRESS,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+  if (productCategory !== undefined) {
+    let emptyValidationText = checkEmpty(
+      productCategory,
+      strings.ENTER_NEW_ADDRESS,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+  if (productDetail !== undefined) {
+    let emptyValidationText = checkEmpty(
+      productDetail,
+      strings.ENTER_NEW_ADDRESS,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+  if (productName !== undefined) {
+    let emptyValidationText = checkEmpty(
+      productName,
+      strings.ENTER_NEW_ADDRESS,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+  if (mrp !== undefined) {
+    let emptyValidationText = checkEmpty(mrp, strings.ENTER_NEW_ADDRESS);
+    let checkNumericValue = checkNumeric(mrp, strings.ENTER_NEW_ADDRESS);
+    console.log(checkNumericValue, 'checkNumericValue');
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    } else if (checkNumericValue) {
+      return checkNumericValue;
+    }
+  }
+  if (salePrice !== undefined) {
+    let emptyValidationText = checkEmpty(salePrice, strings.ENTER_NEW_ADDRESS);
+    let checkNumericValue = checkNumeric(salePrice, strings.ENTER_NEW_ADDRESS);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    } else if (checkNumericValue) {
+      return checkNumericValue;
     }
   }
 
@@ -133,6 +224,9 @@ export default function (data) {
   // }
 
   if (email !== undefined) {
+    if (email === 'emptyValid') {
+      return;
+    }
     let emptyValidationText = checkEmpty(email, strings.EMAIL);
     if (emptyValidationText !== '') {
       return emptyValidationText;
@@ -144,23 +238,26 @@ export default function (data) {
   }
 
   if (phoneNumber !== undefined) {
+    if (phoneNumber === 'emptyValid') {
+      return;
+    }
     // let emptyValidationText = checkEmpty(phoneNumber, strings.PHONE_NUMBER);
     // if (emptyValidationText !== '') {
     //   return emptyValidationText;
     // }
-    // if (!/^[0][1-9]$|^[1-9]\d{8,14}$/.test(phoneNumber)) {
-    //   return strings.PLEASE_ENTER_VALID_PHONE_NUMBER;
-    // }
+    if (!/^[0][1-9]$|^[1-9]\d{4,14}$/.test(phoneNumber)) {
+      return strings.PLEASE_ENTER_VALID_PHONE_NUMBER;
+    }
 
-    let isTrue = isValidPhoneNumber(`+${callingCode}${phoneNumber}`);
+    // let isTrue = isValidPhoneNumber(`+${callingCode}${phoneNumber}`);
 
     if (phoneNumber == '') {
       return strings.PLEASE_ENTER_YOUR_PHONE_NUMBER;
     }
-    if (isTrue) {
-    } else {
-      return strings.PHONE_NUMBER_NOT_VALID;
-    }
+    // if (isTrue) {
+    // } else {
+    //   return strings.PHONE_NUMBER_NOT_VALID;
+    // }
   }
 
   if (otp !== undefined) {
@@ -181,6 +278,13 @@ export default function (data) {
   // 		}
   // 	}
   // }
+
+  if (vendorTitle !== undefined) {
+    let emptyValidationText = checkEmpty(vendorTitle, 'title', false);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
 
   if (password !== undefined) {
     let emptyValidationText = checkEmpty(password, strings.PASSWORD);
@@ -238,6 +342,141 @@ export default function (data) {
       if (minLengthValidation !== '') {
         return minLengthValidation;
       }
+    }
+  }
+
+  if (promocode !== undefined) {
+    let emptyValidationText = checkEmpty(promocode, strings.PROMO_CODE);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    } else {
+      let minLengthValidation = checkMinLength(
+        promocode,
+        3,
+        strings.PROMO_CODE,
+      );
+      if (minLengthValidation !== '') {
+        return minLengthValidation;
+      }
+    }
+  }
+
+  if (vendorLogo !== undefined) {
+    if (validator.empty(vendorLogo)) {
+      return 'Please upload vendor logo';
+    }
+  }
+
+  if (vendorName !== undefined) {
+    let emptyValidationText = checkEmpty(
+      vendorName,
+      strings.ENTER_VENDOR_NAME,
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    } else {
+      let minLengthValidation = checkMinLength(
+        vendorName,
+        3,
+        strings.ENTER_VENDOR_NAME,
+      );
+      if (minLengthValidation !== '') {
+        return minLengthValidation;
+      }
+    }
+  }
+
+  if (vendorDesc !== undefined) {
+    let emptyValidationText = checkEmpty(vendorDesc, 'description', false);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
+  if (vendorAddress !== undefined) {
+    let emptyValidationText = checkEmpty(
+      vendorAddress,
+      strings.VENDOR_ADDRESS,
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
+  // if(!isTermsConditions){
+  //   return "Please accecpt Terms & Conditions"
+  // }
+
+  if (driverType !== undefined) {
+    let emptyValidationText = checkEmptyForSelection(
+      driverType,
+      'valid driver type',
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
+  if (driverTeam !== undefined) {
+    let emptyValidationText = checkEmptyForSelection(
+      driverTeam,
+      'valid driver team',
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
+  if (driverTransportDetails !== undefined) {
+    let emptyValidationText = checkEmpty(
+      driverTransportDetails,
+      'year, make , model',
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
+  if (driverUID !== undefined) {
+    let emptyValidationText = checkEmpty(driverUID, strings.UID, false);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+  if (driverLicencePlate !== undefined) {
+    let emptyValidationText = checkEmpty(
+      driverLicencePlate,
+      'valid Licence Plate',
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+  if (driverColor !== undefined) {
+    let emptyValidationText = checkEmpty(
+      driverColor,
+      'valid color name',
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
+  if (driverTransportType !== undefined) {
+    let emptyValidationText = checkEmptyForSelection(
+      driverTransportType,
+      'valid transport type',
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
     }
   }
 }

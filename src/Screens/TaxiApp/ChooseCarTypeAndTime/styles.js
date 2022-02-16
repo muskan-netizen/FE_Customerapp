@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {I18nManager, StyleSheet} from 'react-native';
 import store from '../../../redux/store';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
@@ -27,7 +27,7 @@ export default ({fontFamily, themeColors}) => {
       //   themeColors.primary_color.substr(1),
       //   20,
       // ),
-      paddingVertical: moderateScaleVertical(15),
+      paddingVertical: moderateScaleVertical(10),
       paddingHorizontal: moderateScaleVertical(10),
       marginVertical: moderateScaleVertical(10),
       flexDirection: 'row',
@@ -41,8 +41,7 @@ export default ({fontFamily, themeColors}) => {
     },
     container: {
       flex: 1,
-      justifyContent: 'flex-end',
-      alignItems: 'center',
+      backgroundColor: '#fff',
     },
     map: {
       ...StyleSheet.absoluteFillObject,
@@ -78,10 +77,8 @@ export default ({fontFamily, themeColors}) => {
     },
     bottomView: {
       backgroundColor: colors.white,
-      borderTopLeftRadius: moderateScale(25),
-      borderTopRightRadius: moderateScale(25),
-      overflow: 'hidden',
-      height: height / 2,
+
+      minHeight: height / 2,
       width: width,
     },
     bottomView3: {
@@ -190,14 +187,19 @@ export default ({fontFamily, themeColors}) => {
     plainView: {
       alignItems: 'center',
       justifyContent: 'center',
-      width: width / 2.5,
-      maxWidth: width / 2.5,
+      // left: 20,
+      borderRadius: moderateScale(2),
+      shadowColor: '#000',
+      shadowOffset: {width: 0, height: 1},
+      shadowOpacity: 0.1,
+      shadowRadius: 2,
+      elevation: 2,
     },
     pickupDropOff: {
-      textAlign: 'left',
-      color: colors.themeColor,
+      textAlign: 'center',
+      alignItems: 'center',
       fontFamily: fontFamily.regular,
-      fontSize: textScale(12),
+      fontSize: textScale(10),
     },
     pickupDropOffAddress: {
       textAlign: 'left',
@@ -245,6 +247,12 @@ export default ({fontFamily, themeColors}) => {
       fontFamily: fontFamily.bold,
       fontSize: textScale(13),
       marginLeft: moderateScale(10),
+    },
+    insctructionText: {
+      flex: 1,
+      fontFamily: fontFamily.medium,
+      textAlign: I18nManager.isRTL ? 'right' : 'left',
+      fontSize: textScale(11),
     },
   });
   return styles;

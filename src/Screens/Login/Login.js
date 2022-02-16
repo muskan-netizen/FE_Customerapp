@@ -40,10 +40,19 @@ import stylesFunc from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {mobile} from 'is_js';
+import {useNavigation} from '@react-navigation/native';
+import {checkIsAdmin} from '../../utils/utils';
 
 export default function Login({navigation}) {
+  const navigation_ = useNavigation();
+  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
+    (state) => state?.initBoot,
+  );
+  const {apple_login, fb_login, twitter_login, google_login} = useSelector(
+    (state) => state?.initBoot?.appData?.profile?.preferences,
+  );
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -52,7 +61,7 @@ export default function Login({navigation}) {
 
   const [state, setState] = useState({
     // email: '',
-    // password: '',
+    password: '',
     isLoading: false,
     phoneInput: false,
     phoneNoVisibility: false,
@@ -71,15 +80,9 @@ export default function Login({navigation}) {
         : 'IN',
       focus: false,
       countryName: '',
+      isShowPassword: false,
     },
   });
-
-  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
-    (state) => state?.initBoot,
-  );
-  const {apple_login, fb_login, twitter_login, google_login} = useSelector(
-    (state) => state?.initBoot?.appData?.profile?.preferences,
-  );
 
   const fontFamily = appStyle?.fontSizeData;
   //CLone deep all the states
@@ -101,6 +104,7 @@ export default function Login({navigation}) {
     mobilNo,
     email,
     number,
+    isShowPassword,
   } = state;
 
   //Naviagtion to specific screen
@@ -127,6 +131,33 @@ export default function Login({navigation}) {
     return true;
   };
 
+  const checkIfEmailVerification = (_data) => {
+    if (
+      !!_data?.client_preference?.verify_email ||
+      !!_data?.client_preference?.verify_phone
+    ) {
+      if (
+        !_data?.verify_details?.is_email_verified &&
+        !!_data?.client_preference?.verify_email
+      ) {
+        moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+          data: _data,
+        })();
+      } else if (
+        !_data?.verify_details?.is_phone_verified &&
+        !!_data?.client_preference?.verify_phone
+      ) {
+        moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+          data: _data,
+        })();
+      } else {
+        checkIsAdmin(navigation_, navigation, _data);
+      }
+    } else {
+      checkIsAdmin(navigation_, navigation, _data);
+    }
+  };
+
   //Login api fucntion
   const _onLogin = async () => {
     let fcmToken = await AsyncStorage.getItem('fcmToken');
@@ -145,8 +176,8 @@ export default function Login({navigation}) {
       dialCode: mobilNo.focus ? mobilNo.callingCode : '',
       countryData: mobilNo.focus ? mobilNo.cca2 : '',
     };
-    console.log(data, 'dataaa');
     updateState({isLoading: true});
+    console.log('chck login data >>>', data);
     actions
       .loginUsername(data, {
         code: appData?.profile?.code,
@@ -161,14 +192,9 @@ export default function Login({navigation}) {
                 username: mobilNo?.phoneNo,
                 dialCode: mobilNo?.callingCode,
                 countryData: mobilNo?.cca2,
+                data: res.data,
               })
-            : !!res.data?.client_preference?.verify_email ||
-              !!res.data?.client_preference?.verify_phone
-            ? !!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified
-              ? navigation.push(navigationStrings.DRAWER_ROUTES)
-              : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : navigation.push(navigationStrings.DRAWER_ROUTES);
+            : checkIfEmailVerification(res.data);
         }
         updateState({isLoading: false});
         getCartDetail();
@@ -196,7 +222,6 @@ export default function Login({navigation}) {
   //Error handling in api
   const errorMethod = (error) => {
     updateState({isLoading: false});
-
     setTimeout(() => {
       showError(error?.message || error?.error);
     }, 500);
@@ -243,9 +268,9 @@ export default function Login({navigation}) {
           !!res.data?.client_preference?.verify_phone
             ? !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
-              ? navigation.push(navigationStrings.DRAWER_ROUTES)
+              ? checkIsAdmin()
               : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : navigation.push(navigationStrings.DRAWER_ROUTES);
+            : checkIsAdmin();
         }
         updateState({isLoading: false});
         getCartDetail();
@@ -316,7 +341,8 @@ export default function Login({navigation}) {
       mobilNo: {
         phoneNo: mobilNo.phoneNo,
         cca2: data.cca2,
-        callingCode: data.callingCode,
+        callingCode: data.callingCode.toString(),
+        focus: true,
       },
       // cca2: data.cca2,
       // callingCode: data.mobilNo.callingCode[0],
@@ -356,6 +382,7 @@ export default function Login({navigation}) {
       });
     }
   };
+
   /*************************** On Text Change
    */ const textChangeHandler = (type, data, value = 'value') => {
     updateState((preState) => {
@@ -368,8 +395,10 @@ export default function Login({navigation}) {
     });
   };
 
-  console.log(mobilNo, 'mobilNo');
-  console.log(email, 'email');
+  const showHidePassword = () => {
+    updateState({isShowPassword: !isShowPassword});
+  };
+
   return (
     <WrapperContainer
       isLoadingB={isLoading}
@@ -443,7 +472,17 @@ export default function Login({navigation}) {
               onChangeText={_onChangeText('password')}
               placeholder={strings.ENTER_PASSWORD}
               value={password}
-              secureTextEntry={true}
+              secureTextEntry={isShowPassword ? false : true}
+              rightIcon={
+                password.length > 0
+                  ? !isShowPassword
+                    ? imagePath.icShowPassword
+                    : imagePath.icHidePassword
+                  : false
+              }
+              onPressRight={showHidePassword}
+              isShowPassword={isShowPassword}
+              rightIconStyle={{}}
             />
           </>
         )}
@@ -551,7 +590,7 @@ export default function Login({navigation}) {
               </View>
             )}
             {!!fb_login && (
-              <View style={{marginVertical: moderateScaleVertical(15)}}>
+              <View style={{marginTop: moderateScaleVertical(15)}}>
                 <TransparentButtonWithTxtAndIcon
                   icon={imagePath.ic_fb2}
                   btnText={strings.CONTINUE_FACEBOOK}
@@ -571,22 +610,24 @@ export default function Login({navigation}) {
               </View>
             )}
             {!!twitter_login && (
-              <TransparentButtonWithTxtAndIcon
-                icon={imagePath.ic_twitter2}
-                btnText={strings.CONTINUE_TWITTER}
-                containerStyle={{
-                  backgroundColor: isDarkMode
-                    ? MyDarkTheme.colors.lightDark
-                    : colors.white,
-                  borderColor: colors.borderColorD,
-                  borderWidth: 1,
-                }}
-                textStyle={{
-                  color: isDarkMode ? colors.white : colors.textGreyB,
-                  marginHorizontal: moderateScale(10),
-                }}
-                nPress={() => openTwitterLogin()}
-              />
+              <View style={{marginTop: moderateScaleVertical(15)}}>
+                <TransparentButtonWithTxtAndIcon
+                  icon={imagePath.ic_twitter2}
+                  btnText={strings.CONTINUE_TWITTER}
+                  containerStyle={{
+                    backgroundColor: isDarkMode
+                      ? MyDarkTheme.colors.lightDark
+                      : colors.white,
+                    borderColor: colors.borderColorD,
+                    borderWidth: 1,
+                  }}
+                  textStyle={{
+                    color: isDarkMode ? colors.white : colors.textGreyB,
+                    marginHorizontal: moderateScale(10),
+                  }}
+                  nPress={() => openTwitterLogin()}
+                />
+              </View>
             )}
 
             {!!apple_login && Platform.OS == 'ios' && (
@@ -618,7 +659,7 @@ export default function Login({navigation}) {
                 ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
                 : {...styles.txtSmall, color: colors.textGreyLight}
             }>
-            {strings.ALREADY_HAVE_AN_ACCOUNT}
+            {strings.DONT_HAVE_ACCOUNT}
             <Text
               onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
               style={{

@@ -1,10 +1,10 @@
-#include "Pods/Target Support Files/Pods-Tranzit/Pods-Tranzit.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Tranzit/Pods-available_pods-Tranzit.debug.xcconfig"
 
 
 PROJECT_APPLE_ID = 1561966015
 PROJECT_BUNDLE_ID = com.tranzit
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 5
+PROJECT_BUILD_NUMBER = 9
 PROJECT_APP_NAME = Tranzit Delivery
 PROJECT_GOOGLE_CLIENT_ID = 763946330264-cdo8aerrunbot0fv1strlmhv5qnnvh0e.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.763946330264-cdo8aerrunbot0fv1strlmhv5qnnvh0e
