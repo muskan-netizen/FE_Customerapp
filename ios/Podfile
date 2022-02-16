@@ -1144,25 +1144,50 @@ target 'Bluebolt' do
   
 end
 
+#ONTHEGO Target
+target 'ONTHEGO' do
+  
+end
+
+#MylaGlobal Target
+target 'MylaGlobal' do
+  
+end
+
+#AmbuTap Target
+target 'AmbuTap' do
+  
+end
+
+#Sabroson Target
+target 'Sabroson' do
+
+end
+
+#SwiffyLLC Target
+target 'SwiffyLLC' do
+
+end
+
 #MeatEasy Target
 target 'MeatEasy' do
   
 end
 
-#BoltDelivery Target
-target 'BoltDelivery' do
+# #BoltDelivery Target
+# target 'BoltDelivery' do
   
-end
+# end
 
 #GamaDelivery Target
-target 'GamaDelivery' do
+# target 'GamaDelivery' do
   
-end
+# end
 
-#Hivefair Target
-target 'Hivefair' do
+# #Hivefair Target
+# target 'Hivefair' do
   
-end
+# end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

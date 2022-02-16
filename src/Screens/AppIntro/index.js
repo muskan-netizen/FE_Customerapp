@@ -63,7 +63,7 @@ class AppIntro extends React.Component {
                 title: '',
                 text: '',
                 // image: {uri: `${el.file_name.image_fit}${Math.round(Dimensions.get('screen').width)}/${Math.round(Dimensions.get('screen').height)}${el.file_name.image_path}`},
-                image: `${el.file_name.image_fit}6000/10000${el.file_name.image_path}`,
+                image: `${el.file_name.image_fit}800/1600${el.file_name.image_path}`,
                 backgroundColor: '#22bcb5',
             }
         })

@@ -966,7 +966,7 @@ export default function ProductDetail({ route, navigation }) {
         leftIcon={
           appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
         }
-        centerTitle={productDetailData?.translation[0]?.title}
+        centerTitle={venderDetail?.name}
         textStyle={{ fontSize: textScale(14) }}
         rightIcon={
           !!data?.showAddToCart

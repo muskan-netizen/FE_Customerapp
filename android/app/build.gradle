@@ -203,6 +203,16 @@ android {
             versionCode 3
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.customer.ace'
+            resValue "string", "app_name", "Ace"
+            resValue "string", "host_name", ""
+         }
+           royoorder {
+            dimension "appType"
+            versionCode 3
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             // applicationIdSuffix ".royoorder"
             applicationId 'com.codebrew.royoorder'
@@ -2218,7 +2228,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.myfiji'
-            resValue "string", "app_name", "Fiji eats"
+            resValue "string", "app_name", "My fiji"
             resValue "string", "host_name", ""
          } 
           fastmikes{
@@ -2511,27 +2521,56 @@ android {
             resValue "string", "app_name", "Bolt Delivery Services"
             resValue "string", "host_name", ""
          }
-          gamaDelivery{
+         onthego{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
-            applicationId 'com.gamaDelivery'
-            resValue "string", "app_name", "Gama Delivery"
+            applicationId 'com.customer.onthego'
+            resValue "string", "app_name", "ONTHEGO"
             resValue "string", "host_name", ""
          }
-     hivefair{
+        mylaglobal{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
-            applicationId 'com.hivefair'
-            resValue "string", "app_name", "Hivefair"
+            applicationId 'com.mylaglobal'
+            resValue "string", "app_name", "Myla Global"
             resValue "string", "host_name", ""
          }
-
+         ambutap{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ambutap'
+            resValue "string", "app_name", "AmbuTap"
+            resValue "string", "host_name", ""
+         }
+         sabroson{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.sabroson'
+            resValue "string", "app_name", "Sabroson"
+            resValue "string", "host_name", ""
+         }
+         swiffyllc{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.swiffyllc'
+            resValue "string", "app_name", "Swiffy LLC"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

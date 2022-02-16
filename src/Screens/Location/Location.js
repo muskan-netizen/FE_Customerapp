@@ -13,6 +13,7 @@ import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import { hitSlopProp } from '../../styles/commonStyles';
 import {
@@ -42,6 +43,7 @@ export default function Location({ route, navigation }) {
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const userData = useSelector((state) => state?.auth?.userData);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
@@ -53,9 +55,10 @@ export default function Location({ route, navigation }) {
     },
     nearByAddressess: [],
     searchResult: [],
+    savedAddress: []
   });
 
-  const { isLoading, address, curLatLng, nearByAddressess, searchResult } = state;
+  const { isLoading, address, curLatLng, nearByAddressess, searchResult, savedAddress } = state;
 
   //Reduc store data
   const { appData, appStyle, themeColors } = useSelector(
@@ -78,8 +81,13 @@ export default function Location({ route, navigation }) {
         navigation.navigate(screenName, { data });
       };
 
+
+
   useEffect(() => {
     getLiveLocation();
+    if (!!userData?.auth_token) {
+      getAllAddress();
+    }
   }, []);
 
   const getLiveLocation = async () => {
@@ -144,11 +152,7 @@ export default function Location({ route, navigation }) {
       .catch((err) => console.log(err, 'errorOccured'));
   };
 
-  const handleAddressOnKeyUp = (text) => {
-    updateState({ address: text });
-  };
-
-  const _moveToNextScreen = (data) => { };
+  
 
   const updateCurValues = (text) => {
     updateState({ address: text });
@@ -193,8 +197,53 @@ export default function Location({ route, navigation }) {
         console.log("something wen't wrong");
       }
     } else {
-      alert(strings.PLACE_ID_NOT_FOUND);
+      let details = {
+        formatted_address: place?.address,
+        geometry: {
+          location: {
+            lat: place?.latitude,
+            lng: place?.longitude,
+          },
+        }
+      }
+      if (type == 'Home1') {
+        navigation.navigate(navigationStrings.HOME, {
+          details,
+        });
+      }
+      if (type == 'Pickup') {
+        navigation.navigate(navigationStrings.PICKUPLOCATION, {
+          details,
+          addressType,
+        });
+      }
     }
+  };
+
+
+  const getAllAddress = () => {
+    actions.getAddress(
+      {},
+      {
+        code: appData?.profile?.code,
+      },
+    )
+      .then((res) => {
+        console.log(res, 'res address>>>>');
+        if (res?.data?.length > 0) {
+          let modifyArray = res.data.filter((val, i) => {
+            if (!!val?.latitude && !!val?.longitude) {
+              return val
+            }
+          })
+          updateState({ savedAddress: modifyArray })
+        }
+
+      })
+      .catch((error) => {
+        updateState({ isLoading: false });
+        // showError(error?.message || error?.error);
+      });
   };
 
   const renderAddressess = (item) => {
@@ -207,7 +256,7 @@ export default function Location({ route, navigation }) {
             : colors.lightGreyBg,
         }}
         onPress={() =>
-          onPressAddress({ place_id: item.place_id, name: item.name })
+          onPressAddress(item)
         }>
         <View style={{ flex: 0.12 }}>
           <Image
@@ -226,7 +275,7 @@ export default function Location({ route, navigation }) {
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               fontFamily: fontFamily.regular,
             }}>
-            {item?.name}
+            {item?.name || item?.city || item?.country}
           </Text>
           <Text
             numberOfLines={2}
@@ -236,7 +285,7 @@ export default function Location({ route, navigation }) {
               fontFamily: fontFamily.regular,
               lineHeight: moderateScaleVertical(20),
             }}>
-            {item?.vicinity}
+            {item?.vicinity || item?.address}
           </Text>
         </View>
       </TouchableOpacity>
@@ -263,7 +312,7 @@ export default function Location({ route, navigation }) {
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               fontFamily: fontFamily.regular,
             }}>
-            {item?.name}
+            {item?.name || item?.city}
           </Text>
           <Text
             numberOfLines={2}
@@ -336,7 +385,9 @@ export default function Location({ route, navigation }) {
 
         <ScrollView
           keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}>
+          showsVerticalScrollIndicator={false}
+          onMomentumScrollBegin={()=>Keyboard.dismiss()}
+          >
           {!!searchResult && searchResult.length > 0 ? (
             <View style={{ marginTop: moderateScaleVertical(16) }}>
               <View style={{ ...styles.savedAddressView }}>
@@ -376,6 +427,35 @@ export default function Location({ route, navigation }) {
               {nearByAddressess.slice(0, 5).map((val) => {
                 return renderAddressess(val);
               })}
+
+              {savedAddress.length > 0 ? <View style={{
+                marginBottom: moderateScaleVertical(92)
+              }}>
+                <View style={{
+                  ...styles.savedAddressView,
+                  marginTop: moderateScaleVertical(12),
+
+                }}>
+                  <Image
+                    style={{ marginHorizontal: moderateScale(12) }}
+                    source={imagePath.starRoundedBackground}
+                  />
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      ...styles.addresssLableName,
+                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    }}>
+                    {strings.SAVED_ADDRESS}
+                  </Text>
+                </View>
+                {savedAddress.length > 0 ? <View>
+                  {savedAddress.map((val) => {
+                    return renderAddressess(val);
+                  })}
+
+                </View> : null}
+              </View> : null}
             </View>
           )}
         </ScrollView>

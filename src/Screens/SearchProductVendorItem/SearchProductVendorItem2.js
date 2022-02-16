@@ -502,6 +502,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
           }}
           imageResizeMode="cover"
           onPress={() => onPressRecommendedVendors(item)}
+          isMaxSaftey={false}
         />
       </View>
     );
@@ -649,6 +650,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
             isVoiceRecord={isVoiceRecord}
             onVoiceStop={onVoiceStop}
             onVoiceListen={onVoiceListen}
+            
           />
         </View>
 
@@ -676,7 +678,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
               keyExtractor={(item, index) => String(index)}
               keyboardShouldPersistTaps="always"
               showsVerticalScrollIndicator={false}
-              style={{flex: 1, marginVertical: moderateScaleVertical(10)}}
+              style={{flex: 1}}
               ListEmptyComponent={_listEmptyComponent}
               ItemSeparatorComponent={() => (
                 <View style={{height: moderateScale(20)}} />

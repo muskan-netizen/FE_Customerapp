@@ -1,4 +1,4 @@
-import {requireNativeComponent} from 'react-native';
+import { requireNativeComponent } from 'react-native';
 
 export default {
   dropdownTriangle: require('../assets/images/ic_dropdown.png'),
@@ -101,6 +101,7 @@ export default {
   editBlue: require('../assets/images/ic_edit.png'),
   crossB: require('../assets/images/ic_close_4.png'),
   icClose3: require('../assets/images/ic_close_3.png'),
+  icClose4: require('../assets/images/ic_close4.png'),
   check: require('../assets/images/ic_check.png'),
   unCheck: require('../assets/images/ic_uncheck.png'),
   workActive: require('../assets/images/ic_work_active.png'),
@@ -498,4 +499,7 @@ export default {
   activeTruck: require('../assets/images/ic_truck2.png'),
   inactiveTruck: require('../assets/images/ic_truck1.png'),
   icMic: require('../assets/images/ic_mic.png'),
+  icVoice: require('../assets/images/icVoice.png'),
+  icDropdown4: require('../assets/images/ic_drpdwn4.png'),
+  icMegaSafe: require('../assets/images/ic_label.png'),
 };

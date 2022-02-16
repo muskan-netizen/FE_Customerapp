@@ -398,7 +398,6 @@ export default function SelectPaymentModal({
                 style={{
                     marginHorizontal: moderateScaleVertical(20),
                     marginBottom:
-                        moderateScaleVertical(80) +
                         (keyboardHeight == 0
                             ? keyboardHeight
                             : moderateScale(keyboardHeight - 80)),

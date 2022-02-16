@@ -226,6 +226,11 @@ const shortCodes = {
   tumbak: '59944a',
   iPicknDrop: 'f9cf93',
   bluebolt: 'e5a64c',
+  onthego: '5e0900',
+  mylaglobal: 'a35cd8',
+  ambutap: 'b436bb',
+  sabroson: 'af268c',
+  swiffyllc: 'da7ecb',
   meatEasy: '3e89e5',
   boltDelivery: '07a31a',
   gamaDelivery: 'b77561',
@@ -1085,7 +1090,7 @@ const appIds = {
     ios: 'com.cannabisClubSF',
     android: 'com.cannabisClubSF',
   }),
-  cannabisClubSF: Platform.select({
+  halaTalabat: Platform.select({
     ios: 'com.halaTalabat',
     android: 'com.halaTalabat',
   }),
@@ -1132,6 +1137,26 @@ const appIds = {
   bluebolt: Platform.select({
     ios: 'com.app.bluebolt',
     android: 'com.app.bluebolt',
+  }),
+  onthego: Platform.select({
+    ios: 'com.customer.onthego',
+    android: 'com.customer.onthego',
+  }),
+  mylaglobal: Platform.select({
+    ios: 'com.mylaglobal',
+    android: 'com.mylaglobal',
+  }),
+  ambutap: Platform.select({
+    ios: 'com.ambutap',
+    android: 'com.ambutap',
+  }),
+  sabroson: Platform.select({
+    ios: 'com.sabroson',
+    android: 'com.sabroson',
+  }),
+  swiffyllc: Platform.select({
+    ios: 'com.swiffyllc',
+    android: 'com.swiffyllc',
   }),
   meatEasy: Platform.select({
     ios: 'com.meatEasy',
