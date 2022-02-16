@@ -460,7 +460,7 @@
     "blueboltRelease": "cd android && ./gradlew assembleBlueboltRelease",
     "onthegoRelease": "cd android && ./gradlew assembleONTHEGORelease",
     "mylaGlobalRelease": "cd android && ./gradlew assembleMylaGlobalRelease",
-    "ambutapRelease": "cd android && ./gradlew assembleMylaAmbuTapRelease",
+    "ambutapRelease": "cd android && ./gradlew assembleAmbuTapRelease",
     "sabrosonRelease": "cd android && ./gradlew assembleSabrosonRelease",
     "swiffyllcRelease": "cd android && ./gradlew assembleSwiffyLLCRelease",
     "android": "react-native run-android",

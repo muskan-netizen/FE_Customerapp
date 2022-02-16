@@ -39,10 +39,10 @@
 		0038C09427BA953C00B7CF17 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		0038C09527BA953C00B7CF17 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		0038C09627BA953C00B7CF17 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		0038C09827BA953C00B7CF17 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		0038C09927BA953C00B7CF17 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		0038C09A27BA953C00B7CF17 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		0038C09B27BA953C00B7CF17 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		0038C09827BA953C00B7CF17 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		0038C09927BA953C00B7CF17 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		0038C09A27BA953C00B7CF17 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		0038C09B27BA953C00B7CF17 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		0038C09D27BA953C00B7CF17 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
 		0038C09E27BA953C00B7CF17 /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78C2681E47000CC5BA2 /* SFProDisplay-Regular.ttf */; };
 		0038C09F27BA953C00B7CF17 /* Futura-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7902681E47100CC5BA2 /* Futura-Medium.ttf */; };
@@ -218,7 +218,7 @@
 		35F7427BF789DCD2B15F5F4B /* libPods-available_pods-Africanize.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51EB2F1D9B578D4D983B77F7 /* libPods-available_pods-Africanize.a */; };
 		3660F096DE85BD4906693B8B /* libPods-available_pods-Ssuum.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EFF368E911F67B0C0E3FC79 /* libPods-available_pods-Ssuum.a */; };
 		366EBACBA1C20FF17778220A /* libPods-available_pods-YogoLift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A19E4C298B324D12114158D7 /* libPods-available_pods-YogoLift.a */; };
-		383CC0A144268A251D360BD1 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		383CC0A144268A251D360BD1 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		387140519358FDBB796290E9 /* libPods-available_pods-EzMobileFuel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9EDF416347EF0819F218C6 /* libPods-available_pods-EzMobileFuel.a */; };
 		395FCDD413D36B626E6C1055 /* libPods-available_pods-Totum4U.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 57B2968BA82E9D2A66B33FD8 /* libPods-available_pods-Totum4U.a */; };
 		39F95BEB20B69BE23EF2A916 /* libPods-available_pods-MOBI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BAB81A69F3E37D52ADB4BDF /* libPods-available_pods-MOBI.a */; };
@@ -3433,7 +3433,7 @@
 		847F6E2427203FDA00C7A32F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847F6E2327203FDA00C7A32F /* Images.xcassets */; };
 		847F6F1A2720428800C7A32F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847F6F192720428700C7A32F /* GoogleService-Info.plist */; };
 		8480076A26CE20340014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		8480076B26CE20340014F500 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		8480076B26CE20340014F500 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8480076C26CE20340014F500 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8480076D26CE20340014F500 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848007AD26CE260D0014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -4090,7 +4090,7 @@
 		848CB12D278D662700DD824C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848CB12C278D662700DD824C /* Images.xcassets */; };
 		848CB1FB278D66F400DD824C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848CB1FA278D66F300DD824C /* GoogleService-Info.plist */; };
 		848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		848CEF8126CE229D0077C918 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		848CEF8126CE229D0077C918 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		848CEF8226CE229D0077C918 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848CEF8326CE229D0077C918 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848D76B92748F70100FE87AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -6671,12 +6671,12 @@
 		9E8128B91DB9BC92F2D400AA /* libPods-available_pods-Baytukom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7586CEEFFDDA8FED9F0E480 /* libPods-available_pods-Baytukom.a */; };
 		9F098BC5C71D00C04B7DC2C3 /* libPods-available_pods-Vici.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76AB3D3BEB7BCA2674C9DC13 /* libPods-available_pods-Vici.a */; };
 		9FABC57813B4A7FFA0F3EEC5 /* libPods-available_pods-BakeSale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A771C710927D6946F6FF55E /* libPods-available_pods-BakeSale.a */; };
-		A2D2D4F74444BB9CC65D1FD6 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		A2D2D4F74444BB9CC65D1FD6 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		A99950F8C139F499E62C6701 /* libPods-available_pods-BustanFakieh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD911E9788B7AA12B3F73C0 /* libPods-available_pods-BustanFakieh.a */; };
 		AA4D3CD2F48340A93CE0ADAA /* libPods-available_pods-PaySic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AC05AF3CA0A91632F39F061 /* libPods-available_pods-PaySic.a */; };
 		AAF8421C6FFAEA29C5B2D6AD /* libPods-available_pods-Bookem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9081FC41638AAC410D50F601 /* libPods-available_pods-Bookem.a */; };
 		AB2CB2A0346E10D2BC269E1E /* libPods-available_pods-Bimol.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A631C2CE45081F8D1468EFB8 /* libPods-available_pods-Bimol.a */; };
-		ACD9102D6950E14F909E383F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		ACD9102D6950E14F909E383F /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		B132425A0E60F60D03587E9E /* libPods-available_pods-Suel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39C60FBB33602360B222FEBC /* libPods-available_pods-Suel.a */; };
 		B22676D915A48CA2D0101628 /* libPods-available_pods-Grub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 067A7876CA184A26CEE21E61 /* libPods-available_pods-Grub.a */; };
 		B256323ED986163389094456 /* libPods-available_pods-Menus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A9566AB28CB9AA470BB48F8 /* libPods-available_pods-Menus.a */; };
@@ -6737,7 +6737,7 @@
 		EAA21165BD5E0718BD7C5668 /* libPods-available_pods-Orbit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7A0BC9C16D55FC6C3BEC420 /* libPods-available_pods-Orbit.a */; };
 		EBAFDF29B0D90865A93F86D2 /* libPods-available_pods-ShooraFresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0321CF8A637FDD73B39303BB /* libPods-available_pods-ShooraFresh.a */; };
 		ED00E4A1A324CDC3B50F8426 /* libPods-available_pods-Dishefs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D5C376CC40461BCB2C3995 /* libPods-available_pods-Dishefs.a */; };
-		EED37C1A2BADBA103098D513 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		EED37C1A2BADBA103098D513 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		EF06CDA633C8BF2F14D8BAA1 /* libPods-available_pods-Punnet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B2106EBE6830FB0DE1C3860 /* libPods-available_pods-Punnet.a */; };
 		F3EDA0FF5DA2CB8EBFC1160C /* libPods-available_pods-InstaMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B04B67710B1D5091EDA465E3 /* libPods-available_pods-InstaMobile.a */; };
 		F41F7EF8667DD78D634B0B26 /* libPods-available_pods-Yoho.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7AB7648CCCE73D9951AF9BD /* libPods-available_pods-Yoho.a */; };
@@ -8856,10 +8856,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0038C09827BA953C00B7CF17 /* BuildFile in Frameworks */,
-				0038C09927BA953C00B7CF17 /* BuildFile in Frameworks */,
-				0038C09A27BA953C00B7CF17 /* BuildFile in Frameworks */,
-				0038C09B27BA953C00B7CF17 /* BuildFile in Frameworks */,
+				0038C09827BA953C00B7CF17 /* (null) in Frameworks */,
+				0038C09927BA953C00B7CF17 /* (null) in Frameworks */,
+				0038C09A27BA953C00B7CF17 /* (null) in Frameworks */,
+				0038C09B27BA953C00B7CF17 /* (null) in Frameworks */,
 				CCCBAC030956BAA883C4F77E /* libPods-available_pods-SwiffyLLC.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -9417,10 +9417,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACD9102D6950E14F909E383F /* BuildFile in Frameworks */,
-				EED37C1A2BADBA103098D513 /* BuildFile in Frameworks */,
-				383CC0A144268A251D360BD1 /* BuildFile in Frameworks */,
-				A2D2D4F74444BB9CC65D1FD6 /* BuildFile in Frameworks */,
+				ACD9102D6950E14F909E383F /* (null) in Frameworks */,
+				EED37C1A2BADBA103098D513 /* (null) in Frameworks */,
+				383CC0A144268A251D360BD1 /* (null) in Frameworks */,
+				A2D2D4F74444BB9CC65D1FD6 /* (null) in Frameworks */,
 				66BD1E4E33292A9D841ACCB5 /* libPods-available_pods-RoyoOrder.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -14677,7 +14677,6 @@
 				0038C05727BA900B00B7CF17 /* Sources */,
 				0038C05B27BA900B00B7CF17 /* Frameworks */,
 				0038C06027BA900B00B7CF17 /* Resources */,
-				0038C07B27BA900B00B7CF17 /* Bundle React Native code and images */,
 				0038C07C27BA900B00B7CF17 /* ShellScript */,
 				0038C07D27BA900B00B7CF17 /* [CP] Embed Pods Frameworks */,
 				0038C07E27BA900B00B7CF17 /* [CP] Copy Pods Resources */,
@@ -14700,7 +14699,6 @@
 				0038C09327BA953C00B7CF17 /* Sources */,
 				0038C09727BA953C00B7CF17 /* Frameworks */,
 				0038C09C27BA953C00B7CF17 /* Resources */,
-				0038C0B727BA953C00B7CF17 /* Bundle React Native code and images */,
 				0038C0B827BA953C00B7CF17 /* ShellScript */,
 				0038C0B927BA953C00B7CF17 /* [CP] Embed Pods Frameworks */,
 				0038C0BA27BA953C00B7CF17 /* [CP] Copy Pods Resources */,
@@ -28569,20 +28567,6 @@
 			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		0038C07B27BA900B00B7CF17 /* Bundle React Native code and images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Bundle React Native code and images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
-		};
 		0038C07C27BA900B00B7CF17 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -28746,20 +28730,6 @@
 			shellPath = /bin/sh;
 			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
 			showEnvVarsInLog = 0;
-		};
-		0038C0B727BA953C00B7CF17 /* Bundle React Native code and images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Bundle React Native code and images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		0038C0B827BA953C00B7CF17 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -72772,7 +72742,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */,
-				848CEF8126CE229D0077C918 /* BuildFile in Sources */,
+				848CEF8126CE229D0077C918 /* (null) in Sources */,
 				848CEF8226CE229D0077C918 /* Royo.swift in Sources */,
 				848CEF8326CE229D0077C918 /* main.m in Sources */,
 			);
@@ -72846,7 +72816,7 @@
 				84FFFF2026D672E600F2B059 /* Royo.swift in Sources */,
 				84FFFF2126D672E600F2B059 /* main.m in Sources */,
 				8480076A26CE20340014F500 /* AppDelegate.m in Sources */,
-				8480076B26CE20340014F500 /* BuildFile in Sources */,
+				8480076B26CE20340014F500 /* (null) in Sources */,
 				8480076C26CE20340014F500 /* Royo.swift in Sources */,
 				8480076D26CE20340014F500 /* main.m in Sources */,
 			);
