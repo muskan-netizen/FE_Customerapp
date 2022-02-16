@@ -964,14 +964,14 @@ export default function ProductDetail({ route, navigation }) {
     >
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5? imagePath.icBackb : imagePath.back
         }
         centerTitle={venderDetail?.name}
         textStyle={{ fontSize: textScale(14) }}
         rightIcon={
           !!data?.showAddToCart
             ? false
-            : appStyle?.homePageLayout === 3
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
               ? imagePath.icSearchb
               : imagePath.search
         }
