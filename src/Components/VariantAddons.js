@@ -580,6 +580,7 @@ const VariantAddons = ({
     if (type == 1) {
       return <View>
         <TouchableOpacity
+
           onPress={() => updateState({ selectedVariant: item })}
           style={{
             ...styles.dropDownStyle,
@@ -673,6 +674,7 @@ const VariantAddons = ({
             {options.map((i, inx) => {
               return (
                 <TouchableOpacity
+                hitSlop={hitSlopProp}
                   key={inx}
                   // disabled={options && options.length == 1 ? true : false}
                   onPress={() => selectSpecificOptions(options, i, inx)}
@@ -770,6 +772,7 @@ const VariantAddons = ({
             {options.map((i, inx) => {
               return (
                 <TouchableOpacity
+                hitSlop={hitSlopProp}
                   key={inx}
                   // disabled={options && options.length == 1 ? true : false}
                   onPress={() => selectSpecificOptions(options, i, inx)}

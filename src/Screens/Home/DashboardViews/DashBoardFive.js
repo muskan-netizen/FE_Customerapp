@@ -222,7 +222,7 @@ export default function DashBoardFive({
   const seeMoreCategories = () => {
 
     updateState({
-      categoriesData: !seeMore ? appMainData?.categories : appMainData?.categories.filter((item, indx) => indx < 4),
+      categoriesData: !seeMore ? appMainData?.categories : appMainData?.categories.filter((item, indx) => indx < 8),
       seeMore: !seeMore
     })
   }
