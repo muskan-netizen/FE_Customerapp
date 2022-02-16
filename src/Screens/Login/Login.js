@@ -1,5 +1,5 @@
-import {cloneDeep} from 'lodash';
-import React, {useEffect, useState, useRef} from 'react';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   I18nManager,
   Image,
@@ -10,11 +10,11 @@ import {
   TextInput,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -28,7 +28,7 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
-import {showError} from '../../utils/helperFunctions';
+import { showError } from '../../utils/helperFunctions';
 import {
   fbLogin,
   googleLogin,
@@ -37,20 +37,20 @@ import {
 } from '../../utils/socialLogin';
 import validator from '../../utils/validations';
 import stylesFunc from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {mobile} from 'is_js';
-import {useNavigation} from '@react-navigation/native';
-import {checkIsAdmin} from '../../utils/utils';
+import { mobile } from 'is_js';
+import { useNavigation } from '@react-navigation/native';
+import { checkIsAdmin } from '../../utils/utils';
 
-export default function Login({navigation}) {
+export default function Login({ navigation }) {
   const navigation_ = useNavigation();
-  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
+  const { appData, themeColors, currencies, languages, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
-  const {apple_login, fb_login, twitter_login, google_login} = useSelector(
+  const { apple_login, fb_login, twitter_login, google_login } = useSelector(
     (state) => state?.initBoot?.appData?.profile?.preferences,
   );
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -91,9 +91,9 @@ export default function Login({navigation}) {
   }, []);
 
   //Update states
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   //Styles in app
-  const styles = stylesFunc({themeColors, fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
 
   //all states used in this screen
   const {
@@ -109,21 +109,21 @@ export default function Login({navigation}) {
 
   //Naviagtion to specific screen
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {data});
+    navigation.navigate(screenName, { data });
   };
   //On change textinput
   const _onChangeText = (key) => (val) => {
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   //Validate form
   const isValidData = () => {
     const error = email.focus
-      ? validator({email: email.value, password})
+      ? validator({ email: email.value, password })
       : validator({
-          phoneNumber: mobilNo.phoneNo,
-          callingCode: mobilNo.callingCode,
-        });
+        phoneNumber: mobilNo.phoneNo,
+        callingCode: mobilNo.callingCode,
+      });
     if (error) {
       showError(error);
       return;
@@ -176,7 +176,7 @@ export default function Login({navigation}) {
       dialCode: mobilNo.focus ? mobilNo.callingCode : '',
       countryData: mobilNo.focus ? mobilNo.cca2 : '',
     };
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     console.log('chck login data >>>', data);
     actions
       .loginUsername(data, {
@@ -189,14 +189,14 @@ export default function Login({navigation}) {
         if (!!res.data) {
           res.data.is_phone
             ? navigation.navigate(navigationStrings.OTP_VERIFICATION, {
-                username: mobilNo?.phoneNo,
-                dialCode: mobilNo?.callingCode,
-                countryData: mobilNo?.cca2,
-                data: res.data,
-              })
+              username: mobilNo?.phoneNo,
+              dialCode: mobilNo?.callingCode,
+              countryData: mobilNo?.cca2,
+              data: res.data,
+            })
             : checkIfEmailVerification(res.data);
         }
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         getCartDetail();
       })
       .catch(errorMethod);
@@ -217,11 +217,11 @@ export default function Login({navigation}) {
       .then((res) => {
         actions.cartItemQty(res);
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
   //Error handling in api
   const errorMethod = (error) => {
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     setTimeout(() => {
       showError(error?.message || error?.error);
     }, 500);
@@ -265,14 +265,14 @@ export default function Login({navigation}) {
         console.log(res, 'res>>>SOCIAL');
         if (!!res.data) {
           !!res.data?.client_preference?.verify_email ||
-          !!res.data?.client_preference?.verify_phone
+            !!res.data?.client_preference?.verify_phone
             ? !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
-              ? checkIsAdmin()
+              ? checkIsAdmin(navigation_, navigation, res.data)
               : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : checkIsAdmin();
+            : checkIsAdmin(navigation_, navigation, res.data)
         }
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         getCartDetail();
       })
       .catch(errorMethod);
@@ -280,44 +280,46 @@ export default function Login({navigation}) {
 
   //Apple Login Support
   const openAppleLogin = () => {
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     handleAppleLogin()
       .then((res) => {
         _saveSocailLogin(res, 'apple');
         // updateState({isLoading: false});
       })
       .catch((err) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       });
   };
 
+
+
   //Gmail Login Support
   const openGmailLogin = () => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     googleLogin()
       .then((res) => {
-        console.log(res, 'google');
         if (res?.user) {
+          console.log(res, 'googlegooogle');
           _saveSocailLogin(res.user, 'google');
         } else {
-          updateState({isLoading: false});
+          updateState({ isLoading: false });
         }
       })
       .catch((err) => {
-        console.log(err, 'error in gmail login');
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       });
   };
+
   const _responseInfoCallback = (error, result) => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     if (error) {
-      updateState({isLoading: false});
+      updateState({ isLoading: false });
     } else {
       if (result && result?.id) {
         console.log(result, 'fbresult');
         _saveSocailLogin(result, 'facebook');
       } else {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       }
     }
   };
@@ -334,7 +336,7 @@ export default function Login({navigation}) {
           _saveSocailLogin(res, 'twitter');
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   const _onCountryChange = (data) => {
     updateState({
@@ -396,7 +398,7 @@ export default function Login({navigation}) {
   };
 
   const showHidePassword = () => {
-    updateState({isShowPassword: !isShowPassword});
+    updateState({ isShowPassword: !isShowPassword });
   };
 
   return (
@@ -407,7 +409,7 @@ export default function Login({navigation}) {
       <View style={styles.headerContainer}>
         <TouchableOpacity
           onPress={() => navigation.goBack(null)}
-          style={{alignSelf: 'flex-start'}}>
+          style={{ alignSelf: 'flex-start' }}>
           <Image
             source={
               appStyle?.homePageLayout === 3
@@ -417,10 +419,10 @@ export default function Login({navigation}) {
             style={
               isDarkMode
                 ? {
-                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                    tintColor: MyDarkTheme.colors.text,
-                  }
-                : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+                  transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                  tintColor: MyDarkTheme.colors.text,
+                }
+                : { transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }
             }
           />
         </TouchableOpacity>
@@ -432,11 +434,11 @@ export default function Login({navigation}) {
           flex: 1,
           marginHorizontal: moderateScale(24),
         }}>
-        <View style={{height: moderateScaleVertical(28)}} />
+        <View style={{ height: moderateScaleVertical(28) }} />
         <Text
           style={
             isDarkMode
-              ? [styles.header, {color: MyDarkTheme.colors.text}]
+              ? [styles.header, { color: MyDarkTheme.colors.text }]
               : styles.header
           }>
           {strings.LOGIN_YOUR_ACCOUNT}
@@ -445,12 +447,12 @@ export default function Login({navigation}) {
         <Text
           style={
             isDarkMode
-              ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+              ? [styles.txtSmall, { color: MyDarkTheme.colors.text }]
               : styles.txtSmall
           }>
           {strings.ENTE_REGISTERED_EMAIL}
         </Text>
-        <View style={{height: moderateScaleVertical(30)}} />
+        <View style={{ height: moderateScaleVertical(30) }} />
         {/* <BorderTextInput
             onChangeText={_onChangeText('email')}
             placeholder={strings.YOUR_EMAIL}
@@ -487,7 +489,7 @@ export default function Login({navigation}) {
           </>
         )}
         {phoneInput && (
-          <View style={{marginBottom: moderateScale(18)}}>
+          <View style={{ marginBottom: moderateScale(18) }}>
             <PhoneNumberInput
               onCountryChange={_onCountryChange}
               onChangePhone={(data) => checkInputHandler(data)}
@@ -515,18 +517,18 @@ export default function Login({navigation}) {
         </View>
 
         <GradientButton
-          containerStyle={{marginTop: moderateScaleVertical(10)}}
+          containerStyle={{ marginTop: moderateScaleVertical(10) }}
           onPress={_onLogin}
           btnText={strings.LOGIN_ACCOUNT}
         />
-        <View style={{marginTop: moderateScaleVertical(30)}}>
+        <View style={{ marginTop: moderateScaleVertical(30) }}>
           {!!google_login || !!fb_login || !!twitter_login || !!apple_login ? (
             <View style={styles.socialRow}>
               <View style={styles.hyphen} />
               <Text
                 style={
                   isDarkMode
-                    ? [styles.orText, {color: MyDarkTheme.colors.text}]
+                    ? [styles.orText, { color: MyDarkTheme.colors.text }]
                     : styles.orText
                 }>
                 {strings.OR_LOGIN_WITH}
@@ -570,7 +572,7 @@ export default function Login({navigation}) {
               flexDirection: 'column',
             }}>
             {!!google_login && (
-              <View style={{marginTop: moderateScaleVertical(15)}}>
+              <View style={{ marginTop: moderateScaleVertical(15) }}>
                 <TransparentButtonWithTxtAndIcon
                   icon={imagePath.ic_google2}
                   btnText={strings.CONTINUE_GOOGLE}
@@ -590,7 +592,7 @@ export default function Login({navigation}) {
               </View>
             )}
             {!!fb_login && (
-              <View style={{marginTop: moderateScaleVertical(15)}}>
+              <View style={{ marginTop: moderateScaleVertical(15) }}>
                 <TransparentButtonWithTxtAndIcon
                   icon={imagePath.ic_fb2}
                   btnText={strings.CONTINUE_FACEBOOK}
@@ -610,7 +612,7 @@ export default function Login({navigation}) {
               </View>
             )}
             {!!twitter_login && (
-              <View style={{marginTop: moderateScaleVertical(15)}}>
+              <View style={{ marginTop: moderateScaleVertical(15) }}>
                 <TransparentButtonWithTxtAndIcon
                   icon={imagePath.ic_twitter2}
                   btnText={strings.CONTINUE_TWITTER}
@@ -631,7 +633,7 @@ export default function Login({navigation}) {
             )}
 
             {!!apple_login && Platform.OS == 'ios' && (
-              <View style={{marginVertical: moderateScaleVertical(15)}}>
+              <View style={{ marginVertical: moderateScaleVertical(15) }}>
                 <TransparentButtonWithTxtAndIcon
                   icon={isDarkMode ? imagePath.ic_apple : imagePath.ic_apple2}
                   btnText={strings.CONTINUE_APPLE}
@@ -656,8 +658,8 @@ export default function Login({navigation}) {
           <Text
             style={
               isDarkMode
-                ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
-                : {...styles.txtSmall, color: colors.textGreyLight}
+                ? { ...styles.txtSmall, color: MyDarkTheme.colors.text }
+                : { ...styles.txtSmall, color: colors.textGreyLight }
             }>
             {strings.DONT_HAVE_ACCOUNT}
             <Text

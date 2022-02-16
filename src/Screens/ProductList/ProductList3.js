@@ -490,7 +490,9 @@ export default function Products({ route, navigation }) {
       )
       .then((res) => {
         console.log('get all products by vendor res', res);
+        
         if (res?.data?.vendor) {
+          console.log("res?.data?.vendor",res?.data?.vendor?.banner || res?.data?.vendor?.image)
           FastImage.preload([{
             uri:
               getImageUrl(
