@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>256888740527-mg6fr33fc4qnrfcofqdiv8mpmasrm44u.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.256888740527-mg6fr33fc4qnrfcofqdiv8mpmasrm44u</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>256888740527-et6tgkkqu8esvo2j755spmv3peb28l8s.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC_CmXMAP6MGdFtboLvg7xRAru88HhzH9Q</string>
+	<key>GCM_SENDER_ID</key>
+	<string>256888740527</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.hivefair</string>
+	<key>PROJECT_ID</key>
+	<string>hivefair-12ce2</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hivefair-12ce2.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:256888740527:ios:6ab54db6ec4f93bb03525a</string>
+</dict>
+</plist>

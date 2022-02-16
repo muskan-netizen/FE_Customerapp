@@ -1498,6 +1498,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.gamaDelivery:
+          updateState({
+            shortCode: shortCodes.gamaDelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hivefair:
+          updateState({
+            shortCode: shortCodes.hivefair,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

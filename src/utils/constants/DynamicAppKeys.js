@@ -198,7 +198,7 @@ const shortCodes = {
   stitchesonsite: '5bdfee',
   easyu: '20b62b',
   mozmarcas: '53ea8a',
-  myfiji: 'a69fda',
+  myfiji: 'a0c80e',
   fastmikes: 'd89823',
   citysuds: 'aaedee',
   homeTownDelivery: 'c49349',
@@ -233,6 +233,8 @@ const shortCodes = {
   swiffyllc: 'da7ecb',
   meatEasy: '3e89e5',
   boltDelivery: '07a31a',
+  gamaDelivery: 'b77561',
+  hivefair: 'f0cede',
 };
 
 const appIds = {
@@ -1162,6 +1164,14 @@ const appIds = {
   boltDelivery: Platform.select({
     ios: 'com.boltDelivery',
     android: 'com.boltDelivery',
+  }),
+  gamaDelivery: Platform.select({
+    ios: 'com.gamaDelivery',
+    android: 'com.gamaDelivery',
+  }),
+  hivefair: Platform.select({
+    ios: 'com.hivefair',
+    android: 'com.hivefair',
   }),
 };
 
