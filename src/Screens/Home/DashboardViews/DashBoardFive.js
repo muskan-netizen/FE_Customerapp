@@ -73,6 +73,7 @@ export default function DashBoardFive({
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
+  const isSingleVendor = appData?.profile?.preferences?.single_vendor
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const { appData, themeColors, appStyle } = useSelector((state) => state?.initBoot);
@@ -532,7 +533,14 @@ export default function DashBoardFive({
     );
   }
 
+  console.log("isSingleVendorisSingleVendor",appData?.profile?.preferences?.single_vendor)
   const vendorHeader = () => {
+    if(appData?.profile?.preferences?.single_vendor){
+      return <View style={{
+        marginBottom: moderateScaleVertical(24),
+        marginTop: moderateScaleVertical(8),
+      }} />
+    }
     return (
       <View key={Math.random()}>
         <View style={styles.viewAllVeiw}>
@@ -687,7 +695,7 @@ export default function DashBoardFive({
           {categoriesBanners()}
           {
             <>
-              {vendorsData.length > 1 || !singleVendor ? <FlatList
+              {vendorsData.length > 0  ? <FlatList
                 scrollEnabled={false}
                 ListHeaderComponent={vendorHeader}
                 showsVerticalScrollIndicator={false}
