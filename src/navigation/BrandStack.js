@@ -29,14 +29,14 @@ export default function () {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        component={appStyle?.homePageLayout === 3 ? Brands2 : Brands}
+        component={appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? Brands2 : Brands}
         name={navigationStrings.BRANDS}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.BRANDDETAIL}
         component={
-          appStyle?.homePageLayout === 3 ? BrandProducts2 : BrandProducts
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? BrandProducts2 : BrandProducts
         }
         options={{headerShown: false}}
       />
@@ -56,7 +56,7 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
         component={
-          appStyle?.homePageLayout === 3
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? SearchProductVendorItem2
             : SearchProductVendorItem
         }

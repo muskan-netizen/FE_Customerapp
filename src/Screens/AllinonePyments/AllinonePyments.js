@@ -145,7 +145,7 @@ export default function AllinonePyments({navigation, route}) {
       isLoadingB={false}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? imagePath.icBackb : imagePath.back
         }
         centerTitle={paramsData?.selectedPayment?.title || paramsData?.title}
         headerStyle={{backgroundColor: colors.white}}

@@ -112,7 +112,7 @@ export default function SelectVendorListModal({
       statusBarColor={colors.white}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? imagePath.icBackb : imagePath.back
         }
         onPressLeft={onCloseModal}
         centerTitle={strings.AVAILABLE_STORE}

@@ -200,7 +200,7 @@ export default function Offer({ route, navigation }) {
 
   const _renderItem = ({ item, index }) => {
     {
-      return appStyle?.homePageLayout === 3 ? (
+      return appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? (
         <OffersCard2
           data={item}
           onPress={() =>
@@ -223,7 +223,7 @@ export default function Offer({ route, navigation }) {
   };
   const _headerComponent = () => {
     if (!!allAvailableCoupons.length) {
-      return appStyle?.homePageLayout === 3 ? (
+      return appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? (
         <View
           style={{
             marginVertical: moderateScaleVertical(16),

@@ -175,11 +175,11 @@ export default function VendorDetail({ navigation, route }) {
 
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? imagePath.icBackb : imagePath.back
         }
         centerTitle={vendorParams?.item?.name || vendordName}
         rightIcon={
-          appStyle?.homePageLayout === 3
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icSearchb
             : imagePath.search
         }

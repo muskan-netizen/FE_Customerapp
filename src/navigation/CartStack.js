@@ -81,7 +81,7 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.WISHLIST}
-        component={appStyle?.homePageLayout === 3 ? Wishlist2 : Wishlist}
+        component={appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? Wishlist2 : Wishlist}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -89,7 +89,7 @@ export default function () {
         component={
           appStyle?.homePageLayout === 2
             ? ProductList2
-            : appStyle?.homePageLayout === 3
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? ProductList3
             : ProductList
         }

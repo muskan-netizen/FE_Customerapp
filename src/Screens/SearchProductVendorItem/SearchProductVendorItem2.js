@@ -617,7 +617,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
             hitSlop={hitSlopProp}>
             <Image
               source={
-                appStyle?.homePageLayout === 3
+                appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
                   ? imagePath.icBackb
                   : imagePath.back
               }
