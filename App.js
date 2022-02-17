@@ -347,7 +347,7 @@ const App = () => {
 
   const progressView = () => {
     return (
-      <SafeAreaView>
+      <View>
         <Modal isVisible={true}>
           <View
             style={{
@@ -412,7 +412,7 @@ const App = () => {
             />
           </View>
         </Modal>
-      </SafeAreaView>
+      </View>
     );
   };
   return (
@@ -420,7 +420,7 @@ const App = () => {
       <MenuProvider>
         <Provider ref={blurRef} store={store}>
           <ForegroundHandler />
-          {!!progress ? progressView() : null}
+          {progress ? progressView() : null}
           <Routes />
           <NotificationModal />
         </Provider>
