@@ -107,7 +107,7 @@ export default function DashBoardFive({
   useEffect(() => {
     if (appMainData?.vendors && appMainData?.vendors.length) {
       updateState({
-        vendorsData: appMainData?.vendors.filter((item, indx) => indx < 8),
+        vendorsData: appMainData?.vendors.filter((item, indx) => indx < 4),
       });
       return;
     }
@@ -118,7 +118,7 @@ export default function DashBoardFive({
 
   useEffect(() => {
     if (!!appMainData?.categories && appMainData?.categories.length) {
-      if (appStyle?.homePageLayout !== 5) {
+      if (appStyle?.homePageLayout == 5) {
         updateState({
           categoriesData: appMainData?.categories.filter((item, indx) => indx < 8),
         });

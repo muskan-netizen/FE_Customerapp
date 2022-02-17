@@ -624,10 +624,10 @@ export default function Cart({ navigation, route }) {
     });
     showError(
       error?.error?.description ||
-        error?.description ||
-        error?.message ||
-        error?.error ||
-        error,
+      error?.description ||
+      error?.message ||
+      error?.error ||
+      error,
     );
   };
 
@@ -1967,7 +1967,13 @@ export default function Cart({ navigation, route }) {
                   <Image
                     style={{ tintColor: themeColors.primary_color }}
                     source={imagePath.percent}
+                    resizeMode='contain'
+                    style={{
+                      width: moderateScale(24),
+                      height: moderateScale(24),
+                    }}
                   />
+
                   <Text
                     style={[
                       styles.viewOffers,
