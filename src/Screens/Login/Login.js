@@ -45,6 +45,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {mobile} from 'is_js';
 import {useNavigation} from '@react-navigation/native';
 import {checkIsAdmin} from '../../utils/utils';
+import {resetStackAndNavigate} from '../../navigation/NavigationService';
 
 export default function Login({navigation}) {
   const navigation_ = useNavigation();
@@ -187,7 +188,11 @@ export default function Login({navigation}) {
       })
       .then((res) => {
         if (!!res.data) {
-          checkIsAdmin(navigation_, navigation, res.data);
+          // checkIsAdmin(navigation_, navigation, res.data);
+          resetStackAndNavigate(
+            navigation_,
+            navigationStrings.TABROUTESVENDORNEW,
+          );
         }
         updateState({isLoading: false});
         getCartDetail();
