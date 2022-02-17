@@ -104,7 +104,7 @@ const RoyoProducts = (props) => {
   } = state;
 
   useEffect(() => {
-    getAllProducts();
+    getAllProducts(undefined);
     // if (!!selectedVendor?.id) {
 
     updateState({
@@ -153,7 +153,10 @@ const RoyoProducts = (props) => {
       <View style={styles.itemBox}>
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
+            navigation.navigate(navigationStrings.PRODUCTDETAIL, {
+              data: item,
+              isVendor: true,
+            })
           }
           style={{alignSelf: 'center'}}>
           {!isEmpty(item?.media) && (
@@ -230,7 +233,8 @@ const RoyoProducts = (props) => {
   };
 
   /**********Get all list items by store  id and category id */
-  const getAllProducts = async () => {
+  const getAllProducts = async (catId) => {
+    const pageNo_ = catId ? 1 : pageNo;
     updateState({
       isLoading: true,
     });
@@ -249,9 +253,14 @@ const RoyoProducts = (props) => {
     const data = {};
 
     data['selected_vendor_id'] = vendordId.toString();
+    if (catId) {
+      data['selected_category_id'] = catId.toString();
+    }
     data['limit'] = limit;
-    data['type'] = 'all';
-    data['page'] = pageNo;
+    if (!catId) {
+      data['type'] = 'all';
+    }
+    data['page'] = pageNo_;
 
     console.log(data, 'data>>>>>');
     actions
@@ -261,7 +270,7 @@ const RoyoProducts = (props) => {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res.data, 'res.data>>>>>', pageNo);
+        console.log(res.data, 'res.data>>>>>', pageNo_);
         let categorylist = res.data.category_list.filter((x) => x.is_selected);
         let selectedVendor = res.data.vendor_list.find((x) => x.is_selected);
         if (!isEmpty(res.data.vendor_list)) {
@@ -276,10 +285,13 @@ const RoyoProducts = (props) => {
           selectedVendor: selectedVendor,
           category_list: res.data.category_list,
           productListData:
-            pageNo == 1
+            pageNo_ == 1
               ? res.data.products.data
               : [...productListData, ...res.data.products.data],
         });
+        if (catId) {
+          selectedOrder(0);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -333,7 +345,7 @@ const RoyoProducts = (props) => {
             : 0,
       }}>
       <TouchableOpacity
-        disabled
+        // disabled
         onPress={() => selectedCategory(item.id)}
         style={styles.categoryItem}>
         <Image
@@ -436,7 +448,7 @@ const RoyoProducts = (props) => {
             productDetail: res?.data?.product_detail,
             onCallBack: () => {
               updateState({pageNo: 1});
-              getAllProducts();
+              getAllProducts(undefined);
             },
           });
         }, 500);
@@ -758,10 +770,10 @@ const RoyoProducts = (props) => {
         {activeIndex == 1 ? (
           <View
             style={{
-              flex: 1,
+              flex: 0.9,
               // alignItems: 'center',
               paddingBottom:
-                Platform.OS === 'ios' ? moderateScaleVertical(70) : 0,
+                Platform.OS === 'ios' ? moderateScaleVertical(0) : 0,
             }}>
             <FlatList
               data={category_list}
@@ -783,7 +795,7 @@ const RoyoProducts = (props) => {
                 })
               }
               btnStyle={styles.categoryBtn}
-              btnText="+  category"
+              btnText="+ category"
               btnTextStyle={{color: colors.black}}
             /> */}
           </View>

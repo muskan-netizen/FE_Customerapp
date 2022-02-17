@@ -114,12 +114,12 @@ const RoyoAccounts = (props) => {
           onPress: () => {
             actions.userLogout();
             actions.cartItemQty('');
-            navigation.navigate(navigationStrings.OUTER_SCREEN);
+            navigation.navigate(navigationStrings.LOGIN);
           },
         },
       ]);
     } else {
-      navigation.navigate(navigationStrings.OUTER_SCREEN);
+      navigation.navigate(navigationStrings.LOGIN);
     }
   };
   const _getListOfVendor = () => {

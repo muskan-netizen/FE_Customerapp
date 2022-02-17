@@ -1502,14 +1502,14 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '245bae',
-        code: shortCode,
+        code: '245bae',
+        // code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '245bae',
-        code: shortCode,
+        code: '245bae',
+        // code: shortCode,
       };
     }
     console.log(header, 'header');
@@ -1579,13 +1579,30 @@ export default function ShortCode({route, navigation}) {
     }
   }
 
+  const handleNotiRedirectionForVendorApp = (deepLinkUrl) => {
+    if (deepLinkUrl != null) {
+      navigation.navigate(navigationStrings.TABROUTESVENDORNEW, {
+        screen: navigationStrings.ROYO_VENDOR_ORDER,
+        params: {index: 1},
+      });
+    } else {
+      navigation.navigate(navigationStrings.TABROUTESVENDORNEW);
+    }
+  };
+
   const navigateToNextScreen = (res, homeData) => {
     // return;
     if (enums.isVendorStandloneApp) {
       if (!!userData?.auth_token) {
-        navigation.navigate(navigationStrings.TABROUTESVENDORNEW);
+        Linking.getInitialURL()
+          .then((link) => {
+            handleNotiRedirectionForVendorApp(link);
+          })
+          .catch((err) => {
+            console.log('checking deep link >>> 3232sdsd', err);
+          });
       } else {
-        navigation.navigate(navigationStrings.OUTER_SCREEN);
+        navigation.navigate(navigationStrings.LOGIN);
       }
     } else {
       getItem('firstTime').then((el) => {
