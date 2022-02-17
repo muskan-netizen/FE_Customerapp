@@ -56,6 +56,7 @@ import stylesFunc from './styles';
 import Modal from 'react-native-modal';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import Share from 'react-native-share';
+import FastImage from 'react-native-fast-image';
 
 export default function ProductDetail({ route, navigation }) {
   console.log("my route", route)
@@ -179,11 +180,14 @@ export default function ProductDetail({ route, navigation }) {
   }, [state.productId, state.isLoadingB]);
 
 
+  console.log("productDetailDataproductDetailData", productDetailData?.product_media)
+
+
   const onShare = () => {
     console.log('onShare', appData);
     if (!!productDetailData?.share_link) {
       let hyperLink = productDetailData?.share_link;
-      let options = {url: hyperLink};
+      let options = { url: hyperLink };
       Share.open(options)
         .then((res) => {
           console.log(res);
@@ -196,7 +200,7 @@ export default function ProductDetail({ route, navigation }) {
     alert('link not found');
   };
 
- 
+
   const getProductDetail = () => {
     console.log("api hit getProductDetail")
     actions
@@ -210,11 +214,27 @@ export default function ProductDetail({ route, navigation }) {
         },
       )
       .then((res) => {
-        console.log(res.data, 'res getProductDetail');
+        console.log(res.data.products, 'res getProductDetail');
+
+        if (res?.data?.products?.product_media) {
+          res?.data?.products?.product_media.map((val) => {
+            const url1 = val?.image?.path?.image_fit || val.image.image_fit;
+            const url2 = val?.image?.path?.image_path || val.image.image_path;
+            let imageUri = getImageUrl(url1, url2, '600/800') 
+            console.log("banner images",imageUri)
+            FastImage.preload([{ uri:imageUri }])
+          })
+        }
+
+        // const imageUrl = res.data?.image?.path
+        // ? getImageUrl(
+        //   item.image.path.image_fit,
+        //   item.image.path.image_path,
+        //   '1000/1000',
+        // )
+        // : getImageUrl(item.image.image_fit, item.image.image_path, '1000/1000');
+
         updateState({
-          isLoading: false,
-          isLoadingB: false,
-          btnLoader: false,
           productDetailData: res.data.products,
           relatedProducts: res.data.relatedProducts,
           productPriceData: res.data.products.variant[0],
@@ -227,6 +247,9 @@ export default function ProductDetail({ route, navigation }) {
           productQuantityForCart: !!res.data.products?.minimum_order_count
             ? Number(res.data.products?.minimum_order_count)
             : 1,
+          isLoading: false,
+          isLoadingB: false,
+          btnLoader: false,
         });
         if (
           res.data.products.variant_set.length &&
@@ -964,7 +987,7 @@ export default function ProductDetail({ route, navigation }) {
     >
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? imagePath.icBackb : imagePath.back
         }
         centerTitle={venderDetail?.name}
         textStyle={{ fontSize: textScale(14) }}

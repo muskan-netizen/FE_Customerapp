@@ -311,7 +311,7 @@ export default function Home({ route, navigation }) {
       .catch(errorMethod);
   };
 
-  console.log("selectedTabTypeselectedTabType",selectedTabType)
+  console.log("selectedTabTypeselectedTabType", selectedTabType)
 
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
@@ -340,10 +340,10 @@ export default function Home({ route, navigation }) {
     };
     console.log(vendorFilterData, 'vendorFilterData');
 
-    if(closeVendor == 0 && openVendor == 0 && bestSeller == 0 ){
-      updateState({singleVendor: true})
-    }else{
-      updateState({singleVendor: false})
+    if (closeVendor == 0 && openVendor == 0 && bestSeller == 0) {
+      updateState({ singleVendor: true })
+    } else {
+      updateState({ singleVendor: false })
     }
 
     {
@@ -568,7 +568,7 @@ export default function Home({ route, navigation }) {
   //On Press banner
   const bannerPress = (data) => {
     console.log('data', data);
-    console.log('category press', item);
+
     let item = {};
     if (data?.redirect_id) {
       if (data?.redirect_to == staticStrings.VENDOR && data?.is_show_category) {
@@ -611,13 +611,19 @@ export default function Home({ route, navigation }) {
           let dat2 = data;
           dat2['id'] = data?.redirect_id;
           moveToNewScreen(navigationStrings.VENDOR, dat2)();
-        } else {
-          moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: data.redirect_id,
-            // vendor: true,
-            name: data.redirect_name,
-            fetchOffers: true,
-          })();
+        }
+        else {
+          if (data.redirect_to == staticStrings.CATEGORY) {
+            let dat2 = data;
+            dat2['id'] = data?.redirect_id;
+            moveToNewScreen(navigationStrings.VENDOR, dat2)();
+          } else
+            moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+              id: data.redirect_id,
+              // vendor: true,
+              name: data.redirect_name,
+              fetchOffers: true,
+            })();
         }
       }
     }
@@ -933,7 +939,7 @@ export default function Home({ route, navigation }) {
       case 5:
         return (
           <>
-              <DashBoardHeaderFive
+            <DashBoardHeaderFive
               navigation={navigation}
               location={location}
               selcetedToggle={selcetedToggle}
