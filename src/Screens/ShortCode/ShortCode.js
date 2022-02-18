@@ -1510,6 +1510,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.beakme:
+          updateState({
+            shortCode: shortCodes.beakme,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.onscart:
+          updateState({
+            shortCode: shortCodes.onscart,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -1544,14 +1556,14 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        code: '5e0900',
-        // code: shortCode,
+        // code: '245bae',
+        code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        code: '5e0900',
-        // code: shortCode,
+        // code: '245bae',
+        code: shortCode,
       };
     }
     console.log(header, 'header');
