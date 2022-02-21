@@ -39,6 +39,12 @@ let sortingData = [
     {
         id: 5,
         label: strings.POPULARITY,
+        labelValue: 'popular_product',
+        parent: strings.SORT_BY,
+    },
+    {
+        id: 6,
+        label: strings.RATING,
         labelValue: 'rating',
         parent: strings.SORT_BY,
     }
