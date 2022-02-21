@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "317472599306",
+    "project_id": "sabroson-2f220",
+    "storage_bucket": "sabroson-2f220.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317472599306:android:30bdbf7d3f505e22955ef3",
+        "android_client_info": {
+          "package_name": "com.sabroson"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317472599306-jbq4jsl2a3o33acgcmvkpjg9tbiljqso.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDY10dl9txl0bk6geqLpx2lB1kMQcg-cXI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317472599306-jbq4jsl2a3o33acgcmvkpjg9tbiljqso.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

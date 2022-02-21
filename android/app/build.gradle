@@ -2511,6 +2511,96 @@ android {
             resValue "string", "app_name", "Bolt Delivery Services"
             resValue "string", "host_name", ""
          }
+         onthego{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.customer.onthego'
+            resValue "string", "app_name", "ONTHEGO"
+            resValue "string", "host_name", ""
+         }
+        mylaglobal{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.mylaglobal'
+            resValue "string", "app_name", "Myla Global"
+            resValue "string", "host_name", ""
+         }
+         ambutap{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ambutap'
+            resValue "string", "app_name", "AmbuTap"
+            resValue "string", "host_name", ""
+         }
+         sabroson{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.sabroson'
+            resValue "string", "app_name", "Sabroson"
+            resValue "string", "host_name", ""
+         }
+         swiffyllc{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.swiffyllc'
+            resValue "string", "app_name", "Swiffy LLC"
+            resValue "string", "host_name", ""
+         }
+         beakme{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.beakme'
+            resValue "string", "app_name", "BeakMe"
+            resValue "string", "host_name", ""
+         }
+         onscart{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.onscart'
+            resValue "string", "app_name", "Onscart"
+            resValue "string", "host_name", ""
+         }
+         gamaDelivery{
+               dimension "appType"
+               versionCode 1
+               versionName "1.0"
+               minSdkVersion rootProject.ext.minSdkVersion
+               targetSdkVersion rootProject.ext.targetSdkVersion
+               applicationId 'com.gamaDelivery'
+               resValue "string", "app_name", "Gama Delivery"
+               resValue "string", "host_name", ""
+         }
+         hivefair{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.hivefair'
+         resValue "string", "app_name", "Hivefair Delivery"
+         resValue "string", "host_name", ""
+         }
 
     }
 }

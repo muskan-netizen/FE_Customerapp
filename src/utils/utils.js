@@ -116,6 +116,7 @@ export async function apiReq(
     //
     axios[method](endPoint, data, {headers})
       .then((result) => {
+        console.log(result,"result>result");
         const {data} = result;
 
         if (data.status === false) {
@@ -125,6 +126,7 @@ export async function apiReq(
         return res(data);
       })
       .catch((error) => {
+        console.log(error,"error>error");
         if (error && error.response && error.response.status === 401) {
           sessionHandler(error.response.data.message);
           return rej(error);
