@@ -17505,6 +17505,7 @@
 				8478E33F270709AF0083F24E /* Bundle React Native code and images */,
 				FA1AA433FBCF7C7870BE15F5 /* [CP] Embed Pods Frameworks */,
 				815F04D48D1C5EA2B804D451 /* [CP] Copy Pods Resources */,
+				FE1BFCF427C3CE88000E19BA /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -75403,6 +75404,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Allotaxi/Pods-available_pods-Allotaxi-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		FE1BFCF427C3CE88000E19BA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Gusto/Pods-available_pods-Gusto-frameworks.sh\"\n";
 		};
 		FE1EB3E35BFCBDFB0244809C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
