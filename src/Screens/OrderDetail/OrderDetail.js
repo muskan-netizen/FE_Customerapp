@@ -176,12 +176,12 @@ export default function OrderDetail({navigation, route}) {
     isFocused ? 5000 : null,
   );
 
-  useFocusEffect(
-    React.useCallback(() => {
-      getOrders();
-      getUpdatedCartDetail();
-    }, []),
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     getOrders();
+  //     getUpdatedCartDetail();
+  //   }, []),
+  // );
 
   const getOrders = () => {
     if (!!userData?.auth_token) {

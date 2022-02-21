@@ -1047,7 +1047,11 @@ export default function ProductDetail({ route, navigation }) {
                         <TouchableOpacity
                           onPress={() => _onAddtoWishlist(productDetailData)}>
                           {productDetailData?.is_wishlist ? (
-                            <View style={{ alignSelf: 'flex-end', padding: 8 }}>
+                            <View style={{ 
+                              position:'absolute',
+                              right: 10,
+                              top: 10
+                            }}>
                               {!!productDetailData?.inwishlist ? (
                                 <Image
                                   style={{

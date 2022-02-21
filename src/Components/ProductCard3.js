@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Animated,
   Image,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -441,7 +442,7 @@ const ProductCard3 = ({
           <View
             style={{
               position:'relative',
-              bottom: 10,
+              bottom: Platform.OS == 'ios'?  10: 0,
               flex: 1,
               justifyContent: url1 ? 'flex-start' : 'center',
             }}>
