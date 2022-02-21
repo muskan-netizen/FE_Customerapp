@@ -209,6 +209,7 @@ export default function WebLinks({navigation, route}) {
   };
 
   const errorMethod = (error) => {
+    console.log(error, 'error');
     updateState({isLoading: false});
     showError(error?.message || error?.error);
   };
@@ -313,7 +314,7 @@ export default function WebLinks({navigation, route}) {
         uri: driverPic.path,
         name: driverPic.filename,
         filename: driverPic.filename,
-        mime: driverPic.mime,
+        type: driverPic.mime,
       });
       selectedTags.map((item) => {
         formData.append('tags[]', item.name);
@@ -326,7 +327,7 @@ export default function WebLinks({navigation, route}) {
                 uri: item.fileData.path,
                 name: item.fileData.filename,
                 filename: item.fileData.filename,
-                mime: item.fileData.mime,
+                type: item.fileData.mime,
               }
             : item?.fileData,
         );
@@ -372,13 +373,13 @@ export default function WebLinks({navigation, route}) {
         uri: vendorLogo.path,
         name: vendorLogo.filename,
         filename: vendorLogo.filename,
-        mime: vendorLogo.mime,
+        type: vendorLogo.mime,
       });
-      formData.append('vendor_description', {
+      formData.append('upload_banner', {
         uri: vendorBanner.path,
         name: vendorBanner.filename,
         filename: vendorBanner.filename,
-        mime: vendorBanner.mime,
+        type: vendorBanner.mime,
       });
 
       // console.log(vendorRegisterationDocs, 'vendorRegDocs');
@@ -423,12 +424,14 @@ export default function WebLinks({navigation, route}) {
                 uri: item.fileData.path,
                 name: item.fileData.filename,
                 filename: item.fileData.filename,
-                mime: item.fileData.mime,
+                type: item.fileData.mime,
               }
             : item?.fileData,
         );
       });
 
+      console.log(formData, 'formData');
+      console.log(JSON.stringify(formData), 'formDatastringfy');
       actions
         .vendorRegisteration(formData, {
           code: appData?.profile?.code,
@@ -512,6 +515,10 @@ export default function WebLinks({navigation, route}) {
     }
   };
 
+  useEffect(() => {
+    console.log(vendorRegisterationDocs, 'vendorRegisterationDocs');
+  }, [vendorRegisterationDocs]);
+
   const cameraHandle = async (index) => {
     const permissionStatus = await androidCameraPermission();
     if (permissionStatus) {
@@ -547,7 +554,7 @@ export default function WebLinks({navigation, route}) {
                   });
                 }
               } else {
-                if (!!clickedIndx) {
+                if (!!clickedItem) {
                   const vendorRegPdfImgAry = [...vendorRegisterationDocs];
                   vendorRegPdfImgAry[clickedIndx] = {
                     item: clickedItem,
@@ -558,6 +565,7 @@ export default function WebLinks({navigation, route}) {
                     vendorRegisterationDocs: vendorRegPdfImgAry,
                   });
                   clickedIndx = null;
+                  clickedItem = null;
                 } else {
                   if (isVendorLogo) {
                     updateState({
@@ -654,14 +662,14 @@ export default function WebLinks({navigation, route}) {
                     : imagePath.icCamIcon
                 }
                 style={{
-                  tintColor:
-                    driverRegDocs?.page_detail?.primary?.type_of_form == 2
-                      ? !driverRegistrationDocs[index]?.fileData?.path
-                        ? themeColors.primary_color
-                        : null
-                      : !vendorRegisterationDocs[index]?.fileData?.path
-                      ? themeColors.primary_color
-                      : null,
+                  // tintColor:
+                  //   driverRegDocs?.page_detail?.primary?.type_of_form == 2
+                  //     ? !driverRegistrationDocs[index]?.fileData?.path
+                  //       ? themeColors.primary_color
+                  //       : null
+                  //     : !vendorRegisterationDocs[index]?.fileData?.path
+                  //     ? themeColors.primary_color
+                  //     : null,
                   height:
                     driverRegDocs?.page_detail?.primary?.type_of_form == 2
                       ? driverRegistrationDocs[index]?.fileData?.path
@@ -902,9 +910,9 @@ export default function WebLinks({navigation, route}) {
                               : imagePath.icCamIcon
                           }
                           style={{
-                            tintColor: vendorLogo.path
-                              ? null
-                              : themeColors.primary_color,
+                            // tintColor: vendorLogo.path
+                            //   ? null
+                            //   : themeColors.primary_color,
                             height: vendorLogo.path ? height / 6 - 10 : 30,
                             width: vendorLogo.path
                               ? width / 2 - moderateScale(62)
@@ -941,9 +949,9 @@ export default function WebLinks({navigation, route}) {
                               : imagePath.icCamIcon
                           }
                           style={{
-                            tintColor: vendorBanner.path
-                              ? null
-                              : themeColors.primary_color,
+                            // tintColor: vendorBanner.path
+                            //   ? null
+                            //   : themeColors.primary_color,
                             height: vendorBanner.path
                               ? height / 6 - 10
                               : moderateScale(30),
@@ -1154,7 +1162,7 @@ export default function WebLinks({navigation, route}) {
               <Image
                 source={driverPic ? {uri: driverPic.path} : imagePath.icCamIcon}
                 style={{
-                  tintColor: !driverPic ? themeColors.primary_color : null,
+                  // tintColor: !driverPic ? themeColors.primary_color : null,
                   height: driverPic ? height / 6 - moderateScale(15) : 30,
                   width: driverPic ? width - moderateScale(80) : 30,
                 }}
