@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "607720829521",
+    "project_id": "onscart-6668b",
+    "storage_bucket": "onscart-6668b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607720829521:android:d2581f0d6f853763e4be70",
+        "android_client_info": {
+          "package_name": "com.onscart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607720829521-q9a4om9kf7kh5pbfvtkeftuvppurpl1l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQqef5FQtkiNcZqCpA7zph3i-tgITLq-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607720829521-q9a4om9kf7kh5pbfvtkeftuvppurpl1l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

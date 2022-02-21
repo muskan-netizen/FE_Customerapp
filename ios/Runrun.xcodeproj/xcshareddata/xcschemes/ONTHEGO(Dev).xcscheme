@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00CF6E6727B6827F005F458C"
+               BlueprintIdentifier = "00301ABE27BE0F990088151F"
                BuildableName = "ONTHEGO.app"
                BlueprintName = "ONTHEGO"
                ReferencedContainer = "container:Runrun.xcodeproj">
@@ -44,7 +44,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "00CF6E6727B6827F005F458C"
+            BlueprintIdentifier = "00301ABE27BE0F990088151F"
             BuildableName = "ONTHEGO.app"
             BlueprintName = "ONTHEGO"
             ReferencedContainer = "container:Runrun.xcodeproj">
@@ -61,7 +61,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "00CF6E6727B6827F005F458C"
+            BlueprintIdentifier = "00301ABE27BE0F990088151F"
             BuildableName = "ONTHEGO.app"
             BlueprintName = "ONTHEGO"
             ReferencedContainer = "container:Runrun.xcodeproj">

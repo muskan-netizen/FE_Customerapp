@@ -235,6 +235,8 @@ const shortCodes = {
   boltDelivery: '07a31a',
   gamaDelivery: 'b77561',
   hivefair: 'f0cede',
+  beakme: '6dcadc',
+  onscart: '10abb5',
 };
 
 const appIds = {
@@ -1173,6 +1175,14 @@ const appIds = {
   hivefair: Platform.select({
     ios: 'com.hivefair',
     android: 'com.hivefair',
+  }),
+  beakme: Platform.select({
+    ios: 'com.beakme',
+    android: 'com.beakme',
+  }),
+  onscart: Platform.select({
+    ios: 'com.onscart',
+    android: 'com.onscart',
   }),
 };
 

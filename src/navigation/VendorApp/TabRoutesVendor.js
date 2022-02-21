@@ -19,6 +19,7 @@ import AccountStackVendor from './AccountStackVendor';
 import HomeStackVendor from './HomeStackVendor';
 import OrderStackVendor from './OrderStackVendor';
 import ProductStackVendor from './ProductStackVendor';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 let showBottomBar_ = true;

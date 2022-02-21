@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "119793611676",
+    "project_id": "beakme-f71b8",
+    "storage_bucket": "beakme-f71b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119793611676:android:205ab4b4f27efa94054e59",
+        "android_client_info": {
+          "package_name": "com.beakme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "119793611676-247gbt81slu2t688p3825od9jidiulcl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM2aQj8JoomUmiNWReByOLXFWFPmuvJrk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "119793611676-247gbt81slu2t688p3825od9jidiulcl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
