@@ -4256,6 +4256,7 @@ export default function Cart({navigation, route}) {
   };
 
   const renderTimeSlots = ({item, index}) => {
+    console.log(item,"itemitemitem");
     return (
       <TouchableOpacity
         key={String(index)}
