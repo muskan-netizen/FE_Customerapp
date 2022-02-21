@@ -647,7 +647,7 @@ export default function Account3({navigation}) {
               <ListItemHorizontal
                 centerContainerStyle={{flexDirection: 'row'}}
                 leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-                onPress={moveToNewScreen(navigationStrings.TABROUTESVENDOR)}
+                onPress={moveToNewScreen(navigationStrings.TABROUTESVENDORNEW)}
                 iconLeft={imagePath.mystores2}
                 centerHeading={strings.MYSTORES}
                 containerStyle={styles.containerStyle2}

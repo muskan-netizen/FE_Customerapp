@@ -768,5 +768,5 @@ export default {
   NODELIVERIESFOUND:'No Deliveries Found',
   CLEAR_FILTER:"Clear Filter",
   PRICE_RANGE:"Price Range",
-
+  WRITE_REVIEW: "Write a review"
 };

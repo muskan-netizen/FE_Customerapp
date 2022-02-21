@@ -772,7 +772,7 @@ android {
          }
           codiner{
             dimension "appType"
-            versionCode 9
+            versionCode 10
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -2572,6 +2572,47 @@ android {
             resValue "string", "app_name", "Swiffy LLC"
             resValue "string", "host_name", ""
          }
+         beakme{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.beakme'
+            resValue "string", "app_name", "BeakMe"
+            resValue "string", "host_name", ""
+         }
+         onscart{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.onscart'
+            resValue "string", "app_name", "Onscart"
+            resValue "string", "host_name", ""
+         }
+         gamaDelivery{
+               dimension "appType"
+               versionCode 1
+               versionName "1.0"
+               minSdkVersion rootProject.ext.minSdkVersion
+               targetSdkVersion rootProject.ext.targetSdkVersion
+               applicationId 'com.gamaDelivery'
+               resValue "string", "app_name", "Gama Delivery"
+               resValue "string", "host_name", ""
+         }
+         hivefair{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.hivefair'
+         resValue "string", "app_name", "Hivefair Delivery"
+         resValue "string", "host_name", ""
+         }
+
     }
 }
 
