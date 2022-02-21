@@ -1124,6 +1124,81 @@ target 'Allotaxi' do
   
 end
 
+#Cabio Target
+target 'Cabio' do
+  
+end
+
+#Tumbak Target
+target 'Tumbak' do
+  
+end
+
+#iPicknDrop Target
+target 'iPicknDrop' do
+  
+end
+
+#Bluebolt Target
+target 'Bluebolt' do
+  
+end
+
+#ONTHEGO Target
+target 'ONTHEGO' do
+  
+end
+
+#MylaGlobal Target
+target 'MylaGlobal' do
+  
+end
+
+#AmbuTap Target
+target 'AmbuTap' do
+  
+end
+
+#Sabroson Target
+target 'Sabroson' do
+
+end
+
+#SwiffyLLC Target
+target 'SwiffyLLC' do
+
+end
+
+#MeatEasy Target
+target 'MeatEasy' do
+  
+end
+
+# #BoltDelivery Target
+# target 'BoltDelivery' do
+  
+# end
+
+#GamaDelivery Target
+# target 'GamaDelivery' do
+  
+# end
+
+# #Hivefair Target
+# target 'Hivefair' do
+  
+# end
+
+#BeakMe Target
+target 'BeakMe' do
+  
+end
+
+#Onscart Target
+target 'Onscart' do
+  
+end
+
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

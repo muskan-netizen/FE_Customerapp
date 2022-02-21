@@ -45,6 +45,7 @@ export function storeWishList(data) {}
 //Get all Products by Vendor id
 
 export function getProductByVendorId(query = '', data = {}, headers = {}) {
+  console.log("sendng headers",headers)
   return new Promise((resolve, reject) => {
     apiGet(GET_PRODUCT_DATA_BY_VENDORID + query, data, headers)
       .then((res) => {

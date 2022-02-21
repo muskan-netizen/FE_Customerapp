@@ -1,4 +1,5 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {Image, StyleSheet, Text} from 'react-native';
 import {View} from 'react-native-animatable';
@@ -14,7 +15,6 @@ import staticStrings from '../constants/staticStrings';
 import colors from '../styles/colors';
 import {moderateScale, textScale} from '../styles/responsiveSize';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
-import {getTabBarVisibility} from '../utils/helperFunctions';
 import AccountStack from './AccountStack';
 import BrandStack from './BrandStack';
 import CartStack from './CartStack';
@@ -37,6 +37,7 @@ export default function TabRoutes(props) {
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
 
+  console.log(appStyle?.tabBarLayout, 'appStyle?.tabBarLayout');
   // const checkForCeleb =
   //   allCategory &&
   //   allCategory.find((x) => x?.redirect_to == staticStrings.CELEBRITY);
@@ -46,6 +47,18 @@ export default function TabRoutes(props) {
 
   var celebTab = null;
   var brandTab = null;
+
+  const getTabBarVisibility = (route, navigation, screen) => {
+    if (navigation && navigation.isFocused && navigation.isFocused()) {
+      const route_name = getFocusedRouteNameFromRoute(route);
+      if (screen.includes(route_name)) {
+        showBottomBar_ = false;
+        return false;
+      }
+      showBottomBar_ = true;
+      return true;
+    }
+  };
 
   if (checkForCeleb) {
     celebTab = (

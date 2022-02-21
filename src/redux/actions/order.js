@@ -18,6 +18,7 @@ import {
   ACCEPTREJECTDRIVERUPDATE,
   GET_VENDOR_REVENUE_DASHBOARD_DATA,
   GET_VENDOR_PROFILE,
+  GET_VENDOR_TRANSACTIONS,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -39,8 +40,6 @@ export function getOrderDetailForBilling(data = {}, headers = {}) {
 
 //Get Cart Detail
 export function getOrderDetail(data = {}, headers = {}) {
-  console.log('sending+++ data', data);
-  console.log('sending+++ header', headers);
   return new Promise((resolve, reject) => {
     apiPost(GET_ORDER_DETAIL, data, headers)
       .then((res) => {
@@ -83,6 +82,19 @@ export const _getListOfVendorOrders = (query = '', data, headers = {}) => {
   console.log('query++++ headers', headers);
   return new Promise((resolve, reject) => {
     apiGet(GET_ALL_VENDOR_ORDERS + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+//Get Vendor Transactions
+export const getVendorTransactions = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_VENDOR_TRANSACTIONS, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -176,7 +188,7 @@ export const getVendorProfile = (data = {}, headers = {}) => {
 
 //Get Cart Detail
 export function getOrderDetailPickUp(data = {}, headers = {}) {
-  return apiPost(DISPATCHER_URL, data, headers)
+  return apiPost(DISPATCHER_URL, data, headers);
 }
 
 //Get RETUREN ORDER Detail

@@ -1,5 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, BackHandler, Linking } from 'react-native';
 import AppLink from 'react-native-app-link';
 import { useDarkMode } from 'react-native-dark-mode';
@@ -17,6 +17,7 @@ import { shortCodes } from '../../utils/constants/DynamicAppKeys';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
+  getImageUrl,
   getNearestLocation,
   showError,
 } from '../../utils/helperFunctions';
@@ -30,6 +31,8 @@ import {
   DashBoardOne,
   DashBoardSix,
 } from './DashboardViews/Index';
+import Voice from '@react-native-voice/voice';
+import FastImage from 'react-native-fast-image';
 
 // navigator.geolocation = require('react-native-geolocation-service');
 
@@ -46,10 +49,14 @@ export default function Home({ route, navigation }) {
     themeToggle,
     allAddresss,
   } = useSelector((state) => state?.initBoot);
-  const { location, appMainData, dineInType } = useSelector((state) => state?.home);
-  console.log(appMainData,"appMainData>appMainData");
+  const { location, appMainData, dineInType } = useSelector(
+    (state) => state?.home,
+  );
+  console.log(appMainData, 'appMainData>appMainData');
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
-  const addressSearch = useSelector((state) => state?.addressSearch.addressSearch,);
+  const addressSearch = useSelector(
+    (state) => state?.addressSearch.addressSearch,
+  );
   const userData = useSelector((state) => state?.auth?.userData);
   const pendingNotifications = useSelector(
     (state) => state?.pendingNotifications?.pendingNotifications,
@@ -73,7 +80,9 @@ export default function Home({ route, navigation }) {
     closeVendor: 0,
     bestSeller: 0,
     nearMe: 1,
-    tempCartData:null
+    tempCartData: null,
+    isVoiceRecord: false,
+    singleVendor: false
   });
 
   const {
@@ -91,11 +100,13 @@ export default function Home({ route, navigation }) {
     closeVendor,
     bestSeller,
     nearMe,
+    isVoiceRecord,
+    singleVendor
   } = state;
 
   const { profile } = appData;
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       const backHandler = BackHandler.addEventListener(
         'hardwareBackPress',
         androidBackButtonHandler,
@@ -114,6 +125,17 @@ export default function Home({ route, navigation }) {
     //   _getLocationFromParams();
     // }
   }, [paramData?.details]);
+
+  useFocusEffect(
+    useCallback(() => {
+      Voice.onSpeechStart = onSpeechStartHandler;
+      Voice.onSpeechEnd = onSpeechEndHandler;
+      Voice.onSpeechResults = onSpeechResultsHandler;
+      return () => {
+        Voice.destroy().then(Voice.removeAllListeners);
+      };
+    }, []),
+  );
 
   const _getLocationFromParams = () => {
     if (
@@ -174,7 +196,6 @@ export default function Home({ route, navigation }) {
   const updateLatLang = (res) => {
     updateState({ updateTime: Math.random() });
     actions.locationData(res);
-
   };
   useEffect(() => {
     if (updateTime) {
@@ -192,7 +213,7 @@ export default function Home({ route, navigation }) {
           getCurrentLocation('home')
             .then((res) => {
               console.log(res, 'userCurrentLocation');
-              actions.constLocationData(res)
+              actions.constLocationData(res);
               if (
                 appMainData &&
                 typeof appMainData?.reqData == 'object' &&
@@ -238,11 +259,11 @@ export default function Home({ route, navigation }) {
   }, [isRefreshing, userData?.auth_token, saveAllUserAddress]);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       // homeData();
       if (!!userData?.auth_token) {
         getAllAddress();
-        getAllTempOrders()
+        getAllTempOrders();
       }
     }, []),
   );
@@ -271,27 +292,26 @@ export default function Home({ route, navigation }) {
     }
   };
 
-   const getAllTempOrders=()=>{
-   
+  const getAllTempOrders = () => {
     actions
-    .getAllTempOrders(
-      {},
-      {
-        code: appData?.profile?.code,
-      },
-    )
-    .then((res) => {
-      console.log('getAllTempOrders data++++++', res);
-      if(res && res?.data){
-        updateState({
-          tempCartData:res?.data
-        })
-      }
-     
-    })
-    .catch(errorMethod)
- 
-   }
+      .getAllTempOrders(
+        {},
+        {
+          code: appData?.profile?.code,
+        },
+      )
+      .then((res) => {
+        console.log('getAllTempOrders data++++++', res);
+        if (res && res?.data) {
+          updateState({
+            tempCartData: res?.data,
+          });
+        }
+      })
+      .catch(errorMethod);
+  };
+
+  console.log("selectedTabTypeselectedTabType", selectedTabType)
 
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
@@ -316,9 +336,16 @@ export default function Home({ route, navigation }) {
       close_vendor: closeVendor,
       open_vendor: openVendor,
       best_vendor: bestSeller,
-      near_me: nearMe,
+      // near_me: nearMe,
     };
     console.log(vendorFilterData, 'vendorFilterData');
+
+    if (closeVendor == 0 && openVendor == 0 && bestSeller == 0) {
+      updateState({ singleVendor: true })
+    } else {
+      updateState({ singleVendor: false })
+    }
+
     {
       selectedTabType
         ? actions
@@ -337,6 +364,7 @@ export default function Home({ route, navigation }) {
           )
           .then((res) => {
             console.log('Home data++++++', res);
+            preLoadImages(res.data)
             updateState({ searchDataLoader: false });
             if (
               appData?.profile?.preferences?.is_hyperlocal &&
@@ -386,7 +414,7 @@ export default function Home({ route, navigation }) {
 
   //Error handling in screen
   const errorMethod = (error) => {
-    console.log(error,"erro>>>>>>errorerrorr");
+    console.log(error, 'erro>>>>>>errorerrorr');
     updateState({
       isLoading: false,
       isRefreshing: false,
@@ -410,6 +438,33 @@ export default function Home({ route, navigation }) {
       };
 
   const { viewRef2, viewRef3, bannerRef } = useRef();
+
+  const preLoadImages = (data) => {
+    if (data.categories.length > 0) {
+      let preLoadCategories = data.categories.map((item, inx) => {
+        return {
+          uri: getImageUrl(
+            item?.icon?.image_fit,
+            item?.icon?.image_path,
+            '160/160',
+          )
+        }
+      })
+      FastImage.preload(preLoadCategories)//preload categories
+    }
+    if (data.vendors.length > 0) {
+      let preLoadVendors = data.vendors.map((item, inx) => {
+        return {
+          uri: getImageUrl(
+            item.banner.proxy_url || item.image.proxy_url,
+            item.banner.image_path || item.image.image_path,
+            '700/300',
+          )
+        }
+      })
+      FastImage.preload(preLoadVendors)//preload vendors
+    }
+  }
 
   const openUber = () => {
     let appName = 'Uber - Easy affordable trips';
@@ -444,7 +499,8 @@ export default function Home({ route, navigation }) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
         fetchOffers: true,
         id: item.id,
-        vendor: item.redirect_to == staticStrings.ONDEMANDSERVICE ? false : true,
+        vendor:
+          item.redirect_to == staticStrings.ONDEMANDSERVICE ? false : true,
         name: item.name,
         isVendorList: true,
       })();
@@ -506,13 +562,13 @@ export default function Home({ route, navigation }) {
   };
   useEffect(() => {
     console.log(saveAllUserAddress, 'saveAllUserAddress');
-      homeData();
+    homeData();
   }, [location, bestSeller, openVendor, closeVendor]);
 
   //On Press banner
   const bannerPress = (data) => {
     console.log('data', data);
-    console.log('category press', item);
+
     let item = {};
     if (data?.redirect_id) {
       if (data?.redirect_to == staticStrings.VENDOR && data?.is_show_category) {
@@ -555,13 +611,19 @@ export default function Home({ route, navigation }) {
           let dat2 = data;
           dat2['id'] = data?.redirect_id;
           moveToNewScreen(navigationStrings.VENDOR, dat2)();
-        } else {
-          moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: data.redirect_id,
-            // vendor: true,
-            name: data.redirect_name,
-            fetchOffers: true,
-          })();
+        }
+        else {
+          if (data.redirect_to == staticStrings.CATEGORY) {
+            let dat2 = data;
+            dat2['id'] = data?.redirect_id;
+            moveToNewScreen(navigationStrings.VENDOR, dat2)();
+          } else
+            moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+              id: data.redirect_id,
+              // vendor: true,
+              name: data.redirect_name,
+              fetchOffers: true,
+            })();
         }
       }
     }
@@ -623,6 +685,8 @@ export default function Home({ route, navigation }) {
   }, [selectedTabType, appData, dineInType]);
   // location
 
+
+
   ///onPressCategory2
   const onPressCategory2 = (data) => {
     if (data.redirect_to == staticStrings.VENDOR) {
@@ -681,7 +745,7 @@ export default function Home({ route, navigation }) {
   };
 
   const onVendorFilterSeletion = (selectedFilter) => {
-    console.log("Selected filter", selectedFilter)
+    console.log('Selected filter', selectedFilter);
     switch (selectedFilter?.id) {
       case 1:
         updateState({
@@ -721,6 +785,45 @@ export default function Home({ route, navigation }) {
         break;
       default:
         break;
+    }
+  };
+
+  const onSpeechStartHandler = (e) => { };
+  const onSpeechEndHandler = (e) => {
+    updateState({
+      isVoiceRecord: false,
+    });
+  };
+
+  const onSpeechResultsHandler = (e) => {
+    let text = e.value[0];
+    console.log(text, 'text>>>');
+    moveToNewScreen(navigationStrings.SEARCHPRODUCTOVENDOR, {
+      voiceInput: text,
+    })();
+    _onVoiceStop();
+  };
+
+  const _onVoiceListen = async () => {
+    const langType = languages?.primary_language?.sort_code;
+    updateState({
+      isVoiceRecord: true,
+    });
+    try {
+      await Voice.start(langType);
+    } catch (error) {
+      console.log('error raised', error);
+    }
+  };
+
+  const _onVoiceStop = async () => {
+    updateState({
+      isVoiceRecord: false,
+    });
+    try {
+      await Voice.stop();
+    } catch (error) {
+      console.log('error raised', error);
     }
   };
 
@@ -779,6 +882,9 @@ export default function Home({ route, navigation }) {
               isLoading={isLoading}
               currentLocation={currentLocation}
               isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
             />
 
             <DashBoardFive
@@ -796,6 +902,7 @@ export default function Home({ route, navigation }) {
               toggleData={appData}
               navigation={navigation}
               onVendorFilterSeletion={onVendorFilterSeletion}
+              singleVendor={singleVendor}
             />
           </>
         );
@@ -832,7 +939,20 @@ export default function Home({ route, navigation }) {
       case 5:
         return (
           <>
-            {/* <DashBoardSeven
+            <DashBoardHeaderFive
+              navigation={navigation}
+              location={location}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              isLoading={isLoading}
+              currentLocation={currentLocation}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+            />
+
+            <DashBoardFive
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}
               isLoading={isLoading}
@@ -843,9 +963,12 @@ export default function Home({ route, navigation }) {
               }}
               isDineInSelected={isDineInSelected}
               selcetedToggle={selcetedToggle}
+              tempCartData={tempCartData}
               toggleData={appData}
               navigation={navigation}
-            /> */}
+              onVendorFilterSeletion={onVendorFilterSeletion}
+              singleVendor={singleVendor}
+            />
           </>
         );
     }

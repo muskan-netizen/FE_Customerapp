@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "948263194498",
+    "project_id": "myla-global",
+    "storage_bucket": "myla-global.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948263194498:android:6eecebddd378990706c99b",
+        "android_client_info": {
+          "package_name": "com.mylaglobal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948263194498-bcfg4msf4f4i7385504eocobtlhgr8k0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI86_V4ylOXZNkpzYhWlJbava-W0g_s-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948263194498-bcfg4msf4f4i7385504eocobtlhgr8k0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

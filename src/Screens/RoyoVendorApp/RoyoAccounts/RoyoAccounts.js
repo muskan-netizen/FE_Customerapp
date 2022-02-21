@@ -114,12 +114,12 @@ const RoyoAccounts = (props) => {
           onPress: () => {
             actions.userLogout();
             actions.cartItemQty('');
-            navigation.navigate(navigationStrings.OUTER_SCREEN);
+            navigation.navigate(navigationStrings.LOGIN);
           },
         },
       ]);
     } else {
-      navigation.navigate(navigationStrings.OUTER_SCREEN);
+      navigation.navigate(navigationStrings.LOGIN);
     }
   };
   const _getListOfVendor = () => {
@@ -162,12 +162,12 @@ const RoyoAccounts = (props) => {
       onPress: () =>
         navigation.navigate(navigationStrings.ROYO_VENDOR_TRANSACTIONS),
     },
-    {
-      text: 'Payment Settings',
-      image: imagePath.paymentSettinRoyo,
-      onPress: () =>
-        navigation.navigate(navigationStrings.ROYO_VENDOR_PAYMENT_SETTINGS),
-    },
+    // {
+    //   text: 'Payment Settings',
+    //   image: imagePath.paymentSettinRoyo,
+    //   onPress: () =>
+    //     navigation.navigate(navigationStrings.ROYO_VENDOR_PAYMENT_SETTINGS),
+    // },
     {
       text: 'Signout',
       image: imagePath.signoutRoyo,
@@ -185,7 +185,7 @@ const RoyoAccounts = (props) => {
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
         // centerTitle="Accounts | Foodies hub  "
-        centerTitle={`Accounts | ${vendorDetail?.name} `}
+        centerTitle={`Accounts | ${selectedVendor?.name} `}
         noLeftIcon
         imageAlongwithTitle={imagePath.dropdownTriangle}
         showImageAlongwithTitle
@@ -222,7 +222,7 @@ const RoyoAccounts = (props) => {
               {vendorDetail?.address}
             </Text>
           </View>
-          <Image style={{alignSelf: 'center'}} source={imagePath.edit1Royo} />
+          {/* <Image style={{alignSelf: 'center'}} source={imagePath.edit1Royo} /> */}
         </View>
         <View style={{marginTop: moderateScaleVertical(16)}}>
           {data.map((val, index) => {

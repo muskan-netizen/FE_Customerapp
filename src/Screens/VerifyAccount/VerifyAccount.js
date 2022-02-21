@@ -29,8 +29,11 @@ import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import validations from '../../utils/validations';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import {useNavigation} from '@react-navigation/native';
+import {checkIsAdmin} from '../../utils/utils';
 
 export default function VerifyAccount({navigation, route}) {
+  const navigation_ = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -363,7 +366,7 @@ export default function VerifyAccount({navigation, route}) {
           style={{alignSelf: 'flex-start'}}>
           <Image
             source={
-              appStyle?.homePageLayout === 3
+              appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
                 ? imagePath.icBackb
                 : imagePath.back
             }
@@ -384,7 +387,11 @@ export default function VerifyAccount({navigation, route}) {
         ) ? null : (
           <TouchableOpacity
             // onPress={() => navigation.push(navigationStrings.TAB_ROUTES)}>
-            onPress={() => navigation.push(navigationStrings.TAB_ROUTES)}>
+            onPress={() => {
+              // console.log(route.params.data.data);
+              checkIsAdmin(navigation_, navigation, route.params.data.data);
+              // navigation.push(navigationStrings.TAB_ROUTES)
+            }}>
             <Text style={styles.skipText}>{strings.SKIP}</Text>
           </TouchableOpacity>
         )}

@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {resetStackAndNavigate} from '../navigation/NavigationService';
 import navigationStrings from '../navigation/navigationStrings';
@@ -112,6 +112,7 @@ export async function apiReq(
         headers,
       };
     }
+  
     //
     axios[method](endPoint, data, {headers})
       .then((result) => {
@@ -124,6 +125,7 @@ export async function apiReq(
         return res(data);
       })
       .catch((error) => {
+        console.log(error,"error>error");
         if (error && error.response && error.response.status === 401) {
           sessionHandler(error.response.data.message);
           return rej(error);
@@ -192,11 +194,10 @@ export const verticalAnimation = {
 };
 
 export const checkIsAdmin = (navigation_, navigation, userData) => {
-  console.log('check userdata', userData.is_admin);
-
   // navigation.push(navigationStrings.TABROUTESVENDOR);
   if (userData.is_admin && enums.isVendorStandloneApp) {
-    resetStackAndNavigate(navigation_, navigationStrings.TABROUTESVENDOR);
+    // resetStackAndNavigate(navigation_, navigationStrings.TABROUTESVENDORNEW);
+    navigation.push(navigationStrings.TAB_ROUTES);
   } else {
     navigation.push(navigationStrings.TAB_ROUTES);
   }

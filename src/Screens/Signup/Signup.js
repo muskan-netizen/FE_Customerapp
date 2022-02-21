@@ -31,7 +31,7 @@ import commonStylesFun from '../../styles/commonStyles';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {checkIsAdmin} from '../../utils/utils';
 import {useNavigation} from '@react-navigation/native';
 
@@ -204,7 +204,7 @@ export default function Signup({navigation}) {
           style={{alignSelf: 'flex-start'}}>
           <Image
             source={
-              appStyle?.homePageLayout === 3
+              appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
                 ? imagePath.icBackb
                 : imagePath.back
             }

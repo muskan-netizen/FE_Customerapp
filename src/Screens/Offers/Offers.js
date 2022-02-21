@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, Image, TouchableOpacity, View, Text} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Image, TouchableOpacity, View, Text } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import OffersCard from '../../Components/OffersCard';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -11,11 +11,11 @@ import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {showError, showSuccess} from '../../utils/helperFunctions';
+import { shortCodes } from '../../utils/constants/DynamicAppKeys';
+import { showError, showSuccess } from '../../utils/helperFunctions';
 import ListEmptyOffers from './ListEmptyOffers';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../styles/theme';
 import OffersCard2 from '../../Components/OffersCard2';
 import {
   moderateScale,
@@ -26,7 +26,7 @@ import fontFamily from '../../styles/fontFamily';
 import BorderTextInput from '../../Components/BorderTextInput';
 import validator from '../../utils/validations';
 
-export default function Offer({route, navigation}) {
+export default function Offer({ route, navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
 
@@ -40,12 +40,12 @@ export default function Offer({route, navigation}) {
   });
 
   const vendorInfo = route?.params?.data;
-  const {isTaxi} = vendorInfo;
-  const {appData, appStyle, themeColors, themeLayouts, currencies, languages} =
+  const { isTaxi } = vendorInfo;
+  const { appData, appStyle, themeColors, themeLayouts, currencies, languages } =
     useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   useEffect(() => {
     if (vendorInfo?.cabOrder) {
       _getAllPromoCodesForCabs();
@@ -54,6 +54,7 @@ export default function Offer({route, navigation}) {
     }
   }, []);
 
+  console.log("appStyle", appStyle)
   //Get all promo codes for cab booking
   const _getAllPromoCodesForCabs = () => {
     let data = {};
@@ -70,10 +71,10 @@ export default function Offer({route, navigation}) {
       })
       .then((res) => {
         console.log(res, 'res');
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
 
         if (res && res.data) {
-          updateState({allAvailableCoupons: res.data});
+          updateState({ allAvailableCoupons: res.data });
         }
       })
       .catch(errorMethod);
@@ -93,10 +94,10 @@ export default function Offer({route, navigation}) {
       })
       .then((res) => {
         console.log(res, 'res');
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
 
         if (res && res?.data) {
-          updateState({allAvailableCoupons: res.data});
+          updateState({ allAvailableCoupons: res.data });
         }
       })
       .catch(errorMethod);
@@ -108,7 +109,7 @@ export default function Offer({route, navigation}) {
     data['vendor_id'] = vendorInfo.vendor.id;
     data['cart_id'] = vendorInfo.cartId;
     data['coupon_id'] = item.id;
-    updateState({isLoadingB: true});
+    updateState({ isLoadingB: true });
     actions
       .verifyPromocode(data, {
         code: appData?.profile?.code,
@@ -118,7 +119,7 @@ export default function Offer({route, navigation}) {
       })
       .then((res) => {
         console.log(res, 'res');
-        updateState({isLoadingB: false});
+        updateState({ isLoadingB: false });
         if (res) {
           showSuccess(res?.message || res?.error);
           navigation.navigate(navigationStrings.CART, {
@@ -140,7 +141,7 @@ export default function Offer({route, navigation}) {
     data['coupon_id'] = item.id;
     data['amount'] = vendorInfo?.vendor?.tags_price;
     console.log(data, 'data-verify-promo');
-    updateState({isLoadingB: true});
+    updateState({ isLoadingB: true });
     actions
       .verifyPromocodeForCabOrders(data, {
         code: appData?.profile?.code,
@@ -150,7 +151,7 @@ export default function Offer({route, navigation}) {
       })
       .then((res) => {
         console.log(res, 'res');
-        updateState({isLoadingB: false});
+        updateState({ isLoadingB: false });
         if (res) {
           showSuccess(res?.message || res?.error);
           if (vendorInfo?.pickUp) {
@@ -180,26 +181,26 @@ export default function Offer({route, navigation}) {
 
   const errorMethod = (error) => {
     console.log(error, 'error');
-    updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+    updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
     showError(error?.message || error?.error);
   };
 
   const rightHeader = () => {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <TouchableOpacity>
           <Image source={imagePath.search} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Image style={{marginLeft: 10}} source={imagePath.cartShop} />
+          <Image style={{ marginLeft: 10 }} source={imagePath.cartShop} />
         </TouchableOpacity>
       </View>
     );
   };
 
-  const _renderItem = ({item, index}) => {
+  const _renderItem = ({ item, index }) => {
     {
-      return appStyle?.homePageLayout === 3 ? (
+      return appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? (
         <OffersCard2
           data={item}
           onPress={() =>
@@ -222,7 +223,7 @@ export default function Offer({route, navigation}) {
   };
   const _headerComponent = () => {
     if (!!allAvailableCoupons.length) {
-      return appStyle?.homePageLayout === 3 ? (
+      return appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? (
         <View
           style={{
             marginVertical: moderateScaleVertical(16),
@@ -237,7 +238,7 @@ export default function Offer({route, navigation}) {
           </Text>
         </View>
       ) : (
-        <View style={{height: 20}} />
+        <View style={{ height: 20 }} />
       );
     } else {
       return <View></View>;
@@ -245,7 +246,7 @@ export default function Offer({route, navigation}) {
   };
 
   const isValidPromoCode = () => {
-    const error = validator({promocode: promocode});
+    const error = validator({ promocode: promocode });
 
     if (error) {
       showError(error);
@@ -265,7 +266,7 @@ export default function Offer({route, navigation}) {
     data['cart_id'] = vendorInfo.cartId;
     data['promocode'] = promocode;
 
-    updateState({isLoadingB: true});
+    updateState({ isLoadingB: true });
 
     actions
       .validatePromocode(data, {
@@ -275,7 +276,7 @@ export default function Offer({route, navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        updateState({isLoadingB: false});
+        updateState({ isLoadingB: false });
         if (res) {
           console.log(res, 'res==>');
           showSuccess(res?.message || res?.error);
@@ -290,7 +291,7 @@ export default function Offer({route, navigation}) {
       .catch(errorMethod);
   };
 
-  const {isLoading, allAvailableCoupons, isLoadingB, promocode} = state;
+  const { isLoading, allAvailableCoupons, isLoadingB, promocode } = state;
 
   return (
     <WrapperContainer
@@ -303,12 +304,12 @@ export default function Offer({route, navigation}) {
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3
-            ? imagePath.icBackb
-            : imagePath.back
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout == 5
+              ? imagePath.icBackb
+              : imagePath.back
         }
       />
-      <View style={{height: 1, backgroundColor: colors.borderLight}} />
+      <View style={{ height: 1, backgroundColor: colors.borderLight }} />
       {!isLoading && (
         <View
           style={{
@@ -319,7 +320,7 @@ export default function Offer({route, navigation}) {
           <BorderTextInput
             marginBottom={0}
             placeholder={strings.ENTER_PROMOCODE}
-            onChangeText={(txt) => updateState({promocode: txt})}
+            onChangeText={(txt) => updateState({ promocode: txt })}
             containerStyle={{
               height: moderateScaleVertical(40),
               flex: 1,
@@ -355,10 +356,10 @@ export default function Offer({route, navigation}) {
           data={isLoading ? [] : allAvailableCoupons}
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={_headerComponent}
-          ItemSeparatorComponent={() => <View style={{height: 8}} />}
+          ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
           keyExtractor={(item, index) => String(index)}
           ListEmptyComponent={<ListEmptyOffers isLoading={isLoading} />}
-          ListFooterComponent={() => <View style={{height: 20}} />}
+          ListFooterComponent={() => <View style={{ height: appStyle?.tabBarLayout == 4 ? moderateScale(80) : moderateScale(20) }} />}
           renderItem={_renderItem}
         />
       </View>

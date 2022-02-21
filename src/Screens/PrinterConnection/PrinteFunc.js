@@ -2,7 +2,7 @@ import {
   BluetoothEscposPrinter,
   BluetoothManager,
 } from '@brooons/react-native-bluetooth-escpos-printer';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Platform} from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob-v2';
 import {appData, language} from './PrinterScreen';
@@ -392,7 +392,7 @@ export const printReciept = async (data) => {
           }
         } else {
           canEnablePrinter = true;
-          alert(strings.SOMETHING_WENT_WRONG_PRINTER_MSG);
+          // alert(strings.SOMETHING_WENT_WRONG_PRINTER_MSG);
           AsyncStorage.getItem('BleDevice').then((res) => {
             console.log(
               'checking ble device storage data >>>',

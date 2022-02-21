@@ -138,11 +138,11 @@ export default function Account3({navigation}) {
   const onStartSupportChat = () => {
     ZendeskChat.setVisitorInfo({
       name: userData?.name,
-      phone: userData?.phone_number,
+      phone: userData?.phone_number ? userData?.phone_number : '',
     });
     ZendeskChat.startChat({
       name: userData?.name,
-      phone: userData?.phone_number,
+      phone: userData?.phone_number ? userData?.phone_number : '',
       withChat: true,
       color: '#000',
     });
@@ -647,7 +647,7 @@ export default function Account3({navigation}) {
               <ListItemHorizontal
                 centerContainerStyle={{flexDirection: 'row'}}
                 leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-                onPress={moveToNewScreen(navigationStrings.TABROUTESVENDOR)}
+                onPress={moveToNewScreen(navigationStrings.TABROUTESVENDORNEW)}
                 iconLeft={imagePath.mystores2}
                 centerHeading={strings.MYSTORES}
                 containerStyle={styles.containerStyle2}

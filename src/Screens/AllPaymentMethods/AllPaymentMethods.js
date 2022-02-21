@@ -89,6 +89,11 @@ export default function AllPaymentMethods({navigation, route}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {preferences} = appData?.profile;
 
+  console.log(
+    preferences?.stripe_publishable_key,
+    'preferences?.stripe_publishable_key',
+  );
+
   useEffect(() => {
     if (
       preferences &&
@@ -101,6 +106,10 @@ export default function AllPaymentMethods({navigation, route}) {
             publishableKey: preferences?.stripe_publishable_key,
             merchantIdentifier: 'merchant.identifier',
           });
+          console.log(
+            preferences?.stripe_publishable_key,
+            'preferences?.stripe_publishable_key',
+          );
         } catch (error) {
           console.log('error raised');
         }
@@ -173,9 +182,9 @@ export default function AllPaymentMethods({navigation, route}) {
         if (cardInfo) {
           await createToken(cardInfo)
             .then((res) => {
-              console.log(res, 'stripeTokenres>>');
+              console.log(res?.error, 'stripeTokenres>>');
               if (!!res?.error) {
-                alert(res.error.localizedMessage);
+                //alert(res.error.localizedMessage);
                 updateState({isLoading: false});
                 return;
               }
@@ -364,7 +373,7 @@ export default function AllPaymentMethods({navigation, route}) {
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icBackb
             : imagePath.back
         }

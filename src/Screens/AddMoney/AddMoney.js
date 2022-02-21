@@ -405,7 +405,7 @@ export default function AddMoney({navigation}) {
   };
 
   const _webPayment = () => {
-    let selectedMethod = selectedPaymentMethod.title.toLowerCase();
+    let selectedMethod = selectedPaymentMethod.code;
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
 
@@ -477,7 +477,7 @@ export default function AddMoney({navigation}) {
                 }
               })
               .catch(errorMethod);
-          }else{
+          } else {
             updateState({isLoadingB: false});
           }
         })
@@ -530,11 +530,12 @@ export default function AddMoney({navigation}) {
                   : colors.textGreyJ,
               }}>
               <Text
-                style={
-                  isDarkMode
-                    ? [styles.currencySymble, {color: MyDarkTheme.colors.text}]
-                    : styles.currencySymble
-                }>
+                style={{
+                  ...styles.currencySymble,
+                  color: isDarkMode? MyDarkTheme.colors.text: colors.black
+                 
+               } }
+                >
                 {currencies?.primary_currency?.symbol}
               </Text>
               <TextInput
@@ -648,7 +649,7 @@ export default function AddMoney({navigation}) {
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icBackb
             : imagePath.back
         }

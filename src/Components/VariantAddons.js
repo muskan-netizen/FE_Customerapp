@@ -10,7 +10,7 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   View,
-
+  FlatList
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import DeviceInfo from 'react-native-device-info';
@@ -36,6 +36,7 @@ import { MyDarkTheme } from '../styles/theme';
 import { currencyNumberFormatter } from '../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
+  getImageUrl,
   hapticEffects,
   playHapticEffect,
   showError,
@@ -45,6 +46,7 @@ import HtmlViewComp from './HtmlViewComp';
 import BannerLoader from './Loaders/BannerLoader';
 import HeaderLoader from './Loaders/HeaderLoader';
 import Modal from 'react-native-modal';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 const VariantAddons = ({
   productdetail = {},
@@ -78,7 +80,9 @@ const VariantAddons = ({
     btnLoader: false,
     typeId: null,
     selectedVariant: null,
-    selectedOption: null
+    selectedOption: null,
+    isProductImageLargeViewVisible: false,
+    isLoadingC: false
   });
 
   const {
@@ -94,7 +98,9 @@ const VariantAddons = ({
     btnLoader,
     typeId,
     selectedVariant,
-    selectedOption
+    selectedOption,
+    isProductImageLargeViewVisible,
+    isLoadingC
   } = state;
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -130,20 +136,19 @@ const VariantAddons = ({
           getProductDetail();
         }
       }
-    }, [variantSet, productdetail, isVisible]),
+    }, [productdetail, isVisible]),
   );
 
   const getProductDetailBasedOnFilter = (variantSetData) => {
-    updateState({ isLoadingC: true });
+    console.log("api hit getProductDetailBasedOnFilter")
     let data = {};
     data['variants'] = variantSetData.map((i) => i.variant_id);
     data['options'] = variantSetData.map((i) => i.optionId);
-    actions
-      .getProductDetailByVariants(`/${productDetailData.sku}`, data, {
-        code: appData.profile.code,
-        currency: currencies.primary_currency.id,
-        language: languages.primary_language.id,
-      })
+    actions.getProductDetailByVariants(`/${productDetailData.sku}`, data, {
+      code: appData.profile.code,
+      currency: currencies.primary_currency.id,
+      language: languages.primary_language.id,
+    })
       .then((res) => {
         console.log(res.data, 'res.data by vendor id ');
         updateState({
@@ -156,6 +161,8 @@ const VariantAddons = ({
           productVariantId: res.data.id,
           showErrorMessageTitle: false,
           typeId: res?.data?.products?.category?.category_detail?.type_id,
+          isLoadingC: false,
+          selectedVariant: null,
         });
       })
       .catch(errorMethod);
@@ -182,9 +189,15 @@ const VariantAddons = ({
           showErrorMessageTitle: true,
           isLoadingB: false,
           isLoadingC: false,
+          selectedVariant: null,
         });
       } else {
-        updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
+        updateState({
+          isLoading: false,
+          isLoadingB: false,
+          isLoadingC: false,
+          selectedVariant: null,
+        });
         showError(error?.message || error?.error);
       }
     }
@@ -228,6 +241,7 @@ const VariantAddons = ({
   }, [productdetail, isVisible]);
 
   const getProductDetail = () => {
+    console.log("api hit getProductDetail")
     actions
       .getProductDetailByProductId(
         `/${productdetail?.id}`,
@@ -240,20 +254,6 @@ const VariantAddons = ({
       )
       .then((res) => {
         console.log(res.data, 'res.data++ prodcut detail');
-
-        // if (!!res?.data?.products?.variant_set) {
-        //   let modifyVariant = []
-        //   let x = res.data.products.variant_set.map((val, i) => {
-        //     let y = val.options.map((item) => {
-        //       if (item?.value) {
-        //         // return {...val, slectedOption: item}
-        //         modifyVariant.push({ ...val, slectedOption: item })
-        //       }
-        //       modifyVariant.push(val)
-        //     })
-        //   })
-        //   console.log("im xxx", modifyVariant)
-        // }
         updateState({
           productDetailData: res.data.products,
           relatedProducts: res.data.relatedProducts,
@@ -265,6 +265,8 @@ const VariantAddons = ({
           productSku: res.data.products.sku,
           variantSet: res.data.products.variant_set,
           typeId: res?.data?.products?.category?.category_detail?.type_id,
+          isLoadingC: false,
+          selectedVariant: null,
           productQuantityForCart: !!res.data.products?.minimum_order_count
             ? Number(res.data.products?.minimum_order_count)
             : 1,
@@ -273,10 +275,14 @@ const VariantAddons = ({
       })
       .catch((error) => {
         console.log('error raised', error);
+        updateState({
+          selectedVariant: null,
+          isLoadingC: false,
+        })
       });
   };
 
-  let productImage = productdetail?.media[0];
+
 
   const selectSpecificOptionsForAddions = (options, i, inx) => {
     let newArray = cloneDeep(options);
@@ -344,6 +350,7 @@ const VariantAddons = ({
         {setoptions.map((i, inx) => {
           return (
             <TouchableOpacity
+              hitSlop={hitSlopProp}
               key={inx}
               activeOpacity={1}
               onPress={() => {
@@ -516,12 +523,7 @@ const VariantAddons = ({
   };
 
   const selectSpecificOptions = (options, i, inx) => {
-    // console.log("im allVariants", allVariants)
-    // console.log("im options iiiiii", options)
-
-    // return;
     let newArray = cloneDeep(options);
-
     let modifyVariants = variantSet.map((vi, vnx) => {
       if (vi.variant_type_id == i.variant_id) {
         return {
@@ -530,7 +532,7 @@ const VariantAddons = ({
             if (j.id == i.id) {
               return {
                 ...j,
-                value: i?.value ? false : true,
+                value: true,
               };
             }
             return {
@@ -543,16 +545,34 @@ const VariantAddons = ({
         return vi;
       }
     });
-
     updateState({
       variantSet: modifyVariants,
-      selectedVariant: null,
       selectedOption: i
     });
-
-
   };
 
+  const onSelect = () => {
+    if (variantSet.length) {
+      let variantSetData = variantSet
+        .map((i, inx) => {
+          let find = i.options.filter((x) => x.value);
+          if (find.length) {
+            return {
+              variant_id: find[0].variant_id,
+              optionId: find[0].id,
+            };
+          }
+        })
+        .filter((x) => x != undefined);
+      console.log(variantSetData, 'variantSetData callback');
+      if (variantSetData.length) {
+        updateState({ isLoadingC: true });
+        getProductDetailBasedOnFilter(variantSetData);
+      } else {
+        getProductDetail();
+      }
+    }
+  }
 
   const variantSetValue = (item) => {
     const { options, type, variant_type_id } = item
@@ -560,10 +580,11 @@ const VariantAddons = ({
     if (type == 1) {
       return <View>
         <TouchableOpacity
+
           onPress={() => updateState({ selectedVariant: item })}
           style={{
             ...styles.dropDownStyle,
-            backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
+            backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.blackOpacity05,
           }}
         >
           <Text style={{
@@ -588,7 +609,7 @@ const VariantAddons = ({
         onPress={() => updateState({ selectedVariant: item })}
         style={{
           ...styles.dropDownStyle,
-          backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
+          backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.blackOpacity05,
         }}
       >
         <Text style={{
@@ -605,6 +626,7 @@ const VariantAddons = ({
         </Text>
         <Image source={imagePath.dropDownSingle} />
       </TouchableOpacity>
+
       {selectedVariant?.variant_type_id == variant_type_id ? circularView(options) : null}
     </View>
   };
@@ -628,7 +650,7 @@ const VariantAddons = ({
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            marginBottom: moderateScaleVertical(16)
+
           }}>
             <Text style={{
               fontSize: moderateScale(18),
@@ -642,10 +664,17 @@ const VariantAddons = ({
               <Image source={imagePath.closeButton} />
             </TouchableOpacity>
           </View>
+          <View style={{
+            ...styles.horizontalLine,
+            borderBottomColor: isDarkMode
+              ? colors.whiteOpacity22
+              : colors.lightGreyBg,
+          }} />
           <ScrollView showsVerticalScrollIndicator={false} >
             {options.map((i, inx) => {
               return (
                 <TouchableOpacity
+                hitSlop={hitSlopProp}
                   key={inx}
                   // disabled={options && options.length == 1 ? true : false}
                   onPress={() => selectSpecificOptions(options, i, inx)}
@@ -656,6 +685,13 @@ const VariantAddons = ({
                     marginBottom: moderateScaleVertical(10),
 
                   }}>
+                  <Image
+                    source={i?.value ? imagePath.icActiveRadio : imagePath.icInActiveRadio}
+                    style={{
+                      tintColor: themeColors.primary_color,
+                      marginRight: moderateScale(16)
+                    }}
+                  />
                   <Text
                     style={{
                       ...styles.variantValue,
@@ -670,6 +706,25 @@ const VariantAddons = ({
               );
             })}
           </ScrollView>
+          <GradientButton
+            indicator={isLoadingC}
+            indicatorColor={colors.white}
+            colorsArray={[
+              themeColors.primary_color,
+              themeColors.primary_color,
+            ]}
+            textStyle={{
+              fontFamily: fontFamily.medium,
+              textTransform: 'capitalize',
+              color: colors.white,
+            }}
+            onPress={onSelect}
+            btnText={strings.SELECT}
+            btnStyle={{
+              borderRadius: moderateScale(4),
+              height: moderateScale(38),
+            }}
+          />
         </View>
       </Modal>
     );
@@ -694,7 +749,6 @@ const VariantAddons = ({
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            marginBottom: moderateScaleVertical(16)
           }}>
             <Text style={{
               fontSize: moderateScale(18),
@@ -708,10 +762,17 @@ const VariantAddons = ({
               <Image source={imagePath.closeButton} />
             </TouchableOpacity>
           </View>
+          <View style={{
+            ...styles.horizontalLine,
+            borderBottomColor: isDarkMode
+              ? colors.whiteOpacity22
+              : colors.lightGreyBg,
+          }} />
           <ScrollView showsVerticalScrollIndicator={false} >
             {options.map((i, inx) => {
               return (
                 <TouchableOpacity
+                hitSlop={hitSlopProp}
                   key={inx}
                   // disabled={options && options.length == 1 ? true : false}
                   onPress={() => selectSpecificOptions(options, i, inx)}
@@ -764,6 +825,25 @@ const VariantAddons = ({
               );
             })}
           </ScrollView>
+          <GradientButton
+            indicator={isLoadingC}
+            indicatorColor={colors.white}
+            colorsArray={[
+              themeColors.primary_color,
+              themeColors.primary_color,
+            ]}
+            textStyle={{
+              fontFamily: fontFamily.medium,
+              textTransform: 'capitalize',
+              color: colors.white,
+            }}
+            onPress={onSelect}
+            btnText={strings.SELECT}
+            btnStyle={{
+              borderRadius: moderateScale(4),
+              height: moderateScale(38),
+            }}
+          />
         </View>
       </Modal>
     );
@@ -773,31 +853,37 @@ const VariantAddons = ({
 
   console.log("variantSetvariantSet", variantSet)
 
+  const renderVariantSet = ({ item, index }) => {
+    return (
+      <View
+        key={String(index)}
+        style={{
+          flex: 1,
+          marginRight: moderateScale(8)
+        }}>
+        <Text
+          style={{
+            ...styles.variantLable,
+            marginBottom: moderateScale(5),
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          }}>{`${item?.title}`}</Text>
+        {item?.options ? variantSetValue(item) : null}
+      </View>
+    )
+  }
+
   const showAllVariants = () => {
     let variantSetData = cloneDeep(variantSet);
     return (
       <View style={{ marginVertical: moderateScaleVertical(12), paddingHorizontal: moderateScale(0) }}>
-        {variantSetData.map((i, inx) => {
-          return (
-            <View
-              key={inx}
-              style={{
-                marginBottom: moderateScaleVertical(16),
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-
-              }}>
-              <Text
-                style={{
-                  ...styles.variantLable,
-                  marginBottom: moderateScale(5),
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>{`${i?.title}`}</Text>
-              {i?.options ? variantSetValue(i) : null}
-            </View>
-          );
-        })}
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
+          numColumns={2}
+          data={!!variantSetData ? variantSetData : []}
+          renderItem={renderVariantSet}
+          keyExtractor={item => item?.variant_type_id.toString()}
+        />
       </View>
     );
   };
@@ -810,29 +896,7 @@ const VariantAddons = ({
     return false;
   };
 
-  const getDiffAddsOn = async (apiData) => {
-    console.log('get diffadds on data', apiData);
-    let header = {
-      code: appData?.profile?.code,
-      currency: currencies?.primary_currency?.id,
-      language: languages?.primary_language?.id,
-      systemuser: DeviceInfo.getUniqueId(),
-    };
-    try {
-      const res = await actions.differentAddOns(apiData, header);
-      if (!!res?.data) {
-        var getQty = 0;
-        console.log('res diff add ons+++++++', res);
-        res.data.map((val) => {
-          getQty = getQty + val.quantity;
-        });
-        return getQty;
-      }
-    } catch (error) {
-      console.log('error raised,error');
-      return false;
-    }
-  };
+
 
   var totalProductQty = 0;
   if (!!productdetail?.check_if_in_cart_app) {
@@ -1132,11 +1196,70 @@ const VariantAddons = ({
     return addOnsAdditionalPrice;
   };
 
+
+  const allImagesArrayForZoom = [];
+  productDetailData?.product_media
+    ? productDetailData?.product_media?.map((item, index) => {
+      return (allImagesArrayForZoom[index] = {
+        url: getImageUrl(
+          item?.image.path.image_fit,
+          item?.image.path.image_path,
+          '1000/1000',
+        ),
+      });
+    })
+    : getImageUrl(
+      productDetailData?.product_media[0]?.image?.path?.image_fit,
+      productDetailData?.product_media[0]?.image?.path?.image_path,
+      '1000/1000',
+    );
+
+  const renderImageZoomingView = () => {
+    return (
+      <View
+        style={{
+          height: moderateScaleVertical(height),
+          width: moderateScale(width),
+        }}>
+        <ImageViewer
+          renderHeader={() => <View style={{ backgroundColor: 'red' }}></View>}
+          renderIndicator={(currentIndex, allSize) => (
+            <View
+              style={{
+                position: 'absolute',
+                top: 100,
+                width: width / 2,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <TouchableOpacity
+                onPress={() =>
+                  updateState({
+                    isProductImageLargeViewVisible: false,
+                  })
+                }>
+                <Image
+                  style={{
+                    tintColor: colors.white,
+                    marginHorizontal: moderateScale(20),
+                  }}
+                  source={imagePath.backArrow}
+                />
+              </TouchableOpacity>
+              <Text style={{ color: colors.white }}>
+                {currentIndex + '/' + allSize}
+              </Text>
+            </View>
+          )}
+          imageUrls={allImagesArrayForZoom}
+        />
+      </View>
+    );
+  };
+
   return (
     <View style={{ flex: 1 }}>
-      {/* <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-        <Image source={imagePath.crossC} />
-      </TouchableOpacity> */}
+
       {showShimmer ? (
         shimmerShow()
       ) : (
@@ -1163,6 +1286,9 @@ const VariantAddons = ({
                 }
                 showLightbox={true}
                 cardViewStyle={styles.cardViewStyle}
+                onPressImage={() => updateState({
+                  isProductImageLargeViewVisible: true,
+                })}
               // resizeMode="contain"
               />
               <View style={{ paddingTop: 5 }}>
@@ -1289,8 +1415,9 @@ const VariantAddons = ({
             (!showErrorMessageTitle && productTotalQuantity > 0) ||
             (!!typeId && typeId == 8) ||
             !!productDetailData?.sell_when_out_of_stock
-          ) && (
-              <View
+          ) ?
+            <View>
+              {true ? <View
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
@@ -1372,7 +1499,7 @@ const VariantAddons = ({
                       }}
                       onPress={() => addToCart(addonSet)}
                       btnText={`${strings.ADD_ITEM} - ${currencies?.primary_currency?.symbol
-                        }${getAdditionalPriceOfAddons()}`}
+                        } ${getAdditionalPriceOfAddons()}`}
                       btnStyle={{
                         borderRadius: moderateScale(4),
                         height: moderateScale(38),
@@ -1380,11 +1507,22 @@ const VariantAddons = ({
                     />
                   </View>
                 )}
-              </View>
-            )}
+              </View> : null}
+            </View>
+            : null}
           <View style={{ height: moderateScale(100) }} />
         </Animatable.View>
       )}
+      <Modal
+        isVisible={isProductImageLargeViewVisible}
+        style={{
+          height: height,
+          width: width,
+          margin: 0,
+        }}
+        animationInTiming={600}>
+        {renderImageZoomingView()}
+      </Modal>
     </View>
   );
 };
@@ -1420,8 +1558,6 @@ const styles = StyleSheet.create({
   modalMainViewContainer: {
     flex: 1,
     backgroundColor: colors.white,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
     // overflow: 'hidden',
     // paddingHorizontal: moderateScale(24),
   },
@@ -1518,20 +1654,24 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.medium,
   },
   dropDownStyle: {
-    borderWidth: 1,
-    alignSelf: 'flex-start',
     paddingHorizontal: moderateScale(8),
     borderRadius: moderateScale(4),
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     paddingVertical: moderateScaleVertical(2),
   },
   modalView: {
     paddingHorizontal: moderateScale(16),
-    paddingTop:moderateScaleVertical(16),
-    paddingBottom:moderateScaleVertical(56),
+    paddingTop: moderateScaleVertical(16),
+    paddingBottom: moderateScaleVertical(16),
     borderTopLeftRadius: moderateScale(12),
     borderTopRightRadius: moderateScale(12),
-  }
+  },
+  horizontalLine: {
+    width: '100%',
+    borderBottomWidth: 1.5,
+    marginVertical: moderateScaleVertical(8)
+  },
 });
 export default React.memo(VariantAddons);

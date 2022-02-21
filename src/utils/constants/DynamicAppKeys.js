@@ -198,7 +198,7 @@ const shortCodes = {
   stitchesonsite: '5bdfee',
   easyu: '20b62b',
   mozmarcas: '53ea8a',
-  myfiji: 'a69fda',
+  myfiji: 'a0c80e',
   fastmikes: 'd89823',
   citysuds: 'aaedee',
   homeTownDelivery: 'c49349',
@@ -222,6 +222,21 @@ const shortCodes = {
   kongafood: 'c08eab',
   launch: '88cccf',
   kampick: 'd12c28',
+  cabio: '476cf3',
+  tumbak: '59944a',
+  iPicknDrop: 'f9cf93',
+  bluebolt: 'e5a64c',
+  onthego: '5e0900',
+  mylaglobal: 'a35cd8',
+  ambutap: 'b436bb',
+  sabroson: 'af268c',
+  swiffyllc: 'da7ecb',
+  meatEasy: '3e89e5',
+  boltDelivery: '07a31a',
+  gamaDelivery: 'b77561',
+  hivefair: 'f0cede',
+  beakme: '6dcadc',
+  onscart: '10abb5',
 };
 
 const appIds = {
@@ -275,7 +290,7 @@ const appIds = {
   }),
   ufood: Platform.select({
     ios: 'com.ufood',
-    android: 'com.ufood',
+    android: 'com.order.ufood',
   }),
   martinionwheels: Platform.select({
     ios: 'com.martinionwheels',
@@ -726,7 +741,7 @@ const appIds = {
     android: 'com.driveree',
   }),
   rxnow: Platform.select({
-    ios: 'com.rxnow',
+    ios: 'com.app.rxnow',
     android: 'com.rxnow',
   }),
   seachangevending: Platform.select({
@@ -1030,7 +1045,7 @@ const appIds = {
     android: 'com.homeTownDelivery',
   }),
   ritenow: Platform.select({
-    ios: 'com.ritenow',
+    ios: 'com.app.ritenow',
     android: 'com.ritenow',
   }),
   flit: Platform.select({
@@ -1077,7 +1092,7 @@ const appIds = {
     ios: 'com.cannabisClubSF',
     android: 'com.cannabisClubSF',
   }),
-  cannabisClubSF: Platform.select({
+  halaTalabat: Platform.select({
     ios: 'com.halaTalabat',
     android: 'com.halaTalabat',
   }),
@@ -1108,6 +1123,66 @@ const appIds = {
   kampick: Platform.select({
     ios: 'com.kampick',
     android: 'com.kampick',
+  }),
+  cabio: Platform.select({
+    ios: 'com.cabio',
+    android: 'com.cabio',
+  }),
+  tumbak: Platform.select({
+    ios: 'com.tumbak',
+    android: 'com.tumbak',
+  }),
+  iPicknDrop: Platform.select({
+    ios: 'com.iPicknDrop',
+    android: 'com.iPicknDrop',
+  }),
+  bluebolt: Platform.select({
+    ios: 'com.app.bluebolt',
+    android: 'com.app.bluebolt',
+  }),
+  onthego: Platform.select({
+    ios: 'com.customer.onthego',
+    android: 'com.customer.onthego',
+  }),
+  mylaglobal: Platform.select({
+    ios: 'com.mylaglobal',
+    android: 'com.mylaglobal',
+  }),
+  ambutap: Platform.select({
+    ios: 'com.ambutap',
+    android: 'com.ambutap',
+  }),
+  sabroson: Platform.select({
+    ios: 'com.sabroson',
+    android: 'com.sabroson',
+  }),
+  swiffyllc: Platform.select({
+    ios: 'com.swiffyllc',
+    android: 'com.swiffyllc',
+  }),
+  meatEasy: Platform.select({
+    ios: 'com.meatEasy',
+    android: 'com.meatEasy',
+  }),
+  boltDelivery: Platform.select({
+    ios: 'com.boltDelivery',
+    android: 'com.boltDelivery',
+  }),
+  gamaDelivery: Platform.select({
+    ios: 'com.gamaDelivery',
+    android: 'com.gamaDelivery',
+  }),
+  hivefair: Platform.select({
+    ios: 'com.hivefair',
+    android: 'com.hivefair',
+  }),
+  beakme: Platform.select({
+    ios: 'com.beakme',
+    android: 'com.beakme',
+  }),
+  onscart: Platform.select({
+    ios: 'com.onscart',
+    android: 'com.onscart',
   }),
 };
 

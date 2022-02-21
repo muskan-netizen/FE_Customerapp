@@ -1,9 +1,11 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
 import {Platform} from 'react-native';
 import PushNotification, {Importance} from 'react-native-push-notification';
 import {useSelector} from 'react-redux';
+import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
+import {enums} from './enums';
 import {getItem} from './utils';
 
 export async function requestUserPermission() {
@@ -73,6 +75,14 @@ const manageRedirections = async (data) => {
   }
 };
 
+const manageRedirectionsForVendorApp = async (data) => {
+  console.log('manage Redirections +++++ Vendor App', data);
+  navigation.navigate(navigationStrings.TABROUTESVENDORNEW, {
+    screen: navigationStrings.ROYO_VENDOR_ORDER,
+    params: {index: 1},
+  });
+};
+
 export const notificationListener = async () => {
   PushNotification.configure({
     permissions: {
@@ -119,7 +129,12 @@ export const notificationListener = async () => {
       remoteMessage,
     );
     const {data, messageId, notification} = remoteMessage;
-    manageRedirections(data);
+    if (enums.isVendorStandloneApp) {
+      manageRedirectionsForVendorApp(data);
+    } else {
+      manageRedirections(data);
+    }
+
     if (
       Platform.OS == 'android' &&
       notification.android.sound == 'notification'

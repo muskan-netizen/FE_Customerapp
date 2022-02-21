@@ -89,8 +89,7 @@ const styles = StyleSheet.create({
   },
   mainView: {
     width: width,
-
-    paddingLeft: moderateScale(20),
+    // paddingLeft: moderateScale(20),
     height: 40,
   },
   activeContractTextStyle: {

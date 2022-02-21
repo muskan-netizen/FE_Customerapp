@@ -12,6 +12,8 @@ import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {useSelector} from 'react-redux';
 import {moderateScale, width} from '../styles/responsiveSize';
 import {getImageUrl} from '../utils/helperFunctions';
+import { MyDarkTheme } from '../styles/theme';
+import colors from '../styles/colors';
 
 const Banner = ({
   imagestyle = {},
@@ -26,11 +28,13 @@ const Banner = ({
   pagination = true,
   resizeMode = 'cover',
   setActiveState = () => {},
-  onPress = () => {},
   childView = null,
   showLightbox = false,
+  onPressImage = () => {}
 }) => {
   const {themeColors} = useSelector((state) => state?.initBoot);
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
 
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -49,7 +53,7 @@ const Banner = ({
       ? getImageUrl(
           item.image.path.image_fit,
           item.image.path.image_path,
-          '1000/1000',
+          '600/6000',
         )
       : getImageUrl(item.image.image_fit, item.image.image_path, '1000/1000');
 
@@ -57,17 +61,28 @@ const Banner = ({
       <>
         <TouchableOpacity
           activeOpacity={1}
-          style={[styles.imageStyle, imagestyle]}
-          onPress={() => onPress(item)}>
-          {/* <Lightbox
-            underlayColor={'black'}
-            renderContent={() => renderCarousel(imageUrl)}> */}
-
+          style={{
+            ...styles.imageStyle, 
+            ...imagestyle,
+          }}
+          onPress={onPressImage}>
+         
           <FastImage
-            source={{uri: imageUrl, priority: FastImage.priority.high}}
+            source={{
+              uri: imageUrl, 
+              priority: FastImage.priority.high,
+              cache: FastImage.cacheControl.immutable
+            }}
             //  onLoadStart={()=>}
             onLoadEnd={() => updateState({imageLoader: false})}
-            style={{height: width * 0.7, width: width, ...imagestyle}}
+            style={{
+              height: width * 0.7,
+               width: width, 
+               backgroundColor:isDarkMode
+               ? MyDarkTheme.colors.background
+               : colors.blackOpacity10,
+               ...imagestyle
+              }}
             resizeMode={resizeMode}>
             {!!state.imageLoader && (
               <UIActivityIndicator

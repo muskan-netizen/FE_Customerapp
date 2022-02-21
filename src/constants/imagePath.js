@@ -1,4 +1,4 @@
-import {requireNativeComponent} from 'react-native';
+import { requireNativeComponent } from 'react-native';
 
 export default {
   dropdownTriangle: require('../assets/images/ic_dropdown.png'),
@@ -101,6 +101,7 @@ export default {
   editBlue: require('../assets/images/ic_edit.png'),
   crossB: require('../assets/images/ic_close_4.png'),
   icClose3: require('../assets/images/ic_close_3.png'),
+  icClose4: require('../assets/images/ic_close4.png'),
   check: require('../assets/images/ic_check.png'),
   unCheck: require('../assets/images/ic_uncheck.png'),
   workActive: require('../assets/images/ic_work_active.png'),
@@ -479,6 +480,7 @@ export default {
   checkBox2InActive: require('../assets/images/ic_check1.png'),
   emptyCart3: require('../assets/images/emptyCart3.png'),
   markerPin: require('../assets/images/markerPin.png'),
+  emptycartco: require('../assets/images/emptycartco.png'),
 
   icContactus: require('../assets/images/RoyoorderNewImages/ic_contactus.png'),
   icInventory: require('../assets/images/RoyoorderNewImages/ic_inventory.png'),
@@ -493,4 +495,11 @@ export default {
   icAdd1: require('../assets/images/RoyoorderNewImages/ic_add1.png'),
   icUp1: require('../assets/images/RoyoorderNewImages/ic_up.png'),
   icImagePlaceholder: require('../assets/images/VendorAppImages/ic_image1.png'),
+  notrcukImage: require('../assets/images/ic_notrucks.png'),
+  activeTruck: require('../assets/images/ic_truck2.png'),
+  inactiveTruck: require('../assets/images/ic_truck1.png'),
+  icMic: require('../assets/images/ic_mic.png'),
+  icVoice: require('../assets/images/icVoice.png'),
+  icDropdown4: require('../assets/images/ic_drpdwn4.png'),
+  icMegaSafe: require('../assets/images/ic_label.png'),
 };
