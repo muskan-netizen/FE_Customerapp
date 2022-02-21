@@ -226,7 +226,7 @@ export default function OrderDetail({ navigation, route }) {
       .then((res) => {
         console.log(res.data, 'order detail res===>');
         if (!!res?.data?.vendors[0] && res?.data?.vendors[0].order_status.current_status.title == "Delivered" && !res?.data?.vendors[0]?.products[0]?.product_rating && !ratingData) {
-          updateState({ratingData: res?.data?.vendors[0].products[0] })
+          updateState({ ratingData: res?.data?.vendors[0].products[0] })
         }
         updateState({ isLoading: false });
         if (res?.data) {
@@ -2528,7 +2528,7 @@ export default function OrderDetail({ navigation, route }) {
                 }}
                 image={imagePath.icDestination}
               />
-              {!!driverStatus?.agent_location?.lat && orderStatus?.current_status?.title != "Delivered"  ?
+              {!!driverStatus?.agent_location?.lat && orderStatus?.current_status?.title != "Delivered" ?
                 <Marker.Animated
                   ref={markerRef}
                   coordinate={state.animateDriver}
