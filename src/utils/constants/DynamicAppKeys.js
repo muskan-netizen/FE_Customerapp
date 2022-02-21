@@ -237,6 +237,9 @@ const shortCodes = {
   hivefair: 'f0cede',
   beakme: '6dcadc',
   onscart: '10abb5',
+  mandaExpress: 'b405dd',
+  foodies: '939bd6',
+  gO: 'a83053',
 };
 
 const appIds = {
@@ -1183,6 +1186,18 @@ const appIds = {
   onscart: Platform.select({
     ios: 'com.onscart',
     android: 'com.onscart',
+  }),
+  mandaExpress: Platform.select({
+    ios: 'com.mandaExpress',
+    android: 'com.mandaExpress',
+  }),
+  gO: Platform.select({
+    ios: 'com.customer.gO',
+    android: 'com.customer.gO',
+  }),
+  foodies: Platform.select({
+    ios: 'com.app.foodies',
+    android: 'com.app.foodies',
   }),
 };
 

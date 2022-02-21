@@ -1522,6 +1522,24 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.mandaExpress:
+          updateState({
+            shortCode: shortCodes.mandaExpress,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.foodies:
+          updateState({
+            shortCode: shortCodes.foodies,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.gO:
+          updateState({
+            shortCode: shortCodes.gO,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
