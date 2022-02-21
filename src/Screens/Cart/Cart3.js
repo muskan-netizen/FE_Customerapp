@@ -1377,6 +1377,7 @@ export default function Cart({navigation, route}) {
       scheduleType != null &&
       scheduleType == 'now' &&
       !!checkCartItem?.data &&
+      !!checkCartItem?.data.products &&
       !!checkCartItem?.data.products.length
     ) {
       setDateAndTimeSchedule();
@@ -1833,6 +1834,7 @@ export default function Cart({navigation, route}) {
                               <View>
                                 {i?.product_addons.length > 0
                                   ? i?.product_addons.map((j, jnx) => {
+                                      console.log('addons >>>>', j);
                                       return (
                                         <View
                                           style={{
@@ -1857,24 +1859,35 @@ export default function Cart({navigation, route}) {
                                                   : styles.cartItemWeight2
                                               }
                                               numberOfLines={1}>
-                                              {j.addon_title}:
+                                              {j.addon_title} x {j.quantity} ={' '}
+                                              {`${
+                                                currencies?.primary_currency
+                                                  ?.symbol
+                                              }${
+                                                // Number(i?.pvariant?.multiplier) *
+                                                currencyNumberFormatter(
+                                                  Number(j?.price).toFixed(2),
+                                                )
+                                              }`}
                                             </Text>
-                                            <Text
-                                              style={
-                                                isDarkMode
-                                                  ? [
-                                                      styles.cartItemWeight2,
-                                                      {
-                                                        color:
-                                                          MyDarkTheme.colors
-                                                            .text,
-                                                      },
-                                                    ]
-                                                  : styles.cartItemWeight2
-                                              }
-                                              numberOfLines={
-                                                1
-                                              }>{`(${j.option_title})`}</Text>
+                                            {j?.option_title ? (
+                                              <Text
+                                                style={
+                                                  isDarkMode
+                                                    ? [
+                                                        styles.cartItemWeight2,
+                                                        {
+                                                          color:
+                                                            MyDarkTheme.colors
+                                                              .text,
+                                                        },
+                                                      ]
+                                                    : styles.cartItemWeight2
+                                                }
+                                                numberOfLines={
+                                                  1
+                                                }>{`(${j.option_title})`}</Text>
+                                            ) : null}
                                           </View>
                                         </View>
                                         // <View
@@ -4256,6 +4269,7 @@ export default function Cart({navigation, route}) {
   };
 
   const renderTimeSlots = ({item, index}) => {
+    console.log(item,"itemitemitem");
     return (
       <TouchableOpacity
         key={String(index)}

@@ -29,11 +29,12 @@ import {
   LOGIN_BY_USERNAME,
   PHONE_LOGIN_OTP,
   UPLOAD_PHOTO,
+  VENDOR_LOGIN_BY_USERNAME,
 } from '../../config/urls';
-import { apiGet, apiPost, clearUserData, setUserData } from '../../utils/utils';
+import {apiGet, apiPost, clearUserData, setUserData} from '../../utils/utils';
 import store from '../store';
 import types from '../types';
-const { dispatch } = store;
+const {dispatch} = store;
 
 export const saveUserData = (data) => {
   dispatch({
@@ -112,6 +113,21 @@ export const sendRefferalCode = (data, headers = {}) => {
 export const socailLogin = (query = '', data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(SOCAIL_LOGIN_API + query, data, headers)
+      .then((res) => {
+        setUserData(res.data).then((suc) => {
+          saveUserData(res.data);
+          resolve(res);
+        });
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const VendorLoginUsername = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(VENDOR_LOGIN_BY_USERNAME, data, headers)
       .then((res) => {
         setUserData(res.data).then((suc) => {
           saveUserData(res.data);
@@ -212,11 +228,11 @@ export const getViewData = (data) => {
 
 export const editProfile = (data) => {
   return new Promise((resolve, reject) => {
-    const headers = { 'Content-Type': 'multipart/form-data' };
+    const headers = {'Content-Type': 'multipart/form-data'};
     apiPost(EDIT_PROFILE, data, headers)
       .then((res) => {
         const userData = store.getState().auth.userData;
-        const updatedUserData = { ...userData, ...res.data };
+        const updatedUserData = {...userData, ...res.data};
         saveUserData(updatedUserData);
         setUserData(updatedUserData);
         resolve(res);
@@ -232,7 +248,7 @@ export const getCurrentUser = () => {
     apiGet(GET_CURRENT_USER)
       .then((res) => {
         const userData = store.getState().auth.userData;
-        const updatedUserData = { ...userData, ...res.data };
+        const updatedUserData = {...userData, ...res.data};
         saveUserData(updatedUserData);
         setUserData(updatedUserData);
         resolve(res);
@@ -343,7 +359,7 @@ export function forgotPassword(data) {
 }
 
 export function logout() {
-  dispatch({ type: types.CLEAR_REDUX_STATE });
+  dispatch({type: types.CLEAR_REDUX_STATE});
   clearUserData();
 }
 

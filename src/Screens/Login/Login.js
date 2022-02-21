@@ -23,6 +23,7 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import CountryPicker from 'react-native-country-picker-modal';
+import {enums} from '../../utils/enums';
 
 import {
   moderateScale,
@@ -44,6 +45,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {mobile} from 'is_js';
 import {useNavigation} from '@react-navigation/native';
 import {checkIsAdmin} from '../../utils/utils';
+import {resetStackAndNavigate} from '../../navigation/NavigationService';
 
 export default function Login({navigation}) {
   const navigation_ = useNavigation();
@@ -156,6 +158,46 @@ export default function Login({navigation}) {
     } else {
       checkIsAdmin(navigation_, navigation, _data);
     }
+  };
+
+  const _onLoginVendor = async () => {
+    let fcmToken = await AsyncStorage.getItem('fcmToken');
+
+    const checkValid = isValidData();
+    if (!checkValid) {
+      return;
+    }
+
+    let data = {
+      email: email.focus ? email.value : mobilNo.phoneNo,
+      password: password,
+      device_type: Platform.OS,
+      device_token: DeviceInfo.getUniqueId(),
+      fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
+      dialCode: mobilNo.focus ? mobilNo.callingCode : '',
+      countryData: mobilNo.focus ? mobilNo.cca2 : '',
+    };
+    updateState({isLoading: true});
+    console.log('chck login data >>>', data);
+    actions
+      .VendorLoginUsername(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        if (!!res.data) {
+          // checkIsAdmin(navigation_, navigation, res.data);
+          resetStackAndNavigate(
+            navigation_,
+            navigationStrings.TABROUTESVENDORNEW,
+          );
+        }
+        updateState({isLoading: false});
+        getCartDetail();
+      })
+      .catch(errorMethod);
   };
 
   //Login api fucntion
@@ -405,25 +447,27 @@ export default function Login({navigation}) {
       source={loaderOne}
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack(null)}
-          style={{alignSelf: 'flex-start'}}>
-          <Image
-            source={
-              appStyle?.homePageLayout === 3
-                ? imagePath.icBackb
-                : imagePath.back
-            }
-            style={
-              isDarkMode
-                ? {
-                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                    tintColor: MyDarkTheme.colors.text,
-                  }
-                : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
-            }
-          />
-        </TouchableOpacity>
+        {!enums.isVendorStandloneApp && (
+          <TouchableOpacity
+            onPress={() => navigation.goBack(null)}
+            style={{alignSelf: 'flex-start'}}>
+            <Image
+              source={
+                appStyle?.homePageLayout === 3
+                  ? imagePath.icBackb
+                  : imagePath.back
+              }
+              style={
+                isDarkMode
+                  ? {
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                      tintColor: MyDarkTheme.colors.text,
+                    }
+                  : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+              }
+            />
+          </TouchableOpacity>
+        )}
       </View>
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
@@ -516,11 +560,12 @@ export default function Login({navigation}) {
 
         <GradientButton
           containerStyle={{marginTop: moderateScaleVertical(10)}}
-          onPress={_onLogin}
+          onPress={enums.isVendorStandloneApp ? _onLoginVendor : _onLogin}
           btnText={strings.LOGIN_ACCOUNT}
         />
         <View style={{marginTop: moderateScaleVertical(30)}}>
-          {!!google_login || !!fb_login || !!twitter_login || !!apple_login ? (
+          {(!!google_login || !!fb_login || !!twitter_login || !!apple_login) &&
+          !enums.isVendorStandloneApp ? (
             <View style={styles.socialRow}>
               <View style={styles.hyphen} />
               <Text
@@ -569,7 +614,7 @@ export default function Login({navigation}) {
             style={{
               flexDirection: 'column',
             }}>
-            {!!google_login && (
+            {!!google_login && !enums.isVendorStandloneApp && (
               <View style={{marginTop: moderateScaleVertical(15)}}>
                 <TransparentButtonWithTxtAndIcon
                   icon={imagePath.ic_google2}
@@ -589,7 +634,7 @@ export default function Login({navigation}) {
                 />
               </View>
             )}
-            {!!fb_login && (
+            {!!fb_login && !enums.isVendorStandloneApp && (
               <View style={{marginTop: moderateScaleVertical(15)}}>
                 <TransparentButtonWithTxtAndIcon
                   icon={imagePath.ic_fb2}
@@ -609,7 +654,7 @@ export default function Login({navigation}) {
                 />
               </View>
             )}
-            {!!twitter_login && (
+            {!!twitter_login && !enums.isVendorStandloneApp && (
               <View style={{marginTop: moderateScaleVertical(15)}}>
                 <TransparentButtonWithTxtAndIcon
                   icon={imagePath.ic_twitter2}
@@ -630,47 +675,51 @@ export default function Login({navigation}) {
               </View>
             )}
 
-            {!!apple_login && Platform.OS == 'ios' && (
-              <View style={{marginVertical: moderateScaleVertical(15)}}>
-                <TransparentButtonWithTxtAndIcon
-                  icon={isDarkMode ? imagePath.ic_apple : imagePath.ic_apple2}
-                  btnText={strings.CONTINUE_APPLE}
-                  containerStyle={{
-                    backgroundColor: isDarkMode
-                      ? MyDarkTheme.colors.lightDark
-                      : colors.white,
-                    borderColor: colors.borderColorD,
-                    borderWidth: 1,
-                  }}
-                  textStyle={{
-                    color: isDarkMode ? colors.white : colors.textGreyB,
-                    marginHorizontal: moderateScale(17),
-                  }}
-                  onPress={() => openAppleLogin()}
-                />
-              </View>
-            )}
+            {!!apple_login &&
+              !enums.isVendorStandloneApp &&
+              Platform.OS == 'ios' && (
+                <View style={{marginVertical: moderateScaleVertical(15)}}>
+                  <TransparentButtonWithTxtAndIcon
+                    icon={isDarkMode ? imagePath.ic_apple : imagePath.ic_apple2}
+                    btnText={strings.CONTINUE_APPLE}
+                    containerStyle={{
+                      backgroundColor: isDarkMode
+                        ? MyDarkTheme.colors.lightDark
+                        : colors.white,
+                      borderColor: colors.borderColorD,
+                      borderWidth: 1,
+                    }}
+                    textStyle={{
+                      color: isDarkMode ? colors.white : colors.textGreyB,
+                      marginHorizontal: moderateScale(17),
+                    }}
+                    onPress={() => openAppleLogin()}
+                  />
+                </View>
+              )}
           </View>
         </View>
-        <View style={styles.bottomContainer}>
-          <Text
-            style={
-              isDarkMode
-                ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
-                : {...styles.txtSmall, color: colors.textGreyLight}
-            }>
-            {strings.DONT_HAVE_ACCOUNT}
+        {!enums.isVendorStandloneApp && (
+          <View style={styles.bottomContainer}>
             <Text
-              onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
-              style={{
-                fontFamily: fontFamily.bold,
-                color: themeColors.primary_color,
-              }}>
-              {' '}
-              {strings.SIGN_UP}
+              style={
+                isDarkMode
+                  ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
+                  : {...styles.txtSmall, color: colors.textGreyLight}
+              }>
+              {strings.DONT_HAVE_ACCOUNT}
+              <Text
+                onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
+                style={{
+                  fontFamily: fontFamily.bold,
+                  color: themeColors.primary_color,
+                }}>
+                {' '}
+                {strings.SIGN_UP}
+              </Text>
             </Text>
-          </Text>
-        </View>
+          </View>
+        )}
       </KeyboardAwareScrollView>
     </WrapperContainer>
   );

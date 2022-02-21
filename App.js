@@ -132,9 +132,7 @@ const App = () => {
   };
 
   const checkExistChannel = () => {
-    PushNotification.getChannels(function (channel_ids) {
-     
-    });
+    PushNotification.getChannels(function (channel_ids) {});
   };
   useEffect(() => {
     (async () => {
@@ -148,7 +146,7 @@ const App = () => {
         });
       }
       const getAppData = await getItem('appData');
-     
+
       if (!!getAppData) {
         setPrimaryColor(getAppData.themeColors.primary_color);
       }
@@ -275,7 +273,7 @@ const App = () => {
   //Check internet connection
   useEffect(() => {
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
-      console.log('checkingInternetConnections',state)
+      console.log('checkingInternetConnections', state);
       const netStatus = state.isConnected;
       setInternet(netStatus);
       updateInternetConnection(netStatus);
