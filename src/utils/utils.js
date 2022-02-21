@@ -197,7 +197,8 @@ export const checkIsAdmin = (navigation_, navigation, userData) => {
 
   // navigation.push(navigationStrings.TABROUTESVENDOR);
   if (userData.is_admin && enums.isVendorStandloneApp) {
-    resetStackAndNavigate(navigation_, navigationStrings.TABROUTESVENDORNEW);
+    // resetStackAndNavigate(navigation_, navigationStrings.TABROUTESVENDORNEW);
+    navigation.push(navigationStrings.TAB_ROUTES);
   } else {
     navigation.push(navigationStrings.TAB_ROUTES);
   }

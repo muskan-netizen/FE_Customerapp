@@ -1362,6 +1362,7 @@ export default function Cart({ navigation, route }) {
       scheduleType != null &&
       scheduleType == 'now' &&
       !!checkCartItem?.data &&
+      !!checkCartItem?.data.products &&
       !!checkCartItem?.data.products.length
     ) {
       setDateAndTimeSchedule();
