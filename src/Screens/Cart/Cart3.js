@@ -506,7 +506,7 @@ export default function Cart({ navigation, route }) {
         Number(itemToUpdate.quantity - itemToUpdate?.product?.batch_count) <=
         itemToUpdate?.product?.minimum_order_count
       ) {
-        quanitity = 0;
+        quanitity = itemToUpdate.quantity - 1;
       } else {
         quanitity = Number(itemToUpdate.quantity) - quantityToIncrease;
       }
@@ -568,6 +568,10 @@ export default function Cart({ navigation, route }) {
           });
         } else {
           actions.cartItemQty({});
+          updateState({
+            isLoadingB: false,
+            btnLoader: false,
+          });
         }
         showSuccess(res?.message);
       })
@@ -1965,7 +1969,7 @@ export default function Cart({ navigation, route }) {
                 </View>
               ) : (
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Image
+                  <FastImage
                     style={{ tintColor: themeColors.primary_color }}
                     source={imagePath.percent}
                     resizeMode='contain'
