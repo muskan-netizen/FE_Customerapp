@@ -2561,6 +2561,27 @@ android {
             resValue "string", "app_name", "Swiffy LLC"
             resValue "string", "host_name", ""
          }
+         gamaDelivery{
+               dimension "appType"
+               versionCode 1
+               versionName "1.0"
+               minSdkVersion rootProject.ext.minSdkVersion
+               targetSdkVersion rootProject.ext.targetSdkVersion
+               applicationId 'com.gamaDelivery'
+               resValue "string", "app_name", "Gama Delivery"
+               resValue "string", "host_name", ""
+         }
+         hivefair{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.hivefair'
+         resValue "string", "app_name", "Hivefair Delivery"
+         resValue "string", "host_name", ""
+         }
+
     }
 }
 
