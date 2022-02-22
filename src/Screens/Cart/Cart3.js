@@ -202,7 +202,7 @@ export default function Cart({navigation, route}) {
   const selectedAddressData = useSelector(
     (state) => state?.cart?.selectedAddress,
   );
-
+  console.log(selectedAddressData, 'checkkkk');
   const dineInType = useSelector((state) => state?.home?.dineInType);
 
   //Update states on screens
@@ -818,7 +818,7 @@ export default function Cart({navigation, route}) {
   };
 
   const placeOrderData = (data) => {
-    console.log('Sending data', data);
+    console.log(data, 'Sending dattaaa');
 
     actions
       .placeOrder(data, {
@@ -1256,7 +1256,7 @@ export default function Cart({navigation, route}) {
             selectedAddressData?.id
           }&payment_option_id=${
             selectedPayment?.id
-          }&action=cart&stripe_token=${tokenInfo}`,
+          }&action=cart&stripe_token=${tokenInfo}&type=${dineInType}`,
           {},
           {
             code: appData?.profile?.code,
@@ -4269,7 +4269,7 @@ export default function Cart({navigation, route}) {
   };
 
   const renderTimeSlots = ({item, index}) => {
-    console.log(item,"itemitemitem");
+    console.log(item, 'itemitemitem');
     return (
       <TouchableOpacity
         key={String(index)}

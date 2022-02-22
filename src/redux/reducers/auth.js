@@ -2,14 +2,14 @@ import types from '../types';
 
 const initial_state = {
   userData: {},
-  profileAddress:{}
+  profileAddress: {},
 };
 
 export default function (state = initial_state, action) {
   switch (action.type) {
     case types.LOGIN: {
       const data = action.payload;
-      console.log(data,'this login data')
+      console.log(data, 'this login data');
       return {userData: data};
     }
     case types.USER_LOGOUT: {

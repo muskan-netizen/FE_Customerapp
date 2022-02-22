@@ -161,7 +161,7 @@ export default function SelectPaymentModal({
             .then((res) => {
               console.log(res, 'stripeTokenres>>');
               if (!!res?.error) {
-                //alert(res.error.localizedMessage);
+                // alert(res.error.localizedMessage);
                 updateState({isLoading: false});
                 return;
               }
