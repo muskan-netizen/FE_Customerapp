@@ -8951,6 +8951,7 @@
 		FC1EBCAC958921936DD4A5F9 /* Pods-available_pods-Sofia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Sofia.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-Sofia/Pods-available_pods-Sofia.debug.xcconfig"; sourceTree = "<group>"; };
 		FD64AA8F9B01FDF461F95181 /* Pods-available_pods-CaribeClean.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-CaribeClean.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-CaribeClean/Pods-available_pods-CaribeClean.debug.xcconfig"; sourceTree = "<group>"; };
 		FE07D18D1AC720B4CB729C04 /* Pods-available_pods-EnExt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-EnExt.release.xcconfig"; path = "Target Support Files/Pods-available_pods-EnExt/Pods-available_pods-EnExt.release.xcconfig"; sourceTree = "<group>"; };
+		FE88851727C4ADA10055FD83 /* ElixirRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ElixirRelease.entitlements; sourceTree = "<group>"; };
 		FE91650441F9D0E44119E9F0 /* libPods-available_pods-AGBDeliveries.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-AGBDeliveries.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FED55E2DFF50F7BB31FC5BBA /* Pods-available_pods-GajaMove.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-GajaMove.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-GajaMove/Pods-available_pods-GajaMove.debug.xcconfig"; sourceTree = "<group>"; };
 		FF131B7728529C614A607ADB /* Pods-available_pods-Everywhere.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Everywhere.release.xcconfig"; path = "Target Support Files/Pods-available_pods-Everywhere/Pods-available_pods-Everywhere.release.xcconfig"; sourceTree = "<group>"; };
@@ -11685,6 +11686,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				FE88851727C4ADA10055FD83 /* ElixirRelease.entitlements */,
 				0020370727BF956100D99F30 /* Onscart.entitlements */,
 				0020370627BF956100D99F30 /* Onscart.entitlements */,
 				0079481527BF69E000F4ABF5 /* BeakMe.entitlements */,
@@ -89978,11 +89980,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8424649427073AA3005473D3 /* Elixir(Production).xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ElixirRelease.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
 				PRODUCT_BUNDLE_IDENTIFIER = "${PROJECT_BUNDLE_ID}";
 				PRODUCT_NAME = Runrun;
 				PROJECT_BUNDLE_ID = "${PROJECT_BUNDLE_ID}";
+				PROVISIONING_PROFILE_SPECIFIER = Elixir;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

@@ -534,7 +534,7 @@ export default function DashBoardFive({
     );
   }
 
-  console.log("isSingleVendorisSingleVendor",appData?.profile?.preferences?.single_vendor)
+
   const vendorHeader = () => {
     if(appData?.profile?.preferences?.single_vendor){
       return <View style={{
@@ -711,7 +711,7 @@ export default function DashBoardFive({
           {categoriesBanners()}
           {
             <>
-              {vendorsData.length > 0  ? <FlatList
+               <FlatList
                 scrollEnabled={false}
                 ListHeaderComponent={vendorHeader}
                 showsVerticalScrollIndicator={false}
@@ -721,10 +721,18 @@ export default function DashBoardFive({
                 keyExtractor={(item) => item.id.toString()}
                 showsHorizontalScrollIndicator={false}
                 renderItem={_renderVendors}
+                ListEmptyComponent={()=><Image 
+                  source={imagePath.noDataFound} 
+                  resizeMode='contain'
+                  style={{
+                  
+                    alignSelf:'center'
+                  }}
+                  />}
                 ItemSeparatorComponent={() => (
                   <View style={{ height: moderateScale(10) }} />
                 )}
-              /> : null}
+              /> 
 
               {checkForBrand && (
                 <View style={{}}>
