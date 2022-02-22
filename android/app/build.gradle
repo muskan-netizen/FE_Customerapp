@@ -379,16 +379,16 @@ android {
       //       resValue "string", "app_name", "Cannabus"
       //       resValue "string", "host_name", ""
       //   }
-      //   govachow{
-      //       dimension "appType"
-      //       versionCode 2
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion
-      //       applicationId 'com.govachow'
-      //       resValue "string", "app_name", "GovaChow"
-      //       resValue "string", "host_name", ""
-      //   }
+        govachow{
+            dimension "appType"
+            versionCode 2
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.govachow'
+            resValue "string", "app_name", "GovaChow"
+            resValue "string", "host_name", ""
+        }
       //    bustanfakieh{
       //       dimension "appType"
       //       versionCode 1
@@ -761,7 +761,7 @@ android {
       //    }
           codiner{
             dimension "appType"
-            versionCode 10
+            versionCode 11
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -1708,16 +1708,16 @@ android {
       //       resValue "string", "app_name", "Yeboy"
       //       resValue "string", "host_name", ""
       //    }
-      //    kel360{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.kel'
-      //       resValue "string", "app_name", "360kel"
-      //       resValue "string", "host_name", ""
-      //    }
+        //  kel360{
+        //     dimension "appType"
+        //     versionCode 1
+        //     versionName "1.0"
+        //     minSdkVersion rootProject.ext.minSdkVersion
+        //     targetSdkVersion rootProject.ext.targetSdkVersion         
+        //     applicationId 'com.kel'
+        //     resValue "string", "app_name", "360kel"
+        //     resValue "string", "host_name", ""
+        //  }
       //     moboserrandsservice{
       //       dimension "appType"
       //       versionCode 1
@@ -2111,16 +2111,16 @@ android {
       //       resValue "string", "app_name", "Vendor Spot"
       //       resValue "string", "host_name", ""
       //    }
-      //    pinkydeli{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.pinkydeli'
-      //       resValue "string", "app_name", "Pinky Deli"
-      //       resValue "string", "host_name", ""
-      //    }
+         pinkydeli{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.app.pinkydeli'
+            resValue "string", "app_name", "Pinky Deli"
+            resValue "string", "host_name", ""
+         }
       //     sxm2go{
       //       dimension "appType"
       //       versionCode 1
