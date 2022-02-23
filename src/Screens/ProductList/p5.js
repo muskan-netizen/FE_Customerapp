@@ -99,11 +99,13 @@ export default function Products({ route, navigation }) {
     selectedSbCategoryID: -1,
     productListId: data,
     productListData: [],
+    categoryInfo: null,
     click: false,
     isVisibleModal: false,
     updateQtyLoader: false,
     showShimmer: true,
     typeId: null,
+
     sortFilters: [
       {
         id: -2,
@@ -163,6 +165,8 @@ export default function Products({ route, navigation }) {
     MenuModalVisible: false,
     isVegEnabled: true,
     updateTagFilter: false,
+    diffAddOnCartIdProductId: null,
+    storeLocalQty: null,
     differentAddsOnsModal: false,
     selectedDiffAdsOnId: 0,
     isShowFilter: false,
@@ -193,6 +197,7 @@ export default function Products({ route, navigation }) {
     isRefreshing,
     selectedSbCategoryID,
     productListId,
+    categoryInfo,
     productListData,
     isLoadingB,
     brandData,
@@ -226,6 +231,8 @@ export default function Products({ route, navigation }) {
     isVegEnabled,
     MenuModalVisible,
     updateTagFilter,
+    diffAddOnCartIdProductId,
+    storeLocalQty,
     differentAddsOnsModal,
     selectedDiffAdsOnId,
     isShowFilter,
@@ -240,13 +247,10 @@ export default function Products({ route, navigation }) {
   const [differentAddsOns, setDifferentAddsOns] = useState([])
   const [selectedDiffAdsOnItem, setSelectedDiffAdsOnItem] = useState(null)
   const [selectedDiffAdsOnSection, setSelectedDiffAdsOnSection] = useState(null)
-  const [diffAddOnCartIdProductId, setDiffAddOnCartIdProductId] = useState(null)
   const [filterData, setFilterData] = useState([])
   const [allFilters, setAllFilter] = useState([])
   const [ProductTags, setProductTags] = useState([])
   const [offerList, setOfferList] = useState([])
-  const [categoryInfo, setCategoryInfo] = useState([])
-  const [storeLocalQty, setStoreLocalQty] = useState(null)
 
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
@@ -362,10 +366,10 @@ export default function Products({ route, navigation }) {
       .then((res) => {
         console.log(res, 'getProductByVendorCategoryId');
         // setFilterData(res?.data?.filterData)
-        setCategoryInfo(res?.data?.vendor)
         updateState({
           isLoading: false,
           isRefreshing: false,
+          categoryInfo: res?.data?.vendor,
           productListData:
             pageNo == 1
               ? res.data.products.data
@@ -493,12 +497,12 @@ export default function Products({ route, navigation }) {
           setSectionListData(filterArray)
           setCloneSectionList(filterArray)
           // setFilterData(res?.data?.filterData)
-          setCategoryInfo(res?.data?.vendor)
           updateState({
             isRefreshing: false,
+            categoryInfo: res?.data?.vendor,
             // vendorCategories: res?.data?.categories,
           });
-
+          console.log(res?.data?.filterData, 'filterArrayfilterArray');
           fetchTags(filterArray);
           setTimeout(() => {
             updateState({ isLoading: false, })
@@ -507,10 +511,10 @@ export default function Products({ route, navigation }) {
           // console.log('get product list by vendor id >>>> ', res);
           if (res?.data) {
             // setFilterData(res?.data?.filterData)
-            setCategoryInfo(res?.data?.vendor)
             updateState({
               isLoading: false,
               isRefreshing: false,
+              categoryInfo: res?.data?.vendor,
               productListData: res?.data?.vendor?.is_show_products_with_category
                 ? res?.data?.categories[0]?.products
                 : pageNo == 1
@@ -569,11 +573,11 @@ export default function Products({ route, navigation }) {
           });
           setSectionListData(filterArray)
           setCloneSectionList(filterArray)
-          setCategoryInfo(res?.data?.vendor)
           // setFilterData(res?.data?.filterData)
           updateState({
             isLoading: false,
             isRefreshing: false,
+            categoryInfo: res?.data?.vendor,
             // vendorCategories: res?.data?.categories,
           });
           console.log(filterArray, 'filterArrayfilterArray');
@@ -582,10 +586,10 @@ export default function Products({ route, navigation }) {
           // console.log('get product list by vendor id >>>> ', res);
           if (!!res?.data?.products?.data) {
             // setFilterData(res?.data?.filterData)
-            setCategoryInfo(res?.data?.vendor)
             updateState({
               isLoading: false,
               isRefreshing: false,
+              categoryInfo: res?.data?.vendor,
               productListData: !!res?.data?.vendor
                 ?.is_show_products_with_category
                 ? res?.data?.categories[0]?.products
@@ -628,8 +632,8 @@ export default function Products({ route, navigation }) {
       .then((res) => {
         console.log(res, 'getProductByCategoryId');
         // setFilterData(res?.data?.filterData)
-        setCategoryInfo(categoryInfo ? categoryInfo : res.data.category)
         updateState({
+          categoryInfo: categoryInfo ? categoryInfo : res.data.category,
           productListData:
             pageNo == 1
               ? res.data.listData.data
@@ -1135,8 +1139,11 @@ export default function Products({ route, navigation }) {
       });
       setSectionListData(filteredArr)
       setCloneSectionList(filteredArr)
-      setStoreLocalQty(differentAddsOnsQty)
-      updateState({ selectedItemID: -1, });
+      updateState({
+        ...state,
+        selectedItemID: -1,
+        storeLocalQty: differentAddsOnsQty,
+      });
       // fetchTags(filteredArr)
     } else {
       let updateArray = productListData.map((val, i) => {
@@ -1150,10 +1157,10 @@ export default function Products({ route, navigation }) {
         }
         return val;
       });
-      setStoreLocalQty(differentAddsOnsQty)
       updateState({
         productListData: updateArray,
         selectedItemID: -1,
+        storeLocalQty: differentAddsOnsQty,
       });
     }
   };
@@ -1423,7 +1430,6 @@ export default function Products({ route, navigation }) {
         totalProductQty = totalProductQty + val?.quantity;
       });
     }
-    console.log("totalProductQty",totalProductQty)
 
     // return;
 
@@ -1453,6 +1459,7 @@ export default function Products({ route, navigation }) {
 
     if (type == 2) {
       // direct subtract customize items if products added with same addons
+
       addDeleteCartItems(
         item,
         tempQty == 0 ? isExistqty : tempQty,
@@ -1516,11 +1523,13 @@ export default function Products({ route, navigation }) {
         setDifferentAddsOns(res?.data || [])
         setSelectedDiffAdsOnItem(item)
         setSelectedDiffAdsOnSection(section)
-        setDiffAddOnCartIdProductId({
-          cart_id: apiData?.cart_id,
-          product_id: apiData?.product_id,
-        })
-        updateState({differentAddsOnsModal: true});
+        updateState({
+          diffAddOnCartIdProductId: {
+            cart_id: apiData?.cart_id,
+            product_id: apiData?.product_id,
+          },
+          differentAddsOnsModal: true,
+        });
         return { data: res?.data, goNext: true };
       }
       return { data: res?.data, goNext: false };
@@ -1565,7 +1574,7 @@ export default function Products({ route, navigation }) {
         ? differentAddsOnsQty + batchCount
         : differentAddsOnsQty - batchCount, //send updated total quantity
     );
-    setDifferentAddsOns(updateLocallyAddOns)
+    updateState({ differentAddsOns: updateLocallyAddOns });
   };
 
   const renderProduct = ({ item, index }) => {
@@ -1622,9 +1631,9 @@ export default function Products({ route, navigation }) {
       })
       setSectionListData(filterArr)
       setCloneSectionList(filterArryClone)
-      setStoreLocalQty(quanitity)
       updateState({
         cartId: cartID,
+        storeLocalQty: quanitity,
         isVisibleModal: false,
       });
     } else {
@@ -1637,7 +1646,7 @@ export default function Products({ route, navigation }) {
             isRemove: false,
           };
         }
-        setStoreLocalQty(quanitity)
+        updateState({ storeLocalQty: quanitity });
         return val;
       });
       updateState({

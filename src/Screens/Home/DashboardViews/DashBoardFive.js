@@ -721,12 +721,14 @@ export default function DashBoardFive({
                 keyExtractor={(item) => item.id.toString()}
                 showsHorizontalScrollIndicator={false}
                 renderItem={_renderVendors}
-                ListEmptyComponent={()=><Image 
+                ListEmptyComponent={()=><FastImage 
                   source={imagePath.noDataFound} 
                   resizeMode='contain'
                   style={{
-                  
-                    alignSelf:'center'
+                  width: moderateScale(140),
+                  height:moderateScale(140),
+                  alignSelf:'center'
+     
                   }}
                   />}
                 ItemSeparatorComponent={() => (

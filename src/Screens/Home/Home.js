@@ -568,6 +568,7 @@ export default function Home({ route, navigation }) {
   //On Press banner
   const bannerPress = (data) => {
     console.log('data', data);
+    // return;
 
     let item = {};
     if (data?.redirect_id) {
@@ -613,10 +614,16 @@ export default function Home({ route, navigation }) {
           moveToNewScreen(navigationStrings.VENDOR, dat2)();
         }
         else {
-          if (data.redirect_to == staticStrings.CATEGORY) {
-            let dat2 = data;
-            dat2['id'] = data?.redirect_id;
-            moveToNewScreen(navigationStrings.VENDOR, dat2)();
+          if (data?.category?.type?.title == staticStrings.PRODUCT) {
+            moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+              id: data.redirect_id,
+              // vendor: true,
+              name: data.redirect_name,
+              fetchOffers: true,
+            })();
+            // let dat2 = data;
+            // dat2['id'] = data?.redirect_id;
+            // moveToNewScreen(navigationStrings.VENDOR, dat2)();
           } else
             moveToNewScreen(navigationStrings.PRODUCT_LIST, {
               id: data.redirect_id,
