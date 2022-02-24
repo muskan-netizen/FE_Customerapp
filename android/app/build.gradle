@@ -625,16 +625,16 @@ android {
       //       resValue "string", "app_name", "Cabdelivr"
       //       resValue "string", "host_name", ""
       //    }
-      //      drus{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion
-      //       applicationId 'com.app.drus'
-      //       resValue "string", "app_name", "Drus"
-      //       resValue "string", "host_name", ""
-      //    }
+           drus{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.app.drus'
+            resValue "string", "app_name", "Drus"
+            resValue "string", "host_name", ""
+         }
     
       //   arenagrub{
       //       dimension "appType"
@@ -1628,16 +1628,16 @@ android {
       //       resValue "string", "app_name", "Bilionza"
       //       resValue "string", "host_name", ""
       //    }
-      //    doleypharmacy{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.doleypharmacy'
-      //       resValue "string", "app_name", "Doley"
-      //       resValue "string", "host_name", ""
-      //    }
+         doleypharmacy{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.doleypharmacy'
+            resValue "string", "app_name", "Doley"
+            resValue "string", "host_name", ""
+         }
       //     bezalio{
       //       dimension "appType"
       //       versionCode 1
@@ -2341,16 +2341,16 @@ android {
       //       resValue "string", "app_name", "Sijang"
       //       resValue "string", "host_name", ""
       //    }
-      //     fairex{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.fairex'
-      //       resValue "string", "app_name", "Fairex"
-      //       resValue "string", "host_name", ""
-      //    }
+          fairex{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.fairex'
+            resValue "string", "app_name", "Fairex"
+            resValue "string", "host_name", ""
+         }
       //     everywhere{
       //       dimension "appType"
       //       versionCode 1
@@ -2631,7 +2631,26 @@ android {
     //      resValue "string", "app_name", "GO"
     //      resValue "string", "host_name", ""
     //      }
-      
+    bauBau{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.baubau'
+         resValue "string", "app_name", "BauBau"
+         resValue "string", "host_name", ""
+         }
+    bookARyde{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.bookARyde'
+         resValue "string", "app_name", "Book-A-Ryde"
+         resValue "string", "host_name", ""
+         }
 
     }
 }

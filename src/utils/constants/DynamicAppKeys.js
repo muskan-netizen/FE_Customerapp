@@ -240,6 +240,8 @@ const shortCodes = {
   mandaExpress: 'b405dd',
   foodies: '939bd6',
   gO: 'a83053',
+  bauBau: 'e5e48e',
+  bookARyde: '3c4b81',
 };
 
 const appIds = {
@@ -1198,6 +1200,14 @@ const appIds = {
   foodies: Platform.select({
     ios: 'com.app.foodies',
     android: 'com.app.foodies',
+  }),
+  bauBau: Platform.select({
+    ios: 'com.baubau',
+    android: 'com.baubau',
+  }),
+  bookARyde: Platform.select({
+    ios: 'com.bookARyde',
+    android: 'com.bookARyde',
   }),
 };
 

@@ -1540,6 +1540,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.bauBau:
+          updateState({
+            shortCode: shortCodes.bauBau,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bookARyde:
+          updateState({
+            shortCode: shortCodes.bookARyde,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
