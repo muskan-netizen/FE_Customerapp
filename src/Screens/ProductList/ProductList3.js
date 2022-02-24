@@ -1,44 +1,40 @@
-import { cloneDeep, debounce, update } from 'lodash';
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { BlurView } from '@react-native-community/blur';
+import Clipboard from '@react-native-community/clipboard';
+import _, { cloneDeep, debounce } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   FlatList,
   I18nManager,
   Image,
-  ImageBackground,
-  Platform,
-  RefreshControl,
-  SafeAreaView,
-  StatusBar,
-  Text,
-  TouchableOpacity,
-  Vibration,
-  View,
-  ScrollView,
-  Modal,
-  TouchableWithoutFeedback,
+  ImageBackground, SafeAreaView, ScrollView, Text,
+  TouchableOpacity, TouchableWithoutFeedback, View
 } from 'react-native';
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import * as Animatable from 'react-native-animatable';
+import { screenWidth } from 'react-native-calendars/src/expandableCalendar/commons';
 import { useDarkMode } from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
+import Share from 'react-native-share';
+import Toast from 'react-native-simple-toast';
 import SectionList from 'react-native-tabs-section-list';
 import { useSelector } from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
-import BottomSheetModal from '../../Components/BottomSheetModal';
 import BottomSlideModal from '../../Components/BottomSlideModal';
-import BrowseMenuButton from '../../Components/BrowseMenuButton';
 import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
+import DifferentAddOns from '../../Components/DifferentAddOns ';
+import FilterComp from '../../Components/FilterComp';
 import GradientCartView from '../../Components/GradientCartView';
 import HomeServiceVariantAddons from '../../Components/HomeServiceVariantAddons';
 import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
-import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
-import ProductListLoader from '../../Components/Loaders/ProductListLoader';
+import HomeLoader from '../../Components/Loaders/HomeLoader';
+import ProductListLoader3 from '../../Components/Loaders/ProductListLoader3';
 import NoDataFound from '../../Components/NoDataFound';
 import ProductCard3 from '../../Components/ProductCard3';
+import RepeatModal from '../../Components/RepeatModal';
 import RoundImg from '../../Components/RoundImg';
 import SearchBar from '../../Components/SearchBar';
 import VariantAddons from '../../Components/VariantAddons';
@@ -49,41 +45,24 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc, { hitSlopProp } from '../../styles/commonStyles';
-import * as NavigationService from '../../navigation/NavigationService';
 import {
   height,
   moderateScale,
-  moderateScaleVertical,
-  StatusBarHeight,
-  textScale,
-  width,
+  moderateScaleVertical, textScale,
+  width
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { currencyNumberFormatter } from '../../utils/commonFunction';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   checkEvenOdd,
   getImageUrl,
   hapticEffects,
-  playHapticEffect,
-  playVibration,
-  showError,
-  showSuccess,
+  playHapticEffect, showError,
+  showSuccess
 } from '../../utils/helperFunctions';
 import { removeItem } from '../../utils/utils';
 import stylesFunc from './styles';
-import _ from 'lodash';
-import ProductListLoader3 from '../../Components/Loaders/ProductListLoader3';
-import Clipboard from '@react-native-community/clipboard';
-import Toast from 'react-native-simple-toast';
-import RepeatModal from '../../Components/RepeatModal';
-import DifferentAddOns from '../../Components/DifferentAddOns ';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
-import FilterComp from '../../Components/FilterComp';
-import { appIds } from '../../utils/constants/DynamicAppKeys';
-import Share from 'react-native-share';
-import { BlurView } from '@react-native-community/blur';
-import HomeLoader from '../../Components/Loaders/HomeLoader';
-import { screenWidth } from 'react-native-calendars/src/expandableCalendar/commons';
 
 let timeOut = undefined;
 
@@ -112,24 +91,17 @@ export default function Products({ route, navigation }) {
   const [state, setState] = useState({
     isVisibleModal: false,
     isOffline: false,
-    isLoading: true,
     isLoadingB: false,
     pageNo: 1,
-    limit: 2,
+    limit: 10,
     isRefreshing: false,
     selectedSbCategoryID: -1,
-    productListId: data,
     productListData: [],
-    categoryInfo: null,
     click: false,
-    filterData: [],
-    brandData: [],
-    allFilters: [],
     isVisibleModal: false,
     updateQtyLoader: false,
     showShimmer: true,
     typeId: null,
-    selectedSection: null,
     sortFilters: [
       {
         id: -2,
@@ -162,19 +134,18 @@ export default function Products({ route, navigation }) {
         ],
       },
     ],
-    sleectdBrands: [],
-    selectedVariants: [],
-    selectedOptions: [],
-    slectedSortBy: [],
+    brandData: [], //NU
+    selectedVariants: [], //Nu
+    selectedOptions: [], //NU
+    slectedSortBy: [], //NU
+    searchedRecords: [], //NU
     minimumPrice: 0,
     maximumPrice: 50000,
     checkForMinimumPriceChange: false,
     checkForMaximumPriceChange: false,
     showFilterSlectedIcon: false,
     isLoadingC: false,
-    selectedCategory: null,
     AnimatedHeaderValue: false,
-    selectedCartItem: null,
     cartId: null,
     isSearch: false,
     searchInput: '',
@@ -184,22 +155,11 @@ export default function Products({ route, navigation }) {
     vendorCategories: null,
     vendorCategorySelectedIndx: 0,
     vendorCategoryItms: null,
-    sectionListData: [],
     numberOfQtyToBeAdd: 0,
-    searchedRecords: [],
-    cloneSectionList: [],
     offersModalVisible: false,
     MenuModalVisible: false,
     isVegEnabled: true,
-    ProductTags: [],
     updateTagFilter: false,
-    offerList: [],
-    repeatItems: null,
-    differentAddsOns: [],
-    selectedDiffAdsOnItem: null,
-    selectedDiffAdsOnSection: null,
-    diffAddOnCartIdProductId: null,
-    storeLocalQty: null,
     differentAddsOnsModal: false,
     selectedDiffAdsOnId: 0,
     isShowFilter: false,
@@ -221,21 +181,15 @@ export default function Products({ route, navigation }) {
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   const {
-    selectedCategory,
     isLoadingC,
-    isLoading,
     isOffline,
     pageNo,
     limit,
     isRefreshing,
     selectedSbCategoryID,
-    productListId,
-    categoryInfo,
     productListData,
     isLoadingB,
-    filterData,
     brandData,
-    allFilters,
     sortFilters,
     sleectdBrands,
     selectedVariants,
@@ -247,7 +201,6 @@ export default function Products({ route, navigation }) {
     checkForMaximumPriceChange,
     showFilterSlectedIcon,
     AnimatedHeaderValue,
-    selectedCartItem,
     isVisibleModal,
     updateQtyLoader,
     cartId,
@@ -261,29 +214,36 @@ export default function Products({ route, navigation }) {
     vendorCategorySelectedIndx,
     vendorCategoryItms,
     typeId,
-    sectionListData,
-    cloneSectionList,
-    selectedSection,
     numberOfQtyToBeAdd,
     searchedRecords,
     offersModalVisible,
     isVegEnabled,
     MenuModalVisible,
-    ProductTags,
     updateTagFilter,
-    offerList,
-    repeatItems,
-    differentAddsOns,
-    selectedDiffAdsOnItem,
-    selectedDiffAdsOnSection,
-    diffAddOnCartIdProductId,
-    storeLocalQty,
     differentAddsOnsModal,
     selectedDiffAdsOnId,
     isShowFilter,
     selectedSortFilter,
   } = state;
 
+  const [sectionListData, setSectionListData] = useState([])
+  const [cloneSectionList, setCloneSectionList] = useState([])
+  const [selectedSection, setSelectedSection] = useState(null)
+  const [repeatItems, setRepeatItems] = useState(null)
+  const [selectedCartItem, setSelectedCarItems] = useState(null)
+  const [differentAddsOns, setDifferentAddsOns] = useState([])
+  const [selectedDiffAdsOnItem, setSelectedDiffAdsOnItem] = useState(null)
+  const [selectedDiffAdsOnSection, setSelectedDiffAdsOnSection] = useState(null)
+  const [diffAddOnCartIdProductId, setDiffAddOnCartIdProductId] = useState(null)
+  const [filterData, setFilterData] = useState([])
+  const [allFilters, setAllFilter] = useState([])
+  const [ProductTags, setProductTags] = useState([])
+  const [offerList, setOfferList] = useState([])
+  const [categoryInfo, setCategoryInfo] = useState([])
+  const [storeLocalQty, setStoreLocalQty] = useState(null)
+  const [selectedCategory, setSelectedCategory] = useState(null)
+  const [productListId, setProductListId] = useState(data)
+  const [isLoading, setLoading] = useState(true)
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
   const styles = stylesFunc({ themeColors, fontFamily, isDarkMode, MyDarkTheme });
@@ -345,13 +305,14 @@ export default function Products({ route, navigation }) {
         },
       )
       .then((res) => {
+        console.log("product tags res", res)
         const productTagsArr = res?.data?.map((el) => {
           return {
             ...el,
             isSelected: false,
           };
         });
-        updateState({ ProductTags: productTagsArr });
+        setProductTags(productTagsArr)
 
         // if (res && res.data) {
         //   updateState({allAvailableCoupons: res.data});
@@ -362,6 +323,7 @@ export default function Products({ route, navigation }) {
         console.log('tags api error >>>>>', error);
       });
   };
+
 
   const getAllListItems = (pageNo = 1) => {
     if (data?.vendor) {
@@ -397,11 +359,11 @@ export default function Products({ route, navigation }) {
       )
       .then((res) => {
         console.log(res, 'getProductByVendorCategoryId');
+        // setFilterData(res?.data?.filterData)
+        setCategoryInfo(res?.data?.vendor)
+        setLoading(false)
         updateState({
-          isLoading: false,
-          isRefreshing: false,
-          categoryInfo: res?.data?.vendor,
-          filterData: res?.data?.filterData,
+          // isRefreshing: false,
           productListData:
             pageNo == 1
               ? res.data.products.data
@@ -449,7 +411,7 @@ export default function Products({ route, navigation }) {
           }),
         };
       });
-      updateState({ allFilters: filterDataNew });
+      setAllFilter(filterDataNew)
     }
   };
 
@@ -490,9 +452,9 @@ export default function Products({ route, navigation }) {
       )
       .then((res) => {
         console.log('get all products by vendor res', res);
-        
+
         if (res?.data?.vendor) {
-          console.log("res?.data?.vendor",res?.data?.vendor?.banner || res?.data?.vendor?.image)
+          console.log("res?.data?.vendor", res?.data?.vendor?.banner || res?.data?.vendor?.image)
           FastImage.preload([{
             uri:
               getImageUrl(
@@ -526,40 +488,39 @@ export default function Products({ route, navigation }) {
             delete newKey['products'];
             return newKey;
           });
+          setSectionListData(filterArray)
+          setCloneSectionList(filterArray)
+          // setFilterData(res?.data?.filterData)
+          setCategoryInfo(res?.data?.vendor)
           updateState({
-            sectionListData: filterArray,
-            cloneSectionList: filterArray,
             isRefreshing: false,
-            categoryInfo: res?.data?.vendor,
-            filterData: res?.data?.filterData,
-            vendorCategories: res?.data?.categories,
+            // vendorCategories: res?.data?.categories,
           });
-          console.log(filterArray, 'filterArrayfilterArray');
+
           fetchTags(filterArray);
-          setTimeout(() => {
-            updateState({ isLoading: false, })
-          }, 400);
+          setLoading(false)
         } else {
           // console.log('get product list by vendor id >>>> ', res);
           if (res?.data) {
+            // setFilterData(res?.data?.filterData)
+            setCategoryInfo(res?.data?.vendor)
+            setLoading(false)
             updateState({
-              isLoading: false,
-              isRefreshing: false,
-              categoryInfo: res?.data?.vendor,
-              filterData: res?.data?.filterData,
+              // isRefreshing: false,
               productListData: res?.data?.vendor?.is_show_products_with_category
                 ? res?.data?.categories[0]?.products
                 : pageNo == 1
                   ? res.data.products.data
                   : [...productListData, ...res.data.products.data],
-              vendorCategories: res?.data?.categories,
+              // vendorCategories: res?.data?.categories,
               // vendorCategoryItms: res?.data?.categories[0]?.products,
             });
           } else {
-            updateState({
-              isLoading: false,
-              isRefreshing: false,
-            });
+            setLoading(false)
+            // updateState({
+            //   isLoading: false,
+            //   isRefreshing: false,
+            // });
           }
         }
         if (res?.data) {
@@ -603,39 +564,39 @@ export default function Products({ route, navigation }) {
             delete newKey['products'];
             return newKey;
           });
-          updateState({
-            sectionListData: filterArray,
-            cloneSectionList: filterArray,
-            isLoading: false,
-            isRefreshing: false,
-            categoryInfo: res?.data?.vendor,
-            filterData: res?.data?.filterData,
-            vendorCategories: res?.data?.categories,
-          });
+          setSectionListData(filterArray)
+          setCloneSectionList(filterArray)
+          setCategoryInfo(res?.data?.vendor)
+          // setFilterData(res?.data?.filterData)
+          // updateState({
+          //   isRefreshing: false,
+          //   // vendorCategories: res?.data?.categories,
+          // });
           console.log(filterArray, 'filterArrayfilterArray');
           fetchTags(filterArray);
         } else {
           // console.log('get product list by vendor id >>>> ', res);
           if (!!res?.data?.products?.data) {
+            // setFilterData(res?.data?.filterData)
+            setCategoryInfo(res?.data?.vendor)
+            setLoading(false)
             updateState({
-              isLoading: false,
-              isRefreshing: false,
-              categoryInfo: res?.data?.vendor,
-              filterData: res?.data?.filterData,
+              // isRefreshing: false,
               productListData: !!res?.data?.vendor
                 ?.is_show_products_with_category
                 ? res?.data?.categories[0]?.products
                 : pageNo == 1
                   ? res.data.products.data
                   : [...productListData, ...res.data.products.data],
-              vendorCategories: res?.data?.categories,
+              // vendorCategories: res?.data?.categories,
               // vendorCategoryItms: res?.data?.categories[0]?.products,
             });
           } else {
-            updateState({
-              isLoading: false,
-              isRefreshing: false,
-            });
+            setLoading(false)
+            // updateState({
+            //   isLoading: false,
+            //   isRefreshing: false,
+            // });
           }
         }
         if (res?.data) {
@@ -663,35 +624,32 @@ export default function Products({ route, navigation }) {
       )
       .then((res) => {
         console.log(res, 'getProductByCategoryId');
+        // setFilterData(res?.data?.filterData)
+        setCategoryInfo(categoryInfo ? categoryInfo : res.data.category)
+        setLoading(false)
         updateState({
-          categoryInfo: categoryInfo ? categoryInfo : res.data.category,
-          filterData: res?.data?.filterData,
           productListData:
             pageNo == 1
               ? res.data.listData.data
               : [...productListData, ...res.data.listData.data],
           isLoadingC: false,
-          isRefreshing: false,
-          isLoading: false,
+          // isRefreshing: false,
         });
-        {
-          pageNo == 1 &&
-            res?.data?.listData?.data.length == 0 &&
-            res?.data?.category &&
-            res?.data?.category?.childs.length
-            ? updateState({
-              selectedCategory: res.data.category.childs[0],
-              productListId: res.data.category.childs[0],
-              pageNo: 1,
-              limit: 30,
-              isLoadingC: true,
-            })
-            : null;
-        }
-        setTimeout(() => {
-          updateState({ isLoading: false });
-        }, 700);
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+
+        // if (pageNo == 1 &&
+        //   res?.data?.listData?.data.length == 0 &&
+        //   res?.data?.category &&
+        //   res?.data?.category?.childs.length) {
+        //   setSelectedCategory(res.data.category.childs[0])
+        //   setProductListId(res.data.category.childs[0])
+        //   updateState({
+        //     pageNo: 1,
+        //     limit: 10,
+        //     isLoadingC: true,
+        //   })
+        // }
+        // updateState({ isLoading: false });
+        // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
       .catch(errorMethod);
     // }
@@ -720,13 +678,13 @@ export default function Products({ route, navigation }) {
         console.log(res, 'getAllProductsCategoryFilter  res ++++++');
 
         updateState({
-          isLoading: false,
-          isRefreshing: false,
+          // isRefreshing: false,
           productListData:
             pageNo == 1
               ? res.data.data
               : [...productListData, ...res.data.data],
         });
+        setLoading(false)
       })
       .catch(errorMethod);
     // }
@@ -746,14 +704,13 @@ export default function Products({ route, navigation }) {
         });
       });
       tagsArr = _.uniqBy(tagsArr, 'tag_id');
-      updateState({
-        ProductTags: tagsArr.map((el) => {
-          return {
-            ...el.tag,
-            isSelected: false,
-          };
-        }),
-      });
+      let productTagsArr = tagsArr.map((el) => {
+        return {
+          ...el.tag,
+          isSelected: false,
+        };
+      })
+      setProductTags(productTagsArr)
     }
   };
 
@@ -813,8 +770,8 @@ export default function Products({ route, navigation }) {
       updateQtyLoader: false,
       selectedItemID: -1,
       btnLoader: false,
-      isLoading: false,
     });
+    setLoading(false)
     showError(error?.message || error?.error);
   };
 
@@ -880,12 +837,12 @@ export default function Products({ route, navigation }) {
   };
 
   const hideDifferentAddOns = () => {
-    updateState({ differentAddsOnsModal: false, differentAddsOns: [] });
+    updateState({ differentAddsOnsModal: false });
+    setDifferentAddsOns([])
   };
 
   const addSingleItem = async (item, section = null) => {
     console.log('checking item info >>>', item);
-
     if (
       !!categoryInfo?.is_vendor_closed &&
       !categoryInfo?.show_slot &&
@@ -894,7 +851,7 @@ export default function Products({ route, navigation }) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
     }
-    playHapticEffect(hapticEffects.impactLight);
+    // playHapticEffect(hapticEffects.impactLight);
     let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
     updateState({ selectedItemID: item?.id, btnLoader: true });
     let isSingleVendor = await checkSingleVendor(item.id);
@@ -923,27 +880,25 @@ export default function Products({ route, navigation }) {
       return;
     }
 
-    // return;
-
     if (item?.add_on?.length !== 0 || item?.variantSet?.length !== 0) {
+      setSelectedSection(section)
+      setSelectedCarItems(item)
       updateState({
         updateQtyLoader: false,
         typeId: getTypeId,
         isVisibleModal: true,
-        selectedCartItem: item,
-        selectedSection: section,
         selectedItemID: -1,
         btnLoader: false,
       });
       return;
     }
     if (item?.add_on?.length === 0 && item?.mode_of_service === 'schedule') {
+      setSelectedSection(section)
+      setSelectedCarItems(item)
       updateState({
         updateQtyLoader: false,
         typeId: getTypeId,
         isVisibleModal: true,
-        selectedCartItem: item,
-        selectedSection: section,
         selectedItemID: -1,
         btnLoader: false,
       });
@@ -987,10 +942,8 @@ export default function Products({ route, navigation }) {
             }
             return f;
           });
-          updateState({
-            sectionListData: filteredArr,
-            cloneSectionList: filteredArr,
-          });
+          setSectionListData(filteredArr)
+          setCloneSectionList(filteredArr)
           // fetchTags(filteredArr)
         } else {
           let updateArray = productListData.map((val, i) => {
@@ -1010,10 +963,10 @@ export default function Products({ route, navigation }) {
             productListData: updateArray,
           });
         }
+        setSelectedSection(section)
+        setSelectedCarItems(item)
         updateState({
-          selectedCartItem: item,
           updateQtyLoader: false,
-          selectedSection: section,
           selectedItemID: -1,
           btnLoader: false,
         });
@@ -1174,13 +1127,10 @@ export default function Products({ route, navigation }) {
         }
         return f;
       });
-      updateState({
-        ...state,
-        sectionListData: filteredArr,
-        cloneSectionList: filteredArr,
-        selectedItemID: -1,
-        storeLocalQty: differentAddsOnsQty,
-      });
+      setSectionListData(filteredArr)
+      setCloneSectionList(filteredArr)
+      setStoreLocalQty(differentAddsOnsQty)
+      updateState({ selectedItemID: -1, });
       // fetchTags(filteredArr)
     } else {
       let updateArray = productListData.map((val, i) => {
@@ -1194,10 +1144,10 @@ export default function Products({ route, navigation }) {
         }
         return val;
       });
+      setStoreLocalQty(differentAddsOnsQty)
       updateState({
         productListData: updateArray,
         selectedItemID: -1,
-        storeLocalQty: differentAddsOnsQty,
       });
     }
   };
@@ -1218,7 +1168,7 @@ export default function Products({ route, navigation }) {
           return val;
         }
       });
-      updateState({ differentAddsOns: updateLocallyAddOns });
+      setDifferentAddsOns(updateLocallyAddOns)
     }
 
     let data = {};
@@ -1261,19 +1211,23 @@ export default function Products({ route, navigation }) {
             return x;
           });
           section['data'] = updatedSection;
+
+          const filterArr = sectionListData.map((f, fnx) => {
+            if (f?.id == section?.id) {
+              return section;
+            }
+            return f;
+          })
+          const filterArryClone = cloneSectionList.map((f, fnx) => {
+            if (f?.id == section?.id) {
+              return section;
+            }
+            return f;
+          })
+          setSectionListData(filterArr)
+          setCloneSectionList(filterArryClone)
+
           updateState({
-            sectionListData: sectionListData.map((f, fnx) => {
-              if (f?.id == section?.id) {
-                return section;
-              }
-              return f;
-            }),
-            cloneSectionList: cloneSectionList.map((f, fnx) => {
-              if (f?.id == section?.id) {
-                return section;
-              }
-              return f;
-            }),
             updateQtyLoader: false,
             selectedItemID: -1,
             btnLoader: false,
@@ -1311,12 +1265,12 @@ export default function Products({ route, navigation }) {
     updateState({ updateQtyLoader: false });
     if (error?.message?.alert == 1) {
       updateState({
-        isLoading: false,
         isLoadingB: false,
         isLoadingC: false,
         selectedItemID: -1,
         btnLoader: false,
       });
+      setLoading(false)
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
@@ -1330,8 +1284,8 @@ export default function Products({ route, navigation }) {
         },
       ]);
     } else {
+      setLoading(false)
       updateState({
-        isLoading: false,
         isLoadingB: false,
         isLoadingC: false,
         selectedItemID: -1,
@@ -1366,8 +1320,7 @@ export default function Products({ route, navigation }) {
 
   const onRepeat = async () => {
     // console.log("repeate items", repeatItems)
-    const { item, isExistqty, productId, parentCartId, updateLocalQty } =
-      repeatItems;
+    const { item, isExistqty, productId, parentCartId, updateLocalQty } = repeatItems;
     await addDeleteCartItems(
       item,
       isExistqty,
@@ -1378,7 +1331,7 @@ export default function Products({ route, navigation }) {
       1,
       updateLocalQty,
     );
-    updateState({ repeatItems: null });
+    setRepeatItems(null)
   };
 
   const onAddNew = () => {
@@ -1393,12 +1346,12 @@ export default function Products({ route, navigation }) {
     let getTypeId =
       !!repeatItems?.item?.category &&
       repeatItems?.item?.category.category_detail?.type_id;
+    setRepeatItems(null)
+    setSelectedCarItems(repeatItems?.item)
     updateState({
-      repeatItems: null,
       updateQtyLoader: false,
       typeId: getTypeId,
       isVisibleModal: true,
-      selectedCartItem: repeatItems?.item,
       selectedItemID: -1,
       btnLoader: false,
     });
@@ -1464,6 +1417,7 @@ export default function Products({ route, navigation }) {
         totalProductQty = totalProductQty + val?.quantity;
       });
     }
+    console.log("totalProductQty", totalProductQty)
 
     // return;
 
@@ -1493,7 +1447,6 @@ export default function Products({ route, navigation }) {
 
     if (type == 2) {
       // direct subtract customize items if products added with same addons
-
       addDeleteCartItems(
         item,
         tempQty == 0 ? isExistqty : tempQty,
@@ -1531,10 +1484,8 @@ export default function Products({ route, navigation }) {
             productId: res?.data?.id,
             parentCartId: res.data.cart_id,
           };
-          console.log('is++ exist qty', tempQty == 0 ? isExistqty : tempQty);
-          console.log('is++ update local qty', res.data?.quantity);
-
-          updateState({ repeatItems: addData, selectedSection: section });
+          setSelectedSection(section)
+          setRepeatItems(addData)
         }
       } catch (error) {
         console.log('error riased++++', error);
@@ -1556,16 +1507,14 @@ export default function Products({ route, navigation }) {
       const res = await actions.differentAddOns(apiData, header);
       console.log('res+++++++', res);
       if (res?.data.length > 1) {
-        updateState({
-          differentAddsOns: res?.data || [],
-          selectedDiffAdsOnItem: item,
-          selectedDiffAdsOnSection: section,
-          diffAddOnCartIdProductId: {
-            cart_id: apiData?.cart_id,
-            product_id: apiData?.product_id,
-          },
-          differentAddsOnsModal: true,
-        });
+        setDifferentAddsOns(res?.data || [])
+        setSelectedDiffAdsOnItem(item)
+        setSelectedDiffAdsOnSection(section)
+        setDiffAddOnCartIdProductId({
+          cart_id: apiData?.cart_id,
+          product_id: apiData?.product_id,
+        })
+        updateState({ differentAddsOnsModal: true });
         return { data: res?.data, goNext: true };
       }
       return { data: res?.data, goNext: false };
@@ -1610,7 +1559,7 @@ export default function Products({ route, navigation }) {
         ? differentAddsOnsQty + batchCount
         : differentAddsOnsQty - batchCount, //send updated total quantity
     );
-    updateState({ differentAddsOns: updateLocallyAddOns });
+    setDifferentAddsOns(updateLocallyAddOns)
   };
 
   const renderProduct = ({ item, index }) => {
@@ -1653,21 +1602,23 @@ export default function Products({ route, navigation }) {
         return x;
       });
       selectedSection['data'] = updatedSection;
+      const filterArr = sectionListData.map((f, fnx) => {
+        if (f?.id == selectedSection?.id) {
+          return selectedSection;
+        }
+        return f;
+      })
+      const filterArryClone = cloneSectionList.map((f, fnx) => {
+        if (f?.id == selectedSection?.id) {
+          return selectedSection;
+        }
+        return f;
+      })
+      setSectionListData(filterArr)
+      setCloneSectionList(filterArryClone)
+      setStoreLocalQty(quanitity)
       updateState({
-        sectionListData: sectionListData.map((f, fnx) => {
-          if (f?.id == selectedSection?.id) {
-            return selectedSection;
-          }
-          return f;
-        }),
-        cloneSectionList: cloneSectionList.map((f, fnx) => {
-          if (f?.id == selectedSection?.id) {
-            return selectedSection;
-          }
-          return f;
-        }),
         cartId: cartID,
-        storeLocalQty: quanitity,
         isVisibleModal: false,
       });
     } else {
@@ -1680,7 +1631,7 @@ export default function Products({ route, navigation }) {
             isRemove: false,
           };
         }
-        updateState({ storeLocalQty: quanitity });
+        setStoreLocalQty(quanitity)
         return val;
       });
       updateState({
@@ -1697,8 +1648,7 @@ export default function Products({ route, navigation }) {
       if (productListId?.vendor && routeData) {
         fetchOffers();
       }
-
-      // getAllProductTags();
+      getAllProductTags();
     }
   }, [isLoadingC]);
 
@@ -1731,7 +1681,7 @@ export default function Products({ route, navigation }) {
         newObj.data = records;
         return newObj;
       });
-      updateState({ cloneSectionList: newArr });
+      setCloneSectionList(newArr)
     } else {
       // getAllProductsByVendor();
     }
@@ -1739,15 +1689,14 @@ export default function Products({ route, navigation }) {
 
   const onPressChildCards = (item) => {
     console.log(item, 'item upload');
+    setSelectedCategory(item)
+    setProductListId(item)
     updateState({
-      selectedCategory: item,
       // productListData: [],
-      productListId: item,
       pageNo: 1,
-      limit: 30,
+      limit: 10,
       isLoadingC: true,
     });
-
     // navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
   };
 
@@ -1771,10 +1720,9 @@ export default function Products({ route, navigation }) {
         // console.log('checking products >>>>>', records)
         // Arr.push(...records)
       });
-      updateState({ cloneSectionList: newArr });
+      setCloneSectionList(newArr)
     } else {
       getAllProductsByVendor();
-      // updateState({ cloneSectionList: sectionListData })
     }
   };
 
@@ -1794,19 +1742,23 @@ export default function Products({ route, navigation }) {
       .then((res) => {
         // console.log('res >>>>>>> offers >>>', res);
         if (res && res.data) {
-          updateState({ offerList: res.data });
+          setOfferList(res.data)
         }
       });
     // .catch(errorMethod);
   };
 
+  const rightIconPress = () =>{
+    updateState({
+      searchInput: '',
+      isSearch: false,
+    })
+    setLoading(false)
+  }
+
   const RenderMenuView = () => {
     return (
       <View>
-        {/* <View style={{ paddingHorizontal: moderateScale(15), width: '100%', borderBottomColor: colors.greyMedium, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Text style={{ fontSize: textScale(14), fontFamily: fontFamily.regular }}>Recommended</Text>
-        <Text style={{ fontSize: textScale(14), fontFamily: fontFamily.regular }}>2</Text>
-                </View> */}
         <ScrollView style={{ width: '100%' }}>
           <Text
             style={{
@@ -2342,13 +2294,7 @@ export default function Products({ route, navigation }) {
                   placeholder={strings.SEARCH_ITEM}
                   // onChangeText={(value) => onChangeText(value)}
                   showRightIcon
-                  rightIconPress={() =>
-                    updateState({
-                      searchInput: '',
-                      isSearch: false,
-                      isLoading: false,
-                    })
-                  }
+                  rightIconPress={rightIconPress}
                 />
               </Animatable.View>
             ) : (
@@ -2555,8 +2501,8 @@ export default function Products({ route, navigation }) {
                           return el;
                         }
                       });
+                      setProductTags(updatedArr)
                       updateState({
-                        ProductTags: updatedArr,
                         updateTagFilter: !updateTagFilter,
                       });
                     }}
@@ -2603,7 +2549,7 @@ export default function Products({ route, navigation }) {
               placeholder={strings.SEARCH_WITHIN_MENU}
               onChangeText={(value) => onSearchWithinMenu(value)}
               showRightIcon={searchInput ? true : false}
-              rightIconStyle={{ tintColor: themeColors.secondary_color }}
+              rightIconStyle={{ tintColor: isDarkMode ? colors.white : colors.black }}
               rightIconPress={() => onSearchWithinMenu('')}
               showVoiceRecord={false}
             />
@@ -2611,7 +2557,7 @@ export default function Products({ route, navigation }) {
             {appIds.codiner == DeviceInfo.getBundleId() ? null : (
               <View style={{ flex: 0.14 }}>
                 <TouchableOpacity
-                hitSlop={hitSlopProp}
+                  hitSlop={hitSlopProp}
                   onPress={onShowHideFilter}
                   style={{
                     alignSelf: 'flex-end'
@@ -2678,48 +2624,6 @@ export default function Products({ route, navigation }) {
     );
   };
 
-  const _onVendorCategory = (itm, indx) => {
-    updateState({
-      vendorCategorySelectedIndx: indx,
-      productListData: itm?.products,
-      // AnimatedHeaderValue: true
-    });
-  };
-
-  const _renderVendorCategories = ({ item, index }) => {
-    return (
-      <TouchableOpacity
-        activeOpacity={1}
-        // onPress={() => _onVendorCategory(item, index)}
-        style={{
-          paddingHorizontal: 5,
-          paddingVertical: 7,
-          backgroundColor:
-            vendorCategorySelectedIndx === index
-              ? themeColors.primary_color
-              : colors.transparent,
-          borderRadius: 10,
-          borderColor:
-            vendorCategorySelectedIndx !== index
-              ? themeColors.primary_color
-              : colors.transparent,
-          borderWidth: 0.7,
-        }}>
-        <Text
-          style={{
-            fontFamily: fontFamily.medium,
-            color:
-              vendorCategorySelectedIndx === index
-                ? colors.white
-                : isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.black,
-          }}>
-          {item?.category?.translation[0]?.name}
-        </Text>
-      </TouchableOpacity>
-    );
-  };
 
   if (isLoading) {
     return (
@@ -2945,7 +2849,8 @@ export default function Products({ route, navigation }) {
                 return el;
               }
             });
-            updateState({ sectionListData: newArr, cloneSectionList: newArr });
+            setSectionListData(newArr)
+            setCloneSectionList(newArr)
             console.log(props);
             // activeIdx = props.index;
             let cells = [];
@@ -3262,13 +3167,7 @@ export default function Products({ route, navigation }) {
                     placeholder={strings.SEARCH_ITEM}
                     // onChangeText={(value) => onChangeText(value)}
                     showRightIcon
-                    rightIconPress={() =>
-                      updateState({
-                        searchInput: '',
-                        isSearch: false,
-                        isLoading: false,
-                      })
-                    }
+                    rightIconPress={rightIconPress}
                   />
                 </Animatable.View>
               ) : (
@@ -3318,28 +3217,18 @@ export default function Products({ route, navigation }) {
         {!!categoryInfo?.is_show_products_with_category ? (
           <Animatable.View style={{ flex: 1 }}>
             <SectionList
+              onScroll={onScroll}
               ref={sectionListRef}
               showsVerticalScrollIndicator={false}
-              onScroll={onScroll}
+              // onScroll={onScroll}
               sections={cloneSectionList}
               ListHeaderComponent={listHeaderComponent2()}
               stickySectionHeadersEnabled={false}
-              scrollToLocationOffset={10}
-              maxToRenderPerBatch={18}
-              windowSize={18}
-              initialNumToRender={18}
-              removeClippedSubviews={true}
-              extraData={sectionListData}
+
               keyExtractor={(item, index) => index}
               // tabBarStyle={styles.tabBar}
               // ItemSeparatorComponent={() => <View style={styles.separator} />}
-              getItemLayout={(data, index) => {
-                return {
-                  length: height / 10,
-                  offset: (height / 10) * index,
-                  index: index,
-                };
-              }}
+
               renderTab={renderSectionTab}
               renderItem={renderSectionItem}
               ListFooterComponent={() => (
@@ -3378,11 +3267,11 @@ export default function Products({ route, navigation }) {
             //     tintColor={themeColors.primary_color}
             //   />
             // }
-            // onEndReached={
-            //   !categoryInfo?.is_show_products_with_category &&
-            //   onEndReachedDelayed
-            // }
-            // onEndReachedThreshold={0.5}
+            onEndReached={
+              !categoryInfo?.is_show_products_with_category &&
+              onEndReachedDelayed
+            }
+            onEndReachedThreshold={0.5}
             ListFooterComponent={() => (
               <View style={{ height: moderateScale(60) }} />
             )}
@@ -3392,25 +3281,25 @@ export default function Products({ route, navigation }) {
           />
         )}
 
-        {isVisibleModal ? 
-        <TouchableWithoutFeedback
-        onPress={() => updateState({ isVisibleModal: false })}
-        >
-        <BlurView
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-          }}
-          viewRef={blurRef}
-          blurType="dark"
-          blurAmount={10}
-          blurRadius={10}
-        /> 
-        </TouchableWithoutFeedback>
-        : null}
+        {isVisibleModal ?
+          <TouchableWithoutFeedback
+            onPress={() => updateState({ isVisibleModal: false })}
+          >
+            <BlurView
+              style={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+              }}
+              viewRef={blurRef}
+              blurType="dark"
+              blurAmount={10}
+              blurRadius={10}
+            />
+          </TouchableWithoutFeedback>
+          : null}
 
       </View>
 
@@ -3570,7 +3459,7 @@ export default function Products({ route, navigation }) {
       {!!repeatItems ? (
         <RepeatModal
           data={repeatItems?.item}
-          modalHide={() => updateState({ repeatItems: null })}
+          modalHide={() => setRepeatItems(null)}
           onRepeat={onRepeat}
           onAddNew={onAddNew}
         />
