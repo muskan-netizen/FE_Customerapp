@@ -63,29 +63,6 @@ export default function DashBoardHeaderOne({navigation = {}, location = []}) {
           {flex: 1, flexDirection: 'row', alignItems: 'center'},
         ]}>
         <View>
-          {/* {isSVG ? (
-            <SvgUri
-              style={{width: width / 6}}
-              uri={
-                'https://imgproxy.royoorders.com/insecure/fit/200/80/sm/0/plain/https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/Clientlogo/611391a2611e4.svg'
-              }
-            />
-          ) : (
-            <ScaledImage
-              width={width / 6}
-              source={
-                profileInfo && profileInfo?.logo
-                  ? {
-                      uri: getImageUrl(
-                        profileInfo.logo.image_fit,
-                        profileInfo.logo.image_path,
-                        '1000/1000',
-                      ),
-                    }
-                  : imagePath.logo
-              }
-            />
-          )} */}
 
           {!!(profileInfo && profileInfo?.logo) ? (
             <ScaledImage

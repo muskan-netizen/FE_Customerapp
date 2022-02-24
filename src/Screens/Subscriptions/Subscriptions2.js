@@ -549,7 +549,7 @@ export default function Subscriptions2({navigation, route}) {
   };
 
   const _webPayment = () => {
-    let selectedMethod = selectedPaymentMethod.title.toLowerCase();
+    let selectedMethod = selectedPaymentMethod?.code?.toLowerCase();
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/subscription`;
     let queryData = `/${selectedMethod}?amount=${planPrice}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&subscription_id=${selectedPlan?.slug}&payment_option_id=${selectedPaymentMethod?.id}&action=subscription`;
@@ -762,7 +762,7 @@ export default function Subscriptions2({navigation, route}) {
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icBackb
             : imagePath.back
         }

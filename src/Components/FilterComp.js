@@ -39,6 +39,12 @@ let sortingData = [
     {
         id: 5,
         label: strings.POPULARITY,
+        labelValue: 'popular_product',
+        parent: strings.SORT_BY,
+    },
+    {
+        id: 6,
+        label: strings.RATING,
         labelValue: 'rating',
         parent: strings.SORT_BY,
     }
@@ -74,7 +80,7 @@ const FilterComp = ({
     }, [])
     const { filterTypes } = state
 
- 
+
 
     const onDone = () => {
         let allFilterData = cloneDeep(filterTypes);
@@ -130,13 +136,17 @@ const FilterComp = ({
     const sortingView = (val, i) => {
         return (
             <TouchableOpacity
+            key={String(i)}
                 activeOpacity={0.6}
-                style={styles.sortingView}
+                style={{
+                    ...styles.sortingView,
+                    marginBottom: sortingData.length-1 == i ? moderateScaleVertical(8) : moderateScaleVertical(20)
+                }}
                 onPress={() => onSelectedSortFilter(val)}
             >
                 <Text style={{
                     fontSize: moderateScale(14),
-                    fontFamily: fontFamily.medium
+                    fontFamily: fontFamily.regular
                 }}>{val.label}</Text>
                 <Image
                     source={selectedSortFilter?.id == val?.id ? imagePath.radioActive : imagePath.radioInActive}
@@ -192,6 +202,7 @@ const FilterComp = ({
     const filterView = (val, i) => {
         return (
             <View
+            key={String(i)}
                 style={{ marginBottom: moderateScaleVertical(16) }}
             >
                 <Text style={{
@@ -203,6 +214,7 @@ const FilterComp = ({
                 {val.value.map((item, index) => {
                     return (
                         <TouchableOpacity
+                        key={String(index)}
                             onPress={() => _selectFilterData(item)}
                             activeOpacity={0.8}
                             style={{
@@ -222,7 +234,7 @@ const FilterComp = ({
                             />
                             <Text style={{
                                 fontSize: moderateScale(14),
-                                fontFamily: fontFamily.medium
+                                fontFamily: fontFamily.regular
                             }}>{item.label}</Text>
                         </TouchableOpacity>
                     )
@@ -247,7 +259,7 @@ const FilterComp = ({
                     maxHeight: height / 1.2,
                     borderTopLeftRadius: 16,
                     borderTopRightRadius: 16,
-                    padding: 16
+                    padding: moderateScale(16)
                     // flex:1
                 }}>
                     <ScrollView
@@ -256,9 +268,9 @@ const FilterComp = ({
                     >
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                             <Text style={{
-                                fontSize: moderateScale(16),
+                                fontSize: moderateScale(15),
                                 fontFamily: fontFamily.bold
-                            }}>Sort By</Text>
+                            }}>{strings.SORT_BY}</Text>
 
                             <TouchableOpacity
                                 onPress={onClearFilter}
@@ -267,7 +279,7 @@ const FilterComp = ({
                                     fontSize: moderateScale(14),
                                     fontFamily: fontFamily.bold,
                                     color: colors.redB
-                                }}>Clear Filter</Text>
+                                }}>{strings.CLEAR_FILTER}</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={{
@@ -286,18 +298,18 @@ const FilterComp = ({
                                 : colors.lightGreyBg,
                         }} />
                         <Text style={{
-                            fontSize: moderateScale(16),
+                            fontSize: moderateScale(15),
                             fontFamily: fontFamily.bold
-                        }}>Price Range</Text>
+                        }}>{strings.PRICE_RANGE}</Text>
 
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: moderateScaleVertical(8) }}>
                             <Text style={{
                                 fontSize: moderateScale(14),
-                                fontFamily: fontFamily.medium
+                                fontFamily: fontFamily.regular
                             }}>{minimumPrice}</Text>
                             <Text style={{
                                 fontSize: moderateScale(14),
-                                fontFamily: fontFamily.medium
+                                fontFamily: fontFamily.regular
                             }}>{maximumPrice}</Text>
                         </View>
                         <View style={{ marginHorizontal: moderateScale(12), marginBottom: moderateScaleVertical(8) }}>
@@ -355,7 +367,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: moderateScaleVertical(12)
+        marginBottom: moderateScaleVertical(20)
     },
     horizontalLine: {
         width: '100%',

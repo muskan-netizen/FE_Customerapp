@@ -812,4 +812,6 @@ montant`,
   PASTDELEIVERIES: 'Livraisons passées',
   MYDELIERIES: 'Mes livraisons',
   NODELIVERIESFOUND: 'Aucune livraison trouvée',
+  CLEAR_FILTER:"Clear Filter",
+  PRICE_RANGE:"Price Range",
 };

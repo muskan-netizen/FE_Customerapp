@@ -177,13 +177,13 @@ export default function Wishlist2({navigation}) {
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icBackb
             : imagePath.back
         }
         centerTitle={strings.WISHLIST}
         rightIcon={
-          appStyle?.homePageLayout === 3
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icSearchb
             : imagePath.search
         }

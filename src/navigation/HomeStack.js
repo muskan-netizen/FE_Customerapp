@@ -78,9 +78,9 @@ export default function () {
         component={
           appStyle?.homePageLayout === 2
             ? Vendors2
-            : appStyle?.homePageLayout === 3
-            ? Vendors3
-            : Vendors
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+              ? Vendors3
+              : Vendors
         }
         options={{headerShown: false}}
       />
@@ -89,9 +89,9 @@ export default function () {
         component={
           appStyle?.homePageLayout === 2
             ? VendorDetail2
-            : appStyle?.homePageLayout === 3
-            ? VendorDetail3
-            : VendorDetail
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+              ? VendorDetail3
+              : VendorDetail
         }
         options={{headerShown: false}}
       />
@@ -100,9 +100,9 @@ export default function () {
         component={
           appStyle?.homePageLayout === 2
             ? ProductList2
-            : appStyle?.homePageLayout === 3
-            ? ProductList3
-            : ProductList
+            : appStyle?.homePageLayout === 3  || appStyle?.homePageLayout === 5
+              ? ProductList3
+              : ProductList
         }
         options={{headerShown: false}}
       />
@@ -149,7 +149,7 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
         component={
-          appStyle?.homePageLayout === 3
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? SearchProductVendorItem2
             : SearchProductVendorItem
         }
@@ -171,7 +171,7 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.BRANDDETAIL}
         component={
-          appStyle?.homePageLayout === 3 ? BrandProducts2 : BrandProducts
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5  ? BrandProducts2 : BrandProducts
         }
         options={{headerShown: false}}
       />
