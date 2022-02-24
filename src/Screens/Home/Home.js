@@ -488,6 +488,7 @@ export default function Home({ route, navigation }) {
   //onPress Category
   const onPressCategory = (item) => {
     console.log(item, 'itemitem');
+ 
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -499,10 +500,9 @@ export default function Home({ route, navigation }) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
         fetchOffers: true,
         id: item.id,
-        vendor:
-          item.redirect_to == staticStrings.ONDEMANDSERVICE ? false : true,
+        vendor: item.redirect_to == staticStrings.ONDEMANDSERVICE ?  false : item.redirect_to == staticStrings.PRODUCT ? false: true,
         name: item.name,
-        isVendorList: true,
+        isVendorList: false,
       })();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {

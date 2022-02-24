@@ -113,6 +113,7 @@ export default function MyProfile3({ route, navigation }) {
     del: false,
     updateData: {},
     indicator: false,
+    selectViaMap: false
   });
   const {
     address,
@@ -138,6 +139,7 @@ export default function MyProfile3({ route, navigation }) {
     del,
     updateData,
     indicator,
+    selectViaMap
   } = state;
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -147,6 +149,9 @@ export default function MyProfile3({ route, navigation }) {
     navigation.navigate(screenName, { data });
   };
 
+  const openCloseMapAddress = (type) => {
+    updateState({ selectViaMap: type == 1 ? true : false });
+  };
   useFocusEffect(
     React.useCallback(() => {
       getAllAddress();
@@ -422,6 +427,7 @@ export default function MyProfile3({ route, navigation }) {
         },
       )
       .then((res) => {
+        console.log("res++++++",res)
         actions.saveAllUserAddress(res.data);
         updateState({ address: res.data, isLoading: false, indicator: false });
         setModalVisible(false);
@@ -750,7 +756,7 @@ export default function MyProfile3({ route, navigation }) {
                             ]
                             : [styles.address, { textAlign: 'left' }]
                         }>
-                        {itm?.address}
+                       {!!itm?.house_number? itm?.house_number + ',' : ''} {itm?.address}
                       </Text>
                     </View>
                     {itm && !!itm.is_primary && (
@@ -1014,7 +1020,8 @@ export default function MyProfile3({ route, navigation }) {
           onClose={() => setModalVisible(false)}
           type={type}
           passLocation={(data) => addUpdateLocation(data)}
-        // onPress={currentLocation}
+          openCloseMapAddress={openCloseMapAddress}
+          selectViaMap={selectViaMap}
         />
       </KeyboardAwareScrollView>
     </WrapperContainer>

@@ -747,6 +747,10 @@ export default function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.AuthorizeNet, paymentData);
         break;
+      case 19: //FPX Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.FPX, paymentData);
+        break;
       default:
         if (
           !!businessType &&
@@ -839,6 +843,7 @@ export default function Cart({ navigation, route }) {
           selectedTipvalue: null,
           selectedTipAmount: null,
         });
+        console.log("paymebnt res", res)
         checkPaymentOptions(res);
         if (selectedPayment?.id != 17) {
           // updateState({

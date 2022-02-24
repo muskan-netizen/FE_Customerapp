@@ -91,21 +91,17 @@ export default function Products({ route, navigation }) {
   const [state, setState] = useState({
     isVisibleModal: false,
     isOffline: false,
-    isLoading: true,
     isLoadingB: false,
     pageNo: 1,
-    limit: 2,
+    limit: 10,
     isRefreshing: false,
     selectedSbCategoryID: -1,
-    productListId: data,
     productListData: [],
-    categoryInfo: null,
     click: false,
     isVisibleModal: false,
     updateQtyLoader: false,
     showShimmer: true,
     typeId: null,
-
     sortFilters: [
       {
         id: -2,
@@ -149,7 +145,6 @@ export default function Products({ route, navigation }) {
     checkForMaximumPriceChange: false,
     showFilterSlectedIcon: false,
     isLoadingC: false,
-    selectedCategory: null,
     AnimatedHeaderValue: false,
     cartId: null,
     isSearch: false,
@@ -165,8 +160,6 @@ export default function Products({ route, navigation }) {
     MenuModalVisible: false,
     isVegEnabled: true,
     updateTagFilter: false,
-    diffAddOnCartIdProductId: null,
-    storeLocalQty: null,
     differentAddsOnsModal: false,
     selectedDiffAdsOnId: 0,
     isShowFilter: false,
@@ -188,16 +181,12 @@ export default function Products({ route, navigation }) {
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   const {
-    selectedCategory,
     isLoadingC,
-    isLoading,
     isOffline,
     pageNo,
     limit,
     isRefreshing,
     selectedSbCategoryID,
-    productListId,
-    categoryInfo,
     productListData,
     isLoadingB,
     brandData,
@@ -231,8 +220,6 @@ export default function Products({ route, navigation }) {
     isVegEnabled,
     MenuModalVisible,
     updateTagFilter,
-    diffAddOnCartIdProductId,
-    storeLocalQty,
     differentAddsOnsModal,
     selectedDiffAdsOnId,
     isShowFilter,
@@ -247,11 +234,16 @@ export default function Products({ route, navigation }) {
   const [differentAddsOns, setDifferentAddsOns] = useState([])
   const [selectedDiffAdsOnItem, setSelectedDiffAdsOnItem] = useState(null)
   const [selectedDiffAdsOnSection, setSelectedDiffAdsOnSection] = useState(null)
+  const [diffAddOnCartIdProductId, setDiffAddOnCartIdProductId] = useState(null)
   const [filterData, setFilterData] = useState([])
   const [allFilters, setAllFilter] = useState([])
   const [ProductTags, setProductTags] = useState([])
   const [offerList, setOfferList] = useState([])
-
+  const [categoryInfo, setCategoryInfo] = useState([])
+  const [storeLocalQty, setStoreLocalQty] = useState(null)
+  const [selectedCategory, setSelectedCategory] = useState(null)
+  const [productListId, setProductListId] = useState(data)
+  const [isLoading, setLoading] = useState(true)
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
   const styles = stylesFunc({ themeColors, fontFamily, isDarkMode, MyDarkTheme });
@@ -313,6 +305,7 @@ export default function Products({ route, navigation }) {
         },
       )
       .then((res) => {
+        console.log("product tags res", res)
         const productTagsArr = res?.data?.map((el) => {
           return {
             ...el,
@@ -330,6 +323,7 @@ export default function Products({ route, navigation }) {
         console.log('tags api error >>>>>', error);
       });
   };
+
 
   const getAllListItems = (pageNo = 1) => {
     if (data?.vendor) {
@@ -366,10 +360,10 @@ export default function Products({ route, navigation }) {
       .then((res) => {
         console.log(res, 'getProductByVendorCategoryId');
         // setFilterData(res?.data?.filterData)
+        setCategoryInfo(res?.data?.vendor)
+        setLoading(false)
         updateState({
-          isLoading: false,
-          isRefreshing: false,
-          categoryInfo: res?.data?.vendor,
+          // isRefreshing: false,
           productListData:
             pageNo == 1
               ? res.data.products.data
@@ -497,24 +491,22 @@ export default function Products({ route, navigation }) {
           setSectionListData(filterArray)
           setCloneSectionList(filterArray)
           // setFilterData(res?.data?.filterData)
+          setCategoryInfo(res?.data?.vendor)
           updateState({
             isRefreshing: false,
-            categoryInfo: res?.data?.vendor,
             // vendorCategories: res?.data?.categories,
           });
-          console.log(res?.data?.filterData, 'filterArrayfilterArray');
+
           fetchTags(filterArray);
-          setTimeout(() => {
-            updateState({ isLoading: false, })
-          }, 400);
+          setLoading(false)
         } else {
           // console.log('get product list by vendor id >>>> ', res);
           if (res?.data) {
             // setFilterData(res?.data?.filterData)
+            setCategoryInfo(res?.data?.vendor)
+            setLoading(false)
             updateState({
-              isLoading: false,
-              isRefreshing: false,
-              categoryInfo: res?.data?.vendor,
+              // isRefreshing: false,
               productListData: res?.data?.vendor?.is_show_products_with_category
                 ? res?.data?.categories[0]?.products
                 : pageNo == 1
@@ -524,10 +516,11 @@ export default function Products({ route, navigation }) {
               // vendorCategoryItms: res?.data?.categories[0]?.products,
             });
           } else {
-            updateState({
-              isLoading: false,
-              isRefreshing: false,
-            });
+            setLoading(false)
+            // updateState({
+            //   isLoading: false,
+            //   isRefreshing: false,
+            // });
           }
         }
         if (res?.data) {
@@ -573,23 +566,22 @@ export default function Products({ route, navigation }) {
           });
           setSectionListData(filterArray)
           setCloneSectionList(filterArray)
+          setCategoryInfo(res?.data?.vendor)
           // setFilterData(res?.data?.filterData)
-          updateState({
-            isLoading: false,
-            isRefreshing: false,
-            categoryInfo: res?.data?.vendor,
-            // vendorCategories: res?.data?.categories,
-          });
+          // updateState({
+          //   isRefreshing: false,
+          //   // vendorCategories: res?.data?.categories,
+          // });
           console.log(filterArray, 'filterArrayfilterArray');
           fetchTags(filterArray);
         } else {
           // console.log('get product list by vendor id >>>> ', res);
           if (!!res?.data?.products?.data) {
             // setFilterData(res?.data?.filterData)
+            setCategoryInfo(res?.data?.vendor)
+            setLoading(false)
             updateState({
-              isLoading: false,
-              isRefreshing: false,
-              categoryInfo: res?.data?.vendor,
+              // isRefreshing: false,
               productListData: !!res?.data?.vendor
                 ?.is_show_products_with_category
                 ? res?.data?.categories[0]?.products
@@ -600,10 +592,11 @@ export default function Products({ route, navigation }) {
               // vendorCategoryItms: res?.data?.categories[0]?.products,
             });
           } else {
-            updateState({
-              isLoading: false,
-              isRefreshing: false,
-            });
+            setLoading(false)
+            // updateState({
+            //   isLoading: false,
+            //   isRefreshing: false,
+            // });
           }
         }
         if (res?.data) {
@@ -632,34 +625,31 @@ export default function Products({ route, navigation }) {
       .then((res) => {
         console.log(res, 'getProductByCategoryId');
         // setFilterData(res?.data?.filterData)
+        setCategoryInfo(categoryInfo ? categoryInfo : res.data.category)
+        setLoading(false)
         updateState({
-          categoryInfo: categoryInfo ? categoryInfo : res.data.category,
           productListData:
             pageNo == 1
               ? res.data.listData.data
               : [...productListData, ...res.data.listData.data],
           isLoadingC: false,
-          isRefreshing: false,
-          isLoading: false,
+          // isRefreshing: false,
         });
-        {
-          pageNo == 1 &&
-            res?.data?.listData?.data.length == 0 &&
-            res?.data?.category &&
-            res?.data?.category?.childs.length
-            ? updateState({
-              selectedCategory: res.data.category.childs[0],
-              productListId: res.data.category.childs[0],
-              pageNo: 1,
-              limit: 30,
-              isLoadingC: true,
-            })
-            : null;
-        }
-        setTimeout(() => {
-          updateState({ isLoading: false });
-        }, 700);
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+
+        // if (pageNo == 1 &&
+        //   res?.data?.listData?.data.length == 0 &&
+        //   res?.data?.category &&
+        //   res?.data?.category?.childs.length) {
+        //   setSelectedCategory(res.data.category.childs[0])
+        //   setProductListId(res.data.category.childs[0])
+        //   updateState({
+        //     pageNo: 1,
+        //     limit: 10,
+        //     isLoadingC: true,
+        //   })
+        // }
+        // updateState({ isLoading: false });
+        // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
       .catch(errorMethod);
     // }
@@ -688,13 +678,13 @@ export default function Products({ route, navigation }) {
         console.log(res, 'getAllProductsCategoryFilter  res ++++++');
 
         updateState({
-          isLoading: false,
-          isRefreshing: false,
+          // isRefreshing: false,
           productListData:
             pageNo == 1
               ? res.data.data
               : [...productListData, ...res.data.data],
         });
+        setLoading(false)
       })
       .catch(errorMethod);
     // }
@@ -780,8 +770,8 @@ export default function Products({ route, navigation }) {
       updateQtyLoader: false,
       selectedItemID: -1,
       btnLoader: false,
-      isLoading: false,
     });
+    setLoading(false)
     showError(error?.message || error?.error);
   };
 
@@ -1139,11 +1129,8 @@ export default function Products({ route, navigation }) {
       });
       setSectionListData(filteredArr)
       setCloneSectionList(filteredArr)
-      updateState({
-        ...state,
-        selectedItemID: -1,
-        storeLocalQty: differentAddsOnsQty,
-      });
+      setStoreLocalQty(differentAddsOnsQty)
+      updateState({ selectedItemID: -1, });
       // fetchTags(filteredArr)
     } else {
       let updateArray = productListData.map((val, i) => {
@@ -1157,10 +1144,10 @@ export default function Products({ route, navigation }) {
         }
         return val;
       });
+      setStoreLocalQty(differentAddsOnsQty)
       updateState({
         productListData: updateArray,
         selectedItemID: -1,
-        storeLocalQty: differentAddsOnsQty,
       });
     }
   };
@@ -1278,12 +1265,12 @@ export default function Products({ route, navigation }) {
     updateState({ updateQtyLoader: false });
     if (error?.message?.alert == 1) {
       updateState({
-        isLoading: false,
         isLoadingB: false,
         isLoadingC: false,
         selectedItemID: -1,
         btnLoader: false,
       });
+      setLoading(false)
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
@@ -1297,8 +1284,8 @@ export default function Products({ route, navigation }) {
         },
       ]);
     } else {
+      setLoading(false)
       updateState({
-        isLoading: false,
         isLoadingB: false,
         isLoadingC: false,
         selectedItemID: -1,
@@ -1430,6 +1417,7 @@ export default function Products({ route, navigation }) {
         totalProductQty = totalProductQty + val?.quantity;
       });
     }
+    console.log("totalProductQty", totalProductQty)
 
     // return;
 
@@ -1459,7 +1447,6 @@ export default function Products({ route, navigation }) {
 
     if (type == 2) {
       // direct subtract customize items if products added with same addons
-
       addDeleteCartItems(
         item,
         tempQty == 0 ? isExistqty : tempQty,
@@ -1523,13 +1510,11 @@ export default function Products({ route, navigation }) {
         setDifferentAddsOns(res?.data || [])
         setSelectedDiffAdsOnItem(item)
         setSelectedDiffAdsOnSection(section)
-        updateState({
-          diffAddOnCartIdProductId: {
-            cart_id: apiData?.cart_id,
-            product_id: apiData?.product_id,
-          },
-          differentAddsOnsModal: true,
-        });
+        setDiffAddOnCartIdProductId({
+          cart_id: apiData?.cart_id,
+          product_id: apiData?.product_id,
+        })
+        updateState({ differentAddsOnsModal: true });
         return { data: res?.data, goNext: true };
       }
       return { data: res?.data, goNext: false };
@@ -1574,7 +1559,7 @@ export default function Products({ route, navigation }) {
         ? differentAddsOnsQty + batchCount
         : differentAddsOnsQty - batchCount, //send updated total quantity
     );
-    updateState({ differentAddsOns: updateLocallyAddOns });
+    setDifferentAddsOns(updateLocallyAddOns)
   };
 
   const renderProduct = ({ item, index }) => {
@@ -1631,9 +1616,9 @@ export default function Products({ route, navigation }) {
       })
       setSectionListData(filterArr)
       setCloneSectionList(filterArryClone)
+      setStoreLocalQty(quanitity)
       updateState({
         cartId: cartID,
-        storeLocalQty: quanitity,
         isVisibleModal: false,
       });
     } else {
@@ -1646,7 +1631,7 @@ export default function Products({ route, navigation }) {
             isRemove: false,
           };
         }
-        updateState({ storeLocalQty: quanitity });
+        setStoreLocalQty(quanitity)
         return val;
       });
       updateState({
@@ -1663,8 +1648,7 @@ export default function Products({ route, navigation }) {
       if (productListId?.vendor && routeData) {
         fetchOffers();
       }
-
-      // getAllProductTags();
+      getAllProductTags();
     }
   }, [isLoadingC]);
 
@@ -1705,15 +1689,14 @@ export default function Products({ route, navigation }) {
 
   const onPressChildCards = (item) => {
     console.log(item, 'item upload');
+    setSelectedCategory(item)
+    setProductListId(item)
     updateState({
-      selectedCategory: item,
       // productListData: [],
-      productListId: item,
       pageNo: 1,
-      limit: 30,
+      limit: 10,
       isLoadingC: true,
     });
-
     // navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
   };
 
@@ -1740,7 +1723,6 @@ export default function Products({ route, navigation }) {
       setCloneSectionList(newArr)
     } else {
       getAllProductsByVendor();
-      // updateState({ cloneSectionList: sectionListData })
     }
   };
 
@@ -1765,6 +1747,14 @@ export default function Products({ route, navigation }) {
       });
     // .catch(errorMethod);
   };
+
+  const rightIconPress = () =>{
+    updateState({
+      searchInput: '',
+      isSearch: false,
+    })
+    setLoading(false)
+  }
 
   const RenderMenuView = () => {
     return (
@@ -2304,13 +2294,7 @@ export default function Products({ route, navigation }) {
                   placeholder={strings.SEARCH_ITEM}
                   // onChangeText={(value) => onChangeText(value)}
                   showRightIcon
-                  rightIconPress={() =>
-                    updateState({
-                      searchInput: '',
-                      isSearch: false,
-                      isLoading: false,
-                    })
-                  }
+                  rightIconPress={rightIconPress}
                 />
               </Animatable.View>
             ) : (
@@ -2565,7 +2549,7 @@ export default function Products({ route, navigation }) {
               placeholder={strings.SEARCH_WITHIN_MENU}
               onChangeText={(value) => onSearchWithinMenu(value)}
               showRightIcon={searchInput ? true : false}
-              rightIconStyle={{ tintColor: themeColors.secondary_color }}
+              rightIconStyle={{ tintColor: isDarkMode ? colors.white : colors.black }}
               rightIconPress={() => onSearchWithinMenu('')}
               showVoiceRecord={false}
             />
@@ -3183,13 +3167,7 @@ export default function Products({ route, navigation }) {
                     placeholder={strings.SEARCH_ITEM}
                     // onChangeText={(value) => onChangeText(value)}
                     showRightIcon
-                    rightIconPress={() =>
-                      updateState({
-                        searchInput: '',
-                        isSearch: false,
-                        isLoading: false,
-                      })
-                    }
+                    rightIconPress={rightIconPress}
                   />
                 </Animatable.View>
               ) : (
@@ -3243,7 +3221,7 @@ export default function Products({ route, navigation }) {
               ref={sectionListRef}
               showsVerticalScrollIndicator={false}
               // onScroll={onScroll}
-              sections={sectionListData}
+              sections={cloneSectionList}
               ListHeaderComponent={listHeaderComponent2()}
               stickySectionHeadersEnabled={false}
 
@@ -3289,11 +3267,11 @@ export default function Products({ route, navigation }) {
             //     tintColor={themeColors.primary_color}
             //   />
             // }
-            // onEndReached={
-            //   !categoryInfo?.is_show_products_with_category &&
-            //   onEndReachedDelayed
-            // }
-            // onEndReachedThreshold={0.5}
+            onEndReached={
+              !categoryInfo?.is_show_products_with_category &&
+              onEndReachedDelayed
+            }
+            onEndReachedThreshold={0.5}
             ListFooterComponent={() => (
               <View style={{ height: moderateScale(60) }} />
             )}

@@ -18171,7 +18171,7 @@
 				848C395127146A5200D492B5 /* Frameworks */,
 				848C399027146A5200D492B5 /* Resources */,
 				848C39AB27146A5200D492B5 /* Bundle React Native code and images */,
-				8498F7A227AABB33006653DF /* ShellScript */,
+				8498F7A227AABB33006653DF /* Run Script */,
 				3F360D48945AB9B564BC7C50 /* [CP] Embed Pods Frameworks */,
 				8C9984BCF9A5A96775C94CC5 /* [CP] Copy Pods Resources */,
 			);
@@ -54938,7 +54938,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
 		};
-		8498F7A227AABB33006653DF /* ShellScript */ = {
+		8498F7A227AABB33006653DF /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -54947,6 +54947,7 @@
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (

@@ -1,22 +1,22 @@
 import queryString from 'query-string';
 import React from 'react';
-import {View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import {WebView} from 'react-native-webview';
-import {useSelector} from 'react-redux';
+import { View } from 'react-native';
+import { useDarkMode } from 'react-native-dark-mode';
+import { WebView } from 'react-native-webview';
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {moderateScaleVertical} from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
+import { moderateScaleVertical } from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
 
-export default function AllinonePyments({navigation, route}) {
+export default function AllinonePyments({ navigation, route }) {
   let paramsData = route?.params?.data || {};
-  const {themeToggle, themeColor, appStyle, currencies, languages, appData} =
+  const { themeToggle, themeColor, appStyle, currencies, languages, appData } =
     useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -24,12 +24,12 @@ export default function AllinonePyments({navigation, route}) {
 
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   const onNavigationStateChange = (props) => {
-    const {url} = props;
+    const { url } = props;
     const URL = queryString.parseUrl(url);
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
@@ -65,7 +65,8 @@ export default function AllinonePyments({navigation, route}) {
           }
         }
         if (paramsData?.action == 'subscription') {
-          if (paramsData?.id != 6 && paramsData?.id != 5) {
+          //Payfast(6), Paystack(6), FPX(19) // 
+          if (paramsData?.id != 6 && paramsData?.id != 5 && paramsData?.id != 19) {
             subscriptionApiHit(transId);
             return;
           } else {
@@ -148,12 +149,12 @@ export default function AllinonePyments({navigation, route}) {
           appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? imagePath.icBackb : imagePath.back
         }
         centerTitle={paramsData?.selectedPayment?.title || paramsData?.title}
-        headerStyle={{backgroundColor: colors.white}}
+        headerStyle={{ backgroundColor: colors.white }}
       />
       {!!paramsData?.paymentUrl && paramsData?.id != 6 ? (
         <WebView
           // onLoad={() => updateState({ isLoading: false })}
-          source={{uri: paramsData?.paymentUrl}}
+          source={{ uri: paramsData?.paymentUrl }}
           onNavigationStateChange={onNavigationStateChange}
         />
       ) : (
@@ -163,7 +164,7 @@ export default function AllinonePyments({navigation, route}) {
             uri: paramsData?.paymentUrl?.redirectUrl,
             method: 'POST',
             body: queryString.stringify(paramsData?.paymentUrl?.formData),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           }}
           onNavigationStateChange={onNavigationStateChange}
         />
