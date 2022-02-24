@@ -1803,7 +1803,7 @@ export default function Products({route, navigation}) {
         cells.push(...el.data);
       }
     });
-    let hight = Number(cells.length) * moderateScaleVertical(150);
+    let hight = Number(cells.length) * moderateScaleVertical(162);
     playHapticEffect(hapticEffects.rigid);
     updateState({MenuModalVisible: !MenuModalVisible});
     sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
@@ -2882,7 +2882,10 @@ export default function Products({route, navigation}) {
   };
   const renderSectionItem = ({item, index, section}) => {
     return (
-      <Animatable.View animation={'slideInUp'} delay={index * 5}>
+      <Animatable.View
+        animation={'slideInUp'}
+        delay={index * 5}
+        style={{height: moderateScaleVertical(162)}}>
         <ProductCard3
           data={item}
           index={index}
@@ -3188,6 +3191,7 @@ export default function Products({route, navigation}) {
         {/* <View style={{height: moderateScale(10)}} /> */}
         {!!categoryInfo?.is_show_products_with_category ? (
           <Animatable.View style={{flex: 1}}>
+            {console.log('cloneSectionList >>>>', cloneSectionList)}
             <SectionList
               onScrollToIndexFailed={() => {}}
               ref={sectionListRef}
