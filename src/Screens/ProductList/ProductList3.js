@@ -1704,7 +1704,33 @@ export default function Products({route, navigation}) {
     } else {
       // getAllProductsByVendor();
     }
-  }, [ProductTags && updateTagFilter]);
+  }, [ProductTags]);
+
+  useEffect(() => {
+    let EnabledTags = ProductTags.filter((el) => el.isSelected);
+    if (EnabledTags.length > 0) {
+      const newArr = sectionListData.map((el) => {
+        const records =
+          el.data &&
+          el.data.filter((item) => {
+            if (
+              item.tags.length > 0 &&
+              checkIfItemExist(item.tags[0], EnabledTags)
+            )
+              return item;
+          });
+        const newObj = {
+          ...el,
+        };
+        newObj.data = records;
+        return newObj;
+      });
+      updateState({cloneSectionList: newArr});
+    } else {
+      updateState({cloneSectionList: sectionListData});
+      getAllProductsByVendor();
+    }
+  }, [updateTagFilter]);
 
   const onPressChildCards = (item) => {
     console.log(item, 'item upload');

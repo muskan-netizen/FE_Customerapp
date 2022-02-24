@@ -1,17 +1,16 @@
 //export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1';  //sales demo
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
-export const API_BASE_URL = 'https://api.focushires.com/api/v1';
-
+// export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.97.123:8020/api/v1'; // sujata
 // export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1'; //dinesh sir
 // export const API_BASE_URL = 'http://192.168.103.186:8005/api/v1'; // harbans
 // export const API_BASE_URL = 'https://876c-114-134-24-242.ngrok.io/api/v1'; // gourav sir
-// export const API_BASE_URL = 'http://192.168.97.160:8000/api/v1';
+// export const API_BASE_URL = 'http://192.168.96.127:8005/api/v1';
 
 // export const API_BASE_URL = 'https://f6da-114-134-24-242.ngrok.io/api/v1';
 
@@ -26,7 +25,7 @@ export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 // export const API_BASE_URL = 'https://tranzit.app/api/v1';
 // export const API_BASE_URL = 'https://pinkjettaxi.com/api/v1';
 // export const API_BASE_URL = 'https://snabbhem.se/api/v1';
-export const API_BASE_URL = 'https://codiner.com/api/v1';
+// export const API_BASE_URL = 'https://codiner.com/api/v1';
 // export const API_BASE_URL = 'https://somame-247.com/api/v1';
 // export const API_BASE_URL = 'https://order.africanize.co/api/v1';
 // export const API_BASE_URL = 'https://destinationops.com/api/v1';

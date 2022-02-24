@@ -1656,7 +1656,11 @@ export default function ShortCode({route, navigation}) {
             console.log('checking deep link >>> 3232sdsd', err);
           });
       } else {
-        navigation.navigate(navigationStrings.LOGIN);
+        // navigation.navigate(navigationStrings.LOGIN);
+        NavigationService.resetStackAndNavigate(
+          navigation,
+          navigationStrings.LOGIN,
+        );
       }
     } else {
       getItem('firstTime').then((el) => {
