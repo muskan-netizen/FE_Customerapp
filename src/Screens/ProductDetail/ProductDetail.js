@@ -56,6 +56,7 @@ import stylesFunc from './styles';
 import Modal from 'react-native-modal';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import Share from 'react-native-share';
+import FastImage from 'react-native-fast-image';
 import {enums} from '../../utils/enums';
 
 export default function ProductDetail({route, navigation}) {
@@ -183,7 +184,7 @@ export default function ProductDetail({route, navigation}) {
     console.log('onShare', appData);
     if (!!productDetailData?.share_link) {
       let hyperLink = productDetailData?.share_link;
-      let options = {url: hyperLink};
+      let options = { url: hyperLink };
       Share.open(options)
         .then((res) => {
           console.log(res);
@@ -209,11 +210,27 @@ export default function ProductDetail({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res.data, 'res getProductDetail');
+        console.log(res.data.products, 'res getProductDetail');
+
+        if (res?.data?.products?.product_media) {
+          res?.data?.products?.product_media.map((val) => {
+            const url1 = val?.image?.path?.image_fit || val.image.image_fit;
+            const url2 = val?.image?.path?.image_path || val.image.image_path;
+            let imageUri = getImageUrl(url1, url2, '600/800') 
+            console.log("banner images",imageUri)
+            FastImage.preload([{ uri:imageUri }])
+          })
+        }
+
+        // const imageUrl = res.data?.image?.path
+        // ? getImageUrl(
+        //   item.image.path.image_fit,
+        //   item.image.path.image_path,
+        //   '1000/1000',
+        // )
+        // : getImageUrl(item.image.image_fit, item.image.image_path, '1000/1000');
+
         updateState({
-          isLoading: false,
-          isLoadingB: false,
-          btnLoader: false,
           productDetailData: res.data.products,
           relatedProducts: res.data.relatedProducts,
           productPriceData: res.data.products.variant[0],
@@ -226,6 +243,9 @@ export default function ProductDetail({route, navigation}) {
           productQuantityForCart: !!res.data.products?.minimum_order_count
             ? Number(res.data.products?.minimum_order_count)
             : 1,
+          isLoading: false,
+          isLoadingB: false,
+          btnLoader: false,
         });
         if (
           res.data.products.variant_set.length &&
@@ -994,16 +1014,16 @@ export default function ProductDetail({route, navigation}) {
     >
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? imagePath.icBackb : imagePath.back
         }
-        centerTitle={productDetailData?.translation[0]?.title}
-        textStyle={{fontSize: textScale(14)}}
+        centerTitle={venderDetail?.name}
+        textStyle={{ fontSize: textScale(14) }}
         rightIcon={
           !!data?.showAddToCart
             ? false
-            : appStyle?.homePageLayout === 3
-            ? imagePath.icSearchb
-            : imagePath.search
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+              ? imagePath.icSearchb
+              : imagePath.search
         }
         onPressRight={() =>
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
@@ -1055,7 +1075,11 @@ export default function ProductDetail({route, navigation}) {
                           onPress={() => _onAddtoWishlist(productDetailData)}>
                           {!enums.isVendorStandloneApp &&
                           productDetailData?.is_wishlist ? (
-                            <View style={{alignSelf: 'flex-end', padding: 8}}>
+                            <View style={{
+                              position:'absolute',
+                              right: moderateScale(10),
+                              top: moderateScale(10),
+                            }}>
                               {!!productDetailData?.inwishlist ? (
                                 <Image
                                   style={{

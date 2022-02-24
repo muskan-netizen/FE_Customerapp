@@ -140,6 +140,7 @@ android {
         versionName "1.0"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary true
+        resValue 'string', "CODE_PUSH_APK_BUILD_TIME", String.format("\"%d\"", System.currentTimeMillis())
     }
     splits {
         abi {
@@ -198,6 +199,16 @@ android {
     flavorDimensions "appType"
 
     productFlavors {
+           royoorder {
+            dimension "appType"
+            versionCode 3
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.customer.ace'
+            resValue "string", "app_name", "Ace"
+            resValue "string", "host_name", ""
+         }
            royoorder {
             dimension "appType"
             versionCode 3
@@ -1304,7 +1315,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.zestyclickz'
-            resValue "string", "app_name", "ZestyClickz"
+            resValue "string", "app_name", "Veg-Hub"
             resValue "string", "host_name", ""
          }
          bakesale{

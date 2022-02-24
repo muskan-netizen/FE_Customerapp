@@ -1,6 +1,6 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Image,
   ScrollView,
@@ -11,15 +11,15 @@ import {
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import FastImage from 'react-native-fast-image';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 import AddressModal from '../../Components/AddressModal';
 import BorderTextInput from '../../Components/BorderTextInput';
 import CustomTopTabBar from '../../Components/CustomTopTabBar';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import TransparentButtonWithTxtAndIcon from '../../Components/TransparentButtonWithTxtAndIcon';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -36,7 +36,7 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {cameraHandler} from '../../utils/commonFunction';
+import { cameraHandler } from '../../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -45,29 +45,29 @@ import {
 } from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
-import {androidCameraPermission} from '../../utils/permissions';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../styles/theme';
+import { androidCameraPermission } from '../../utils/permissions';
 import AutoUpLabelTxtInput from '../../Components/AutoUpLabelTxtInput';
 import PhoneNumberInput2 from '../../Components/PhoneNumberInput2';
 import PhoneNumberInputWithUnderline from '../../Components/PhoneNumberInputWithUnderline';
 import BorderTextInputWithLable from '../../Components/BorderTextInputWithLable';
 import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
-import {string} from 'is_js';
+import { string } from 'is_js';
 import AddressModal3 from '../../Components/AddressModal3';
 
-export default function MyProfile3({route, navigation}) {
+export default function MyProfile3({ route, navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state?.initBoot);
-  const {languages} = useSelector((state) => state?.initBoot);
+  const { languages } = useSelector((state) => state?.initBoot);
 
-  const {themeColors, themeLayouts, appStyle} = currentTheme;
+  const { themeColors, themeLayouts, appStyle } = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({themeColors, fontFamily});
-  const commonStyles = commonStylesFunc({fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
+  const commonStyles = commonStylesFunc({ fontFamily });
   const paramData = route?.params;
   const appData = useSelector((state) => state?.initBoot?.appData);
   const userData = useSelector((state) => state?.auth?.userData);
@@ -77,21 +77,21 @@ export default function MyProfile3({route, navigation}) {
     newPassword: '',
     confirmPassword: '',
     tabBarData: [
-      {title: strings.BASIC_INFO, isActive: true},
-      {title: strings.CHANGE_PASS, isActive: false},
-      {title: strings.ADDRESS, isActive: false},
+      { title: strings.BASIC_INFO, isActive: true },
+      { title: strings.CHANGE_PASS, isActive: false },
+      { title: strings.ADDRESS, isActive: false },
     ],
     selectedTab: strings.BASIC_INFO,
     callingCode: userData?.dial_code
       ? userData?.dial_code
       : appData?.profile?.country?.phonecode
-      ? appData?.profile?.country?.phonecode
-      : '91',
+        ? appData?.profile?.country?.phonecode
+        : '91',
     cca2: userData?.cca2
       ? userData?.cca2
       : appData?.profile?.country?.code
-      ? appData?.profile?.country?.code
-      : 'IN',
+        ? appData?.profile?.country?.code
+        : 'IN',
     name: userData?.name,
     email: userData?.email,
     password: '',
@@ -113,6 +113,7 @@ export default function MyProfile3({route, navigation}) {
     del: false,
     updateData: {},
     indicator: false,
+    selectViaMap: false
   });
   const {
     address,
@@ -138,15 +139,19 @@ export default function MyProfile3({route, navigation}) {
     del,
     updateData,
     indicator,
+    selectViaMap
   } = state;
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   const profileAddress = useSelector((state) => state?.home?.profileAddress);
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {data});
+    navigation.navigate(screenName, { data });
   };
 
+  const openCloseMapAddress = (type) => {
+    updateState({ selectViaMap: type == 1 ? true : false });
+  };
   useFocusEffect(
     React.useCallback(() => {
       getAllAddress();
@@ -174,13 +179,13 @@ export default function MyProfile3({route, navigation}) {
 
   //select tje country
   const _onCountryChange = (data) => {
-    updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
+    updateState({ cca2: data.cca2, callingCode: data.callingCode[0] });
     return;
   };
 
   // on change text
   const _onChangeText = (key) => (val) => {
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   //this function use for save user info
@@ -211,7 +216,7 @@ export default function MyProfile3({route, navigation}) {
         country_code: cca2,
         callingCode: callingCode,
       };
-      updateState({isLoading: true});
+      updateState({ isLoading: true });
       actions
         .profileBasicInfo(data, {
           code: appData?.profile?.code,
@@ -223,8 +228,8 @@ export default function MyProfile3({route, navigation}) {
           obj['phone_number'] = res.data.phone_number;
           obj['cca2'] = res.data.cca2;
           obj['dial_code'] = res.data.callingCode || callingCode;
-          actions.updateProfile({...userData, ...obj});
-          updateState({isLoading: false});
+          actions.updateProfile({ ...userData, ...obj });
+          updateState({ isLoading: false });
           // navigation.goBack()
           console.log(res, 'userInfo');
           showSuccess(res.message);
@@ -237,7 +242,7 @@ export default function MyProfile3({route, navigation}) {
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({ isLoading: false, isLoadingB: false, isRefreshing: false });
     showError(error?.message || error?.error);
   };
 
@@ -246,7 +251,7 @@ export default function MyProfile3({route, navigation}) {
 
     if (type == 'addAddress') {
       // updateState({isLoading: true});
-      updateState({isLoading: true});
+      updateState({ isLoading: true });
 
       actions
         .addAddress(childData, {
@@ -254,7 +259,7 @@ export default function MyProfile3({route, navigation}) {
           language: languages?.primary_language?.id,
         })
         .then((res) => {
-          updateState({del: del ? false : true});
+          updateState({ del: del ? false : true });
           showSuccess(res.message);
           console.log(res.message, 'responseSave');
 
@@ -263,11 +268,11 @@ export default function MyProfile3({route, navigation}) {
           // }, 1000);
         })
         .catch((error) => {
-          updateState({isLoading: false});
+          updateState({ isLoading: false });
           showError(error?.message || error?.error);
         });
     } else if (type == 'updateAddress') {
-      updateState({isLoading: true});
+      updateState({ isLoading: true });
       let query = `/${selectedId}`;
 
       actions
@@ -276,11 +281,11 @@ export default function MyProfile3({route, navigation}) {
           language: languages?.primary_language?.id,
         })
         .then((res) => {
-          updateState({del: del ? false : true});
+          updateState({ del: del ? false : true });
           showSuccess(res.message);
         })
         .catch((error) => {
-          updateState({isLoading: false});
+          updateState({ isLoading: false });
           showError(error?.message || error?.error);
         });
     }
@@ -310,14 +315,14 @@ export default function MyProfile3({route, navigation}) {
         new_password: newPassword,
         confirm_password: confirmPassword,
       };
-      updateState({isLoading: true});
+      updateState({ isLoading: true });
       actions
         .changePassword(data, {
           code: appData?.profile?.code,
         })
         .then((res) => {
           // showSuccess(res.message)
-          updateState({isLoading: false});
+          updateState({ isLoading: false });
           showSuccess(res.message);
           updateState({
             currentpassword: '',
@@ -325,7 +330,7 @@ export default function MyProfile3({route, navigation}) {
             confirmPassword: '',
           });
         })
-        .catch((err) => {});
+        .catch((err) => { });
     } else {
       showError(strings.UNAUTHORIZED_MESSAGE);
     }
@@ -333,7 +338,7 @@ export default function MyProfile3({route, navigation}) {
 
   //Select Primary Address
   const setPrimaryLocation = (id) => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     let data = {};
     let query = `/${id}`;
     actions
@@ -341,11 +346,11 @@ export default function MyProfile3({route, navigation}) {
         code: appData?.profile?.code,
       })
       .then((res) => {
-        updateState({isLoading: false, del: del ? false : true});
+        updateState({ isLoading: false, del: del ? false : true });
         showSuccess(res.message);
       })
       .catch((error) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         showError(error?.message || error?.error);
       });
   };
@@ -372,7 +377,7 @@ export default function MyProfile3({route, navigation}) {
         })
           .then((res) => {
             if (res?.data) {
-              updateState({isLoading: true});
+              updateState({ isLoading: true });
             }
             let data = {
               type: 'jpg',
@@ -395,13 +400,13 @@ export default function MyProfile3({route, navigation}) {
                 const image = {
                   source,
                 };
-                actions.updateProfile({...userData, ...image});
-                updateState({isLoading: false});
+                actions.updateProfile({ ...userData, ...image });
+                updateState({ isLoading: false });
                 showSuccess(res.message);
               })
-              .catch((err) => {});
+              .catch((err) => { });
           })
-          .catch((err) => {});
+          .catch((err) => { });
       }
     }
   };
@@ -422,12 +427,13 @@ export default function MyProfile3({route, navigation}) {
         },
       )
       .then((res) => {
+        console.log("res++++++",res)
         actions.saveAllUserAddress(res.data);
-        updateState({address: res.data, isLoading: false, indicator: false});
+        updateState({ address: res.data, isLoading: false, indicator: false });
         setModalVisible(false);
       })
       .catch((error) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         showError(error?.message || error?.error);
         setModalVisible(false);
       });
@@ -448,7 +454,7 @@ export default function MyProfile3({route, navigation}) {
 
   //Delete address
   const delAddress = (id) => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
 
     let data = {};
     let query = `/${id}`;
@@ -459,12 +465,12 @@ export default function MyProfile3({route, navigation}) {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        updateState({del: del ? false : true});
+        updateState({ del: del ? false : true });
 
         showSuccess(res.message);
       })
       .catch((error) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         showError(error?.message || error?.error);
       });
   };
@@ -476,205 +482,198 @@ export default function MyProfile3({route, navigation}) {
   // Basic information tab
   const basicInfoView = () => {
     return (
-      <KeyboardAwareScrollView
-        style={{height: height / 2}}
-        enableAutomaticScroll={true}>
-        <View
-          style={{
-            marginVertical: moderateScaleVertical(30),
-            marginHorizontal: moderateScale(24),
-            height: height / 1.5,
-          }}>
-          {userData?.refferal_code && userData?.refferal_code != '' ? (
+
+      <View
+        style={{
+          marginVertical: moderateScaleVertical(30),
+          marginHorizontal: moderateScale(24),
+          height: height / 2,
+        }}>
+        {userData?.refferal_code && userData?.refferal_code != '' ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginBottom: moderateScaleVertical(20),
+            }}>
             <View
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginBottom: moderateScaleVertical(20),
+                flex: 0.6,
+                alignItems: 'flex-start',
+                justifyContent: 'center',
               }}>
-              <View
-                style={{
-                  flex: 0.6,
-                  alignItems: 'flex-start',
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [styles.referralCode, {color: MyDarkTheme.colors.text}]
-                      : styles.referralCode
-                  }>{`${strings.YOUR_REFFERAL_CODE} ${userData?.refferal_code}`}</Text>
-              </View>
-              <View
-                style={{
-                  flex: 0.4,
-                  alignItems: 'flex-end',
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  onPress={() => _sendRefferal()}
-                  style={[
-                    styles.referralCode,
-                    {
-                      color: themeColors.primary_color,
-                      fontFamily: fontFamily.bold,
-                    },
-                  ]}>
-                  {strings.SEND_REFFERAL}
-                </Text>
-              </View>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.referralCode, { color: MyDarkTheme.colors.text }]
+                    : styles.referralCode
+                }>{`${strings.YOUR_REFFERAL_CODE} ${userData?.refferal_code}`}</Text>
             </View>
-          ) : null}
+            <View
+              style={{
+                flex: 0.4,
+                alignItems: 'flex-end',
+                justifyContent: 'center',
+              }}>
+              <Text
+                onPress={() => _sendRefferal()}
+                style={[
+                  styles.referralCode,
+                  {
+                    color: themeColors.primary_color,
+                    fontFamily: fontFamily.bold,
+                  },
+                ]}>
+                {strings.SEND_REFFERAL}
+              </Text>
+            </View>
+          </View>
+        ) : null}
 
-          <TextInputWithUnderlineAndLabel
-            onChangeText={_onChangeText('name')}
-            value={name}
-            label={strings.YOUR_NAME}
-            autoCapitalize={'none'}
-            containerStyle={{marginVertical: moderateScaleVertical(10)}}
-            undnerlinecolor={colors.textGreyB}
-            txtInputStyle={{
-              fontFamily: fontFamily.regular,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            }}
-            labelStyle={{
-              color: colors.textGreyB,
-              textTransform: 'uppercase',
-              fontSize: textScale(12),
-            }}
-          />
+        <TextInputWithUnderlineAndLabel
+          onChangeText={_onChangeText('name')}
+          value={name}
+          label={strings.YOUR_NAME}
+          autoCapitalize={'none'}
+          containerStyle={{ marginVertical: moderateScaleVertical(10) }}
+          undnerlinecolor={colors.textGreyB}
+          txtInputStyle={{
+            fontFamily: fontFamily.regular,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          }}
+          labelStyle={{
+            color: colors.textGreyB,
+            textTransform: 'uppercase',
+            fontSize: textScale(12),
+          }}
+        />
 
-          <TextInputWithUnderlineAndLabel
-            onChangeText={_onChangeText('email')}
-            value={email}
-            label={strings.EMAIL}
-            autoCapitalize={'none'}
-            containerStyle={{marginVertical: moderateScaleVertical(10)}}
-            txtInputStyle={{
-              fontFamily: fontFamily.regular,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            }}
-            undnerlinecolor={colors.textGreyB}
-            labelStyle={{
-              color: colors.textGreyB,
-              textTransform: 'uppercase',
-              fontSize: textScale(12),
-            }}
-          />
+        <TextInputWithUnderlineAndLabel
+          onChangeText={_onChangeText('email')}
+          value={email}
+          label={strings.EMAIL}
+          autoCapitalize={'none'}
+          containerStyle={{ marginVertical: moderateScaleVertical(10) }}
+          txtInputStyle={{
+            fontFamily: fontFamily.regular,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          }}
+          undnerlinecolor={colors.textGreyB}
+          labelStyle={{
+            color: colors.textGreyB,
+            textTransform: 'uppercase',
+            fontSize: textScale(12),
+          }}
+        />
 
-          <PhoneNumberInputWithUnderline
-            onCountryChange={_onCountryChange}
-            placeholder={strings.PHONE_NUMBER}
-            onChangePhone={(phoneNumber) =>
-              updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
-            }
-            cca2={cca2}
-            phoneNumber={phoneNumber}
-            callingCode={callingCode}
-            undnerlineColor={colors.textGreyB}
-            textInputStyle={{
-              fontFamily: fontFamily.regular,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              fontSize: textScale(14),
-            }}
-            labelStyle={{
-              color: colors.textGreyB,
-              textTransform: 'uppercase',
-              fontSize: textScale(12),
-            }}
-          />
+        <PhoneNumberInputWithUnderline
+          onCountryChange={_onCountryChange}
+          placeholder={strings.PHONE_NUMBER}
+          onChangePhone={(phoneNumber) =>
+            updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })
+          }
+          cca2={cca2}
+          phoneNumber={phoneNumber}
+          callingCode={callingCode}
+          undnerlineColor={colors.textGreyB}
+          textInputStyle={{
+            fontFamily: fontFamily.regular,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            fontSize: textScale(14),
+          }}
+          labelStyle={{
+            color: colors.textGreyB,
+            textTransform: 'uppercase',
+            fontSize: textScale(12),
+          }}
+        />
 
-          <View style={{height: moderateScaleVertical(20)}} />
+        <View style={{ height: moderateScaleVertical(20) }} />
 
-          <GradientButton
-            colorsArray={[themeColors.primary_color, themeColors.primary_color]}
-            textStyle={styles.textStyle}
-            onPress={saveUserInfo}
-            // marginTop={moderateScaleVertical(20)}
-            marginBottom={moderateScaleVertical(50)}
-            btnText={strings.SAVE_CHANGES}
-          />
-        </View>
-      </KeyboardAwareScrollView>
+        <GradientButton
+          colorsArray={[themeColors.primary_color, themeColors.primary_color]}
+          textStyle={styles.textStyle}
+          onPress={saveUserInfo}
+          // marginTop={moderateScaleVertical(20)}
+          marginBottom={moderateScaleVertical(50)}
+          btnText={strings.SAVE_CHANGES}
+        />
+      </View>
+
     );
   };
   console.log(fontFamily, 'fontFamily');
   //Change password info tab
   const changePasswordView = () => {
     return (
-      <KeyboardAwareScrollView
-        style={{height: height / 2}}
-        enableAutomaticScroll={true}>
-        <View
-          style={{
-            height: height / 1.7,
-            marginVertical: moderateScaleVertical(50),
-            marginHorizontal: moderateScale(24),
-          }}>
-          <TextInputWithUnderlineAndLabel
-            onChangeText={_onChangeText('currentpassword')}
-            label={strings.ENTER_CURRENT_PASSWORD}
-            value={currentpassword}
-            secureTextEntry={true}
-            containerStyle={{marginVertical: moderateScaleVertical(10)}}
-            undnerlinecolor={colors.textGreyB}
-            labelStyle={{
-              color: colors.textGreyB,
-              textTransform: 'uppercase',
-              fontSize: textScale(12),
-            }}
-            secureTextEntry={true}
-          />
 
-          <TextInputWithUnderlineAndLabel
-            onChangeText={_onChangeText('newPassword')}
-            value={newPassword}
-            label={strings.ENTER_NEW_PASSWORD}
-            undnerlinecolor={colors.textGreyB}
-            labelStyle={{
-              color: colors.textGreyB,
-              textTransform: 'uppercase',
-              fontSize: textScale(12),
-            }}
-            secureTextEntry={true}
-            containerStyle={{marginVertical: moderateScaleVertical(10)}}
-          />
-          <TextInputWithUnderlineAndLabel
-            onChangeText={_onChangeText('confirmPassword')}
-            value={confirmPassword}
-            label={strings.ENTER_CONFIRM_PASSWORD}
-            undnerlinecolor={colors.textGreyB}
-            labelStyle={{
-              color: colors.textGreyB,
-              textTransform: 'uppercase',
-              fontSize: textScale(12),
-            }}
-            secureTextEntry={true}
-            containerStyle={{marginVertical: moderateScaleVertical(10)}}
-          />
-          <GradientButton
-            btnStyle={{marginTop: moderateScaleVertical(57)}}
-            colorsArray={[themeColors.primary_color, themeColors.primary_color]}
-            textStyle={styles.textStyle}
-            onPress={changePassword}
-            // marginTop={moderateScaleVertical(50)}
-            marginBottom={moderateScaleVertical(50)}
-            btnText={strings.CHANGE_PASS_CAPS}
-          />
-        </View>
-      </KeyboardAwareScrollView>
+      <View
+        style={{
+          height: height / 2,
+          marginVertical: moderateScaleVertical(50),
+          marginHorizontal: moderateScale(24),
+        }}>
+        <TextInputWithUnderlineAndLabel
+          onChangeText={_onChangeText('currentpassword')}
+          label={strings.ENTER_CURRENT_PASSWORD}
+          value={currentpassword}
+          secureTextEntry={true}
+          containerStyle={{ marginVertical: moderateScaleVertical(10) }}
+          undnerlinecolor={colors.textGreyB}
+          labelStyle={{
+            color: colors.textGreyB,
+            textTransform: 'uppercase',
+            fontSize: textScale(12),
+          }}
+          secureTextEntry={true}
+        />
+
+        <TextInputWithUnderlineAndLabel
+          onChangeText={_onChangeText('newPassword')}
+          value={newPassword}
+          label={strings.ENTER_NEW_PASSWORD}
+          undnerlinecolor={colors.textGreyB}
+          labelStyle={{
+            color: colors.textGreyB,
+            textTransform: 'uppercase',
+            fontSize: textScale(12),
+          }}
+          secureTextEntry={true}
+          containerStyle={{ marginVertical: moderateScaleVertical(10) }}
+        />
+        <TextInputWithUnderlineAndLabel
+          onChangeText={_onChangeText('confirmPassword')}
+          value={confirmPassword}
+          label={strings.ENTER_CONFIRM_PASSWORD}
+          undnerlinecolor={colors.textGreyB}
+          labelStyle={{
+            color: colors.textGreyB,
+            textTransform: 'uppercase',
+            fontSize: textScale(12),
+          }}
+          secureTextEntry={true}
+          containerStyle={{ marginVertical: moderateScaleVertical(10) }}
+        />
+        <GradientButton
+          btnStyle={{ marginTop: moderateScaleVertical(57) }}
+          colorsArray={[themeColors.primary_color, themeColors.primary_color]}
+          textStyle={styles.textStyle}
+          onPress={changePassword}
+          // marginTop={moderateScaleVertical(50)}
+          marginBottom={moderateScaleVertical(50)}
+          btnText={strings.CHANGE_PASS_CAPS}
+        />
+      </View>
     );
   };
 
   //address view tab
   const addressView = () => {
     return (
-      <ScrollView
+      <View
         style={{
           marginVertical: moderateScaleVertical(30),
-          // borderBottomColor:colors.lightGreyBorder,
-          // borderBottomWidth:moderateScaleVertical(1)
-          // profileAddress?.address && userData?.auth_token?
+          height: height / 1.6,
         }}>
         <View
           style={{
@@ -733,7 +732,7 @@ export default function MyProfile3({route, navigation}) {
                       <Image
                         style={
                           isDarkMode
-                            ? {tintColor: MyDarkTheme.colors.text}
+                            ? { tintColor: MyDarkTheme.colors.text }
                             : null
                         }
                         source={
@@ -743,21 +742,21 @@ export default function MyProfile3({route, navigation}) {
                         }
                       />
                     </View>
-                    <View style={{flex: 0.8}}>
+                    <View style={{ flex: 0.8 }}>
                       <Text
                         numberOfLines={2}
                         style={
                           isDarkMode
                             ? [
-                                styles.address,
-                                {
-                                  textAlign: 'left',
-                                  color: MyDarkTheme.colors.text,
-                                },
-                              ]
-                            : [styles.address, {textAlign: 'left'}]
+                              styles.address,
+                              {
+                                textAlign: 'left',
+                                color: MyDarkTheme.colors.text,
+                              },
+                            ]
+                            : [styles.address, { textAlign: 'left' }]
                         }>
-                        {itm?.address}
+                       {!!itm?.house_number? itm?.house_number + ',' : ''} {itm?.address}
                       </Text>
                     </View>
                     {itm && !!itm.is_primary && (
@@ -768,7 +767,7 @@ export default function MyProfile3({route, navigation}) {
                           justifyContent: 'center',
                         }}>
                         <Image
-                          style={{tintColor: themeColors.primary_color}}
+                          style={{ tintColor: themeColors.primary_color }}
                           source={imagePath.done}
                         />
                       </View>
@@ -781,7 +780,7 @@ export default function MyProfile3({route, navigation}) {
                     alignItems: 'center',
                     marginHorizontal: moderateScale(24),
                   }}>
-                  <View style={{flex: 0.1}} />
+                  <View style={{ flex: 0.1 }} />
                   <View
                     style={{
                       flex: 0.8,
@@ -806,7 +805,7 @@ export default function MyProfile3({route, navigation}) {
                         justifyContent: 'center',
                       }}>
                       <Image
-                        style={{tintColor: themeColors.primary_color}}
+                        style={{ tintColor: themeColors.primary_color }}
                         source={imagePath.editBlue}
                       />
                       <Text
@@ -820,7 +819,7 @@ export default function MyProfile3({route, navigation}) {
                         {strings.EDIT}
                       </Text>
                     </TouchableOpacity>
-                    <View style={{flex: 0.05}} />
+                    <View style={{ flex: 0.05 }} />
                     <TouchableOpacity
                       onPress={() => delAddress(itm.id)}
                       style={{
@@ -849,7 +848,7 @@ export default function MyProfile3({route, navigation}) {
                       </Text>
                     </TouchableOpacity>
                   </View>
-                  <View style={{flex: 0.1}} />
+                  <View style={{ flex: 0.1 }} />
                 </View>
               </View>
             );
@@ -857,7 +856,7 @@ export default function MyProfile3({route, navigation}) {
             //   return;
             // }
           })}
-      </ScrollView>
+      </View>
     );
   };
 
@@ -879,34 +878,37 @@ export default function MyProfile3({route, navigation}) {
             : colors.backgroundGreyC,
         }}
       />
-      <View style={{...commonStyles.headerTopLine}} />
+      <View style={{ ...commonStyles.headerTopLine }} />
       {/* top section user general info */}
-
-      <View
-        style={
-          isDarkMode
-            ? [
+      <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View
+          style={
+            isDarkMode
+              ? [
                 styles.topSection,
-                {backgroundColor: MyDarkTheme.colors.background},
+                { backgroundColor: MyDarkTheme.colors.background },
               ]
-            : styles.topSection
-        }>
-        <TouchableWithoutFeedback onPress={showActionSheet}>
-          <View
-            style={{
-              backgroundColor: colors.backgroundGrey,
-              alignSelf: 'center',
-              height: moderateScale(90),
-              width: moderateScale(90),
-              borderRadius: moderateScale(12),
-              borderWidth: moderateScale(5),
-              borderColor: colors.white,
-              marginTop: moderateScale(20),
-            }}>
-            <FastImage
-              source={
-                userData?.source?.image_path
-                  ? {
+              : styles.topSection
+          }>
+          <TouchableWithoutFeedback onPress={showActionSheet}>
+            <View
+              style={{
+                backgroundColor: colors.backgroundGrey,
+                alignSelf: 'center',
+                height: moderateScale(90),
+                width: moderateScale(90),
+                borderRadius: moderateScale(12),
+                borderWidth: moderateScale(5),
+                borderColor: colors.white,
+                marginTop: moderateScale(20),
+              }}>
+              <FastImage
+                source={
+                  userData?.source?.image_path
+                    ? {
                       uri: getImageUrl(
                         userData?.source?.proxy_url,
                         userData?.source?.image_path,
@@ -914,112 +916,114 @@ export default function MyProfile3({route, navigation}) {
                       ),
                       priority: FastImage.priority.high,
                     }
-                  : userData?.source
-              }
-              style={{
-                height: moderateScale(80),
-                width: moderateScale(80),
-                borderRadius: moderateScale(12),
-              }}
-            />
-            <View style={styles.cameraView}>
-              <View
-                style={styles.roundViewCamera}
-                resizeMode="contain"
-                source={imagePath?.camera}>
-                <Image
-                  source={imagePath.ic_cameraColored}
+                    : userData?.source
+                }
+                style={{
+                  height: moderateScale(80),
+                  width: moderateScale(80),
+                  borderRadius: moderateScale(12),
+                }}
+              />
+              <View style={styles.cameraView}>
+                <View
+                  style={styles.roundViewCamera}
                   resizeMode="contain"
-                  style={{
-                    height: moderateScale(20),
-                    width: moderateScale(20),
-                    tintColor: colors.white,
-                  }}
-                />
+                  source={imagePath?.camera}>
+                  <Image
+                    source={imagePath.ic_cameraColored}
+                    resizeMode="contain"
+                    style={{
+                      height: moderateScale(20),
+                      width: moderateScale(20),
+                      tintColor: colors.white,
+                    }}
+                  />
+                </View>
               </View>
             </View>
+          </TouchableWithoutFeedback>
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: moderateScaleVertical(20),
+            }}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.userName, { color: MyDarkTheme.colors.text }]
+                  : styles.userName
+              }>
+              {userData?.name}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.userEmail, { color: MyDarkTheme.colors.text }]
+                  : styles.userEmail
+              }>
+              {userData?.email}
+            </Text>
           </View>
-        </TouchableWithoutFeedback>
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: moderateScaleVertical(20),
-          }}>
-          <Text
-            style={
-              isDarkMode
-                ? [styles.userName, {color: MyDarkTheme.colors.text}]
-                : styles.userName
-            }>
-            {userData?.name}
-          </Text>
-          <Text
-            style={
-              isDarkMode
-                ? [styles.userEmail, {color: MyDarkTheme.colors.text}]
-                : styles.userEmail
-            }>
-            {userData?.email}
-          </Text>
         </View>
-      </View>
 
-      <View
-        style={
-          isDarkMode
-            ? [
+        <View
+          style={
+            isDarkMode
+              ? [
                 styles.bottomSection,
-                {backgroundColor: MyDarkTheme.colors.background},
+                { backgroundColor: MyDarkTheme.colors.background },
               ]
-            : styles.bottomSection
-        }>
-        {/* scrolllablr tob bar */}
-        <CustomTopTabBar
-          scrollEnabled={true}
-          tabBarItems={tabBarData}
-          onPress={(tabData) => changeTab(tabData)}
-          numberOfLines={1}
-          // containerStyle={{  width: width / 3}}
-          textTabWidth={width / 2.8}
-          customTextContainerStyle={{
-            width: width / 2.8,
+              : styles.bottomSection
+          }>
+          {/* scrolllablr tob bar */}
+          <CustomTopTabBar
+            scrollEnabled={true}
+            tabBarItems={tabBarData}
+            onPress={(tabData) => changeTab(tabData)}
+            numberOfLines={1}
+            // containerStyle={{  width: width / 3}}
+            textTabWidth={width / 2.8}
+            customTextContainerStyle={{
+              width: width / 2.8,
 
-            // flexWrap: 'wrap',
-            // alignSelf:'center'
-            // justifyContent: 'center',
-          }}
-          textStyle={{
-            fontSize: textScale(13),
-          }}
+              // flexWrap: 'wrap',
+              // alignSelf:'center'
+              // justifyContent: 'center',
+            }}
+            textStyle={{
+              fontSize: textScale(13),
+            }}
+          />
+
+          {selectedTab && selectedTab == strings.BASIC_INFO && basicInfoView()}
+          {selectedTab &&
+            selectedTab == strings.CHANGE_PASS &&
+            changePasswordView()}
+          {selectedTab && selectedTab == strings.ADDRESS && addressView()}
+        </View>
+
+        <ActionSheet
+          ref={actionSheet}
+          // title={'Choose one option'}
+          options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
+          cancelButtonIndex={2}
+          destructiveButtonIndex={2}
+          onPress={(index) => cameraHandle(index)}
         />
 
-        {selectedTab && selectedTab == strings.BASIC_INFO && basicInfoView()}
-        {selectedTab &&
-          selectedTab == strings.CHANGE_PASS &&
-          changePasswordView()}
-        {selectedTab && selectedTab == strings.ADDRESS && addressView()}
-      </View>
-
-      <ActionSheet
-        ref={actionSheet}
-        // title={'Choose one option'}
-        options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
-        cancelButtonIndex={2}
-        destructiveButtonIndex={2}
-        onPress={(index) => cameraHandle(index)}
-      />
-
-      <AddressModal3
-        navigation={navigation}
-        updateData={updateData}
-        isVisible={isVisible}
-        indicator={indicator}
-        onClose={() => setModalVisible(false)}
-        type={type}
-        passLocation={(data) => addUpdateLocation(data)}
-        // onPress={currentLocation}
-      />
+        <AddressModal3
+          navigation={navigation}
+          updateData={updateData}
+          isVisible={isVisible}
+          indicator={indicator}
+          onClose={() => setModalVisible(false)}
+          type={type}
+          passLocation={(data) => addUpdateLocation(data)}
+          openCloseMapAddress={openCloseMapAddress}
+          selectViaMap={selectViaMap}
+        />
+      </KeyboardAwareScrollView>
     </WrapperContainer>
   );
 }

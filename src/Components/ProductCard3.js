@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {
   Animated,
   Image,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -261,11 +262,7 @@ const ProductCard3 = ({
 
   let typeId = data?.category?.category_detail?.type_id;
   return (
-    <Animatable.View
-      // animation={index > 8 ? '' : 'fadeInUp'}
-      // delay={index > 8 ? 1 * 100 : index * 10}
-      pointerEvents={btnLoader ? 'none' : 'auto'}
-      style={{flex: 1}}>
+    <View pointerEvents={btnLoader ? 'none' : 'auto'} style={{flex: 1}}>
       <TouchableOpacity
         // disabled
         activeOpacity={0.6}
@@ -273,22 +270,17 @@ const ProductCard3 = ({
         onPressIn={() => pressInAnimation(scaleInAnimated)}
         onPressOut={() => pressOutAnimation(scaleInAnimated)}
         style={{
-          borderRadius: 10,
-          flexDirection: selectedIndex == index ? 'column' : 'row',
-          justifyContent: 'space-between',
-          marginVertical: moderateScaleVertical(10),
-          paddingHorizontal: 16,
-          overflow: 'hidden',
-          justifyContent: 'space-between',
           flexDirection: 'row',
+          marginVertical: moderateScaleVertical(10),
+          paddingHorizontal: moderateScale(16),
+          overflow: 'hidden',
         }}>
-        <Animatable.View
+        <View
           style={{
-            flex: 1,
-            marginTop: selectedIndex == index ? moderateScaleVertical(8) : 0,
+            flex: 0.8,
           }}>
           {/* Title View */}
-          <View>
+          <View style={{}}>
             {data && !!data?.tags && data?.tags.length > 0 ? (
               <View>
                 {!!data.tags[0]?.tag?.icon ? (
@@ -388,7 +380,7 @@ const ProductCard3 = ({
               )}`}
             </Text>
           </View>
-          <View style={{width: width / 2}}>
+          <View style={{}}>
             <Text
               style={{
                 fontSize: textScale(10),
@@ -401,69 +393,49 @@ const ProductCard3 = ({
               }}>
               {data?.translation_description}
             </Text>
-            {/* {!!htmlText && (
-                <HtmlViewComp
-                  plainHtml={htmlText}
-                  nodeComponentProps={{
-                    numberOfLines: 2,
-                  }}
-                />
-              )} */}
           </View>
-        </Animatable.View>
-
+        </View>
         <View
           style={{
-            paddingBottom:
-              (!!data?.add_on && data?.add_on.length !== 0) ||
-              (!!data?.variantSet && data?.variantSet.length !== 0)
-                ? moderateScale(30)
-                : moderateScale(15),
             alignItems: 'center',
-            // flex:1,
-            // marginRight: url1 ? 0 :  moderateScale(60)
+            flex: 0.35,
+            marginRight: url1 ? 0 : moderateScale(60),
           }}>
-          {url1 && (
-            <Animatable.View
-              animation={
-                selectedIndex == index ? 'slideInLeft' : 'slideInRight'
-              }
-              duration={100}>
-              <TouchableOpacity
-                disabled
-                onPress={changePosition}
-                activeOpacity={1}
+          {!!url1 ? (
+            <TouchableOpacity
+              disabled
+              onPress={changePosition}
+              activeOpacity={1}
+              style={{
+                ...commonStyles.shadowStyle,
+                margin: 2,
+                borderRadius: moderateScale(15),
+                height: moderateScale(100),
+                width: moderateScale(100),
+
+                // padding:5
+              }}>
+              <FastImage
                 style={{
-                  ...commonStyles.shadowStyle,
-                  margin: 2,
-                  borderRadius: moderateScale(15),
-                  height: moderateScale(100),
-                  width: moderateScale(100),
-                  // backgroundColor: 'red',
-                  // padding:5
-                }}>
-                <FastImage
-                  style={{
-                    ...styles.imgStyle,
-                    backgroundColor: isDarkMode
-                      ? colors.whiteOpacity15
-                      : colors.greyColor,
-                    borderRadius: moderateScale(7),
-                  }}
-                  source={{
-                    uri: getImage('200/200'),
-                    cache: FastImage.cacheControl.immutable,
-                    priority: FastImage.priority.high,
-                  }}
-                />
-              </TouchableOpacity>
-            </Animatable.View>
-          )}
+                  ...styles.imgStyle,
+                  backgroundColor: isDarkMode
+                    ? colors.whiteOpacity15
+                    : colors.greyColor,
+                  borderRadius: moderateScale(7),
+                }}
+                source={{
+                  uri: getImage('200/200'),
+                  cache: FastImage.cacheControl.immutable,
+                  priority: FastImage.priority.high,
+                }}
+              />
+            </TouchableOpacity>
+          ) : null}
 
           <View
             style={{
-              position: url1 ? 'absolute' : 'relative',
-              bottom: 0,
+              position: 'relative',
+              bottom: Platform.OS == 'ios' ? 10 : 0,
               flex: 1,
               justifyContent: url1 ? 'flex-start' : 'center',
             }}>
@@ -476,7 +448,6 @@ const ProductCard3 = ({
                   marginTop:
                     selectedIndex == index ? moderateScaleVertical(8) : 0,
                   alignItems: 'center',
-                  // backgroundColor: 'red',
                 }}>
                 {(!!data?.check_if_in_cart_app &&
                   data?.check_if_in_cart_app.length > 0) ||
@@ -512,14 +483,16 @@ const ProductCard3 = ({
                     </TouchableOpacity>
                     <Animatable.View
                       style={{
-                        // backgroundColor: 'red',
                         // height: 30,
                         overflow: 'hidden',
                       }}>
                       {selectedItemID == data?.id && btnLoader ? (
                         <UIActivityIndicator
-                          size={moderateScale(18)}
+                          size={moderateScale(16)}
                           color={themeColors.primary_color}
+                          style={{
+                            marginHorizontal: moderateScale(8),
+                          }}
                         />
                       ) : (
                         // {/* {selectedItemIndx === index &&
@@ -547,7 +520,7 @@ const ProductCard3 = ({
                                 fontSize: moderateScale(14),
                                 color: themeColors.primary_color,
                                 // height: moderateScale(100),
-                                marginHorizontal: moderateScale(4),
+                                marginHorizontal: moderateScale(12),
                               }}>
                               {/* {qtyText || data?.qty || totalProductQty} */}
                               {qtyText}
@@ -607,7 +580,9 @@ const ProductCard3 = ({
                     style={{
                       ...styles.customTextStyle,
                       textTransform: 'lowercase',
-                      color: isDarkMode? colors.whiteOpacity77: colors.blackOpacity40,
+                      color: isDarkMode
+                        ? colors.whiteOpacity77
+                        : colors.blackOpacity40,
                     }}>
                     {strings.CUSTOMISABLE}
                   </Text>
@@ -619,7 +594,7 @@ const ProductCard3 = ({
           </View>
         </View>
       </TouchableOpacity>
-    </Animatable.View>
+    </View>
   );
 };
 
@@ -642,6 +617,7 @@ function styleData({themeColors, fontFamily}) {
       fontSize: textScale(10),
       color: themeColors.primary_color,
       fontFamily: fontFamily.bold,
+      marginHorizontal: moderateScale(16),
     },
     addBtnStyle: {
       borderWidth: StyleSheet.hairlineWidth,
@@ -650,7 +626,7 @@ function styleData({themeColors, fontFamily}) {
       borderColor: themeColors.primary_color,
       justifyContent: 'center',
       alignItems: 'center',
-      minWidth: moderateScale(74),
+      minWidth: moderateScale(50),
       height: moderateScaleVertical(35),
 
       // flexDirection:"row"

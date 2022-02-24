@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -37,9 +37,9 @@ const ProductListLoader3 = ({
           rectWidthLeft={widthLeft}
           rx={6}
           ry={6}
-          viewStyles={{marginHorizontal: 20, marginBottom: 10}}
+          viewStyles={{ marginHorizontal: 20, marginBottom: 10 }}
         />
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View>
             <HeaderLoader
               isRight={false}
@@ -56,7 +56,7 @@ const ProductListLoader3 = ({
               rectHeightLeft={8}
               widthLeft={moderateScale(70)}
               rectWidthLeft={moderateScale(70)}
-              viewStyles={{marginTop: moderateScale(7)}}
+              viewStyles={{ marginTop: moderateScale(7) }}
               rx={6}
               ry={6}
             />
@@ -66,7 +66,7 @@ const ProductListLoader3 = ({
               rectHeightLeft={8}
               widthLeft={moderateScale(60)}
               rectWidthLeft={moderateScale(60)}
-              viewStyles={{marginTop: moderateScale(7)}}
+              viewStyles={{ marginTop: moderateScale(7) }}
               rx={6}
               ry={6}
             />
@@ -79,7 +79,7 @@ const ProductListLoader3 = ({
         height={rectWidthBottom}
         rectWidth={widthTop}
         rectHeight={rectWidthBottom}
-        viewStyles={{marginRight: 10}}
+        viewStyles={{ marginRight: 10 }}
         ry={7}
         rx={7}
       />

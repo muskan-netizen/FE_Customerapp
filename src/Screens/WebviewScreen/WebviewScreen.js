@@ -38,7 +38,7 @@ export default function WebviewScreen({navigation, route}) {
       statusBarColor={colors.white}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3  || appStyle?.homePageLayout === 5? imagePath.icBackb : imagePath.back
         }
         centerTitle={paramData?.title || ''}
         headerStyle={{backgroundColor: colors.white}}

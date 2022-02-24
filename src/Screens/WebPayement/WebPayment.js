@@ -142,7 +142,7 @@ export default function WebPayment({navigation, route}) {
       statusBarColor={colors.white}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? imagePath.icBackb : imagePath.back
         }
         centerTitle={paramData?.paymentTitle || ''}
         headerStyle={{backgroundColor: Colors.white}}

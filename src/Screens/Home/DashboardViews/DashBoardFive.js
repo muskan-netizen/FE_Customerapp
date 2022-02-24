@@ -72,6 +72,7 @@ export default function DashBoardFive({
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
+  const isSingleVendor = appData?.profile?.preferences?.single_vendor;
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const {appData, themeColors, appStyle} = useSelector(
@@ -85,6 +86,8 @@ export default function DashBoardFive({
     vendorsData: [],
     showMenu: false,
     currSelectedFilter: null,
+    categoriesData: [],
+    seeMore: false,
   });
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
@@ -96,7 +99,8 @@ export default function DashBoardFive({
     allCategory &&
     allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
   // const {bannerRef} = useRef();
-  const {slider1ActiveSlide, vendorsData, showMenu} = state;
+  const {slider1ActiveSlide, vendorsData, showMenu, categoriesData, seeMore} =
+    state;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
 
@@ -114,9 +118,30 @@ export default function DashBoardFive({
       vendorsData: [],
     });
   }, [appMainData?.vendors]);
+
+  useEffect(() => {
+    if (!!appMainData?.categories && appMainData?.categories.length) {
+      if (appStyle?.homePageLayout == 5) {
+        updateState({
+          categoriesData: appMainData?.categories.filter(
+            (item, indx) => indx < 8,
+          ),
+        });
+      } else {
+        updateState({
+          categoriesData: appMainData?.categories,
+        });
+      }
+      return;
+    }
+    updateState({
+      categoriesData: [],
+    });
+  }, [appMainData?.categories]);
+
   const {currSelectedFilter} = state;
 
-  console.log('app main data', appMainData);
+  // console.log('app main data', appMainData);
 
   const onSelectedFilter = (selectedFilter) => {
     updateState({showMenu: false, currSelectedFilter: selectedFilter});
@@ -129,19 +154,23 @@ export default function DashBoardFive({
       {id: 2, type: strings.CLOSE},
       {id: 3, type: strings.BESTSELLER},
     ];
-    if (appData?.profile?.preferences?.is_hyperlocal) {
-      homeFilter.push({id: 4, type: strings.NEAR_BY});
-    } else {
-      if (homeFilter.length > 3) {
-        homeFilter.pop();
-      }
-    }
+    // if (appData?.profile?.preferences?.is_hyperlocal) {
+    //   homeFilter.push({ id: 4, type: strings.NEAR_BY });
+    // } else {
+    //   if (homeFilter.length > 3) {
+    //     homeFilter.pop();
+    //   }
+    // }
     return homeFilter;
   };
 
   const _renderItem = ({item, index}) => {
     return (
-      <View style={{marginRight: moderateScale(8), width: width / 6.2}}>
+      <View
+        style={{
+          // marginRight: moderateScale(8),
+          width: appStyle?.homePageLayout == 5 ? '25%' : 'auto',
+        }}>
         <HomeCategoryCard2
           data={item}
           onPress={() => onPressCategory(item)}
@@ -167,17 +196,11 @@ export default function DashBoardFive({
     const imageUrl = getImageUrl(
       item.image.image_fit,
       item.image.image_path,
-      '400/600',
+      appStyle?.homePageLayout === 5 ? '800/600' : '400/600',
     );
 
     return (
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => bannerPress(item)}
-        // style={getScaleTransformationStyle(scaleInAnimated)}
-        // onPressIn={() => pressInAnimation(scaleInAnimated)}
-        // onPressOut={() => pressOutAnimation(scaleInAnimated)}
-      >
+      <TouchableOpacity activeOpacity={0.8} onPress={() => bannerPress(item)}>
         <FastImage
           source={{
             uri: imageUrl,
@@ -185,9 +208,14 @@ export default function DashBoardFive({
             cache: FastImage.cacheControl.immutable,
           }}
           style={{
-            height: height / 3.8,
-            width: moderateScale(160),
+            height:
+              appStyle?.homePageLayout == 5 ? moderateScale(140) : height / 3.8,
+            width:
+              appStyle?.homePageLayout == 5 ? width / 1.2 : moderateScale(160),
             borderRadius: moderateScale(16),
+            backgroundColor: isDarkMode
+              ? colors.whiteOpacity15
+              : colors.greyColor,
           }}
           resizeMode={FastImage.resizeMode.cover}
         />
@@ -195,38 +223,98 @@ export default function DashBoardFive({
     );
   };
 
+  const seeMoreCategories = () => {
+    updateState({
+      categoriesData: !seeMore
+        ? appMainData?.categories
+        : appMainData?.categories.filter((item, indx) => indx < 8),
+      seeMore: !seeMore,
+    });
+  };
+
   const categoriesBanners = () => {
     return (
       <View style={{}}>
         {appMainData &&
           appMainData?.categories &&
-          !!appMainData?.categories.length && (
+          !!appMainData?.categories?.length && (
             <View
               style={{
                 // marginHorizontal: moderateScale(8),
-                marginTop: moderateScaleVertical(10),
+                marginVertical: moderateScaleVertical(16),
               }}>
-              <FlatList
-                horizontal
-                data={appMainData?.categories}
-                keyExtractor={(item) => item.id.toString()}
-                showsHorizontalScrollIndicator={false}
-                renderItem={_renderItem}
-                ItemSeparatorComponent={() => (
-                  <View style={{marginRight: moderateScale(12)}} />
-                )}
-                ListHeaderComponent={() => (
-                  <View style={{marginLeft: moderateScale(12)}} />
-                )}
-                ListFooterComponent={() => (
-                  <View style={{marginRight: moderateScale(12)}} />
-                )}
-              />
+              {appStyle?.homePageLayout === 5 ? (
+                <FlatList
+                  key={'7'}
+                  numColumns={4}
+                  data={categoriesData}
+                  keyExtractor={(item) => item.id.toString()}
+                  showsHorizontalScrollIndicator={false}
+                  renderItem={_renderItem}
+                  ItemSeparatorComponent={() => (
+                    <View style={{marginTop: moderateScale(24)}} />
+                  )}
+                />
+              ) : (
+                <FlatList
+                  key={'6'}
+                  horizontal
+                  data={categoriesData}
+                  keyExtractor={(item) => item.id.toString()}
+                  showsHorizontalScrollIndicator={false}
+                  renderItem={_renderItem}
+                  ItemSeparatorComponent={() => (
+                    <View style={{marginTop: moderateScale(24)}} />
+                  )}
+                  ListHeaderComponent={() => (
+                    <View style={{marginLeft: moderateScale(12)}} />
+                  )}
+                  ListFooterComponent={() => (
+                    <View style={{marginRight: moderateScale(12)}} />
+                  )}
+                />
+              )}
+              <View>
+                {appMainData?.categories.length > 8 &&
+                  appStyle?.homePageLayout === 5 && (
+                    <TouchableOpacity
+                      onPress={seeMoreCategories}
+                      activeOpacity={0.8}
+                      style={{
+                        borderWidth: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        paddingVertical: moderateScaleVertical(6),
+                        marginHorizontal: moderateScale(8),
+                        borderRadius: moderateScale(6),
+                        marginTop: moderateScaleVertical(16),
+                        borderColor: colors.borderColorB,
+                      }}>
+                      <View
+                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Text
+                          style={{
+                            fontSize: textScale(10),
+                            fontFamily: fontFamily.regular,
+                          }}>
+                          see more
+                        </Text>
+                        <Image
+                          source={imagePath.icDropdown4}
+                          style={{
+                            transform: [{rotate: seeMore ? '180deg' : '0deg'}],
+                            marginLeft: moderateScale(4),
+                          }}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  )}
+              </View>
             </View>
           )}
-        <View style={{marginTop: moderateScaleVertical(16)}}>
+        <View style={{}}>
           {!!appData?.mobile_banners?.length && (
-            <View>
+            <View style={{marginTop: moderateScaleVertical(4)}}>
               <FlatList
                 horizontal
                 data={appData?.mobile_banners}
@@ -357,83 +445,128 @@ export default function DashBoardFive({
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{flexGrow: 1}}>
-        {/* <SearchLoader viewStyles={{marginTop: moderateScale(15)}} /> */}
-        <CategoryLoader2 viewStyles={{marginTop: moderateScale(20)}} />
-        {/* <CategoryLoader2 viewStyles={{marginTop: moderateScale(35)}} /> */}
+        <CategoryLoader2 viewStyles={{marginVertical: moderateScale(16)}} />
 
-        <View style={{flexDirection: 'row'}}>
-          <HeaderLoader
-            viewStyles={{marginVertical: 30}}
-            widthLeft={moderateScale(150)}
-            rectWidthLeft={moderateScale(150)}
-            heightLeft={moderateScaleVertical(240)}
-            rectHeightLeft={moderateScaleVertical(240)}
-            isRight={false}
-            rx={15}
-            ry={15}
-          />
-          <HeaderLoader
-            viewStyles={{marginVertical: 30, marginLeft: 0}}
-            widthLeft={moderateScale(150)}
-            rectWidthLeft={moderateScale(150)}
-            heightLeft={moderateScaleVertical(240)}
-            rectHeightLeft={moderateScaleVertical(240)}
-            isRight={false}
-            rx={15}
-            ry={15}
-          />
-          <HeaderLoader
-            viewStyles={{marginVertical: 30, marginLeft: 0}}
-            widthLeft={moderateScale(150)}
-            rectWidthLeft={moderateScale(150)}
-            heightLeft={moderateScaleVertical(240)}
-            rectHeightLeft={moderateScaleVertical(240)}
-            isRight={false}
-            rx={15}
-            ry={15}
-          />
-        </View>
+        {appStyle?.homePageLayout === 5 ? (
+          <CategoryLoader2 viewStyles={{marginBottom: moderateScale(16)}} />
+        ) : null}
+        {appStyle?.homePageLayout === 5 ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              marginBottom: moderateScaleVertical(16),
+            }}>
+            <HeaderLoader
+              widthLeft={moderateScale(width / 1.2)}
+              rectWidthLeft={moderateScale(width / 1.2)}
+              heightLeft={moderateScaleVertical(140)}
+              rectHeightLeft={moderateScaleVertical(140)}
+              isRight={false}
+              rx={15}
+              ry={15}
+            />
+            <HeaderLoader
+              widthLeft={moderateScale(width / 1.2)}
+              rectWidthLeft={moderateScale(width / 1.2)}
+              heightLeft={moderateScaleVertical(140)}
+              rectHeightLeft={moderateScaleVertical(140)}
+              isRight={false}
+              rx={15}
+              ry={15}
+            />
+          </View>
+        ) : (
+          <View style={{flexDirection: 'row'}}>
+            <HeaderLoader
+              viewStyles={{
+                marginTop: moderateScaleVertical(8),
+                marginBottom: moderateScaleVertical(16),
+              }}
+              widthLeft={moderateScale(150)}
+              rectWidthLeft={moderateScale(150)}
+              heightLeft={moderateScaleVertical(240)}
+              rectHeightLeft={moderateScaleVertical(240)}
+              isRight={false}
+              rx={15}
+              ry={15}
+            />
+            <HeaderLoader
+              viewStyles={{
+                marginTop: moderateScaleVertical(8),
+                marginBottom: moderateScaleVertical(16),
+              }}
+              widthLeft={moderateScale(150)}
+              rectWidthLeft={moderateScale(150)}
+              heightLeft={moderateScaleVertical(240)}
+              rectHeightLeft={moderateScaleVertical(240)}
+              isRight={false}
+              rx={15}
+              ry={15}
+            />
+            <HeaderLoader
+              viewStyles={{
+                marginTop: moderateScaleVertical(8),
+                marginBottom: moderateScaleVertical(16),
+              }}
+              widthLeft={moderateScale(150)}
+              rectWidthLeft={moderateScale(150)}
+              heightLeft={moderateScaleVertical(240)}
+              rectHeightLeft={moderateScaleVertical(240)}
+              isRight={false}
+              rx={15}
+              ry={15}
+            />
+          </View>
+        )}
+
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <HeaderLoader
-            viewStyles={{marginTop: 5}}
-            widthLeft={moderateScale(150)}
-            rectWidthLeft={moderateScale(150)}
-            heightLeft={moderateScaleVertical(20)}
-            rectHeightLeft={moderateScaleVertical(20)}
+            widthLeft={moderateScale(180)}
+            rectWidthLeft={moderateScale(180)}
+            rectHeightLeft={moderateScaleVertical(60)}
+            rectHeightLeft={moderateScaleVertical(60)}
             isRight={false}
-            rx={15}
-            ry={15}
+            rx={4}
+            ry={4}
           />
           <HeaderLoader
-            viewStyles={{marginTop: 5}}
-            widthLeft={moderateScale(60)}
-            rectWidthLeft={moderateScale(60)}
-            heightLeft={moderateScaleVertical(20)}
-            rectHeightLeft={moderateScaleVertical(20)}
+            widthLeft={moderateScale(100)}
+            rectWidthLeft={moderateScale(100)}
+            rectHeightLeft={moderateScaleVertical(60)}
+            rectHeightLeft={moderateScaleVertical(60)}
             isRight={false}
-            rx={15}
-            ry={15}
+            rx={4}
+            ry={4}
           />
         </View>
 
         <BannerLoader
-          isVendorLoader
-          viewStyles={{marginTop: moderateScale(20)}}
+          // isVendorLoader
+          viewStyles={{marginTop: moderateScale(12)}}
         />
         <BannerLoader
-          isVendorLoader
-          viewStyles={{marginTop: moderateScale(25)}}
+          // isVendorLoader
+          viewStyles={{marginTop: moderateScale(12)}}
         />
         <BannerLoader
-          isVendorLoader
-          viewStyles={{marginTop: moderateScale(25)}}
+          // isVendorLoader
+          viewStyles={{marginTop: moderateScale(12)}}
         />
-        {/* <HomeLoader /> */}
       </ScrollView>
     );
   }
 
   const vendorHeader = () => {
+    if (appData?.profile?.preferences?.single_vendor) {
+      return (
+        <View
+          style={{
+            marginBottom: moderateScaleVertical(24),
+            marginTop: moderateScaleVertical(8),
+          }}
+        />
+      );
+    }
     return (
       <View key={Math.random()}>
         <View style={styles.viewAllVeiw}>
@@ -613,6 +746,18 @@ export default function DashBoardFive({
                 keyExtractor={(item) => item.id.toString()}
                 showsHorizontalScrollIndicator={false}
                 renderItem={_renderVendors}
+                ListEmptyComponent={() => (
+                  <FastImage
+                    source={imagePath.noDataFound}
+                    resizeMode="contain"
+                    style={{
+                      width: moderateScale(140),
+                      height: moderateScale(140),
+                      alignSelf: 'center',
+                      marginTop: moderateScaleVertical(30),
+                    }}
+                  />
+                )}
                 ItemSeparatorComponent={() => (
                   <View style={{height: moderateScale(10)}} />
                 )}
