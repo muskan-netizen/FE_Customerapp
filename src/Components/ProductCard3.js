@@ -547,6 +547,7 @@ const ProductCard3 = ({
                 ) : (
                   <>
                     <TouchableOpacity
+                    // hitSlopProp={hitSlopProp}
                       disabled={selectedItemID == data?.id}
                       onPress={addToCart}
                       style={{
@@ -620,8 +621,8 @@ function styleData({themeColors, fontFamily}) {
       marginHorizontal: moderateScale(16),
     },
     addBtnStyle: {
-      borderWidth: StyleSheet.hairlineWidth,
-      paddingVertical: moderateScaleVertical(6),
+      borderWidth: 1,
+      // paddingVertical: moderateScaleVertical(6),
       borderRadius: moderateScale(8),
       borderColor: themeColors.primary_color,
       justifyContent: 'center',

@@ -432,21 +432,24 @@ export default function Products({ route, navigation }) {
         }
 
         if (res?.data?.vendor?.is_show_products_with_category) {
+
           res.data.categories.map((item) => {
             item?.products.map((val) => {
-              const url1 = val?.media[0]?.image?.path.image_fit;
-              const url2 = val?.media[0]?.image?.path.image_path;
-              FastImage.preload([{ uri: getImageUrl(url1, url2, '200/200') }]);
+              if (val?.media?.length > 0) {
+                const url1 = val?.media[0]?.image?.path?.image_fit;
+                const url2 = val?.media[0]?.image?.path?.image_path;
+                FastImage.preload([{ uri: getImageUrl(url1, url2, '200/200') }]);
+              }
             });
           });
 
-          var totalProduct = 1;
+          // var totalProduct = 1;
           let filterArray = res?.data?.categories?.map((val) => {
             let newKey = {
               ...val,
               ['data']: val?.products && val.products,
               title: val?.category && val.category?.translation[0]?.name,
-              totalProduct: totalProduct + val.products.length,
+              // totalProduct: totalProduct + val.products.length,
             };
             delete newKey['products'];
             return newKey;
@@ -1704,7 +1707,7 @@ export default function Products({ route, navigation }) {
         cells.push(...el.data);
       }
     });
-    let hight = Number(cells.length) * moderateScaleVertical(180);
+    let hight = Number(cells.length) * moderateScaleVertical(200);
     playHapticEffect(hapticEffects.rigid);
     updateState({ MenuModalVisible: !MenuModalVisible });
     sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
@@ -1726,7 +1729,7 @@ export default function Products({ route, navigation }) {
 
   const RenderMenuView = () => {
     return (
-      <View>
+      <View style={{ marginBottom: moderateScaleVertical(16) }}>
         <ScrollView style={{ width: '100%' }}>
           <Text
             style={{
@@ -2852,7 +2855,7 @@ export default function Products({ route, navigation }) {
          * Height should be fixed as 180 to measure exact scroll position for browse menu
          */
         style={{
-          height: moderateScaleVertical(180),
+          minHeight: moderateScaleVertical(200),
           overflow: 'visible',
           // backgroundColor: 'red',
           // marginBottom: moderateScaleVertical(5),
@@ -3190,7 +3193,7 @@ export default function Products({ route, navigation }) {
               )}
               renderSectionHeader={renderSectionHeader}
               ListEmptyComponent={
-                <NoDataFound isLoading={state.isLoading} containerStyle={{}} />
+                <NoDataFound isLoading={isLoading} containerStyle={{}} />
               }
             />
           </Animatable.View>
@@ -3230,7 +3233,7 @@ export default function Products({ route, navigation }) {
               <View style={{ height: moderateScale(60) }} />
             )}
             ListEmptyComponent={
-              <NoDataFound isLoading={state.isLoading} containerStyle={{}} />
+              <NoDataFound isLoading={isLoading} containerStyle={{}} />
             }
           />
         )}
@@ -3393,6 +3396,7 @@ export default function Products({ route, navigation }) {
           marginHorizontal: 0,
           height: moderateScale(250),
           backgroundColor: 'transparent',
+          marginBottom: moderateScaleVertical(16)
         }}
         innerViewContainerStyle={{
           width: '100%',
@@ -3400,6 +3404,7 @@ export default function Products({ route, navigation }) {
           marginHorizontal: 0,
           backgroundColor: 'white',
           borderRadius: moderateScale(10),
+          marginBottom: moderateScaleVertical(16)
         }}
         onBackdropPress={() => {
           updateState({ MenuModalVisible: !MenuModalVisible });
