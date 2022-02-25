@@ -168,7 +168,7 @@ export default function DashBoardFive({
     return (
       <View
         style={{
-          // marginRight: moderateScale(8),
+          marginRight:  appStyle?.homePageLayout == 5 ? 0: moderateScale(8),
           width: appStyle?.homePageLayout == 5 ? '25%' : 'auto',
         }}>
         <HomeCategoryCard2
