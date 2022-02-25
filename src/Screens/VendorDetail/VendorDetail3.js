@@ -102,7 +102,7 @@ export default function VendorDetail3({ navigation, route }) {
     navigation.navigate(navigationStrings.PRODUCT_LIST, {
       data: {
         id: item.id,
-        rootProducts: vendorParams?.rootProducts,
+        rootProducts: vendorParams?.rootProducts? true: false,
         vendor: vendorParams?.rootProducts ? true : false,
         vendorData: vendorParams?.item,
         categoryInfo: item,

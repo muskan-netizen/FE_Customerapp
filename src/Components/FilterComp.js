@@ -136,6 +136,7 @@ const FilterComp = ({
     const sortingView = (val, i) => {
         return (
             <TouchableOpacity
+            key={String(i)}
                 activeOpacity={0.6}
                 style={{
                     ...styles.sortingView,
@@ -201,6 +202,7 @@ const FilterComp = ({
     const filterView = (val, i) => {
         return (
             <View
+            key={String(i)}
                 style={{ marginBottom: moderateScaleVertical(16) }}
             >
                 <Text style={{
@@ -212,6 +214,7 @@ const FilterComp = ({
                 {val.value.map((item, index) => {
                     return (
                         <TouchableOpacity
+                        key={String(index)}
                             onPress={() => _selectFilterData(item)}
                             activeOpacity={0.8}
                             style={{

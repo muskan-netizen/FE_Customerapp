@@ -747,6 +747,10 @@ export default function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.AuthorizeNet, paymentData);
         break;
+      case 19: //FPX Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.FPX, paymentData);
+        break;
       default:
         if (
           !!businessType &&
@@ -839,6 +843,7 @@ export default function Cart({ navigation, route }) {
           selectedTipvalue: null,
           selectedTipAmount: null,
         });
+        console.log("paymebnt res", res)
         checkPaymentOptions(res);
         if (selectedPayment?.id != 17) {
           // updateState({
@@ -3453,6 +3458,8 @@ export default function Cart({ navigation, route }) {
     );
   };
 
+  console.log("selectedAddressData",selectedAddressData)
+
   //end footer
 
   //Header section of cart screen
@@ -3497,7 +3504,7 @@ export default function Cart({ navigation, route }) {
               {vendorAddress
                 ? vendorAddress
                 : selectedAddressData
-                  ? selectedAddressData?.address
+                  ? `${!!selectedAddressData?.house_number? selectedAddressData?.house_number + ',  ' : ''}${selectedAddressData?.address}`
                   : strings.TAP_HERE_ADD_ADDRESS}
             </Text>
           </View>

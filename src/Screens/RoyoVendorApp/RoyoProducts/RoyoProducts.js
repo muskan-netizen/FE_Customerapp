@@ -175,7 +175,9 @@ const RoyoProducts = (props) => {
         <View style={{flex: 1}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             {/* <View style={{flex: 1, }}> */}
-            <Text numberOfLines={1} style={styles.font16medium}>
+            <Text
+              numberOfLines={1}
+              style={[styles.font16medium, {textTransform: 'capitalize'}]}>
               {item.translation[0]?.title}
             </Text>
 
@@ -344,6 +346,7 @@ const RoyoProducts = (props) => {
             ? moderateScale(10)
             : 0,
       }}>
+      {console.log(item)}
       <TouchableOpacity
         // disabled
         onPress={() => selectedCategory(item.id)}
@@ -359,8 +362,16 @@ const RoyoProducts = (props) => {
               width > 600
                 ? (width - moderateScale(203)) / 5
                 : (width - moderateScale(152)) / 3,
+            borderRadius: moderateScale(7),
           }}
-          source={imagePath.testingImageRoyo}
+          // source={imagePath.testingImageRoyo}
+          source={
+            item.cat_image && item.cat_image.proxy_url
+              ? {
+                  uri: `${item.cat_image.proxy_url}200/200${item.cat_image.image_path}`,
+                }
+              : imagePath.testingImageRoyo
+          }
         />
       </TouchableOpacity>
       <Text
@@ -370,6 +381,7 @@ const RoyoProducts = (props) => {
             width > 600
               ? (width - moderateScale(173)) / 5
               : (width - moderateScale(112)) / 3,
+          textTransform: 'capitalize',
         }}>
         {item.name}
       </Text>

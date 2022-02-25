@@ -14,6 +14,7 @@ import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
+import {resetStackAndNavigate} from '../../../navigation/NavigationService';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
@@ -111,15 +112,17 @@ const RoyoAccounts = (props) => {
         },
         {
           text: strings.CONFIRM,
-          onPress: () => {
-            actions.userLogout();
+          onPress: async () => {
+            await actions.userLogout();
             actions.cartItemQty('');
-            navigation.navigate(navigationStrings.LOGIN);
+            // navigation.navigate(navigationStrings.LOGIN);
+            resetStackAndNavigate(navigation, navigationStrings.LOGIN);
           },
         },
       ]);
     } else {
-      navigation.navigate(navigationStrings.LOGIN);
+      // navigation.navigate(navigationStrings.LOGIN);
+      resetStackAndNavigate(navigation, navigationStrings.LOGIN);
     }
   };
   const _getListOfVendor = () => {

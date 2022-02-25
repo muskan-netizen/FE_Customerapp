@@ -125,7 +125,8 @@ android {
     dexOptions {
         javaMaxHeapSize "4g"
     }
-    compileSdkVersion rootProject.ext.compileSdkVersion
+   //  compileSdkVersion rootProject.ext.compileSdkVersion
+       compileSdkVersion 31
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -135,7 +136,8 @@ android {
     defaultConfig {
         applicationId "com.codebrew"
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+      //   targetSdkVersion rootProject.ext.targetSdkVersion
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -1315,7 +1317,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.zestyclickz'
-            resValue "string", "app_name", "ZestyClickz"
+            resValue "string", "app_name", "Veg-Hub"
             resValue "string", "host_name", ""
          }
          bakesale{
