@@ -242,6 +242,11 @@ const shortCodes = {
   gO: 'a83053',
   bauBau: 'e5e48e',
   bookARyde: '3c4b81',
+  petsChoice: 'c995df',
+  heyBuddy: '66ca24',
+  yoloSonic: 'fc53be',
+  mrHealth: 'e04975',
+  lopht: '16ab0d',
 };
 
 const appIds = {
@@ -983,7 +988,7 @@ const appIds = {
   }),
   mml: Platform.select({
     ios: 'com.mml',
-    android: 'com.mml',
+    android: 'com.app.mml',
   }),
   bimol: Platform.select({
     ios: 'com.bimol',
@@ -1208,6 +1213,26 @@ const appIds = {
   bookARyde: Platform.select({
     ios: 'com.bookARyde',
     android: 'com.bookARyde',
+  }),
+  petsChoice: Platform.select({
+    ios: 'com.petsChoice',
+    android: 'com.petsChoice',
+  }),
+  heyBuddy: Platform.select({
+    ios: 'com.app.heyBuddy',
+    android: 'com.app.heyBuddy',
+  }),
+  yoloSonic: Platform.select({
+    ios: 'com.yoloSonic',
+    android: 'com.yoloSonic',
+  }),
+  mrHealth: Platform.select({
+    ios: 'com.mrHealth',
+    android: 'com.mrHealth',
+  }),
+  lopht: Platform.select({
+    ios: 'com.lopht',
+    android: 'com.lopht',
   }),
 };
 

@@ -1552,6 +1552,36 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.petsChoice:
+          updateState({
+            shortCode: shortCodes.petsChoice,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.heyBuddy:
+          updateState({
+            shortCode: shortCodes.heyBuddy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.yoloSonic:
+          updateState({
+            shortCode: shortCodes.yoloSonic,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mrHealth:
+          updateState({
+            shortCode: shortCodes.mrHealth,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.lopht:
+          updateState({
+            shortCode: shortCodes.lopht,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

@@ -625,16 +625,16 @@ android {
       //       resValue "string", "app_name", "Cabdelivr"
       //       resValue "string", "host_name", ""
       //    }
-           drus{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.app.drus'
-            resValue "string", "app_name", "Drus"
-            resValue "string", "host_name", ""
-         }
+        //    drus{
+        //     dimension "appType"
+        //     versionCode 1
+        //     versionName "1.0"
+        //     minSdkVersion rootProject.ext.minSdkVersion
+        //     targetSdkVersion rootProject.ext.targetSdkVersion
+        //     applicationId 'com.app.drus'
+        //     resValue "string", "app_name", "Drus"
+        //     resValue "string", "host_name", ""
+        //  }
     
       //   arenagrub{
       //       dimension "appType"
@@ -758,17 +758,17 @@ android {
       //       applicationId 'com.ridemate'
       //       resValue "string", "app_name", "Ridemate"
       //       resValue "string", "host_name", ""
-      //    }
-          codiner{
-            dimension "appType"
-            versionCode 11
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.app.codiner'
-            resValue "string", "app_name", "Codiner"
-            resValue "string", "host_name", "codiner.royoorders.com"
-         }
+    //   //    }
+    //       codiner{
+    //         dimension "appType"
+    //         versionCode 11
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.app.codiner'
+    //         resValue "string", "app_name", "Codiner"
+    //         resValue "string", "host_name", "codiner.royoorders.com"
+    //      }
       //    housekeeper{
       //       dimension "appType"
       //       versionCode 1
@@ -1628,16 +1628,16 @@ android {
       //       resValue "string", "app_name", "Bilionza"
       //       resValue "string", "host_name", ""
       //    }
-         doleypharmacy{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion         
-            applicationId 'com.doleypharmacy'
-            resValue "string", "app_name", "Doley"
-            resValue "string", "host_name", ""
-         }
+        //  doleypharmacy{
+        //     dimension "appType"
+        //     versionCode 1
+        //     versionName "1.0"
+        //     minSdkVersion rootProject.ext.minSdkVersion
+        //     targetSdkVersion rootProject.ext.targetSdkVersion         
+        //     applicationId 'com.doleypharmacy'
+        //     resValue "string", "app_name", "Doley"
+        //     resValue "string", "host_name", ""
+        //  }
       //     bezalio{
       //       dimension "appType"
       //       versionCode 1
@@ -1869,16 +1869,16 @@ android {
       //       resValue "string", "app_name", "INeed"
       //       resValue "string", "host_name", ""
       //    }
-      //     nadelivery{
-      //       dimension "appType"
-      //       versionCode 2
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.nadelivery'
-      //       resValue "string", "app_name", "NaDelivery"
-      //       resValue "string", "host_name", ""
-      //    }
+          nadelivery{
+            dimension "appType"
+            versionCode 4
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.nadelivery'
+            resValue "string", "app_name", "NaDeliver"
+            resValue "string", "host_name", ""
+         }
       // marasym{
       //       dimension "appType"
       //       versionCode 1
@@ -2080,16 +2080,16 @@ android {
       //       resValue "string", "app_name", "Sofia"
       //       resValue "string", "host_name", ""
       //    }
-      //    mml{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.mml'
-      //       resValue "string", "app_name", "MML"
-      //       resValue "string", "host_name", ""
-      //    }
+         mml{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.app.mml'
+            resValue "string", "app_name", "MML"
+            resValue "string", "host_name", ""
+         }
       //     bimol{
       //       dimension "appType"
       //       versionCode 1
@@ -2111,16 +2111,16 @@ android {
       //       resValue "string", "app_name", "Vendor Spot"
       //       resValue "string", "host_name", ""
       //    }
-         pinkydeli{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion         
-            applicationId 'com.app.pinkydeli'
-            resValue "string", "app_name", "Pinky Deli"
-            resValue "string", "host_name", ""
-         }
+        //  pinkydeli{
+        //     dimension "appType"
+        //     versionCode 1
+        //     versionName "1.0"
+        //     minSdkVersion rootProject.ext.minSdkVersion
+        //     targetSdkVersion rootProject.ext.targetSdkVersion         
+        //     applicationId 'com.app.pinkydeli'
+        //     resValue "string", "app_name", "Pinky Deli"
+        //     resValue "string", "host_name", ""
+        //  }
       //     sxm2go{
       //       dimension "appType"
       //       versionCode 1
@@ -2631,24 +2631,74 @@ android {
     //      resValue "string", "app_name", "GO"
     //      resValue "string", "host_name", ""
     //      }
-    bauBau{
+    // bauBau{
+    //      dimension "appType"
+    //      versionCode 1
+    //      versionName "1.0"
+    //      minSdkVersion rootProject.ext.minSdkVersion
+    //      targetSdkVersion rootProject.ext.targetSdkVersion
+    //      applicationId 'com.baubau'
+    //      resValue "string", "app_name", "BauBau"
+    //      resValue "string", "host_name", ""
+    //      }
+    // bookARyde{
+    //      dimension "appType"
+    //      versionCode 1
+    //      versionName "1.0"
+    //      minSdkVersion rootProject.ext.minSdkVersion
+    //      targetSdkVersion rootProject.ext.targetSdkVersion
+    //      applicationId 'com.bookARyde'
+    //      resValue "string", "app_name", "Book-A-Ryde"
+    //      resValue "string", "host_name", ""
+    //      }
+    //  petsChoice{
+    //      dimension "appType"
+    //      versionCode 1
+    //      versionName "1.0"
+    //      minSdkVersion rootProject.ext.minSdkVersion
+    //      targetSdkVersion rootProject.ext.targetSdkVersion
+    //      applicationId 'com.petsChoice'
+    //      resValue "string", "app_name", "Pets Choice"
+    //      resValue "string", "host_name", ""
+    //      }
+    heyBuddy{
          dimension "appType"
          versionCode 1
          versionName "1.0"
          minSdkVersion rootProject.ext.minSdkVersion
          targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.baubau'
-         resValue "string", "app_name", "BauBau"
+         applicationId 'com.app.heyBuddy'
+         resValue "string", "app_name", "Hey Buddy"
          resValue "string", "host_name", ""
          }
-    bookARyde{
+     yoloSonic{
          dimension "appType"
          versionCode 1
          versionName "1.0"
          minSdkVersion rootProject.ext.minSdkVersion
          targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.bookARyde'
-         resValue "string", "app_name", "Book-A-Ryde"
+         applicationId 'com.yoloSonic'
+         resValue "string", "app_name", "YoloSonic"
+         resValue "string", "host_name", ""
+         }
+     mrHealth{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.mrHealth'
+         resValue "string", "app_name", "MrHealth"
+         resValue "string", "host_name", ""
+         }
+    lopht{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.lopht'
+         resValue "string", "app_name", "LOPHT"
          resValue "string", "host_name", ""
          }
 
