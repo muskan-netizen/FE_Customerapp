@@ -273,7 +273,7 @@ const ProductCard3 = ({
           flexDirection: 'row',
           marginVertical: moderateScaleVertical(10),
           paddingHorizontal: moderateScale(16),
-          overflow: 'hidden',
+
         }}>
         <View
           style={{
@@ -484,7 +484,7 @@ const ProductCard3 = ({
                     <Animatable.View
                       style={{
                         // height: 30,
-                        overflow: 'hidden',
+                
                       }}>
                       {selectedItemID == data?.id && btnLoader ? (
                         <UIActivityIndicator

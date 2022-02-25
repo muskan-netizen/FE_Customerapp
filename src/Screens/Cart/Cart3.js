@@ -3458,6 +3458,8 @@ export default function Cart({ navigation, route }) {
     );
   };
 
+  console.log("selectedAddressData",selectedAddressData)
+
   //end footer
 
   //Header section of cart screen
@@ -3502,7 +3504,7 @@ export default function Cart({ navigation, route }) {
               {vendorAddress
                 ? vendorAddress
                 : selectedAddressData
-                  ? selectedAddressData?.address
+                  ? `${!!selectedAddressData?.house_number? selectedAddressData?.house_number + ',  ' : ''}${selectedAddressData?.address}`
                   : strings.TAP_HERE_ADD_ADDRESS}
             </Text>
           </View>
