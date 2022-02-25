@@ -31,6 +31,7 @@ import {
   AuthorizeNet,
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
+import KongaPay from '../Screens/PaymentGateways/KongaPay';
 import Pagarme from '../Screens/PaymentGateways/Pagarme';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
@@ -156,6 +157,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.SCROLLABLE_CATEGORY}
         component={ScrollableCategory}
+        options={{headerShown: false}}
+      />
+        <Stack.Screen
+        name={navigationStrings.KONGOPAY}
+        component={KongaPay}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

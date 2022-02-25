@@ -750,6 +750,10 @@ export default function Cart({navigation, route}) {
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.AuthorizeNet, paymentData);
         break;
+        case 20: //AuthorizeNet Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.KONGOPAY, paymentData);
+        break;
       default:
         if (
           !!businessType &&
@@ -4269,7 +4273,7 @@ export default function Cart({navigation, route}) {
   };
 
   const renderTimeSlots = ({item, index}) => {
-    console.log(item,"itemitemitem");
+    console.log(item, 'itemitemitem');
     return (
       <TouchableOpacity
         key={String(index)}
