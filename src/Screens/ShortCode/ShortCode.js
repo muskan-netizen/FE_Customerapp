@@ -1582,6 +1582,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.yalary:
+          updateState({
+            shortCode: shortCodes.yalary,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.seratho:
+          updateState({
+            shortCode: shortCodes.seratho,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

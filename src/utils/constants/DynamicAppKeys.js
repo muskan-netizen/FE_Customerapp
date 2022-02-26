@@ -247,6 +247,8 @@ const shortCodes = {
   yoloSonic: 'fc53be',
   mrHealth: 'e04975',
   lopht: '16ab0d',
+  yalary: '9571e0',
+  seratho: '0aa2e4',
 };
 
 const appIds = {
@@ -1233,6 +1235,14 @@ const appIds = {
   lopht: Platform.select({
     ios: 'com.lopht',
     android: 'com.lopht',
+  }),
+  yalary: Platform.select({
+    ios: 'com.yalary',
+    android: 'com.yalary',
+  }),
+  seratho: Platform.select({
+    ios: 'com.seratho',
+    android: 'com.seratho',
   }),
 };
 

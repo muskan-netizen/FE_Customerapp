@@ -379,16 +379,16 @@ android {
       //       resValue "string", "app_name", "Cannabus"
       //       resValue "string", "host_name", ""
       //   }
-        govachow{
-            dimension "appType"
-            versionCode 2
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.govachow'
-            resValue "string", "app_name", "GovaChow"
-            resValue "string", "host_name", ""
-        }
+        // govachow{
+        //     dimension "appType"
+        //     versionCode 2
+        //     versionName "1.0"
+        //     minSdkVersion rootProject.ext.minSdkVersion
+        //     targetSdkVersion rootProject.ext.targetSdkVersion
+        //     applicationId 'com.govachow'
+        //     resValue "string", "app_name", "GovaChow"
+        //     resValue "string", "host_name", ""
+        // }
       //    bustanfakieh{
       //       dimension "appType"
       //       versionCode 1
@@ -1387,16 +1387,16 @@ android {
       //       resValue "string", "app_name", "Sambiga"
       //       resValue "string", "host_name", ""
       //    }
-      //    agrionline{
-      //       dimension "appType"
-      //       versionCode 3
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.agrionline'
-      //       resValue "string", "app_name", "AgriOnline"
-      //       resValue "string", "host_name", ""
-      //    }
+         agrionline{
+            dimension "appType"
+            versionCode 3
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.agrionline'
+            resValue "string", "app_name", "AgriOnline"
+            resValue "string", "host_name", ""
+         }
       //    quickquick{
       //       dimension "appType"
       //       versionCode 1
@@ -1668,16 +1668,16 @@ android {
       //       resValue "string", "app_name", "InstaShop"
       //       resValue "string", "host_name", ""
       //    }
-      //    shoorafresh{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.shoorafresh'
-      //       resValue "string", "app_name", "Shoora Fresh"
-      //       resValue "string", "host_name", ""
-      //    }
+         shoorafresh{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.shoorafresh'
+            resValue "string", "app_name", "Shoora Fresh"
+            resValue "string", "host_name", ""
+         }
       //     click2deliver{
       //       dimension "appType"
       //       versionCode 1
@@ -1869,16 +1869,16 @@ android {
       //       resValue "string", "app_name", "INeed"
       //       resValue "string", "host_name", ""
       //    }
-          nadelivery{
-            dimension "appType"
-            versionCode 4
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion         
-            applicationId 'com.nadelivery'
-            resValue "string", "app_name", "NaDeliver"
-            resValue "string", "host_name", ""
-         }
+        //   nadelivery{
+        //     dimension "appType"
+        //     versionCode 4
+        //     versionName "1.0"
+        //     minSdkVersion rootProject.ext.minSdkVersion
+        //     targetSdkVersion rootProject.ext.targetSdkVersion         
+        //     applicationId 'com.nadelivery'
+        //     resValue "string", "app_name", "NaDeliver"
+        //     resValue "string", "host_name", ""
+        //  }
       // marasym{
       //       dimension "appType"
       //       versionCode 1
@@ -2030,16 +2030,16 @@ android {
       //       resValue "string", "app_name", "SafeWalks"
       //       resValue "string", "host_name", ""
       //    }
-      //    dimavega{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.dimavega'
-      //       resValue "string", "app_name", "Dima Vega"
-      //       resValue "string", "host_name", ""
-      //    }
+         dimavega{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.dimavega'
+            resValue "string", "app_name", "Dima Vega"
+            resValue "string", "host_name", ""
+         }
       //     skoop{
       //       dimension "appType"
       //       versionCode 1
@@ -2080,16 +2080,16 @@ android {
       //       resValue "string", "app_name", "Sofia"
       //       resValue "string", "host_name", ""
       //    }
-         mml{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion         
-            applicationId 'com.app.mml'
-            resValue "string", "app_name", "MML"
-            resValue "string", "host_name", ""
-         }
+        //  mml{
+        //     dimension "appType"
+        //     versionCode 1
+        //     versionName "1.0"
+        //     minSdkVersion rootProject.ext.minSdkVersion
+        //     targetSdkVersion rootProject.ext.targetSdkVersion         
+        //     applicationId 'com.app.mml'
+        //     resValue "string", "app_name", "MML"
+        //     resValue "string", "host_name", ""
+        //  }
       //     bimol{
       //       dimension "appType"
       //       versionCode 1
@@ -2341,16 +2341,16 @@ android {
       //       resValue "string", "app_name", "Sijang"
       //       resValue "string", "host_name", ""
       //    }
-          fairex{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion         
-            applicationId 'com.fairex'
-            resValue "string", "app_name", "Fairex"
-            resValue "string", "host_name", ""
-         }
+        //   fairex{
+        //     dimension "appType"
+        //     versionCode 1
+        //     versionName "1.0"
+        //     minSdkVersion rootProject.ext.minSdkVersion
+        //     targetSdkVersion rootProject.ext.targetSdkVersion         
+        //     applicationId 'com.fairex'
+        //     resValue "string", "app_name", "Fairex"
+        //     resValue "string", "host_name", ""
+        //  }
       //     everywhere{
       //       dimension "appType"
       //       versionCode 1
@@ -2661,44 +2661,65 @@ android {
     //      resValue "string", "app_name", "Pets Choice"
     //      resValue "string", "host_name", ""
     //      }
-    heyBuddy{
+    // heyBuddy{
+    //      dimension "appType"
+    //      versionCode 1
+    //      versionName "1.0"
+    //      minSdkVersion rootProject.ext.minSdkVersion
+    //      targetSdkVersion rootProject.ext.targetSdkVersion
+    //      applicationId 'com.app.heyBuddy'
+    //      resValue "string", "app_name", "Hey Buddy"
+    //      resValue "string", "host_name", ""
+    //      }
+    //  yoloSonic{
+    //      dimension "appType"
+    //      versionCode 1
+    //      versionName "1.0"
+    //      minSdkVersion rootProject.ext.minSdkVersion
+    //      targetSdkVersion rootProject.ext.targetSdkVersion
+    //      applicationId 'com.yoloSonic'
+    //      resValue "string", "app_name", "YoloSonic"
+    //      resValue "string", "host_name", ""
+    //      }
+    //  mrHealth{
+    //      dimension "appType"
+    //      versionCode 1
+    //      versionName "1.0"
+    //      minSdkVersion rootProject.ext.minSdkVersion
+    //      targetSdkVersion rootProject.ext.targetSdkVersion
+    //      applicationId 'com.mrHealth'
+    //      resValue "string", "app_name", "MrHealth"
+    //      resValue "string", "host_name", ""
+    //      }
+    // lopht{
+    //      dimension "appType"
+    //      versionCode 1
+    //      versionName "1.0"
+    //      minSdkVersion rootProject.ext.minSdkVersion
+    //      targetSdkVersion rootProject.ext.targetSdkVersion
+    //      applicationId 'com.lopht'
+    //      resValue "string", "app_name", "LOPHT"
+    //      resValue "string", "host_name", ""
+    //      }
+
+    yalary{
          dimension "appType"
          versionCode 1
          versionName "1.0"
          minSdkVersion rootProject.ext.minSdkVersion
          targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.app.heyBuddy'
-         resValue "string", "app_name", "Hey Buddy"
+         applicationId 'com.yalary'
+         resValue "string", "app_name", "Yalary"
          resValue "string", "host_name", ""
          }
-     yoloSonic{
+    seratho{
          dimension "appType"
          versionCode 1
          versionName "1.0"
          minSdkVersion rootProject.ext.minSdkVersion
          targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.yoloSonic'
-         resValue "string", "app_name", "YoloSonic"
-         resValue "string", "host_name", ""
-         }
-     mrHealth{
-         dimension "appType"
-         versionCode 1
-         versionName "1.0"
-         minSdkVersion rootProject.ext.minSdkVersion
-         targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.mrHealth'
-         resValue "string", "app_name", "MrHealth"
-         resValue "string", "host_name", ""
-         }
-    lopht{
-         dimension "appType"
-         versionCode 1
-         versionName "1.0"
-         minSdkVersion rootProject.ext.minSdkVersion
-         targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.lopht'
-         resValue "string", "app_name", "LOPHT"
+         applicationId 'com.seratho'
+         resValue "string", "app_name", "Seratho"
          resValue "string", "host_name", ""
          }
 

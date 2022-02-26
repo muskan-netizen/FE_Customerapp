@@ -1244,6 +1244,21 @@ target 'Lopht' do
   
 end
 
+#MrHealth Target
+target 'MrHealth' do
+  
+end
+
+#Yalary Target
+target 'Yalary' do
+  
+end
+
+#Seratho Target
+target 'Seratho' do
+  
+end
+
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
