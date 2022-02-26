@@ -249,6 +249,11 @@ const shortCodes = {
   lopht: '16ab0d',
   yalary: '9571e0',
   seratho: '0aa2e4',
+  xborne: '16c5f2',
+  fawaz: '806be0',
+  grn: 'd697e3',
+  delivadrinks: 'e22dd6',
+  myRide: 'f6fb25',
 };
 
 const appIds = {
@@ -1243,6 +1248,26 @@ const appIds = {
   seratho: Platform.select({
     ios: 'com.seratho',
     android: 'com.seratho',
+  }),
+  xborne: Platform.select({
+    ios: 'com.xborne',
+    android: 'com.xborne',
+  }),
+  fawaz: Platform.select({
+    ios: 'com.fawaz',
+    android: 'com.fawaz',
+  }),
+  grn: Platform.select({
+    ios: 'com.grn',
+    android: 'com.grn',
+  }),
+  delivadrinks: Platform.select({
+    ios: 'com.delivadrinks',
+    android: 'com.delivadrinks',
+  }),
+  myRide: Platform.select({
+    ios: 'com.app.myRide',
+    android: 'com.app.myRide',
   }),
 };
 

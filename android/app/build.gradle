@@ -2702,24 +2702,74 @@ android {
     //      resValue "string", "host_name", ""
     //      }
 
-    yalary{
+    // yalary{
+    //      dimension "appType"
+    //      versionCode 1
+    //      versionName "1.0"
+    //      minSdkVersion rootProject.ext.minSdkVersion
+    //      targetSdkVersion rootProject.ext.targetSdkVersion
+    //      applicationId 'com.yalary'
+    //      resValue "string", "app_name", "Yalary"
+    //      resValue "string", "host_name", ""
+    //      }
+    // seratho{
+    //      dimension "appType"
+    //      versionCode 1
+    //      versionName "1.0"
+    //      minSdkVersion rootProject.ext.minSdkVersion
+    //      targetSdkVersion rootProject.ext.targetSdkVersion
+    //      applicationId 'com.seratho'
+    //      resValue "string", "app_name", "Seratho"
+    //      resValue "string", "host_name", ""
+    //      }
+    //    xborne{
+    //      dimension "appType"
+    //      versionCode 1
+    //      versionName "1.0"
+    //      minSdkVersion rootProject.ext.minSdkVersion
+    //      targetSdkVersion rootProject.ext.targetSdkVersion
+    //      applicationId 'com.xborne'
+    //      resValue "string", "app_name", "Xborne"
+    //      resValue "string", "host_name", ""
+    //      }
+    //    fawaz{
+    //      dimension "appType"
+    //      versionCode 1
+    //      versionName "1.0"
+    //      minSdkVersion rootProject.ext.minSdkVersion
+    //      targetSdkVersion rootProject.ext.targetSdkVersion
+    //      applicationId 'com.fawaz'
+    //      resValue "string", "app_name", "Fawaz"
+    //      resValue "string", "host_name", ""
+    //      }
+    //      grn{
+    //      dimension "appType"
+    //      versionCode 1
+    //      versionName "1.0"
+    //      minSdkVersion rootProject.ext.minSdkVersion
+    //      targetSdkVersion rootProject.ext.targetSdkVersion
+    //      applicationId 'com.grn'
+    //      resValue "string", "app_name", "GRN"
+    //      resValue "string", "host_name", ""
+    //      }
+         delivadrinks{
          dimension "appType"
          versionCode 1
          versionName "1.0"
          minSdkVersion rootProject.ext.minSdkVersion
          targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.yalary'
-         resValue "string", "app_name", "Yalary"
+         applicationId 'com.delivadrinks'
+         resValue "string", "app_name", "Delivadrinks"
          resValue "string", "host_name", ""
          }
-    seratho{
+         myRide{
          dimension "appType"
          versionCode 1
          versionName "1.0"
          minSdkVersion rootProject.ext.minSdkVersion
          targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.seratho'
-         resValue "string", "app_name", "Seratho"
+         applicationId 'com.app.myRide'
+         resValue "string", "app_name", "MyRide"
          resValue "string", "host_name", ""
          }
 
