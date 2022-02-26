@@ -1,5 +1,5 @@
 import {debounce} from 'lodash';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {FlatList, View} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
@@ -20,6 +20,9 @@ import {
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import * as Animatable from 'react-native-animatable';
+import actions from '../../redux/actions';
+import VendorDetailLoader from '../../Components/Loaders/VendorDetailLoader';
+import BannerLoader from '../../Components/Loaders/BannerLoader';
 
 export default function ViewAllData({route, navigation}) {
   console.log('route', route);
@@ -29,22 +32,24 @@ export default function ViewAllData({route, navigation}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
-    isLoading: false,
+    isLoading: true,
     pageNo: 1,
     limit: 5,
     isRefreshing: false,
+    vendorData: [],
   });
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state.initBoot);
 
   const categoryData = useSelector((state) => state?.vendor?.categoryData);
-  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
-
+  const {appMainData, dineInType} = useSelector((state) => state?.home);
   // alert(dine_In_Type);
   const location = useSelector((state) => state?.home?.location);
 
-  const {isLoading, pageNo, isRefreshing, limit} = state;
+  const {isLoading, pageNo, isRefreshing, limit, vendorData} = state;
   const {data, type} = route.params;
+
+  console.log(data, 'ViewAllData>ViewAllData');
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -75,16 +80,78 @@ export default function ViewAllData({route, navigation}) {
           })();
     }
   };
+  useEffect(() => {
+    getAllVendorData();
+  }, []);
+
+  const getAllVendorData = (slectedLocatonFromPreviousScreen) => {
+    console.log('getAllVendorData>>>>COMES HERE');
+    let latlongObj = {};
+    if (appData?.profile?.preferences?.is_hyperlocal) {
+      latlongObj = {
+        address: slectedLocatonFromPreviousScreen
+          ? slectedLocatonFromPreviousScreen?.address
+          : location?.address,
+        latitude: slectedLocatonFromPreviousScreen
+          ? slectedLocatonFromPreviousScreen?.latitude
+          : location?.latitude,
+        longitude: slectedLocatonFromPreviousScreen
+          ? slectedLocatonFromPreviousScreen?.longitude
+          : location?.longitude,
+      };
+    }
+    {
+      actions
+        .getAllVendors(
+          {
+            type: dineInType ? dineInType : dineInType,
+            ...latlongObj,
+            // ...vendorFilterData,
+          },
+          {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+            // ...latlongObj,
+          },
+        )
+        .then((res) => {
+          if (res && res?.data && res?.data?.data) {
+            updateState({
+              vendorData: res?.data?.data,
+              isLoadingB: false,
+              isLoading: false,
+            });
+          }
+          console.log('getAllVendors data++++++', res);
+        })
+        .catch(errorMethod);
+    }
+  };
+
+  //Error handling in screen
+  const errorMethod = (error) => {
+    console.log(error, 'erro>>>>>>errorerrorr');
+    updateState({
+      isLoading: false,
+      isRefreshing: false,
+      acceptLoader: false,
+      rejectLoader: false,
+      selectedOrder: null,
+      isLoadingB: false,
+      searchDataLoader: false,
+    });
+    showError(error?.message || error?.error);
+  };
 
   /**********/
 
   const _renderItem = ({item, index}) => {
     return (
-      <Animatable.View 
-      style={{marginHorizontal: moderateScale(15)}}
-      animation={'fadeInUp'}
-      delay={index*60}
-      >
+      <Animatable.View
+        style={{marginHorizontal: moderateScale(15)}}
+        animation={'fadeInUp'}
+        delay={index * 60}>
         <MarketCard3 onPress={() => _checkRedirectScreen(item)} data={item} />
       </Animatable.View>
     );
@@ -113,27 +180,54 @@ export default function ViewAllData({route, navigation}) {
         }
       />
       <SearchBar2 navigation={navigation} />
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={(!!data && data) || []}
-        ItemSeparatorComponent={() => <View style={{height: 8}} />}
-        keyExtractor={(item, index) => String(index)}
-        renderItem={_renderItem}
-        ListEmptyComponent={
-          !isLoading && (
-            <View
-              style={{
-                flex: 1,
-                marginTop: moderateScaleVertical(width / 2),
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <NoDataFound isLoading={state.isLoading} />
-            </View>
-          )
-        }
-        ListFooterComponent={() => <View style={{height: 100}} />}
-      />
+      {isLoading ? (
+        <View>
+          <View style={{height: 10}} />
+          <BannerLoader
+            isVendorLoader
+            viewStyles={{marginTop: moderateScale(20)}}
+          />
+          <BannerLoader
+            isVendorLoader
+            viewStyles={{marginTop: moderateScale(20)}}
+          />
+          <BannerLoader
+            isVendorLoader
+            viewStyles={{marginTop: moderateScale(20)}}
+          />
+
+          <BannerLoader
+            isVendorLoader
+            viewStyles={{marginTop: moderateScale(20)}}
+          />
+          <BannerLoader
+            isVendorLoader
+            viewStyles={{marginTop: moderateScale(20)}}
+          />
+        </View>
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={(!!vendorData && vendorData) || []}
+          ItemSeparatorComponent={() => <View style={{height: 8}} />}
+          keyExtractor={(item, index) => String(index)}
+          renderItem={_renderItem}
+          ListEmptyComponent={
+            !isLoading && (
+              <View
+                style={{
+                  flex: 1,
+                  marginTop: moderateScaleVertical(width / 2),
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <NoDataFound isLoading={state.isLoading} />
+              </View>
+            )
+          }
+          ListFooterComponent={() => <View style={{height: 100}} />}
+        />
+      )}
     </WrapperContainer>
   );
 }

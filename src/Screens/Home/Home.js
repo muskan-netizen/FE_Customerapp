@@ -309,6 +309,7 @@ export default function Home({route, navigation}) {
 
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
+    console.log(slectedLocatonFromPreviousScreen,"slectedLocatonFromPreviousScreen>slectedLocatonFromPreviousScreen")
     if (!!paramData) {
       updateState({searchDataLoader: true});
     }
