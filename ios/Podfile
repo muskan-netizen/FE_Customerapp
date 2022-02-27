@@ -1262,6 +1262,27 @@ end
 target 'Xborne' do
   
 end
+
+#Fawaz Target
+target 'Fawaz' do
+  
+end
+
+#GRN Target
+target 'GRN' do
+  
+end
+
+#Delivadrinks Target
+target 'Delivadrinks' do
+  
+end
+
+#MyRide Target
+target 'MyRide' do
+  
+end
+
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
