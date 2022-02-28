@@ -29008,7 +29008,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node ../node_modules/react-native/scripts/react-native-xcode.sh\n";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n\n";
 		};
 		00301AE327BE0F990088151F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -75259,7 +75259,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "${PROJECT_BUNDLE_ID}";
 				PRODUCT_NAME = Runrun;
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = tasmeemApp;
+				PROVISIONING_PROFILE_SPECIFIER = Onscart;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runrun-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
