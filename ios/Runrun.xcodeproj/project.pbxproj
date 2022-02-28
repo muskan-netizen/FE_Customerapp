@@ -18660,6 +18660,7 @@
 				84782321277AE8C700476AB4 /* Bundle React Native code and images */,
 				C38220F25309076796273E4B /* [CP] Embed Pods Frameworks */,
 				8281C5BD511E734813EB422E /* [CP] Copy Pods Resources */,
+				840EBFC827CCFE4500D679EB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -51292,6 +51293,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-SamakeeMart/Pods-available_pods-SamakeeMart-frameworks.sh\"\n";
+		};
+		840EBFC827CCFE4500D679EB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-RoyoOrder/Pods-available_pods-RoyoOrder-frameworks.sh\"\n";
 		};
 		8412E14126CA27D2007B8D4F /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
