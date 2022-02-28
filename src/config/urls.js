@@ -1,8 +1,8 @@
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
-export const API_BASE_URL = 'https://sales.royoorders.com/api/v1';  //sales demo
+// export const API_BASE_URL = 'https://sales.royoorders.com/api/v1';  //sales demo
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
-// export const API_BASE_URL = 'https://order.tasmeemgroup.com/api/v1';
+export const API_BASE_URL = 'https://order.tasmeemgroup.com/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 
@@ -229,4 +229,5 @@ export const UPDATE_VENDOR_PRODUCT = getApiUrl('/mystore/product/update');
 export const ADD_PRODUCT_IMAGE = getApiUrl('/mystore/product/addProductImage');
 export const GET_PRODUCT_IMAGE = getApiUrl('/mystore/product/getProductImages');
 export const DELETE_PRODUCT_IMAGE = getApiUrl('/mystore/product/deleteimage');
-export const VENDOR_ALL = getApiUrl('/api/v1/vendor/all');
+export const VENDOR_ALL = getApiUrl('/vendor/all');
+export const VENDOR_OPTIMIZE = getApiUrl('/vendor-optimize');

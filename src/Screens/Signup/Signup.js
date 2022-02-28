@@ -51,7 +51,7 @@ export default function Signup({navigation}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  // console.log(appData, 'appDataSignup');
+  console.log(appData, 'appDataSignup');
 
   const [state, setState] = useState({
     isLoading: false,

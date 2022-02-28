@@ -24,6 +24,7 @@ import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import Share from 'react-native-share';
 import Toast from 'react-native-simple-toast';
+import { SvgUri } from 'react-native-svg';
 import SectionList from 'react-native-tabs-section-list';
 import { useSelector } from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
@@ -163,8 +164,6 @@ export default function Products({ route, navigation }) {
     appStyle,
   } = useSelector((state) => state?.initBoot);
 
-  console.log(appStyle, 'appStyleeee');
-
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   const {
@@ -206,11 +205,13 @@ export default function Products({ route, navigation }) {
   const [allFilters, setAllFilter] = useState([]);
   const [ProductTags, setProductTags] = useState([]);
   const [offerList, setOfferList] = useState([]);
-  const [categoryInfo, setCategoryInfo] = useState([]);
+  const [categoryInfo, setCategoryInfo] = useState(null);
   const [storeLocalQty, setStoreLocalQty] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [productListId, setProductListId] = useState(data);
   const [isLoading, setLoading] = useState(true);
+  const [apiHitAgain, setApiHitAgain] = useState(false)
+
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
   const styles = stylesFunc({ themeColors, fontFamily, isDarkMode, MyDarkTheme });
@@ -395,7 +396,7 @@ export default function Products({ route, navigation }) {
   };
 
   /****Get all list items by vendor id */
-  const getAllProductsByVendor = (pageNo) => {
+  const getAllProductsByVendor = (pageNo = 1) => {
     console.log('api hit getAllProductsByVendor');
     actions
       .getProductByVendorId(
@@ -434,7 +435,7 @@ export default function Products({ route, navigation }) {
         if (res?.data?.vendor?.is_show_products_with_category) {
 
           res.data.categories.map((item) => {
-            item?.products.map((val) => {
+            item?.category?.products.map((val) => {
               if (val?.media?.length > 0) {
                 const url1 = val?.media[0]?.image?.path?.image_fit;
                 const url2 = val?.media[0]?.image?.path?.image_path;
@@ -447,7 +448,7 @@ export default function Products({ route, navigation }) {
           let filterArray = res?.data?.categories?.map((val) => {
             let newKey = {
               ...val,
-              ['data']: val?.products && val.products,
+              ['data']: val?.category?.products && val?.category?.products,
               title: val?.category && val.category?.translation[0]?.name,
               // totalProduct: totalProduct + val.products.length,
             };
@@ -563,6 +564,7 @@ export default function Products({ route, navigation }) {
       .then((res) => {
         console.log(res, 'getProductByCategoryId');
         // setFilterData(res?.data?.filterData)
+        console.log("categoryInfocategoryInfo", categoryInfo)
         setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
         setLoading(false);
         setProductListData(pageNo == 1
@@ -619,7 +621,7 @@ export default function Products({ route, navigation }) {
     // }
   };
 
-  console.log('productListData length+++++++', productListData.length);
+
 
   const fetchTags = (filterArray) => {
     if (filterArray && filterArray.length > 0) {
@@ -806,7 +808,7 @@ export default function Products({ route, navigation }) {
       return;
     }
 
-    if (item?.add_on?.length !== 0 || item?.variantSet?.length !== 0) {
+    if (item?.add_on?.length !== 0 || item?.variant_set?.length !== 0 || item?.variantSet?.length !== 0) {
       setSelectedSection(section);
       setSelectedCarItems(item);
       setIsVisibleModal(true)
@@ -1324,7 +1326,7 @@ export default function Products({ route, navigation }) {
     let itemToUpdate = cloneDeep(item);
     console.log('check item to update', itemToUpdate);
     // return;
-    if (item.add_on.length == 0 && item.variantSet.length == 0) {
+    if (item.add_on.length == 0 && item.variant_set.length == 0 || item.variantSet.length == 0) {
       // hit in case of simple products withou any customization
       addProductsWithoutCustomize(item, section, index, type);
       return;
@@ -1351,9 +1353,7 @@ export default function Products({ route, navigation }) {
     var tempQty = 0; //this variable contain latest updated quantity of products
 
     if (
-      (type == 2 && item?.add_on?.length > 0) ||
-      item?.variantSet?.length > 0
-    ) {
+      (type == 2 && item?.add_on?.length > 0) || item?.variant_set?.length > 0 || item?.variantSet?.length > 0) {
       //hit in case of subtruction
       let apiData = { cart_id: parentCartId, product_id: item.id };
       let checkIsAvailable = await getDiffAddsOn(apiData, section, item); //check products with different addOns is exist or not.
@@ -1490,7 +1490,9 @@ export default function Products({ route, navigation }) {
 
   const renderProduct = ({ item, index }) => {
     return (
-      <Animatable.View animation={'slideInUp'} delay={index * 5}>
+      <Animatable.View
+      // animation={'slideInUp'} delay={index * 5}
+      >
         <ProductCard3
           data={item}
           index={index}
@@ -1616,6 +1618,7 @@ export default function Products({ route, navigation }) {
   useEffect(() => {
     let EnabledTags = ProductTags.filter((el) => el.isSelected);
     if (EnabledTags.length > 0) {
+      setApiHitAgain(true)
       const newArr = sectionListData.map((el) => {
         const records =
           el.data &&
@@ -1635,7 +1638,10 @@ export default function Products({ route, navigation }) {
       updateState({ cloneSectionList: newArr });
     } else {
       updateState({ cloneSectionList: sectionListData });
-      getAllProductsByVendor();
+      if (apiHitAgain) {
+        setApiHitAgain(false)
+        getAllProductsByVendor();
+      }
     }
   }, [updateTagFilter]);
 
@@ -2198,12 +2204,19 @@ export default function Products({ route, navigation }) {
 
               <View style={{ marginLeft: moderateScale(8), flex: 0.7 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <RoundImg
-                    img={getImageUrl(uri1, uri2, '400/400')}
-                    size={30}
-                    isDarkMode={isDarkMode}
-                    MyDarkTheme={MyDarkTheme}
-                  />
+                  {isSVG ?
+                    <SvgUri
+                      height={moderateScale(40)}
+                      width={moderateScale(40)}
+                      uri={imageURI}
+                    />
+                    :
+                    <RoundImg
+                      img={imageURI}
+                      size={30}
+                      isDarkMode={isDarkMode}
+                      MyDarkTheme={MyDarkTheme}
+                    />}
                   <View style={{ marginLeft: moderateScale(8) }}>
                     <Text
                       numberOfLines={1}
@@ -2849,8 +2862,8 @@ export default function Products({ route, navigation }) {
   const renderSectionItem = ({ item, index, section }) => {
     return (
       <Animatable.View
-        animation={'slideInUp'}
-        delay={index * 5}
+        // animation={'slideInUp'}
+        // delay={index * 5}
         /*
          * Height should be fixed as 180 to measure exact scroll position for browse menu
          */
@@ -2921,6 +2934,10 @@ export default function Products({ route, navigation }) {
 
   let uri1 = categoryInfo?.banner?.image_fit || categoryInfo?.icon?.image_fit;
   let uri2 = categoryInfo?.banner?.image_path || categoryInfo?.icon?.image_path;
+  let imageURI = getImageUrl(uri1, uri2, '200/200')
+  const isSVG = imageURI ? imageURI.includes('.svg') : null;
+  console.log(imageURI, "is svg", isSVG)
+
   let name =
     data?.name ||
     data?.categoryInfo?.name ||
@@ -3072,12 +3089,19 @@ export default function Products({ route, navigation }) {
 
                 <View style={{ marginLeft: moderateScale(8), flex: 0.7 }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <RoundImg
-                      img={getImageUrl(uri1, uri2, '400/400')}
-                      size={30}
-                      isDarkMode={isDarkMode}
-                      MyDarkTheme={MyDarkTheme}
-                    />
+                    {isSVG ?
+                      <SvgUri
+                        height={moderateScale(40)}
+                        width={moderateScale(40)}
+                        uri={imageURI}
+                      />
+                      :
+                      <RoundImg
+                        img={imageURI}
+                        size={30}
+                        isDarkMode={isDarkMode}
+                        MyDarkTheme={MyDarkTheme}
+                      />}
                     <View style={{ marginLeft: moderateScale(8) }}>
                       <Text
                         numberOfLines={1}
@@ -3263,7 +3287,7 @@ export default function Products({ route, navigation }) {
           {isVisibleModal && (
             <HomeServiceVariantAddons
               addonSet={selectedCartItem?.add_on}
-              variantData={selectedCartItem?.variantSet}
+              variantData={selectedCartItem?.variant_set || selectedCartItem?.varinatSet}
               isVisible={isVisibleModal}
               productdetail={selectedCartItem}
               onClose={onCloseModal}
@@ -3307,7 +3331,7 @@ export default function Products({ route, navigation }) {
               }}>
               <VariantAddons
                 addonSet={selectedCartItem?.add_on}
-                variantData={selectedCartItem?.variantSet}
+                variantData={selectedCartItem?.variant_set || selectedCartItem?.varinatSet}
                 isVisible={isVisibleModal}
                 productdetail={selectedCartItem}
                 onClose={onCloseModal}

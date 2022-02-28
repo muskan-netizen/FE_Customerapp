@@ -26,6 +26,7 @@ import {
   UPDATE_VENDOR_PRODUCT,
   WALLET_CREDIT,
   NEW_VENDOR_FILTER,
+  VENDOR_OPTIMIZE,
 } from '../../config/urls';
 import {apiGet, apiPost, setWalletData} from '../../utils/utils';
 import store from '../store';
@@ -47,7 +48,7 @@ export function storeWishList(data) {}
 export function getProductByVendorId(query = '', data = {}, headers = {}) {
   console.log("sendng headers",headers)
   return new Promise((resolve, reject) => {
-    apiGet(GET_PRODUCT_DATA_BY_VENDORID + query, data, headers)
+    apiGet(VENDOR_OPTIMIZE + query, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -56,6 +57,7 @@ export function getProductByVendorId(query = '', data = {}, headers = {}) {
       });
   });
 }
+
 
 //Get all Products by Vendor id
 

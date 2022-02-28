@@ -42,6 +42,8 @@ export default function VerifyAccount({navigation, route}) {
   const appData = useSelector((state) => state?.initBoot?.appData);
   let paramsData = route?.params;
   const userData = useSelector((state) => state?.auth?.userData);
+
+  console.log("user data",userData)
   const [state, setState] = useState({
     timer2: 0,
     timer: 0,

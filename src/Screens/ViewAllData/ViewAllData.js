@@ -1,101 +1,275 @@
-import {debounce} from 'lodash';
-import React, {useState} from 'react';
-import {FlatList, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { FlatList, TouchableOpacity, View, Image } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import { useDarkMode } from 'react-native-dark-mode';
+import { ActivityIndicator } from 'react-native-paper';
+import { useSelector } from 'react-redux';
 import Header3 from '../../Components/Header3';
+import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import SearchLoader from '../../Components/Loaders/SearchLoader';
 import MarketCard3 from '../../Components/MarketCard3';
 import NoDataFound from '../../Components/NoDataFound';
 import SearchBar2 from '../../Components/SearchBar2';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
-  width,
+  width
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import * as Animatable from 'react-native-animatable';
+import { MyDarkTheme } from '../../styles/theme';
 
-export default function ViewAllData({route, navigation}) {
-  console.log('route', route);
-
+export default function ViewAllData({ route, navigation }) {
+  const { appData, themeColors, currencies, languages, appStyle } = useSelector((state) => state.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const { appMainData, dineInType, location } = useSelector((state) => state?.home);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const fontFamily = appStyle?.fontSizeData;
+  const commonStyles = commonStylesFun({ fontFamily });
+
+
   const [state, setState] = useState({
-    isLoading: false,
+    isLoading: true,
     pageNo: 1,
     limit: 5,
     isRefreshing: false,
+    data: [],
+    totalProduct: 0,
+    loadMore: false,
+    openVendor: 1,
+    closeVendor: 0,
+    bestSeller: 0,
+    nearMe: 0,
   });
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
-    useSelector((state) => state.initBoot);
 
-  const categoryData = useSelector((state) => state?.vendor?.categoryData);
-  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
+  const {
+    isLoading,
+    pageNo,
+    isRefreshing,
+    limit,
+    data,
+    totalProduct,
+    loadMore,
+    openVendor,
+    closeVendor,
+    bestSeller,
+    nearMe,
+  } = state;
 
-  // alert(dine_In_Type);
-  const location = useSelector((state) => state?.home?.location);
-
-  const {isLoading, pageNo, isRefreshing, limit} = state;
-  const {data, type} = route.params;
   //update state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+
+  useEffect(() => {
+    apiHit(pageNo)
+
+    const homeAllFilters = () => {
+      let homeFilter = [
+        { id: 1, type: strings.OPEN },
+        { id: 2, type: strings.CLOSE },
+        { id: 3, type: strings.BESTSELLER },
+      ];
+      if (appData?.profile?.preferences?.is_hyperlocal) {
+        homeFilter.push({ id: 4, type: strings.NEAR_BY });
+      } else {
+        if (homeFilter.length > 3) {
+          homeFilter.pop();
+        }
+      }
+      return homeFilter;
+    };
+
+  }, [])
+
+  //Home data
+  const apiHit = (pageNo) => {
+
+    let latlongObj = {};
+    if (appData?.profile?.preferences?.is_hyperlocal) {
+      latlongObj = {
+        latitude: location?.latitude,
+        longitude: location?.longitude,
+      };
+    }
+    let vendorFilterData = {
+      close_vendor: 1,
+      open_vendor: 0,
+      best_vendor: 0,
+      near_me: 0,
+    };
+    console.log(vendorFilterData, 'vendorFilterData');
+    // let query = `?limit=${limit}&page=${pageNo}&close_vendor=${1}&open_vendor=${0}&best_vendor=${0}&near_me=${0}`
+    let query = `?limit=${limit}&page=${pageNo}`
+    let apiData = {
+      type: dineInType ? dineInType : dineInType,
+      ...latlongObj
+    }
+    let headers = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    }
+    console.log("sending api data",apiData)
+    console.log("sending headers",headers)
+
+    actions.vendorAll(query, apiData,headers)
+      .then((res) => {
+        console.log('Home data++++++', res);
+        if (totalProduct == 0) {
+          updateState({ totalProduct: res?.data?.total })
+        }
+        updateState({
+          data: pageNo == 1
+            ? res?.data?.data
+            : [...data, ...res?.data?.data],
+          isLoading: false,
+          loadMore: false
+        })
+      })
+      .catch(error => {
+        console.log("error raised", error)
+        updateState({
+          isLoading: false,
+          loadMore: false
+        })
+      })
+  }
+  console.log("data length", data.length)
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
-  const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({fontFamily});
 
   const _checkRedirectScreen = (item) => {
     {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            categoryData: data,
-          })()
+          item,
+          rootProducts: true,
+          categoryData: data,
+        })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: item.id,
-            vendor: true,
-            name: item.name,
-            isVendorList: true,
-            fetchOffers: true,
-          })();
+          id: item.id,
+          vendor: true,
+          name: item.name,
+          isVendorList: true,
+          fetchOffers: true,
+        })();
     }
   };
 
   /**********/
 
-  const _renderItem = ({item, index}) => {
+  const _renderItem = ({ item, index }) => {
     return (
-      <Animatable.View 
-      style={{marginHorizontal: moderateScale(15)}}
-      animation={'fadeInUp'}
-      delay={index*60}
+      <Animatable.View
+        style={{ marginHorizontal: moderateScale(15) }}
+        animation={'fadeInUp'}
+        delay={index * 60}
       >
         <MarketCard3 onPress={() => _checkRedirectScreen(item)} data={item} />
       </Animatable.View>
     );
   };
 
-  // we set the height of item is fixed
-  const getItemLayout = (data, index) => ({
-    length: width - moderateScale(32),
-    offset: (width - moderateScale(32)) * index,
-    index,
-  });
+  if (isLoading) {
+    return (
+      <WrapperContainer
+        bgColor={
+          isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+        }
+        statusBarColor={colors.backgroundGrey}>
+        <Header3
+          leftIcon={imagePath.icBackb}
+          centerTitle={data?.name}
+          rightIcon={imagePath.search}
+          location={location}
+          onPressRight={() =>
+            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+          }
+        />
+        <View style={{ alignItems: 'center' }}>
+          <SearchLoader viewStyles={{ marginVertical: moderateScale(17) }} />
+          <HeaderLoader
+            viewStyles={{ marginTop: 5 }}
+            widthLeft={width - moderateScaleVertical(40)}
+            rectWidthLeft={width - moderateScaleVertical(40)}
+            heightLeft={moderateScaleVertical(170)}
+            rectHeightLeft={moderateScaleVertical(170)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{ marginTop: 15 }}
+            widthLeft={width - moderateScaleVertical(40)}
+            rectWidthLeft={width - moderateScaleVertical(40)}
+            heightLeft={moderateScaleVertical(170)}
+            rectHeightLeft={moderateScaleVertical(170)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{ marginTop: 15 }}
+            widthLeft={width - moderateScaleVertical(40)}
+            rectWidthLeft={width - moderateScaleVertical(40)}
+            heightLeft={moderateScaleVertical(170)}
+            rectHeightLeft={moderateScaleVertical(170)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{ marginTop: 15 }}
+            widthLeft={width - moderateScaleVertical(40)}
+            rectWidthLeft={width - moderateScaleVertical(40)}
+            heightLeft={moderateScaleVertical(170)}
+            rectHeightLeft={moderateScaleVertical(170)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{ marginTop: 15 }}
+            widthLeft={width - moderateScaleVertical(40)}
+            rectWidthLeft={width - moderateScaleVertical(40)}
+            heightLeft={moderateScaleVertical(170)}
+            rectHeightLeft={moderateScaleVertical(170)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+        </View>
+      </WrapperContainer>
+    )
+  }
+
+  const onEndReached = () => {
+    if (totalProduct !== data.length) {
+      updateState({ pageNo: pageNo + 1, loadMore: true });
+      apiHit(pageNo + 1);
+    } else {
+      updateState({ loadMore: false });
+    }
+  };
+
+  const listFooterComponent = () => {
+    return (
+      <View style={{ marginVertical: moderateScaleVertical(16) }}>
+      </View>
+    )
+  }
 
   return (
     <WrapperContainer
@@ -103,22 +277,32 @@ export default function ViewAllData({route, navigation}) {
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }
       statusBarColor={colors.backgroundGrey}>
-      <Header3
-        leftIcon={imagePath.icBackb}
-        centerTitle={data?.name}
-        rightIcon={imagePath.search}
-        location={location}
-        onPressRight={() =>
-          navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-        }
-      />
+
+      <View style={{ flexDirection: "row", justifyContent: 'space-between', alignItems: 'center' }}>
+        <Header3
+          leftIcon={imagePath.icBackb}
+          centerTitle={data?.name}
+          rightIcon={imagePath.search}
+          location={location}
+          onPressRight={() =>
+            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+          }
+        />
+        {/* <TouchableOpacity>
+          <Image source={imagePath.filter} />
+        </TouchableOpacity> */}
+      </View>
       <SearchBar2 navigation={navigation} />
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={(!!data && data) || []}
-        ItemSeparatorComponent={() => <View style={{height: 8}} />}
+        data={data}
+        extraData={data}
+        ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
         keyExtractor={(item, index) => String(index)}
         renderItem={_renderItem}
+        onEndReachedThreshold={0.5}
+        onEndReached={onEndReached}
+        initialNumToRender={6}
         ListEmptyComponent={
           !isLoading && (
             <View
@@ -128,11 +312,11 @@ export default function ViewAllData({route, navigation}) {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <NoDataFound isLoading={state.isLoading} />
+              <NoDataFound isLoading={isLoading} />
             </View>
           )
         }
-        ListFooterComponent={() => <View style={{height: 100}} />}
+        ListFooterComponent={listFooterComponent}
       />
     </WrapperContainer>
   );
