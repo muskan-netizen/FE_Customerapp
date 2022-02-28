@@ -48,7 +48,7 @@ import validator from '../../utils/validations';
 import stylesFun from './styles';
 
 let clickedIndx = null;
-let clickedItem = {};
+let clickedItem = null;
 let isVendorLogo = false;
 
 export default function WebLinks({navigation, route}) {
@@ -476,6 +476,9 @@ export default function WebLinks({navigation, route}) {
   };
 
   const uploadDocs = async (type, item, indx) => {
+    console.log(type, 'type');
+    console.log(item, 'item');
+    console.log(indx, 'indx');
     if (type == 'Pdf') {
       try {
         const res = await DocumentPicker.pick({
@@ -554,6 +557,8 @@ export default function WebLinks({navigation, route}) {
                   });
                 }
               } else {
+                console.log(res, 'regis doc');
+                console.log(clickedItem, 'clickedItem doc');
                 if (!!clickedItem) {
                   const vendorRegPdfImgAry = [...vendorRegisterationDocs];
                   vendorRegPdfImgAry[clickedIndx] = {
@@ -564,7 +569,7 @@ export default function WebLinks({navigation, route}) {
                   updateState({
                     vendorRegisterationDocs: vendorRegPdfImgAry,
                   });
-                  clickedIndx = null;
+                  // clickedIndx = null;
                   clickedItem = null;
                 } else {
                   if (isVendorLogo) {
@@ -789,6 +794,8 @@ export default function WebLinks({navigation, route}) {
     }
   };
 
+  console.log(vendorLogo, 'vendorLogoupdated');
+
   return (
     <WrapperContainer
       bgColor={
@@ -892,36 +899,38 @@ export default function WebLinks({navigation, route}) {
                     <Text style={styles.uploadText}>
                       {strings.UPLOAD_LOGO}*
                     </Text>
-
-                    <View style={styles.imageView}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          isVendorLogo = true;
-                          actionSheet.current.show();
-                        }}
-                        style={[
-                          styles.viewOverImage2,
-                          {borderStyle: 'dashed'},
-                        ]}>
-                        <Image
-                          source={
-                            vendorLogo.path
-                              ? {uri: vendorLogo.path}
-                              : imagePath.icCamIcon
-                          }
-                          style={{
-                            // tintColor: vendorLogo.path
-                            //   ? null
-                            //   : themeColors.primary_color,
-                            height: vendorLogo.path ? height / 6 - 10 : 30,
-                            width: vendorLogo.path
-                              ? width / 2 - moderateScale(62)
-                              : moderateScale(30),
-                          }}
-                          resizeMode="cover"
-                        />
-                      </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        isVendorLogo = true;
+                        actionSheet.current.show();
+                      }}>
+                      <View style={styles.imageView}>
+                        <View
+                          style={[
+                            styles.viewOverImage2,
+                            {borderStyle: 'dashed'},
+                          ]}>
+                          <Image
+                            source={
+                              vendorLogo?.path
+                                ? {uri: vendorLogo.path}
+                                : imagePath.icCamIcon
+                            }
+                            // source={{uri:'file:///storage/emulated/0/Android/data/com.donepacked/files/Pictures/111fa92e-6b97-46e9-a459-a50b57c91641.jpg'}}
+                            style={{
+                              // tintColor: vendorLogo.path
+                              //   ? null
+                              //   : themeColors.primary_color,
+                              height: vendorLogo.path ? height / 6 - 10 : 30,
+                              width: vendorLogo.path
+                                ? width / 2 - moderateScale(62)
+                                : moderateScale(30),
+                            }}
+                            resizeMode="cover"
+                          />
+                        </View>
+                      </View>
+                    </TouchableOpacity>
                   </View>
                   <View
                     style={{
