@@ -2411,8 +2411,8 @@ export default function Products({route, navigation}) {
                         opacity: 1,
                         fontSize: textScale(10),
                       }}>
-                      {checkEvenOdd(categoryInfo.timeofLineOfSightDistance)}-
-                      {checkEvenOdd(categoryInfo.timeofLineOfSightDistance + 5)}
+                      ~{checkEvenOdd(categoryInfo.timeofLineOfSightDistance)}
+                      {/* - {checkEvenOdd(categoryInfo.timeofLineOfSightDistance + 5)} */}
                     </Text>
                   ) : null}
                 </View>
