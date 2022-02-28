@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, ScrollView} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import {WebView} from 'react-native-webview';
 import {useSelector} from 'react-redux';
@@ -9,12 +9,13 @@ import WrapperContainer from '../../Components/WrapperContainer';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {height, moderateScaleVertical} from '../../styles/responsiveSize';
+import {moderateScaleVertical} from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
+import {showError} from '../../utils/helperFunctions';
 import Header from '../../Components/Header';
 import imagePath from '../../constants/imagePath';
 
-export default function Simplify({navigation, route}) {
+export default function KongaPay({navigation, route}) {
   let paramsData = route?.params;
   console.log(paramsData, '===>paramsData');
 
@@ -24,24 +25,24 @@ export default function Simplify({navigation, route}) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const [state, setState] = useState({
-    webData: '',
+    webUrl: '',
     isLoading: true,
   });
 
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {webData, isLoading} = state;
+  const {webUrl, isLoading} = state;
 
   useEffect(() => {
     apiHit();
   }, []);
 
   const apiHit = async () => {
-    let queryData = `/${paramsData?.selectedPayment?.title?.toLowerCase()}?amount=${
+    let queryData = `/${paramsData?.selectedPayment?.code?.toLowerCase()}?amount=${
       paramsData?.total_payable_amount
-    }&payment_option_id=${
-      paramsData?.payment_option_id
-    }&action=${paramsData?.redirectFrom}&order_number=${paramsData?.orderDetail?.order_number}`;
+    }&payment_option_id=${paramsData?.payment_option_id}&action=${
+      paramsData?.redirectFrom
+    }&order_number=${paramsData?.orderDetail?.order_number}`;
 
     try {
       const res = await actions.openPaymentWebUrl(
@@ -53,16 +54,14 @@ export default function Simplify({navigation, route}) {
           language: languages?.primary_language?.id,
         },
       );
-      console.log(res?.data, 'responseData===>');
-
-      updateState({webData: res?.data});
+      console.log(res, 'KongaPay');
+      updateState({webUrl: res.data});
     } catch (error) {
-      console.log(error, 'errorerror');
       updateState({isLoading: false});
+
       showError(error.message || error);
     }
   };
-
   const moveToNewScreen =
     (screenName, data = {}) =>
     () => {
@@ -74,26 +73,38 @@ export default function Simplify({navigation, route}) {
     const URL = queryString.parseUrl(url);
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
-    console.log(props, 'props===>');
+    console.log(props, 'propsMobbex');
 
-    setTimeout(() => {
-      if (queryParams.status == 200) {
+    if (queryParams.status == 200) {
         moveToNewScreen(navigationStrings.ORDERSUCESS, {
           orderDetail: {
             order_number: queryParams.order,
             id: paramsData?.orderDetail?.id,
           },
         })();
-      } else if (queryParams.status == 0) {
+      }
+      if (queryParams.status == 0) {
         moveToNewScreen(navigationStrings.CART, {
           queryURL: url.replace(`${nonQueryURL}?`, ''),
         })();
       }
-    }, 200);
+      
+    // setTimeout(() => {
+    //   if (queryParams.status == 200) {
+    //     moveToNewScreen(navigationStrings.ORDERSUCESS, {
+    //       orderDetail: {
+    //         order_number: queryParams.order,
+    //         id: paramsData?.orderDetail?.id,
+    //       },
+    //     })();
+    //   }
+    //   if (queryParams.status == 0) {
+    //     moveToNewScreen(navigationStrings.CART, {
+    //       queryURL: url.replace(`${nonQueryURL}?`, ''),
+    //     })();
+    //   }
+    // }, 0);
   };
-
-  console.log(webData, 'webDatawebDatawebData');
-
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.transparent}
@@ -109,19 +120,19 @@ export default function Simplify({navigation, route}) {
         }
         headerStyle={{backgroundColor: colors.white}}
       />
-      {webData !== '' && (
+      {webUrl !== '' && (
         <WebView
-          showsVerticalScrollIndicator={false}
-          source={{
-            uri: webData,
-            method: 'GET',
-            body: queryString.stringify(webData?.formData),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-          }}
-          onNavigationStateChange={onNavigationStateChange}
           onLoad={() => updateState({isLoading: false})}
+          source={{uri: webUrl}}
+          onNavigationStateChange={onNavigationStateChange}
         />
       )}
+      <View
+        style={{
+          height: moderateScaleVertical(75),
+          backgroundColor: colors.transparent,
+        }}
+      />
     </WrapperContainer>
   );
 }

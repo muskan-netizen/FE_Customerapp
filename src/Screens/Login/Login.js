@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
   TextInput,
+  Alert,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -263,10 +264,26 @@ export default function Login({navigation}) {
   };
   //Error handling in api
   const errorMethod = (error) => {
+    console.log(error, 'error>error');
     updateState({isLoading: false});
-    setTimeout(() => {
-      showError(error?.message || error?.error);
-    }, 500);
+    if (error?.data && !error?.data?.user_exists) {
+     
+      Alert.alert('', error?.message, [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          // style: 'destructive',
+        },
+        {
+          text: 'Signup',
+          onPress: () => navigation.navigate(navigationStrings.SIGN_UP),
+        },
+      ]);
+    } else {
+      setTimeout(() => {
+        showError(error?.message || error?.error);
+      }, 500);
+    }
   };
 
   //Saving login user to backend
