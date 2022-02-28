@@ -1648,16 +1648,16 @@ android {
       //       resValue "string", "app_name", "Bezalio"
       //       resValue "string", "host_name", ""
       //    }
-      //    youchillax{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.youchillax'
-      //       resValue "string", "app_name", "YouChillax"
-      //       resValue "string", "host_name", ""
-      //    }
+         youchillax{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.youchillax'
+            resValue "string", "app_name", "YouChillax"
+            resValue "string", "host_name", ""
+         }
       //     instashop{
       //       dimension "appType"
       //       versionCode 1
