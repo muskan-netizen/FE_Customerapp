@@ -1174,6 +1174,16 @@ target 'MeatEasy' do
   
 end
 
+#Local dropoff Target
+target 'LocalDropoff' do
+  
+end
+
+#Ubi Target
+target 'Ubi' do
+  
+end
+
 # #BoltDelivery Target
 # target 'BoltDelivery' do
   

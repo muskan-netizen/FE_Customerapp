@@ -235,6 +235,8 @@ const shortCodes = {
   boltDelivery: '07a31a',
   gamaDelivery: 'b77561',
   hivefair: 'f0cede',
+  localdropoff: '960a1f',
+  ubi: '085703',
 };
 
 const appIds = {
@@ -1173,6 +1175,14 @@ const appIds = {
   hivefair: Platform.select({
     ios: 'com.hivefair',
     android: 'com.hivefair',
+  }),
+  localdropoff: Platform.select({
+    ios: 'com.localdropoff',
+    android: 'com.localdropoff',
+  }),
+  ubi: Platform.select({
+    ios: 'com.application.ubi',
+    android: 'com.ubi',
   }),
 };
 
