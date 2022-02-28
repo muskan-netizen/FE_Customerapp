@@ -52,9 +52,9 @@ const Banner2 = ({
       ? getImageUrl(
         item.image.path.image_fit,
         item.image.path.image_path,
-        '1000/1000',
+        '600/800',
       )
-      : getImageUrl(item.image.image_fit, item.image.image_path, '1000/1000');
+      : getImageUrl(item.image.image_fit, item.image.image_path, '600/800');
 
     return (
       <>

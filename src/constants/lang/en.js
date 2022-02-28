@@ -537,7 +537,7 @@ Amount`,
   AROUNDYOU: 'Around you',
   PLEASESELECTONECATEGORY: 'Please Select One Category',
   MYRIDES: 'My Rides',
-  WRITE_REVIEW: 'Write a Review',
+  WRITE_REVIEW: 'Write a review',
   VIEW_ALL: 'View All',
   POPULAR_BRANDS: 'Popular Brands',
   FEATURED_PRODUCTS: 'Featured products',
@@ -827,6 +827,7 @@ Amount`,
   PASTDELEIVERIES:'Past Deliveries',
   MYDELIERIES:"My Deliveries",
   NODELIVERIESFOUND:'No Deliveries Found',
-  
+  CLEAR_FILTER:"Clear Filter",
+  PRICE_RANGE:"Price Range",
 
 };

@@ -106,10 +106,6 @@ export function initApp(
         // setPrimaryCurrency
 
         if (reload) {
-          console.log(
-            currenciesData,
-            'currenciesDatacurrenciesDatacurrenciesData',
-          );
           setItem('setPrimaryCurrent', currenciesData);
           setCurrentcy(currenciesData);
         } else {

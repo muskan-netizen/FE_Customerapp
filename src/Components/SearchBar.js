@@ -34,7 +34,7 @@ const SearchBar = ({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { appStyle } = useSelector((state) => state?.initBoot);
+  const { appStyle,themeColors } = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
   return (
@@ -80,20 +80,30 @@ const SearchBar = ({
             <TouchableOpacity onPress={onVoiceStop}>
               <LottieView
                 style={{
-                  height: 45,
-                  width: 45,
-                  marginLeft: 3,
+                  height: moderateScale(34),
+                  width: moderateScale(34),
+                  marginLeft: moderateScale(3),
                 }}
                 source={voiceListen}
                 autoPlay
                 loop
+                colorFilters={[
+                  { keypath: "layers", color: themeColors.primary_color },
+                  { keypath: "transparent2", color: themeColors.primary_color },
+                  { keypath: "transparent1", color: themeColors.primary_color },
+                  { keypath: "01", color: themeColors.primary_color },
+                  { keypath: "02", color: themeColors.primary_color },
+                  { keypath: "03", color: themeColors.primary_color },
+                  { keypath: "04", color: themeColors.primary_color },
+                ]}
               />
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={onVoiceListen}>
               <Image
-                source={imagePath.icMic}
-                style={{ height: 30, width: 30, tintColor: '#2A9CD7' }}
+                source={imagePath.icVoice}
+                style={{ height: moderateScale(20), width: moderateScale(20), borderRadius:moderateScale(10), tintColor: themeColors.primary_color}}
+                resizeMode='contain'
               />
             </TouchableOpacity>
           )}

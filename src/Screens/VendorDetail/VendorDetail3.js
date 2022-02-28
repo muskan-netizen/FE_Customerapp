@@ -102,7 +102,7 @@ export default function VendorDetail3({ navigation, route }) {
     navigation.navigate(navigationStrings.PRODUCT_LIST, {
       data: {
         id: item.id,
-        rootProducts: vendorParams?.rootProducts,
+        rootProducts: vendorParams?.rootProducts? true: false,
         vendor: vendorParams?.rootProducts ? true : false,
         vendorData: vendorParams?.item,
         categoryInfo: item,
@@ -257,12 +257,12 @@ export default function VendorDetail3({ navigation, route }) {
 
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? imagePath.icBackb : imagePath.back
         }
         centerTitle={vendorParams?.item?.name || vendordName}
         textStyle={{ fontSize: textScale(13) }}
         rightIcon={
-          appStyle?.homePageLayout === 3
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icSearchb
             : imagePath.search
         }

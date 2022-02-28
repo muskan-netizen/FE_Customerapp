@@ -19,7 +19,7 @@ const BrowseMenuButton = ({fontFamily, containerStyle, onMenuTap}) => {
           ? MyDarkTheme.colors.lightDark
           : colors.black,
         position: 'absolute',
-        bottom: moderateScaleVertical(50),
+        bottom: moderateScaleVertical(30),
         paddingHorizontal: moderateScale(15),
         paddingVertical: moderateScale(10),
         borderRadius: 50,

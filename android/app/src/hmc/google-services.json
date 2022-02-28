@@ -1,57 +1,50 @@
 {
   "project_info": {
-    "project_number": "17112101652",
-    "project_id": "hmc-app-8aeac",
-    "storage_bucket": "hmc-app-8aeac.appspot.com"
+    "project_number": "685740076937",
+    "project_id": "hmc-orders-341010",
+    "storage_bucket": "hmc-orders-341010.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:17112101652:android:9658411089e16d09d60801",
+        "mobilesdk_app_id": "1:685740076937:android:9ab95dc09451d62dcfbb58",
         "android_client_info": {
           "package_name": "com.eatkareem.hmchalal"
         }
       },
       "oauth_client": [
         {
-          "client_id": "17112101652-p7fvslldo7u28ed18vnebnb1c06qakiv.apps.googleusercontent.com",
+          "client_id": "685740076937-j03rf7bgfjjk7883aarp5po8f483u9t2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.eatkareem.hmchalal",
-            "certificate_hash": "4238303688c4192aeaf074ad7cd9f46d78a87f1d"
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "17112101652-u68k1v3bkfcmk7hitreodp4okrh94gt7.apps.googleusercontent.com",
+          "client_id": "685740076937-o3mjrkl418lm3hpd8tq6gds7hb86h18g.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.eatkareem.hmchalal",
-            "certificate_hash": "01b5bd09b84a2f26f2b99cd7648f8a1c063e6570"
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "17112101652-7hmvl3j1otuo5ckus2brmrqcca9g8h90.apps.googleusercontent.com",
+          "client_id": "685740076937-kueiohtm3kd8a0eumvuqo5g9243eldoi.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAgVChJ_IwhcGQdMaW5ND-m4EaQadYoPPo"
+          "current_key": "AIzaSyC8faACXiZyb1UaQcJKGFk2ylNVG_pMNkM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "17112101652-7hmvl3j1otuo5ckus2brmrqcca9g8h90.apps.googleusercontent.com",
+              "client_id": "685740076937-kueiohtm3kd8a0eumvuqo5g9243eldoi.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "17112101652-0uh0029ipmdg48b0m9qmqo343mel6v3p.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.hmc.customer"
-              }
             }
           ]
         }
