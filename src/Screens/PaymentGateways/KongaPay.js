@@ -15,7 +15,7 @@ import {showError} from '../../utils/helperFunctions';
 import Header from '../../Components/Header';
 import imagePath from '../../constants/imagePath';
 
-export default function Mobbex({navigation, route}) {
+export default function KongaPay({navigation, route}) {
   let paramsData = route?.params;
   console.log(paramsData, '===>paramsData');
 
@@ -40,9 +40,9 @@ export default function Mobbex({navigation, route}) {
   const apiHit = async () => {
     let queryData = `/${paramsData?.selectedPayment?.code?.toLowerCase()}?amount=${
       paramsData?.total_payable_amount
-    }&payment_option_id=${
-      paramsData?.payment_option_id
-    }&action=${paramsData?.redirectFrom}&order_number=${paramsData?.orderDetail?.order_number}`;
+    }&payment_option_id=${paramsData?.payment_option_id}&action=${
+      paramsData?.redirectFrom
+    }&order_number=${paramsData?.orderDetail?.order_number}`;
 
     try {
       const res = await actions.openPaymentWebUrl(
@@ -54,7 +54,7 @@ export default function Mobbex({navigation, route}) {
           language: languages?.primary_language?.id,
         },
       );
-      console.log(res, 'responseMobbex');
+      console.log(res, 'KongaPay');
       updateState({webUrl: res.data});
     } catch (error) {
       updateState({isLoading: false});
@@ -75,8 +75,7 @@ export default function Mobbex({navigation, route}) {
     const nonQueryURL = URL.url;
     console.log(props, 'propsMobbex');
 
-    setTimeout(() => {
-      if (queryParams.status == 200) {
+    if (queryParams.status == 200) {
         moveToNewScreen(navigationStrings.ORDERSUCESS, {
           orderDetail: {
             order_number: queryParams.order,
@@ -89,7 +88,22 @@ export default function Mobbex({navigation, route}) {
           queryURL: url.replace(`${nonQueryURL}?`, ''),
         })();
       }
-    }, 3000);
+      
+    // setTimeout(() => {
+    //   if (queryParams.status == 200) {
+    //     moveToNewScreen(navigationStrings.ORDERSUCESS, {
+    //       orderDetail: {
+    //         order_number: queryParams.order,
+    //         id: paramsData?.orderDetail?.id,
+    //       },
+    //     })();
+    //   }
+    //   if (queryParams.status == 0) {
+    //     moveToNewScreen(navigationStrings.CART, {
+    //       queryURL: url.replace(`${nonQueryURL}?`, ''),
+    //     })();
+    //   }
+    // }, 0);
   };
   return (
     <WrapperContainer
@@ -99,7 +113,7 @@ export default function Mobbex({navigation, route}) {
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
         }
         centerTitle={
           paramsData?.selectedPayment?.title || paramsData?.walletTip?.title

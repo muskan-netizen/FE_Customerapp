@@ -6,7 +6,6 @@ import Geolocation from 'react-native-geolocation-service';
 export const googlePlacesApi = async (data, key, latLng) => {
     // console.log("key", key)
     try {
-        // AIzaSyD0nhmGVsfQ3JwVaJeSa-yRKovdzMrEvwM
         // location=30.7173%2C-76.8035
         let res = await fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${data}&location=${latLng}&key=${key}`, {
             method: 'GET',
