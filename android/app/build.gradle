@@ -359,16 +359,16 @@ android {
       //       resValue "string", "app_name", "BLIP"
       //       resValue "string", "host_name", ""
       //   }
-      //   helpnowrightnow{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion
-      //       applicationId 'com.helpnowrightnow'
-      //       resValue "string", "app_name", "HelpNow!RN"
-      //       resValue "string", "host_name", ""
-      //   }
+        helpnowrightnow{
+            dimension "appType"
+            versionCode 4
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.helpnowrightnow'
+            resValue "string", "app_name", "HelpNow!RN"
+            resValue "string", "host_name", ""
+        }
       //   cannabus{
       //       dimension "appType"
       //       versionCode 1
@@ -2770,6 +2770,16 @@ android {
          targetSdkVersion rootProject.ext.targetSdkVersion
          applicationId 'com.app.myRide'
          resValue "string", "app_name", "MyRide"
+         resValue "string", "host_name", ""
+         }
+         getfix{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.app.getfix'
+         resValue "string", "app_name", "Getfix"
          resValue "string", "host_name", ""
          }
 

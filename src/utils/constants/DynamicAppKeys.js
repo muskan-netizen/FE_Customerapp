@@ -254,6 +254,7 @@ const shortCodes = {
   grn: 'd697e3',
   delivadrinks: 'e22dd6',
   myRide: 'f6fb25',
+  getfix: '3065fd',
 };
 
 const appIds = {
@@ -1268,6 +1269,10 @@ const appIds = {
   myRide: Platform.select({
     ios: 'com.app.myRide',
     android: 'com.app.myRide',
+  }),
+  getfix: Platform.select({
+    ios: 'com.app.getfix',
+    android: 'com.app.getfix',
   }),
 };
 
