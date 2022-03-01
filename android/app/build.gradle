@@ -366,7 +366,7 @@ android {
       //       minSdkVersion rootProject.ext.minSdkVersion
       //       targetSdkVersion rootProject.ext.targetSdkVersion
       //       applicationId 'com.helpnowrightnow'
-      //       resValue "string", "app_name", "HelpNow!"
+      //       resValue "string", "app_name", "HelpNow!RN"
       //       resValue "string", "host_name", ""
       //   }
       //   cannabus{
@@ -1317,16 +1317,16 @@ android {
       //       resValue "string", "app_name", "BakeSale"
       //       resValue "string", "host_name", ""
       //    }
-      //    elcheregio{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.elcheregio'
-      //       resValue "string", "app_name", "El Che Regio"
-      //       resValue "string", "host_name", ""
-      //    }
+         elcheregio{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.elcheregio'
+            resValue "string", "app_name", "El Che Regio"
+            resValue "string", "host_name", ""
+         }
       //     yaawi{
       //       dimension "appType"
       //       versionCode 1
