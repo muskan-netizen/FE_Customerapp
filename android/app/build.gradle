@@ -276,17 +276,17 @@ android {
       //       resValue "string", "host_name", ""
       //   }
 
-      //   yogofood{
-      //       dimension "appType"
-      //        versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion
-      //       // applicationIdSuffix ".hmoobhhub"
-      //       applicationId 'com.yogofood'
-      //       resValue "string", "app_name", "Yogo Food"
-      //       resValue "string", "host_name", "yogofood.royoorders.com"
-      //   }
+        yogofood{
+            dimension "appType"
+             versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            // applicationIdSuffix ".hmoobhhub"
+            applicationId 'com.yogofood'
+            resValue "string", "app_name", "Yogo Food"
+            resValue "string", "host_name", "yogofood.royoorders.com"
+        }
      
       //   clicktoeat{
       //       dimension "appType"
