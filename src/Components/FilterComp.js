@@ -65,9 +65,6 @@ const FilterComp = ({
     filterData = []
 }) => {
 
-
-
-
     const [state, setState] = useState({
         minPrice: 0,
         maxPrice: 50000,
@@ -136,11 +133,11 @@ const FilterComp = ({
     const sortingView = (val, i) => {
         return (
             <TouchableOpacity
-            key={String(i)}
+                key={String(i)}
                 activeOpacity={0.6}
                 style={{
                     ...styles.sortingView,
-                    marginBottom: sortingData.length-1 == i ? moderateScaleVertical(8) : moderateScaleVertical(20)
+                    marginBottom: sortingData.length - 1 == i ? moderateScaleVertical(8) : moderateScaleVertical(20)
                 }}
                 onPress={() => onSelectedSortFilter(val)}
             >
@@ -202,7 +199,7 @@ const FilterComp = ({
     const filterView = (val, i) => {
         return (
             <View
-            key={String(i)}
+                key={String(i)}
                 style={{ marginBottom: moderateScaleVertical(16) }}
             >
                 <Text style={{
@@ -214,7 +211,7 @@ const FilterComp = ({
                 {val.value.map((item, index) => {
                     return (
                         <TouchableOpacity
-                        key={String(index)}
+                            key={String(index)}
                             onPress={() => _selectFilterData(item)}
                             activeOpacity={0.8}
                             style={{

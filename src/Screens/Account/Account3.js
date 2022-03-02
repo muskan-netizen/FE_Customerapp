@@ -597,7 +597,7 @@ export default function Account3({navigation}) {
                 // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             ))}
-          {console.log('check platform >>> ', Platform)}
+
           {/* {!!userData?.auth_token && (
           <ListItemHorizontal
             centerContainerStyle={{flexDirection: 'row'}}
