@@ -1492,7 +1492,9 @@ export default function Products({ route, navigation }) {
 
   const renderProduct = ({ item, index }) => {
     return (
-      <Animatable.View animation={'slideInUp'} delay={index * 5}>
+      <Animatable.View 
+      // animation={'slideInUp'} delay={index * 5}
+      >
         <ProductCard3
           data={item}
           index={index}
@@ -2862,8 +2864,8 @@ export default function Products({ route, navigation }) {
   const renderSectionItem = ({ item, index, section }) => {
     return (
       <Animatable.View
-        animation={'slideInUp'}
-        delay={index * 5}
+        // animation={'slideInUp'}
+        // delay={index * 5}
         /*
          * Height should be fixed as 180 to measure exact scroll position for browse menu
          */
