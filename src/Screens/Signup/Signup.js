@@ -72,7 +72,9 @@ export default function Signup({navigation}) {
     deviceToken: '',
     referralCode: '',
     isShowPassword: false,
-    registrationDocument: [],
+    addtionalTextInputs: [],
+    addtionalImages: [],
+    addtionalPdfs: [],
   });
   const {
     phoneNumber,
@@ -84,7 +86,9 @@ export default function Signup({navigation}) {
     password,
     referralCode,
     isShowPassword,
-    registrationDocument,
+    addtionalTextInputs,
+    addtionalImages,
+    addtionalPdfs,
   } = state;
   const _onCountryChange = (data) => {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
@@ -111,23 +115,30 @@ export default function Signup({navigation}) {
     return true;
   };
 
-  // useEffect(() => {
-  //   actions
-  //     .userRegistrationDocument(
-  //       {},
-  //       {
-  //         code: appData?.profile?.code,
-  //         currency: currencies?.primary_currency?.id,
-  //         language: languages?.primary_language?.id,
-  //       },
-  //     )
-  //     .then((res) => {
-  //       console.log(res, 'res>>>>');
-  //     })
-  //     .catch((err) => {
-  //       console.log(err, 'err>>>>>');
-  //     });
-  // }, []);
+  useEffect(() => {
+    actions
+      .userRegistrationDocument(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'additionalDocuments>>>Res');
+        updateState({
+          addtionalTextInputs: res?.data.filter((x) => x?.file_type == 'Text'),
+          addtionalImages: res?.data.filter((x) => x?.file_type == 'Image'),
+          addtionalPdfs: res?.data.filter((x) => x?.file_type == 'Pdf'),
+        });
+      })
+      .catch((err) => {
+        console.log(err, 'err>>>>>');
+      });
+  }, []);
+
+  console.log(addtionalTextInputs, 'addtionalTextInputs>>');
 
   /** SIGNUP API FUNCTION **/
   const onSignup = async () => {
