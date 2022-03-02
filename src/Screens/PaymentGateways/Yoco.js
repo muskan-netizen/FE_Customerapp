@@ -49,7 +49,7 @@ export default function Yoco({navigation, route}) {
       paramsData?.total_payable_amount
     }&payment_option_id=${
       paramsData?.payment_option_id
-    }&action=cart&order_number=${paramsData?.orderDetail?.order_number}`;
+    }&action=${paramsData?.redirectFrom}&order_number=${paramsData?.orderDetail?.order_number}`;
     console.log(queryData, 'queryData');
     try {
       const res = await actions.openPaymentWebUrl(

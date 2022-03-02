@@ -105,7 +105,7 @@ const ProductCard3 = ({
 
   useEffect(() => {
     updateState({qtyText: data?.qty || totalProductQty});
-  }, []);
+  }, [totalProductQty]);
 
   useEffect(() => {
     updateState({qtyText: data?.qty || totalProductQty});
@@ -273,7 +273,6 @@ const ProductCard3 = ({
           flexDirection: 'row',
           marginVertical: moderateScaleVertical(10),
           paddingHorizontal: moderateScale(16),
-
         }}>
         <View
           style={{
@@ -482,10 +481,11 @@ const ProductCard3 = ({
                       </Text>
                     </TouchableOpacity>
                     <Animatable.View
-                      style={{
-                        // height: 30,
-                
-                      }}>
+                      style={
+                        {
+                          // height: 30,
+                        }
+                      }>
                       {selectedItemID == data?.id && btnLoader ? (
                         <UIActivityIndicator
                           size={moderateScale(16)}
@@ -547,7 +547,7 @@ const ProductCard3 = ({
                 ) : (
                   <>
                     <TouchableOpacity
-                    // hitSlopProp={hitSlopProp}
+                      // hitSlopProp={hitSlopProp}
                       disabled={selectedItemID == data?.id}
                       onPress={addToCart}
                       style={{

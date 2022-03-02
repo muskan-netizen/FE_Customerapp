@@ -763,6 +763,10 @@ export default function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.FPX, paymentData);
         break;
+        case 20: //AuthorizeNet Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.KONGOPAY, paymentData);
+        break;
       default:
         if (
           !!businessType &&

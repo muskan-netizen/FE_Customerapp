@@ -30,6 +30,7 @@ import {
   PHONE_LOGIN_OTP,
   UPLOAD_PHOTO,
   VENDOR_LOGIN_BY_USERNAME,
+  USER_REGISTRATION_DOCUMENT,
 } from '../../config/urls';
 import {apiGet, apiPost, clearUserData, setUserData} from '../../utils/utils';
 import store from '../store';
@@ -458,4 +459,16 @@ export function getLoyaltyInfo(data = {}, headers = {}) {
 
 export function imageUpload(data = {}, headers = {}) {
   return apiPost(UPLOAD_PHOTO, data, headers);
+}
+
+export function userRegistrationDocument(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiGet(USER_REGISTRATION_DOCUMENT, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 }

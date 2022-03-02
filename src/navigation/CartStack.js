@@ -32,6 +32,7 @@ import {
   FPX
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
+import KongaPay from '../Screens/PaymentGateways/KongaPay';
 import Pagarme from '../Screens/PaymentGateways/Pagarme';
 import { shortCodes } from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
@@ -163,6 +164,11 @@ export default function () {
         name={navigationStrings.FPX}
         component={FPX}
         options={{ headerShown: false }}
+      />
+        <Stack.Screen
+        name={navigationStrings.KONGOPAY}
+        component={KongaPay}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

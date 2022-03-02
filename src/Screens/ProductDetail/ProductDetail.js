@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  TextInput,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
@@ -184,7 +185,7 @@ export default function ProductDetail({route, navigation}) {
     console.log('onShare', appData);
     if (!!productDetailData?.share_link) {
       let hyperLink = productDetailData?.share_link;
-      let options = { url: hyperLink };
+      let options = {url: hyperLink};
       Share.open(options)
         .then((res) => {
           console.log(res);
@@ -216,10 +217,10 @@ export default function ProductDetail({route, navigation}) {
           res?.data?.products?.product_media.map((val) => {
             const url1 = val?.image?.path?.image_fit || val.image.image_fit;
             const url2 = val?.image?.path?.image_path || val.image.image_path;
-            let imageUri = getImageUrl(url1, url2, '600/800') 
-            console.log("banner images",imageUri)
-            FastImage.preload([{ uri:imageUri }])
-          })
+            let imageUri = getImageUrl(url1, url2, '600/800');
+            console.log('banner images', imageUri);
+            FastImage.preload([{uri: imageUri}]);
+          });
         }
 
         // const imageUrl = res.data?.image?.path
@@ -1014,16 +1015,18 @@ export default function ProductDetail({route, navigation}) {
     >
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={venderDetail?.name}
-        textStyle={{ fontSize: textScale(14) }}
+        textStyle={{fontSize: textScale(14)}}
         rightIcon={
           !!data?.showAddToCart
             ? false
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-              ? imagePath.icSearchb
-              : imagePath.search
+            ? imagePath.icSearchb
+            : imagePath.search
         }
         onPressRight={() =>
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
@@ -1075,11 +1078,12 @@ export default function ProductDetail({route, navigation}) {
                           onPress={() => _onAddtoWishlist(productDetailData)}>
                           {!enums.isVendorStandloneApp &&
                           productDetailData?.is_wishlist ? (
-                            <View style={{
-                              position:'absolute',
-                              right: moderateScale(10),
-                              top: moderateScale(10),
-                            }}>
+                            <View
+                              style={{
+                                position: 'absolute',
+                                right: moderateScale(10),
+                                top: moderateScale(10),
+                              }}>
                               {!!productDetailData?.inwishlist ? (
                                 <Image
                                   style={{
@@ -1144,7 +1148,7 @@ export default function ProductDetail({route, navigation}) {
                               styles.productName,
                               {color: MyDarkTheme.colors.text},
                             ]
-                          : styles.productName
+                          : {...styles.productName, flex: 1}
                       }>
                       {productDetailData?.translation[0]?.title}
                     </Text>
@@ -1308,63 +1312,80 @@ export default function ProductDetail({route, navigation}) {
                             ? MyDarkTheme.colors.background
                             : colors.white,
                         }}>
-                        <View style={{flex: 0.25}}>
-                          <View
+                        <View
+                          style={{
+                            ...commonStyles.buttonRect,
+                            ...styles.incDecBtnStyle,
+                            backgroundColor: getColorCodeWithOpactiyNumber(
+                              themeColors.primary_color.substr(1),
+                              15,
+                            ),
+                            flex: 0.28,
+                            borderColor: themeColors?.primary_color,
+                            height: moderateScale(38),
+                            justifyContent: 'space-between',
+                          }}
+                          // onPress={onPress}
+                        >
+                          <TouchableOpacity
+                            disabled={
+                              !productDetailData?.vendor?.show_slot &&
+                              !!productDetailData?.vendor?.is_vendor_closed
+                            }
+                            onPress={() => productIncrDecreamentForCart(2)}
+                            // hitSlop={hitSlopProp}
                             style={{
-                              ...commonStyles.buttonRect,
-                              ...styles.incDecBtnStyle,
-                              backgroundColor: getColorCodeWithOpactiyNumber(
-                                themeColors.primary_color.substr(1),
-                                15,
-                              ),
-                              borderColor: themeColors?.primary_color,
-                              height: moderateScale(38),
-                            }}
-                            // onPress={onPress}
-                          >
-                            <TouchableOpacity
-                              disabled={
-                                !productDetailData?.vendor?.show_slot &&
-                                !!productDetailData?.vendor?.is_vendor_closed
-                              }
-                              onPress={() => productIncrDecreamentForCart(2)}
-                              hitSlop={hitSlopProp}>
-                              <Text
-                                style={{
-                                  ...commonStyles.mediumFont14,
-                                  color: themeColors?.primary_color,
-                                  fontFamily: fontFamily.bold,
-                                }}>
-                                -
-                              </Text>
-                            </TouchableOpacity>
+                              flex: 0.2,
+                            }}>
                             <Text
                               style={{
                                 ...commonStyles.mediumFont14,
-                                color: isDarkMode
-                                  ? MyDarkTheme.colors.text
-                                  : colors.black,
+                                color: themeColors?.primary_color,
+                                fontFamily: fontFamily.bold,
                               }}>
-                              {/* {productQuantityForCart} */}
-                              {productQuantityForCart}
+                              -
                             </Text>
-                            <TouchableOpacity
-                              disabled={
-                                !productDetailData?.vendor?.show_slot &&
-                                !!productDetailData?.vendor?.is_vendor_closed
+                          </TouchableOpacity>
+                          <TextInput
+                            style={{
+                              marginHorizontal: moderateScale(3),
+                              textAlign: 'center',
+                              alignSelf: 'center',
+                              flex: 0.8,
+                            }}
+                            keyboardType="number-pad"
+                            onEndEditing={() => {
+                              if (productQuantityForCart == '') {
+                                return updateState({
+                                  productQuantityForCart: 1,
+                                });
                               }
-                              onPress={() => productIncrDecreamentForCart(1)}
-                              hitSlop={hitSlopProp}>
-                              <Text
-                                style={{
-                                  ...commonStyles.mediumFont14,
-                                  color: themeColors?.primary_color,
-                                  fontFamily: fontFamily.bold,
-                                }}>
-                                +
-                              </Text>
-                            </TouchableOpacity>
-                          </View>
+                            }}
+                            value={productQuantityForCart.toString()}
+                            onChangeText={(value) =>
+                              updateState({
+                                productQuantityForCart:
+                                  value == '' ? '' : Number(value),
+                              })
+                            }
+                          />
+                          <TouchableOpacity
+                            disabled={
+                              !productDetailData?.vendor?.show_slot &&
+                              !!productDetailData?.vendor?.is_vendor_closed
+                            }
+                            style={{flex: 0.2}}
+                            onPress={() => productIncrDecreamentForCart(1)}
+                            hitSlop={hitSlopProp}>
+                            <Text
+                              style={{
+                                ...commonStyles.mediumFont14,
+                                color: themeColors?.primary_color,
+                                fontFamily: fontFamily.bold,
+                              }}>
+                              +
+                            </Text>
+                          </TouchableOpacity>
                         </View>
 
                         <View style={{marginHorizontal: 8}} />
