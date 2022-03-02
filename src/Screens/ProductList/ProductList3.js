@@ -207,7 +207,7 @@ export default function Products({ route, navigation }) {
   const [allFilters, setAllFilter] = useState([]);
   const [ProductTags, setProductTags] = useState([]);
   const [offerList, setOfferList] = useState([]);
-  const [categoryInfo, setCategoryInfo] = useState([]);
+  const [categoryInfo, setCategoryInfo] = useState(null);
   const [storeLocalQty, setStoreLocalQty] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [productListId, setProductListId] = useState(data);
@@ -564,7 +564,7 @@ export default function Products({ route, navigation }) {
       .then((res) => {
         console.log(res, 'getProductByCategoryId res');
         // setFilterData(res?.data?.filterData)
-        // setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
+        setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
         setCategoryInfo(res.data.category);
         setLoading(false);
         setProductListData(pageNo == 1
