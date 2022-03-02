@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   I18nManager,
   Image,
@@ -39,18 +39,22 @@ export default function Signup({navigation}) {
   const navigation_ = useNavigation();
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const userData = useSelector((state) => state.auth.userData);
-  const {appData, themeColors, themeLayouts, currencies, languages} =
-    useSelector((state) => state?.initBoot);
+  const {
+    appData,
+    themeColors,
+    themeLayouts,
+    currencies,
+    languages,
+    themeColor,
+    themeToggle,
+  } = useSelector((state) => state?.initBoot);
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});
   const styles = stylesFun({fontFamily});
 
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   // console.log(appData, 'appDataSignup');
 
   const [state, setState] = useState({
@@ -68,7 +72,20 @@ export default function Signup({navigation}) {
     deviceToken: '',
     referralCode: '',
     isShowPassword: false,
+    registrationDocument: [],
   });
+  const {
+    phoneNumber,
+    callingCode,
+    cca2,
+    name,
+    email,
+    isLoading,
+    password,
+    referralCode,
+    isShowPassword,
+    registrationDocument,
+  } = state;
   const _onCountryChange = (data) => {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
     return;
@@ -93,6 +110,24 @@ export default function Signup({navigation}) {
     }
     return true;
   };
+
+  // useEffect(() => {
+  //   actions
+  //     .userRegistrationDocument(
+  //       {},
+  //       {
+  //         code: appData?.profile?.code,
+  //         currency: currencies?.primary_currency?.id,
+  //         language: languages?.primary_language?.id,
+  //       },
+  //     )
+  //     .then((res) => {
+  //       console.log(res, 'res>>>>');
+  //     })
+  //     .catch((err) => {
+  //       console.log(err, 'err>>>>>');
+  //     });
+  // }, []);
 
   /** SIGNUP API FUNCTION **/
   const onSignup = async () => {
@@ -172,18 +207,6 @@ export default function Signup({navigation}) {
   const _onChangeText = (key) => (val) => {
     updateState({[key]: val});
   };
-
-  const {
-    phoneNumber,
-    callingCode,
-    cca2,
-    name,
-    email,
-    isLoading,
-    password,
-    referralCode,
-    isShowPassword,
-  } = state;
 
   const showHidePassword = () => {
     updateState({isShowPassword: !isShowPassword});
