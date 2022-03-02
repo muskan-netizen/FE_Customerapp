@@ -934,16 +934,16 @@ android {
       //       resValue "string", "app_name", "DoorStep"
       //       resValue "string", "host_name", ""
       //    }
-      //     sunshinerideshare{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion
-      //       applicationId 'com.sunshinerideshare'
-      //       resValue "string", "app_name", "Sunshine Rideshare"
-      //       resValue "string", "host_name", ""
-      //    }
+          sunshinerideshare{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.sunshinerideshare'
+            resValue "string", "app_name", "Sunshine Rideshare"
+            resValue "string", "host_name", ""
+         }
       //    autotek{
       //       dimension "appType"
       //       versionCode 1

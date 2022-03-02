@@ -535,7 +535,7 @@ const appIds = {
     android: 'com.doorstep',
   }),
   sunshinerideshare: Platform.select({
-    ios: 'com.sunshinerideshare',
+    ios: 'com.app.sunshinerideshare',
     android: 'com.sunshinerideshare',
   }),
   autotek: Platform.select({

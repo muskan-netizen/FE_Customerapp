@@ -2480,7 +2480,6 @@
 		8468581E26E0CEC200F7063A /* SunshineRideshare(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8468581D26E0CEC200F7063A /* SunshineRideshare(Development).xcconfig */; };
 		8468586A26E0CEDD00F7063A /* SunshineRideshare(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8468586926E0CEDD00F7063A /* SunshineRideshare(Production).xcconfig */; };
 		8468586C26E0CEFD00F7063A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8468586B26E0CEFD00F7063A /* Images.xcassets */; };
-		846858B826E0D0DF00F7063A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 846858B726E0D0DF00F7063A /* GoogleService-Info.plist */; };
 		84685D9226E0ED2E00F7063A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84685D9326E0ED2E00F7063A /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		84685D9426E0ED2E00F7063A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -5910,6 +5909,7 @@
 		84BDEA0D27C3E6F1005A160E /* GO(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84BDEA0C27C3E6F1005A160E /* GO(Production).xcconfig */; };
 		84BDEA0F27C3E70D005A160E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84BDEA0E27C3E70C005A160E /* Images.xcassets */; };
 		84BDEAFE27C3E7B9005A160E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84BDEAFD27C3E7B8005A160E /* GoogleService-Info.plist */; };
+		84BE067127CF868800DD3E60 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84BE067027CF868700DD3E60 /* GoogleService-Info.plist */; };
 		84BEA29226DCECE300390501 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84BEA29326DCECE300390501 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		84BEA29426DCECE300390501 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -8282,7 +8282,6 @@
 		8468581D26E0CEC200F7063A /* SunshineRideshare(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "SunshineRideshare(Development).xcconfig"; sourceTree = "<group>"; };
 		8468586926E0CEDD00F7063A /* SunshineRideshare(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "SunshineRideshare(Production).xcconfig"; sourceTree = "<group>"; };
 		8468586B26E0CEFD00F7063A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		846858B726E0D0DF00F7063A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84685A2B26E0D23400F7063A /* SunshineRideshare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SunshineRideshare.entitlements; sourceTree = "<group>"; };
 		84685DD326E0ED2E00F7063A /* Autotek.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Autotek.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84685F4D26E0EF0100F7063A /* Autotek(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Autotek(Development).xcconfig"; sourceTree = "<group>"; };
@@ -8995,6 +8994,7 @@
 		84BDEA0E27C3E70C005A160E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84BDEAFD27C3E7B8005A160E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84BDECD927C3E8D2005A160E /* GO.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GO.entitlements; sourceTree = "<group>"; };
+		84BE067027CF868700DD3E60 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84BEA2CD26DCECE300390501 /* FlyingHorse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlyingHorse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84BEA46E26DCEE2100390501 /* FlyingHorse(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "FlyingHorse(Development).xcconfig"; sourceTree = "<group>"; };
 		84BEA4B526DCEE5000390501 /* FlyingHorse(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "FlyingHorse(Production).xcconfig"; sourceTree = "<group>"; };
@@ -14200,7 +14200,7 @@
 		8468581C26E0CE9B00F7063A /* SunshineRideshare */ = {
 			isa = PBXGroup;
 			children = (
-				846858B726E0D0DF00F7063A /* GoogleService-Info.plist */,
+				84BE067027CF868700DD3E60 /* GoogleService-Info.plist */,
 				8468581D26E0CEC200F7063A /* SunshineRideshare(Development).xcconfig */,
 				8468586926E0CEDD00F7063A /* SunshineRideshare(Production).xcconfig */,
 				8468586B26E0CEFD00F7063A /* Images.xcassets */,
@@ -25724,13 +25724,13 @@
 				8468586C26E0CEFD00F7063A /* Images.xcassets in Resources */,
 				8496BC4E26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				846856E226E0CDD800F7063A /* Plists in Resources */,
-				846858B826E0D0DF00F7063A /* GoogleService-Info.plist in Resources */,
 				846856E326E0CDD800F7063A /* Futura-Normal.ttf in Resources */,
 				846856E426E0CDD800F7063A /* Futura-Book.ttf in Resources */,
 				846856E526E0CDD800F7063A /* CircularStd-Medium.otf in Resources */,
 				8496BCA426F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846856E626E0CDD800F7063A /* FuturaBT-Heavy.ttf in Resources */,
 				846856E726E0CDD800F7063A /* CircularStd-Bold.ttf in Resources */,
+				84BE067127CF868800DD3E60 /* GoogleService-Info.plist in Resources */,
 				8468581E26E0CEC200F7063A /* SunshineRideshare(Development).xcconfig in Resources */,
 				8496BCFA26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				846856EA26E0CDD800F7063A /* SFProText-Bold.ttf in Resources */,
@@ -51131,7 +51131,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n\nexport RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\nif nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\nif ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\necho \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\nexit 2\nfi\nelse\nopen \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\nfi\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		8400C39227254680003BF24A /* Bundle React Native code and images */ = {
@@ -85865,7 +85865,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = 524M9N47DV;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
