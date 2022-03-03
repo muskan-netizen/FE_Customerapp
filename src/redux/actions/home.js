@@ -209,7 +209,7 @@ export const getAllTempOrders = (data = {}, headers = {}) => {
 
 export function vendorAll(query, data, headers = {}){
   console.log("sending headers",data)
-  return apiGet(VENDOR_ALL, data, headers)
+  return apiGet(VENDOR_ALL + query, data, headers)
 }
 
 

@@ -174,8 +174,8 @@ export default function ViewAllData({ route, navigation }) {
     return (
       <Animatable.View
         style={{ marginHorizontal: moderateScale(15) }}
-        animation={'fadeInUp'}
-        delay={index * 60}
+        // animation={'fadeInUp'}
+        // delay={index * 60}
       >
         <MarketCard3 onPress={() => _checkRedirectScreen(item)} data={item} />
       </Animatable.View>
