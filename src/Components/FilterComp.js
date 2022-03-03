@@ -157,9 +157,7 @@ const FilterComp = ({
 
 
 
-    const _selectFilterData = (item) => {
-        console.log(filterTypes,"item+++",item)
-    
+    const _selectFilterData = (item) => {   
         let allFilterData = cloneDeep(filterTypes);
         let modifyFilter = [
             ...allFilterData.map((i, inx) => {
