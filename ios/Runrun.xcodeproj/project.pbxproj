@@ -3764,7 +3764,7 @@
 		847F6E2427203FDA00C7A32F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847F6E2327203FDA00C7A32F /* Images.xcassets */; };
 		847F6F1A2720428800C7A32F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847F6F192720428700C7A32F /* GoogleService-Info.plist */; };
 		8480076A26CE20340014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		8480076B26CE20340014F500 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		8480076B26CE20340014F500 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8480076C26CE20340014F500 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8480076D26CE20340014F500 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848007AD26CE260D0014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -4533,7 +4533,7 @@
 		848CB12D278D662700DD824C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848CB12C278D662700DD824C /* Images.xcassets */; };
 		848CB1FB278D66F400DD824C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848CB1FA278D66F300DD824C /* GoogleService-Info.plist */; };
 		848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		848CEF8126CE229D0077C918 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		848CEF8126CE229D0077C918 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		848CEF8226CE229D0077C918 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848CEF8326CE229D0077C918 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848D76B92748F70100FE87AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -6891,6 +6891,10 @@
 		84E176DE26C6535A00E71F11 /* Drus(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84E176DD26C6535A00E71F11 /* Drus(Development).xcconfig */; };
 		84E1770D26C6537A00E71F11 /* Drus(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84E1770C26C6537A00E71F11 /* Drus(Production).xcconfig */; };
 		84E1773C26C653A500E71F11 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E1773B26C653A500E71F11 /* Images.xcassets */; };
+		84E177BA27D0DA9400127D2F /* ScoopaTechnologies(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84E177B927D0DA9400127D2F /* ScoopaTechnologies(Development).xcconfig */; };
+		84E177BC27D0DAC800127D2F /* ScoopaTechnologies(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84E177BB27D0DAC700127D2F /* ScoopaTechnologies(Production).xcconfig */; };
+		84E178AA27D0DAF700127D2F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E178A927D0DAF700127D2F /* Images.xcassets */; };
+		84E1799827D0DBA400127D2F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84E1799727D0DBA200127D2F /* GoogleService-Info.plist */; };
 		84E1E1E42728354C0063649A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84E1E1E32728354B0063649A /* GoogleService-Info.plist */; };
 		84ECE25F26A7FA8F009A0F8C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84ECE26026A7FA8F009A0F8C /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -9243,6 +9247,11 @@
 		84E176DD26C6535A00E71F11 /* Drus(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Drus(Development).xcconfig"; sourceTree = "<group>"; };
 		84E1770C26C6537A00E71F11 /* Drus(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Drus(Production).xcconfig"; sourceTree = "<group>"; };
 		84E1773B26C653A500E71F11 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		84E177B927D0DA9400127D2F /* ScoopaTechnologies(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ScoopaTechnologies(Development).xcconfig"; sourceTree = "<group>"; };
+		84E177BB27D0DAC700127D2F /* ScoopaTechnologies(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ScoopaTechnologies(Production).xcconfig"; sourceTree = "<group>"; };
+		84E178A927D0DAF700127D2F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		84E1799727D0DBA200127D2F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		84E17F2127D0E1EE00127D2F /* ScoopaTechnologies.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScoopaTechnologies.entitlements; sourceTree = "<group>"; };
 		84E1E1E32728354B0063649A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84EA41CC26393E950078E919 /* libRNGoogleSignin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNGoogleSignin.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EA41CE26393EA70078E919 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -10293,6 +10302,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				1823107874C7CFA9BE4EF7BD /* libPods-available_pods-Lopht.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844ACFC327D0D6FA00C99019 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F91852998067BA17D6D83B19 /* libPods-available_pods-ScoopaTechnologies.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12677,6 +12694,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				84E17F2127D0E1EE00127D2F /* ScoopaTechnologies.entitlements */,
 				84D8688327C8FEF7001725D6 /* Ubi.entitlements */,
 				84D8688227C8FD98001725D6 /* UbiRelease.entitlements */,
 				843391E627C3A3FB00ADB24E /* LocalDropoff.entitlements */,
@@ -13771,6 +13789,7 @@
 		844804B42653CF490050AA67 /* Configs */ = {
 			isa = PBXGroup;
 			children = (
+				844AD2AC27D0D81900C99019 /* ScoopaTechnologies */,
 				84967F6C27C8ED3B002B73CD /* Ubi */,
 				84FA340A27BFBBD300AC4712 /* LocalDropoff */,
 				84FF5FD227CE2471006774C1 /* Getfix */,
@@ -80719,7 +80738,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */,
-				848CEF8126CE229D0077C918 /* BuildFile in Sources */,
+				848CEF8126CE229D0077C918 /* (null) in Sources */,
 				848CEF8226CE229D0077C918 /* Royo.swift in Sources */,
 				848CEF8326CE229D0077C918 /* main.m in Sources */,
 			);
@@ -80823,7 +80842,7 @@
 				84FFFF2026D672E600F2B059 /* Royo.swift in Sources */,
 				84FFFF2126D672E600F2B059 /* main.m in Sources */,
 				8480076A26CE20340014F500 /* AppDelegate.m in Sources */,
-				8480076B26CE20340014F500 /* BuildFile in Sources */,
+				8480076B26CE20340014F500 /* (null) in Sources */,
 				8480076C26CE20340014F500 /* Royo.swift in Sources */,
 				8480076D26CE20340014F500 /* main.m in Sources */,
 			);
@@ -85378,6 +85397,70 @@
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
 				PROVISIONING_PROFILE_SPECIFIER = Lopht;
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		844ACFE427D0D6FA00C99019 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 84E177B927D0DA9400127D2F /* ScoopaTechnologies(Development).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ScoopaTechnologies.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = "$(PROJECT_APP_VERSION)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "${PROJECT_BUNDLE_ID}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROJECT_PLIST = "$(PROJECT_PLIST)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Runrun-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		844ACFE527D0D6FA00C99019 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 84E177BB27D0DAC700127D2F /* ScoopaTechnologies(Production).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ScoopaTechnologies.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = "$(PROJECT_APP_VERSION)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "${PROJECT_BUNDLE_ID}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROJECT_PLIST = "$(PROJECT_PLIST)";
+				PROVISIONING_PROFILE_SPECIFIER = "Scoopa Technologies";
+				SWIFT_OBJC_BRIDGING_HEADER = "Runrun-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

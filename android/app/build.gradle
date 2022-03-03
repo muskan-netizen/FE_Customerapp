@@ -2805,13 +2805,23 @@ android {
          resValue "string", "host_name", ""
          }
          getfix{
+            dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+          applicationId 'com.app.getfix'
+         resValue "string", "app_name", "Getfix"
+         resValue "string", "host_name", ""
+         }
+         scoopaTechnologies{
          dimension "appType"
          versionCode 1
          versionName "1.0"
          minSdkVersion rootProject.ext.minSdkVersion
          targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.app.getfix'
-         resValue "string", "app_name", "Getfix"
+         applicationId 'com.scoopaTechnologies'
+         resValue "string", "app_name", "Scoopa Technologies"
          resValue "string", "host_name", ""
          }
 

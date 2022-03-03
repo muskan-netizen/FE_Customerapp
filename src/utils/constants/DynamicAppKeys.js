@@ -257,6 +257,7 @@ const shortCodes = {
   delivadrinks: 'e22dd6',
   myRide: 'f6fb25',
   getfix: '3065fd',
+  scoopaTechnologies: '3c6a7e',
 };
 
 const appIds = {
@@ -1283,6 +1284,10 @@ const appIds = {
   getfix: Platform.select({
     ios: 'com.app.getfix',
     android: 'com.app.getfix',
+  }),
+  scoopaTechnologies: Platform.select({
+    ios: 'com.scoopaTechnologies',
+    android: 'com.scoopaTechnologies',
   }),
 };
 
