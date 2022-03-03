@@ -65,6 +65,8 @@ const FilterComp = ({
     filterData = []
 }) => {
 
+    console.log("filterData+++++",filterData)
+
     const [state, setState] = useState({
         minPrice: 0,
         maxPrice: 50000,
@@ -156,12 +158,14 @@ const FilterComp = ({
 
 
     const _selectFilterData = (item) => {
+        console.log(filterTypes,"item+++",item)
+    
         let allFilterData = cloneDeep(filterTypes);
         let modifyFilter = [
             ...allFilterData.map((i, inx) => {
                 if (i.label == item?.parent) {
                     let checkArray = i.value.map((j, jnx) => {
-                        if (j.label == item.label) {
+                        if (j.id == item.id) {
                             if (i.id == -2) {
                                 return {
                                     ...j,

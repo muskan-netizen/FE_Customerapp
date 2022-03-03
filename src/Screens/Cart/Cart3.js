@@ -1497,8 +1497,8 @@ function Cart({ navigation, route }) {
 
         <Text style={{
           fontSize: textScale(12),
-          color:  (!!sel_types ? sel_types : item?.sel_types) == val?.code  ? themeColors.primary_color : colors.black,
-          fontFamily:  (!!sel_types ? sel_types : item?.sel_types) == val?.code ? fontFamily.bold : fontFamily.regular,
+          color: (!!sel_types ? sel_types : item?.sel_types) == val?.code ? themeColors.primary_color : colors.black,
+          fontFamily: (!!sel_types ? sel_types : item?.sel_types) == val?.code ? fontFamily.bold : fontFamily.regular,
           textAlign: 'left'
         }}>{val?.rate}</Text>
       </TouchableOpacity>
@@ -2055,8 +2055,8 @@ function Cart({ navigation, route }) {
                 dropdownStyle={{
                   minWidth: '40%',
                   // minHeight: 50,
-                  paddingHorizontal:moderateScale(6),
-                  paddingVertical:moderateScaleVertical(12)
+                  paddingHorizontal: moderateScale(6),
+                  paddingVertical: moderateScaleVertical(12)
                 }}
 
               >
@@ -3417,6 +3417,33 @@ function Cart({ navigation, route }) {
   //end footer
 
   //Header section of cart screen
+
+  const homeType = (data) => {
+    let value = strings.HOME
+    if (!!vendorAddress) {
+      return value = strings.HOME_1
+    }
+    // vendorAddress
+    // ? strings.HOME_1
+    // : selectedAddressData.type
+    //   ? strings.HOME
+    //   : strings.ADD_ADDRESS
+    switch (data?.type) {
+      case 1:
+        value = strings.HOME
+        break;
+      case 2:
+        value = strings.WORK
+        break;
+      case 3:
+        value = data?.type_name
+        break;
+      default:
+        value = strings.ADD_ADDRESS
+        break;
+    }
+    return value
+  }
   const getHeader = () => {
     return (
       <TouchableOpacity
@@ -3442,11 +3469,7 @@ function Cart({ navigation, route }) {
                 ...styles.homeTxt,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
-              {vendorAddress
-                ? strings.HOME_1
-                : selectedAddressData
-                  ? strings.HOME
-                  : strings.ADD_ADDRESS}
+              {homeType(selectedAddressData)}
             </Text>
             <Text
               numberOfLines={2}
