@@ -125,5 +125,6 @@ export default {
   SCROLLABLE_CATEGORY: 'ScrollableCategory',
   TABROUTESVENDORNEW: 'TabRoutesVendorNewTemplate',
   AuthorizeNet: 'AuthorizeNet',
-  KONGOPAY:"KongoPay"
+  FPX: 'fpx',
+  KONGOPAY: 'KongoPay',
 };

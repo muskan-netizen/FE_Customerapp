@@ -167,7 +167,7 @@ export default function OtpVerification({navigation, route}) {
           style={{alignSelf: 'flex-start'}}>
           <Image
             source={
-              appStyle?.homePageLayout === 3
+              appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
                 ? imagePath.icBackb
                 : imagePath.back
             }

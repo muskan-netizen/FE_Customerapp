@@ -1,4 +1,4 @@
-import {I18nManager, Platform, StyleSheet} from 'react-native';
+import { I18nManager, Platform, StyleSheet } from 'react-native';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
@@ -8,10 +8,10 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
+import { getColorCodeWithOpactiyNumber } from '../../utils/helperFunctions';
 
-export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
-  const commonStyles = commonStylesFun({fontFamily});
+export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
+  const commonStyles = commonStylesFun({ fontFamily });
   const styles = StyleSheet.create({
     scrollviewHorizontal: {
       borderTopWidth: 1,
@@ -157,10 +157,8 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     // cart item design start from here
     cartItemMainContainer: {
       flexDirection: 'row',
-      paddingTop: moderateScaleVertical(10),
-      paddingHorizontal: moderateScale(10),
-      paddingBottom: moderateScale(2),
-      // backgroundColor: colors.white,
+      padding: moderateScaleVertical(8),
+      borderRadius: moderateScale(10),
     },
     cartItemImage: {
       height: width / 4.5,
@@ -473,6 +471,24 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       lineHeight: 20,
       fontFamily: fontFamily.medium,
     },
+    deliveryFeeDropDown: {
+      borderWidth: 1,
+      height: moderateScale(38),
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: moderateScale(8),
+      marginBottom: moderateScaleVertical(8),
+      borderRadius: moderateScale(8),
+      minWidth: moderateScale(120),
+      alignSelf: 'flex-start'
+    },
+    dropDownTextStyle: {
+      fontSize: textScale(10),
+      color: themeColors.primary_color,
+      fontFamily: fontFamily.bold,
+      textAlign: 'left'
+    }
   });
   return styles;
 };

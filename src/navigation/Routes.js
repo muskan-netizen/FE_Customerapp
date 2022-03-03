@@ -14,7 +14,7 @@ import TabRoutes from './TabRoutes';
 import TaxiAppStack from './TaxiAppStack';
 import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesVendor from './TabRoutesVendor';
-import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor'
+import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';
 const Stack = createStackNavigator();
 
 export function shortCode(Stack) {
@@ -108,7 +108,7 @@ export default function Routes() {
             component={TabRoutesVendor}
             options={{headerShown: false, gestureEnabled: false}}
           />
-           <Stack.Screen
+          <Stack.Screen
             name={navigationStrings.TABROUTESVENDORNEW}
             component={TabRoutesVendorNewTemplate}
             options={{headerShown: false, gestureEnabled: false}}

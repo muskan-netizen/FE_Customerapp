@@ -17,6 +17,7 @@ import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
+  getImageUrl,
   getNearestLocation,
   showError,
 } from '../../utils/helperFunctions';
@@ -31,6 +32,7 @@ import {
   DashBoardSix,
 } from './DashboardViews/Index';
 import Voice from '@react-native-voice/voice';
+import FastImage from 'react-native-fast-image';
 
 // navigator.geolocation = require('react-native-geolocation-service');
 
@@ -80,6 +82,7 @@ export default function Home({route, navigation}) {
     nearMe: 1,
     tempCartData: null,
     isVoiceRecord: false,
+    singleVendor: false,
   });
 
   const {
@@ -98,6 +101,7 @@ export default function Home({route, navigation}) {
     bestSeller,
     nearMe,
     isVoiceRecord,
+    singleVendor,
   } = state;
 
   const {profile} = appData;
@@ -121,7 +125,7 @@ export default function Home({route, navigation}) {
     //   _getLocationFromParams();
     // }
   }, [paramData?.details]);
-  
+
   useFocusEffect(
     useCallback(() => {
       Voice.onSpeechStart = onSpeechStartHandler;
@@ -307,6 +311,8 @@ export default function Home({route, navigation}) {
       .catch(errorMethod);
   };
 
+  console.log('selectedTabTypeselectedTabType', selectedTabType);
+
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
     console.log(slectedLocatonFromPreviousScreen,"slectedLocatonFromPreviousScreen>slectedLocatonFromPreviousScreen")
@@ -331,9 +337,16 @@ export default function Home({route, navigation}) {
       close_vendor: closeVendor,
       open_vendor: openVendor,
       best_vendor: bestSeller,
-      near_me: nearMe,
+      // near_me: nearMe,
     };
     console.log(vendorFilterData, 'vendorFilterData');
+
+    if (closeVendor == 0 && openVendor == 0 && bestSeller == 0) {
+      updateState({singleVendor: true});
+    } else {
+      updateState({singleVendor: false});
+    }
+
     {
       selectedTabType
         ? actions
@@ -352,6 +365,7 @@ export default function Home({route, navigation}) {
             )
             .then((res) => {
               console.log('Home data++++++', res);
+              preLoadImages(res.data);
               updateState({searchDataLoader: false});
               if (
                 appData?.profile?.preferences?.is_hyperlocal &&
@@ -426,6 +440,33 @@ export default function Home({route, navigation}) {
 
   const {viewRef2, viewRef3, bannerRef} = useRef();
 
+  const preLoadImages = (data) => {
+    if (data.categories.length > 0) {
+      let preLoadCategories = data.categories.map((item, inx) => {
+        return {
+          uri: getImageUrl(
+            item?.icon?.image_fit,
+            item?.icon?.image_path,
+            '160/160',
+          ),
+        };
+      });
+      FastImage.preload(preLoadCategories); //preload categories
+    }
+    if (data.vendors.length > 0) {
+      let preLoadVendors = data.vendors.map((item, inx) => {
+        return {
+          uri: getImageUrl(
+            item.banner.proxy_url || item.image.proxy_url,
+            item.banner.image_path || item.image.image_path,
+            '700/300',
+          ),
+        };
+      });
+      FastImage.preload(preLoadVendors); //preload vendors
+    }
+  };
+
   const openUber = () => {
     let appName = 'Uber - Easy affordable trips';
     let appStoreLocale = '';
@@ -448,6 +489,7 @@ export default function Home({route, navigation}) {
   //onPress Category
   const onPressCategory = (item) => {
     console.log(item, 'itemitem');
+
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -460,9 +502,13 @@ export default function Home({route, navigation}) {
         fetchOffers: true,
         id: item.id,
         vendor:
-          item.redirect_to == staticStrings.ONDEMANDSERVICE ? false : true,
+          item.redirect_to == staticStrings.ONDEMANDSERVICE
+            ? false
+            : item.redirect_to == staticStrings.PRODUCT
+            ? false
+            : true,
         name: item.name,
-        isVendorList: true,
+        isVendorList: false,
       })();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
@@ -528,7 +574,8 @@ export default function Home({route, navigation}) {
   //On Press banner
   const bannerPress = (data) => {
     console.log('data', data);
-    console.log('category press', item);
+    // return;
+
     let item = {};
     if (data?.redirect_id) {
       if (data?.redirect_to == staticStrings.VENDOR && data?.is_show_category) {
@@ -572,12 +619,23 @@ export default function Home({route, navigation}) {
           dat2['id'] = data?.redirect_id;
           moveToNewScreen(navigationStrings.VENDOR, dat2)();
         } else {
-          moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: data.redirect_id,
-            // vendor: true,
-            name: data.redirect_name,
-            fetchOffers: true,
-          })();
+          if (data?.category?.type?.title == staticStrings.PRODUCT) {
+            moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+              id: data.redirect_id,
+              // vendor: true,
+              name: data.redirect_name,
+              fetchOffers: true,
+            })();
+            // let dat2 = data;
+            // dat2['id'] = data?.redirect_id;
+            // moveToNewScreen(navigationStrings.VENDOR, dat2)();
+          } else
+            moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+              id: data.redirect_id,
+              // vendor: true,
+              name: data.redirect_name,
+              fetchOffers: true,
+            })();
         }
       }
     }
@@ -854,6 +912,7 @@ export default function Home({route, navigation}) {
               toggleData={appData}
               navigation={navigation}
               onVendorFilterSeletion={onVendorFilterSeletion}
+              singleVendor={singleVendor}
             />
           </>
         );
@@ -890,7 +949,20 @@ export default function Home({route, navigation}) {
       case 5:
         return (
           <>
-            {/* <DashBoardSeven
+            <DashBoardHeaderFive
+              navigation={navigation}
+              location={location}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              isLoading={isLoading}
+              currentLocation={currentLocation}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+            />
+
+            <DashBoardFive
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}
               isLoading={isLoading}
@@ -901,9 +973,12 @@ export default function Home({route, navigation}) {
               }}
               isDineInSelected={isDineInSelected}
               selcetedToggle={selcetedToggle}
+              tempCartData={tempCartData}
               toggleData={appData}
               navigation={navigation}
-            /> */}
+              onVendorFilterSeletion={onVendorFilterSeletion}
+              singleVendor={singleVendor}
+            />
           </>
         );
     }

@@ -112,11 +112,10 @@ export async function apiReq(
         headers,
       };
     }
-    console.log('check data in api generator>>>', headers);
+  
     //
     axios[method](endPoint, data, {headers})
       .then((result) => {
-        console.log(result,"result>result");
         const {data} = result;
 
         if (data.status === false) {
@@ -196,7 +195,7 @@ export const verticalAnimation = {
 
 export const checkIsAdmin = (navigation_, navigation, userData) => {
   // navigation.push(navigationStrings.TABROUTESVENDOR);
-  if (userData.is_admin && enums.isVendorStandloneApp) {
+  if (userData?.is_admin && enums?.isVendorStandloneApp) {
     // resetStackAndNavigate(navigation_, navigationStrings.TABROUTESVENDORNEW);
     navigation.push(navigationStrings.TAB_ROUTES);
   } else {

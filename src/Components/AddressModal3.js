@@ -114,7 +114,6 @@ const AddressModal3 = ({
 
   const styles = stylesData({fontFamily, themeColors});
 
-  console.log('constCurrLoc', constCurrLoc);
 
   //To update the states
   useEffect(() => {

@@ -26,6 +26,7 @@ import types from './src/redux/types';
 import PrinterScreen from './src/Screens/PrinterConnection/PrinterScreen';
 import colors from './src/styles/colors';
 import fontFamily from './src/styles/fontFamily';
+
 import {
   moderateScale,
   moderateScaleVertical,
@@ -40,6 +41,7 @@ import {
 } from './src/utils/notificationService';
 import {getItem, getUserData, setItem} from './src/utils/utils';
 import {MenuProvider} from 'react-native-popup-menu';
+import FastImage from 'react-native-fast-image';
 
 // import withCodePush from './withcodepush';
 
@@ -61,6 +63,11 @@ const App = () => {
     });
     AsyncStorage.removeItem('BleDevice2');
   };
+
+  // useEffect(() => {
+  //   FastImage.clearMemoryCache()
+  //   FastImage.clearDiskCache()
+  // }, [])
 
   const [internetConnection, setInternet] = useState(true);
   // const appMainData = useSelector((state) => state?.home?.appMainData);
@@ -132,9 +139,7 @@ const App = () => {
   };
 
   const checkExistChannel = () => {
-    PushNotification.getChannels(function (channel_ids) {
-     
-    });
+    PushNotification.getChannels(function (channel_ids) {});
   };
   useEffect(() => {
     (async () => {
@@ -148,7 +153,7 @@ const App = () => {
         });
       }
       const getAppData = await getItem('appData');
-     
+
       if (!!getAppData) {
         setPrimaryColor(getAppData.themeColors.primary_color);
       }
@@ -275,7 +280,6 @@ const App = () => {
   //Check internet connection
   useEffect(() => {
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
-      console.log('checkingInternetConnections',state)
       const netStatus = state.isConnected;
       setInternet(netStatus);
       updateInternetConnection(netStatus);
@@ -340,7 +344,7 @@ const App = () => {
 
   const progressView = () => {
     return (
-      <SafeAreaView>
+      <View>
         <Modal isVisible={true}>
           <View
             style={{
@@ -405,7 +409,7 @@ const App = () => {
             />
           </View>
         </Modal>
-      </SafeAreaView>
+      </View>
     );
   };
   return (
@@ -413,7 +417,7 @@ const App = () => {
       <MenuProvider>
         <Provider ref={blurRef} store={store}>
           <ForegroundHandler />
-          {!!progress ? progressView() : null}
+          {progress ? progressView() : null}
           <Routes />
           <NotificationModal />
         </Provider>

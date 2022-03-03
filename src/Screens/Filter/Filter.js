@@ -437,7 +437,7 @@ export default function Filter({route, navigation}) {
                 source={
                   appStyle?.homePageLayout === 2
                     ? imagePath.backArrow
-                    : appStyle?.homePageLayout === 3
+                    : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
                     ? imagePath.icBackb
                     : imagePath.back
                 }
@@ -492,7 +492,7 @@ export default function Filter({route, navigation}) {
           <Image
             style={isDarkMode ? {tintColor: MyDarkTheme.colors.text} : null}
             source={
-              appStyle?.homePageLayout === 3
+              appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
                 ? imagePath.icSearchb
                 : imagePath.search
             }

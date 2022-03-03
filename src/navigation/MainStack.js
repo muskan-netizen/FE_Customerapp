@@ -79,7 +79,7 @@ export default function (Stack) {
         component={
           appStyle?.homePageLayout === 2
             ? MyProfile2
-            : appStyle?.homePageLayout === 3
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? MyProfile3
             : MyProfile
         }

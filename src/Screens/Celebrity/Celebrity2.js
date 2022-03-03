@@ -214,12 +214,12 @@ export default function Celebrity2({navigation}) {
           leftIcon={
             appStyle?.homePageLayout === 2
               ? imagePath.backArrow
-              : appStyle?.homePageLayout === 3
+              : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
               ? imagePath.icBackb
               : imagePath.back
           }
           rightIcon={
-            appStyle?.homePageLayout === 3
+            appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
               ? imagePath.icSearchb
               : imagePath.search
           }
@@ -269,12 +269,12 @@ export default function Celebrity2({navigation}) {
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icBackb
             : imagePath.back
         }
         rightIcon={
-          appStyle?.homePageLayout === 3
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icSearchb
             : imagePath.search
         }

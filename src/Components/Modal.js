@@ -32,7 +32,10 @@ const ModalView = ({
       onBackdropPress={onClose}
       backdropTransitionInTiming={transistionIn}
       backdropTransitionInTiming={transistionOut}
-      style={[styles.modalStyle, modalStyle]}>
+      style={{
+        ...styles.modalStyle,
+        ...modalStyle,
+      }}>
       <View
         style={{
           // flex: 1,

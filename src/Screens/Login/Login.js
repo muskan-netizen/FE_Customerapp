@@ -264,26 +264,10 @@ export default function Login({navigation}) {
   };
   //Error handling in api
   const errorMethod = (error) => {
-    console.log(error, 'error>error');
     updateState({isLoading: false});
-    if (error?.data && !error?.data?.user_exists) {
-     
-      Alert.alert('', error?.message, [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          // style: 'destructive',
-        },
-        {
-          text: 'Signup',
-          onPress: () => navigation.navigate(navigationStrings.SIGN_UP),
-        },
-      ]);
-    } else {
-      setTimeout(() => {
-        showError(error?.message || error?.error);
-      }, 500);
-    }
+    setTimeout(() => {
+      showError(error?.message || error?.error);
+    }, 500);
   };
 
   //Saving login user to backend
@@ -327,9 +311,9 @@ export default function Login({navigation}) {
           !!res.data?.client_preference?.verify_phone
             ? !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
-              ? checkIsAdmin()
+              ? checkIsAdmin(navigation_, navigation, res.data)
               : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : checkIsAdmin();
+            : checkIsAdmin(navigation_, navigation, res.data);
         }
         updateState({isLoading: false});
         getCartDetail();
@@ -355,18 +339,18 @@ export default function Login({navigation}) {
     updateState({isLoading: true});
     googleLogin()
       .then((res) => {
-        console.log(res, 'google');
         if (res?.user) {
+          console.log(res, 'googlegooogle');
           _saveSocailLogin(res.user, 'google');
         } else {
           updateState({isLoading: false});
         }
       })
       .catch((err) => {
-        console.log(err, 'error in gmail login');
         updateState({isLoading: false});
       });
   };
+
   const _responseInfoCallback = (error, result) => {
     updateState({isLoading: true});
     if (error) {

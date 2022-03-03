@@ -18,13 +18,20 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {getUrlRoutes, showError} from '../../utils/helperFunctions';
+import {
+  getImageUrl,
+  getUrlRoutes,
+  showError,
+} from '../../utils/helperFunctions';
 import {getItem, setItem} from '../../utils/utils';
 import styles from './styles';
 import RNFetchBlob from 'rn-fetch-blob-v2';
 import {MaterialIndicator} from 'react-native-indicators';
 import * as NavigationService from '../../navigation/NavigationService';
 import {enums} from '../../utils/enums';
+import {MyDarkTheme} from '../../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import FastImage from 'react-native-fast-image';
 
 const fs = RNFetchBlob.fs;
 
@@ -56,6 +63,13 @@ export default function ShortCode({route, navigation}) {
     (state) => state?.initBoot,
   );
   const userData = useSelector((state) => state.auth.userData);
+  const {themeColors} = useSelector((state) => state?.initBoot);
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+
+  const customColor = themeColors.primary_color;
 
   useEffect(() => {
     (async () => {
@@ -1124,7 +1138,7 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          break;
+
         case appIds.foodnests:
           updateState({
             shortCode: shortCodes.foodnests,
@@ -1556,7 +1570,6 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '245bae',
         code: shortCode,
         language: res?.primary_language?.id,
       };
@@ -1571,6 +1584,28 @@ export default function ShortCode({route, navigation}) {
       .initApp({}, header, false, null, null, true)
       .then((res) => {
         console.log(res, '<====headerResponse');
+        if (res.data.mobile_banners.length > 0) {
+          let preLoadBanners = res.data.mobile_banners.map((item, inx) => {
+            return {
+              uri: getImageUrl(
+                item.image.image_fit,
+                item.image.image_path,
+                '800/600',
+              ),
+            };
+          });
+          FastImage.preload(preLoadBanners); //preload banners
+        }
+        if (res.data.dynamic_tutorial.length > 0) {
+          let preLoadTutorial = res.data.dynamic_tutorial.map((el, inx) => {
+            return {
+              uri: `${el.file_name.image_fit}800/1600${el.file_name.image_path}`,
+            };
+          });
+          console.log('preload tutorial', preLoadTutorial[0]);
+          FastImage.preload(preLoadTutorial); //preload tutorial images
+        }
+
         updateState({changeInShortCode: false});
         if (getBundleId() == appIds.royoorder) {
           actions.saveShortCode(shortCode);
@@ -1656,7 +1691,11 @@ export default function ShortCode({route, navigation}) {
             console.log('checking deep link >>> 3232sdsd', err);
           });
       } else {
-        navigation.navigate(navigationStrings.LOGIN);
+        // navigation.navigate(navigationStrings.LOGIN);
+        NavigationService.resetStackAndNavigate(
+          navigation,
+          navigationStrings.LOGIN,
+        );
       }
     } else {
       getItem('firstTime').then((el) => {
@@ -1745,11 +1784,13 @@ export default function ShortCode({route, navigation}) {
   // }
 
   return (
-    <WrapperContainer
-      statusBarColor={colors.white}
-      bgColor={colors.white}
-      isLoadingB={isLoading}
-      source={loaderOne}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.background
+          : colors.white,
+      }}>
       {isShortcodePrefilled ? (
         <View style={{flex: 1}}>
           <View
@@ -1772,112 +1813,100 @@ export default function ShortCode({route, navigation}) {
           <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
         </View>
       ) : (
-        <View
-          style={{
-            paddingHorizontal: moderateScale(24),
-            flex: 1,
-            marginTop: width / 3,
-          }}>
-          <Image style={{alignSelf: 'center'}} source={imagePath.logo} />
-          <View style={{height: moderateScaleVertical(50)}} />
-          <Text style={styles.enterShortCode}>{strings.ENTER_SHORT_CODE}</Text>
-          <View style={{height: 10}} />
-          <Text style={styles.enterShortCode2}>
-            {strings.ENTERSHORTCODEBELOW}
-          </Text>
+        <WrapperContainer
+          statusBarColor={colors.white}
+          bgColor={colors.white}
+          isLoadingB={isLoading}
+          source={loaderOne}>
+          <View
+            style={{
+              paddingHorizontal: moderateScale(24),
+              flex: 1,
+              marginTop: width / 3,
+            }}>
+            <Image style={{alignSelf: 'center'}} source={imagePath.logo} />
+            <View style={{height: moderateScaleVertical(50)}} />
+            <Text style={styles.enterShortCode}>
+              {strings.ENTER_SHORT_CODE}
+            </Text>
+            <View style={{height: 10}} />
+            <Text style={styles.enterShortCode2}>
+              {strings.ENTERSHORTCODEBELOW}
+            </Text>
 
-          <View style={{height: 10}} />
-
-          {/* <CodeInput
-            // ref="codeInputRef2"
-            secureTextEntry
-            activeColor={colors.blueBackGroudB}
-            inactiveColor={colors.blueBackGroudB}
-            autoFocus={false}
-            inputPosition="center"
-            size={moderateScale(40)}
-            keyboardType={'default'}
-            codeLength={6}
-            borderType={'underline'}
-            onFulfill={(code) => onOtpInput(code)}
-            containerStyle={{margin: 10}}
-            codeInputStyle={{
-              borderBottomWidth: 1,
-              color: colors.blueBackGroudB,
-            }}
-          /> */}
-
-          <SmoothPinCodeInput
-            containerStyle={{alignSelf: 'center'}}
-            password
-            mask={
-              <View
-                style={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: 25,
-                  backgroundColor: 'blue',
-                }}></View>
-            }
-            cellSize={width / 10}
-            codeLength={6}
-            cellSpacing={10}
-            editable={true}
-            cellStyle={{
-              borderBottomWidth: 1,
-              borderColor: 'gray',
-            }}
-            cellStyleFocused={{
-              borderColor: 'black',
-            }}
-            textStyle={{
-              fontSize: 24,
-              color: colors.textBlue,
-            }}
-            textStyleFocused={{
-              color: colors.textBlue,
-            }}
-            // autoCapitalize={'none'}
-            inputProps={{
-              autoCapitalize: 'none',
-            }}
-            value={shortCode}
-            autoFocus={false}
-            keyboardType={'default'}
-            onTextChange={(shortCode) => updateState({shortCode})}
-            onFulfill={(code) => onOtpInput(code)}
-          />
-
-          <View style={{height: 20}} />
-
-          <View style={{flex: 1, justifyContent: 'flex-end'}}>
-            <ButtonWithLoader
-              // isLoading={isLoading}
-              color={colors.black}
-              disabled={isBtnDisabled}
-              btnStyle={{
-                ...styles.guestBtn,
-                ...{
-                  backgroundColor: isBtnDisabled
-                    ? colors.blueBackGroudB
-                    : colors.blueBackGroudB,
-                },
+            <View style={{height: 10}} />
+            <SmoothPinCodeInput
+              containerStyle={{alignSelf: 'center'}}
+              password
+              mask={
+                <View
+                  style={{
+                    width: 10,
+                    height: 10,
+                    borderRadius: 25,
+                    backgroundColor: 'blue',
+                  }}></View>
+              }
+              cellSize={width / 10}
+              codeLength={6}
+              cellSpacing={10}
+              editable={true}
+              cellStyle={{
+                borderBottomWidth: 1,
+                borderColor: 'gray',
               }}
-              btnTextStyle={{color: colors.textBlue}}
-              onPress={_onSubmitShortCode}
-              btnText={strings.SUBMIT}
-              btnTextStyle={{
-                color: isBtnDisabled ? colors.white : colors.white,
+              cellStyleFocused={{
+                borderColor: 'black',
               }}
+              textStyle={{
+                fontSize: 24,
+                color: colors.textBlue,
+              }}
+              textStyleFocused={{
+                color: colors.textBlue,
+              }}
+              // autoCapitalize={'none'}
+              inputProps={{
+                autoCapitalize: 'none',
+              }}
+              value={shortCode}
+              autoFocus={false}
+              keyboardType={'default'}
+              onTextChange={(shortCode) => updateState({shortCode})}
+              onFulfill={(code) => onOtpInput(code)}
             />
-          </View>
 
-          <View style={{height: 20}} />
-        </View>
+            <View style={{height: 20}} />
+
+            <View style={{flex: 1, justifyContent: 'flex-end'}}>
+              <ButtonWithLoader
+                // isLoading={isLoading}
+                color={colors.black}
+                disabled={isBtnDisabled}
+                btnStyle={{
+                  ...styles.guestBtn,
+                  ...{
+                    backgroundColor: isBtnDisabled
+                      ? colors.blueBackGroudB
+                      : colors.blueBackGroudB,
+                  },
+                }}
+                btnTextStyle={{color: colors.textBlue}}
+                onPress={_onSubmitShortCode}
+                btnText={strings.SUBMIT}
+                btnTextStyle={{
+                  color: isBtnDisabled ? colors.white : colors.white,
+                }}
+              />
+            </View>
+
+            <View style={{height: 20}} />
+          </View>
+        </WrapperContainer>
         // </KeyboardAwareScrollView>
       )}
 
       {/* </ScrollView> */}
-    </WrapperContainer>
+    </View>
   );
 }

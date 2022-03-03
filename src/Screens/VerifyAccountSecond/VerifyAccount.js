@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {Image, Text, TouchableOpacity, View, I18nManager} from 'react-native';
-import {useSelector} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { Image, Text, TouchableOpacity, View, I18nManager } from 'react-native';
+import { useSelector } from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -18,17 +18,20 @@ import {
   otpTimerCounter,
 } from '../../utils/helperFunctions';
 import stylesFunc from './styles';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import BorderTextInput from '../../Components/BorderTextInput';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import colors from '../../styles/colors';
-import {TextInput} from 'react-native-gesture-handler';
+import { TextInput } from 'react-native-gesture-handler';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
-import CountryPicker, {Flag} from 'react-native-country-picker-modal';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import CountryPicker, { Flag } from 'react-native-country-picker-modal';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import validations from '../../utils/validations';
+import { useNavigation } from '@react-navigation/native';
+import { checkIsAdmin } from '../../utils/utils';
 
-export default function VerifyAccountSecond({navigation, route}) {
+export default function VerifyAccountSecond({ navigation, route }) {
+  const navigation_ = useNavigation();
   let paramsData = route?.params;
   const userData = useSelector((state) => state?.auth?.userData);
   const appData = useSelector((state) => state?.initBoot?.appData);
@@ -55,11 +58,11 @@ export default function VerifyAccountSecond({navigation, route}) {
     countryPickerModalVisible: false,
   });
 
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
 
-  const styles = stylesFunc({userData, fontFamily, themeColors});
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const styles = stylesFunc({ userData, fontFamily, themeColors });
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const {
     timer2,
     timer,
@@ -92,7 +95,7 @@ export default function VerifyAccountSecond({navigation, route}) {
       data['type'] = type;
     }
     console.log(data, '>>>data');
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     actions
       .resendOTP(data, {
         code: appData?.profile?.code,
@@ -101,14 +104,14 @@ export default function VerifyAccountSecond({navigation, route}) {
         console.log(res, 'res>>>');
         showSuccess(res.message);
         if (type == 'phone') {
-          updateState({editablePhone: false});
+          updateState({ editablePhone: false });
         } else {
-          updateState({editableEmail: false});
+          updateState({ editableEmail: false });
         }
 
         // moveToNewScreen(navigationStrings.OTP_VERIFICATION, {})();
 
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       })
       .catch(errorMethod);
   };
@@ -126,7 +129,7 @@ export default function VerifyAccountSecond({navigation, route}) {
       data['type'] = type;
     }
     console.log(data, '>>>data');
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     actions
       .resendOTP(data, {
         code: appData?.profile?.code,
@@ -135,13 +138,13 @@ export default function VerifyAccountSecond({navigation, route}) {
         console.log(res, 'res>>>');
         showSuccess(res.message);
         if (type == 'phone') {
-          updateState({timer2: 30});
+          updateState({ timer2: 30 });
         } else {
-          updateState({timer: 30});
+          updateState({ timer: 30 });
         }
         // moveToNewScreen(navigationStrings.OTP_VERIFICATION, {})();
 
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       })
       .catch(errorMethod);
   };
@@ -149,7 +152,7 @@ export default function VerifyAccountSecond({navigation, route}) {
     let timerId;
     if (timer > 0) {
       timerId = setTimeout(() => {
-        updateState({timer: timer - 1});
+        updateState({ timer: timer - 1 });
       }, 1000);
     }
     return () => {
@@ -161,7 +164,7 @@ export default function VerifyAccountSecond({navigation, route}) {
     let timerId2;
     if (timer2 > 0) {
       timerId2 = setTimeout(() => {
-        updateState({timer2: timer2 - 1});
+        updateState({ timer2: timer2 - 1 });
       }, 1000);
     }
     return () => {
@@ -193,7 +196,7 @@ export default function VerifyAccountSecond({navigation, route}) {
     }
 
     console.log(data, 'data>>>');
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     actions
       .verifyAccount(data, {
         code: appData?.profile?.code,
@@ -246,38 +249,38 @@ export default function VerifyAccountSecond({navigation, route}) {
             }
           }
         }
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       })
       .catch(errorMethod);
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     showError(error?.message || error?.error);
     console.log(error);
   };
 
   //On change textinput
   const _onChangeText = (key) => (val) => {
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   const onclickSaveAndSend = (type, editable) => {
     if (type == 'email') {
       // alert('21');
       if (editable) {
-        updateState({editableEmail: false});
+        updateState({ editableEmail: false });
         sendOTP(type);
       } else {
-        updateState({editableEmail: true});
+        updateState({ editableEmail: true });
       }
     }
     if (type == 'phone') {
       if (editable) {
-        updateState({editablePhone: false});
+        updateState({ editablePhone: false });
         sendOTP(type);
       } else {
-        updateState({editablePhone: true});
+        updateState({ editablePhone: true });
       }
     }
   };
@@ -325,24 +328,24 @@ export default function VerifyAccountSecond({navigation, route}) {
         value={type}
         autoFocus={false}
         keyboardType={'numeric'}
-        onTextChange={(val) => updateState({[value]: val})}
-        // onFulfill={(code) => onVerify(type, code)}
+        onTextChange={(val) => updateState({ [value]: val })}
+      // onFulfill={(code) => onVerify(type, code)}
       />
     );
   };
   const _onCountryChange = (data) => {
-    updateState({countryPickerModalVisible: false});
+    updateState({ countryPickerModalVisible: false });
     onCountryChange(data);
   };
   const _openCountryPicker = () => {
-    updateState({countryPickerModalVisible: true});
+    updateState({ countryPickerModalVisible: true });
   };
   const _onCountryPickerModalClose = () => {
-    updateState({countryPickerModalVisible: false});
+    updateState({ countryPickerModalVisible: false });
   };
 
   const onCountryChange = (data) => {
-    updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
+    updateState({ cca2: data.cca2, callingCode: data.callingCode[0] });
     return;
   };
 
@@ -351,10 +354,10 @@ export default function VerifyAccountSecond({navigation, route}) {
       <View style={styles.headerContainer}>
         <TouchableOpacity
           onPress={() => navigation.goBack(null)}
-          style={{alignSelf: 'flex-start'}}>
+          style={{ alignSelf: 'flex-start' }}>
           <Image
             source={imagePath.back}
-            style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+            style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
           />
         </TouchableOpacity>
         {!!(
@@ -364,7 +367,13 @@ export default function VerifyAccountSecond({navigation, route}) {
         ) ? null : (
           <TouchableOpacity
             // onPress={() => navigation.push(navigationStrings.TAB_ROUTES)}>
-            onPress={() => navigation.push(navigationStrings.TAB_ROUTES)}>
+            onPress={() => {
+              // console.log(route.params.data.data);
+              checkIsAdmin(navigation_, navigation, route?.params?.data?.data);
+              // navigation.push(navigationStrings.TAB_ROUTES)
+            }}
+
+          >
             <Text style={styles.skipText}>{strings.SKIP}</Text>
           </TouchableOpacity>
         )}
@@ -387,7 +396,7 @@ export default function VerifyAccountSecond({navigation, route}) {
         style={{
           flex: 1,
         }}>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           {!!userData?.client_preference?.verify_email ? (
             !userData?.verify_details?.is_email_verified && (
               <>
@@ -434,7 +443,7 @@ export default function VerifyAccountSecond({navigation, route}) {
                     <View
                       style={[
                         styles.editAndSendView,
-                        {flex: editableEmail ? 0.35 : 0.2},
+                        { flex: editableEmail ? 0.35 : 0.2 },
                       ]}>
                       <Text
                         onPress={() =>
@@ -451,7 +460,7 @@ export default function VerifyAccountSecond({navigation, route}) {
                     </View>
                   </View>
                   {otpView(emailOtp, 'emailOtp')}
-                  <View style={{marginVertical: 10}}>
+                  <View style={{ marginVertical: 10 }}>
                     {timer > 0 ? (
                       <View style={styles.bottomContainer}>
                         <Text
@@ -565,7 +574,7 @@ export default function VerifyAccountSecond({navigation, route}) {
                           +{callingCode}
                         </Text>
 
-                        <View style={{marginRight: moderateScale(-10)}}>
+                        <View style={{ marginRight: moderateScale(-10) }}>
                           <Flag countryCode={cca2} />
                         </View>
                         <Image source={imagePath.dropdownTriangle} />
@@ -587,7 +596,7 @@ export default function VerifyAccountSecond({navigation, route}) {
                     <View
                       style={[
                         styles.editAndSendView,
-                        {flex: editablePhone ? 0.35 : 0.2},
+                        { flex: editablePhone ? 0.35 : 0.2 },
                       ]}>
                       <Text
                         onPress={() =>
@@ -604,7 +613,7 @@ export default function VerifyAccountSecond({navigation, route}) {
                     </View>
                   </View>
                   {otpView(phoneOtp, 'phoneOtp')}
-                  <View style={{marginVertical: 10}}>
+                  <View style={{ marginVertical: 10 }}>
                     {timer2 > 0 ? (
                       <Text
                         style={{
@@ -669,7 +678,7 @@ export default function VerifyAccountSecond({navigation, route}) {
             <View></View>
           )}
 
-          <View style={{height: 50}} />
+          <View style={{ height: 50 }} />
         </View>
       </KeyboardAwareScrollView>
     </WrapperContainer>
