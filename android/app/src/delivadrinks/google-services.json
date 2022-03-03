@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "792187418730",
+    "project_id": "delivadrinks-21ec1",
+    "storage_bucket": "delivadrinks-21ec1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792187418730:android:6153c8106f99c4345ff213",
+        "android_client_info": {
+          "package_name": "com.delivadrinks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792187418730-53a35kh0oi2sggsdh9c3q19fnj570nh5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.delivadrinks",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "792187418730-7569up4drpnae7sa7h3rkh8q6umniqcs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.delivadrinks",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "792187418730-pf18b65n8qvt9ohs2elv8vb7icnochb0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.delivadrinks",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "792187418730-e55jibn4j3jul3k0pk7c0mblp6lrag2i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKGYsIfmp1HwfwNAbCbG-MnCY2vdQPzkU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792187418730-e55jibn4j3jul3k0pk7c0mblp6lrag2i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "792187418730-nmclraaqd6kgsapan1qruornl3do1e9v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.delivadrinks"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

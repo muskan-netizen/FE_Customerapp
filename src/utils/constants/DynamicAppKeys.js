@@ -237,6 +237,26 @@ const shortCodes = {
   hivefair: 'f0cede',
   localdropoff: '960a1f',
   ubi: '085703',
+  beakme: '6dcadc',
+  onscart: '10abb5',
+  mandaExpress: 'b405dd',
+  foodies: '939bd6',
+  gO: 'a83053',
+  bauBau: 'e5e48e',
+  bookARyde: '3c4b81',
+  petsChoice: 'c995df',
+  heyBuddy: '66ca24',
+  yoloSonic: 'fc53be',
+  mrHealth: 'e04975',
+  lopht: '16ab0d',
+  yalary: '9571e0',
+  seratho: '0aa2e4',
+  xborne: '16c5f2',
+  fawaz: '806be0',
+  grn: 'd697e3',
+  delivadrinks: 'e22dd6',
+  myRide: 'f6fb25',
+  getfix: '3065fd',
 };
 
 const appIds = {
@@ -517,7 +537,7 @@ const appIds = {
     android: 'com.doorstep',
   }),
   sunshinerideshare: Platform.select({
-    ios: 'com.sunshinerideshare',
+    ios: 'com.app.sunshinerideshare',
     android: 'com.sunshinerideshare',
   }),
   autotek: Platform.select({
@@ -978,7 +998,7 @@ const appIds = {
   }),
   mml: Platform.select({
     ios: 'com.mml',
-    android: 'com.mml',
+    android: 'com.app.mml',
   }),
   bimol: Platform.select({
     ios: 'com.bimol',
@@ -1183,6 +1203,86 @@ const appIds = {
   ubi: Platform.select({
     ios: 'com.application.ubi',
     android: 'com.ubi',
+  }),
+  beakme: Platform.select({
+    ios: 'com.beakme',
+    android: 'com.beakme',
+  }),
+  onscart: Platform.select({
+    ios: 'com.onscart',
+    android: 'com.onscart',
+  }),
+  mandaExpress: Platform.select({
+    ios: 'com.mandaExpress',
+    android: 'com.mandaExpress',
+  }),
+  gO: Platform.select({
+    ios: 'com.customer.gO',
+    android: 'com.customer.gO',
+  }),
+  foodies: Platform.select({
+    ios: 'com.app.foodies',
+    android: 'com.app.foodies',
+  }),
+  bauBau: Platform.select({
+    ios: 'com.baubau',
+    android: 'com.baubau',
+  }),
+  bookARyde: Platform.select({
+    ios: 'com.bookARyde',
+    android: 'com.bookARyde',
+  }),
+  petsChoice: Platform.select({
+    ios: 'com.petsChoice',
+    android: 'com.petsChoice',
+  }),
+  heyBuddy: Platform.select({
+    ios: 'com.app.heyBuddy',
+    android: 'com.app.heyBuddy',
+  }),
+  yoloSonic: Platform.select({
+    ios: 'com.yoloSonic',
+    android: 'com.yoloSonic',
+  }),
+  mrHealth: Platform.select({
+    ios: 'com.mrHealth',
+    android: 'com.mrHealth',
+  }),
+  lopht: Platform.select({
+    ios: 'com.lopht',
+    android: 'com.lopht',
+  }),
+  yalary: Platform.select({
+    ios: 'com.yalary',
+    android: 'com.yalary',
+  }),
+  seratho: Platform.select({
+    ios: 'com.seratho',
+    android: 'com.seratho',
+  }),
+  xborne: Platform.select({
+    ios: 'com.xborne',
+    android: 'com.xborne',
+  }),
+  fawaz: Platform.select({
+    ios: 'com.fawaz',
+    android: 'com.fawaz',
+  }),
+  grn: Platform.select({
+    ios: 'com.grn',
+    android: 'com.grn',
+  }),
+  delivadrinks: Platform.select({
+    ios: 'com.delivadrinks',
+    android: 'com.delivadrinks',
+  }),
+  myRide: Platform.select({
+    ios: 'com.app.myRide',
+    android: 'com.app.myRide',
+  }),
+  getfix: Platform.select({
+    ios: 'com.app.getfix',
+    android: 'com.app.getfix',
   }),
 };
 

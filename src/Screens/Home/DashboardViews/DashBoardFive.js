@@ -66,7 +66,7 @@ export default function DashBoardFive({
   navigation = {},
   toggleData = {},
   onVendorFilterSeletion = () => {},
-  tempCartData=null
+  tempCartData = null,
 }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -77,8 +77,6 @@ export default function DashBoardFive({
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-
-  console.log('appDataappData', appData);
 
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -104,7 +102,7 @@ export default function DashBoardFive({
 
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
-
+  console.log(appMainData?.vendors, 'vendores');
   useEffect(() => {
     if (appMainData?.vendors && appMainData?.vendors.length) {
       updateState({
@@ -519,43 +517,58 @@ export default function DashBoardFive({
       orderId: item?.vendors[0].order_id,
       // fromVendorApp: true,
       orderDetail: {
-        dispatch_traking_url:item?.vendors[0].dispatch_traking_url
-            },
+        dispatch_traking_url: item?.vendors[0].dispatch_traking_url,
+      },
       selectedVendor: {id: item?.vendors[0].vendor_id},
     });
-  }
-  
+  };
+
   const showAllTempCartOrders = () => {
     return (
       <View>
-        {
-       tempCartData &&
-       tempCartData.length
-          ?tempCartData.map((item, index) => {
+        {tempCartData && tempCartData.length
+          ? tempCartData.map((item, index) => {
               return (
                 <TouchableOpacity
-                onPress={()=>onPressViewEditAndReplace(item)}
+                  onPress={() => onPressViewEditAndReplace(item)}
                   style={{
                     padding: moderateScale(8),
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     // alignItems: 'center',
-                    backgroundColor:getColorCodeWithOpactiyNumber(
+                    backgroundColor: getColorCodeWithOpactiyNumber(
                       themeColors?.primary_color.substr(1),
                       20,
                     ),
-                    marginHorizontal:moderateScale(15),
-                    marginTop:moderateScale(15),
-                    borderRadius:moderateScale(5),
-                    borderWidth:moderateScale(0.5),
-                    borderColor:themeColors?.primary_color
+                    marginHorizontal: moderateScale(15),
+                    marginTop: moderateScale(15),
+                    borderRadius: moderateScale(5),
+                    borderWidth: moderateScale(0.5),
+                    borderColor: themeColors?.primary_color,
                   }}>
-                  <View style={{flex:0.7}}>
-                    <Text style={{fontSize:textScale(12),fontFamily:fontFamily.medium}}>{strings.YOURDRIVERHASMODIFIED}</Text>
-                    <Text style={{fontSize:textScale(12),paddingTop:moderateScale(5), fontFamily:fontFamily.bold}}>{strings.VIEW_DETAIL}</Text>
+                  <View style={{flex: 0.7}}>
+                    <Text
+                      style={{
+                        fontSize: textScale(12),
+                        fontFamily: fontFamily.medium,
+                      }}>
+                      {strings.YOURDRIVERHASMODIFIED}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: textScale(12),
+                        paddingTop: moderateScale(5),
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {strings.VIEW_DETAIL}
+                    </Text>
                   </View>
-                  <View style={{flex:0.3,alignItems:'flex-end'}}>
-                    <Text style={{fontSize:textScale(14),fontFamily:fontFamily.medium}}>{`#${item?.order_number}`}</Text>
+                  <View style={{flex: 0.3, alignItems: 'flex-end'}}>
+                    <Text
+                      style={{
+                        fontSize: textScale(14),
+                        fontFamily: fontFamily.medium,
+                      }}>{`#${item?.order_number}`}</Text>
                   </View>
                 </TouchableOpacity>
               );

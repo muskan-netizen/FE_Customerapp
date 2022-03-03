@@ -1,26 +1,26 @@
-import { useFocusEffect } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
 import {
   I18nManager,
   Image,
   Platform,
+  ScrollView,
   Text,
   TouchableOpacity,
   Vibration,
   View,
-  ScrollView
 } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dark-mode';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RNRestart from 'react-native-restart'; // Import package from node modules
 import LinearGradient from 'react-native-linear-gradient';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
 import Header from '../../Components/Header';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
-import strings, { changeLaguage } from '../../constants/lang/index';
+import strings, {changeLaguage} from '../../constants/lang/index';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
@@ -30,13 +30,13 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
-import { setItem } from '../../utils/utils';
+import {MyDarkTheme} from '../../styles/theme';
+import {setItem} from '../../utils/utils';
 import stylesFunc from './styles';
 import DeviceInfo from 'react-native-device-info';
-import { API_BASE_URL } from '../../config/urls';
+import {API_BASE_URL} from '../../config/urls';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
+import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
 import BackgroundService from 'react-native-background-actions';
 import {
   hapticEffects,
@@ -44,15 +44,14 @@ import {
   playVibration,
 } from '../../utils/helperFunctions';
 
-
-export default function Settings({ route, navigation }) {
+export default function Settings({route, navigation}) {
   // const appData = useSelector(state => state?.initBoot?.appData);
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { currencies, appData, languages, appStyle, themeColors } = useSelector(
+  const {currencies, appData, languages, appStyle, themeColors} = useSelector(
     (state) => state?.initBoot,
   );
   console.log(languages, 'languageslanguages');
@@ -91,8 +90,8 @@ export default function Settings({ route, navigation }) {
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ fontFamily });
-  const commonStyles = commonStylesFunc({ fontFamily });
+  const styles = stylesFunc({fontFamily});
+  const commonStyles = commonStylesFunc({fontFamily});
 
   useFocusEffect(
     React.useCallback(() => {
@@ -108,27 +107,27 @@ export default function Settings({ route, navigation }) {
       isOn: toggleTheme,
       selectedThemeOption: theme
         ? {
-          id: 2,
-          image: imagePath.dark,
-          selectedImage: imagePath.done,
-          type: 'dark',
-        }
+            id: 2,
+            image: imagePath.dark,
+            selectedImage: imagePath.done,
+            type: 'dark',
+          }
         : {
-          id: 1,
-          image: imagePath.light,
-          selectedImage: imagePath.done,
-          type: 'light',
-        },
+            id: 1,
+            image: imagePath.light,
+            selectedImage: imagePath.done,
+            type: 'light',
+          },
     });
   }, [currencies, languages]);
   //update state
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   //Update currency
   const updateCurrency = (item) => {
@@ -140,9 +139,9 @@ export default function Settings({ route, navigation }) {
         primary_currency: data,
       };
       setItem('setPrimaryCurrent', currenciesData);
-      updateState({ isLoading: true });
+      updateState({isLoading: true});
       setTimeout(() => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
         actions.updateCurrency(data);
       }, 1000);
     }
@@ -161,7 +160,7 @@ export default function Settings({ route, navigation }) {
       // updateState({isLoading: true});
       setItem('setPrimaryLanguage', languagesData);
       setTimeout(() => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
         actions.updateLanguage(data);
         onSubmitLang(data.sort_code, languagesData);
       }, 1000);
@@ -193,7 +192,7 @@ export default function Settings({ route, navigation }) {
             RNRestart.Restart();
           }
           BluetoothManager.disconnect(JSON.parse(res).boundAddress).then(
-            (s) => { },
+            (s) => {},
           );
         } else {
           if (lang === 'ar') {
@@ -259,8 +258,8 @@ export default function Settings({ route, navigation }) {
       selectedThemeOption && selectedThemeOption?.id == item?.id
         ? null
         : updateState({
-          selectedThemeOption: item,
-        });
+            selectedThemeOption: item,
+          });
     }
   };
 
@@ -282,20 +281,20 @@ export default function Settings({ route, navigation }) {
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3
-              ? imagePath.icBackb
-              : imagePath.back
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={strings.SETTINGS}
         // rightIcon={imagePath.cartShop}
         headerStyle={
           isDarkMode
-            ? { backgroundColor: MyDarkTheme.colors.background }
-            : { backgroundColor: colors.white }
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
         }
       />
-
-      <View style={{ ...commonStyles.headerTopLine }} />
-      <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }} >
+      <ScrollView>
+        <View style={{...commonStyles.headerTopLine}} />
+        {/* <KeyboardAwareScrollView bounces={false}> */}
         <View
           style={{
             marginHorizontal: moderateScale(20),
@@ -304,13 +303,15 @@ export default function Settings({ route, navigation }) {
           <Text
             style={{
               ...styles.darkAppearanceTextStyle,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity43,
+              color: isDarkMode
+                ? MyDarkTheme.colors.text
+                : colors.blackOpacity43,
               fontSize: textScale(12),
             }}>
             {strings.APPEARANCE}
           </Text>
         </View>
-        <View style={{ height: 10 }} />
+        <View style={{height: 10}} />
 
         <View
           style={{
@@ -347,7 +348,9 @@ export default function Settings({ route, navigation }) {
                     style={{
                       marginHorizontal: moderateScale(10),
                       marginVertical: moderateScaleVertical(5),
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
                     }}>
                     {i.themeType}
                   </Text>
@@ -384,9 +387,9 @@ export default function Settings({ route, navigation }) {
               style={
                 isDarkMode
                   ? [
-                    styles.darkAppearanceTextStyle,
-                    { color: MyDarkTheme.colors.text },
-                  ]
+                      styles.darkAppearanceTextStyle,
+                      {color: MyDarkTheme.colors.text},
+                    ]
                   : styles.darkAppearanceTextStyle
               }>
               {strings.AUTOMATIC}
@@ -401,9 +404,9 @@ export default function Settings({ route, navigation }) {
               animationSpeed={400}
             />
           </View>
-          <View style={{ height: 10 }} />
+          <View style={{height: 10}} />
         </View>
-        <View style={{ height: moderateScaleVertical(30) }} />
+        <View style={{height: moderateScaleVertical(30)}} />
         {Platform.OS === 'android' ? (
           <LinearGradient
             style={{
@@ -448,7 +451,7 @@ export default function Settings({ route, navigation }) {
                 appCurrencies?.primary_currency?.label ||
                 ''
               }
-              containerStyle={{ height: 40, marginTop: moderateScaleVertical(5) }}
+              containerStyle={{height: 40, marginTop: moderateScaleVertical(5)}}
               style={{
                 backgroundColor: isDarkMode
                   ? MyDarkTheme.colors.lightDark
@@ -576,7 +579,7 @@ export default function Settings({ route, navigation }) {
                 appCurrencies?.primary_currency?.label ||
                 ''
               }
-              containerStyle={{ height: 40, marginTop: moderateScaleVertical(5) }}
+              containerStyle={{height: 40, marginTop: moderateScaleVertical(5)}}
               style={{
                 backgroundColor: isDarkMode
                   ? MyDarkTheme.colors.lightDark
@@ -663,13 +666,13 @@ export default function Settings({ route, navigation }) {
             />
           </View>
         )}
+        {/* </KeyboardAwareScrollView> */}
         <View
           style={{
             zIndex: -1,
             flexDirection: 'row',
             alignSelf: 'center',
-            marginBottom: moderateScaleVertical(90),
-            marginTop: moderateScaleVertical(24)
+            marginVertical: moderateScaleVertical(24),
           }}>
           <Text
             style={{

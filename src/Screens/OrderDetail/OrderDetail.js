@@ -677,7 +677,9 @@ export default function OrderDetail({navigation, route}) {
                                                 currencies?.primary_currency
                                                   ?.symbol
                                               } ${currencyNumberFormatter(
-                                                Number(j?.quantity_price).toFixed(2),
+                                                Number(
+                                                  j?.quantity_price,
+                                                ).toFixed(2),
                                               )}`}
                                             </Text>
                                           </View>
@@ -2080,14 +2082,17 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const acceptRejectDriverUpdation = (status) => {
+    console.log(cartData, 'cartData');
     if (
       status == 1 &&
       updatedcartData &&
       Number(updatedcartData?.user_wallet_balance) <
-        Number(updatedcartData?.difference_to_be_paid)
+        Number(updatedcartData?.difference_to_be_paid) &&
+      cartData?.payment_option?.id != 1
     ) {
       showError(strings.INSUFFICIENT_FUNDS_IN_WALLET_PLEASERECHARGE);
     } else {
+      // alert("123")
       let data = {};
       data['cart_id'] = updatedcartData?.id;
       data['address_id'] = updatedcartData?.address_id;

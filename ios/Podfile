@@ -1199,6 +1199,105 @@ end
   
 # end
 
+#BeakMe Target
+target 'BeakMe' do
+  
+end
+
+#Onscart Target
+target 'Onscart' do
+  
+end
+
+#Foodies Target
+target 'Foodies' do
+  
+end
+
+#GO Target
+target 'GO' do
+  
+end
+
+#MandaExpress Target
+target 'MandaExpress' do
+  
+end
+
+#BauBau Target
+target 'BauBau' do
+  
+end
+
+#BookARyde Target
+target 'BookARyde' do
+  
+end
+
+#PetsChoice Target
+target 'PetsChoice' do
+  
+end
+
+#HeyBuddy Target
+target 'HeyBuddy' do
+  
+end
+
+#YoloSonic Target
+target 'YoloSonic' do
+  
+end
+
+#Lopht Target
+target 'Lopht' do
+  
+end
+
+#MrHealth Target
+target 'MrHealth' do
+  
+end
+
+#Yalary Target
+target 'Yalary' do
+  
+end
+
+#Seratho Target
+target 'Seratho' do
+  
+end
+#Xborne Target
+target 'Xborne' do
+  
+end
+
+#Fawaz Target
+target 'Fawaz' do
+  
+end
+
+#GRN Target
+target 'GRN' do
+  
+end
+
+#Delivadrinks Target
+target 'Delivadrinks' do
+  
+end
+
+#MyRide Target
+target 'MyRide' do
+  
+end
+
+#Getfix Target
+target 'Getfix' do
+  
+end
+
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

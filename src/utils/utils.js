@@ -116,6 +116,7 @@ export async function apiReq(
     //
     axios[method](endPoint, data, {headers})
       .then((result) => {
+        console.log(result,"result>result");
         const {data} = result;
 
         if (data.status === false) {
@@ -125,6 +126,7 @@ export async function apiReq(
         return res(data);
       })
       .catch((error) => {
+        console.log(error,"error>error");
         if (error && error.response && error.response.status === 401) {
           sessionHandler(error.response.data.message);
           return rej(error);
@@ -193,11 +195,10 @@ export const verticalAnimation = {
 };
 
 export const checkIsAdmin = (navigation_, navigation, userData) => {
-  console.log('check userdata', userData.is_admin);
-
   // navigation.push(navigationStrings.TABROUTESVENDOR);
   if (userData.is_admin && enums.isVendorStandloneApp) {
-    resetStackAndNavigate(navigation_, navigationStrings.TABROUTESVENDORNEW);
+    // resetStackAndNavigate(navigation_, navigationStrings.TABROUTESVENDORNEW);
+    navigation.push(navigationStrings.TAB_ROUTES);
   } else {
     navigation.push(navigationStrings.TAB_ROUTES);
   }

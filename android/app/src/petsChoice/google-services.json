@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "578091518443",
+    "project_id": "pets-choice-8c67e",
+    "storage_bucket": "pets-choice-8c67e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578091518443:android:0737ed9016f4ef64ee31ae",
+        "android_client_info": {
+          "package_name": "com.petsChoice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "578091518443-4t88ulierbt2q6f777dae2flah2eusu6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petsChoice",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "578091518443-8hhh3tlf28de5i7urqh5h7igs0427aho.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petsChoice",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "578091518443-jngv3ja30huusa3ovtui85kj40pojclq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petsChoice",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "578091518443-ddck8de99777vr20k8ea7dohec4bdher.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBi--koMNiaSNFLDoQO7jrOjuFzbj4Fz-Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "578091518443-ddck8de99777vr20k8ea7dohec4bdher.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "578091518443-ekae1ln3pu604nj92kflrc1nfkqfkpm0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.petsChoice"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

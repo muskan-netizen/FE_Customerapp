@@ -290,6 +290,7 @@ export default function MyOrders({ navigation }) {
         fromActive: selectedTab == 'Active Orders' // this value use for useInterval
       });
     }
+
     // (item?.dispatch_traking_url &&
     //   item?.product_details[0]?.category_type ==
     //     staticStrings.PICKUPANDDELIEVRY) ||

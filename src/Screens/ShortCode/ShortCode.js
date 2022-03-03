@@ -1535,6 +1535,125 @@ export default function ShortCode({route, navigation}) {
             shortCode: shortCodes.ubi,
             isShortcodePrefilled: true,
           });
+        case appIds.beakme:
+          updateState({
+            shortCode: shortCodes.beakme,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.onscart:
+          updateState({
+            shortCode: shortCodes.onscart,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mandaExpress:
+          updateState({
+            shortCode: shortCodes.mandaExpress,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.foodies:
+          updateState({
+            shortCode: shortCodes.foodies,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.gO:
+          updateState({
+            shortCode: shortCodes.gO,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bauBau:
+          updateState({
+            shortCode: shortCodes.bauBau,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bookARyde:
+          updateState({
+            shortCode: shortCodes.bookARyde,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.petsChoice:
+          updateState({
+            shortCode: shortCodes.petsChoice,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.heyBuddy:
+          updateState({
+            shortCode: shortCodes.heyBuddy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.yoloSonic:
+          updateState({
+            shortCode: shortCodes.yoloSonic,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mrHealth:
+          updateState({
+            shortCode: shortCodes.mrHealth,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.lopht:
+          updateState({
+            shortCode: shortCodes.lopht,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.yalary:
+          updateState({
+            shortCode: shortCodes.yalary,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.seratho:
+          updateState({
+            shortCode: shortCodes.seratho,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.xborne:
+          updateState({
+            shortCode: shortCodes.xborne,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.fawaz:
+          updateState({
+            shortCode: shortCodes.fawaz,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.grn:
+          updateState({
+            shortCode: shortCodes.grn,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.delivadrinks:
+          updateState({
+            shortCode: shortCodes.delivadrinks,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.myRide:
+          updateState({
+            shortCode: shortCodes.myRide,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.getfix:
+          updateState({
+            shortCode: shortCodes.getfix,
+            isShortcodePrefilled: true,
+          });
           break;
       }
     })();
@@ -1570,6 +1689,7 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
+        // code: '245bae',
         code: shortCode,
         language: res?.primary_language?.id,
       };
@@ -1668,13 +1788,30 @@ export default function ShortCode({route, navigation}) {
     }
   }
 
+  const handleNotiRedirectionForVendorApp = (deepLinkUrl) => {
+    if (deepLinkUrl != null) {
+      navigation.navigate(navigationStrings.TABROUTESVENDORNEW, {
+        screen: navigationStrings.ROYO_VENDOR_ORDER,
+        params: {index: 1},
+      });
+    } else {
+      navigation.navigate(navigationStrings.TABROUTESVENDORNEW);
+    }
+  };
+
   const navigateToNextScreen = (res, homeData) => {
     // return;
     if (enums.isVendorStandloneApp) {
       if (!!userData?.auth_token) {
-        navigation.navigate(navigationStrings.TABROUTESVENDORNEW);
+        Linking.getInitialURL()
+          .then((link) => {
+            handleNotiRedirectionForVendorApp(link);
+          })
+          .catch((err) => {
+            console.log('checking deep link >>> 3232sdsd', err);
+          });
       } else {
-        navigation.navigate(navigationStrings.OUTER_SCREEN);
+        navigation.navigate(navigationStrings.LOGIN);
       }
     } else {
       getItem('firstTime').then((el) => {

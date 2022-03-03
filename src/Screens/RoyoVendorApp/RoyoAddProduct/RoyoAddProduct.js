@@ -137,6 +137,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     selectedVariant: {},
     variantImages: [],
     isVarientImageDeleted: false,
+    tempImg: '',
   });
   const {
     isLoading,
@@ -200,13 +201,8 @@ const RoyoAddProduct = ({route, navigation}) => {
     selectedVariant,
     variantImages,
     isVarientImageDeleted,
+    tempImg,
   } = state;
-  console.log(variantIds, 'variantIds>>');
-  console.log(variantName, 'variantName>>');
-  console.log(variantQuantity, 'variantQuantity>>>');
-  console.log(variantPrice, 'variantPrice>>>');
-  console.log(variantCostPrice, 'variantCostPrice>>>');
-  console.log(variantCompareAtPrice, 'variantCompareAtPrice>>>');
 
   useEffect(() => {
     if (isLoading || isVarientImageDeleted) {
@@ -489,7 +485,8 @@ const RoyoAddProduct = ({route, navigation}) => {
                 Platform.OS == 'ios'
                   ? res?.filename
                   : res?.path.substring(res?.path.lastIndexOf('/') + 1),
-              mime: res?.mime,
+              // mime: res?.mime,
+              type: res?.mime,
               uri: res?.sourceURL || res?.path,
             };
 
@@ -875,6 +872,8 @@ const RoyoAddProduct = ({route, navigation}) => {
       formData.append('file[]', item);
     });
 
+    updateState({tempImg: tempImg.uri});
+
     setTimeout(() => {
       addProductImages(formData);
     }, 500);
@@ -882,12 +881,14 @@ const RoyoAddProduct = ({route, navigation}) => {
 
   const addProductImages = (formData) => {
     console.log(formData, 'formData>>>>');
+
     updateState({isLoadingB: true});
     actions
       .addProductImage(formData, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
+        'Content-Type': 'multipart/form-data',
       })
       .then((res) => {
         showSuccess(res?.message);
@@ -1176,7 +1177,11 @@ const RoyoAddProduct = ({route, navigation}) => {
                 />
               </View>
             </View>
-
+            {/* <Image
+              source={tempImg ? {uri: 'file:///storage/emulated/0/Android/data/com.codebrew.royoorder/files/Pictures/abb5aa92-05c3-45bb-aaa6-667da4395aed.jpg'} : imagePath.allProducts}
+              // source={{uri: 'file:///storage/emulated/0/Android/data/com.codebrew.royoorder/files/Pictures/abb5aa92-05c3-45bb-aaa6-667da4395aed.jpg'}}
+              style={{width: 100, height: 100}}
+            /> */}
             <View
               style={{
                 ...styles.stepBarView,
