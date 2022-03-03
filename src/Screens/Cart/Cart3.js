@@ -688,6 +688,8 @@ export default function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
+  console.log("cart data++++", cartData)
+
   const checkPaymentOptions = (res) => {
     let paymentId = res?.data?.payment_option_id;
     let paymentData = {
@@ -763,7 +765,7 @@ export default function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.FPX, paymentData);
         break;
-        case 20: //AuthorizeNet Payment Getway
+      case 20: //AuthorizeNet Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.KONGOPAY, paymentData);
         break;
@@ -2148,40 +2150,7 @@ export default function Cart({ navigation, route }) {
               </ModalDropdown>
               : null}
 
-            {/* {!!item?.deliver_charge && (
-              <View style={styles.itemPriceDiscountTaxView}>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                        styles.priceItemLabel,
-                        {
-                          color: MyDarkTheme.colors.text,
-                        },
-                      ]
-                      : styles.priceItemLabel
-                  }>
-                  {strings.DELIVERY_CHARGES}
-                </Text>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                        styles.priceItemLabel,
-                        {
-                          color: MyDarkTheme.colors.text,
-                        },
-                      ]
-                      : styles.priceItemLabel
-                  }>{`${currencies?.primary_currency?.symbol
-                    }${currencyNumberFormatter(
-                      Number(
-                        item?.deliver_charge ? item?.deliver_charge : 0,
-                      ).toFixed(2),
-                    )}`}</Text>
-              </View>
-            )} */}
-            <View style={styles.itemPriceDiscountTaxView}>
+            {/* <View style={styles.itemPriceDiscountTaxView}>
               <Text
                 style={
                   isDarkMode
@@ -2209,31 +2178,8 @@ export default function Cart({ navigation, route }) {
                   ).toFixed(2),
                 )}
               </Text>
+            </View> */}
 
-              {/* <NumberFormat
-                thousandsGroupStyle="thousand"
-                value={2456981}
-                prefix="$"
-                decimalSeparator="."
-                displayType="input"
-                type="text"
-                thousandSeparator={true}
-                allowNegative={true}
-              /> */}
-              {/* <Text
-                style={
-                  isDarkMode
-                    ? [
-                        styles.priceItemLabel2,
-                        {
-                          color: MyDarkTheme.colors.text,
-                        },
-                      ]
-                    : styles.priceItemLabel2
-                }>{`${currencies?.primary_currency?.symbol}${Number(
-                item?.payable_amount ? item?.payable_amount : 0,
-              ).toFixed(2)}`}</Text> */}
-            </View>
             {/* <View style={styles.bottomTabLableValue}>
               <Text
                 style={
@@ -3158,6 +3104,34 @@ export default function Cart({ navigation, route }) {
                 Number(cartData?.gross_paybale_amount).toFixed(2),
               )}`}</Text>
         </View>
+
+        {/* total_delivery_fee */}
+
+
+        {!!cartData?.total_delivery_fee ?
+          <View style={styles.bottomTabLableValue}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                  : styles.priceItemLabel
+              }>
+              {strings.TOTAL_DELIVERY_FEE}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                  : styles.priceItemLabel
+              }>{`${currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(
+                    cartData?.total_delivery_fee ? cartData?.total_delivery_fee : 0,
+                  ).toFixed(2),
+                )}`}</Text>
+          </View>
+          : null}
+
         {!!cartData?.wallet_amount && (
           <View style={styles.bottomTabLableValue}>
             <Text
@@ -3181,6 +3155,7 @@ export default function Cart({ navigation, route }) {
                 )}`}</Text>
           </View>
         )}
+
         {!!cartData?.loyalty_amount && (
           <View style={styles.bottomTabLableValue}>
             <Text

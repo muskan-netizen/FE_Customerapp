@@ -828,4 +828,5 @@ Amount`,
   PASTDELEIVERIES: 'Past Deliveries',
   MYDELIERIES: 'My Deliveries',
   NODELIVERIESFOUND: 'No Deliveries Found',
+  TOTAL_DELIVERY_FEE:"Total delivery fee",
 };

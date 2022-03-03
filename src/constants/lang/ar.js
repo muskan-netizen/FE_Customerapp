@@ -763,6 +763,7 @@ export default {
   ACTIVEDELEIVERIES:'الولادات النشطة',
   PASTDELEIVERIES:'عمليات التسليم الماضية',
   MYDELIERIES:"تسليماتي",
-  NODELIVERIESFOUND:'لم يتم العثور على تسليمات'
+  NODELIVERIESFOUND:'لم يتم العثور على تسليمات',
+  TOTAL_DELIVERY_FEE:"Total delivery fee",
 
 };

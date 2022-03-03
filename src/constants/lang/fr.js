@@ -814,4 +814,5 @@ montant`,
   NODELIVERIESFOUND: 'Aucune livraison trouvée',
   CLEAR_FILTER:"Clear Filter",
   PRICE_RANGE:"Price Range",
+  TOTAL_DELIVERY_FEE:"Total delivery fee",
 };

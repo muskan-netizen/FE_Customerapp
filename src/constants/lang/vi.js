@@ -836,4 +836,5 @@ export default {
   PASTDELEIVERIES: 'Giao hàng trước đây',
   MYDELIERIES: 'Giao hàng của tôi',
   NODELIVERIESFOUND: 'Không tìm thấy hàng giao',
+  TOTAL_DELIVERY_FEE:"Total delivery fee",
 };

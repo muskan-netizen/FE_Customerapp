@@ -724,4 +724,5 @@ export default {
   NODELIVERIESFOUND:'No Deliveries Found',
   CLEAR_FILTER:"Clear Filter",
   PRICE_RANGE:"Price Range",
+  TOTAL_DELIVERY_FEE:"Total delivery fee",
 };

@@ -826,5 +826,5 @@ export default {
     CLEAR_FILTER:"Clear Filter",
     PRICE_RANGE:"Price Range",
     CUSTOMISABLE: 'Customisable',
-
+    TOTAL_DELIVERY_FEE:"Total delivery fee",
 };
