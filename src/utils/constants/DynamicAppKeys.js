@@ -237,6 +237,7 @@ const shortCodes = {
   hivefair: 'f0cede',
   localdropoff: '960a1f',
   ubi: '085703',
+  scoopaTechnologies:'3c6a7e',
 };
 
 const appIds = {
@@ -1183,6 +1184,10 @@ const appIds = {
   ubi: Platform.select({
     ios: 'com.application.ubi',
     android: 'com.ubi',
+  }),
+  scoopaTechnologies: Platform.select({
+    ios: 'com.scoopaTechnologies',
+    android: 'com.scoopaTechnologies',
   }),
 };
 

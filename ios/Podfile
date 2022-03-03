@@ -1184,6 +1184,11 @@ target 'Ubi' do
   
 end
 
+#ScoopaTechnologies Target
+target 'ScoopaTechnologies' do
+  
+end
+
 # #BoltDelivery Target
 # target 'BoltDelivery' do
   
