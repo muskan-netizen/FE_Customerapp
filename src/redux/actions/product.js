@@ -26,6 +26,9 @@ import {
   UPDATE_VENDOR_PRODUCT,
   WALLET_CREDIT,
   NEW_VENDOR_FILTER,
+  VENDOR_OPTIMIZE,
+  VENDOR_OPTIMIZE_FILTERS,
+  VENDOR_PRODUCTS_OPTIMIZE_FILTERS,
 } from '../../config/urls';
 import {apiGet, apiPost, setWalletData} from '../../utils/utils';
 import store from '../store';
@@ -56,6 +59,7 @@ export function getProductByVendorId(query = '', data = {}, headers = {}) {
       });
   });
 }
+
 
 //Get all Products by Vendor id
 
@@ -154,6 +158,21 @@ export const newVendorFilters = (
 ) => {
   return new Promise((resolve, reject) => {
     apiPost(NEW_VENDOR_FILTER, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const vendorFilterOptimize = (
+  data = {},
+  headers = {},
+) => {
+  return new Promise((resolve, reject) => {
+    apiPost(VENDOR_PRODUCTS_OPTIMIZE_FILTERS, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -431,6 +450,18 @@ export function getProductImage(data = {}, headers = {}) {
 export function deleteProductImage(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiPost(DELETE_PRODUCT_IMAGE, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function getVendorFilters(query = '', data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiGet(VENDOR_OPTIMIZE_FILTERS + query, data, headers)
       .then((res) => {
         resolve(res);
       })

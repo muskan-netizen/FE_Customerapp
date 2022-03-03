@@ -260,7 +260,7 @@ const ProductCard3 = ({
     }
   };
 
-  let typeId = data?.category?.category_detail?.type_id;
+  let typeId = data?.category_id;
   return (
     <View pointerEvents={btnLoader ? 'none' : 'auto'} style={{flex: 1}}>
       <TouchableOpacity
@@ -316,7 +316,7 @@ const ProductCard3 = ({
               }}>
               {data?.translation[0]?.title}
             </Text>
-            {!!data?.category?.category_detail?.translation && (
+            {!!data?.title ?
               <Text
                 numberOfLines={1}
                 style={{
@@ -326,9 +326,9 @@ const ProductCard3 = ({
                     : colors.blackOpacity40,
                 }}>
                 {strings.IN}
-                {` ${data?.category?.category_detail?.translation[0]?.name}`}
+                {` ${data?.title}`}
               </Text>
-            )}
+            :null}
           </View>
 
           {/* rating View */}
