@@ -58,6 +58,7 @@ import {
   AddProduct,
   AddNewCustomer,
   CustomerEarningHistory,
+  Location,
 } from '../Screens';
 import navigationStrings from './navigationStrings';
 
@@ -235,6 +236,12 @@ export default function ({ navigation }) {
         component={WebLinks}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+      name={navigationStrings.LOCATION}
+      component={Location}
+      options={{headerShown: false}}
+      />
+      
       <Stack.Screen
         name={navigationStrings.WEBPAYMENTS}
         component={WebPayment}

@@ -1,7 +1,7 @@
-export const API_BASE_URL = 'https://order.tasmeemgroup.com/api/v1';
+// export const API_BASE_URL = 'https://9303-112-196-88-218.ngrok.io/api/v1';
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1';  //sales demo
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://2d24-103-72-170-243.ngrok.io/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1';
@@ -236,5 +236,4 @@ export const VENDOR_ALL = getApiUrl('/vendor/all');
 export const VENDOR_OPTIMIZE = getApiUrl('/vendor-optimize');
 export const VENDOR_OPTIMIZE_FILTERS = getApiUrl('/vendor-optimize-filters');
 export const VENDOR_PRODUCTS_OPTIMIZE_FILTERS = getApiUrl('/vendor/vendorProductsFilterOptimize');
-export const GETALLVENDORS = getApiUrl('/vendor/all');
 export const USER_REGISTRATION_DOCUMENT = getApiUrl('/user/registration/document');
