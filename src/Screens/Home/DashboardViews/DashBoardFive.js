@@ -102,7 +102,7 @@ export default function DashBoardFive({
 
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
-
+  console.log(appMainData?.vendors, 'vendores');
   useEffect(() => {
     if (appMainData?.vendors && appMainData?.vendors.length) {
       updateState({
