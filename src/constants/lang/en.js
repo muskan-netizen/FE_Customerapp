@@ -829,5 +829,6 @@ Amount`,
   NODELIVERIESFOUND:'No Deliveries Found',
   CLEAR_FILTER:"Clear Filter",
   PRICE_RANGE:"Price Range",
+  CONTAINERCHARGES:'Container charges'
 
 };
