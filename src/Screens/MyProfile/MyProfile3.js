@@ -62,6 +62,7 @@ export default function MyProfile3({route, navigation}) {
     themeColor,
     themeToggle,
     appData,
+    currencies,
   } = useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -166,6 +167,8 @@ export default function MyProfile3({route, navigation}) {
             {},
             {
               code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
             },
           )
           .then((res) => {
