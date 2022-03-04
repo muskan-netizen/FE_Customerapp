@@ -301,7 +301,7 @@ export default function AddMoney({navigation}) {
 
   const renderRazorPay = () => {
     let options = {
-      description: 'Credits towards consultation',
+      description: 'Payment for your order',
       image: getImageUrl(
         appData?.profile?.logo?.image_fit,
         appData?.profile?.logo?.image_path,
@@ -532,10 +532,8 @@ export default function AddMoney({navigation}) {
               <Text
                 style={{
                   ...styles.currencySymble,
-                  color: isDarkMode? MyDarkTheme.colors.text: colors.black
-                 
-               } }
-                >
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
                 {currencies?.primary_currency?.symbol}
               </Text>
               <TextInput

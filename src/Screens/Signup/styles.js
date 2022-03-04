@@ -3,6 +3,7 @@ import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
 } from '../../styles/responsiveSize';
 import commonStylesFun from '../../styles/commonStyles';
 
@@ -52,6 +53,33 @@ export default ({fontFamily}) => {
       opacity: 0.6,
       marginTop: 0,
       marginHorizontal: moderateScale(16),
+    },
+    viewStyleForUploadImage: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      // justifyContent: 'space-between',
+    },
+    imageUpload: {
+      borderStyle: 'dashed',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: moderateScaleVertical(10),
+    },
+    imageStyle2: {
+      height: 100,
+      width: 100,
+      borderRadius: moderateScale(4),
+    },
+    label3: {
+      marginBottom: moderateScaleVertical(10),
+      textAlign: 'center',
+      fontSize: textScale(12),
+      fontFamily: fontFamily.medium,
+      color: colors.greyLight,
+    },
+    uploadStyle: {
+      color: colors.blue,
+      fontFamily: fontFamily.medium,
     },
   });
   return styles;
