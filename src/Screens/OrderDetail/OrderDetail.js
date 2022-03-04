@@ -1014,6 +1014,69 @@ export default function OrderDetail({navigation, route}) {
                                     );
                                   })
                                 : null}
+
+                              {!!(
+                                !!i?.pvariant &&
+                                Number(i?.pvariant?.container_charges)
+                              ) && (
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    marginTop: moderateScale(2),
+                                  }}>
+                                  <View>
+                                    <Text
+                                      style={{
+                                        ...styles.cartItemWeight2,
+                                        color: isDarkMode
+                                          ? MyDarkTheme.colors.text
+                                          : colors.textGreyB,
+                                        marginBottom: moderateScale(2),
+                                        // marginTop: moderateScaleVertical(6),
+                                      }}>
+                                      {`${strings.CONTAINERCHARGES} : `}
+                                    </Text>
+                                  </View>
+                                  {!!(
+                                    !!i?.pvariant &&
+                                    Number(i?.pvariant?.container_charges)
+                                  ) && (
+                                    <View
+                                      style={{
+                                        marginBottom: moderateScaleVertical(2),
+                                      }}>
+                                      <View
+                                        style={{
+                                          marginRight: moderateScale(10),
+                                        }}>
+                                        <Text
+                                          style={
+                                            isDarkMode
+                                              ? [
+                                                  styles.cartItemWeight2,
+                                                  {
+                                                    color:
+                                                      MyDarkTheme.colors.text,
+                                                  },
+                                                ]
+                                              : styles.cartItemWeight2
+                                          }
+                                          // numberOfLines={1}
+                                        >
+                                          {`${
+                                            currencies?.primary_currency?.symbol
+                                          }${currencyNumberFormatter(
+                                            Number(
+                                              i?.pvariant?.container_charges,
+                                            ).toFixed(2) * Number(i?.quantity),
+                                          )}`}
+                                        </Text>
+                                      </View>
+                                    </View>
+                                  )}
+                                </View>
+                              )}
                             </View>
                           </View>
                         </View>
@@ -1762,6 +1825,19 @@ export default function OrderDetail({navigation, route}) {
                   currencies?.primary_currency?.symbol
                 }${currencyNumberFormatter(
                   Number(cartData?.loyalty_amount_saved).toFixed(2),
+                )}`}
+                isDarkMode={isDarkMode}
+                MyDarkTheme={MyDarkTheme}
+              />
+            )}
+          {!!cartData?.total_container_charges &&
+            cartData?.total_container_charges > 0 && (
+              <LeftRightText
+                leftText={strings.WALLET}
+                rightText={`- ${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(cartData?.total_container_charges).toFixed(2),
                 )}`}
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}
