@@ -168,7 +168,7 @@ export default function DashBoardFive({
     return (
       <View
         style={{
-          marginRight:  appStyle?.homePageLayout == 5 ? 0: moderateScale(8),
+          marginRight: appStyle?.homePageLayout == 5 ? 0 : moderateScale(8),
           width: appStyle?.homePageLayout == 5 ? '25%' : 'auto',
         }}>
         <HomeCategoryCard2
@@ -747,16 +747,29 @@ export default function DashBoardFive({
                 showsHorizontalScrollIndicator={false}
                 renderItem={_renderVendors}
                 ListEmptyComponent={() => (
-                  <FastImage
-                    source={imagePath.noDataFound}
-                    resizeMode="contain"
-                    style={{
-                      width: moderateScale(140),
-                      height: moderateScale(140),
-                      alignSelf: 'center',
-                      marginTop: moderateScaleVertical(30),
-                    }}
-                  />
+                  <View>
+                    <FastImage
+                      source={imagePath.noDataFound}
+                      resizeMode="contain"
+                      style={{
+                        width: moderateScale(140),
+                        height: moderateScale(140),
+                        alignSelf: 'center',
+                        marginTop: moderateScaleVertical(30),
+                      }}
+                    />
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        fontSize: textScale(11),
+                        fontFamily: fontFamily.regular,
+                        marginHorizontal: moderateScale(10),
+                        lineHeight: moderateScale(20),
+                        marginTop: moderateScale(5),
+                      }}>
+                      {strings.SORRY_MSG}
+                    </Text>
+                  </View>
                 )}
                 ItemSeparatorComponent={() => (
                   <View style={{height: moderateScale(10)}} />

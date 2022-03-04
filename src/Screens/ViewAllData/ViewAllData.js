@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, TouchableOpacity, View, Image } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {FlatList, TouchableOpacity, View, Image} from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { useDarkMode } from 'react-native-dark-mode';
-import { ActivityIndicator } from 'react-native-paper';
-import { useSelector } from 'react-redux';
+import {useDarkMode} from 'react-native-dark-mode';
+import {ActivityIndicator} from 'react-native-paper';
+import {useSelector} from 'react-redux';
 import Header3 from '../../Components/Header3';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import SearchLoader from '../../Components/Loaders/SearchLoader';
@@ -20,20 +20,23 @@ import commonStylesFun from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
-  width
+  width,
 } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
+import {MyDarkTheme} from '../../styles/theme';
 
-export default function ViewAllData({ route, navigation }) {
-  const { appData, themeColors, currencies, languages, appStyle } = useSelector((state) => state.initBoot);
+export default function ViewAllData({route, navigation}) {
+  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
+    (state) => state.initBoot,
+  );
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const { appMainData, dineInType, location } = useSelector((state) => state?.home);
+  const {appMainData, dineInType, location} = useSelector(
+    (state) => state?.home,
+  );
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({ fontFamily });
-
+  const commonStyles = commonStylesFun({fontFamily});
 
   const [state, setState] = useState({
     isLoading: true,
@@ -64,19 +67,19 @@ export default function ViewAllData({ route, navigation }) {
   } = state;
 
   //update state
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   useEffect(() => {
-    apiHit(pageNo)
+    apiHit(pageNo);
 
     const homeAllFilters = () => {
       let homeFilter = [
-        { id: 1, type: strings.OPEN },
-        { id: 2, type: strings.CLOSE },
-        { id: 3, type: strings.BESTSELLER },
+        {id: 1, type: strings.OPEN},
+        {id: 2, type: strings.CLOSE},
+        {id: 3, type: strings.BESTSELLER},
       ];
       if (appData?.profile?.preferences?.is_hyperlocal) {
-        homeFilter.push({ id: 4, type: strings.NEAR_BY });
+        homeFilter.push({id: 4, type: strings.NEAR_BY});
       } else {
         if (homeFilter.length > 3) {
           homeFilter.pop();
@@ -84,12 +87,10 @@ export default function ViewAllData({ route, navigation }) {
       }
       return homeFilter;
     };
-
-  }, [])
+  }, []);
 
   //Home data
   const apiHit = (pageNo) => {
-
     let latlongObj = {};
     if (appData?.profile?.preferences?.is_hyperlocal) {
       latlongObj = {
@@ -103,77 +104,76 @@ export default function ViewAllData({ route, navigation }) {
       best_vendor: 0,
       near_me: 0,
     };
+
     console.log(vendorFilterData, 'vendorFilterData');
     // let query = `?limit=${limit}&page=${pageNo}&close_vendor=${1}&open_vendor=${0}&best_vendor=${0}&near_me=${0}`
-    let query = `?limit=${limit}&page=${pageNo}`
+    let query = `?limit=${limit}&page=${pageNo}`;
     let apiData = {
       type: dineInType ? dineInType : dineInType,
-      ...latlongObj
-    }
+      ...latlongObj,
+    };
     let headers = {
       code: appData?.profile?.code,
       currency: currencies?.primary_currency?.id,
       language: languages?.primary_language?.id,
-    }
-    console.log("sending api data",apiData)
-    console.log("sending headers",headers)
+    };
+    console.log('sending api data', apiData);
+    console.log('sending headers', headers);
 
-    actions.vendorAll(query, apiData,headers)
+    actions
+      .vendorAll(query, apiData, headers)
       .then((res) => {
         console.log('Home data++++++', res);
         if (totalProduct == 0) {
-          updateState({ totalProduct: res?.data?.total })
+          updateState({totalProduct: res?.data?.total});
         }
         updateState({
-          data: pageNo == 1
-            ? res?.data?.data
-            : [...data, ...res?.data?.data],
+          data: pageNo == 1 ? res?.data?.data : [...data, ...res?.data?.data],
           isLoading: false,
-          loadMore: false
-        })
+          loadMore: false,
+        });
       })
-      .catch(error => {
-        console.log("error raised", error)
+      .catch((error) => {
+        console.log('error raised', error);
         updateState({
           isLoading: false,
-          loadMore: false
-        })
-      })
-  }
-  console.log("data length", data.length)
+          loadMore: false,
+        });
+      });
+  };
+  console.log('data length', data.length);
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
-
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   const _checkRedirectScreen = (item) => {
     {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-          item,
-          rootProducts: true,
-          categoryData: data,
-        })()
+            item,
+            rootProducts: true,
+            categoryData: data,
+          })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-          id: item.id,
-          vendor: true,
-          name: item.name,
-          isVendorList: true,
-          fetchOffers: true,
-        })();
+            id: item.id,
+            vendor: true,
+            name: item.name,
+            isVendorList: true,
+            fetchOffers: true,
+          })();
     }
   };
 
   /**********/
 
-  const _renderItem = ({ item, index }) => {
+  const _renderItem = ({item, index}) => {
     return (
       <Animatable.View
-        style={{ marginHorizontal: moderateScale(15) }}
+        style={{marginHorizontal: moderateScale(15)}}
         // animation={'fadeInUp'}
         // delay={index * 60}
       >
@@ -198,10 +198,10 @@ export default function ViewAllData({ route, navigation }) {
             navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
           }
         />
-        <View style={{ alignItems: 'center' }}>
-          <SearchLoader viewStyles={{ marginVertical: moderateScale(17) }} />
+        <View style={{alignItems: 'center'}}>
+          <SearchLoader viewStyles={{marginVertical: moderateScale(17)}} />
           <HeaderLoader
-            viewStyles={{ marginTop: 5 }}
+            viewStyles={{marginTop: 5}}
             widthLeft={width - moderateScaleVertical(40)}
             rectWidthLeft={width - moderateScaleVertical(40)}
             heightLeft={moderateScaleVertical(170)}
@@ -211,7 +211,7 @@ export default function ViewAllData({ route, navigation }) {
             ry={15}
           />
           <HeaderLoader
-            viewStyles={{ marginTop: 15 }}
+            viewStyles={{marginTop: 15}}
             widthLeft={width - moderateScaleVertical(40)}
             rectWidthLeft={width - moderateScaleVertical(40)}
             heightLeft={moderateScaleVertical(170)}
@@ -221,7 +221,7 @@ export default function ViewAllData({ route, navigation }) {
             ry={15}
           />
           <HeaderLoader
-            viewStyles={{ marginTop: 15 }}
+            viewStyles={{marginTop: 15}}
             widthLeft={width - moderateScaleVertical(40)}
             rectWidthLeft={width - moderateScaleVertical(40)}
             heightLeft={moderateScaleVertical(170)}
@@ -231,7 +231,7 @@ export default function ViewAllData({ route, navigation }) {
             ry={15}
           />
           <HeaderLoader
-            viewStyles={{ marginTop: 15 }}
+            viewStyles={{marginTop: 15}}
             widthLeft={width - moderateScaleVertical(40)}
             rectWidthLeft={width - moderateScaleVertical(40)}
             heightLeft={moderateScaleVertical(170)}
@@ -241,7 +241,7 @@ export default function ViewAllData({ route, navigation }) {
             ry={15}
           />
           <HeaderLoader
-            viewStyles={{ marginTop: 15 }}
+            viewStyles={{marginTop: 15}}
             widthLeft={width - moderateScaleVertical(40)}
             rectWidthLeft={width - moderateScaleVertical(40)}
             heightLeft={moderateScaleVertical(170)}
@@ -252,24 +252,21 @@ export default function ViewAllData({ route, navigation }) {
           />
         </View>
       </WrapperContainer>
-    )
+    );
   }
 
   const onEndReached = () => {
     if (totalProduct !== data.length) {
-      updateState({ pageNo: pageNo + 1, loadMore: true });
+      updateState({pageNo: pageNo + 1, loadMore: true});
       apiHit(pageNo + 1);
     } else {
-      updateState({ loadMore: false });
+      updateState({loadMore: false});
     }
   };
 
   const listFooterComponent = () => {
-    return (
-      <View style={{ marginVertical: moderateScaleVertical(16) }}>
-      </View>
-    )
-  }
+    return <View style={{marginVertical: moderateScaleVertical(16)}}></View>;
+  };
 
   return (
     <WrapperContainer
@@ -277,8 +274,12 @@ export default function ViewAllData({ route, navigation }) {
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }
       statusBarColor={colors.backgroundGrey}>
-
-      <View style={{ flexDirection: "row", justifyContent: 'space-between', alignItems: 'center' }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
         <Header3
           leftIcon={imagePath.icBackb}
           centerTitle={data?.name}
@@ -297,7 +298,7 @@ export default function ViewAllData({ route, navigation }) {
         showsVerticalScrollIndicator={false}
         data={data}
         extraData={data}
-        ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+        ItemSeparatorComponent={() => <View style={{height: 8}} />}
         keyExtractor={(item, index) => String(index)}
         renderItem={_renderItem}
         onEndReachedThreshold={0.5}

@@ -49,9 +49,7 @@ export default function Home({route, navigation}) {
     themeToggle,
     allAddresss,
   } = useSelector((state) => state?.initBoot);
-  const {location, appMainData, dineInType} = useSelector(
-    (state) => state?.home,
-  );
+  const {location, appMainData, dineInType} = useSelector((state) => state?.home);
   console.log(appMainData, 'appMainData>appMainData');
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const addressSearch = useSelector(

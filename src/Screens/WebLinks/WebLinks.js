@@ -46,10 +46,22 @@ import {showError, showSuccess} from '../../utils/helperFunctions';
 import {androidCameraPermission} from '../../utils/permissions';
 import validator from '../../utils/validations';
 import stylesFun from './styles';
+import Accordion from 'react-native-collapsible/Accordion';
 
 let clickedIndx = null;
 let clickedItem = null;
 let isVendorLogo = false;
+
+const SECTIONS = [
+  {
+    name: 'First',
+    content: 'Lorem ipsum...',
+  },
+  {
+    name: 'Second',
+    content: 'Lorem ipsum...',
+  },
+];
 
 export default function WebLinks({navigation, route}) {
   let actionSheet = useRef();
@@ -124,6 +136,7 @@ export default function WebLinks({navigation, route}) {
       ? appData?.profile.country?.phonecode
       : '91',
     driverTagsAry: [],
+    activeSections: [],
   });
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -178,7 +191,16 @@ export default function WebLinks({navigation, route}) {
     isTermsConditions,
     callingCode,
     driverTagsAry,
+    activeSections,
   } = state;
+
+    useEffect(() => {
+    _getLocationFromParams();
+    // if (addressSearch) {
+    //   _getLocationFromParams();
+    // }
+  }, [paramData?.details]);
+
 
   useEffect(() => {
     updateState({isLoading: true});
@@ -794,7 +816,99 @@ export default function WebLinks({navigation, route}) {
     }
   };
 
-  console.log(vendorLogo, 'vendorLogoupdated');
+  const _renderSectionTitle = (section) => {
+    return (
+      <View
+        style={{
+          height: moderateScaleVertical(15),
+        }}></View>
+    );
+  };
+
+  const _renderHeader = (section) => {
+    return (
+      <View
+        style={{
+          backgroundColor: colors.white,
+          height: moderateScaleVertical(50),
+          justifyContent: 'center',
+          borderLeftWidth: 4,
+          borderLeftColor: themeColors.primary_color,
+        }}>
+        <Text
+          style={{
+            marginLeft: moderateScale(15),
+            fontFamily: fontFamily.bold,
+            fontSize: textScale(13),
+          }}>
+          {section.question}
+        </Text>
+      </View>
+    );
+  };
+
+  const _renderContent = (section) => {
+    return (
+      <View
+        style={{
+          backgroundColor: colors.white,
+          paddingHorizontal: moderateScale(20),
+          paddingBottom: moderateScaleVertical(15),
+        }}>
+        <Text
+          style={{
+            fontFamily: fontFamily.regular,
+            fontSize: textScale(11),
+          }}>
+          {section.answer}
+        </Text>
+      </View>
+    );
+  };
+
+  const _updateSections = (activeSections) => {
+    updateState({
+      activeSections: activeSections,
+    });
+  };
+
+  if (driverRegDocs?.page_detail?.primary?.type_of_form == 3) {
+    return (
+      <WrapperContainer
+        bgColor={colors.backGroundGreyD}
+        statusBarColor={colors.backGroundGreyD}>
+        <Header
+          leftIcon={
+            appStyle?.homePageLayout === 2
+              ? imagePath.backArrow
+              : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+              ? imagePath.icBackb
+              : imagePath.back
+          }
+          centerTitle={(paramData && paramData?.title) || ''}
+          headerStyle={
+            isDarkMode
+              ? {backgroundColor: MyDarkTheme.colors.background}
+              : {backgroundColor: colors.backGroundGreyD}
+          }
+        />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Accordion
+            sections={driverRegDocs?.faq_data}
+            activeSections={activeSections}
+            renderSectionTitle={_renderSectionTitle}
+            renderHeader={_renderHeader}
+            renderContent={_renderContent}
+            onChange={_updateSections}
+            containerStyle={{
+              paddingHorizontal: moderateScale(15),
+            }}
+          />
+          <View style={{height: 50}} />
+        </ScrollView>
+      </WrapperContainer>
+    );
+  }
 
   const _getLocationFromParams = () => {
     if (
@@ -814,12 +928,6 @@ export default function WebLinks({navigation, route}) {
     }
   };
 
-  useEffect(() => {
-    _getLocationFromParams();
-    // if (addressSearch) {
-    //   _getLocationFromParams();
-    // }
-  }, [paramData?.details]);
 
   return (
     <WrapperContainer

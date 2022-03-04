@@ -502,4 +502,5 @@ export default {
   icVoice: require('../assets/images/icVoice.png'),
   icDropdown4: require('../assets/images/ic_drpdwn4.png'),
   icMegaSafe: require('../assets/images/ic_label.png'),
+  icPhoto: require('../assets/images/ic_photo.png'),
 };

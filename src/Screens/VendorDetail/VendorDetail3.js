@@ -132,7 +132,20 @@ export default function VendorDetail3({ navigation, route }) {
     }
     if (item?.redirect_to == staticStrings.VENDOR) {
       navigation.navigate(navigationStrings.VENDOR, { data: item });
+      return;
     }
+    navigation.navigate(navigationStrings.PRODUCT_LIST, {
+      data: {
+        id: item.id,
+        rootProducts: vendorParams?.rootProducts,
+        vendor: vendorParams?.rootProducts ? true : false,
+        vendorData: vendorParams?.item,
+        categoryInfo: item,
+        name: item.name,
+        isVendorList: false,
+        category_slug: item?.slug,
+      },
+    });
     return;
   };
 

@@ -810,10 +810,10 @@ Amount`,
   INSUFFICIENT_FUNDS_IN_WALLET: 'Insufficient funds in wallet',
   USER_DOES_NOT_EXIST: 'User doest not exist',
   INVALID_CARD_DETAILS: 'Invalid card details',
-   SLOT_NOT_AVAILABAL: 'Slot not available please select another date',
+  SLOT_NOT_AVAILABAL: 'Slot not available please select another date',
   TIME_SLOT: 'Time Slots',
   RATING: 'Rating',
-  CURRENTLYUNAVAILABLE:'Currently Unavailable',
+  CURRENTLYUNAVAILABLE: 'Currently Unavailable',
   TRANSFER_FUNDS: 'Transfer Funds',
   PRODUCT: 'Product',
   WE_ARE_NOT_ACCEPTING:
@@ -830,6 +830,10 @@ Amount`,
   CLEAR_FILTER:"Clear Filter",
   PRICE_RANGE:"Price Range",
   CONTAINERCHARGES:'Container charges',
-  TOTALCONTAINERCHARGES:"Total Container Charges"
-
+  TOTALCONTAINERCHARGES:"Total Container Charges",
+  UPLOAD: 'Upload',
+  PLEASE_UPLOAD: 'Please upload',
+  SORRY_MSG: `Sorry, we currently don’t deliver here but we are
+  expanding quickly. Kindly check back soon!`,
+  TOTAL_DELIVERY_FEE:"Total delivery fee",
 };
