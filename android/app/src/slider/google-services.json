@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "934809950192",
+    "project_id": "slider-90bd6",
+    "storage_bucket": "slider-90bd6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934809950192:android:dbc9afe9979784a528af35",
+        "android_client_info": {
+          "package_name": "com.app.slider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "934809950192-24mh10lbrpfj76h5pfvaipveko94pgd1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.slider",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "934809950192-c9h6vs3aa3qi1epcbpauc8gd1b1r3s1m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.slider",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "934809950192-k1gepvdsj9va5l2eqn5u52sr1dlj9sta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.slider",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "934809950192-djq1k8s1phqknc1v4hdqkqslig5aq9dh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8wzl8VvfHjRqyeHmmGl8fCvh-SRZCwbo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "934809950192-djq1k8s1phqknc1v4hdqkqslig5aq9dh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "934809950192-0031ahsvd5g830jlsi9fhhncu10a4uhd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.slider"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -258,6 +258,8 @@ const shortCodes = {
   myRide: 'f6fb25',
   getfix: '3065fd',
   scoopaTechnologies: '3c6a7e',
+  slider: '3fea63',
+  ICare: 'd3e178',
 };
 
 const appIds = {
@@ -1288,6 +1290,14 @@ const appIds = {
   scoopaTechnologies: Platform.select({
     ios: 'com.scoopaTechnologies',
     android: 'com.scoopaTechnologies',
+  }),
+  slider: Platform.select({
+    ios: 'com.app.slider',
+    android: 'com.app.slider',
+  }),
+  ICare: Platform.select({
+    ios: 'com.codebrew.ICare',
+    android: 'com.codebrew.ICare',
   }),
 };
 

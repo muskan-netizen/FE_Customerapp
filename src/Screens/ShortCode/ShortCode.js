@@ -1661,7 +1661,19 @@ export default function ShortCode({route, navigation}) {
             shortCode: shortCodes.scoopaTechnologies,
             isShortcodePrefilled: true,
           });
-        break;
+          break;
+        case appIds.slider:
+          updateState({
+            shortCode: shortCodes.slider,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ICare:
+          updateState({
+            shortCode: shortCodes.ICare,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
