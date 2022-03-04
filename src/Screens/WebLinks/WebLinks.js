@@ -194,6 +194,14 @@ export default function WebLinks({navigation, route}) {
     activeSections,
   } = state;
 
+    useEffect(() => {
+    _getLocationFromParams();
+    // if (addressSearch) {
+    //   _getLocationFromParams();
+    // }
+  }, [paramData?.details]);
+
+
   useEffect(() => {
     updateState({isLoading: true});
     getCmsPageDetail();
@@ -901,6 +909,25 @@ export default function WebLinks({navigation, route}) {
       </WrapperContainer>
     );
   }
+
+  const _getLocationFromParams = () => {
+    if (
+      paramData?.details &&
+      paramData?.details?.formatted_address != location?.address
+    ) {
+      const address = paramData?.details?.formatted_address;
+      const res = {
+        address: address,
+        latitude: paramData?.details?.geometry?.location.lat,
+        longitude: paramData?.details?.geometry?.location.lng,
+      };
+      updateState({
+        address:address
+      })
+     
+    }
+  };
+
 
   return (
     <WrapperContainer
