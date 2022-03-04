@@ -818,4 +818,5 @@ export default {
   PRICE_RANGE: 'نطاقالسعر',
   SORRY_MSG: `عذرا ، نحن حاليا لا نوصل هنا ولكننا نقوم بذلك
   يتوسع بسرعة. يرجى التحقق مرة أخرى قريبا!`,
+  TOTAL_DELIVERY_FEE:"Total delivery fee",
 };

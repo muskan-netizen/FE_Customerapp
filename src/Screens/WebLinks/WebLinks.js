@@ -901,6 +901,31 @@ export default function WebLinks({navigation, route}) {
       </WrapperContainer>
     );
   }
+  const _getLocationFromParams = () => {
+    if (
+      paramData?.details &&
+      paramData?.details?.formatted_address != location?.address
+    ) {
+      const address = paramData?.details?.formatted_address;
+      const res = {
+        address: address,
+        latitude: paramData?.details?.geometry?.location.lat,
+        longitude: paramData?.details?.geometry?.location.lng,
+      };
+      updateState({
+        address:address
+      })
+     
+    }
+  };
+
+  useEffect(() => {
+    _getLocationFromParams();
+    // if (addressSearch) {
+    //   _getLocationFromParams();
+    // }
+  }, [paramData?.details]);
+
   return (
     <WrapperContainer
       bgColor={
@@ -1092,11 +1117,51 @@ export default function WebLinks({navigation, route}) {
               onChangeText={_onChangeText('description')}
               containerStyle={styles.containerStyle}
             />
-            <BorderTextInput
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() =>
+                navigation.navigate(navigationStrings.LOCATION, {
+                  type: 'vendorRegistration',
+                })
+              }
+              style={{
+                flexDirection: 'row',
+                height: moderateScaleVertical(49),
+                color: colors.white,
+                borderWidth: 1,
+                borderRadius: 13,
+                borderColor: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.borderLight,
+                marginBottom: 20,
+                overflow: 'hidden',
+                alignItems: 'center',
+                ...styles.containerStyle,
+              }}>
+              <Text
+                style={{
+                  flex: 1,
+                  opacity: 0.7,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.textGreyOpcaity7,
+                  fontFamily: fontFamily.medium,
+                  fontSize: textScale(14),
+                  paddingHorizontal: 8,
+                  paddingTop: 0,
+                  paddingBottom: 0,
+                  textAlign: I18nManager.isRTL ? 'right' : 'left',
+                }}>
+                {address != '' && address != null
+                  ? address
+                  : `${strings.ADDRESS}*`}
+              </Text>
+            </TouchableOpacity>
+            {/* <BorderTextInput
               placeholder={`${strings.ADDRESS}*`}
               onChangeText={_onChangeText('address')}
               containerStyle={styles.containerStyle}
-            />
+            /> */}
             <BorderTextInput
               placeholder={strings.WEBSITE}
               onChangeText={_onChangeText('website')}

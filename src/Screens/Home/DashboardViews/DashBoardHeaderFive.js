@@ -565,10 +565,11 @@ export default function DashBoardHeaderFive({
                     {
                       color: isDarkMode
                         ? MyDarkTheme.colors.text
-                        : colors.blackOpacity43,
-                        fontFamily:fontFamily.regular
+                        : colors.blackOpacity30,
+                        fontFamily:fontFamily.medium
                     },
-                  ]}>
+                  ]}
+                  >
                   {location?.address}
                 </Text>
               </View>
