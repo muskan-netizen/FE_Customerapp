@@ -12,7 +12,6 @@ export const API_BASE_URL = 'https://9303-112-196-88-218.ngrok.io/api/v1'; //din
 // export const API_BASE_URL = 'http://192.168.103.186:8005/api/v1'; // harbans
 // export const API_BASE_URL = 'https://876c-114-134-24-242.ngrok.io/api/v1'; // gourav sir
 // export const API_BASE_URL = 'http://192.168.96.127:8005/api/v1';
-
 // export const API_BASE_URL = 'https://f6da-114-134-24-242.ngrok.io/api/v1';
 
 //export const API_BASE_URL = 'https://yummiidash.com/api/v1';

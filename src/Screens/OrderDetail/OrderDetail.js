@@ -220,7 +220,7 @@ export default function OrderDetail({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res.data, 'order detail res===>');
+        console.log(res.data, 'order detail res===>>>>');
         if (
           !!res?.data?.vendors[0] &&
           res?.data?.vendors[0].order_status.current_status.title ==
@@ -1016,8 +1016,8 @@ export default function OrderDetail({navigation, route}) {
                                 : null}
 
                               {!!(
-                                !!i?.pvariant &&
-                                Number(i?.pvariant?.container_charges)
+                                !!i?.container_charges &&
+                                Number(i?.container_charges)
                               ) && (
                                 <View
                                   style={{
@@ -1039,8 +1039,8 @@ export default function OrderDetail({navigation, route}) {
                                     </Text>
                                   </View>
                                   {!!(
-                                    !!i?.pvariant &&
-                                    Number(i?.pvariant?.container_charges)
+                                    !!i?.container_charges &&
+                                    Number(i?.container_charges)
                                   ) && (
                                     <View
                                       style={{
@@ -1068,7 +1068,7 @@ export default function OrderDetail({navigation, route}) {
                                             currencies?.primary_currency?.symbol
                                           }${currencyNumberFormatter(
                                             Number(
-                                              i?.pvariant?.container_charges,
+                                              i?.container_charges,
                                             ).toFixed(2) * Number(i?.quantity),
                                           )}`}
                                         </Text>
@@ -1830,14 +1830,14 @@ export default function OrderDetail({navigation, route}) {
                 MyDarkTheme={MyDarkTheme}
               />
             )}
-          {!!cartData?.total_container_charges &&
-            cartData?.total_container_charges > 0 && (
+          {!!cartData?.vendors[0]?.total_container_charges &&
+            Number(cartData?.total_container_charges) > 0 && (
               <LeftRightText
-                leftText={strings.WALLET}
-                rightText={`- ${
+                leftText={strings.TOTALCONTAINERCHARGES}
+                rightText={`${
                   currencies?.primary_currency?.symbol
                 }${currencyNumberFormatter(
-                  Number(cartData?.total_container_charges).toFixed(2),
+                  Number(cartData?.vendors[0]?.total_container_charges).toFixed(2),
                 )}`}
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}
