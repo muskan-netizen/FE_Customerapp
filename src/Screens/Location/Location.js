@@ -162,6 +162,11 @@ export default function Location({route, navigation}) {
               addressType,
             });
           }
+          if (type == 'vendorRegistration') {
+            navigation.navigate(navigationStrings.WEBLINKS, {
+              details,
+            });
+          }
         }, 200);
       })
       .catch((err) => console.log(err, 'errorOccured'));
@@ -206,6 +211,11 @@ export default function Location({route, navigation}) {
             addressType,
           });
         }
+        if (type == 'vendorRegistration') {
+          navigation.navigate(navigationStrings.WEBLINKS, {
+            details,
+          });
+        }
       } catch (error) {
         console.log("something wen't wrong");
       }
@@ -228,6 +238,11 @@ export default function Location({route, navigation}) {
         navigation.navigate(navigationStrings.PICKUPLOCATION, {
           details,
           addressType,
+        });
+      }
+      if (type == 'vendorRegistration') {
+        navigation.navigate(navigationStrings.WEBLINKS, {
+          details,
         });
       }
     }
@@ -368,6 +383,11 @@ export default function Location({route, navigation}) {
         navigation.navigate(navigationStrings.PICKUPLOCATION, {
           details,
           addressType,
+        });
+      }
+      if (type == 'vendorRegistration') {
+        navigation.navigate(navigationStrings.WEBLINKS, {
+          details,
         });
       }
     }, 200);
