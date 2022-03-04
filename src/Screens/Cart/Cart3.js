@@ -1909,8 +1909,16 @@ function Cart({ navigation, route }) {
                                     })
                                   : null}
                               </View>
-                              {!!(!!i?.pvariant && Number(i?.pvariant?.container_charges)) && (
-                                <View style={{flexDirection: 'row',alignItems:'center',marginTop:moderateScale(2)}}>
+                              {!!(
+                                !!i?.pvariant &&
+                                Number(i?.pvariant?.container_charges)
+                              ) && (
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    marginTop: moderateScale(2),
+                                  }}>
                                   <View>
                                     <Text
                                       style={{
@@ -1924,43 +1932,43 @@ function Cart({ navigation, route }) {
                                       {`${strings.CONTAINERCHARGES} : `}
                                     </Text>
                                   </View>
-                                  {!!(!!i?.pvariant &&
-                                    Number(i?.pvariant?.container_charges)) && (
+                                  {!!(
+                                    !!i?.pvariant &&
+                                    Number(i?.pvariant?.container_charges)
+                                  ) && (
+                                    <View
+                                      style={{
+                                        marginBottom: moderateScaleVertical(2),
+                                      }}>
                                       <View
                                         style={{
-                                          marginBottom:
-                                            moderateScaleVertical(2),
+                                          marginRight: moderateScale(10),
                                         }}>
-                                        <View
-                                          style={{
-                                            marginRight: moderateScale(10),
-                                          }}>
-                                          <Text
-                                            style={
-                                              isDarkMode
-                                                ? [
-                                                    styles.cartItemWeight2,
-                                                    {
-                                                      color:
-                                                        MyDarkTheme.colors.text,
-                                                    },
-                                                  ]
-                                                : styles.cartItemWeight2
-                                            }
-                                            // numberOfLines={1}
-                                          >
-                                            {`${
-                                              currencies?.primary_currency
-                                                ?.symbol
-                                            }${currencyNumberFormatter(
-                                              Number(
-                                                i?.pvariant?.container_charges,
-                                              ).toFixed(2),
-                                            )}`}
-                                          </Text>
-                                        </View>
+                                        <Text
+                                          style={
+                                            isDarkMode
+                                              ? [
+                                                  styles.cartItemWeight2,
+                                                  {
+                                                    color:
+                                                      MyDarkTheme.colors.text,
+                                                  },
+                                                ]
+                                              : styles.cartItemWeight2
+                                          }
+                                          // numberOfLines={1}
+                                        >
+                                          {`${
+                                            currencies?.primary_currency?.symbol
+                                          }${currencyNumberFormatter(
+                                            Number(
+                                              i?.pvariant?.container_charges,
+                                            ).toFixed(2) * Number(i?.quantity),
+                                          )}`}
+                                        </Text>
                                       </View>
-                                    )}
+                                    </View>
+                                  )}
                                 </View>
                               )}
                             </View>
@@ -3162,6 +3170,29 @@ function Cart({ navigation, route }) {
               Number(
                 cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
               ).toFixed(2),
+            )}`}</Text>
+          </View>
+        )}
+
+        {!!cartData?.total_container_charges && (
+          <View style={styles.bottomTabLableValue}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles.priceItemLabel
+              }>
+              {strings.TOTALCONTAINERCHARGES}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles.priceItemLabel
+              }>{`${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(cartData?.total_container_charges).toFixed(2),
             )}`}</Text>
           </View>
         )}
