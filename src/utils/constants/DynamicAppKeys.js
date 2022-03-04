@@ -926,7 +926,7 @@ const appIds = {
     android: 'com.silvestre',
   }),
   samakeemart: Platform.select({
-    ios: 'com.samakeemart',
+    ios: 'com.app.samakeemart',
     android: 'com.samakeemart',
   }),
   seaeats: Platform.select({
