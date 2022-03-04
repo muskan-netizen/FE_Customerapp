@@ -4,6 +4,7 @@ import {
   Alert,
   I18nManager,
   Image,
+  Linking,
   Platform,
   ScrollView,
   Text,
@@ -38,7 +39,7 @@ import stylesFun from './styles';
 import ZendeskChat from '../../library/react-native-zendesk-chat';
 import Share from 'react-native-share';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import SunmiV2Printer from 'react-native-sunmi-v2-printer';
 
 export default function Account3({navigation}) {
@@ -321,7 +322,9 @@ export default function Account3({navigation}) {
               <ListItemHorizontal
                 centerContainerStyle={{flexDirection: 'row'}}
                 leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-                onPress={moveToNewScreen(navigationStrings.MY_ORDERS)}
+                onPress={moveToNewScreen(navigationStrings.MY_ORDERS, {
+                  isBack: true,
+                })}
                 iconLeft={imagePath.myOrder2}
                 centerHeading={strings.MY_ORDERS}
                 containerStyle={styles.containerStyle2}
@@ -613,7 +616,14 @@ export default function Account3({navigation}) {
           <ListItemHorizontal
             centerContainerStyle={{flexDirection: 'row'}}
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.CONTACT_US)}
+            onPress={
+              appIds.hokitch == getBundleId()
+                ? () =>
+                    Linking.openURL(
+                      'https://api.whatsapp.com/send?phone=9902792830',
+                    )
+                : moveToNewScreen(navigationStrings.CONTACT_US)
+            }
             iconLeft={imagePath.contactUs}
             centerHeading={strings.CONTACT_US}
             containerStyle={styles.containerStyle2}

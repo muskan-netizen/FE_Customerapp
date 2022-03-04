@@ -832,4 +832,6 @@ Amount`,
   PRICE_RANGE: 'Price Range',
   UPLOAD: 'Upload',
   PLEASE_UPLOAD: 'Please upload',
+  SORRY_MSG: `Sorry, we currently don’t deliver here but we are
+  expanding quickly. Kindly check back soon!`,
 };

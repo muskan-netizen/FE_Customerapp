@@ -77,6 +77,10 @@ export default ({fontFamily}) => {
       fontFamily: fontFamily.medium,
       color: colors.greyLight,
     },
+    uploadStyle: {
+      color: colors.blue,
+      fontFamily: fontFamily.medium,
+    },
   });
   return styles;
 };

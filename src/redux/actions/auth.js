@@ -31,6 +31,7 @@ import {
   UPLOAD_PHOTO,
   VENDOR_LOGIN_BY_USERNAME,
   USER_REGISTRATION_DOCUMENT,
+  GET_USER_PROFILE,
 } from '../../config/urls';
 import {apiGet, apiPost, clearUserData, setUserData} from '../../utils/utils';
 import store from '../store';
@@ -61,10 +62,10 @@ export const signUpApi = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(SIGN_UP_API, data, headers)
       .then((res) => {
-        // setUserData(res.data).then((suc) => {
-        //   saveUserData(res.data);
-        resolve(res);
-        // });
+        setUserData(res.data).then((suc) => {
+          saveUserData(res.data);
+          resolve(res);
+        });
       })
       .catch((error) => {
         reject(error);
@@ -472,3 +473,15 @@ export function userRegistrationDocument(data = {}, headers = {}) {
       });
   });
 }
+
+export const getUserProfile = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiGet(GET_USER_PROFILE, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};

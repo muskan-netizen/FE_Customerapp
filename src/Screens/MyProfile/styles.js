@@ -106,6 +106,34 @@ export default ({themeColors, fontFamily}) => {
       justifyContent: 'center',
       borderRadius: moderateScale(30),
     },
+
+    viewStyleForUploadImage: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      // justifyContent: 'space-between',
+    },
+    imageUpload: {
+      borderStyle: 'dashed',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: moderateScaleVertical(10),
+    },
+    imageStyle2: {
+      height: 100,
+      width: 100,
+      borderRadius: moderateScale(4),
+    },
+    label3: {
+      marginBottom: moderateScaleVertical(10),
+      textAlign: 'center',
+      fontSize: textScale(12),
+      fontFamily: fontFamily.medium,
+      color: colors.greyLight,
+    },
+    uploadStyle: {
+      color: colors.blue,
+      fontFamily: fontFamily.medium,
+    },
   });
   return styles;
 };

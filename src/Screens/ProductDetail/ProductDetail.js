@@ -1075,6 +1075,12 @@ export default function ProductDetail({route, navigation}) {
                       cardViewStyle={styles.cardViewStyle}
                       childView={
                         <TouchableOpacity
+                        hitSlop={{
+                          top: 40,
+                          right: 40,
+                          left: 40,
+                          bottom: 40,
+                        }}
                           onPress={() => _onAddtoWishlist(productDetailData)}>
                           {!enums.isVendorStandloneApp &&
                           productDetailData?.is_wishlist ? (

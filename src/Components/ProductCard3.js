@@ -433,8 +433,8 @@ const ProductCard3 = ({
 
           <View
             style={{
-              position: 'relative',
-              bottom: Platform.OS == 'ios' ? 10 : 0,
+              // position: 'relative',
+              // bottom: Platform.OS == 'ios' ? 10 : 0,
               flex: 1,
               justifyContent: url1 ? 'flex-start' : 'center',
             }}>

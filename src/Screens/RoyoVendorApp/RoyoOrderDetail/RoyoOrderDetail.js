@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Share,
   FlatList,
+  Linking,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
@@ -29,12 +30,32 @@ import {customMarginBottom} from '../../../utils/constants/constants';
 import {getImageUrl, showError} from '../../../utils/helperFunctions';
 import {dialCall} from '../../../utils/openNativeApp';
 import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import {isEmpty} from 'lodash';
+import FastImage from 'react-native-fast-image';
 
 const RoyoOrderDetail = (props) => {
   const {data, selectedVendor} = props.route.params;
   const {appData, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
+  const [state, setState] = useState({
+    address: '',
+    isLoadingB: false,
+    showUpcomingStatus: false,
+    current_status: data?.order_status.current_status,
+    upcoming_status: data?.order_status.upcoming_status,
+    orderInfo: {},
+    userDocumentList: [],
+  });
+  const {
+    showUpcomingStatus,
+    current_status,
+    upcoming_status,
+    isLoadingB,
+    address,
+    orderInfo,
+    userDocumentList,
+  } = state;
   const shareOptions = {
     title: 'Share via',
     message: 'some message',
@@ -80,6 +101,7 @@ const RoyoOrderDetail = (props) => {
             address: res.data.address,
             isLoadingB: false,
             orderInfo: res.data,
+            userDocumentList: res?.data?.user_document_list,
           });
         }
       })
@@ -122,28 +144,53 @@ const RoyoOrderDetail = (props) => {
       });
   };
 
-  const [state, setState] = useState({
-    address: '',
-    isLoadingB: false,
-    showUpcomingStatus: false,
-    current_status: data?.order_status.current_status,
-    upcoming_status: data?.order_status.upcoming_status,
-    orderInfo: {},
-  });
-  const {
-    showUpcomingStatus,
-    current_status,
-    upcoming_status,
-    isLoadingB,
-    address,
-    orderInfo,
-  } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const toggleUpcomingStatus = () => {
     updateState({
       showUpcomingStatus: !showUpcomingStatus,
     });
   };
+
+  const renderUserDetails = (item, index) => {
+    return (
+      <View style={{marginTop: moderateScaleVertical(15)}}>
+        <Text style={{fontFamily: fontFamily.bold, fontSize: textScale(13)}}>
+          {'• '}
+          {item?.primary?.name}
+        </Text>
+        <View style={{marginHorizontal: moderateScale(5), marginTop: 5}}>
+          {item?.file_type == 'Text' ? (
+            <Text>{item?.user_document?.file_name}</Text>
+          ) : item?.file_type == 'Image' ? (
+            <FastImage
+              source={{
+                uri: getImageUrl(
+                  item?.user_document?.image_file?.image_fit,
+                  item?.user_document?.image_file?.image_path,
+                  '500/500',
+                ),
+              }}
+              style={{height: 70, width: 70}}
+            />
+          ) : (
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL(item?.user_document?.image_file?.storage_url)
+              }>
+              <Text
+                style={{
+                  color: colors.blueColor,
+                  textDecorationLine: 'underline',
+                }}>
+                View PDF
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
+    );
+  };
+
   return (
     <WrapperContainer
       isLoading={isLoadingB}
@@ -229,9 +276,7 @@ const RoyoOrderDetail = (props) => {
                     {item?.translation?.title}
                   </Text>
                   <Text style={styles.font13Regular}>{item.quantity} Unit</Text>
-                  <Text style={styles.font14Regular}>
-                    $ {item.price} dollar
-                  </Text>
+                  <Text style={styles.font14Regular}>$ {item.price}</Text>
                 </View>
                 <Text style={styles.font16Semibold}>
                   {`$ ${item.quantity * item.price}`}{' '}
@@ -327,6 +372,11 @@ const RoyoOrderDetail = (props) => {
               {data.payment_option_title}
             </Text>
           </View>
+        </View>
+        <View style={{marginHorizontal: moderateScale(20)}}>
+          {console.log(userDocumentList, 'userDocumentList>><')}
+          {!isEmpty(userDocumentList) &&
+            userDocumentList.map(renderUserDetails)}
         </View>
         {current_status.id == 1 ? (
           <View style={styles.buttonBox}>

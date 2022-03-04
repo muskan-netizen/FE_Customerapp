@@ -1332,7 +1332,7 @@ export default function Cart({ navigation, route }) {
   const _renderRazor = () => {
     updateState({ isLoadingB: true });
     let options = {
-      description: 'Credits towards consultation',
+      description: 'Payment for your order',
       image: getImageUrl(
         appData?.profile?.logo?.image_fit,
         appData?.profile?.logo?.image_path,

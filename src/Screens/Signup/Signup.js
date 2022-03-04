@@ -40,7 +40,6 @@ import {cameraHandler} from '../../utils/commonFunction';
 import ActionSheet from 'react-native-actionsheet';
 import {androidCameraPermission} from '../../utils/permissions';
 import DocumentPicker from 'react-native-document-picker';
-import is from 'is_js';
 
 let addtionSelectedImageIndex = null;
 
@@ -159,6 +158,11 @@ export default function Signup({navigation}) {
       return;
     }
 
+    if (!email && !phoneNumber) {
+      showError(strings.ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE);
+      return;
+    }
+
     formdata.append('name', name);
     formdata.append('phone_number', phoneNumber);
     formdata.append('dial_code', callingCode.toString());
@@ -238,7 +242,6 @@ export default function Signup({navigation}) {
         console.log(res, 'THIS IS RESPONSE');
         console.log(userData, 'USERDATA AFTER THEN');
         updateState({isLoading: false});
-        return;
         if (!!res.data) {
           if (
             !!res.data?.client_preference?.verify_email &&
@@ -321,9 +324,9 @@ export default function Signup({navigation}) {
     return (
       <View
         style={{
-          marginRight: moderateScale(10),
+          marginRight: moderateScale(15),
           marginTop: moderateScale(10),
-          width: moderateScale(110),
+          width: moderateScale(95),
         }}>
         <TouchableOpacity
           onPress={() => updateImages(type, index)}
@@ -402,7 +405,6 @@ export default function Signup({navigation}) {
 
   // this funtion use for camera handle
   const cameraHandle = async (index) => {
-    // alert(addtionSelectedImageIndex);
     const permissionStatus = await androidCameraPermission();
     if (permissionStatus) {
       if (index == 0 || index == 1) {
