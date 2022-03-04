@@ -175,32 +175,33 @@ export default function MyProfile3({route, navigation}) {
             console.log(err, 'err>>>>>');
           });
       }
+      if (!isEmpty(userData?.user_document)) {
+        let textInputs = cloneDeep(
+          userData?.user_document?.filter((x) => x?.file_type == 'Text'),
+        );
+        let images = cloneDeep(
+          userData?.user_document?.filter((x) => x?.file_type == 'Image'),
+        );
+        let pdfs = cloneDeep(
+          userData?.user_document?.filter((x) => x?.file_type == 'Pdf'),
+        );
+        textInputs.map((item, index) => {
+          textInputs[index].contents = item?.user_document?.file_name;
+        });
 
-      let textInputs = cloneDeep(
-        userData?.user_document?.filter((x) => x?.file_type == 'Text'),
-      );
-      let images = cloneDeep(
-        userData?.user_document?.filter((x) => x?.file_type == 'Image'),
-      );
-      let pdfs = cloneDeep(
-        userData?.user_document?.filter((x) => x?.file_type == 'Pdf'),
-      );
-      textInputs.map((item, index) => {
-        textInputs[index].contents = item?.user_document?.file_name;
-      });
-
-      images.map((item, index) => {
-        images[index].value = item?.user_document?.image_file?.storage_url;
-      });
-      pdfs.map((item, index) => {
-        pdfs[index].filename = item?.user_document?.file_original_name;
-        pdfs[index].value = item?.user_document?.image_file?.storage_url;
-      });
-      updateState({
-        addtionalTextInputs: textInputs,
-        addtionalImages: images,
-        addtionalPdfs: pdfs,
-      });
+        images.map((item, index) => {
+          images[index].value = item?.user_document?.image_file?.storage_url;
+        });
+        pdfs.map((item, index) => {
+          pdfs[index].filename = item?.user_document?.file_original_name;
+          pdfs[index].value = item?.user_document?.image_file?.storage_url;
+        });
+        updateState({
+          addtionalTextInputs: textInputs,
+          addtionalImages: images,
+          addtionalPdfs: pdfs,
+        });
+      }
     }, []),
   );
 
