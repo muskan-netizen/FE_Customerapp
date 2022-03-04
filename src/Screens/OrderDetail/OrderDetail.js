@@ -1229,6 +1229,40 @@ export default function OrderDetail({navigation, route}) {
               )}`}</Text>
             </View>
           )}
+            {!!Number(item?.total_container_charges) && (
+            <View style={styles.itemPriceDiscountTaxView}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                        styles.priceItemLabel,
+                        {
+                          color: MyDarkTheme.colors.text,
+                          fontSize: textScale(14),
+                        },
+                      ]
+                    : styles.priceItemLabel
+                }>
+                {strings.CONTAINER_CHARGES}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                        styles.priceItemLabel,
+                        {
+                          color: MyDarkTheme.colors.text,
+                          fontSize: textScale(14),
+                        },
+                      ]
+                    : styles.priceItemLabel
+                }>{`${
+                currencies?.primary_currency?.symbol
+              } ${currencyNumberFormatter(
+                Number(item?.total_container_charges ? item?.total_container_charges : 0).toFixed(2),
+              )}`}</Text>
+            </View>
+          )}
           <View style={styles.itemPriceDiscountTaxView}>
             <Text
               style={{
