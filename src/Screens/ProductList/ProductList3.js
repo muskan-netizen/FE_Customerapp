@@ -1708,7 +1708,7 @@ export default function Products({ route, navigation }) {
   };
 
   const onPressMenuOption = (index) => {
-    console.log("index+++",index)
+    console.log("index+++", index)
     activeIdx = index;
     let cells = [];
     cloneSectionList.forEach((el, ind) => {
@@ -2457,7 +2457,7 @@ export default function Products({ route, navigation }) {
                     }
                     size="small"
                     onToggle={() => {
-                      playHapticEffect(hapticEffects.impactLight);
+                      // playHapticEffect(hapticEffects.impactLight);
                       const updatedArr = ProductTags.map((el, idx) => {
                         console.log(el);
                         if (idx === index) {
@@ -2830,7 +2830,7 @@ export default function Products({ route, navigation }) {
               }
             });
             let hight = Number(cells.length) * 160;
-            playHapticEffect(hapticEffects.rigid);
+            // playHapticEffect(hapticEffects.rigid);
             // updateState({MenuModalVisible: !MenuModalVisible});
             sectionListRef.current.sectionList.current.scrollToLocation({
               animated: true,
@@ -2950,12 +2950,10 @@ export default function Products({ route, navigation }) {
   };
 
   const onMenuTap = () => {
-    playHapticEffect(hapticEffects.impactLight);
+    // playHapticEffect(hapticEffects.impactLight);
     updateState({ MenuModalVisible: !MenuModalVisible });
 
   }
-
-
 
   let uri1 = categoryInfo?.banner?.image_fit || categoryInfo?.icon?.image_fit;
   let uri2 = categoryInfo?.banner?.image_path || categoryInfo?.icon?.image_path;
@@ -3226,6 +3224,7 @@ export default function Products({ route, navigation }) {
         {!!categoryInfo?.is_show_products_with_category ? (
           <Animatable.View style={{ flex: 1 }}>
             <SectionList
+              onViewableItemsChanged={({ viewableItems }) => console.log("viewableItemsviewableItems")}
               onScroll={onScroll}
               ref={sectionListRef}
               showsVerticalScrollIndicator={false}
