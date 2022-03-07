@@ -1492,7 +1492,7 @@ export default function Products({ route, navigation }) {
 
   const renderProduct = ({ item, index }) => {
     return (
-      <Animatable.View 
+      <Animatable.View
       // animation={'slideInUp'} delay={index * 5}
       >
         <ProductCard3
@@ -1708,6 +1708,7 @@ export default function Products({ route, navigation }) {
   };
 
   const onPressMenuOption = (index) => {
+    console.log("index+++",index)
     activeIdx = index;
     let cells = [];
     cloneSectionList.forEach((el, ind) => {
@@ -1715,16 +1716,24 @@ export default function Products({ route, navigation }) {
         cells.push(...el.data);
       }
     });
-    let hight = Number(cells.length) * moderateScaleVertical(200);
-    playHapticEffect(hapticEffects.rigid);
+    // let hight = Number(cells.length) * moderateScaleVertical(200);
+    // playHapticEffect(hapticEffects.rigid);
     updateState({ MenuModalVisible: !MenuModalVisible });
-    sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
-      {
-        x: hight + 200,
-        y: hight + 200,
-        animated: true,
-      },
-    );
+    console.log("sectionListRef", sectionListRef)
+    sectionListRef.current.sectionList.current.scrollToLocation({
+      animated: true,
+      sectionIndex: activeIdx,
+      itemIndex: 1,
+      viewPosition: 0.5
+    })
+    // sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
+    //   {
+    //     x: hight + 200,
+    //     y: hight + 200,
+    //     animated: true,
+    //   },
+    // );
+
   };
 
   const rightIconPress = () => {
@@ -2823,13 +2832,19 @@ export default function Products({ route, navigation }) {
             let hight = Number(cells.length) * 160;
             playHapticEffect(hapticEffects.rigid);
             // updateState({MenuModalVisible: !MenuModalVisible});
-            sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
-              {
-                x: hight + 200,
-                y: hight + 200,
-                animated: true,
-              },
-            );
+            sectionListRef.current.sectionList.current.scrollToLocation({
+              animated: true,
+              sectionIndex: activeIdx,
+              itemIndex: 1,
+              viewPosition: 0.5
+            })
+            // sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
+            //   {
+            //     x: hight + 200,
+            //     y: hight + 200,
+            //     animated: true,
+            //   },
+            // );
           }}>
           <Text
             style={{
@@ -2934,6 +2949,12 @@ export default function Products({ route, navigation }) {
     }
   };
 
+  const onMenuTap = () => {
+    playHapticEffect(hapticEffects.impactLight);
+    updateState({ MenuModalVisible: !MenuModalVisible });
+
+  }
+
 
 
   let uri1 = categoryInfo?.banner?.image_fit || categoryInfo?.icon?.image_fit;
@@ -2953,6 +2974,7 @@ export default function Products({ route, navigation }) {
       categoryInfo?.translation[0]?.meta_description);
 
   var itemHeights = [];
+
   const getItemLayout = (data, index) => {
     const length = itemHeights[index];
     const offset = itemHeights.slice(0, index).reduce((a, c) => a + c, 0);
@@ -3214,7 +3236,7 @@ export default function Products({ route, navigation }) {
               keyExtractor={(item, index) => index}
               // tabBarStyle={styles.tabBar}
               // ItemSeparatorComponent={() => <View style={styles.separator} />}
-
+              // getItemLayout={getItemLayout}
               renderTab={renderSectionTab}
               renderItem={renderSectionItem}
               ListFooterComponent={() => (
@@ -3224,6 +3246,8 @@ export default function Products({ route, navigation }) {
               ListEmptyComponent={
                 <NoDataFound isLoading={isLoading} containerStyle={{}} />
               }
+              onScrollToIndexFailed={(info) => console.log('info index failed', info)}
+              initialNumToRender={1000}
             />
           </Animatable.View>
         ) : (
@@ -3385,10 +3409,7 @@ export default function Products({ route, navigation }) {
               : false
           }
           isMenuBtnShow={categoryInfo?.is_show_products_with_category}
-          onMenuTap={() => {
-            playHapticEffect(hapticEffects.impactLight);
-            updateState({ MenuModalVisible: !MenuModalVisible });
-          }}
+          onMenuTap={onMenuTap}
           isLoading={btnLoader}
           sectionListData={sectionListData}
         // btnStyle={
