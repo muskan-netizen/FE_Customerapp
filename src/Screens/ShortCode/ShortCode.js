@@ -1543,6 +1543,42 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
         break;
+        case appIds.dbairro:
+          updateState({
+            shortCode: shortCodes.dbairro,
+            isShortcodePrefilled: true,
+          });
+        break;
+        case appIds.knockknock:
+          updateState({
+            shortCode: shortCodes.knockknock,
+            isShortcodePrefilled: true,
+          });
+        break;
+        case appIds.qrider:
+          updateState({
+            shortCode: shortCodes.qrider,
+            isShortcodePrefilled: true,
+          });
+        break;
+        case appIds.dlvrd:
+          updateState({
+            shortCode: shortCodes.dlvrd,
+            isShortcodePrefilled: true,
+          });
+        break;
+        case appIds.delivery:
+          updateState({
+            shortCode: shortCodes.delivery,
+            isShortcodePrefilled: true,
+          });
+        break;
+        case appIds.timHomeServices:
+          updateState({
+            shortCode: shortCodes.timHomeServices,
+            isShortcodePrefilled: true,
+          });
+        break;
       }
     })();
   }, []);

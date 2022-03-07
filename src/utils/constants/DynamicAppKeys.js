@@ -238,6 +238,12 @@ const shortCodes = {
   localdropoff: '960a1f',
   ubi: '085703',
   scoopaTechnologies:'3c6a7e',
+  dbairro:'c1dfa6',
+  knockknock:'ee66a0',
+  qrider:'b715e7',
+  dlvrd:'525456',
+  delivery:'d477fd',
+  timHomeServices:'ab2892',
 };
 
 const appIds = {
@@ -1188,6 +1194,30 @@ const appIds = {
   scoopaTechnologies: Platform.select({
     ios: 'com.scoopaTechnologies',
     android: 'com.scoopaTechnologies',
+  }),
+  dbairro: Platform.select({
+    ios: 'com.dbairro',
+    android: 'com.dbairro',
+  }),
+  knockknock: Platform.select({
+    ios: 'com.knockknock',
+    android: 'com.knockknock',
+  }),
+  qrider: Platform.select({
+    ios: 'com.qrider',
+    android: 'com.qrider',
+  }),
+  dlvrd: Platform.select({
+    ios: 'com.dlvrd',
+    android: 'com.dlvrd',
+  }),
+  delivery: Platform.select({
+    ios: 'com.delivery',
+    android: 'com.delivery',
+  }),
+  timHomeServices: Platform.select({
+    ios: 'com.timHomeServices',
+    android: 'com.timHomeServices',
   }),
 };
 

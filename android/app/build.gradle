@@ -2631,6 +2631,66 @@ android {
          resValue "string", "app_name", "Scoopa Technologies"
          resValue "string", "host_name", ""
          }
+         dbairro{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.dbairro'
+         resValue "string", "app_name", "Dbairro"
+         resValue "string", "host_name", ""
+         }
+         knockknock{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.knockknock'
+         resValue "string", "app_name", "Knockknock"
+         resValue "string", "host_name", ""
+         }
+         qrider{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.qrider'
+         resValue "string", "app_name", "Qrider"
+         resValue "string", "host_name", ""
+         }
+         dlvrd{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.dlvrd'
+         resValue "string", "app_name", "Dlvrd"
+         resValue "string", "host_name", ""
+         }
+         delivery{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.delivery'
+         resValue "string", "app_name", "Delivery"
+         resValue "string", "host_name", ""
+         }
+         timHomeServices{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.timHomeServices'
+         resValue "string", "app_name", "TimHomeServices"
+         resValue "string", "host_name", ""
+         }
 
     }
 }
