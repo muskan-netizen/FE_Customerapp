@@ -276,10 +276,14 @@ const RoyoOrderDetail = (props) => {
                     {item?.translation?.title}
                   </Text>
                   <Text style={styles.font13Regular}>{item.quantity} Unit</Text>
-                  <Text style={styles.font14Regular}>$ {item.price}</Text>
+                  <Text style={styles.font14Regular}>
+                    {currencies?.primary_currency?.symbol} {item.price}
+                  </Text>
                 </View>
                 <Text style={styles.font16Semibold}>
-                  {`$ ${item.quantity * item.price}`}{' '}
+                  {`${currencies?.primary_currency?.symbol} ${
+                    item.quantity * item.price
+                  }`}{' '}
                 </Text>
               </View>
             );
@@ -291,19 +295,23 @@ const RoyoOrderDetail = (props) => {
         <View style={{margin: moderateScaleVertical(16)}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>Subtotal</Text>
-            <Text style={styles.font15Semibold}>${data.payable_amount}</Text>
+            <Text style={styles.font15Semibold}>
+              {currencies?.primary_currency?.symbol}
+              {data.payable_amount}
+            </Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>Delivery fee</Text>
             <Text style={styles.font15Semibold}>
-              ${data.total_delivery_fee}
+              {currencies?.primary_currency?.symbol}
+              {data.total_delivery_fee}
             </Text>
           </View>
           <View style={styles.dashLine} />
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>Total</Text>
             <Text style={{...styles.font15Semibold, color: colors.themeColor2}}>
-              {`$ ${
+              {`${currencies?.primary_currency?.symbol} ${
                 parseFloat(data.payable_amount) +
                 parseFloat(data.total_delivery_fee)
               }`}

@@ -227,7 +227,10 @@ const RoyoTransactions = (props) => {
         imageAlongwithTitle={imagePath.dropdownTriangle}
       />
       <View style={styles.headerBox}>
-        <Text style={styles.font28Semibold}>$ {totalAmtRecieved}</Text>
+        <Text style={styles.font28Semibold}>
+          {currencies?.primary_currency?.symbol}{' '}
+          {Number(totalAmtRecieved).toFixed(2)}
+        </Text>
         <Text style={styles.font14Semibold}>AMOUNT RECIEVED</Text>
       </View>
 

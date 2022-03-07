@@ -701,7 +701,10 @@ const RoyoHome = (props) => {
                   <Text style={{...styles.font13Regular, color: '#2E3E3A5f'}}>
                     Total revenue (Delivered order)
                   </Text>
-                  <Text style={styles.font16Bold}>${totalRevenue}</Text>
+                  <Text style={styles.font16Bold}>
+                    {currencies?.primary_currency?.symbol}
+                    {Number(totalRevenue).toFixed(2)}
+                  </Text>
                 </View>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                   {console.log('labelslabelslabels', labels)}
@@ -712,7 +715,7 @@ const RoyoHome = (props) => {
                     data={barData}
                     width={labels.length > 6 ? BarWidth() : boxWidth()}
                     height={moderateScaleVertical(250)}
-                    yAxisLabel="$"
+                    yAxisLabel={currencies?.primary_currency?.symbol}
                     yAxisInterval={2}
                     chartConfig={chartConfig}
                     verticalLabelRotation={0}

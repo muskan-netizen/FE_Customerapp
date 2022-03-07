@@ -147,6 +147,7 @@ export default function WebLinks({navigation, route}) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily});
   const commonStyles = commonStylesFun({fontFamily});
+  const {location, appMainData, dineInType} = useSelector((state) => state?.home);
 
   const {
     cca2,
@@ -924,7 +925,6 @@ export default function WebLinks({navigation, route}) {
       updateState({
         address:address
       })
-     
     }
   };
 

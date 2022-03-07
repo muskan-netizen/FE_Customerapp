@@ -221,7 +221,9 @@ const RoyoProducts = (props) => {
               marginTop: moderateScaleVertical(4),
             }}>
             {item.variant[0]?.price
-              ? `$ ${Number(item.variant[0]?.price).toFixed(2)}`
+              ? `${currencies?.primary_currency?.symbol} ${Number(
+                  item.variant[0]?.price,
+                ).toFixed(2)}`
               : ''}
           </Text>
         </View>
@@ -634,7 +636,6 @@ const RoyoProducts = (props) => {
           btnTextStyle={{
             color: colors.white,
           }}
-          btnTextStyle={{color: colors.white}}
           btnText={strings.ADD_PRODUCT}
         />
       </View>
