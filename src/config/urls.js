@@ -1,7 +1,7 @@
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1';  //sales demo
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
@@ -49,7 +49,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://tranzit.app/api/v1';
 // export const API_BASE_URL = 'https://orders.halalhmc.org/api/v1';
 // export const API_BASE_URL = 'https://tranzonline.com/api/v1';
-// export const API_BASE_URL = 'https://hellodeliver.in/api/v1';
+export const API_BASE_URL = 'https://hellodeliver.in/api/v1';
 // export const API_BASE_URL = 'https://yohopartner.com/api/v1'
 // export const API_BASE_URL = 'https://swiftandvalu.com/api/v1';
 // export const API_BASE_URL = 'https://baytukom.royoorders.com/api/v1';
