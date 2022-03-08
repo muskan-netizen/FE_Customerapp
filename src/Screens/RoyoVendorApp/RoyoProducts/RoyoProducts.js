@@ -63,7 +63,7 @@ const RoyoProducts = (props) => {
     productListData: [],
     category_list: [],
     categoryName: '',
-    topTabs: ['Products', 'Categories'],
+    topTabs: [strings.PRODUCTS, strings.CATEGORIES],
     isAddProductModal: false,
     productName: '',
     productSKU: '',
@@ -183,7 +183,7 @@ const RoyoProducts = (props) => {
 
             {/* </View> */}
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={styles.font16Semibold}>In Stock</Text>
+              <Text style={styles.font16Semibold}>{strings.IN_STOCK}</Text>
               <TouchableOpacity
                 onPress={() => updateIsLiveStatus(item.id, item.is_live)}>
                 <Image
@@ -221,7 +221,9 @@ const RoyoProducts = (props) => {
               marginTop: moderateScaleVertical(4),
             }}>
             {item.variant[0]?.price
-              ? `$ ${Number(item.variant[0]?.price).toFixed(2)}`
+              ? `${currencies?.primary_currency?.symbol} ${Number(
+                  item.variant[0]?.price,
+                ).toFixed(2)}`
               : ''}
           </Text>
         </View>
@@ -411,7 +413,7 @@ const RoyoProducts = (props) => {
 
   const checkValidations = () => {
     if (productName == '') {
-      alert('Please enter product name');
+      alert(strings.PLEASE_ENTER_PRODUCT_NAME);
       return false;
     } else if (isEmpty(selectedVendorCategory)) {
       alert('Please select category');
@@ -512,7 +514,7 @@ const RoyoProducts = (props) => {
             marginTop: moderateScale(20),
           }}>
           <TextInputWithUnderlineAndLabel
-            label={'Product Name'}
+            label={strings.PRODUCT_NAME}
             labelStyle={styles.labelStyle}
             placeholder={''}
             value={productName}
@@ -531,7 +533,7 @@ const RoyoProducts = (props) => {
             autoFocus
           />
           <View style={{flex: 0.56}}>
-            <Text style={styles.labelStyle}>Category</Text>
+            <Text style={styles.labelStyle}>{strings.CATEGORY}</Text>
             <TouchableOpacity
               activeOpacity={0.7}
               onPress={() => {
@@ -543,7 +545,7 @@ const RoyoProducts = (props) => {
               <Text style={styles.labelStyle}>
                 {!isEmpty(selectedVendorCategory)
                   ? selectedVendorCategory.hierarchy
-                  : 'Select a category'}
+                  : strings.SELECT_CATEGORY}
               </Text>
               <Image source={imagePath.icDropdown} />
             </TouchableOpacity>
@@ -596,7 +598,7 @@ const RoyoProducts = (props) => {
           </View>
         </View>
         <TextInputWithUnderlineAndLabel
-          label={`SKU ( a-z, A-Z,0-9,-,…)`}
+          label={strings.SKU}
           labelStyle={styles.labelStyle}
           placeholder={'xyz.LocalMarket.Tshirt'}
           value={productSKU}
@@ -610,9 +612,9 @@ const RoyoProducts = (props) => {
           mainStyle={{marginTop: moderateScale(5)}}
         />
         <TextInputWithUnderlineAndLabel
-          label={`Url Slug`}
+          label={strings.URL_SLUG}
           labelStyle={styles.labelStyle}
-          placeholder={'Slug'}
+          placeholder={strings.SLUG}
           value={productSlug}
           onChangeText={(text) => {
             updateState({
@@ -634,7 +636,6 @@ const RoyoProducts = (props) => {
           btnTextStyle={{
             color: colors.white,
           }}
-          btnTextStyle={{color: colors.white}}
           btnText={strings.ADD_PRODUCT}
         />
       </View>
