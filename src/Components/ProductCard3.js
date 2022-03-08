@@ -492,12 +492,12 @@ const ProductCard3 = ({
                         />
                       ) : (
 
-                        <Animatable.View style={{overflow:'hidden'}}>
+                        <Animatable.View style={{ overflow: 'hidden' }}>
                           {isVisibleText ? (
                             <Animatable.Text
-                            key={String(qtyText)}
-                            animation={ isAdd? 'slideInUp': 'slideInDown'}
-                            // easing={'ease-out-sine'}
+                              key={String(qtyText)}
+                              animation={isAdd ? 'slideInUp' : 'slideInDown'}
+                              // easing={'ease-out-sine'}
                               // animation={
                               //   isIncrement
                               //     ? isVisibleTextSlideUp
@@ -516,7 +516,7 @@ const ProductCard3 = ({
                                 color: themeColors.primary_color,
                                 // height: moderateScale(100),
                                 marginHorizontal: moderateScale(8),
-                
+
 
                               }}>
                               {/* {qtyText || data?.qty || totalProductQty} */}

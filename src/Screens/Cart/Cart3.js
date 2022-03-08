@@ -629,6 +629,7 @@ function Cart({ navigation, route }) {
   const checkPaymentOptions = (res) => {
     let paymentId = res?.data?.payment_option_id;
     setSelectedPayment(selectedPayment)
+    console.log("selected payment id",selectedPayment)
 
     let paymentData = {
       total_payable_amount: (
@@ -640,6 +641,7 @@ function Cart({ navigation, route }) {
       payment_option_id: selectedPayment?.id,
       orderDetail: res.data,
       redirectFrom: 'cart',
+      selectedPayment: selectedPayment
     };
     if (
       !!paymentId &&
@@ -705,6 +707,11 @@ function Cart({ navigation, route }) {
       case 20: //AuthorizeNet Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.KONGOPAY, paymentData);
+        break;
+
+        case 22: //AuthorizeNet Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.AVENUE, paymentData);
         break;
       default:
         if (

@@ -99,14 +99,14 @@ export default function Wallet({navigation}) {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       (event) => {
-        console.log('my events', event);
+        // console.log('my events', event);
         updateState({keyboardHeight: event.endCoordinates.height});
       },
     );
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       (event) => {
-        console.log('my events', event);
+        // console.log('my events', event);
         updateState({keyboardHeight: 0});
       },
     );
