@@ -1,4 +1,7 @@
-import {cloneDeep, debounce, update} from 'lodash';
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {BlurView} from '@react-native-community/blur';
+import Clipboard from '@react-native-community/clipboard';
+import _, {cloneDeep, debounce} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
@@ -6,38 +9,37 @@ import {
   I18nManager,
   Image,
   ImageBackground,
-  Platform,
-  RefreshControl,
   SafeAreaView,
-  StatusBar,
+  ScrollView,
   Text,
   TouchableOpacity,
-  Vibration,
+  TouchableWithoutFeedback,
   View,
-  ScrollView,
-  Modal,
 } from 'react-native';
-import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import * as Animatable from 'react-native-animatable';
+import {screenWidth} from 'react-native-calendars/src/expandableCalendar/commons';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
+import Share from 'react-native-share';
+import Toast from 'react-native-simple-toast';
 import SectionList from 'react-native-tabs-section-list';
 import {useSelector} from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
-import BottomSheetModal from '../../Components/BottomSheetModal';
 import BottomSlideModal from '../../Components/BottomSlideModal';
-import BrowseMenuButton from '../../Components/BrowseMenuButton';
 import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
+import DifferentAddOns from '../../Components/DifferentAddOns ';
+import FilterComp from '../../Components/FilterComp';
 import GradientCartView from '../../Components/GradientCartView';
 import HomeServiceVariantAddons from '../../Components/HomeServiceVariantAddons';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
-import ProductListLoader from '../../Components/Loaders/ProductListLoader';
+import HomeLoader from '../../Components/Loaders/HomeLoader';
+import ProductListLoader3 from '../../Components/Loaders/ProductListLoader3';
 import NoDataFound from '../../Components/NoDataFound';
 import ProductCard3 from '../../Components/ProductCard3';
+import RepeatModal from '../../Components/RepeatModal';
 import RoundImg from '../../Components/RoundImg';
 import SearchBar from '../../Components/SearchBar';
 import VariantAddons from '../../Components/VariantAddons';
@@ -48,44 +50,66 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc, {hitSlopProp} from '../../styles/commonStyles';
-import * as NavigationService from '../../navigation/NavigationService';
+import {SvgUri} from 'react-native-svg';
 import {
   height,
   moderateScale,
   moderateScaleVertical,
-  StatusBarHeight,
   textScale,
   width,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {
   checkEvenOdd,
   getImageUrl,
   hapticEffects,
   playHapticEffect,
-  playVibration,
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
 import {removeItem} from '../../utils/utils';
 import stylesFunc from './styles';
-import _ from 'lodash';
-import ProductListLoader3 from '../../Components/Loaders/ProductListLoader3';
-import Clipboard from '@react-native-community/clipboard';
-import Toast from 'react-native-simple-toast';
-import RepeatModal from '../../Components/RepeatModal';
-import DifferentAddOns from '../../Components/DifferentAddOns ';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
-import FilterComp from '../../Components/FilterComp';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
-import Share from 'react-native-share';
 
 let timeOut = undefined;
 
 var tempQty = 0;
 
 let activeIdx = 0;
+
+const filtersData = [
+  {
+    id: -2,
+    label: strings.SORT_BY,
+    value: [
+      {
+        id: 1,
+        label: strings.LOW_TO_HIGH,
+        labelValue: 'low_to_high',
+        parent: strings.SORT_BY,
+      },
+      {
+        id: 2,
+        label: strings.HIGH_TO_LOW,
+        labelValue: 'high_to_low',
+        parent: strings.SORT_BY,
+      },
+      {
+        id: 3,
+        label: strings.POPULARITY,
+        labelValue: 'popularity',
+        parent: strings.SORT_BY,
+      },
+      {
+        id: 4,
+        label: strings.MOST_PURCHASED,
+        labelValue: 'most_purcahsed',
+        parent: strings.SORT_BY,
+      },
+    ],
+  },
+];
 
 export default function Products({route, navigation}) {
   const bottomSheetRef = useRef(null);
@@ -106,100 +130,28 @@ export default function Products({route, navigation}) {
 
   let sectionListRef = useRef(null);
   const [state, setState] = useState({
-    isVisibleModal: false,
-    isOffline: false,
-    isLoading: true,
-    isLoadingB: false,
+    sortFilters: filtersData,
+    searchInput: '',
     pageNo: 1,
-    limit: 2,
-    isRefreshing: false,
-    selectedSbCategoryID: -1,
-    productListId: data,
-    productListData: [],
-    categoryInfo: null,
-    click: false,
-    filterData: [],
-    brandData: [],
-    allFilters: [],
-    isVisibleModal: false,
-    updateQtyLoader: false,
-    showShimmer: true,
-    typeId: null,
-    selectedSection: null,
-    sortFilters: [
-      {
-        id: -2,
-        label: strings.SORT_BY,
-        value: [
-          {
-            id: 1,
-            label: strings.LOW_TO_HIGH,
-            labelValue: 'low_to_high',
-            parent: strings.SORT_BY,
-          },
-          {
-            id: 2,
-            label: strings.HIGH_TO_LOW,
-            labelValue: 'high_to_low',
-            parent: strings.SORT_BY,
-          },
-          {
-            id: 3,
-            label: strings.POPULARITY,
-            labelValue: 'popularity',
-            parent: strings.SORT_BY,
-          },
-          {
-            id: 4,
-            label: strings.MOST_PURCHASED,
-            labelValue: 'most_purcahsed',
-            parent: strings.SORT_BY,
-          },
-        ],
-      },
-    ],
-    sleectdBrands: [],
-    selectedVariants: [],
-    selectedOptions: [],
-    slectedSortBy: [],
+    limit: 10,
+    selectedItemID: -1,
+    selectedDiffAdsOnId: 0,
     minimumPrice: 0,
     maximumPrice: 50000,
-    checkForMinimumPriceChange: false,
-    checkForMaximumPriceChange: false,
-    showFilterSlectedIcon: false,
-    isLoadingC: false,
-    selectedCategory: null,
-    AnimatedHeaderValue: false,
-    selectedCartItem: null,
+    typeId: null,
     cartId: null,
-    isSearch: false,
-    searchInput: '',
-    btnLoader: false,
-    selectedItemID: -1,
     selectedItemIndx: null,
-    vendorCategories: null,
-    vendorCategorySelectedIndx: 0,
-    vendorCategoryItms: null,
-    sectionListData: [],
-    numberOfQtyToBeAdd: 0,
-    searchedRecords: [],
-    cloneSectionList: [],
+    selectedSortFilter: null,
+    updateQtyLoader: false,
+    isSearch: false,
+    isLoadingC: false,
+    AnimatedHeaderValue: false,
+    btnLoader: false,
     offersModalVisible: false,
     MenuModalVisible: false,
-    isVegEnabled: true,
-    ProductTags: [],
     updateTagFilter: false,
-    offerList: [],
-    repeatItems: null,
-    differentAddsOns: [],
-    selectedDiffAdsOnItem: null,
-    selectedDiffAdsOnSection: null,
-    diffAddOnCartIdProductId: null,
-    storeLocalQty: null,
     differentAddsOnsModal: false,
-    selectedDiffAdsOnId: 0,
     isShowFilter: false,
-    selectedSortFilter: null,
   });
 
   const {
@@ -217,69 +169,52 @@ export default function Products({route, navigation}) {
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   const {
-    selectedCategory,
     isLoadingC,
-    isLoading,
-    isOffline,
     pageNo,
     limit,
-    isRefreshing,
-    selectedSbCategoryID,
-    productListId,
-    categoryInfo,
-    productListData,
-    isLoadingB,
-    filterData,
-    brandData,
-    allFilters,
-    sortFilters,
-    sleectdBrands,
-    selectedVariants,
-    selectedOptions,
-    slectedSortBy,
     minimumPrice,
     maximumPrice,
-    checkForMinimumPriceChange,
-    checkForMaximumPriceChange,
-    showFilterSlectedIcon,
     AnimatedHeaderValue,
-    selectedCartItem,
-    isVisibleModal,
     updateQtyLoader,
     cartId,
-    showShimmer,
     isSearch,
     searchInput,
     btnLoader,
     selectedItemID,
     selectedItemIndx,
-    vendorCategories,
-    vendorCategorySelectedIndx,
-    vendorCategoryItms,
     typeId,
-    sectionListData,
-    cloneSectionList,
-    selectedSection,
-    numberOfQtyToBeAdd,
-    searchedRecords,
     offersModalVisible,
-    isVegEnabled,
     MenuModalVisible,
-    ProductTags,
     updateTagFilter,
-    offerList,
-    repeatItems,
-    differentAddsOns,
-    selectedDiffAdsOnItem,
-    selectedDiffAdsOnSection,
-    diffAddOnCartIdProductId,
-    storeLocalQty,
     differentAddsOnsModal,
     selectedDiffAdsOnId,
     isShowFilter,
     selectedSortFilter,
   } = state;
-
+  const [showShimmer, setShowShimmer] = useState(true);
+  const [isVisibleModal, setIsVisibleModal] = useState(false);
+  const [productListData, setProductListData] = useState([]);
+  const [sectionListData, setSectionListData] = useState([]);
+  const [cloneSectionList, setCloneSectionList] = useState([]);
+  const [selectedSection, setSelectedSection] = useState(null);
+  const [repeatItems, setRepeatItems] = useState(null);
+  const [selectedCartItem, setSelectedCarItems] = useState(null);
+  const [differentAddsOns, setDifferentAddsOns] = useState([]);
+  const [selectedDiffAdsOnItem, setSelectedDiffAdsOnItem] = useState(null);
+  const [selectedDiffAdsOnSection, setSelectedDiffAdsOnSection] =
+    useState(null);
+  const [diffAddOnCartIdProductId, setDiffAddOnCartIdProductId] =
+    useState(null);
+  const [filterData, setFilterData] = useState([]);
+  const [allFilters, setAllFilter] = useState([]);
+  const [ProductTags, setProductTags] = useState([]);
+  const [offerList, setOfferList] = useState([]);
+  const [categoryInfo, setCategoryInfo] = useState(null);
+  const [storeLocalQty, setStoreLocalQty] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [productListId, setProductListId] = useState(data);
+  const [isLoading, setLoading] = useState(true);
+  const [apiHitAgain, setApiHitAgain] = useState(false);
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
   const styles = stylesFunc({themeColors, fontFamily, isDarkMode, MyDarkTheme});
@@ -321,7 +256,7 @@ export default function Products({route, navigation}) {
 
   // useEffect(() => {
   //   getAllListItems();
-  // }, [pageNo, isRefreshing]);
+  // }, [pageNo]);
 
   const getAllProductTags = () => {
     actions
@@ -341,13 +276,14 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
+        console.log('product tags res', res);
         const productTagsArr = res?.data?.map((el) => {
           return {
             ...el,
             isSelected: false,
           };
         });
-        updateState({ProductTags: productTagsArr});
+        setProductTags(productTagsArr);
 
         // if (res && res.data) {
         //   updateState({allAvailableCoupons: res.data});
@@ -393,16 +329,14 @@ export default function Products({route, navigation}) {
       )
       .then((res) => {
         console.log(res, 'getProductByVendorCategoryId');
-        updateState({
-          isLoading: false,
-          isRefreshing: false,
-          categoryInfo: res?.data?.vendor,
-          filterData: res?.data?.filterData,
-          productListData:
-            pageNo == 1
-              ? res.data.products.data
-              : [...productListData, ...res?.data?.products?.data],
-        });
+        // setFilterData(res?.data?.filterData)
+        setCategoryInfo(res?.data?.vendor);
+        setLoading(false);
+        setProductListData(
+          pageNo == 1
+            ? res.data.products.data
+            : [...productListData, ...res?.data?.products?.data],
+        );
         updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
       .catch(errorMethod);
@@ -445,7 +379,7 @@ export default function Products({route, navigation}) {
           }),
         };
       });
-      updateState({allFilters: filterDataNew});
+      setAllFilter(filterDataNew);
     }
   };
 
@@ -484,50 +418,68 @@ export default function Products({route, navigation}) {
       )
       .then((res) => {
         console.log('get all products by vendor res', res);
+
+        if (res?.data?.vendor) {
+          console.log(
+            'res?.data?.vendor',
+            res?.data?.vendor?.banner || res?.data?.vendor?.image,
+          );
+          FastImage.preload([
+            {
+              uri: getImageUrl(
+                res?.data?.vendor?.banner?.image_fit ||
+                  res?.data?.vendor?.image?.image_fit,
+                res?.data?.vendor?.banner?.image_path ||
+                  res?.data?.vendor?.image?.image_path,
+                '400/400',
+              ),
+            },
+          ]); //category banner preload
+        }
+
         if (res?.data?.vendor?.is_show_products_with_category) {
-          var totalProduct = 1;
+          res.data.categories.map((item) => {
+            item?.products.map((val) => {
+              if (val?.media?.length > 0) {
+                const url1 = val?.media[0]?.image?.path?.image_fit;
+                const url2 = val?.media[0]?.image?.path?.image_path;
+                FastImage.preload([{uri: getImageUrl(url1, url2, '200/200')}]);
+              }
+            });
+          });
+
+          // var totalProduct = 1;
           let filterArray = res?.data?.categories?.map((val) => {
             let newKey = {
               ...val,
               ['data']: val?.products && val.products,
               title: val?.category && val.category?.translation[0]?.name,
-              totalProduct: totalProduct + val.products.length,
+              // totalProduct: totalProduct + val.products.length,
             };
             delete newKey['products'];
             return newKey;
           });
-          updateState({
-            sectionListData: filterArray,
-            cloneSectionList: filterArray,
-            isLoading: false,
-            isRefreshing: false,
-            categoryInfo: res?.data?.vendor,
-            filterData: res?.data?.filterData,
-            vendorCategories: res?.data?.categories,
-          });
-          console.log(filterArray, 'filterArrayfilterArray');
+          setSectionListData(filterArray);
+          setCloneSectionList(filterArray);
+          // setFilterData(res?.data?.filterData)
+          setCategoryInfo(res?.data?.vendor);
           fetchTags(filterArray);
+          setLoading(false);
         } else {
           // console.log('get product list by vendor id >>>> ', res);
           if (res?.data) {
-            updateState({
-              isLoading: false,
-              isRefreshing: false,
-              categoryInfo: res?.data?.vendor,
-              filterData: res?.data?.filterData,
-              productListData: res?.data?.vendor?.is_show_products_with_category
+            // setFilterData(res?.data?.filterData)
+            setCategoryInfo(res?.data?.vendor);
+            setLoading(false);
+            setProductListData(
+              res?.data?.vendor?.is_show_products_with_category
                 ? res?.data?.categories[0]?.products
                 : pageNo == 1
                 ? res.data.products.data
                 : [...productListData, ...res.data.products.data],
-              vendorCategories: res?.data?.categories,
-              // vendorCategoryItms: res?.data?.categories[0]?.products,
-            });
+            );
           } else {
-            updateState({
-              isLoading: false,
-              isRefreshing: false,
-            });
+            setLoading(false);
           }
         }
         if (res?.data) {
@@ -571,39 +523,27 @@ export default function Products({route, navigation}) {
             delete newKey['products'];
             return newKey;
           });
-          updateState({
-            sectionListData: filterArray,
-            cloneSectionList: filterArray,
-            isLoading: false,
-            isRefreshing: false,
-            categoryInfo: res?.data?.vendor,
-            filterData: res?.data?.filterData,
-            vendorCategories: res?.data?.categories,
-          });
+          setSectionListData(filterArray);
+          setCloneSectionList(filterArray);
+          setCategoryInfo(res?.data?.vendor);
+          // setFilterData(res?.data?.filterData)
           console.log(filterArray, 'filterArrayfilterArray');
           fetchTags(filterArray);
         } else {
           // console.log('get product list by vendor id >>>> ', res);
           if (!!res?.data?.products?.data) {
-            updateState({
-              isLoading: false,
-              isRefreshing: false,
-              categoryInfo: res?.data?.vendor,
-              filterData: res?.data?.filterData,
-              productListData: !!res?.data?.vendor
-                ?.is_show_products_with_category
+            // setFilterData(res?.data?.filterData)
+            setCategoryInfo(res?.data?.vendor);
+            setProductListData(
+              !!res?.data?.vendor?.is_show_products_with_category
                 ? res?.data?.categories[0]?.products
                 : pageNo == 1
                 ? res.data.products.data
                 : [...productListData, ...res.data.products.data],
-              vendorCategories: res?.data?.categories,
-              // vendorCategoryItms: res?.data?.categories[0]?.products,
-            });
+            );
+            setLoading(false);
           } else {
-            updateState({
-              isLoading: false,
-              isRefreshing: false,
-            });
+            setLoading(false);
           }
         }
         if (res?.data) {
@@ -631,36 +571,32 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'getProductByCategoryId');
-        updateState({
-          categoryInfo: categoryInfo ? categoryInfo : res.data.category,
-          filterData: res?.data?.filterData,
-          productListData:
-            pageNo == 1
-              ? res.data.listData.data
-              : [...productListData, ...res.data.listData.data],
-          isLoadingC: false,
-          isRefreshing: false,
-          isLoading: false,
-        });
-        {
-          pageNo == 1 &&
-          res?.data?.listData?.data.length == 0 &&
-          res?.data?.category &&
-          res?.data?.category?.childs.length
-            ? updateState({
-                selectedCategory: res.data.category.childs[0],
-                productListId: res.data.category.childs[0],
-                pageNo: 1,
-                limit: 30,
-                isLoadingC: true,
-              })
-            : null;
-        }
-        setTimeout(() => {
-          updateState({isLoading: false});
-        }, 700);
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        console.log(res, 'getProductByCategoryId res');
+        // setFilterData(res?.data?.filterData)
+        setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
+        setCategoryInfo(res.data.category);
+        setLoading(false);
+        setProductListData(
+          pageNo == 1
+            ? res.data.listData.data
+            : [...productListData, ...res.data.listData.data],
+        );
+        updateState({isLoadingC: false});
+
+        // if (pageNo == 1 &&
+        //   res?.data?.listData?.data.length == 0 &&
+        //   res?.data?.category &&
+        //   res?.data?.category?.childs.length) {
+        //   setSelectedCategory(res.data.category.childs[0])
+        //   setProductListId(res.data.category.childs[0])
+        //   updateState({
+        //     pageNo: 1,
+        //     limit: 10,
+        //     isLoadingC: true,
+        //   })
+        // }
+        // updateState({ isLoading: false });
+        // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
       .catch(errorMethod);
     // }
@@ -687,15 +623,10 @@ export default function Products({route, navigation}) {
       )
       .then((res) => {
         console.log(res, 'getAllProductsCategoryFilter  res ++++++');
-
-        updateState({
-          isLoading: false,
-          isRefreshing: false,
-          productListData:
-            pageNo == 1
-              ? res.data.data
-              : [...productListData, ...res.data.data],
-        });
+        setProductListData(
+          pageNo == 1 ? res.data.data : [...productListData, ...res.data.data],
+        );
+        setLoading(false);
       })
       .catch(errorMethod);
     // }
@@ -715,14 +646,13 @@ export default function Products({route, navigation}) {
         });
       });
       tagsArr = _.uniqBy(tagsArr, 'tag_id');
-      updateState({
-        ProductTags: tagsArr.map((el) => {
-          return {
-            ...el.tag,
-            isSelected: false,
-          };
-        }),
+      let productTagsArr = tagsArr.map((el) => {
+        return {
+          ...el.tag,
+          isSelected: false,
+        };
       });
+      setProductTags(productTagsArr);
     }
   };
 
@@ -730,7 +660,6 @@ export default function Products({route, navigation}) {
   const _onAddtoWishlist = (item) => {
     playHapticEffect(hapticEffects.impactLight);
     if (!!userData?.auth_token) {
-      updateState({isLoadingB: true});
       actions
         .updateProductWishListData(
           `/${item.id}`,
@@ -749,7 +678,6 @@ export default function Products({route, navigation}) {
         .catch(errorMethod);
     } else {
       showError(strings.UNAUTHORIZED_MESSAGE);
-      updateState({isLoadingB: false});
     }
   };
 
@@ -768,9 +696,8 @@ export default function Products({route, navigation}) {
         return i;
       }
     });
+    setProductListData(newArray);
     updateState({
-      productListData: newArray,
-      isLoadingB: false,
       updateQtyLoader: false,
       selectedItemID: -1,
     });
@@ -782,15 +709,15 @@ export default function Products({route, navigation}) {
       updateQtyLoader: false,
       selectedItemID: -1,
       btnLoader: false,
-      isLoading: false,
     });
+    setLoading(false);
     showError(error?.message || error?.error);
   };
 
   console.log('pageNopageNo', pageNo);
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({pageNo: 1, isRefreshing: true});
+    updateState({pageNo: 1});
   };
 
   //pagination of data
@@ -849,12 +776,12 @@ export default function Products({route, navigation}) {
   };
 
   const hideDifferentAddOns = () => {
-    updateState({differentAddsOnsModal: false, differentAddsOns: []});
+    updateState({differentAddsOnsModal: false});
+    setDifferentAddsOns([]);
   };
 
   const addSingleItem = async (item, section = null) => {
     console.log('checking item info >>>', item);
-
     if (
       !!categoryInfo?.is_vendor_closed &&
       !categoryInfo?.show_slot &&
@@ -863,7 +790,7 @@ export default function Products({route, navigation}) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
     }
-    playHapticEffect(hapticEffects.impactLight);
+    // playHapticEffect(hapticEffects.impactLight);
     let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
     updateState({selectedItemID: item?.id, btnLoader: true});
     let isSingleVendor = await checkSingleVendor(item.id);
@@ -892,27 +819,25 @@ export default function Products({route, navigation}) {
       return;
     }
 
-    // return;
-
     if (item?.add_on?.length !== 0 || item?.variantSet?.length !== 0) {
+      setSelectedSection(section);
+      setSelectedCarItems(item);
+      setIsVisibleModal(true);
       updateState({
         updateQtyLoader: false,
         typeId: getTypeId,
-        isVisibleModal: true,
-        selectedCartItem: item,
-        selectedSection: section,
         selectedItemID: -1,
         btnLoader: false,
       });
       return;
     }
     if (item?.add_on?.length === 0 && item?.mode_of_service === 'schedule') {
+      setSelectedSection(section);
+      setSelectedCarItems(item);
+      setIsVisibleModal(true);
       updateState({
         updateQtyLoader: false,
         typeId: getTypeId,
-        isVisibleModal: true,
-        selectedCartItem: item,
-        selectedSection: section,
         selectedItemID: -1,
         btnLoader: false,
       });
@@ -956,10 +881,8 @@ export default function Products({route, navigation}) {
             }
             return f;
           });
-          updateState({
-            sectionListData: filteredArr,
-            cloneSectionList: filteredArr,
-          });
+          setSectionListData(filteredArr);
+          setCloneSectionList(filteredArr);
           // fetchTags(filteredArr)
         } else {
           let updateArray = productListData.map((val, i) => {
@@ -975,19 +898,22 @@ export default function Products({route, navigation}) {
             }
             return val;
           });
-          updateState({
-            productListData: updateArray,
-          });
+          setProductListData(updateArray);
         }
+        setSelectedSection(section);
+        setSelectedCarItems(item);
         updateState({
-          selectedCartItem: item,
           updateQtyLoader: false,
-          selectedSection: section,
           selectedItemID: -1,
           btnLoader: false,
         });
       })
       .catch((error) => errorMethodSecond(error, [], item, section));
+  };
+
+  const onCloseModal = () => {
+    setIsVisibleModal(false);
+    setShowShimmer(true);
   };
 
   const addDeleteCartItems = async (
@@ -1143,13 +1069,10 @@ export default function Products({route, navigation}) {
         }
         return f;
       });
-      updateState({
-        ...state,
-        sectionListData: filteredArr,
-        cloneSectionList: filteredArr,
-        selectedItemID: -1,
-        storeLocalQty: differentAddsOnsQty,
-      });
+      setSectionListData(filteredArr);
+      setCloneSectionList(filteredArr);
+      setStoreLocalQty(differentAddsOnsQty);
+      updateState({selectedItemID: -1});
       // fetchTags(filteredArr)
     } else {
       let updateArray = productListData.map((val, i) => {
@@ -1163,11 +1086,9 @@ export default function Products({route, navigation}) {
         }
         return val;
       });
-      updateState({
-        productListData: updateArray,
-        selectedItemID: -1,
-        storeLocalQty: differentAddsOnsQty,
-      });
+      setStoreLocalQty(differentAddsOnsQty);
+      setProductListData(updateArray);
+      updateState({selectedItemID: -1});
     }
   };
 
@@ -1187,7 +1108,7 @@ export default function Products({route, navigation}) {
           return val;
         }
       });
-      updateState({differentAddsOns: updateLocallyAddOns});
+      setDifferentAddsOns(updateLocallyAddOns);
     }
 
     let data = {};
@@ -1230,19 +1151,23 @@ export default function Products({route, navigation}) {
             return x;
           });
           section['data'] = updatedSection;
+
+          const filterArr = sectionListData.map((f, fnx) => {
+            if (f?.id == section?.id) {
+              return section;
+            }
+            return f;
+          });
+          const filterArryClone = cloneSectionList.map((f, fnx) => {
+            if (f?.id == section?.id) {
+              return section;
+            }
+            return f;
+          });
+          setSectionListData(filterArr);
+          setCloneSectionList(filterArryClone);
+
           updateState({
-            sectionListData: sectionListData.map((f, fnx) => {
-              if (f?.id == section?.id) {
-                return section;
-              }
-              return f;
-            }),
-            cloneSectionList: cloneSectionList.map((f, fnx) => {
-              if (f?.id == section?.id) {
-                return section;
-              }
-              return f;
-            }),
             updateQtyLoader: false,
             selectedItemID: -1,
             btnLoader: false,
@@ -1264,8 +1189,8 @@ export default function Products({route, navigation}) {
             }
             return val;
           });
+          setProductListData(updateArray);
           updateState({
-            productListData: updateArray,
             updateQtyLoader: false,
             selectedItemID: -1,
             btnLoader: false,
@@ -1280,12 +1205,11 @@ export default function Products({route, navigation}) {
     updateState({updateQtyLoader: false});
     if (error?.message?.alert == 1) {
       updateState({
-        isLoading: false,
-        isLoadingB: false,
         isLoadingC: false,
         selectedItemID: -1,
         btnLoader: false,
       });
+      setLoading(false);
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
@@ -1299,9 +1223,8 @@ export default function Products({route, navigation}) {
         },
       ]);
     } else {
+      setLoading(false);
       updateState({
-        isLoading: false,
-        isLoadingB: false,
         isLoadingC: false,
         selectedItemID: -1,
         btnLoader: false,
@@ -1347,7 +1270,7 @@ export default function Products({route, navigation}) {
       1,
       updateLocalQty,
     );
-    updateState({repeatItems: null});
+    setRepeatItems(null);
   };
 
   const onAddNew = () => {
@@ -1362,12 +1285,12 @@ export default function Products({route, navigation}) {
     let getTypeId =
       !!repeatItems?.item?.category &&
       repeatItems?.item?.category.category_detail?.type_id;
+    setRepeatItems(null);
+    setSelectedCarItems(repeatItems?.item);
+    setIsVisibleModal(true);
     updateState({
-      repeatItems: null,
       updateQtyLoader: false,
       typeId: getTypeId,
-      isVisibleModal: true,
-      selectedCartItem: repeatItems?.item,
       selectedItemID: -1,
       btnLoader: false,
     });
@@ -1433,6 +1356,7 @@ export default function Products({route, navigation}) {
         totalProductQty = totalProductQty + val?.quantity;
       });
     }
+    console.log('totalProductQty', totalProductQty);
 
     // return;
 
@@ -1462,7 +1386,6 @@ export default function Products({route, navigation}) {
 
     if (type == 2) {
       // direct subtract customize items if products added with same addons
-
       addDeleteCartItems(
         item,
         tempQty == 0 ? isExistqty : tempQty,
@@ -1500,10 +1423,8 @@ export default function Products({route, navigation}) {
             productId: res?.data?.id,
             parentCartId: res.data.cart_id,
           };
-          console.log('is++ exist qty', tempQty == 0 ? isExistqty : tempQty);
-          console.log('is++ update local qty', res.data?.quantity);
-
-          updateState({repeatItems: addData, selectedSection: section});
+          setSelectedSection(section);
+          setRepeatItems(addData);
         }
       } catch (error) {
         console.log('error riased++++', error);
@@ -1525,16 +1446,14 @@ export default function Products({route, navigation}) {
       const res = await actions.differentAddOns(apiData, header);
       console.log('res+++++++', res);
       if (res?.data.length > 1) {
-        updateState({
-          differentAddsOns: res?.data || [],
-          selectedDiffAdsOnItem: item,
-          selectedDiffAdsOnSection: section,
-          diffAddOnCartIdProductId: {
-            cart_id: apiData?.cart_id,
-            product_id: apiData?.product_id,
-          },
-          differentAddsOnsModal: true,
+        setDifferentAddsOns(res?.data || []);
+        setSelectedDiffAdsOnItem(item);
+        setSelectedDiffAdsOnSection(section);
+        setDiffAddOnCartIdProductId({
+          cart_id: apiData?.cart_id,
+          product_id: apiData?.product_id,
         });
+        updateState({differentAddsOnsModal: true});
         return {data: res?.data, goNext: true};
       }
       return {data: res?.data, goNext: false};
@@ -1579,12 +1498,14 @@ export default function Products({route, navigation}) {
         ? differentAddsOnsQty + batchCount
         : differentAddsOnsQty - batchCount, //send updated total quantity
     );
-    updateState({differentAddsOns: updateLocallyAddOns});
+    setDifferentAddsOns(updateLocallyAddOns);
   };
 
   const renderProduct = ({item, index}) => {
     return (
-      <Animatable.View animation={'slideInUp'} delay={index * 5}>
+      <Animatable.View
+      // animation={'slideInUp'} delay={index * 5}
+      >
         <ProductCard3
           data={item}
           index={index}
@@ -1622,22 +1543,24 @@ export default function Products({route, navigation}) {
         return x;
       });
       selectedSection['data'] = updatedSection;
+      const filterArr = sectionListData.map((f, fnx) => {
+        if (f?.id == selectedSection?.id) {
+          return selectedSection;
+        }
+        return f;
+      });
+      const filterArryClone = cloneSectionList.map((f, fnx) => {
+        if (f?.id == selectedSection?.id) {
+          return selectedSection;
+        }
+        return f;
+      });
+      setSectionListData(filterArr);
+      setCloneSectionList(filterArryClone);
+      setStoreLocalQty(quanitity);
+      setIsVisibleModal(false);
       updateState({
-        sectionListData: sectionListData.map((f, fnx) => {
-          if (f?.id == selectedSection?.id) {
-            return selectedSection;
-          }
-          return f;
-        }),
-        cloneSectionList: cloneSectionList.map((f, fnx) => {
-          if (f?.id == selectedSection?.id) {
-            return selectedSection;
-          }
-          return f;
-        }),
         cartId: cartID,
-        storeLocalQty: quanitity,
-        isVisibleModal: false,
       });
     } else {
       let updateArray = productListData.map((val, i) => {
@@ -1649,13 +1572,13 @@ export default function Products({route, navigation}) {
             isRemove: false,
           };
         }
-        updateState({storeLocalQty: quanitity});
+        setStoreLocalQty(quanitity);
         return val;
       });
+      setProductListData(updateArray);
+      setIsVisibleModal(false);
       updateState({
         cartId: cartID,
-        productListData: updateArray,
-        isVisibleModal: false,
       });
     }
   };
@@ -1666,8 +1589,7 @@ export default function Products({route, navigation}) {
       if (productListId?.vendor && routeData) {
         fetchOffers();
       }
-
-      // getAllProductTags();
+      getAllProductTags();
     }
   }, [isLoadingC]);
 
@@ -1700,23 +1622,51 @@ export default function Products({route, navigation}) {
         newObj.data = records;
         return newObj;
       });
-      updateState({cloneSectionList: newArr});
+      setCloneSectionList(newArr);
     } else {
       // getAllProductsByVendor();
     }
-  }, [ProductTags && updateTagFilter]);
+  }, [ProductTags]);
+
+  useEffect(() => {
+    let EnabledTags = ProductTags.filter((el) => el.isSelected);
+    if (EnabledTags.length > 0) {
+      setApiHitAgain(true);
+      const newArr = sectionListData.map((el) => {
+        const records =
+          el.data &&
+          el.data.filter((item) => {
+            if (
+              item.tags.length > 0 &&
+              checkIfItemExist(item.tags[0], EnabledTags)
+            )
+              return item;
+          });
+        const newObj = {
+          ...el,
+        };
+        newObj.data = records;
+        return newObj;
+      });
+      updateState({cloneSectionList: newArr});
+    } else {
+      updateState({cloneSectionList: sectionListData});
+      if (apiHitAgain) {
+        setApiHitAgain(false);
+        getAllProductsByVendor();
+      }
+    }
+  }, [updateTagFilter]);
 
   const onPressChildCards = (item) => {
     console.log(item, 'item upload');
+    setSelectedCategory(item);
+    setProductListId(item);
     updateState({
-      selectedCategory: item,
-      // productListData: [],
-      productListId: item,
       pageNo: 1,
-      limit: 30,
+      limit: 10,
       isLoadingC: true,
     });
-
     // navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
   };
 
@@ -1740,10 +1690,9 @@ export default function Products({route, navigation}) {
         // console.log('checking products >>>>>', records)
         // Arr.push(...records)
       });
-      updateState({cloneSectionList: newArr});
+      setCloneSectionList(newArr);
     } else {
       getAllProductsByVendor();
-      // updateState({ cloneSectionList: sectionListData })
     }
   };
 
@@ -1763,7 +1712,7 @@ export default function Products({route, navigation}) {
       .then((res) => {
         // console.log('res >>>>>>> offers >>>', res);
         if (res && res.data) {
-          updateState({offerList: res.data});
+          setOfferList(res.data);
         }
       });
     // .catch(errorMethod);
@@ -1777,7 +1726,7 @@ export default function Products({route, navigation}) {
         cells.push(...el.data);
       }
     });
-    let hight = Number(cells.length) * moderateScaleVertical(150);
+    let hight = Number(cells.length) * moderateScaleVertical(200);
     playHapticEffect(hapticEffects.rigid);
     updateState({MenuModalVisible: !MenuModalVisible});
     sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
@@ -1789,13 +1738,17 @@ export default function Products({route, navigation}) {
     );
   };
 
+  const rightIconPress = () => {
+    updateState({
+      searchInput: '',
+      isSearch: false,
+    });
+    setLoading(false);
+  };
+
   const RenderMenuView = () => {
     return (
-      <View>
-        {/* <View style={{ paddingHorizontal: moderateScale(15), width: '100%', borderBottomColor: colors.greyMedium, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Text style={{ fontSize: textScale(14), fontFamily: fontFamily.regular }}>Recommended</Text>
-        <Text style={{ fontSize: textScale(14), fontFamily: fontFamily.regular }}>2</Text>
-                </View> */}
+      <View style={{marginBottom: moderateScaleVertical(16)}}>
         <ScrollView style={{width: '100%'}}>
           <Text
             style={{
@@ -1969,7 +1922,9 @@ export default function Products({route, navigation}) {
 
   const listHeaderComponent2 = () => {
     return (
-      <View>
+      <Animatable.View
+      // animation={'fadeInUp'}
+      >
         {!!categoryInfo?.categoriesList ? (
           <View style={{marginBottom: moderateScaleVertical(16)}}>
             <ImageBackground
@@ -1995,25 +1950,42 @@ export default function Products({route, navigation}) {
                 style={{}}
                 colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0.7)']}>
                 <SafeAreaView>
-                  <TouchableOpacity
-                    hitSlop={styles.hitSlopProp}
-                    activeOpacity={0.7}
+                  <View
                     style={{
-                      width: moderateScale(30),
-                      height: moderateScale(30),
-                      justifyContent: 'center',
-                      marginLeft: moderateScale(10),
-                      paddding: 10,
-                    }}
-                    onPress={() => navigation.goBack()}>
-                    <Image
-                      source={imagePath.icBackb}
-                      style={{
-                        tintColor: colors.white,
-                        transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                      }}
-                    />
-                  </TouchableOpacity>
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      marginHorizontal: moderateScale(16),
+                      marginTop: moderateScaleVertical(16),
+                      marginBottom: moderateScaleVertical(8),
+                    }}>
+                    <TouchableOpacity
+                      hitSlop={styles.hitSlopProp}
+                      activeOpacity={0.7}
+                      style={{}}
+                      onPress={() => navigation.goBack()}>
+                      <Image
+                        source={imagePath.icBackb}
+                        style={{
+                          tintColor: colors.white,
+                          transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                        }}
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      hitSlop={styles.hitSlopProp}
+                      activeOpacity={0.7}
+                      style={{}}
+                      onPress={onShare}>
+                      <Image
+                        source={imagePath.icShareb}
+                        style={{
+                          tintColor: colors.white,
+                          transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View>
 
                   <View
                     style={{
@@ -2245,12 +2217,20 @@ export default function Products({route, navigation}) {
 
               <View style={{marginLeft: moderateScale(8), flex: 0.7}}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <RoundImg
-                    img={getImageUrl(uri1, uri2, '400/400')}
-                    size={30}
-                    isDarkMode={isDarkMode}
-                    MyDarkTheme={MyDarkTheme}
-                  />
+                  {isSVG ? (
+                    <SvgUri
+                      height={moderateScale(40)}
+                      width={moderateScale(40)}
+                      uri={imageURI}
+                    />
+                  ) : (
+                    <RoundImg
+                      img={imageURI}
+                      size={30}
+                      isDarkMode={isDarkMode}
+                      MyDarkTheme={MyDarkTheme}
+                    />
+                  )}
                   <View style={{marginLeft: moderateScale(8)}}>
                     <Text
                       numberOfLines={1}
@@ -2286,13 +2266,7 @@ export default function Products({route, navigation}) {
                   placeholder={strings.SEARCH_ITEM}
                   // onChangeText={(value) => onChangeText(value)}
                   showRightIcon
-                  rightIconPress={() =>
-                    updateState({
-                      searchInput: '',
-                      isSearch: false,
-                      isLoading: false,
-                    })
-                  }
+                  rightIconPress={rightIconPress}
                 />
               </Animatable.View>
             ) : (
@@ -2355,7 +2329,7 @@ export default function Products({route, navigation}) {
               alignSelf: 'center',
               borderBottomWidth: 1,
               borderBottomColor: colors.greyMedium,
-              // marginBottom: moderateScale(15),
+              marginBottom: moderateScale(16),
               paddingBottom: moderateScaleVertical(10),
               paddingHorizontal: moderateScale(12),
             }}>
@@ -2469,10 +2443,15 @@ export default function Products({route, navigation}) {
           contentContainerStyle={{alignItems: 'center'}}>
           {ProductTags &&
             ProductTags.map((el, index) => {
+              console.log('elelelelel', el);
               return (
                 <View
                   key={index}
-                  style={{flexDirection: 'row', marginTop: moderateScale(20)}}>
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    // marginTop: moderateScale(20)
+                  }}>
                   <ToggleSwitch
                     isOn={el.isSelected}
                     onColor={colors.green}
@@ -2492,8 +2471,8 @@ export default function Products({route, navigation}) {
                           return el;
                         }
                       });
+                      setProductTags(updatedArr);
                       updateState({
-                        ProductTags: updatedArr,
                         updateTagFilter: !updateTagFilter,
                       });
                     }}
@@ -2521,7 +2500,7 @@ export default function Products({route, navigation}) {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              marginBottom: moderateScaleVertical(16),
+              marginBottom: moderateScaleVertical(8),
               marginHorizontal: moderateScale(12),
             }}>
             <SearchBar
@@ -2539,7 +2518,9 @@ export default function Products({route, navigation}) {
               placeholder={strings.SEARCH_WITHIN_MENU}
               onChangeText={(value) => onSearchWithinMenu(value)}
               showRightIcon={searchInput ? true : false}
-              rightIconStyle={{tintColor: themeColors.secondary_color}}
+              rightIconStyle={{
+                tintColor: isDarkMode ? colors.white : colors.black,
+              }}
               rightIconPress={() => onSearchWithinMenu('')}
               showVoiceRecord={false}
             />
@@ -2547,6 +2528,7 @@ export default function Products({route, navigation}) {
             {appIds.codiner == DeviceInfo.getBundleId() ? null : (
               <View style={{flex: 0.14}}>
                 <TouchableOpacity
+                  hitSlop={hitSlopProp}
                   onPress={onShowHideFilter}
                   style={{
                     alignSelf: 'flex-end',
@@ -2609,50 +2591,7 @@ export default function Products({route, navigation}) {
             </ScrollView>
           </View>
         )}
-      </View>
-    );
-  };
-
-  const _onVendorCategory = (itm, indx) => {
-    updateState({
-      vendorCategorySelectedIndx: indx,
-      productListData: itm?.products,
-      // AnimatedHeaderValue: true
-    });
-  };
-
-  const _renderVendorCategories = ({item, index}) => {
-    return (
-      <TouchableOpacity
-        activeOpacity={1}
-        // onPress={() => _onVendorCategory(item, index)}
-        style={{
-          paddingHorizontal: 5,
-          paddingVertical: 7,
-          backgroundColor:
-            vendorCategorySelectedIndx === index
-              ? themeColors.primary_color
-              : colors.transparent,
-          borderRadius: 10,
-          borderColor:
-            vendorCategorySelectedIndx !== index
-              ? themeColors.primary_color
-              : colors.transparent,
-          borderWidth: 0.7,
-        }}>
-        <Text
-          style={{
-            fontFamily: fontFamily.medium,
-            color:
-              vendorCategorySelectedIndx === index
-                ? colors.white
-                : isDarkMode
-                ? MyDarkTheme.colors.text
-                : colors.black,
-          }}>
-          {item?.category?.translation[0]?.name}
-        </Text>
-      </TouchableOpacity>
+      </Animatable.View>
     );
   };
 
@@ -2665,41 +2604,110 @@ export default function Products({route, navigation}) {
             ? MyDarkTheme.colors.background
             : colors.white,
         }}>
-        <SafeAreaView>
-          <HeaderLoader
-            widthLeft={20}
-            rectWidthLeft={20}
-            widthRight={20}
-            rectWidthRight={20}
-            heightLeft={20}
-            rectHeightLeft={20}
-            heightRight={20}
-            rectHeightRight={20}
-            rx={5}
-            ry={5}
-            viewStyles={{marginTop: moderateScale(10)}}
-          />
+        <ScrollView showsVerticalScrollIndicator={false}>
           {true ? (
             <View>
-              <View style={{height: moderateScale(16)}} />
               <HeaderLoader
                 viewStyles={{
-                  marginHorizontal: moderateScale(20),
-                  marginBottom: moderateScale(10),
+                  // marginHorizontal: moderateScale(20),
+                  // marginBottom: moderateScale(10),
+                  marginHorizontal: 0,
                 }}
-                widthLeft={width - moderateScale(40)}
-                rectWidthLeft={width - moderateScale(40)}
-                heightLeft={moderateScaleVertical(100)}
-                rectHeightLeft={moderateScaleVertical(100)}
+                widthLeft={width}
+                rectWidthLeft={width}
+                heightLeft={moderateScaleVertical(152)}
+                rectHeightLeft={moderateScaleVertical(152)}
                 isRight={false}
-                rx={8}
-                ry={8}
+                rx={4}
+                ry={4}
               />
+              <HomeLoader
+                width={width / 1.1}
+                height={18}
+                rectHeight={18}
+                rectWidth={screenWidth / 1.1}
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginHorizontal: moderateScale(16),
+                }}
+              />
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginHorizontal: moderateScale(16),
+                  marginTop: moderateScaleVertical(16),
+                }}>
+                <HomeLoader
+                  height={40}
+                  rectHeight={40}
+                  rectWidth={60}
+                  width={60}
+                />
+                <HomeLoader
+                  height={40}
+                  rectHeight={40}
+                  rectWidth={60}
+                  width={60}
+                />
+              </View>
+              <View
+                style={{
+                  ...styles.horizontalLine,
+                  marginVertical: 16,
+                }}
+              />
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginHorizontal: moderateScale(16),
+                  marginBottom: moderateScaleVertical(16),
+                }}>
+                <HomeLoader
+                  height={20}
+                  rectHeight={20}
+                  rectWidth={60}
+                  width={60}
+                />
+                <View style={{marginRight: moderateScale(16)}} />
+                <HomeLoader
+                  height={20}
+                  rectHeight={20}
+                  rectWidth={60}
+                  width={60}
+                />
+              </View>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <HomeLoader
+                  width={width / 1.2}
+                  height={34}
+                  rectHeight={34}
+                  rectWidth={width / 1.2}
+                  viewStyles={{
+                    marginHorizontal: 16,
+                  }}
+                />
+                {/* <View style={{ marginHorizontal: moderateScale(16) }} /> */}
+                <HomeLoader
+                  height={25}
+                  width={25}
+                  rectHeight={25}
+                  rectWidth={25}
+                />
+              </View>
             </View>
           ) : (
             <View style={{marginBottom: moderateScaleVertical(16)}} />
           )}
-          <View style={{marginHorizontal: moderateScale(16)}}>
+          <View
+            style={{
+              marginHorizontal: moderateScale(16),
+              marginTop: moderateScaleVertical(16),
+            }}>
             <ProductListLoader3 />
             <View style={{marginBottom: moderateScaleVertical(12)}} />
             <ProductListLoader3 />
@@ -2719,7 +2727,7 @@ export default function Products({route, navigation}) {
               <View style={{marginBottom: moderateScaleVertical(12)}} />
             </View>
           )}
-        </SafeAreaView>
+        </ScrollView>
       </View>
     );
   }
@@ -2730,6 +2738,17 @@ export default function Products({route, navigation}) {
 
   const onShowHideFilter = () => {
     updateState({isShowFilter: !isShowFilter});
+  };
+
+  const bottomSheetHeader = () => {
+    return (
+      <View
+        style={{
+          height: 0,
+          backgroundColor: 'transparent',
+        }}
+      />
+    );
   };
 
   const onShare = () => {
@@ -2768,38 +2787,6 @@ export default function Products({route, navigation}) {
   //   }
   // };
 
-  const onPressSectionTab = (props) => {
-    const newArr = cloneSectionList.map((el, indx) => {
-      if (indx == props.index) {
-        let temp = el;
-        temp.isActive = true;
-        activeIdx = indx;
-        return temp;
-      } else {
-        return el;
-      }
-    });
-    updateState({sectionListData: newArr, cloneSectionList: newArr});
-    console.log(props);
-    // activeIdx = props.index;
-    let cells = [];
-    cloneSectionList.forEach((el, ind) => {
-      if (props.index > ind) {
-        cells.push(...el.data);
-      }
-    });
-    let hight = Number(cells.length) * moderateScaleVertical(150);
-    playHapticEffect(hapticEffects.rigid);
-    // updateState({MenuModalVisible: !MenuModalVisible});
-    sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
-      {
-        x: hight + 200,
-        y: hight + 200,
-        animated: true,
-      },
-    );
-  };
-
   const renderSectionTab = (props) => {
     const {title, isActive} = props;
 
@@ -2823,7 +2810,39 @@ export default function Products({route, navigation}) {
               ? themeColors.primary_color
               : colors.transparent,
         }}>
-        <TouchableOpacity onPress={() => onPressSectionTab(props)}>
+        <TouchableOpacity
+          onPress={() => {
+            const newArr = cloneSectionList.map((el, indx) => {
+              if (indx == props.index) {
+                let temp = el;
+                temp.isActive = true;
+                activeIdx = indx;
+                return temp;
+              } else {
+                return el;
+              }
+            });
+            setSectionListData(newArr);
+            setCloneSectionList(newArr);
+            console.log(props);
+            // activeIdx = props.index;
+            let cells = [];
+            cloneSectionList.forEach((el, ind) => {
+              if (props.index > ind) {
+                cells.push(...el.data);
+              }
+            });
+            let hight = Number(cells.length) * 160;
+            playHapticEffect(hapticEffects.rigid);
+            // updateState({MenuModalVisible: !MenuModalVisible});
+            sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
+              {
+                x: hight + 200,
+                y: hight + 200,
+                animated: true,
+              },
+            );
+          }}>
           <Text
             style={{
               fontFamily: fontFamily.medium,
@@ -2856,7 +2875,18 @@ export default function Products({route, navigation}) {
   };
   const renderSectionItem = ({item, index, section}) => {
     return (
-      <Animatable.View animation={'slideInUp'} delay={index * 5}>
+      <Animatable.View
+        // animation={'slideInUp'}
+        // delay={index * 5}
+        /*
+         * Height should be fixed as 180 to measure exact scroll position for browse menu
+         */
+        style={{
+          minHeight: moderateScaleVertical(200),
+          overflow: 'visible',
+          // backgroundColor: 'red',
+          // marginBottom: moderateScaleVertical(5),
+        }}>
         <ProductCard3
           data={item}
           index={index}
@@ -2871,7 +2901,12 @@ export default function Products({route, navigation}) {
           businessType={businessType}
           categoryInfo={categoryInfo}
         />
-        <View style={styles.horizontalLine} />
+        <View
+          style={{
+            ...styles.horizontalLine,
+            marginBottom: moderateScaleVertical(16),
+          }}
+        />
       </Animatable.View>
     );
   };
@@ -2889,13 +2924,13 @@ export default function Products({route, navigation}) {
     let offset = nativeEvent.contentOffset.y;
     let index = parseInt(offset / 8); // your cell height
     /** cell heihgt 167 */
-    let num = [];
-    const hej = cloneSectionList.map((el, index) => {
-      if (offset > Number(num.length) * 167) {
-        num.push(...el.data);
-        activeIdx = index;
-      }
-    });
+    // let num = [];
+    // const hej = cloneSectionList.map((el, index) => {
+    //   if (offset > Number(num.length) * 167) {
+    //     num.push(...el.data);
+    //     activeIdx = index;
+    //   }
+    // });
     if (index > moderateScale(36)) {
       if (!AnimatedHeaderValue) {
         updateState({AnimatedHeaderValue: true});
@@ -2913,6 +2948,10 @@ export default function Products({route, navigation}) {
 
   let uri1 = categoryInfo?.banner?.image_fit || categoryInfo?.icon?.image_fit;
   let uri2 = categoryInfo?.banner?.image_path || categoryInfo?.icon?.image_path;
+  let imageURI = getImageUrl(uri1, uri2, '200/200');
+  const isSVG = imageURI ? imageURI.includes('.svg') : null;
+  console.log(imageURI, 'is svg', isSVG);
+
   let name =
     data?.name ||
     data?.categoryInfo?.name ||
@@ -2930,6 +2969,16 @@ export default function Products({route, navigation}) {
     console.log('l++++index', index);
     console.log('l++++offset', offset);
     return {length, offset, index};
+  };
+
+  const backgroundComponent = () => {
+    return (
+      <TouchableOpacity
+        onPress={() => setIsVisibleModal(false)}
+        style={{alignSelf: 'center', marginBottom: moderateScaleVertical(16)}}>
+        <Image source={imagePath.icClose4} />
+      </TouchableOpacity>
+    );
   };
 
   return (
@@ -3054,12 +3103,20 @@ export default function Products({route, navigation}) {
 
               <View style={{marginLeft: moderateScale(8), flex: 0.7}}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <RoundImg
-                    img={getImageUrl(uri1, uri2, '400/400')}
-                    size={30}
-                    isDarkMode={isDarkMode}
-                    MyDarkTheme={MyDarkTheme}
-                  />
+                  {isSVG ? (
+                    <SvgUri
+                      height={moderateScale(40)}
+                      width={moderateScale(40)}
+                      uri={imageURI}
+                    />
+                  ) : (
+                    <RoundImg
+                      img={imageURI}
+                      size={30}
+                      isDarkMode={isDarkMode}
+                      MyDarkTheme={MyDarkTheme}
+                    />
+                  )}
                   <View style={{marginLeft: moderateScale(8)}}>
                     <Text
                       numberOfLines={1}
@@ -3107,13 +3164,7 @@ export default function Products({route, navigation}) {
                   placeholder={strings.SEARCH_ITEM}
                   // onChangeText={(value) => onChangeText(value)}
                   showRightIcon
-                  rightIconPress={() =>
-                    updateState({
-                      searchInput: '',
-                      isSearch: false,
-                      isLoading: false,
-                    })
-                  }
+                  rightIconPress={rightIconPress}
                 />
               </Animatable.View>
             ) : (
@@ -3163,29 +3214,17 @@ export default function Products({route, navigation}) {
         {!!categoryInfo?.is_show_products_with_category ? (
           <Animatable.View style={{flex: 1}}>
             <SectionList
-              onScrollToIndexFailed={() => {}}
+              onScroll={onScroll}
               ref={sectionListRef}
               showsVerticalScrollIndicator={false}
-              onScroll={onScroll}
+              // onScroll={onScroll}
               sections={cloneSectionList}
               ListHeaderComponent={listHeaderComponent2()}
               stickySectionHeadersEnabled={false}
-              scrollToLocationOffset={10}
-              maxToRenderPerBatch={18}
-              windowSize={18}
-              initialNumToRender={500}
-              removeClippedSubviews={true}
-              extraData={sectionListData}
               keyExtractor={(item, index) => index}
               // tabBarStyle={styles.tabBar}
               // ItemSeparatorComponent={() => <View style={styles.separator} />}
-              getItemLayout={(data, index) => {
-                return {
-                  length: height / 10,
-                  offset: (height / 10) * index,
-                  index: index,
-                };
-              }}
+
               renderTab={renderSectionTab}
               renderItem={renderSectionItem}
               ListFooterComponent={() => (
@@ -3193,7 +3232,7 @@ export default function Products({route, navigation}) {
               )}
               renderSectionHeader={renderSectionHeader}
               ListEmptyComponent={
-                <NoDataFound isLoading={state.isLoading} containerStyle={{}} />
+                <NoDataFound isLoading={isLoading} containerStyle={{}} />
               }
             />
           </Animatable.View>
@@ -3224,34 +3263,37 @@ export default function Products({route, navigation}) {
             //     tintColor={themeColors.primary_color}
             //   />
             // }
-            // onEndReached={
-            //   !categoryInfo?.is_show_products_with_category &&
-            //   onEndReachedDelayed
-            // }
-            // onEndReachedThreshold={0.5}
+            onEndReached={
+              !categoryInfo?.is_show_products_with_category &&
+              onEndReachedDelayed
+            }
+            onEndReachedThreshold={0.5}
             ListFooterComponent={() => (
               <View style={{height: moderateScale(60)}} />
             )}
             ListEmptyComponent={
-              <NoDataFound isLoading={state.isLoading} containerStyle={{}} />
+              <NoDataFound isLoading={isLoading} containerStyle={{}} />
             }
           />
         )}
 
-        {/* {!!repeatItems && (<BlurView
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-          }}
-          viewRef={blurRef}
-          blurType="light"
-          blurAmount={10}
-          blurRadius={10}
-        />)} */}
-        {/* <View style={{ height: moderateScale(height * 0.070) }} /> */}
+        {isVisibleModal ? (
+          <TouchableWithoutFeedback onPress={() => setIsVisibleModal(false)}>
+            <BlurView
+              style={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+              }}
+              viewRef={blurRef}
+              blurType="dark"
+              blurAmount={10}
+              blurRadius={10}
+            />
+          </TouchableWithoutFeedback>
+        ) : null}
       </View>
 
       {!!typeId && typeId == 8 ? (
@@ -3262,11 +3304,9 @@ export default function Products({route, navigation}) {
               variantData={selectedCartItem?.variantSet}
               isVisible={isVisibleModal}
               productdetail={selectedCartItem}
-              onClose={() =>
-                updateState({isVisibleModal: false, showShimmer: true})
-              }
+              onClose={onCloseModal}
               showShimmer={showShimmer}
-              shimmerClose={(val) => updateState({showShimmer: val})}
+              shimmerClose={(val) => setShowShimmer(val)}
               updateCartItems={updateCartItems}
               // modeOfService={selectedCartItem?.mode_of_service}
             />
@@ -3281,29 +3321,26 @@ export default function Products({route, navigation}) {
             activeOffsetY={[-1, 1]}
             failOffsetX={[-5, 5]}
             animateOnMount={true}
-            handleComponent={() => (
-              <View
-                style={{
-                  height: 0,
-                  borderTopLeftRadius: 20,
-                  backgroundColor: 'rgba(0,0,0,0)',
-                }}
-              />
-            )}
+            handleComponent={bottomSheetHeader}
             onChange={(index) => {
               if (index === 0) {
-                updateState({isVisibleModal: false, showShimmer: true});
+                onCloseModal();
               }
               playHapticEffect(hapticEffects.impactMedium);
-            }}>
+            }}
+            backdropComponent={() => (
+              <View style={{height: 0}}>
+                <Text>dfdf</Text>
+              </View>
+            )}
+            backgroundComponent={backgroundComponent}>
             <BottomSheetScrollView
               keyboardShouldPersistTaps="handled"
               showsVerticalScrollIndicator={false}
               style={{
-                borderTopLeftRadius: moderateScale(15),
-                borderTopRightRadius: moderateScale(15),
+                flex: 1,
                 backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.background
+                  ? MyDarkTheme.colors.lightDark
                   : colors.white,
               }}>
               <VariantAddons
@@ -3311,12 +3348,10 @@ export default function Products({route, navigation}) {
                 variantData={selectedCartItem?.variantSet}
                 isVisible={isVisibleModal}
                 productdetail={selectedCartItem}
-                onClose={() =>
-                  updateState({isVisibleModal: false, showShimmer: true})
-                }
+                onClose={onCloseModal}
                 typeId={typeId}
                 showShimmer={showShimmer}
-                shimmerClose={(val) => updateState({showShimmer: val})}
+                shimmerClose={(val) => setShowShimmer(val)}
                 updateCartItems={updateCartItems}
               />
             </BottomSheetScrollView>
@@ -3338,7 +3373,7 @@ export default function Products({route, navigation}) {
         visible={updateQtyLoader}
       />
 
-      {!searchInput && (
+      {!searchInput && !isVisibleModal && (
         <GradientCartView
           onPress={() => {
             playHapticEffect(hapticEffects.notificationSuccess);
@@ -3366,6 +3401,7 @@ export default function Products({route, navigation}) {
             updateState({MenuModalVisible: !MenuModalVisible});
           }}
           isLoading={btnLoader}
+          sectionListData={sectionListData}
           // btnStyle={
           //   appStyle?.tabBarLayout == 4 && {marginBottom: moderateScale(160)}
           // }
@@ -3400,6 +3436,7 @@ export default function Products({route, navigation}) {
           marginHorizontal: 0,
           height: moderateScale(250),
           backgroundColor: 'transparent',
+          marginBottom: moderateScaleVertical(16),
         }}
         innerViewContainerStyle={{
           width: '100%',
@@ -3407,6 +3444,7 @@ export default function Products({route, navigation}) {
           marginHorizontal: 0,
           backgroundColor: 'white',
           borderRadius: moderateScale(10),
+          marginBottom: moderateScaleVertical(16),
         }}
         onBackdropPress={() => {
           updateState({MenuModalVisible: !MenuModalVisible});
@@ -3417,7 +3455,7 @@ export default function Products({route, navigation}) {
       {!!repeatItems ? (
         <RepeatModal
           data={repeatItems?.item}
-          modalHide={() => updateState({repeatItems: null})}
+          modalHide={() => setRepeatItems(null)}
           onRepeat={onRepeat}
           onAddNew={onAddNew}
         />

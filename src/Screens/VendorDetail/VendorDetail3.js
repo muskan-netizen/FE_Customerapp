@@ -30,6 +30,7 @@ import * as Animatable from 'react-native-animatable';
 
 export default function VendorDetail3({ navigation, route }) {
   let vendorParams = route?.params?.data;
+  console.log('vendor params', vendorParams)
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   // alert("312")
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -99,6 +100,40 @@ export default function VendorDetail3({ navigation, route }) {
       navigation.navigate(navigationStrings.OUTER_SCREEN, {})
       return
     }
+    if (!!item?.redirect_to && item?.redirect_to == staticStrings.PRODUCT) {
+      navigation.navigate(navigationStrings.PRODUCT_LIST, {
+        data: {
+          id: item.id,
+          rootProducts: vendorParams?.rootProducts,
+          vendor: vendorParams?.rootProducts ? true : false,
+          vendorData: vendorParams?.item,
+          categoryInfo: item,
+          name: item.name,
+          isVendorList: false,
+          category_slug: item?.slug,
+        },
+      });
+      return
+    }
+    if (!!item?.type && item?.type.redirect_to == staticStrings.PRODUCT) {
+      navigation.navigate(navigationStrings.PRODUCT_LIST, {
+        data: {
+          id: item.id,
+          rootProducts: vendorParams?.rootProducts,
+          vendor: vendorParams?.rootProducts ? true : false,
+          vendorData: vendorParams?.item,
+          categoryInfo: item,
+          name: item.name,
+          isVendorList: false,
+          category_slug: item?.slug,
+        },
+      });
+      return
+    }
+    if (item?.redirect_to == staticStrings.VENDOR) {
+      navigation.navigate(navigationStrings.VENDOR, { data: item });
+      return;
+    }
     navigation.navigate(navigationStrings.PRODUCT_LIST, {
       data: {
         id: item.id,
@@ -111,6 +146,7 @@ export default function VendorDetail3({ navigation, route }) {
         category_slug: item?.slug,
       },
     });
+    return;
   };
 
   /***********GET SUBCATEGORY  DETAIL DATA******** */
@@ -177,8 +213,8 @@ export default function VendorDetail3({ navigation, route }) {
   const _renderItem = ({ item, index }) => {
     return (
       <Animatable.View
-      animation={'fadeInLeft'}
-      delay={index*40}
+        animation={'fadeInLeft'}
+        delay={index * 40}
       >
         <BrandCard2
           onPress={() => moveToNewScreen(item)}
@@ -257,12 +293,12 @@ export default function VendorDetail3({ navigation, route }) {
 
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? imagePath.icBackb : imagePath.back
         }
         centerTitle={vendorParams?.item?.name || vendordName}
         textStyle={{ fontSize: textScale(13) }}
         rightIcon={
-          appStyle?.homePageLayout === 3
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icSearchb
             : imagePath.search
         }

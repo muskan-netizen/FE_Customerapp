@@ -389,6 +389,26 @@ const getNearestLocation = (currentLocation, savedLocations) => {
   return nearestAddress;
 };
 
+// const timeConvert = (n) => {
+//   var num = n;
+//   var hours = num / 60;
+//   var rhours = Math.floor(hours);
+//   var minutes = (hours - rhours) * 60;
+//   var rminutes = Math.round(minutes);
+//   if (num >= 60) {
+//     if(minutes>=30){
+//     return Math.ceil(hours) + 'h'// + '≈'
+//     }else{
+//     return rhours + 'h'//+ '≈'
+//     }
+//     } else {
+//     return rminutes + `${strings.MINS}` //+ '≈';
+//     }
+//   // return num >= 60
+//   //   ? rhours + 'h :' + rminutes + `${strings.MINS}`
+//   //   : rminutes + `${strings.MINS}`;
+// };
+
 const timeConvert = (n) => {
   var num = n;
   var hours = num / 60;
@@ -396,17 +416,17 @@ const timeConvert = (n) => {
   var minutes = (hours - rhours) * 60;
   var rminutes = Math.round(minutes);
   if (num >= 60) {
-    if(minutes>=30){
-      return Math.ceil(hours) + 'h'// + '≈'
-    }else{
-      return rhours + 'h'//+ '≈'
+    if (minutes >= 30) {
+      return Math.ceil(hours) + 'h'; // + '≈'
+    } else {
+      return rhours + 'h'; //+ '≈'
     }
   } else {
-    return rminutes + `${strings.MINS}` //+ '≈';
+    return rminutes + `${strings.MINS}`; //+ '≈';
   }
   // return num >= 60
-  //   ?  rhours + 'h' //+ rminutes + `${strings.MINS}`
-  //   : rminutes + `${strings.MINS}`;
+  // ? rhours + 'h' //+ rminutes + ${strings.MINS}
+  // : rminutes + ${strings.MINS};
 };
 
 const checkEvenOdd = (num) => {

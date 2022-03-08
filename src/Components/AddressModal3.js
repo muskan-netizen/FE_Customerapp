@@ -114,8 +114,6 @@ const AddressModal3 = ({
 
   const styles = stylesData({fontFamily, themeColors});
 
-  console.log('constCurrLoc', constCurrLoc);
-
   //To update the states
   useEffect(() => {
     updateState({
@@ -273,12 +271,12 @@ const AddressModal3 = ({
   //this function use for save user info
   const isValidDataOfAddressSave = () => {
     const error = validations({
-      address: address ? address : '',
-      street: street ? street : '',
-      city: city ? city : '',
-      states: states ? states : '',
-      country: country ? country : '',
-      // pincode: pincode ? pincode : '',
+      address: address || '',
+      street: street || '',
+      city: city || '',
+      states: states || '',
+      country: country || '',
+      pincode: pincode || '',
     });
     if (error) {
       // showError(error);
@@ -727,7 +725,7 @@ const AddressModal3 = ({
                     marginLeft: moderateScale(8),
                     color: colors.redB,
                   }}>
-                  Use Curent Location
+                  {strings.USECURRENTLOACTION}
                 </Text>
                 <Text
                   style={{

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   I18nManager,
   Image,
@@ -34,24 +34,37 @@ import {MyDarkTheme} from '../../styles/theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {checkIsAdmin} from '../../utils/utils';
 import {useNavigation} from '@react-navigation/native';
+import {cloneDeep, isEmpty} from 'lodash';
+import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
+import {cameraHandler} from '../../utils/commonFunction';
+import ActionSheet from 'react-native-actionsheet';
+import {androidCameraPermission} from '../../utils/permissions';
+import DocumentPicker from 'react-native-document-picker';
+
+let addtionSelectedImageIndex = null;
+
+let addtionSelectedImage = null;
 
 export default function Signup({navigation}) {
   const navigation_ = useNavigation();
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const userData = useSelector((state) => state.auth.userData);
-  const {appData, themeColors, themeLayouts, currencies, languages} =
-    useSelector((state) => state?.initBoot);
+  const {
+    appData,
+    themeColors,
+    themeLayouts,
+    currencies,
+    languages,
+    themeColor,
+    themeToggle,
+  } = useSelector((state) => state?.initBoot);
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});
   const styles = stylesFun({fontFamily});
 
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  // console.log(appData, 'appDataSignup');
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const [state, setState] = useState({
     isLoading: false,
@@ -68,7 +81,24 @@ export default function Signup({navigation}) {
     deviceToken: '',
     referralCode: '',
     isShowPassword: false,
+    addtionalTextInputs: [],
+    addtionalImages: [],
+    addtionalPdfs: [],
   });
+  const {
+    phoneNumber,
+    callingCode,
+    cca2,
+    name,
+    email,
+    isLoading,
+    password,
+    referralCode,
+    isShowPassword,
+    addtionalTextInputs,
+    addtionalImages,
+    addtionalPdfs,
+  } = state;
   const _onCountryChange = (data) => {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
     return;
@@ -79,13 +109,15 @@ export default function Signup({navigation}) {
 
   const isValidData = () => {
     const error = validations({
-      email: appData?.profile?.preferences?.verify_email ? email : 'emptyValid',
-      password: password,
       name: name,
+      email: appData?.profile?.preferences?.verify_email
+        ? email
+        : 'abc@gmail.com',
+      password: password,
       callingCode: callingCode,
       phoneNumber: appData?.profile?.preferences?.verify_phone
         ? phoneNumber
-        : 'emptyValid',
+        : '78787878787',
     });
     if (error) {
       showError(error);
@@ -94,33 +126,113 @@ export default function Signup({navigation}) {
     return true;
   };
 
+  useEffect(() => {
+    actions
+      .userRegistrationDocument(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        updateState({
+          addtionalTextInputs: res?.data.filter((x) => x?.file_type == 'Text'),
+          addtionalImages: res?.data.filter((x) => x?.file_type == 'Image'),
+          addtionalPdfs: res?.data.filter((x) => x?.file_type == 'Pdf'),
+        });
+      })
+      .catch((err) => {
+        console.log(err, 'err>>>>>');
+      });
+  }, []);
+
   /** SIGNUP API FUNCTION **/
   const onSignup = async () => {
+    let formdata = new FormData();
     let fcmToken = await AsyncStorage.getItem('fcmToken');
 
-    let {callingCode} = state;
     const checkValid = isValidData();
     if (!checkValid) {
       return;
     }
 
-    let data = {
-      name: name,
-      // phone_number: '+' + callingCode + phoneNumber,
-      phone_number: phoneNumber,
-      dial_code: callingCode.toString(),
-      country_code: cca2,
-      email: email,
-      password: password,
-      device_type: Platform.OS,
-      device_token: DeviceInfo.getUniqueId(),
-      refferal_code: referralCode,
-      fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
-      // country_id: '1',
-    };
+    if (!email && !phoneNumber) {
+      showError(strings.ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE);
+      return;
+    }
+
+    formdata.append('name', name);
+    formdata.append('phone_number', phoneNumber);
+    formdata.append('dial_code', callingCode.toString());
+    formdata.append('country_code', cca2);
+    formdata.append('email', email);
+    formdata.append('password', password);
+    formdata.append('device_type', Platform.OS);
+    formdata.append('device_token', DeviceInfo.getUniqueId());
+    formdata.append('refferal_code', referralCode);
+    formdata.append(
+      'fcm_token',
+      !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
+    );
+
+    var isRequired = true;
+    if (!isEmpty(addtionalTextInputs)) {
+      addtionalTextInputs.map((i, inx) => {
+        if (i?.contents != '' && !!i?.contents) {
+          formdata.append(i?.translations[0].slug, i?.contents);
+        } else if (i?.is_required) {
+          if (isRequired) {
+            showError(
+              `${
+                strings.PLEASE_ENTER
+              } ${i?.translations[0].name.toLowerCase()}`,
+            );
+            isRequired = false;
+            return;
+          }
+        }
+      });
+    }
+
+    let concatinatedArray = addtionalImages.concat(addtionalPdfs);
+    if (!isEmpty(concatinatedArray)) {
+      concatinatedArray.map((i, inx) => {
+        if (i?.value) {
+          formdata.append(
+            i?.translations[0].slug,
+            i?.file_type == 'Image'
+              ? {
+                  uri: i.fileData.path,
+                  name: i.fileData.filename,
+                  filename: i.fileData.filename,
+                  type: i.fileData.mime,
+                }
+              : i?.fileData,
+          );
+        } else if (i?.is_required) {
+          if (isRequired) {
+            showError(
+              `${
+                strings.PLEASE_UPLOAD
+              } ${i?.translations[0].name.toLowerCase()}`,
+            );
+            isRequired = false;
+            return;
+          }
+        }
+      });
+    }
+
+    if (!isRequired) {
+      return;
+    }
+    console.log(formdata, 'formdata>><');
+
     updateState({isLoading: true});
     actions
-      .signUpApi(data, {
+      .signUpApi(formdata, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
@@ -130,7 +242,6 @@ export default function Signup({navigation}) {
         console.log(res, 'THIS IS RESPONSE');
         console.log(userData, 'USERDATA AFTER THEN');
         updateState({isLoading: false});
-
         if (!!res.data) {
           if (
             !!res.data?.client_preference?.verify_email &&
@@ -173,21 +284,159 @@ export default function Signup({navigation}) {
     updateState({[key]: val});
   };
 
-  const {
-    phoneNumber,
-    callingCode,
-    cca2,
-    name,
-    email,
-    isLoading,
-    password,
-    referralCode,
-    isShowPassword,
-  } = state;
-
   const showHidePassword = () => {
     updateState({isShowPassword: !isShowPassword});
   };
+
+  let actionSheet = useRef();
+  const showActionSheet = () => {
+    actionSheet.current.show();
+  };
+
+  const handleDynamicTxtInput = (text, index, type) => {
+    let data = cloneDeep(addtionalTextInputs);
+    data[index].contents = text;
+    data[index].id = type?.id;
+    data[index].file_type = type?.file_type;
+    data[index].label_name = type?.translations[0]?.name;
+    updateState({addtionalTextInputs: data});
+  };
+
+  //Get TextInput
+  const getTextInputField = (type, index) => {
+    return (
+      <BorderTextInput
+        // secureTextEntry={true}
+        placeholder={type?.translations[0]?.name || ''}
+        onChangeText={(text) => handleDynamicTxtInput(text, index, type)}
+      />
+    );
+  };
+
+  //Update Images
+  const updateImages = (type, index) => {
+    addtionSelectedImageIndex = index;
+    addtionSelectedImage = type;
+    showActionSheet(false);
+  };
+
+  const getImageFieldView = (type, index) => {
+    return (
+      <View
+        style={{
+          marginRight: moderateScale(15),
+          marginTop: moderateScale(10),
+          width: moderateScale(95),
+        }}>
+        <TouchableOpacity
+          onPress={() => updateImages(type, index)}
+          style={styles.imageUpload}>
+          {addtionalImages[index].value != undefined &&
+          addtionalImages[index].value != null &&
+          addtionalImages[index].value != '' ? (
+            <Image
+              source={{uri: addtionalImages[index].value}}
+              style={styles.imageStyle2}
+            />
+          ) : (
+            <Image source={imagePath?.icPhoto} />
+          )}
+        </TouchableOpacity>
+        <Text
+          numberOfLines={2}
+          style={{...styles.label3, minHeight: moderateScale(25)}}>
+          {type?.translations[0]?.name}
+          {type.is_required ? '*' : ''}
+        </Text>
+      </View>
+    );
+  };
+
+  const getDoc = async (value, index) => {
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.pdf],
+      });
+      let data = cloneDeep(addtionalPdfs);
+      if (res) {
+        data[index].value = res[0].uri;
+        data[index].filename = res[0].name;
+        data[index].fileData = res[0];
+        updateState({addtionalPdfs: data});
+      }
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the picker, exit any dialogs or menus and move on
+      } else {
+        throw err;
+      }
+    }
+  };
+
+  const getPdfView = (type, index) => {
+    return (
+      <View
+        style={{marginRight: moderateScale(20), marginTop: moderateScale(20)}}>
+        <TouchableOpacity
+          onPress={() => getDoc(type, index)}
+          style={{
+            ...styles.imageUpload,
+            height: 100,
+            width: 100,
+            borderRadius: moderateScale(4),
+            borderWidth: 1,
+            borderColor: colors.blue,
+          }}>
+          <Text style={styles.uploadStyle}>
+            {addtionalPdfs[index].value != undefined &&
+            addtionalPdfs[index].value != null &&
+            addtionalPdfs[index].value != ''
+              ? `${addtionalPdfs[index].filename}`
+              : `+ ${strings.UPLOAD}`}
+          </Text>
+        </TouchableOpacity>
+        <Text style={[styles.label3]}>
+          {type?.translations[0]?.name}
+          {type.is_required ? '*' : ''}
+        </Text>
+      </View>
+    );
+  };
+
+  // this funtion use for camera handle
+  const cameraHandle = async (index) => {
+    const permissionStatus = await androidCameraPermission();
+    if (permissionStatus) {
+      if (index == 0 || index == 1) {
+        cameraHandler(index, {
+          width: 300,
+          height: 400,
+          cropping: true,
+          cropperCircleOverlay: true,
+          mediaType: 'photo',
+        })
+          .then((res) => {
+            console.log(res, 'res>>><>>>');
+            let data = cloneDeep(addtionalImages);
+
+            data[addtionSelectedImageIndex].value = res?.sourceURL || res?.path;
+            data[addtionSelectedImageIndex].fileData = res;
+            // data[addtionSelectedImageIndex].filename1 =
+            //   addtionSelectedImage?.translations[0]?.name;
+            // data[addtionSelectedImageIndex].file_type =
+            //   addtionSelectedImage?.file_type;
+            // data[addtionSelectedImageIndex].id = addtionSelectedImage?.id;
+            // data[addtionSelectedImageIndex].mime = res?.mime;
+
+            updateState({addtionalImages: data});
+          })
+          .catch((err) => {
+            console.log(err, 'err>>>>');
+          });
+      }
+    }
+  };
+
   return (
     <WrapperContainer
       isLoadingB={isLoading}
@@ -204,7 +453,7 @@ export default function Signup({navigation}) {
           style={{alignSelf: 'flex-start'}}>
           <Image
             source={
-              appStyle?.homePageLayout === 3
+              appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
                 ? imagePath.icBackb
                 : imagePath.back
             }
@@ -296,6 +545,28 @@ export default function Signup({navigation}) {
               placeholder={strings.ENTERREFERALCODE}
               value={referralCode}
             />
+
+            {!isEmpty(addtionalTextInputs) &&
+              addtionalTextInputs.map((item, index) => {
+                return getTextInputField(item, index);
+              })}
+
+            {!isEmpty(addtionalImages) && (
+              <View style={styles.viewStyleForUploadImage}>
+                {addtionalImages.map((item, index) => {
+                  return getImageFieldView(item, index);
+                })}
+              </View>
+            )}
+
+            {!isEmpty(addtionalPdfs) && (
+              <View style={styles.viewStyleForUploadImage}>
+                {addtionalPdfs.map((item, index) => {
+                  return getPdfView(item, index);
+                })}
+              </View>
+            )}
+
             <GradientButton
               onPress={onSignup}
               marginTop={moderateScaleVertical(10)}
@@ -322,6 +593,14 @@ export default function Signup({navigation}) {
           </View>
         </View>
       </KeyboardAwareScrollView>
+      <ActionSheet
+        ref={actionSheet}
+        // title={'Choose one option'}
+        options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
+        cancelButtonIndex={2}
+        destructiveButtonIndex={2}
+        onPress={(index) => cameraHandle(index)}
+      />
     </WrapperContainer>
   );
 }

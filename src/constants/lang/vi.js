@@ -836,4 +836,7 @@ export default {
   PASTDELEIVERIES: 'Giao hàng trước đây',
   MYDELIERIES: 'Giao hàng của tôi',
   NODELIVERIESFOUND: 'Không tìm thấy hàng giao',
+  SORRY_MSG: `Sorry, we currently don’t deliver here but we are
+  expanding quickly. Kindly check back soon!`,
+  TOTAL_DELIVERY_FEE:"Total delivery fee",
 };

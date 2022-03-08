@@ -1,5 +1,5 @@
-import { Keyboard } from 'react-native';
-import { openCamera, openPicker } from './imagePicker';
+import {Keyboard} from 'react-native';
+import {openCamera, openPicker} from './imagePicker';
 const cameraHandler = async (data, option) => {
   Keyboard.dismiss();
   //this condition use for open camera
@@ -57,10 +57,10 @@ export function getImageUrl(url1, url2, dimentions) {
 }
 
 export const ifDataExist = (data) => {
-  if(data && data !== null){
-    return true
+  if (data && data !== null) {
+    return true;
   }
-  return false
-}
+  return false;
+};
 
 export {cameraHandler, currencyNumberFormatter};

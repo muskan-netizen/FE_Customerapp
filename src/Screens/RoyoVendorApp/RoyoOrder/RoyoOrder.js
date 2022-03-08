@@ -196,6 +196,9 @@ const RoyoOrder = (props) => {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        updateState({
+          isLoadingB: false,
+        });
         if (res && res.status == 'success') {
           updateStatus(res, acceptRejectData);
         }
@@ -214,7 +217,6 @@ const RoyoOrder = (props) => {
       }
     });
     updateState({
-      isLoadingB: false,
       activeOrders: clonedArrayOrderList,
     });
   };

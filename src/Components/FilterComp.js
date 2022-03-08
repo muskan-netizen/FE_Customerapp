@@ -39,6 +39,12 @@ let sortingData = [
     {
         id: 5,
         label: strings.POPULARITY,
+        labelValue: 'popular_product',
+        parent: strings.SORT_BY,
+    },
+    {
+        id: 6,
+        label: strings.RATING,
         labelValue: 'rating',
         parent: strings.SORT_BY,
     }
@@ -59,8 +65,7 @@ const FilterComp = ({
     filterData = []
 }) => {
 
-
-
+    console.log("filterData+++++",filterData)
 
     const [state, setState] = useState({
         minPrice: 0,
@@ -130,10 +135,11 @@ const FilterComp = ({
     const sortingView = (val, i) => {
         return (
             <TouchableOpacity
+                key={String(i)}
                 activeOpacity={0.6}
                 style={{
                     ...styles.sortingView,
-                    marginBottom: sortingData.length-1 == i ? moderateScaleVertical(8) : moderateScaleVertical(20)
+                    marginBottom: sortingData.length - 1 == i ? moderateScaleVertical(8) : moderateScaleVertical(20)
                 }}
                 onPress={() => onSelectedSortFilter(val)}
             >
@@ -151,13 +157,13 @@ const FilterComp = ({
 
 
 
-    const _selectFilterData = (item) => {
+    const _selectFilterData = (item) => {   
         let allFilterData = cloneDeep(filterTypes);
         let modifyFilter = [
             ...allFilterData.map((i, inx) => {
                 if (i.label == item?.parent) {
                     let checkArray = i.value.map((j, jnx) => {
-                        if (j.label == item.label) {
+                        if (j.id == item.id) {
                             if (i.id == -2) {
                                 return {
                                     ...j,
@@ -195,6 +201,7 @@ const FilterComp = ({
     const filterView = (val, i) => {
         return (
             <View
+                key={String(i)}
                 style={{ marginBottom: moderateScaleVertical(16) }}
             >
                 <Text style={{
@@ -206,6 +213,7 @@ const FilterComp = ({
                 {val.value.map((item, index) => {
                     return (
                         <TouchableOpacity
+                            key={String(index)}
                             onPress={() => _selectFilterData(item)}
                             activeOpacity={0.8}
                             style={{

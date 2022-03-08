@@ -46,10 +46,22 @@ import {showError, showSuccess} from '../../utils/helperFunctions';
 import {androidCameraPermission} from '../../utils/permissions';
 import validator from '../../utils/validations';
 import stylesFun from './styles';
+import Accordion from 'react-native-collapsible/Accordion';
 
 let clickedIndx = null;
-let clickedItem = {};
+let clickedItem = null;
 let isVendorLogo = false;
+
+const SECTIONS = [
+  {
+    name: 'First',
+    content: 'Lorem ipsum...',
+  },
+  {
+    name: 'Second',
+    content: 'Lorem ipsum...',
+  },
+];
 
 export default function WebLinks({navigation, route}) {
   let actionSheet = useRef();
@@ -124,6 +136,7 @@ export default function WebLinks({navigation, route}) {
       ? appData?.profile.country?.phonecode
       : '91',
     driverTagsAry: [],
+    activeSections: [],
   });
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -134,6 +147,7 @@ export default function WebLinks({navigation, route}) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily});
   const commonStyles = commonStylesFun({fontFamily});
+  const {location, appMainData, dineInType} = useSelector((state) => state?.home);
 
   const {
     cca2,
@@ -178,7 +192,16 @@ export default function WebLinks({navigation, route}) {
     isTermsConditions,
     callingCode,
     driverTagsAry,
+    activeSections,
   } = state;
+
+    useEffect(() => {
+    _getLocationFromParams();
+    // if (addressSearch) {
+    //   _getLocationFromParams();
+    // }
+  }, [paramData?.details]);
+
 
   useEffect(() => {
     updateState({isLoading: true});
@@ -476,6 +499,9 @@ export default function WebLinks({navigation, route}) {
   };
 
   const uploadDocs = async (type, item, indx) => {
+    console.log(type, 'type');
+    console.log(item, 'item');
+    console.log(indx, 'indx');
     if (type == 'Pdf') {
       try {
         const res = await DocumentPicker.pick({
@@ -554,6 +580,8 @@ export default function WebLinks({navigation, route}) {
                   });
                 }
               } else {
+                console.log(res, 'regis doc');
+                console.log(clickedItem, 'clickedItem doc');
                 if (!!clickedItem) {
                   const vendorRegPdfImgAry = [...vendorRegisterationDocs];
                   vendorRegPdfImgAry[clickedIndx] = {
@@ -564,7 +592,7 @@ export default function WebLinks({navigation, route}) {
                   updateState({
                     vendorRegisterationDocs: vendorRegPdfImgAry,
                   });
-                  clickedIndx = null;
+                  // clickedIndx = null;
                   clickedItem = null;
                 } else {
                   if (isVendorLogo) {
@@ -789,6 +817,118 @@ export default function WebLinks({navigation, route}) {
     }
   };
 
+  const _renderSectionTitle = (section) => {
+    return (
+      <View
+        style={{
+          height: moderateScaleVertical(15),
+        }}></View>
+    );
+  };
+
+  const _renderHeader = (section) => {
+    return (
+      <View
+        style={{
+          backgroundColor: colors.white,
+          height: moderateScaleVertical(50),
+          justifyContent: 'center',
+          borderLeftWidth: 4,
+          borderLeftColor: themeColors.primary_color,
+        }}>
+        <Text
+          style={{
+            marginLeft: moderateScale(15),
+            fontFamily: fontFamily.bold,
+            fontSize: textScale(13),
+          }}>
+          {section.question}
+        </Text>
+      </View>
+    );
+  };
+
+  const _renderContent = (section) => {
+    return (
+      <View
+        style={{
+          backgroundColor: colors.white,
+          paddingHorizontal: moderateScale(20),
+          paddingBottom: moderateScaleVertical(15),
+        }}>
+        <Text
+          style={{
+            fontFamily: fontFamily.regular,
+            fontSize: textScale(11),
+          }}>
+          {section.answer}
+        </Text>
+      </View>
+    );
+  };
+
+  const _updateSections = (activeSections) => {
+    updateState({
+      activeSections: activeSections,
+    });
+  };
+
+  if (driverRegDocs?.page_detail?.primary?.type_of_form == 3) {
+    return (
+      <WrapperContainer
+        bgColor={colors.backGroundGreyD}
+        statusBarColor={colors.backGroundGreyD}>
+        <Header
+          leftIcon={
+            appStyle?.homePageLayout === 2
+              ? imagePath.backArrow
+              : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+              ? imagePath.icBackb
+              : imagePath.back
+          }
+          centerTitle={(paramData && paramData?.title) || ''}
+          headerStyle={
+            isDarkMode
+              ? {backgroundColor: MyDarkTheme.colors.background}
+              : {backgroundColor: colors.backGroundGreyD}
+          }
+        />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Accordion
+            sections={driverRegDocs?.faq_data}
+            activeSections={activeSections}
+            renderSectionTitle={_renderSectionTitle}
+            renderHeader={_renderHeader}
+            renderContent={_renderContent}
+            onChange={_updateSections}
+            containerStyle={{
+              paddingHorizontal: moderateScale(15),
+            }}
+          />
+          <View style={{height: 50}} />
+        </ScrollView>
+      </WrapperContainer>
+    );
+  }
+
+  const _getLocationFromParams = () => {
+    if (
+      paramData?.details &&
+      paramData?.details?.formatted_address != location?.address
+    ) {
+      const address = paramData?.details?.formatted_address;
+      const res = {
+        address: address,
+        latitude: paramData?.details?.geometry?.location.lat,
+        longitude: paramData?.details?.geometry?.location.lng,
+      };
+      updateState({
+        address:address
+      })
+    }
+  };
+
+
   return (
     <WrapperContainer
       bgColor={
@@ -801,7 +941,7 @@ export default function WebLinks({navigation, route}) {
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icBackb
             : imagePath.back
         }
@@ -892,36 +1032,38 @@ export default function WebLinks({navigation, route}) {
                     <Text style={styles.uploadText}>
                       {strings.UPLOAD_LOGO}*
                     </Text>
-
-                    <View style={styles.imageView}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          isVendorLogo = true;
-                          actionSheet.current.show();
-                        }}
-                        style={[
-                          styles.viewOverImage2,
-                          {borderStyle: 'dashed'},
-                        ]}>
-                        <Image
-                          source={
-                            vendorLogo.path
-                              ? {uri: vendorLogo.path}
-                              : imagePath.icCamIcon
-                          }
-                          style={{
-                            // tintColor: vendorLogo.path
-                            //   ? null
-                            //   : themeColors.primary_color,
-                            height: vendorLogo.path ? height / 6 - 10 : 30,
-                            width: vendorLogo.path
-                              ? width / 2 - moderateScale(62)
-                              : moderateScale(30),
-                          }}
-                          resizeMode="cover"
-                        />
-                      </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        isVendorLogo = true;
+                        actionSheet.current.show();
+                      }}>
+                      <View style={styles.imageView}>
+                        <View
+                          style={[
+                            styles.viewOverImage2,
+                            {borderStyle: 'dashed'},
+                          ]}>
+                          <Image
+                            source={
+                              vendorLogo?.path
+                                ? {uri: vendorLogo.path}
+                                : imagePath.icCamIcon
+                            }
+                            // source={{uri:'file:///storage/emulated/0/Android/data/com.donepacked/files/Pictures/111fa92e-6b97-46e9-a459-a50b57c91641.jpg'}}
+                            style={{
+                              // tintColor: vendorLogo.path
+                              //   ? null
+                              //   : themeColors.primary_color,
+                              height: vendorLogo.path ? height / 6 - 10 : 30,
+                              width: vendorLogo.path
+                                ? width / 2 - moderateScale(62)
+                                : moderateScale(30),
+                            }}
+                            resizeMode="cover"
+                          />
+                        </View>
+                      </View>
+                    </TouchableOpacity>
                   </View>
                   <View
                     style={{
@@ -978,11 +1120,51 @@ export default function WebLinks({navigation, route}) {
               onChangeText={_onChangeText('description')}
               containerStyle={styles.containerStyle}
             />
-            <BorderTextInput
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() =>
+                navigation.navigate(navigationStrings.LOCATION, {
+                  type: 'vendorRegistration',
+                })
+              }
+              style={{
+                flexDirection: 'row',
+                height: moderateScaleVertical(49),
+                color: colors.white,
+                borderWidth: 1,
+                borderRadius: 13,
+                borderColor: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.borderLight,
+                marginBottom: 20,
+                overflow: 'hidden',
+                alignItems: 'center',
+                ...styles.containerStyle,
+              }}>
+              <Text
+                style={{
+                  flex: 1,
+                  opacity: 0.7,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.textGreyOpcaity7,
+                  fontFamily: fontFamily.medium,
+                  fontSize: textScale(14),
+                  paddingHorizontal: 8,
+                  paddingTop: 0,
+                  paddingBottom: 0,
+                  textAlign: I18nManager.isRTL ? 'right' : 'left',
+                }}>
+                {address != '' && address != null
+                  ? address
+                  : `${strings.ADDRESS}*`}
+              </Text>
+            </TouchableOpacity>
+            {/* <BorderTextInput
               placeholder={`${strings.ADDRESS}*`}
               onChangeText={_onChangeText('address')}
               containerStyle={styles.containerStyle}
-            />
+            /> */}
             <BorderTextInput
               placeholder={strings.WEBSITE}
               onChangeText={_onChangeText('website')}

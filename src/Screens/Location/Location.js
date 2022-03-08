@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   I18nManager,
-  Image, Keyboard, ScrollView, Text,
+  Image,
+  Keyboard,
+  ScrollView,
+  Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dark-mode';
 import Geocoder from 'react-native-geocoding';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import SearchPlaces from '../../Components/SearchPlaces';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -15,30 +18,30 @@ import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import { hitSlopProp } from '../../styles/commonStyles';
+import {hitSlopProp} from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale
+  textScale,
 } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
+import {MyDarkTheme} from '../../styles/theme';
 import {
   getCurrentLocationFromApi,
   getPlaceDetails,
-  nearbySearch
+  nearbySearch,
 } from '../../utils/googlePlaceApi';
-import { getCurrentLocation } from '../../utils/helperFunctions';
+import {getCurrentLocation} from '../../utils/helperFunctions';
 import {
   chekLocationPermission,
-  locationPermission
+  locationPermission,
 } from '../../utils/permissions';
 import stylesFun from './styles';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
-export default function Location({ route, navigation }) {
+export default function Location({route, navigation}) {
   //get param data from specific screen
-  const { type } = route.params;
+  const {type} = route.params;
   const addressType = route?.params?.addressType;
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -55,33 +58,40 @@ export default function Location({ route, navigation }) {
     },
     nearByAddressess: [],
     searchResult: [],
-    savedAddress: []
+    savedAddress: [],
+    isMapSelectLocation: false,
   });
 
-  const { isLoading, address, curLatLng, nearByAddressess, searchResult, savedAddress } = state;
+  const {
+    isLoading,
+    address,
+    curLatLng,
+    nearByAddressess,
+    searchResult,
+    savedAddress,
+    isMapSelectLocation,
+  } = state;
 
   //Reduc store data
-  const { appData, appStyle, themeColors } = useSelector(
+  const {appData, appStyle, themeColors} = useSelector(
     (state) => state?.initBoot,
   );
-  const { profile } = appData;
+  const {profile} = appData;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({ fontFamily });
+  const styles = stylesFun({fontFamily});
   useEffect(() => {
-    Geocoder.init(profile.preferences.map_key, { language: 'en' }); // set the language
+    Geocoder.init(profile.preferences.map_key, {language: 'en'}); // set the language
   }, []);
 
   //update state
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
-
-
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   useEffect(() => {
     getLiveLocation();
@@ -93,9 +103,9 @@ export default function Location({ route, navigation }) {
   const getLiveLocation = async () => {
     const locPermissionDenied = await locationPermission();
     if (locPermissionDenied) {
-      const { latitude, longitude } = await getCurrentLocationFromApi();
+      const {latitude, longitude} = await getCurrentLocationFromApi();
       // console.log("get live location after 4 second")
-      updateState({ curLatLng: { latitude, longitude } });
+      updateState({curLatLng: {latitude, longitude}});
       getNearByAddress(`${latitude}, ${longitude}`);
     }
   };
@@ -104,7 +114,7 @@ export default function Location({ route, navigation }) {
     try {
       const res = await nearbySearch(latlng, profile?.preferences?.map_key);
       console.log('nearby search res+++++', res.results);
-      updateState({ nearByAddressess: res.results });
+      updateState({nearByAddressess: res.results});
     } catch (error) {
       console.log('error raised', error);
     }
@@ -112,6 +122,10 @@ export default function Location({ route, navigation }) {
 
   //Get Your current location
   const getCurrentLocate = () => {
+    updateState({
+      isMapSelectLocation: true,
+    });
+    return;
     chekLocationPermission()
       .then((result) => {
         if (result !== 'goback') {
@@ -125,7 +139,7 @@ export default function Location({ route, navigation }) {
     getCurrentLocation('home')
       .then((res) => {
         let details = {};
-        updateState({ address: res.address });
+        updateState({address: res.address});
         details = {
           formatted_address: res?.address,
           geometry: {
@@ -135,6 +149,7 @@ export default function Location({ route, navigation }) {
             },
           },
         };
+        console.log(details, 'details>>>>>');
         setTimeout(() => {
           if (type == 'Home1') {
             navigation.navigate(navigationStrings.HOME, {
@@ -147,15 +162,18 @@ export default function Location({ route, navigation }) {
               addressType,
             });
           }
+          if (type == 'vendorRegistration') {
+            navigation.navigate(navigationStrings.WEBLINKS, {
+              details,
+            });
+          }
         }, 200);
       })
       .catch((err) => console.log(err, 'errorOccured'));
   };
 
-  
-
   const updateCurValues = (text) => {
-    updateState({ address: text });
+    updateState({address: text});
   };
 
   const onPressAddress = async (place) => {
@@ -168,7 +186,7 @@ export default function Location({ route, navigation }) {
           place.place_id,
           profile?.preferences?.map_key,
         );
-        const { result } = res;
+        const {result} = res;
         console.log('res===', result);
 
         let details = {};
@@ -193,6 +211,11 @@ export default function Location({ route, navigation }) {
             addressType,
           });
         }
+        if (type == 'vendorRegistration') {
+          navigation.navigate(navigationStrings.WEBLINKS, {
+            details,
+          });
+        }
       } catch (error) {
         console.log("something wen't wrong");
       }
@@ -204,8 +227,8 @@ export default function Location({ route, navigation }) {
             lat: place?.latitude,
             lng: place?.longitude,
           },
-        }
-      }
+        },
+      };
       if (type == 'Home1') {
         navigation.navigate(navigationStrings.HOME, {
           details,
@@ -217,31 +240,35 @@ export default function Location({ route, navigation }) {
           addressType,
         });
       }
+      if (type == 'vendorRegistration') {
+        navigation.navigate(navigationStrings.WEBLINKS, {
+          details,
+        });
+      }
     }
   };
 
-
   const getAllAddress = () => {
-    actions.getAddress(
-      {},
-      {
-        code: appData?.profile?.code,
-      },
-    )
+    actions
+      .getAddress(
+        {},
+        {
+          code: appData?.profile?.code,
+        },
+      )
       .then((res) => {
         console.log(res, 'res address>>>>');
         if (res?.data?.length > 0) {
           let modifyArray = res.data.filter((val, i) => {
             if (!!val?.latitude && !!val?.longitude) {
-              return val
+              return val;
             }
-          })
-          updateState({ savedAddress: modifyArray })
+          });
+          updateState({savedAddress: modifyArray});
         }
-
       })
       .catch((error) => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
         // showError(error?.message || error?.error);
       });
   };
@@ -255,10 +282,8 @@ export default function Location({ route, navigation }) {
             ? colors.whiteOpacity22
             : colors.lightGreyBg,
         }}
-        onPress={() =>
-          onPressAddress(item)
-        }>
-        <View style={{ flex: 0.12 }}>
+        onPress={() => onPressAddress(item)}>
+        <View style={{flex: 0.12}}>
           <Image
             style={{
               height: moderateScale(24),
@@ -268,7 +293,7 @@ export default function Location({ route, navigation }) {
             source={imagePath.RecentLocationImage}
           />
         </View>
-        <View style={{ flex: 0.9 }}>
+        <View style={{flex: 0.9}}>
           <Text
             style={{
               fontSize: textScale(12),
@@ -302,10 +327,10 @@ export default function Location({ route, navigation }) {
             : colors.lightGreyBg,
         }}
         onPress={() => onPressAddress(item)}>
-        <View style={{ flex: 0.15 }}>
+        <View style={{flex: 0.15}}>
           <Image source={imagePath.RecentLocationImage} />
         </View>
-        <View style={{ flex: 0.9 }}>
+        <View style={{flex: 0.9}}>
           <Text
             style={{
               fontSize: textScale(12),
@@ -327,6 +352,45 @@ export default function Location({ route, navigation }) {
         </View>
       </TouchableOpacity>
     );
+  };
+
+  const mapClose = () => {
+    updateState({
+      isMapSelectLocation: false,
+    });
+  };
+
+  const addressDone = (value) => {
+    let details = {};
+    updateState({address: value.address});
+    details = {
+      formatted_address: value?.address,
+      geometry: {
+        location: {
+          lat: value?.latitude,
+          lng: value?.longitude,
+        },
+      },
+    };
+
+    setTimeout(() => {
+      if (type == 'Home1') {
+        navigation.navigate(navigationStrings.HOME, {
+          details,
+        });
+      }
+      if (type == 'Pickup') {
+        navigation.navigate(navigationStrings.PICKUPLOCATION, {
+          details,
+          addressType,
+        });
+      }
+      if (type == 'vendorRegistration') {
+        navigation.navigate(navigationStrings.WEBLINKS, {
+          details,
+        });
+      }
+    }, 200);
   };
 
   return (
@@ -356,29 +420,32 @@ export default function Location({ route, navigation }) {
             hitSlop={hitSlopProp}>
             <Image
               source={
-                appStyle?.homePageLayout === 3
+                appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
                   ? imagePath.icBackb
                   : imagePath.back
               }
               style={{
                 tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
               }}
             />
           </TouchableOpacity>
 
-          <View style={{ flex: 0.88 }}>
+          <View style={{flex: 0.88}}>
             <SearchPlaces
               curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
               autoFocus={true}
               placeHolder={strings.SEARCH_LOCATION}
               value={address} // instant update search value
               mapKey={profile?.preferences?.map_key} //send here google Key
-              fetchArrayResult={(data) => updateState({ searchResult: data })}
+              fetchArrayResult={(data) => updateState({searchResult: data})}
               setValue={(text) => updateCurValues(text)} //return & update on change text value
               _moveToNextScreen={getCurrentLocate}
               placeHolderColor={colors.textGreyB}
-              onClear={() => updateState({ address: '', searchResult: [] })}
+              onClear={() => updateState({address: '', searchResult: []})}
+              mapClose={mapClose}
+              addressDone={addressDone}
+              isMapSelectLocation={isMapSelectLocation}
             />
           </View>
         </View>
@@ -386,13 +453,12 @@ export default function Location({ route, navigation }) {
         <ScrollView
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
-          onMomentumScrollBegin={()=>Keyboard.dismiss()}
-          >
+          onMomentumScrollBegin={() => Keyboard.dismiss()}>
           {!!searchResult && searchResult.length > 0 ? (
-            <View style={{ marginTop: moderateScaleVertical(16) }}>
-              <View style={{ ...styles.savedAddressView }}>
+            <View style={{marginTop: moderateScaleVertical(16)}}>
+              <View style={{...styles.savedAddressView}}>
                 <Image
-                  style={{ marginHorizontal: moderateScale(12) }}
+                  style={{marginHorizontal: moderateScale(12)}}
                   source={imagePath.starRoundedBackground}
                 />
                 <Text
@@ -409,10 +475,10 @@ export default function Location({ route, navigation }) {
               })}
             </View>
           ) : (
-            <View style={{ marginTop: moderateScaleVertical(16) }}>
-              <View style={{ ...styles.savedAddressView }}>
+            <View style={{marginTop: moderateScaleVertical(16)}}>
+              <View style={{...styles.savedAddressView}}>
                 <Image
-                  style={{ marginHorizontal: moderateScale(12) }}
+                  style={{marginHorizontal: moderateScale(12)}}
                   source={imagePath.starRoundedBackground}
                 />
                 <Text
@@ -428,34 +494,40 @@ export default function Location({ route, navigation }) {
                 return renderAddressess(val);
               })}
 
-              {savedAddress.length > 0 ? <View style={{
-                marginBottom: moderateScaleVertical(92)
-              }}>
-                <View style={{
-                  ...styles.savedAddressView,
-                  marginTop: moderateScaleVertical(12),
-
-                }}>
-                  <Image
-                    style={{ marginHorizontal: moderateScale(12) }}
-                    source={imagePath.starRoundedBackground}
-                  />
-                  <Text
-                    numberOfLines={1}
+              {savedAddress.length > 0 ? (
+                <View
+                  style={{
+                    marginBottom: moderateScaleVertical(92),
+                  }}>
+                  <View
                     style={{
-                      ...styles.addresssLableName,
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      ...styles.savedAddressView,
+                      marginTop: moderateScaleVertical(12),
                     }}>
-                    {strings.SAVED_ADDRESS}
-                  </Text>
+                    <Image
+                      style={{marginHorizontal: moderateScale(12)}}
+                      source={imagePath.starRoundedBackground}
+                    />
+                    <Text
+                      numberOfLines={1}
+                      style={{
+                        ...styles.addresssLableName,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                      }}>
+                      {strings.SAVED_ADDRESS}
+                    </Text>
+                  </View>
+                  {savedAddress.length > 0 ? (
+                    <View>
+                      {savedAddress.map((val) => {
+                        return renderAddressess(val);
+                      })}
+                    </View>
+                  ) : null}
                 </View>
-                {savedAddress.length > 0 ? <View>
-                  {savedAddress.map((val) => {
-                    return renderAddressess(val);
-                  })}
-
-                </View> : null}
-              </View> : null}
+              ) : null}
             </View>
           )}
         </ScrollView>

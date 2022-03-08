@@ -1,4 +1,4 @@
-import { requireNativeComponent } from 'react-native';
+import {requireNativeComponent} from 'react-native';
 
 export default {
   dropdownTriangle: require('../assets/images/ic_dropdown.png'),
@@ -94,7 +94,7 @@ export default {
   crossBlueB: require('../assets/images/ic_cross_2.png'),
   masterCard: require('../assets/images/mastercard.png'),
   emptyCart: require('../assets/images/ic_emptycart.png'),
-  noDataFound: require('../assets/images/ic_nodata.png'),
+  noDataFound: require('../assets/images/RoyoorderNewImages/ic_nostores1.png'),
   twitterIcon: require('../assets/images/ic_twitter.png'),
   successfulIcon: require('../assets/images/ic_successful.png'),
   deleteRed: require('../assets/images/ic_delete.png'),
@@ -502,4 +502,5 @@ export default {
   icVoice: require('../assets/images/icVoice.png'),
   icDropdown4: require('../assets/images/ic_drpdwn4.png'),
   icMegaSafe: require('../assets/images/ic_label.png'),
+  icPhoto: require('../assets/images/ic_photo.png'),
 };

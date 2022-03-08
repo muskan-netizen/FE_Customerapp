@@ -43,7 +43,8 @@ import useInterval from '../../utils/useInterval';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
 import { getBundleId } from 'react-native-device-info';
 
-export default function MyOrders({ navigation }) {
+export default function MyOrders(props) {
+  const { navigation, route} = props
   const {
     appData,
     currencies,
@@ -58,6 +59,8 @@ export default function MyOrders({ navigation }) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const cartData = useSelector((state) => state?.cart?.cartItemCount);
+
+  let backIconShow = !!route?.params?.data ? route.params.data.isBack: false
 
   const businessType = appStyle?.homePageLayout;
   const [state, setState] = useState({
@@ -587,14 +590,14 @@ export default function MyOrders({ navigation }) {
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
-        noLeftIcon
-        // leftIcon={
-        //   appStyle?.homePageLayout === 2
-        //     ? imagePath.backArrow
-        //     : appStyle?.homePageLayout === 3
-        //     ? imagePath.icBackb
-        //     : imagePath.backArrowCourier
-        // }
+        noLeftIcon={!backIconShow}
+        leftIcon={
+          appStyle?.homePageLayout === 2
+            ? imagePath.backArrow
+            : appStyle?.homePageLayout === 3
+              ? imagePath.icBackb
+              : imagePath.backArrowCourier
+        }
         centerTitle={
           businessType === 4
             ? appIds.mml == getBundleId()

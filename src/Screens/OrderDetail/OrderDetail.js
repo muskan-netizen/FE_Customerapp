@@ -31,6 +31,7 @@ import {
   loaderFive,
   loaderOne,
 } from '../../Components/Loaders/AnimatedLoaderFiles';
+import RatingModal from '../../Components/RatingModal';
 import StepIndicators from '../../Components/StepIndicator';
 import UserDetail from '../../Components/UserDetail';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -61,7 +62,7 @@ export default function OrderDetail({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-  console.log(paramData, 'paramData');
+  // console.log(paramData, 'paramData');
   const dineInType = useSelector((state) => state?.home?.dineInType);
   let businessType = appData?.profile?.preferences?.business_type || null;
 
@@ -112,6 +113,8 @@ export default function OrderDetail({navigation, route}) {
     driverStatus: null,
     swipeKey: 'randomStrings',
     showTaxFeeArea: false,
+    trackingUrl: paramData?.orderDetail?.dispatch_traking_url || null,
+    ratingData: null,
   });
   const {
     showTaxFeeArea,
@@ -130,6 +133,8 @@ export default function OrderDetail({navigation, route}) {
     driverStatus,
     swipeKey,
     dispatcherStatus,
+    trackingUrl,
+    ratingData,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -178,8 +183,11 @@ export default function OrderDetail({navigation, route}) {
 
   useFocusEffect(
     React.useCallback(() => {
-      getOrders();
-      getUpdatedCartDetail();
+      if (paramData?.fromActive) {
+        return;
+      } else {
+        getOrders();
+      }
     }, []),
   );
 
@@ -191,46 +199,9 @@ export default function OrderDetail({navigation, route}) {
     }
   };
 
-  const new_dispatch_traking_url = paramData?.orderDetail?.dispatch_traking_url
-    ? (paramData?.orderDetail?.dispatch_traking_url).replace(
-        '/order/',
-        '/order-details/',
-      )
+  const new_dispatch_traking_url = trackingUrl
+    ? trackingUrl.replace('/order/', '/order-details/')
     : null;
-
-  // console.log(new_dispatch_traking_url, 'new_dispatch_traking_url');
-
-  const getUpdatedCartDetail = () => {
-    let data = {};
-    data['order_id'] = paramData?.orderId;
-    if (paramData?.selectedVendor) {
-      data['vendor_id'] = paramData?.selectedVendor.id;
-    }
-    data['new_dispatch_traking_url'] = new_dispatch_traking_url;
-
-    // updateState({ isLoading: true });
-    actions
-      .getOrderDetail(data, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        timezone: RNLocalize.getTimeZone(),
-        // systemuser: DeviceInfo.getUniqueId(),
-      })
-      .then((res) => {
-        console.log(res.data, 'order detail res===>');
-        updateState({isLoading: false});
-        if (res?.data) {
-          if (res?.data?.vendors[0]?.tempCart) {
-            updateState({
-              updatedcartData: res?.data?.vendors[0]?.tempCart,
-              updatedcartItems: res?.data?.vendors[0]?.tempCart?.products,
-            });
-          }
-        }
-      })
-      .catch(errorMethod);
-  };
 
   /*********Get order detail screen********* */
   const _getOrderDetailScreen = () => {
@@ -240,9 +211,6 @@ export default function OrderDetail({navigation, route}) {
       data['vendor_id'] = paramData?.selectedVendor.id;
     }
     data['new_dispatch_traking_url'] = new_dispatch_traking_url;
-
-    console.log(data, '_getOrderDetailScreen>data>');
-    // updateState({ isLoading: true });
     actions
       .getOrderDetail(data, {
         code: appData?.profile?.code,
@@ -252,7 +220,16 @@ export default function OrderDetail({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'order detail res===>');
+        console.log(res.data, 'order detail res===>>>>');
+        if (
+          !!res?.data?.vendors[0] &&
+          res?.data?.vendors[0].order_status.current_status.title ==
+            'Delivered' &&
+          !res?.data?.vendors[0]?.products[0]?.product_rating &&
+          !ratingData
+        ) {
+          updateState({ratingData: res?.data?.vendors[0].products[0]});
+        }
         updateState({isLoading: false});
         if (res?.data) {
           if (res?.data?.vendors[0]?.tempCart) {
@@ -289,6 +266,12 @@ export default function OrderDetail({navigation, route}) {
             if (!!lat && !!lng) {
               animate(lat, lng);
             }
+          }
+
+          if (!trackingUrl) {
+            updateState({
+              trackingUrl: res.data.vendors[0].dispatch_traking_url,
+            });
           }
 
           updateState({
@@ -395,23 +378,8 @@ export default function OrderDetail({navigation, route}) {
     navigation.navigate(navigationStrings.RATEORDER, {item});
   };
 
-  const onOrderStatusChange = (status) => {
-    switch (status) {
-      case 'Accepted':
-        return strings.ORDERACCEPTED;
-        break;
-      case 'Processing':
-        return strings.PROCCESSING;
-        break;
-      case 'Out For Delivery':
-        return strings.OUTFORDELIVERY;
-        break;
-      case 'Delivered':
-        return strings.ORDERDELIVERED;
-        break;
-      default:
-        break;
-    }
+  const onSuccessRating = () => {
+    getOrders();
   };
 
   const _renderItem2 = ({item, index}) => {
@@ -1046,21 +1014,86 @@ export default function OrderDetail({navigation, route}) {
                                     );
                                   })
                                 : null}
+
+                              {!!(
+                                !!i?.container_charges &&
+                                Number(i?.container_charges)
+                              ) && (
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    marginTop: moderateScale(2),
+                                  }}>
+                                  <View>
+                                    <Text
+                                      style={{
+                                        ...styles.cartItemWeight2,
+                                        color: isDarkMode
+                                          ? MyDarkTheme.colors.text
+                                          : colors.textGreyB,
+                                        marginBottom: moderateScale(2),
+                                        // marginTop: moderateScaleVertical(6),
+                                      }}>
+                                      {`${strings.CONTAINERCHARGES} : `}
+                                    </Text>
+                                  </View>
+                                  {!!(
+                                    !!i?.container_charges &&
+                                    Number(i?.container_charges)
+                                  ) && (
+                                    <View
+                                      style={{
+                                        marginBottom: moderateScaleVertical(2),
+                                      }}>
+                                      <View
+                                        style={{
+                                          marginRight: moderateScale(10),
+                                        }}>
+                                        <Text
+                                          style={
+                                            isDarkMode
+                                              ? [
+                                                  styles.cartItemWeight2,
+                                                  {
+                                                    color:
+                                                      MyDarkTheme.colors.text,
+                                                  },
+                                                ]
+                                              : styles.cartItemWeight2
+                                          }
+                                          // numberOfLines={1}
+                                        >
+                                          {`${
+                                            currencies?.primary_currency?.symbol
+                                          }${currencyNumberFormatter(
+                                            Number(
+                                              i?.container_charges,
+                                            ).toFixed(2) * Number(i?.quantity),
+                                          )}`}
+                                        </Text>
+                                      </View>
+                                    </View>
+                                  )}
+                                </View>
+                              )}
                             </View>
                           </View>
                         </View>
                       </View>
 
-                      {!!paramData?.showRating ? (
+                      {!!driverStatus?.order &&
+                      driverStatus?.order?.status === 'completed' ? (
                         <View
                           style={{
                             flexDirection: 'row',
                             justifyContent: 'space-between',
                             paddingBottom: moderateScaleVertical(5),
                             paddingHorizontal: moderateScale(10),
+                            marginVertical: moderateScaleVertical(16),
                           }}>
                           <StarRating
-                            disabled={false}
+                            disabled={true}
                             maxStars={5}
                             rating={Number(i?.product_rating?.rating)}
                             selectedStar={(rating) =>
@@ -1069,18 +1102,28 @@ export default function OrderDetail({navigation, route}) {
                             fullStarColor={colors.ORANGE}
                             starSize={15}
                           />
-                          {i?.product_rating?.rating ? (
-                            <View>
-                              <Text
-                                onPress={() => rateYourOrder(i)}
-                                style={[
-                                  styles.writeAReview,
-                                  {color: themeColors.primary_color},
-                                ]}>
-                                {strings.WRITE_REVIEW}
-                              </Text>
-                            </View>
-                          ) : null}
+                          <View>
+                            <Text
+                              onPress={() => updateState({ratingData: i})}
+                              style={[
+                                styles.writeAReview,
+                                {color: themeColors.primary_color},
+                              ]}>
+                              {strings.WRITE_REVIEW}
+                            </Text>
+                          </View>
+                          {/* {i?.product_rating?.rating ? (
+                          <View>
+                            <Text
+                              onPress={() => rateYourOrder(i)}
+                              style={[
+                                styles.writeAReview,
+                                { color: themeColors.primary_color },
+                              ]}>
+                              {strings.WRITE_REVIEW}
+                            </Text>
+                          </View>
+                        ) : null} */}
                         </View>
                       ) : null}
                     </View>
@@ -1183,6 +1226,40 @@ export default function OrderDetail({navigation, route}) {
                 currencies?.primary_currency?.symbol
               } ${currencyNumberFormatter(
                 Number(item?.delivery_fee ? item?.delivery_fee : 0).toFixed(2),
+              )}`}</Text>
+            </View>
+          )}
+            {!!Number(item?.total_container_charges) && (
+            <View style={styles.itemPriceDiscountTaxView}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                        styles.priceItemLabel,
+                        {
+                          color: MyDarkTheme.colors.text,
+                          fontSize: textScale(14),
+                        },
+                      ]
+                    : styles.priceItemLabel
+                }>
+                {strings.CONTAINER_CHARGES}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                        styles.priceItemLabel,
+                        {
+                          color: MyDarkTheme.colors.text,
+                          fontSize: textScale(14),
+                        },
+                      ]
+                    : styles.priceItemLabel
+                }>{`${
+                currencies?.primary_currency?.symbol
+              } ${currencyNumberFormatter(
+                Number(item?.total_container_charges ? item?.total_container_charges : 0).toFixed(2),
               )}`}</Text>
             </View>
           )}
@@ -1725,7 +1802,7 @@ export default function OrderDetail({navigation, route}) {
               leftText={strings.SUBTOTAL}
               rightText={`${
                 currencies?.primary_currency?.symbol
-              } ${currencyNumberFormatter(
+              }${currencyNumberFormatter(
                 Number(cartData?.total_amount).toFixed(2),
               )}`}
               isDarkMode={isDarkMode}
@@ -1733,12 +1810,12 @@ export default function OrderDetail({navigation, route}) {
             />
           )}
           {!!cartData?.total_delivery_fee &&
-            cartData?.total_delivery_fee !== '0.00' && (
+            cartData?.total_delivery_fee > 0 && (
               <LeftRightText
                 leftText={strings.DELIVERY_FEE}
                 rightText={`${
                   currencies?.primary_currency?.symbol
-                } ${currencyNumberFormatter(
+                }${currencyNumberFormatter(
                   Number(cartData?.total_delivery_fee).toFixed(2),
                 )}`}
                 isDarkMode={isDarkMode}
@@ -1746,12 +1823,12 @@ export default function OrderDetail({navigation, route}) {
               />
             )}
           {!!cartData?.wallet_amount_used &&
-            cartData?.wallet_amount_used !== '0.00' && (
+            cartData?.wallet_amount_used > 0 && (
               <LeftRightText
                 leftText={strings.WALLET}
-                rightText={`${
+                rightText={`- ${
                   currencies?.primary_currency?.symbol
-                } ${currencyNumberFormatter(
+                }${currencyNumberFormatter(
                   Number(cartData?.wallet_amount_used).toFixed(2),
                 )}`}
                 isDarkMode={isDarkMode}
@@ -1764,7 +1841,7 @@ export default function OrderDetail({navigation, route}) {
               leftText={strings.TAXES_FEES}
               rightText={`${
                 currencies?.primary_currency?.symbol
-              } ${currencyNumberFormatter(
+              }${currencyNumberFormatter(
                 (
                   Number(cartData?.total_service_fee) +
                   Number(cartData?.taxable_amount)
@@ -1775,19 +1852,32 @@ export default function OrderDetail({navigation, route}) {
             />
           )}
           {!!cartData?.loyalty_amount_saved &&
-            cartData?.loyalty_amount_saved !== '0.00' && (
+            cartData?.loyalty_amount_saved > 0 && (
               <LeftRightText
                 leftText={strings.LOYALTY}
-                rightText={`${
+                rightText={`- ${
                   currencies?.primary_currency?.symbol
-                } ${currencyNumberFormatter(
+                }${currencyNumberFormatter(
                   Number(cartData?.loyalty_amount_saved).toFixed(2),
                 )}`}
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}
               />
             )}
-          {!!cartData?.tip_amount && cartData?.tip_amount !== '0.00' && (
+          {!!cartData?.vendors[0]?.total_container_charges &&
+            Number(cartData?.total_container_charges) > 0 && (
+              <LeftRightText
+                leftText={strings.TOTALCONTAINERCHARGES}
+                rightText={`${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(cartData?.vendors[0]?.total_container_charges).toFixed(2),
+                )}`}
+                isDarkMode={isDarkMode}
+                MyDarkTheme={MyDarkTheme}
+              />
+            )}
+          {!!cartData?.tip_amount && cartData?.tip_amount > 0 && (
             <LeftRightText
               leftText={strings.TIP_AMOUNT}
               rightText={`${
@@ -1799,19 +1889,18 @@ export default function OrderDetail({navigation, route}) {
               MyDarkTheme={MyDarkTheme}
             />
           )}
-          {!!cartData?.total_discount &&
-            cartData?.total_discount !== '0.00' && (
-              <LeftRightText
-                leftText={strings.DISCOUNT}
-                rightText={`-${
-                  currencies?.primary_currency?.symbol
-                } ${currencyNumberFormatter(
-                  Number(cartData?.total_discount).toFixed(2),
-                )}`}
-                isDarkMode={isDarkMode}
-                MyDarkTheme={MyDarkTheme}
-              />
-            )}
+          {!!cartData?.total_discount && cartData?.total_discount > 0 && (
+            <LeftRightText
+              leftText={strings.DISCOUNT}
+              rightText={`- ${
+                currencies?.primary_currency?.symbol
+              }${currencyNumberFormatter(
+                Number(cartData?.total_discount).toFixed(2),
+              )}`}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+            />
+          )}
           <View
             style={{
               ...styles.dottedLine,
@@ -2092,7 +2181,6 @@ export default function OrderDetail({navigation, route}) {
     ) {
       showError(strings.INSUFFICIENT_FUNDS_IN_WALLET_PLEASERECHARGE);
     } else {
-      // alert("123")
       let data = {};
       data['cart_id'] = updatedcartData?.id;
       data['address_id'] = updatedcartData?.address_id;
@@ -2587,7 +2675,8 @@ export default function OrderDetail({navigation, route}) {
                 }}
                 image={imagePath.icDestination}
               />
-              {!!driverStatus?.agent_location?.lat && (
+              {!!driverStatus?.agent_location?.lat &&
+              orderStatus?.current_status?.title != 'Delivered' ? (
                 <Marker.Animated
                   ref={markerRef}
                   coordinate={state.animateDriver}
@@ -2599,7 +2688,7 @@ export default function OrderDetail({navigation, route}) {
                     }}
                   />
                 </Marker.Animated>
-              )}
+              ) : null}
             </MapView>
             <TouchableOpacity
               style={{
@@ -2873,7 +2962,7 @@ export default function OrderDetail({navigation, route}) {
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icBackb
             : imagePath.back
         }
@@ -2909,6 +2998,14 @@ export default function OrderDetail({navigation, route}) {
             flexGrow: 1,
           }}
         />
+
+        {!!ratingData ? (
+          <RatingModal
+            productDetail={ratingData}
+            modalClose={() => updateState({ratingData: null})}
+            onSuccessRating={onSuccessRating}
+          />
+        ) : null}
       </View>
     </WrapperContainer>
   );

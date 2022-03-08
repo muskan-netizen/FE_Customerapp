@@ -133,7 +133,7 @@ const ChooseAddressModal = ({
                             ]
                             : [styles.address, { textAlign: 'left' }]
                         }>
-                        {itm?.address}
+                        {!!itm?.house_number? itm?.house_number + ', ' : ''}{itm?.address}
                       </Text>
                     </View>
                     {selectedAddress && selectedAddress.id == itm.id && (

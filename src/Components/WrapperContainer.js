@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, View} from 'react-native';
+import {StatusBar, View} from 'react-native';
 import colors from '../styles/colors';
 import CustomAnimatedLoader from './CustomAnimatedLoader';
 import Loader from './Loader';
@@ -9,6 +9,7 @@ import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 import strings from '../constants/lang';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const WrapperContainer = ({
   children,

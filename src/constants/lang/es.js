@@ -781,4 +781,9 @@ export default {
   PASTDELEIVERIES: 'Entregas pasadas',
   MYDELIERIES: 'Entregas pasadas',
   NODELIVERIESFOUND: 'No se encontraron entregas',
+  CLEAR_FILTER: 'Clear Filter',
+  PRICE_RANGE: 'Price Range',
+  SORRY_MSG: `Sorry, we currently don’t deliver here but we are
+  expanding quickly. Kindly check back soon!`,
+  TOTAL_DELIVERY_FEE: 'Total delivery fee',
 };

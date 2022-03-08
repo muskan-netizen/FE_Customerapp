@@ -1171,13 +1171,13 @@ export default function CelebrityProduct2({route, navigation}) {
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icBackb
             : imagePath.back
         }
         centerTitle={celebrity.name || celebrity.translation[0].title}
         rightIcon={
-          appStyle?.homePageLayout === 3
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icSearchb
             : imagePath.search
         }
