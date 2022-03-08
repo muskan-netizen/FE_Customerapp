@@ -15,7 +15,6 @@ export const API_BASE_URL = 'https://sales.royoorders.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.103.186:8005/api/v1'; // harbans
 // export const API_BASE_URL = 'https://876c-114-134-24-242.ngrok.io/api/v1'; // gourav sir
 // export const API_BASE_URL = 'http://192.168.96.127:8005/api/v1';
-
 // export const API_BASE_URL = 'https://f6da-114-134-24-242.ngrok.io/api/v1';
 
 //export const API_BASE_URL = 'https://yummiidash.com/api/v1';
@@ -243,4 +242,6 @@ export const USER_REGISTRATION_DOCUMENT = getApiUrl(
   '/user/registration/document',
 );
 export const GET_USER_PROFILE = getApiUrl('/getProfile');
-export const VENDOR_PRODUCTS_OPTIMIZE_FILTERS = getApiUrl('/vendor/vendorProductsFilterOptimize');
+export const VENDOR_PRODUCTS_OPTIMIZE_FILTERS = getApiUrl(
+  '/vendor/vendorProductsFilterOptimize',
+);
