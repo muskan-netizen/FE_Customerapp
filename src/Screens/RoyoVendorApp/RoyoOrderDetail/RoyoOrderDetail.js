@@ -32,6 +32,7 @@ import {dialCall} from '../../../utils/openNativeApp';
 import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import {isEmpty} from 'lodash';
 import FastImage from 'react-native-fast-image';
+import strings from '../../../constants/lang';
 
 const RoyoOrderDetail = (props) => {
   const {data, selectedVendor} = props.route.params;
@@ -182,7 +183,7 @@ const RoyoOrderDetail = (props) => {
                   color: colors.blueColor,
                   textDecorationLine: 'underline',
                 }}>
-                View PDF
+                {strings.VIEW_PDF}
               </Text>
             </TouchableOpacity>
           )}
@@ -212,7 +213,7 @@ const RoyoOrderDetail = (props) => {
         showsVerticalScrollIndicator={false}>
         {current_status.id != 1 ? (
           <View>
-            <Text style={styles.jobStatus}>Job Status</Text>
+            <Text style={styles.jobStatus}>{strings.JOB_STATUS}</Text>
             <View style={styles.preparingBox}>
               <Text style={{...styles.font16Semibold, color: colors.white}}>
                 {current_status.title}
@@ -241,7 +242,7 @@ const RoyoOrderDetail = (props) => {
         ) : null}
         <View style={{...styles.orderNumberBox, zIndex: -1}}>
           {/* <Text style={styles.orderNumber}>Order #{data.order_number}</Text> */}
-          <Text style={styles.orderNumber}>Ordered at:</Text>
+          <Text style={styles.orderNumber}>{strings.ORDERAT}:</Text>
           <Text style={styles.orderTime}>{`${moment(data?.date_time).format(
             'DD MMM,YYYY',
           )} ${moment(data?.date_time).format('LT')} `}</Text>
@@ -275,7 +276,10 @@ const RoyoOrderDetail = (props) => {
                   <Text style={styles.font16Medium}>
                     {item?.translation?.title}
                   </Text>
-                  <Text style={styles.font13Regular}>{item.quantity} Unit</Text>
+                  <Text style={styles.font13Regular}>
+                    {item.quantity}
+                    {strings.UNIT}
+                  </Text>
                   <Text style={styles.font14Regular}>
                     {currencies?.primary_currency?.symbol} {item.price}
                   </Text>
@@ -283,7 +287,7 @@ const RoyoOrderDetail = (props) => {
                 <Text style={styles.font16Semibold}>
                   {`${currencies?.primary_currency?.symbol} ${
                     item.quantity * item.price
-                  }`}{' '}
+                  }`}
                 </Text>
               </View>
             );
@@ -294,14 +298,14 @@ const RoyoOrderDetail = (props) => {
 
         <View style={{margin: moderateScaleVertical(16)}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.font15Medium}>Subtotal</Text>
+            <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>
             <Text style={styles.font15Semibold}>
               {currencies?.primary_currency?.symbol}
               {data.payable_amount}
             </Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.font15Medium}>Delivery fee</Text>
+            <Text style={styles.font15Medium}>{strings.DELIVERYFEE}</Text>
             <Text style={styles.font15Semibold}>
               {currencies?.primary_currency?.symbol}
               {data.total_delivery_fee}
@@ -309,7 +313,7 @@ const RoyoOrderDetail = (props) => {
           </View>
           <View style={styles.dashLine} />
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.font15Medium}>Total</Text>
+            <Text style={styles.font15Medium}>{strings.TOTAL}</Text>
             <Text style={{...styles.font15Semibold, color: colors.themeColor2}}>
               {`${currencies?.primary_currency?.symbol} ${
                 parseFloat(data.payable_amount) +
@@ -324,7 +328,9 @@ const RoyoOrderDetail = (props) => {
             backgroundColor: colors.whiteSmokeColor,
           }}>
           <View style={styles.flexRow}>
-            <Text style={styles.font14Semibold}>Delivery address</Text>
+            <Text style={styles.font14Semibold}>
+              {strings.DELIEVERY_ADDRESS}
+            </Text>
             <View style={{flexDirection: 'row'}}>
               <TouchableOpacity onPress={() => dialCall(1234567890)}>
                 <Image source={imagePath.callRoyo} />
@@ -375,14 +381,15 @@ const RoyoOrderDetail = (props) => {
             </View>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{...styles.font14Semibold}}>Payment method</Text>
+            <Text style={{...styles.font14Semibold}}>
+              {strings.PAYMENT_METHOD}
+            </Text>
             <Text style={{...styles.font14Semibold, color: colors.black}}>
               {data.payment_option_title}
             </Text>
           </View>
         </View>
         <View style={{marginHorizontal: moderateScale(20)}}>
-          {console.log(userDocumentList, 'userDocumentList>><')}
           {!isEmpty(userDocumentList) &&
             userDocumentList.map(renderUserDetails)}
         </View>

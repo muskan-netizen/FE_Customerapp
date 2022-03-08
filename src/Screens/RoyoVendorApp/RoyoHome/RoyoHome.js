@@ -40,6 +40,7 @@ import Modal from 'react-native-modal';
 import SelectVendorListModal from '../../../Components/SelectVendorListModal';
 import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import {enums} from '../../../utils/enums';
+import strings from '../../../constants/lang';
 
 const commonStyle = commonStyles({
   fontFamily,
@@ -675,7 +676,7 @@ const RoyoHome = (props) => {
           <View style={styles.rowWrapSpace}>
             <View>
               <View style={styles.chartHeader}>
-                <Text style={styles.font18Semibold}>Revenue</Text>
+                <Text style={styles.font18Semibold}>{strings.REVENUE}</Text>
                 <TouchableOpacity
                   onPress={toggleRevenueDate}
                   style={{flexDirection: 'row'}}>
@@ -699,15 +700,14 @@ const RoyoHome = (props) => {
               <View style={{...styles.graphContainer, zIndex: -1}}>
                 <View style={styles.graphHeader}>
                   <Text style={{...styles.font13Regular, color: '#2E3E3A5f'}}>
-                    Total revenue (Delivered order)
+                    {strings.TOTAL_REVENUE}
                   </Text>
                   <Text style={styles.font16Bold}>
                     {currencies?.primary_currency?.symbol}
-                    {Number(totalRevenue).toFixed(2)}
+                    {!!totalRevenue ? Number(totalRevenue).toFixed(2) : 0}
                   </Text>
                 </View>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                  {console.log('labelslabelslabels', labels)}
                   <BarChart
                     withCustomBarColorFromData={true}
                     style={{margin: 0, padding: 0, flex: 1, marginLeft: 0}}
@@ -730,7 +730,7 @@ const RoyoHome = (props) => {
             </View>
             <View>
               <View style={styles.chartHeader}>
-                <Text style={styles.font18Semibold}>Revenue</Text>
+                <Text style={styles.font18Semibold}>{strings.REVENUE}</Text>
                 <TouchableOpacity
                   onPress={toggleOrderDate}
                   style={{flexDirection: 'row'}}>
@@ -752,7 +752,9 @@ const RoyoHome = (props) => {
               </View>
               <View style={styles.graphContainer}>
                 <View style={styles.graphHeader}>
-                  <Text style={styles.font13Regular}>Total orders placed</Text>
+                  <Text style={styles.font13Regular}>
+                    {strings.TOTAL_ORDER_PLACED}
+                  </Text>
                   <Text style={styles.font16Bold}>34565</Text>
                 </View>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -782,7 +784,7 @@ const RoyoHome = (props) => {
                 ...styles.font18Semibold,
                 marginVertical: moderateScaleVertical(16),
               }}>
-              New Order
+              {strings.NEW_ORDER}
             </Text>
             <FlatList
               onEndReached={onEndReachedDelayed}

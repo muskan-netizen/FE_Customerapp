@@ -19,6 +19,7 @@ import {useSelector} from 'react-redux';
 import navigationStrings from '../../../navigation/navigationStrings';
 import {isEmpty} from 'lodash';
 import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import strings from '../../../constants/lang';
 
 const RoyoTransactions = (props) => {
   const {navigation} = props;
@@ -196,7 +197,9 @@ const RoyoTransactions = (props) => {
           ))}
         </View>
         <View style={{flex: 1}}>
-          <Text style={styles.font14Medium}>Order #{item.order_number}</Text>
+          <Text style={styles.font14Medium}>
+            {strings.ORDER} #{item.order_number}
+          </Text>
           <Text style={styles.font12Regular}>{item.date_time}</Text>
         </View>
         <Text
@@ -231,12 +234,12 @@ const RoyoTransactions = (props) => {
           {currencies?.primary_currency?.symbol}{' '}
           {Number(totalAmtRecieved).toFixed(2)}
         </Text>
-        <Text style={styles.font14Semibold}>AMOUNT RECIEVED</Text>
+        <Text style={styles.font14Semibold}>{strings.AMOUNT_RECIEVED}</Text>
       </View>
 
       <View style={styles.transactionTimeBox}>
-        <Text style={styles.font14Regular}>Transactions time :</Text>
-        <Text style={styles.font14Regular}> Lifetime</Text>
+        <Text style={styles.font14Regular}>{strings.TRANSACTION_TIME} :</Text>
+        <Text style={styles.font14Regular}>{strings.LIFETIME}</Text>
         {/* <Image
           style={{alignItems: 'center', tintColor: colors.blackOpacity66}}
           source={imagePath.dropdownTriangle}
