@@ -213,6 +213,7 @@ export default function Products({ route, navigation }) {
   const [productListId, setProductListId] = useState(data);
   const [isLoading, setLoading] = useState(true);
   const [apiHitAgain, setApiHitAgain] = useState(false)
+  const [animateText, setAnimateText] = useState(0)
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
   const styles = stylesFunc({ themeColors, fontFamily, isDarkMode, MyDarkTheme });
@@ -997,6 +998,7 @@ export default function Products({ route, navigation }) {
               console.log('update qty res', res);
               tempQty = 0;
               actions.cartItemQty(res);
+              setAnimateText(res.data.total_payable_amount)
               updateState({
                 cartItems: res.data.products,
                 cartData: res.data,
@@ -1509,6 +1511,7 @@ export default function Products({ route, navigation }) {
           differentAddsOns={differentAddsOns}
           businessType={businessType}
           categoryInfo={categoryInfo}
+          animateText={animateText}
         />
         <View style={styles.horizontalLine} />
       </Animatable.View>
@@ -2903,6 +2906,7 @@ export default function Products({ route, navigation }) {
           selectedItemIndx={selectedItemIndx}
           businessType={businessType}
           categoryInfo={categoryInfo}
+          animateText={animateText}
         />
         <View
           style={{

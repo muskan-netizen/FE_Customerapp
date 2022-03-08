@@ -47,6 +47,7 @@ const ProductCard3 = ({
   btnLoader,
   categoryInfo = '',
   businessType,
+  animateText = 0
 }) => {
   // console.log('item data++', data);
   // data['qty'] = 1
@@ -495,8 +496,9 @@ const ProductCard3 = ({
                         <Animatable.View style={{ overflow: 'hidden' }}>
                           {isVisibleText ? (
                             <Animatable.Text
-                              key={String(qtyText)}
-                              animation={isAdd ? 'slideInUp' : 'slideInDown'}
+                              // key={String(animateText)}
+                              
+                              // animation={isAdd ? 'slideInUp' : 'slideInDown'}
                               // easing={'ease-out-sine'}
                               // animation={
                               //   isIncrement

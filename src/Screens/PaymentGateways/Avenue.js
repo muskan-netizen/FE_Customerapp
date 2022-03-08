@@ -111,6 +111,7 @@ export default function Avenue({navigation, route}) {
           onLoad={() => updateState({isLoading: false})}
           source={{uri: webUrl}}
           onNavigationStateChange={onNavigationStateChange}
+          onError={() => updateState({isLoading: false})}
         />
       )}
       <View
