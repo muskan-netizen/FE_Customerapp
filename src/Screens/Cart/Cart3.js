@@ -639,6 +639,7 @@ function Cart({ navigation, route }) {
       ).toFixed(2),
       payment_option_id: selectedPayment?.id,
       orderDetail: res.data,
+      selectedPayment:selectedPayment,
       redirectFrom: 'cart',
     };
     if (
