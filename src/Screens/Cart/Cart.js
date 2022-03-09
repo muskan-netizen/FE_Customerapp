@@ -915,9 +915,9 @@ export default function Cart({navigation, route}) {
                                       numberOfLines={1}>{` ${
                                       currencies?.primary_currency?.symbol
                                     }${currencyNumberFormatter(
-                                      (
-                                        Number(j.price) * Number(j.multiplier)
-                                      ).toFixed(2),
+                                      Number(j.price) * Number(j.multiplier),
+                                      appData?.profile?.preferences
+                                        ?.digit_after_decimal,
                                     )} `}</Text>
                                   </View>
                                 );
@@ -935,7 +935,9 @@ export default function Cart({navigation, route}) {
                             {`${currencies?.primary_currency?.symbol}${
                               // Number(i?.pvariant?.multiplier) *
                               currencyNumberFormatter(
-                                Number(i?.variants?.quantity_price).toFixed(2),
+                                Number(i?.variants?.quantity_price),
+                                appData?.profile?.preferences
+                                  ?.digit_after_decimal,
                               )
                             }`}
                           </Text>
@@ -1033,9 +1035,8 @@ export default function Cart({navigation, route}) {
               }>{`- ${
               currencies?.primary_currency?.symbol
             }${currencyNumberFormatter(
-              Number(item?.discount_amount ? item?.discount_amount : 0).toFixed(
-                2,
-              ),
+              Number(item?.discount_amount ? item?.discount_amount : 0),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -1067,9 +1068,8 @@ export default function Cart({navigation, route}) {
               }>{`${
               currencies?.primary_currency?.symbol
             }${currencyNumberFormatter(
-              Number(item?.deliver_charge ? item?.deliver_charge : 0).toFixed(
-                2,
-              ),
+              Number(item?.deliver_charge ? item?.deliver_charge : 0),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -1100,7 +1100,8 @@ export default function Cart({navigation, route}) {
             }>{`${
             currencies?.primary_currency?.symbol
           }${currencyNumberFormatter(
-            Number(item?.payable_amount ? item?.payable_amount : 0).toFixed(2),
+            Number(item?.payable_amount ? item?.payable_amount : 0),
+            appData?.profile?.preferences?.digit_after_decimal,
           )}`}</Text>
         </View>
       </View>
@@ -1178,7 +1179,8 @@ export default function Cart({navigation, route}) {
               }>{`${
               currencies?.primary_currency?.symbol
             }${currencyNumberFormatter(
-              Number(cartData?.gross_paybale_amount).toFixed(2),
+              Number(cartData?.gross_paybale_amount),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
           {!!cartData?.wallet_amount && (
@@ -1199,9 +1201,8 @@ export default function Cart({navigation, route}) {
                 }>{`${
                 currencies?.primary_currency?.symbol
               }${currencyNumberFormatter(
-                Number(
-                  cartData?.wallet_amount ? cartData?.wallet_amount : 0,
-                ).toFixed(2),
+                Number(cartData?.wallet_amount ? cartData?.wallet_amount : 0),
+                appData?.profile?.preferences?.digit_after_decimal,
               )}`}</Text>
             </View>
           )}
@@ -1223,9 +1224,8 @@ export default function Cart({navigation, route}) {
                 }>{`-${
                 currencies?.primary_currency?.symbol
               }${currencyNumberFormatter(
-                Number(
-                  cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
-                ).toFixed(2),
+                Number(cartData?.loyalty_amount ? cartData?.loyalty_amount : 0),
+                appData?.profile?.preferences?.digit_after_decimal,
               )}`}</Text>
             </View>
           )}
@@ -1252,7 +1252,8 @@ export default function Cart({navigation, route}) {
                   cartData?.wallet_amount_used
                     ? cartData?.wallet_amount_used
                     : 0,
-                ).toFixed(2),
+                ),
+                appData?.profile?.preferences?.digit_after_decimal,
               )}`}</Text>
             </View>
           )}
@@ -1274,7 +1275,8 @@ export default function Cart({navigation, route}) {
                 }>{`-${
                 currencies?.primary_currency?.symbol
               }${currencyNumberFormatter(
-                Number(cartData?.total_subscription_discount).toFixed(2),
+                Number(cartData?.total_subscription_discount),
+                appData?.profile?.preferences?.digit_after_decimal,
               )}`}</Text>
             </View>
           )}
@@ -1286,7 +1288,7 @@ export default function Cart({navigation, route}) {
               </Text>
               <Text style={styles.priceItemLabel}>{`-${
                 currencies?.primary_currency?.symbol
-              }${Number(cartData?.total_discount_amount).toFixed(2)}`}</Text>
+              }${Number(cartData?.total_discount_amount).toFixed( appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
             </View>
           )} */}
 
@@ -1339,7 +1341,10 @@ export default function Cart({navigation, route}) {
                           }>
                           {`${
                             currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(j.value)}`}
+                          } ${currencyNumberFormatter(
+                            j.value,
+                            appData?.profile?.preferences?.digit_after_decimal,
+                          )}`}
                         </Text>
                         <Text
                           style={{
@@ -1440,9 +1445,8 @@ export default function Cart({navigation, route}) {
                 }>{`${
                 currencies?.primary_currency?.symbol
               }${currencyNumberFormatter(
-                Number(cartData?.total_tax ? cartData?.total_tax : 0).toFixed(
-                  2,
-                ),
+                Number(cartData?.total_tax ? cartData?.total_tax : 0),
+                appData?.profile?.preferences?.digit_after_decimal,
               )}`}</Text>
             </View>
           )}
@@ -1464,12 +1468,11 @@ export default function Cart({navigation, route}) {
               }>{`${
               currencies?.primary_currency?.symbol
             }${currencyNumberFormatter(
-              (
-                Number(cartData?.total_payable_amount) +
+              Number(cartData?.total_payable_amount) +
                 (selectedTipAmount != null && selectedTipAmount != ''
                   ? Number(selectedTipAmount)
-                  : 0)
-              ).toFixed(2),
+                  : 0),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         </View>
@@ -1956,7 +1959,6 @@ export default function Cart({navigation, route}) {
               </Text>
             </View>
           )}
-          style={{flex: 1}}
           refreshControl={
             <RefreshControl
               refreshing={isRefreshing}

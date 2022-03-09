@@ -168,7 +168,9 @@ export default function SendProduct({navigation, route}) {
         console.log(res, 'res>>>');
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
-            ? Number(res?.data?.loyalty_amount_saved).toFixed(2)
+            ? Number(res?.data?.loyalty_amount_saved).toFixed(
+                appData?.profile?.preferences?.digit_after_decimal,
+              )
             : 0,
           availableCarList:
             pageNo == 1

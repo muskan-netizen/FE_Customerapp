@@ -704,7 +704,11 @@ const RoyoHome = (props) => {
                   </Text>
                   <Text style={styles.font16Bold}>
                     {currencies?.primary_currency?.symbol}
-                    {!!totalRevenue ? Number(totalRevenue).toFixed(2) : 0}
+                    {!!totalRevenue
+                      ? Number(totalRevenue).toFixed(
+                          appData?.profile?.preferences?.digit_after_decimal,
+                        )
+                      : 0}
                   </Text>
                 </View>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>

@@ -44,10 +44,10 @@ const cameraHandler = async (data, option) => {
   }
 };
 
-const currencyNumberFormatter = (item) => {
+const currencyNumberFormatter = (item, digitAfterDecimal = 2) => {
   let unformateAmount = item;
   return parseFloat(unformateAmount)
-    .toFixed(2)
+    .toFixed(digitAfterDecimal)
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 };
 

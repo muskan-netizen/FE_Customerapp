@@ -49,7 +49,9 @@ export default function Home({route, navigation}) {
     themeToggle,
     allAddresss,
   } = useSelector((state) => state?.initBoot);
-  const {location, appMainData, dineInType} = useSelector((state) => state?.home);
+  const {location, appMainData, dineInType} = useSelector(
+    (state) => state?.home,
+  );
   console.log(appMainData, 'appMainData>appMainData');
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const addressSearch = useSelector(
@@ -313,7 +315,10 @@ export default function Home({route, navigation}) {
 
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
-    console.log(slectedLocatonFromPreviousScreen,"slectedLocatonFromPreviousScreen>slectedLocatonFromPreviousScreen")
+    console.log(
+      slectedLocatonFromPreviousScreen,
+      'slectedLocatonFromPreviousScreen>slectedLocatonFromPreviousScreen',
+    );
     if (!!paramData) {
       updateState({searchDataLoader: true});
     }
@@ -337,7 +342,6 @@ export default function Home({route, navigation}) {
       best_vendor: bestSeller,
       // near_me: nearMe,
     };
-    console.log(vendorFilterData, 'vendorFilterData');
 
     if (closeVendor == 0 && openVendor == 0 && bestSeller == 0) {
       updateState({singleVendor: true});

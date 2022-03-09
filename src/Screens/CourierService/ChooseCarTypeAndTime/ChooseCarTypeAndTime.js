@@ -201,7 +201,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         console.log(res, 'res>>>');
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
-            ? Number(res?.data?.loyalty_amount_saved).toFixed(2)
+            ? Number(res?.data?.loyalty_amount_saved).toFixed(
+                appData?.profile?.preferences?.digit_after_decimal,
+              )
             : 0,
           availableCarList:
             pageNo == 1
@@ -427,7 +429,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         slectedDate={slectedDate}
         isModalVisible={isModalVisible}
         selectedTime={selectedTime}
-        navigation={navigation}
         date={date}
         onPressBack={() =>
           redirectFromNow
