@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "84FA303527BFB7CF00AC4712"
-               BuildableName = "LocalDropoff.app"
+               BuildableName = "Runrun.app"
                BlueprintName = "LocalDropoff"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "84FA303527BFB7CF00AC4712"
-            BuildableName = "LocalDropoff.app"
+            BuildableName = "Runrun.app"
             BlueprintName = "LocalDropoff"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "84FA303527BFB7CF00AC4712"
-            BuildableName = "LocalDropoff.app"
+            BuildableName = "Runrun.app"
             BlueprintName = "LocalDropoff"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "844ACFBD27D0D6FA00C99019"
+               BlueprintIdentifier = "840CC03027D737EC00DC97BF"
                BuildableName = "ScoopaTechnologies.app"
                BlueprintName = "ScoopaTechnologies"
                ReferencedContainer = "container:Runrun.xcodeproj">
@@ -44,7 +44,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "844ACFBD27D0D6FA00C99019"
+            BlueprintIdentifier = "840CC03027D737EC00DC97BF"
             BuildableName = "ScoopaTechnologies.app"
             BlueprintName = "ScoopaTechnologies"
             ReferencedContainer = "container:Runrun.xcodeproj">
@@ -61,7 +61,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "844ACFBD27D0D6FA00C99019"
+            BlueprintIdentifier = "840CC03027D737EC00DC97BF"
             BuildableName = "ScoopaTechnologies.app"
             BlueprintName = "ScoopaTechnologies"
             ReferencedContainer = "container:Runrun.xcodeproj">

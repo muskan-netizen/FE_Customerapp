@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "302169099070",
+    "project_id": "seratho-821b7",
+    "storage_bucket": "seratho-821b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302169099070:android:b3d514e3d4182b69a97a6f",
+        "android_client_info": {
+          "package_name": "com.seratho"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302169099070-1b16cqt1rflu4rjqfqt8096lgb5mh1l2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.seratho",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "302169099070-vkam83ab16o3cjje5otphi2gg7e39jao.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.seratho",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "302169099070-vmrmcsu9fdg036rvh9dmfn6gi9cah7h1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.seratho",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "302169099070-mgubsc1j16nhv1s81c31l22ll24ebu3t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOK4Jq018HTSH9Aros7BtaK5j4DiRjwFk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302169099070-mgubsc1j16nhv1s81c31l22ll24ebu3t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "302169099070-dlff93h99sequ2q1gefsaa9m8c58ctk4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.seratho"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

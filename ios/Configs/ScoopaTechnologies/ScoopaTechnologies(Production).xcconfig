@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-available_pods-ScoopaTechnologies/Pods-available_pods-ScoopaTechnologies.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-ScoopaTechnologies/Pods-available_pods-ScoopaTechnologies.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1612623200
 PROJECT_BUNDLE_ID =com.scoopaTechnologies
@@ -11,4 +11,3 @@ PROJECT_FACEBOOK_ID = 1140189740074247
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST =ScoopaTechnologiesInfo
 PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4
-

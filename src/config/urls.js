@@ -4,6 +4,9 @@
 export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 
+// export const API_BASE_URL = 'https://releezer.shop/api/v1';
+// export const API_BASE_URL = 'https://api.focushires.com/api/v1';
+
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.97.123:8020/api/v1'; // sujata
 // export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1'; //dinesh sir
@@ -11,14 +14,13 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://876c-114-134-24-242.ngrok.io/api/v1'; // gourav sir
 // export const API_BASE_URL = 'http://192.168.97.160:8000/api/v1';
 
-//export const API_BASE_URL = 'https://1d48-103-72-170-243.ngrok.io/api/v1';
+// export const API_BASE_URL = 'https://f6da-114-134-24-242.ngrok.io/api/v1';
 
 //export const API_BASE_URL = 'https://yummiidash.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.100.198:8020/api/v1';
-// export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 // export const API_BASE_URL = 'https://b724-103-72-170-243.ngrok.io/api/v1';
 // export const API_BASE_URL = 'https://zuzu.alerthire.com/api/v1';
 // export const API_BASE_URL = 'https://click-eat.com/api/v1';
@@ -63,11 +65,13 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://drusdeliveries.com/api/v1';
 // export const API_BASE_URL = 'https://empirehub.com/api/v1';
 // export const API_BASE_URL = 'https://rxnowweb.com/api/v1';
-// export const API_BASE_URL = 'https://36kel.com.ph/api/v1';
+// export const API_BASE_URL = 'https://order.mml.mobi/api/v1';
+// export const API_BASE_URL = 'https://sunshinerideshare.com/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
 export const LOGIN_BY_USERNAME = getApiUrl('/auth/loginViaUsername');
+export const VENDOR_LOGIN_BY_USERNAME = getApiUrl('/auth/login');
 export const PHONE_LOGIN_OTP = getApiUrl('/auth/verify/phoneLoginOtp');
 export const LOGIN_API = getApiUrl('/auth/login');
 export const SIGN_UP_API = getApiUrl('/auth/register');
