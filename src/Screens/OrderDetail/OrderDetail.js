@@ -161,6 +161,8 @@ export default function OrderDetail({navigation, route}) {
       : Communications.text(number.toString());
   };
   const isFocused = useIsFocused();
+
+  console.log('isFocusedisFocused', isFocused);
   // useFocusEffect(
   //   React.useCallback(() => {
   //     updateState({ isLoading: true });
@@ -181,15 +183,15 @@ export default function OrderDetail({navigation, route}) {
     isFocused ? 5000 : null,
   );
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (paramData?.fromActive) {
-        return;
-      } else {
-        getOrders();
-      }
-    }, []),
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     if (paramData?.fromActive) {
+  //       return;
+  //     } else {
+  //       getOrders();
+  //     }
+  //   }, []),
+  // );
 
   const getOrders = () => {
     if (!!userData?.auth_token) {
@@ -231,66 +233,75 @@ export default function OrderDetail({navigation, route}) {
           updateState({ratingData: res?.data?.vendors[0].products[0]});
         }
         updateState({isLoading: false});
-        if (res?.data) {
-          if (res?.data?.vendors[0]?.tempCart) {
-            updateState({
-              updatedcartData: res?.data?.vendors[0]?.tempCart,
-              updatedcartItems: res?.data?.vendors[0]?.tempCart?.products,
-            });
-          } else {
-            updateState({
-              updatedcartData: null,
-              updatedcartItems: [],
-            });
-          }
-          if (res?.data?.luxury_option_name !== strings.DELIVERY) {
-            updateState({
-              labels: [
-                strings.ACCEPTED,
-                strings.PROCESSING,
-                strings.ORDER_PREPARED,
-                strings.DELIVERED,
-              ],
-            });
-          }
-          let checkDriver =
-            !!res?.data?.order_data && !!res?.data?.order_data
-              ? res?.data?.order_data
-              : null;
-          if (
-            !!checkDriver?.agent_location?.lat &&
-            !!checkDriver?.agent_location?.lat
-          ) {
-            let lat = Number(driverStatus?.agent_location?.lat);
-            let lng = Number(driverStatus?.agent_location?.long);
-            if (!!lat && !!lng) {
-              animate(lat, lng);
+        if (isFocused) {
+          if (res?.data) {
+            if (res?.data?.vendors[0]?.tempCart) {
+              updateState({
+                updatedcartData: res?.data?.vendors[0]?.tempCart,
+                updatedcartItems: res?.data?.vendors[0]?.tempCart?.products,
+              });
+            } else {
+              updateState({
+                updatedcartData: null,
+                updatedcartItems: [],
+              });
             }
-          }
-
-          if (!trackingUrl) {
-            updateState({
-              trackingUrl: res.data.vendors[0].dispatch_traking_url,
-            });
-          }
-
-          updateState({
-            dispatcherStatus: res.data.vendors[0],
-            cartItems: res.data.vendors,
-            cartData: res.data,
-            isLoading: false,
-            driverStatus:
+            if (res?.data?.luxury_option_name !== strings.DELIVERY) {
+              updateState({
+                labels: [
+                  strings.ACCEPTED,
+                  strings.PROCESSING,
+                  strings.ORDER_PREPARED,
+                  strings.DELIVERED,
+                ],
+              });
+            }
+            let checkDriver =
               !!res?.data?.order_data && !!res?.data?.order_data
                 ? res?.data?.order_data
-                : null,
-            // driverDetail:
-            selectedTipvalue:
-              res.data.payable_amount == '0.00' ? 'custom' : null,
-            currentPosition: res.data.vendors[0].order_status
-              ? res?.data?.luxury_option_name !== strings.DELIVERY
-                ? res.data.vendors[0].order_status?.current_status?.title ==
-                  strings.OUT_FOR_DELIVERY
-                  ? 2
+                : null;
+            if (
+              !!checkDriver?.agent_location?.lat &&
+              !!checkDriver?.agent_location?.lat
+            ) {
+              let lat = Number(driverStatus?.agent_location?.lat);
+              let lng = Number(driverStatus?.agent_location?.long);
+              if (!!lat && !!lng) {
+                animate(lat, lng);
+              }
+            }
+
+            if (!trackingUrl) {
+              updateState({
+                trackingUrl: res.data.vendors[0].dispatch_traking_url,
+              });
+            }
+
+            updateState({
+              dispatcherStatus: res.data.vendors[0],
+              cartItems: res.data.vendors,
+              cartData: res.data,
+              isLoading: false,
+              driverStatus:
+                !!res?.data?.order_data && !!res?.data?.order_data
+                  ? res?.data?.order_data
+                  : null,
+              // driverDetail:
+              selectedTipvalue:
+                res.data.payable_amount == '0.00' ? 'custom' : null,
+              currentPosition: res.data.vendors[0].order_status
+                ? res?.data?.luxury_option_name !== strings.DELIVERY
+                  ? res.data.vendors[0].order_status?.current_status?.title ==
+                    strings.OUT_FOR_DELIVERY
+                    ? 2
+                    : labels.indexOf(
+                        res.data.vendors[0].order_status?.current_status?.title
+                          .charAt(0)
+                          .toUpperCase() +
+                          res.data.vendors[0].order_status?.current_status?.title.slice(
+                            1,
+                          ),
+                      )
                   : labels.indexOf(
                       res.data.vendors[0].order_status?.current_status?.title
                         .charAt(0)
@@ -299,27 +310,20 @@ export default function OrderDetail({navigation, route}) {
                           1,
                         ),
                     )
-                : labels.indexOf(
-                    res.data.vendors[0].order_status?.current_status?.title
-                      .charAt(0)
-                      .toUpperCase() +
-                      res.data.vendors[0].order_status?.current_status?.title.slice(
-                        1,
-                      ),
-                  )
-              : null,
+                : null,
 
-            // ? dineInType==="Delivery"? labels.indexOf(
-            //       res.data.vendors[0].order_status?.current_status?.title
-            //         .charAt(0)
-            //         .toUpperCase() +
-            //         res.data.vendors[0].order_status?.current_status?.title.slice(
-            //           1,
-            //         ),
-            //     ) :  res.data.vendors[0].order_status?.current_status?.title==="Order Predpared"? 3,
+              // ? dineInType==="Delivery"? labels.indexOf(
+              //       res.data.vendors[0].order_status?.current_status?.title
+              //         .charAt(0)
+              //         .toUpperCase() +
+              //         res.data.vendors[0].order_status?.current_status?.title.slice(
+              //           1,
+              //         ),
+              //     ) :  res.data.vendors[0].order_status?.current_status?.title==="Order Predpared"? 3,
 
-            orderStatus: res?.data?.vendors[0]?.order_status,
-          });
+              orderStatus: res?.data?.vendors[0]?.order_status,
+            });
+          }
         }
       })
       .catch(errorMethod);
@@ -1016,8 +1020,8 @@ export default function OrderDetail({navigation, route}) {
                                 : null}
 
                               {!!(
-                                !!i?.container_charges &&
-                                Number(i?.container_charges)
+                                !!i?.pvariant &&
+                                Number(i?.pvariant?.container_charges)
                               ) && (
                                 <View
                                   style={{
@@ -1068,7 +1072,7 @@ export default function OrderDetail({navigation, route}) {
                                             currencies?.primary_currency?.symbol
                                           }${currencyNumberFormatter(
                                             Number(
-                                              i?.container_charges,
+                                              i?.pvariant?.container_charges,
                                             ).toFixed(2) * Number(i?.quantity),
                                           )}`}
                                         </Text>
@@ -1229,7 +1233,7 @@ export default function OrderDetail({navigation, route}) {
               )}`}</Text>
             </View>
           )}
-            {!!Number(item?.total_container_charges) && (
+          {!!Number(item?.total_container_charges) && (
             <View style={styles.itemPriceDiscountTaxView}>
               <Text
                 style={
@@ -1259,7 +1263,11 @@ export default function OrderDetail({navigation, route}) {
                 }>{`${
                 currencies?.primary_currency?.symbol
               } ${currencyNumberFormatter(
-                Number(item?.total_container_charges ? item?.total_container_charges : 0).toFixed(2),
+                Number(
+                  item?.total_container_charges
+                    ? item?.total_container_charges
+                    : 0,
+                ).toFixed(2),
               )}`}</Text>
             </View>
           )}
@@ -1867,11 +1875,11 @@ export default function OrderDetail({navigation, route}) {
           {!!cartData?.vendors[0]?.total_container_charges &&
             Number(cartData?.total_container_charges) > 0 && (
               <LeftRightText
-                leftText={strings.TOTALCONTAINERCHARGES}
-                rightText={`${
+                leftText={strings.WALLET}
+                rightText={`- ${
                   currencies?.primary_currency?.symbol
                 }${currencyNumberFormatter(
-                  Number(cartData?.vendors[0]?.total_container_charges).toFixed(2),
+                  Number(cartData?.total_container_charges).toFixed(2),
                 )}`}
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}

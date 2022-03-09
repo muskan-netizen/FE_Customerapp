@@ -17,7 +17,7 @@ import {
   View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {screenWidth} from 'react-native-calendars/src/expandableCalendar/commons';
+
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
@@ -215,6 +215,7 @@ export default function Products({route, navigation}) {
   const [productListId, setProductListId] = useState(data);
   const [isLoading, setLoading] = useState(true);
   const [apiHitAgain, setApiHitAgain] = useState(false);
+  const [animateText, setAnimateText] = useState(0);
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
   const styles = stylesFunc({themeColors, fontFamily, isDarkMode, MyDarkTheme});
@@ -1008,6 +1009,7 @@ export default function Products({route, navigation}) {
               console.log('update qty res', res);
               tempQty = 0;
               actions.cartItemQty(res);
+              setAnimateText(res.data.total_payable_amount);
               updateState({
                 cartItems: res.data.products,
                 cartData: res.data,
@@ -1520,6 +1522,7 @@ export default function Products({route, navigation}) {
           differentAddsOns={differentAddsOns}
           businessType={businessType}
           categoryInfo={categoryInfo}
+          animateText={animateText}
         />
         <View style={styles.horizontalLine} />
       </Animatable.View>
@@ -1719,6 +1722,7 @@ export default function Products({route, navigation}) {
   };
 
   const onPressMenuOption = (index) => {
+    console.log('index+++', index);
     activeIdx = index;
     let cells = [];
     cloneSectionList.forEach((el, ind) => {
@@ -1726,16 +1730,23 @@ export default function Products({route, navigation}) {
         cells.push(...el.data);
       }
     });
-    let hight = Number(cells.length) * moderateScaleVertical(200);
-    playHapticEffect(hapticEffects.rigid);
+    // let hight = Number(cells.length) * moderateScaleVertical(200);
+    // playHapticEffect(hapticEffects.rigid);
     updateState({MenuModalVisible: !MenuModalVisible});
-    sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
-      {
-        x: hight + 200,
-        y: hight + 200,
-        animated: true,
-      },
-    );
+    console.log('sectionListRef', sectionListRef);
+    sectionListRef.current.sectionList.current.scrollToLocation({
+      animated: true,
+      sectionIndex: activeIdx,
+      itemIndex: 1,
+      viewPosition: 0.5,
+    });
+    // sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
+    //   {
+    //     x: hight + 200,
+    //     y: hight + 200,
+    //     animated: true,
+    //   },
+    // );
   };
 
   const rightIconPress = () => {
@@ -2460,7 +2471,7 @@ export default function Products({route, navigation}) {
                     }
                     size="small"
                     onToggle={() => {
-                      playHapticEffect(hapticEffects.impactLight);
+                      // playHapticEffect(hapticEffects.impactLight);
                       const updatedArr = ProductTags.map((el, idx) => {
                         console.log(el);
                         if (idx === index) {
@@ -2625,7 +2636,7 @@ export default function Products({route, navigation}) {
                 width={width / 1.1}
                 height={18}
                 rectHeight={18}
-                rectWidth={screenWidth / 1.1}
+                rectWidth={width / 1.1}
                 viewStyles={{
                   marginTop: moderateScaleVertical(8),
                   marginHorizontal: moderateScale(16),
@@ -2833,15 +2844,21 @@ export default function Products({route, navigation}) {
               }
             });
             let hight = Number(cells.length) * 160;
-            playHapticEffect(hapticEffects.rigid);
+            // playHapticEffect(hapticEffects.rigid);
             // updateState({MenuModalVisible: !MenuModalVisible});
-            sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
-              {
-                x: hight + 200,
-                y: hight + 200,
-                animated: true,
-              },
-            );
+            sectionListRef.current.sectionList.current.scrollToLocation({
+              animated: true,
+              sectionIndex: activeIdx,
+              itemIndex: 1,
+              viewPosition: 0.5,
+            });
+            // sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
+            //   {
+            //     x: hight + 200,
+            //     y: hight + 200,
+            //     animated: true,
+            //   },
+            // );
           }}>
           <Text
             style={{
@@ -2900,6 +2917,7 @@ export default function Products({route, navigation}) {
           selectedItemIndx={selectedItemIndx}
           businessType={businessType}
           categoryInfo={categoryInfo}
+          animateText={animateText}
         />
         <View
           style={{
@@ -2946,6 +2964,11 @@ export default function Products({route, navigation}) {
     }
   };
 
+  const onMenuTap = () => {
+    // playHapticEffect(hapticEffects.impactLight);
+    updateState({MenuModalVisible: !MenuModalVisible});
+  };
+
   let uri1 = categoryInfo?.banner?.image_fit || categoryInfo?.icon?.image_fit;
   let uri2 = categoryInfo?.banner?.image_path || categoryInfo?.icon?.image_path;
   let imageURI = getImageUrl(uri1, uri2, '200/200');
@@ -2962,6 +2985,7 @@ export default function Products({route, navigation}) {
       categoryInfo?.translation[0]?.meta_description);
 
   var itemHeights = [];
+
   const getItemLayout = (data, index) => {
     const length = itemHeights[index];
     const offset = itemHeights.slice(0, index).reduce((a, c) => a + c, 0);
@@ -3214,6 +3238,9 @@ export default function Products({route, navigation}) {
         {!!categoryInfo?.is_show_products_with_category ? (
           <Animatable.View style={{flex: 1}}>
             <SectionList
+              onViewableItemsChanged={({viewableItems}) =>
+                console.log('viewableItemsviewableItems')
+              }
               onScroll={onScroll}
               ref={sectionListRef}
               showsVerticalScrollIndicator={false}
@@ -3224,7 +3251,7 @@ export default function Products({route, navigation}) {
               keyExtractor={(item, index) => index}
               // tabBarStyle={styles.tabBar}
               // ItemSeparatorComponent={() => <View style={styles.separator} />}
-
+              // getItemLayout={getItemLayout}
               renderTab={renderSectionTab}
               renderItem={renderSectionItem}
               ListFooterComponent={() => (
@@ -3234,6 +3261,10 @@ export default function Products({route, navigation}) {
               ListEmptyComponent={
                 <NoDataFound isLoading={isLoading} containerStyle={{}} />
               }
+              onScrollToIndexFailed={(info) =>
+                console.log('info index failed', info)
+              }
+              initialNumToRender={1000}
             />
           </Animatable.View>
         ) : (
@@ -3396,10 +3427,7 @@ export default function Products({route, navigation}) {
               : false
           }
           isMenuBtnShow={categoryInfo?.is_show_products_with_category}
-          onMenuTap={() => {
-            playHapticEffect(hapticEffects.impactLight);
-            updateState({MenuModalVisible: !MenuModalVisible});
-          }}
+          onMenuTap={onMenuTap}
           isLoading={btnLoader}
           sectionListData={sectionListData}
           // btnStyle={

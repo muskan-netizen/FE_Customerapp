@@ -641,6 +641,7 @@ function Cart({navigation, route}) {
   const checkPaymentOptions = (res) => {
     let paymentId = res?.data?.payment_option_id;
     setSelectedPayment(selectedPayment);
+    console.log('selected payment id', selectedPayment);
 
     let paymentData = {
       total_payable_amount: (
@@ -651,8 +652,8 @@ function Cart({navigation, route}) {
       ).toFixed(2),
       payment_option_id: selectedPayment?.id,
       orderDetail: res.data,
-      selectedPayment: selectedPayment,
       redirectFrom: 'cart',
+      selectedPayment: selectedPayment,
     };
     if (
       !!paymentId &&
@@ -718,6 +719,11 @@ function Cart({navigation, route}) {
       case 20: //AuthorizeNet Payment Getway
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.KONGOPAY, paymentData);
+        break;
+
+      case 22: //AuthorizeNet Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.AVENUE, paymentData);
         break;
       default:
         if (
@@ -2075,12 +2081,12 @@ function Cart({navigation, route}) {
                       alignItems: 'center',
                     }}>
                     <FastImage
-                      style={{tintColor: themeColors.primary_color}}
                       source={imagePath.percent}
                       resizeMode="contain"
                       style={{
                         width: moderateScale(16),
                         height: moderateScale(16),
+                        tintColor: themeColors.primary_color,
                       }}
                     />
                     <Text
@@ -2107,12 +2113,12 @@ function Cart({navigation, route}) {
               ) : (
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <FastImage
-                    style={{tintColor: themeColors.primary_color}}
                     source={imagePath.percent}
                     resizeMode="contain"
                     style={{
                       width: moderateScale(24),
                       height: moderateScale(24),
+                      tintColor: themeColors.primary_color,
                     }}
                   />
 
@@ -2726,7 +2732,6 @@ function Cart({navigation, route}) {
                   value={pickupDriverComment}
                   onChangeText={(text) => setPickupDriverComment(text)}
                   placeholder={strings.PLACEHOLDERCOMMENTFORPICKUPDRIVER}
-                  placeholderTextColor={colors.textGreyOpcaity6}
                   style={{
                     height: 40,
                     alignItems: 'center',
@@ -2763,7 +2768,6 @@ function Cart({navigation, route}) {
                 <TextInput
                   value={dropOffDriverComment}
                   onChangeText={(text) => setDropOffDriverComment(text)}
-                  placeholderTextColor={colors.textGreyOpcaity6}
                   placeholder={strings.PLACEHOLDERCOMMENTFORDROPUPDRIVER}
                   style={{
                     height: 40,
@@ -2799,7 +2803,6 @@ function Cart({navigation, route}) {
               </View>
               <View style={{flex: 0.5, marginTop: moderateScale(5)}}>
                 <TextInput
-                  placeholderTextColor={colors.textGreyOpcaity6}
                   placeholder={strings.PLACEHOLDERCOMMENTFORVENDOR}
                   value={vendorComment}
                   onChangeText={(text) => setVendorComment(text)}
@@ -4370,10 +4373,9 @@ function Cart({navigation, route}) {
         ListHeaderComponent={cartItems?.length ? getHeader() : null}
         ListFooterComponent={cartItems?.length ? getFooter() : null}
         showsVerticalScrollIndicator={false}
-        style={{backgroundColor: colors.backgroundGrey}}
         keyExtractor={(item, index) => String(index)}
         renderItem={_renderItem}
-        style={{flex: 1}}
+        style={{flex: 1, backgroundColor: colors.backgroundGrey}}
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}

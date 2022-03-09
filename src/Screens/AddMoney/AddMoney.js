@@ -448,12 +448,18 @@ export default function AddMoney({navigation}) {
       await createToken(cardInfo)
         .then((res) => {
           console.log(res, 'res>>STRIpe');
+          if(!!res?.error && !!res?.error?.localizedMessage){
+            showError(res?.error?.localizedMessage)
+            updateState({isLoadingB: false});
+            return;
+          }
           if (res && res?.token && res.token?.id) {
             let selectedMethod = selectedPaymentMethod.code.toLowerCase();
             // updateState({isLoadingB: true});
+            let apiData =`/${selectedMethod}?amount=${amount}&payment_option_id=${selectedPaymentMethod?.id}&action=wallet&stripe_token=${res.token?.id}`
             actions
               .openPaymentWebUrl(
-                `/${selectedMethod}?amount=${amount}&payment_option_id=${selectedPaymentMethod?.id}&action=wallet&stripe_token=${res.token?.id}`,
+                apiData,
                 {},
                 {
                   code: appData?.profile?.code,
