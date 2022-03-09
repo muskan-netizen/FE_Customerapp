@@ -346,17 +346,20 @@ export default function AddMoney({navigation}) {
       .catch(errorMethod);
   };
 
-  console.log(selectedPaymentMethod, 'selectedPaymentMethod');
   const _addMoneyToWallet = () => {
+    console.log(selectedPaymentMethod, 'selectedPaymentMethod');
+
     if (amount == '') {
       showError(strings.PLEASE_ENTER_OR_SELECT_AMOUNT);
     } else if (!selectedPaymentMethod) {
       showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
     } else {
+      
       if (
         selectedPaymentMethod?.off_site == 0 &&
         selectedPaymentMethod?.id == 10
       ) {
+     
         renderRazorPay();
         return;
       }
@@ -365,6 +368,7 @@ export default function AddMoney({navigation}) {
         _webPayment();
         return;
       } else {
+   
         _offineLinePayment();
       }
     }
@@ -405,6 +409,7 @@ export default function AddMoney({navigation}) {
   };
 
   const _webPayment = () => {
+
     let selectedMethod = selectedPaymentMethod.code;
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;

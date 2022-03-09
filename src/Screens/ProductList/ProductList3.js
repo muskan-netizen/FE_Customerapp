@@ -2495,7 +2495,7 @@ export default function Products({ route, navigation }) {
               );
             })}
         </ScrollView>
-        {!!categoryInfo?.is_show_products_with_category ? (
+        {true ? (
           <View
             style={{
               flexDirection: 'row',
@@ -2503,7 +2503,7 @@ export default function Products({ route, navigation }) {
               marginBottom: moderateScaleVertical(8),
               marginHorizontal: moderateScale(12),
             }}>
-            <SearchBar
+            {categoryInfo?.is_show_products_with_category ? <SearchBar
               autoFocus={false}
               containerStyle={{
                 flex: 1,
@@ -2523,15 +2523,16 @@ export default function Products({ route, navigation }) {
               }}
               rightIconPress={() => onSearchWithinMenu('')}
               showVoiceRecord={false}
-            />
+            /> : null}
 
             {appIds.codiner == DeviceInfo.getBundleId() ? null : (
-              <View style={{ flex: 0.14 }}>
+              <View style={{flex:categoryInfo?.is_show_products_with_category?0:1 }}>
                 <TouchableOpacity
                   hitSlop={hitSlopProp}
                   onPress={onShowHideFilter}
                   style={{
                     alignSelf: 'flex-end',
+                    marginLeft: categoryInfo?.is_show_products_with_category ? 0: moderateScale(16)
                   }}>
                   <Image
                     style={{

@@ -6,7 +6,7 @@
 // export const API_BASE_URL = 'https://2d24-103-72-170-243.ngrok.io/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1';
-export const API_BASE_URL = 'http://192.168.97.160:9000/api/v1';//inderjit
+// export const API_BASE_URL = 'http://192.168.97.160:9000/api/v1';//inderjit
 
 // export const API_BASE_URL = 'https://961a-112-196-88-218.ngrok.io/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.97.123:8020/api/v1'; // sujata
@@ -50,7 +50,7 @@ export const API_BASE_URL = 'http://192.168.97.160:9000/api/v1';//inderjit
 // export const API_BASE_URL = 'https://hellodeliver.in/api/v1';
 // export const API_BASE_URL = 'https://yohopartner.com/api/v1'
 // export const API_BASE_URL = 'https://swiftandvalu.com/api/v1';
-// export const API_BASE_URL = 'https://baytukom.royoorders.com/api/v1';
+export const API_BASE_URL = 'https://baytukom.royoorders.com/api/v1';
 //export const API_BASE_URL = 'https://marketplace.verofax.com/api/v1';
 // export const API_BASE_URL = 'https://agrionline.ph/api/v1';
 // export const API_BASE_URL = 'https://marketplace.verofax.com/api/v1';
