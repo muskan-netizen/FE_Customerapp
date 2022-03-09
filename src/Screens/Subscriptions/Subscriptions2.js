@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
+import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
 import CheckoutPaymentView from '../../Components/CheckoutPaymentView';
 import GradientButton from '../../Components/GradientButton';
@@ -337,12 +338,13 @@ export default function Subscriptions2({navigation, route}) {
               alignItems: 'center',
               paddingVertical: moderateScaleVertical(5),
             }}>
-            <Image
+            <FastImage
               source={
                 selectedPaymentMethod && selectedPaymentMethod?.id == item.id
                   ? imagePath.radioActive
                   : imagePath.radioInActive
               }
+       
             />
             <Text
               style={[

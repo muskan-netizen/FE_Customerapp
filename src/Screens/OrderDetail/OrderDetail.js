@@ -1229,7 +1229,7 @@ export default function OrderDetail({navigation, route}) {
               )}`}</Text>
             </View>
           )}
-            {!!Number(item?.total_container_charges) && (
+          {!!Number(item?.total_container_charges) && (
             <View style={styles.itemPriceDiscountTaxView}>
               <Text
                 style={
@@ -1259,7 +1259,11 @@ export default function OrderDetail({navigation, route}) {
                 }>{`${
                 currencies?.primary_currency?.symbol
               } ${currencyNumberFormatter(
-                Number(item?.total_container_charges ? item?.total_container_charges : 0).toFixed(2),
+                Number(
+                  item?.total_container_charges
+                    ? item?.total_container_charges
+                    : 0,
+                ).toFixed(2),
               )}`}</Text>
             </View>
           )}
@@ -1871,7 +1875,9 @@ export default function OrderDetail({navigation, route}) {
                 rightText={`${
                   currencies?.primary_currency?.symbol
                 }${currencyNumberFormatter(
-                  Number(cartData?.vendors[0]?.total_container_charges).toFixed(2),
+                  Number(cartData?.vendors[0]?.total_container_charges).toFixed(
+                    2,
+                  ),
                 )}`}
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}

@@ -17,3 +17,10 @@ export function isVendorNotification(data = false) {
         payload: data,
     });
 }
+export function refreshNotification(data = false) {
+    console.log(data, 'data');
+    dispatch({
+    type: types.REFRESH_NOTIFICATION,
+    payload: data,
+    });
+    }
