@@ -121,6 +121,7 @@ export default function Vendors({route, navigation}) {
             vendor: true,
             name: item.name,
             category_slug: data?.slug,
+            categoryExist: data?.id || null
           })();
     }
   };
