@@ -263,6 +263,13 @@
     "slider": "react-native run-android --variant=sliderDebug --appIdSuffix=slider",
     "ICare": "react-native run-android --variant=ICareDebug --appIdSuffix=ICare",
     "scoopaTechnologies": "react-native run-android --variant=scoopaTechnologiesDebug --appIdSuffix=scoopaTechnologies",
+    "dbairro": "react-native run-android --variant=dbairroDebug --appIdSuffix=dbairro",
+    "knockknock": "react-native run-android --variant=knockknockDebug --appIdSuffix=knockknock",
+
+    "qrider": "react-native run-android --variant=qriderDebug --appIdSuffix=qrider",
+    "dlvrd": "react-native run-android --variant=dlvrdDebug --appIdSuffix=dlvrd",
+    "delivery": "react-native run-android --variant=deliveryDebug --appIdSuffix=delivery",
+    "timHomeServices": "react-native run-android --variant=timHomeServicesDebug --appIdSuffix=timHomeServices",
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
     "bustanfakiehRelease": "cd android && ./gradlew assembleBustanFakiehRelease",
