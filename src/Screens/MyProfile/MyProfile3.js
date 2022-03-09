@@ -597,6 +597,11 @@ export default function MyProfile3({route, navigation}) {
     moveToNewScreen(navigationStrings.SENDREFFERAL)();
   };
 
+  const onModalClose = () =>{
+    setModalVisible(false)
+    updateState({selectViaMap:false});
+  }
+
   const handleDynamicTxtInput = (text, index, type) => {
     let data = cloneDeep(addtionalTextInputs);
     data[index].contents = text;
@@ -1273,7 +1278,7 @@ export default function MyProfile3({route, navigation}) {
           updateData={updateData}
           isVisible={isVisible}
           indicator={indicator}
-          onClose={() => setModalVisible(false)}
+          onClose={onModalClose}
           type={type}
           passLocation={(data) => addUpdateLocation(data)}
           openCloseMapAddress={openCloseMapAddress}

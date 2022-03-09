@@ -2030,7 +2030,6 @@ export default function ShortCode({route, navigation}) {
                       : colors.blueBackGroudB,
                   },
                 }}
-                btnTextStyle={{color: colors.textBlue}}
                 onPress={_onSubmitShortCode}
                 btnText={strings.SUBMIT}
                 btnTextStyle={{

@@ -15,8 +15,10 @@ import {showError} from '../../utils/helperFunctions';
 import Header from '../../Components/Header';
 import imagePath from '../../constants/imagePath';
 
-export default function Paylink({navigation, route}) {
+export default function Avenue({navigation, route}) {
   let paramsData = route?.params;
+  console.log(paramsData, '===>paramsData');
+
   const {themeToggle, themeColor, appStyle, appData, currencies, languages} =
     useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
@@ -32,26 +34,16 @@ export default function Paylink({navigation, route}) {
   const {webUrl, isLoading} = state;
 
   useEffect(() => {
-    if (!!paramsData?.walletTip) {
-      //pay via wallet or tip
-      console.log(paramsData?.walletTip.paymentUrl, '===>paramsData');
-      updateState({
-        webUrl: paramsData?.walletTip.paymentUrl,
-        isLoading: false,
-      });
-      return;
-    }
-    console.log(paramsData, '===>paramsData');
-    apiHit(); //hit this function if user select paypal getway because paypal have different queries
+    apiHit();
   }, []);
 
   const apiHit = async () => {
-    let queryData = `/${paramsData?.selectedPayment?.title?.toLowerCase()}?amount=${
+    let queryData = `/${paramsData?.selectedPayment?.code?.toLowerCase()}?amount=${
       paramsData?.total_payable_amount
-    }&payment_option_id=${paramsData?.payment_option_id}&action=${
-      paramsData?.redirectFrom
-    }&order_number=${paramsData?.orderDetail?.order_number}`;
-    console.log(queryData, 'queryData');
+    }&payment_option_id=${
+      paramsData?.payment_option_id
+    }&action=${paramsData?.redirectFrom}&order_number=${paramsData?.orderDetail?.order_number}`;
+
     try {
       const res = await actions.openPaymentWebUrl(
         queryData,
@@ -62,15 +54,14 @@ export default function Paylink({navigation, route}) {
           language: languages?.primary_language?.id,
         },
       );
-      console.log(res, 'responseYoco');
+      console.log(res, 'responseMobbex');
       updateState({webUrl: res.data});
     } catch (error) {
       updateState({isLoading: false});
-      console.log(error, 'errorerror');
-      showError(error?.message || error);
+
+      showError(error.message || error);
     }
   };
-
   const moveToNewScreen =
     (screenName, data = {}) =>
     () => {
@@ -82,31 +73,24 @@ export default function Paylink({navigation, route}) {
     const URL = queryString.parseUrl(url);
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
-    // return;
+    console.log(props, 'propsMobbex');
+
     setTimeout(() => {
       if (queryParams.status == 200) {
-        if (!!paramsData?.walletTip) {
-          moveToNewScreen(paramsData?.walletTip?.screenName)();
-          return;
-        }
         moveToNewScreen(navigationStrings.ORDERSUCESS, {
           orderDetail: {
             order_number: queryParams.order,
             id: paramsData?.orderDetail?.id,
           },
         })();
-      } else if (queryParams.status == 0) {
-        if (!!paramsData?.walletTip) {
-          moveToNewScreen(paramsData?.walletTip?.screenName)();
-          return;
-        }
+      }
+      if (queryParams.status == 0) {
         moveToNewScreen(navigationStrings.CART, {
           queryURL: url.replace(`${nonQueryURL}?`, ''),
         })();
       }
-    }, 1500);
+    }, 3000);
   };
-
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.transparent}
@@ -115,7 +99,7 @@ export default function Paylink({navigation, route}) {
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3  || appStyle?.homePageLayout === 5? imagePath.icBackb : imagePath.back
         }
         centerTitle={
           paramsData?.selectedPayment?.title || paramsData?.walletTip?.title

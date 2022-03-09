@@ -146,7 +146,7 @@ const PaymentSettings = (props) => {
           <Image source={imagePath.closeRoyo} />
         </TouchableOpacity>
         <View style={styles.modalBody}>
-          <Text style={styles.modalHeaderText}>Add new account</Text>
+          <Text style={styles.modalHeaderText}>{strings.ADD_NEW_ACCOUNT}</Text>
 
           <TextInputWithUnderlineAndLabel
             labelStyle={styles.labelText}
@@ -158,10 +158,10 @@ const PaymentSettings = (props) => {
             containerStyle={{}}
             txtInputStyle={styles.textInput}
             underlineColor="transparent"
-            label="Account Holder name"
+            label={strings.ACCOUNT_HOLDER_NAME}
             value={AccountHolderName}
             onChangeText={onChangeText('AccountHolderName')}
-            placeholder="Example"
+            placeholder={strings.EXAMPLE}
             marginBottom={0}
           />
           {/* <View style={{...styles.textInputView}}>
@@ -184,12 +184,12 @@ const PaymentSettings = (props) => {
               ...styles.textInputView,
               marginTop: moderateScaleVertical(10),
             }}>
-            <Text style={styles.labelText}>Account Type</Text>
+            <Text style={styles.labelText}>{strings.ACCOUNT_TYPE}</Text>
             <DropDown
               value={accountType}
               inputStyle={styles.textInput}
               selectedIndexByProps={-1}
-              placeholder="Choose Accouont type"
+              placeholder={strings.CHOOSE_ACCOUNT_TYPE}
               data={dropDownData}
               fetchValues={onSelectAccountType}
               marginBottom={0}
@@ -206,7 +206,7 @@ const PaymentSettings = (props) => {
             containerStyle={{}}
             txtInputStyle={styles.textInput}
             underlineColor="transparent"
-            label="Account Number"
+            label={strings.ACCOUNT_NUMBER}
             value={accouontNumber}
             onChangeText={onChangeText('accouontNumber')}
             placeholder="xxxxxxxxxxxxxx"
@@ -222,10 +222,10 @@ const PaymentSettings = (props) => {
             }}
             txtInputStyle={styles.textInput}
             underlineColor="transparent"
-            label="IFSC"
+            label={strings.IFSC}
             value={ifsc}
             onChangeText={onChangeText('ifsc')}
-            placeholder="Enter branch ifsc code"
+            placeholder={strings.ENTER_IFSC}
           />
         </View>
       </KeyboardAwareScrollView>
@@ -288,7 +288,7 @@ const PaymentSettings = (props) => {
                     // justifyContent: 'space-around',
                   }}>
                   <Text style={styles.cardNumber}>1234 5678 9234 2345</Text>
-                  <Text style={styles.cardName}>master Card</Text>
+                  <Text style={styles.cardName}>{strings.MASTER_CARD}</Text>
                 </View>
               </View>
             ))}

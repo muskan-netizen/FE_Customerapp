@@ -29,6 +29,7 @@ import {
   Paystack,
   ScrollableCategory,
   AuthorizeNet,
+  Avenue,
   FPX
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
@@ -165,10 +166,15 @@ export default function () {
         component={FPX}
         options={{ headerShown: false }}
       />
-        <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.KONGOPAY}
         component={KongaPay}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={navigationStrings.AVENUE}
+        component={Avenue}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
