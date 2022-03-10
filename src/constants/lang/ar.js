@@ -814,8 +814,8 @@ export default {
   SEARCH_FOR_PRODUCT: 'بحثعنعميل',
   PRODUCT: 'المنتوج',
   EXTRA_INSTRUCTION: 'تعليماتإضافية',
-  CLEAR_FILTER: 'مسحالفلتر',
-  PRICE_RANGE: 'نطاقالسعر',
+  CLEAR_FILTER: 'مسح',
+  PRICE_RANGE: 'نطاق السعر',
   SORRY_MSG: `عذرا ، نحن حاليا لا نوصل هنا ولكننا نقوم بذلك
   يتوسع بسرعة. يرجى التحقق مرة أخرى قريبا!`,
   TOTAL_DELIVERY_FEE:"Total delivery fee",
