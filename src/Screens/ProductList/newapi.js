@@ -124,6 +124,8 @@ export default function Products({ route, navigation }) {
   const dineInType = useSelector((state) => state?.home?.dineInType);
   const CartItems = useSelector((state) => state?.cart?.cartItemCount);
 
+  console.log("data++++++", data)
+
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
@@ -380,19 +382,23 @@ export default function Products({ route, navigation }) {
   /****Get all list items by vendor id */
   const getAllProductsByVendor = (pageNo = 1) => {
     console.log('api hit getAllProductsByVendor');
-    actions
-      .getProductByVendorId(
-        `/${productListId?.id}?limit=${limit}&page=${pageNo}`,
-        {},
-        {
-          code: appData.profile.code,
-          currency: currencies.primary_currency.id,
-          language: languages.primary_language.id,
-          latitude: appMainData?.reqData?.latitude,
-          longitude: appMainData?.reqData?.longitude,
-          systemuser: DeviceInfo.getUniqueId(),
-        },
-      )
+    let apiData = `/${productListId?.id}?limit=${limit}&page=${pageNo}`
+    if (!!data?.categoryExist) { //sent category id if user comes from category>>vendor>>productList
+      apiData = apiData + `&category_id=${data?.categoryExist}`
+    }
+
+    actions.getProductByVendorIdOptamize(
+      apiData,
+      {},
+      {
+        code: appData.profile.code,
+        currency: currencies.primary_currency.id,
+        language: languages.primary_language.id,
+        latitude: appMainData?.reqData?.latitude,
+        longitude: appMainData?.reqData?.longitude,
+        systemuser: DeviceInfo.getUniqueId(),
+      },
+    )
       .then((res) => {
         console.log('get all products by vendor res', res);
 
@@ -460,22 +466,29 @@ export default function Products({ route, navigation }) {
   //***************get products by vendor filter**************
   const newVendorFilter = (pageNo) => {
     console.log('api hit new vendorFilter', selectedFilters);
-    let data = {};
-    data['variants'] = selectedFilters?.current?.selectedVariants || [];
-    data['options'] = selectedFilters?.current?.selectedOptions || [];
-    data['brands'] = selectedFilters?.current?.sleectdBrands || [];
-    data['order_type'] = selectedFilters?.current?.selectedSorting || 0;
-    data['range'] = `${minimumPrice};${maximumPrice}`;
-    data['vendor_id'] = productListId.id;
-    data['limit'] = limit;
-    data['page'] = pageNo;
-    console.log('sending data', data);
-    actions.vendorFilterOptimize(data, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      })
+    let apiData = {};
+    apiData['variants'] = selectedFilters?.current?.selectedVariants || [];
+    apiData['options'] = selectedFilters?.current?.selectedOptions || [];
+    apiData['brands'] = selectedFilters?.current?.sleectdBrands || [];
+    apiData['order_type'] = selectedFilters?.current?.selectedSorting || 0;
+    apiData['range'] = `${minimumPrice};${maximumPrice}`;
+    apiData['vendor_id'] = productListId.id;
+    apiData['limit'] = limit;
+    apiData['page'] = pageNo;
+    if (!!data?.categoryExist) { //sent category id if user comes from category>>vendor>>productList
+      apiData['category_id'] = data?.categoryExist
+    }
+
+    console.log('sending++ data', apiData);
+
+    let headerData = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      systemuser: DeviceInfo.getUniqueId(),
+    }
+    console.log("sending++ Header data++", headerData)
+    actions.vendorFilterOptimize(apiData, headerData)
       .then((res) => {
         console.log('filter vendor res', res);
 
@@ -1346,8 +1359,8 @@ export default function Products({ route, navigation }) {
   const checkIsCustomize = async (item, section = null, index, type) => {
     let itemToUpdate = cloneDeep(item);
     console.log('check item to update', itemToUpdate);
-    // return;
-    if (item?.add_on_count.length == 0 && item?.variant_set_count.length == 0) {
+    return;
+    if (item?.add_on_count !== 0 || item?.variant_set_count !== 0) {
       // hit in case of simple products withou any customization
       addProductsWithoutCustomize(item, section, index, type);
       return;
