@@ -899,4 +899,10 @@ export default {
   AMOUNT_RECIEVED: 'AMOUNT RECIEVED',
   TRANSACTION_TIME: 'Transactions time',
   LIFETIME: 'Lifetime',
+  CLEAR_FILTER:"Clear filter",
+  PRICE_RANGE: 'Price Range',
+  A_TO_Z:"A to Z",
+  Z_TO_A: "Z to A",
+  COST_LOW_TO_HIGH: "COST: Low to High",
+  COST: "COST",
 };

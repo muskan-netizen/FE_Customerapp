@@ -14,13 +14,13 @@ import GradientButton from './GradientButton';
 let sortingData = [
     {
         id: 1,
-        label: 'A to Z',
+        label: strings.A_TO_Z,
         labelValue: 'a_to_z',
         parent: strings.SORT_BY,
     },
     {
         id: 2,
-        label: 'Z to A',
+        label:strings.Z_TO_A,
         labelValue: 'z_to_a',
         parent: strings.SORT_BY,
     },

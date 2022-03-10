@@ -30,8 +30,6 @@ import { MyDarkTheme } from '../styles/theme';
 import { getColorCodeWithOpactiyNumber } from '../utils/helperFunctions';
 import * as Animatable from 'react-native-animatable';
 import HomeLoader from './Loaders/HomeLoader';
-import { screenWidth } from 'react-native-calendars/src/expandableCalendar/commons';
-
 
 export default function SelectPaymentModal({
     onSelectPayment,

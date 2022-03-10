@@ -51,10 +51,9 @@ export default function Settings({route, navigation}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {currencies, appData, languages, appStyle, themeColors} = useSelector(
-    (state) => state?.initBoot,
-  );
-  console.log(languages, 'languageslanguages');
+  const {currencies, appData, languages, appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  
+  console.log(isOn, 'isOnisOn');
   const [state, setState] = useState({
     isLoading: false,
     country: 'uk',
