@@ -470,3 +470,16 @@ export function getVendorFilters(query = '', data = {}, headers = {}) {
       });
   });
 }
+
+export function getProductByVendorIdOptamize(query = '', data = {}, headers = {}) {
+  console.log("sendng headers",headers)
+  return new Promise((resolve, reject) => {
+    apiGet(VENDOR_OPTIMIZE + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
