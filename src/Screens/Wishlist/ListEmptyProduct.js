@@ -25,5 +25,11 @@ export default function ListEmptyProduct({
       </View>
     );
   }
-  return <NoDataFound containerStyle text={text} isLoading={isLoading} />;
+  return (
+    <NoDataFound
+      containerStyle
+      text={strings.EMPTY_WISHLIST}
+      isLoading={isLoading}
+    />
+  );
 }
