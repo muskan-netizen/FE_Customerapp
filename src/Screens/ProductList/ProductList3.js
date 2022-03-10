@@ -385,8 +385,7 @@ export default function Products({ route, navigation }) {
     if (!!data?.categoryExist) { //sent category id if user comes from category>>vendor>>productList
       apiData = apiData + `&category_id=${data?.categoryExist}`
     }
-
-    actions.getProductByVendorIdOptamize(
+    actions.getProductByVendorId(
       apiData,
       {},
       {
@@ -487,7 +486,7 @@ export default function Products({ route, navigation }) {
       systemuser: DeviceInfo.getUniqueId(),
     }
     console.log("sending++ Header data++", headerData)
-    actions.vendorFilterOptimize(apiData, headerData)
+    actions.newVendorFilters(apiData, headerData)
       .then((res) => {
         console.log('filter vendor res', res);
 
