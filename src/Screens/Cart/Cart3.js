@@ -3206,7 +3206,7 @@ function Cart({navigation, route}) {
           </View>
         )}
 
-        {!!cartData?.total_container_charges && (
+        {!!Number(cartData?.total_container_charges) && (
           <View style={styles.bottomTabLableValue}>
             <Text
               style={
@@ -3320,7 +3320,9 @@ function Cart({navigation, route}) {
               Number(
                 cartData?.total_service_fee ? cartData?.total_service_fee : 0,
               )
-            ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
+            ).toFixed(
+              appData?.profile?.preferences?.digit_after_decimal,
+            )}`}</Text>
           </Animatable.View>
         )}
         {showTaxFeeArea && (
