@@ -36,7 +36,7 @@ import {
   getRandomColor,
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
-import ZendeskChat from '../../library/react-native-zendesk-chat';
+import ZendeskChat from 'react-native-zendesk-chat';
 import Share from 'react-native-share';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
 import DeviceInfo, {getBundleId} from 'react-native-device-info';
