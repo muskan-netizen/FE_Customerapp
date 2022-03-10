@@ -3131,7 +3131,7 @@ function Cart({navigation, route}) {
         </View>
 
         {/* total_delivery_fee */}
-
+        {console.log(cartData, 'cartData>>>>')}
         {!!cartData?.total_delivery_fee ? (
           <View style={styles.bottomTabLableValue}>
             <Text
@@ -3315,15 +3315,12 @@ function Cart({navigation, route}) {
                 isDarkMode
                   ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                   : styles.priceItemLabel
-              }>{`${
-              currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
+              }>{`${currencies?.primary_currency?.symbol} ${(
               Number(cartData?.total_tax ? cartData?.total_tax : 0) +
-                Number(
-                  cartData?.total_service_fee ? cartData?.total_service_fee : 0,
-                ),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}</Text>
+              Number(
+                cartData?.total_service_fee ? cartData?.total_service_fee : 0,
+              )
+            ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
           </Animatable.View>
         )}
         {showTaxFeeArea && (
@@ -3352,14 +3349,11 @@ function Cart({navigation, route}) {
                         ? MyDarkTheme.colors.text
                         : colors.textGreyB,
                       fontSize: textScale(11),
-                    }}>{`${
-                    currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
-                    Number(
-                      cartData?.total_service_fee
-                        ? cartData?.total_service_fee
-                        : 0,
-                    ),
+                    }}>{`${currencies?.primary_currency?.symbol}${Number(
+                    cartData?.total_service_fee
+                      ? cartData?.total_service_fee
+                      : 0,
+                  ).toFixed(
                     appData?.profile?.preferences?.digit_after_decimal,
                   )}`}</Text>
                 </View>
@@ -3385,10 +3379,9 @@ function Cart({navigation, route}) {
                         ? MyDarkTheme.colors.text
                         : colors.textGreyB,
                       fontSize: textScale(11),
-                    }}>{`${
-                    currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
-                    Number(cartData?.total_tax ? cartData?.total_tax : 0),
+                    }}>{`${currencies?.primary_currency?.symbol}${Number(
+                    cartData?.total_tax ? cartData?.total_tax : 0,
+                  ).toFixed(
                     appData?.profile?.preferences?.digit_after_decimal,
                   )}`}</Text>
                 </View>
@@ -4377,6 +4370,7 @@ function Cart({navigation, route}) {
         onPressRightTxt={() => openClearCartModal()}
       />
 
+      {console.log(cartItems, 'cartItems>>>')}
       <FlatList
         data={cartItems}
         extraData={cartItems}
