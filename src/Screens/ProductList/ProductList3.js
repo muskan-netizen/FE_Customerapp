@@ -234,18 +234,15 @@ export default function Products({ route, navigation }) {
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      updateState({ pageNo: 1 });
-      getAllListItems(1);
-      if (productListId?.vendor && routeData) {
-        fetchOffers();
-      }
-      if (isLoadingC) {
-        getAllProductsByCategoryId(true);
-      }
-    });
-    return unsubscribe;
-  }, [navigation, languages, currencies]);
+    updateState({ pageNo: 1 });
+    getAllListItems(1);
+    if (productListId?.vendor && routeData) {
+      fetchOffers();
+    }
+    if (isLoadingC) {
+      getAllProductsByCategoryId(true);
+    }
+  }, [navigation, languages, currencies,CartItems]);
 
   // useEffect(() => {
   //   updateState({ pageNo: 1 });

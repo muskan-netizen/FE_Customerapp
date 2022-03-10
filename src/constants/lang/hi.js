@@ -891,4 +891,6 @@ Amount`,
   AMOUNT_RECIEVED: 'AMOUNT RECIEVED',
   TRANSACTION_TIME: 'Transactions time',
   LIFETIME: 'Lifetime',
+  A_TO_Z:"A to Z",
+  Z_TO_A:"Z to A",
 };

@@ -35,13 +35,13 @@ const FilterComp = ({
         sortFilters: [
             {
                 id: 1,
-                label: 'A to Z',
-                labelValue: 'a_to_z',
+                label: strings.ato,
+                labelValue: strings.A_TO_Z,
                 parent: strings.SORT_BY,
             },
             {
                 id: 2,
-                label: 'Z to A',
+                label: strings.Z_TO_A,
                 labelValue: 'z_to_a',
                 parent: strings.SORT_BY,
             },
