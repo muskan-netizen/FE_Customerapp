@@ -83,7 +83,7 @@ import { appIds } from '../../utils/constants/DynamicAppKeys';
 import Share from 'react-native-share';
 import { BlurView } from '@react-native-community/blur';
 import HomeLoader from '../../Components/Loaders/HomeLoader';
-import { screenWidth } from 'react-native-calendars/src/expandableCalendar/commons';
+
 
 let timeOut = undefined;
 
@@ -2754,7 +2754,7 @@ export default function Products({ route, navigation }) {
                 width={width / 1.1}
                 height={18}
                 rectHeight={18}
-                rectWidth={screenWidth / 1.1}
+                rectWidth={width / 1.1}
                 viewStyles={{
                   marginTop: moderateScaleVertical(8),
                   marginHorizontal: moderateScale(16)

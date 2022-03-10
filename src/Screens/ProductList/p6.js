@@ -17,7 +17,7 @@ import {
   View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {screenWidth} from 'react-native-calendars/src/expandableCalendar/commons';
+
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
@@ -2670,7 +2670,7 @@ export default function Products({route, navigation}) {
                 width={width / 1.1}
                 height={18}
                 rectHeight={18}
-                rectWidth={screenWidth / 1.1}
+                rectWidth={width / 1.1}
                 viewStyles={{
                   marginTop: moderateScaleVertical(8),
                   marginHorizontal: moderateScale(16),
