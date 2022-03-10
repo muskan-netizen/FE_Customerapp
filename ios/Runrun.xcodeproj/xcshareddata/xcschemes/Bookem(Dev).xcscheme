@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "84051B7A27218FD7002D52AF"
-               BuildableName = "Runrun.app"
+               BuildableName = "Bookem.app"
                BlueprintName = "Bookem"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "84051B7A27218FD7002D52AF"
-            BuildableName = "Runrun.app"
+            BuildableName = "Bookem.app"
             BlueprintName = "Bookem"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "84051B7A27218FD7002D52AF"
-            BuildableName = "Runrun.app"
+            BuildableName = "Bookem.app"
             BlueprintName = "Bookem"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
