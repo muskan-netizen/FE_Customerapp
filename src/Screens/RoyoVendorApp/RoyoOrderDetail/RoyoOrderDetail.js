@@ -1,44 +1,48 @@
+import {isEmpty} from 'lodash';
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
-import * as MyShare from 'react-native-share';
 import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Share,
   FlatList,
+  Image,
   Linking,
+  ScrollView,
+  Share,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
+import * as MyShare from 'react-native-share';
 import {useSelector} from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import Header from '../../../Components/Header';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import fontFamily from '../../../styles/fontFamily';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../../../styles/responsiveSize';
+import {currencyNumberFormatter} from '../../../utils/commonFunction';
 import {customMarginBottom} from '../../../utils/constants/constants';
 import {getImageUrl, showError} from '../../../utils/helperFunctions';
 import {dialCall} from '../../../utils/openNativeApp';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
-import {isEmpty} from 'lodash';
-import FastImage from 'react-native-fast-image';
-import strings from '../../../constants/lang';
 
 const RoyoOrderDetail = (props) => {
   const {data, selectedVendor} = props.route.params;
-  const {appData, appStyle, currencies, languages} = useSelector(
+  const {appData, appStyle, currencies, languages, themeColors} = useSelector(
     (state) => state?.initBoot,
   );
+  const fontFamily = appStyle?.fontSizeData;
+
+  const styles = stylesData({fontFamily, themeColors});
+
   const [state, setState] = useState({
     address: '',
     isLoadingB: false,
@@ -87,6 +91,7 @@ const RoyoOrderDetail = (props) => {
       collectedData['vendor_id'] = selectedVendor?.id;
     }
     console.log(data, '=====res');
+    console.log(collectedData, 'collectedData?>?');
     updateState({isLoadingB: true});
     actions
       .getOrderDetail(collectedData, {
@@ -192,6 +197,87 @@ const RoyoOrderDetail = (props) => {
     );
   };
 
+  const renderItem = ({item, index}) => {
+    return (
+      <View style={styles.itemBox}>
+        <Image
+          style={styles.itemImage}
+          source={{
+            uri: getImageUrl(
+              item?.image_path?.image_fit,
+              item?.image_path?.image_path,
+              '500/500',
+            ),
+          }}
+        />
+        <View style={{flex: 1, justifyContent: 'space-around'}}>
+          <Text style={styles.font16Medium}>{item?.translation?.title}</Text>
+          <Text style={styles.font13Regular}>
+            {item.quantity}x {strings.UNIT}
+          </Text>
+          {!isEmpty(item?.product_addons) && (
+            <View>
+              <Text
+                style={{
+                  color: colors.textGreyB,
+                  fontSize: moderateScaleVertical(11),
+                  fontFamily: fontFamily.regular,
+                }}>
+                {strings.EXTRA}
+              </Text>
+            </View>
+          )}
+          {!isEmpty(item?.product_addons)
+            ? item?.product_addons.map((j, jnx) => {
+                return (
+                  <View>
+                    <Text
+                      style={{
+                        color: colors.textGreyB,
+                        fontSize: moderateScaleVertical(11),
+                        fontFamily: fontFamily.regular,
+                      }}
+                      numberOfLines={1}>
+                      {j.addon_title}{' '}
+                    </Text>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text
+                        style={{
+                          color: colors.textGreyB,
+                          fontSize: moderateScaleVertical(11),
+                          fontFamily: fontFamily.regular,
+                        }}
+                        numberOfLines={1}>{`(${j.option_title})`}</Text>
+                      <Text
+                        style={{
+                          color: colors.textGreyB,
+                          fontSize: moderateScaleVertical(11),
+                          fontFamily: fontFamily.regular,
+                        }}
+                        numberOfLines={1}>
+                        {` ${
+                          currencies?.primary_currency?.symbol
+                        } ${currencyNumberFormatter(Number(j?.price))}`}
+                      </Text>
+                    </View>
+                  </View>
+                );
+              })
+            : null}
+          <Text style={{...styles.font14Regular, marginTop: 10}}>
+            {currencies?.primary_currency?.symbol}{' '}
+            {Number(item.price).toFixed(2)}
+          </Text>
+        </View>
+        <Text style={styles.font16Semibold}>
+          {`${currencies?.primary_currency?.symbol} ${Number(
+            item.quantity * item.price,
+          ).toFixed(2)}`}
+        </Text>
+      </View>
+    );
+  };
+
   return (
     <WrapperContainer
       isLoading={isLoadingB}
@@ -256,69 +342,47 @@ const RoyoOrderDetail = (props) => {
               : []
           }
           keyExtractor={(val, index) => index}
-          renderItem={({item, index}) => {
-            {
-              console.log('checkhheck', data);
-            }
-            return (
-              <View style={styles.itemBox}>
-                <Image
-                  style={styles.itemImage}
-                  source={{
-                    uri: getImageUrl(
-                      item?.image_path?.image_fit,
-                      item?.image_path?.image_path,
-                      '500/500',
-                    ),
-                  }}
-                />
-                <View style={{flex: 1, justifyContent: 'space-around'}}>
-                  <Text style={styles.font16Medium}>
-                    {item?.translation?.title}
-                  </Text>
-                  <Text style={styles.font13Regular}>
-                    {item.quantity}
-                    {strings.UNIT}
-                  </Text>
-                  <Text style={styles.font14Regular}>
-                    {currencies?.primary_currency?.symbol} {item.price}
-                  </Text>
-                </View>
-                <Text style={styles.font16Semibold}>
-                  {`${currencies?.primary_currency?.symbol} ${
-                    item.quantity * item.price
-                  }`}
-                </Text>
-              </View>
-            );
-          }}
+          renderItem={renderItem}
           contentContainerStyle={styles.orderBox}
           ItemSeparatorComponent={() => <View style={styles.itemSeperator} />}
         />
-
+        {!!data?.comment_for_vendor && (
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginHorizontal: moderateScale(16),
+            }}>
+            <Text style={styles.font14Semibold}>
+              {strings.SPECIAL_INSTRUCTION}
+            </Text>
+            <Text style={styles.font14Semibold}>
+              {data?.comment_for_vendor}
+            </Text>
+          </View>
+        )}
         <View style={{margin: moderateScaleVertical(16)}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>
             <Text style={styles.font15Semibold}>
               {currencies?.primary_currency?.symbol}
-              {data.payable_amount}
+              {Number(data.total_amount).toFixed(2)}
             </Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>{strings.DELIVERYFEE}</Text>
             <Text style={styles.font15Semibold}>
               {currencies?.primary_currency?.symbol}
-              {data.total_delivery_fee}
+              {Number(data.total_delivery_fee).toFixed(2)}
             </Text>
           </View>
           <View style={styles.dashLine} />
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>{strings.TOTAL}</Text>
             <Text style={{...styles.font15Semibold, color: colors.themeColor2}}>
-              {`${currencies?.primary_currency?.symbol} ${
-                parseFloat(data.payable_amount) +
-                parseFloat(data.total_delivery_fee)
-              }`}
+              {`${currencies?.primary_currency?.symbol} ${Number(
+                parseFloat(data.payable_amount),
+              ).toFixed(2)}`}
             </Text>
           </View>
         </View>
@@ -419,165 +483,167 @@ const RoyoOrderDetail = (props) => {
 };
 
 export default RoyoOrderDetail;
-
-const styles = StyleSheet.create({
-  font15Medium: {
-    fontSize: textScale(15),
-    fontFamily: fontFamily.medium,
-    color: colors.blackOpacity43,
-  },
-  font15Semibold: {
-    fontFamily: fontFamily.semiBold,
-    fontSize: textScale(15),
-    color: colors.black,
-  },
-  font16Medium: {
-    fontSize: 16,
-    fontFamily: fontFamily.medium,
-  },
-  font16Semibold: {
-    fontFamily: fontFamily.semiBold,
-    fontSize: 16,
-    alignSelf: 'flex-end',
-  },
-  font13Regular: {
-    fontFamily: fontFamily.regular,
-    color: colors.blackOpacity40,
-    fontSize: 13,
-  },
-  font14Regular: {
-    fontSize: 14,
-    fontFamily: fontFamily.regular,
-  },
-  font14Semibold: {
-    color: colors.blackOpacity43,
-    fontSize: 14,
-    fontFamily: fontFamily.semiBold,
-  },
-  header: {
-    marginBottom: moderateScaleVertical(32),
-    marginHorizontal: moderateScaleVertical(16),
-  },
-  container: {
-    flex: 1,
-    // marginTop: moderateScaleVertical(24),
-    paddingBottom: moderateScaleVertical(10),
-    // marginBottom: moderateScaleVertical(16),
-    marginBottom: customMarginBottom(),
-  },
-  jobStatus: {
-    fontSize: 18,
-    fontFamily: fontFamily.medium,
-    marginHorizontal: moderateScaleVertical(16),
-    // marginTop: moderateScaleVertical(16),
-  },
-  preparingBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: moderateScale(20),
-    paddingVertical: moderateScaleVertical(15),
-    borderRadius: moderateScale(5),
-    backgroundColor: colors.themeColor2,
-    marginTop: moderateScaleVertical(16),
-    marginHorizontal: moderateScaleVertical(16),
-    alignItems: 'center',
-  },
-  upcomingStatus: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: moderateScale(20),
-    paddingVertical: moderateScaleVertical(15),
-    borderRadius: moderateScale(5),
-    backgroundColor: colors.themeColor2,
-    marginTop: moderateScaleVertical(16),
-    marginHorizontal: moderateScaleVertical(16),
-    alignItems: 'center',
-    marginTop: 0,
-    zIndex: 23,
-    position: 'absolute',
-    bottom: -moderateScaleVertical(48),
-    width: width - moderateScaleVertical(32),
-  },
-  orderNumberBox: {
-    marginTop: moderateScaleVertical(16),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: moderateScale(4),
-    marginHorizontal: moderateScaleVertical(16),
-  },
-  orderNumber: {
-    color: colors.blackOpacity66,
-    fontFamily: fontFamily.regular,
-    fontSize: 16,
-  },
-  orderTime: {
-    color: colors.blackOpacity66,
-    fontFamily: fontFamily.regular,
-    fontSize: 16,
-  },
-  itemBox: {
-    flexDirection: 'row',
-    padding: moderateScale(16),
-  },
-  itemImage: {
-    width: moderateScale(65),
-    height: moderateScale(65),
-    borderRadius: moderateScale(5),
-    marginRight: moderateScale(16),
-  },
-  orderBox: {
-    borderRadius: moderateScale(8),
-    backgroundColor: colors.whiteSmokeColor,
-    margin: moderateScaleVertical(16),
-  },
-  itemSeperator: {
-    borderBottomColor: colors.lightGreyBgColor,
-    borderBottomWidth: 1,
-    marginHorizontal: moderateScale(16),
-  },
-  dashLine: {
-    borderWidth: 1,
-    borderStyle: 'dashed',
-    borderRadius: 1,
-    flex: 1,
-    marginVertical: moderateScaleVertical(16),
-    borderColor: colors.lightGreyBgColor,
-  },
-  shareImage: {
-    height: moderateScaleVertical(23),
-    width: moderateScaleVertical(23),
-  },
-  locationBox: {
-    flexDirection: 'row',
-    marginVertical: moderateScale(16),
-    borderRadius: moderateScale(6),
-  },
-  locationImage: {
-    width: moderateScale(65),
-    height: moderateScale(65),
-    borderRadius: moderateScale(5),
-    marginRight: moderateScaleVertical(16),
-  },
-  btnText: {
-    color: colors.themeColor2,
-    // paddingHorizontal: moderateScale(16),
-    textTransform: 'none',
-    fontSize: textScale(14),
-  },
-  buttonBox: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    margin: moderateScaleVertical(16),
-  },
-  btnContainer: {
-    borderRadius: moderateScale(5),
-    backgroundColor: colors.white,
-    borderColor: colors.themeColor2,
-    paddingHorizontal: moderateScale(20),
-  },
-  flexRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-});
+export function stylesData({fontFamily, themeColors}) {
+  const styles = StyleSheet.create({
+    font15Medium: {
+      fontSize: textScale(15),
+      fontFamily: fontFamily.medium,
+      color: colors.blackOpacity43,
+    },
+    font15Semibold: {
+      fontFamily: fontFamily.semiBold,
+      fontSize: textScale(15),
+      color: colors.black,
+    },
+    font16Medium: {
+      fontSize: 16,
+      fontFamily: fontFamily.medium,
+    },
+    font16Semibold: {
+      fontFamily: fontFamily.semiBold,
+      fontSize: 16,
+      alignSelf: 'flex-end',
+    },
+    font13Regular: {
+      fontFamily: fontFamily.regular,
+      color: colors.blackOpacity40,
+      fontSize: 13,
+    },
+    font14Regular: {
+      fontSize: 14,
+      fontFamily: fontFamily.regular,
+    },
+    font14Semibold: {
+      color: colors.blackOpacity43,
+      fontSize: 14,
+      fontFamily: fontFamily.semiBold,
+    },
+    header: {
+      marginBottom: moderateScaleVertical(32),
+      marginHorizontal: moderateScaleVertical(16),
+    },
+    container: {
+      flex: 1,
+      // marginTop: moderateScaleVertical(24),
+      paddingBottom: moderateScaleVertical(10),
+      // marginBottom: moderateScaleVertical(16),
+      marginBottom: customMarginBottom(),
+    },
+    jobStatus: {
+      fontSize: 18,
+      fontFamily: fontFamily.medium,
+      marginHorizontal: moderateScaleVertical(16),
+      // marginTop: moderateScaleVertical(16),
+    },
+    preparingBox: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingHorizontal: moderateScale(20),
+      paddingVertical: moderateScaleVertical(15),
+      borderRadius: moderateScale(5),
+      backgroundColor: colors.themeColor2,
+      marginTop: moderateScaleVertical(16),
+      marginHorizontal: moderateScaleVertical(16),
+      alignItems: 'center',
+    },
+    upcomingStatus: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingHorizontal: moderateScale(20),
+      paddingVertical: moderateScaleVertical(15),
+      borderRadius: moderateScale(5),
+      backgroundColor: colors.themeColor2,
+      marginTop: moderateScaleVertical(16),
+      marginHorizontal: moderateScaleVertical(16),
+      alignItems: 'center',
+      marginTop: 0,
+      zIndex: 23,
+      position: 'absolute',
+      bottom: -moderateScaleVertical(48),
+      width: width - moderateScaleVertical(32),
+    },
+    orderNumberBox: {
+      marginTop: moderateScaleVertical(16),
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      padding: moderateScale(4),
+      marginHorizontal: moderateScaleVertical(16),
+    },
+    orderNumber: {
+      color: colors.blackOpacity66,
+      fontFamily: fontFamily.regular,
+      fontSize: 16,
+    },
+    orderTime: {
+      color: colors.blackOpacity66,
+      fontFamily: fontFamily.regular,
+      fontSize: 16,
+    },
+    itemBox: {
+      flexDirection: 'row',
+      padding: moderateScale(16),
+    },
+    itemImage: {
+      width: moderateScale(65),
+      height: moderateScale(65),
+      borderRadius: moderateScale(5),
+      marginRight: moderateScale(16),
+    },
+    orderBox: {
+      borderRadius: moderateScale(8),
+      backgroundColor: colors.whiteSmokeColor,
+      margin: moderateScaleVertical(16),
+    },
+    itemSeperator: {
+      borderBottomColor: colors.lightGreyBgColor,
+      borderBottomWidth: 1,
+      marginHorizontal: moderateScale(16),
+    },
+    dashLine: {
+      borderWidth: 1,
+      borderStyle: 'dashed',
+      borderRadius: 1,
+      flex: 1,
+      marginVertical: moderateScaleVertical(16),
+      borderColor: colors.lightGreyBgColor,
+    },
+    shareImage: {
+      height: moderateScaleVertical(23),
+      width: moderateScaleVertical(23),
+    },
+    locationBox: {
+      flexDirection: 'row',
+      marginVertical: moderateScale(16),
+      borderRadius: moderateScale(6),
+    },
+    locationImage: {
+      width: moderateScale(65),
+      height: moderateScale(65),
+      borderRadius: moderateScale(5),
+      marginRight: moderateScaleVertical(16),
+    },
+    btnText: {
+      color: colors.themeColor2,
+      // paddingHorizontal: moderateScale(16),
+      textTransform: 'none',
+      fontSize: textScale(14),
+    },
+    buttonBox: {
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+      margin: moderateScaleVertical(16),
+    },
+    btnContainer: {
+      borderRadius: moderateScale(5),
+      backgroundColor: colors.white,
+      borderColor: colors.themeColor2,
+      paddingHorizontal: moderateScale(20),
+    },
+    flexRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+  });
+  return styles;
+}
