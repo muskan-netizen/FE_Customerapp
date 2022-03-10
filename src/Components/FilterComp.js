@@ -42,7 +42,7 @@ const FilterComp = ({
             {
                 id: 2,
                 label: strings.Z_TO_A,
-                labelValue: 'z_to_a',
+                labelValue: strings.Z_TO_A,
                 parent: strings.SORT_BY,
             },
             {
