@@ -234,18 +234,26 @@ export default function Products({ route, navigation }) {
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      updateState({ pageNo: 1 });
-      getAllListItems(1);
-      if (productListId?.vendor && routeData) {
-        fetchOffers();
-      }
-      if (isLoadingC) {
-        getAllProductsByCategoryId(true);
-      }
-    });
-    return unsubscribe;
-  }, [navigation, languages, currencies]);
+    updateState({ pageNo: 1 });
+    getAllListItems(1);
+    if (productListId?.vendor && routeData) {
+      fetchOffers();
+    }
+    if (isLoadingC) {
+      getAllProductsByCategoryId(1);
+    }
+    // const unsubscribe = navigation.addListener('focus', () => {
+    //   updateState({ pageNo: 1 });
+    //   getAllListItems(1);
+    //   if (productListId?.vendor && routeData) {
+    //     fetchOffers();
+    //   }
+    //   if (isLoadingC) {
+    //     getAllProductsByCategoryId(true);
+    //   }
+    // });
+    // return unsubscribe;
+  }, [navigation, languages, currencies, CartItems]);
 
   // useEffect(() => {
   //   updateState({ pageNo: 1 });
@@ -565,26 +573,26 @@ export default function Products({ route, navigation }) {
         console.log(res, 'getProductByCategoryId res');
         // setFilterData(res?.data?.filterData)
         setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
-        setCategoryInfo(res.data.category);
+        // setCategoryInfo(res.data.category);
         setLoading(false);
         setProductListData(pageNo == 1
           ? res.data.listData.data
           : [...productListData, ...res.data.listData.data])
         updateState({ isLoadingC: false });
 
-        // if (pageNo == 1 &&
-        //   res?.data?.listData?.data.length == 0 &&
-        //   res?.data?.category &&
-        //   res?.data?.category?.childs.length) {
-        //   setSelectedCategory(res.data.category.childs[0])
-        //   setProductListId(res.data.category.childs[0])
-        //   updateState({
-        //     pageNo: 1,
-        //     limit: 10,
-        //     isLoadingC: true,
-        //   })
-        // }
-        // updateState({ isLoading: false });
+        if (pageNo == 1 &&
+          res?.data?.listData?.data.length == 0 &&
+          res?.data?.category &&
+          res?.data?.category?.childs.length) {
+          setSelectedCategory(res.data.category.childs[0])
+          setProductListId(res.data.category.childs[0])
+          updateState({
+            pageNo: 1,
+            limit: 10,
+            isLoadingC: true,
+          })
+        }
+        updateState({ isLoading: false });
         // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
       .catch(errorMethod);
@@ -1576,7 +1584,7 @@ export default function Products({ route, navigation }) {
 
   useEffect(() => {
     if (isLoadingC) {
-      getAllProductsByCategoryId(true);
+      getAllProductsByCategoryId(1);
       if (productListId?.vendor && routeData) {
         fetchOffers();
       }
