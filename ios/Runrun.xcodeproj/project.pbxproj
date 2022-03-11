@@ -20186,6 +20186,7 @@
 				849BD7DC27465FF00036F905 /* Bundle React Native code and images */,
 				E782DA65EDD992C9B2E8C47B /* [CP] Embed Pods Frameworks */,
 				07339F2791F0D3BF590DCE12 /* [CP] Copy Pods Resources */,
+				84222C3A27DB2D3800372C9B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -52018,6 +52019,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Taquick/Pods-available_pods-Taquick-resources.sh\"\n\n";
+		};
+		84222C3A27DB2D3800372C9B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-RoyoOrder/Pods-available_pods-RoyoOrder-frameworks.sh\"\n";
 		};
 		8424518D27071D32005473D3 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
