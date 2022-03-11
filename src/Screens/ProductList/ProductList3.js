@@ -17,6 +17,7 @@ import {
   View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+
 import { useDarkMode } from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
@@ -75,8 +76,6 @@ let timeOut = undefined;
 
 var tempQty = 0;
 
-let activeIdx = 0;
-
 const filtersData = [
   {
     id: -2,
@@ -122,8 +121,7 @@ export default function Products({ route, navigation }) {
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const dineInType = useSelector((state) => state?.home?.dineInType);
   const CartItems = useSelector((state) => state?.cart?.cartItemCount);
-
-  console.log("data++++++", data)
+  const [activeIdx, setActiveIdx] = useState(0)
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -245,7 +243,7 @@ export default function Products({ route, navigation }) {
       }
     });
     return unsubscribe;
-  }, [navigation, languages, currencies]);
+  }, [navigation, languages, currencies, CartItems]);
 
   // useEffect(() => {
   //   updateState({ pageNo: 1 });
@@ -385,7 +383,8 @@ export default function Products({ route, navigation }) {
     if (!!data?.categoryExist) { //sent category id if user comes from category>>vendor>>productList
       apiData = apiData + `&category_id=${data?.categoryExist}`
     }
-    actions.getProductByVendorId(
+
+    actions.getProductByVendorIdOptamize(
       apiData,
       {},
       {
@@ -486,7 +485,7 @@ export default function Products({ route, navigation }) {
       systemuser: DeviceInfo.getUniqueId(),
     }
     console.log("sending++ Header data++", headerData)
-    actions.newVendorFilters(apiData, headerData)
+    actions.vendorFilterOptimize(apiData, headerData)
       .then((res) => {
         console.log('filter vendor res', res);
 
@@ -540,7 +539,7 @@ export default function Products({ route, navigation }) {
   const getAllProductsByCategoryId = (pageNo) => {
     console.log('api hit getProductByCategoryId', data);
     actions
-      .getProductByCategoryId(
+      .getProductByCategoryIdOptamize(
         `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${data?.rootProducts ? true : false
         }`,
         {},
@@ -606,48 +605,6 @@ export default function Products({ route, navigation }) {
           ? res.data.data
           : [...productListData, ...res.data.data])
         setLoading(false);
-      })
-      .catch(errorMethod);
-    // }
-  };
-
-
-  useEffect(() => {
-    getAllVendorFilters()
-  }, [])
-
-  const getAllVendorFilters = () => {
-    actions
-      .getVendorFilters(`/${productListId?.id}`,
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        },
-      )
-      .then((res) => {
-        console.log(res, 'getVendorFilter');
-
-        if (!!res.data.filterData?.length) {
-          let filterDataNew = res.data.filterData.map((i, inx) => {
-            return {
-              id: i.variant_type_id,
-              label: i.title,
-              value: i.options.map((j, jnx) => {
-                return {
-                  id: j.id,
-                  parent: i.title,
-                  label: j.title,
-                  variant_type_id: i.variant_type_id,
-                };
-              }),
-            };
-          });
-          setAllFilter(filterDataNew);
-          console.log("filterDataNewfilterDataNew", filterDataNew)
-        }
       })
       .catch(errorMethod);
     // }
@@ -788,7 +745,7 @@ export default function Products({ route, navigation }) {
       )
       .then((res) => {
         actions.cartItemQty(res);
-        console.log('clear cart res', res);
+        console.log('clear cart and add product res', res);
         // alert("add single item")
         addSingleItem(item, section);
         // showSuccess(res?.message);
@@ -852,7 +809,7 @@ export default function Products({ route, navigation }) {
       });
       return;
     }
-    if (item?.add_on_count?.length === 0 && item?.mode_of_service === 'schedule') {
+    if (item?.add_on_count === 0 && item?.mode_of_service === 'schedule') {
       setSelectedSection(section);
       setSelectedCarItems(item);
       setIsVisibleModal(true)
@@ -870,7 +827,7 @@ export default function Products({ route, navigation }) {
     data['quantity'] = !!item?.minimum_order_count
       ? Number(item?.minimum_order_count)
       : 1;
-    data['product_variant_id'] = item?.variant[0]?.id;
+    data['product_variant_id'] = item?.variant[0].id;
     data['type'] = dine_In_Type;
     actions
       .addProductsToCart(data, {
@@ -1357,8 +1314,9 @@ export default function Products({ route, navigation }) {
   const checkIsCustomize = async (item, section = null, index, type) => {
     let itemToUpdate = cloneDeep(item);
     console.log('check item to update', itemToUpdate);
-    return;
-    if (item?.add_on_count !== 0 || item?.variant_set_count !== 0) {
+
+
+    if (itemToUpdate?.add_on_count !== 0 && itemToUpdate?.variant_set_count !== 0) {
       // hit in case of simple products withou any customization
       addProductsWithoutCustomize(item, section, index, type);
       return;
@@ -1384,15 +1342,11 @@ export default function Products({ route, navigation }) {
     var isExistqty = itemToUpdate?.qty ? itemToUpdate?.qty : totalProductQty; //this variable contain only local product quantity
     var tempQty = 0; //this variable contain latest updated quantity of products
 
-    if (
-      (type == 2 && item?.add_on_count?.length > 0) ||
-      item?.variant_set_count?.length > 0
-    ) {
+    if ((type == 2 && itemToUpdate?.add_on_count !== 0) || (type == 2 && itemToUpdate?.variant_set_count !== 0)) {
       //hit in case of subtruction
       let apiData = { cart_id: parentCartId, product_id: item.id };
       let checkIsAvailable = await getDiffAddsOn(apiData, section, item); //check products with different addOns is exist or not.
       // console.log("check available", checkIsAvailable)
-
       !!checkIsAvailable?.data &&
         checkIsAvailable?.data.map((val) => {
           console.log('check available', val);
@@ -1406,9 +1360,10 @@ export default function Products({ route, navigation }) {
     }
 
     if (type == 2) {
+
       // direct subtract customize items if products added with same addons
       addDeleteCartItems(
-        item,
+        itemToUpdate,
         tempQty == 0 ? isExistqty : tempQty,
         productId,
         parentCartId,
@@ -1431,11 +1386,11 @@ export default function Products({ route, navigation }) {
       console.log('api data checkLastAdded', apiData);
       try {
         const res = await actions.checkLastAdded(apiData, header);
-        console.log('res++++++', res);
+        console.log('check last addedres++++++', res);
         if (!!res.data) {
           //open RepeatModal
           const addData = {
-            item: item,
+            item: itemToUpdate,
             index: index,
             type: type,
             section: section,
@@ -1740,7 +1695,8 @@ export default function Products({ route, navigation }) {
   };
 
   const onPressMenuOption = (index) => {
-    activeIdx = index;
+    setActiveIdx(index)
+
     let cells = [];
     cloneSectionList.forEach((el, ind) => {
       if (index > ind) {
@@ -1750,11 +1706,13 @@ export default function Products({ route, navigation }) {
     let hight = Number(cells.length) * moderateScaleVertical(200);
     playHapticEffect(hapticEffects.rigid);
     updateState({ MenuModalVisible: !MenuModalVisible });
-    sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
+    sectionListRef.current.sectionList.current.scrollToLocation(
       {
-        x: hight + 200,
-        y: hight + 200,
+        sectionIndex: index,
+        itemIndex: 0,
         animated: true,
+        viewPosition: 0,
+        viewOffset: 1
       },
     );
   };
@@ -1787,7 +1745,6 @@ export default function Products({ route, navigation }) {
             }}
           />
           {cloneSectionList.map((el, index) => {
-            console.log('checking dtaa on tap >>>', activeIdx);
             const idx = index + 1;
             const temp = el.data.length + idx * 2;
             return (
@@ -2515,55 +2472,54 @@ export default function Products({ route, navigation }) {
               );
             })}
         </ScrollView>
-        {true ? (
-         <View
-         style={{
-           flexDirection: 'row',
-           alignItems: 'center',
-           marginBottom: moderateScaleVertical(8),
-           marginHorizontal: moderateScale(12),
-         }}>
-         {categoryInfo?.is_show_products_with_category ? <SearchBar
-           autoFocus={false}
-           containerStyle={{
-             flex: 1,
-             // marginHorizontal: moderateScale(18),
-             borderRadius: moderateScale(8),
-             backgroundColor: isDarkMode
-               ? colors.whiteOpacity15
-               : colors.greyColor,
-             height: moderateScaleVertical(37),
-           }}
-           searchValue={searchInput}
-           placeholder={strings.SEARCH_WITHIN_MENU}
-           onChangeText={(value) => onSearchWithinMenu(value)}
-           showRightIcon={searchInput ? true : false}
-           rightIconStyle={{
-             tintColor: isDarkMode ? colors.white : colors.black,
-           }}
-           rightIconPress={() => onSearchWithinMenu('')}
-           showVoiceRecord={false}
-         /> : null}
+        {!!categoryInfo?.is_show_products_with_category ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginBottom: moderateScaleVertical(8),
+              marginHorizontal: moderateScale(12),
+            }}>
+            <SearchBar
+              autoFocus={false}
+              containerStyle={{
+                flex: 1,
+                // marginHorizontal: moderateScale(18),
+                borderRadius: moderateScale(8),
+                backgroundColor: isDarkMode
+                  ? colors.whiteOpacity15
+                  : colors.greyColor,
+                height: moderateScaleVertical(37),
+              }}
+              searchValue={searchInput}
+              placeholder={strings.SEARCH_WITHIN_MENU}
+              onChangeText={(value) => onSearchWithinMenu(value)}
+              showRightIcon={searchInput ? true : false}
+              rightIconStyle={{
+                tintColor: isDarkMode ? colors.white : colors.black,
+              }}
+              rightIconPress={() => onSearchWithinMenu('')}
+              showVoiceRecord={false}
+            />
 
-         {appIds.codiner == DeviceInfo.getBundleId() ? null : (
-           <View style={{flex:categoryInfo?.is_show_products_with_category?0:1 }}>
-             <TouchableOpacity
-               hitSlop={hitSlopProp}
-               onPress={onShowHideFilter}
-               style={{
-                 alignSelf: 'flex-end',
-                 marginLeft: categoryInfo?.is_show_products_with_category ? 0: moderateScale(16)
-               }}>
-               <Image
-                 style={{
-                   tintColor: isDarkMode ? colors.white : colors.black,
-                 }}
-                 source={imagePath.filter}
-               />
-             </TouchableOpacity>
-           </View>
-         )}
-       </View>
+            {appIds.codiner == DeviceInfo.getBundleId() ? null : (
+              <View style={{ flex: 0.14 }}>
+                <TouchableOpacity
+                  hitSlop={hitSlopProp}
+                  onPress={onShowHideFilter}
+                  style={{
+                    alignSelf: 'flex-end',
+                  }}>
+                  <Image
+                    style={{
+                      tintColor: isDarkMode ? colors.white : colors.black,
+                    }}
+                    source={imagePath.filter}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
         ) : null}
         {!!categoryInfo && categoryInfo?.childs?.length > 0 && (
           <View style={{ marginHorizontal: moderateScale(20) }}>
@@ -2808,14 +2764,51 @@ export default function Products({ route, navigation }) {
   //   }
   // };
 
-  const renderSectionTab = (props) => {
-    const { title, isActive } = props;
+  const scrollHeader = (index) => {
 
+    setActiveIdx(index)
+    // const newArr = cloneSectionList.map((el, indx) => {
+    //   if (indx == index) {
+    //     let temp = el;
+    //     temp.isActive = true;
+    //     activeIdx = indx;
+    //     return temp;
+    //   } else {
+    //     return el;
+    //   }
+    // });
+    // setSectionListData(newArr);
+    // setCloneSectionList(newArr);
+
+    // // activeIdx = props.index;
+    // let cells = [];
+    // cloneSectionList.forEach((el, ind) => {
+    //   if (index > ind) {
+    //     cells.push(...el.data);
+    //   }
+    // });
+    // playHapticEffect(hapticEffects.rigid);
+    // updateState({MenuModalVisible: !MenuModalVisible});
+    sectionListRef.current.sectionList.current.scrollToLocation(
+      {
+        sectionIndex: index,
+        itemIndex: 0,
+        animated: true,
+        viewPosition: 0,
+        viewOffset: 1
+      },
+    );
+  }
+
+  const renderSectionTab = (props) => {
+    const { title, isActive, index } = props;
+    console.log("props+++", props)
     if (isActive) {
       // activeIdx = props.index;
+
     }
     if (!AnimatedHeaderValue) {
-      return <View style={{ width: 40 }} />;
+      return <TouchableOpacity style={{ width: 40 }} />;
     }
     return (
       <Animatable.View
@@ -2827,43 +2820,13 @@ export default function Products({ route, navigation }) {
           padding: 4,
           borderBottomWidth: 3,
           borderColor:
-            activeIdx == props.index
+          props.isActive
               ? themeColors.primary_color
               : colors.transparent,
         }}>
         <TouchableOpacity
-          onPress={() => {
-            const newArr = cloneSectionList.map((el, indx) => {
-              if (indx == props.index) {
-                let temp = el;
-                temp.isActive = true;
-                activeIdx = indx;
-                return temp;
-              } else {
-                return el;
-              }
-            });
-            setSectionListData(newArr);
-            setCloneSectionList(newArr);
-            console.log(props);
-            // activeIdx = props.index;
-            let cells = [];
-            cloneSectionList.forEach((el, ind) => {
-              if (props.index > ind) {
-                cells.push(...el.data);
-              }
-            });
-            let hight = Number(cells.length) * 160;
-            playHapticEffect(hapticEffects.rigid);
-            // updateState({MenuModalVisible: !MenuModalVisible});
-            sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
-              {
-                x: hight + 200,
-                y: hight + 200,
-                animated: true,
-              },
-            );
-          }}>
+          onPress={() => scrollHeader(index)}
+        >
           <Text
             style={{
               fontFamily: fontFamily.medium,
@@ -2971,7 +2934,6 @@ export default function Products({ route, navigation }) {
   let uri2 = categoryInfo?.banner?.image_path || categoryInfo?.icon?.image_path;
   let imageURI = getImageUrl(uri1, uri2, '200/200')
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
-  console.log(imageURI, "is svg", isSVG)
 
   let name =
     data?.name ||
@@ -3283,10 +3245,10 @@ export default function Products({ route, navigation }) {
             //     tintColor={themeColors.primary_color}
             //   />
             // }
-            onEndReached={
-              !categoryInfo?.is_show_products_with_category &&
-              onEndReachedDelayed
-            }
+            // onEndReached={
+            //   !categoryInfo?.is_show_products_with_category &&
+            //   onEndReachedDelayed
+            // }
             onEndReachedThreshold={0.5}
             ListFooterComponent={() => (
               <View style={{ height: moderateScale(60) }} />

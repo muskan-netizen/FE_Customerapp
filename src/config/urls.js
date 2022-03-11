@@ -10,7 +10,7 @@ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 
 // export const API_BASE_URL = 'https://961a-112-196-88-218.ngrok.io/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.97.123:8020/api/v1'; // sujata
-// export const API_BASE_URL = 'https://9303-112-196-88-218.ngrok.io/api/v1'; //dinesh sir
+// export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1'; //dinesh sir
 // export const API_BASE_URL = 'http://192.168.97.160:9090/api/v1'; //inderjeet sir
 // export const API_BASE_URL = 'http://192.168.103.186:8005/api/v1'; // harbans
 // export const API_BASE_URL = 'https://876c-114-134-24-242.ngrok.io/api/v1'; // gourav sir
@@ -79,6 +79,7 @@ export const FORGOT_API = getApiUrl('/auth/forgotPassword');
 export const APP_INITIAL_SETTINGS = getApiUrl('/header');
 export const HOMEPAGE_DATA_URL = getApiUrl('/homepage');
 export const GET_DATA_BY_CATEGORY = getApiUrl('/category');
+export const GET_DATA_BY_CATEGORY_OPTAMIZE = getApiUrl('/v2/category');
 export const GET_PRODUCT_DATA_BY_PRODUCTID = getApiUrl('/product');
 export const GET_PRODUCT_DATA_BY_VENDORID = getApiUrl('/vendor');
 export const GET_PRODUTC_DATA_BY_BRANDID = getApiUrl('/brand');

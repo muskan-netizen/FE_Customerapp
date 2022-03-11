@@ -228,8 +228,8 @@ const ProductCard3 = ({
       return;
     }
     if (
-      (!!data?.add_on && data?.add_on.length !== 0) ||
-      (!!data?.variantSet && data?.variantSet.length !== 0)
+      (!!data?.add_on_count && data?.add_on_count !== 0) ||
+      (!!data?.variant_set_count && data?.variant_set_count !== 0)
     ) {
       onIncrement();
     } else {
@@ -248,8 +248,8 @@ const ProductCard3 = ({
   const onDecrementQty = () => {
     setAdd(false)
     if (
-      (!!data?.add_on && data?.add_on.length !== 0) ||
-      (!!data?.variantSet && data?.variantSet.length !== 0)
+      (!!data?.add_on_count && data?.add_on_count !== 0) ||
+      (!!data?.variant_set_count && data?.variant_set_count !== 0)
     ) {
       onDecrement();
     } else {
@@ -571,8 +571,8 @@ const ProductCard3 = ({
                     </TouchableOpacity>
                   </>
                 )}
-                {(!!data?.add_on && data?.add_on.length !== 0) ||
-                  (!!data?.variantSet && data?.variantSet.length !== 0) ? (
+                {(!!data?.add_on_count && data?.add_on_count !== 0) ||
+                  (!!data?.variant_set_count && data?.variant_set_count !== 0) ? (
                   <Text
                     style={{
                       ...styles.customTextStyle,
