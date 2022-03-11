@@ -788,4 +788,5 @@ export default {
   AMOUNT_RECIEVED: 'AMOUNT RECIEVED',
   TRANSACTION_TIME: 'Transactions time',
   LIFETIME: 'Lifetime',
+  MENU:"Menu"
 };

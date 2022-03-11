@@ -273,4 +273,12 @@ export default ({themeColors, fontFamily, isDarkMode, MyDarkTheme}) =>
         ? colors.whiteOpacity22
         : colors.lightGreyBg,
     },
+    borderBottomWidth: 0,
+    paddingHorizontal: moderateScale(15),
+    width: '100%',
+    borderBottomColor: colors.greyMedium,
+    marginBottom: moderateScale(10),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   });

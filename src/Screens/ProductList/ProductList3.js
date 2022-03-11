@@ -1696,15 +1696,6 @@ export default function Products({ route, navigation }) {
 
   const onPressMenuOption = (index) => {
     setActiveIdx(index)
-
-    let cells = [];
-    cloneSectionList.forEach((el, ind) => {
-      if (index > ind) {
-        cells.push(...el.data);
-      }
-    });
-    let hight = Number(cells.length) * moderateScaleVertical(200);
-    playHapticEffect(hapticEffects.rigid);
     updateState({ MenuModalVisible: !MenuModalVisible });
     sectionListRef.current.sectionList.current.scrollToLocation(
       {
@@ -1735,7 +1726,7 @@ export default function Products({ route, navigation }) {
               fontSize: textScale(14),
               fontFamily: fontFamily.medium,
             }}>
-            Menu
+            {strings.MENU}
           </Text>
           <View
             style={{
@@ -1745,22 +1736,11 @@ export default function Products({ route, navigation }) {
             }}
           />
           {cloneSectionList.map((el, index) => {
-            const idx = index + 1;
-            const temp = el.data.length + idx * 2;
             return (
               <TouchableOpacity
                 key={index}
                 onPress={() => onPressMenuOption(index)}
-                style={{
-                  borderBottomWidth: 0,
-                  paddingHorizontal: moderateScale(15),
-                  width: '100%',
-                  borderBottomColor: colors.greyMedium,
-                  marginBottom: moderateScale(10),
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}>
+                style={styles.menuView}>
                 <Text
                   style={{
                     fontSize:
@@ -3256,6 +3236,8 @@ export default function Products({ route, navigation }) {
             ListEmptyComponent={
               <NoDataFound isLoading={isLoading} containerStyle={{}} />
             }
+            initialNumToRender={1000}
+            onScrollToIndexFailed={val => console.log("indexed failed")}
           />
         )}
 
