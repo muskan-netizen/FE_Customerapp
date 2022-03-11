@@ -17,7 +17,6 @@ import {
   View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
@@ -3271,7 +3270,6 @@ export default function Products({route, navigation}) {
           <FlatList
             onScroll={onScroll}
             disableScrollViewPanResponder
-            showsVerticalScrollIndicator={false}
             data={productListData}
             renderItem={renderProduct}
             ListHeaderComponent={listHeaderComponent2()}
@@ -3417,7 +3415,8 @@ export default function Products({route, navigation}) {
                 } | ${
                   currencies.primary_currency.symbol
                 } ${currencyNumberFormatter(
-                  Number(CartItems.data.total_payable_amount).toFixed(2),
+                  Number(CartItems.data.total_payable_amount),
+                  appData?.profile?.preferences?.digit_after_decimal,
                 )}`
               : ''
           }

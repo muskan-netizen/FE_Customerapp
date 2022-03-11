@@ -229,7 +229,6 @@ export default function Signup({navigation}) {
       return;
     }
     console.log(formdata, 'formdata>><');
-
     updateState({isLoading: true});
     actions
       .signUpApi(formdata, {
