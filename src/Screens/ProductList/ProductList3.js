@@ -133,7 +133,7 @@ export default function Products({route, navigation}) {
     sortFilters: filtersData,
     searchInput: '',
     pageNo: 1,
-    limit: 10,
+    limit: 1000,
     selectedItemID: -1,
     selectedDiffAdsOnId: 0,
     minimumPrice: 0,
@@ -237,18 +237,18 @@ export default function Products({route, navigation}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      updateState({pageNo: 1});
-      getAllListItems(1);
-      if (productListId?.vendor && routeData) {
-        fetchOffers();
-      }
-      if (isLoadingC) {
-        getAllProductsByCategoryId(true);
-      }
-    });
-    return unsubscribe;
-  }, [navigation, languages, currencies]);
+    // const unsubscribe = navigation.addListener('focus', () => {
+    updateState({pageNo: 1});
+    getAllListItems(1);
+    if (productListId?.vendor && routeData) {
+      fetchOffers();
+    }
+    if (isLoadingC) {
+      getAllProductsByCategoryId(true);
+    }
+    // });
+    // return unsubscribe;
+  }, [navigation, languages, currencies, CartItems]);
 
   // useEffect(() => {
   //   updateState({ pageNo: 1 });
@@ -297,6 +297,7 @@ export default function Products({route, navigation}) {
   };
 
   const getAllListItems = (pageNo = 1) => {
+    // alert('');
     if (data?.vendor) {
       {
         !!selectedFilters.current
@@ -307,9 +308,8 @@ export default function Products({route, navigation}) {
       }
     } else {
       {
-        !!selectedFilters.current
-          ? getAllProductsCategoryFilter(pageNo)
-          : getAllProductsByCategoryId(pageNo);
+        !!selectedFilters.current && getAllProductsCategoryFilter(pageNo);
+        // : getAllProductsByCategoryId(pageNo);
       }
     }
   };
@@ -335,7 +335,7 @@ export default function Products({route, navigation}) {
         setLoading(false);
         setProductListData(
           pageNo == 1
-            ? res.data.products.data
+            ? res?.data?.products?.data
             : [...productListData, ...res?.data?.products?.data],
         );
         updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
@@ -557,7 +557,6 @@ export default function Products({route, navigation}) {
 
   /**********Get all list items by category id */
   const getAllProductsByCategoryId = (pageNo) => {
-    console.log('api hit getProductByCategoryId', data);
     actions
       .getProductByCategoryId(
         `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${
@@ -575,28 +574,25 @@ export default function Products({route, navigation}) {
         console.log(res, 'getProductByCategoryId res');
         // setFilterData(res?.data?.filterData)
         setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
-        setCategoryInfo(res.data.category);
+        // setCategoryInfo(res.data.category);
         setLoading(false);
-        setProductListData(
-          pageNo == 1
-            ? res.data.listData.data
-            : [...productListData, ...res.data.listData.data],
-        );
-        updateState({isLoadingC: false});
 
-        // if (pageNo == 1 &&
-        //   res?.data?.listData?.data.length == 0 &&
-        //   res?.data?.category &&
-        //   res?.data?.category?.childs.length) {
-        //   setSelectedCategory(res.data.category.childs[0])
-        //   setProductListId(res.data.category.childs[0])
-        //   updateState({
-        //     pageNo: 1,
-        //     limit: 10,
-        //     isLoadingC: true,
-        //   })
-        // }
-        // updateState({ isLoading: false });
+        setProductListData(res?.data?.listData?.data);
+        if (
+          (res?.data?.listData?.length > 0 ||
+            res?.data?.listData?.data?.length > 0) &&
+          res?.data?.category &&
+          res?.data?.category?.childs.length > 0
+        ) {
+          setSelectedCategory(res.data.category.childs[0]);
+          setProductListId(res.data.category.childs[0]);
+          updateState({
+            pageNo: 1,
+            limit: 10,
+            isLoadingC: true,
+          });
+        }
+        setLoading(false);
         // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
       .catch(errorMethod);
@@ -632,8 +628,6 @@ export default function Products({route, navigation}) {
       .catch(errorMethod);
     // }
   };
-
-  console.log('productListData length+++++++', productListData.length);
 
   const fetchTags = (filterArray) => {
     if (filterArray && filterArray.length > 0) {
@@ -1660,6 +1654,10 @@ export default function Products({route, navigation}) {
       }
     }
   }, [updateTagFilter]);
+
+  useEffect(() => {
+    getAllProductsByCategoryId(true);
+  }, [productListId?.id]);
 
   const onPressChildCards = (item) => {
     console.log(item, 'item upload');

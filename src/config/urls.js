@@ -1,7 +1,7 @@
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-//export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://9303-112-196-88-218.ngrok.io/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
 //export const API_BASE_URL = 'https://api.focushires.com/api/v1';
@@ -20,6 +20,9 @@
 
 // WE EAT
 // export const API_BASE_URL = 'https://weeat.royoorders.com/api/v1';
+
+//BEZALIO LIVE
+// export const API_BASE_URL = 'https://bezaliohub.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
@@ -54,11 +57,11 @@
 // export const API_BASE_URL = 'https://swiftandvalu.com/api/v1';
 // export const API_BASE_URL = 'https://baytukom.royoorders.com/api/v1';
 //export const API_BASE_URL = 'https://marketplace.verofax.com/api/v1';
-// export const API_BASE_URL = 'https://agrionline.ph/api/v1';
+//export const API_BASE_URL = 'https://agrionline.ph/api/v1';
 // export const API_BASE_URL = 'https://marketplace.verofax.com/api/v1';
 // export const API_BASE_URL = 'https://order.loopwhole.ca/api/v1';
 // export const API_BASE_URL = 'https://elcheregio.mx/api/v1';
-export const API_BASE_URL = 'https://donepacked.com/api/v1';
+//export const API_BASE_URL = 'https://donepacked.com/api/v1';
 // export const API_BASE_URL = 'https://cannabusxpress.com/api/v1';
 // export const API_BASE_URL = 'https://order-dev.taquick.com/api/v1';
 // export const API_BASE_URL = 'https://yeboy.mx/api/v1';
