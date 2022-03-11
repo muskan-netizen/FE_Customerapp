@@ -1,46 +1,45 @@
-import React, {useEffect} from 'react';
+import {cloneDeep, isEmpty} from 'lodash';
+import debounce from 'lodash.debounce';
+import moment from 'moment';
+import React, {useEffect, useState} from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
+  FlatList,
   Image,
-  ScrollView,
   RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import {useState} from 'react';
+import {BarChart} from 'react-native-chart-kit';
+import Modal from 'react-native-modal';
+import MonthPicker from 'react-native-month-year-picker';
+import {useSelector} from 'react-redux';
+import Header from '../../../Components/Header';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import OrderCard from '../../../Components/OrderCard';
+import SelectVendorListModal from '../../../Components/SelectVendorListModal';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
+import navigationStrings from '../../../navigation/navigationStrings';
+import actions from '../../../redux/actions';
+import colors from '../../../styles/colors';
+import commonStyles from '../../../styles/commonStyles';
+import fontFamily from '../../../styles/fontFamily';
 import {
   moderateScale,
   moderateScaleVertical,
   width,
 } from '../../../styles/responsiveSize';
-import fontFamily from '../../../styles/fontFamily';
-import navigationStrings from '../../../navigation/navigationStrings';
-import colors from '../../../styles/colors';
-import {BarChart} from 'react-native-chart-kit';
-import {FlatList} from 'react-native';
-import OrderCard from '../../../Components/OrderCard';
-import commonStyles from '../../../styles/commonStyles';
 import {
   boxWidth,
   customMarginBottom,
   customMarginLeftForBox,
 } from '../../../utils/constants/constants';
-import Header from '../../../Components/Header';
-import {useSelector} from 'react-redux';
-import actions from '../../../redux/actions';
-import moment from 'moment';
-import {showError} from '../../../utils/helperFunctions';
-import debounce from 'lodash.debounce';
-import {cloneDeep, isEmpty} from 'lodash';
-import {TouchableOpacity} from 'react-native';
-import MonthPicker from 'react-native-month-year-picker';
-import Modal from 'react-native-modal';
-import SelectVendorListModal from '../../../Components/SelectVendorListModal';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import {enums} from '../../../utils/enums';
-import strings from '../../../constants/lang';
+import {showError} from '../../../utils/helperFunctions';
 
 const commonStyle = commonStyles({
   fontFamily,
@@ -518,7 +517,7 @@ const RoyoHome = (props) => {
     data['vendor_id'] = selectedVendor?.id;
     data['order_status_option_id'] = status;
     console.log(data, 'data>>data');
-    updateState({isLoadingB: true});
+    updateState({isLoading: true});
     actions
       .updateOrderStatus(data, {
         code: appData?.profile?.code,
@@ -527,7 +526,9 @@ const RoyoHome = (props) => {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'res>>>acceptRejectOrder');
+        updateState({
+          isLoading: false,
+        });
         if (res && res.status == 'success') {
           updateStatus(res, acceptRejectData);
         }
