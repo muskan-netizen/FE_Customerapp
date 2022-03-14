@@ -4156,6 +4156,7 @@
 		848A1B0D27425CAA003BD140 /* TruckTireNow(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 848A1B0C27425CAA003BD140 /* TruckTireNow(Production).xcconfig */; };
 		848A1B0F27425CC7003BD140 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848A1B0E27425CC7003BD140 /* Images.xcassets */; };
 		848A1BA727425D2D003BD140 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848A1BA627425D2C003BD140 /* GoogleService-Info.plist */; };
+		848A80C727DB4F6100FFB168 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848A80C627DB4F6000FFB168 /* GoogleService-Info.plist */; };
 		848B010727675D4300DAA1EB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		848B010827675D4300DAA1EB /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848B010927675D4300DAA1EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -7270,7 +7271,6 @@
 		84FFFAD226D6669D00F2B059 /* LoopWhole(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84FFFAD126D6669D00F2B059 /* LoopWhole(Development).xcconfig */; };
 		84FFFB5826D666C300F2B059 /* LoopWhole(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84FFFB5726D666C300F2B059 /* LoopWhole(Production).xcconfig */; };
 		84FFFB9C26D666D800F2B059 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84FFFB9B26D666D800F2B059 /* Images.xcassets */; };
-		84FFFBE026D666FD00F2B059 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84FFFBDF26D666FD00F2B059 /* GoogleService-Info.plist */; };
 		84FFFF1F26D672E600F2B059 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84FFFF2026D672E600F2B059 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		84FFFF2126D672E600F2B059 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -8693,6 +8693,7 @@
 		848A1B0E27425CC7003BD140 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		848A1BA627425D2C003BD140 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		848A1D6A27425EC6003BD140 /* TruckTireNow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TruckTireNow.entitlements; sourceTree = "<group>"; };
+		848A80C627DB4F6000FFB168 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		848B014927675D4300DAA1EB /* ShopCentral.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShopCentral.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		848B04CB27675E2700DAA1EB /* ShopCentral(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ShopCentral(Development).xcconfig"; sourceTree = "<group>"; };
 		848B063327675E4400DAA1EB /* ShopCentral(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ShopCentral(Production).xcconfig"; sourceTree = "<group>"; };
@@ -9350,7 +9351,6 @@
 		84FFFAD126D6669D00F2B059 /* LoopWhole(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "LoopWhole(Development).xcconfig"; sourceTree = "<group>"; };
 		84FFFB5726D666C300F2B059 /* LoopWhole(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "LoopWhole(Production).xcconfig"; sourceTree = "<group>"; };
 		84FFFB9B26D666D800F2B059 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		84FFFBDF26D666FD00F2B059 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84FFFCE926D669C200F2B059 /* LoopWhole.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LoopWhole.entitlements; sourceTree = "<group>"; };
 		84FFFF5826D672E700F2B059 /* YogoLift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YogoLift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FFFF9E26D6742D00F2B059 /* YogoLift(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "YogoLift(Development).xcconfig"; sourceTree = "<group>"; };
@@ -16124,7 +16124,7 @@
 		84FFFAD026D6665F00F2B059 /* LoopWhole */ = {
 			isa = PBXGroup;
 			children = (
-				84FFFBDF26D666FD00F2B059 /* GoogleService-Info.plist */,
+				848A80C627DB4F6000FFB168 /* GoogleService-Info.plist */,
 				84FFFAD126D6669D00F2B059 /* LoopWhole(Development).xcconfig */,
 				84FFFB5726D666C300F2B059 /* LoopWhole(Production).xcconfig */,
 				84FFFB9B26D666D800F2B059 /* Images.xcassets */,
@@ -21865,10 +21865,10 @@
 				84FFF94B26D6652C00F2B059 /* Sources */,
 				84FFF94F26D6652C00F2B059 /* Frameworks */,
 				84FFF96926D6652C00F2B059 /* Resources */,
-				C761169AC4ABA5393A9994CD /* ShellScript */,
 				A6526E6ABB57C23C4768A546 /* ShellScript */,
 				F30FBB31C52033061BC150C3 /* [CP] Embed Pods Frameworks */,
 				26312797CDC99612DA0B0D4D /* [CP] Copy Pods Resources */,
+				84C96C1227DB51E600EDABCB /* Start Packager */,
 			);
 			buildRules = (
 			);
@@ -31294,8 +31294,8 @@
 				84FFF97126D6652C00F2B059 /* SFProText-Medium.ttf in Resources */,
 				84D1CE1B2703529D00C05E36 /* notification.wav in Resources */,
 				84FFFB9C26D666D800F2B059 /* Images.xcassets in Resources */,
+				848A80C727DB4F6100FFB168 /* GoogleService-Info.plist in Resources */,
 				84FFF97426D6652C00F2B059 /* Plists in Resources */,
-				84FFFBE026D666FD00F2B059 /* GoogleService-Info.plist in Resources */,
 				8455CA7726DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84FFF97526D6652C00F2B059 /* Futura-Normal.ttf in Resources */,
 				84FFF97626D6652C00F2B059 /* Futura-Book.ttf in Resources */,
@@ -60248,6 +60248,24 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
+		84C96C1227DB51E600EDABCB /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n\nexport RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\nif nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\nif ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\necho \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\nexit 2\nfi\nelse\nopen \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\nfi\nfi\n";
+		};
 		84CB0727274CBB6100E5F07B /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -70127,50 +70145,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Share/Pods-available_pods-Share-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C761169AC4ABA5393A9994CD /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-available_pods-LoopWhole/Pods-available_pods-LoopWhole-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core.common-CoreModulesHeaders/AccessibilityResources.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit/FacebookSDKStrings.bundle",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/RNImageCropPicker/QBImagePicker.bundle",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
-				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe3DS2.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
-				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework/TwitterKitResources.bundle",
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Sambiga-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-LoopWhole/Pods-available_pods-LoopWhole-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C791E5386C2BA505D6DD6ED7 /* ShellScript */ = {
@@ -97138,7 +97112,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = 95K77859B4;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

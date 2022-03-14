@@ -500,7 +500,7 @@ const appIds = {
     android: 'com.destinationOps',
   }),
   loopwhole: Platform.select({
-    ios: 'com.loopwhole',
+    ios: 'com.app.loopwhole',
     android: 'com.loopwhole',
   }),
   vici: Platform.select({
