@@ -494,7 +494,9 @@ export default function OrderDetail({navigation, route}) {
                                 {`${currencies?.primary_currency?.symbol} ${
                                   // Number(i?.pvariant?.multiplier) *
                                   currencyNumberFormatter(
-                                    Number(i?.variants?.price).toFixed(2),
+                                    Number(i?.variants?.price),
+                                    appData?.profile?.preferences
+                                      ?.digit_after_decimal,
                                   )
                                 }`}
                               </Text>{' '}
@@ -508,9 +510,9 @@ export default function OrderDetail({navigation, route}) {
                                 {`${currencies?.primary_currency?.symbol} ${
                                   // Number(i?.pvariant?.multiplier) *
                                   currencyNumberFormatter(
-                                    Number(i?.variants?.quantity_price).toFixed(
-                                      2,
-                                    ),
+                                    Number(i?.variants?.quantity_price),
+                                    appData?.profile?.preferences
+                                      ?.digit_after_decimal,
                                   )
                                 }`}
                               </Text>
@@ -645,9 +647,9 @@ export default function OrderDetail({navigation, route}) {
                                                 currencies?.primary_currency
                                                   ?.symbol
                                               } ${currencyNumberFormatter(
-                                                Number(
-                                                  j?.quantity_price,
-                                                ).toFixed(2),
+                                                Number(j?.quantity_price),
+                                                appData?.profile?.preferences
+                                                  ?.digit_after_decimal,
                                               )}`}
                                             </Text>
                                           </View>
@@ -725,9 +727,8 @@ export default function OrderDetail({navigation, route}) {
                   }>{`- ${
                   currencies?.primary_currency?.symbol
                 } ${currencyNumberFormatter(
-                  Number(
-                    item?.discount_amount ? item?.discount_amount : 0,
-                  ).toFixed(2),
+                  Number(item?.discount_amount ? item?.discount_amount : 0),
+                  appData?.profile?.preferences?.digit_after_decimal,
                 )}`}</Text>
               </View>
             )}
@@ -759,9 +760,8 @@ export default function OrderDetail({navigation, route}) {
                   }>{`${
                   currencies?.primary_currency?.symbol
                 } ${currencyNumberFormatter(
-                  Number(
-                    item?.deliver_charge ? item?.deliver_charge : 0,
-                  ).toFixed(2),
+                  Number(item?.deliver_charge ? item?.deliver_charge : 0),
+                  appData?.profile?.preferences?.digit_after_decimal,
                 )}`}</Text>
               </View>
             )}
@@ -788,9 +788,8 @@ export default function OrderDetail({navigation, route}) {
                 }>
                 {currencies?.primary_currency?.symbol}{' '}
                 {currencyNumberFormatter(
-                  Number(
-                    item?.payable_amount ? item?.payable_amount : 0,
-                  ).toFixed(2),
+                  Number(item?.payable_amount ? item?.payable_amount : 0),
+                  appData?.profile?.preferences?.digit_after_decimal,
                 )}
               </Text>
 
@@ -816,7 +815,7 @@ export default function OrderDetail({navigation, route}) {
                     : styles.priceItemLabel2
                 }>{`${currencies?.primary_currency?.symbol}${Number(
                 item?.payable_amount ? item?.payable_amount : 0,
-              ).toFixed(2)}`}</Text> */}
+              ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text> */}
             </View>
           </View>
         </View>
@@ -944,7 +943,9 @@ export default function OrderDetail({navigation, route}) {
                                 {`${currencies?.primary_currency?.symbol} ${
                                   // Number(i?.pvariant?.multiplier) *
                                   currencyNumberFormatter(
-                                    Number(i?.price).toFixed(2),
+                                    Number(i?.price),
+                                    appData?.profile?.preferences
+                                      ?.digit_after_decimal,
                                   )
                                 }`}
                               </Text>
@@ -1006,7 +1007,9 @@ export default function OrderDetail({navigation, route}) {
                                               currencies?.primary_currency
                                                 ?.symbol
                                             } ${currencyNumberFormatter(
-                                              Number(j?.price).toFixed(2),
+                                              Number(j?.price),
+                                              appData?.profile?.preferences
+                                                ?.digit_after_decimal,
                                             )}`}
                                           </Text>
                                         </View>
@@ -1016,8 +1019,8 @@ export default function OrderDetail({navigation, route}) {
                                 : null}
 
                               {!!(
-                                !!i?.container_charges &&
-                                Number(i?.container_charges)
+                                !!i?.pvariant &&
+                                Number(i?.pvariant?.container_charges)
                               ) && (
                                 <View
                                   style={{
@@ -1068,8 +1071,10 @@ export default function OrderDetail({navigation, route}) {
                                             currencies?.primary_currency?.symbol
                                           }${currencyNumberFormatter(
                                             Number(
-                                              i?.container_charges,
-                                            ).toFixed(2) * Number(i?.quantity),
+                                              i?.pvariant?.container_charges,
+                                            ) * Number(i?.quantity),
+                                            appData?.profile?.preferences
+                                              ?.digit_after_decimal,
                                           )}`}
                                         </Text>
                                       </View>
@@ -1164,9 +1169,8 @@ export default function OrderDetail({navigation, route}) {
                 }>{`- ${
                 currencies?.primary_currency?.symbol
               } ${currencyNumberFormatter(
-                Number(
-                  item?.discount_amount ? item?.discount_amount : 0,
-                ).toFixed(2),
+                Number(item?.discount_amount ? item?.discount_amount : 0),
+                appData?.profile?.preferences?.digit_after_decimal,
               )}`}</Text>
             </View>
           )}
@@ -1225,11 +1229,12 @@ export default function OrderDetail({navigation, route}) {
                 }>{`${
                 currencies?.primary_currency?.symbol
               } ${currencyNumberFormatter(
-                Number(item?.delivery_fee ? item?.delivery_fee : 0).toFixed(2),
+                Number(item?.delivery_fee ? item?.delivery_fee : 0),
+                appData?.profile?.preferences?.digit_after_decimal,
               )}`}</Text>
             </View>
           )}
-            {!!Number(item?.total_container_charges) && (
+          {!!Number(item?.total_container_charges) && (
             <View style={styles.itemPriceDiscountTaxView}>
               <Text
                 style={
@@ -1259,7 +1264,12 @@ export default function OrderDetail({navigation, route}) {
                 }>{`${
                 currencies?.primary_currency?.symbol
               } ${currencyNumberFormatter(
-                Number(item?.total_container_charges ? item?.total_container_charges : 0).toFixed(2),
+                Number(
+                  item?.total_container_charges
+                    ? item?.total_container_charges
+                    : 0,
+                ),
+                appData?.profile?.preferences?.digit_after_decimal,
               )}`}</Text>
             </View>
           )}
@@ -1284,9 +1294,8 @@ export default function OrderDetail({navigation, route}) {
               }}>{`${
               currencies?.primary_currency?.symbol
             } ${currencyNumberFormatter(
-              Number(item?.payable_amount ? item?.payable_amount : 0).toFixed(
-                2,
-              ),
+              Number(item?.payable_amount ? item?.payable_amount : 0),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         </View>
@@ -1330,7 +1339,8 @@ export default function OrderDetail({navigation, route}) {
             }>{`${
             currencies?.primary_currency?.symbol
           }${currencyNumberFormatter(
-            Number(cartData?.total_amount).toFixed(2),
+            Number(cartData?.total_amount),
+            appData?.profile?.preferences?.digit_after_decimal,
           )}`}</Text>
         </View>
         {!!cartData?.wallet_amount_used && (
@@ -1365,7 +1375,8 @@ export default function OrderDetail({navigation, route}) {
             } ${currencyNumberFormatter(
               Number(
                 cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
-              ).toFixed(2),
+              ),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -1403,7 +1414,8 @@ export default function OrderDetail({navigation, route}) {
                 cartData?.loyalty_amount_saved
                   ? cartData?.loyalty_amount_saved
                   : 0,
-              ).toFixed(2),
+              ),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -1438,7 +1450,8 @@ export default function OrderDetail({navigation, route}) {
               }>{`-${
               currencies?.primary_currency?.symbol
             } ${currencyNumberFormatter(
-              Number(cartData?.total_discount).toFixed(2),
+              Number(cartData?.total_discount),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -1474,7 +1487,7 @@ export default function OrderDetail({navigation, route}) {
             }${currencyNumberFormatter(
               Number(
                 cartData?.taxable_amount ? cartData?.taxable_amount : 0,
-              ).toFixed(2),
+              ), appData?.profile?.preferences?.digit_after_decimal
             )}`}</Text>
           </View>
         )} */}
@@ -1508,7 +1521,8 @@ export default function OrderDetail({navigation, route}) {
             }>{`${
             currencies?.primary_currency?.symbol
           } ${currencyNumberFormatter(
-            Number(cartData?.payable_amount).toFixed(2),
+            Number(cartData?.payable_amount),
+            appData?.profile?.preferences?.digit_after_decimal,
           )}`}</Text>
         </View>
       </View>
@@ -1803,7 +1817,8 @@ export default function OrderDetail({navigation, route}) {
               rightText={`${
                 currencies?.primary_currency?.symbol
               }${currencyNumberFormatter(
-                Number(cartData?.total_amount).toFixed(2),
+                Number(cartData?.total_amount),
+                appData?.profile?.preferences?.digit_after_decimal,
               )}`}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
@@ -1816,7 +1831,8 @@ export default function OrderDetail({navigation, route}) {
                 rightText={`${
                   currencies?.primary_currency?.symbol
                 }${currencyNumberFormatter(
-                  Number(cartData?.total_delivery_fee).toFixed(2),
+                  Number(cartData?.total_delivery_fee),
+                  appData?.profile?.preferences?.digit_after_decimal,
                 )}`}
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}
@@ -1829,7 +1845,8 @@ export default function OrderDetail({navigation, route}) {
                 rightText={`- ${
                   currencies?.primary_currency?.symbol
                 }${currencyNumberFormatter(
-                  Number(cartData?.wallet_amount_used).toFixed(2),
+                  Number(cartData?.wallet_amount_used),
+                  appData?.profile?.preferences?.digit_after_decimal,
                 )}`}
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}
@@ -1842,10 +1859,9 @@ export default function OrderDetail({navigation, route}) {
               rightText={`${
                 currencies?.primary_currency?.symbol
               }${currencyNumberFormatter(
-                (
-                  Number(cartData?.total_service_fee) +
-                  Number(cartData?.taxable_amount)
-                ).toFixed(2),
+                Number(cartData?.total_service_fee) +
+                  Number(cartData?.taxable_amount),
+                appData?.profile?.preferences?.digit_after_decimal,
               )}`}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
@@ -1858,7 +1874,8 @@ export default function OrderDetail({navigation, route}) {
                 rightText={`- ${
                   currencies?.primary_currency?.symbol
                 }${currencyNumberFormatter(
-                  Number(cartData?.loyalty_amount_saved).toFixed(2),
+                  Number(cartData?.loyalty_amount_saved),
+                  appData?.profile?.preferences?.digit_after_decimal,
                 )}`}
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}
@@ -1867,11 +1884,12 @@ export default function OrderDetail({navigation, route}) {
           {!!cartData?.vendors[0]?.total_container_charges &&
             Number(cartData?.total_container_charges) > 0 && (
               <LeftRightText
-                leftText={strings.TOTALCONTAINERCHARGES}
-                rightText={`${
+                leftText={strings.WALLET}
+                rightText={`- ${
                   currencies?.primary_currency?.symbol
                 }${currencyNumberFormatter(
-                  Number(cartData?.vendors[0]?.total_container_charges).toFixed(2),
+                  Number(cartData?.total_container_charges),
+                  appData?.profile?.preferences?.digit_after_decimal,
                 )}`}
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}
@@ -1883,7 +1901,8 @@ export default function OrderDetail({navigation, route}) {
               rightText={`${
                 currencies?.primary_currency?.symbol
               } ${currencyNumberFormatter(
-                Number(cartData?.tip_amount).toFixed(2),
+                Number(cartData?.tip_amount),
+                appData?.profile?.preferences?.digit_after_decimal,
               )}`}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
@@ -1895,7 +1914,8 @@ export default function OrderDetail({navigation, route}) {
               rightText={`- ${
                 currencies?.primary_currency?.symbol
               }${currencyNumberFormatter(
-                Number(cartData?.total_discount).toFixed(2),
+                Number(cartData?.total_discount),
+                appData?.profile?.preferences?.digit_after_decimal,
               )}`}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
@@ -1914,7 +1934,8 @@ export default function OrderDetail({navigation, route}) {
             rightText={`${
               currencies?.primary_currency?.symbol
             } ${currencyNumberFormatter(
-              Number(cartData?.payable_amount).toFixed(2),
+              Number(cartData?.payable_amount),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}
             isDarkMode={isDarkMode}
             MyDarkTheme={MyDarkTheme}
@@ -1998,7 +2019,11 @@ export default function OrderDetail({navigation, route}) {
                             }>
                             {`${
                               currencies?.primary_currency?.symbol
-                            } ${currencyNumberFormatter(j.value)}`}
+                            } ${currencyNumberFormatter(
+                              j.value,
+                              appData?.profile?.preferences
+                                ?.digit_after_decimal,
+                            )}`}
                           </Text>
                           <Text
                             style={{
@@ -2227,7 +2252,8 @@ export default function OrderDetail({navigation, route}) {
             }>{`${
             currencies?.primary_currency?.symbol
           } ${currencyNumberFormatter(
-            Number(updatedcartData?.gross_paybale_amount).toFixed(2),
+            Number(updatedcartData?.gross_paybale_amount),
+            appData?.profile?.preferences?.digit_after_decimal,
           )}`}</Text>
         </View>
         {!!updatedcartData?.wallet_amount && (
@@ -2252,7 +2278,8 @@ export default function OrderDetail({navigation, route}) {
                 updatedcartData?.wallet_amount
                   ? updatedcartData?.wallet_amount
                   : 0,
-              ).toFixed(2),
+              ),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -2278,7 +2305,8 @@ export default function OrderDetail({navigation, route}) {
                 updatedcartData?.loyalty_amount
                   ? updatedcartData?.loyalty_amount
                   : 0,
-              ).toFixed(2),
+              ),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -2305,7 +2333,8 @@ export default function OrderDetail({navigation, route}) {
                 updatedcartData?.wallet_amount_used
                   ? updatedcartData?.wallet_amount_used
                   : 0,
-              ).toFixed(2),
+              ),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -2327,7 +2356,8 @@ export default function OrderDetail({navigation, route}) {
               }>{`-${
               currencies?.primary_currency?.symbol
             } ${currencyNumberFormatter(
-              Number(updatedcartData?.total_subscription_discount).toFixed(2),
+              Number(updatedcartData?.total_subscription_discount),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -2372,16 +2402,15 @@ export default function OrderDetail({navigation, route}) {
               }>{`${
               currencies?.primary_currency?.symbol
             } ${currencyNumberFormatter(
-              (
-                Number(
-                  updatedcartData?.total_tax ? updatedcartData?.total_tax : 0,
-                ) +
+              Number(
+                updatedcartData?.total_tax ? updatedcartData?.total_tax : 0,
+              ) +
                 Number(
                   updatedcartData?.total_service_fee
                     ? updatedcartData?.total_service_fee
                     : 0,
-                )
-              ).toFixed(2),
+                ),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </Animatable.View>
         )}
@@ -2418,7 +2447,8 @@ export default function OrderDetail({navigation, route}) {
                       updatedcartData?.total_service_fee
                         ? updatedcartData?.total_service_fee
                         : 0,
-                    ).toFixed(2),
+                    ),
+                    appData?.profile?.preferences?.digit_after_decimal,
                   )}`}</Text>
                 </View>
               )}
@@ -2450,7 +2480,8 @@ export default function OrderDetail({navigation, route}) {
                       updatedcartData?.total_tax
                         ? updatedcartData?.total_tax
                         : 0,
-                    ).toFixed(2),
+                    ),
+                    appData?.profile?.preferences?.digit_after_decimal,
                   )}`}</Text>
                 </View>
               )}
@@ -2474,12 +2505,11 @@ export default function OrderDetail({navigation, route}) {
             }>{`${
             currencies?.primary_currency?.symbol
           } ${currencyNumberFormatter(
-            (
-              Number(updatedcartData?.total_payable_amount) +
+            Number(updatedcartData?.total_payable_amount) +
               (selectedTipAmount != null && selectedTipAmount != ''
                 ? Number(selectedTipAmount)
-                : 0)
-            ).toFixed(2),
+                : 0),
+            appData?.profile?.preferences?.digit_after_decimal,
           )}`}</Text>
         </View>
         <View style={styles2.amountPayable}>
@@ -2518,7 +2548,9 @@ export default function OrderDetail({navigation, route}) {
               }>{`${
               currencies?.primary_currency?.symbol
             } ${currencyNumberFormatter(
-              Number(updatedcartData?.total_payable_amount).toFixed(2),
+              Number(updatedcartData?.total_payable_amount).toFixed(
+                appData?.profile?.preferences?.digit_after_decimal,
+              ),
             )}`}</Text>
             <Text
               style={
@@ -2528,7 +2560,8 @@ export default function OrderDetail({navigation, route}) {
               }>{`${
               currencies?.primary_currency?.symbol
             } ${currencyNumberFormatter(
-              Number(updatedcartData?.difference_to_be_paid).toFixed(2),
+              Number(updatedcartData?.difference_to_be_paid),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         </View>
@@ -2641,8 +2674,8 @@ export default function OrderDetail({navigation, route}) {
                 // maxZoomLevel={20}
                 onReady={(result) => {
                   // updateState({
-                  //   totalDistance: result.distance.toFixed(2),v
-                  //   totalDuration: result.duration.toFixed(2),
+                  //   totalDistance: result.distance.toFixed(appData?.profile?.preferences?.digit_after_decimal),v
+                  //   totalDuration: result.duration.toFixed(appData?.profile?.preferences?.digit_after_decimal),
                   // });
                   mapRef.current.fitToCoordinates(result.coordinates, {
                     edgePadding: {
@@ -2877,7 +2910,6 @@ export default function OrderDetail({navigation, route}) {
             ListHeaderComponent={getHeader2()}
             ListFooterComponent={updatedcartItems?.length ? getFooter2() : null}
             showsVerticalScrollIndicator={false}
-            style={{backgroundColor: colors.backgroundGrey}}
             // keyExtractor={(item, index) => String(index)}
             keyExtractor={(item) => item.id}
             renderItem={_renderItem2}
@@ -2886,6 +2918,7 @@ export default function OrderDetail({navigation, route}) {
               borderColor: themeColors?.primary_color,
               borderWidth: 2,
               marginHorizontal: moderateScale(10),
+              backgroundColor: colors.backgroundGrey,
             }}
           />
         )}
@@ -2989,7 +3022,6 @@ export default function OrderDetail({navigation, route}) {
           ListHeaderComponent={cartItems.length ? getHeader() : null}
           ListFooterComponent={cartItems.length ? getFooter() : null}
           showsVerticalScrollIndicator={false}
-          style={{backgroundColor: colors.backgroundGrey}}
           keyExtractor={(item, index) => index.toString()}
           renderItem={_renderItem}
           ListEmptyComponent={<ListEmptyCart isLoading={isLoading} />}

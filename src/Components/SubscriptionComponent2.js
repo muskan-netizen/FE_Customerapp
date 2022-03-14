@@ -50,7 +50,9 @@ const SubscriptionComponent2 = ({
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const {appStyle, themeColors, appData} = useSelector(
+    (state) => state?.initBoot,
+  );
   const fontFamily = appStyle?.fontSizeData;
   const {themeLayouts} = currentTheme;
   const commonStyles = commonStylesFunc({fontFamily});
@@ -128,10 +130,14 @@ const SubscriptionComponent2 = ({
               <Text style={styles.title}>
                 {currencyNumberFormatter(
                   currentSubscription
-                    ? `${Number(subscriptionData?.subscription_amount).toFixed(
-                        2,
-                      )}`
-                    : `${Number(data?.price).toFixed(2)}`,
+                    ? `${
+                        (Number(subscriptionData?.subscription_amount),
+                        appData?.profile?.preferences?.digit_after_decimal)
+                      }`
+                    : `${
+                        (Number(data?.price),
+                        appData?.profile?.preferences?.digit_after_decimal)
+                      }`,
                 )}
               </Text>
             </View>
@@ -260,7 +266,6 @@ const SubscriptionComponent2 = ({
                   themeColors.primary_color,
                 ]}
                 textStyle={styles.textStyle}
-                onPress={() => onPress(data)}
                 marginTop={moderateScaleVertical(10)}
                 marginBottom={moderateScaleVertical(10)}
                 borderRadius={moderateScale(5)}
@@ -283,7 +288,6 @@ const SubscriptionComponent2 = ({
                   ),
                 ]}
                 textStyle={styles.textStyle2}
-                onPress={() => onPress(data)}
                 marginTop={moderateScaleVertical(10)}
                 marginBottom={moderateScaleVertical(10)}
                 borderRadius={moderateScale(5)}

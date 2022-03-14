@@ -211,7 +211,7 @@ const RoyoAccounts = (props) => {
           ) : (
             <View style={styles.cameraBox}>
               <Image source={imagePath.cameraRoyo} />
-              <Text style={styles.addLogo}>Add Logo</Text>
+              <Text style={styles.addLogo}>{strings.ADD_LOGO}</Text>
             </View>
           )}
           <View style={{flex: 1, justifyContent: 'center'}}>

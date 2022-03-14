@@ -53,6 +53,7 @@ const ForegroundHandler = (props) => {
 
       if (Platform.OS == 'android' && notification.android.sound == 'notification') {
         actions.isVendorNotification(true)
+        actions.refreshNotification(messageId);
         const { data } = remoteMessage.data
         let _data = JSON.parse(data)
         console.log('foreground notification listener checking data >>>>',_data)
@@ -64,6 +65,7 @@ const ForegroundHandler = (props) => {
 
       if (Platform.OS == 'ios' && notification.sound == 'notification.wav') {
         actions.isVendorNotification(true)
+        actions.refreshNotification(messageId);
       }
 
     });

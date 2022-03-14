@@ -130,4 +130,5 @@ export {default as AddNewCustomer} from './AddNewCustomer/AddNewCustomer';
 export {default as CustomerEarningHistory} from './CustomerEarningHistory/CustomerEarningHistory';
 export {default as Paystack} from './PaymentGateways/Paystack';
 export {default as AuthorizeNet} from './PaymentGateways/AuthorizeNet';
+export {default as Avenue} from './PaymentGateways/Avenue';
 export {default as ScrollableCategory} from './ScrollableCategory/ScrollableCategory';

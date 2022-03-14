@@ -163,7 +163,8 @@ export default function AddonModal({
                   {`${
                     currencies?.primary_currency?.symbol
                   }${currencyNumberFormatter(
-                    (Number(i?.multiplier) * Number(i?.price)).toFixed(2),
+                    Number(i?.multiplier) * Number(i?.price),
+                    appData?.profile?.preferences?.digit_after_decimal,
                   )}`}
                 </Text>
                 <View style={{paddingLeft: moderateScale(5)}}>

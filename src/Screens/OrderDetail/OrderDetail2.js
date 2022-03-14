@@ -327,7 +327,9 @@ export default function OrderDetail({navigation, route}) {
                               {`${currencies?.primary_currency?.symbol}${
                                 // Number(i?.pvariant?.multiplier) *
                                 currencyNumberFormatter(
-                                  Number(i?.price).toFixed(2),
+                                  Number(i?.price),
+                                  appData?.profile?.preferences
+                                    ?.digit_after_decimal,
                                 )
                               }`}
                             </Text>
@@ -383,19 +385,18 @@ export default function OrderDetail({navigation, route}) {
                                           numberOfLines={
                                             1
                                           }>{`(${j.option_title})`}</Text>
-                                           <Text
+                                        <Text
                                           style={styles.cartItemWeight2}
-                                          numberOfLines={
-                                            1
-                                          }>{` ${
+                                          numberOfLines={1}>
+                                          {` ${
                                             currencies?.primary_currency?.symbol
                                           } ${currencyNumberFormatter(
-                                            Number(
-                                              j?.price
-                                            ).toFixed(2),
+                                            Number(j?.price),
+                                            appData?.profile?.preferences
+                                              ?.digit_after_decimal,
                                           )}`}
-                                         </Text>
-                                        </View>
+                                        </Text>
+                                      </View>
                                     </View>
                                   );
                                 })
@@ -512,9 +513,8 @@ export default function OrderDetail({navigation, route}) {
               }>{`- ${
               currencies?.primary_currency?.symbol
             }${currencyNumberFormatter(
-              Number(item?.discount_amount ? item?.discount_amount : 0).toFixed(
-                2,
-              ),
+              Number(item?.discount_amount ? item?.discount_amount : 0),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -548,7 +548,8 @@ export default function OrderDetail({navigation, route}) {
               }>{`${
               currencies?.primary_currency?.symbol
             }${currencyNumberFormatter(
-              Number(item?.delivery_fee ? item?.delivery_fee : 0).toFixed(2),
+              Number(item?.delivery_fee ? item?.delivery_fee : 0),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -581,7 +582,8 @@ export default function OrderDetail({navigation, route}) {
             }>{`${
             currencies?.primary_currency?.symbol
           }${currencyNumberFormatter(
-            Number(item?.payable_amount ? item?.payable_amount : 0).toFixed(2),
+            Number(item?.payable_amount ? item?.payable_amount : 0),
+            appData?.profile?.preferences?.digit_after_decimal,
           )}`}</Text>
         </View>
       </View>
@@ -624,7 +626,8 @@ export default function OrderDetail({navigation, route}) {
             }>{`${
             currencies?.primary_currency?.symbol
           }${currencyNumberFormatter(
-            Number(cartData?.total_amount).toFixed(2),
+            Number(cartData?.total_amount),
+            appData?.profile?.preferences?.digit_after_decimal,
           )}`}</Text>
         </View>
         {!!cartData?.wallet_amount_used && (
@@ -659,7 +662,8 @@ export default function OrderDetail({navigation, route}) {
             }${currencyNumberFormatter(
               Number(
                 cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
-              ).toFixed(2),
+              ),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -697,7 +701,8 @@ export default function OrderDetail({navigation, route}) {
                 cartData?.loyalty_amount_saved
                   ? cartData?.loyalty_amount_saved
                   : 0,
-              ).toFixed(2),
+              ),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -732,7 +737,8 @@ export default function OrderDetail({navigation, route}) {
               }>{`-${
               currencies?.primary_currency?.symbol
             }${currencyNumberFormatter(
-              Number(cartData?.total_discount).toFixed(2),
+              Number(cartData?.total_discount),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -766,9 +772,8 @@ export default function OrderDetail({navigation, route}) {
               }>{`${
               currencies?.primary_currency?.symbol
             }${currencyNumberFormatter(
-              Number(
-                cartData?.taxable_amount ? cartData?.taxable_amount : 0,
-              ).toFixed(2),
+              Number(cartData?.taxable_amount ? cartData?.taxable_amount : 0),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -802,7 +807,8 @@ export default function OrderDetail({navigation, route}) {
             }>{`${
             currencies?.primary_currency?.symbol
           }${currencyNumberFormatter(
-            Number(cartData?.payable_amount).toFixed(2),
+            Number(cartData?.payable_amount),
+            appData?.profile?.preferences?.digit_after_decimal,
           )}`}</Text>
         </View>
       </View>
@@ -1101,7 +1107,6 @@ export default function OrderDetail({navigation, route}) {
           ListHeaderComponent={cartItems.length ? getHeader() : null}
           ListFooterComponent={cartItems.length ? getFooter() : null}
           showsVerticalScrollIndicator={false}
-          style={{backgroundColor: colors.backgroundGrey}}
           keyExtractor={(item, index) => String(index)}
           renderItem={_renderItem}
           ListEmptyComponent={<ListEmptyCart isLoading={isLoading} />}
