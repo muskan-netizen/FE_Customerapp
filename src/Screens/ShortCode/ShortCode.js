@@ -1138,7 +1138,7 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          break;
+
         case appIds.foodnests:
           updateState({
             shortCode: shortCodes.foodnests,
@@ -1661,44 +1661,86 @@ export default function ShortCode({route, navigation}) {
             shortCode: shortCodes.scoopaTechnologies,
             isShortcodePrefilled: true,
           });
-        break;
+          break;
         case appIds.dbairro:
           updateState({
             shortCode: shortCodes.dbairro,
             isShortcodePrefilled: true,
           });
-        break;
+          break;
         case appIds.knockknock:
           updateState({
             shortCode: shortCodes.knockknock,
             isShortcodePrefilled: true,
           });
-        break;
+          break;
         case appIds.qrider:
           updateState({
             shortCode: shortCodes.qrider,
             isShortcodePrefilled: true,
           });
-        break;
+          break;
         case appIds.dlvrd:
           updateState({
             shortCode: shortCodes.dlvrd,
             isShortcodePrefilled: true,
           });
-        break;
+          break;
         case appIds.delivery:
           updateState({
             shortCode: shortCodes.delivery,
             isShortcodePrefilled: true,
           });
-        break;
+          break;
         case appIds.timHomeServices:
           updateState({
             shortCode: shortCodes.timHomeServices,
             isShortcodePrefilled: true,
           });
-          
-        break;
+
+          break;
+        case appIds.slider:
+          updateState({
+            shortCode: shortCodes.slider,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ICare:
+          updateState({
+            shortCode: shortCodes.ICare,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.viversbox:
+          updateState({
+            shortCode: shortCodes.viversbox,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.scootz:
+          updateState({
+            shortCode: shortCodes.scootz,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ola:
+          updateState({
+            shortCode: shortCodes.ola,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.spliffnation:
+          updateState({
+            shortCode: shortCodes.spliffnation,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sourcesServices:
+          updateState({
+            shortCode: shortCodes.sourcesServices,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -1855,7 +1897,11 @@ export default function ShortCode({route, navigation}) {
             console.log('checking deep link >>> 3232sdsd', err);
           });
       } else {
-        navigation.navigate(navigationStrings.LOGIN);
+        // navigation.navigate(navigationStrings.LOGIN);
+        NavigationService.resetStackAndNavigate(
+          navigation,
+          navigationStrings.LOGIN,
+        );
       }
     } else {
       getItem('firstTime').then((el) => {
@@ -2051,7 +2097,6 @@ export default function ShortCode({route, navigation}) {
                       : colors.blueBackGroudB,
                   },
                 }}
-                btnTextStyle={{color: colors.textBlue}}
                 onPress={_onSubmitShortCode}
                 btnText={strings.SUBMIT}
                 btnTextStyle={{

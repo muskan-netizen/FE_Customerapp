@@ -115,7 +115,7 @@ export default function Paylink({navigation, route}) {
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? imagePath.icBackb : imagePath.back
         }
         centerTitle={
           paramsData?.selectedPayment?.title || paramsData?.walletTip?.title
@@ -127,6 +127,7 @@ export default function Paylink({navigation, route}) {
           onLoad={() => updateState({isLoading: false})}
           source={{uri: webUrl}}
           onNavigationStateChange={onNavigationStateChange}
+          onError={() => updateState({isLoading: false})}
         />
       )}
       <View

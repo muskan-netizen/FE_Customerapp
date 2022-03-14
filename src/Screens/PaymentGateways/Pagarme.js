@@ -42,7 +42,7 @@ export default function Pagarme({navigation, route}) {
       paramsData?.total_payable_amount
     }&payment_option_id=${
       paramsData?.payment_option_id
-    }&action=cart&order_number=${paramsData?.orderDetail?.order_number}`;
+    }&action=${paramsData?.redirectFrom}&order_number=${paramsData?.orderDetail?.order_number}`;
 
     try {
       const res = await actions.openPaymentWebUrl(
@@ -99,7 +99,7 @@ export default function Pagarme({navigation, route}) {
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? imagePath.icBackb : imagePath.back
         }
         centerTitle={
           paramsData?.selectedPayment?.title || paramsData?.walletTip?.title

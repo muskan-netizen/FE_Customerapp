@@ -301,7 +301,7 @@ export default function AddMoney({navigation}) {
 
   const renderRazorPay = () => {
     let options = {
-      description: 'Credits towards consultation',
+      description: 'Payment for your order',
       image: getImageUrl(
         appData?.profile?.logo?.image_fit,
         appData?.profile?.logo?.image_path,
@@ -448,12 +448,18 @@ export default function AddMoney({navigation}) {
       await createToken(cardInfo)
         .then((res) => {
           console.log(res, 'res>>STRIpe');
+          if(!!res?.error && !!res?.error?.localizedMessage){
+            showError(res?.error?.localizedMessage)
+            updateState({isLoadingB: false});
+            return;
+          }
           if (res && res?.token && res.token?.id) {
             let selectedMethod = selectedPaymentMethod.code.toLowerCase();
             // updateState({isLoadingB: true});
+            let apiData =`/${selectedMethod}?amount=${amount}&payment_option_id=${selectedPaymentMethod?.id}&action=wallet&stripe_token=${res.token?.id}`
             actions
               .openPaymentWebUrl(
-                `/${selectedMethod}?amount=${amount}&payment_option_id=${selectedPaymentMethod?.id}&action=wallet&stripe_token=${res.token?.id}`,
+                apiData,
                 {},
                 {
                   code: appData?.profile?.code,
@@ -532,10 +538,8 @@ export default function AddMoney({navigation}) {
               <Text
                 style={{
                   ...styles.currencySymble,
-                  color: isDarkMode? MyDarkTheme.colors.text: colors.black
-                 
-               } }
-                >
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
                 {currencies?.primary_currency?.symbol}
               </Text>
               <TextInput
@@ -649,7 +653,7 @@ export default function AddMoney({navigation}) {
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icBackb
             : imagePath.back
         }

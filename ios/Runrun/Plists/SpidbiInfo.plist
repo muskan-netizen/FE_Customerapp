@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CodePushDeploymentKey</key>
-    <string>$(CODE_PUSH_KEY)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -22,8 +20,6 @@
 	<string>$(PROJECT_APP_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-    <key>CodePushDeploymentKey</key>
-    <string>$(CODE_PUSH_KEY)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -67,6 +63,8 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>CodePushDeploymentKey</key>
+	<string>$(CODE_PUSH_KEY)</string>
 	<key>FacebookAppID</key>
 	<string>$(PROJECT_FACEBOOK_ID)</string>
 	<key>FacebookDisplayName</key>
@@ -84,6 +82,21 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>codepush.appcenter.ms</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+			<key>codepush.blob.core.windows.net</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+			<key>codepushupdates.azureedge.net</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
 			<key>localhost</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
@@ -91,12 +104,16 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSContactsUsageDescription</key>
-	<string>$(PRODUCT_NAME) requires contacts access to function properly.</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play using while you are hiking</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to access to microphone to get your voice.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to access to speech recognition to get speech results.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like access to your photo gallery to upload photos and set profile picture</string>
+	<key>NSContactsUsageDescription</key>
+	<string>$(PRODUCT_NAME) requires contacts access to function properly.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to access your current location for registration</string>
 	<key>NSLocationAlwaysUsageDescription</key>

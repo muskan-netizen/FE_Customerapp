@@ -27,10 +27,13 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
 import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
 import * as Animatable from 'react-native-animatable';
+import HomeLoader from './Loaders/HomeLoader';
+import {screenWidth} from 'react-native-calendars/src/expandableCalendar/commons';
 
 export default function SelectPaymentModal({
   onSelectPayment,
@@ -56,6 +59,7 @@ export default function SelectPaymentModal({
     cardInfo: null,
     tokenInfo: null,
     keyboardHeight: 0,
+    btnLoader: false,
   });
   const {
     payementMethods,
@@ -64,10 +68,11 @@ export default function SelectPaymentModal({
     selectedPaymentMethod,
     isLoading,
     keyboardHeight,
+    btnLoader,
   } = state;
 
   useEffect(() => {
-    console.log(preferences?.stripe_publishable_key, 'selectedPaymentMethod>>');
+    console.log(selectedPaymentMethod, 'selectedPaymentMethod>>');
   }, [selectedPaymentMethod]);
   //Update states in screen
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -146,12 +151,10 @@ export default function SelectPaymentModal({
     alert(error?.message || error?.error);
   };
 
-  console.log(cardInfo, selectedPaymentMethod?.off_site, 'cardInfocardInfo');
-
   //Change Payment method/ Navigate to payment screen
   const selectPaymentOption = async () => {
     if (selectedPaymentMethod) {
-      updateState({isLoading: true});
+      updateState({btnLoader: true});
       if (
         selectedPaymentMethod?.id == 4 &&
         selectedPaymentMethod?.off_site == 0
@@ -161,7 +164,7 @@ export default function SelectPaymentModal({
             .then((res) => {
               console.log(res, 'stripeTokenres>>');
               if (!!res?.error) {
-                // alert(res.error.localizedMessage);
+                alert(res.error.localizedMessage);
                 updateState({isLoading: false});
                 return;
               }
@@ -175,21 +178,21 @@ export default function SelectPaymentModal({
                 });
                 paymentModalClose();
               } else {
-                updateState({isLoading: false});
+                updateState({btnLoader: false});
               }
             })
             .catch((err) => {
-              updateState({isLoading: false});
+              updateState({btnLoader: false});
               console.log(err, 'err>>');
             });
         } else {
-          updateState({isLoading: false});
+          updateState({btnLoader: false});
           alert(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
           //   showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
         }
       } else {
         setTimeout(() => {
-          updateState({isLoading: false});
+          updateState({btnLoader: false});
           onSelectPayment({
             selectedPaymentMethod,
             cardInfo,
@@ -229,7 +232,10 @@ export default function SelectPaymentModal({
 
   const _renderItemPayments = ({item, index}) => {
     return (
-      <Animatable.View animation={'slideInUp'} duration={200} style={{flex: 1}}>
+      <Animatable.View
+        // animation={'slideInUp'}
+        // duration={200}
+        style={{flex: 1}}>
         <TouchableOpacity
           onPress={() => selectPaymentMethod(item, index)}
           key={index}
@@ -329,7 +335,6 @@ export default function SelectPaymentModal({
   };
 
   const _onChangeStripeData = (cardDetails) => {
-    console.log(cardDetails, 'all card info');
     if (cardDetails?.complete) {
       updateState({
         cardInfo: {
@@ -346,6 +351,83 @@ export default function SelectPaymentModal({
     }
   };
 
+  if (isLoading) {
+    return (
+      <WrapperContainer
+        bgColor={
+          isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+        }
+        statusBarColor={colors.backgroundGrey}
+        source={loaderOne}
+        // isLoadingB={isLoading}
+      >
+        <Header
+          leftIcon={
+            appStyle?.homePageLayout === 2
+              ? imagePath.backArrow
+              : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+              ? imagePath.icBackb
+              : imagePath.back
+          }
+          onPressLeft={paymentModalClose}
+          centerTitle={strings.PAYMENT}
+          headerStyle={
+            isDarkMode
+              ? {backgroundColor: MyDarkTheme.colors.background}
+              : {backgroundColor: colors.backgroundGrey}
+          }
+        />
+        <View
+          style={{
+            height: 1,
+            backgroundColor: colors.borderLight,
+          }}
+        />
+
+        <HomeLoader
+          width={width / 1.1}
+          height={24}
+          rectHeight={24}
+          rectWidth={width / 1.1}
+          viewStyles={{
+            marginHorizontal: moderateScale(16),
+            marginVertical: moderateScaleVertical(16),
+          }}
+        />
+        <HomeLoader
+          width={width / 1.1}
+          height={24}
+          rectHeight={24}
+          rectWidth={width / 1.1}
+          viewStyles={{
+            marginHorizontal: moderateScale(16),
+            marginBottom: moderateScaleVertical(16),
+          }}
+        />
+        <HomeLoader
+          width={width / 1.1}
+          height={24}
+          rectHeight={24}
+          rectWidth={width / 1.1}
+          viewStyles={{
+            marginBottom: moderateScaleVertical(16),
+            marginHorizontal: moderateScale(16),
+          }}
+        />
+        <HomeLoader
+          width={width / 1.1}
+          height={24}
+          rectHeight={24}
+          rectWidth={width / 1.1}
+          viewStyles={{
+            marginBottom: moderateScaleVertical(16),
+            marginHorizontal: moderateScale(16),
+          }}
+        />
+      </WrapperContainer>
+    );
+  }
+
   return (
     <WrapperContainer
       bgColor={
@@ -353,12 +435,13 @@ export default function SelectPaymentModal({
       }
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
-      isLoadingB={isLoading}>
+      // isLoadingB={isLoading}
+    >
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icBackb
             : imagePath.back
         }
@@ -386,6 +469,9 @@ export default function SelectPaymentModal({
           style={{marginTop: moderateScaleVertical(10)}}
           keyExtractor={(item, index) => String(index)}
           renderItem={_renderItemPayments}
+          ItemSeparatorComponent={() => (
+            <View style={{marginBottom: moderateScaleVertical(16)}} />
+          )}
           ListEmptyComponent={() =>
             !isLoading && (
               <Text style={{textAlign: 'center'}}>
@@ -400,10 +486,9 @@ export default function SelectPaymentModal({
         style={{
           marginHorizontal: moderateScaleVertical(20),
           marginBottom:
-            moderateScaleVertical(80) +
-            (keyboardHeight == 0
+            keyboardHeight == 0
               ? keyboardHeight
-              : moderateScale(keyboardHeight - 80)),
+              : moderateScale(keyboardHeight - 80),
         }}>
         {selectedPaymentMethod == null || selectedPaymentMethod.id != 17 ? (
           <GradientButton
@@ -411,6 +496,8 @@ export default function SelectPaymentModal({
             marginTop={moderateScaleVertical(10)}
             marginBottom={moderateScaleVertical(10)}
             btnText={strings.SELECT}
+            indicator={btnLoader}
+            indicatorColor={colors.white}
           />
         ) : (
           <></>
@@ -441,14 +528,9 @@ const stylesFun = ({fontFamily, themeColors}) => {
       marginVertical: 5,
     },
     caseOnDeliveryView: {
-      padding: moderateScaleVertical(5),
       borderRadius: moderateScaleVertical(13),
-      // borderWidth: 2,
-      // borderColor: colors.borderLight,
       alignItems: 'center',
       flexDirection: 'row',
-      marginVertical: 5,
-      marginTop: moderateScaleVertical(10),
     },
     useNewCartView: {
       padding: moderateScaleVertical(10),

@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Share,
   FlatList,
+  Linking,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
@@ -29,12 +30,33 @@ import {customMarginBottom} from '../../../utils/constants/constants';
 import {getImageUrl, showError} from '../../../utils/helperFunctions';
 import {dialCall} from '../../../utils/openNativeApp';
 import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import {isEmpty} from 'lodash';
+import FastImage from 'react-native-fast-image';
+import strings from '../../../constants/lang';
 
 const RoyoOrderDetail = (props) => {
   const {data, selectedVendor} = props.route.params;
   const {appData, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
+  const [state, setState] = useState({
+    address: '',
+    isLoadingB: false,
+    showUpcomingStatus: false,
+    current_status: data?.order_status.current_status,
+    upcoming_status: data?.order_status.upcoming_status,
+    orderInfo: {},
+    userDocumentList: [],
+  });
+  const {
+    showUpcomingStatus,
+    current_status,
+    upcoming_status,
+    isLoadingB,
+    address,
+    orderInfo,
+    userDocumentList,
+  } = state;
   const shareOptions = {
     title: 'Share via',
     message: 'some message',
@@ -80,6 +102,7 @@ const RoyoOrderDetail = (props) => {
             address: res.data.address,
             isLoadingB: false,
             orderInfo: res.data,
+            userDocumentList: res?.data?.user_document_list,
           });
         }
       })
@@ -122,28 +145,53 @@ const RoyoOrderDetail = (props) => {
       });
   };
 
-  const [state, setState] = useState({
-    address: '',
-    isLoadingB: false,
-    showUpcomingStatus: false,
-    current_status: data?.order_status.current_status,
-    upcoming_status: data?.order_status.upcoming_status,
-    orderInfo: {},
-  });
-  const {
-    showUpcomingStatus,
-    current_status,
-    upcoming_status,
-    isLoadingB,
-    address,
-    orderInfo,
-  } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const toggleUpcomingStatus = () => {
     updateState({
       showUpcomingStatus: !showUpcomingStatus,
     });
   };
+
+  const renderUserDetails = (item, index) => {
+    return (
+      <View style={{marginTop: moderateScaleVertical(15)}}>
+        <Text style={{fontFamily: fontFamily.bold, fontSize: textScale(13)}}>
+          {'• '}
+          {item?.primary?.name}
+        </Text>
+        <View style={{marginHorizontal: moderateScale(5), marginTop: 5}}>
+          {item?.file_type == 'Text' ? (
+            <Text>{item?.user_document?.file_name}</Text>
+          ) : item?.file_type == 'Image' ? (
+            <FastImage
+              source={{
+                uri: getImageUrl(
+                  item?.user_document?.image_file?.image_fit,
+                  item?.user_document?.image_file?.image_path,
+                  '500/500',
+                ),
+              }}
+              style={{height: 70, width: 70}}
+            />
+          ) : (
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL(item?.user_document?.image_file?.storage_url)
+              }>
+              <Text
+                style={{
+                  color: colors.blueColor,
+                  textDecorationLine: 'underline',
+                }}>
+                {strings.VIEW_PDF}
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
+    );
+  };
+
   return (
     <WrapperContainer
       isLoading={isLoadingB}
@@ -165,7 +213,7 @@ const RoyoOrderDetail = (props) => {
         showsVerticalScrollIndicator={false}>
         {current_status.id != 1 ? (
           <View>
-            <Text style={styles.jobStatus}>Job Status</Text>
+            <Text style={styles.jobStatus}>{strings.JOB_STATUS}</Text>
             <View style={styles.preparingBox}>
               <Text style={{...styles.font16Semibold, color: colors.white}}>
                 {current_status.title}
@@ -194,7 +242,7 @@ const RoyoOrderDetail = (props) => {
         ) : null}
         <View style={{...styles.orderNumberBox, zIndex: -1}}>
           {/* <Text style={styles.orderNumber}>Order #{data.order_number}</Text> */}
-          <Text style={styles.orderNumber}>Ordered at:</Text>
+          <Text style={styles.orderNumber}>{strings.ORDERAT}:</Text>
           <Text style={styles.orderTime}>{`${moment(data?.date_time).format(
             'DD MMM,YYYY',
           )} ${moment(data?.date_time).format('LT')} `}</Text>
@@ -228,13 +276,18 @@ const RoyoOrderDetail = (props) => {
                   <Text style={styles.font16Medium}>
                     {item?.translation?.title}
                   </Text>
-                  <Text style={styles.font13Regular}>{item.quantity} Unit</Text>
+                  <Text style={styles.font13Regular}>
+                    {item.quantity}
+                    {strings.UNIT}
+                  </Text>
                   <Text style={styles.font14Regular}>
-                    $ {item.price} dollar
+                    {currencies?.primary_currency?.symbol} {item.price}
                   </Text>
                 </View>
                 <Text style={styles.font16Semibold}>
-                  {`$ ${item.quantity * item.price}`}{' '}
+                  {`${currencies?.primary_currency?.symbol} ${
+                    item.quantity * item.price
+                  }`}
                 </Text>
               </View>
             );
@@ -245,20 +298,24 @@ const RoyoOrderDetail = (props) => {
 
         <View style={{margin: moderateScaleVertical(16)}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.font15Medium}>Subtotal</Text>
-            <Text style={styles.font15Semibold}>${data.payable_amount}</Text>
+            <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>
+            <Text style={styles.font15Semibold}>
+              {currencies?.primary_currency?.symbol}
+              {data.payable_amount}
+            </Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.font15Medium}>Delivery fee</Text>
+            <Text style={styles.font15Medium}>{strings.DELIVERYFEE}</Text>
             <Text style={styles.font15Semibold}>
-              ${data.total_delivery_fee}
+              {currencies?.primary_currency?.symbol}
+              {data.total_delivery_fee}
             </Text>
           </View>
           <View style={styles.dashLine} />
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.font15Medium}>Total</Text>
+            <Text style={styles.font15Medium}>{strings.TOTAL}</Text>
             <Text style={{...styles.font15Semibold, color: colors.themeColor2}}>
-              {`$ ${
+              {`${currencies?.primary_currency?.symbol} ${
                 parseFloat(data.payable_amount) +
                 parseFloat(data.total_delivery_fee)
               }`}
@@ -271,7 +328,9 @@ const RoyoOrderDetail = (props) => {
             backgroundColor: colors.whiteSmokeColor,
           }}>
           <View style={styles.flexRow}>
-            <Text style={styles.font14Semibold}>Delivery address</Text>
+            <Text style={styles.font14Semibold}>
+              {strings.DELIEVERY_ADDRESS}
+            </Text>
             <View style={{flexDirection: 'row'}}>
               <TouchableOpacity onPress={() => dialCall(1234567890)}>
                 <Image source={imagePath.callRoyo} />
@@ -322,11 +381,17 @@ const RoyoOrderDetail = (props) => {
             </View>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{...styles.font14Semibold}}>Payment method</Text>
+            <Text style={{...styles.font14Semibold}}>
+              {strings.PAYMENT_METHOD}
+            </Text>
             <Text style={{...styles.font14Semibold, color: colors.black}}>
               {data.payment_option_title}
             </Text>
           </View>
+        </View>
+        <View style={{marginHorizontal: moderateScale(20)}}>
+          {!isEmpty(userDocumentList) &&
+            userDocumentList.map(renderUserDetails)}
         </View>
         {current_status.id == 1 ? (
           <View style={styles.buttonBox}>

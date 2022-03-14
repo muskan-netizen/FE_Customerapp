@@ -165,14 +165,14 @@ export default function Loyalty({ navigation }) {
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
               ? imagePath.icBackb
               : imagePath.back
         }
         centerTitle={strings.LOYALTYPOINTS}
         textStyle={{
           fontSize:
-            appStyle?.homePageLayout === 3 ? textScale(13) : textScale(16),
+            appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? textScale(13) : textScale(16),
         }}
         headerStyle={
           isDarkMode

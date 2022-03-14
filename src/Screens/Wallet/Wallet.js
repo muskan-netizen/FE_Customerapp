@@ -99,14 +99,14 @@ export default function Wallet({navigation}) {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       (event) => {
-        console.log('my events', event);
+        // console.log('my events', event);
         updateState({keyboardHeight: event.endCoordinates.height});
       },
     );
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       (event) => {
-        console.log('my events', event);
+        // console.log('my events', event);
         updateState({keyboardHeight: 0});
       },
     );
@@ -359,7 +359,7 @@ export default function Wallet({navigation}) {
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icBackb
             : imagePath.back
         }

@@ -114,6 +114,9 @@ export {default as Payfast} from './PaymentGateways/Payfast';
 export {default as Yoco} from './PaymentGateways/Yoco';
 export {default as TipPaymentOptions} from './TipPaymentOptions/TipPaymentOptions';
 export {default as Paylink} from './PaymentGateways/Paylink';
+export {default as FPX} from './PaymentGateways/FPX';
+
+
 export {default as OuterScreen4} from './OuterScreen/OuterScreen4';
 export {default as CategoryBrands} from './CategoryBrands/CategoryBrands';
 export {default as AllinonePyments} from './AllinonePyments/AllinonePyments';
@@ -127,4 +130,5 @@ export {default as AddNewCustomer} from './AddNewCustomer/AddNewCustomer';
 export {default as CustomerEarningHistory} from './CustomerEarningHistory/CustomerEarningHistory';
 export {default as Paystack} from './PaymentGateways/Paystack';
 export {default as AuthorizeNet} from './PaymentGateways/AuthorizeNet';
+export {default as Avenue} from './PaymentGateways/Avenue';
 export {default as ScrollableCategory} from './ScrollableCategory/ScrollableCategory';

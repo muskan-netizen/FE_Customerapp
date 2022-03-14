@@ -1,9 +1,9 @@
 #include "Pods/Target Support Files/Pods-available_pods-SamakeeMart/Pods-available_pods-SamakeeMart.debug.xcconfig"
 
-PROJECT_APPLE_ID =1597882201
-PROJECT_BUNDLE_ID =com.samakeemart
+PROJECT_APPLE_ID =1612797766
+PROJECT_BUNDLE_ID =com.app.samakeemart
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 3
+PROJECT_BUILD_NUMBER = 2
 PROJECT_APP_NAME =Samakee Mart
 PROJECT_GOOGLE_CLIENT_ID =120057501775-eec2ua5b6cgnc2bipe249tuh0777vgcn.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.120057501775-eec2ua5b6cgnc2bipe249tuh0777vgcn

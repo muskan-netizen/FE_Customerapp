@@ -512,7 +512,7 @@ target 'Suel' do
   
 end
 
-#Ace Target
+# Ace Target
 target 'Ace' do
   
 end
@@ -1315,6 +1315,46 @@ end
 
 #Dbairro Target
 target 'Dbairro' do
+  
+end
+
+#Slider Target
+target 'Slider' do
+  
+end
+
+#Icare Target
+target 'Icare' do
+  
+end
+
+#Qrider Target
+target 'Qrider' do
+  
+end
+
+#Spliffnation Target
+target 'Spliffnation' do
+  
+end
+
+#Scootz Target
+target 'Scootz' do
+  
+end
+
+# TimHomeServices Target
+target 'TimHomeServices' do
+  
+end
+
+# Viversbox Target
+target 'Viversbox' do
+  
+end
+
+# Delivery Target
+target 'Delivery' do
   
 end
 

@@ -1,18 +1,18 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-community/clipboard';
 import NetInfo from '@react-native-community/netinfo';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import React, { useEffect, useRef, useState } from 'react';
-import { Linking, Platform, SafeAreaView, Text, View } from 'react-native';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import React, {useEffect, useRef, useState} from 'react';
+import {Linking, Platform, SafeAreaView, Text, View} from 'react-native';
 import codePush from 'react-native-code-push';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dark-mode';
 import FlashMessage from 'react-native-flash-message';
 import Modal from 'react-native-modal';
 import * as Progress from 'react-native-progress';
 import PushNotification from 'react-native-push-notification';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import NoInternetModal from './src/Components/NoInternetModal';
 import NotificationModal from './src/Components/NotificationModal';
 import strings from './src/constants/lang';
@@ -20,7 +20,7 @@ import Container from './src/library/toastify-react-native';
 import * as NavigationService from './src/navigation/NavigationService';
 import navigationStrings from './src/navigation/navigationStrings';
 import Routes from './src/navigation/Routes';
-import { updateInternetConnection } from './src/redux/actions/auth';
+import {updateInternetConnection} from './src/redux/actions/auth';
 import store from './src/redux/store';
 import types from './src/redux/types';
 import PrinterScreen from './src/Screens/PrinterConnection/PrinterScreen';
@@ -34,18 +34,18 @@ import {
   width,
 } from './src/styles/responsiveSize';
 import ForegroundHandler from './src/utils/ForegroundHandler';
-import { getUrlRoutes } from './src/utils/helperFunctions';
+import {getUrlRoutes} from './src/utils/helperFunctions';
 import {
   notificationListener,
   requestUserPermission,
 } from './src/utils/notificationService';
-import { getItem, getUserData, setItem } from './src/utils/utils';
-import { MenuProvider } from 'react-native-popup-menu';
+import {getItem, getUserData, setItem} from './src/utils/utils';
+import {MenuProvider} from 'react-native-popup-menu';
 import FastImage from 'react-native-fast-image';
 
 // import withCodePush from './withcodepush';
 
-let CodePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
+let CodePushOptions = {checkFrequency: codePush.CheckFrequency.MANUAL};
 
 const App = () => {
   const [progress, setProgress] = useState(false);
@@ -139,15 +139,13 @@ const App = () => {
   };
 
   const checkExistChannel = () => {
-    PushNotification.getChannels(function (channel_ids) {
-
-    });
+    PushNotification.getChannels(function (channel_ids) {});
   };
   useEffect(() => {
     (async () => {
       const userData = await getUserData();
       notificationConfig();
-      const { dispatch } = store;
+      const {dispatch} = store;
       if (userData && !!userData.auth_token) {
         dispatch({
           type: types.LOGIN,
@@ -276,20 +274,19 @@ const App = () => {
         Clipboard.setString('');
       }
     })();
-    return () => { };
+    return () => {};
   }, []);
 
   //Check internet connection
   useEffect(() => {
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
-      console.log('checkingInternetConnections', state)
       const netStatus = state.isConnected;
       setInternet(netStatus);
       updateInternetConnection(netStatus);
     });
     return () => removeNetInfoSubscription();
   }, []);
-  const { blurRef } = useRef();
+  const {blurRef} = useRef();
   // let isVal = store.getState().pendingNotifications.isVendorNotification
   // console.log("is val++",isVal)
 
@@ -347,7 +344,7 @@ const App = () => {
 
   const progressView = () => {
     return (
-      <SafeAreaView>
+      <View>
         <Modal isVisible={true}>
           <View
             style={{
@@ -379,10 +376,10 @@ const App = () => {
                   color: colors.blackOpacity70,
                   fontSize: textScale(12),
                 }}>{`${(Number(progress?.receivedBytes) / 1048576).toFixed(
-                  2,
-                )}MB/${(Number(progress.totalBytes) / 1048576).toFixed(
-                  2,
-                )}MB`}</Text>
+                2,
+              )}MB/${(Number(progress.totalBytes) / 1048576).toFixed(
+                2,
+              )}MB`}</Text>
 
               <Text
                 style={{
@@ -412,7 +409,7 @@ const App = () => {
             />
           </View>
         </Modal>
-      </SafeAreaView>
+      </View>
     );
   };
   return (
@@ -420,7 +417,7 @@ const App = () => {
       <MenuProvider>
         <Provider ref={blurRef} store={store}>
           <ForegroundHandler />
-          {!!progress ? progressView() : null}
+          {progress ? progressView() : null}
           <Routes />
           <NotificationModal />
         </Provider>

@@ -31,13 +31,13 @@ export default function () {
     <Stack.Navigator>
       <Stack.Screen
         name={navigationStrings.CELEBRITY}
-        component={appStyle?.homePageLayout === 3 ? Celebrity2 : Celebrity}
+        component={appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? Celebrity2 : Celebrity}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.CELEBRITYDETAIL}
         component={
-          appStyle?.homePageLayout === 3 ? CelebrityProduct2 : CelebrityProduct
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? CelebrityProduct2 : CelebrityProduct
         }
         options={{headerShown: false}}
       />
@@ -45,7 +45,7 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
         component={
-          appStyle?.homePageLayout === 3
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? SearchProductVendorItem2
             : SearchProductVendorItem
         }

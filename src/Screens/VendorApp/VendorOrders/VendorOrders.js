@@ -306,7 +306,7 @@ export default function VendorOrders({navigation, route}) {
       isLoadingB={isLoading || isLoadingB}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5? imagePath.icBackb : imagePath.back
         }
         centerTitle={selectedVendor?.name || ''}
         showImageAlongwithTitle={true}

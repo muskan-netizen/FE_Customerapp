@@ -93,6 +93,8 @@
 	<string>Play using while you are hiking</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like access to your photo gallery to upload photos and set profile picture</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to access to speech recognition to get speech results.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires contacts access to function properly.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

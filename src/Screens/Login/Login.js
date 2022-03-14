@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
   TextInput,
+  Alert,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -310,9 +311,9 @@ export default function Login({navigation}) {
           !!res.data?.client_preference?.verify_phone
             ? !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
-              ? checkIsAdmin()
+              ? checkIsAdmin(navigation_, navigation, res.data)
               : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : checkIsAdmin();
+            : checkIsAdmin(navigation_, navigation, res.data);
         }
         updateState({isLoading: false});
         getCartDetail();
@@ -338,18 +339,18 @@ export default function Login({navigation}) {
     updateState({isLoading: true});
     googleLogin()
       .then((res) => {
-        console.log(res, 'google');
         if (res?.user) {
+          console.log(res, 'googlegooogle');
           _saveSocailLogin(res.user, 'google');
         } else {
           updateState({isLoading: false});
         }
       })
       .catch((err) => {
-        console.log(err, 'error in gmail login');
         updateState({isLoading: false});
       });
   };
+
   const _responseInfoCallback = (error, result) => {
     updateState({isLoading: true});
     if (error) {

@@ -158,7 +158,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     cartItemMainContainer: {
       flexDirection: 'row',
       padding: moderateScaleVertical(8),
-      borderRadius:moderateScale(10),
+      borderRadius: moderateScale(10),
     },
     cartItemImage: {
       height: width / 4.5,
@@ -415,7 +415,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       // zIndex: 5000,
     },
     dropDownContainerStyle: {
-      height: 40,
+      height: 20,
       marginVertical: moderateScaleVertical(10),
       // zIndex: 10,
     },
@@ -470,6 +470,24 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       fontSize: textScale(10),
       lineHeight: 20,
       fontFamily: fontFamily.medium,
+    },
+    deliveryFeeDropDown: {
+      borderWidth: 1,
+      height: moderateScale(38),
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: moderateScale(8),
+      marginBottom: moderateScaleVertical(8),
+      borderRadius: moderateScale(8),
+      minWidth: moderateScale(120),
+      alignSelf: 'flex-start',
+    },
+    dropDownTextStyle: {
+      fontSize: textScale(10),
+      color: themeColors.primary_color,
+      fontFamily: fontFamily.bold,
+      textAlign: 'left',
     },
   });
   return styles;

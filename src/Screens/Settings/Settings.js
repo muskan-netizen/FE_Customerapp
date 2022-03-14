@@ -4,11 +4,11 @@ import {
   I18nManager,
   Image,
   Platform,
-  ScrollView,
   Text,
   TouchableOpacity,
   Vibration,
   View,
+  ScrollView,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -280,7 +280,7 @@ export default function Settings({route, navigation}) {
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icBackb
             : imagePath.back
         }
@@ -292,9 +292,9 @@ export default function Settings({route, navigation}) {
             : {backgroundColor: colors.white}
         }
       />
-      <ScrollView>
-        <View style={{...commonStyles.headerTopLine}} />
-        {/* <KeyboardAwareScrollView bounces={false}> */}
+
+      <View style={{...commonStyles.headerTopLine}} />
+      <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
         <View
           style={{
             marginHorizontal: moderateScale(20),
@@ -666,13 +666,13 @@ export default function Settings({route, navigation}) {
             />
           </View>
         )}
-        {/* </KeyboardAwareScrollView> */}
         <View
           style={{
             zIndex: -1,
             flexDirection: 'row',
             alignSelf: 'center',
-            marginVertical: moderateScaleVertical(24),
+            marginBottom: moderateScaleVertical(90),
+            marginTop: moderateScaleVertical(24),
           }}>
           <Text
             style={{
