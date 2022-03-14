@@ -573,7 +573,7 @@ export default function Products({route, navigation}) {
       .then((res) => {
         console.log(res, 'getProductByCategoryId res');
         // setFilterData(res?.data?.filterData)
-        setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
+        setCategoryInfo(categoryInfo ? categoryInfo : res?.data?.category);
         // setCategoryInfo(res.data.category);
         setLoading(false);
 
@@ -3092,7 +3092,7 @@ export default function Products({route, navigation}) {
           </View>
         )} */}
 
-        {((AnimatedHeaderValue && productListData.length > 6) ||
+        {((AnimatedHeaderValue && productListData?.length > 6) ||
           (!!sectionListData?.length && AnimatedHeaderValue)) && (
           <Animatable.View
             // key={AnimatedHeaderValue}

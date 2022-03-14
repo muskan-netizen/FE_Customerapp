@@ -107,21 +107,24 @@ export default function ViewAllData({route, navigation}) {
 
     console.log(vendorFilterData, 'vendorFilterData');
     // let query = `?limit=${limit}&page=${pageNo}&close_vendor=${1}&open_vendor=${0}&best_vendor=${0}&near_me=${0}`
-    let query = `?limit=${limit}&page=${pageNo}`;
-    let apiData = {
-      type: dineInType ? dineInType : dineInType,
-      ...latlongObj,
-    };
+    let query = `?limit=${limit}&page=${pageNo}&type=${
+      dineInType ? dineInType : dineInType
+    }&latitude=${location?.latitude}&longitude=${location?.longitude}`;
+    // let apiData = {
+    //   // type: dineInType ? dineInType : dineInType,
+    //   // latitude: '6.5243793',
+    //   // longitude: '3.3792057',
+    // };
     let headers = {
       code: appData?.profile?.code,
       currency: currencies?.primary_currency?.id,
       language: languages?.primary_language?.id,
     };
-    console.log('sending api data', apiData);
+    // console.log('sending api data', apiData);
     console.log('sending headers', headers);
 
     actions
-      .vendorAll(query, apiData, headers)
+      .vendorAll(query, {}, headers)
       .then((res) => {
         console.log('Home data++++++', res);
         if (totalProduct == 0) {
