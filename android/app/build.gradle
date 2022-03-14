@@ -2130,7 +2130,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
-            applicationId 'com.pinkydeli'
+            applicationId 'com.app.pinkydeli'
             resValue "string", "app_name", "Pinky Deli"
             resValue "string", "host_name", ""
          }

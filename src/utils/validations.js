@@ -245,7 +245,7 @@ export default function (data) {
     // if (emptyValidationText !== '') {
     //   return emptyValidationText;
     // }
-    if (!/^[0][1-9]$|^[1-9]\d{4,14}$/.test(phoneNumber)) {
+    if (!/^[0][1-9]$|^[0-9]\d{4,14}$/.test(phoneNumber)) {
       return strings.PLEASE_ENTER_VALID_PHONE_NUMBER;
     }
 

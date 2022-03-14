@@ -1,4 +1,4 @@
-import { I18nManager, Platform, StyleSheet } from 'react-native';
+import {I18nManager, Platform, StyleSheet} from 'react-native';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
@@ -8,10 +8,10 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { getColorCodeWithOpactiyNumber } from '../../utils/helperFunctions';
+import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
 
-export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
-  const commonStyles = commonStylesFun({ fontFamily });
+export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
+  const commonStyles = commonStylesFun({fontFamily});
   const styles = StyleSheet.create({
     scrollviewHorizontal: {
       borderTopWidth: 1,
@@ -415,7 +415,7 @@ export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
       // zIndex: 5000,
     },
     dropDownContainerStyle: {
-      height: 40,
+      height: 20,
       marginVertical: moderateScaleVertical(10),
       // zIndex: 10,
     },
@@ -481,14 +481,14 @@ export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
       marginBottom: moderateScaleVertical(8),
       borderRadius: moderateScale(8),
       minWidth: moderateScale(120),
-      alignSelf: 'flex-start'
+      alignSelf: 'flex-start',
     },
     dropDownTextStyle: {
       fontSize: textScale(10),
       color: themeColors.primary_color,
       fontFamily: fontFamily.bold,
-      textAlign: 'left'
-    }
+      textAlign: 'left',
+    },
   });
   return styles;
 };

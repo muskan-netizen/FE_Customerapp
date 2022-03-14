@@ -44,11 +44,10 @@ const cameraHandler = async (data, option) => {
   }
 };
 
-const currencyNumberFormatter = (item) => {
-  let unformateAmount = item;
-  return parseFloat(unformateAmount)
-    .toFixed(2)
-    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+const currencyNumberFormatter = (number, digitAfterDecimal = 2) => {
+  return parseFloat(number)
+    .toFixed(digitAfterDecimal)
+    .replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 };
 
 export function getImageUrl(url1, url2, dimentions) {
