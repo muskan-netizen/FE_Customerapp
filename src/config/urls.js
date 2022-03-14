@@ -21,6 +21,9 @@
 // WE EAT
 // export const API_BASE_URL = 'https://weeat.royoorders.com/api/v1';
 
+//BEZALIO LIVE
+// export const API_BASE_URL = 'https://bezaliohub.com/api/v1';
+
 // export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.100.198:8020/api/v1';
@@ -54,7 +57,7 @@
 // export const API_BASE_URL = 'https://swiftandvalu.com/api/v1';
 // export const API_BASE_URL = 'https://baytukom.royoorders.com/api/v1';
 //export const API_BASE_URL = 'https://marketplace.verofax.com/api/v1';
-// export const API_BASE_URL = 'https://agrionline.ph/api/v1';
+export const API_BASE_URL = 'https://agrionline.ph/api/v1';
 // export const API_BASE_URL = 'https://marketplace.verofax.com/api/v1';
 // export const API_BASE_URL = 'https://order.loopwhole.ca/api/v1';
 // export const API_BASE_URL = 'https://elcheregio.mx/api/v1';
@@ -70,7 +73,7 @@
 // export const API_BASE_URL = 'https://rxnowweb.com/api/v1';
 // export const API_BASE_URL = 'https://order.mml.mobi/api/v1';
 // export const API_BASE_URL = 'https://sunshinerideshare.com/api/v1';
-export const API_BASE_URL = 'https://groupystore.com/api/v1';
+// export const API_BASE_URL = 'https://groupystore.com/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
