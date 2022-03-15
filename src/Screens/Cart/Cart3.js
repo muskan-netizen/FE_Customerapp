@@ -744,11 +744,15 @@ function Cart({navigation, route}) {
   };
 
   const checkoutPayment = (paymentData) => {
+
+
+   
     let queryData = `/${paymentData?.selectedPayment?.code?.toLowerCase()}?amount=${
       paymentData?.total_payable_amount
     }&payment_option_id=${paymentData?.payment_option_id}&order_number=${
       paymentData?.orderDetail?.order_number
     }&token=${!!cardInfo ? cardInfo : null}&action=cart`;
+
     actions
       .openPaymentWebUrl(
         queryData,

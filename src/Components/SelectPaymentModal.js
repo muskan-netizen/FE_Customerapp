@@ -167,6 +167,7 @@ export default function SelectPaymentModal({
                 updateState({isLoading: false});
                 return;
               }
+              console.log(res, 'res>>>>>>');
               if (res && res?.token && res.token?.id) {
                 updateState({isLoading: false});
 
@@ -207,6 +208,9 @@ export default function SelectPaymentModal({
 
   //Select/ Update payment method
   const selectPaymentMethod = (data, inx) => {
+    if (selectedPaymentMethod?.id === 4) {
+      return;
+    }
     {
       selectedPaymentMethod && selectedPaymentMethod?.id == data?.id
         ? updateState({selectedPaymentMethod: null})
@@ -301,6 +305,7 @@ export default function SelectPaymentModal({
           <CheckoutPaymentView
             cardTokenized={(e) => {
               updateState({isLoading: false});
+              console.log(e, 'e>>>>>>');
               if (e.token) {
                 onSelectPayment({
                   selectedPaymentMethod,
