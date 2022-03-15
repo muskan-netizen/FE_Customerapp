@@ -60,6 +60,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     (state) => state?.initBoot,
   );
   const userData = useSelector((state) => state?.auth?.userData);
+  const {pickUpTimeType} = useSelector((state) => state?.home);
 
   const fontFamily = appStyle?.fontSizeData;
   const [refArr, setRefArr] = useState([]);
@@ -120,9 +121,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       : moment(date).format('LT'),
 
     isModalVisible: false,
-    pickUpTimeType: paramData?.pickUpTimeType
-      ? paramData?.pickUpTimeType
-      : null,
+
     selectedDateAndTime: `${moment().format('YYYY-MM-DD')} ${moment().format(
       'H:MM',
     )}`,
@@ -162,7 +161,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     totalDuration,
     showVendorModal,
     selectedDateAndTime,
-    pickUpTimeType,
+
     isModalVisible,
     isLoading,
     addressLabel,
