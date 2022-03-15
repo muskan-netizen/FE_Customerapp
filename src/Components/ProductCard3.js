@@ -231,16 +231,17 @@ const ProductCard3 = ({
       (!!data?.add_on_count && data?.add_on_count !== 0) ||
       (!!data?.variant_set_count && data?.variant_set_count !== 0)
     ) {
+
       onIncrement();
     } else {
       updateState({ ...state, isIncrement: true });
-      if (!disabledBtn) {
-        const isEnabled = numberOfHits.length === 0;
-        numberOfHits.push(data?.qty || totalProductQty);
-        if (isEnabled) {
-          initAnimation();
-        }
-      }
+      // if (!disabledBtn) {
+      //   const isEnabled = numberOfHits.length === 0;
+      //   numberOfHits.push(data?.qty || totalProductQty);
+      //   if (isEnabled) {
+      //     initAnimation();
+      //   }
+      // }
       onIncrement();
     }
   };
@@ -254,13 +255,13 @@ const ProductCard3 = ({
       onDecrement();
     } else {
       updateState({ ...state, isIncrement: false });
-      if (!disabledBtn) {
-        const isEnabled = numberOfHits.length === 0;
-        numberOfHits.push(data?.qty || totalProductQty);
-        if (isEnabled) {
-          initAnimation();
-        }
-      }
+      // if (!disabledBtn) {
+      //   const isEnabled = numberOfHits.length === 0;
+      //   numberOfHits.push(data?.qty || totalProductQty);
+      //   if (isEnabled) {
+      //     initAnimation();
+      //   }
+      // }
       onDecrement();
     }
   };
@@ -319,7 +320,7 @@ const ProductCard3 = ({
                 textTransform: 'capitalize',
                 // flex:1
               }}>
-              {data?.translation[0]?.title}
+              {data?.translation_title || data?.title}
             </Text>
             {!!data?.title ?
               <Text

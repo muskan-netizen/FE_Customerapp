@@ -37,7 +37,6 @@ export default function TabRoutes(props) {
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
 
-  console.log(appStyle?.tabBarLayout, 'appStyle?.tabBarLayout');
   // const checkForCeleb =
   //   allCategory &&
   //   allCategory.find((x) => x?.redirect_to == staticStrings.CELEBRITY);

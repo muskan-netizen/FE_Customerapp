@@ -30,6 +30,7 @@ import {
   VENDOR_OPTIMIZE_FILTERS,
   VENDOR_PRODUCTS_OPTIMIZE_FILTERS,
   GET_DATA_BY_CATEGORY_OPTAMIZE,
+  GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE,
 } from '../../config/urls';
 import {apiGet, apiPost, setWalletData} from '../../utils/utils';
 import store from '../store';
@@ -126,6 +127,23 @@ export const getProductByCategoryFilters = (
 ) => {
   return new Promise((resolve, reject) => {
     apiPost(GET_DATA_BY_CATEGORY_FILTERS + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+///get Product By Category filter optamize
+export const getProductByCategoryFiltersOptamize = (
+  query = '',
+  data = {},
+  headers = {},
+) => {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE + query, data, headers)
       .then((res) => {
         resolve(res);
       })

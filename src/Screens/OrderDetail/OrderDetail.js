@@ -183,15 +183,15 @@ export default function OrderDetail({navigation, route}) {
     isFocused ? 5000 : null,
   );
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     if (paramData?.fromActive) {
-  //       return;
-  //     } else {
-  //       getOrders();
-  //     }
-  //   }, []),
-  // );
+  useFocusEffect(
+    React.useCallback(() => {
+      if (paramData?.fromActive) {
+        return;
+      } else {
+        getOrders();
+      }
+    }, []),
+  );
 
   const getOrders = () => {
     if (!!userData?.auth_token) {

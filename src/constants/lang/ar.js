@@ -879,5 +879,10 @@ export default {
   AMOUNT_RECIEVED: 'AMOUNT RECIEVED',
   TRANSACTION_TIME: 'Transactions time',
   LIFETIME: 'Lifetime',
-  MENU:"Menu"
+  MENU:"Menu",
+  A_TO_Z:"من الألف للياء",
+  Z_TO_A: "من الياء للألف",
+  COST_LOW_TO_HIGH:"السعر من الأقل للأعلى",
+  COST_HIGH_TO_LOW:"من الأعلى إلى الأقل",
+
 };
