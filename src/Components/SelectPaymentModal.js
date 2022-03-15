@@ -158,6 +158,7 @@ export default function SelectPaymentModal({
         selectedPaymentMethod?.id == 4 &&
         selectedPaymentMethod?.off_site == 0
       ) {
+        console.log(cardInfo, 'cardInfo>>>>');
         if (cardInfo) {
           await createToken(cardInfo)
             .then((res) => {

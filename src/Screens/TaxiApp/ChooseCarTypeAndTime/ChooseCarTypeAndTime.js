@@ -328,6 +328,33 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     updateState({showTimeModal: false, showPaymentModal: true});
   };
 
+  const sendStripeToken = (extraData, data) => {
+    data['order_number'] = extraData?.orderDetail?.order_number;
+    data['action'] = 'pickup_delivery';
+    data['stripe_token'] = paramData?.tokenInfo;
+    console.log(data, 'data>>>>>>');
+    actions
+      .openPaymentWebUrlPost(`/${selectedPayment?.code}`, data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        updateState({
+          isModalVisible: false,
+          isLoading: false,
+          isRefreshing: false,
+          indicatorLoader: false,
+        });
+        console.log(res, 'response===>');
+        navigation.navigate(
+          navigationStrings.PICKUPTAXIORDERDETAILS,
+          extraData,
+        );
+      })
+      .catch(errorMethod);
+  };
+
   const _finalPayment = (data) => {
     if (isEmpty(selectedPayment)) {
       // showError(strings.PLEASE_SELECT_A_PAYMENT_METHOD);
@@ -339,7 +366,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       isLoading: true,
       indicatorLoader: true,
     });
-
+    console.log(data, 'data>>>>>');
     actions
       .placeDelievryOrder(data, {
         code: appData?.profile?.code,
@@ -349,17 +376,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       .then((res) => {
         console.log(res, 'resresresres');
         if (res && res?.status == 200) {
-          updateState({
-            isModalVisible: false,
-            isLoading: false,
-            isRefreshing: false,
-            indicatorLoader: false,
-          });
-          // navigation.navigate(navigationStrings.CABDRIVERLOCATIONANDDETAIL, {
-          //   orderDetail: res?.data,
-          //   selectedCarOption: selectedCarOption,
-          // });
-          navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
+          let extraData = {
             orderId: res?.data?.id,
             fromVendorApp: true,
             selectedVendor: {id: selectedCarOption?.vendor_id},
@@ -368,8 +385,23 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             pickup_taxi: paramData?.pickup_taxi,
             totalDuration: totalDuration,
             selectedCarOption: selectedCarOption?.sku,
+          };
+          if (selectedPayment?.id == 4) {
+            sendStripeToken(extraData, data);
+            return;
+          }
+          updateState({
+            isModalVisible: false,
+            isLoading: false,
+            isRefreshing: false,
+            indicatorLoader: false,
           });
+          navigation.navigate(
+            navigationStrings.PICKUPTAXIORDERDETAILS,
+            extraData,
+          );
         } else {
+          console.log(res, 'res>>>>>');
           updateState({
             isModalVisible: false,
             isLoading: false,
