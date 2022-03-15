@@ -238,7 +238,6 @@ const shortCodes = {
   localdropoff: '960a1f',
   ubi: '085703',
   scoopaTechnologies: '3c6a7e',
-  dbairro: 'c1dfa6',
   knockknock: 'ee66a0',
   qrider: 'b715e7',
   dlvrd: '525456',
@@ -264,9 +263,19 @@ const shortCodes = {
   delivadrinks: 'e22dd6',
   myRide: 'f6fb25',
   getfix: '3065fd',
-  scoopaTechnologies: '3c6a7e',
   slider: '3fea63',
   ICare: 'd3e178',
+  dbairro: 'f3a0f7',
+  knockknock: '3403fc',
+  qrider: 'b715e7',
+  dlvrd: '525456',
+  delivery: 'd477fd',
+  timHomeServices: 'ab2892',
+  viversbox: 'aaa2b4',
+  scootz: '760243',
+  ola: 'e11f38',
+  spliffnation: '1c98de',
+  sourcesServices: '67f0c8',
 };
 
 const appIds = {
@@ -1295,8 +1304,32 @@ const appIds = {
     android: 'com.app.getfix',
   }),
   scoopaTechnologies: Platform.select({
-    ios: 'com.scoopaTechnologies',
+    ios: 'com.application.delivery',
     android: 'com.scoopaTechnologies',
+  }),
+  dbairro: Platform.select({
+    ios: 'com.dbairro',
+    android: 'com.dbairro',
+  }),
+  knockknock: Platform.select({
+    ios: 'com.application.knockknock',
+    android: 'com.knockknock',
+  }),
+  qrider: Platform.select({
+    ios: 'com.qrider',
+    android: 'com.qrider',
+  }),
+  dlvrd: Platform.select({
+    ios: 'com.application.dlvrd',
+    android: 'com.dlvrd',
+  }),
+  delivery: Platform.select({
+    ios: 'com.delivery',
+    android: 'com.delivery',
+  }),
+  timHomeServices: Platform.select({
+    ios: 'com.timHomeServices',
+    android: 'com.timHomeServices',
   }),
   slider: Platform.select({
     ios: 'com.app.slider',
@@ -1305,6 +1338,27 @@ const appIds = {
   ICare: Platform.select({
     ios: 'com.codebrew.ICare',
     android: 'com.codebrew.ICare',
+  }),
+
+  viversbox: Platform.select({
+    ios: 'com.viversbox',
+    android: 'com.viversbox',
+  }),
+  scootz: Platform.select({
+    ios: 'com.scootz',
+    android: 'com.scootz',
+  }),
+  ola: Platform.select({
+    ios: 'com.app.ola',
+    android: 'com.app.ola',
+  }),
+  spliffnation: Platform.select({
+    ios: 'com.spliffnation',
+    android: 'com.spliffnation',
+  }),
+  sourcesServices: Platform.select({
+    ios: 'com.sourcesServices',
+    android: 'com.sourcesServices',
   }),
 };
 

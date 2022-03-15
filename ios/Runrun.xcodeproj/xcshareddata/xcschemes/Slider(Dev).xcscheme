@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "84D55F6B27D245C300023438"
+               BlueprintIdentifier = "8451960527D9D6D400317E27"
                BuildableName = "Slider.app"
                BlueprintName = "Slider"
                ReferencedContainer = "container:Runrun.xcodeproj">
@@ -44,7 +44,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84D55F6B27D245C300023438"
+            BlueprintIdentifier = "8451960527D9D6D400317E27"
             BuildableName = "Slider.app"
             BlueprintName = "Slider"
             ReferencedContainer = "container:Runrun.xcodeproj">
@@ -61,7 +61,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84D55F6B27D245C300023438"
+            BlueprintIdentifier = "8451960527D9D6D400317E27"
             BuildableName = "Slider.app"
             BlueprintName = "Slider"
             ReferencedContainer = "container:Runrun.xcodeproj">
