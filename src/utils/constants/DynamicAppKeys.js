@@ -592,7 +592,7 @@ const appIds = {
     android: 'com.eatkareem.hmchalal',
   }),
   groupy: Platform.select({
-    ios: 'com.groupy',
+    ios: 'com.app.groupy',
     android: 'com.groupy',
   }),
   weeat: Platform.select({
