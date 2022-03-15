@@ -45,6 +45,8 @@ export default function ShippingDetails({navigation, route}) {
   const {appData, currencies, languages, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  const {pickUpTimeType} = useSelector((state) => state?.home);
+
   const userData = useSelector((state) => state?.auth?.userData);
   const [state, setState] = useState({
     message: '',
@@ -582,11 +584,9 @@ export default function ShippingDetails({navigation, route}) {
     console.log(selectedCarOption, 'selectedCarOption');
     let data = {};
 
-    data['task_type'] = paramData?.pickUpTimeType
-      ? paramData?.pickUpTimeType
-      : '';
+    data['task_type'] = pickUpTimeType ? pickUpTimeType : '';
     data['schedule_time'] =
-      paramData?.pickUpTimeType == 'now' ? '' : paramData?.selectedDateAndTime;
+      pickUpTimeType == 'now' ? '' : paramData?.selectedDateAndTime;
     data['recipient_phone'] = `${callingCode}${phoneNumber}`;
     data['recipient_email'] = email;
     data['task_description'] = message;

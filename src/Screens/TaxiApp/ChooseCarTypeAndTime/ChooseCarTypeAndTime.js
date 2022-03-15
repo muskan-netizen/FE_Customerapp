@@ -60,6 +60,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     (state) => state?.initBoot,
   );
   const userData = useSelector((state) => state?.auth?.userData);
+  const {pickUpTimeType} = useSelector((state) => state?.home);
 
   const fontFamily = appStyle?.fontSizeData;
   const [refArr, setRefArr] = useState([]);
@@ -120,9 +121,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       : moment(date).format('LT'),
 
     isModalVisible: false,
-    pickUpTimeType: paramData?.pickUpTimeType
-      ? paramData?.pickUpTimeType
-      : null,
+
     selectedDateAndTime: `${moment().format('YYYY-MM-DD')} ${moment().format(
       'H:MM',
     )}`,
@@ -162,7 +161,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     totalDuration,
     showVendorModal,
     selectedDateAndTime,
-    pickUpTimeType,
+
     isModalVisible,
     isLoading,
     addressLabel,
@@ -332,7 +331,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     data['order_number'] = extraData?.orderDetail?.order_number;
     data['action'] = 'pickup_delivery';
     data['stripe_token'] = paramData?.tokenInfo;
-    console.log(data, 'data>>>>>>');
+    console.log(extraData, 'extraData....');
     actions
       .openPaymentWebUrlPost(`/${selectedPayment?.code}`, data, {
         code: appData?.profile?.code,
@@ -340,13 +339,17 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
+        console.log(res, 'res>>>>>');
         updateState({
           isModalVisible: false,
           isLoading: false,
           isRefreshing: false,
           indicatorLoader: false,
         });
-        console.log(res, 'response===>');
+        let newObj = extraData?.orderDetail;
+        newObj['dispatch_traking_url'] = res?.data?.data?.dispatch_traking_url;
+        extraData['orderDetail'] = newObj;
+
         navigation.navigate(
           navigationStrings.PICKUPTAXIORDERDETAILS,
           extraData,
