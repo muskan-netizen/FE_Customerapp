@@ -7,6 +7,7 @@ export default {
   JOIN_US: '¿Cómo quieres continuar?',
   CREATE_AN_ACCOUNT: 'Crear una cuenta',
   CREATE_NEW_ACCOUNT: 'Crear una cuenta nueva',
+  DONT_HAVE_ACCOUNT: 'no tengo una cuenta ?',
   GUEST_LOGIN: 'Pásele sin compromiso como invitado',
   OR_SIGNUP_WITH: 'Continuar con:',
   OR_LOGIN_WITH: 'Continuar con:',
@@ -27,7 +28,7 @@ export default {
   PACKAGE_DESC: 'Ahora un poema de detalles',
   PRODUCT_WEIGHT: 'Peso de Producto',
   YOUR_PHONE_NUMBER: 'Número de Teléfono',
-  ENTER_PASSWORD: 'Crea tu contraseña',
+  ENTER_PASSWORD: 'Introducir la contraseña',
   CONFIRM_PASSWORD: 'Confirma tu contraseña',
   WISHLIST: 'Mis deseos de Parrillero',
   SIGNUP_AN_ACCOUNT: 'Crea tu cuenta',
@@ -846,4 +847,6 @@ export default {
   AMOUNT_RECIEVED: 'AMOUNT RECIEVED',
   TRANSACTION_TIME: 'Transactions time',
   LIFETIME: 'Lifetime',
+  LOGIN_ACCOUNT: 'Iniciar sesión Cuenta',
+  EMPTY_WISHLIST: 'Tu lista de deseos Esta vacía',
 };

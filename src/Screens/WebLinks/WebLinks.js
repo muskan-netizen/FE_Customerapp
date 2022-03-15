@@ -147,7 +147,9 @@ export default function WebLinks({navigation, route}) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily});
   const commonStyles = commonStylesFun({fontFamily});
-  const {location, appMainData, dineInType} = useSelector((state) => state?.home);
+  const {location, appMainData, dineInType} = useSelector(
+    (state) => state?.home,
+  );
 
   const {
     cca2,
@@ -195,13 +197,12 @@ export default function WebLinks({navigation, route}) {
     activeSections,
   } = state;
 
-    useEffect(() => {
+  useEffect(() => {
     _getLocationFromParams();
     // if (addressSearch) {
     //   _getLocationFromParams();
     // }
   }, [paramData?.details]);
-
 
   useEffect(() => {
     updateState({isLoading: true});
@@ -923,11 +924,10 @@ export default function WebLinks({navigation, route}) {
         longitude: paramData?.details?.geometry?.location.lng,
       };
       updateState({
-        address:address
-      })
+        address: address,
+      });
     }
   };
-
 
   return (
     <WrapperContainer
@@ -1003,7 +1003,7 @@ export default function WebLinks({navigation, route}) {
             />
 
             <BorderTextInput
-              placeholder={`${strings.ENTER_TITLE}*`}
+              placeholder={strings.ENTER_TITLE}
               label={'Title'}
               onChangeText={_onChangeText('title')}
               containerStyle={styles.containerStyle}

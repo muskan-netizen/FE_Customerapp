@@ -4680,26 +4680,6 @@ android {
          resValue "string", "app_name", "Scoopa Technologies"
          resValue "string", "host_name", ""
          }
-         slider{
-         dimension "appType"
-         versionCode 1
-         versionName "1.0"
-         minSdkVersion rootProject.ext.minSdkVersion
-         targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.app.slider'
-         resValue "string", "app_name", "Slider"
-         resValue "string", "host_name", ""
-         }
-      ICare{
-         dimension "appType"
-         versionCode 1
-         versionName "1.0"
-         minSdkVersion rootProject.ext.minSdkVersion
-         targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.codebrew.ICare'
-         resValue "string", "app_name", "ICare"
-         resValue "string", "host_name", ""
-         }
          dbairro{
          dimension "appType"
          versionCode 1
@@ -4809,6 +4789,26 @@ android {
          targetSdkVersion rootProject.ext.targetSdkVersion
          applicationId 'com.sourcesServices'
          resValue "string", "app_name", "Sources Services"
+         resValue "string", "host_name", ""
+         }
+         slider{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.app.slider'
+         resValue "string", "app_name", "Slider"
+         resValue "string", "host_name", ""
+         }
+      ICare{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.codebrew.ICare'
+         resValue "string", "app_name", "ICare"
          resValue "string", "host_name", ""
          }
     }

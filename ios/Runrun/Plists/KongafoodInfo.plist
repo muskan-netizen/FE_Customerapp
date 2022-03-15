@@ -89,12 +89,16 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSContactsUsageDescription</key>
-	<string>$(PRODUCT_NAME) requires contacts access to function properly.</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play using while you are hiking</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to access to microphone to get your voice.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to access to speech recognition to get speech results.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like access to your photo gallery to upload photos and set profile picture</string>
+	<key>NSContactsUsageDescription</key>
+	<string>$(PRODUCT_NAME) requires contacts access to function properly.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to access your current location for registration</string>
 	<key>NSLocationAlwaysUsageDescription</key>

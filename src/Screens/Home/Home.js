@@ -338,7 +338,9 @@ export default function Home({route, navigation}) {
       // near_me: nearMe,
     };
     console.log(vendorFilterData, 'vendorFilterData');
-
+    console.log(latlongObj, 'latlongObj');
+    console.log(dineInType, 'dineInType');
+    
     if (closeVendor == 0 && openVendor == 0 && bestSeller == 0) {
       updateState({singleVendor: true});
     } else {
