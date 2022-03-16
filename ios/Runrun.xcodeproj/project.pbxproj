@@ -2397,7 +2397,6 @@
 		8459BFA0277ADCB000D36404 /* MML(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8459BF9F277ADCB000D36404 /* MML(Development).xcconfig */; };
 		8459C060277ADCD200D36404 /* MML(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8459C05F277ADCD200D36404 /* MML(Production).xcconfig */; };
 		8459C120277ADCF100D36404 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8459C11F277ADCF100D36404 /* Images.xcassets */; };
-		8459C1E0277ADD9700D36404 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8459C1DF277ADD9700D36404 /* GoogleService-Info.plist */; };
 		845AEAD3265504520075224A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		845AEAD5265504520075224A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		845AEADA265504520075224A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -6650,6 +6649,7 @@
 		84CB132D274CC71900E5F07B /* PaySic(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84CB132C274CC71900E5F07B /* PaySic(Production).xcconfig */; };
 		84CB13D3274CC73100E5F07B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84CB13D2274CC73100E5F07B /* Images.xcassets */; };
 		84CB1479274CC84900E5F07B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84CB1478274CC84800E5F07B /* GoogleService-Info.plist */; };
+		84CC824A27E20EDD006F4530 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84CC824927E20EDB006F4530 /* GoogleService-Info.plist */; };
 		84CDD7E726BC0A9A001FE3EE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84CDD7E826BC0A9A001FE3EE /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		84CDD7E926BC0A9A001FE3EE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -8691,7 +8691,6 @@
 		8459BF9F277ADCB000D36404 /* MML(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "MML(Development).xcconfig"; sourceTree = "<group>"; };
 		8459C05F277ADCD200D36404 /* MML(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "MML(Production).xcconfig"; sourceTree = "<group>"; };
 		8459C11F277ADCF100D36404 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		8459C1DF277ADD9700D36404 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8459C29F277ADEBB00D36404 /* MML.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MML.entitlements; sourceTree = "<group>"; };
 		845AEAEF265504520075224A /* RoyoOrder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoyoOrder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8461AC18273E43A2003AB3BB /* Bezalio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bezalio.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -9588,6 +9587,7 @@
 		84CB13D2274CC73100E5F07B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84CB1478274CC84800E5F07B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84CB170A274CC95A00E5F07B /* PaySic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PaySic.entitlements; sourceTree = "<group>"; };
+		84CC824927E20EDB006F4530 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84CD60AC27578D4200E6A2F7 /* Snabbhem(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Snabbhem(Production).xcconfig"; sourceTree = "<group>"; };
 		84CDD81826BC0A9A001FE3EE /* Orbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Orbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84CDD84F26BC0BBC001FE3EE /* Orbit(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Orbit(Development).xcconfig"; sourceTree = "<group>"; };
@@ -14844,8 +14844,8 @@
 		8459BEE0277ADC7800D36404 /* MML */ = {
 			isa = PBXGroup;
 			children = (
+				84CC824927E20EDB006F4530 /* GoogleService-Info.plist */,
 				8459BF9F277ADCB000D36404 /* MML(Development).xcconfig */,
-				8459C1DF277ADD9700D36404 /* GoogleService-Info.plist */,
 				8459C05F277ADCD200D36404 /* MML(Production).xcconfig */,
 				8459C11F277ADCF100D36404 /* Images.xcassets */,
 			);
@@ -19558,7 +19558,6 @@
 			buildConfigurationList = 846ED0F026B01EAB00EED0B4 /* Build configuration list for PBXNativeTarget "Cannabus" */;
 			buildPhases = (
 				BD530A90592E6807F088698B /* [CP] Check Pods Manifest.lock */,
-				93AD17C733C1F0A6B6909567 /* ShellScript */,
 				846ED0C926B01EAB00EED0B4 /* Sources */,
 				846ED0CD26B01EAB00EED0B4 /* Frameworks */,
 				846ED0DB26B01EAB00EED0B4 /* Resources */,
@@ -19566,6 +19565,7 @@
 				89B25B48681F10DCE5CEA1D3 /* ShellScript */,
 				50299091975CAB69F0193B4B /* [CP] Embed Pods Frameworks */,
 				CB8997CEDAFE913A54A2AE9A /* [CP] Copy Pods Resources */,
+				84CC7DB927E1EB97006F4530 /* Start Packager */,
 			);
 			buildRules = (
 			);
@@ -26811,7 +26811,7 @@
 				8459BC8A277ADBE200D36404 /* SFProText-Regular.ttf in Resources */,
 				8459BC8B277ADBE200D36404 /* SFProText-SemiBold.ttf in Resources */,
 				8459BC8C277ADBE200D36404 /* SFProText-Medium.ttf in Resources */,
-				8459C1E0277ADD9700D36404 /* GoogleService-Info.plist in Resources */,
+				84CC824A27E20EDD006F4530 /* GoogleService-Info.plist in Resources */,
 				8459BC8E277ADBE200D36404 /* notification.wav in Resources */,
 				8459BC90277ADBE200D36404 /* Plists in Resources */,
 				8459BC91277ADBE200D36404 /* Futura-Normal.ttf in Resources */,
@@ -63329,6 +63329,24 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
+		84CC7DB927E1EB97006F4530 /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n\nexport RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\nif nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\nif ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\necho \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\nexit 2\nfi\nelse\nopen \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\nfi\nfi\n";
+		};
 		84CDD7E526BC0A9A001FE3EE /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -65920,33 +65938,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		93AD17C733C1F0A6B6909567 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Bookem/Pods-Bookem-frameworks.sh",
-				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
-				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework",
-				"${PODS_ROOT}/razorpay-pod/Pod/Razorpay.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatProvidersSDK/ChatProvidersSDK.framework/ChatProvidersSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatSDK/ChatSDK.framework/ChatSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCommonUISDK/CommonUISDK.framework/CommonUISDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingAPISDK/MessagingAPI.framework/MessagingAPI",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingSDK/MessagingSDK.framework/MessagingSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework/SDKConfigurations",
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-available_pods-Cannabus-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bookem/Pods-Bookem-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9487F29D6C8435BC6C446E12 /* [CP] Copy Pods Resources */ = {
@@ -89671,7 +89662,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = HSSTV28WF2;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -90393,7 +90384,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = "Spidbi User";
+				PROVISIONING_PROFILE_SPECIFIER = spidbiProvision;
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

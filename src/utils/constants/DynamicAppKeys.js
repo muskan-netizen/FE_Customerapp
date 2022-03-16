@@ -1016,7 +1016,7 @@ const appIds = {
     android: 'com.app.sofia',
   }),
   mml: Platform.select({
-    ios: 'com.mml',
+    ios: 'com.app.mml',
     android: 'com.app.mml',
   }),
   bimol: Platform.select({
