@@ -1785,16 +1785,16 @@ android {
    //          resValue "string", "app_name", "Silvestre"
    //          resValue "string", "host_name", ""
    //       }
-   //       samakeemart{
-   //          dimension "appType"
-   //          versionCode 1
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion         
-   //          applicationId 'com.samakeemart'
-   //          resValue "string", "app_name", "Samakee Mart"
-   //          resValue "string", "host_name", ""
-   //       }
+         samakeemart{
+            dimension "appType"
+            versionCode 2
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.samakeemart'
+            resValue "string", "app_name", "Samakee Mart"
+            resValue "string", "host_name", ""
+         }
    
    //       enext{
    //          dimension "appType"
