@@ -764,7 +764,7 @@ android {
             applicationId 'com.ridemate'
             resValue "string", "app_name", "Ridemate"
             resValue "string", "host_name", ""
-      //    }
+         }
           codiner{
             dimension "appType"
             versionCode 11
@@ -4677,7 +4677,7 @@ android {
          minSdkVersion rootProject.ext.minSdkVersion
          targetSdkVersion rootProject.ext.targetSdkVersion
          applicationId 'com.scoopaTechnologies'
-         resValue "string", "app_name", "Scoopa Technologies"
+         resValue "string", "app_name", "Scoopa"
          resValue "string", "host_name", ""
          }
          dbairro{
@@ -4801,7 +4801,7 @@ android {
          resValue "string", "app_name", "Slider"
          resValue "string", "host_name", ""
          }
-      ICare{
+         ICare{
          dimension "appType"
          versionCode 1
          versionName "1.0"
@@ -4809,6 +4809,26 @@ android {
          targetSdkVersion rootProject.ext.targetSdkVersion
          applicationId 'com.codebrew.ICare'
          resValue "string", "app_name", "ICare"
+         resValue "string", "host_name", ""
+         }
+         wer{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.wer'
+         resValue "string", "app_name", "Wer"
+         resValue "string", "host_name", ""
+         }
+         beachhop{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.beachhop'
+         resValue "string", "app_name", "Beachhop"
          resValue "string", "host_name", ""
          }
     }

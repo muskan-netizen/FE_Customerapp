@@ -276,6 +276,8 @@ const shortCodes = {
   ola: 'e11f38',
   spliffnation: '1c98de',
   sourcesServices: '67f0c8',
+  wer: 'fb5def',
+  beachhop: '9199e7',
 };
 
 const appIds = {
@@ -1304,7 +1306,7 @@ const appIds = {
     android: 'com.app.getfix',
   }),
   scoopaTechnologies: Platform.select({
-    ios: 'com.application.delivery',
+    ios: 'com.scoopaTechnologies',
     android: 'com.scoopaTechnologies',
   }),
   dbairro: Platform.select({
@@ -1349,7 +1351,7 @@ const appIds = {
     android: 'com.scootz',
   }),
   ola: Platform.select({
-    ios: 'com.app.ola',
+    ios: 'com.application.ola',
     android: 'com.app.ola',
   }),
   spliffnation: Platform.select({
@@ -1359,6 +1361,14 @@ const appIds = {
   sourcesServices: Platform.select({
     ios: 'com.sourcesServices',
     android: 'com.sourcesServices',
+  }),
+  wer: Platform.select({
+    ios: 'com.app.wer',
+    android: 'com.wer',
+  }),
+  beachhop: Platform.select({
+    ios: 'com.beachhop',
+    android: 'com.beachhop',
   }),
 };
 

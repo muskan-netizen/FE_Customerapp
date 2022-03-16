@@ -1184,17 +1184,17 @@ target 'Ubi' do
   
 end
 
-# #ScoopaTechnologies Target
-# target 'ScoopaTechnologies' do
+#ScoopaTechnologies Target
+target 'ScoopaTechnologies' do
   
-# end
+end
 
 # #BoltDelivery Target
 # target 'BoltDelivery' do
   
 # end
 
-#GamaDelivery Target
+# # GamaDelivery Target
 # target 'GamaDelivery' do
   
 # end
@@ -1358,6 +1358,20 @@ target 'Delivery' do
   
 end
 
+# Ola Target
+target 'Ola' do
+  
+end
+
+# Wer Target
+target 'Wer' do
+  
+end
+
+# Beachhop Target
+target 'Beachhop' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
