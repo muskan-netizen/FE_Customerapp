@@ -116,7 +116,7 @@ export default function Products({route, navigation}) {
   let selectedFilters = useRef(null);
   // console.log(route.params, 'route.params');
   const {data} = route.params;
-  // console.log(data, 'datadatadata');
+  console.log(data, 'datadatadata');
   const routeData = data?.fetchOffers;
   const {blurRef} = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
