@@ -652,7 +652,6 @@ function Cart({navigation, route}) {
       ).toFixed(appData?.profile?.preferences?.digit_after_decimal),
       payment_option_id: selectedPayment?.id,
       orderDetail: res.data,
-      selectedPayment: selectedPayment,
       redirectFrom: 'cart',
       selectedPayment: selectedPayment,
     };

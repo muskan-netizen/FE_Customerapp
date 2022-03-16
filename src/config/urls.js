@@ -6,6 +6,14 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
 //export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.97.160:9000/api/v1';//inderjit
+// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+// export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
+// export const API_BASE_URL = 'https://sales.royoorders.com/api/v1';  //sales demo
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
+
+// export const API_BASE_URL = 'https://releezer.shop/api/v1';
+// export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 
 // export const API_BASE_URL = 'https://961a-112-196-88-218.ngrok.io/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.98.185:8060/api/v1'; // sujata
@@ -66,12 +74,14 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://order-dev.taquick.com/api/v1';
 // export const API_BASE_URL = 'https://yeboy.mx/api/v1';
 // export const API_BASE_URL = 'https://nadeliver.com/api/v1';
-// export const API_BASE_URL = 'https://order-dev.taquick.com/api/v1';
+// export const API_BASE_URL = 'https://samakeemart.com/api/v1';
 // export const API_BASE_URL = 'https://ritenowdelivery.com/api/v1';
 // export const API_BASE_URL = 'https://drusdeliveries.com/api/v1';
-// export const API_BASE_URL = 'https://empirehub.com/api/v1';
+// export const API_BASE_URL = 'https://hellodeliver.in/api/v1';
 // export const API_BASE_URL = 'https://rxnowweb.com/api/v1';
-// export const API_BASE_URL = 'https://36kel.com.ph/api/v1';
+// export const API_BASE_URL = 'https://order.mml.mobi/api/v1';
+// export const API_BASE_URL = 'https://martinionwheelsllc.org/api/v1';
+// export const API_BASE_URL = 'https://groupystore.com/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 export const SEND_OTP = getApiUrl('/auth/sendOtp');

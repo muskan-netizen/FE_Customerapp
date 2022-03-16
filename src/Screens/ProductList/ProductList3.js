@@ -17,6 +17,7 @@ import {
   View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
@@ -115,7 +116,7 @@ export default function Products({route, navigation}) {
   let selectedFilters = useRef(null);
   // console.log(route.params, 'route.params');
   const {data} = route.params;
-  // console.log(data, 'datadatadata');
+  console.log(data, 'datadatadata');
   const routeData = data?.fetchOffers;
   const {blurRef} = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -132,7 +133,7 @@ export default function Products({route, navigation}) {
     sortFilters: filtersData,
     searchInput: '',
     pageNo: 1,
-    limit: 1000,
+    limit: 10,
     selectedItemID: -1,
     selectedDiffAdsOnId: 0,
     minimumPrice: 0,
@@ -236,18 +237,18 @@ export default function Products({route, navigation}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   useEffect(() => {
-    // const unsubscribe = navigation.addListener('focus', () => {
-    updateState({pageNo: 1});
-    getAllListItems(1);
-    if (productListId?.vendor && routeData) {
-      fetchOffers();
-    }
-    if (isLoadingC) {
-      getAllProductsByCategoryId(true);
-    }
-    // });
-    // return unsubscribe;
-  }, [navigation, languages, currencies, CartItems]);
+    const unsubscribe = navigation.addListener('focus', () => {
+      updateState({pageNo: 1});
+      getAllListItems(1);
+      if (productListId?.vendor && routeData) {
+        fetchOffers();
+      }
+      if (isLoadingC) {
+        getAllProductsByCategoryId(true);
+      }
+    });
+    return unsubscribe;
+  }, [navigation, languages, currencies]);
 
   // useEffect(() => {
   //   updateState({ pageNo: 1 });
@@ -296,7 +297,6 @@ export default function Products({route, navigation}) {
   };
 
   const getAllListItems = (pageNo = 1) => {
-    // alert('');
     if (data?.vendor) {
       {
         !!selectedFilters.current
@@ -307,8 +307,9 @@ export default function Products({route, navigation}) {
       }
     } else {
       {
-        !!selectedFilters.current && getAllProductsCategoryFilter(pageNo);
-        // : getAllProductsByCategoryId(pageNo);
+        !!selectedFilters.current
+          ? getAllProductsCategoryFilter(pageNo)
+          : getAllProductsByCategoryId(pageNo);
       }
     }
   };
@@ -334,7 +335,7 @@ export default function Products({route, navigation}) {
         setLoading(false);
         setProductListData(
           pageNo == 1
-            ? res?.data?.products?.data
+            ? res.data.products.data
             : [...productListData, ...res?.data?.products?.data],
         );
         updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
@@ -556,6 +557,7 @@ export default function Products({route, navigation}) {
 
   /**********Get all list items by category id */
   const getAllProductsByCategoryId = (pageNo) => {
+    console.log('api hit getProductByCategoryId', data);
     actions
       .getProductByCategoryId(
         `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${
@@ -572,26 +574,29 @@ export default function Products({route, navigation}) {
       .then((res) => {
         console.log(res, 'getProductByCategoryId res');
         // setFilterData(res?.data?.filterData)
-        setCategoryInfo(categoryInfo ? categoryInfo : res?.data?.category);
-        // setCategoryInfo(res.data.category);
+        setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
+        setCategoryInfo(res.data.category);
         setLoading(false);
+        setProductListData(
+          pageNo == 1
+            ? res.data.listData.data
+            : [...productListData, ...res.data.listData.data],
+        );
+        updateState({isLoadingC: false});
 
-        setProductListData(res?.data?.listData?.data);
-        if (
-          (res?.data?.listData?.length > 0 ||
-            res?.data?.listData?.data?.length > 0) &&
-          res?.data?.category &&
-          res?.data?.category?.childs.length > 0
-        ) {
-          setSelectedCategory(res.data.category.childs[0]);
-          setProductListId(res.data.category.childs[0]);
-          updateState({
-            pageNo: 1,
-            limit: 10,
-            isLoadingC: true,
-          });
-        }
-        setLoading(false);
+        // if (pageNo == 1 &&
+        //   res?.data?.listData?.data.length == 0 &&
+        //   res?.data?.category &&
+        //   res?.data?.category?.childs.length) {
+        //   setSelectedCategory(res.data.category.childs[0])
+        //   setProductListId(res.data.category.childs[0])
+        //   updateState({
+        //     pageNo: 1,
+        //     limit: 10,
+        //     isLoadingC: true,
+        //   })
+        // }
+        // updateState({ isLoading: false });
         // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
       .catch(errorMethod);
@@ -627,6 +632,8 @@ export default function Products({route, navigation}) {
       .catch(errorMethod);
     // }
   };
+
+  console.log('productListData length+++++++', productListData.length);
 
   const fetchTags = (filterArray) => {
     if (filterArray && filterArray.length > 0) {
@@ -1653,10 +1660,6 @@ export default function Products({route, navigation}) {
       }
     }
   }, [updateTagFilter]);
-
-  useEffect(() => {
-    getAllProductsByCategoryId(true);
-  }, [productListId?.id]);
 
   const onPressChildCards = (item) => {
     console.log(item, 'item upload');
@@ -3091,7 +3094,7 @@ export default function Products({route, navigation}) {
           </View>
         )} */}
 
-        {((AnimatedHeaderValue && productListData?.length > 6) ||
+        {((AnimatedHeaderValue && productListData.length > 6) ||
           (!!sectionListData?.length && AnimatedHeaderValue)) && (
           <Animatable.View
             // key={AnimatedHeaderValue}
@@ -3268,6 +3271,7 @@ export default function Products({route, navigation}) {
           <FlatList
             onScroll={onScroll}
             disableScrollViewPanResponder
+            showsVerticalScrollIndicator={false}
             data={productListData}
             renderItem={renderProduct}
             ListHeaderComponent={listHeaderComponent2()}
@@ -3413,8 +3417,7 @@ export default function Products({route, navigation}) {
                 } | ${
                   currencies.primary_currency.symbol
                 } ${currencyNumberFormatter(
-                  Number(CartItems.data.total_payable_amount),
-                  appData?.profile?.preferences?.digit_after_decimal,
+                  Number(CartItems.data.total_payable_amount).toFixed(2),
                 )}`
               : ''
           }

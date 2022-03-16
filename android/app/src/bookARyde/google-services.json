@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "843730620163",
+    "project_id": "book-a-ryde",
+    "storage_bucket": "book-a-ryde.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843730620163:android:83e35b42987ebbb6226336",
+        "android_client_info": {
+          "package_name": "com.bookARyde"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "843730620163-1djd76606kl28ntc874brf1ceroum7a0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bookARyde",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "843730620163-4q2i5e80p6pu4nelq1mb7oknne0gmd4q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bookARyde",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "843730620163-htr21qjocjs6jtkjf7kvjg0sio2r8mb7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bookARyde",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "843730620163-u12muc10mejsf456kpg0a3hmkivbvdud.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu322pLrXDWiCmfKc5sn6ST3Zs5qRhMbA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "843730620163-u12muc10mejsf456kpg0a3hmkivbvdud.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "843730620163-kklhus4qhpgr3nlv9dd6oaujfh2e30dr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bookARyde"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

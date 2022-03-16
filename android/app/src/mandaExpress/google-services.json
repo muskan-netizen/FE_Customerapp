@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "674793384348",
+    "project_id": "foodies-f2996",
+    "storage_bucket": "foodies-f2996.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674793384348:android:f0bf962018a96824bbc059",
+        "android_client_info": {
+          "package_name": "com.mandaExpress"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674793384348-23lrthmt6hehnt5b83vmooejs3omcd9v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mandaExpress",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "674793384348-5nvsg4o7blthkk0b5khig2bslqk2ug4l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mandaExpress",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "674793384348-t0lo54i7q00ueouuettlvsnahe7bv5ai.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mandaExpress",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "674793384348-n0sqob89jhrhcoddphsccn8g07rf5mve.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJQRwVYEpzoBE3ygZhpgOLYSsO-r908Io"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "674793384348-n0sqob89jhrhcoddphsccn8g07rf5mve.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "674793384348-4d513c58o6ivjs1tp50jn9n7i0cdnjbp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mandaExpress"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

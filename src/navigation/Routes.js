@@ -115,6 +115,6 @@ export default function Routes() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </AppearanceProvider>
+     </AppearanceProvider>
   );
 }

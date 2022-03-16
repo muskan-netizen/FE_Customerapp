@@ -1,8 +1,8 @@
-import React, { createRef, useEffect, useRef, useState } from 'react';
-import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
+import React, {createRef, useEffect, useRef, useState} from 'react';
+import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 import deviceInfoModule from 'react-native-device-info';
 import Modal from 'react-native-modal';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
@@ -15,19 +15,19 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import { getImageUrl, showSuccess } from '../../../utils/helperFunctions';
+import {getImageUrl, showSuccess} from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
-import { RadioButton } from 'react-native-paper';
+import {RadioButton} from 'react-native-paper';
 
 import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 import strings from '../../../constants/lang';
-import { string } from 'prop-types';
-import { BlurView } from '@react-native-community/blur';
+import {string} from 'prop-types';
+import {BlurView} from '@react-native-community/blur';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import ScaledImage from 'react-native-scalable-image';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
 import {
   loaderOne,
@@ -43,9 +43,9 @@ export default function DashBoardHeaderFive({
   toggleData,
   isLoading = false,
   isLoadingB = false,
-  _onVoiceListen = () => { },
+  _onVoiceListen = () => {},
   isVoiceRecord = false,
-  _onVoiceStop = () => { },
+  _onVoiceStop = () => {},
 }) {
   const navigation = useNavigation();
   const pickerRef = createRef();
@@ -54,7 +54,7 @@ export default function DashBoardHeaderFive({
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
-  const { appData, themeColors, appStyle, currencies, languages } = useSelector(
+  const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
@@ -65,12 +65,12 @@ export default function DashBoardHeaderFive({
     setSelectedTab: 0,
   });
 
-  const { isModalVisible, checked, tabs } = state;
+  const {isModalVisible, checked, tabs} = state;
 
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ themeColors, fontFamily });
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const styles = stylesFunc({themeColors, fontFamily});
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   const imageURI = getImageUrl(
     profileInfo?.logo?.image_fit,
@@ -171,7 +171,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.dinein_nomenclature ||
-          strings.DINE_IN,
+            strings.DINE_IN,
           'dine_in',
         );
       } else if (
@@ -181,7 +181,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-          strings.TAKEAWAY,
+            strings.TAKEAWAY,
           'takeaway',
         );
       } else if (
@@ -191,13 +191,13 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.dinein_nomenclature ||
-          strings.DINE_IN,
+            strings.DINE_IN,
           'dine_in',
         );
       } else {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.delivery_nomenclature ||
-          strings.DELIVERY,
+            strings.DELIVERY,
           'delivery',
         );
       }
@@ -209,7 +209,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.dinein_nomenclature ||
-          strings.DINE_IN,
+            strings.DINE_IN,
           'dine_in',
         );
       } else if (
@@ -219,7 +219,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-          strings.TAKEAWAY,
+            strings.TAKEAWAY,
           'takeaway',
         );
       } else if (
@@ -229,7 +229,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.dinein_nomenclature ||
-          strings.DINE_IN,
+            strings.DINE_IN,
           'dine_in',
         );
       } else if (
@@ -239,7 +239,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.delivery_nomenclature ||
-          strings.DELIVERY,
+            strings.DELIVERY,
           'delivery',
         );
       } else if (
@@ -249,7 +249,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.delivery_nomenclature ||
-          strings.DELIVERY,
+            strings.DELIVERY,
           'delivery',
         );
       } else if (
@@ -259,13 +259,13 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.delivery_nomenclature ||
-          strings.DELIVERY,
+            strings.DELIVERY,
           'delivery',
         );
       } else {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.dinein_nomenclature ||
-          strings.DINE_IN,
+            strings.DINE_IN,
           'dine_in',
         );
       }
@@ -277,7 +277,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-          strings.TAKEAWAY,
+            strings.TAKEAWAY,
           'takeaway',
         );
       } else if (
@@ -287,7 +287,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-          strings.TAKEAWAY,
+            strings.TAKEAWAY,
           'takeaway',
         );
       } else if (
@@ -297,7 +297,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-          strings.TAKEAWAY,
+            strings.TAKEAWAY,
           'takeaway',
         );
       } else if (
@@ -307,7 +307,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.dinein_nomenclature ||
-          strings.DINE_IN,
+            strings.DINE_IN,
           'dine_in',
         );
       } else if (
@@ -317,7 +317,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.delivery_nomenclature ||
-          strings.DELIVERY,
+            strings.DELIVERY,
           'delivery',
         );
       } else if (
@@ -327,13 +327,13 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.delivery_nomenclature ||
-          strings.DELIVERY,
+            strings.DELIVERY,
           'delivery',
         );
       } else {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-          strings.TAKEAWAY,
+            strings.TAKEAWAY,
           'takeaway',
         );
       }
@@ -346,7 +346,7 @@ export default function DashBoardHeaderFive({
         text: strings.CANCEL,
         onPress: () => console.log('Cancel Pressed'),
       },
-      { text: strings.CLEAR_CART2, onPress: () => clearCart(item, indx) },
+      {text: strings.CLEAR_CART2, onPress: () => clearCart(item, indx)},
     ]);
   };
 
@@ -365,13 +365,13 @@ export default function DashBoardHeaderFive({
         showSuccess(res?.message);
         actions.cartItemQty(res);
         _onTableItm(item, indx);
-        updateState({ isModalVisible: false });
+        updateState({isModalVisible: false});
       })
       .catch(errorMethod);
   };
 
   const errorMethod = (error) => {
-    updateState({ isLoading: false, isRefreshing: false });
+    updateState({isLoading: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
 
@@ -399,19 +399,15 @@ export default function DashBoardHeaderFive({
   if (false) {
     return (
       <View>
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginHorizontal: moderateScale(16),
-          marginBottom: moderateScaleVertical(12)
-        }}>
-          <HomeLoader
-            rectWidth={60}
-            width={60}
-            rectHeight={38}
-            height={38}
-          />
-          <View style={{ marginHorizontal: moderateScale(12) }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginHorizontal: moderateScale(16),
+            marginBottom: moderateScaleVertical(12),
+          }}>
+          <HomeLoader rectWidth={60} width={60} rectHeight={38} height={38} />
+          <View style={{marginHorizontal: moderateScale(12)}}>
             <HomeLoader
               rectWidth={width / 2}
               width={width / 2}
@@ -420,7 +416,7 @@ export default function DashBoardHeaderFive({
             />
           </View>
 
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <HomeLoader
               rectWidth={30}
               width={30}
@@ -436,9 +432,8 @@ export default function DashBoardHeaderFive({
               height={30}
               rx={15}
               ry={15}
-              viewStyles={{ marginLeft: 8 }}
+              viewStyles={{marginLeft: 8}}
             />
-
           </View>
         </View>
         <View
@@ -448,35 +443,19 @@ export default function DashBoardHeaderFive({
               ? colors.whiteOpacity22
               : colors.borderColorD,
             borderBottomWidth: 0.8,
-          }} />
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginHorizontal: moderateScale(16),
-          marginVertical: moderateScaleVertical(12)
-        }}>
-          <HomeLoader
-            rectWidth={100}
-            width={100}
-            rectHeight={30}
-            height={30}
-
-          />
-          <HomeLoader
-            rectWidth={100}
-            width={100}
-            rectHeight={30}
-            height={30}
-
-          />
-          <HomeLoader
-            rectWidth={100}
-            width={100}
-            rectHeight={30}
-            height={30}
-          />
-
+          }}
+        />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginHorizontal: moderateScale(16),
+            marginVertical: moderateScaleVertical(12),
+          }}>
+          <HomeLoader rectWidth={100} width={100} rectHeight={30} height={30} />
+          <HomeLoader rectWidth={100} width={100} rectHeight={30} height={30} />
+          <HomeLoader rectWidth={100} width={100} rectHeight={30} height={30} />
         </View>
         <View
           style={{
@@ -485,7 +464,8 @@ export default function DashBoardHeaderFive({
               ? colors.whiteOpacity22
               : colors.borderColorD,
             borderBottomWidth: 0.8,
-          }} />
+          }}
+        />
       </View>
     );
   }
@@ -523,10 +503,10 @@ export default function DashBoardHeaderFive({
               source={{
                 uri: imageURI,
                 priority: FastImage.priority.high,
-                cache: FastImage.cacheControl.immutable
+                cache: FastImage.cacheControl.immutable,
               }}
             />
-          ) :null}
+          ) : null}
           {!!appData?.profile?.preferences?.is_hyperlocal && (
             <TouchableOpacity
               activeOpacity={1}
@@ -554,8 +534,8 @@ export default function DashBoardHeaderFive({
                         ? location?.type_name
                         : strings.UNKNOWN
                       : location?.type === 2
-                        ? strings.WORK
-                        : strings.HOME}
+                      ? strings.WORK
+                      : strings.HOME}
                   </Text>
                 )}
                 <Text
@@ -566,10 +546,9 @@ export default function DashBoardHeaderFive({
                       color: isDarkMode
                         ? MyDarkTheme.colors.text
                         : colors.blackOpacity30,
-                        fontFamily:fontFamily.medium
+                      fontFamily: fontFamily.medium,
                     },
-                  ]}
-                  >
+                  ]}>
                   {location?.address}
                 </Text>
               </View>
@@ -583,16 +562,14 @@ export default function DashBoardHeaderFive({
             alignItems: 'center',
             height: moderateScale(30),
             width: moderateScale(80),
-
-          }}
-        >
+          }}>
           <TouchableOpacity
-            style={{ marginHorizontal: moderateScale(8) }}
+            style={{marginHorizontal: moderateScale(8)}}
             onPress={() =>
               navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
             }>
             <Image
-              style={{ tintColor: themeColors.primary_color }}
+              style={{tintColor: themeColors.primary_color}}
               source={imagePath.search1}
             />
           </TouchableOpacity>
@@ -602,25 +579,25 @@ export default function DashBoardHeaderFive({
                 style={{
                   height: moderateScale(43),
                   width: moderateScale(30),
-                  marginLeft: moderateScale(-2)
+                  marginLeft: moderateScale(-2),
                 }}
                 source={voiceListen}
                 autoPlay
                 loop
                 colorFilters={[
-                  { keypath: "layers", color: themeColors.primary_color },
-                  { keypath: "transparent2", color: themeColors.primary_color },
-                  { keypath: "transparent1", color: themeColors.primary_color },
-                  { keypath: "01", color: themeColors.primary_color },
-                  { keypath: "02", color: themeColors.primary_color },
-                  { keypath: "03", color: themeColors.primary_color },
-                  { keypath: "04", color: themeColors.primary_color }
+                  {keypath: 'layers', color: themeColors.primary_color},
+                  {keypath: 'transparent2', color: themeColors.primary_color},
+                  {keypath: 'transparent1', color: themeColors.primary_color},
+                  {keypath: '01', color: themeColors.primary_color},
+                  {keypath: '02', color: themeColors.primary_color},
+                  {keypath: '03', color: themeColors.primary_color},
+                  {keypath: '04', color: themeColors.primary_color},
                 ]}
               />
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
-              style={{ marginHorizontal: moderateScale(8) }}
+              style={{marginHorizontal: moderateScale(8)}}
               onPress={_onVoiceListen}>
               <Image
                 source={imagePath.icVoice}
@@ -628,9 +605,9 @@ export default function DashBoardHeaderFive({
                   height: moderateScale(20),
                   width: moderateScale(20),
                   borderRadius: moderateScale(10),
-                  tintColor: themeColors.primary_color
+                  tintColor: themeColors.primary_color,
                 }}
-                resizeMode='contain'
+                resizeMode="contain"
               />
             </TouchableOpacity>
           )}
@@ -679,11 +656,11 @@ export default function DashBoardHeaderFive({
             justifyContent: 'flex-end',
             margin: 0,
           }}
-          onBackdropPress={() => updateState({ isModalVisible: false })}>
+          onBackdropPress={() => updateState({isModalVisible: false})}>
           <View>
             <TouchableOpacity
               style={styles.closeButton}
-              onPress={() => updateState({ isModalVisible: false })}>
+              onPress={() => updateState({isModalVisible: false})}>
               <Image source={imagePath.crossC} resizeMode="contain" />
             </TouchableOpacity>
 
@@ -696,7 +673,7 @@ export default function DashBoardHeaderFive({
                     : colors.white,
                 },
               ]}>
-              <View style={{ padding: moderateScale(10) }}>
+              <View style={{padding: moderateScale(10)}}>
                 {tabs.length > 1 &&
                   tabs.map((item, indx) => {
                     return (
@@ -750,8 +727,8 @@ export default function DashBoardHeaderFive({
                               color: item.isActive
                                 ? themeColors.primary_color
                                 : isDarkMode
-                                  ? MyDarkTheme.colors.text
-                                  : colors.blackOpacity43,
+                                ? MyDarkTheme.colors.text
+                                : colors.blackOpacity43,
                               fontSize: textScale(12),
                               marginHorizontal: moderateScale(10),
                             }}>
@@ -766,8 +743,8 @@ export default function DashBoardHeaderFive({
                             tintColor: item.isActive
                               ? themeColors.primary_color
                               : isDarkMode
-                                ? MyDarkTheme.colors.text
-                                : colors.blackOpacity66,
+                              ? MyDarkTheme.colors.text
+                              : colors.blackOpacity66,
                             alignSelf: 'flex-end',
                           }}
                           resizeMode="contain"
@@ -809,10 +786,10 @@ export default function DashBoardHeaderFive({
                     item.isActive && isDarkMode
                       ? MyDarkTheme.colors.white
                       : item.isActive && !isDarkMode
-                        ? themeColors.primary_color
-                        : isDarkMode
-                          ? colors.blackOpacity0
-                          : colors.greyColor1,
+                      ? themeColors.primary_color
+                      : isDarkMode
+                      ? colors.blackOpacity0
+                      : colors.greyColor1,
                   borderBottomWidth: 2,
                   height: moderateScale(40),
                   alignItems: 'center',
@@ -828,8 +805,8 @@ export default function DashBoardHeaderFive({
                       item.isActive && isDarkMode
                         ? MyDarkTheme.colors.white
                         : item.isActive && !isDarkMode
-                          ? themeColors.primary_color
-                          : colors.greyLight,
+                        ? themeColors.primary_color
+                        : colors.greyLight,
                     // ? themeColors.primary_color
                     // : isDarkMode
                     // ? MyDarkTheme.colors.text
@@ -851,8 +828,8 @@ export default function DashBoardHeaderFive({
                       item.isActive && isDarkMode
                         ? MyDarkTheme.colors.white
                         : item.isActive && !isDarkMode
-                          ? themeColors.primary_color
-                          : colors.greyLight,
+                        ? themeColors.primary_color
+                        : colors.greyLight,
                     textTransform: 'capitalize',
                   }}>
                   {item.value}
