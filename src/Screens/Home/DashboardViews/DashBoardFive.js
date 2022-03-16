@@ -297,7 +297,7 @@ export default function DashBoardFive({
                             fontSize: textScale(10),
                             fontFamily: fontFamily.regular,
                           }}>
-                          see more
+                          {!seeMore ? strings.SEE_MORE : strings.SEE_LESS}
                         </Text>
                         <Image
                           source={imagePath.icDropdown4}
