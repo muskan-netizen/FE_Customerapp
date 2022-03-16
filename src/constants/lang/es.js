@@ -849,4 +849,6 @@ export default {
   LOGIN_ACCOUNT: 'Iniciar sesión Cuenta',
   EMPTY_WISHLIST: 'Tu lista de deseos esta vacía',
   TOTALCONTAINERCHARGES: 'Cargos totales por contenedor',
+  SEE_MORE: 'see more',
+  SEE_LESS: 'see less',
 };

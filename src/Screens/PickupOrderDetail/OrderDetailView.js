@@ -247,7 +247,8 @@ export default function OrderDetailView({
                       ? `${
                           currencies?.primary_currency?.symbol
                         }${currencyNumberFormatter(
-                          Number(productDetail?.payable_amount).toFixed(2),
+                          Number(productDetail?.payable_amount),
+                          appData?.profile?.preferences?.digit_after_decimal,
                         )}`
                       : '--'}
                   </Text>
@@ -289,10 +290,6 @@ export default function OrderDetailView({
             <TransparentButtonWithTxtAndIcon
               btnText={strings.CHAT}
               borderRadius={moderateScale(13)}
-              containerStyle={{
-                marginHorizontal: 20,
-                alignItems: 'center',
-              }}
               onPress={() => onPressChat(orderDetail)}
               marginBottom={moderateScaleVertical(10)}
               marginTop={moderateScaleVertical(10)}

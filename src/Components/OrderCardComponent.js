@@ -100,7 +100,10 @@ const OrderCardComponent = ({
               currencies?.primary_currency?.symbol
             }${
               // Number(i?.pvariant?.multiplier) *
-              currencyNumberFormatter(Number(data?.payable_amount).toFixed(2))
+              currencyNumberFormatter(
+                Number(data?.payable_amount),
+                appData?.profile?.preferences?.digit_after_decimal,
+              )
             }`}</Text>
           </Text>
         </View>

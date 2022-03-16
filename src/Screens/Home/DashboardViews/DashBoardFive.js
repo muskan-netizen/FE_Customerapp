@@ -297,7 +297,7 @@ export default function DashBoardFive({
                             fontSize: textScale(10),
                             fontFamily: fontFamily.regular,
                           }}>
-                          see more
+                          {!seeMore ? strings.SEE_MORE : strings.SEE_LESS}
                         </Text>
                         <Image
                           source={imagePath.icDropdown4}
@@ -524,7 +524,6 @@ export default function DashBoardFive({
             widthLeft={moderateScale(180)}
             rectWidthLeft={moderateScale(180)}
             rectHeightLeft={moderateScaleVertical(60)}
-            rectHeightLeft={moderateScaleVertical(60)}
             isRight={false}
             rx={4}
             ry={4}
@@ -532,7 +531,6 @@ export default function DashBoardFive({
           <HeaderLoader
             widthLeft={moderateScale(100)}
             rectWidthLeft={moderateScale(100)}
-            rectHeightLeft={moderateScaleVertical(60)}
             rectHeightLeft={moderateScaleVertical(60)}
             isRight={false}
             rx={4}

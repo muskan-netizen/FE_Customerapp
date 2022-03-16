@@ -649,7 +649,7 @@ function Cart({navigation, route}) {
         (selectedTipAmount != null && selectedTipAmount != ''
           ? Number(selectedTipAmount)
           : 0)
-      ).toFixed(2),
+      ).toFixed(appData?.profile?.preferences?.digit_after_decimal),
       payment_option_id: selectedPayment?.id,
       orderDetail: res.data,
       redirectFrom: 'cart',
@@ -743,11 +743,15 @@ function Cart({navigation, route}) {
   };
 
   const checkoutPayment = (paymentData) => {
+
+
+   
     let queryData = `/${paymentData?.selectedPayment?.code?.toLowerCase()}?amount=${
       paymentData?.total_payable_amount
     }&payment_option_id=${paymentData?.payment_option_id}&order_number=${
       paymentData?.orderDetail?.order_number
     }&token=${!!cardInfo ? cardInfo : null}&action=cart`;
+
     actions
       .openPaymentWebUrl(
         queryData,
@@ -1171,7 +1175,9 @@ function Cart({navigation, route}) {
       (selectedTipAmount != null && selectedTipAmount != ''
         ? Number(selectedTipAmount)
         : 0)
-    ).toFixed(2)}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&address_id=${
+    ).toFixed(
+      appData?.profile?.preferences?.digit_after_decimal,
+    )}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&address_id=${
       selectedAddressData?.id
     }&payment_option_id=${selectedPayment?.id}&action=cart`;
 
@@ -1468,7 +1474,9 @@ function Cart({navigation, route}) {
   const renderMinAmountMsg = (item) => {
     if (
       Number(item?.vendor?.order_min_amount) >
-      Number(item?.payable_amount ? item?.payable_amount : 0).toFixed(2)
+      Number(item?.payable_amount ? item?.payable_amount : 0).toFixed(
+        appData?.profile?.preferences?.digit_after_decimal,
+      )
     ) {
       return (
         <Text
@@ -1806,7 +1814,9 @@ function Cart({navigation, route}) {
                                   {`${currencies?.primary_currency?.symbol}${
                                     // Number(i?.pvariant?.multiplier) *
                                     currencyNumberFormatter(
-                                      Number(i?.variants?.price).toFixed(2),
+                                      Number(i?.variants?.price),
+                                      appData?.profile?.preferences
+                                        ?.digit_after_decimal,
                                     )
                                   }`}
                                 </Text>{' '}
@@ -1820,9 +1830,9 @@ function Cart({navigation, route}) {
                                   {`${currencies?.primary_currency?.symbol}${
                                     // Number(i?.pvariant?.multiplier) *
                                     currencyNumberFormatter(
-                                      Number(
-                                        i?.variants?.quantity_price,
-                                      ).toFixed(2),
+                                      Number(i?.variants?.quantity_price),
+                                      appData?.profile?.preferences
+                                        ?.digit_after_decimal,
                                     )
                                   }`}
                                 </Text>
@@ -1928,7 +1938,9 @@ function Cart({navigation, route}) {
                                                 currencies?.primary_currency
                                                   ?.symbol
                                               }${currencyNumberFormatter(
-                                                Number(j.price).toFixed(2),
+                                                Number(j.price),
+                                                appData?.profile?.preferences
+                                                  ?.digit_after_decimal,
                                               )}`}
                                             </Text>
                                           </View>
@@ -1991,7 +2003,9 @@ function Cart({navigation, route}) {
                                           }${currencyNumberFormatter(
                                             Number(
                                               i?.pvariant?.container_charges,
-                                            ).toFixed(2) * Number(i?.quantity),
+                                            ) * Number(i?.quantity),
+                                            appData?.profile?.preferences
+                                              ?.digit_after_decimal,
                                           )}`}
                                         </Text>
                                       </View>
@@ -2167,9 +2181,8 @@ function Cart({navigation, route}) {
                   }>{`- ${
                   currencies?.primary_currency?.symbol
                 }${currencyNumberFormatter(
-                  Number(
-                    item?.discount_amount ? item?.discount_amount : 0,
-                  ).toFixed(2),
+                  Number(item?.discount_amount ? item?.discount_amount : 0),
+                  appData?.profile?.preferences?.digit_after_decimal,
                 )}`}</Text>
               </View>
             )}
@@ -2258,7 +2271,7 @@ function Cart({navigation, route}) {
                 {currencyNumberFormatter(
                   Number(
                     item?.payable_amount ? item?.payable_amount : 0,
-                  ).toFixed(2),
+                  ), appData?.profile?.preferences?.digit_after_decimal
                 )}
               </Text>
             </View> */}
@@ -2279,7 +2292,7 @@ function Cart({navigation, route}) {
                     : styles.priceItemLabel
                 }>{`${currencies?.primary_currency?.symbol}${Number(
                 cartData?.gross_paybale_amount,
-              ).toFixed(2)}`}</Text>
+              ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
             </View>
             {!!cartData?.wallet_amount && (
               <View style={styles.bottomTabLableValue}>
@@ -2304,7 +2317,7 @@ function Cart({navigation, route}) {
                       : styles.priceItemLabel
                   }>{`${currencies?.primary_currency?.symbol}${Number(
                   cartData?.wallet_amount ? cartData?.wallet_amount : 0,
-                ).toFixed(2)}`}</Text>
+                ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
               </View>
             )}
             {!!cartData?.loyalty_amount && (
@@ -2330,7 +2343,7 @@ function Cart({navigation, route}) {
                       : styles.priceItemLabel
                   }>{`-${currencies?.primary_currency?.symbol}${Number(
                   cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
-                ).toFixed(2)}`}</Text>
+                ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
               </View>
             )}
 
@@ -2359,7 +2372,7 @@ function Cart({navigation, route}) {
                   cartData?.wallet_amount_used
                     ? cartData?.wallet_amount_used
                     : 0,
-                ).toFixed(2)}`}</Text>
+                ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
               </View>
             )}
             {!!cartData?.total_subscription_discount && (
@@ -2385,7 +2398,7 @@ function Cart({navigation, route}) {
                       : styles.priceItemLabel
                   }>{`-${currencies?.primary_currency?.symbol}${Number(
                   cartData?.total_subscription_discount,
-                ).toFixed(2)}`}</Text>
+                ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
               </View>
             )} */}
 
@@ -2396,7 +2409,7 @@ function Cart({navigation, route}) {
               </Text>
               <Text style={styles.priceItemLabel}>{`-${
                 currencies?.primary_currency?.symbol
-              }${Number(cartData?.total_discount_amount).toFixed(2)}`}</Text>
+              }${Number(cartData?.total_discount_amount).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
             </View>
           )} */}
 
@@ -2567,7 +2580,7 @@ function Cart({navigation, route}) {
                       : styles.priceItemLabel
                   }>{`${currencies?.primary_currency?.symbol}${Number(
                   cartData?.total_tax ? cartData?.total_tax : 0,
-                ).toFixed(2)}`}</Text>
+                ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
               </View>
             )}
 
@@ -2589,7 +2602,7 @@ function Cart({navigation, route}) {
                 (selectedTipAmount != null && selectedTipAmount != ''
                   ? Number(selectedTipAmount)
                   : 0)
-              ).toFixed(2)}`}</Text>
+              ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
             </View> */}
           </View>
         </View>
@@ -2629,7 +2642,7 @@ function Cart({navigation, route}) {
   };
 
   const selectedTip = (tip) => {
-    if (selectedTipvalue == 'custom') {
+    if (tip == 'custom') {
       setSelectedTipvalue(tip);
       setSelectedTipAmount(null);
     } else {
@@ -3116,12 +3129,12 @@ function Cart({navigation, route}) {
             }>{`${
             currencies?.primary_currency?.symbol
           }${currencyNumberFormatter(
-            Number(cartData?.gross_paybale_amount).toFixed(2),
+            Number(cartData?.gross_paybale_amount),
+            appData?.profile?.preferences?.digit_after_decimal,
           )}`}</Text>
         </View>
 
         {/* total_delivery_fee */}
-
         {!!cartData?.total_delivery_fee ? (
           <View style={styles.bottomTabLableValue}>
             <Text
@@ -3142,7 +3155,8 @@ function Cart({navigation, route}) {
             }${currencyNumberFormatter(
               Number(
                 cartData?.total_delivery_fee ? cartData?.total_delivery_fee : 0,
-              ).toFixed(2),
+              ),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         ) : null}
@@ -3165,9 +3179,8 @@ function Cart({navigation, route}) {
               }>{`${
               currencies?.primary_currency?.symbol
             }${currencyNumberFormatter(
-              Number(
-                cartData?.wallet_amount ? cartData?.wallet_amount : 0,
-              ).toFixed(2),
+              Number(cartData?.wallet_amount ? cartData?.wallet_amount : 0),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -3190,14 +3203,13 @@ function Cart({navigation, route}) {
               }>{`-${
               currencies?.primary_currency?.symbol
             }${currencyNumberFormatter(
-              Number(
-                cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
-              ).toFixed(2),
+              Number(cartData?.loyalty_amount ? cartData?.loyalty_amount : 0),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
 
-        {!!cartData?.total_container_charges && (
+        {!!Number(cartData?.total_container_charges) && (
           <View style={styles.bottomTabLableValue}>
             <Text
               style={
@@ -3215,7 +3227,8 @@ function Cart({navigation, route}) {
               }>{`${
               currencies?.primary_currency?.symbol
             }${currencyNumberFormatter(
-              Number(cartData?.total_container_charges).toFixed(2),
+              Number(cartData?.total_container_charges),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -3240,7 +3253,8 @@ function Cart({navigation, route}) {
             }${currencyNumberFormatter(
               Number(
                 cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
-              ).toFixed(2),
+              ),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -3262,7 +3276,8 @@ function Cart({navigation, route}) {
               }>{`-${
               currencies?.primary_currency?.symbol
             }${currencyNumberFormatter(
-              Number(cartData?.total_subscription_discount).toFixed(2),
+              Number(cartData?.total_subscription_discount),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -3303,15 +3318,13 @@ function Cart({navigation, route}) {
                 isDarkMode
                   ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                   : styles.priceItemLabel
-              }>{`${
-              currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
-              (
-                Number(cartData?.total_tax ? cartData?.total_tax : 0) +
-                Number(
-                  cartData?.total_service_fee ? cartData?.total_service_fee : 0,
-                )
-              ).toFixed(2),
+              }>{`${currencies?.primary_currency?.symbol} ${(
+              Number(cartData?.total_tax ? cartData?.total_tax : 0) +
+              Number(
+                cartData?.total_service_fee ? cartData?.total_service_fee : 0,
+              )
+            ).toFixed(
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </Animatable.View>
         )}
@@ -3341,14 +3354,12 @@ function Cart({navigation, route}) {
                         ? MyDarkTheme.colors.text
                         : colors.textGreyB,
                       fontSize: textScale(11),
-                    }}>{`${
-                    currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
-                    Number(
-                      cartData?.total_service_fee
-                        ? cartData?.total_service_fee
-                        : 0,
-                    ).toFixed(2),
+                    }}>{`${currencies?.primary_currency?.symbol}${Number(
+                    cartData?.total_service_fee
+                      ? cartData?.total_service_fee
+                      : 0,
+                  ).toFixed(
+                    appData?.profile?.preferences?.digit_after_decimal,
                   )}`}</Text>
                 </View>
               )}
@@ -3373,12 +3384,10 @@ function Cart({navigation, route}) {
                         ? MyDarkTheme.colors.text
                         : colors.textGreyB,
                       fontSize: textScale(11),
-                    }}>{`${
-                    currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
-                    Number(
-                      cartData?.total_tax ? cartData?.total_tax : 0,
-                    ).toFixed(2),
+                    }}>{`${currencies?.primary_currency?.symbol}${Number(
+                    cartData?.total_tax ? cartData?.total_tax : 0,
+                  ).toFixed(
+                    appData?.profile?.preferences?.digit_after_decimal,
                   )}`}</Text>
                 </View>
               )}
@@ -3402,12 +3411,11 @@ function Cart({navigation, route}) {
             }>{`${
             currencies?.primary_currency?.symbol
           }${currencyNumberFormatter(
-            (
-              Number(cartData?.total_payable_amount) +
+            Number(cartData?.total_payable_amount) +
               (selectedTipAmount != null && selectedTipAmount != ''
                 ? Number(selectedTipAmount)
-                : 0)
-            ).toFixed(2),
+                : 0),
+            appData?.profile?.preferences?.digit_after_decimal,
           )}`}</Text>
         </View>
 
@@ -4367,6 +4375,7 @@ function Cart({navigation, route}) {
         onPressRightTxt={() => openClearCartModal()}
       />
 
+      {console.log(cartItems, 'cartItems>>>')}
       <FlatList
         data={cartItems}
         extraData={cartItems}
