@@ -19,7 +19,7 @@ import {
   GET_ALL_PROMO_CODES_FOR_PRODUCTLIST,
   LAST_ADDED,
   DIFFERENT_ADD_ONS,
-  VENDOR_SLOTS
+  VENDOR_SLOTS,
 } from '../../config/urls';
 import {
   apiGet,
@@ -30,7 +30,7 @@ import {
 } from '../../utils/utils';
 import store from '../store';
 import types from '../types';
-const { dispatch } = store;
+const {dispatch} = store;
 
 export const saveAddress = (data) => {
   saveSelectedAddress(data).then((suc) => {
@@ -128,7 +128,6 @@ export const getAllPromoCodesForProductList = (data, headers = {}) => {
   });
 };
 
-
 //Get all promo codes for cab
 export const getAllPromoCodesForCaB = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
@@ -213,10 +212,24 @@ export function getListOfPaymentMethod(query = '', data = {}, headers = {}) {
 
 //Get List of payment method
 export function openPaymentWebUrl(query = '', data = {}, headers = {}) {
-  console.log("payment++ query", query)
-  console.log("payment++ data", data)
+  console.log('payment++ query', query);
+  console.log('payment++ data', data);
   return new Promise((resolve, reject) => {
     apiGet(GETWEBURL + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function openPaymentWebUrlPost(query = '', data = {}, headers = {}) {
+  console.log('payment++ query', query);
+  console.log('payment++ data', data);
+  return new Promise((resolve, reject) => {
+    apiPost(GETWEBURL + query, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -290,9 +303,8 @@ export const validatePromocode = (data, headers = {}) => {
   });
 };
 
-
 export const checkLastAdded = (data, headers = {}) => {
-  console.log("data", data)
+  console.log('data', data);
   return new Promise((resolve, reject) => {
     apiPost(LAST_ADDED, data, headers)
       .then((res) => {
@@ -316,7 +328,6 @@ export const differentAddOns = (data, headers = {}) => {
   });
 };
 
-
-export const checkVendorSlots = (data, headers ={}) => {
-  return apiGet(VENDOR_SLOTS + data, {}, headers)
-}
+export const checkVendorSlots = (data, headers = {}) => {
+  return apiGet(VENDOR_SLOTS + data, {}, headers);
+};

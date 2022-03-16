@@ -207,6 +207,9 @@ export default function SelectPaymentModal({
 
   //Select/ Update payment method
   const selectPaymentMethod = (data, inx) => {
+    if (selectedPaymentMethod?.id === 4) {
+      return;
+    }
     {
       selectedPaymentMethod && selectedPaymentMethod?.id == data?.id
         ? updateState({selectedPaymentMethod: null})

@@ -60,6 +60,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     (state) => state?.initBoot,
   );
   const userData = useSelector((state) => state?.auth?.userData);
+  const {pickUpTimeType} = useSelector((state) => state?.home);
 
   const fontFamily = appStyle?.fontSizeData;
   const [refArr, setRefArr] = useState([]);
@@ -120,9 +121,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       : moment(date).format('LT'),
 
     isModalVisible: false,
-    pickUpTimeType: paramData?.pickUpTimeType
-      ? paramData?.pickUpTimeType
-      : null,
+
     selectedDateAndTime: `${moment().format('YYYY-MM-DD')} ${moment().format(
       'H:MM',
     )}`,
@@ -162,7 +161,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     totalDuration,
     showVendorModal,
     selectedDateAndTime,
-    pickUpTimeType,
+
     isModalVisible,
     isLoading,
     addressLabel,
@@ -328,6 +327,37 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     updateState({showTimeModal: false, showPaymentModal: true});
   };
 
+  const sendStripeToken = (extraData, data) => {
+    data['order_number'] = extraData?.orderDetail?.order_number;
+    data['action'] = 'pickup_delivery';
+    data['stripe_token'] = paramData?.tokenInfo;
+    console.log(extraData, 'extraData....');
+    actions
+      .openPaymentWebUrlPost(`/${selectedPayment?.code}`, data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        console.log(res, 'res>>>>>');
+        updateState({
+          isModalVisible: false,
+          isLoading: false,
+          isRefreshing: false,
+          indicatorLoader: false,
+        });
+        let newObj = extraData?.orderDetail;
+        newObj['dispatch_traking_url'] = res?.data?.data?.dispatch_traking_url;
+        extraData['orderDetail'] = newObj;
+
+        navigation.navigate(
+          navigationStrings.PICKUPTAXIORDERDETAILS,
+          extraData,
+        );
+      })
+      .catch(errorMethod);
+  };
+
   const _finalPayment = (data) => {
     if (isEmpty(selectedPayment)) {
       // showError(strings.PLEASE_SELECT_A_PAYMENT_METHOD);
@@ -339,7 +369,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       isLoading: true,
       indicatorLoader: true,
     });
-
+    console.log(data, 'data>>>>>');
     actions
       .placeDelievryOrder(data, {
         code: appData?.profile?.code,
@@ -349,17 +379,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       .then((res) => {
         console.log(res, 'resresresres');
         if (res && res?.status == 200) {
-          updateState({
-            isModalVisible: false,
-            isLoading: false,
-            isRefreshing: false,
-            indicatorLoader: false,
-          });
-          // navigation.navigate(navigationStrings.CABDRIVERLOCATIONANDDETAIL, {
-          //   orderDetail: res?.data,
-          //   selectedCarOption: selectedCarOption,
-          // });
-          navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
+          let extraData = {
             orderId: res?.data?.id,
             fromVendorApp: true,
             selectedVendor: {id: selectedCarOption?.vendor_id},
@@ -368,8 +388,23 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             pickup_taxi: paramData?.pickup_taxi,
             totalDuration: totalDuration,
             selectedCarOption: selectedCarOption?.sku,
+          };
+          if (selectedPayment?.id == 4) {
+            sendStripeToken(extraData, data);
+            return;
+          }
+          updateState({
+            isModalVisible: false,
+            isLoading: false,
+            isRefreshing: false,
+            indicatorLoader: false,
           });
+          navigation.navigate(
+            navigationStrings.PICKUPTAXIORDERDETAILS,
+            extraData,
+          );
         } else {
+          console.log(res, 'res>>>>>');
           updateState({
             isModalVisible: false,
             isLoading: false,

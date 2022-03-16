@@ -898,4 +898,6 @@ Amount`,
   AMOUNT_RECIEVED: 'AMOUNT RECIEVED',
   TRANSACTION_TIME: 'Transactions time',
   LIFETIME: 'Lifetime',
+  SEE_MORE: 'see more',
+  SEE_LESS: 'see less',
 };
