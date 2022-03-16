@@ -465,7 +465,7 @@
     "gasgiantRelease": "cd android && ./gradlew assembleGasGiantRelease",
     "releezerRelease": "cd android && ./gradlew assembleReleezerRelease",
     "vendoorRelease": "cd android && ./gradlew assembleVendoorRelease",
-    "farmersouqrRelease": "cd android && ./gradlew assembleFARMERSOUQRelease",
+    "farmersouqRelease": "cd android && ./gradlew assembleFARMERSOUQRelease",
     "tmgShopsRelease": "cd android && ./gradlew assembleTMGShopsRelease",
     "stitchesonsiteRelease": "cd android && ./gradlew assembleStitchesonSiteRelease",
     "easyuRelease": "cd android && ./gradlew assembleEasyuRelease",
