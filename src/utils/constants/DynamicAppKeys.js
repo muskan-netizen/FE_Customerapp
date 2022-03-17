@@ -238,7 +238,7 @@ const shortCodes = {
   localdropoff: '960a1f',
   ubi: '085703',
   scoopaTechnologies: '3c6a7e',
-  knockknock: 'ee66a0',
+  knockknock: '3403fc',
   qrider: 'b715e7',
   dlvrd: '525456',
   delivery: 'd477fd',
@@ -266,11 +266,7 @@ const shortCodes = {
   slider: '3fea63',
   ICare: 'd3e178',
   dbairro: 'f3a0f7',
-  knockknock: '3403fc',
-  qrider: 'b715e7',
-  dlvrd: '525456',
   delivery: 'd477fd',
-  timHomeServices: 'ab2892',
   viversbox: 'aaa2b4',
   scootz: '760243',
   ola: 'e11f38',
@@ -278,6 +274,7 @@ const shortCodes = {
   sourcesServices: '67f0c8',
   wer: 'fb5def',
   beachhop: '9199e7',
+  qseek:'a1ffe8',
 };
 
 const appIds = {
@@ -1319,19 +1316,19 @@ const appIds = {
   }),
   qrider: Platform.select({
     ios: 'com.qrider',
-    android: 'com.qrider',
+    android: 'com.app.qrider',
   }),
   dlvrd: Platform.select({
     ios: 'com.application.dlvrd',
     android: 'com.dlvrd',
   }),
   delivery: Platform.select({
-    ios: 'com.delivery',
-    android: 'com.delivery',
+    ios: 'com.application.delivery',
+    android: 'com.app.delivery',
   }),
   timHomeServices: Platform.select({
     ios: 'com.timHomeServices',
-    android: 'com.timHomeServices',
+    android: 'com.app.timHomeServices',
   }),
   slider: Platform.select({
     ios: 'com.app.slider',
@@ -1348,7 +1345,7 @@ const appIds = {
   }),
   scootz: Platform.select({
     ios: 'com.scootz',
-    android: 'com.scootz',
+    android: 'com.app.scootz',
   }),
   ola: Platform.select({
     ios: 'com.application.ola',
@@ -1369,6 +1366,10 @@ const appIds = {
   beachhop: Platform.select({
     ios: 'com.beachhop',
     android: 'com.beachhop',
+  }),
+  qseek: Platform.select({
+    ios: 'com.qseek',
+    android: 'com.qseek',
   }),
 };
 

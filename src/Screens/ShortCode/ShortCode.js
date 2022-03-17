@@ -1754,6 +1754,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+          case appIds.qseek:
+            updateState({
+              shortCode: shortCodes.qseek,
+              isShortcodePrefilled: true,
+            });
+          break;
       }
     })();
   }, []);
