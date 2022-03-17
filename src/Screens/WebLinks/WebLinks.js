@@ -988,6 +988,7 @@ export default function WebLinks({navigation, route}) {
               placeholder={`${strings.YOUR_EMAIL}*`}
               onChangeText={_onChangeText('email')}
               containerStyle={styles.containerStyle}
+              keyboardType={'email-address'}
             />
             <PhoneNumberInput
               onCountryChange={_onCountryChange}

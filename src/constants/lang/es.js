@@ -785,7 +785,7 @@ export default {
   PRICE_RANGE: 'Rango de precios',
   SORRY_MSG: `Lo sentimos, actualmente no hacemos entregas aquí, pero estamos
   expandiéndose rápidamente. ¡Por favor vuelva pronto!`,
-  TOTAL_DELIVERY_FEE: 'Tarifa total de envío',
+  TOTAL_DELIVERY_FEE: 'Costo de envio',
   TOTAL_REVENUE: 'Ingresos totales (pedido entregado)',
   ADD_LOGO: 'Añadir logotipo',
   IMAGE: 'Image',
