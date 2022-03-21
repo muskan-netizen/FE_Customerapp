@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1220"
+   LastUpgradeVersion = "1240"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "84F74F512786FF8B002DBAD3"
+               BlueprintIdentifier = "8487708527DB1CB600135E8C"
                BuildableName = "Releezer.app"
                BlueprintName = "Releezer"
                ReferencedContainer = "container:Runrun.xcodeproj">
@@ -44,7 +44,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84F74F512786FF8B002DBAD3"
+            BlueprintIdentifier = "8487708527DB1CB600135E8C"
             BuildableName = "Releezer.app"
             BlueprintName = "Releezer"
             ReferencedContainer = "container:Runrun.xcodeproj">
@@ -61,7 +61,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84F74F512786FF8B002DBAD3"
+            BlueprintIdentifier = "8487708527DB1CB600135E8C"
             BuildableName = "Releezer.app"
             BlueprintName = "Releezer"
             ReferencedContainer = "container:Runrun.xcodeproj">

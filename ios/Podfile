@@ -993,10 +993,10 @@ end
   
 # end
 
-# #Releezer Target
-# target 'Releezer' do
+#Releezer Target
+target 'Releezer' do
   
-# end
+end
 
 # #Vendoor Target
 # target 'Vendoor' do
