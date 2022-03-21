@@ -204,6 +204,7 @@ android {
     flavorDimensions "appType"
 
     productFlavors {
+
            royoorder {
             dimension "appType"
             versionCode 3
@@ -304,6 +305,7 @@ android {
             resValue "string", "app_name", "Click Eat"
             resValue "string", "host_name", ""
         } 
+
         instamobile{
             dimension "appType"
             versionCode 1
@@ -631,7 +633,8 @@ android {
             resValue "string", "app_name", "Cabdelivr"
             resValue "string", "host_name", ""
          }
-           drus{
+         
+         drus{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -642,7 +645,7 @@ android {
             resValue "string", "host_name", ""
          }
     
-        arenagrub{
+        arenagrub {
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -652,7 +655,8 @@ android {
             resValue "string", "app_name", "ArenaGrub" 
             resValue "string", "host_name", ""
          }
-          yahu{
+
+         yahu {
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -661,7 +665,8 @@ android {
             applicationId 'com.yahu'
             resValue "string", "app_name", "Yahu" 
             resValue "string", "host_name", ""
-         }
+            }
+
         zuzuclean{
             dimension "appType"
             versionCode 1
@@ -672,6 +677,7 @@ android {
             resValue "string", "app_name", "Zuzu Clean"
             resValue "string", "host_name", ""
          }
+
         towtrek{
             dimension "appType"
             versionCode 1
@@ -682,6 +688,7 @@ android {
             resValue "string", "app_name", "TowTrek"
             resValue "string", "host_name", ""
          }
+
           jet{
             dimension "appType"
             versionCode 1
@@ -692,6 +699,7 @@ android {
             resValue "string", "app_name", "Jet"
              resValue "string", "host_name", ""
          }
+
          africanize{
             dimension "appType"
             versionCode 1
@@ -765,6 +773,7 @@ android {
             resValue "string", "app_name", "VICI"
             resValue "string", "host_name", ""
          }
+
          destinationOps{
             dimension "appType"
             versionCode 1
@@ -1393,6 +1402,7 @@ android {
             resValue "string", "app_name", "RX Now"
             resValue "string", "host_name", ""
          }
+
          seachangevending{
             dimension "appType"
             versionCode 1
@@ -2007,6 +2017,7 @@ android {
             resValue "string", "app_name", "Fast Mikes"
             resValue "string", "host_name", ""
          } 
+
          citysuds{
             dimension "appType"
             versionCode 1
@@ -2077,6 +2088,7 @@ android {
             resValue "string", "app_name", "Private premium pickups"
             resValue "string", "host_name", ""
          } 
+    
          fidesDelivery{
             dimension "appType"
             versionCode 1
@@ -2251,6 +2263,7 @@ android {
             resValue "string", "app_name", "Autotek"
             resValue "string", "host_name", ""
          }
+
        seaeats{
             dimension "appType"
             versionCode 1
@@ -2284,7 +2297,7 @@ android {
             resValue "string", "host_name", ""
          }
 
-         
+      
       shopcentral{
             dimension "appType"
             versionCode 1
@@ -2359,6 +2372,7 @@ android {
             resValue "string", "app_name", "Vendor Spot"
             resValue "string", "host_name", ""
          }
+
          pinkydeli{
             dimension "appType"
             versionCode 1
@@ -2411,7 +2425,6 @@ android {
          }
   
 
-   
         easyu{
             dimension "appType"
             versionCode 1
@@ -2614,16 +2627,7 @@ android {
             resValue "string", "app_name", "UBERCANN"
             resValue "string", "host_name", ""
          }
-         kongafood{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion         
-            applicationId 'com.kongafood'
-            resValue "string", "app_name", "KONGA FOOD"
-            resValue "string", "host_name", ""
-         }
+
          allotaxi{
             dimension "appType"
             versionCode 1
@@ -2714,6 +2718,7 @@ android {
             resValue "string", "app_name", "Launch"
             resValue "string", "host_name", ""
          }
+
          kampick{
             dimension "appType"
             versionCode 1
@@ -2724,6 +2729,7 @@ android {
             resValue "string", "app_name", "kampick"
             resValue "string", "host_name", ""
          }
+
           cabio{
             dimension "appType"
             versionCode 1
@@ -2734,6 +2740,7 @@ android {
             resValue "string", "app_name", "Cabio"
             resValue "string", "host_name", ""
          }
+
           tumbak{
             dimension "appType"
             versionCode 1
@@ -2744,6 +2751,7 @@ android {
             resValue "string", "app_name", "Tumbak"
             resValue "string", "host_name", ""
          }
+         
           iPicknDrop{
             dimension "appType"
             versionCode 1
@@ -2895,6 +2903,7 @@ android {
          resValue "string", "app_name", "Foodies"
          resValue "string", "host_name", ""
          }
+
       gO{
          dimension "appType"
          versionCode 1
@@ -2905,7 +2914,8 @@ android {
          resValue "string", "app_name", "GO"
          resValue "string", "host_name", ""
          }
-    bauBau{
+         
+      bauBau{
          dimension "appType"
          versionCode 1
          versionName "1.0"
@@ -2915,7 +2925,8 @@ android {
          resValue "string", "app_name", "BauBau"
          resValue "string", "host_name", ""
          }
-    bookARyde{
+         
+      bookARyde{
          dimension "appType"
          versionCode 1
          versionName "1.0"
@@ -2925,7 +2936,8 @@ android {
          resValue "string", "app_name", "Book-A-Ryde"
          resValue "string", "host_name", ""
          }
-     petsChoice{
+
+      petsChoice{
          dimension "appType"
          versionCode 1
          versionName "1.0"
@@ -2935,7 +2947,8 @@ android {
          resValue "string", "app_name", "Pets Choice"
          resValue "string", "host_name", ""
          }
-    heyBuddy{
+
+      heyBuddy{
          dimension "appType"
          versionCode 1
          versionName "1.0"
@@ -2945,7 +2958,8 @@ android {
          resValue "string", "app_name", "Hey Buddy"
          resValue "string", "host_name", ""
          }
-     yoloSonic{
+
+      yoloSonic{
          dimension "appType"
          versionCode 1
          versionName "1.0"
@@ -2955,7 +2969,8 @@ android {
          resValue "string", "app_name", "YoloSonic"
          resValue "string", "host_name", ""
          }
-     mrHealth{
+
+      mrHealth{
          dimension "appType"
          versionCode 1
          versionName "1.0"
@@ -2965,7 +2980,8 @@ android {
          resValue "string", "app_name", "MrHealth"
          resValue "string", "host_name", ""
          }
-    lopht{
+
+      lopht{
          dimension "appType"
          versionCode 1
          versionName "1.0"
@@ -2976,7 +2992,7 @@ android {
          resValue "string", "host_name", ""
          }
 
-    yalary{
+      yalary{
          dimension "appType"
          versionCode 1
          versionName "1.0"
@@ -2986,7 +3002,8 @@ android {
          resValue "string", "app_name", "Yalary"
          resValue "string", "host_name", ""
          }
-    seratho{
+         
+      seratho{
          dimension "appType"
          versionCode 1
          versionName "1.0"
@@ -2996,6 +3013,7 @@ android {
          resValue "string", "app_name", "Seratho"
          resValue "string", "host_name", ""
          }
+
        xborne{
          dimension "appType"
          versionCode 1
@@ -3006,6 +3024,7 @@ android {
          resValue "string", "app_name", "Xborne"
          resValue "string", "host_name", ""
          }
+
        fawaz{
          dimension "appType"
          versionCode 1
@@ -3016,6 +3035,7 @@ android {
          resValue "string", "app_name", "Fawaz"
          resValue "string", "host_name", ""
          }
+
          grn{
          dimension "appType"
          versionCode 1
@@ -3026,6 +3046,7 @@ android {
          resValue "string", "app_name", "GRN"
          resValue "string", "host_name", ""
          }
+
          delivadrinks{
          dimension "appType"
          versionCode 1
@@ -3036,6 +3057,7 @@ android {
          resValue "string", "app_name", "Delivadrinks"
          resValue "string", "host_name", ""
          }
+
          myRide{
          dimension "appType"
          versionCode 1
@@ -3045,10 +3067,10 @@ android {
          applicationId 'com.app.myride'
          resValue "string", "app_name", "MyRide"
          resValue "string", "host_name", ""
-        
          }
+         
          spidbi{
-          dimension "appType"
+         dimension "appType"
          versionCode 1
          versionName "1.0"
          minSdkVersion rootProject.ext.minSdkVersion
@@ -3057,6 +3079,7 @@ android {
          resValue "string", "app_name", "Spidbi"
          resValue "string", "host_name", ""
          }
+         
          ubi{
           dimension "appType"
          versionCode 1
