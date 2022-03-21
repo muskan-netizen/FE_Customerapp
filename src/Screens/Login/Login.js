@@ -264,6 +264,7 @@ export default function Login({navigation}) {
   };
   //Error handling in api
   const errorMethod = (error) => {
+    console.log(error, 'errorrrrr');
     updateState({isLoading: false});
     setTimeout(() => {
       showError(error?.message || error?.error);
