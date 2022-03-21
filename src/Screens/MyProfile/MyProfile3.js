@@ -597,10 +597,10 @@ export default function MyProfile3({route, navigation}) {
     moveToNewScreen(navigationStrings.SENDREFFERAL)();
   };
 
-  const onModalClose = () =>{
-    setModalVisible(false)
-    updateState({selectViaMap:false});
-  }
+  const onModalClose = () => {
+    setModalVisible(false);
+    updateState({selectViaMap: false});
+  };
 
   const handleDynamicTxtInput = (text, index, type) => {
     let data = cloneDeep(addtionalTextInputs);
@@ -886,7 +886,6 @@ export default function MyProfile3({route, navigation}) {
             textTransform: 'uppercase',
             fontSize: textScale(12),
           }}
-          secureTextEntry={true}
         />
 
         <TextInputWithUnderlineAndLabel

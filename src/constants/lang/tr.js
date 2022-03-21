@@ -828,8 +828,11 @@ export default {
   AMOUNT_RECIEVED: 'AMOUNT RECIEVED',
   TRANSACTION_TIME: 'Transactions time',
   LIFETIME: 'Lifetime',
+  SEE_MORE: 'see more',
+  SEE_LESS: 'see less',
+  MENU:"Menu",
   A_TO_Z:"A to Z",
   Z_TO_A: "Z to A",
-  COST_LOW_TO_HIGH: "COST: Low to High",
-  COST: "COST",
+  COST_LOW_TO_HIGH: "Cost: Low to high",
+  COST_HIGH_TO_LOW: "Cost: High to low"
 };

@@ -39,8 +39,8 @@ const VendorTracking = ({data, mapKey}) => {
         // maxZoomLevel={20}
         onReady={(result) => {
           // updateState({
-          //   totalDistance: result.distance.toFixed(2),
-          //   totalDuration: result.duration.toFixed(2),
+          //   totalDistance: result.distance.toFixed(appData?.profile?.preferences?.digit_after_decimal),
+          //   totalDuration: result.duration.toFixed(appData?.profile?.preferences?.digit_after_decimal),
           // });
           mapRef.current.fitToCoordinates(result.coordinates, {
             edgePadding: {

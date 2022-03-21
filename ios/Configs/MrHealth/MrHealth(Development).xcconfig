@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-available_pods-MrHealth/Pods-available_pods-MrHealth.debug.xcconfig"
+
+PROJECT_APPLE_ID = 1611743572
+PROJECT_BUNDLE_ID =com.mrHealth
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = MrHealth
+PROJECT_GOOGLE_CLIENT_ID =180042591829-dfkf1l86tc7s5j8gp7a7it6dgpgfqmeg.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.180042591829-dfkf1l86tc7s5j8gp7a7it6dgpgfqmeg
+PROJECT_FACEBOOK_ID = 622975412481024
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =MrHealthInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

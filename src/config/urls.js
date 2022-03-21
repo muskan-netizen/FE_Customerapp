@@ -11,6 +11,7 @@ export const FORGOT_API = getApiUrl('/auth/forgotPassword');
 export const APP_INITIAL_SETTINGS = getApiUrl('/header');
 export const HOMEPAGE_DATA_URL = getApiUrl('/homepage');
 export const GET_DATA_BY_CATEGORY = getApiUrl('/category');
+export const GET_DATA_BY_CATEGORY_OPTAMIZE = getApiUrl('/v2/category');
 export const GET_PRODUCT_DATA_BY_PRODUCTID = getApiUrl('/product');
 export const GET_PRODUCT_DATA_BY_VENDORID = getApiUrl('/vendor');
 export const GET_PRODUTC_DATA_BY_BRANDID = getApiUrl('/brand');
@@ -26,6 +27,7 @@ export const RESEND_OTP = getApiUrl('/auth/sendToken');
 export const INCREASE_ITEM_QNT = getApiUrl('/cart/increaseItem');
 export const DECREASE_ITEM_QNT = getApiUrl('/cart/decreaseItem');
 export const GET_DATA_BY_CATEGORY_FILTERS = getApiUrl('/category/filters');
+export const GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE = getApiUrl('/v2/category/filters');
 export const GET_DATA_BY_VENDOR_FILTERS = getApiUrl('/vendor/filters');
 export const GET_PRODUCT_DATA_BASED_VARIANTS = getApiUrl('/productByVariant');
 export const GET_PRODUCT_TAGS = getApiUrl('/getAllProductTags');
@@ -174,4 +176,6 @@ export const USER_REGISTRATION_DOCUMENT = getApiUrl(
   '/user/registration/document',
 );
 export const GET_USER_PROFILE = getApiUrl('/getProfile');
-export const VENDOR_PRODUCTS_OPTIMIZE_FILTERS = getApiUrl('/vendor/vendorProductsFilterOptimize');
+export const VENDOR_PRODUCTS_OPTIMIZE_FILTERS = getApiUrl(
+  '/vendor/vendorProductsFilterOptimize',
+);

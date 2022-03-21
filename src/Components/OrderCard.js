@@ -13,6 +13,7 @@ import {getImageUrl} from '../utils/helperFunctions';
 import ButtonWithLoader from './ButtonWithLoader';
 import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
 import strings from '../constants/lang';
+import {useSelector} from 'react-redux';
 
 const OrderCard = (props) => {
   const {
@@ -21,6 +22,7 @@ const OrderCard = (props) => {
     updateOrderStatus,
     isBleDevice = false,
   } = props;
+  const {currencies} = useSelector((state) => state?.initBoot);
   let count = item.item_count - 1;
   return (
     <View style={styles.container}>
@@ -60,10 +62,10 @@ const OrderCard = (props) => {
       )}
       <TouchableOpacity onPress={onPress}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={styles.font13Regular}>Order {item?.order_number}</Text>
-          <Text style={styles.date}>{`${moment(item?.date_time).format(
-            'DD MMM,YYYY',
-          )} ${moment(item?.date_time).format('LT')} `}</Text>
+          <Text style={styles.font13Regular}>
+            {strings.ORDER} {item?.order_number}
+          </Text>
+          <Text style={styles.date}>{item?.date_time}</Text>
         </View>
         <View
           style={[
@@ -119,7 +121,10 @@ const OrderCard = (props) => {
       <View style={{...styles.rowSapce, marginTop: moderateScaleVertical(12)}}>
         <View>
           <Text style={styles.orderText}>Order Total</Text>
-          <Text style={styles.totalPrice}>${item?.payable_amount}</Text>
+          <Text style={styles.totalPrice}>
+            {currencies?.primary_currency?.symbol}
+            {Number(item?.payable_amount).toFixed(2)}
+          </Text>
         </View>
 
         {item?.order_status?.current_status?.id != 1 ? (

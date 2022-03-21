@@ -138,9 +138,8 @@ export default function CabAndOrderDetail({
                       ? `${
                           currencies?.primary_currency?.symbol
                         }${currencyNumberFormatter(
-                          Number(
-                            paramData?.orderDetail?.payable_amount,
-                          ).toFixed(2),
+                          Number(paramData?.orderDetail?.payable_amount),
+                          appData?.profile?.preferences?.digit_after_decimal,
                         )}`
                       : '--'}
                   </Text>

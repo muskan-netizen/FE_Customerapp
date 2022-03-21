@@ -15,6 +15,7 @@ const HomeCategoryCard2 = ({
   onPress = () => {},
   isLoading = false,
 }) => {
+  
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -33,6 +34,10 @@ const HomeCategoryCard2 = ({
   const onLoad = (evl) =>{
 
   }
+
+  let imgHeight= appStyle?.homePageLayout === 5 ? moderateScale(80): moderateScale(50)
+  let imgWidth = appStyle?.homePageLayout === 5 ? moderateScale(80): moderateScale(50)
+  let imgRadius = appStyle?.homePageLayout === 5 ? moderateScale(40): moderateScale(25)
 
   return (
     <TouchableOpacity
@@ -55,8 +60,8 @@ const HomeCategoryCard2 = ({
         }}>
         {isSVG ? (
           <SvgUri
-            height={moderateScale(80)}
-            width={moderateScale(80)}
+            height={imgHeight}
+            width={imgWidth}
             uri={imageURI}
             style={{
 
@@ -66,9 +71,9 @@ const HomeCategoryCard2 = ({
           <View>
           <FastImage
             style={{
-              height: moderateScale(80),
-              width: moderateScale(80),
-              borderRadius: moderateScale(40),
+              height:imgHeight,
+              width:imgWidth,
+              borderRadius:imgRadius
               
             }}
             source={{

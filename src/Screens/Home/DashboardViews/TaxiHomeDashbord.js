@@ -177,7 +177,7 @@ export default function TaxiHomeDashbord({
 
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  
+
   const moveToNewScreen =
     (screenName, data = {}) =>
     () => {
@@ -366,10 +366,12 @@ export default function TaxiHomeDashbord({
 
                   setTimeout(() => {
                     updateState({isLoadingModal: false});
+                    actions.saveSchduleTime(
+                      slectedDate || selectedTime ? '' : 'now',
+                    );
                     navigation.navigate(navigationStrings.ADDADDRESS, {
                       cat: appMainData?.categories[0],
                       datetime: {slectedDate, selectedTime},
-                      pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
                     });
                   }, 2000);
                 }}>
@@ -399,10 +401,10 @@ export default function TaxiHomeDashbord({
           pre_address: details?.address,
         };
       }
+      actions.saveSchduleTime('now');
       navigation.navigate(navigationStrings.ADDADDRESS, {
         cat: appMainData?.categories[0],
         datetime: {slectedDate, selectedTime},
-        pickUpTimeType: 'now',
         prefillAdress: !!prefillAdress ? prefillAdress : null,
       });
     } else {
@@ -502,10 +504,10 @@ export default function TaxiHomeDashbord({
             width: width - 20,
           }}
           onPress={() => {
+            actions.saveSchduleTime('now');
             userData?.auth_token
               ? navigation.navigate(navigationStrings.ADDADDRESS, {
                   data: appMainData?.categories[0],
-                  pickUpTimeType: 'now',
                 })
               : navigation.navigate(navigationStrings.LOGIN);
           }}>
@@ -628,11 +630,11 @@ export default function TaxiHomeDashbord({
               <TouchableOpacity
                 style={{width: width - width / 3}}
                 onPress={() => {
+                  actions.saveSchduleTime('now');
                   userData?.auth_token
                     ? navigation.navigate(navigationStrings.ADDADDRESS, {
                         cat: appMainData?.categories[0],
                         datetime: {slectedDate, selectedTime},
-                        pickUpTimeType: 'now',
                       })
                     : navigation.navigate(navigationStrings.LOGIN);
                 }}>

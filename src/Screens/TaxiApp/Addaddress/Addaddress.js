@@ -53,6 +53,8 @@ export default function Addaddress({navigation, route}) {
   const {appData, allAddresss, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  const {pickUpTimeType} = useSelector((state) => state?.home);
+
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
     pageNo: 1,
@@ -340,8 +342,7 @@ export default function Addaddress({navigation, route}) {
       tasks: checkEmptyTask,
       cabVendors: pickUpVendors,
       datetime: paramData?.datetime,
-      pickUpTimeType:
-        paramData?.pickUpTimeType || route?.params?.data?.pickUpTimeType,
+      pickUpTimeType: pickUpTimeType,
     });
   };
 
@@ -700,8 +701,7 @@ export default function Addaddress({navigation, route}) {
           <ScrollView
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
-            onMomentumScrollBegin={()=>Keyboard.dismiss()}
-            >
+            onMomentumScrollBegin={() => Keyboard.dismiss()}>
             {!!searchResult?.data && searchResult?.data.length > 0 ? (
               <View style={{marginTop: moderateScaleVertical(16)}}>
                 <View style={{...styles.savedAddressView}}>
