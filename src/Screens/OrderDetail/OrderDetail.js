@@ -2693,7 +2693,7 @@ export default function OrderDetail({ navigation, route }) {
           </View>
         ) : null}
 
-        {!!lalaMoveUrl ? <View style={{height: moderateScale(height/1.8)}}>
+        {!!lalaMoveUrl ? <View style={{ height: moderateScale(height / 1.8) }}>
 
           <WebView
             source={{ uri: lalaMoveUrl }}
