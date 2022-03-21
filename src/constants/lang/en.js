@@ -900,4 +900,9 @@ Amount`,
   LIFETIME: 'Lifetime',
   SEE_MORE: 'see more',
   SEE_LESS: 'see less',
+  MENU:"Menu",
+  A_TO_Z:"A to Z",
+  Z_TO_A: "Z to A",
+  COST_LOW_TO_HIGH: "Cost: Low to high",
+  COST_HIGH_TO_LOW: "Cost: High to low"
 };

@@ -230,19 +230,20 @@ const ProductCard3 = ({
       return;
     }
     if (
-      (!!data?.add_on && data?.add_on.length !== 0) ||
-      (!!data?.variantSet && data?.variantSet.length !== 0)
+      (!!data?.add_on_count && data?.add_on_count !== 0) ||
+      (!!data?.variant_set_count && data?.variant_set_count !== 0)
     ) {
+
       onIncrement();
     } else {
-      updateState({...state, isIncrement: true});
-      if (!disabledBtn) {
-        const isEnabled = numberOfHits.length === 0;
-        numberOfHits.push(data?.qty || totalProductQty);
-        if (isEnabled) {
-          initAnimation();
-        }
-      }
+      updateState({ ...state, isIncrement: true });
+      // if (!disabledBtn) {
+      //   const isEnabled = numberOfHits.length === 0;
+      //   numberOfHits.push(data?.qty || totalProductQty);
+      //   if (isEnabled) {
+      //     initAnimation();
+      //   }
+      // }
       onIncrement();
     }
   };
@@ -250,19 +251,19 @@ const ProductCard3 = ({
   const onDecrementQty = () => {
     setAdd(false);
     if (
-      (!!data?.add_on && data?.add_on.length !== 0) ||
-      (!!data?.variantSet && data?.variantSet.length !== 0)
+      (!!data?.add_on_count && data?.add_on_count !== 0) ||
+      (!!data?.variant_set_count && data?.variant_set_count !== 0)
     ) {
       onDecrement();
     } else {
-      updateState({...state, isIncrement: false});
-      if (!disabledBtn) {
-        const isEnabled = numberOfHits.length === 0;
-        numberOfHits.push(data?.qty || totalProductQty);
-        if (isEnabled) {
-          initAnimation();
-        }
-      }
+      updateState({ ...state, isIncrement: false });
+      // if (!disabledBtn) {
+      //   const isEnabled = numberOfHits.length === 0;
+      //   numberOfHits.push(data?.qty || totalProductQty);
+      //   if (isEnabled) {
+      //     initAnimation();
+      //   }
+      // }
       onDecrement();
     }
   };
@@ -321,7 +322,7 @@ const ProductCard3 = ({
                 textTransform: 'capitalize',
                 // flex:1
               }}>
-              {data?.translation[0]?.title}
+              {data?.translation_title || data?.title}
             </Text>
             {!!data?.title ? (
               <Text
@@ -379,7 +380,7 @@ const ProductCard3 = ({
                 currencies?.primary_currency?.symbol
               } ${currencyNumberFormatter(
                 Number(
-                  data?.variant[0]?.multiplier || data?.variant_multiplier,
+                 data?.variant_multiplier,
                 ) * Number(data?.variant[0]?.price),
                 appData?.profile?.preferences?.digit_after_decimal,
               )}`}
@@ -445,9 +446,9 @@ const ProductCard3 = ({
               justifyContent: url1 ? 'flex-start' : 'center',
             }}>
             {data?.has_inventory == 0 ||
-            !!data?.variant[0]?.quantity ||
-            (!!typeId && typeId == 8) ||
-            (!!businessType && businessType == 'laundry') ? (
+              !!data?.variant_quantity ||
+              (!!typeId && typeId == 8) ||
+              (!!businessType && businessType == 'laundry') ? (
               <View
                 style={{
                   marginTop:
@@ -574,8 +575,8 @@ const ProductCard3 = ({
                     </TouchableOpacity>
                   </>
                 )}
-                {(!!data?.add_on && data?.add_on.length !== 0) ||
-                (!!data?.variantSet && data?.variantSet.length !== 0) ? (
+                {(!!data?.add_on_count && data?.add_on_count !== 0) ||
+                  (!!data?.variant_set_count && data?.variant_set_count !== 0) ? (
                   <Text
                     style={{
                       ...styles.customTextStyle,

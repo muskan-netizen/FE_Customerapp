@@ -725,6 +725,10 @@ function Cart({navigation, route}) {
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.AVENUE, paymentData);
         break;
+      case 24: //Cashfree Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.CASH_FREE, paymentData);
+        break;
       default:
         if (
           !!businessType &&
@@ -743,9 +747,6 @@ function Cart({navigation, route}) {
   };
 
   const checkoutPayment = (paymentData) => {
-
-
-   
     let queryData = `/${paymentData?.selectedPayment?.code?.toLowerCase()}?amount=${
       paymentData?.total_payable_amount
     }&payment_option_id=${paymentData?.payment_option_id}&order_number=${
@@ -1514,6 +1515,7 @@ function Cart({navigation, route}) {
           alignItems: 'center',
           // marginBottom: moderateScaleVertical(8),
           justifyContent: 'space-between',
+          marginVertical:moderateScaleVertical(8)
           // padding: moderateScale(8)
         }}>
         <View
