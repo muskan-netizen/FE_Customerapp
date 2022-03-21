@@ -1,11 +1,11 @@
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
-// export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
+export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://2d24-103-72-170-243.ngrok.io/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
-export const API_BASE_URL = 'https://api.focushires.com/api/v1';
+// export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.97.160:9000/api/v1';//inderjit
 
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
