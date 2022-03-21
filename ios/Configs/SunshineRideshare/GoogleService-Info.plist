@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>34352099268-a9t1f5ghdihri9lrikb5iohn9gb9t3ok.apps.googleusercontent.com</string>
+	<string>536956537175-tnig54ramm3bn425j65saheooo1j4n29.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.34352099268-a9t1f5ghdihri9lrikb5iohn9gb9t3ok</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>34352099268-32larhakdno3p03u96mi3dnehnvlhqq2.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.536956537175-tnig54ramm3bn425j65saheooo1j4n29</string>
 	<key>API_KEY</key>
-	<string>AIzaSyA6vnXPSEZsq9NY87eFBDunqosV4Xu-01w</string>
+	<string>AIzaSyAMkLXzNsDre-QopZG-GgR2Dont2k0Fryw</string>
 	<key>GCM_SENDER_ID</key>
-	<string>34352099268</string>
+	<string>536956537175</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.sunshinerideshare</string>
+	<string>com.app.sunshinerideshare</string>
 	<key>PROJECT_ID</key>
-	<string>sunshine-rideshare</string>
+	<string>sun-shine-ride-share</string>
 	<key>STORAGE_BUCKET</key>
-	<string>sunshine-rideshare.appspot.com</string>
+	<string>sun-shine-ride-share.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:34352099268:ios:1a7ab432ccbe208830fe91</string>
+	<string>1:536956537175:ios:1c1a3f46699e4e424b9612</string>
 </dict>
 </plist>

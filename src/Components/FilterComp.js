@@ -35,25 +35,25 @@ const FilterComp = ({
         sortFilters: [
             {
                 id: 1,
-                label: 'A to Z',
+                label: strings.Z_TO_A,
                 labelValue: 'a_to_z',
                 parent: strings.SORT_BY,
             },
             {
                 id: 2,
-                label: 'Z to A',
+                label: strings.Z_TO_A,
                 labelValue: 'z_to_a',
                 parent: strings.SORT_BY,
             },
             {
                 id: 3,
-                label: strings.LOW_TO_HIGH,
+                label: strings.COST_LOW_TO_HIGH,
                 labelValue: 'low_to_high',
                 parent: strings.SORT_BY,
             },
             {
                 id: 4,
-                label: strings.HIGH_TO_LOW,
+                label: strings.COST_HIGH_TO_LOW,
                 labelValue: 'high_to_low',
                 parent: strings.SORT_BY,
             },

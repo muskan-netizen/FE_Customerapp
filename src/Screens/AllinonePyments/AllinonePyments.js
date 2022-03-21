@@ -65,8 +65,8 @@ export default function AllinonePyments({ navigation, route }) {
           }
         }
         if (paramsData?.action == 'subscription') {
-          //Payfast(6), Paystack(6), FPX(19) // 
-          if (paramsData?.id != 6 && paramsData?.id != 5 && paramsData?.id != 19) {
+          //Payfast(6), Paystack(6), FPX(19) // Cashfree(24)
+          if (paramsData?.id != 6 && paramsData?.id != 5 && paramsData?.id != 19 && paramsData?.id != 24) {
             subscriptionApiHit(transId);
             return;
           } else {

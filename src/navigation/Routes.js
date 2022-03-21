@@ -57,8 +57,6 @@ export default function Routes() {
   const {shortCodeStatus, appStyle} = useSelector((state) => state?.initBoot);
   const businessType = appStyle?.homePageLayout;
 
-  console.log('bussiness type', businessType);
-
   const MyTheme = {
     ...DefaultTheme,
     colors: {
@@ -115,6 +113,6 @@ export default function Routes() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </AppearanceProvider>
+     </AppearanceProvider>
   );
 }

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "180042591829",
+    "project_id": "mrhealth-463eb",
+    "storage_bucket": "mrhealth-463eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180042591829:android:6e8bb67411bd6bd1c6eedc",
+        "android_client_info": {
+          "package_name": "com.mrHealth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "180042591829-5qdkf68k8p2fqufgviksfia5rfi23tuc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAb9-YArJC6HpnU7QaYaUS30sUZfeJ2CKs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "180042591829-5qdkf68k8p2fqufgviksfia5rfi23tuc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "180042591829-dfkf1l86tc7s5j8gp7a7it6dgpgfqmeg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mrHealth"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

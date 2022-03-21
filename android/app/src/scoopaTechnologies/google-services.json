@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "93441502791",
+    "project_id": "royodispatcher8",
+    "storage_bucket": "royodispatcher8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93441502791:android:b332b26898326d2aa08b62",
+        "android_client_info": {
+          "package_name": "com.scoopaTechnologies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93441502791-dkhgatli7bg8k6v7vphlar12tgcp57vr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.scoopaTechnologies",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "93441502791-hefmsefivnqt0ae2i76a8e1ie7mnbpfg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.scoopaTechnologies",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "93441502791-q9ndf7jvo5iftfib5h1sh6o53c2pnhdm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.scoopaTechnologies",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANMqEHQTGQiOi-ZehCSGggXRsacdmSNWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

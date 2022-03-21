@@ -250,7 +250,9 @@ const RoyoAddProduct = ({route, navigation}) => {
             productInfo?.variant &&
             productInfo?.variant.length > 0 &&
             productInfo?.variant[0].price
-              ? Number(productInfo?.variant[0].price).toFixed(2).toString()
+              ? Number(productInfo?.variant[0].price)
+                  .toFixed(appData?.profile?.preferences?.digit_after_decimal)
+                  .toString()
               : '',
           // compareAtPrice: productInfo?.variant[0].cost_price
           //   ? productInfo?.variant[0].cost_price
@@ -260,7 +262,7 @@ const RoyoAddProduct = ({route, navigation}) => {
             productInfo?.variant.length > 0 &&
             productInfo?.variant[0].compare_at_price
               ? Number(productInfo?.variant[0].compare_at_price)
-                  .toFixed(2)
+                  .toFixed(appData?.profile?.preferences?.digit_after_decimal)
                   .toString()
               : '',
           batchCount:
@@ -794,7 +796,13 @@ const RoyoAddProduct = ({route, navigation}) => {
             mainStyle={{flex: 0.2}}
             placeholderTextColor={colors.textGreyB}
             txtInputStyle={styles.textInputStyle}
-            value={item.price ? Number(item.price).toFixed(2).toString() : ''}
+            value={
+              item.price
+                ? Number(item.price)
+                    .toFixed(appData?.profile?.preferences?.digit_after_decimal)
+                    .toString()
+                : ''
+            }
           />
           <TextInputWithUnderlineAndLabel
             label={strings.COST_PRICE}
@@ -820,7 +828,9 @@ const RoyoAddProduct = ({route, navigation}) => {
             txtInputStyle={styles.textInputStyle}
             value={
               item.compare_at_price
-                ? Number(item.compare_at_price).toFixed(2).toString()
+                ? Number(item.compare_at_price)
+                    .toFixed(appData?.profile?.preferences?.digit_after_decimal)
+                    .toString()
                 : ''
             }
           />

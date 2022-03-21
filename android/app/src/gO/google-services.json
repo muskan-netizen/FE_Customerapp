@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "906544415092",
+    "project_id": "go-app-90080",
+    "storage_bucket": "go-app-90080.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906544415092:android:775e19977e525c803c2c21",
+        "android_client_info": {
+          "package_name": "com.customer.gO"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "906544415092-g6jo5tf1bbm5f3dblkhdl6fndstgnpi5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.gO",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "906544415092-idg4kpbois8tsfb0ms7ms5p15jirgnn6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.gO",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "906544415092-slkdjuf8m2qmj7ri6epjuvnr4v0i3krq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.gO",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "906544415092-r6coojn9r1fe6jd604pi23ubuiet96nj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHvVvDRreEBAkAaNLLCwlbk_p--uw2E6c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "906544415092-r6coojn9r1fe6jd604pi23ubuiet96nj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "906544415092-hrne6ldeb4v7e2u79i3sdgr9kfg7jeri.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.customer.gO"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

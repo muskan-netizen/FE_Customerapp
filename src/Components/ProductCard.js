@@ -38,7 +38,7 @@ const ProductCard = ({
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle, appData} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const {themeColors, themeLayouts} = currentTheme;
   const commonStyles = commonStylesFunc({fontFamily});
@@ -111,10 +111,9 @@ const ProductCard = ({
               color: themeColors.currencyRed,
             }}>
             {`${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
-              (
-                Number(data?.variant[0]?.multiplier) *
-                Number(data?.variant[0]?.price)
-              ).toFixed(2),
+              Number(data?.variant[0]?.multiplier) *
+                Number(data?.variant[0]?.price),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}
           </Text>
         </View>
