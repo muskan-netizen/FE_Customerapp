@@ -378,7 +378,7 @@ const ProductCard3 = ({
                 } ${currencyNumberFormatter(
                   (
                     Number(
-                      data?.variant[0]?.multiplier || data?.variant_multiplier,
+                      data?.variant_multiplier,
                     ) * Number(data?.variant[0]?.price)
                   ).toFixed(2),
                 )}`}
@@ -444,7 +444,7 @@ const ProductCard3 = ({
               justifyContent: url1 ? 'flex-start' : 'center',
             }}>
             {data?.has_inventory == 0 ||
-              !!data?.variant[0]?.quantity ||
+              !!data?.variant_quantity ||
               (!!typeId && typeId == 8) ||
               (!!businessType && businessType == 'laundry') ? (
               <View

@@ -423,7 +423,9 @@ export default function Products({ route, navigation }) {
   /****Get all list items by vendor id */
   const getAllProductsByVendor = (pageNo = 1) => {
     console.log('api hit getAllProductsByVendor');
-    let apiData = `/${productListId?.id}?limit=${limit}&page=${pageNo}`
+    let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id
+    
+    let apiData = `/${vendorId}?limit=${limit}&page=${pageNo}`
     if (!!data?.categoryExist) { //sent category id if user comes from category>>vendor>>productList
       apiData = apiData + `&category_id=${data?.categoryExist}`
     }
