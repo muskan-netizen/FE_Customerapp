@@ -13,11 +13,11 @@ import {
   VENDOR_ALL,
   GETALLVENDORS,
 } from '../../config/urls';
-import { apiPost, setItem, getItem, apiGet } from '../../utils/utils';
+import {apiPost, setItem, getItem, apiGet} from '../../utils/utils';
 import store from '../store';
 import types from '../types';
 
-const { dispatch } = store;
+const {dispatch} = store;
 
 //Get Homme banners and Category data
 export function homeData(data = {}, headers = {}, isShortCode = false) {
@@ -112,7 +112,7 @@ export function profileAddress(res) {
         payload: res,
       });
     })
-    .catch((err) => { });
+    .catch((err) => {});
 }
 
 // export function updateProfileAddress(res) {
@@ -207,11 +207,10 @@ export const getAllTempOrders = (data = {}, headers = {}) => {
   });
 };
 
-export function vendorAll(query, data, headers = {}){
-  console.log("sending headers",data)
-  return apiGet(VENDOR_ALL + query, data, headers)
+export function vendorAll(query, data, headers = {}) {
+  console.log('sending headers', data);
+  return apiGet(VENDOR_ALL + query, data, headers);
 }
-
 
 //Get all vendors
 export function getAllVendors(data = {}, headers = {}, isShortCode = false) {
@@ -225,3 +224,10 @@ export function getAllVendors(data = {}, headers = {}, isShortCode = false) {
       });
   });
 }
+
+export const saveSchduleTime = (data) => {
+  dispatch({
+    type: types.SAVE_SCHEDULE_TIME,
+    payload: data,
+  });
+};

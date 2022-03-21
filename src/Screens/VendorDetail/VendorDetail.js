@@ -156,6 +156,7 @@ export default function VendorDetail({ navigation, route }) {
           vendorData: vendorParams?.item,
           categoryInfo: item,
           name: item.name,
+          categoryExist: item?.id || null
         })}
         // onPress={() => navigation.navigate(navigationStrings.PRODUCT_LIST)}
         data={item}

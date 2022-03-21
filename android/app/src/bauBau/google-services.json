@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "671083763720",
+    "project_id": "baubau-6025b",
+    "storage_bucket": "baubau-6025b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:671083763720:android:957c83df88b15df75799bd",
+        "android_client_info": {
+          "package_name": "com.baubau"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "671083763720-2amk4704an7g4hdbnpd6vb5fbj7tm7ca.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.baubau",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "671083763720-6etqnde32qps1q55mevno86edt2ori6p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.baubau",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "671083763720-7jufe6lc25nfaj54dvpvb7ajii2pmgfo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.baubau",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "671083763720-2f3ktn4qi0a0deiqbbvvd0tv38lf5slb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgVcU_QC8siA6AmZFzEWKVLuy-LqHWVgQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "671083763720-2f3ktn4qi0a0deiqbbvvd0tv38lf5slb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "671083763720-hhnds51qtjgko6pee431o1vahiumlv1h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.baubau"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

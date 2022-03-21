@@ -39,6 +39,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const {appData, currencies, languages, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  const {pickUpTimeType} = useSelector((state) => state?.home);
+
   const userData = useSelector((state) => state?.auth?.userData);
 
   const fontFamily = appStyle?.fontSizeData;
@@ -95,7 +97,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     selectedTime: moment(date).format('LT'),
 
     isModalVisible: false,
-    pickUpTimeType: null,
     selectedDateAndTime: `${moment().format('YYYY-MM-DD')} ${moment().format(
       'H:MM',
     )}`,
@@ -118,7 +119,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     totalDuration,
     showVendorModal,
     selectedDateAndTime,
-    pickUpTimeType,
     isModalVisible,
     isLoading,
     addressLabel,
@@ -201,7 +201,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         console.log(res, 'res>>>');
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
-            ? Number(res?.data?.loyalty_amount_saved).toFixed(2)
+            ? Number(res?.data?.loyalty_amount_saved).toFixed(
+                appData?.profile?.preferences?.digit_after_decimal,
+              )
             : 0,
           availableCarList:
             pageNo == 1
@@ -385,9 +387,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         onPressAvailableCar={(item) => updateState({selectedCarOption: item})}
         selectedCarOption={selectedCarOption}
         onPressPickUpNow={() => {
+          actions.saveSchduleTime('now');
           selectedCarOption
             ? updateState({
-                pickUpTimeType: 'now',
                 showPaymentModal: true,
                 redirectFromNow: true,
                 showCarModal: false,
@@ -396,9 +398,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         }}
         isLoading={isLoading}
         onPressPickUplater={() => {
+          actions.saveSchduleTime('schedule');
           selectedCarOption
             ? updateState({
-                pickUpTimeType: 'schedule',
                 showTimeModal: true,
                 redirectFromNow: false,
                 showCarModal: false,
@@ -427,7 +429,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         slectedDate={slectedDate}
         isModalVisible={isModalVisible}
         selectedTime={selectedTime}
-        navigation={navigation}
         date={date}
         onPressBack={() =>
           redirectFromNow

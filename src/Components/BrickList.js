@@ -16,7 +16,8 @@ export default (props) => {
                   prop.rowHeight === undefined
                     ? width / props.columns
                     : prop.rowHeight,
-              }}>
+              }}
+              >
               {props.renderItem(prop)}
             </View>
           );
