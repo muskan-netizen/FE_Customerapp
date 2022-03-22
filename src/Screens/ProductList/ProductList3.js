@@ -479,8 +479,9 @@ export default function Products({route, navigation}) {
         }
 
         if (res?.data?.vendor?.is_show_products_with_category) {
+      
           res.data.categories.map((item) => {
-            item?.products.map((val) => {
+            item?.category.products.map((val) => {
               if (val?.media?.length > 0) {
                 const url1 = val?.media[0]?.image?.path?.image_fit;
                 const url2 = val?.media[0]?.image?.path?.image_path;
@@ -493,9 +494,10 @@ export default function Products({route, navigation}) {
           let filterArray = res?.data?.categories?.map((val) => {
             let newKey = {
               ...val,
-              ['data']: val?.products && val.products,
+              // ['data']: val?.products && val.products,
+              ['data']: val?.category.products && val.category.products,
               title: val?.category && val.category?.translation[0]?.name,
-              // totalProduct: totalProduct + val.products.length,
+  
             };
             delete newKey['products'];
             return newKey;
