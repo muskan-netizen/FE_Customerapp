@@ -497,7 +497,6 @@ export default function Products({route, navigation}) {
               // ['data']: val?.products && val.products,
               ['data']: val?.category.products && val.category.products,
               title: val?.category && val.category?.translation[0]?.name,
-  
             };
             delete newKey['products'];
             return newKey;
