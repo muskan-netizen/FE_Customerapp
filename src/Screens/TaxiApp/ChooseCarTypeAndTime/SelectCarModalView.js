@@ -175,7 +175,8 @@ export default function SelectCarModalView({
                   {`${
                     currencies?.primary_currency?.symbol
                   }${currencyNumberFormatter(
-                    Number(item.tags_price).toFixed(2),
+                    Number(item.tags_price),
+                    appData?.profile?.preferences?.digit_after_decimal,
                   )}`}
                 </Text>
               </View>

@@ -39,6 +39,8 @@ export default function SendProduct({navigation, route}) {
   const {appData, allAddresss, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  const {pickUpTimeType} = useSelector((state) => state?.home);
+
   const [state, setState] = useState({
     pickUpLocation: '',
     pickUpLocationFocus: false,
@@ -84,7 +86,6 @@ export default function SendProduct({navigation, route}) {
     selectedAvailableTimeOption: null,
     openTimeAndDateOption: null,
     pickUpVendors: [],
-    pickUpTimeType: 'now',
   });
   const {
     pickUpLocation,
@@ -110,7 +111,6 @@ export default function SendProduct({navigation, route}) {
     selectedAvailableTimeOption,
     openTimeAndDateOption,
     pickUpVendors,
-    pickUpTimeType,
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -168,7 +168,9 @@ export default function SendProduct({navigation, route}) {
         console.log(res, 'res>>>');
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
-            ? Number(res?.data?.loyalty_amount_saved).toFixed(2)
+            ? Number(res?.data?.loyalty_amount_saved).toFixed(
+                appData?.profile?.preferences?.digit_after_decimal,
+              )
             : 0,
           availableCarList:
             pageNo == 1

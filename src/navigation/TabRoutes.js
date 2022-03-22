@@ -37,7 +37,6 @@ export default function TabRoutes(props) {
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
 
-  console.log(appStyle?.tabBarLayout, 'appStyle?.tabBarLayout');
   // const checkForCeleb =
   //   allCategory &&
   //   allCategory.find((x) => x?.redirect_to == staticStrings.CELEBRITY);
@@ -204,9 +203,24 @@ export default function TabRoutes(props) {
           tabBarIcon: ({focused, tintColor}) => (
             <View style={{alignItems: 'center'}}>
               {cartItemCount?.data?.item_count ? (
-                <View style={[styles.cartItemCountView]}>
+                <View
+                  style={{
+                    ...styles.cartItemCountView,
+                    width:
+                      cartItemCount?.data?.item_count > 999
+                        ? moderateScale(23)
+                        : moderateScale(18),
+                    height:
+                      cartItemCount?.data?.item_count > 999
+                        ? moderateScale(23)
+                        : moderateScale(18),
+                    top: cartItemCount?.data?.item_count > 999 ? -10 : -7,
+                    right: cartItemCount?.data?.item_count > 999 ? -13 : -8,
+                  }}>
                   <Text style={styles.cartItemCountNumber}>
-                    {cartItemCount?.data?.item_count}
+                    {cartItemCount?.data?.item_count > 999
+                      ? '999+'
+                      : cartItemCount?.data?.item_count}
                   </Text>
                 </View>
               ) : null}
@@ -280,11 +294,9 @@ export function stylesData(params) {
     cartItemCountView: {
       position: 'absolute',
       zIndex: 100,
-      top: -5,
-      right: -5,
+
       backgroundColor: colors.cartItemPrice,
-      width: moderateScale(18),
-      height: moderateScale(18),
+
       borderRadius: 50,
       alignItems: 'center',
       justifyContent: 'center',

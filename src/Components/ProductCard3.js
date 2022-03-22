@@ -13,6 +13,7 @@ import FastImage from 'react-native-fast-image';
 import {UIActivityIndicator} from 'react-native-indicators';
 import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
+import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import commonStylesFunc, {hitSlopProp} from '../styles/commonStyles';
@@ -46,9 +47,11 @@ const ProductCard3 = ({
   btnLoader,
   categoryInfo = '',
   businessType,
+  animateText = 0,
 }) => {
   // console.log('item data++', data);
   // data['qty'] = 1
+  const [isAdd, setAdd] = useState(false);
   const [state, setState] = useState({
     selectedIndex: -1,
     selectedIndexForCartIcon: -1,
@@ -82,7 +85,9 @@ const ProductCard3 = ({
   const isDarkMode = theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const {appStyle, themeColors, appData} = useSelector(
+    (state) => state?.initBoot,
+  );
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = styleData({themeColors, fontFamily});
@@ -215,6 +220,7 @@ const ProductCard3 = ({
   };
 
   const onIncrementQty = () => {
+    setAdd(true);
     console.log('data', data);
     if (
       !!categoryInfo?.is_vendor_closed &&
@@ -224,38 +230,40 @@ const ProductCard3 = ({
       return;
     }
     if (
-      (!!data?.add_on && data?.add_on.length !== 0) ||
-      (!!data?.variantSet && data?.variantSet.length !== 0)
+      (!!data?.add_on_count && data?.add_on_count !== 0) ||
+      (!!data?.variant_set_count && data?.variant_set_count !== 0)
     ) {
+
       onIncrement();
     } else {
-      updateState({...state, isIncrement: true});
-      if (!disabledBtn) {
-        const isEnabled = numberOfHits.length === 0;
-        numberOfHits.push(data?.qty || totalProductQty);
-        if (isEnabled) {
-          initAnimation();
-        }
-      }
+      updateState({ ...state, isIncrement: true });
+      // if (!disabledBtn) {
+      //   const isEnabled = numberOfHits.length === 0;
+      //   numberOfHits.push(data?.qty || totalProductQty);
+      //   if (isEnabled) {
+      //     initAnimation();
+      //   }
+      // }
       onIncrement();
     }
   };
 
   const onDecrementQty = () => {
+    setAdd(false);
     if (
-      (!!data?.add_on && data?.add_on.length !== 0) ||
-      (!!data?.variantSet && data?.variantSet.length !== 0)
+      (!!data?.add_on_count && data?.add_on_count !== 0) ||
+      (!!data?.variant_set_count && data?.variant_set_count !== 0)
     ) {
       onDecrement();
     } else {
-      updateState({...state, isIncrement: false});
-      if (!disabledBtn) {
-        const isEnabled = numberOfHits.length === 0;
-        numberOfHits.push(data?.qty || totalProductQty);
-        if (isEnabled) {
-          initAnimation();
-        }
-      }
+      updateState({ ...state, isIncrement: false });
+      // if (!disabledBtn) {
+      //   const isEnabled = numberOfHits.length === 0;
+      //   numberOfHits.push(data?.qty || totalProductQty);
+      //   if (isEnabled) {
+      //     initAnimation();
+      //   }
+      // }
       onDecrement();
     }
   };
@@ -314,9 +322,9 @@ const ProductCard3 = ({
                 textTransform: 'capitalize',
                 // flex:1
               }}>
-              {data?.translation[0]?.title}
+              {data?.translation_title || data?.title}
             </Text>
-            {!!data?.title ?
+            {!!data?.title ? (
               <Text
                 numberOfLines={1}
                 style={{
@@ -328,7 +336,7 @@ const ProductCard3 = ({
                 {strings.IN}
                 {` ${data?.title}`}
               </Text>
-            :null}
+            ) : null}
           </View>
 
           {/* rating View */}
@@ -371,11 +379,10 @@ const ProductCard3 = ({
               {`${
                 currencies?.primary_currency?.symbol
               } ${currencyNumberFormatter(
-                (
-                  Number(
-                    data?.variant[0]?.multiplier || data?.variant_multiplier,
-                  ) * Number(data?.variant[0]?.price)
-                ).toFixed(2),
+                Number(
+                 data?.variant_multiplier,
+                ) * Number(data?.variant[0]?.price),
+                appData?.profile?.preferences?.digit_after_decimal,
               )}`}
             </Text>
           </View>
@@ -439,9 +446,9 @@ const ProductCard3 = ({
               justifyContent: url1 ? 'flex-start' : 'center',
             }}>
             {data?.has_inventory == 0 ||
-            !!data?.variant[0]?.quantity ||
-            (!!typeId && typeId == 8) ||
-            (!!businessType && businessType == 'laundry') ? (
+              !!data?.variant_quantity ||
+              (!!typeId && typeId == 8) ||
+              (!!businessType && businessType == 'laundry') ? (
               <View
                 style={{
                   marginTop:
@@ -457,35 +464,30 @@ const ProductCard3 = ({
                     style={{
                       ...styles.addBtnStyle,
                       paddingVertical: 0,
-                      minHeight: moderateScale(34),
+                      height: moderateScale(38),
                       // backgroundColor: themeColors.primary_color,
                       backgroundColor: colors.greyColor2,
                       alignItems: 'center',
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                       borderRadius: moderateScale(8),
-                      paddingHorizontal: moderateScale(8),
+                      paddingHorizontal: moderateScale(12),
+                      width: moderateScale(100),
                     }}>
                     <TouchableOpacity
                       disabled={selectedItemID == data?.id}
                       onPress={onDecrementQty}
                       activeOpacity={0.8}
                       hitSlop={hitSlopProp}>
-                      <Text
+                      <Image
                         style={{
-                          fontFamily: fontFamily.medium,
-                          fontSize: moderateScale(16),
-                          color: themeColors.primary_color,
-                        }}>
-                        -
-                      </Text>
+                          tintColor: themeColors.primary_color,
+                        }}
+                        source={imagePath.icMinus2}
+                      />
                     </TouchableOpacity>
-                    <Animatable.View
-                      style={
-                        {
-                          // height: 30,
-                        }
-                      }>
+
+                    <Animatable.View>
                       {selectedItemID == data?.id && btnLoader ? (
                         <UIActivityIndicator
                           size={moderateScale(16)}
@@ -495,32 +497,31 @@ const ProductCard3 = ({
                           }}
                         />
                       ) : (
-                        // {/* {selectedItemIndx === index &&
-                        //   selectedItemID == data?.id &&
-                        //   btnLoader ? (
-                        //   <UIActivityIndicator
-                        //     size={moderateScale(18)}
-                        //     color={themeColors.primary_color}
-                        //   /> */}
-                        <Animatable.View style={{flex: 1}}>
+                        <Animatable.View style={{overflow: 'hidden'}}>
                           {isVisibleText ? (
                             <Animatable.Text
-                              animation={
-                                isIncrement
-                                  ? isVisibleTextSlideUp
-                                    ? textAnimateForIncrement
-                                    : textAnimateForIncrement_
-                                  : isVisibleTextSlideUp
-                                  ? textAnimateForDecrement
-                                  : textAnimateForDecrement_
-                              }
-                              duration={150}
+                              // key={String(animateText)}
+
+                              // animation={isAdd ? 'slideInUp' : 'slideInDown'}
+                              // easing={'ease-out-sine'}
+                              // animation={
+                              //   isIncrement
+                              //     ? isVisibleTextSlideUp
+                              //       ? textAnimateForIncrement
+                              //       : textAnimateForIncrement_
+                              //     : isVisibleTextSlideUp
+                              //     ? textAnimateForDecrement
+                              //     : textAnimateForDecrement_
+                              // }
+                              duration={200}
+                              // delay={200}
+                              numberOfLines={2}
                               style={{
                                 fontFamily: fontFamily.medium,
                                 fontSize: moderateScale(14),
                                 color: themeColors.primary_color,
                                 // height: moderateScale(100),
-                                marginHorizontal: moderateScale(12),
+                                marginHorizontal: moderateScale(8),
                               }}>
                               {/* {qtyText || data?.qty || totalProductQty} */}
                               {qtyText}
@@ -534,14 +535,12 @@ const ProductCard3 = ({
                       activeOpacity={0.8}
                       hitSlop={hitSlopProp}
                       onPress={onIncrementQty}>
-                      <Text
+                      <Image
                         style={{
-                          fontFamily: fontFamily.medium,
-                          fontSize: moderateScale(16),
-                          color: themeColors.primary_color,
-                        }}>
-                        +
-                      </Text>
+                          tintColor: themeColors.primary_color,
+                        }}
+                        source={imagePath.icAdd4}
+                      />
                     </TouchableOpacity>
                   </View>
                 ) : (
@@ -553,7 +552,8 @@ const ProductCard3 = ({
                       style={{
                         ...styles.addBtnStyle,
                         backgroundColor: colors.greyColor2,
-                        // marginBottom: 1,
+                        width: moderateScale(100),
+                        minHeight: moderateScaleVertical(35),
                       }}>
                       {selectedItemID == data?.id ? (
                         <UIActivityIndicator
@@ -575,8 +575,8 @@ const ProductCard3 = ({
                     </TouchableOpacity>
                   </>
                 )}
-                {(!!data?.add_on && data?.add_on.length !== 0) ||
-                (!!data?.variantSet && data?.variantSet.length !== 0) ? (
+                {(!!data?.add_on_count && data?.add_on_count !== 0) ||
+                  (!!data?.variant_set_count && data?.variant_set_count !== 0) ? (
                   <Text
                     style={{
                       ...styles.customTextStyle,
@@ -627,9 +627,8 @@ function styleData({themeColors, fontFamily}) {
       borderColor: themeColors.primary_color,
       justifyContent: 'center',
       alignItems: 'center',
-      minWidth: moderateScale(50),
-      height: moderateScaleVertical(35),
-
+      // width: moderateScale(100),
+      // minHeight: moderateScaleVertical(35),
       // flexDirection:"row"
       // width: moderateScale(80),
     },

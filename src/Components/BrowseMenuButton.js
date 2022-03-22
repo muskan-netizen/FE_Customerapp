@@ -9,7 +9,6 @@ import {useSelector} from 'react-redux';
 
 const BrowseMenuButton = ({fontFamily, containerStyle, onMenuTap}) => {
   const {appStyle} = useSelector((state) => state?.initBoot);
-  console.log(appStyle, 'appstyleapppppppppp');
   return (
     <TouchableOpacity
       onPress={onMenuTap}

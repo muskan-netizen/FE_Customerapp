@@ -868,7 +868,9 @@ export default function ProductDetail2({route, navigation}) {
               }${(
                 Number(productPriceData?.multiplier) *
                 Number(productPriceData?.price)
-              ).toFixed(2)}`}</Text>
+              ).toFixed(
+                appData?.profile?.preferences?.digit_after_decimal,
+              )}`}</Text>
             </View>
 
             {/* Out of stock view */}

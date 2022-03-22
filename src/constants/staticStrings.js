@@ -17,5 +17,6 @@ export default {
   ONDEMANDSERVICE: 'On Demand Service',
   VIEW_ALL_VENDORS: 'veiwAllVendors',
   LAUNDRY:"Laundry",
-  FPX:"fpx"
+  FPX:"fpx",
+  CASH_FREE:"Cash free"
 };

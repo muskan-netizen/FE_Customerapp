@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "306694553713",
+    "project_id": "lopht-4d10e",
+    "storage_bucket": "lopht-4d10e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306694553713:android:1572975181c3851c5f9bd0",
+        "android_client_info": {
+          "package_name": "com.lopht"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "306694553713-8e0khoms44f0npf15k0mk4g94kj4n40f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lopht",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "306694553713-9bfv2ri1hguth7phj5o778pc9uvdvrb9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lopht",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "306694553713-dvluvo37oddbj4n8dio4vlblpnkrve7n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lopht",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "306694553713-kcum9kmgfnphjnbs662go0c1e5qkshcj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVfitVFVaQZPR4R2WutUd1BZhrhdMMaPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "306694553713-kcum9kmgfnphjnbs662go0c1e5qkshcj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "306694553713-80n7nk529du41nr2ov4tak9eg9n32n48.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.lopht"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

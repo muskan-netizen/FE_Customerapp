@@ -1,45 +1,45 @@
-import React, {useEffect} from 'react';
+import {cloneDeep, isEmpty} from 'lodash';
+import debounce from 'lodash.debounce';
+import moment from 'moment';
+import React, {useEffect, useState} from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
+  FlatList,
   Image,
-  ScrollView,
   RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import {useState} from 'react';
+import {BarChart} from 'react-native-chart-kit';
+import Modal from 'react-native-modal';
+import MonthPicker from 'react-native-month-year-picker';
+import {useSelector} from 'react-redux';
+import Header from '../../../Components/Header';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import OrderCard from '../../../Components/OrderCard';
+import SelectVendorListModal from '../../../Components/SelectVendorListModal';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
+import navigationStrings from '../../../navigation/navigationStrings';
+import actions from '../../../redux/actions';
+import colors from '../../../styles/colors';
+import commonStyles from '../../../styles/commonStyles';
+import fontFamily from '../../../styles/fontFamily';
 import {
   moderateScale,
   moderateScaleVertical,
   width,
 } from '../../../styles/responsiveSize';
-import fontFamily from '../../../styles/fontFamily';
-import navigationStrings from '../../../navigation/navigationStrings';
-import colors from '../../../styles/colors';
-import {BarChart} from 'react-native-chart-kit';
-import {FlatList} from 'react-native';
-import OrderCard from '../../../Components/OrderCard';
-import commonStyles from '../../../styles/commonStyles';
 import {
   boxWidth,
   customMarginBottom,
   customMarginLeftForBox,
 } from '../../../utils/constants/constants';
-import Header from '../../../Components/Header';
-import {useSelector} from 'react-redux';
-import actions from '../../../redux/actions';
-import moment from 'moment';
-import {showError} from '../../../utils/helperFunctions';
-import debounce from 'lodash.debounce';
-import {cloneDeep, isEmpty} from 'lodash';
-import {TouchableOpacity} from 'react-native';
-import MonthPicker from 'react-native-month-year-picker';
-import Modal from 'react-native-modal';
-import SelectVendorListModal from '../../../Components/SelectVendorListModal';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import {enums} from '../../../utils/enums';
+import {showError} from '../../../utils/helperFunctions';
 
 const commonStyle = commonStyles({
   fontFamily,
@@ -517,7 +517,7 @@ const RoyoHome = (props) => {
     data['vendor_id'] = selectedVendor?.id;
     data['order_status_option_id'] = status;
     console.log(data, 'data>>data');
-    updateState({isLoadingB: true});
+    updateState({isLoading: true});
     actions
       .updateOrderStatus(data, {
         code: appData?.profile?.code,
@@ -526,7 +526,9 @@ const RoyoHome = (props) => {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'res>>>acceptRejectOrder');
+        updateState({
+          isLoading: false,
+        });
         if (res && res.status == 'success') {
           updateStatus(res, acceptRejectData);
         }
@@ -675,7 +677,7 @@ const RoyoHome = (props) => {
           <View style={styles.rowWrapSpace}>
             <View>
               <View style={styles.chartHeader}>
-                <Text style={styles.font18Semibold}>Revenue</Text>
+                <Text style={styles.font18Semibold}>{strings.REVENUE}</Text>
                 <TouchableOpacity
                   onPress={toggleRevenueDate}
                   style={{flexDirection: 'row'}}>
@@ -699,12 +701,18 @@ const RoyoHome = (props) => {
               <View style={{...styles.graphContainer, zIndex: -1}}>
                 <View style={styles.graphHeader}>
                   <Text style={{...styles.font13Regular, color: '#2E3E3A5f'}}>
-                    Total revenue (Delivered order)
+                    {strings.TOTAL_REVENUE}
                   </Text>
-                  <Text style={styles.font16Bold}>${totalRevenue}</Text>
+                  <Text style={styles.font16Bold}>
+                    {currencies?.primary_currency?.symbol}
+                    {!!totalRevenue
+                      ? Number(totalRevenue).toFixed(
+                          appData?.profile?.preferences?.digit_after_decimal,
+                        )
+                      : 0}
+                  </Text>
                 </View>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                  {console.log('labelslabelslabels', labels)}
                   <BarChart
                     withCustomBarColorFromData={true}
                     style={{margin: 0, padding: 0, flex: 1, marginLeft: 0}}
@@ -712,7 +720,7 @@ const RoyoHome = (props) => {
                     data={barData}
                     width={labels.length > 6 ? BarWidth() : boxWidth()}
                     height={moderateScaleVertical(250)}
-                    yAxisLabel="$"
+                    yAxisLabel={currencies?.primary_currency?.symbol}
                     yAxisInterval={2}
                     chartConfig={chartConfig}
                     verticalLabelRotation={0}
@@ -727,7 +735,7 @@ const RoyoHome = (props) => {
             </View>
             <View>
               <View style={styles.chartHeader}>
-                <Text style={styles.font18Semibold}>Revenue</Text>
+                <Text style={styles.font18Semibold}>{strings.REVENUE}</Text>
                 <TouchableOpacity
                   onPress={toggleOrderDate}
                   style={{flexDirection: 'row'}}>
@@ -749,7 +757,9 @@ const RoyoHome = (props) => {
               </View>
               <View style={styles.graphContainer}>
                 <View style={styles.graphHeader}>
-                  <Text style={styles.font13Regular}>Total orders placed</Text>
+                  <Text style={styles.font13Regular}>
+                    {strings.TOTAL_ORDER_PLACED}
+                  </Text>
                   <Text style={styles.font16Bold}>34565</Text>
                 </View>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -779,7 +789,7 @@ const RoyoHome = (props) => {
                 ...styles.font18Semibold,
                 marginVertical: moderateScaleVertical(16),
               }}>
-              New Order
+              {strings.NEW_ORDER}
             </Text>
             <FlatList
               onEndReached={onEndReachedDelayed}

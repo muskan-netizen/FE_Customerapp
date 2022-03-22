@@ -54,7 +54,7 @@ export default function Settings({route, navigation}) {
   const {currencies, appData, languages, appStyle, themeColors} = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(languages, 'languageslanguages');
+  console.log(currencies, 'lang');
   const [state, setState] = useState({
     isLoading: false,
     country: 'uk',

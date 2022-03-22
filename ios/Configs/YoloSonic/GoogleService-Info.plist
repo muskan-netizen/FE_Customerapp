@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>799906162364-drhof73ca8gd24m4pua10uod7t68of6f.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.799906162364-drhof73ca8gd24m4pua10uod7t68of6f</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>799906162364-2782lo9ua3qglso0s9lj0dq2579lsuiu.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBguC6HcLQmX6xLH-HIejwKMicbWu_39dw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>799906162364</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.yoloSonic</string>
+	<key>PROJECT_ID</key>
+	<string>yolosonic-ac417</string>
+	<key>STORAGE_BUCKET</key>
+	<string>yolosonic-ac417.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:799906162364:ios:ac9abab7a92d39fc87d2b9</string>
+</dict>
+</plist>

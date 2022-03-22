@@ -111,6 +111,7 @@ export default function VendorDetail3({ navigation, route }) {
           name: item.name,
           isVendorList: false,
           category_slug: item?.slug,
+          categoryExist: item?.id || null
         },
       });
       return
@@ -126,6 +127,7 @@ export default function VendorDetail3({ navigation, route }) {
           name: item.name,
           isVendorList: false,
           category_slug: item?.slug,
+          categoryExist: item?.id || null
         },
       });
       return
@@ -144,6 +146,7 @@ export default function VendorDetail3({ navigation, route }) {
         name: item.name,
         isVendorList: false,
         category_slug: item?.slug,
+        categoryExist: item?.id || null
       },
     });
     return;
@@ -213,7 +216,7 @@ export default function VendorDetail3({ navigation, route }) {
   const _renderItem = ({ item, index }) => {
     return (
       <Animatable.View
-        animation={'fadeInLeft'}
+        // animation={'fadeInLeft'}
         delay={index * 40}
       >
         <BrandCard2
@@ -329,7 +332,7 @@ export default function VendorDetail3({ navigation, route }) {
               </View>
             )
           }
-          keyExtractor={(item, index) => String(index)}
+          keyExtractor={(item, index) => item.id.toString()}
         />
       </View>
     </WrapperContainer>

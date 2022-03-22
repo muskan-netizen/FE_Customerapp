@@ -72,9 +72,9 @@ const BrandCard2 = ({data = {}, onPress = () => {}}) => {
         ) : (
           <FastImage
             source={{
-              uri: imageURI, 
+              uri: imageURI,
               priority: FastImage.priority.high,
-              cache: FastImage.cacheControl.immutable
+              cache: FastImage.cacheControl.immutable,
             }}
             style={{
               ...styles.imgStyle,
@@ -85,7 +85,7 @@ const BrandCard2 = ({data = {}, onPress = () => {}}) => {
           />
         )}
       </TouchableOpacity>
-
+      {console.log(data, 'data>>>>')}
       <Text
         style={{
           color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
@@ -94,7 +94,7 @@ const BrandCard2 = ({data = {}, onPress = () => {}}) => {
           textAlign: 'center',
           marginTop: moderateScaleVertical(2),
         }}>
-        {data?.name ? data?.name : data?.translation[0]?.title}
+        {data?.name || (data?.translation && data?.translation[0]?.title) || ''}
       </Text>
     </View>
   );

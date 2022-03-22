@@ -99,14 +99,14 @@ export default function Wallet({navigation}) {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       (event) => {
-        console.log('my events', event);
+        // console.log('my events', event);
         updateState({keyboardHeight: event.endCoordinates.height});
       },
     );
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       (event) => {
-        console.log('my events', event);
+        // console.log('my events', event);
         updateState({keyboardHeight: 0});
       },
     );
@@ -321,7 +321,10 @@ export default function Wallet({navigation}) {
               {item.type == 'deposit'
                 ? `+${currencies?.primary_currency?.symbol}`
                 : `-${currencies?.primary_currency?.symbol}`}
-              {currencyNumberFormatter(item.amount)}
+              {currencyNumberFormatter(
+                item.amount,
+                appData?.profile?.preferences?.digit_after_decimal,
+              )}
             </Text>
           </View>
         </View>
@@ -413,7 +416,10 @@ export default function Wallet({navigation}) {
                   : styles.availableBalanceValue
               }>
               {currencies?.primary_currency?.symbol}{' '}
-              {currencyNumberFormatter(wallet_amount)}
+              {currencyNumberFormatter(
+                wallet_amount,
+                appData?.profile?.preferences?.digit_after_decimal,
+              )}
             </Text>
           </View>
         </View>
@@ -541,7 +547,10 @@ export default function Wallet({navigation}) {
                   : styles.availableBalanceValue
               }>
               {currencies?.primary_currency?.symbol}{' '}
-              {currencyNumberFormatter(wallet_amount)}
+              {currencyNumberFormatter(
+                wallet_amount,
+                appData?.profile?.preferences?.digit_after_decimal,
+              )}
             </Text>
           </View>
 

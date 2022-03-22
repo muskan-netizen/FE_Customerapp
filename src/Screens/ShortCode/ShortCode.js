@@ -1524,6 +1524,17 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.localdropoff:
+          updateState({
+            shortCode: shortCodes.localdropoff,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ubi:
+          updateState({
+            shortCode: shortCodes.ubi,
+            isShortcodePrefilled: true,
+          });
         case appIds.beakme:
           updateState({
             shortCode: shortCodes.beakme,
@@ -1533,6 +1544,200 @@ export default function ShortCode({route, navigation}) {
         case appIds.onscart:
           updateState({
             shortCode: shortCodes.onscart,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mandaExpress:
+          updateState({
+            shortCode: shortCodes.mandaExpress,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.foodies:
+          updateState({
+            shortCode: shortCodes.foodies,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.gO:
+          updateState({
+            shortCode: shortCodes.gO,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bauBau:
+          updateState({
+            shortCode: shortCodes.bauBau,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bookARyde:
+          updateState({
+            shortCode: shortCodes.bookARyde,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.petsChoice:
+          updateState({
+            shortCode: shortCodes.petsChoice,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.heyBuddy:
+          updateState({
+            shortCode: shortCodes.heyBuddy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.yoloSonic:
+          updateState({
+            shortCode: shortCodes.yoloSonic,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mrHealth:
+          updateState({
+            shortCode: shortCodes.mrHealth,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.lopht:
+          updateState({
+            shortCode: shortCodes.lopht,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.yalary:
+          updateState({
+            shortCode: shortCodes.yalary,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.seratho:
+          updateState({
+            shortCode: shortCodes.seratho,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.xborne:
+          updateState({
+            shortCode: shortCodes.xborne,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.fawaz:
+          updateState({
+            shortCode: shortCodes.fawaz,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.grn:
+          updateState({
+            shortCode: shortCodes.grn,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.delivadrinks:
+          updateState({
+            shortCode: shortCodes.delivadrinks,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.myRide:
+          updateState({
+            shortCode: shortCodes.myRide,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.getfix:
+          updateState({
+            shortCode: shortCodes.getfix,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.scoopaTechnologies:
+          updateState({
+            shortCode: shortCodes.scoopaTechnologies,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.dbairro:
+          updateState({
+            shortCode: shortCodes.dbairro,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.knockknock:
+          updateState({
+            shortCode: shortCodes.knockknock,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.qrider:
+          updateState({
+            shortCode: shortCodes.qrider,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.dlvrd:
+          updateState({
+            shortCode: shortCodes.dlvrd,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.delivery:
+          updateState({
+            shortCode: shortCodes.delivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.timHomeServices:
+          updateState({
+            shortCode: shortCodes.timHomeServices,
+            isShortcodePrefilled: true,
+          });
+
+          break;
+        case appIds.slider:
+          updateState({
+            shortCode: shortCodes.slider,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ICare:
+          updateState({
+            shortCode: shortCodes.ICare,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.viversbox:
+          updateState({
+            shortCode: shortCodes.viversbox,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.scootz:
+          updateState({
+            shortCode: shortCodes.scootz,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ola:
+          updateState({
+            shortCode: shortCodes.ola,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.spliffnation:
+          updateState({
+            shortCode: shortCodes.spliffnation,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sourcesServices:
+          updateState({
+            shortCode: shortCodes.sourcesServices,
             isShortcodePrefilled: true,
           });
           break;
@@ -1892,7 +2097,6 @@ export default function ShortCode({route, navigation}) {
                       : colors.blueBackGroudB,
                   },
                 }}
-                btnTextStyle={{color: colors.textBlue}}
                 onPress={_onSubmitShortCode}
                 btnText={strings.SUBMIT}
                 btnTextStyle={{

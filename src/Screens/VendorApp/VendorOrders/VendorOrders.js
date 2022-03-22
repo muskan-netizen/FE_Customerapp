@@ -306,10 +306,11 @@ export default function VendorOrders({navigation, route}) {
       isLoadingB={isLoading || isLoadingB}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={selectedVendor?.name || ''}
-        showImageAlongwithTitle={true}
         showImageAlongwithTitle={true}
         // rightIcon={imagePath.cartShop}
         onPressCenterTitle={() => _reDirectToVendorList()}

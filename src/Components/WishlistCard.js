@@ -18,11 +18,12 @@ import {currencyNumberFormatter} from '../utils/commonFunction';
 import {getImageUrl} from '../utils/helperFunctions';
 
 const WishlistCard = ({data, onPress}) => {
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const {themeColor, themeToggle, appData} = useSelector(
+    (state) => state?.initBoot,
+  );
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const url1 = data?.media[0]?.image?.path.proxy_url;
   const url2 = data?.media[0]?.image?.path.image_path;
@@ -87,10 +88,9 @@ const WishlistCard = ({data, onPress}) => {
               }}>{`${
               currencies?.primary_currency?.symbol
             }${currencyNumberFormatter(
-              (
-                Number(data?.variant[0]?.multiplier) *
-                Number(data?.variant[0]?.price)
-              ).toFixed(2),
+              Number(data?.variant[0]?.multiplier) *
+                Number(data?.variant[0]?.price),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
             {data?.averageRating && (
               <View style={styles.ratingView}>

@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "695865800977",
+    "project_id": "grn-app",
+    "storage_bucket": "grn-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695865800977:android:d4508db6d8c909bebd34b0",
+        "android_client_info": {
+          "package_name": "com.grn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695865800977-4ge0dlj0d3oscoffrpgbm561h45ojllj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grn",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "695865800977-9uks0nvmqq5ep526u5nmneg88gous83o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grn",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "695865800977-d0r010pmuo86oup8ql5d9nlklme4g2e0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grn",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "695865800977-78vfutqfv6d1aq16lfe613671b2uvfav.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsY9P1hDY1U1ByXg-3heH1daObNfDb_BI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695865800977-78vfutqfv6d1aq16lfe613671b2uvfav.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "695865800977-q85gg2q6cv412q0ekq6svl2p6fkd2rpa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.grn"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

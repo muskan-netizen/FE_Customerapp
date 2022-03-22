@@ -29,8 +29,13 @@ import {
   Paystack,
   ScrollableCategory,
   AuthorizeNet,
-  FPX
+  Avenue,
+  FPX,
+  Cashfree,
+  MyProfile3,
+  MyProfile2
 } from '../Screens';
+import MyProfile from '../Screens/MyProfile/MyProfile2';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
 import KongaPay from '../Screens/PaymentGateways/KongaPay';
 import Pagarme from '../Screens/PaymentGateways/Pagarme';
@@ -104,6 +109,18 @@ export default function () {
         }
         options={{ headerShown: false }}
       />
+
+      <Stack.Screen
+        name={navigationStrings.MY_PROFILE}
+        component={
+          appStyle?.homePageLayout === 2
+            ? MyProfile2
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+              ? MyProfile3
+              : MyProfile
+        }
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name={navigationStrings.MOBBEX}
         component={Mobbex}
@@ -165,10 +182,20 @@ export default function () {
         component={FPX}
         options={{ headerShown: false }}
       />
-        <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.KONGOPAY}
         component={KongaPay}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={navigationStrings.AVENUE}
+        component={Avenue}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={navigationStrings.CASH_FREE}
+        component={Cashfree}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

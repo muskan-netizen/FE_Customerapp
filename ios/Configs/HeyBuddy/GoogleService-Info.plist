@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>875087340188-e9p6eomofsrrg2agt1dq6lnmj26jivdr.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.875087340188-e9p6eomofsrrg2agt1dq6lnmj26jivdr</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>875087340188-37iaci4imd2hpnohm7obovdh2l1adb1s.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC8cMrZtP5eSoipHiYX8EJJd4HrrVhQYKQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>875087340188</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.app.heyBuddy</string>
+	<key>PROJECT_ID</key>
+	<string>hey-buddy-a46ea</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hey-buddy-a46ea.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:875087340188:ios:025523bb8b4ae3f991c359</string>
+</dict>
+</plist>
