@@ -24,7 +24,7 @@ const FilterComp = ({
     minimumPrice = 0,
     maximumPrice = 50000,
     updateMinMax,
-    filterData = []
+    filterData = [],
 }) => {
 
 
@@ -35,7 +35,7 @@ const FilterComp = ({
         sortFilters: [
             {
                 id: 1,
-                label: strings.Z_TO_A,
+                label: strings.A_TO_Z,
                 labelValue: 'a_to_z',
                 parent: strings.SORT_BY,
             },
@@ -71,13 +71,14 @@ const FilterComp = ({
             }
         ]
     })
+    const { filterTypes,sortFilters } = state
     const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
     useEffect(() => {
-        updateState({ filterTypes: filterData })
+        updateState({ 
+            filterTypes: filterData,
+         })
     }, [])
-    const { filterTypes,sortFilters } = state
-
 
 
     const onDone = () => {
