@@ -3335,7 +3335,7 @@ export default function Products({route, navigation}) {
             }}
             backdropComponent={() => (
               <View style={{height: 0}}>
-                <Text>dfdf</Text>
+           
               </View>
             )}
             backgroundComponent={backgroundComponent}>
