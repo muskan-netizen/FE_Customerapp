@@ -1564,12 +1564,7 @@ const styles = StyleSheet.create({
     lineHeight: 28,
     fontFamily: fontFamily.medium,
   },
-  description: {
-    color: colors.textGreyB,
-    fontSize: textScale(14),
-    lineHeight: 22,
-    fontFamily: fontFamily.medium,
-  },
+
   relatedProducts: {
     color: colors.textGrey,
     fontSize: textScale(18),

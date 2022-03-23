@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Animated,
   Image,
@@ -10,21 +10,21 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FastImage from 'react-native-fast-image';
-import {UIActivityIndicator} from 'react-native-indicators';
+import { UIActivityIndicator } from 'react-native-indicators';
 import StarRating from 'react-native-star-rating';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import commonStylesFunc, {hitSlopProp} from '../styles/commonStyles';
+import commonStylesFunc, { hitSlopProp } from '../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {currencyNumberFormatter} from '../utils/commonFunction';
+import { MyDarkTheme } from '../styles/theme';
+import { currencyNumberFormatter } from '../utils/commonFunction';
 import {
   getImageUrl,
   pressInAnimation,
@@ -35,8 +35,8 @@ let numberOfHits = [];
 
 const ProductCard3 = ({
   data = {},
-  onPress = () => {},
-  addToCart = () => {},
+  onPress = () => { },
+  addToCart = () => { },
   index,
   onIncrement,
   onDecrement,
@@ -78,22 +78,22 @@ const ProductCard3 = ({
     });
   }
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const isDarkMode = theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
-  const {appStyle, themeColors, appData} = useSelector(
+  const { appStyle, themeColors, appData } = useSelector(
     (state) => state?.initBoot,
   );
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = styleData({themeColors, fontFamily});
+  const styles = styleData({ themeColors, fontFamily });
 
-  const {themeLayouts} = currentTheme;
-  const commonStyles = commonStylesFunc({fontFamily});
+  const { themeLayouts } = currentTheme;
+  const commonStyles = commonStylesFunc({ fontFamily });
 
   const url1 = data?.media[0]?.image?.path.image_fit;
   const url2 = data?.media[0]?.image?.path.image_path;
@@ -105,20 +105,23 @@ const ProductCard3 = ({
 
   const changePosition = () => {
     let i = selectedIndex == -1 ? index : -1;
-    updateState({selectedIndex: i});
+    updateState({ selectedIndex: i });
   };
 
   useEffect(() => {
-    updateState({qtyText: data?.qty || totalProductQty});
+    updateState({ qtyText: data?.qty || totalProductQty });
   }, [totalProductQty]);
 
   useEffect(() => {
-    updateState({qtyText: data?.qty || totalProductQty});
+    updateState({ qtyText: data?.qty || totalProductQty });
   }, [data?.qty]);
+
+
+  console.log("datadata",data.has_inventory)
 
   const changePositionForCartIcon = () => {
     let i = selectedIndexForCartIcon == -1 ? index : -1;
-    updateState({selectedIndexForCartIcon: i});
+    updateState({ selectedIndexForCartIcon: i });
   };
 
   const textAnimateForIncrement = {
@@ -181,14 +184,14 @@ const ProductCard3 = ({
   };
 
   const initAnimation = async () => {
-    updateState({disabledBtn: true});
+    updateState({ disabledBtn: true });
     console.log('checking text >>>>', numberOfHits[0]);
-    updateState({isVisibleTextSlideUp: true});
-    updateState({qtyText: Number(numberOfHits[0]) + 1});
+    updateState({ isVisibleTextSlideUp: true });
+    updateState({ qtyText: Number(numberOfHits[0]) + 1 });
 
     await setTimeout(() => {
-      updateState({isVisibleText: false, isVisibleTextSlideUp: false});
-      updateState({isVisibleText: true});
+      updateState({ isVisibleText: false, isVisibleTextSlideUp: false });
+      updateState({ isVisibleText: true });
     }, 250);
     await setTimeout(() => {
       numberOfHits.shift();
@@ -199,19 +202,19 @@ const ProductCard3 = ({
       }
     }, 800);
     setTimeout(() => {
-      updateState({disabledBtn: false});
+      updateState({ disabledBtn: false });
     }, 300);
 
     return;
     numberOfHits.forEach((el, index) => {
       console.log('checking text >>>>', el);
-      updateState({isVisibleTextSlideUp: true});
-      updateState({qtyText: el});
+      updateState({ isVisibleTextSlideUp: true });
+      updateState({ qtyText: el });
 
       setTimeout(() => {
-        updateState({isVisibleText: false});
-        updateState({isVisibleText: true});
-        updateState({isVisibleTextSlideUp: false});
+        updateState({ isVisibleText: false });
+        updateState({ isVisibleText: true });
+        updateState({ isVisibleTextSlideUp: false });
       }, 500);
       if (numberOfHits.length === index + 1) {
         numberOfHits = [];
@@ -270,7 +273,7 @@ const ProductCard3 = ({
 
   let typeId = data?.category_id;
   return (
-    <View pointerEvents={btnLoader ? 'none' : 'auto'} style={{flex: 1}}>
+    <View pointerEvents={btnLoader ? 'none' : 'auto'} style={{ flex: 1 }}>
       <TouchableOpacity
         // disabled
         activeOpacity={0.6}
@@ -357,7 +360,7 @@ const ProductCard3 = ({
                 rating={Number(parseInt(data?.averageRating).toFixed(1))}
                 fullStarColor={colors.yellowB}
                 starSize={8}
-                containerStyle={{width: width / 9}}
+                containerStyle={{ width: width / 9 }}
               />
             </View>
           )}
@@ -376,14 +379,13 @@ const ProductCard3 = ({
                 fontSize: textScale(12),
                 fontFamily: fontFamily.regular,
               }}>
-              {`${
-                currencies?.primary_currency?.symbol
-              } ${currencyNumberFormatter(
-                Number(
-                 data?.variant_multiplier,
-                ) * Number(data?.variant[0]?.price),
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}`}
+              {`${currencies?.primary_currency?.symbol
+                } ${currencyNumberFormatter(
+                  Number(
+                    data?.variant_multiplier,
+                  ) * Number(data?.variant[0]?.price),
+                  appData?.profile?.preferences?.digit_after_decimal,
+                )}`}
             </Text>
           </View>
           <View style={{}}>
@@ -446,9 +448,9 @@ const ProductCard3 = ({
               justifyContent: url1 ? 'flex-start' : 'center',
             }}>
             {data?.has_inventory == 0 ||
-              !!data?.variant_quantity ||
+              !!data?.variant[0].quantity ||
               (!!typeId && typeId == 8) ||
-              (!!businessType && businessType == 'laundry') ? (
+              (!!businessType && businessType == 'laundry') ?
               <View
                 style={{
                   marginTop:
@@ -457,8 +459,8 @@ const ProductCard3 = ({
                 }}>
                 {(!!data?.check_if_in_cart_app &&
                   data?.check_if_in_cart_app.length > 0) ||
-                !!data?.qty ||
-                totalProductQty ? (
+                  !!data?.qty ||
+                  totalProductQty ? (
                   <View
                     // pointerEvents={!!categoryInfo?.is_vendor_closed && !!categoryInfo?.closed_store_order_scheduled !== 1 ? 'none' : 'auto'}
                     style={{
@@ -497,7 +499,7 @@ const ProductCard3 = ({
                           }}
                         />
                       ) : (
-                        <Animatable.View style={{overflow: 'hidden'}}>
+                        <Animatable.View style={{ overflow: 'hidden' }}>
                           {isVisibleText ? (
                             <Animatable.Text
                               // key={String(animateText)}
@@ -589,9 +591,9 @@ const ProductCard3 = ({
                   </Text>
                 ) : null}
               </View>
-            ) : (
+              :
               <Text style={styles.outOfStock}>{strings.OUT_OF_STOCK}</Text>
-            )}
+            }
           </View>
         </View>
       </TouchableOpacity>
@@ -599,7 +601,7 @@ const ProductCard3 = ({
   );
 };
 
-function styleData({themeColors, fontFamily}) {
+function styleData({ themeColors, fontFamily }) {
   const styles = StyleSheet.create({
     outOfStock: {
       color: colors.orangeB,
