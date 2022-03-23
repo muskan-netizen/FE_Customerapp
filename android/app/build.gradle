@@ -4762,16 +4762,16 @@ android {
         //  resValue "string", "app_name", "Scootz"
         //  resValue "string", "host_name", ""
         //  }
-        //  ola{
-        //  dimension "appType"
-        //  versionCode 1
-        //  versionName "1.0"
-        //  minSdkVersion rootProject.ext.minSdkVersion
-        //  targetSdkVersion rootProject.ext.targetSdkVersion
-        //  applicationId 'com.app.ola'
-        //  resValue "string", "app_name", "Ola"
-        //  resValue "string", "host_name", ""
-        //  }
+         ola{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.app.ola'
+         resValue "string", "app_name", "Ola"
+         resValue "string", "host_name", ""
+         }
          spliffnation{
          dimension "appType"
          versionCode 1
@@ -4843,37 +4843,37 @@ android {
         //  resValue "string", "host_name", ""
         //  }
 
-        delvento{
-         dimension "appType"
-         versionCode 1
-         versionName "1.0"
-         minSdkVersion rootProject.ext.minSdkVersion
-         targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.delvento'
-         resValue "string", "app_name", "Delvento"
-         resValue "string", "host_name", ""
-         }
+        // delvento{
+        //  dimension "appType"
+        //  versionCode 1
+        //  versionName "1.0"
+        //  minSdkVersion rootProject.ext.minSdkVersion
+        //  targetSdkVersion rootProject.ext.targetSdkVersion
+        //  applicationId 'com.delvento'
+        //  resValue "string", "app_name", "Delvento"
+        //  resValue "string", "host_name", ""
+        //  }
 
-        rideshare{
-         dimension "appType"
-         versionCode 1
-         versionName "1.0"
-         minSdkVersion rootProject.ext.minSdkVersion
-         targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.rideshare'
-         resValue "string", "app_name", "Rideshare"
-         resValue "string", "host_name", ""
-         }
-        bua{
-         dimension "appType"
-         versionCode 1
-         versionName "1.0"
-         minSdkVersion rootProject.ext.minSdkVersion
-         targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.bua'
-         resValue "string", "app_name", "Bua"
-         resValue "string", "host_name", ""
-         }
+        // rideshare{
+        //  dimension "appType"
+        //  versionCode 1
+        //  versionName "1.0"
+        //  minSdkVersion rootProject.ext.minSdkVersion
+        //  targetSdkVersion rootProject.ext.targetSdkVersion
+        //  applicationId 'com.rideshare'
+        //  resValue "string", "app_name", "Rideshare"
+        //  resValue "string", "host_name", ""
+        //  }
+        // bua{
+        //  dimension "appType"
+        //  versionCode 1
+        //  versionName "1.0"
+        //  minSdkVersion rootProject.ext.minSdkVersion
+        //  targetSdkVersion rootProject.ext.targetSdkVersion
+        //  applicationId 'com.bua'
+        //  resValue "string", "app_name", "Bua"
+        //  resValue "string", "host_name", ""
+        //  }
     }
 }
 
