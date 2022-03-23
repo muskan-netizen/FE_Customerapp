@@ -32,7 +32,7 @@ import {
 import {MyDarkTheme} from '../styles/theme';
 import {appIds} from '../utils/constants/DynamicAppKeys';
 import {getPlaceDetails} from '../utils/googlePlaceApi';
-import {getAddressComponent} from '../utils/helperFunctions';
+import {getAddressComponent, showError} from '../utils/helperFunctions';
 import {chekLocationPermission} from '../utils/permissions';
 import validations from '../utils/validations';
 import BorderTextInput from './BorderTextInput';
@@ -279,8 +279,8 @@ const AddressModal3 = ({
       pincode: pincode || '',
     });
     if (error) {
-      // showError(error);
-      alert(error);
+      showError(error);
+      // alert(error);
       return;
     }
     return true;
