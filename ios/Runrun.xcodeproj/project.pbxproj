@@ -20042,8 +20042,6 @@
 				847EE41127840F410003197D /* Resources */,
 				847EE42C27840F410003197D /* Bundle React Native code and images */,
 				847EE42D27840F410003197D /* ShellScript */,
-				974493B2B769713730636B1F /* Bundle React Native code and images */,
-				84B086296D2C607F8EB7A2F5 /* Bundle React Native code and images */,
 				5073E005D1111B86857CC7B7 /* [CP] Embed Pods Frameworks */,
 				325C6789132D94E48EBD07BE /* [CP] Copy Pods Resources */,
 			);
@@ -59544,7 +59542,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RoyoOrder/Pods-RoyoOrder-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-PinkyDeli/Pods-available_pods-PinkyDeli-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		847F6B4A27203D1B00C7A32F /* Start Packager */ = {
@@ -61859,22 +61857,6 @@
 			showEnvVarsInLog = 0;
 		};
 		84AE318326BACC02005257F6 /* Bundle React Native code and images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Bundle React Native code and images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
-		};
-		84B086296D2C607F8EB7A2F5 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -66491,33 +66473,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Tranzit/Pods-available_pods-Tranzit-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		974493B2B769713730636B1F /* Bundle React Native code and images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PinkyDeli/Pods-PinkyDeli-frameworks.sh",
-				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
-				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework",
-				"${PODS_ROOT}/razorpay-pod/Pod/Razorpay.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatProvidersSDK/ChatProvidersSDK.framework/ChatProvidersSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatSDK/ChatSDK.framework/ChatSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCommonUISDK/CommonUISDK.framework/CommonUISDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingAPISDK/MessagingAPI.framework/MessagingAPI",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingSDK/MessagingSDK.framework/MessagingSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework/SDKConfigurations",
-			);
-			name = "Bundle React Native code and images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PinkyDeli/Pods-PinkyDeli-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		974F62EDA27CCFFAF6D9E659 /* [CP] Embed Pods Frameworks */ = {
