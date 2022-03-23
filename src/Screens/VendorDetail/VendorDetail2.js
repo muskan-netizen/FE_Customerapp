@@ -145,6 +145,7 @@ export default function VendorDetail2({navigation, route}) {
                 // vendor: true,
                 // rootProducts:
                 name: item.name,
+                categoryExist: item?.id || null
               })
         }
         data={item}

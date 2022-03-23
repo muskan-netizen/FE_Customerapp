@@ -223,7 +223,7 @@ const RoyoProducts = (props) => {
             {item.variant[0]?.price
               ? `${currencies?.primary_currency?.symbol} ${Number(
                   item.variant[0]?.price,
-                ).toFixed(2)}`
+                ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`
               : ''}
           </Text>
         </View>

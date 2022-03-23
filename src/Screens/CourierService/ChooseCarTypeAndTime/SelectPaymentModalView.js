@@ -208,10 +208,9 @@ export default function SelectPaymentModalView({
                   ? `${
                       currencies?.primary_currency?.symbol
                     }${currencyNumberFormatter(
-                      (
-                        Number(selectedCarOption?.variant[0]?.multiplier) *
-                        Number(selectedCarOption?.variant[0]?.price)
-                      ).toFixed(2),
+                      Number(selectedCarOption?.variant[0]?.multiplier) *
+                        Number(selectedCarOption?.variant[0]?.price),
+                      appData?.profile?.preferences?.digit_after_decimal,
                     )}`
                   : ''}
               </Text>
@@ -231,11 +230,10 @@ export default function SelectPaymentModalView({
                     Number(selectedCarOption.tags_price) -
                       Number(updatedPrice) >
                       0
-                      ? (
-                          Number(selectedCarOption.tags_price) -
+                      ? Number(selectedCarOption.tags_price) -
                           Number(updatedPrice)
-                        ).toFixed(2)
                       : 0,
+                    appData?.profile?.preferences?.digit_after_decimal,
                   )}`}
                 </Text>
               )}
@@ -361,10 +359,9 @@ export default function SelectPaymentModalView({
               }>{`-${
               currencies?.primary_currency?.symbol
             }${currencyNumberFormatter(
-              (
-                Number(selectedCarOption?.variant[0]?.multiplier) *
-                Number(loyalityAmount)
-              ).toFixed(2),
+              Number(selectedCarOption?.variant[0]?.multiplier) *
+                Number(loyalityAmount),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}

@@ -29,6 +29,8 @@ import {
   VENDOR_OPTIMIZE,
   VENDOR_OPTIMIZE_FILTERS,
   VENDOR_PRODUCTS_OPTIMIZE_FILTERS,
+  GET_DATA_BY_CATEGORY_OPTAMIZE,
+  GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE,
 } from '../../config/urls';
 import {apiGet, apiPost, setWalletData} from '../../utils/utils';
 import store from '../store';
@@ -92,6 +94,18 @@ export function getProductByCategoryId(query = '', data = {}, headers = {}) {
   });
 }
 
+export function getProductByCategoryIdOptamize(query = '', data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiGet(GET_DATA_BY_CATEGORY_OPTAMIZE + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
 ///Add Product to Cartr
 export const addProductsToCart = (data = {}, headers = {}) => {
   return new Promise((resolve, reject) => {
@@ -113,6 +127,23 @@ export const getProductByCategoryFilters = (
 ) => {
   return new Promise((resolve, reject) => {
     apiPost(GET_DATA_BY_CATEGORY_FILTERS + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+///get Product By Category filter optamize
+export const getProductByCategoryFiltersOptamize = (
+  query = '',
+  data = {},
+  headers = {},
+) => {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE + query, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -462,6 +493,19 @@ export function deleteProductImage(data = {}, headers = {}) {
 export function getVendorFilters(query = '', data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiGet(VENDOR_OPTIMIZE_FILTERS + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function getProductByVendorIdOptamize(query = '', data = {}, headers = {}) {
+  console.log("sendng headers",headers)
+  return new Promise((resolve, reject) => {
+    apiGet(VENDOR_OPTIMIZE + query, data, headers)
       .then((res) => {
         resolve(res);
       })

@@ -1167,7 +1167,9 @@ export default function ProductDetail({route, navigation}) {
                       }}>{`${currencies?.primary_currency.symbol} ${(
                       Number(productPriceData?.multiplier) *
                       Number(productPriceData?.price)
-                    ).toFixed(2)}`}</Text>
+                    ).toFixed(
+                      appData?.profile?.preferences?.digit_after_decimal,
+                    )}`}</Text>
                   </View>
                 </View>
 
@@ -1415,11 +1417,11 @@ export default function ProductDetail({route, navigation}) {
                             btnText={`${strings.ADD}  ${
                               currencies?.primary_currency?.symbol
                             } ${currencyNumberFormatter(
-                              (
-                                Number(productPriceData?.multiplier) *
+                              Number(productPriceData?.multiplier) *
                                 Number(productPriceData?.price) *
-                                Number(productQuantityForCart)
-                              ).toFixed(2),
+                                Number(productQuantityForCart),
+                              appData?.profile?.preferences
+                                ?.digit_after_decimal,
                             )}`}
                             btnStyle={{
                               borderRadius: moderateScale(4),
@@ -1503,7 +1505,7 @@ export default function ProductDetail({route, navigation}) {
               ? `${CartItems.data.item_count} ${CartItems.data.item_count > 1 ? strings.ITEM : strings.ITEMS
               } | ${currencies.primary_currency.symbol
               }${currencyNumberFormatter(
-                Number(CartItems.data.total_payable_amount).toFixed(2),
+                Number(CartItems.data.total_payable_amount), appData?.profile?.preferences?.digit_after_decimal
               )}`
               : ''
           }

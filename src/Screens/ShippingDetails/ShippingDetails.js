@@ -45,6 +45,8 @@ export default function ShippingDetails({navigation, route}) {
   const {appData, currencies, languages, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  const {pickUpTimeType} = useSelector((state) => state?.home);
+
   const userData = useSelector((state) => state?.auth?.userData);
   const [state, setState] = useState({
     message: '',
@@ -173,7 +175,9 @@ export default function ShippingDetails({navigation, route}) {
         console.log(res, 'all available car res>>>');
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
-            ? Number(res?.data?.loyalty_amount_saved).toFixed(2)
+            ? Number(res?.data?.loyalty_amount_saved).toFixed(
+                appData?.profile?.preferences?.digit_after_decimal,
+              )
             : 0,
           availableCarList:
             pageNo == 1
@@ -580,11 +584,9 @@ export default function ShippingDetails({navigation, route}) {
     console.log(selectedCarOption, 'selectedCarOption');
     let data = {};
 
-    data['task_type'] = paramData?.pickUpTimeType
-      ? paramData?.pickUpTimeType
-      : '';
+    data['task_type'] = pickUpTimeType ? pickUpTimeType : '';
     data['schedule_time'] =
-      paramData?.pickUpTimeType == 'now' ? '' : paramData?.selectedDateAndTime;
+      pickUpTimeType == 'now' ? '' : paramData?.selectedDateAndTime;
     data['recipient_phone'] = `${callingCode}${phoneNumber}`;
     data['recipient_email'] = email;
     data['task_description'] = message;
@@ -643,10 +645,9 @@ export default function ShippingDetails({navigation, route}) {
                   ? `${
                       currencies?.primary_currency?.symbol
                     }${currencyNumberFormatter(
-                      (
-                        Number(selectedCarOption?.variant[0]?.multiplier) *
-                        Number(selectedCarOption?.variant[0]?.price)
-                      ).toFixed(2),
+                      Number(selectedCarOption?.variant[0]?.multiplier) *
+                        Number(selectedCarOption?.variant[0]?.price),
+                      appData?.profile?.preferences?.digit_after_decimal,
                     )}`
                   : ''}
               </Text>
@@ -659,11 +660,10 @@ export default function ShippingDetails({navigation, route}) {
                     Number(selectedCarOption.tags_price) -
                       Number(updatedAmount) >
                       0
-                      ? (
-                          Number(selectedCarOption.tags_price) -
+                      ? Number(selectedCarOption.tags_price) -
                           Number(updatedAmount)
-                        ).toFixed(2)
                       : 0,
+                    appData?.profile?.preferences?.digit_after_decimal,
                   )}`}
                 </Text>
               )}
@@ -684,10 +684,9 @@ export default function ShippingDetails({navigation, route}) {
             <Text style={styles.distanceDurationDeliveryValue}>{`-${
               currencies?.primary_currency?.symbol
             }${currencyNumberFormatter(
-              (
-                Number(selectedCarOption?.variant[0]?.multiplier) *
-                Number(loyalityAmount)
-              ).toFixed(2),
+              Number(selectedCarOption?.variant[0]?.multiplier) *
+                Number(loyalityAmount),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
         )}
@@ -836,7 +835,8 @@ export default function ShippingDetails({navigation, route}) {
           </Text>
           <Text numberOfLines={2} style={styles.boxTitle2}>
             {`${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
-              Number(item.tags_price).toFixed(2),
+              Number(item.tags_price),
+              appData?.profile?.preferences?.digit_after_decimal,
             )}`}
           </Text>
         </View>

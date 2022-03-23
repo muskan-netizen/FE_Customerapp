@@ -1,5 +1,5 @@
 import produce from 'immer';
-import { getColorCodeWithOpactiyNumber } from '../../utils/helperFunctions';
+import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
 import types from '../types';
 
 const initial_state = {
@@ -18,7 +18,8 @@ const initial_state = {
     address: '',
     latitude: '',
     longitude: '',
-  }
+  },
+  pickUpTimeType: 'now',
 };
 
 export default function (state = initial_state, action) {
@@ -62,8 +63,16 @@ export default function (state = initial_state, action) {
       };
     }
 
+    case types.SAVE_SCHEDULE_TIME: {
+      const data = action.payload;
+      return {
+        ...state,
+        pickUpTimeType: data,
+      };
+    }
+
     default: {
-      return { ...state };
+      return {...state};
     }
   }
 }

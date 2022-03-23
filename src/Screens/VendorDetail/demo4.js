@@ -111,6 +111,7 @@ export default function VendorDetail3({ navigation, route }) {
           name: item.name,
           isVendorList: false,
           category_slug: item?.slug,
+          categoryExist: item?.id || null
         },
       });
       return

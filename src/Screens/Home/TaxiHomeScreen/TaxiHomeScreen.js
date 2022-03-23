@@ -366,9 +366,9 @@ export default function TaxiHomeScreen({route, navigation}) {
         //     moveToNewScreen(navigationStrings.ADDADDRESS, item)();
         //   }
         // }
+        actions.saveSchduleTime('now');
         moveToNewScreen(navigationStrings.ADDADDRESS, {
           ...item,
-          pickUpTimeType: 'now',
         })();
       } else {
         // showError(strings.UNAUTHORIZED_MESSAGE);

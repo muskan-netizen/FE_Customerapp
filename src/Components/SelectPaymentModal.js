@@ -33,7 +33,6 @@ import {MyDarkTheme} from '../styles/theme';
 import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
 import * as Animatable from 'react-native-animatable';
 import HomeLoader from './Loaders/HomeLoader';
-import {screenWidth} from 'react-native-calendars/src/expandableCalendar/commons';
 
 export default function SelectPaymentModal({
   onSelectPayment,
@@ -208,6 +207,9 @@ export default function SelectPaymentModal({
 
   //Select/ Update payment method
   const selectPaymentMethod = (data, inx) => {
+    if (selectedPaymentMethod?.id === 4) {
+      return;
+    }
     {
       selectedPaymentMethod && selectedPaymentMethod?.id == data?.id
         ? updateState({selectedPaymentMethod: null})

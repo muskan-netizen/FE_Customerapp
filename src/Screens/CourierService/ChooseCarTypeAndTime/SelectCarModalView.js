@@ -162,7 +162,8 @@ export default function SelectCarModalView({
                 {`${
                   currencies?.primary_currency?.symbol
                 }${currencyNumberFormatter(
-                  Number(item.tags_price).toFixed(2),
+                  Number(item.tags_price),
+                  appData?.profile?.preferences?.digit_after_decimal,
                 )}`}
               </Text>
             </View>
@@ -323,10 +324,6 @@ export default function SelectCarModalView({
             <TransparentButtonWithTxtAndIcon
               btnText={strings.PICKUPLATER}
               borderRadius={moderateScale(13)}
-              containerStyle={{
-                marginHorizontal: 20,
-                alignItems: 'center',
-              }}
               onPress={onPressPickUplater}
               marginBottom={moderateScaleVertical(10)}
               marginTop={moderateScaleVertical(10)}
