@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "1022934464896",
+    "project_id": "bua-26c68",
+    "storage_bucket": "bua-26c68.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022934464896:android:c34bc050072de8ac12e965",
+        "android_client_info": {
+          "package_name": "com.bua"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022934464896-106bub15a5ujn43on4kqa1vfq7e4733o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bua",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "1022934464896-1n4hu81espuiet5jf1ponsnfmteka8k6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bua",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "1022934464896-94cqv5n2ige6sk8qsjo67i7rku4j6si4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bua",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1022934464896-gc21f0tnv55qga40q3f598snn58dnvfq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfzsfA8-WQEkAvLLe46LpjAXDSTnBvyD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1022934464896-gc21f0tnv55qga40q3f598snn58dnvfq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

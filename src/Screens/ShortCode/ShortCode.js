@@ -1760,6 +1760,25 @@ export default function ShortCode({route, navigation}) {
               isShortcodePrefilled: true,
             });
           break;
+
+          case appIds.delvento:
+            updateState({
+              shortCode: shortCodes.delvento,
+              isShortcodePrefilled: true,
+            });
+          break;
+          case appIds.rideshare:
+            updateState({
+              shortCode: shortCodes.rideshare,
+              isShortcodePrefilled: true,
+            });
+          break;
+          case appIds.bua:
+            updateState({
+              shortCode: shortCodes.bua,
+              isShortcodePrefilled: true,
+            });
+          break;
       }
     })();
   }, []);

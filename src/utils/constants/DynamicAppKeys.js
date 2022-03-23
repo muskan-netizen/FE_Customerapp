@@ -275,6 +275,9 @@ const shortCodes = {
   wer: 'fb5def',
   beachhop: '9199e7',
   qseek:'a1ffe8',
+  delvento:'6a617a',
+  rideshare:'d4997d',
+  bua:'132c75',
 };
 
 const appIds = {
@@ -1370,6 +1373,18 @@ const appIds = {
   qseek: Platform.select({
     ios: 'com.qseek',
     android: 'com.qseek',
+  }),
+  delvento: Platform.select({
+    ios: 'com.delvento',
+    android: 'com.delvento',
+  }),
+  rideshare: Platform.select({
+    ios: 'com.rideshare',
+    android: 'com.rideshare',
+  }),
+  bua: Platform.select({
+    ios: 'com.bua',
+    android: 'com.bua',
   }),
 };
 
