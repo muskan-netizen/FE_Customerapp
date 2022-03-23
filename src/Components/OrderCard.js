@@ -120,7 +120,7 @@ const OrderCard = (props) => {
       <View style={styles.line} />
       <View style={{...styles.rowSapce, marginTop: moderateScaleVertical(12)}}>
         <View>
-          <Text style={styles.orderText}>Order Total</Text>
+          <Text style={styles.orderText}>{strings.ORDER_TOTAL}</Text>
           <Text style={styles.totalPrice}>
             {currencies?.primary_currency?.symbol}
             {Number(item?.payable_amount).toFixed(2)}
@@ -135,7 +135,7 @@ const OrderCard = (props) => {
                 fontSize: 11,
                 color: '#8B8B8B',
               }}>
-              Order Status
+              {strings.ORDER_STATUS}
             </Text>
             <Text
               style={{
@@ -151,13 +151,13 @@ const OrderCard = (props) => {
         ) : (
           <View style={{flexDirection: 'row'}}>
             <ButtonWithLoader
-              btnText="Reject"
+              btnText={strings.REJECT}
               btnTextStyle={styles.btnText}
               btnStyle={styles.btnContainer}
               onPress={() => updateOrderStatus(item, 8)}
             />
             <ButtonWithLoader
-              btnText="Confirm"
+              btnText={strings.CONFIRM}
               btnTextStyle={{...styles.btnText, color: colors.white}}
               btnStyle={{
                 ...styles.btnContainer,

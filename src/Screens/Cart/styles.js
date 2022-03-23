@@ -269,7 +269,8 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     },
     placeOrderButtonStyle: {
       backgroundColor: themeColors.primary_color,
-      height: moderateScale(30),
+      flex: 1,
+      marginHorizontal: moderateScale(5),
     },
     sceduleOrderStyle: {
       backgroundColor: getColorCodeWithOpactiyNumber(
@@ -487,6 +488,12 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       color: themeColors.primary_color,
       fontFamily: fontFamily.bold,
       textAlign: 'left',
+    },
+    insctructionText: {
+      flex: 1,
+      fontFamily: fontFamily.medium,
+      textAlign: I18nManager.isRTL ? 'right' : 'left',
+      fontSize: textScale(11),
     },
   });
   return styles;

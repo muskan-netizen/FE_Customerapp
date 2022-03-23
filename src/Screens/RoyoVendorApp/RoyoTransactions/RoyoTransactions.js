@@ -225,7 +225,9 @@ const RoyoTransactions = (props) => {
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
         leftIcon={imagePath.backRoyo}
-        centerTitle={'Transactions | ' + selectedVendor?.name || ''}
+        centerTitle={` ${strings.TRANSACTIONS} | ${
+          selectedVendor?.name || ''
+        }`}
         onPressCenterTitle={() => _reDirectToVendorList()}
         onPressImageAlongwithTitle={() => _reDirectToVendorList()}
         showImageAlongwithTitle

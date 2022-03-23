@@ -5,9 +5,12 @@ import React, {Fragment, useEffect, useRef, useState} from 'react';
 import {
   Alert,
   Animated,
+  Dimensions,
   FlatList,
   I18nManager,
   Image,
+  Keyboard,
+  KeyboardAvoidingView,
   Platform,
   RefreshControl,
   ScrollView,
@@ -15,6 +18,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Calendar} from 'react-native-calendars';
@@ -25,6 +29,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import * as RNLocalize from 'react-native-localize';
 import Modal from 'react-native-modal';
 import ModalDropdown from 'react-native-modal-dropdown';
@@ -47,13 +52,16 @@ import WishlistCard from '../../Components/WishlistCard';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
+import Vi from '../../constants/lang/vi';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {hitSlopProp} from '../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
+  StatusBarHeight,
   textScale,
   width,
 } from '../../styles/responsiveSize';
@@ -70,6 +78,8 @@ import {
 } from '../../utils/helperFunctions';
 import {getItem, removeItem, setItem} from '../../utils/utils';
 import stylesFun from './styles';
+
+let clickedItem = {};
 
 function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -116,6 +126,12 @@ function Cart({navigation, route}) {
   const [sheduledorderdate, setSheduledorderdate] = useState(null);
   const [sheduledpickupdate, setSheduledpickupdate] = useState(null);
   const [sheduleddropoffdate, setSheduleddropoffdate] = useState(null);
+  const [productFaqs, setProductFaqs] = useState([]);
+  const [myAnswerdArray, setMyAllanswers] = useState([]);
+  const [myFaqValidationArray, setMyFaqValidationArray] = useState([]);
+  const [validationFucCalled, setvalidationFucCalled] = useState(true);
+  const [faqModalLayoutHeight, setfaqModalLayoutHeight] = useState(null);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   const [state, setState] = useState({
     showTaxFeeArea: false,
@@ -132,6 +148,8 @@ function Cart({navigation, route}) {
     isModalVisibleForClearCart: false,
     isVisibleAddressModal: false,
     isRefreshing: false,
+    isProductOrderForm: false,
+    isProductLoader: false,
   });
 
   const {
@@ -149,6 +167,8 @@ function Cart({navigation, route}) {
     selectViaMap,
     paymentModal,
     deliveryFeeLoader,
+    isProductOrderForm,
+    isProductLoader,
   } = state;
 
   //Redux store data
@@ -181,6 +201,11 @@ function Cart({navigation, route}) {
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   console.log('cart items', cartItems);
+
+  const closeForm = () => {
+    updateState({isProductOrderForm: false});
+    Keyboard.dismiss();
+  };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -585,6 +610,7 @@ function Cart({navigation, route}) {
       btnLoader: false,
       placeLoader: false,
       deliveryFeeLoader: false,
+      isProductLoader: false,
     });
     showError(
       error?.error?.description ||
@@ -1582,6 +1608,88 @@ function Cart({navigation, route}) {
   const onModalDropDown = () => {
     setSelTypes(val?.code);
   };
+
+  const getProductFAQs = (item) => {
+    clickedItem = item;
+    updateState({
+      isProductOrderForm: true,
+      isProductLoader: true,
+    });
+    actions
+      .getProductFaqs(
+        `/${item?.product?.id}`,
+        {},
+        {
+          code: appData?.profile?.code,
+        },
+      )
+      .then((res) => {
+        setProductFaqs(res?.data);
+        updateState({
+          isProductLoader: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+
+  const setAllRequiredQuestions = (item, index) => {
+    if (validationFucCalled) {
+      if (item?.is_required) {
+        setvalidationFucCalled(false);
+        const arraywithAllRequiredQuestion = [...myFaqValidationArray];
+        arraywithAllRequiredQuestion[index] = true;
+
+        setMyFaqValidationArray(arraywithAllRequiredQuestion);
+      } else {
+        setvalidationFucCalled(false);
+      }
+    }
+  };
+
+  const onChangeText = (item, text, index, arrLength) => {
+    // const myAnswerdArray = [];
+    const answerdArray = [...myAnswerdArray];
+    answerdArray[index] = {
+      question: item?.translations[0]?.name,
+      answer: text,
+      product_faq_id: item?.id,
+    };
+
+    if (item?.is_required) {
+      setvalidationFucCalled(false);
+      const arraywithAllRequiredQuestion = [...myFaqValidationArray];
+      arraywithAllRequiredQuestion[index] = false;
+      setMyFaqValidationArray(arraywithAllRequiredQuestion);
+      if (text === '') {
+        const arraywithAllRequiredQuestion = [...myFaqValidationArray];
+        arraywithAllRequiredQuestion[index] = true;
+        setMyFaqValidationArray(arraywithAllRequiredQuestion);
+      }
+    }
+    setMyAllanswers(answerdArray);
+  };
+
+  console.log(clickedItem, 'myAnswerdArray>>>');
+
+  const setAllFormData = () => {
+    actions
+      .updateProductFAQs(
+        {
+          product_id: clickedItem?.product?.id,
+          user_product_order_form: myAnswerdArray,
+        },
+        {
+          code: appData?.profile?.code,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'res>>><>>>');
+      })
+      .catch((err) => {
+        console.log(err, 'err>>>>>>');
+      });
+  };
+
   const _renderItem = ({item, index}) => {
     return (
       <View>
@@ -2028,7 +2136,7 @@ function Cart({navigation, route}) {
                                 marginRight: moderateScale(14),
                                 marginTop: moderateScale(6),
                               }}
-                              onPress={() => openDeleteView(i)}>
+                              onPress={() => getProductFAQs(i)}>
                               <FastImage
                                 source={imagePath.edit1Royo}
                                 resizeMode="contain"
@@ -4687,6 +4795,180 @@ function Cart({navigation, route}) {
             paymentModalClose={() => updateState({paymentModal: false})}
           />
         </View>
+      </Modal>
+      <Modal
+        onBackdropPress={closeForm}
+        isVisible={isProductOrderForm}
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end',
+          // marginBottom: keyboardHeight,
+        }}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <View
+            style={{
+              maxHeight: height / 2,
+              minHeight: moderateScaleVertical(250),
+              borderTopLeftRadius: moderateScale(16),
+              borderTopRightRadius: moderateScale(16),
+              backgroundColor: colors.white,
+              padding: moderateScale(12),
+            }}>
+            {isProductLoader ? (
+              <View>
+                <HeaderLoader
+                  viewStyles={{
+                    marginTop: moderateScaleVertical(8),
+                    marginBottom: moderateScaleVertical(16),
+                    marginHorizontal: 0,
+                  }}
+                  widthLeft={width - moderateScale(25)}
+                  rectWidthLeft={width - moderateScale(25)}
+                  heightLeft={moderateScaleVertical(45)}
+                  rectHeightLeft={moderateScaleVertical(45)}
+                  isRight={false}
+                  rx={7}
+                  ry={7}
+                />
+                <HeaderLoader
+                  viewStyles={{
+                    marginTop: moderateScaleVertical(8),
+                    marginBottom: moderateScaleVertical(16),
+                    marginHorizontal: 0,
+                  }}
+                  widthLeft={width - moderateScale(25)}
+                  rectWidthLeft={width - moderateScale(25)}
+                  heightLeft={moderateScaleVertical(45)}
+                  rectHeightLeft={moderateScaleVertical(45)}
+                  isRight={false}
+                  rx={7}
+                  ry={7}
+                />
+                <HeaderLoader
+                  viewStyles={{
+                    marginTop: moderateScaleVertical(8),
+                    marginBottom: moderateScaleVertical(16),
+                    marginHorizontal: 0,
+                  }}
+                  widthLeft={width - moderateScale(25)}
+                  rectWidthLeft={width - moderateScale(25)}
+                  heightLeft={moderateScaleVertical(45)}
+                  rectHeightLeft={moderateScaleVertical(45)}
+                  isRight={false}
+                  rx={7}
+                  ry={7}
+                />
+              </View>
+            ) : (
+              <View
+                style={{
+                  backgroundColor: isDarkMode ? colors.black : colors.white,
+                  borderRadius: moderateScale(8),
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text />
+
+                  <TouchableOpacity onPress={closeForm}>
+                    <Image source={imagePath.closeButton} />
+                  </TouchableOpacity>
+                </View>
+                <ScrollView>
+                  {productFaqs.map((item, index) => {
+                    setAllRequiredQuestions(item, index);
+                    return (
+                      <View
+                        style={{
+                          marginTop: moderateScaleVertical(10),
+                        }}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              marginBottom: moderateScaleVertical(10),
+                              color: colors.redColor,
+                            }}>
+                            {`${item?.is_required ? '* ' : ''}`}
+                          </Text>
+                          <Text
+                            style={{
+                              marginBottom: moderateScaleVertical(10),
+                              fontFamily: fontFamily.medium,
+                              color: isDarkMode ? colors.white : colors.blackC,
+                            }}>
+                            {item?.translations[0]?.name}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            // marginVertical: moderateScaleVertical(16),
+                            backgroundColor: isDarkMode
+                              ? colors.whiteOpacity15
+                              : colors.greyNew,
+                            height: moderateScale(42),
+                            borderRadius: moderateScale(4),
+                            paddingHorizontal: moderateScale(8),
+                          }}>
+                          <TextInput
+                            placeholder={strings.ANSWER}
+                            onChangeText={(text) =>
+                              onChangeText(item, text, index, item?.length)
+                            }
+                            style={{
+                              ...styles.insctructionText,
+                              color: isDarkMode
+                                ? colors.textGreyB
+                                : colors.black,
+                            }}
+                            placeholderTextColor={
+                              isDarkMode
+                                ? colors.textGreyB
+                                : colors.blackOpacity40
+                            }
+                          />
+                        </View>
+                      </View>
+                    );
+                  })}
+                </ScrollView>
+
+                <GradientButton
+                  colorsArray={[
+                    themeColors.primary_color,
+                    themeColors.primary_color,
+                  ]}
+                  textStyle={{
+                    textTransform: 'none',
+                    fontSize: textScale(12),
+                  }}
+                  onPress={() => {
+                    const isRequired = myFaqValidationArray.some(checkRequird);
+                    function checkRequird(checkRequird) {
+                      return checkRequird == true;
+                    }
+
+                    if (isRequired) {
+                      alert(strings.PLEASEFILDALL);
+                    } else {
+                      setAllFormData();
+                    }
+                  }}
+                  btnText={strings.SUBMIT}
+                  marginTop={moderateScaleVertical(16)}
+                  marginBottom={moderateScaleVertical(16)}
+                />
+              </View>
+            )}
+          </View>
+        </KeyboardAvoidingView>
       </Modal>
     </WrapperContainer>
   );

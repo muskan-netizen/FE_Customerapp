@@ -52,7 +52,7 @@ const RoyoProducts = (props) => {
   );
   const [state, setState] = useState({
     activeIndex: 0,
-    headerText: 'Products',
+    headerText: strings.PRODUCTS,
     vendor_list: [],
     selectedVendor: {},
     isVisibleModal: false,
@@ -199,7 +199,7 @@ const RoyoProducts = (props) => {
           </View>
           {item?.category_name?.name ? (
             <Text style={styles.font13Regular}>
-              in {item.category_name.name}
+              {strings.IN} {item.category_name.name}
             </Text>
           ) : null}
 
@@ -232,8 +232,9 @@ const RoyoProducts = (props) => {
   };
 
   const selectedOrder = (index) => {
-    if (index == 0) updateState({activeIndex: index, headerText: 'Products'});
-    else updateState({activeIndex: index, headerText: 'Categories'});
+    if (index == 0)
+      updateState({activeIndex: index, headerText: strings.PRODUCTS});
+    else updateState({activeIndex: index, headerText: strings.CATEGORIES});
   };
 
   /**********Get all list items by store  id and category id */
