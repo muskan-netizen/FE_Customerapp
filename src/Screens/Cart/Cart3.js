@@ -1933,7 +1933,7 @@ function Cart({navigation, route}) {
                                   fontSize: textScale(12),
                                   color: isDarkMode
                                     ? MyDarkTheme.colors.text
-                                    : '#B3B3B3',
+                                    : colors.textGreyOpcaity7,
                                   marginTop: moderateScaleVertical(4),
                                   fontFamily: fontFamily.regular,
                                 }}>
@@ -2023,7 +2023,7 @@ function Cart({navigation, route}) {
                                       ...styles.cartItemWeight2,
                                       color: isDarkMode
                                         ? MyDarkTheme.colors.text
-                                        : colors.textGreyB,
+                                        : colors.textGreyOpcaity7,
                                       marginBottom: moderateScale(2),
                                       marginTop: moderateScaleVertical(6),
                                     }}>

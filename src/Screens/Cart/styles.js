@@ -186,7 +186,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       color: colors.textGreyB,
     },
     cartItemWeight2: {
-      color: colors.textGreyB,
+      color: colors.textGreyOpcaity7,
       fontSize: moderateScaleVertical(11),
     },
     rattingContainer: {
