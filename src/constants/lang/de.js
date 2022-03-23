@@ -852,4 +852,5 @@ export default {
   SIGN_OUT: 'Signout',
   PENDING: 'Pending',
   REFUNDS: 'Refunds',
+  ORDER_TOTAL: 'Order Total',
 };
