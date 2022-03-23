@@ -269,8 +269,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     },
     placeOrderButtonStyle: {
       backgroundColor: themeColors.primary_color,
-      flex: 1,
-      marginHorizontal: moderateScale(5),
+      height: moderateScale(30),
     },
     sceduleOrderStyle: {
       backgroundColor: getColorCodeWithOpactiyNumber(

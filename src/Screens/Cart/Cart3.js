@@ -1515,7 +1515,7 @@ function Cart({navigation, route}) {
           alignItems: 'center',
           // marginBottom: moderateScaleVertical(8),
           justifyContent: 'space-between',
-          marginVertical:moderateScaleVertical(8)
+          marginVertical: moderateScaleVertical(8),
           // padding: moderateScale(8)
         }}>
         <View
@@ -1677,6 +1677,7 @@ function Cart({navigation, route}) {
               </Text>
             ) : null}
           </View>
+
           {/************ start  render cart items *************/}
           {item?.vendor_products.length > 0
             ? item?.vendor_products.map((i, inx) => {
@@ -2018,6 +2019,26 @@ function Cart({navigation, route}) {
                             </View>
                           </View>
 
+                          {!!(
+                            i?.faq_count && i?.user_product_order_form == null
+                          ) && (
+                            <TouchableOpacity
+                              style={{
+                                alignSelf: 'flex-end',
+                                marginRight: moderateScale(14),
+                                marginTop: moderateScale(6),
+                              }}
+                              onPress={() => openDeleteView(i)}>
+                              <FastImage
+                                source={imagePath.edit1Royo}
+                                resizeMode="contain"
+                                style={{
+                                  width: moderateScale(16),
+                                  height: moderateScale(16),
+                                }}
+                              />
+                            </TouchableOpacity>
+                          )}
                           <TouchableOpacity
                             style={{
                               alignSelf: 'flex-end',
@@ -2065,6 +2086,7 @@ function Cart({navigation, route}) {
                 );
               })
             : null}
+
           {/************ end render cart items *************/}
           {item?.isDeliverable ? null : (
             <View style={{marginHorizontal: moderateScale(10)}}>

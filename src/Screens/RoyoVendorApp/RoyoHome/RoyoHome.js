@@ -474,24 +474,24 @@ const RoyoHome = (props) => {
   const dashboardData = [
     {
       image: imagePath.timerRoyo,
-      header: 'Pending order',
-      text: `${totalPendingOrder} pending order`,
+      header: strings.PENDING_ORDERS,
+      text: `${totalPendingOrder} ${strings.PENDING_ORDERS}`,
     },
     {
       image: imagePath.activeRoyo,
-      header: 'Active order',
-      text: `${totalActiveOrder} active orders`,
+      header: strings.ACTIVE_ORDERS,
+      text: `${totalActiveOrder} ${strings.ACTIVE_ORDERS}`,
     },
 
     {
       image: imagePath.cancelledRoyo,
-      header: 'Cancelled order',
-      text: `${totalCancelledOrder} orders cancelled`,
+      header: strings.CANCELLED_ORDER,
+      text: `${totalCancelledOrder} ${strings.CANCELLED_ORDER}`,
     },
     {
       image: imagePath.deliveredRoyo,
-      header: 'Delivered order',
-      text: `${totalCompletedOrder} orders delivered`,
+      header: strings.DELIVERED_ORDERS,
+      text: `${totalCompletedOrder} ${strings.DELIVERED_ORDERS}`,
     },
   ];
   const chartConfig = {

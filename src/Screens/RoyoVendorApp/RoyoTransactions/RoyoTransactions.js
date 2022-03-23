@@ -252,7 +252,13 @@ const RoyoTransactions = (props) => {
           tabTextStyle={{
             marginTop: moderateScaleVertical(0),
           }}
-          screenName={['Completed', 'Pending', 'Refunds', '', '']}
+          screenName={[
+            strings.COMPLETED,
+            strings.PENDING,
+            strings.REFUNDS,
+            '',
+            '',
+          ]}
           selectedScreen={(index) => selectedOrder(index)}
           selectedScreenIndex={activeIndex}
         />
