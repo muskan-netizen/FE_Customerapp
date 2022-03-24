@@ -918,4 +918,5 @@ Amount`,
   PENDING: 'Pending',
   REFUNDS: 'Refunds',
   ORDER_TOTAL: 'Order Total',
+  PRODUCT_ORDER_FORM: 'Product Order Form',
 };

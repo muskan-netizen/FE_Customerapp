@@ -1050,9 +1050,17 @@ function Cart({navigation, route}) {
     // }
     // _offineLinePayment();
   };
-  console.log(isFAQsSubmitted, 'isFAQsSubmitted');
   //Clear cart
   const placeOrder = () => {
+    isFAQsSubmitted = true;
+    cartItems.map((itm, inx) => {
+      itm?.vendor_products.map((item, index) => {
+        if (item?.faq_count && item?.user_product_order_form == null) {
+          isFAQsSubmitted = false;
+        }
+      });
+    });
+
     if (!!userData?.auth_token) {
       if (
         !!cartData?.closed_store_order_scheduled &&
@@ -1077,8 +1085,10 @@ function Cart({navigation, route}) {
         return;
       }
 
-
-  
+      if (!isFAQsSubmitted) {
+        showInfo("Please fill all product's FAQs");
+        return;
+      }
 
       updateState({placeLoader: true});
       var d1 = new Date();
@@ -1707,6 +1717,7 @@ function Cart({navigation, route}) {
   };
 
   const _renderItem = ({item, index}) => {
+    console.log(item, 'item>>><>>>');
     return (
       <View>
         {index === 0 && (
@@ -2154,24 +2165,20 @@ function Cart({navigation, route}) {
                               i?.faq_count && i?.user_product_order_form == null
                             ) && (
                               <>
-                              <TouchableOpacity
-                                style={{
-                                  marginRight: moderateScale(14),
-                                }}
-                                onPress={() => getProductFAQs(i)}>
-                                
-                                <FastImage
-                                  source={imagePath.edit1Royo}
-                                  resizeMode="contain"
+                                <TouchableOpacity
                                   style={{
-                                    width: moderateScale(16),
-                                    height: moderateScale(16),
+                                    marginRight: moderateScale(14),
                                   }}
-                                />
-                              </TouchableOpacity>
-                              {
-                                    isFAQsSubmitted=false
-                                  }
+                                  onPress={() => getProductFAQs(i)}>
+                                  <FastImage
+                                    source={imagePath.edit1Royo}
+                                    resizeMode="contain"
+                                    style={{
+                                      width: moderateScale(16),
+                                      height: moderateScale(16),
+                                    }}
+                                  />
+                                </TouchableOpacity>
                               </>
                             )}
                             <TouchableOpacity onPress={() => openDeleteView(i)}>
