@@ -495,8 +495,8 @@ export default function Products({route, navigation}) {
             let newKey = {
               ...val,
               // ['data']: val?.products && val.products,
-              ['data']: val?.category.products && val.category.products,
-              title: val?.category && val.category?.translation[0]?.name || val.category?.translation[1]?.name  ,
+              ['data']: val?.category?.products && val?.category?.products,
+              title: val?.category && val?.category?.translation[0]?.name || val?.category?.translation[1]?.name  ,
             };
             delete newKey['products'];
             return newKey;
