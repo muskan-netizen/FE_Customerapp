@@ -994,9 +994,9 @@ end
 # end
 
 #Releezer Target
-target 'Releezer' do
+ target 'Releezer' do
   
-end
+ end
 
 # #Vendoor Target
 # target 'Vendoor' do
