@@ -920,16 +920,16 @@ android {
    //          resValue "string", "app_name", "Partner Project"
    //          resValue "string", "host_name", ""
    //       }
-   //        menus{
-   //          dimension "appType"
-   //          versionCode 1
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion
-   //          applicationId 'com.menus'
-   //          resValue "string", "app_name", "Menus@"
-   //           resValue "string", "host_name", ""
-   //       }
+          menus{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.menus'
+            resValue "string", "app_name", "Menus@"
+             resValue "string", "host_name", ""
+         }
    //       doorstep{
    //          dimension "appType"
    //          versionCode 1
@@ -4864,16 +4864,56 @@ android {
         //  resValue "string", "app_name", "Rideshare"
         //  resValue "string", "host_name", ""
         //  }
-        // bua{
-        //  dimension "appType"
-        //  versionCode 1
-        //  versionName "1.0"
-        //  minSdkVersion rootProject.ext.minSdkVersion
-        //  targetSdkVersion rootProject.ext.targetSdkVersion
-        //  applicationId 'com.bua'
-        //  resValue "string", "app_name", "Bua"
-        //  resValue "string", "host_name", ""
-        //  }
+        bua{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.bua'
+         resValue "string", "app_name", "Bua"
+         resValue "string", "host_name", ""
+         }
+        upstreet{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.upstreet'
+         resValue "string", "app_name", "Upstreet"
+         resValue "string", "host_name", ""
+         }
+        newYorkMiniMart{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.newYorkMiniMart'
+         resValue "string", "app_name", "New York Mini Mart"
+         resValue "string", "host_name", ""
+         }
+        airlinesRecruiter{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.airlinesRecruiter'
+         resValue "string", "app_name", "Airlines Recruiter"
+         resValue "string", "host_name", ""
+         }
+        nineOneTwo{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.nineOneTwo'
+         resValue "string", "app_name", "912"
+         resValue "string", "host_name", ""
+         }
     }
 }
 

@@ -278,6 +278,10 @@ const shortCodes = {
   delvento:'6a617a',
   rideshare:'d4997d',
   bua:'132c75',
+  upstreet:'260629',
+  newYorkMiniMart:'5e4b3b',
+  airlinesRecruiter:'deb34c',
+  nineOneTwo:'f92fea',
 };
 
 const appIds = {
@@ -1379,12 +1383,29 @@ const appIds = {
     android: 'com.delvento',
   }),
   rideshare: Platform.select({
-    ios: 'com.rideshare',
+    ios: 'com.customer.rideshare',
     android: 'com.rideshare',
   }),
   bua: Platform.select({
     ios: 'com.bua',
     android: 'com.bua',
+  }),
+  // ////
+  upstreet: Platform.select({
+    ios: 'com.app.upstreet',
+    android: 'com.upstreet',
+  }),
+  newYorkMiniMart: Platform.select({
+    ios: 'com.newYorkMiniMart',
+    android: 'com.newYorkMiniMart',
+  }),
+  airlinesRecruiter: Platform.select({
+    ios: 'com.airlinesRecruiter',
+    android: 'com.airlinesRecruiter',
+  }),
+  nineOneTwo: Platform.select({
+    ios: 'com.nineOneTwo',
+    android: 'com.nineOneTwo',
   }),
 };
 
@@ -1401,7 +1422,6 @@ const socialKeys = {
       : getBundleId() == appIds.hmoobhub
       ? 'AvNzKlREbm3Aan3sEKYbXv0k8'
       : 'R66DHARfuoYAPowApUxNxwbPi',
-
   TWITTER_CONSUMER_SECRET:
     getBundleId() == appIds.runrun
       ? 'zBfzttCBVAzimuaIsDWDU1MjqI4pWzvNsrW6YOYPVZtgtzTlN8'

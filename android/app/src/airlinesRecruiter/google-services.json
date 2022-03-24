@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "172244006586",
+    "project_id": "airlinesrecruiter-51078",
+    "storage_bucket": "airlinesrecruiter-51078.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172244006586:android:505bc46fe08e057b96b483",
+        "android_client_info": {
+          "package_name": "com.airlinesRecruiter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "172244006586-9mop70s1in4kiu294iqg9ofg7htshoeq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.airlinesRecruiter",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "172244006586-n2a97dghki5aco300i3st62lonjj67jv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.airlinesRecruiter",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "172244006586-vlqpbl5f3pluncjahg4a3cciacsj0hb4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.airlinesRecruiter",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "172244006586-5rcd8qm4kvtnn57k2a94veb6aivtmg42.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgnmW4hQSe_d6KkccpzD2njqDcrNFE7eY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "172244006586-5rcd8qm4kvtnn57k2a94veb6aivtmg42.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
