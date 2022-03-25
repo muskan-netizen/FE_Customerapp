@@ -186,7 +186,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       color: colors.textGreyB,
     },
     cartItemWeight2: {
-      color: colors.textGreyB,
+      color: colors.textGreyOpcaity7,
       fontSize: moderateScaleVertical(11),
     },
     rattingContainer: {
@@ -488,6 +488,12 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       color: themeColors.primary_color,
       fontFamily: fontFamily.bold,
       textAlign: 'left',
+    },
+    insctructionText: {
+      flex: 1,
+      fontFamily: fontFamily.medium,
+      textAlign: I18nManager.isRTL ? 'right' : 'left',
+      fontSize: textScale(11),
     },
   });
   return styles;

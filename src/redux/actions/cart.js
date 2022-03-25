@@ -20,6 +20,8 @@ import {
   LAST_ADDED,
   DIFFERENT_ADD_ONS,
   VENDOR_SLOTS,
+  GET_PRODUCT_FAQS,
+  UPDATE_PRODUCT_FAQS_CART,
 } from '../../config/urls';
 import {
   apiGet,
@@ -330,4 +332,28 @@ export const differentAddOns = (data, headers = {}) => {
 
 export const checkVendorSlots = (data, headers = {}) => {
   return apiGet(VENDOR_SLOTS + data, {}, headers);
+};
+
+export const getProductFaqs = (query, data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiGet(GET_PRODUCT_FAQS + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const updateProductFAQs = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(UPDATE_PRODUCT_FAQS_CART, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 };

@@ -160,7 +160,7 @@ const RoyoAccounts = (props) => {
   };
   const data = [
     {
-      text: 'Transactions',
+      text: strings.TRANSACTIONS,
       image: imagePath.transactionsRoyo,
       onPress: () =>
         navigation.navigate(navigationStrings.ROYO_VENDOR_TRANSACTIONS),
@@ -172,7 +172,7 @@ const RoyoAccounts = (props) => {
     //     navigation.navigate(navigationStrings.ROYO_VENDOR_PAYMENT_SETTINGS),
     // },
     {
-      text: 'Signout',
+      text: strings.SIGN_OUT,
       image: imagePath.signoutRoyo,
       onPress: userlogout,
     },
@@ -188,7 +188,7 @@ const RoyoAccounts = (props) => {
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
         // centerTitle="Accounts | Foodies hub  "
-        centerTitle={`Accounts | ${selectedVendor?.name} `}
+        centerTitle={`${strings.ACCOUNTS} | ${selectedVendor?.name} `}
         noLeftIcon
         imageAlongwithTitle={imagePath.dropdownTriangle}
         showImageAlongwithTitle

@@ -1779,6 +1779,30 @@ export default function ShortCode({route, navigation}) {
               isShortcodePrefilled: true,
             });
           break;
+          case appIds.upstreet:
+            updateState({
+              shortCode: shortCodes.upstreet,
+              isShortcodePrefilled: true,
+            });
+          break;
+          case appIds.newYorkMiniMart:
+            updateState({
+              shortCode: shortCodes.newYorkMiniMart,
+              isShortcodePrefilled: true,
+            });
+          break;
+          case appIds.airlinesRecruiter:
+            updateState({
+              shortCode: shortCodes.airlinesRecruiter,
+              isShortcodePrefilled: true,
+            });
+          break;
+          case appIds.nineOneTwo:
+            updateState({
+              shortCode: shortCodes.nineOneTwo,
+              isShortcodePrefilled: true,
+            });
+          break;
       }
     })();
   }, []);

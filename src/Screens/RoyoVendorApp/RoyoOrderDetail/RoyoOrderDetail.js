@@ -204,7 +204,7 @@ const RoyoOrderDetail = (props) => {
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
         leftIcon={imagePath.backRoyo}
-        centerTitle={`Order #${data.order_number}`}
+        centerTitle={`${strings.ORDER} #${data.order_number}`}
       />
       {/* <View style={{...styles.orderNumberBox, zIndex: -1}}>
         <Text style={styles.orderNumber}>Order #{data.order_number}</Text>
@@ -457,13 +457,13 @@ const RoyoOrderDetail = (props) => {
         {current_status.id == 1 ? (
           <View style={styles.buttonBox}>
             <ButtonWithLoader
-              btnText="Reject"
+              btnText={strings.REJECT}
               btnTextStyle={styles.btnText}
               btnStyle={styles.btnContainer}
               onPress={() => updateOrderStatus(data, 8)}
             />
             <ButtonWithLoader
-              btnText="Confirm"
+              btnText={strings.CONFIRM}
               btnTextStyle={{...styles.btnText, color: colors.white}}
               btnStyle={{
                 ...styles.btnContainer,

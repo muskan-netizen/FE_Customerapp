@@ -1388,6 +1388,37 @@ target 'Delvento' do
   
 end
 
+# Rideshare Target
+target 'Rideshare' do
+  
+end
+
+# Bua Target
+target 'Bua' do
+  
+end
+
+# Upstreet Target
+target 'Upstreet' do
+  
+end
+
+# NewYorkMiniMart Target
+target 'NewYorkMiniMart' do
+  
+end
+
+# AirlinesRecruiter Target
+target 'AirlinesRecruiter' do
+  
+end
+
+# NineOneTwo Target
+target 'NineOneTwo' do
+  
+end
+
+
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

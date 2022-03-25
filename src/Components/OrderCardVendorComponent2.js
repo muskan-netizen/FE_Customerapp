@@ -167,7 +167,7 @@ const OrderCardVendorComponent2 = ({
                 color: colors.white,
                 fontFamily: fontFamily.bold,
               }}>
-              Repeat Order
+              {strings.REPEAT_ORDER}
             </Text>
           </TouchableOpacity>
         </View>
