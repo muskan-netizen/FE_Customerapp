@@ -279,8 +279,8 @@ const AddressModal3 = ({
       pincode: pincode || '',
     });
     if (error) {
-      showError(error);
-      // alert(error);
+      // showError(error);
+      alert(error);
       return;
     }
     return true;
