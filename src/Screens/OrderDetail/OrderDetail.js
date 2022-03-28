@@ -2710,7 +2710,7 @@ export default function OrderDetail({navigation, route}) {
             data={driverStatus}
             type={strings.DRIVER}
             containerStyle={{paddingHorizontal: moderateScale(8)}}
-            isDriver={true}
+            isDriver={cartData?.driver_rating == null}
             _onRateDriver={_onRateDriver}
           />
         ) : null}
@@ -3119,11 +3119,10 @@ export default function OrderDetail({navigation, route}) {
           }}
         />
 
-        {/* {console.log(isDriverRateModal, 'isDriverRateModal')} */}
-
         {!!(ratingData || isDriverRateModal) ? (
           <RatingModal
             productDetail={ratingData}
+            productData={cartData}
             isDriverRateModal={isDriverRateModal}
             modalClose={() =>
               updateState({ratingData: null, isDriverRateModal: false})

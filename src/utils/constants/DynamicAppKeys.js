@@ -1304,8 +1304,8 @@ const appIds = {
     android: 'com.app.getfix',
   }),
   scoopaTechnologies: Platform.select({
-    ios: 'com.application.delivery',
-    android: 'com.scoopaTechnologies',
+    ios: 'com.scoopaTechnologies',
+    android: 'com.app.scoopaTechnologies',
   }),
   dbairro: Platform.select({
     ios: 'com.dbairro',

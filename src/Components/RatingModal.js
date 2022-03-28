@@ -38,6 +38,7 @@ const RatingModal = ({
   modalClose = () => {},
   onSuccessRating = () => {},
   isDriverRateModal = false,
+  productData = {},
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const {themeToggle, appStyle, themeColors, appData, currencies, languages} =
@@ -142,6 +143,31 @@ const RatingModal = ({
 
   const _giveRatingToProduct = () => {
     updateState({isLoading: true});
+    if (isDriverRateModal) {
+      const data = {
+        order_id: productData?.id,
+        rating: rating,
+        review: reviewText,
+      };
+
+      console.log(data);
+      actions
+        .ratingToDriver(data, {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        })
+        .then((res) => {
+          updateState({isLoading: false});
+          console.log('res++++++', res);
+          showSuccess(res?.message);
+          modalClose();
+          onSuccessRating();
+        })
+        .catch(errorMethod);
+      return;
+    }
+
     let formdata = new FormData();
     formdata.append('order_vendor_product_id', productDetail?.id);
     formdata.append('order_id', productDetail?.order_id);

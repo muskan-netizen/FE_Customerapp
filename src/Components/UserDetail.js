@@ -116,6 +116,7 @@ const UserDetail = ({
                 borderRadius: moderateScale(3),
                 paddingVertical: moderateScaleVertical(2),
                 marginTop: moderateScaleVertical(10),
+                paddingHorizontal: 2,
               }}>
               <Text style={{color: colors.white}}>Rate Driver</Text>
             </TouchableOpacity>

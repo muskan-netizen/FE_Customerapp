@@ -3,7 +3,7 @@
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
 export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1';
-// export const API_BASE_URL = 'http://192.168.97.192:8005/api/v1';
+// export const API_BASE_URL = 'http://192.168.96.127:8005/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
@@ -189,3 +189,4 @@ export const VENDOR_PRODUCTS_OPTIMIZE_FILTERS = getApiUrl(
 
 export const GET_PRODUCT_FAQS = getApiUrl('/products_faq');
 export const UPDATE_PRODUCT_FAQS_CART = getApiUrl('/cart/productfaq/update');
+export const RATE_TO_DRIVER = getApiUrl('/rating/update-driver-rating');
