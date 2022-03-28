@@ -50,6 +50,8 @@ const currencyNumberFormatter = (number, digitAfterDecimal = 2) => {
     .replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 };
 
+
+
 export function getImageUrl(url1, url2, dimentions) {
   // console.log(`${url1}${dimentions}${url2}`, "Url")
   return `${url1}${dimentions}${url2}`;

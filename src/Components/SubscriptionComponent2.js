@@ -128,6 +128,7 @@ const SubscriptionComponent2 = ({
                 {`${currencies?.primary_currency?.symbol} `}
               </Text>
               <Text style={styles.title}>
+                
                 {currencyNumberFormatter(
                   currentSubscription
                     ? `${

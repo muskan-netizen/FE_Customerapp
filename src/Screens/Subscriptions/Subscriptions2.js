@@ -1,5 +1,4 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {CardField, createToken, initStripe} from '@stripe/stripe-react-native';
 import React, {createRef, useEffect, useState} from 'react';
 import {
   FlatList,
@@ -38,7 +37,15 @@ import {MyDarkTheme} from '../../styles/theme';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptySubscriptions from './ListEmptySubscriptions';
 import stylesFun from './styles';
-
+import {
+  CardField,
+  createToken,
+  initStripe,
+  StripeProvider,
+  handleCardAction,
+  createPaymentMethod,
+  confirmPayment,
+} from '@stripe/stripe-react-native';
 export default function Subscriptions2({navigation, route}) {
   //   console.log(route, 'route>>>');
   const paramData = route?.params;
@@ -344,7 +351,6 @@ export default function Subscriptions2({navigation, route}) {
                   ? imagePath.radioActive
                   : imagePath.radioInActive
               }
-       
             />
             <Text
               style={[
@@ -594,23 +600,30 @@ export default function Subscriptions2({navigation, route}) {
       .catch(errorMethod);
   };
 
-  //Offline payments
-  const _offineLinePayment = async () => {
-    if (cardInfo) {
-      updateState({isModalVisibleForPayment: false});
-      await createToken(cardInfo)
+  const _createPaymentMethod = async (cardInfo, res2) => {
+    // console.log(cardInfo, 'cardInfo');
+    if (res2) {
+      await createPaymentMethod({
+        type: 'Card',
+        card: cardInfo,
+        billing_details: {
+          name: 'Jenny Rosen',
+        },
+      })
         .then((res) => {
-          if (res && res?.token && res.token?.id) {
-            updateState({isLoading: true});
-            let selectedMethod = selectedPaymentMethod.title.toLowerCase();
-
+          // updateState({isLoadingB: false});
+          console.log('_createPaymentMethod res', res);
+          if (res && res?.error && res?.error?.message) {
+            showError(res?.error?.message);
+          } else {
+            console.log(res, 'success_createPaymentMethod ');
             actions
-              .purchaseSubscriptionPlan(
-                `/${selectedPlan?.slug}`,
+              .getStripePaymentIntent(
+                // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
                 {
                   payment_option_id: selectedPaymentMethod?.id,
-                  transaction_id: res?.token?.id,
-                  // amount: selectedPlan?.id,
+                  amount: selectedPlan?.price,
+                  payment_method_id: res?.paymentMethod?.id,
                 },
                 {
                   code: appData?.profile?.code,
@@ -618,25 +631,108 @@ export default function Subscriptions2({navigation, route}) {
                   language: languages?.primary_language?.id,
                 },
               )
-              .then((res) => {
-                getAllSubscriptions(true);
-                updateState({
-                  isLoadingB: false,
-                  isLoading: false,
-                  isRefreshing: false,
-                });
+              .then(async (res) => {
+                console.log(res, 'getStripePaymentIntent response');
+                if (res && res?.client_secret) {
+                  const {paymentIntent, error} = await handleCardAction(
+                    res?.client_secret,
+                  );
+
+                  console.log(paymentIntent, 'paymentIntent');
+                  if (paymentIntent) {
+                    actions
+                      .confirmPaymentIntentStripe(
+                        {
+                          payment_option_id: selectedPaymentMethod?.id,
+                          action: 'subscription',
+                          amount: selectedPlan?.price,
+                          payment_intent_id: paymentIntent?.id,
+                          subscription_slug: selectedPlan?.slug,
+                        },
+                        {
+                          code: appData?.profile?.code,
+                          currency: currencies?.primary_currency?.id,
+                          language: languages?.primary_language?.id,
+                        },
+                      )
+                      .then((res) => {
+                        console.log(res,"confirmPaymentIntentStripe api reponse");
+                        if (res) {
+                          getAllSubscriptions(true);
+                          updateState({
+                            isLoadingB: false,
+                            isLoading: false,
+                            isRefreshing: false,
+                          });
+                          // navigation.navigate(navigationStrings.WALLET);
+                        }
+                      })
+                      .catch(errorMethod);
+                  } else {
+                    console.log(error, 'error');
+                    showError(error?.message || 'payment failed');
+                  }
+                } else {
+                  updateState({isLoadingB: false, isLoading: false});
+                }
               })
               .catch(errorMethod);
-          } else {
-            if (res && res?.error) {
-              updateState({
-                isLoadingB: false,
-                isLoading: false,
-                isRefreshing: false,
-              });
-              showError(res?.error?.message);
-            }
           }
+        })
+        .catch(errorMethod);
+    }
+  };
+
+  //Offline payments
+  const _offineLinePayment = async () => {
+    if (cardInfo) {
+      updateState({isModalVisibleForPayment: false});
+      updateState({isLoading: true});
+      await createToken(cardInfo)
+        .then((res) => {
+          console.log(res, 'res>');
+          console.log(selectedPlan, 'selectedPlan>');
+
+          if (res && res?.token && res.token?.id) {
+            _createPaymentMethod(cardInfo, res);
+          }
+
+          // if (res && res?.token && res.token?.id) {
+          //   updateState({isLoading: true});
+          //   let selectedMethod = selectedPaymentMethod.title.toLowerCase();
+          //   actions
+          //     .purchaseSubscriptionPlan(
+          //       `/${selectedPlan?.slug}`,
+          //       {
+          //         payment_option_id: selectedPaymentMethod?.id,
+          //         transaction_id: res?.token?.id,
+          //         // amount: selectedPlan?.id,
+          //       },
+          //       {
+          //         code: appData?.profile?.code,
+          //         currency: currencies?.primary_currency?.id,
+          //         language: languages?.primary_language?.id,
+          //       },
+          //     )
+          //     .then((res) => {
+          //       getAllSubscriptions(true);
+          //       updateState({
+          //         isLoadingB: false,
+          //         isLoading: false,
+          //         isRefreshing: false,
+          //       });
+          //     })
+          //     .catch(errorMethod);
+          // } else {
+          //   if (res && res?.error) {
+          //     updateState({
+          //       isLoadingB: false,
+          //       isLoading: false,
+          //       isRefreshing: false,
+          //     });
+          //     showError(res?.error?.message);
+          //   }
+          // }
         })
         .catch((err) => {
           updateState({isLoadingB: false});
