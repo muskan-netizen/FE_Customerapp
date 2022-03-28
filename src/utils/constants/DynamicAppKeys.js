@@ -1311,7 +1311,7 @@ const appIds = {
   }),
   scoopaTechnologies: Platform.select({
     ios: 'com.scoopaTechnologies',
-    android: 'com.scoopaTechnologies',
+    android: 'com.app.scoopaTechnologies',
   }),
   dbairro: Platform.select({
     ios: 'com.dbairro',

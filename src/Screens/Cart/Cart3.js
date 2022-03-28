@@ -80,6 +80,7 @@ import {getItem, removeItem, setItem} from '../../utils/utils';
 import stylesFun from './styles';
 
 let clickedItem = {};
+let isFAQsSubmitted = true;
 
 function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -150,6 +151,7 @@ function Cart({navigation, route}) {
     isRefreshing: false,
     isProductOrderForm: false,
     isProductLoader: false,
+    isSubmitFaqLoader: false,
   });
 
   const {
@@ -169,6 +171,7 @@ function Cart({navigation, route}) {
     deliveryFeeLoader,
     isProductOrderForm,
     isProductLoader,
+    isSubmitFaqLoader,
   } = state;
 
   //Redux store data
@@ -339,10 +342,11 @@ function Cart({navigation, route}) {
         },
       )
       .then((res) => {
+        closeForm();
         actions.cartItemQty(res);
         console.log('cart details>>>', res);
         let checkDate = !!res?.data?.scheduled_date_time;
-        updateState({deliveryFeeLoader: false});
+        updateState({deliveryFeeLoader: false, isSubmitFaqLoader: false});
 
         if (!!checkDate && res.data.schedule_type == 'schedule') {
           let formatDate = new Date(res?.data?.scheduled_date_time);
@@ -611,6 +615,7 @@ function Cart({navigation, route}) {
       placeLoader: false,
       deliveryFeeLoader: false,
       isProductLoader: false,
+      isSubmitFaqLoader: false,
     });
     showError(
       error?.error?.description ||
@@ -1045,9 +1050,17 @@ function Cart({navigation, route}) {
     // }
     // _offineLinePayment();
   };
-  console.log(selectedPayment, 'selectedPaymentselectedPayment');
   //Clear cart
   const placeOrder = () => {
+    isFAQsSubmitted = true;
+    cartItems.map((itm, inx) => {
+      itm?.vendor_products.map((item, index) => {
+        if (item?.faq_count && item?.user_product_order_form == null) {
+          isFAQsSubmitted = false;
+        }
+      });
+    });
+
     if (!!userData?.auth_token) {
       if (
         !!cartData?.closed_store_order_scheduled &&
@@ -1069,6 +1082,11 @@ function Cart({navigation, route}) {
 
         updateState({paymentModal: true});
         // moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)();
+        return;
+      }
+
+      if (!isFAQsSubmitted) {
+        showInfo("Please fill all product's FAQs");
         return;
       }
 
@@ -1669,28 +1687,37 @@ function Cart({navigation, route}) {
     setMyAllanswers(answerdArray);
   };
 
-  console.log(clickedItem, 'myAnswerdArray>>>');
-
   const setAllFormData = () => {
-    actions
-      .updateProductFAQs(
-        {
-          product_id: clickedItem?.product?.id,
-          user_product_order_form: myAnswerdArray,
-        },
-        {
-          code: appData?.profile?.code,
-        },
-      )
-      .then((res) => {
-        console.log(res, 'res>>><>>>');
-      })
-      .catch((err) => {
-        console.log(err, 'err>>>>>>');
+    const isRequired = myFaqValidationArray.some(checkRequird);
+    function checkRequird(checkRequird) {
+      return checkRequird == true;
+    }
+
+    if (isRequired) {
+      alert(strings.PLEASEFILDALL);
+    } else {
+      updateState({
+        isSubmitFaqLoader: true,
       });
+      actions
+        .updateProductFAQs(
+          {
+            product_id: clickedItem?.product?.id,
+            user_product_order_form: myAnswerdArray,
+          },
+          {
+            code: appData?.profile?.code,
+          },
+        )
+        .then((res) => {
+          getCartDetail();
+        })
+        .catch(errorMethod);
+    }
   };
 
   const _renderItem = ({item, index}) => {
+    console.log(item, 'item>>><>>>');
     return (
       <View>
         {index === 0 && (
@@ -2127,18 +2154,36 @@ function Cart({navigation, route}) {
                             </View>
                           </View>
 
-                          {!!(
-                            i?.faq_count && i?.user_product_order_form == null
-                          ) && (
-                            <TouchableOpacity
-                              style={{
-                                alignSelf: 'flex-end',
-                                marginRight: moderateScale(14),
-                                marginTop: moderateScale(6),
-                              }}
-                              onPress={() => getProductFAQs(i)}>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              alignSelf: 'flex-end',
+                              marginTop: moderateScale(6),
+                            }}>
+                            {!!(
+                              i?.faq_count && i?.user_product_order_form == null
+                            ) && (
+                              <>
+                                <TouchableOpacity
+                                  style={{
+                                    marginRight: moderateScale(14),
+                                  }}
+                                  onPress={() => getProductFAQs(i)}>
+                                  <FastImage
+                                    source={imagePath.edit1Royo}
+                                    resizeMode="contain"
+                                    style={{
+                                      width: moderateScale(16),
+                                      height: moderateScale(16),
+                                    }}
+                                  />
+                                </TouchableOpacity>
+                              </>
+                            )}
+                            <TouchableOpacity onPress={() => openDeleteView(i)}>
                               <FastImage
-                                source={imagePath.edit1Royo}
+                                source={imagePath.deleteRed}
                                 resizeMode="contain"
                                 style={{
                                   width: moderateScale(16),
@@ -2146,23 +2191,7 @@ function Cart({navigation, route}) {
                                 }}
                               />
                             </TouchableOpacity>
-                          )}
-                          <TouchableOpacity
-                            style={{
-                              alignSelf: 'flex-end',
-                              marginRight: moderateScale(14),
-                              marginTop: moderateScale(6),
-                            }}
-                            onPress={() => openDeleteView(i)}>
-                            <FastImage
-                              source={imagePath.deleteRed}
-                              resizeMode="contain"
-                              style={{
-                                width: moderateScale(16),
-                                height: moderateScale(16),
-                              }}
-                            />
-                          </TouchableOpacity>
+                          </View>
                         </View>
                       </View>
                       {!!cartData?.delay_date && (
@@ -2194,7 +2223,6 @@ function Cart({navigation, route}) {
                 );
               })
             : null}
-
           {/************ end render cart items *************/}
           {item?.isDeliverable ? null : (
             <View style={{marginHorizontal: moderateScale(10)}}>
@@ -4949,18 +4977,9 @@ function Cart({navigation, route}) {
                     textTransform: 'none',
                     fontSize: textScale(12),
                   }}
-                  onPress={() => {
-                    const isRequired = myFaqValidationArray.some(checkRequird);
-                    function checkRequird(checkRequird) {
-                      return checkRequird == true;
-                    }
-
-                    if (isRequired) {
-                      alert(strings.PLEASEFILDALL);
-                    } else {
-                      setAllFormData();
-                    }
-                  }}
+                  indicator={isSubmitFaqLoader}
+                  indicatorColor={colors.white}
+                  onPress={setAllFormData}
                   btnText={strings.SUBMIT}
                   marginTop={moderateScaleVertical(16)}
                   marginBottom={moderateScaleVertical(16)}
