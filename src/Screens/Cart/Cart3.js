@@ -1078,13 +1078,6 @@ function Cart({navigation, route}) {
   //Clear cart
   const placeOrder = () => {
     isFAQsSubmitted = true;
-    cartItems.map((itm, inx) => {
-      itm?.vendor_products.map((item, index) => {
-        if (item?.faq_count && item?.user_product_order_form == null) {
-          isFAQsSubmitted = false;
-        }
-      });
-    });
 
     if (!!userData?.auth_token) {
       if (
@@ -1109,6 +1102,18 @@ function Cart({navigation, route}) {
         // moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)();
         return;
       }
+
+      if (cartData?.category_kyc_count > 0) {
+        showError('Please submit KYC form!');
+        return;
+      }
+      cartItems.map((itm, inx) => {
+        itm?.vendor_products.map((item, index) => {
+          if (item?.faq_count && item?.user_product_order_form == null) {
+            isFAQsSubmitted = false;
+          }
+        });
+      });
 
       if (!isFAQsSubmitted) {
         showInfo("Please fill all product's FAQs");
