@@ -1,4 +1,4 @@
-// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
 
@@ -15,7 +15,7 @@
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 
-// export const API_BASE_URL = 'https://961a-112-196-88-218.ngrok.io/api/v1'; // preet
+// export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.98.185:8060/api/v1'; // sujata
 // export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1'; //dinesh sir
 // export const API_BASE_URL = 'http://192.168.97.160:9090/api/v1'; //inderjeet sir
@@ -52,7 +52,7 @@
 // export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
 // export const API_BASE_URL = 'https://ufood.ca/api/v1';
-export const API_BASE_URL = 'https://app.vici.la/api/v1';
+// export const API_BASE_URL = 'https://app.vici.la/api/v1';
 // export const API_BASE_URL = 'https://blipdelivery.com/api/v1';
 // export const API_BASE_URL = 'https://africanvillage.market/api/v1';
 // export const API_BASE_URL = 'https://govachow.com/api/v1';
