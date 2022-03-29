@@ -264,6 +264,16 @@ const RoyoOrderDetail = (props) => {
     );
   };
 
+  const renderKycDocs = (item, index) => {
+    console.log(item, 'item>>>');
+    return (
+      <View>
+        <Text>{item?.category_document?.primary?.name}</Text>
+        {/* {<Image></Image>} */}
+      </View>
+    );
+  };
+
   return (
     <WrapperContainer
       isLoading={isLoadingB}
@@ -439,17 +449,34 @@ const RoyoOrderDetail = (props) => {
           contentContainerStyle={styles.orderBox}
           ItemSeparatorComponent={() => <View style={styles.itemSeperator} />}
         />
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginHorizontal: moderateScale(16),
-          }}>
-          <Text style={styles.font14Semibold}>
-            {strings.SPECIAL_INSTRUCTION}
-          </Text>
-          <Text style={styles.font14Semibold}>{data?.comment_for_vendor}</Text>
-        </View>
+        {/* {!!orderInfo && !isEmpty(orderInfo?.category_KYC_document) && (
+          <View
+            style={{
+              paddingHorizontal: moderateScale(15),
+              paddingVertical: moderateScaleVertical(10),
+            }}>
+            <Text
+              style={{...styles.font16Medium, marginBottom: moderateScale(10)}}>
+              {'Category KYC Documents'}
+            </Text>
+            {orderInfo?.category_KYC_document.map(renderKycDocs)}{' '}
+          </View>
+        )} */}
+        {!!data?.comment_for_vendor && (
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginHorizontal: moderateScale(16),
+            }}>
+            <Text style={styles.font14Semibold}>
+              {strings.SPECIAL_INSTRUCTION}
+            </Text>
+            <Text style={styles.font14Semibold}>
+              {data?.comment_for_vendor}
+            </Text>
+          </View>
+        )}
         <View style={{margin: moderateScaleVertical(16)}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>

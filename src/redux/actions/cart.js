@@ -22,6 +22,8 @@ import {
   VENDOR_SLOTS,
   GET_PRODUCT_FAQS,
   UPDATE_PRODUCT_FAQS_CART,
+  GET_CATEGORY_KYC_DOCUMENT,
+  SUBMIT_CATEGORY_KYC,
 } from '../../config/urls';
 import {
   apiGet,
@@ -349,6 +351,30 @@ export const getProductFaqs = (query, data, headers = {}) => {
 export const updateProductFAQs = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(UPDATE_PRODUCT_FAQS_CART, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const getCategoryKycDocument = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_CATEGORY_KYC_DOCUMENT, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const submitCategoryKYC = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(SUBMIT_CATEGORY_KYC, data, headers)
       .then((res) => {
         resolve(res);
       })
