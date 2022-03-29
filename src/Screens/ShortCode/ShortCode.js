@@ -1741,6 +1741,68 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+
+          case appIds.wer:
+          updateState({
+            shortCode: shortCodes.wer,
+            isShortcodePrefilled: true,
+          });
+          break;
+          case appIds.beachhop:
+          updateState({
+            shortCode: shortCodes.beachhop,
+            isShortcodePrefilled: true,
+          });
+          break;
+          case appIds.qseek:
+            updateState({
+              shortCode: shortCodes.qseek,
+              isShortcodePrefilled: true,
+            });
+          break;
+
+          case appIds.delvento:
+            updateState({
+              shortCode: shortCodes.delvento,
+              isShortcodePrefilled: true,
+            });
+          break;
+          case appIds.rideshare:
+            updateState({
+              shortCode: shortCodes.rideshare,
+              isShortcodePrefilled: true,
+            });
+          break;
+          case appIds.bua:
+            updateState({
+              shortCode: shortCodes.bua,
+              isShortcodePrefilled: true,
+            });
+          break;
+          case appIds.upstreet:
+            updateState({
+              shortCode: shortCodes.upstreet,
+              isShortcodePrefilled: true,
+            });
+          break;
+          case appIds.newYorkMiniMart:
+            updateState({
+              shortCode: shortCodes.newYorkMiniMart,
+              isShortcodePrefilled: true,
+            });
+          break;
+          case appIds.airlinesRecruiter:
+            updateState({
+              shortCode: shortCodes.airlinesRecruiter,
+              isShortcodePrefilled: true,
+            });
+          break;
+          case appIds.nineOneTwo:
+            updateState({
+              shortCode: shortCodes.nineOneTwo,
+              isShortcodePrefilled: true,
+            });
+          break;
       }
     })();
   }, []);

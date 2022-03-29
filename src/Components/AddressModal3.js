@@ -32,7 +32,7 @@ import {
 import {MyDarkTheme} from '../styles/theme';
 import {appIds} from '../utils/constants/DynamicAppKeys';
 import {getPlaceDetails} from '../utils/googlePlaceApi';
-import {getAddressComponent} from '../utils/helperFunctions';
+import {getAddressComponent, showError} from '../utils/helperFunctions';
 import {chekLocationPermission} from '../utils/permissions';
 import validations from '../utils/validations';
 import BorderTextInput from './BorderTextInput';
@@ -110,6 +110,12 @@ const AddressModal3 = ({
     customAddress: '',
     houseNo: '',
     searchResult: [],
+    isStreet: false,
+    isCity: false,
+    isState: false,
+    isCountry: false,
+    isPincode: false,
+    isAddress: false,
   });
 
   const styles = stylesData({fontFamily, themeColors});
@@ -160,6 +166,12 @@ const AddressModal3 = ({
     houseNo,
     searchResult,
     extra_instruction,
+    isStreet,
+    isCity,
+    isState,
+    isCountry,
+    isPincode,
+    isAddress,
   } = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -280,12 +292,99 @@ const AddressModal3 = ({
     });
     if (error) {
       // showError(error);
-      alert(error);
+      // alert(error);
+      checkAddressError(error);
       return;
     }
     return true;
   };
 
+  const checkAddressError = (error) => {
+    if (
+      error ==
+      strings.PLEASE_ENTER +
+        ' ' +
+        strings.YOUR +
+        ' ' +
+        strings.ENTER_NEW_ADDRESS
+    ) {
+      updateState({
+        isAddress: true,
+        isStreet: false,
+        isCity: false,
+        isState: false,
+        isCountry: false,
+        isPincode: false,
+      });
+    }
+    if (
+      error ==
+      strings.PLEASE_ENTER + ' ' + strings.YOUR + ' ' + strings.ENTER_STREET
+    ) {
+      updateState({
+        isStreet: true,
+        isCity: false,
+        isState: false,
+        isCountry: false,
+        isPincode: false,
+        isAddress: false,
+      });
+    }
+    if (
+      error ==
+      strings.PLEASE_ENTER + ' ' + strings.YOUR + ' ' + strings.CITY
+    ) {
+      updateState({
+        isCity: true,
+        isStreet: false,
+        isState: false,
+        isCountry: false,
+        isPincode: false,
+        isAddress: false,
+      });
+    }
+    if (
+      error ==
+      strings.PLEASE_ENTER + ' ' + strings.YOUR + ' ' + strings.STATE
+    ) {
+      updateState({
+        isState: true,
+        isStreet: false,
+        isCity: false,
+        isCountry: false,
+        isPincode: false,
+        isAddress: false,
+      });
+    }
+    if (
+      error ==
+      strings.PLEASE_ENTER + ' ' + strings.YOUR + ' ' + strings.COUNTRY
+    ) {
+      updateState({
+        isCountry: true,
+        isStreet: false,
+        isCity: false,
+        isState: false,
+        isPincode: false,
+        isAddress: false,
+      });
+    }
+    if (
+      error ==
+      strings.PLEASE_ENTER + ' ' + strings.YOUR + ' ' + strings.PINCODE
+    ) {
+      updateState({
+        isPincode: true,
+        isStreet: false,
+        isCity: false,
+        isState: false,
+        isCountry: false,
+        isAddress: false,
+      });
+    } else {
+      return;
+    }
+  };
   //Save your current address
   const saveAddress = () => {
     const checkValid = isValidDataOfAddressSave();
@@ -691,6 +790,7 @@ const AddressModal3 = ({
                 })}
               </View>
             </View>
+
             <View
               style={{
                 marginBottom: 5,
@@ -700,6 +800,15 @@ const AddressModal3 = ({
                   : colors.borderLight,
                 marginTop: 4,
               }}></View>
+            {isAddress && (
+              <Text style={{color: colors.redB}}>
+                {strings.PLEASE_ENTER +
+                  ' ' +
+                  strings.YOUR +
+                  ' ' +
+                  strings.ENTER_NEW_ADDRESS}
+              </Text>
+            )}
             <TouchableOpacity
               onPress={currentLocation}
               style={{
@@ -804,6 +913,20 @@ const AddressModal3 = ({
                 marginBottomTxt={0}
                 containerStyle={{borderBottomWidth: 1}}
               />
+              {isStreet && (
+                <Text
+                  style={{
+                    marginTop: moderateScale(-20),
+                    marginLeft: moderateScale(6),
+                    color: colors.redB,
+                  }}>
+                  {strings.PLEASE_ENTER +
+                    ' ' +
+                    strings.YOUR +
+                    ' ' +
+                    strings.ENTER_STREET}
+                </Text>
+              )}
 
               <BorderTextInputWithLable
                 onChangeText={_onChangeText('city')}
@@ -814,6 +937,20 @@ const AddressModal3 = ({
                 marginBottomTxt={0}
                 containerStyle={{borderBottomWidth: 1}}
               />
+              {isCity && (
+                <Text
+                  style={{
+                    marginTop: moderateScale(-20),
+                    marginLeft: moderateScale(6),
+                    color: colors.redB,
+                  }}>
+                  {strings.PLEASE_ENTER +
+                    ' ' +
+                    strings.YOUR +
+                    ' ' +
+                    strings.CITY}
+                </Text>
+              )}
 
               <BorderTextInputWithLable
                 onChangeText={_onChangeText('states')}
@@ -824,6 +961,20 @@ const AddressModal3 = ({
                 marginBottomTxt={0}
                 containerStyle={{borderBottomWidth: 1}}
               />
+              {isState && (
+                <Text
+                  style={{
+                    marginTop: moderateScale(-20),
+                    marginLeft: moderateScale(6),
+                    color: colors.redB,
+                  }}>
+                  {strings.PLEASE_ENTER +
+                    ' ' +
+                    strings.YOUR +
+                    ' ' +
+                    strings.STATE}
+                </Text>
+              )}
 
               <View
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -834,59 +985,93 @@ const AddressModal3 = ({
               textInputStyle={getTextInputStyle(country)}
               value={country}
             /> */}
+                <View style={{flex: 0.48}}>
+                  <View
+                    style={{
+                      height: moderateScaleVertical(49),
+                      borderBottomWidth: 1,
+                      borderRadius: 13,
+                      borderColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.borderLight,
+                      marginBottom: 20,
+                      justifyContent: 'center',
+                      paddingHorizontal: 8,
+                    }}>
+                    <TextInput
+                      selectionColor={
+                        isDarkMode ? MyDarkTheme.colors.text : colors.black
+                      }
+                      placeholderTextColor={
+                        isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.textGreyOpcaity7
+                      }
+                      onChangeText={_onChangeText('country')}
+                      placeholder={strings.COUNTRY}
+                      // textInputStyle={[getTextInputStyle(country)]}
+                      value={country}
+                      style={
+                        isDarkMode
+                          ? [styles.textInput3, {opacity: 0.7, color: '#fff'}]
+                          : [
+                              styles.textInput3,
+                              {opacity: 0.7, color: colors.textGrey},
+                            ]
+                      }
+                    />
+                  </View>
+                  {isCountry && (
+                    <Text
+                      style={{
+                        marginTop: moderateScale(-20),
+                        marginLeft: moderateScale(6),
+                        color: colors.redB,
+                      }}>
+                      {strings.PLEASE_ENTER +
+                        ' ' +
+                        strings.YOUR +
+                        ' ' +
+                        strings.COUNTRY}
+                    </Text>
+                  )}
+                </View>
                 <View
                   style={{
                     flex: 0.48,
-                    height: moderateScaleVertical(49),
-                    borderBottomWidth: 1,
-                    borderRadius: 13,
-                    borderColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.borderLight,
-                    marginBottom: 20,
-                    justifyContent: 'center',
-                    paddingHorizontal: 8,
                   }}>
-                  <TextInput
-                    selectionColor={
-                      isDarkMode ? MyDarkTheme.colors.text : colors.black
-                    }
-                    placeholderTextColor={
-                      isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.textGreyOpcaity7
-                    }
-                    onChangeText={_onChangeText('country')}
-                    placeholder={strings.COUNTRY}
-                    // textInputStyle={[getTextInputStyle(country)]}
-                    value={country}
-                    style={
-                      isDarkMode
-                        ? [styles.textInput3, {opacity: 0.7, color: '#fff'}]
-                        : [
-                            styles.textInput3,
-                            {opacity: 0.7, color: colors.textGrey},
-                          ]
-                    }
+                  <BorderTextInput
+                    containerStyle={{
+                      flex: 0.48,
+                      color: colors.textGrey,
+                      fontFamily: fontFamily.bold,
+                      fontSize: textScale(12),
+                      opacity: 1,
+                      borderBottomWidth: 1,
+                    }}
+                    onChangeText={_onChangeText('pincode')}
+                    placeholder={strings.PINCODE}
+                    textInputStyle={getTextInputStyle(pincode)}
+                    value={pincode}
+                    keyboardType={'numeric'}
+                    borderWidth={0}
+                    borderRadius={0}
                   />
+                  {isPincode && (
+                    <Text
+                      style={{
+                        marginTop: moderateScale(-20),
+                        marginLeft: moderateScale(6),
+                        color: colors.redB,
+                      }}>
+                      {strings.PLEASE_ENTER +
+                        ' ' +
+                        strings.YOUR +
+                        ' ' +
+                        strings.PINCODE}
+                    </Text>
+                  )}
                 </View>
-                <BorderTextInput
-                  containerStyle={{
-                    flex: 0.48,
-                    color: colors.textGrey,
-                    fontFamily: fontFamily.bold,
-                    fontSize: textScale(12),
-                    opacity: 1,
-                    borderBottomWidth: 1,
-                  }}
-                  onChangeText={_onChangeText('pincode')}
-                  placeholder={strings.PINCODE}
-                  textInputStyle={getTextInputStyle(pincode)}
-                  value={pincode}
-                  keyboardType={'numeric'}
-                  borderWidth={0}
-                  borderRadius={0}
-                />
               </View>
 
               <BorderTextInputWithLable

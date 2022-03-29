@@ -14,6 +14,7 @@ const HtmlViewComp = ({plainHtml = null, numOfLine = 2, ...props}) => {
     <View style={{maxHeight: 40}}>
       <HTMLView
         value={'<div>' + plainHtml + '</div>'}
+        
         stylesheet={{
           div: {
             fontSize: textScale(9),

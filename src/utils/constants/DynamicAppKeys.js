@@ -238,7 +238,7 @@ const shortCodes = {
   localdropoff: '960a1f',
   ubi: '085703',
   scoopaTechnologies: '3c6a7e',
-  knockknock: 'ee66a0',
+  knockknock: '3403fc',
   qrider: 'b715e7',
   dlvrd: '525456',
   delivery: 'd477fd',
@@ -266,16 +266,22 @@ const shortCodes = {
   slider: '3fea63',
   ICare: 'd3e178',
   dbairro: 'f3a0f7',
-  knockknock: '3403fc',
-  qrider: 'b715e7',
-  dlvrd: '525456',
   delivery: 'd477fd',
-  timHomeServices: 'ab2892',
   viversbox: 'aaa2b4',
   scootz: '760243',
   ola: 'e11f38',
   spliffnation: '1c98de',
   sourcesServices: '67f0c8',
+  wer: 'fb5def',
+  beachhop: '9199e7',
+  qseek:'a1ffe8',
+  delvento:'6a617a',
+  rideshare:'d4997d',
+  bua:'132c75',
+  upstreet:'260629',
+  newYorkMiniMart:'5e4b3b',
+  airlinesRecruiter:'deb34c',
+  nineOneTwo:'f92fea',
 };
 
 const appIds = {
@@ -1304,8 +1310,8 @@ const appIds = {
     android: 'com.app.getfix',
   }),
   scoopaTechnologies: Platform.select({
-    ios: 'com.application.delivery',
-    android: 'com.scoopaTechnologies',
+    ios: 'com.scoopaTechnologies',
+    android: 'com.app.scoopaTechnologies',
   }),
   dbairro: Platform.select({
     ios: 'com.dbairro',
@@ -1317,19 +1323,19 @@ const appIds = {
   }),
   qrider: Platform.select({
     ios: 'com.qrider',
-    android: 'com.qrider',
+    android: 'com.app.qrider',
   }),
   dlvrd: Platform.select({
     ios: 'com.application.dlvrd',
     android: 'com.dlvrd',
   }),
   delivery: Platform.select({
-    ios: 'com.delivery',
-    android: 'com.delivery',
+    ios: 'com.application.delivery',
+    android: 'com.app.delivery',
   }),
   timHomeServices: Platform.select({
     ios: 'com.timHomeServices',
-    android: 'com.timHomeServices',
+    android: 'com.app.timHomeServices',
   }),
   slider: Platform.select({
     ios: 'com.app.slider',
@@ -1346,10 +1352,10 @@ const appIds = {
   }),
   scootz: Platform.select({
     ios: 'com.scootz',
-    android: 'com.scootz',
+    android: 'com.app.scootz',
   }),
   ola: Platform.select({
-    ios: 'com.app.ola',
+    ios: 'com.application.ola',
     android: 'com.app.ola',
   }),
   spliffnation: Platform.select({
@@ -1359,6 +1365,47 @@ const appIds = {
   sourcesServices: Platform.select({
     ios: 'com.sourcesServices',
     android: 'com.sourcesServices',
+  }),
+  wer: Platform.select({
+    ios: 'com.app.wer',
+    android: 'com.wer',
+  }),
+  beachhop: Platform.select({
+    ios: 'com.beachhop',
+    android: 'com.beachhop',
+  }),
+  qseek: Platform.select({
+    ios: 'com.qseek',
+    android: 'com.qseek',
+  }),
+  delvento: Platform.select({
+    ios: 'com.delvento',
+    android: 'com.delvento',
+  }),
+  rideshare: Platform.select({
+    ios: 'com.customer.rideshare',
+    android: 'com.rideshare',
+  }),
+  bua: Platform.select({
+    ios: 'com.bua',
+    android: 'com.bua',
+  }),
+  // ////
+  upstreet: Platform.select({
+    ios: 'com.app.upstreet',
+    android: 'com.upstreet',
+  }),
+  newYorkMiniMart: Platform.select({
+    ios: 'com.newYorkMiniMart',
+    android: 'com.newYorkMiniMart',
+  }),
+  airlinesRecruiter: Platform.select({
+    ios: 'com.airlinesRecruiter',
+    android: 'com.airlinesRecruiter',
+  }),
+  nineOneTwo: Platform.select({
+    ios: 'com.nineOneTwo',
+    android: 'com.nineOneTwo',
   }),
 };
 
@@ -1375,7 +1422,6 @@ const socialKeys = {
       : getBundleId() == appIds.hmoobhub
       ? 'AvNzKlREbm3Aan3sEKYbXv0k8'
       : 'R66DHARfuoYAPowApUxNxwbPi',
-
   TWITTER_CONSUMER_SECRET:
     getBundleId() == appIds.runrun
       ? 'zBfzttCBVAzimuaIsDWDU1MjqI4pWzvNsrW6YOYPVZtgtzTlN8'

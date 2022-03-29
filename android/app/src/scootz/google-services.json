@@ -1,164 +1,65 @@
 {
   "project_info": {
-    "project_number": "1064634340878",
-    "project_id": "royodispatcher9",
-    "storage_bucket": "royodispatcher9.appspot.com"
+    "project_number": "84992023993",
+    "project_id": "scootz-ca3db",
+    "storage_bucket": "scootz-ca3db.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1064634340878:android:5b33e3defd03aff5670e5f",
+        "mobilesdk_app_id": "1:84992023993:android:2cc21672bba65cd695ea68",
         "android_client_info": {
-          "package_name": "com.app.ola"
+          "package_name": "com.app.scootz"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1064634340878-dab7pder4356g91i2gnh9vrn67akb3f0.apps.googleusercontent.com",
+          "client_id": "84992023993-3bj761uak4etgvealegbitd53mlv3vdf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.app.ola",
+            "package_name": "com.app.scootz",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "1064634340878-q6itbmpcb8n2ca3ffc100b2lurgiove6.apps.googleusercontent.com",
+          "client_id": "84992023993-tkkc38lrkloseh4a1vh50v1t93vu12qa.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.app.ola",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "1064634340878-tbnmkvf1r8ahacdbgmvmc89khlpfgmvu.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.app.ola",
+            "package_name": "com.app.scootz",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "1064634340878-fm1ebe6v4iagbb5sbg1mhmp3ek2gli5a.apps.googleusercontent.com",
+          "client_id": "84992023993-tv6tjgqo1ddjotbht2dr9rgtktrkr6dp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.scootz",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "84992023993-50co26f6kt5010kui0uoc4lu32e4nopu.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBqAZR3brgbp8OTGPNvE_MjgPjLbTzs660"
+          "current_key": "AIzaSyCAHtd66ES6r7wZsZm5BQlCkE9jm2ZSNm0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1064634340878-fm1ebe6v4iagbb5sbg1mhmp3ek2gli5a.apps.googleusercontent.com",
+              "client_id": "84992023993-50co26f6kt5010kui0uoc4lu32e4nopu.apps.googleusercontent.com",
               "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1064634340878:android:1b8a85ec649f133a670e5f",
-        "android_client_info": {
-          "package_name": "com.scootz"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1064634340878-e1gutn7jn9akr5en2biuiarjmvd788le.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.scootz",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "1064634340878-hajg1n8epjii9v0seenj0orrr0tqa48b.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.scootz",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "1064634340878-ogo4ld5t26icadtntkue50trchgj2mep.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.scootz",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "1064634340878-fm1ebe6v4iagbb5sbg1mhmp3ek2gli5a.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBqAZR3brgbp8OTGPNvE_MjgPjLbTzs660"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
+            },
             {
-              "client_id": "1064634340878-fm1ebe6v4iagbb5sbg1mhmp3ek2gli5a.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1064634340878:android:700694c6828db946670e5f",
-        "android_client_info": {
-          "package_name": "com.viversbox"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1064634340878-k3o5gm50ib0eqglm98iphf3ookkaum9i.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.viversbox",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "1064634340878-kbvqotc7hju5gvm9p23hss5k51sqnabd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.viversbox",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "1064634340878-v7jfrog2k3b67svmsnspr21cqeuq674k.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.viversbox",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "1064634340878-fm1ebe6v4iagbb5sbg1mhmp3ek2gli5a.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBqAZR3brgbp8OTGPNvE_MjgPjLbTzs660"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1064634340878-fm1ebe6v4iagbb5sbg1mhmp3ek2gli5a.apps.googleusercontent.com",
-              "client_type": 3
+              "client_id": "84992023993-jevbnl5bmlhhtlv6mvertdsar4fmjj5f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.scootz"
+              }
             }
           ]
         }

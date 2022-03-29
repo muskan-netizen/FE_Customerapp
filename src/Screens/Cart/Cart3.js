@@ -5,9 +5,12 @@ import React, {Fragment, useEffect, useRef, useState} from 'react';
 import {
   Alert,
   Animated,
+  Dimensions,
   FlatList,
   I18nManager,
   Image,
+  Keyboard,
+  KeyboardAvoidingView,
   Platform,
   RefreshControl,
   ScrollView,
@@ -15,6 +18,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Calendar} from 'react-native-calendars';
@@ -25,12 +29,14 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import * as RNLocalize from 'react-native-localize';
 import Modal from 'react-native-modal';
 import ModalDropdown from 'react-native-modal-dropdown';
 import RazorpayCheckout from 'react-native-razorpay';
 import {useSelector} from 'react-redux';
 import AddressModal3 from '../../Components/AddressModal3';
+import BorderTextInput from '../../Components/BorderTextInput';
 import ButtonComponent from '../../Components/ButtonComponent';
 import ChooseAddressModal from '../../Components/ChooseAddressModal';
 import ConfirmationModal from '../../Components/ConfirmationModal';
@@ -47,13 +53,16 @@ import WishlistCard from '../../Components/WishlistCard';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
+import Vi from '../../constants/lang/vi';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {hitSlopProp} from '../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
+  StatusBarHeight,
   textScale,
   width,
 } from '../../styles/responsiveSize';
@@ -70,17 +79,48 @@ import {
 } from '../../utils/helperFunctions';
 import {getItem, removeItem, setItem} from '../../utils/utils';
 import stylesFun from './styles';
+import {cameraHandler} from '../../utils/commonFunction';
+import ActionSheet from 'react-native-actionsheet';
+import {androidCameraPermission} from '../../utils/permissions';
+import DocumentPicker from 'react-native-document-picker';
+
+let clickedItem = {};
+let isFAQsSubmitted = true;
+let addtionSelectedImageIndex = null;
+let addtionSelectedImage = null;
 
 function Cart({navigation, route}) {
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const location = useSelector((state) => state?.home?.location);
-  const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const appMainData = useSelector((state) => state?.home?.appMainData);
-  const recommendedVendorsdata = appMainData?.vendors;
   let paramsData = route?.params;
+
+  let actionSheet = useRef(null);
+
+  //Redux store data
+  const userData = useSelector((state) => state?.auth?.userData);
+  const {
+    appData,
+    allAddresss,
+    themeColors,
+    currencies,
+    languages,
+    appStyle,
+    themeColor,
+    themeToggle,
+  } = useSelector((state) => state?.initBoot);
+  const selectedAddressData = useSelector(
+    (state) => state?.cart?.selectedAddress,
+  );
+
+  const {dineInType, appMainData, location} = useSelector(
+    (state) => state?.home,
+  );
+  const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
+  const darkthemeusingDevice = useDarkMode();
+
+  const selectedLanguage = languages?.primary_language?.sort_code;
+  const fontFamily = appStyle?.fontSizeData;
+  const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const recommendedVendorsdata = appMainData?.vendors;
 
   const [defaultSelectedTable, setDefaultSelectedTable] = useState('');
   const [type, setType] = useState('');
@@ -116,6 +156,15 @@ function Cart({navigation, route}) {
   const [sheduledorderdate, setSheduledorderdate] = useState(null);
   const [sheduledpickupdate, setSheduledpickupdate] = useState(null);
   const [sheduleddropoffdate, setSheduleddropoffdate] = useState(null);
+  const [productFaqs, setProductFaqs] = useState([]);
+  const [myAnswerdArray, setMyAllanswers] = useState([]);
+  const [myFaqValidationArray, setMyFaqValidationArray] = useState([]);
+  const [validationFucCalled, setvalidationFucCalled] = useState(true);
+  const [faqModalLayoutHeight, setfaqModalLayoutHeight] = useState(null);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [kycTxtInpts, setKycTxtInpts] = useState([]);
+  const [kycImages, setKycImages] = useState([]);
+  const [kycPdfs, setKycPdfs] = useState([]);
 
   const [state, setState] = useState({
     showTaxFeeArea: false,
@@ -132,6 +181,12 @@ function Cart({navigation, route}) {
     isModalVisibleForClearCart: false,
     isVisibleAddressModal: false,
     isRefreshing: false,
+    isProductOrderForm: false,
+    isProductLoader: false,
+    isSubmitFaqLoader: false,
+    isCategoryKyc: false,
+    isCategoryKycLoader: false,
+    isSubmitKycLoader: false,
   });
 
   const {
@@ -149,22 +204,13 @@ function Cart({navigation, route}) {
     selectViaMap,
     paymentModal,
     deliveryFeeLoader,
+    isProductOrderForm,
+    isProductLoader,
+    isSubmitFaqLoader,
+    isCategoryKyc,
+    isCategoryKycLoader,
+    isSubmitKycLoader,
   } = state;
-
-  //Redux store data
-  const userData = useSelector((state) => state?.auth?.userData);
-  const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
-    useSelector((state) => state?.initBoot);
-  console.log(appData, 'core appData');
-  const selectedLanguage = languages?.primary_language?.sort_code;
-  const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
-
-  const selectedAddressData = useSelector(
-    (state) => state?.cart?.selectedAddress,
-  );
-
-  const dineInType = useSelector((state) => state?.home?.dineInType);
 
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -181,6 +227,11 @@ function Cart({navigation, route}) {
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   console.log('cart items', cartItems);
+
+  const closeForm = () => {
+    updateState({isProductOrderForm: false, isCategoryKyc: false});
+    Keyboard.dismiss();
+  };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -314,10 +365,11 @@ function Cart({navigation, route}) {
         },
       )
       .then((res) => {
+        closeForm();
         actions.cartItemQty(res);
         console.log('cart details>>>', res);
         let checkDate = !!res?.data?.scheduled_date_time;
-        updateState({deliveryFeeLoader: false});
+        updateState({deliveryFeeLoader: false, isSubmitFaqLoader: false});
 
         if (!!checkDate && res.data.schedule_type == 'schedule') {
           let formatDate = new Date(res?.data?.scheduled_date_time);
@@ -585,6 +637,10 @@ function Cart({navigation, route}) {
       btnLoader: false,
       placeLoader: false,
       deliveryFeeLoader: false,
+      isProductLoader: false,
+      isSubmitFaqLoader: false,
+      isCategoryKycLoader: false,
+      isSubmitKycLoader: false,
     });
     showError(
       error?.error?.description ||
@@ -1019,9 +1075,10 @@ function Cart({navigation, route}) {
     // }
     // _offineLinePayment();
   };
-  console.log(selectedPayment, 'selectedPaymentselectedPayment');
   //Clear cart
   const placeOrder = () => {
+    isFAQsSubmitted = true;
+
     if (!!userData?.auth_token) {
       if (
         !!cartData?.closed_store_order_scheduled &&
@@ -1043,6 +1100,23 @@ function Cart({navigation, route}) {
 
         updateState({paymentModal: true});
         // moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)();
+        return;
+      }
+
+      if (cartData?.category_kyc_count > 0) {
+        showError('Please submit KYC form!');
+        return;
+      }
+      cartItems.map((itm, inx) => {
+        itm?.vendor_products.map((item, index) => {
+          if (item?.faq_count && item?.user_product_order_form == null) {
+            isFAQsSubmitted = false;
+          }
+        });
+      });
+
+      if (!isFAQsSubmitted) {
+        showInfo("Please fill all product's FAQs");
         return;
       }
 
@@ -1515,7 +1589,7 @@ function Cart({navigation, route}) {
           alignItems: 'center',
           // marginBottom: moderateScaleVertical(8),
           justifyContent: 'space-between',
-          marginVertical:moderateScaleVertical(8)
+          marginVertical: moderateScaleVertical(8),
           // padding: moderateScale(8)
         }}>
         <View
@@ -1582,7 +1656,98 @@ function Cart({navigation, route}) {
   const onModalDropDown = () => {
     setSelTypes(val?.code);
   };
+
+  const getProductFAQs = (item) => {
+    clickedItem = item;
+    updateState({
+      isProductOrderForm: true,
+      isProductLoader: true,
+    });
+    actions
+      .getProductFaqs(
+        `/${item?.product?.id}`,
+        {},
+        {
+          code: appData?.profile?.code,
+        },
+      )
+      .then((res) => {
+        setProductFaqs(res?.data);
+        updateState({
+          isProductLoader: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+
+  const setAllRequiredQuestions = (item, index) => {
+    if (validationFucCalled) {
+      if (item?.is_required) {
+        setvalidationFucCalled(false);
+        const arraywithAllRequiredQuestion = [...myFaqValidationArray];
+        arraywithAllRequiredQuestion[index] = true;
+
+        setMyFaqValidationArray(arraywithAllRequiredQuestion);
+      } else {
+        setvalidationFucCalled(false);
+      }
+    }
+  };
+
+  const onChangeText = (item, text, index, arrLength) => {
+    // const myAnswerdArray = [];
+    const answerdArray = [...myAnswerdArray];
+    answerdArray[index] = {
+      question: item?.translations[0]?.name,
+      answer: text,
+      product_faq_id: item?.id,
+    };
+
+    if (item?.is_required) {
+      setvalidationFucCalled(false);
+      const arraywithAllRequiredQuestion = [...myFaqValidationArray];
+      arraywithAllRequiredQuestion[index] = false;
+      setMyFaqValidationArray(arraywithAllRequiredQuestion);
+      if (text === '') {
+        const arraywithAllRequiredQuestion = [...myFaqValidationArray];
+        arraywithAllRequiredQuestion[index] = true;
+        setMyFaqValidationArray(arraywithAllRequiredQuestion);
+      }
+    }
+    setMyAllanswers(answerdArray);
+  };
+
+  const setAllFormData = () => {
+    const isRequired = myFaqValidationArray.some(checkRequird);
+    function checkRequird(checkRequird) {
+      return checkRequird == true;
+    }
+
+    if (isRequired) {
+      alert(strings.PLEASEFILDALL);
+    } else {
+      updateState({
+        isSubmitFaqLoader: true,
+      });
+      actions
+        .updateProductFAQs(
+          {
+            product_id: clickedItem?.product?.id,
+            user_product_order_form: myAnswerdArray,
+          },
+          {
+            code: appData?.profile?.code,
+          },
+        )
+        .then((res) => {
+          getCartDetail();
+        })
+        .catch(errorMethod);
+    }
+  };
+
   const _renderItem = ({item, index}) => {
+    console.log(item, 'item>>><>>>');
     return (
       <View>
         {index === 0 && (
@@ -1677,6 +1842,7 @@ function Cart({navigation, route}) {
               </Text>
             ) : null}
           </View>
+
           {/************ start  render cart items *************/}
           {item?.vendor_products.length > 0
             ? item?.vendor_products.map((i, inx) => {
@@ -1808,7 +1974,7 @@ function Cart({navigation, route}) {
                                   fontSize: textScale(12),
                                   color: isDarkMode
                                     ? MyDarkTheme.colors.text
-                                    : '#B3B3B3',
+                                    : colors.textGreyOpcaity7,
                                   marginTop: moderateScaleVertical(4),
                                   fontFamily: fontFamily.regular,
                                 }}>
@@ -1898,7 +2064,7 @@ function Cart({navigation, route}) {
                                       ...styles.cartItemWeight2,
                                       color: isDarkMode
                                         ? MyDarkTheme.colors.text
-                                        : colors.textGreyB,
+                                        : colors.textGreyOpcaity7,
                                       marginBottom: moderateScale(2),
                                       marginTop: moderateScaleVertical(6),
                                     }}>
@@ -2018,22 +2184,44 @@ function Cart({navigation, route}) {
                             </View>
                           </View>
 
-                          <TouchableOpacity
+                          <View
                             style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
                               alignSelf: 'flex-end',
-                              marginRight: moderateScale(14),
                               marginTop: moderateScale(6),
-                            }}
-                            onPress={() => openDeleteView(i)}>
-                            <FastImage
-                              source={imagePath.deleteRed}
-                              resizeMode="contain"
-                              style={{
-                                width: moderateScale(16),
-                                height: moderateScale(16),
-                              }}
-                            />
-                          </TouchableOpacity>
+                            }}>
+                            {!!(
+                              i?.faq_count && i?.user_product_order_form == null
+                            ) && (
+                              <>
+                                <TouchableOpacity
+                                  style={{
+                                    marginRight: moderateScale(14),
+                                  }}
+                                  onPress={() => getProductFAQs(i)}>
+                                  <FastImage
+                                    source={imagePath.edit1Royo}
+                                    resizeMode="contain"
+                                    style={{
+                                      width: moderateScale(16),
+                                      height: moderateScale(16),
+                                    }}
+                                  />
+                                </TouchableOpacity>
+                              </>
+                            )}
+                            <TouchableOpacity onPress={() => openDeleteView(i)}>
+                              <FastImage
+                                source={imagePath.deleteRed}
+                                resizeMode="contain"
+                                style={{
+                                  width: moderateScale(16),
+                                  height: moderateScale(16),
+                                }}
+                              />
+                            </TouchableOpacity>
+                          </View>
                         </View>
                       </View>
                       {!!cartData?.delay_date && (
@@ -2666,6 +2854,20 @@ function Cart({navigation, route}) {
   const getFooter = () => {
     return (
       <View style={{}}>
+        {!!cartData?.category_kyc_count && (
+          <ButtonComponent
+            onPress={onCategoryKYC}
+            btnText={'Categoory KYC'}
+            borderRadius={moderateScale(13)}
+            textStyle={{color: colors.white, textTransform: 'none'}}
+            containerStyle={{
+              ...styles.placeOrderButtonStyle,
+              marginHorizontal: moderateScale(10),
+            }}
+            placeLoader={false}
+          />
+        )}
+
         <TextInput
           value={instruction}
           onChangeText={(text) => setInstruction(text)}
@@ -4362,6 +4564,505 @@ function Cart({navigation, route}) {
   const openCloseMapAddress = (type) => {
     updateState({selectViaMap: type == 1 ? true : false});
   };
+
+  const renderProductForm = () => {
+    return (
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <View
+          style={{
+            maxHeight: height / 2,
+            minHeight: moderateScaleVertical(250),
+            borderTopLeftRadius: moderateScale(16),
+            borderTopRightRadius: moderateScale(16),
+            backgroundColor: colors.white,
+            padding: moderateScale(12),
+          }}>
+          {isProductLoader ? (
+            <View>
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                  marginHorizontal: 0,
+                }}
+                widthLeft={width - moderateScale(25)}
+                rectWidthLeft={width - moderateScale(25)}
+                heightLeft={moderateScaleVertical(45)}
+                rectHeightLeft={moderateScaleVertical(45)}
+                isRight={false}
+                rx={7}
+                ry={7}
+              />
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                  marginHorizontal: 0,
+                }}
+                widthLeft={width - moderateScale(25)}
+                rectWidthLeft={width - moderateScale(25)}
+                heightLeft={moderateScaleVertical(45)}
+                rectHeightLeft={moderateScaleVertical(45)}
+                isRight={false}
+                rx={7}
+                ry={7}
+              />
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                  marginHorizontal: 0,
+                }}
+                widthLeft={width - moderateScale(25)}
+                rectWidthLeft={width - moderateScale(25)}
+                heightLeft={moderateScaleVertical(45)}
+                rectHeightLeft={moderateScaleVertical(45)}
+                isRight={false}
+                rx={7}
+                ry={7}
+              />
+            </View>
+          ) : (
+            <View
+              style={{
+                backgroundColor: isDarkMode ? colors.black : colors.white,
+                borderRadius: moderateScale(8),
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <Text />
+
+                <TouchableOpacity onPress={closeForm}>
+                  <Image source={imagePath.closeButton} />
+                </TouchableOpacity>
+              </View>
+              <ScrollView>
+                {productFaqs.map((item, index) => {
+                  setAllRequiredQuestions(item, index);
+                  return (
+                    <View
+                      style={{
+                        marginTop: moderateScaleVertical(10),
+                      }}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            marginBottom: moderateScaleVertical(10),
+                            color: colors.redColor,
+                          }}>
+                          {`${item?.is_required ? '* ' : ''}`}
+                        </Text>
+                        <Text
+                          style={{
+                            marginBottom: moderateScaleVertical(10),
+                            fontFamily: fontFamily.medium,
+                            color: isDarkMode ? colors.white : colors.blackC,
+                          }}>
+                          {item?.translations[0]?.name}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          // marginVertical: moderateScaleVertical(16),
+                          backgroundColor: isDarkMode
+                            ? colors.whiteOpacity15
+                            : colors.greyNew,
+                          height: moderateScale(42),
+                          borderRadius: moderateScale(4),
+                          paddingHorizontal: moderateScale(8),
+                        }}>
+                        <TextInput
+                          placeholder={strings.ANSWER}
+                          onChangeText={(text) =>
+                            onChangeText(item, text, index, item?.length)
+                          }
+                          style={{
+                            ...styles.insctructionText,
+                            color: isDarkMode ? colors.textGreyB : colors.black,
+                          }}
+                          placeholderTextColor={
+                            isDarkMode
+                              ? colors.textGreyB
+                              : colors.blackOpacity40
+                          }
+                        />
+                      </View>
+                    </View>
+                  );
+                })}
+              </ScrollView>
+
+              <GradientButton
+                colorsArray={[
+                  themeColors.primary_color,
+                  themeColors.primary_color,
+                ]}
+                textStyle={{
+                  textTransform: 'none',
+                  fontSize: textScale(12),
+                }}
+                indicator={isSubmitFaqLoader}
+                indicatorColor={colors.white}
+                onPress={setAllFormData}
+                btnText={strings.SUBMIT}
+                marginTop={moderateScaleVertical(16)}
+                marginBottom={moderateScaleVertical(16)}
+              />
+            </View>
+          )}
+        </View>
+      </KeyboardAvoidingView>
+    );
+  };
+
+  // Category KYC start
+
+  const onCategoryKYC = () => {
+    updateState({
+      isCategoryKyc: true,
+      isCategoryKycLoader: true,
+    });
+    actions
+      .getCategoryKycDocument(
+        {
+          category_ids: cartData?.category_ids,
+        },
+        {code: appData?.profile?.code},
+      )
+      .then((res) => {
+        console.log(res?.data, 'res?.data>>>');
+        setKycTxtInpts(res?.data.filter((x) => x?.file_type == 'Text'));
+        setKycImages(res?.data.filter((x) => x?.file_type == 'Image'));
+        setKycPdfs(res?.data.filter((x) => x?.file_type == 'Pdf'));
+
+        updateState({
+          isCategoryKycLoader: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+
+  const showActionSheet = () => {
+    actionSheet.current.show();
+  };
+  const updateImages = (type, index) => {
+    addtionSelectedImageIndex = index;
+    addtionSelectedImage = type;
+    showActionSheet(false);
+  };
+
+  const getDoc = async (value, index) => {
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.pdf],
+      });
+      let data = cloneDeep(kycPdfs);
+      if (res) {
+        data[index].value = res[0].uri;
+        data[index].filename = res[0].name;
+        data[index].fileData = res[0];
+        setKycPdfs(data);
+      }
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the picker, exit any dialogs or menus and move on
+      } else {
+        throw err;
+      }
+    }
+  };
+
+  const cameraHandle = async (index) => {
+    const permissionStatus = await androidCameraPermission();
+    if (permissionStatus) {
+      if (index == 0 || index == 1) {
+        cameraHandler(index, {
+          width: 300,
+          height: 400,
+          cropping: true,
+          cropperCircleOverlay: true,
+          mediaType: 'photo',
+        })
+          .then((res) => {
+            console.log(res, 'res>>><>>>');
+            let data = cloneDeep(kycImages);
+
+            data[addtionSelectedImageIndex].value = res?.sourceURL || res?.path;
+            data[addtionSelectedImageIndex].fileData = res;
+            setKycImages(data);
+          })
+          .catch((err) => {
+            console.log(err, 'err>>>>');
+          });
+      }
+    }
+  };
+
+  const onSubmitKycDocs = () => {
+    let formdata = new FormData();
+    formdata.append('category_ids', cartData?.category_ids);
+    var isRequired = true;
+    if (!isEmpty(kycTxtInpts)) {
+      kycTxtInpts.map((i, inx) => {
+        if (i?.contents != '' && !!i?.contents) {
+          formdata.append(i?.translations[0].slug, i?.contents);
+        } else if (i?.is_required) {
+          if (isRequired) {
+            alert(
+              `${
+                strings.PLEASE_ENTER
+              } ${i?.translations[0].name.toLowerCase()}`,
+            );
+            isRequired = false;
+            return;
+          }
+        }
+      });
+    }
+
+    let concatinatedArray = kycImages.concat(kycPdfs);
+    if (!isEmpty(concatinatedArray)) {
+      concatinatedArray.map((i, inx) => {
+        if (i?.value) {
+          formdata.append(
+            i?.translations[0].slug,
+            i?.file_type == 'Image'
+              ? {
+                  uri: i.fileData.path,
+                  name: i.fileData.filename,
+                  filename: i.fileData.filename,
+                  type: i.fileData.mime,
+                }
+              : i?.fileData,
+          );
+        } else if (i?.is_required) {
+          if (isRequired) {
+            alert(
+              `${
+                strings.PLEASE_UPLOAD
+              } ${i?.translations[0].name.toLowerCase()}`,
+            );
+            isRequired = false;
+            return;
+          }
+        }
+      });
+    }
+
+    if (!isRequired) {
+      return;
+    }
+    updateState({
+      isSubmitKycLoader: true,
+    });
+
+    console.log(formdata, 'formdata>>>');
+
+    actions
+      .submitCategoryKYC(formdata, {
+        code: appData?.profile?.code,
+      })
+      .then((res) => {
+        console.log(res, 'res_submit_Kyc>>>>');
+        updateState({
+          isCategoryKyc: false,
+          isSubmitKycLoader: false,
+        });
+        showSuccess(res?.message);
+        getCartDetail();
+      })
+      .catch(errorMethod);
+  };
+
+  //Get TextInput
+  const getTextInputField = (type, index) => {
+    return (
+      <BorderTextInput
+        // secureTextEntry={true}
+        placeholder={type?.translations[0]?.name || ''}
+        // onChangeText={(text) => handleDynamicTxtInput(text, index, type)}
+      />
+    );
+  };
+
+  const getImageFieldView = (type, index) => {
+    return (
+      <View
+        style={{
+          marginRight: moderateScale(15),
+          marginTop: moderateScale(10),
+          width: moderateScale(95),
+        }}>
+        <TouchableOpacity
+          onPress={() => updateImages(type, index)}
+          style={styles.imageUpload}>
+          {kycImages[index].value != undefined &&
+          kycImages[index].value != null &&
+          kycImages[index].value != '' ? (
+            <Image
+              source={{uri: kycImages[index].value}}
+              style={styles.imageStyle2}
+            />
+          ) : (
+            <Image source={imagePath?.icPhoto} />
+          )}
+        </TouchableOpacity>
+        <Text
+          numberOfLines={2}
+          style={{...styles.label3, minHeight: moderateScale(25)}}>
+          {type?.translations[0]?.name}
+          {type.is_required ? '*' : ''}
+        </Text>
+      </View>
+    );
+  };
+
+  const getPdfView = (type, index) => {
+    return (
+      <View
+        style={{marginRight: moderateScale(20), marginTop: moderateScale(20)}}>
+        <TouchableOpacity
+          onPress={() => getDoc(type, index)}
+          style={{
+            ...styles.imageUpload,
+            height: 100,
+            width: 100,
+            borderRadius: moderateScale(4),
+            borderWidth: 1,
+            borderColor: colors.blue,
+          }}>
+          <Text style={styles.uploadStyle}>
+            {kycPdfs[index].value != undefined &&
+            kycPdfs[index].value != null &&
+            kycPdfs[index].value != ''
+              ? `${kycPdfs[index].filename}`
+              : `+ ${strings.UPLOAD}`}
+          </Text>
+        </TouchableOpacity>
+        <Text style={styles.label3}>
+          {type?.translations[0]?.name}
+          {type.is_required ? '*' : ''}
+        </Text>
+      </View>
+    );
+  };
+
+  const renderCategoryKYC = () => {
+    return (
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <View
+          style={{
+            height: height / 2,
+
+            borderTopLeftRadius: moderateScale(16),
+            borderTopRightRadius: moderateScale(16),
+            backgroundColor: colors.white,
+            padding: moderateScale(12),
+          }}>
+          {isCategoryKycLoader ? (
+            <View>
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                  marginHorizontal: 0,
+                }}
+                widthLeft={width - moderateScale(25)}
+                rectWidthLeft={width - moderateScale(25)}
+                heightLeft={moderateScaleVertical(120)}
+                rectHeightLeft={moderateScaleVertical(120)}
+                isRight={false}
+                rx={7}
+                ry={7}
+              />
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                  marginHorizontal: 0,
+                }}
+                widthLeft={width - moderateScale(25)}
+                rectWidthLeft={width - moderateScale(25)}
+                heightLeft={moderateScaleVertical(120)}
+                rectHeightLeft={moderateScaleVertical(120)}
+                isRight={false}
+                rx={7}
+                ry={7}
+              />
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                  marginHorizontal: 0,
+                }}
+                widthLeft={width - moderateScale(25)}
+                rectWidthLeft={width - moderateScale(25)}
+                heightLeft={moderateScaleVertical(120)}
+                rectHeightLeft={moderateScaleVertical(120)}
+                isRight={false}
+                rx={7}
+                ry={7}
+              />
+            </View>
+          ) : (
+            <View
+              style={{
+                height: '100%',
+                paddingHorizontal: moderateScale(15),
+              }}>
+              {!isEmpty(kycTxtInpts) &&
+                kycTxtInpts.map((item, index) => {
+                  return getTextInputField(item, index);
+                })}
+
+              {!isEmpty(kycImages) && (
+                <View style={styles.viewStyleForUploadImage}>
+                  {kycImages.map((item, index) => {
+                    return getImageFieldView(item, index);
+                  })}
+                </View>
+              )}
+
+              {!isEmpty(kycPdfs) && (
+                <View style={styles.viewStyleForUploadImage}>
+                  {kycPdfs.map((item, index) => {
+                    return getPdfView(item, index);
+                  })}
+                </View>
+              )}
+
+              <ButtonComponent
+                onPress={onSubmitKycDocs}
+                btnText={'Submit'}
+                borderRadius={moderateScale(13)}
+                textStyle={{color: colors.white}}
+                containerStyle={{
+                  position: 'absolute',
+                  backgroundColor: themeColors.primary_color,
+                  width: width - moderateScale(30),
+                  bottom: 10,
+                }}
+                placeLoader={isSubmitKycLoader}
+              />
+            </View>
+          )}
+        </View>
+      </KeyboardAvoidingView>
+    );
+  };
+
+  // Category KYC end
+
   return (
     <WrapperContainer
       bgColor={
@@ -4666,6 +5367,35 @@ function Cart({navigation, route}) {
           />
         </View>
       </Modal>
+      <Modal
+        onBackdropPress={closeForm}
+        isVisible={isProductOrderForm}
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end',
+          // marginBottom: keyboardHeight,
+        }}>
+        {renderProductForm()}
+      </Modal>
+      <Modal
+        onBackdropPress={closeForm}
+        isVisible={isCategoryKyc}
+        // isVisible={true}
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end',
+          // marginBottom: keyboardHeight,
+        }}>
+        {renderCategoryKYC()}
+      </Modal>
+      <ActionSheet
+        ref={actionSheet}
+        // title={'Choose one option'}
+        options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
+        cancelButtonIndex={2}
+        destructiveButtonIndex={2}
+        onPress={(index) => cameraHandle(index)}
+      />
     </WrapperContainer>
   );
 }

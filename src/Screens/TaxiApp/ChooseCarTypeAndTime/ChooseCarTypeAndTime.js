@@ -331,6 +331,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     data['order_number'] = extraData?.orderDetail?.order_number;
     data['action'] = 'pickup_delivery';
     data['stripe_token'] = paramData?.tokenInfo;
+    console.log(data, 'data>>><');
     console.log(extraData, 'extraData....');
     actions
       .openPaymentWebUrlPost(`/${selectedPayment?.code}`, data, {

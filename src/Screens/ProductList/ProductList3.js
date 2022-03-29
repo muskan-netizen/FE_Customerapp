@@ -495,8 +495,8 @@ export default function Products({route, navigation}) {
             let newKey = {
               ...val,
               // ['data']: val?.products && val.products,
-              ['data']: val?.category.products && val.category.products,
-              title: val?.category && val.category?.translation[0]?.name,
+              ['data']: val?.category?.products && val?.category?.products,
+              title: val?.category && val?.category?.translation[0]?.name || val?.category?.translation[1]?.name  ,
             };
             delete newKey['products'];
             return newKey;
@@ -859,7 +859,7 @@ export default function Products({route, navigation}) {
       return;
     }
 
-    if (item?.add_on?.length !== 0 || item?.variantSet?.length !== 0) {
+    if (item?.add_on_count !== 0 || item?.variant_set_count !== 0) {
       setSelectedSection(section);
       setSelectedCarItems(item);
       setIsVisibleModal(true);
@@ -3306,7 +3306,6 @@ export default function Products({route, navigation}) {
           {isVisibleModal && (
             <HomeServiceVariantAddons
               addonSet={selectedCartItem?.add_on}
-              variantData={selectedCartItem?.variantSet}
               isVisible={isVisibleModal}
               productdetail={selectedCartItem}
               onClose={onCloseModal}
@@ -3335,7 +3334,7 @@ export default function Products({route, navigation}) {
             }}
             backdropComponent={() => (
               <View style={{height: 0}}>
-                <Text>dfdf</Text>
+           
               </View>
             )}
             backgroundComponent={backgroundComponent}>
@@ -3350,7 +3349,6 @@ export default function Products({route, navigation}) {
               }}>
               <VariantAddons
                 addonSet={selectedCartItem?.add_on}
-                variantData={selectedCartItem?.variantSet}
                 isVisible={isVisibleModal}
                 productdetail={selectedCartItem}
                 onClose={onCloseModal}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>860516399181-d5hlridcrs4spqorqjtg8u080i2b2f3d.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.860516399181-d5hlridcrs4spqorqjtg8u080i2b2f3d</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>860516399181-11bidhl7nu12ach8lq41jkv6u8g3ssqi.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAQqOp0OJKRzMBTaQNU50Oc59qSvOXnRxA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>860516399181</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.beachhop</string>
+	<key>PROJECT_ID</key>
+	<string>beachhop-7a46f</string>
+	<key>STORAGE_BUCKET</key>
+	<string>beachhop-7a46f.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:860516399181:ios:3c7afe6220817efe718404</string>
+</dict>
+</plist>

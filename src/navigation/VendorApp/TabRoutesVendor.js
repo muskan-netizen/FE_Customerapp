@@ -20,6 +20,7 @@ import HomeStackVendor from './HomeStackVendor';
 import OrderStackVendor from './OrderStackVendor';
 import ProductStackVendor from './ProductStackVendor';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
+import strings from '../../constants/lang';
 
 const Tab = createBottomTabNavigator();
 let showBottomBar_ = true;
@@ -122,7 +123,7 @@ const TabRoutesVendorNewTemplate = ({barColor = colors.themeColor2}) => {
                   fontFamily: focused ? fontFamily.bold : fontFamily.regular,
                   paddingVertical: moderateScale(8),
                 }}>
-                Home
+                {strings.HOME}
               </Text>
             );
           },
@@ -154,7 +155,7 @@ const TabRoutesVendorNewTemplate = ({barColor = colors.themeColor2}) => {
                   fontFamily: focused ? fontFamily.bold : fontFamily.regular,
                   paddingVertical: moderateScale(8),
                 }}>
-                Orders
+                {strings.ORDERS}
               </Text>
             );
           },
@@ -189,7 +190,7 @@ const TabRoutesVendorNewTemplate = ({barColor = colors.themeColor2}) => {
                   fontFamily: focused ? fontFamily.bold : fontFamily.regular,
                   paddingVertical: moderateScale(8),
                 }}>
-                Product
+                {strings.PRODUCT}
               </Text>
             );
           },
@@ -221,7 +222,7 @@ const TabRoutesVendorNewTemplate = ({barColor = colors.themeColor2}) => {
                   fontFamily: focused ? fontFamily.bold : fontFamily.regular,
                   paddingVertical: moderateScale(8),
                 }}>
-                Account
+                {strings.ACCOUNT}
               </Text>
             );
           },

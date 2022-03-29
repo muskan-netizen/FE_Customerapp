@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "894028078770",
+    "project_id": "qseek-fc696",
+    "storage_bucket": "qseek-fc696.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:894028078770:android:9a531eaf3750dc9cfbf3ab",
+        "android_client_info": {
+          "package_name": "com.qseek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "894028078770-69nppt0eij7k3krm9b603jh89tjcpk8c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qseek",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "894028078770-bfh1u3o8ovbtk41c1ijapj352j3sk4ab.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qseek",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "894028078770-gg2ijoobvqjjp55fdli9778lhgc2bnn9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qseek",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "894028078770-2nhfi1pcoqjm2l0b3c26lshfi9bd4fv5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOi4gRn3FvQN9RWTHiiKfh2P2Tr0wnkg8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "894028078770-2nhfi1pcoqjm2l0b3c26lshfi9bd4fv5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "894028078770-1tkjp3l94rcbsn95nog5ba7567q0jmur.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.qseek"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

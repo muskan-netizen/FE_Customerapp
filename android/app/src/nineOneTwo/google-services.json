@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "73964634041",
+    "project_id": "nineonetwo-87bdb",
+    "storage_bucket": "nineonetwo-87bdb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:73964634041:android:b8a83c8cf1732d1edb4068",
+        "android_client_info": {
+          "package_name": "com.nineOneTwo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "73964634041-2h1kj3641hrcn4el35j4bph5j4u5catl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nineOneTwo",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "73964634041-b1614gmr3iv9f4g2h3rfjddm0rkq63na.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nineOneTwo",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "73964634041-e74r5nucfn7ppli63v41bc62ko3p0ldf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nineOneTwo",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "73964634041-mit0s4a26t2epnp2bmf4k173tgg3h6eu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAskiXsoNUDdt3tJg64_VtszZXvMCMTPyU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "73964634041-mit0s4a26t2epnp2bmf4k173tgg3h6eu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

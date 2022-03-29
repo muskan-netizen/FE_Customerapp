@@ -994,9 +994,9 @@ end
 # end
 
 # #Releezer Target
-# target 'Releezer' do
+ target 'Releezer' do
   
-# end
+ end
 
 # #Vendoor Target
 # target 'Vendoor' do
@@ -1184,17 +1184,17 @@ target 'Ubi' do
   
 end
 
-# #ScoopaTechnologies Target
-# target 'ScoopaTechnologies' do
+#ScoopaTechnologies Target
+target 'ScoopaTechnologies' do
   
-# end
+end
 
 # #BoltDelivery Target
 # target 'BoltDelivery' do
   
 # end
 
-#GamaDelivery Target
+# # GamaDelivery Target
 # target 'GamaDelivery' do
   
 # end
@@ -1355,6 +1355,66 @@ end
 
 # Delivery Target
 target 'Delivery' do
+  
+end
+
+# Ola Target
+target 'Ola' do
+  
+end
+
+# Wer Target
+target 'Wer' do
+  
+end
+
+# Beachhop Target
+target 'Beachhop' do
+  
+end
+
+# SourcesServices Target
+target 'SourcesServices' do
+  
+end
+
+# Qseek Target
+target 'Qseek' do
+  
+end
+
+# Delvento Target
+target 'Delvento' do
+  
+end
+
+# Rideshare Target
+target 'Rideshare' do
+  
+end
+
+# Bua Target
+target 'Bua' do
+  
+end
+
+# Upstreet Target
+target 'Upstreet' do
+  
+end
+
+# NewYorkMiniMart Target
+target 'NewYorkMiniMart' do
+  
+end
+
+# AirlinesRecruiter Target
+target 'AirlinesRecruiter' do
+  
+end
+
+# NineOneTwo Target
+target 'NineOneTwo' do
   
 end
 

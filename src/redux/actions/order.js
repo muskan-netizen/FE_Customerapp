@@ -19,6 +19,7 @@ import {
   GET_VENDOR_REVENUE_DASHBOARD_DATA,
   GET_VENDOR_PROFILE,
   GET_VENDOR_TRANSACTIONS,
+  RATE_TO_DRIVER,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -284,6 +285,18 @@ export function allPendingOrders(query, data = {}, headers = {}) {
 export function acceptRejectDriveUpdate(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiPost(ACCEPTREJECTDRIVERUPDATE, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function ratingToDriver(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(RATE_TO_DRIVER, data, headers)
       .then((res) => {
         resolve(res);
       })

@@ -25,6 +25,7 @@ import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import fontFamily from '../../../styles/fontFamily';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
@@ -34,6 +35,8 @@ import {currencyNumberFormatter} from '../../../utils/commonFunction';
 import {customMarginBottom} from '../../../utils/constants/constants';
 import {getImageUrl, showError} from '../../../utils/helperFunctions';
 import {dialCall} from '../../../utils/openNativeApp';
+import Modal from 'react-native-modal';
+import Accordion from 'react-native-collapsible/Accordion';
 
 const RoyoOrderDetail = (props) => {
   const {data, selectedVendor} = props.route.params;
@@ -48,6 +51,9 @@ const RoyoOrderDetail = (props) => {
     upcoming_status: data?.order_status.upcoming_status,
     orderInfo: {},
     userDocumentList: [],
+    isProductOrderForm: false,
+    activeSections: [],
+    productOrderForm: [],
   });
   const {
     showUpcomingStatus,
@@ -57,6 +63,9 @@ const RoyoOrderDetail = (props) => {
     address,
     orderInfo,
     userDocumentList,
+    isProductOrderForm,
+    activeSections,
+    productOrderForm,
   } = state;
   const shareOptions = {
     title: 'Share via',
@@ -87,7 +96,6 @@ const RoyoOrderDetail = (props) => {
     if (selectedVendor) {
       collectedData['vendor_id'] = selectedVendor?.id;
     }
-    console.log(data, '=====res');
     console.log(collectedData, 'collectedData?>?');
     updateState({isLoadingB: true});
     actions
@@ -97,7 +105,7 @@ const RoyoOrderDetail = (props) => {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res.data, '=====res');
+        console.log(res, 'res=====res');
         updateState({isLoadingB: false});
         if (res?.data) {
           updateState({
@@ -194,6 +202,78 @@ const RoyoOrderDetail = (props) => {
     );
   };
 
+  const _updateSections = (activeSections) => {
+    updateState({
+      activeSections: activeSections,
+    });
+  };
+
+  const _renderSectionTitle = (section) => {
+    return (
+      <View
+        style={{
+          height: moderateScaleVertical(15),
+        }}></View>
+    );
+  };
+
+  const _renderHeader = (section) => {
+    console.log(section, 'section>>>');
+    return (
+      <View
+        style={{
+          backgroundColor: colors.grey2,
+          height: moderateScaleVertical(40),
+          justifyContent: 'center',
+          borderWidth: 1,
+          borderColor: colors.borderColorGrey,
+          borderTopLeftRadius: 5,
+          borderTopRightRadius: 5,
+        }}>
+        <Text
+          style={{
+            marginLeft: moderateScale(15),
+            fontFamily: fontFamily.bold,
+            fontSize: textScale(13),
+          }}>
+          Q: {section.question}
+        </Text>
+      </View>
+    );
+  };
+
+  const _renderContent = (section) => {
+    return (
+      <View
+        style={{
+          paddingHorizontal: moderateScale(20),
+          borderWidth: 1,
+          borderColor: colors.borderColorGrey,
+          borderTopWidth: 0,
+          justifyContent: 'center',
+          height: moderateScaleVertical(40),
+        }}>
+        <Text
+          style={{
+            fontFamily: fontFamily.regular,
+            fontSize: textScale(11),
+          }}>
+          Ans: {section.answer}
+        </Text>
+      </View>
+    );
+  };
+
+  const renderKycDocs = (item, index) => {
+    console.log(item, 'item>>>');
+    return (
+      <View>
+        <Text>{item?.category_document?.primary?.name}</Text>
+        {/* {<Image></Image>} */}
+      </View>
+    );
+  };
+
   return (
     <WrapperContainer
       isLoading={isLoadingB}
@@ -204,7 +284,7 @@ const RoyoOrderDetail = (props) => {
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
         leftIcon={imagePath.backRoyo}
-        centerTitle={`Order #${data.order_number}`}
+        centerTitle={`${strings.ORDER} #${data.order_number}`}
       />
       {/* <View style={{...styles.orderNumberBox, zIndex: -1}}>
         <Text style={styles.orderNumber}>Order #{data.order_number}</Text>
@@ -259,61 +339,42 @@ const RoyoOrderDetail = (props) => {
           }
           keyExtractor={(val, index) => index}
           renderItem={({item, index}) => {
-            {
-              console.log('checkhheck', data);
-            }
             return (
-              <View style={styles.itemBox}>
-                <Image
-                  style={styles.itemImage}
-                  source={{
-                    uri: getImageUrl(
-                      item?.image_path?.image_fit,
-                      item?.image_path?.image_path,
-                      '500/500',
-                    ),
-                  }}
-                />
-                <View style={{flex: 1, justifyContent: 'space-around'}}>
-                  <Text style={styles.font16Medium}>
-                    {item?.translation?.title}
-                  </Text>
-                  <Text style={styles.font13Regular}>
-                    {item.quantity}x {strings.UNIT}
-                  </Text>
-                  {!isEmpty(item?.product_addons) && (
-                    <View>
-                      <Text
-                        style={{
-                          color: colors.textGreyB,
-                          fontSize: moderateScaleVertical(11),
-                          fontFamily: fontFamily.regular,
-                        }}>
-                        {strings.EXTRA}
-                      </Text>
-                    </View>
-                  )}
-                  {!isEmpty(item?.product_addons)
-                    ? item?.product_addons.map((j, jnx) => {
-                        return (
-                          <View>
-                            <Text
-                              style={{
-                                color: colors.textGreyB,
-                                fontSize: moderateScaleVertical(11),
-                                fontFamily: fontFamily.regular,
-                              }}
-                              numberOfLines={1}>
-                              {j.addon_title}{' '}
-                            </Text>
-                            <View style={{flexDirection: 'row'}}>
-                              <Text
-                                style={{
-                                  color: colors.textGreyB,
-                                  fontSize: moderateScaleVertical(11),
-                                  fontFamily: fontFamily.regular,
-                                }}
-                                numberOfLines={1}>{`(${j.option_title})`}</Text>
+              <View>
+                <View style={styles.itemBox}>
+                  <Image
+                    style={styles.itemImage}
+                    source={{
+                      uri: getImageUrl(
+                        item?.image_path?.image_fit,
+                        item?.image_path?.image_path,
+                        '500/500',
+                      ),
+                    }}
+                  />
+                  <View style={{flex: 1, justifyContent: 'space-around'}}>
+                    <Text style={styles.font16Medium}>
+                      {item?.translation?.title}
+                    </Text>
+                    <Text style={styles.font13Regular}>
+                      {item.quantity}x {strings.UNIT}
+                    </Text>
+                    {!isEmpty(item?.product_addons) && (
+                      <View>
+                        <Text
+                          style={{
+                            color: colors.textGreyB,
+                            fontSize: moderateScaleVertical(11),
+                            fontFamily: fontFamily.regular,
+                          }}>
+                          {strings.EXTRA}
+                        </Text>
+                      </View>
+                    )}
+                    {!isEmpty(item?.product_addons)
+                      ? item?.product_addons.map((j, jnx) => {
+                          return (
+                            <View>
                               <Text
                                 style={{
                                   color: colors.textGreyB,
@@ -321,42 +382,101 @@ const RoyoOrderDetail = (props) => {
                                   fontFamily: fontFamily.regular,
                                 }}
                                 numberOfLines={1}>
-                                {` ${
-                                  currencies?.primary_currency?.symbol
-                                } ${currencyNumberFormatter(Number(j?.price))}`}
+                                {j.addon_title}{' '}
                               </Text>
+                              <View style={{flexDirection: 'row'}}>
+                                <Text
+                                  style={{
+                                    color: colors.textGreyB,
+                                    fontSize: moderateScaleVertical(11),
+                                    fontFamily: fontFamily.regular,
+                                  }}
+                                  numberOfLines={
+                                    1
+                                  }>{`(${j.option_title})`}</Text>
+                                <Text
+                                  style={{
+                                    color: colors.textGreyB,
+                                    fontSize: moderateScaleVertical(11),
+                                    fontFamily: fontFamily.regular,
+                                  }}
+                                  numberOfLines={1}>
+                                  {` ${
+                                    currencies?.primary_currency?.symbol
+                                  } ${currencyNumberFormatter(
+                                    Number(j?.price),
+                                  )}`}
+                                </Text>
+                              </View>
                             </View>
-                          </View>
-                        );
-                      })
-                    : null}
-                  <Text style={{...styles.font14Regular, marginTop: 10}}>
-                    {currencies?.primary_currency?.symbol}{' '}
-                    {Number(item.price).toFixed(2)}
+                          );
+                        })
+                      : null}
+                    <Text style={{...styles.font14Regular, marginTop: 10}}>
+                      {currencies?.primary_currency?.symbol}{' '}
+                      {Number(item.price).toFixed(2)}
+                    </Text>
+                  </View>
+                  <Text style={styles.font16Semibold}>
+                    {`${currencies?.primary_currency?.symbol} ${Number(
+                      item.quantity * item.price,
+                    ).toFixed(2)}`}
                   </Text>
                 </View>
-                <Text style={styles.font16Semibold}>
-                  {`${currencies?.primary_currency?.symbol} ${Number(
-                    item.quantity * item.price,
-                  ).toFixed(2)}`}
-                </Text>
+
+                {!isEmpty(item?.user_product_order_form) && (
+                  <ButtonWithLoader
+                    btnText={strings.PRODUCT_ORDER_FORM}
+                    btnTextStyle={{...styles.btnText, color: colors.white}}
+                    btnStyle={{
+                      ...styles.btnContainer,
+                      backgroundColor: colors.themeColor2,
+                      marginLeft: moderateScale(10),
+                      marginTop: 0,
+                      height: moderateScaleVertical(35),
+                    }}
+                    onPress={() => {
+                      updateState({
+                        productOrderForm: item,
+                        isProductOrderForm: true,
+                      });
+                    }}
+                  />
+                )}
               </View>
             );
           }}
           contentContainerStyle={styles.orderBox}
           ItemSeparatorComponent={() => <View style={styles.itemSeperator} />}
         />
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginHorizontal: moderateScale(16),
-          }}>
-          <Text style={styles.font14Semibold}>
-            {strings.SPECIAL_INSTRUCTION}
-          </Text>
-          <Text style={styles.font14Semibold}>{data?.comment_for_vendor}</Text>
-        </View>
+        {/* {!!orderInfo && !isEmpty(orderInfo?.category_KYC_document) && (
+          <View
+            style={{
+              paddingHorizontal: moderateScale(15),
+              paddingVertical: moderateScaleVertical(10),
+            }}>
+            <Text
+              style={{...styles.font16Medium, marginBottom: moderateScale(10)}}>
+              {'Category KYC Documents'}
+            </Text>
+            {orderInfo?.category_KYC_document.map(renderKycDocs)}{' '}
+          </View>
+        )} */}
+        {!!data?.comment_for_vendor && (
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginHorizontal: moderateScale(16),
+            }}>
+            <Text style={styles.font14Semibold}>
+              {strings.SPECIAL_INSTRUCTION}
+            </Text>
+            <Text style={styles.font14Semibold}>
+              {data?.comment_for_vendor}
+            </Text>
+          </View>
+        )}
         <View style={{margin: moderateScaleVertical(16)}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>
@@ -457,13 +577,13 @@ const RoyoOrderDetail = (props) => {
         {current_status.id == 1 ? (
           <View style={styles.buttonBox}>
             <ButtonWithLoader
-              btnText="Reject"
+              btnText={strings.REJECT}
               btnTextStyle={styles.btnText}
               btnStyle={styles.btnContainer}
               onPress={() => updateOrderStatus(data, 8)}
             />
             <ButtonWithLoader
-              btnText="Confirm"
+              btnText={strings.CONFIRM}
               btnTextStyle={{...styles.btnText, color: colors.white}}
               btnStyle={{
                 ...styles.btnContainer,
@@ -475,6 +595,42 @@ const RoyoOrderDetail = (props) => {
           </View>
         ) : null}
       </ScrollView>
+      {console.log(productOrderForm, 'productOrderForm>>')}
+      <Modal
+        isVisible={isProductOrderForm}
+        onBackdropPress={() => {
+          updateState({
+            isProductOrderForm: false,
+          });
+        }}
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end',
+        }}>
+        <View
+          style={{
+            minHeight: moderateScaleVertical(200),
+            maxHeight: height / 2,
+            backgroundColor: colors.white,
+            borderTopRightRadius: moderateScale(16),
+            borderTopLeftRadius: moderateScale(16),
+          }}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Accordion
+              sections={productOrderForm?.user_product_order_form || []}
+              activeSections={activeSections}
+              renderSectionTitle={_renderSectionTitle}
+              renderHeader={_renderHeader}
+              renderContent={_renderContent}
+              onChange={_updateSections}
+              containerStyle={{
+                paddingHorizontal: moderateScale(15),
+              }}
+            />
+            <View style={{height: 50}} />
+          </ScrollView>
+        </View>
+      </Modal>
     </WrapperContainer>
   );
 };
