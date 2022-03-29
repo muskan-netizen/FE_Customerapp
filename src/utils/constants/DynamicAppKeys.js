@@ -296,7 +296,7 @@ const appIds = {
   }),
   tranzit: Platform.select({
     ios: 'com.tranzit',
-    android: 'com.tranzit',
+    android: 'com.app.tranzit',
   }),
   hmoobhub: Platform.select({
     ios: 'com.codebrew.hmoobhub',
@@ -1391,7 +1391,6 @@ const appIds = {
     ios: 'com.bua',
     android: 'com.bua',
   }),
-  // ////
   upstreet: Platform.select({
     ios: 'com.app.upstreet',
     android: 'com.upstreet',
