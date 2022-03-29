@@ -282,6 +282,7 @@ const shortCodes = {
   newYorkMiniMart:'5e4b3b',
   airlinesRecruiter:'deb34c',
   nineOneTwo:'f92fea',
+  trip:'89e246',
 };
 
 const appIds = {
@@ -1406,6 +1407,10 @@ const appIds = {
   nineOneTwo: Platform.select({
     ios: 'com.nineOneTwo',
     android: 'com.nineOneTwo',
+  }),
+  trip: Platform.select({
+    ios: 'com.app.trip',
+    android: 'com.trip',
   }),
 };
 
