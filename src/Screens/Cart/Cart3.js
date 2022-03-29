@@ -70,6 +70,15 @@ import {
 } from '../../utils/helperFunctions';
 import {getItem, removeItem, setItem} from '../../utils/utils';
 import stylesFun from './styles';
+import {
+  CardField,
+  createToken,
+  initStripe,
+  StripeProvider,
+  handleCardAction,
+  createPaymentMethod,
+  confirmPayment,
+} from '@stripe/stripe-react-native';
 
 function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -1218,83 +1227,215 @@ function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
+  const _createPaymentMethod = async (cardInfo, res2) => {
+    // console.log(cardInfo, 'cardInfo');
+    if (res2) {
+      await createPaymentMethod({
+        type: 'Card',
+        card: cardInfo,
+      })
+        .then((res) => {
+          // updateState({isLoadingB: false});
+          console.log('_createPaymentMethod res', res);
+          if (res && res?.error && res?.error?.message) {
+            showError(res?.error?.message);
+          } else {
+            console.log(res, 'success_createPaymentMethod ');
+            actions
+              .getStripePaymentIntent(
+                // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
+                {
+                  payment_option_id: selectedPayment?.id,
+                  action: 'cart',
+                  amount:
+                    Number(cartData?.total_payable_amount) +
+                    (selectedTipAmount != null && selectedTipAmount != ''
+                      ? Number(selectedTipAmount)
+                      : 0),
+                  payment_method_id: res?.paymentMethod?.id,
+                },
+                {
+                  code: appData?.profile?.code,
+                  currency: currencies?.primary_currency?.id,
+                  language: languages?.primary_language?.id,
+                },
+              )
+              .then(async (res) => {
+                console.log(res, 'getStripePaymentIntent response');
+                if (res && res?.client_secret) {
+                  const {paymentIntent, error} = await handleCardAction(
+                    res?.client_secret,
+                  );
+                  if (paymentIntent) {
+                    console.log(paymentIntent, 'paymentIntent');
+                    if (paymentIntent) {
+                      actions
+                        .confirmPaymentIntentStripe(
+                          {
+                            payment_option_id: selectedPayment?.id,
+                            action: 'cart',
+                            amount:
+                              Number(cartData?.total_payable_amount) +
+                              (selectedTipAmount != null &&
+                              selectedTipAmount != ''
+                                ? Number(selectedTipAmount)
+                                : 0),
+                            payment_intent_id: paymentIntent?.id,
+                            address_id: selectedAddressData?.id,
+                            tip:
+                              selectedTipAmount && selectedTipAmount != ''
+                                ? Number(selectedTipAmount)
+                                : 0,
+                          },
+                          {
+                            code: appData?.profile?.code,
+                            currency: currencies?.primary_currency?.id,
+                            language: languages?.primary_language?.id,
+                          },
+                        )
+                        .then((res) => {
+                          updateState({isRefreshing: false});
+                          if (res && res?.status == 'Success' && res?.data) {
+                            // updateState({allAvailAblePaymentMethods: res?.data});
+                            actions.cartItemQty({});
+                            setCartItems([]);
+                            setCartData({});
+                            setSelectedPayment({
+                              id: 1,
+                              off_site: 0,
+                              title: 'Cash On Delivery',
+                              title_lng: strings.CASH_ON_DELIVERY,
+                            });
+                            setPickupDriverComment(null);
+                            setDropOffDriverComment(null);
+                            setVendorComment(null);
+                            setLocalPickupDate(null);
+                            setLocaleDropOffDate(null);
+                            setModalType(null);
+                            setSheduledpickupdate(null);
+
+                            updateState({
+                              isLoadingB: false,
+                              placeLoader: false,
+                            });
+                            moveToNewScreen(navigationStrings.ORDERSUCESS, {
+                              orderDetail: res.data,
+                            })();
+                            showSuccess(res?.message);
+                          } else {
+                            setSelectedPayment({
+                              id: 1,
+                              off_site: 0,
+                              title: 'Cash On Delivery',
+                              title_lng: strings.CASH_ON_DELIVERY,
+                            });
+                            updateState({
+                              isLoadingB: false,
+                              placeLoader: false,
+                            });
+                          }
+                        })
+                        .catch(errorMethod);
+                    }
+                  } else {
+                    updateState({
+                      isRefreshing:false,
+                      isLoadingB: false,
+                      placeLoader: false,
+                    });
+                    console.log(error, 'error');
+                    showError(error?.message || 'payment failed');
+                  }
+                } else {
+                  updateState({isLoadingB: false});
+                }
+              })
+              .catch(errorMethod);
+          }
+        })
+        .catch(errorMethod);
+    }
+  };
+
   //Offline payments
   const _offineLinePayment = async () => {
     if (!!tokenInfo) {
-      let selectedMethod = selectedPayment.code.toLowerCase();
-      actions
-        .openPaymentWebUrl(
-          `/${selectedMethod}?tip=${
-            selectedTipAmount && selectedTipAmount != ''
-              ? Number(selectedTipAmount)
-              : 0
-          }&amount=${
-            Number(cartData?.total_payable_amount) +
-            (selectedTipAmount != null && selectedTipAmount != ''
-              ? Number(selectedTipAmount)
-              : 0)
-          }&auth_token=${userData?.auth_token}&address_id=${
-            selectedAddressData?.id
-          }&payment_option_id=${
-            selectedPayment?.id
-          }&action=cart&stripe_token=${tokenInfo}`,
-          {},
-          {
-            code: appData?.profile?.code,
-            currency: currencies?.primary_currency?.id,
-            language: languages?.primary_language?.id,
-          },
-        )
-        .then((res) => {
-          updateState({isRefreshing: false});
-          if (res && res?.status == 'Success' && res?.data) {
-            // updateState({allAvailAblePaymentMethods: res?.data});
-            actions.cartItemQty({});
-            setCartItems([]);
-            setCartData({});
-            setSelectedPayment({
-              id: 1,
-              off_site: 0,
-              title: 'Cash On Delivery',
-              title_lng: strings.CASH_ON_DELIVERY,
-            });
-            setPickupDriverComment(null);
-            setDropOffDriverComment(null);
-            setVendorComment(null);
-            setLocalPickupDate(null);
-            setLocaleDropOffDate(null);
-            setModalType(null);
-            setSheduledpickupdate(null);
+      _createPaymentMethod(cardInfo, tokenInfo);
 
-            updateState({
-              isLoadingB: false,
-              placeLoader: false,
-            });
-            moveToNewScreen(navigationStrings.ORDERSUCESS, {
-              orderDetail: res.data,
-            })();
-            showSuccess(res?.message);
-          } else {
-            setSelectedPayment({
-              id: 1,
-              off_site: 0,
-              title: 'Cash On Delivery',
-              title_lng: strings.CASH_ON_DELIVERY,
-            });
-            updateState({
-              isLoadingB: false,
-              placeLoader: false,
-            });
-          }
-        })
-        .catch((err) => {
-          showError(err.message);
-          updateState({
-            isLoadingB: false,
-            placeLoader: false,
-          });
-          console.log(err, 'errorInPlaceOrder');
-        });
+      // let selectedMethod = selectedPayment.code.toLowerCase();
+      // actions
+      //   .openPaymentWebUrl(
+      //     `/${selectedMethod}?tip=${
+      //       selectedTipAmount && selectedTipAmount != ''
+      //         ? Number(selectedTipAmount)
+      //         : 0
+      //     }&amount=${
+      //       Number(cartData?.total_payable_amount) +
+      //       (selectedTipAmount != null && selectedTipAmount != ''
+      //         ? Number(selectedTipAmount)
+      //         : 0)
+      //     }&auth_token=${userData?.auth_token}&address_id=${
+      //       selectedAddressData?.id
+      //     }&payment_option_id=${
+      //       selectedPayment?.id
+      //     }&action=cart&stripe_token=${tokenInfo}`,
+      //     {},
+      //     {
+      //       code: appData?.profile?.code,
+      //       currency: currencies?.primary_currency?.id,
+      //       language: languages?.primary_language?.id,
+      //     },
+      //   )
+      //   .then((res) => {
+      //     updateState({isRefreshing: false});
+      //     if (res && res?.status == 'Success' && res?.data) {
+      //       // updateState({allAvailAblePaymentMethods: res?.data});
+      //       actions.cartItemQty({});
+      //       setCartItems([]);
+      //       setCartData({});
+      //       setSelectedPayment({
+      //         id: 1,
+      //         off_site: 0,
+      //         title: 'Cash On Delivery',
+      //         title_lng: strings.CASH_ON_DELIVERY,
+      //       });
+      //       setPickupDriverComment(null);
+      //       setDropOffDriverComment(null);
+      //       setVendorComment(null);
+      //       setLocalPickupDate(null);
+      //       setLocaleDropOffDate(null);
+      //       setModalType(null);
+      //       setSheduledpickupdate(null);
+
+      //       updateState({
+      //         isLoadingB: false,
+      //         placeLoader: false,
+      //       });
+      //       moveToNewScreen(navigationStrings.ORDERSUCESS, {
+      //         orderDetail: res.data,
+      //       })();
+      //       showSuccess(res?.message);
+      //     } else {
+      //       setSelectedPayment({
+      //         id: 1,
+      //         off_site: 0,
+      //         title: 'Cash On Delivery',
+      //         title_lng: strings.CASH_ON_DELIVERY,
+      //       });
+      //       updateState({
+      //         isLoadingB: false,
+      //         placeLoader: false,
+      //       });
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     showError(err.message);
+      //     updateState({
+      //       isLoadingB: false,
+      //       placeLoader: false,
+      //     });
+      //     console.log(err, 'errorInPlaceOrder');
+      //   });
     } else {
       errorMethod(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }

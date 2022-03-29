@@ -527,10 +527,11 @@ export default function AddMoney({navigation}) {
                         .catch(errorMethod);
                     }
                   } else {
+                    updateState({isLoadingB: false});
                     console.log(error, 'error');
                     showError(error?.message || 'payment failed');
                   }
-                }else{
+                } else {
                   updateState({isLoadingB: false});
                 }
               })

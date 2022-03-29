@@ -687,12 +687,12 @@ export default function Subscriptions2({navigation, route}) {
   const _offineLinePayment = async () => {
     if (cardInfo) {
       updateState({isModalVisibleForPayment: false});
-      updateState({isLoading: true});
+     
       await createToken(cardInfo)
         .then((res) => {
           console.log(res, 'res>');
           console.log(selectedPlan, 'selectedPlan>');
-
+          updateState({isLoading: true});
           if (res && res?.token && res.token?.id) {
             _createPaymentMethod(cardInfo, res);
           }
@@ -737,6 +737,8 @@ export default function Subscriptions2({navigation, route}) {
         .catch((err) => {
           updateState({isLoadingB: false});
         });
+    }else{
+      updateState({isLoading:false})
     }
   };
 

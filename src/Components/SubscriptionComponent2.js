@@ -128,8 +128,8 @@ const SubscriptionComponent2 = ({
                 {`${currencies?.primary_currency?.symbol} `}
               </Text>
               <Text style={styles.title}>
-                
-                {currencyNumberFormatter(
+                {Number(data?.price).toFixed(2)}
+                {/* {currencyNumberFormatter(
                   currentSubscription
                     ? `${
                         (Number(subscriptionData?.subscription_amount),
@@ -139,7 +139,7 @@ const SubscriptionComponent2 = ({
                         (Number(data?.price),
                         appData?.profile?.preferences?.digit_after_decimal)
                       }`,
-                )}
+                )} */}
               </Text>
             </View>
 
@@ -275,7 +275,7 @@ const SubscriptionComponent2 = ({
                   width: width / 2,
                 }}
                 onPress={payNowUpcoming}
-                btnText={`${strings.PAYNOW} (${data?.price})`}
+                btnText={`${strings.PAYNOW} (${currencies?.primary_currency?.symbol}${(Number(data?.price).toFixed(2))})`}
               />
               <GradientButton
                 colorsArray={[
