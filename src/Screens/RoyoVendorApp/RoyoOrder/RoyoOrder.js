@@ -1,7 +1,7 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {cloneDeep, debounce} from 'lodash';
-import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
+import React, { useState, useCallback, useEffect } from 'react';
+import { cloneDeep, debounce } from 'lodash';
+import { View, Text, StyleSheet, ScrollView, Image, Platform } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import colors from '../../../styles/colors';
 import fontFamily from '../../../styles/fontFamily';
@@ -13,7 +13,7 @@ import {
 import MultiScreen from '../../../Components/MultiScreen';
 import OrderCard from '../../../Components/OrderCard';
 import imagePath from '../../../constants/imagePath';
-import {FlatList} from 'react-native';
+import { FlatList } from 'react-native';
 import {
   customMarginBottom,
   customMarginLeftForBox,
@@ -21,35 +21,35 @@ import {
 } from '../../../utils/constants/constants';
 import navigationStrings from '../../../navigation/navigationStrings';
 import Header from '../../../Components/Header';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import actions from '../../../redux/actions';
 import strings from '../../../constants/lang';
-import {RefreshControl} from 'react-native';
+import { RefreshControl } from 'react-native';
 import staticStrings from '../../../constants/staticStrings';
-import {showError} from '../../../utils/helperFunctions';
+import { showError } from '../../../utils/helperFunctions';
 import SunmiV2Printer from 'react-native-sunmi-v2-printer';
-import {getItem} from '../../../utils/utils';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import { getItem } from '../../../utils/utils';
+import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import _ from 'lodash';
 
 const RoyoOrder = (props) => {
-  const {navigation, route} = props;
-  const {params} = route;
+  const { navigation, route } = props;
+  const { params } = route;
 
   useEffect(() => {
     if (params) {
       console.log('focused order screen >>>> ', params);
-      updateState({activeIndex: params?.index});
+      updateState({ activeIndex: params?.index });
     }
   }, [params]);
 
   const selectedOrder = (index) => {
-    updateState({activeIndex: index});
+    updateState({ activeIndex: index });
   };
 
   // new copy data
 
-  const {storeSelectedVendor} = useSelector((state) => state?.order);
+  const { storeSelectedVendor } = useSelector((state) => state?.order);
 
   const [state, setState] = useState({
     newOrder: [],
@@ -88,14 +88,14 @@ const RoyoOrder = (props) => {
     isBleDevice,
   } = state;
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   const currentTheme = useSelector((state) => state.initBoot);
-  const {appData, appStyle, currencies, languages} = useSelector(
+  const { appData, appStyle, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
 
-  const {themeColors, themeLayouts} = currentTheme;
+  const { themeColors, themeLayouts } = currentTheme;
   // const fontFamily = appStyle?.fontSizeData;
   // const commonStyles = commonStylesFun({fontFamily});
   useEffect(() => {
@@ -106,16 +106,18 @@ const RoyoOrder = (props) => {
   }, [isLoading]);
 
   const _getBleDevice = async () => {
-    const res = await getItem('BleDevice');
-    const sunmiPrinterAvail = await SunmiV2Printer.hasPrinter;
-    if (!!res || sunmiPrinterAvail) {
-      updateState({
-        isBleDevice: true,
-      });
-    } else {
-      updateState({
-        isBleDevice: false,
-      });
+    if (Platform.OS == 'android') {
+      const res = await getItem('BleDevice');
+      const sunmiPrinterAvail = await SunmiV2Printer.hasPrinter;
+      if (!!res || sunmiPrinterAvail) {
+        updateState({
+          isBleDevice: true,
+        });
+      } else {
+        updateState({
+          isBleDevice: false,
+        });
+      }
     }
   };
 
@@ -135,19 +137,18 @@ const RoyoOrder = (props) => {
     let vendordId = !!storeSelectedVendor?.id
       ? storeSelectedVendor?.id
       : selectedVendor?.id
-      ? selectedVendor?.id
-      : '';
-    actions
-      ._getListOfVendorOrders(
-        `?limit=${limit}&page=${pageActive}&selected_vendor_id=${vendordId}`,
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          // systemuser: DeviceInfo.getUniqueId(),
-        },
-      )
+        ? selectedVendor?.id
+        : '';
+    actions._getListOfVendorOrders(
+      `?limit=${limit}&page=${pageActive}&selected_vendor_id=${vendordId}`,
+      {},
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        // systemuser: DeviceInfo.getUniqueId(),
+      },
+    )
       .then((res) => {
         console.log('vendor orders res', res);
         const data = res.data.order_list.data;
@@ -187,14 +188,13 @@ const RoyoOrder = (props) => {
     data['order_id'] = acceptRejectData?.id;
     data['vendor_id'] = selectedVendor?.id;
     data['order_status_option_id'] = status;
-    updateState({isLoadingB: true});
-    actions
-      .updateOrderStatus(data, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        // systemuser: DeviceInfo.getUniqueId(),
-      })
+    updateState({ isLoadingB: true });
+    actions.updateOrderStatus(data, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      // systemuser: DeviceInfo.getUniqueId(),
+    })
       .then((res) => {
         updateState({
           isLoadingB: false,
@@ -228,7 +228,7 @@ const RoyoOrder = (props) => {
   useEffect(() => {
     _getListOfVendorOrders();
     _getBleDevice();
-  }, [pageActive, isRefreshing]);
+  }, [pageActive, isRefreshing,activeIndex]);
 
   useEffect(() => {
     updateOrderList();
@@ -262,12 +262,12 @@ const RoyoOrder = (props) => {
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({pageActive: 1, isRefreshing: true});
+    updateState({ pageActive: 1, isRefreshing: true });
   };
 
   //pagination of data
-  const onEndReached = ({distanceFromEnd}) => {
-    updateState({pageActive: pageActive + 1});
+  const onEndReached = ({ distanceFromEnd }) => {
+    updateState({ pageActive: pageActive + 1 });
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -290,7 +290,7 @@ const RoyoOrder = (props) => {
       isLoadingB={isLoadingB}
       source={loaderOne}>
       <Header
-        headerStyle={{marginVertical: moderateScaleVertical(16)}}
+        headerStyle={{ marginVertical: moderateScaleVertical(16) }}
         // centerTitle="Orders | Foodies hub  "
         centerTitle={`${strings.ORDERS} | ' ${selectedVendor?.name || ''}`}
         onPressCenterTitle={() => _reDirectToVendorList()}
@@ -335,7 +335,7 @@ const RoyoOrder = (props) => {
                 </View>
               );
             }}
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <View
                 style={{
                   // marginLeft: customMarginLeftForBox(index),
@@ -381,7 +381,7 @@ const RoyoOrder = (props) => {
                 </View>
               );
             }}
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <View
                 style={{
                   marginLeft: customMarginLeftForBox(index),
@@ -426,7 +426,7 @@ const RoyoOrder = (props) => {
                 </View>
               );
             }}
-            renderItem={({item, index}) => {
+            renderItem={({ item, index }) => {
               return (
                 <View
                   style={{
@@ -473,7 +473,7 @@ const RoyoOrder = (props) => {
                 </View>
               );
             }}
-            renderItem={({item, index}) => {
+            renderItem={({ item, index }) => {
               return (
                 <View
                   style={{

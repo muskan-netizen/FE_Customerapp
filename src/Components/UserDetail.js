@@ -24,7 +24,14 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {getImageUrl} from '../utils/helperFunctions';
 
 // create a component
-const UserDetail = ({data, type, containerStyle, imgStyle}) => {
+const UserDetail = ({
+  data,
+  type,
+  containerStyle,
+  imgStyle,
+  isDriver = false,
+  _onRateDriver = () => {},
+}) => {
   const {toggleTheme, themeColors, theme, appStyle} = useSelector(
     (state) => state.initBoot,
   );
@@ -99,6 +106,21 @@ const UserDetail = ({data, type, containerStyle, imgStyle}) => {
             }}>
             {type}
           </Text>
+          {isDriver && (
+            <TouchableOpacity
+              onPress={_onRateDriver}
+              style={{
+                justifyContent: 'center',
+                backgroundColor: themeColors.primary_color,
+                alignItems: 'center',
+                borderRadius: moderateScale(3),
+                paddingVertical: moderateScaleVertical(2),
+                marginTop: moderateScaleVertical(10),
+                paddingHorizontal: 2,
+              }}>
+              <Text style={{color: colors.white}}>Rate Driver</Text>
+            </TouchableOpacity>
+          )}
         </View>
 
         {(data?.vendor?.phone_no || data?.order?.phone_number) && (

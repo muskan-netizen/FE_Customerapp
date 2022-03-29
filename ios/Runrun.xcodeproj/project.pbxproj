@@ -730,7 +730,6 @@
 		840CC36B27D73FB200DC97BF /* ScoopaTechnologies(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 840CC36A27D73FB100DC97BF /* ScoopaTechnologies(Development).xcconfig */; };
 		840CC56D27D73FEA00DC97BF /* ScoopaTechnologies(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 840CC56C27D73FEA00DC97BF /* ScoopaTechnologies(Production).xcconfig */; };
 		840CC66F27D7406200DC97BF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 840CC66E27D7406200DC97BF /* Images.xcassets */; };
-		840CC77127D7417A00DC97BF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 840CC77027D7417A00DC97BF /* GoogleService-Info.plist */; };
 		8412E14326CA27D2007B8D4F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		8412E14426CA27D2007B8D4F /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8412E14526CA27D2007B8D4F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -4187,7 +4186,7 @@
 		847F6E2427203FDA00C7A32F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847F6E2327203FDA00C7A32F /* Images.xcassets */; };
 		847F6F1A2720428800C7A32F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847F6F192720428700C7A32F /* GoogleService-Info.plist */; };
 		8480076A26CE20340014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		8480076B26CE20340014F500 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		8480076B26CE20340014F500 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		8480076C26CE20340014F500 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8480076D26CE20340014F500 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848007AD26CE260D0014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -4956,7 +4955,7 @@
 		848CB12D278D662700DD824C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848CB12C278D662700DD824C /* Images.xcassets */; };
 		848CB1FB278D66F400DD824C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848CB1FA278D66F300DD824C /* GoogleService-Info.plist */; };
 		848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		848CEF8126CE229D0077C918 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		848CEF8126CE229D0077C918 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		848CEF8226CE229D0077C918 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848CEF8326CE229D0077C918 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848D76B92748F70100FE87AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -5663,6 +5662,7 @@
 		849AE5EE26C53BDE00B6C20D /* Cabdelivr(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 849AE5ED26C53BDE00B6C20D /* Cabdelivr(Development).xcconfig */; };
 		849AE61C26C53BF800B6C20D /* Cabdelivr(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 849AE61B26C53BF800B6C20D /* Cabdelivr(Production).xcconfig */; };
 		849AE64A26C53C0B00B6C20D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 849AE64926C53C0B00B6C20D /* Images.xcassets */; };
+		849B1D9527F18F51009DB184 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849B1D9427F18F50009DB184 /* GoogleService-Info.plist */; };
 		849BD27D27465C100036F905 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		849BD27E27465C100036F905 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		849BD27F27465C100036F905 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -8066,7 +8066,7 @@
 		A3A6250FCCD0B14E349230A3 /* libPods-available_pods-Kel360.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCC2D67FD81987E8FA99F96 /* libPods-available_pods-Kel360.a */; };
 		A586460F6C79DE43A28EF374 /* libPods-available_pods-Easyu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D0236DDCE860FE9753CB4F /* libPods-available_pods-Easyu.a */; };
 		A84072FAAB82B0E89B6F43E8 /* libPods-available_pods-Delvento.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E7BEC3A5B8F7375B6F91944 /* libPods-available_pods-Delvento.a */; };
-		A92AB8016833F1D5F3CBD9FA /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		A92AB8016833F1D5F3CBD9FA /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		A977DDAF0B9B464D07FB1D18 /* libPods-available_pods-HeyBuddy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 118DFFE265C8819D7983D913 /* libPods-available_pods-HeyBuddy.a */; };
 		A9C1DC9D0CB173AB55D95F96 /* libPods-available_pods-FARMER SOUQ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADCB41B53CA320B9D9EF09C4 /* libPods-available_pods-FARMER SOUQ.a */; };
 		A9F4168BD0B359E352A8F821 /* libPods-available_pods-TimHomeServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD492B9AC292AB3A08F04DCE /* libPods-available_pods-TimHomeServices.a */; };
@@ -8723,7 +8723,6 @@
 		840CC36A27D73FB100DC97BF /* ScoopaTechnologies(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ScoopaTechnologies(Development).xcconfig"; sourceTree = "<group>"; };
 		840CC56C27D73FEA00DC97BF /* ScoopaTechnologies(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ScoopaTechnologies(Production).xcconfig"; sourceTree = "<group>"; };
 		840CC66E27D7406200DC97BF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		840CC77027D7417A00DC97BF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8412E17226CA27D2007B8D4F /* Jet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8413651826BBE43300008438 /* Shariff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shariff.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8413654D26BBE87200008438 /* Shariff(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Shariff(Development).xcconfig"; sourceTree = "<group>"; };
@@ -9735,6 +9734,7 @@
 		849AE61B26C53BF800B6C20D /* Cabdelivr(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Cabdelivr(Production).xcconfig"; sourceTree = "<group>"; };
 		849AE64926C53C0B00B6C20D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		849AE81126C5415900B6C20D /* Cabdelivr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cabdelivr.entitlements; sourceTree = "<group>"; };
+		849B1D9427F18F50009DB184 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		849BD2B427465C100036F905 /* Ssuum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ssuum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		849BD48E27465D200036F905 /* Ssuum(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Ssuum(Development).xcconfig"; sourceTree = "<group>"; };
 		849BD5CA27465D510036F905 /* Ssuum(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Ssuum(Production).xcconfig"; sourceTree = "<group>"; };
@@ -11398,7 +11398,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A92AB8016833F1D5F3CBD9FA /* (null) in Frameworks */,
+				A92AB8016833F1D5F3CBD9FA /* BuildFile in Frameworks */,
 				33529B0A5EF05D4C959D34E1 /* libPods-available_pods-RoyoOrder.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -14607,7 +14607,7 @@
 		840CC36927D739BF00DC97BF /* ScoopaTechnologies */ = {
 			isa = PBXGroup;
 			children = (
-				840CC77027D7417A00DC97BF /* GoogleService-Info.plist */,
+				849B1D9427F18F50009DB184 /* GoogleService-Info.plist */,
 				840CC36A27D73FB100DC97BF /* ScoopaTechnologies(Development).xcconfig */,
 				840CC56C27D73FEA00DC97BF /* ScoopaTechnologies(Production).xcconfig */,
 				840CC66E27D7406200DC97BF /* Images.xcassets */,
@@ -21030,9 +21030,7 @@
 				847EE41027840F410003197D /* Frameworks */,
 				847EE41127840F410003197D /* Resources */,
 				847EE42C27840F410003197D /* Bundle React Native code and images */,
-				847EE42D27840F410003197D /* ShellScript */,
-				974493B2B769713730636B1F /* Bundle React Native code and images */,
-				84B086296D2C607F8EB7A2F5 /* Bundle React Native code and images */,
+				847EE42D27840F410003197D /* Run Script */,
 				E7479B9C34D0E79A05EBA56C /* [CP] Embed Pods Frameworks */,
 				D991D121042919927466A094 /* [CP] Copy Pods Resources */,
 			);
@@ -26158,7 +26156,7 @@
 				840CC04E27D737EC00DC97BF /* SFProText-SemiBold.ttf in Resources */,
 				840CC04F27D737EC00DC97BF /* SFProText-Medium.ttf in Resources */,
 				840CC05127D737EC00DC97BF /* notification.wav in Resources */,
-				840CC77127D7417A00DC97BF /* GoogleService-Info.plist in Resources */,
+				849B1D9527F18F51009DB184 /* GoogleService-Info.plist in Resources */,
 				840CC05427D737EC00DC97BF /* Plists in Resources */,
 				840CC36B27D73FB200DC97BF /* ScoopaTechnologies(Development).xcconfig in Resources */,
 				840CC05527D737EC00DC97BF /* Futura-Normal.ttf in Resources */,
@@ -60752,7 +60750,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		847EE42D27840F410003197D /* ShellScript */ = {
+		847EE42D27840F410003197D /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -60769,12 +60767,13 @@
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingSDK/MessagingSDK.framework/MessagingSDK",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework/SDKConfigurations",
 			);
+			name = "Run Script";
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Donepacked-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RoyoOrder/Pods-RoyoOrder-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-PinkyDeli/Pods-available_pods-PinkyDeli-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		847F6B4A27203D1B00C7A32F /* Start Packager */ = {
@@ -63379,22 +63378,6 @@
 			showEnvVarsInLog = 0;
 		};
 		84AE318326BACC02005257F6 /* Bundle React Native code and images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Bundle React Native code and images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
-		};
-		84B086296D2C607F8EB7A2F5 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -68379,33 +68362,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		974493B2B769713730636B1F /* Bundle React Native code and images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PinkyDeli/Pods-PinkyDeli-frameworks.sh",
-				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
-				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework",
-				"${PODS_ROOT}/razorpay-pod/Pod/Razorpay.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatProvidersSDK/ChatProvidersSDK.framework/ChatProvidersSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatSDK/ChatSDK.framework/ChatSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCommonUISDK/CommonUISDK.framework/CommonUISDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingAPISDK/MessagingAPI.framework/MessagingAPI",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingSDK/MessagingSDK.framework/MessagingSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework/SDKConfigurations",
-			);
-			name = "Bundle React Native code and images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PinkyDeli/Pods-PinkyDeli-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9770B8D0BBDE93910D1B8A9F /* ShellScript */ = {
@@ -88601,7 +88557,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */,
-				848CEF8126CE229D0077C918 /* (null) in Sources */,
+				848CEF8126CE229D0077C918 /* BuildFile in Sources */,
 				848CEF8226CE229D0077C918 /* Royo.swift in Sources */,
 				848CEF8326CE229D0077C918 /* main.m in Sources */,
 			);
@@ -88705,7 +88661,7 @@
 				84FFFF2026D672E600F2B059 /* Royo.swift in Sources */,
 				84FFFF2126D672E600F2B059 /* main.m in Sources */,
 				8480076A26CE20340014F500 /* AppDelegate.m in Sources */,
-				8480076B26CE20340014F500 /* (null) in Sources */,
+				8480076B26CE20340014F500 /* BuildFile in Sources */,
 				8480076C26CE20340014F500 /* Royo.swift in Sources */,
 				8480076D26CE20340014F500 /* main.m in Sources */,
 			);
