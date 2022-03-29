@@ -265,11 +265,47 @@ const RoyoOrderDetail = (props) => {
   };
 
   const renderKycDocs = (item, index) => {
-    console.log(item, 'item>>>');
+    console.log(item?.category_document?.file_type, 'item>>>');
     return (
-      <View>
-        <Text>{item?.category_document?.primary?.name}</Text>
-        {/* {<Image></Image>} */}
+      <View
+        style={{
+          marginLeft: moderateScale(10),
+          marginTop: index == 0 ? 0 : moderateScaleVertical(15),
+        }}>
+        <Text>◉ {item?.category_document?.primary?.name}</Text>
+        {item?.category_document?.file_type == 'Image' ? (
+          <Image
+            style={{
+              height: moderateScale(100),
+              width: moderateScale(100),
+              marginLeft: moderateScale(20),
+              marginTop: 4,
+            }}
+            source={{
+              uri: getImageUrl(
+                item?.image_file?.image_fit,
+                item?.image_file?.image_path,
+                '500/500',
+              ),
+            }}
+          />
+        ) : item?.category_document?.file_type == 'Pdf' ? (
+          <TouchableOpacity
+            style={{
+              marginLeft: moderateScale(20),
+            }}
+            onPress={() => Linking.openURL(item?.image_file?.storage_url)}>
+            <Text
+              style={{
+                color: colors.blueColor,
+                textDecorationLine: 'underline',
+              }}>
+              {strings.VIEW_PDF}
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <Text>{item?.file_name}</Text>
+        )}
       </View>
     );
   };
@@ -449,7 +485,7 @@ const RoyoOrderDetail = (props) => {
           contentContainerStyle={styles.orderBox}
           ItemSeparatorComponent={() => <View style={styles.itemSeperator} />}
         />
-        {/* {!!orderInfo && !isEmpty(orderInfo?.category_KYC_document) && (
+        {!!orderInfo && !isEmpty(orderInfo?.category_KYC_document) && (
           <View
             style={{
               paddingHorizontal: moderateScale(15),
@@ -459,9 +495,9 @@ const RoyoOrderDetail = (props) => {
               style={{...styles.font16Medium, marginBottom: moderateScale(10)}}>
               {'Category KYC Documents'}
             </Text>
-            {orderInfo?.category_KYC_document.map(renderKycDocs)}{' '}
+            {orderInfo?.category_KYC_document.map(renderKycDocs)}
           </View>
-        )} */}
+        )}
         {!!data?.comment_for_vendor && (
           <View
             style={{
