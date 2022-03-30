@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-Releezer/Pods-Releezer.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Releezer/Pods-available_pods-Releezer.release.xcconfig"
 
 PROJECT_APPLE_ID = 1603611344
 PROJECT_BUNDLE_ID = com.releezer

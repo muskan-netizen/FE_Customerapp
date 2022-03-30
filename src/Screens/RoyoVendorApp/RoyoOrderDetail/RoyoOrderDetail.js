@@ -264,6 +264,52 @@ const RoyoOrderDetail = (props) => {
     );
   };
 
+  const renderKycDocs = (item, index) => {
+    console.log(item?.category_document?.file_type, 'item>>>');
+    return (
+      <View
+        style={{
+          marginLeft: moderateScale(10),
+          marginTop: index == 0 ? 0 : moderateScaleVertical(15),
+        }}>
+        <Text>◉ {item?.category_document?.primary?.name}</Text>
+        {item?.category_document?.file_type == 'Image' ? (
+          <Image
+            style={{
+              height: moderateScale(100),
+              width: moderateScale(100),
+              marginLeft: moderateScale(20),
+              marginTop: 4,
+            }}
+            source={{
+              uri: getImageUrl(
+                item?.image_file?.image_fit,
+                item?.image_file?.image_path,
+                '500/500',
+              ),
+            }}
+          />
+        ) : item?.category_document?.file_type == 'Pdf' ? (
+          <TouchableOpacity
+            style={{
+              marginLeft: moderateScale(20),
+            }}
+            onPress={() => Linking.openURL(item?.image_file?.storage_url)}>
+            <Text
+              style={{
+                color: colors.blueColor,
+                textDecorationLine: 'underline',
+              }}>
+              {strings.VIEW_PDF}
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <Text>{item?.file_name}</Text>
+        )}
+      </View>
+    );
+  };
+
   return (
     <WrapperContainer
       isLoading={isLoadingB}
@@ -439,17 +485,34 @@ const RoyoOrderDetail = (props) => {
           contentContainerStyle={styles.orderBox}
           ItemSeparatorComponent={() => <View style={styles.itemSeperator} />}
         />
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginHorizontal: moderateScale(16),
-          }}>
-          <Text style={styles.font14Semibold}>
-            {strings.SPECIAL_INSTRUCTION}
-          </Text>
-          <Text style={styles.font14Semibold}>{data?.comment_for_vendor}</Text>
-        </View>
+        {!!orderInfo && !isEmpty(orderInfo?.category_KYC_document) && (
+          <View
+            style={{
+              paddingHorizontal: moderateScale(15),
+              paddingVertical: moderateScaleVertical(10),
+            }}>
+            <Text
+              style={{...styles.font16Medium, marginBottom: moderateScale(10)}}>
+              {'Category KYC Documents'}
+            </Text>
+            {orderInfo?.category_KYC_document.map(renderKycDocs)}
+          </View>
+        )}
+        {!!data?.comment_for_vendor && (
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginHorizontal: moderateScale(16),
+            }}>
+            <Text style={styles.font14Semibold}>
+              {strings.SPECIAL_INSTRUCTION}
+            </Text>
+            <Text style={styles.font14Semibold}>
+              {data?.comment_for_vendor}
+            </Text>
+          </View>
+        )}
         <View style={{margin: moderateScaleVertical(16)}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>

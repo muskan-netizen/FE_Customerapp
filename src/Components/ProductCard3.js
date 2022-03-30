@@ -117,8 +117,6 @@ const ProductCard3 = ({
     updateState({qtyText: data?.qty || totalProductQty});
   }, [data?.qty]);
 
-  console.log('datadata', data.has_inventory);
-
   const changePositionForCartIcon = () => {
     let i = selectedIndexForCartIcon == -1 ? index : -1;
     updateState({selectedIndexForCartIcon: i});

@@ -5,7 +5,7 @@
 export const API_BASE_URL =
   'https://yogofood-order.netsolutionindia.com/api/v1';
 
-// export const API_BASE_URL = 'https://2d24-103-72-170-243.ngrok.io/api/v1';
+// export const API_BASE_URL = 'http://192.168.97.192:8005/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.97.192:8005/api/v1';
