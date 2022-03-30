@@ -850,9 +850,14 @@ function Cart({navigation, route}) {
     }
     placeOrderData(data);
   };
+  
 
   const placeOrderData = (data) => {
     console.log('Sending data', data);
+    if(!!instruction){
+      setDateAndTimeSchedule()
+    }
+  
 
     actions
       .placeOrder(data, {
