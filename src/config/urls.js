@@ -8,7 +8,6 @@ export const API_BASE_URL =
 // export const API_BASE_URL = 'http://192.168.97.192:8005/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1';
-// export const API_BASE_URL = 'http://192.168.97.192:8005/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
