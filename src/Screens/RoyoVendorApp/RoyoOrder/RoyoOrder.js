@@ -292,7 +292,7 @@ const RoyoOrder = (props) => {
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
         // centerTitle="Orders | Foodies hub  "
-        centerTitle={'Orders | ' + selectedVendor?.name || ''}
+        centerTitle={`${strings.ORDERS} | ' ${selectedVendor?.name || ''}`}
         onPressCenterTitle={() => _reDirectToVendorList()}
         onPressImageAlongwithTitle={() => _reDirectToVendorList()}
         noLeftIcon
@@ -304,7 +304,12 @@ const RoyoOrder = (props) => {
           tabTextStyle={{
             marginTop: moderateScaleVertical(0),
           }}
-          screenName={['New', 'Confirmed', 'Cancelled', 'Completed']}
+          screenName={[
+            strings.NEW,
+            strings.CONFIRMED,
+            strings.CANCELLED,
+            strings.COMPLETED,
+          ]}
           selectedScreen={(index) => selectedOrder(index)}
           selectedScreenIndex={activeIndex}
         />

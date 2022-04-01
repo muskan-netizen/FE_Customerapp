@@ -111,7 +111,7 @@ const VariantAddons = ({
   const buttonTextColor = themeColors;
   const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
   // let typeId = productdetail?.category?.category_detail?.type_id;
-  console.log(typeId, 'typeId>typeId');
+  console.log(productdetail, 'typeId>typeId');
   // !!data?.variant[0]?.quantity || (!!typeId && typeId == 8) ||  !!data?.sell_when_out_of_stock?
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -1404,9 +1404,16 @@ const VariantAddons = ({
 
               {productdetail?.translation[0]?.body_html != null && (
                 <View>
-                  <HtmlViewComp
+                  {/* <HtmlViewComp
                     plainHtml={productdetail?.translation[0]?.body_html}
-                  />
+                  /> */}
+                  <Text style={{
+                     fontSize: textScale(10),
+                     fontFamily: fontFamily.regular,
+                     lineHeight: moderateScale(14),
+                     color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyE,
+                     textAlign: 'left',
+                  }}>{productdetail?.translation_description}</Text>
                   <View style={{marginBottom: 10}} />
                 </View>
               )}
@@ -1564,12 +1571,7 @@ const styles = StyleSheet.create({
     lineHeight: 28,
     fontFamily: fontFamily.medium,
   },
-  description: {
-    color: colors.textGreyB,
-    fontSize: textScale(14),
-    lineHeight: 22,
-    fontFamily: fontFamily.medium,
-  },
+
   relatedProducts: {
     color: colors.textGrey,
     fontSize: textScale(18),

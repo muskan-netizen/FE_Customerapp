@@ -110,7 +110,7 @@ export default function DashBoardFive({
   useEffect(() => {
     if (appMainData?.vendors && appMainData?.vendors.length) {
       updateState({
-        vendorsData: appMainData?.vendors.filter((item, indx) => indx < 4),
+        vendorsData: appMainData?.vendors
       });
       return;
     }
@@ -297,7 +297,7 @@ export default function DashBoardFive({
                             fontSize: textScale(10),
                             fontFamily: fontFamily.regular,
                           }}>
-                          see more
+                          {!seeMore ? strings.SEE_MORE : strings.SEE_LESS}
                         </Text>
                         <Image
                           source={imagePath.icDropdown4}

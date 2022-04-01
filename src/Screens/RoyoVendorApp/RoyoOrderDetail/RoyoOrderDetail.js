@@ -204,7 +204,7 @@ const RoyoOrderDetail = (props) => {
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
         leftIcon={imagePath.backRoyo}
-        centerTitle={`Order #${data.order_number}`}
+        centerTitle={`${strings.ORDER} #${data.order_number}`}
       />
       {/* <View style={{...styles.orderNumberBox, zIndex: -1}}>
         <Text style={styles.orderNumber}>Order #{data.order_number}</Text>
@@ -362,7 +362,7 @@ const RoyoOrderDetail = (props) => {
             <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>
             <Text style={styles.font15Semibold}>
               {currencies?.primary_currency?.symbol}
-              {Number(data.payable_amount).toFixed(2)}
+              {Number(data.total_amount).toFixed(2)}
             </Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -372,13 +372,48 @@ const RoyoOrderDetail = (props) => {
               {Number(data.total_delivery_fee).toFixed(2)}
             </Text>
           </View>
+
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.font15Medium}>{strings.CONTAINERCHARGES}</Text>
+            <Text style={styles.font15Semibold}>
+              {currencies?.primary_currency?.symbol}
+              {Number(data.total_container_charges).toFixed(2)}
+            </Text>
+          </View>
+
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.font15Medium}>{strings.TAX_AMOUNT}</Text>
+            <Text style={styles.font15Semibold}>
+              {currencies?.primary_currency?.symbol}
+              {Number(data.taxable_amount).toFixed(2)}
+            </Text>
+          </View>
+
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.font15Medium}>{strings.TOTAL_SERVICE_FEE}</Text>
+            <Text style={styles.font15Semibold}>
+              {currencies?.primary_currency?.symbol}
+              {Number(data.total_service_fee).toFixed(2)}
+            </Text>
+          </View>
+
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.font15Medium}>{strings.TOTAL_DISCOUNT}</Text>
+            <Text style={styles.font15Semibold}>
+              -{currencies?.primary_currency?.symbol}
+              {Number(data.total_discount).toFixed(2)}
+            </Text>
+          </View>
+
+
           <View style={styles.dashLine} />
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>{strings.TOTAL}</Text>
             <Text style={{...styles.font15Semibold, color: colors.themeColor2}}>
               {`${currencies?.primary_currency?.symbol} ${Number(
-                parseFloat(data.payable_amount) +
-                  parseFloat(data.total_delivery_fee),
+                parseFloat(data.payable_amount)
+                //  +
+                  // parseFloat(data.total_delivery_fee),
               ).toFixed(2)}`}
             </Text>
           </View>
@@ -457,13 +492,13 @@ const RoyoOrderDetail = (props) => {
         {current_status.id == 1 ? (
           <View style={styles.buttonBox}>
             <ButtonWithLoader
-              btnText="Reject"
+              btnText={strings.REJECT}
               btnTextStyle={styles.btnText}
               btnStyle={styles.btnContainer}
               onPress={() => updateOrderStatus(data, 8)}
             />
             <ButtonWithLoader
-              btnText="Confirm"
+              btnText={strings.CONFIRM}
               btnTextStyle={{...styles.btnText, color: colors.white}}
               btnStyle={{
                 ...styles.btnContainer,

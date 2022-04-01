@@ -5,9 +5,12 @@ import React, {Fragment, useEffect, useRef, useState} from 'react';
 import {
   Alert,
   Animated,
+  Dimensions,
   FlatList,
   I18nManager,
   Image,
+  Keyboard,
+  KeyboardAvoidingView,
   Platform,
   RefreshControl,
   ScrollView,
@@ -15,6 +18,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Calendar} from 'react-native-calendars';
@@ -25,6 +29,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import * as RNLocalize from 'react-native-localize';
 import Modal from 'react-native-modal';
 import ModalDropdown from 'react-native-modal-dropdown';
@@ -47,13 +52,16 @@ import WishlistCard from '../../Components/WishlistCard';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
+import Vi from '../../constants/lang/vi';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {hitSlopProp} from '../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
+  StatusBarHeight,
   textScale,
   width,
 } from '../../styles/responsiveSize';
@@ -79,6 +87,8 @@ import {
   createPaymentMethod,
   confirmPayment,
 } from '@stripe/stripe-react-native';
+
+let clickedItem = {};
 
 function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -125,6 +135,13 @@ function Cart({navigation, route}) {
   const [sheduledorderdate, setSheduledorderdate] = useState(null);
   const [sheduledpickupdate, setSheduledpickupdate] = useState(null);
   const [sheduleddropoffdate, setSheduleddropoffdate] = useState(null);
+  const [productFaqs, setProductFaqs] = useState([]);
+  const [myAnswerdArray, setMyAllanswers] = useState([]);
+  const [myFaqValidationArray, setMyFaqValidationArray] = useState([]);
+  const [validationFucCalled, setvalidationFucCalled] = useState(true);
+  const [faqModalLayoutHeight, setfaqModalLayoutHeight] = useState(null);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [paymentMethodId, setPaymentMethodId] = useState(null);
 
   const [state, setState] = useState({
     showTaxFeeArea: false,
@@ -141,6 +158,8 @@ function Cart({navigation, route}) {
     isModalVisibleForClearCart: false,
     isVisibleAddressModal: false,
     isRefreshing: false,
+    isProductOrderForm: false,
+    isProductLoader: false,
   });
 
   const {
@@ -158,6 +177,8 @@ function Cart({navigation, route}) {
     selectViaMap,
     paymentModal,
     deliveryFeeLoader,
+    isProductOrderForm,
+    isProductLoader,
   } = state;
 
   //Redux store data
@@ -168,6 +189,7 @@ function Cart({navigation, route}) {
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
+  const {preferences} = appData?.profile;
 
   const selectedAddressData = useSelector(
     (state) => state?.cart?.selectedAddress,
@@ -190,6 +212,11 @@ function Cart({navigation, route}) {
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   console.log('cart items', cartItems);
+
+  const closeForm = () => {
+    updateState({isProductOrderForm: false});
+    Keyboard.dismiss();
+  };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -594,6 +621,7 @@ function Cart({navigation, route}) {
       btnLoader: false,
       placeLoader: false,
       deliveryFeeLoader: false,
+      isProductLoader: false,
     });
     showError(
       error?.error?.description ||
@@ -734,6 +762,10 @@ function Cart({navigation, route}) {
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.AVENUE, paymentData);
         break;
+      case 24: //Cashfree Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.CASH_FREE, paymentData);
+        break;
       default:
         if (
           !!businessType &&
@@ -757,6 +789,7 @@ function Cart({navigation, route}) {
     }&payment_option_id=${paymentData?.payment_option_id}&order_number=${
       paymentData?.orderDetail?.order_number
     }&token=${!!cardInfo ? cardInfo : null}&action=cart`;
+
     actions
       .openPaymentWebUrl(
         queryData,
@@ -785,7 +818,13 @@ function Cart({navigation, route}) {
     data['address_id'] =
       paramsData?.selectedAddressData?.id || selectedAddressData?.id;
     data['payment_option_id'] =
-      paramsData?.selectedPayment?.id || selectedPayment?.id;
+      Number(cartData?.total_payable_amount) +
+        (selectedTipAmount != null && selectedTipAmount != ''
+          ? Number(selectedTipAmount)
+          : 0) >
+      0
+        ? paramsData?.selectedPayment?.id || selectedPayment?.id
+        : 1;
 
     data['type'] = dineInType || '';
     data['is_gift'] = isGiftBoxSelected ? 1 : 0;
@@ -796,6 +835,7 @@ function Cart({navigation, route}) {
     if (!!selectedTipAmount) {
       data['tip'] = selectedTipAmount || '';
     }
+    console.log(data, '_directOrderPlace>_directOrderPlace');
     placeOrderData(data);
   };
 
@@ -1042,7 +1082,14 @@ function Cart({navigation, route}) {
         showInfo(strings.SCHEDULE_DATE_REQUIRED);
         return;
       }
-      if (isEmpty(selectedPayment)) {
+      if (
+        Number(cartData?.total_payable_amount) +
+          (selectedTipAmount != null && selectedTipAmount != ''
+            ? Number(selectedTipAmount)
+            : 0) !=
+          0 &&
+        isEmpty(selectedPayment)
+      ) {
         // showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
 
         updateState({paymentModal: true});
@@ -1070,6 +1117,7 @@ function Cart({navigation, route}) {
         errorMethod(strings.INVALID_SCHEDULED_DATE);
       } else {
         if (!!userData) {
+          console.log(userData, 'userData');
           if (!!userData) {
             if (
               !!userData?.client_preference?.verify_email &&
@@ -1095,20 +1143,44 @@ function Cart({navigation, route}) {
               !!userData?.client_preference?.verify_phone
             ) {
               if (
-                !!userData?.verify_details?.is_email_verified ||
-                !!userData?.verify_details?.is_phone_verified
+                !!userData?.client_preference?.verify_email &&
+                !userData?.verify_details?.is_email_verified
               ) {
-                // setDateAndTimeSchedule(true);
-                setTimeout(() => {
-                  _finalPayment();
-                }, 500);
-              } else {
                 updateState({placeLoader: false});
 
                 moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
                   formCart: true,
                 })();
+              } else if (
+                !!userData?.client_preference?.verify_phone &&
+                !userData?.verify_details?.is_phone_verified
+              ) {
+                updateState({placeLoader: false});
+
+                moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+                  formCart: true,
+                })();
+              } else {
+                setTimeout(() => {
+                  _finalPayment();
+                }, 500);
               }
+
+              // if (
+              //   !!userData?.verify_details?.is_email_verified ||
+              //   !!userData?.verify_details?.is_phone_verified
+              // ) {
+              //   // setDateAndTimeSchedule(true);
+              //   setTimeout(() => {
+              //     _finalPayment();
+              //   }, 500);
+              // } else {
+              //   updateState({placeLoader: false});
+
+              //   moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+              //     formCart: true,
+              //   })();
+              // }
             } else {
               // setDateAndTimeSchedule(true);
               setTimeout(() => {
@@ -1227,141 +1299,263 @@ function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
-  const _createPaymentMethod = async (cardInfo, res2) => {
-    // console.log(cardInfo, 'cardInfo');
-    if (res2) {
-      await createPaymentMethod({
-        type: 'Card',
-        card: cardInfo,
-      })
-        .then((res) => {
-          // updateState({isLoadingB: false});
-          console.log('_createPaymentMethod res', res);
-          if (res && res?.error && res?.error?.message) {
-            showError(res?.error?.message);
-          } else {
-            console.log(res, 'success_createPaymentMethod ');
-            actions
-              .getStripePaymentIntent(
-                // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
-                {
-                  payment_option_id: selectedPayment?.id,
-                  action: 'cart',
-                  amount:
-                    Number(cartData?.total_payable_amount) +
-                    (selectedTipAmount != null && selectedTipAmount != ''
-                      ? Number(selectedTipAmount)
-                      : 0),
-                  payment_method_id: res?.paymentMethod?.id,
-                },
-                {
-                  code: appData?.profile?.code,
-                  currency: currencies?.primary_currency?.id,
-                  language: languages?.primary_language?.id,
-                },
-              )
-              .then(async (res) => {
-                console.log(res, 'getStripePaymentIntent response');
-                if (res && res?.client_secret) {
-                  const {paymentIntent, error} = await handleCardAction(
-                    res?.client_secret,
-                  );
-                  if (paymentIntent) {
-                    console.log(paymentIntent, 'paymentIntent');
-                    if (paymentIntent) {
-                      actions
-                        .confirmPaymentIntentStripe(
-                          {
-                            payment_option_id: selectedPayment?.id,
-                            action: 'cart',
-                            amount:
-                              Number(cartData?.total_payable_amount) +
-                              (selectedTipAmount != null &&
-                              selectedTipAmount != ''
-                                ? Number(selectedTipAmount)
-                                : 0),
-                            payment_intent_id: paymentIntent?.id,
-                            address_id: selectedAddressData?.id,
-                            tip:
-                              selectedTipAmount && selectedTipAmount != ''
-                                ? Number(selectedTipAmount)
-                                : 0,
-                          },
-                          {
-                            code: appData?.profile?.code,
-                            currency: currencies?.primary_currency?.id,
-                            language: languages?.primary_language?.id,
-                          },
-                        )
-                        .then((res) => {
-                          updateState({isRefreshing: false});
-                          if (res && res?.status == 'Success' && res?.data) {
-                            // updateState({allAvailAblePaymentMethods: res?.data});
-                            actions.cartItemQty({});
-                            setCartItems([]);
-                            setCartData({});
-                            setSelectedPayment({
-                              id: 1,
-                              off_site: 0,
-                              title: 'Cash On Delivery',
-                              title_lng: strings.CASH_ON_DELIVERY,
-                            });
-                            setPickupDriverComment(null);
-                            setDropOffDriverComment(null);
-                            setVendorComment(null);
-                            setLocalPickupDate(null);
-                            setLocaleDropOffDate(null);
-                            setModalType(null);
-                            setSheduledpickupdate(null);
+  // const _createPaymentMethod = async (cardInfo, res2) => {
+  //   console.log(cardInfo, '_createPaymentMethod>>>ardInfo');
+  //   if (res2) {
+  //    await createPaymentMethod({
+  //       type: 'Card',
+  //       // token:tokenInfo,
+  //       card: cardInfo,
+  //       billing_details: {
+  //         name: 'Jenny Rosen',
+  //       },
+  //     }).then((res) => {
+  //         // updateState({isLoadingB: false});
+  //         console.log('_createPaymentMethod res', res);
+  //         if (res && res?.error && res?.error?.message) {
+  //           showError(res?.error?.message);
+  //           updateState({
+  //             isRefreshing:false,
+  //             isLoadingB: false,
+  //             placeLoader: false,
+  //           });
+  //         } else {
+  //           console.log(res, 'success_createPaymentMethod ');
+  //           actions
+  //             .getStripePaymentIntent(
+  //               // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
+  //               {
+  //                 payment_option_id: selectedPayment?.id,
+  //                 action: 'cart',
+  //                 amount:
+  //                   Number(cartData?.total_payable_amount) +
+  //                   (selectedTipAmount != null && selectedTipAmount != ''
+  //                     ? Number(selectedTipAmount)
+  //                     : 0),
+  //                 payment_method_id: res?.paymentMethod?.id,
+  //               },
+  //               {
+  //                 code: appData?.profile?.code,
+  //                 currency: currencies?.primary_currency?.id,
+  //                 language: languages?.primary_language?.id,
+  //               },
+  //             )
+  //             .then(async (res) => {
+  //               console.log(res, 'getStripePaymentIntent response');
+  //               if (res && res?.client_secret) {
+  //                 const {paymentIntent, error} = await handleCardAction(
+  //                   res?.client_secret,
+  //                 );
+  //                 if (paymentIntent) {
+  //                   console.log(paymentIntent, 'paymentIntent');
+  //                   if (paymentIntent) {
+  //                     actions
+  //                       .confirmPaymentIntentStripe(
+  //                         {
+  //                           payment_option_id: selectedPayment?.id,
+  //                           action: 'cart',
+  //                           amount:
+  //                             Number(cartData?.total_payable_amount) +
+  //                             (selectedTipAmount != null &&
+  //                             selectedTipAmount != ''
+  //                               ? Number(selectedTipAmount)
+  //                               : 0),
+  //                           payment_intent_id: paymentIntent?.id,
+  //                           address_id: selectedAddressData?.id,
+  //                           tip:
+  //                             selectedTipAmount && selectedTipAmount != ''
+  //                               ? Number(selectedTipAmount)
+  //                               : 0,
+  //                         },
+  //                         {
+  //                           code: appData?.profile?.code,
+  //                           currency: currencies?.primary_currency?.id,
+  //                           language: languages?.primary_language?.id,
+  //                         },
+  //                       )
+  //                       .then((res) => {
+  //                         updateState({isRefreshing: false});
+  //                         if (res && res?.status == 'Success' && res?.data) {
+  //                           // updateState({allAvailAblePaymentMethods: res?.data});
+  //                           actions.cartItemQty({});
+  //                           setCartItems([]);
+  //                           setCartData({});
+  //                           setSelectedPayment({
+  //                             id: 1,
+  //                             off_site: 0,
+  //                             title: 'Cash On Delivery',
+  //                             title_lng: strings.CASH_ON_DELIVERY,
+  //                           });
+  //                           setPickupDriverComment(null);
+  //                           setDropOffDriverComment(null);
+  //                           setVendorComment(null);
+  //                           setLocalPickupDate(null);
+  //                           setLocaleDropOffDate(null);
+  //                           setModalType(null);
+  //                           setSheduledpickupdate(null);
 
-                            updateState({
-                              isLoadingB: false,
-                              placeLoader: false,
-                            });
-                            moveToNewScreen(navigationStrings.ORDERSUCESS, {
-                              orderDetail: res.data,
-                            })();
-                            showSuccess(res?.message);
-                          } else {
-                            setSelectedPayment({
-                              id: 1,
-                              off_site: 0,
-                              title: 'Cash On Delivery',
-                              title_lng: strings.CASH_ON_DELIVERY,
-                            });
-                            updateState({
-                              isLoadingB: false,
-                              placeLoader: false,
-                            });
-                          }
-                        })
-                        .catch(errorMethod);
-                    }
-                  } else {
+  //                           updateState({
+  //                             isLoadingB: false,
+  //                             placeLoader: false,
+  //                           });
+  //                           moveToNewScreen(navigationStrings.ORDERSUCESS, {
+  //                             orderDetail: res.data,
+  //                           })();
+  //                           showSuccess(res?.message);
+  //                         } else {
+  //                           setSelectedPayment({
+  //                             id: 1,
+  //                             off_site: 0,
+  //                             title: 'Cash On Delivery',
+  //                             title_lng: strings.CASH_ON_DELIVERY,
+  //                           });
+  //                           updateState({
+  //                             isLoadingB: false,
+  //                             placeLoader: false,
+  //                           });
+  //                         }
+  //                       })
+  //                       .catch(errorMethod);
+  //                   }
+  //                 } else {
+  //                   updateState({
+  //                     isRefreshing:false,
+  //                     isLoadingB: false,
+  //                     placeLoader: false,
+  //                   });
+  //                   console.log(error, 'error');
+  //                   showError(error?.message || 'payment failed');
+  //                 }
+  //               } else {
+  //                 updateState({isLoadingB: false});
+  //               }
+  //             })
+  //             .catch(errorMethod);
+
+  //         }
+  //       })
+  //       .catch(errorMethod);
+  //   }
+  // };
+
+  const _paymentWithStripe = async (cardInfo, tokenInfo, paymentMethodId) => {
+    actions
+      .getStripePaymentIntent(
+        // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
+        {
+          payment_option_id: selectedPayment?.id,
+          action: 'cart',
+          amount:
+            Number(cartData?.total_payable_amount) +
+            (selectedTipAmount != null && selectedTipAmount != ''
+              ? Number(selectedTipAmount)
+              : 0),
+          payment_method_id: paymentMethodId,
+        },
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then(async (res) => {
+        console.log(res, 'getStripePaymentIntent response');
+        if (res && res?.client_secret) {
+          const {paymentIntent, error} = await handleCardAction(
+            res?.client_secret,
+          );
+          if (paymentIntent) {
+            console.log(paymentIntent, 'paymentIntent');
+            if (paymentIntent) {
+              actions
+                .confirmPaymentIntentStripe(
+                  {
+                    payment_option_id: selectedPayment?.id,
+                    action: 'cart',
+                    amount:
+                      Number(cartData?.total_payable_amount) +
+                      (selectedTipAmount != null && selectedTipAmount != ''
+                        ? Number(selectedTipAmount)
+                        : 0),
+                    payment_intent_id: paymentIntent?.id,
+                    address_id: selectedAddressData?.id,
+                    tip:
+                      selectedTipAmount && selectedTipAmount != ''
+                        ? Number(selectedTipAmount)
+                        : 0,
+                  },
+                  {
+                    code: appData?.profile?.code,
+                    currency: currencies?.primary_currency?.id,
+                    language: languages?.primary_language?.id,
+                  },
+                )
+                .then((res) => {
+                  updateState({isRefreshing: false});
+                  if (res && res?.status == 'Success' && res?.data) {
+                    // updateState({allAvailAblePaymentMethods: res?.data});
+                    actions.cartItemQty({});
+                    setCartItems([]);
+                    setCartData({});
+                    setSelectedPayment({
+                      id: 1,
+                      off_site: 0,
+                      title: 'Cash On Delivery',
+                      title_lng: strings.CASH_ON_DELIVERY,
+                    });
+                    setPickupDriverComment(null);
+                    setDropOffDriverComment(null);
+                    setVendorComment(null);
+                    setLocalPickupDate(null);
+                    setLocaleDropOffDate(null);
+                    setModalType(null);
+                    setSheduledpickupdate(null);
+
                     updateState({
-                      isRefreshing:false,
                       isLoadingB: false,
                       placeLoader: false,
                     });
-                    console.log(error, 'error');
-                    showError(error?.message || 'payment failed');
+                    moveToNewScreen(navigationStrings.ORDERSUCESS, {
+                      orderDetail: res.data,
+                    })();
+                    showSuccess(res?.message);
+                  } else {
+                    setSelectedPayment({
+                      id: 1,
+                      off_site: 0,
+                      title: 'Cash On Delivery',
+                      title_lng: strings.CASH_ON_DELIVERY,
+                    });
+                    updateState({
+                      isLoadingB: false,
+                      placeLoader: false,
+                    });
                   }
-                } else {
-                  updateState({isLoadingB: false});
-                }
-              })
-              .catch(errorMethod);
+                })
+                .catch(errorMethod);
+            }
+          } else {
+            updateState({
+              isRefreshing: false,
+              isLoadingB: false,
+              placeLoader: false,
+            });
+            console.log(error, 'error');
+            showError(error?.message || 'payment failed');
           }
-        })
-        .catch(errorMethod);
-    }
+        } else {
+          updateState({isLoadingB: false});
+        }
+      })
+      .catch(errorMethod);
   };
 
   //Offline payments
   const _offineLinePayment = async () => {
-    if (!!tokenInfo) {
-      _createPaymentMethod(cardInfo, tokenInfo);
-
+    console.log(tokenInfo, 'tokenInfo>tokenInfo>tokenInfo');
+    if (!!paymentMethodId) {
+      // _createPaymentMethod(cardInfo, tokenInfo);
+      _paymentWithStripe(cardInfo, tokenInfo, paymentMethodId);
       // let selectedMethod = selectedPayment.code.toLowerCase();
       // actions
       //   .openPaymentWebUrl(
@@ -1651,6 +1845,7 @@ function Cart({navigation, route}) {
           alignItems: 'center',
           // marginBottom: moderateScaleVertical(8),
           justifyContent: 'space-between',
+          marginVertical: moderateScaleVertical(8),
           // padding: moderateScale(8)
         }}>
         <View
@@ -1717,6 +1912,88 @@ function Cart({navigation, route}) {
   const onModalDropDown = () => {
     setSelTypes(val?.code);
   };
+
+  const getProductFAQs = (item) => {
+    clickedItem = item;
+    updateState({
+      isProductOrderForm: true,
+      isProductLoader: true,
+    });
+    actions
+      .getProductFaqs(
+        `/${item?.product?.id}`,
+        {},
+        {
+          code: appData?.profile?.code,
+        },
+      )
+      .then((res) => {
+        setProductFaqs(res?.data);
+        updateState({
+          isProductLoader: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+
+  const setAllRequiredQuestions = (item, index) => {
+    if (validationFucCalled) {
+      if (item?.is_required) {
+        setvalidationFucCalled(false);
+        const arraywithAllRequiredQuestion = [...myFaqValidationArray];
+        arraywithAllRequiredQuestion[index] = true;
+
+        setMyFaqValidationArray(arraywithAllRequiredQuestion);
+      } else {
+        setvalidationFucCalled(false);
+      }
+    }
+  };
+
+  const onChangeText = (item, text, index, arrLength) => {
+    // const myAnswerdArray = [];
+    const answerdArray = [...myAnswerdArray];
+    answerdArray[index] = {
+      question: item?.translations[0]?.name,
+      answer: text,
+      product_faq_id: item?.id,
+    };
+
+    if (item?.is_required) {
+      setvalidationFucCalled(false);
+      const arraywithAllRequiredQuestion = [...myFaqValidationArray];
+      arraywithAllRequiredQuestion[index] = false;
+      setMyFaqValidationArray(arraywithAllRequiredQuestion);
+      if (text === '') {
+        const arraywithAllRequiredQuestion = [...myFaqValidationArray];
+        arraywithAllRequiredQuestion[index] = true;
+        setMyFaqValidationArray(arraywithAllRequiredQuestion);
+      }
+    }
+    setMyAllanswers(answerdArray);
+  };
+
+  console.log(clickedItem, 'myAnswerdArray>>>');
+
+  const setAllFormData = () => {
+    actions
+      .updateProductFAQs(
+        {
+          product_id: clickedItem?.product?.id,
+          user_product_order_form: myAnswerdArray,
+        },
+        {
+          code: appData?.profile?.code,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'res>>><>>>');
+      })
+      .catch((err) => {
+        console.log(err, 'err>>>>>>');
+      });
+  };
+
   const _renderItem = ({item, index}) => {
     return (
       <View>
@@ -1812,6 +2089,7 @@ function Cart({navigation, route}) {
               </Text>
             ) : null}
           </View>
+
           {/************ start  render cart items *************/}
           {item?.vendor_products.length > 0
             ? item?.vendor_products.map((i, inx) => {
@@ -1943,7 +2221,7 @@ function Cart({navigation, route}) {
                                   fontSize: textScale(12),
                                   color: isDarkMode
                                     ? MyDarkTheme.colors.text
-                                    : '#B3B3B3',
+                                    : colors.textGreyOpcaity7,
                                   marginTop: moderateScaleVertical(4),
                                   fontFamily: fontFamily.regular,
                                 }}>
@@ -2033,7 +2311,7 @@ function Cart({navigation, route}) {
                                       ...styles.cartItemWeight2,
                                       color: isDarkMode
                                         ? MyDarkTheme.colors.text
-                                        : colors.textGreyB,
+                                        : colors.textGreyOpcaity7,
                                       marginBottom: moderateScale(2),
                                       marginTop: moderateScaleVertical(6),
                                     }}>
@@ -2153,6 +2431,26 @@ function Cart({navigation, route}) {
                             </View>
                           </View>
 
+                          {!!(
+                            i?.faq_count && i?.user_product_order_form == null
+                          ) && (
+                            <TouchableOpacity
+                              style={{
+                                alignSelf: 'flex-end',
+                                marginRight: moderateScale(14),
+                                marginTop: moderateScale(6),
+                              }}
+                              onPress={() => getProductFAQs(i)}>
+                              <FastImage
+                                source={imagePath.edit1Royo}
+                                resizeMode="contain"
+                                style={{
+                                  width: moderateScale(16),
+                                  height: moderateScale(16),
+                                }}
+                              />
+                            </TouchableOpacity>
+                          )}
                           <TouchableOpacity
                             style={{
                               alignSelf: 'flex-end',
@@ -2200,6 +2498,7 @@ function Cart({navigation, route}) {
                 );
               })
             : null}
+
           {/************ end render cart items *************/}
           {item?.isDeliverable ? null : (
             <View style={{marginHorizontal: moderateScale(10)}}>
@@ -3556,51 +3855,64 @@ function Cart({navigation, route}) {
           )}`}</Text>
         </View>
 
-        <TouchableOpacity
-          onPress={() =>
-            !!userData?.auth_token
-              ? updateState({paymentModal: true})
-              : //  moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
-                navigation.navigate(navigationStrings.OUTER_SCREEN, {})
-          }
-          style={styles.paymentMainView}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <FastImage
-              source={imagePath.paymentMethod}
-              resizeMode="contain"
-              style={{
-                width: moderateScale(32),
-                height: moderateScale(32),
-                tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              }}
-            />
+        {cartData &&
+          Number(cartData?.total_payable_amount) +
+            (selectedTipAmount != null && selectedTipAmount != ''
+              ? Number(selectedTipAmount)
+              : 0) >
+            0 && (
+            <TouchableOpacity
+              onPress={() =>
+                !!userData?.auth_token
+                  ? updateState({paymentModal: true})
+                  : // ?moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
+                    //  moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
+                    navigation.navigate(navigationStrings.OUTER_SCREEN, {})
+              }
+              style={styles.paymentMainView}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <FastImage
+                  source={imagePath.paymentMethod}
+                  resizeMode="contain"
+                  style={{
+                    width: moderateScale(32),
+                    height: moderateScale(32),
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
+                />
 
-            <Text
-              style={{
-                ...styles.priceItemLabel2,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                marginLeft: moderateScale(4),
-              }}>
-              {selectedPayment.title_lng
-                ? selectedPayment.title_lng
-                : selectedPayment.title
-                ? selectedPayment.title
-                : strings.SELECT_PAYMENT_METHOD}
-            </Text>
-          </View>
-          <View>
-            <FastImage
-              source={imagePath.goRight}
-              resizeMode="contain"
-              style={{
-                width: moderateScale(14),
-                height: moderateScale(14),
-                tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-              }}
-            />
-          </View>
-        </TouchableOpacity>
+                <Text
+                  style={{
+                    ...styles.priceItemLabel2,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    marginLeft: moderateScale(4),
+                  }}>
+                  {selectedPayment.title_lng
+                    ? selectedPayment.title_lng
+                    : selectedPayment.title
+                    ? selectedPayment.title
+                    : strings.SELECT_PAYMENT_METHOD}
+                </Text>
+              </View>
+              <View>
+                <FastImage
+                  source={imagePath.goRight}
+                  resizeMode="contain"
+                  style={{
+                    width: moderateScale(14),
+                    height: moderateScale(14),
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                  }}
+                />
+              </View>
+            </TouchableOpacity>
+          )}
+
         {!!(
           userData?.auth_token &&
           !appData?.profile?.preferences?.off_scheduling_at_cart &&
@@ -4448,6 +4760,9 @@ function Cart({navigation, route}) {
 
   const onSelectPayment = (data) => {
     console.log('my data++++', data);
+
+    // const [paymentMethodId, setPaymentMethodId] = useState(null);
+    setPaymentMethodId(data?.payment_method_id);
     setSelectedPayment(data?.selectedPaymentMethod);
     if (!!data?.cardInfo) {
       setCardInfo(data?.cardInfo);
@@ -4795,11 +5110,189 @@ function Cart({navigation, route}) {
           margin: 0,
         }}>
         <View style={{flex: 1}}>
-          <SelectPaymentModal
-            onSelectPayment={onSelectPayment}
-            paymentModalClose={() => updateState({paymentModal: false})}
-          />
+          <StripeProvider
+            publishableKey={preferences?.stripe_publishable_key}
+            merchantIdentifier="merchant.identifier">
+            <SelectPaymentModal
+              onSelectPayment={onSelectPayment}
+              paymentModalClose={() => updateState({paymentModal: false})}
+            />
+          </StripeProvider>
         </View>
+      </Modal>
+      <Modal
+        onBackdropPress={closeForm}
+        isVisible={isProductOrderForm}
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end',
+          // marginBottom: keyboardHeight,
+        }}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <View
+            style={{
+              maxHeight: height / 2,
+              minHeight: moderateScaleVertical(250),
+              borderTopLeftRadius: moderateScale(16),
+              borderTopRightRadius: moderateScale(16),
+              backgroundColor: colors.white,
+              padding: moderateScale(12),
+            }}>
+            {isProductLoader ? (
+              <View>
+                <HeaderLoader
+                  viewStyles={{
+                    marginTop: moderateScaleVertical(8),
+                    marginBottom: moderateScaleVertical(16),
+                    marginHorizontal: 0,
+                  }}
+                  widthLeft={width - moderateScale(25)}
+                  rectWidthLeft={width - moderateScale(25)}
+                  heightLeft={moderateScaleVertical(45)}
+                  rectHeightLeft={moderateScaleVertical(45)}
+                  isRight={false}
+                  rx={7}
+                  ry={7}
+                />
+                <HeaderLoader
+                  viewStyles={{
+                    marginTop: moderateScaleVertical(8),
+                    marginBottom: moderateScaleVertical(16),
+                    marginHorizontal: 0,
+                  }}
+                  widthLeft={width - moderateScale(25)}
+                  rectWidthLeft={width - moderateScale(25)}
+                  heightLeft={moderateScaleVertical(45)}
+                  rectHeightLeft={moderateScaleVertical(45)}
+                  isRight={false}
+                  rx={7}
+                  ry={7}
+                />
+                <HeaderLoader
+                  viewStyles={{
+                    marginTop: moderateScaleVertical(8),
+                    marginBottom: moderateScaleVertical(16),
+                    marginHorizontal: 0,
+                  }}
+                  widthLeft={width - moderateScale(25)}
+                  rectWidthLeft={width - moderateScale(25)}
+                  heightLeft={moderateScaleVertical(45)}
+                  rectHeightLeft={moderateScaleVertical(45)}
+                  isRight={false}
+                  rx={7}
+                  ry={7}
+                />
+              </View>
+            ) : (
+              <View
+                style={{
+                  backgroundColor: isDarkMode ? colors.black : colors.white,
+                  borderRadius: moderateScale(8),
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text />
+
+                  <TouchableOpacity onPress={closeForm}>
+                    <Image source={imagePath.closeButton} />
+                  </TouchableOpacity>
+                </View>
+                <ScrollView>
+                  {productFaqs.map((item, index) => {
+                    setAllRequiredQuestions(item, index);
+                    return (
+                      <View
+                        style={{
+                          marginTop: moderateScaleVertical(10),
+                        }}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              marginBottom: moderateScaleVertical(10),
+                              color: colors.redColor,
+                            }}>
+                            {`${item?.is_required ? '* ' : ''}`}
+                          </Text>
+                          <Text
+                            style={{
+                              marginBottom: moderateScaleVertical(10),
+                              fontFamily: fontFamily.medium,
+                              color: isDarkMode ? colors.white : colors.blackC,
+                            }}>
+                            {item?.translations[0]?.name}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            // marginVertical: moderateScaleVertical(16),
+                            backgroundColor: isDarkMode
+                              ? colors.whiteOpacity15
+                              : colors.greyNew,
+                            height: moderateScale(42),
+                            borderRadius: moderateScale(4),
+                            paddingHorizontal: moderateScale(8),
+                          }}>
+                          <TextInput
+                            placeholder={strings.ANSWER}
+                            onChangeText={(text) =>
+                              onChangeText(item, text, index, item?.length)
+                            }
+                            style={{
+                              ...styles.insctructionText,
+                              color: isDarkMode
+                                ? colors.textGreyB
+                                : colors.black,
+                            }}
+                            placeholderTextColor={
+                              isDarkMode
+                                ? colors.textGreyB
+                                : colors.blackOpacity40
+                            }
+                          />
+                        </View>
+                      </View>
+                    );
+                  })}
+                </ScrollView>
+
+                <GradientButton
+                  colorsArray={[
+                    themeColors.primary_color,
+                    themeColors.primary_color,
+                  ]}
+                  textStyle={{
+                    textTransform: 'none',
+                    fontSize: textScale(12),
+                  }}
+                  onPress={() => {
+                    const isRequired = myFaqValidationArray.some(checkRequird);
+                    function checkRequird(checkRequird) {
+                      return checkRequird == true;
+                    }
+
+                    if (isRequired) {
+                      alert(strings.PLEASEFILDALL);
+                    } else {
+                      setAllFormData();
+                    }
+                  }}
+                  btnText={strings.SUBMIT}
+                  marginTop={moderateScaleVertical(16)}
+                  marginBottom={moderateScaleVertical(16)}
+                />
+              </View>
+            )}
+          </View>
+        </KeyboardAvoidingView>
       </Modal>
     </WrapperContainer>
   );

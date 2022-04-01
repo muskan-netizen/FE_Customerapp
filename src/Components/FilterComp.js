@@ -11,47 +11,9 @@ import fontFamily from '../styles/fontFamily';
 import { height, moderateScale, moderateScaleVertical, width } from '../styles/responsiveSize';
 import GradientButton from './GradientButton';
 
-let sortingData = [
-    {
-        id: 1,
-        label: 'A to Z',
-        labelValue: 'a_to_z',
-        parent: strings.SORT_BY,
-    },
-    {
-        id: 2,
-        label: 'Z to A',
-        labelValue: 'z_to_a',
-        parent: strings.SORT_BY,
-    },
-    {
-        id: 3,
-        label: strings.LOW_TO_HIGH,
-        labelValue: 'low_to_high',
-        parent: strings.SORT_BY,
-    },
-    {
-        id: 4,
-        label: strings.HIGH_TO_LOW,
-        labelValue: 'high_to_low',
-        parent: strings.SORT_BY,
-    },
-    {
-        id: 5,
-        label: strings.POPULARITY,
-        labelValue: 'popular_product',
-        parent: strings.SORT_BY,
-    },
-    {
-        id: 6,
-        label: strings.RATING,
-        labelValue: 'rating',
-        parent: strings.SORT_BY,
-    }
-]
+
 
 const FilterComp = ({
-    sortFilters = sortingData,
     isDarkMode = null,
     themeColors,
     onFilterApply = () => { },
@@ -62,23 +24,61 @@ const FilterComp = ({
     minimumPrice = 0,
     maximumPrice = 50000,
     updateMinMax,
-    filterData = []
+    filterData = [],
 }) => {
 
-    console.log("filterData+++++",filterData)
 
     const [state, setState] = useState({
         minPrice: 0,
         maxPrice: 50000,
-        filterTypes: []
+        filterTypes: [],
+        sortFilters: [
+            {
+                id: 1,
+                label: strings.A_TO_Z,
+                labelValue: 'a_to_z',
+                parent: strings.SORT_BY,
+            },
+            {
+                id: 2,
+                label: strings.Z_TO_A,
+                labelValue: 'z_to_a',
+                parent: strings.SORT_BY,
+            },
+            {
+                id: 3,
+                label: strings.COST_LOW_TO_HIGH,
+                labelValue: 'low_to_high',
+                parent: strings.SORT_BY,
+            },
+            {
+                id: 4,
+                label: strings.COST_HIGH_TO_LOW,
+                labelValue: 'high_to_low',
+                parent: strings.SORT_BY,
+            },
+            {
+                id: 5,
+                label: strings.POPULARITY,
+                labelValue: 'popular_product',
+                parent: strings.SORT_BY,
+            },
+            {
+                id: 6,
+                label: strings.RATING,
+                labelValue: 'rating',
+                parent: strings.SORT_BY,
+            }
+        ]
     })
+    const { filterTypes,sortFilters } = state
     const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
     useEffect(() => {
-        updateState({ filterTypes: filterData })
+        updateState({ 
+            filterTypes: filterData,
+         })
     }, [])
-    const { filterTypes } = state
-
 
 
     const onDone = () => {
@@ -139,7 +139,7 @@ const FilterComp = ({
                 activeOpacity={0.6}
                 style={{
                     ...styles.sortingView,
-                    marginBottom: sortingData.length - 1 == i ? moderateScaleVertical(8) : moderateScaleVertical(20)
+                    marginBottom: sortFilters.length - 1 == i ? moderateScaleVertical(8) : moderateScaleVertical(20)
                 }}
                 onPress={() => onSelectedSortFilter(val)}
             >

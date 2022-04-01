@@ -301,7 +301,6 @@ export default function Home({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log('getAllTempOrders data++++++', res);
         if (res && res?.data) {
           updateState({
             tempCartData: res?.data,
@@ -311,14 +310,8 @@ export default function Home({route, navigation}) {
       .catch(errorMethod);
   };
 
-  console.log('selectedTabTypeselectedTabType', selectedTabType);
-
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
-    console.log(
-      slectedLocatonFromPreviousScreen,
-      'slectedLocatonFromPreviousScreen>slectedLocatonFromPreviousScreen',
-    );
     if (!!paramData) {
       updateState({searchDataLoader: true});
     }

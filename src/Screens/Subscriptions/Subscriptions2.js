@@ -601,7 +601,7 @@ export default function Subscriptions2({navigation, route}) {
   };
 
   const _createPaymentMethod = async (cardInfo, res2) => {
-    // console.log(cardInfo, 'cardInfo');
+    console.log(cardInfo, 'cardInfo');
     if (res2) {
       await createPaymentMethod({
         type: 'Card',

@@ -208,16 +208,8 @@ export const getAllTempOrders = (data = {}, headers = {}) => {
 };
 
 export function vendorAll(query, data, headers = {}) {
-  console.log(VENDOR_ALL + query, data, 'VENDOR_ALL + query');
-  return new Promise((resolve, reject) => {
-    apiGet(VENDOR_ALL + query, data, headers)
-      .then((res) => {
-        resolve(res);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
+  console.log('sending headers', data);
+  return apiGet(VENDOR_ALL + query, data, headers);
 }
 
 //Get all vendors
@@ -232,3 +224,10 @@ export function getAllVendors(data = {}, headers = {}, isShortCode = false) {
       });
   });
 }
+
+export const saveSchduleTime = (data) => {
+  dispatch({
+    type: types.SAVE_SCHEDULE_TIME,
+    payload: data,
+  });
+};

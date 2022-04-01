@@ -12,6 +12,7 @@ import pt from './pt';
 import vi from './vi';
 import hi from './hi';
 
+
 let strings = new LocalizedStrings({
   en: en,
   ar: ar,

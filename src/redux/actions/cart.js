@@ -22,6 +22,8 @@ import {
   VENDOR_SLOTS,
   GET_PAYMENT_INTENT,
   CONFIRM_PAYMENT_INTENT,
+  GET_PRODUCT_FAQS,
+  UPDATE_PRODUCT_FAQS_CART,
 } from '../../config/urls';
 import {
   apiGet,
@@ -227,6 +229,20 @@ export function openPaymentWebUrl(query = '', data = {}, headers = {}) {
   });
 }
 
+export function openPaymentWebUrlPost(query = '', data = {}, headers = {}) {
+  console.log('payment++ query', query);
+  console.log('payment++ data', data);
+  return new Promise((resolve, reject) => {
+    apiPost(GETWEBURL + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
 export function vendorTableCart(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiPost(VENDOR_TABLE_CART, data, headers)
@@ -325,6 +341,30 @@ export function getStripePaymentIntent(data = {}, headers = {}) {
   // console.log("payment++ query", query)
   return new Promise((resolve, reject) => {
     apiPost(GET_PAYMENT_INTENT, data, headers)
+    .then((res) => {
+      resolve(res);
+    })
+    .catch((error) => {
+      reject(error);
+    });
+});
+};
+
+export const getProductFaqs = (query, data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiGet(GET_PRODUCT_FAQS + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const updateProductFAQs = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(UPDATE_PRODUCT_FAQS_CART, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -347,3 +387,4 @@ export function confirmPaymentIntentStripe(data = {}, headers = {}) {
       });
   });
 }
+
