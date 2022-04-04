@@ -495,6 +495,34 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       textAlign: I18nManager.isRTL ? 'right' : 'left',
       fontSize: textScale(11),
     },
+    viewStyleForUploadImage: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      // justifyContent: 'space-between',
+    },
+
+    imageUpload: {
+      borderStyle: 'dashed',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: moderateScaleVertical(10),
+    },
+    imageStyle2: {
+      height: 100,
+      width: 100,
+      borderRadius: moderateScale(4),
+    },
+    label3: {
+      marginBottom: moderateScaleVertical(10),
+      textAlign: 'center',
+      fontSize: textScale(12),
+      fontFamily: fontFamily.medium,
+      color: colors.greyLight,
+    },
+    uploadStyle: {
+      color: colors.blue,
+      fontFamily: fontFamily.medium,
+    },
   });
   return styles;
 };

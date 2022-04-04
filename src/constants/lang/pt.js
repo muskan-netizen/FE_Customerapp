@@ -192,7 +192,7 @@ export default {
   SUBTOTAL: 'Subtotal',
   WALLET: 'Carteira',
   LOYALTY: 'Fidelidade',
-  AMOUNT_PAYABLE: 'Valor Pagavél',
+  AMOUNT_PAYABLE: 'Valor a pagar',
   TAX: 'Taxa',
   TOTAL: 'Total',
   AMOUNT: 'Valor',

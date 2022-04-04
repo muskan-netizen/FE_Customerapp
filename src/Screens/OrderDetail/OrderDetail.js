@@ -118,6 +118,7 @@ export default function OrderDetail({navigation, route}) {
     showTaxFeeArea: false,
     trackingUrl: paramData?.orderDetail?.dispatch_traking_url || null,
     ratingData: null,
+    isDriverRateModal: false,
   });
   const {
     showTaxFeeArea,
@@ -138,6 +139,7 @@ export default function OrderDetail({navigation, route}) {
     dispatcherStatus,
     trackingUrl,
     ratingData,
+    isDriverRateModal,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -352,6 +354,13 @@ export default function OrderDetail({navigation, route}) {
     // updateState({isLoading: true});
     _giveRatingToProduct(i, rating);
   };
+
+  {
+    console.log(
+      appData?.profile?.preferences?.digit_after_decimal,
+      'decimalDigitis',
+    );
+  }
 
   const _giveRatingToProduct = (productDetail, rating) => {
     let data = {};
@@ -876,6 +885,7 @@ export default function OrderDetail({navigation, route}) {
                   }>
                   {strings.DELIVERY_CHARGES}
                 </Text>
+
                 <Text
                   style={
                     isDarkMode
@@ -1943,6 +1953,11 @@ export default function OrderDetail({navigation, route}) {
                 MyDarkTheme={MyDarkTheme}
               />
             )}
+          {console.log(
+            Number(cartData?.total_service_fee) +
+              Number(cartData?.taxable_amount),
+            'fsdkjfjafks',
+          )}
           {(cartData?.total_service_fee > 0 ||
             cartData?.taxable_amount > 0) && (
             <LeftRightText
@@ -1986,6 +2001,7 @@ export default function OrderDetail({navigation, route}) {
                 MyDarkTheme={MyDarkTheme}
               />
             )}
+          {console.log(cartData?.tip_amount, 'cartData?.tip_amount>')}
           {!!cartData?.tip_amount && cartData?.tip_amount > 0 && (
             <LeftRightText
               leftText={strings.TIP_AMOUNT}
@@ -2689,6 +2705,12 @@ export default function OrderDetail({navigation, route}) {
     );
   };
 
+  const _onRateDriver = () => {
+    updateState({
+      isDriverRateModal: true,
+    });
+  };
+
   const getHeader = () => {
     let getUserImage = getImageUrl(
       cartData?.user_image?.image_fit,
@@ -2697,13 +2719,13 @@ export default function OrderDetail({navigation, route}) {
     );
     return (
       <View>
-        {!!driverStatus?.order &&
-        driverStatus?.order.status == 'assigned' &&
-        driverStatus?.agent_location?.lat ? (
+        {!!(driverStatus?.order && driverStatus?.agent_location?.lat) ? (
           <UserDetail
             data={driverStatus}
             type={strings.DRIVER}
             containerStyle={{paddingHorizontal: moderateScale(8)}}
+            isDriver={cartData?.driver_rating == null}
+            _onRateDriver={_onRateDriver}
           />
         ) : null}
 
@@ -3111,10 +3133,14 @@ export default function OrderDetail({navigation, route}) {
           }}
         />
 
-        {!!ratingData ? (
+        {!!(ratingData || isDriverRateModal) ? (
           <RatingModal
             productDetail={ratingData}
-            modalClose={() => updateState({ratingData: null})}
+            productData={cartData}
+            isDriverRateModal={isDriverRateModal}
+            modalClose={() =>
+              updateState({ratingData: null, isDriverRateModal: false})
+            }
             onSuccessRating={onSuccessRating}
           />
         ) : null}
