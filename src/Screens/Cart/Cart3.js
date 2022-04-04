@@ -103,33 +103,11 @@ function Cart({navigation, route}) {
 
   let actionSheet = useRef(null);
 
-  //Redux store data
-  const userData = useSelector((state) => state?.auth?.userData);
-  const {
-    appData,
-    allAddresss,
-    themeColors,
-    currencies,
-    languages,
-    appStyle,
-    themeColor,
-    themeToggle,
-  } = useSelector((state) => state?.initBoot);
-  const selectedAddressData = useSelector(
-    (state) => state?.cart?.selectedAddress,
-  );
-
-  const {dineInType, appMainData, location} = useSelector(
-    (state) => state?.home,
-  );
+ 
+  
   const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
   const darkthemeusingDevice = useDarkMode();
 
-  const selectedLanguage = languages?.primary_language?.sort_code;
-  const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
-  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  const recommendedVendorsdata = appMainData?.vendors;
 
   const [defaultSelectedTable, setDefaultSelectedTable] = useState('');
   const [type, setType] = useState('');
@@ -171,7 +149,7 @@ function Cart({navigation, route}) {
   const [validationFucCalled, setvalidationFucCalled] = useState(true);
   const [faqModalLayoutHeight, setfaqModalLayoutHeight] = useState(null);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
-  const [onSelectPayment, setPaymentMethodId] = useState(null);
+  const [paymentMethodId, setPaymentMethodId] = useState(null);
   const [kycTxtInpts, setKycTxtInpts] = useState([]);
   const [kycImages, setKycImages] = useState([]);
   const [kycPdfs, setKycPdfs] = useState([]);
@@ -224,20 +202,32 @@ function Cart({navigation, route}) {
 
   //Redux store data
   const userData = useSelector((state) => state?.auth?.userData);
-  const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
-    useSelector((state) => state?.initBoot);
+  const {
+    appData,
+    allAddresss,
+    themeColors,
+    currencies,
+    languages,
+    appStyle,
+    themeColor,
+    themeToggle,
+  } = useSelector((state) => state?.initBoot);
   console.log(appData, 'core appData');
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+
   const {preferences} = appData?.profile;
 
   const selectedAddressData = useSelector(
     (state) => state?.cart?.selectedAddress,
   );
+  const recommendedVendorsdata = appMainData?.vendors;
 
-  const dineInType = useSelector((state) => state?.home?.dineInType);
-
+  const {dineInType, appMainData, location} = useSelector(
+    (state) => state?.home,
+  );
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
