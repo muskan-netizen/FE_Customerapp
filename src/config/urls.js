@@ -182,6 +182,8 @@ export const VENDOR_PRODUCTS_OPTIMIZE_FILTERS = getApiUrl(
   '/vendor/vendorProductsFilterOptimize',
 );
 
+export const GET_PAYMENT_INTENT = getApiUrl('/create-payment-intent');
+export const CONFIRM_PAYMENT_INTENT = getApiUrl('/confirm-payment-intent');
 export const GET_PRODUCT_FAQS = getApiUrl('/products_faq');
 export const UPDATE_PRODUCT_FAQS_CART = getApiUrl('/cart/productfaq/update');
 export const RATE_TO_DRIVER = getApiUrl('/rating/update-driver-rating');
