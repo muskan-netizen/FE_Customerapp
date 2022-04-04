@@ -692,16 +692,16 @@ android {
         //     resValue "string", "app_name", "Jet"
         //      resValue "string", "host_name", ""
         //  }
-        //  africanize{
-        //     dimension "appType"
-        //     versionCode 1
-        //     versionName "1.0"
-        //     minSdkVersion rootProject.ext.minSdkVersion
-        //     targetSdkVersion rootProject.ext.targetSdkVersion
-        //     applicationId 'com.africanize'
-        //     resValue "string", "app_name", "Africanize"
-        //     resValue "string", "host_name", ""
-        //  }
+         africanize{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.africanize'
+            resValue "string", "app_name", "Africanize"
+            resValue "string", "host_name", ""
+         }
 
         //   markita{
         //     dimension "appType"
@@ -1303,16 +1303,16 @@ android {
     //         resValue "string", "app_name", "Boozie Doozie"
     //         resValue "string", "host_name", ""
     //      }
-    //      zestyclickz{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion         
-    //         applicationId 'com.zestyclickz'
-    //         resValue "string", "app_name", "Veg-Hub"
-    //         resValue "string", "host_name", ""
-    //      }
+         zestyclickz{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.app.zestyclickz'
+            resValue "string", "app_name", "Veg-Hub"
+            resValue "string", "host_name", ""
+         }
     //      bakesale{
     //         dimension "appType"
     //         versionCode 1
@@ -3054,16 +3054,6 @@ android {
     //         resValue "string", "app_name", "Ace"
     //         resValue "string", "host_name", ""
     //      }
-    //      empire{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion         
-    //         applicationId 'com.empire'
-    //         resValue "string", "app_name", "Empire"
-    //         resValue "string", "host_name", ""
-    //      }
     //       expressdelivery{
     //         dimension "appType"
     //         versionCode 1
@@ -3082,16 +3072,6 @@ android {
     //         targetSdkVersion rootProject.ext.targetSdkVersion         
     //         applicationId 'com.booziedoozie'
     //         resValue "string", "app_name", "Boozie Doozie"
-    //         resValue "string", "host_name", ""
-    //      }
-    //      zestyclickz{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion         
-    //         applicationId 'com.zestyclickz'
-    //         resValue "string", "app_name", "ZestyClickz"
     //         resValue "string", "host_name", ""
     //      }
     //      bakesale{
@@ -3746,16 +3726,16 @@ android {
     //         resValue "string", "app_name", "Sponge"
     //         resValue "string", "host_name", ""
     //      }
-    //       gomeat{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion         
-    //         applicationId 'com.app.gomeat'
-    //         resValue "string", "app_name", "GoMeat"
-    //         resValue "string", "host_name", ""
-    //      }
+          gomeat{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.app.gomeat'
+            resValue "string", "app_name", "GoMeat"
+            resValue "string", "host_name", ""
+         }
          
     //   shopcentral{
     //         dimension "appType"
@@ -4158,16 +4138,16 @@ android {
     //         resValue "string", "app_name", "Cannabis Club SF"
     //         resValue "string", "host_name", ""
     //      }
-    //      halaTalabat{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion         
-    //         applicationId 'com.halaTalabat'
-    //         resValue "string", "app_name", "Hala Talabat"
-    //         resValue "string", "host_name", ""
-    //      }
+         halaTalabat{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.halaTalabat'
+            resValue "string", "app_name", "Hala Talabat"
+            resValue "string", "host_name", ""
+         }
     //    jadorDrive{
     //         dimension "appType"
     //         versionCode 1
@@ -4226,16 +4206,6 @@ android {
     //         targetSdkVersion rootProject.ext.targetSdkVersion         
     //         applicationId 'com.cannabisClubSF'
     //         resValue "string", "app_name", "Cannabis Club SF"
-    //         resValue "string", "host_name", ""
-    //      }
-    //      halaTalabat{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion         
-    //         applicationId 'com.halaTalabat'
-    //         resValue "string", "app_name", "Hala Talabat"
     //         resValue "string", "host_name", ""
     //      }
     //    jadorDrive{
@@ -4428,16 +4398,16 @@ android {
     //         resValue "string", "app_name", "BeakMe"
     //         resValue "string", "host_name", ""
     //      }
-    //      onscart{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion         
-    //         applicationId 'com.onscart'
-    //         resValue "string", "app_name", "Onscart"
-    //         resValue "string", "host_name", ""
-    //      }
+         onscart{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.onscart'
+            resValue "string", "app_name", "Onscart"
+            resValue "string", "host_name", ""
+         }
     //      gamaDelivery{
     //            dimension "appType"
     //            versionCode 1
@@ -4702,16 +4672,16 @@ android {
     //      resValue "string", "app_name", "Qrider"
     //      resValue "string", "host_name", ""
     //      }
-    //      dlvrd{
-    //      dimension "appType"
-    //      versionCode 1
-    //      versionName "1.0"
-    //      minSdkVersion rootProject.ext.minSdkVersion
-    //      targetSdkVersion rootProject.ext.targetSdkVersion
-    //      applicationId 'com.dlvrd'
-    //      resValue "string", "app_name", "Dlvrd"
-    //      resValue "string", "host_name", ""
-    //      }
+         dlvrd{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.dlvrd'
+         resValue "string", "app_name", "Dlvrd"
+         resValue "string", "host_name", ""
+         }
     //      delivery{
     //      dimension "appType"
     //      versionCode 1
@@ -4915,6 +4885,17 @@ android {
     //      resValue "string", "app_name", "Trip"
     //      resValue "string", "host_name", ""
     //      }
+     localdropoff{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.app.localdropoff'
+         resValue "string", "app_name", "Trip"
+         resValue "string", "host_name", ""
+         }
+    
     }
 }
 

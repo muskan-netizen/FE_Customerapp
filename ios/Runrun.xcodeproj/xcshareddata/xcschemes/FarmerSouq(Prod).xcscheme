@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "84C2715E27F57C0300D7D808"
-               BuildableName = "LocalDropoff.app"
-               BlueprintName = "LocalDropoff"
+               BlueprintIdentifier = "843E862227F41B07009D8DD1"
+               BuildableName = "FarmerSouq.app"
+               BlueprintName = "FarmerSouq"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,9 +44,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84C2715E27F57C0300D7D808"
-            BuildableName = "LocalDropoff.app"
-            BlueprintName = "LocalDropoff"
+            BlueprintIdentifier = "843E862227F41B07009D8DD1"
+            BuildableName = "FarmerSouq.app"
+            BlueprintName = "FarmerSouq"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -61,9 +61,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84C2715E27F57C0300D7D808"
-            BuildableName = "LocalDropoff.app"
-            BlueprintName = "LocalDropoff"
+            BlueprintIdentifier = "843E862227F41B07009D8DD1"
+            BuildableName = "FarmerSouq.app"
+            BlueprintName = "FarmerSouq"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

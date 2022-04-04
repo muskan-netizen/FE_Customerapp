@@ -14,16 +14,16 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "84C2715E27F57C0300D7D808"
-               BuildableName = "LocalDropoff.app"
-               BlueprintName = "LocalDropoff"
+               BlueprintIdentifier = "843E862227F41B07009D8DD1"
+               BuildableName = "FarmerSouq.app"
+               BlueprintName = "FarmerSouq"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
@@ -31,7 +31,7 @@
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -44,15 +44,15 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84C2715E27F57C0300D7D808"
-            BuildableName = "LocalDropoff.app"
-            BlueprintName = "LocalDropoff"
+            BlueprintIdentifier = "843E862227F41B07009D8DD1"
+            BuildableName = "FarmerSouq.app"
+            BlueprintName = "FarmerSouq"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
@@ -61,18 +61,18 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84C2715E27F57C0300D7D808"
-            BuildableName = "LocalDropoff.app"
-            BlueprintName = "LocalDropoff"
+            BlueprintIdentifier = "843E862227F41B07009D8DD1"
+            BuildableName = "FarmerSouq.app"
+            BlueprintName = "FarmerSouq"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
-      buildConfiguration = "Release">
+      buildConfiguration = "Debug">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

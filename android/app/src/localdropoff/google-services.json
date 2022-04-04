@@ -1,64 +1,64 @@
 {
   "project_info": {
-    "project_number": "173265613825",
-    "project_id": "local-dropoff",
-    "storage_bucket": "local-dropoff.appspot.com"
+    "project_number": "236503350854",
+    "project_id": "local-dropoff-customer",
+    "storage_bucket": "local-dropoff-customer.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:173265613825:android:85748f39814dc7576d3c00",
+        "mobilesdk_app_id": "1:236503350854:android:bd5d831981f43f65451447",
         "android_client_info": {
-          "package_name": "com.localdropoff"
+          "package_name": "com.app.localdropoff"
         }
       },
       "oauth_client": [
         {
-          "client_id": "173265613825-h1ho7hh9rhg9iioqiq9ga01rn019f2dg.apps.googleusercontent.com",
+          "client_id": "236503350854-0kk30o9re4tp96kssn1e3nck0lltl40u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.localdropoff",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "173265613825-ng6s7brbf7t7k9qlkkuv4bgc3g8on16u.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.localdropoff",
+            "package_name": "com.app.localdropoff",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "173265613825-rtc70c8jbvchuvlguoro0s17m234m4va.apps.googleusercontent.com",
+          "client_id": "236503350854-i1itfvlkgjsr4eofqe8hvn16lp4ef6sn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.localdropoff",
+            "package_name": "com.app.localdropoff",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "236503350854-kosv0dnut8gvu469s4mkmo6nm63uhdfl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.localdropoff",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "173265613825-j5rs6umpdfred9m403dc51t1713tcbmm.apps.googleusercontent.com",
+          "client_id": "236503350854-g6br3cj7db40evs7kiqp7bhuu762cc40.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCJdLy0LXPN00TJYwYI_BurtRIH4I-R1XU"
+          "current_key": "AIzaSyDH-_bjf__HKH7GaQT97OC06ZXE2EeMbYc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "173265613825-j5rs6umpdfred9m403dc51t1713tcbmm.apps.googleusercontent.com",
+              "client_id": "236503350854-g6br3cj7db40evs7kiqp7bhuu762cc40.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "173265613825-3a4ah51sj10l8at88sbosrhh1s03ec0k.apps.googleusercontent.com",
+              "client_id": "236503350854-177jaopfu6mmpi1vu6cek4h99lqmja4s.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.localdropoff"
+                "bundle_id": "com.app.localdropoff"
               }
             }
           ]

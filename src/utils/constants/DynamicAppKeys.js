@@ -695,8 +695,8 @@ const appIds = {
     android: 'com.customer.ace',
   }),
   empire: Platform.select({
-    ios: 'com.customer.empire',
-    android: 'com.empire',
+    ios: 'com.application.empire',
+    android: 'com.application.empire',
   }),
   expressdelivery: Platform.select({
     ios: 'com.customer.expressdelivery',
@@ -707,8 +707,8 @@ const appIds = {
     android: 'com.booziedoozie',
   }),
   zestyclickz: Platform.select({
-    ios: 'com.zestyclickz',
-    android: 'com.zestyclickz',
+    ios: 'com.app.zestyclickz',
+    android: 'com.app.zestyclickz',
   }),
   bakesale: Platform.select({
     ios: 'com.bakesale',
@@ -1223,8 +1223,8 @@ const appIds = {
     android: 'com.hivefair',
   }),
   localdropoff: Platform.select({
-    ios: 'com.localdropoff',
-    android: 'com.localdropoff',
+    ios: 'com.app.localdropoff',
+    android: 'com.app.localdropoff',
   }),
   ubi: Platform.select({
     ios: 'com.application.ubi',
