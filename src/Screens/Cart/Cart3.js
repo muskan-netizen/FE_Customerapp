@@ -141,7 +141,7 @@ function Cart({navigation, route}) {
   const [validationFucCalled, setvalidationFucCalled] = useState(true);
   const [faqModalLayoutHeight, setfaqModalLayoutHeight] = useState(null);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
-  const [paymentMethodId, setPaymentMethodId] = useState(null);
+  const [onSelectPayment, setPaymentMethodId] = useState(null);
 
   const [state, setState] = useState({
     showTaxFeeArea: false,
