@@ -1,15 +1,21 @@
 
 import axios from 'axios';
-import Geocoder from 'react-native-geocoder';
 import Geolocation from 'react-native-geolocation-service';
 
-export const googlePlacesApi = async (data, key, latLng) => {
+export const googlePlacesApi = async (data, key, latLng, region) => {
     // console.log("key", key)
     try {
         // location=30.7173%2C-76.8035
-        let res = await fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${data}&location=${latLng}&key=${key}`, {
-            method: 'GET',
-        });
+        // let res = await fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${data}&location=${latLng}&key=${key}`, {
+        //     method: 'GET',
+        // });
+
+        let res = await fetch(
+            `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${data}&location=${latLng}&key=${key}`,
+            {
+                method: "GET",
+            }
+        );
 
         let response = await res.json();
         console.log("ressss", response)
@@ -87,7 +93,7 @@ export const getAddressFromLatLong = (latlng, mapKey) =>
         .then(response => {
             // console.log("success resp==>>", response)
             if (response.data.results && response.data.results.length > 0) {
-          
+
                 const dataToSend = {
                     address: response.data.results[0].formatted_address,
                 };

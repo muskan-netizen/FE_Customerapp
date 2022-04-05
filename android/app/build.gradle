@@ -1325,7 +1325,7 @@ android {
          }
          elcheregio{
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -3104,16 +3104,7 @@ android {
             resValue "string", "app_name", "BakeSale"
             resValue "string", "host_name", ""
          }
-         elcheregio{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion         
-            applicationId 'com.elcheregio'
-            resValue "string", "app_name", "El Che Regio"
-            resValue "string", "host_name", ""
-         }
+       
           yaawi{
             dimension "appType"
             versionCode 1
@@ -3767,7 +3758,7 @@ android {
             resValue "string", "app_name", "Shop Central"
             resValue "string", "host_name", ""
          }
-          skidoo{
+         skidoo{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -3797,7 +3788,7 @@ android {
             resValue "string", "app_name", "Instaride user"
             resValue "string", "host_name", ""
          }
-          movingwheelsdelivery{
+         movingwheelsdelivery{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -3807,7 +3798,7 @@ android {
             resValue "string", "app_name", "Moving Wheels Delivery"
             resValue "string", "host_name", ""
          }
-           safewalks{
+         safewalks{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -3827,7 +3818,7 @@ android {
             resValue "string", "app_name", "Dima Vega"
             resValue "string", "host_name", ""
          }
-          skoop{
+         skoop{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -3837,7 +3828,7 @@ android {
             resValue "string", "app_name", "Skoop"
             resValue "string", "host_name", ""
          }
-          kudhyo{
+         kudhyo{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -3847,7 +3838,7 @@ android {
             resValue "string", "app_name", "Kudhyo"
             resValue "string", "host_name", ""
          }
-          bharatMove{
+         bharatMove{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -3877,7 +3868,7 @@ android {
             resValue "string", "app_name", "MML"
             resValue "string", "host_name", ""
          }
-          bimol{
+         bimol{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -3888,7 +3879,7 @@ android {
             resValue "string", "host_name", ""
          }
         
-            vendorspot{
+         vendorspot{
              dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -3908,7 +3899,7 @@ android {
             resValue "string", "app_name", "Pinky Deli"
             resValue "string", "host_name", ""
          }
-          sxm2go{
+         sxm2go{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -3928,7 +3919,7 @@ android {
             resValue "string", "app_name", "Gas Giant"
             resValue "string", "host_name", ""
          }
-          releezer{
+         releezer{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -3938,7 +3929,7 @@ android {
             resValue "string", "app_name", "Releezer"
             resValue "string", "host_name", ""
          }
-            vendoor{
+         vendoor{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -3958,7 +3949,7 @@ android {
             resValue "string", "app_name", "FARMER SOUQ"
             resValue "string", "host_name", ""
          }
-          tmgShops{
+         tmgShops{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -3988,7 +3979,7 @@ android {
             resValue "string", "app_name", "Easyu"
             resValue "string", "host_name", ""
          }
-          mozmarcas{
+         mozmarcas{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -3998,7 +3989,7 @@ android {
             resValue "string", "app_name", "Pakela"
             resValue "string", "host_name", ""
          } 
-          myfiji{
+         myfiji{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -4098,7 +4089,7 @@ android {
             resValue "string", "app_name", "Fides Delivery"
             resValue "string", "host_name", ""
          } 
-          bksTaxi{
+         bksTaxi{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -4128,7 +4119,7 @@ android {
             resValue "string", "app_name", "Sijang"
             resValue "string", "host_name", ""
          }
-          fairex{
+         fairex{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -4138,7 +4129,7 @@ android {
             resValue "string", "app_name", "Fairex"
             resValue "string", "host_name", ""
          }
-          everywhere{
+         everywhere{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -4188,7 +4179,7 @@ android {
             resValue "string", "app_name", "Palmetto Plus"
             resValue "string", "host_name", ""
          }
-          ubercann{
+         ubercann{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -4238,7 +4229,7 @@ android {
             resValue "string", "app_name", "Hala Talabat"
             resValue "string", "host_name", ""
          }
-       jadorDrive{
+         jadorDrive{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -4258,7 +4249,7 @@ android {
             resValue "string", "app_name", "Palmetto Plus"
             resValue "string", "host_name", ""
          }
-          ubercann{
+         ubercann{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -4308,7 +4299,7 @@ android {
             resValue "string", "app_name", "kampick"
             resValue "string", "host_name", ""
          }
-          cabio{
+         cabio{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -4318,7 +4309,7 @@ android {
             resValue "string", "app_name", "Cabio"
             resValue "string", "host_name", ""
          }
-          tumbak{
+         tumbak{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -4328,7 +4319,7 @@ android {
             resValue "string", "app_name", "Tumbak"
             resValue "string", "host_name", ""
          }
-          iPicknDrop{
+         iPicknDrop{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -4338,7 +4329,7 @@ android {
             resValue "string", "app_name", "iPicknDrop"
             resValue "string", "host_name", ""
          }
-          bluebolt{
+         bluebolt{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -4378,7 +4369,7 @@ android {
             resValue "string", "app_name", "ONTHEGO"
             resValue "string", "host_name", ""
          }
-        mylaglobal{
+         mylaglobal{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -4667,8 +4658,8 @@ android {
          versionName "1.0"
          minSdkVersion rootProject.ext.minSdkVersion
          targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.app.scoopaTechnologies'
-         resValue "string", "app_name", "Scoopa Technologies"
+         applicationId 'com.scoopaTechnologies'
+         resValue "string", "app_name", "Scoopa"
          resValue "string", "host_name", ""
          }
 

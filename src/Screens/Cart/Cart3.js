@@ -36,6 +36,7 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import RazorpayCheckout from 'react-native-razorpay';
 import {useSelector} from 'react-redux';
 import AddressModal3 from '../../Components/AddressModal3';
+import BorderTextInput from '../../Components/BorderTextInput';
 import ButtonComponent from '../../Components/ButtonComponent';
 import ChooseAddressModal from '../../Components/ChooseAddressModal';
 import ConfirmationModal from '../../Components/ConfirmationModal';
@@ -78,20 +79,32 @@ import {
 } from '../../utils/helperFunctions';
 import {getItem, removeItem, setItem} from '../../utils/utils';
 import stylesFun from './styles';
+import {
+  CardField,
+  createToken,
+  initStripe,
+  StripeProvider,
+  handleCardAction,
+  createPaymentMethod,
+  confirmPayment,
+} from '@stripe/stripe-react-native';
+import {cameraHandler} from '../../utils/commonFunction';
+import ActionSheet from 'react-native-actionsheet';
+import {androidCameraPermission} from '../../utils/permissions';
+import DocumentPicker from 'react-native-document-picker';
 
 let clickedItem = {};
 let isFAQsSubmitted = true;
+let addtionSelectedImageIndex = null;
+let addtionSelectedImage = null;
 
 function Cart({navigation, route}) {
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const location = useSelector((state) => state?.home?.location);
-  const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const appMainData = useSelector((state) => state?.home?.appMainData);
-  const recommendedVendorsdata = appMainData?.vendors;
   let paramsData = route?.params;
+
+  let actionSheet = useRef(null);
+
+  const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
+  const darkthemeusingDevice = useDarkMode();
 
   const [defaultSelectedTable, setDefaultSelectedTable] = useState('');
   const [type, setType] = useState('');
@@ -133,6 +146,10 @@ function Cart({navigation, route}) {
   const [validationFucCalled, setvalidationFucCalled] = useState(true);
   const [faqModalLayoutHeight, setfaqModalLayoutHeight] = useState(null);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [paymentMethodId, setPaymentMethodId] = useState(null);
+  const [kycTxtInpts, setKycTxtInpts] = useState([]);
+  const [kycImages, setKycImages] = useState([]);
+  const [kycPdfs, setKycPdfs] = useState([]);
 
   const [state, setState] = useState({
     showTaxFeeArea: false,
@@ -152,6 +169,9 @@ function Cart({navigation, route}) {
     isProductOrderForm: false,
     isProductLoader: false,
     isSubmitFaqLoader: false,
+    isCategoryKyc: false,
+    isCategoryKycLoader: false,
+    isSubmitKycLoader: false,
   });
 
   const {
@@ -172,23 +192,39 @@ function Cart({navigation, route}) {
     isProductOrderForm,
     isProductLoader,
     isSubmitFaqLoader,
+    isCategoryKyc,
+    isCategoryKycLoader,
+    isSubmitKycLoader,
   } = state;
 
   //Redux store data
   const userData = useSelector((state) => state?.auth?.userData);
-  const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
-    useSelector((state) => state?.initBoot);
+  const {
+    appData,
+    allAddresss,
+    themeColors,
+    currencies,
+    languages,
+    appStyle,
+    themeColor,
+    themeToggle,
+  } = useSelector((state) => state?.initBoot);
   console.log(appData, 'core appData');
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+
+  const {preferences} = appData?.profile;
 
   const selectedAddressData = useSelector(
     (state) => state?.cart?.selectedAddress,
   );
+  const recommendedVendorsdata = appMainData?.vendors;
 
-  const dineInType = useSelector((state) => state?.home?.dineInType);
-
+  const {dineInType, appMainData, location} = useSelector(
+    (state) => state?.home,
+  );
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -206,7 +242,7 @@ function Cart({navigation, route}) {
   console.log('cart items', cartItems);
 
   const closeForm = () => {
-    updateState({isProductOrderForm: false});
+    updateState({isProductOrderForm: false, isCategoryKyc: false});
     Keyboard.dismiss();
   };
 
@@ -456,6 +492,18 @@ function Cart({navigation, route}) {
             //if schedule type is null then hit the api again with now option
             setDateAndTimeSchedule();
           }
+
+          if (
+            res?.data &&
+            res?.data?.tip.length &&
+            preferences?.auto_implement_5_percent_tip
+          ) {
+            setSelectedTipvalue(res?.data?.tip[0]);
+            setSelectedTipAmount(res?.data?.tip[0]?.value);
+          } else {
+            setSelectedTipvalue(null);
+            setSelectedTipAmount(null);
+          }
         } else {
           setVendorAddress('');
           setCartItems([]);
@@ -616,6 +664,8 @@ function Cart({navigation, route}) {
       deliveryFeeLoader: false,
       isProductLoader: false,
       isSubmitFaqLoader: false,
+      isCategoryKycLoader: false,
+      isSubmitKycLoader: false,
     });
     showError(
       error?.error?.description ||
@@ -812,7 +862,13 @@ function Cart({navigation, route}) {
     data['address_id'] =
       paramsData?.selectedAddressData?.id || selectedAddressData?.id;
     data['payment_option_id'] =
-      paramsData?.selectedPayment?.id || selectedPayment?.id;
+      Number(cartData?.total_payable_amount) +
+        (selectedTipAmount != null && selectedTipAmount != ''
+          ? Number(selectedTipAmount)
+          : 0) >
+      0
+        ? paramsData?.selectedPayment?.id || selectedPayment?.id
+        : 1;
 
     data['type'] = dineInType || '';
     data['is_gift'] = isGiftBoxSelected ? 1 : 0;
@@ -823,6 +879,7 @@ function Cart({navigation, route}) {
     if (!!selectedTipAmount) {
       data['tip'] = selectedTipAmount || '';
     }
+    console.log(data, '_directOrderPlace>_directOrderPlace');
     placeOrderData(data);
   };
 
@@ -1053,13 +1110,6 @@ function Cart({navigation, route}) {
   //Clear cart
   const placeOrder = () => {
     isFAQsSubmitted = true;
-    cartItems.map((itm, inx) => {
-      itm?.vendor_products.map((item, index) => {
-        if (item?.faq_count && item?.user_product_order_form == null) {
-          isFAQsSubmitted = false;
-        }
-      });
-    });
 
     if (!!userData?.auth_token) {
       if (
@@ -1077,13 +1127,32 @@ function Cart({navigation, route}) {
         showInfo(strings.SCHEDULE_DATE_REQUIRED);
         return;
       }
-      if (isEmpty(selectedPayment)) {
+      if (
+        Number(cartData?.total_payable_amount) +
+          (selectedTipAmount != null && selectedTipAmount != ''
+            ? Number(selectedTipAmount)
+            : 0) !=
+          0 &&
+        isEmpty(selectedPayment)
+      ) {
         // showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
 
         updateState({paymentModal: true});
         // moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)();
         return;
       }
+
+      if (cartData?.category_kyc_count > 0) {
+        showError('Please submit KYC form!');
+        return;
+      }
+      cartItems.map((itm, inx) => {
+        itm?.vendor_products.map((item, index) => {
+          if (item?.faq_count && item?.user_product_order_form == null) {
+            isFAQsSubmitted = false;
+          }
+        });
+      });
 
       if (!isFAQsSubmitted) {
         showInfo("Please fill all product's FAQs");
@@ -1110,6 +1179,7 @@ function Cart({navigation, route}) {
         errorMethod(strings.INVALID_SCHEDULED_DATE);
       } else {
         if (!!userData) {
+          console.log(userData, 'userData');
           if (!!userData) {
             if (
               !!userData?.client_preference?.verify_email &&
@@ -1135,20 +1205,44 @@ function Cart({navigation, route}) {
               !!userData?.client_preference?.verify_phone
             ) {
               if (
-                !!userData?.verify_details?.is_email_verified ||
-                !!userData?.verify_details?.is_phone_verified
+                !!userData?.client_preference?.verify_email &&
+                !userData?.verify_details?.is_email_verified
               ) {
-                // setDateAndTimeSchedule(true);
-                setTimeout(() => {
-                  _finalPayment();
-                }, 500);
-              } else {
                 updateState({placeLoader: false});
 
                 moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
                   formCart: true,
                 })();
+              } else if (
+                !!userData?.client_preference?.verify_phone &&
+                !userData?.verify_details?.is_phone_verified
+              ) {
+                updateState({placeLoader: false});
+
+                moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+                  formCart: true,
+                })();
+              } else {
+                setTimeout(() => {
+                  _finalPayment();
+                }, 500);
               }
+
+              // if (
+              //   !!userData?.verify_details?.is_email_verified ||
+              //   !!userData?.verify_details?.is_phone_verified
+              // ) {
+              //   // setDateAndTimeSchedule(true);
+              //   setTimeout(() => {
+              //     _finalPayment();
+              //   }, 500);
+              // } else {
+              //   updateState({placeLoader: false});
+
+              //   moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+              //     formCart: true,
+              //   })();
+              // }
             } else {
               // setDateAndTimeSchedule(true);
               setTimeout(() => {
@@ -1267,83 +1361,337 @@ function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
-  //Offline payments
-  const _offineLinePayment = async () => {
-    if (!!tokenInfo) {
-      let selectedMethod = selectedPayment.code.toLowerCase();
-      actions
-        .openPaymentWebUrl(
-          `/${selectedMethod}?tip=${
-            selectedTipAmount && selectedTipAmount != ''
-              ? Number(selectedTipAmount)
-              : 0
-          }&amount=${
+  // const _createPaymentMethod = async (cardInfo, res2) => {
+  //   console.log(cardInfo, '_createPaymentMethod>>>ardInfo');
+  //   if (res2) {
+  //    await createPaymentMethod({
+  //       type: 'Card',
+  //       // token:tokenInfo,
+  //       card: cardInfo,
+  //       billing_details: {
+  //         name: 'Jenny Rosen',
+  //       },
+  //     }).then((res) => {
+  //         // updateState({isLoadingB: false});
+  //         console.log('_createPaymentMethod res', res);
+  //         if (res && res?.error && res?.error?.message) {
+  //           showError(res?.error?.message);
+  //           updateState({
+  //             isRefreshing:false,
+  //             isLoadingB: false,
+  //             placeLoader: false,
+  //           });
+  //         } else {
+  //           console.log(res, 'success_createPaymentMethod ');
+  //           actions
+  //             .getStripePaymentIntent(
+  //               // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
+  //               {
+  //                 payment_option_id: selectedPayment?.id,
+  //                 action: 'cart',
+  //                 amount:
+  //                   Number(cartData?.total_payable_amount) +
+  //                   (selectedTipAmount != null && selectedTipAmount != ''
+  //                     ? Number(selectedTipAmount)
+  //                     : 0),
+  //                 payment_method_id: res?.paymentMethod?.id,
+  //               },
+  //               {
+  //                 code: appData?.profile?.code,
+  //                 currency: currencies?.primary_currency?.id,
+  //                 language: languages?.primary_language?.id,
+  //               },
+  //             )
+  //             .then(async (res) => {
+  //               console.log(res, 'getStripePaymentIntent response');
+  //               if (res && res?.client_secret) {
+  //                 const {paymentIntent, error} = await handleCardAction(
+  //                   res?.client_secret,
+  //                 );
+  //                 if (paymentIntent) {
+  //                   console.log(paymentIntent, 'paymentIntent');
+  //                   if (paymentIntent) {
+  //                     actions
+  //                       .confirmPaymentIntentStripe(
+  //                         {
+  //                           payment_option_id: selectedPayment?.id,
+  //                           action: 'cart',
+  //                           amount:
+  //                             Number(cartData?.total_payable_amount) +
+  //                             (selectedTipAmount != null &&
+  //                             selectedTipAmount != ''
+  //                               ? Number(selectedTipAmount)
+  //                               : 0),
+  //                           payment_intent_id: paymentIntent?.id,
+  //                           address_id: selectedAddressData?.id,
+  //                           tip:
+  //                             selectedTipAmount && selectedTipAmount != ''
+  //                               ? Number(selectedTipAmount)
+  //                               : 0,
+  //                         },
+  //                         {
+  //                           code: appData?.profile?.code,
+  //                           currency: currencies?.primary_currency?.id,
+  //                           language: languages?.primary_language?.id,
+  //                         },
+  //                       )
+  //                       .then((res) => {
+  //                         updateState({isRefreshing: false});
+  //                         if (res && res?.status == 'Success' && res?.data) {
+  //                           // updateState({allAvailAblePaymentMethods: res?.data});
+  //                           actions.cartItemQty({});
+  //                           setCartItems([]);
+  //                           setCartData({});
+  //                           setSelectedPayment({
+  //                             id: 1,
+  //                             off_site: 0,
+  //                             title: 'Cash On Delivery',
+  //                             title_lng: strings.CASH_ON_DELIVERY,
+  //                           });
+  //                           setPickupDriverComment(null);
+  //                           setDropOffDriverComment(null);
+  //                           setVendorComment(null);
+  //                           setLocalPickupDate(null);
+  //                           setLocaleDropOffDate(null);
+  //                           setModalType(null);
+  //                           setSheduledpickupdate(null);
+
+  //                           updateState({
+  //                             isLoadingB: false,
+  //                             placeLoader: false,
+  //                           });
+  //                           moveToNewScreen(navigationStrings.ORDERSUCESS, {
+  //                             orderDetail: res.data,
+  //                           })();
+  //                           showSuccess(res?.message);
+  //                         } else {
+  //                           setSelectedPayment({
+  //                             id: 1,
+  //                             off_site: 0,
+  //                             title: 'Cash On Delivery',
+  //                             title_lng: strings.CASH_ON_DELIVERY,
+  //                           });
+  //                           updateState({
+  //                             isLoadingB: false,
+  //                             placeLoader: false,
+  //                           });
+  //                         }
+  //                       })
+  //                       .catch(errorMethod);
+  //                   }
+  //                 } else {
+  //                   updateState({
+  //                     isRefreshing:false,
+  //                     isLoadingB: false,
+  //                     placeLoader: false,
+  //                   });
+  //                   console.log(error, 'error');
+  //                   showError(error?.message || 'payment failed');
+  //                 }
+  //               } else {
+  //                 updateState({isLoadingB: false});
+  //               }
+  //             })
+  //             .catch(errorMethod);
+
+  //         }
+  //       })
+  //       .catch(errorMethod);
+  //   }
+  // };
+
+  const _paymentWithStripe = async (cardInfo, tokenInfo, paymentMethodId) => {
+    actions
+      .getStripePaymentIntent(
+        // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
+        {
+          payment_option_id: selectedPayment?.id,
+          action: 'cart',
+          amount:
             Number(cartData?.total_payable_amount) +
             (selectedTipAmount != null && selectedTipAmount != ''
               ? Number(selectedTipAmount)
-              : 0)
-          }&auth_token=${userData?.auth_token}&address_id=${
-            selectedAddressData?.id
-          }&payment_option_id=${
-            selectedPayment?.id
-          }&action=cart&stripe_token=${tokenInfo}`,
-          {},
-          {
-            code: appData?.profile?.code,
-            currency: currencies?.primary_currency?.id,
-            language: languages?.primary_language?.id,
-          },
-        )
-        .then((res) => {
-          updateState({isRefreshing: false});
-          if (res && res?.status == 'Success' && res?.data) {
-            // updateState({allAvailAblePaymentMethods: res?.data});
-            actions.cartItemQty({});
-            setCartItems([]);
-            setCartData({});
-            setSelectedPayment({
-              id: 1,
-              off_site: 0,
-              title: 'Cash On Delivery',
-              title_lng: strings.CASH_ON_DELIVERY,
-            });
-            setPickupDriverComment(null);
-            setDropOffDriverComment(null);
-            setVendorComment(null);
-            setLocalPickupDate(null);
-            setLocaleDropOffDate(null);
-            setModalType(null);
-            setSheduledpickupdate(null);
+              : 0),
+          payment_method_id: paymentMethodId,
+        },
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then(async (res) => {
+        console.log(res, 'getStripePaymentIntent response');
+        if (res && res?.client_secret) {
+          const {paymentIntent, error} = await handleCardAction(
+            res?.client_secret,
+          );
+          if (paymentIntent) {
+            console.log(paymentIntent, 'paymentIntent');
+            if (paymentIntent) {
+              actions
+                .confirmPaymentIntentStripe(
+                  {
+                    payment_option_id: selectedPayment?.id,
+                    action: 'cart',
+                    amount:
+                      Number(cartData?.total_payable_amount) +
+                      (selectedTipAmount != null && selectedTipAmount != ''
+                        ? Number(selectedTipAmount)
+                        : 0),
+                    payment_intent_id: paymentIntent?.id,
+                    address_id: selectedAddressData?.id,
+                    tip:
+                      selectedTipAmount && selectedTipAmount != ''
+                        ? Number(selectedTipAmount)
+                        : 0,
+                  },
+                  {
+                    code: appData?.profile?.code,
+                    currency: currencies?.primary_currency?.id,
+                    language: languages?.primary_language?.id,
+                  },
+                )
+                .then((res) => {
+                  updateState({isRefreshing: false});
+                  if (res && res?.status == 'Success' && res?.data) {
+                    // updateState({allAvailAblePaymentMethods: res?.data});
+                    actions.cartItemQty({});
+                    setCartItems([]);
+                    setCartData({});
+                    setSelectedPayment({
+                      id: 1,
+                      off_site: 0,
+                      title: 'Cash On Delivery',
+                      title_lng: strings.CASH_ON_DELIVERY,
+                    });
+                    setPickupDriverComment(null);
+                    setDropOffDriverComment(null);
+                    setVendorComment(null);
+                    setLocalPickupDate(null);
+                    setLocaleDropOffDate(null);
+                    setModalType(null);
+                    setSheduledpickupdate(null);
 
-            updateState({
-              isLoadingB: false,
-              placeLoader: false,
-            });
-            moveToNewScreen(navigationStrings.ORDERSUCESS, {
-              orderDetail: res.data,
-            })();
-            showSuccess(res?.message);
+                    updateState({
+                      isLoadingB: false,
+                      placeLoader: false,
+                    });
+                    moveToNewScreen(navigationStrings.ORDERSUCESS, {
+                      orderDetail: res.data,
+                    })();
+                    showSuccess(res?.message);
+                  } else {
+                    setSelectedPayment({
+                      id: 1,
+                      off_site: 0,
+                      title: 'Cash On Delivery',
+                      title_lng: strings.CASH_ON_DELIVERY,
+                    });
+                    updateState({
+                      isLoadingB: false,
+                      placeLoader: false,
+                    });
+                  }
+                })
+                .catch(errorMethod);
+            }
           } else {
-            setSelectedPayment({
-              id: 1,
-              off_site: 0,
-              title: 'Cash On Delivery',
-              title_lng: strings.CASH_ON_DELIVERY,
-            });
             updateState({
+              isRefreshing: false,
               isLoadingB: false,
               placeLoader: false,
             });
+            console.log(error, 'error');
+            showError(error?.message || 'payment failed');
           }
-        })
-        .catch((err) => {
-          showError(err.message);
-          updateState({
-            isLoadingB: false,
-            placeLoader: false,
-          });
-          console.log(err, 'errorInPlaceOrder');
-        });
+        } else {
+          updateState({isLoadingB: false});
+        }
+      })
+      .catch(errorMethod);
+  };
+
+  //Offline payments
+  const _offineLinePayment = async () => {
+    console.log(tokenInfo, 'tokenInfo>tokenInfo>tokenInfo');
+    if (!!paymentMethodId) {
+      // _createPaymentMethod(cardInfo, tokenInfo);
+      _paymentWithStripe(cardInfo, tokenInfo, paymentMethodId);
+      // let selectedMethod = selectedPayment.code.toLowerCase();
+      // actions
+      //   .openPaymentWebUrl(
+      //     `/${selectedMethod}?tip=${
+      //       selectedTipAmount && selectedTipAmount != ''
+      //         ? Number(selectedTipAmount)
+      //         : 0
+      //     }&amount=${
+      //       Number(cartData?.total_payable_amount) +
+      //       (selectedTipAmount != null && selectedTipAmount != ''
+      //         ? Number(selectedTipAmount)
+      //         : 0)
+      //     }&auth_token=${userData?.auth_token}&address_id=${
+      //       selectedAddressData?.id
+      //     }&payment_option_id=${
+      //       selectedPayment?.id
+      //     }&action=cart&stripe_token=${tokenInfo}`,
+      //     {},
+      //     {
+      //       code: appData?.profile?.code,
+      //       currency: currencies?.primary_currency?.id,
+      //       language: languages?.primary_language?.id,
+      //     },
+      //   )
+      //   .then((res) => {
+      //     updateState({isRefreshing: false});
+      //     if (res && res?.status == 'Success' && res?.data) {
+      //       // updateState({allAvailAblePaymentMethods: res?.data});
+      //       actions.cartItemQty({});
+      //       setCartItems([]);
+      //       setCartData({});
+      //       setSelectedPayment({
+      //         id: 1,
+      //         off_site: 0,
+      //         title: 'Cash On Delivery',
+      //         title_lng: strings.CASH_ON_DELIVERY,
+      //       });
+      //       setPickupDriverComment(null);
+      //       setDropOffDriverComment(null);
+      //       setVendorComment(null);
+      //       setLocalPickupDate(null);
+      //       setLocaleDropOffDate(null);
+      //       setModalType(null);
+      //       setSheduledpickupdate(null);
+
+      //       updateState({
+      //         isLoadingB: false,
+      //         placeLoader: false,
+      //       });
+      //       moveToNewScreen(navigationStrings.ORDERSUCESS, {
+      //         orderDetail: res.data,
+      //       })();
+      //       showSuccess(res?.message);
+      //     } else {
+      //       setSelectedPayment({
+      //         id: 1,
+      //         off_site: 0,
+      //         title: 'Cash On Delivery',
+      //         title_lng: strings.CASH_ON_DELIVERY,
+      //       });
+      //       updateState({
+      //         isLoadingB: false,
+      //         placeLoader: false,
+      //       });
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     showError(err.message);
+      //     updateState({
+      //       isLoadingB: false,
+      //       placeLoader: false,
+      //     });
+      //     console.log(err, 'errorInPlaceOrder');
+      //   });
     } else {
       errorMethod(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }
@@ -2802,6 +3150,7 @@ function Cart({navigation, route}) {
   };
 
   const selectedTip = (tip) => {
+    console.log(tip, 'tip?');
     if (tip == 'custom') {
       setSelectedTipvalue(tip);
       setSelectedTipAmount(null);
@@ -2824,6 +3173,20 @@ function Cart({navigation, route}) {
   const getFooter = () => {
     return (
       <View style={{}}>
+        {!!cartData?.category_kyc_count && (
+          <ButtonComponent
+            onPress={onCategoryKYC}
+            btnText={'Categoory KYC'}
+            borderRadius={moderateScale(13)}
+            textStyle={{color: colors.white, textTransform: 'none'}}
+            containerStyle={{
+              ...styles.placeOrderButtonStyle,
+              marginHorizontal: moderateScale(10),
+            }}
+            placeLoader={false}
+          />
+        )}
+
         <TextInput
           value={instruction}
           onChangeText={(text) => setInstruction(text)}
@@ -3094,7 +3457,10 @@ function Cart({navigation, route}) {
                     ? [styles.priceTipLabel, {color: MyDarkTheme.colors.text}]
                     : [styles.priceTipLabel]
                 }>
-                {strings.DOYOUWANTTOGIVEATIP}
+                {preferences?.want_to_tip != '' &&
+                preferences?.want_to_tip != null
+                  ? preferences?.want_to_tip
+                  : strings.DOYOUWANTTOGIVEATIP}
               </Text>
               <ScrollView
                 horizontal
@@ -3579,51 +3945,64 @@ function Cart({navigation, route}) {
           )}`}</Text>
         </View>
 
-        <TouchableOpacity
-          onPress={() =>
-            !!userData?.auth_token
-              ? updateState({paymentModal: true})
-              : //  moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
-                navigation.navigate(navigationStrings.OUTER_SCREEN, {})
-          }
-          style={styles.paymentMainView}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <FastImage
-              source={imagePath.paymentMethod}
-              resizeMode="contain"
-              style={{
-                width: moderateScale(32),
-                height: moderateScale(32),
-                tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              }}
-            />
+        {cartData &&
+          Number(cartData?.total_payable_amount) +
+            (selectedTipAmount != null && selectedTipAmount != ''
+              ? Number(selectedTipAmount)
+              : 0) >
+            0 && (
+            <TouchableOpacity
+              onPress={() =>
+                !!userData?.auth_token
+                  ? updateState({paymentModal: true})
+                  : // ?moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
+                    //  moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
+                    navigation.navigate(navigationStrings.OUTER_SCREEN, {})
+              }
+              style={styles.paymentMainView}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <FastImage
+                  source={imagePath.paymentMethod}
+                  resizeMode="contain"
+                  style={{
+                    width: moderateScale(32),
+                    height: moderateScale(32),
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
+                />
 
-            <Text
-              style={{
-                ...styles.priceItemLabel2,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                marginLeft: moderateScale(4),
-              }}>
-              {selectedPayment.title_lng
-                ? selectedPayment.title_lng
-                : selectedPayment.title
-                ? selectedPayment.title
-                : strings.SELECT_PAYMENT_METHOD}
-            </Text>
-          </View>
-          <View>
-            <FastImage
-              source={imagePath.goRight}
-              resizeMode="contain"
-              style={{
-                width: moderateScale(14),
-                height: moderateScale(14),
-                tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-              }}
-            />
-          </View>
-        </TouchableOpacity>
+                <Text
+                  style={{
+                    ...styles.priceItemLabel2,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    marginLeft: moderateScale(4),
+                  }}>
+                  {selectedPayment.title_lng
+                    ? selectedPayment.title_lng
+                    : selectedPayment.title
+                    ? selectedPayment.title
+                    : strings.SELECT_PAYMENT_METHOD}
+                </Text>
+              </View>
+              <View>
+                <FastImage
+                  source={imagePath.goRight}
+                  resizeMode="contain"
+                  style={{
+                    width: moderateScale(14),
+                    height: moderateScale(14),
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                  }}
+                />
+              </View>
+            </TouchableOpacity>
+          )}
+
         {!!(
           userData?.auth_token &&
           !appData?.profile?.preferences?.off_scheduling_at_cart &&
@@ -4471,6 +4850,9 @@ function Cart({navigation, route}) {
 
   const onSelectPayment = (data) => {
     console.log('my data++++', data);
+
+    // const [paymentMethodId, setPaymentMethodId] = useState(null);
+    setPaymentMethodId(data?.payment_method_id);
     setSelectedPayment(data?.selectedPaymentMethod);
     if (!!data?.cardInfo) {
       setCardInfo(data?.cardInfo);
@@ -4520,6 +4902,505 @@ function Cart({navigation, route}) {
   const openCloseMapAddress = (type) => {
     updateState({selectViaMap: type == 1 ? true : false});
   };
+
+  const renderProductForm = () => {
+    return (
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <View
+          style={{
+            maxHeight: height / 2,
+            minHeight: moderateScaleVertical(250),
+            borderTopLeftRadius: moderateScale(16),
+            borderTopRightRadius: moderateScale(16),
+            backgroundColor: colors.white,
+            padding: moderateScale(12),
+          }}>
+          {isProductLoader ? (
+            <View>
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                  marginHorizontal: 0,
+                }}
+                widthLeft={width - moderateScale(25)}
+                rectWidthLeft={width - moderateScale(25)}
+                heightLeft={moderateScaleVertical(45)}
+                rectHeightLeft={moderateScaleVertical(45)}
+                isRight={false}
+                rx={7}
+                ry={7}
+              />
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                  marginHorizontal: 0,
+                }}
+                widthLeft={width - moderateScale(25)}
+                rectWidthLeft={width - moderateScale(25)}
+                heightLeft={moderateScaleVertical(45)}
+                rectHeightLeft={moderateScaleVertical(45)}
+                isRight={false}
+                rx={7}
+                ry={7}
+              />
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                  marginHorizontal: 0,
+                }}
+                widthLeft={width - moderateScale(25)}
+                rectWidthLeft={width - moderateScale(25)}
+                heightLeft={moderateScaleVertical(45)}
+                rectHeightLeft={moderateScaleVertical(45)}
+                isRight={false}
+                rx={7}
+                ry={7}
+              />
+            </View>
+          ) : (
+            <View
+              style={{
+                backgroundColor: isDarkMode ? colors.black : colors.white,
+                borderRadius: moderateScale(8),
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <Text />
+
+                <TouchableOpacity onPress={closeForm}>
+                  <Image source={imagePath.closeButton} />
+                </TouchableOpacity>
+              </View>
+              <ScrollView>
+                {productFaqs.map((item, index) => {
+                  setAllRequiredQuestions(item, index);
+                  return (
+                    <View
+                      style={{
+                        marginTop: moderateScaleVertical(10),
+                      }}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            marginBottom: moderateScaleVertical(10),
+                            color: colors.redColor,
+                          }}>
+                          {`${item?.is_required ? '* ' : ''}`}
+                        </Text>
+                        <Text
+                          style={{
+                            marginBottom: moderateScaleVertical(10),
+                            fontFamily: fontFamily.medium,
+                            color: isDarkMode ? colors.white : colors.blackC,
+                          }}>
+                          {item?.translations[0]?.name}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          // marginVertical: moderateScaleVertical(16),
+                          backgroundColor: isDarkMode
+                            ? colors.whiteOpacity15
+                            : colors.greyNew,
+                          height: moderateScale(42),
+                          borderRadius: moderateScale(4),
+                          paddingHorizontal: moderateScale(8),
+                        }}>
+                        <TextInput
+                          placeholder={strings.ANSWER}
+                          onChangeText={(text) =>
+                            onChangeText(item, text, index, item?.length)
+                          }
+                          style={{
+                            ...styles.insctructionText,
+                            color: isDarkMode ? colors.textGreyB : colors.black,
+                          }}
+                          placeholderTextColor={
+                            isDarkMode
+                              ? colors.textGreyB
+                              : colors.blackOpacity40
+                          }
+                        />
+                      </View>
+                    </View>
+                  );
+                })}
+              </ScrollView>
+
+              <GradientButton
+                colorsArray={[
+                  themeColors.primary_color,
+                  themeColors.primary_color,
+                ]}
+                textStyle={{
+                  textTransform: 'none',
+                  fontSize: textScale(12),
+                }}
+                indicator={isSubmitFaqLoader}
+                indicatorColor={colors.white}
+                onPress={setAllFormData}
+                btnText={strings.SUBMIT}
+                marginTop={moderateScaleVertical(16)}
+                marginBottom={moderateScaleVertical(16)}
+              />
+            </View>
+          )}
+        </View>
+      </KeyboardAvoidingView>
+    );
+  };
+
+  // Category KYC start
+
+  const onCategoryKYC = () => {
+    updateState({
+      isCategoryKyc: true,
+      isCategoryKycLoader: true,
+    });
+    actions
+      .getCategoryKycDocument(
+        {
+          category_ids: cartData?.category_ids,
+        },
+        {code: appData?.profile?.code},
+      )
+      .then((res) => {
+        console.log(res?.data, 'res?.data>>>');
+        setKycTxtInpts(res?.data.filter((x) => x?.file_type == 'Text'));
+        setKycImages(res?.data.filter((x) => x?.file_type == 'Image'));
+        setKycPdfs(res?.data.filter((x) => x?.file_type == 'Pdf'));
+
+        updateState({
+          isCategoryKycLoader: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+
+  const showActionSheet = () => {
+    actionSheet.current.show();
+  };
+  const updateImages = (type, index) => {
+    addtionSelectedImageIndex = index;
+    addtionSelectedImage = type;
+    showActionSheet(false);
+  };
+
+  const getDoc = async (value, index) => {
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.pdf],
+      });
+      let data = cloneDeep(kycPdfs);
+      if (res) {
+        data[index].value = res[0].uri;
+        data[index].filename = res[0].name;
+        data[index].fileData = res[0];
+        setKycPdfs(data);
+      }
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the picker, exit any dialogs or menus and move on
+      } else {
+        throw err;
+      }
+    }
+  };
+
+  const cameraHandle = async (index) => {
+    const permissionStatus = await androidCameraPermission();
+    if (permissionStatus) {
+      if (index == 0 || index == 1) {
+        cameraHandler(index, {
+          width: 300,
+          height: 400,
+          cropping: true,
+          cropperCircleOverlay: true,
+          mediaType: 'photo',
+        })
+          .then((res) => {
+            console.log(res, 'res>>><>>>');
+            let data = cloneDeep(kycImages);
+
+            data[addtionSelectedImageIndex].value = res?.sourceURL || res?.path;
+            data[addtionSelectedImageIndex].fileData = res;
+            setKycImages(data);
+          })
+          .catch((err) => {
+            console.log(err, 'err>>>>');
+          });
+      }
+    }
+  };
+
+  const onSubmitKycDocs = () => {
+    let formdata = new FormData();
+    formdata.append('category_ids', cartData?.category_ids);
+    var isRequired = true;
+    if (!isEmpty(kycTxtInpts)) {
+      kycTxtInpts.map((i, inx) => {
+        if (i?.contents != '' && !!i?.contents) {
+          formdata.append(i?.translations[0].slug, i?.contents);
+        } else if (i?.is_required) {
+          if (isRequired) {
+            alert(
+              `${
+                strings.PLEASE_ENTER
+              } ${i?.translations[0].name.toLowerCase()}`,
+            );
+            isRequired = false;
+            return;
+          }
+        }
+      });
+    }
+
+    let concatinatedArray = kycImages.concat(kycPdfs);
+    if (!isEmpty(concatinatedArray)) {
+      concatinatedArray.map((i, inx) => {
+        if (i?.value) {
+          formdata.append(
+            i?.translations[0].slug,
+            i?.file_type == 'Image'
+              ? {
+                  uri: i.fileData.path,
+                  name: i.fileData.filename,
+                  filename: i.fileData.filename,
+                  type: i.fileData.mime,
+                }
+              : i?.fileData,
+          );
+        } else if (i?.is_required) {
+          if (isRequired) {
+            alert(
+              `${
+                strings.PLEASE_UPLOAD
+              } ${i?.translations[0].name.toLowerCase()}`,
+            );
+            isRequired = false;
+            return;
+          }
+        }
+      });
+    }
+
+    if (!isRequired) {
+      return;
+    }
+    updateState({
+      isSubmitKycLoader: true,
+    });
+
+    console.log(formdata, 'formdata>>>');
+
+    actions
+      .submitCategoryKYC(formdata, {
+        code: appData?.profile?.code,
+      })
+      .then((res) => {
+        console.log(res, 'res_submit_Kyc>>>>');
+        updateState({
+          isCategoryKyc: false,
+          isSubmitKycLoader: false,
+        });
+        showSuccess(res?.message);
+        getCartDetail();
+      })
+      .catch(errorMethod);
+  };
+
+  //Get TextInput
+  const getTextInputField = (type, index) => {
+    return (
+      <BorderTextInput
+        // secureTextEntry={true}
+        placeholder={type?.translations[0]?.name || ''}
+        // onChangeText={(text) => handleDynamicTxtInput(text, index, type)}
+      />
+    );
+  };
+
+  const getImageFieldView = (type, index) => {
+    return (
+      <View
+        style={{
+          marginRight: moderateScale(15),
+          marginTop: moderateScale(10),
+          width: moderateScale(95),
+        }}>
+        <TouchableOpacity
+          onPress={() => updateImages(type, index)}
+          style={styles.imageUpload}>
+          {kycImages[index].value != undefined &&
+          kycImages[index].value != null &&
+          kycImages[index].value != '' ? (
+            <Image
+              source={{uri: kycImages[index].value}}
+              style={styles.imageStyle2}
+            />
+          ) : (
+            <Image source={imagePath?.icPhoto} />
+          )}
+        </TouchableOpacity>
+        <Text
+          numberOfLines={2}
+          style={{...styles.label3, minHeight: moderateScale(25)}}>
+          {type?.translations[0]?.name}
+          {type.is_required ? '*' : ''}
+        </Text>
+      </View>
+    );
+  };
+
+  const getPdfView = (type, index) => {
+    return (
+      <View
+        style={{marginRight: moderateScale(20), marginTop: moderateScale(20)}}>
+        <TouchableOpacity
+          onPress={() => getDoc(type, index)}
+          style={{
+            ...styles.imageUpload,
+            height: 100,
+            width: 100,
+            borderRadius: moderateScale(4),
+            borderWidth: 1,
+            borderColor: colors.blue,
+          }}>
+          <Text style={styles.uploadStyle}>
+            {kycPdfs[index].value != undefined &&
+            kycPdfs[index].value != null &&
+            kycPdfs[index].value != ''
+              ? `${kycPdfs[index].filename}`
+              : `+ ${strings.UPLOAD}`}
+          </Text>
+        </TouchableOpacity>
+        <Text style={styles.label3}>
+          {type?.translations[0]?.name}
+          {type.is_required ? '*' : ''}
+        </Text>
+      </View>
+    );
+  };
+
+  const renderCategoryKYC = () => {
+    return (
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <View
+          style={{
+            height: height / 2,
+
+            borderTopLeftRadius: moderateScale(16),
+            borderTopRightRadius: moderateScale(16),
+            backgroundColor: colors.white,
+            padding: moderateScale(12),
+          }}>
+          {isCategoryKycLoader ? (
+            <View>
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                  marginHorizontal: 0,
+                }}
+                widthLeft={width - moderateScale(25)}
+                rectWidthLeft={width - moderateScale(25)}
+                heightLeft={moderateScaleVertical(120)}
+                rectHeightLeft={moderateScaleVertical(120)}
+                isRight={false}
+                rx={7}
+                ry={7}
+              />
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                  marginHorizontal: 0,
+                }}
+                widthLeft={width - moderateScale(25)}
+                rectWidthLeft={width - moderateScale(25)}
+                heightLeft={moderateScaleVertical(120)}
+                rectHeightLeft={moderateScaleVertical(120)}
+                isRight={false}
+                rx={7}
+                ry={7}
+              />
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                  marginHorizontal: 0,
+                }}
+                widthLeft={width - moderateScale(25)}
+                rectWidthLeft={width - moderateScale(25)}
+                heightLeft={moderateScaleVertical(120)}
+                rectHeightLeft={moderateScaleVertical(120)}
+                isRight={false}
+                rx={7}
+                ry={7}
+              />
+            </View>
+          ) : (
+            <View
+              style={{
+                height: '100%',
+                paddingHorizontal: moderateScale(15),
+              }}>
+              {!isEmpty(kycTxtInpts) &&
+                kycTxtInpts.map((item, index) => {
+                  return getTextInputField(item, index);
+                })}
+
+              {!isEmpty(kycImages) && (
+                <View style={styles.viewStyleForUploadImage}>
+                  {kycImages.map((item, index) => {
+                    return getImageFieldView(item, index);
+                  })}
+                </View>
+              )}
+
+              {!isEmpty(kycPdfs) && (
+                <View style={styles.viewStyleForUploadImage}>
+                  {kycPdfs.map((item, index) => {
+                    return getPdfView(item, index);
+                  })}
+                </View>
+              )}
+
+              <ButtonComponent
+                onPress={onSubmitKycDocs}
+                btnText={'Submit'}
+                borderRadius={moderateScale(13)}
+                textStyle={{color: colors.white}}
+                containerStyle={{
+                  position: 'absolute',
+                  backgroundColor: themeColors.primary_color,
+                  width: width - moderateScale(30),
+                  bottom: 10,
+                }}
+                placeLoader={isSubmitKycLoader}
+              />
+            </View>
+          )}
+        </View>
+      </KeyboardAvoidingView>
+    );
+  };
+
+  // Category KYC end
+
   return (
     <WrapperContainer
       bgColor={
@@ -4818,10 +5699,14 @@ function Cart({navigation, route}) {
           margin: 0,
         }}>
         <View style={{flex: 1}}>
-          <SelectPaymentModal
-            onSelectPayment={onSelectPayment}
-            paymentModalClose={() => updateState({paymentModal: false})}
-          />
+          <StripeProvider
+            publishableKey={preferences?.stripe_publishable_key}
+            merchantIdentifier="merchant.identifier">
+            <SelectPaymentModal
+              onSelectPayment={onSelectPayment}
+              paymentModalClose={() => updateState({paymentModal: false})}
+            />
+          </StripeProvider>
         </View>
       </Modal>
       <Modal
@@ -4832,163 +5717,27 @@ function Cart({navigation, route}) {
           justifyContent: 'flex-end',
           // marginBottom: keyboardHeight,
         }}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <View
-            style={{
-              maxHeight: height / 2,
-              minHeight: moderateScaleVertical(250),
-              borderTopLeftRadius: moderateScale(16),
-              borderTopRightRadius: moderateScale(16),
-              backgroundColor: colors.white,
-              padding: moderateScale(12),
-            }}>
-            {isProductLoader ? (
-              <View>
-                <HeaderLoader
-                  viewStyles={{
-                    marginTop: moderateScaleVertical(8),
-                    marginBottom: moderateScaleVertical(16),
-                    marginHorizontal: 0,
-                  }}
-                  widthLeft={width - moderateScale(25)}
-                  rectWidthLeft={width - moderateScale(25)}
-                  heightLeft={moderateScaleVertical(45)}
-                  rectHeightLeft={moderateScaleVertical(45)}
-                  isRight={false}
-                  rx={7}
-                  ry={7}
-                />
-                <HeaderLoader
-                  viewStyles={{
-                    marginTop: moderateScaleVertical(8),
-                    marginBottom: moderateScaleVertical(16),
-                    marginHorizontal: 0,
-                  }}
-                  widthLeft={width - moderateScale(25)}
-                  rectWidthLeft={width - moderateScale(25)}
-                  heightLeft={moderateScaleVertical(45)}
-                  rectHeightLeft={moderateScaleVertical(45)}
-                  isRight={false}
-                  rx={7}
-                  ry={7}
-                />
-                <HeaderLoader
-                  viewStyles={{
-                    marginTop: moderateScaleVertical(8),
-                    marginBottom: moderateScaleVertical(16),
-                    marginHorizontal: 0,
-                  }}
-                  widthLeft={width - moderateScale(25)}
-                  rectWidthLeft={width - moderateScale(25)}
-                  heightLeft={moderateScaleVertical(45)}
-                  rectHeightLeft={moderateScaleVertical(45)}
-                  isRight={false}
-                  rx={7}
-                  ry={7}
-                />
-              </View>
-            ) : (
-              <View
-                style={{
-                  backgroundColor: isDarkMode ? colors.black : colors.white,
-                  borderRadius: moderateScale(8),
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                  }}>
-                  <Text />
-
-                  <TouchableOpacity onPress={closeForm}>
-                    <Image source={imagePath.closeButton} />
-                  </TouchableOpacity>
-                </View>
-                <ScrollView>
-                  {productFaqs.map((item, index) => {
-                    setAllRequiredQuestions(item, index);
-                    return (
-                      <View
-                        style={{
-                          marginTop: moderateScaleVertical(10),
-                        }}>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}>
-                          <Text
-                            style={{
-                              marginBottom: moderateScaleVertical(10),
-                              color: colors.redColor,
-                            }}>
-                            {`${item?.is_required ? '* ' : ''}`}
-                          </Text>
-                          <Text
-                            style={{
-                              marginBottom: moderateScaleVertical(10),
-                              fontFamily: fontFamily.medium,
-                              color: isDarkMode ? colors.white : colors.blackC,
-                            }}>
-                            {item?.translations[0]?.name}
-                          </Text>
-                        </View>
-                        <View
-                          style={{
-                            // marginVertical: moderateScaleVertical(16),
-                            backgroundColor: isDarkMode
-                              ? colors.whiteOpacity15
-                              : colors.greyNew,
-                            height: moderateScale(42),
-                            borderRadius: moderateScale(4),
-                            paddingHorizontal: moderateScale(8),
-                          }}>
-                          <TextInput
-                            placeholder={strings.ANSWER}
-                            onChangeText={(text) =>
-                              onChangeText(item, text, index, item?.length)
-                            }
-                            style={{
-                              ...styles.insctructionText,
-                              color: isDarkMode
-                                ? colors.textGreyB
-                                : colors.black,
-                            }}
-                            placeholderTextColor={
-                              isDarkMode
-                                ? colors.textGreyB
-                                : colors.blackOpacity40
-                            }
-                          />
-                        </View>
-                      </View>
-                    );
-                  })}
-                </ScrollView>
-
-                <GradientButton
-                  colorsArray={[
-                    themeColors.primary_color,
-                    themeColors.primary_color,
-                  ]}
-                  textStyle={{
-                    textTransform: 'none',
-                    fontSize: textScale(12),
-                  }}
-                  indicator={isSubmitFaqLoader}
-                  indicatorColor={colors.white}
-                  onPress={setAllFormData}
-                  btnText={strings.SUBMIT}
-                  marginTop={moderateScaleVertical(16)}
-                  marginBottom={moderateScaleVertical(16)}
-                />
-              </View>
-            )}
-          </View>
-        </KeyboardAvoidingView>
+        {renderProductForm()}
       </Modal>
+      <Modal
+        onBackdropPress={closeForm}
+        isVisible={isCategoryKyc}
+        // isVisible={true}
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end',
+          // marginBottom: keyboardHeight,
+        }}>
+        {renderCategoryKYC()}
+      </Modal>
+      <ActionSheet
+        ref={actionSheet}
+        // title={'Choose one option'}
+        options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
+        cancelButtonIndex={2}
+        destructiveButtonIndex={2}
+        onPress={(index) => cameraHandle(index)}
+      />
     </WrapperContainer>
   );
 }
