@@ -515,6 +515,7 @@ export default function Login({ navigation }) {
               keyboardType={'email-address'}
               autoCapitalize={'none'}
               autoFocus={true}
+              returnKeyType={'next'}
             />
             <BorderTextInput
               onChangeText={_onChangeText('password')}
@@ -531,6 +532,7 @@ export default function Login({ navigation }) {
               onPressRight={showHidePassword}
               isShowPassword={isShowPassword}
               rightIconStyle={{}}
+              // returnKeyType={'next'}
             />
           </>
         )}

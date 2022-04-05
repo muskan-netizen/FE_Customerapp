@@ -250,8 +250,10 @@ const SubscriptionComponent2 = ({
           )}
         </View>
       </ImageBackground>
-
-      {subscriptionData?.subscription_id === data?.id && (
+      {!!(
+        !!subscriptionData?.plan?.deleted_at == null &&
+        subscriptionData?.subscription_id === data?.id
+      ) && (
         <View>
           {subscriptionData?.cancelled_at ||
           currentDateValue == subscriptionEndDateValue ||
@@ -275,7 +277,9 @@ const SubscriptionComponent2 = ({
                   width: width / 2,
                 }}
                 onPress={payNowUpcoming}
-                btnText={`${strings.PAYNOW} (${currencies?.primary_currency?.symbol}${(Number(data?.price).toFixed(2))})`}
+                btnText={`${strings.PAYNOW} (${
+                  currencies?.primary_currency?.symbol
+                }${Number(data?.price).toFixed(2)})`}
               />
               <GradientButton
                 colorsArray={[
