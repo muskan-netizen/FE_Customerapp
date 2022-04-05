@@ -4,6 +4,9 @@ import {
   createToken,
   initStripe,
   StripeProvider,
+  handleCardAction,
+  createPaymentMethod,
+  confirmPayment,
 } from '@stripe/stripe-react-native';
 import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
@@ -68,6 +71,7 @@ export default function AddMoney({ navigation }) {
   const { appData, themeColors, appStyle, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
+  console.log(appData, 'appData');
   const userData = useSelector((state) => state.auth.userData);
 
   const { preferences } = appData?.profile;
@@ -448,11 +452,106 @@ export default function AddMoney({ navigation }) {
       })
       .catch(errorMethod);
   };
+  const _createPaymentMethod = async (cardInfo, res2) => {
+    // console.log(cardInfo, 'cardInfo');
+    if (res2) {
+      await createPaymentMethod({
+        type: 'Card',
+        card: cardInfo,
+        billing_details: {
+          name: 'Jenny Rosen',
+        },
+      })
+        .then((res) => {
+          // updateState({isLoadingB: false});
+          console.log('_createPaymentMethod res', res);
+          if (res && res?.error && res?.error?.message) {
+            showError(res?.error?.message);
+          } else {
+            console.log(res, 'success_createPaymentMethod ');
+            actions
+              .getStripePaymentIntent(
+                // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
+                {
+                  payment_option_id: selectedPaymentMethod?.id,
+                  action: 'wallet',
+                  amount: amount,
+                  payment_method_id: res?.paymentMethod?.id,
+                },
+                {
+                  code: appData?.profile?.code,
+                  currency: currencies?.primary_currency?.id,
+                  language: languages?.primary_language?.id,
+                },
+              )
+              .then(async (res) => {
+                console.log(res, 'getStripePaymentIntent response');
+                if (res && res?.client_secret) {
+                  // const {paymentIntent, error} = await confirmPayment(res?.client_secret, {
+                  //   type: 'Card',
+                  // });
+
+                  // if (error) {
+                  //   console.log('Payment confirmation error', error);
+                  // } else if (paymentIntent) {
+                  //   console.log('Success from promise', paymentIntent);
+                  // }
+                  const {paymentIntent, error} = await handleCardAction(
+                    res?.client_secret,
+                  );
+                  if (paymentIntent) {
+                    console.log(paymentIntent, 'paymentIntent');
+                    if (paymentIntent) {
+                      actions
+                        .confirmPaymentIntentStripe(
+                          {
+                            payment_option_id: selectedPaymentMethod?.id,
+                            action: 'wallet',
+                            amount: amount,
+                            payment_intent_id: paymentIntent?.id,
+                          },
+                          {
+                            code: appData?.profile?.code,
+                            currency: currencies?.primary_currency?.id,
+                            language: languages?.primary_language?.id,
+                          },
+                        )
+                        .then((res) => {
+                          if (res) {
+                            Alert.alert('', strings.PAYMENT_SUCCESS, [
+                              {
+                                text: strings.OK,
+                                onPress: () => console.log('Cancel Pressed'),
+                                // style: 'destructive',
+                              },
+                            ]);
+                            updateState({isLoadingB: false});
+                            navigation.navigate(navigationStrings.WALLET);
+                          }
+                        })
+                        .catch(errorMethod);
+                    }
+                  } else {
+                    updateState({isLoadingB: false});
+                    console.log(error, 'error');
+                    showError(error?.message || 'payment failed');
+                  }
+                } else {
+                  updateState({isLoadingB: false});
+                }
+              })
+              .catch(errorMethod);
+          }
+        })
+        .catch(errorMethod);
+    }
+  };
 
   //Offline payments
   const _offineLinePayment = async () => {
     if (cardInfo) {
-      updateState({ isLoadingB: true });
+      console.log(cardInfo, 'cardInfo>cardInfo>cardInfo');
+      updateState({isLoadingB: true});
       await createToken(cardInfo)
         .then((res) => {
           console.log(res, 'res>>STRIpe');
@@ -461,39 +560,46 @@ export default function AddMoney({ navigation }) {
             updateState({ isLoadingB: false });
             return;
           }
+
+          //Creating the createPaymentMehod
+
           if (res && res?.token && res.token?.id) {
-            let selectedMethod = selectedPaymentMethod.code.toLowerCase();
-            // updateState({isLoadingB: true});
-            let apiData = `/${selectedMethod}?amount=${amount}&payment_option_id=${selectedPaymentMethod?.id}&action=wallet&stripe_token=${res.token?.id}`
-            actions
-              .openPaymentWebUrl(
-                apiData,
-                {},
-                {
-                  code: appData?.profile?.code,
-                  currency: currencies?.primary_currency?.id,
-                  language: languages?.primary_language?.id,
-                },
-              )
-              .then((res) => {
-                updateState({ isLoadingB: false, isRefreshing: false });
-                if (res && res?.status == 'Success' && res?.data) {
-                  // updateState({allAvailAblePaymentMethods: res?.data});
-                  // alert('Payment successfull');
-                  Alert.alert('', strings.PAYMENT_SUCCESS, [
-                    {
-                      text: strings.OK,
-                      onPress: () => console.log('Cancel Pressed'),
-                      // style: 'destructive',
-                    },
-                  ]);
-                  navigation.navigate(navigationStrings.WALLET);
-                }
-              })
-              .catch(errorMethod);
-          } else {
-            updateState({ isLoadingB: false });
+            _createPaymentMethod(cardInfo, res);
           }
+
+          // if (res && res?.token && res.token?.id) {
+          //   let selectedMethod = selectedPaymentMethod.code.toLowerCase();
+          //   // updateState({isLoadingB: true});
+          //   let apiData = `/${selectedMethod}?amount=${amount}&payment_option_id=${selectedPaymentMethod?.id}&action=wallet&stripe_token=${res.token?.id}`;
+          //   actions
+          //     .openPaymentWebUrl(
+          //       apiData,
+          //       {},
+          //       {
+          //         code: appData?.profile?.code,
+          //         currency: currencies?.primary_currency?.id,
+          //         language: languages?.primary_language?.id,
+          //       },
+          //     )
+          //     .then((res) => {
+          //       updateState({isLoadingB: false, isRefreshing: false});
+          //       if (res && res?.status == 'Success' && res?.data) {
+          //         // updateState({allAvailAblePaymentMethods: res?.data});
+          //         // alert('Payment successfull');
+          //         Alert.alert('', strings.PAYMENT_SUCCESS, [
+          //           {
+          //             text: strings.OK,
+          //             onPress: () => console.log('Cancel Pressed'),
+          //             // style: 'destructive',
+          //           },
+          //         ]);
+          //         navigation.navigate(navigationStrings.WALLET);
+          //       }
+          //     })
+          //     .catch(errorMethod);
+          // } else {
+          //   updateState({isLoadingB: false});
+          // }
         })
         .catch(errorMethod);
     }
@@ -661,6 +767,19 @@ export default function AddMoney({ navigation }) {
       </>
     );
   };
+
+  const _confirmCardPayment = async (paymentData) => {
+    const {paymentIntent, error} = await handleCardAction(
+      paymentData?.clientSecret,
+    );
+    if (paymentIntent) {
+      console.log(paymentIntent, 'paymentIntent');
+    } else {
+      console.log(error, 'error');
+      showError(error?.message || 'payment faild');
+    }
+  };
+
   return (
     <WrapperContainer
       bgColor={
@@ -687,6 +806,7 @@ export default function AddMoney({ navigation }) {
       {preferences?.stripe_publishable_key ? (
         <StripeProvider
           publishableKey={preferences?.stripe_publishable_key}
+          curr
           merchantIdentifier="merchant.identifier">
           {mainView()}
         </StripeProvider>

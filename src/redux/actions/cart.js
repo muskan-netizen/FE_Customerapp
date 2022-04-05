@@ -20,6 +20,8 @@ import {
   LAST_ADDED,
   DIFFERENT_ADD_ONS,
   VENDOR_SLOTS,
+  GET_PAYMENT_INTENT,
+  CONFIRM_PAYMENT_INTENT,
   GET_PRODUCT_FAQS,
   UPDATE_PRODUCT_FAQS_CART,
   GET_CATEGORY_KYC_DOCUMENT,
@@ -336,6 +338,20 @@ export const checkVendorSlots = (data, headers = {}) => {
   return apiGet(VENDOR_SLOTS + data, {}, headers);
 };
 
+//Get List of payment method
+export function getStripePaymentIntent(data = {}, headers = {}) {
+  // console.log("payment++ query", query)
+  return new Promise((resolve, reject) => {
+    apiPost(GET_PAYMENT_INTENT, data, headers)
+    .then((res) => {
+      resolve(res);
+    })
+    .catch((error) => {
+      reject(error);
+    });
+});
+};
+
 export const getProductFaqs = (query, data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiGet(GET_PRODUCT_FAQS + query, data, headers)
@@ -358,6 +374,20 @@ export const updateProductFAQs = (data, headers = {}) => {
         reject(error);
       });
   });
+}
+
+//Confirm payment intent stripe
+export function confirmPaymentIntentStripe(data = {}, headers = {}) {
+  // console.log("payment++ query", query)
+  return new Promise((resolve, reject) => {
+    apiPost(CONFIRM_PAYMENT_INTENT, data, headers)
+    .then((res) => {
+      resolve(res);
+    })
+    .catch((error) => {
+      reject(error);
+    });
+});
 };
 
 export const getCategoryKycDocument = (data, headers = {}) => {

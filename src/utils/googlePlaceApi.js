@@ -1,6 +1,5 @@
 
 import axios from 'axios';
-import Geocoder from 'react-native-geocoder';
 import Geolocation from 'react-native-geolocation-service';
 
 export const googlePlacesApi = async (data, key, latLng, region) => {
@@ -12,7 +11,7 @@ export const googlePlacesApi = async (data, key, latLng, region) => {
         // });
 
         let res = await fetch(
-            `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${data}&location=${latLng}&components=country:${region}&key=${key}`,
+            `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${data}&location=${latLng}&key=${key}`,
             {
                 method: "GET",
             }

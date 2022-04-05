@@ -97,6 +97,7 @@ const BorderTextInput = ({
         value={value}
         secureTextEntry={secureTextEntry}
         autoCapitalize={'none'}
+       
         {...props}
       />
 
