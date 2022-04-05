@@ -882,9 +882,14 @@ function Cart({navigation, route}) {
     console.log(data, '_directOrderPlace>_directOrderPlace');
     placeOrderData(data);
   };
+  
 
   const placeOrderData = (data) => {
     console.log('Sending data', data);
+    if(!!instruction){
+      setDateAndTimeSchedule()
+    }
+  
 
     actions
       .placeOrder(data, {
