@@ -61,6 +61,7 @@ import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import {FlatList} from 'react-native';
 import CustomCallouts from '../../../Components/CustomCallouts';
 import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import {currencyNumberFormatter} from '../../../utils/commonFunction';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -772,11 +773,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       .catch(errorMethod);
   };
 
-  console.log(
-    'orderFullDetail?.order_details.dispatcher_status_type',
-    orderFullDetail?.order_details.dispatcher_status_type,
-  );
-
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -1019,8 +1015,11 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     }}>
                     <Text style={styles.statusText}>
                       {' '}
-                      {currencies?.primary_currency?.symbol}{' '}
-                      {orderFullDetail.order_details?.payable_amount}
+                      {currencies?.primary_currency?.symbol}
+                      {currencyNumberFormatter(
+                        Number(orderFullDetail.order_details?.payable_amount),
+                        appData?.profile?.preferences?.digit_after_decimal,
+                      )}
                     </Text>
                     <Text
                       style={{
@@ -1425,7 +1424,14 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       <View>
                         <LeftRightText
                           leftText={strings.DISCOUNT}
-                          rightText={` ${currencies?.primary_currency?.symbol} ${orderFullDetail?.order_details?.discount_amount}`}
+                          rightText={` ${
+                            currencies?.primary_currency?.symbol
+                          } ${currencyNumberFormatter(
+                            Number(
+                              orderFullDetail?.order_details?.discount_amount,
+                            ),
+                            appData?.profile?.preferences?.digit_after_decimal,
+                          )}`}
                           leftTextStyle={{color: themeColors.primary_color}}
                           rightTextStyle={{color: themeColors.primary_color}}
                           isDarkMode={isDarkMode}
@@ -1441,7 +1447,14 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       <View>
                         <LeftRightText
                           leftText={strings.TAX_AMOUNT}
-                          rightText={` ${currencies?.primary_currency?.symbol} ${orderFullDetail?.order_details?.taxable_amount}`}
+                          rightText={` ${
+                            currencies?.primary_currency?.symbol
+                          } ${currencyNumberFormatter(
+                            Number(
+                              orderFullDetail?.order_details?.taxable_amount,
+                            ),
+                            appData?.profile?.preferences?.digit_after_decimal,
+                          )}`}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
                           marginBottom={0}
@@ -1455,7 +1468,14 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       <View>
                         <LeftRightText
                           leftText={strings.SUBTOTAL}
-                          rightText={` ${currencies?.primary_currency?.symbol} ${orderFullDetail?.order_details?.subtotal_amount}`}
+                          rightText={` ${
+                            currencies?.primary_currency?.symbol
+                          } ${currencyNumberFormatter(
+                            Number(
+                              orderFullDetail?.order_details?.subtotal_amount,
+                            ),
+                            appData?.profile?.preferences?.digit_after_decimal,
+                          )}`}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
                           marginBottom={0}
@@ -1470,7 +1490,14 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       <View>
                         <LeftRightText
                           leftText={strings.TOTAL}
-                          rightText={` ${currencies?.primary_currency?.symbol} ${orderFullDetail?.order_details?.payable_amount}`}
+                          rightText={` ${
+                            currencies?.primary_currency?.symbol
+                          } ${currencyNumberFormatter(
+                            Number(
+                              orderFullDetail?.order_details?.payable_amount,
+                            ),
+                            appData?.profile?.preferences?.digit_after_decimal,
+                          )}`}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
                           marginBottom={0}
