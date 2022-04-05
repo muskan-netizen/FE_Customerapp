@@ -1305,8 +1305,8 @@ android {
          }
          zestyclickz{
             dimension "appType"
-            versionCode 1
-            versionName "1.0"
+            versionCode 2
+            versionName "1.1"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.app.zestyclickz'
@@ -4822,7 +4822,7 @@ android {
          minSdkVersion rootProject.ext.minSdkVersion
          targetSdkVersion rootProject.ext.targetSdkVersion
          applicationId 'com.rideshare'
-         resValue "string", "app_name", "Rideshare"
+         resValue "string", "app_name", "Classic Cab"
          resValue "string", "host_name", ""
          }
         bua{
@@ -4852,7 +4852,7 @@ android {
          minSdkVersion rootProject.ext.minSdkVersion
          targetSdkVersion rootProject.ext.targetSdkVersion
          applicationId 'com.newYorkMiniMart'
-         resValue "string", "app_name", "New York Mini Mart"
+         resValue "string", "app_name", "Little Bird"
          resValue "string", "host_name", ""
          }
         airlinesRecruiter{
