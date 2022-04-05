@@ -19,6 +19,7 @@ const BannerHome2 = ({
   carouselViewStyle = {},
   isDarkMode = false,
   isPagination = false,
+  paginationColor = colors.themeColor,
 }) => {
   const [activeSlide, setActiveSlide] = useState(0);
 
@@ -38,7 +39,7 @@ const BannerHome2 = ({
           height: 10,
           borderRadius: 5,
           // marginHorizontal: 8,
-          backgroundColor: '#369E0B',
+          ...paginationColor,
         }}
         inactiveDotStyle={{
           backgroundColor: '#D8D8D8',
@@ -63,7 +64,7 @@ const BannerHome2 = ({
           '900/700',
         )
       : getImageUrl(item.image.image_fit, item.image.image_path, '900/700');
-
+    console.log(item, 'item item');
     return (
       <TouchableOpacity
         activeOpacity={1}
@@ -103,7 +104,7 @@ const BannerHome2 = ({
           onSnapToItem={(index) => setSnapState(index)}
         />
       </View>
-      {isPagination && pagination()}
+      <View style={{alignSelf: 'center'}}>{isPagination && pagination()}</View>
     </>
   );
 };
@@ -117,7 +118,6 @@ const styles = StyleSheet.create({
     right: 0,
     borderRadius: moderateScale(15),
     overflow: 'hidden',
-    marginRight: moderateScale(10),
   },
 });
 

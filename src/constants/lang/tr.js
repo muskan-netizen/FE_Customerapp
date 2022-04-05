@@ -48,7 +48,7 @@ export default {
   FORGOT_YOUR_PASSWORD: 'Şifrenizi mi Unuttunuz?',
   FORGOT: 'Şifrenizi mi Unuttunuz?',
   FORGOT_DESCRIPTION: 'Şifrenizi sıfırlamak için lütfen E-postanızı girin.',
-  WHAT_WOULD_YOU_LIKE_TO_DO: 'Ne yapmak istersiniz?',
+  WHAT_WHOULD_YOU_LIKE_TO_DO: 'Ne yapmak istersiniz?',
   TRACKING: 'Takip',
   SEND_SOMETHING: 'Bir şey gönderin.',
   WE_WILL_PICK: ' Ürününüzü alıp bırakacağız',
@@ -848,5 +848,5 @@ export default {
   PENDING: 'Pending',
   REFUNDS: 'Refunds',
   ORDER_TOTAL: 'Order Total',
-
+  ORDERS: 'Orders',
 };

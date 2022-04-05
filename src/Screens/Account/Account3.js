@@ -317,7 +317,8 @@ export default function Account3({navigation}) {
             />
           </TouchableOpacity>
         )} */}
-          {!!userData?.auth_token &&
+          {!DeviceInfo.getBundleId() == appIds.dlvrd &&
+            !!userData?.auth_token &&
             (businessType == 4 ? null : (
               <ListItemHorizontal
                 centerContainerStyle={{flexDirection: 'row'}}

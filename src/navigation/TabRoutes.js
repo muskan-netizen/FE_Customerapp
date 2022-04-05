@@ -14,13 +14,15 @@ import strings from '../constants/lang';
 import staticStrings from '../constants/staticStrings';
 import colors from '../styles/colors';
 import {moderateScale, textScale} from '../styles/responsiveSize';
-import {shortCodes} from '../utils/constants/DynamicAppKeys';
+import {appIds, shortCodes} from '../utils/constants/DynamicAppKeys';
 import AccountStack from './AccountStack';
 import BrandStack from './BrandStack';
 import CartStack from './CartStack';
 import CelebrityStack from './CelebrityStack';
 import HomeStack from './HomeStack';
 import navigationStrings from './navigationStrings';
+import DeviceInfo from 'react-native-device-info';
+import MyOrdersStack from './MyOrdersStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -250,6 +252,38 @@ export default function TabRoutes(props) {
           gestureEnabled: true,
         })}
       />
+      {DeviceInfo.getBundleId() == appIds.dlvrd && (
+        <Tab.Screen
+          component={MyOrdersStack}
+          name={navigationStrings.MYORDERSSTACK}
+          options={({route}) => ({
+            tabBarLabel: strings.ORDERS,
+            tabBarIcon: ({focused, tintColor}) => (
+              <Image
+                resizeMode="contain"
+                style={[
+                  {tintColor: tintColor},
+                  appStyle?.tabBarLayout === 2 && {height: 23, width: 23},
+                ]}
+                source={
+                  appStyle?.tabBarLayout === 5
+                    ? focused
+                      ? imagePath.myOrder2
+                      : imagePath.myOrder2
+                    : appStyle?.tabBarLayout === 4
+                    ? focused
+                      ? imagePath.myOrder2
+                      : imagePath.myOrder2
+                    : focused
+                    ? imagePath.tabEActive
+                    : imagePath.tabEInActive
+                }
+              />
+            ),
+            //  unmountOnBlur: true,
+          })}
+        />
+      )}
       {brandTab}
       {celebTab}
       <Tab.Screen
