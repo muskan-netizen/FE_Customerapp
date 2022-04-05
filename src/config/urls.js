@@ -21,7 +21,7 @@
 // export const API_BASE_URL = 'http://192.168.98.185:8060/api/v1'; // sujata
 // export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1'; //dinesh sir
 // export const API_BASE_URL = 'http://192.168.97.160:9090/api/v1'; //inderjeet sir
-// export const API_BASE_URL = 'http://192.168.97.192:8005/api/v1'; // harbans
+export const API_BASE_URL = 'http://192.168.97.192:8005/api/v1'; // harbans
 // export const API_BASE_URL = 'https://876c-114-134-24-242.ngrok.io/api/v1'; // gourav sir
 // export const API_BASE_URL = 'http://192.168.96.127:8005/api/v1';
 // export const API_BASE_URL = 'https://f6da-114-134-24-242.ngrok.io/api/v1';
@@ -74,7 +74,7 @@
 //export const API_BASE_URL = 'https://donepacked.com/api/v1';
 // export const API_BASE_URL = 'https://cannabusxpress.com/api/v1';
 // export const API_BASE_URL = 'https://order-dev.taquick.com/api/v1';
-export const API_BASE_URL = 'https://yeboy.mx/api/v1';
+// export const API_BASE_URL = 'https://yeboy.mx/api/v1';
 // export const API_BASE_URL = 'https://nadeliver.com/api/v1';
 // export const API_BASE_URL = 'https://samakeemart.com/api/v1';
 // export const API_BASE_URL = 'https://ritenowdelivery.com/api/v1';

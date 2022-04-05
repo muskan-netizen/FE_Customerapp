@@ -103,11 +103,8 @@ function Cart({navigation, route}) {
 
   let actionSheet = useRef(null);
 
- 
-  
   const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
   const darkthemeusingDevice = useDarkMode();
-
 
   const [defaultSelectedTable, setDefaultSelectedTable] = useState('');
   const [type, setType] = useState('');
@@ -494,6 +491,18 @@ function Cart({navigation, route}) {
           if (!res?.data?.schedule_type && res.data.products.length > 0) {
             //if schedule type is null then hit the api again with now option
             setDateAndTimeSchedule();
+          }
+
+          if (
+            res?.data &&
+            res?.data?.tip.length &&
+            preferences?.auto_implement_5_percent_tip
+          ) {
+            setSelectedTipvalue(res?.data?.tip[0]);
+            setSelectedTipAmount(res?.data?.tip[0]?.value);
+          } else {
+            setSelectedTipvalue(null);
+            setSelectedTipAmount(null);
           }
         } else {
           setVendorAddress('');
@@ -3141,6 +3150,7 @@ function Cart({navigation, route}) {
   };
 
   const selectedTip = (tip) => {
+    console.log(tip, 'tip?');
     if (tip == 'custom') {
       setSelectedTipvalue(tip);
       setSelectedTipAmount(null);
@@ -3447,7 +3457,10 @@ function Cart({navigation, route}) {
                     ? [styles.priceTipLabel, {color: MyDarkTheme.colors.text}]
                     : [styles.priceTipLabel]
                 }>
-                {strings.DOYOUWANTTOGIVEATIP}
+                {preferences?.want_to_tip != '' &&
+                preferences?.want_to_tip != null
+                  ? preferences?.want_to_tip
+                  : strings.DOYOUWANTTOGIVEATIP}
               </Text>
               <ScrollView
                 horizontal
