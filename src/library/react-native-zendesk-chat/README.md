@@ -39,13 +39,13 @@ If you're on older react-native versions, please see the [Advanced Setup](#advan
 2. Call the JS Initializer:
 
 ```javascript
-import ZendeskChat from "react-native-zendesk-chat";
+import ZendeskChat from 'react-native-zendesk-chat';
 
 // Once in your application:
-ZendeskChat.init("YOUR_ZENDESK_ACCOUNT_KEY");
+ZendeskChat.init('YOUR_ZENDESK_ACCOUNT_KEY');
 
 // Optionally specify the appId provided by Zendesk
-ZendeskChat.init("YOUR_ZENDESK_ACCOUNT_KEY", "APP_ID_PROVIDED_BY_ZENDESK");
+ZendeskChat.init('YOUR_ZENDESK_ACCOUNT_KEY', 'APP_ID_PROVIDED_BY_ZENDESK');
 ```
 
 3. Show the Chat UI
@@ -53,40 +53,39 @@ ZendeskChat.init("YOUR_ZENDESK_ACCOUNT_KEY", "APP_ID_PROVIDED_BY_ZENDESK");
 ```javascript
 // On button press, when you want to show chat:
 ZendeskChat.startChat({
-	name: user.full_name,
-	email: user.email,
-	phone: user.mobile_phone,
-	tags: ["tag1", "tag2"],
-	department: "Your department",
-	// The behaviorFlags are optional, and each default to 'true' if omitted
-	behaviorFlags: {
-		showAgentAvailability: true,
-		showChatTranscriptPrompt: true,
-		showPreChatForm: true,
-		showOfflineForm: true,
-	},
-	// The preChatFormOptions are optional & each defaults to "optional" if omitted
-	preChatFormOptions: {
-		name: !user.full_name ? "required" : "optional",
-		email: "optional",
-		phone: "optional",
-		department: "required",
-	},
-	localizedDismissButtonTitle: "Dismiss",
+  name: user.full_name,
+  email: user.email,
+  phone: user.mobile_phone,
+  tags: ['tag1', 'tag2'],
+  department: 'Your department',
+  // The behaviorFlags are optional, and each default to 'true' if omitted
+  behaviorFlags: {
+    showAgentAvailability: true,
+    showChatTranscriptPrompt: true,
+    showPreChatForm: true,
+    showOfflineForm: true,
+  },
+  // The preChatFormOptions are optional & each defaults to "optional" if omitted
+  preChatFormOptions: {
+    name: !user.full_name ? 'required' : 'optional',
+    email: 'optional',
+    phone: 'optional',
+    department: 'required',
+  },
+  localizedDismissButtonTitle: 'Dismiss',
 });
 ```
 
-
 ### Obtaining the `YOUR_ZENDESK_ACCOUNT_KEY`
+
 To optain your zendesk account key see the instructions in [Initializing the SDK](https://api.zopim.com/web-sdk/#initializing-the-sdk) in the Zendesk SDK.
 
 To get your account key, follow these steps:
 
 1. In the Zendesk Chat Dashboard, click on your profile in the upper right corner and click on the 'Check Connection' option:
-![status_dropdown](https://api.zopim.com/web-sdk/images/status_dropdown.png)
+   ![status_dropdown](https://api.zopim.com/web-sdk/images/status_dropdown.png)
 1. In the dialog, copy the account key value
-![account_key](https://api.zopim.com/web-sdk/images/account_key.png)
-
+   ![account_key](https://api.zopim.com/web-sdk/images/account_key.png)
 
 ### Styling
 
@@ -165,11 +164,11 @@ dependencies {
   api group: 'com.zendesk', name: 'chat', version: '2.2.0'
   api group: 'com.zendesk', name: 'messaging', version: '4.3.1'
 ```
-also in project build.gradle 
 
- Add ```gradle
-  maven { url 'https://zendesk.jfrog.io/zendesk/repo' }```
-     
+also in project build.gradle
+
+Add `gradle maven { url 'https://zendesk.jfrog.io/zendesk/repo' }`
+
 For RN < 0.60:
 
 ```gradle

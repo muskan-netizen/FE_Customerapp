@@ -131,8 +131,8 @@ export default function Account3({navigation}) {
 
   useEffect(() => {
     ZendeskChat.init(
-      `${appData?.profile?.preferences?.customer_support_key}`,
-      `${appData?.profile?.preferences?.customer_support_application_id}`,
+      'HHcdbCRPXg50IOREwHwMBxZskL21F4BK',
+      'c1fc7b86f377bad268b4796430a25dac3e54b985b5319f2e',
     );
   }, []);
 
@@ -146,6 +146,7 @@ export default function Account3({navigation}) {
       phone: userData?.phone_number ? userData?.phone_number : '',
       withChat: true,
       color: '#000',
+      messagingOptions: {},
     });
   };
 
