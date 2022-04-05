@@ -190,7 +190,6 @@ export default {
   SUPPLÉMENT: 'Modules complémentaires : ',
   APPLY_PROMO_CODE: 'Ajouter un code promo ',
   AMOUNT: 'Montant',
-  SUBTOTAL: 'Sous-total',
   WALLET: 'Portefeuille',
   LOYALTY: 'Fidelite',
   AMOUNT_PAYABLE: 'Montant à payer',
