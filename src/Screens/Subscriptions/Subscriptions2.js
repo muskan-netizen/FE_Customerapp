@@ -543,7 +543,7 @@ export default function Subscriptions2({navigation, route}) {
     );
   };
 
-  const CardField = () => {
+  const payAmount = () => {
     updateState({isModalVisibleForPayment: false});
     if (!!selectedPaymentMethod) {
       if (selectedPaymentMethod?.id == 4) {
