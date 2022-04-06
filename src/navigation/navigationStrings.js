@@ -127,6 +127,7 @@ export default {
   AuthorizeNet: 'AuthorizeNet',
   FPX: 'fpx',
   KONGOPAY: 'KongoPay',
-  AVENUE:"Avenue",
-  CASH_FREE:"cashFree"
+  AVENUE: 'Avenue',
+  CASH_FREE: 'cashFree',
+  EASEBUZZ: 'easebuzz',
 };

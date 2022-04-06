@@ -810,6 +810,10 @@ function Cart({navigation, route}) {
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.CASH_FREE, paymentData);
         break;
+        case 25: //Easebuzz Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.EASEBUZZ, paymentData);
+        break;
       default:
         if (
           !!businessType &&
