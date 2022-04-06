@@ -1837,14 +1837,14 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        code: '2f3120',
-        // code: shortCode,
+        // code: '2f3120',
+        code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        code: '2f3120',
-        // code: shortCode,
+        // code: '2f3120',
+        code: shortCode,
       };
     }
     console.log(header, 'header');

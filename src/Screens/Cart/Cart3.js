@@ -2695,6 +2695,43 @@ function Cart({navigation, route}) {
               </View>
             )}
 
+            {!!item?.vendor && item?.vendor?.fixed_fee && (
+              <View style={styles.itemPriceDiscountTaxView}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.priceItemLabel,
+                          {
+                            color: MyDarkTheme.colors.text,
+                          },
+                        ]
+                      : styles.priceItemLabel
+                  }>
+                  {preferences?.fixed_fee_nomenclature != '' &&
+                  preferences?.fixed_fee_nomenclature != null
+                    ? preferences?.fixed_fee_nomenclature
+                    : strings.FIXED_FEE}
+                </Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.priceItemLabel,
+                          {
+                            color: MyDarkTheme.colors.text,
+                          },
+                        ]
+                      : styles.priceItemLabel
+                  }>{`${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(item?.vendor?.fixed_fee_amount ? item?.vendor?.fixed_fee_amount : 0),
+                  appData?.profile?.preferences?.digit_after_decimal,
+                )}`}</Text>
+              </View>
+            )}
+
             {!!item?.delivery_types && item?.delivery_types?.length > 0 ? (
               <Text
                 style={{
@@ -3730,6 +3767,37 @@ function Cart({navigation, route}) {
               currencies?.primary_currency?.symbol
             }${currencyNumberFormatter(
               Number(cartData?.loyalty_amount ? cartData?.loyalty_amount : 0),
+              appData?.profile?.preferences?.digit_after_decimal,
+            )}`}</Text>
+          </View>
+        )}
+
+        {!!Number(cartData?.total_fixed_fee_amount) && (
+          <View style={styles.bottomTabLableValue}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles.priceItemLabel
+              }>
+              {preferences?.fixed_fee_nomenclature != '' &&
+              preferences?.fixed_fee_nomenclature != null
+                ? preferences?.fixed_fee_nomenclature
+                : strings.FIXED_FEE}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles.priceItemLabel
+              }>{`${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(
+                cartData?.total_fixed_fee_amount
+                  ? cartData?.total_fixed_fee_amount
+                  : 0,
+              ),
               appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
