@@ -848,5 +848,5 @@ export default {
   PENDING: 'Pending',
   REFUNDS: 'Refunds',
   ORDER_TOTAL: 'Order Total',
-
+  ORDER_CANCELLED: 'Order Cancelled',
 };

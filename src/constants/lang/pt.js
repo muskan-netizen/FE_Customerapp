@@ -929,4 +929,5 @@ Amount`,
   PENDING: 'Pendentes',
   REFUNDS: 'Reembolsos',
   ORDER_TOTAL: 'Total de pedidos',
+  ORDER_CANCELLED: 'Order Cancelled',
 };

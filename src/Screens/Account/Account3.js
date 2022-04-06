@@ -9,12 +9,15 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  Vibration,
   View,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
+import {getBundleId} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Share from 'react-native-share';
+import SunmiV2Printer from 'react-native-sunmi-v2-printer';
+import ZendeskChat from 'react-native-zendesk-chat';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import ListItemHorizontal from '../../Components/ListItemHorizontalWithImage';
@@ -30,17 +33,9 @@ import {
   textScale,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {
-  getColorCodeWithOpactiyNumber,
-  getImageUrl,
-  getRandomColor,
-} from '../../utils/helperFunctions';
-import stylesFun from './styles';
-import ZendeskChat from 'react-native-zendesk-chat';
-import Share from 'react-native-share';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
-import SunmiV2Printer from 'react-native-sunmi-v2-printer';
+import {getImageUrl, getRandomColor} from '../../utils/helperFunctions';
+import stylesFun from './styles';
 
 export default function Account3({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);

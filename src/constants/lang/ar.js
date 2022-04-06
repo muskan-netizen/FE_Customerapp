@@ -904,4 +904,5 @@ export default {
   REFUNDS: 'Refunds',
   ORDER_TOTAL: 'Order Total',
   PRODUCT_ORDER_FORM: 'Product Order Form',
+  ORDER_CANCELLED: 'Order Cancelled',
 };

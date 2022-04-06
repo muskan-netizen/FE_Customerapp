@@ -279,13 +279,14 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         : null,
     };
     if (!!paramData?.orderId && !!new_dispatch_traking_url) {
+      console.log(apiData, 'apiData>?');
       try {
         const res = await actions.getOrderDetailPickUp(apiData, {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
         });
-        console.log(res?.data, 'res---agent');
+        console.log(res?.data, 'res---agent>>>>');
         if (!!res?.data) {
           updateState({
             agent_location: res?.data?.agent_location,
@@ -964,8 +965,13 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     }>
                     {`${strings.ORDER_ID}: #${paramData?.orderDetail?.order_number}`}
                   </Text>
-                  {orderStatus !== 'completed' ? (
+                  {!!(
+                    orderStatus !== 'completed' ||
+                    orderStatus !== 'started' ||
+                    orderStatus !== 'arrived'
+                  ) ? (
                     <TouchableOpacity
+                      disabled={orderStatus == 'cancelled'}
                       activeOpacity={0.7}
                       onPress={() => updateState({isCancleModal: true})}>
                       <Text
@@ -973,7 +979,9 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                           textAlign: 'right',
                           color: colors.redB,
                         }}>
-                        {strings.CANCEL_ORDER}
+                        {orderStatus == 'cancelled'
+                          ? strings.ORDER_CANCELLED
+                          : strings.CANCEL_ORDER}
                       </Text>
                     </TouchableOpacity>
                   ) : null}
