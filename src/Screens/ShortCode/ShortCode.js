@@ -1809,6 +1809,12 @@ export default function ShortCode({route, navigation}) {
               isShortcodePrefilled: true,
             });
           break;
+          case appIds.aauJau:
+            updateState({
+              shortCode: shortCodes.aauJau,
+              isShortcodePrefilled: true,
+            });
+          break;
       }
     })();
   }, []);

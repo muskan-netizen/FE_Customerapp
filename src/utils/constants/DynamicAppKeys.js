@@ -283,6 +283,7 @@ const shortCodes = {
   airlinesRecruiter:'deb34c',
   nineOneTwo:'f92fea',
   trip:'89e246',
+  aauJau:'326d8e',
 };
 
 const appIds = {
@@ -1410,6 +1411,10 @@ const appIds = {
   trip: Platform.select({
     ios: 'com.app.trip',
     android: 'com.trip',
+  }),
+  aauJau: Platform.select({
+    ios: 'com.aauJau',
+    android: 'com.aauJau',
   }),
 };
 
