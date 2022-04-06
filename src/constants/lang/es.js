@@ -187,7 +187,7 @@ export default {
   SUBTOTAL: 'Total parcial',
   WALLET: 'Monedero',
   LOYALTY: 'Puntos',
-  AMOUNT_PAYABLE: '¿En cuanto salió el chiste?',
+  AMOUNT_PAYABLE: 'tu total desglosado',
   TAX: 'IVA',
   AMOUNT: 'Cantidad',
   SPICY_DIP: 'Salsita',
@@ -336,8 +336,7 @@ export default {
   PAYNOW: "PAGAR AHORA CHINGAO'",
   LOYALTYPOINTS: 'Puntos',
   TOTALSUBSCRIPTION: 'Descuentos por suscripción',
-  DOYOUWANTTOGIVEATIP:
-    'si te gusto nuestro servicio dejale una propina al conductor',
+  DOYOUWANTTOGIVEATIP: 'si te gusto nuestro',
   RENEW: 'Renovar',
   ORDER_CART: 'Pedido',
   CONTINUE_GOOGLE: 'Continuar con Google',
@@ -442,7 +441,7 @@ export default {
   NO_DATA_FOUND: 'No se encontraron datos',
   THIS_CHANGE_WILL_REMOVE_YOUR_CART:
     'Este cambio borrará los productos de tu carrito. ¿Seguro que quieres continuar?',
-  CLEAR_CART2: 'vaciar carrito',
+  CLEAR_CART2: 'Vaciar carrito',
   ENTER_CUSTOM_AMOUNT: 'Ingresar cantidad',
   RECENTLY_SEARCH: 'Tus búsquedas',
   CLEAR: 'Borrar',

@@ -1,4 +1,3 @@
-import {CardField, createToken, initStripe} from '@stripe/stripe-react-native';
 import React, {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import {
@@ -32,6 +31,15 @@ import {
   showError,
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
+import {
+  CardField,
+  createToken,
+  initStripe,
+  StripeProvider,
+  handleCardAction,
+  createPaymentMethod,
+  confirmPayment,
+} from '@stripe/stripe-react-native';
 
 export default function TipPaymentOptions({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -96,6 +104,89 @@ export default function TipPaymentOptions({navigation, route}) {
     showError(error?.message || error?.error);
   };
 
+  const _createPaymentMethod = async (cardInfo, res2) => {
+    // console.log(cardInfo, 'cardInfo');
+    if (res2) {
+      await createPaymentMethod({
+        type: 'Card',
+        card: cardInfo,
+      })
+        .then((res) => {
+          // updateState({isLoadingB: false});
+          console.log('_createPaymentMethod res', res);
+          if (res && res?.error && res?.error?.message) {
+            showError(res?.error?.message);
+          } else {
+            console.log(res, 'success_createPaymentMethod ');
+            actions
+              .getStripePaymentIntent(
+                // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
+                {
+                  payment_option_id: selectedPaymentMethod?.id,
+                  action: 'tip',
+                  amount:data?.selectedTipAmount,
+                  payment_method_id: res?.paymentMethod?.id,
+                },
+                {
+                  code: appData?.profile?.code,
+                  currency: currencies?.primary_currency?.id,
+                  language: languages?.primary_language?.id,
+                },
+              )
+              .then(async (res) => {
+                console.log(res, 'getStripePaymentIntent response');
+                if (res && res?.client_secret) {
+                  const {paymentIntent, error} = await handleCardAction(
+                    res?.client_secret,
+                  );
+                  if (paymentIntent) {
+                    console.log(paymentIntent, 'paymentIntent');
+                    if (paymentIntent) {
+                      actions
+                        .confirmPaymentIntentStripe(
+                          {
+                            payment_option_id: selectedPaymentMethod?.id,
+                            action: 'tip',
+                            tip_amount:data?.selectedTipAmount,
+                            payment_intent_id: paymentIntent?.id,
+                            order_number:data?.order_number
+                          },
+                          {
+                            code: appData?.profile?.code,
+                            currency: currencies?.primary_currency?.id,
+                            language: languages?.primary_language?.id,
+                          },
+                        )
+                        .then((res) => {
+                          updateState({isLoading: false});
+                          if (res && res?.status == 'Success' && res?.data) {
+                            Alert.alert('', strings.PAYMENT_SUCCESS, [
+                              {
+                                text: strings.OK,
+                                onPress: () => console.log('Cancel Pressed'),
+                              },
+                            ]);
+                            navigation.navigate(navigationStrings.ORDER_DETAIL);
+                          }
+                        })
+                        .catch(errorMethod);
+                    }
+                  } else {
+                    updateState({isLoading: false});
+                    console.log(error, 'error');
+                    showError(error?.message || 'payment failed');
+                  }
+                } else {
+                  updateState({isLoadingB: false});
+                }
+              })
+              .catch(errorMethod);
+          }
+        })
+        .catch(errorMethod);
+    }
+  };
+
   //Change Payment method/ Navigate to payment screen
   const selectPaymentOption = async () => {
     if (selectedPaymentMethod) {
@@ -104,36 +195,38 @@ export default function TipPaymentOptions({navigation, route}) {
         selectedPaymentMethod?.off_site == 0
       ) {
         if (cardInfo) {
+          updateState({isLoading: true})
           await createToken(cardInfo)
             .then((res) => {
               if (res && res?.token && res.token?.id) {
-                updateState({isLoading: false});
-                actions
-                  .tipAfterOrder(
-                    {
-                      tip_amount: data?.selectedTipAmount,
-                      order_number: data?.order_number,
-                      transaction_id: res.token?.id,
-                    },
-                    {
-                      code: appData?.profile?.code,
-                      currency: currencies?.primary_currency?.id,
-                      language: languages?.primary_language?.id,
-                    },
-                  )
-                  .then((res) => {
-                    updateState({isLoading: false});
-                    if (res && res?.status == 'Success' && res?.data) {
-                      Alert.alert('', strings.PAYMENT_SUCCESS, [
-                        {
-                          text: strings.OK,
-                          onPress: () => console.log('Cancel Pressed'),
-                        },
-                      ]);
-                      navigation.navigate(navigationStrings.ORDER_DETAIL);
-                    }
-                  })
-                  .catch(errorMethod);
+                _createPaymentMethod(cardInfo, res);
+                // updateState({isLoading: false});
+                // actions
+                //   .tipAfterOrder(
+                //     {
+                //       tip_amount: data?.selectedTipAmount,
+                //       order_number: data?.order_number,
+                //       transaction_id: res.token?.id,
+                //     },
+                //     {
+                //       code: appData?.profile?.code,
+                //       currency: currencies?.primary_currency?.id,
+                //       language: languages?.primary_language?.id,
+                //     },
+                //   )
+                //   .then((res) => {
+                //     updateState({isLoading: false});
+                //     if (res && res?.status == 'Success' && res?.data) {
+                //       Alert.alert('', strings.PAYMENT_SUCCESS, [
+                //         {
+                //           text: strings.OK,
+                //           onPress: () => console.log('Cancel Pressed'),
+                //         },
+                //       ]);
+                //       navigation.navigate(navigationStrings.ORDER_DETAIL);
+                //     }
+                //   })
+                //   .catch(errorMethod);
               } else {
                 updateState({isLoading: false});
               }
@@ -228,7 +321,7 @@ export default function TipPaymentOptions({navigation, route}) {
         ) && (
           <View>
             <CardField
-              postalCodeEnabled={true}
+              postalCodeEnabled={false}
               placeholder={{
                 number: '4242 4242 4242 4242',
               }}

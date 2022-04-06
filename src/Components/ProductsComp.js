@@ -182,7 +182,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
                   color: colors.green,
                   marginVertical: moderateScaleVertical(8),
                 }}>
-                $ {variant[0]?.price}
+                {currencies?.primary_currency.symbol} {variant[0]?.price}
               </Text>
               <Text
                 style={{
@@ -192,7 +192,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
                     : colors.blackOpacity40,
                   marginLeft: moderateScale(12),
                 }}>
-                $ {variant[0]?.price}
+                {currencies?.primary_currency.symbol} {variant[0]?.price}
               </Text>
             </View>
           </View>
