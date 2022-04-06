@@ -2695,7 +2695,7 @@ function Cart({navigation, route}) {
               </View>
             )}
 
-            {!!item?.vendor && item?.vendor?.fixed_fee && (
+            {!!(item?.vendor && item?.vendor?.fixed_fee) && (
               <View style={styles.itemPriceDiscountTaxView}>
                 <Text
                   style={
@@ -2726,7 +2726,11 @@ function Cart({navigation, route}) {
                   }>{`${
                   currencies?.primary_currency?.symbol
                 }${currencyNumberFormatter(
-                  Number(item?.vendor?.fixed_fee_amount ? item?.vendor?.fixed_fee_amount : 0),
+                  Number(
+                    item?.vendor?.fixed_fee_amount
+                      ? item?.vendor?.fixed_fee_amount
+                      : 0,
+                  ),
                   appData?.profile?.preferences?.digit_after_decimal,
                 )}`}</Text>
               </View>

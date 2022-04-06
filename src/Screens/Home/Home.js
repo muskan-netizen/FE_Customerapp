@@ -52,6 +52,7 @@ export default function Home({route, navigation}) {
   const {location, appMainData, dineInType} = useSelector(
     (state) => state?.home,
   );
+  console.log(location,">location>location");
   console.log(appMainData, 'appMainData>appMainData');
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const addressSearch = useSelector(
@@ -163,6 +164,7 @@ export default function Home({route, navigation}) {
     }
   };
 
+  // {alert(appData?.profile?.preferences?.is_hyperlocal)}
   const checkCartWithLatLang = (res) => {
     Alert.alert('', strings.THIS_WILL_REMOVE_CART, [
       {
@@ -207,9 +209,11 @@ export default function Home({route, navigation}) {
   }, []);
 
   useEffect(() => {
-    chekLocationPermission(false)
+    chekLocationPermission(true)
       .then((result) => {
-        if (result !== 'goback') {
+      
+        if (result !== 'goback' && result=='granted') {
+          console.log(result,"chekLocationPermission");
           getCurrentLocation('home')
             .then((res) => {
               console.log(res, 'userCurrentLocation');
@@ -235,6 +239,7 @@ export default function Home({route, navigation}) {
                     );
 
                     if (!!nearestAddress) {
+                    
                       actions.locationData(nearestAddress);
                       // homeData(nearestAddress);
                       return;
@@ -252,7 +257,11 @@ export default function Home({route, navigation}) {
                 return;
               }
             })
-            .catch((err) => {});
+            .catch((err) => {
+              console.log(err,"chekLocationPermission error");
+            });
+        }else{
+
         }
       })
       .catch((error) => console.log('error while accessing location', error));
@@ -316,6 +325,7 @@ export default function Home({route, navigation}) {
       updateState({searchDataLoader: true});
     }
     let latlongObj = {};
+    console.log(location,">location");
     if (appData?.profile?.preferences?.is_hyperlocal) {
       latlongObj = {
         address: slectedLocatonFromPreviousScreen
@@ -329,6 +339,7 @@ export default function Home({route, navigation}) {
           : location?.longitude,
       };
     }
+    console.log(location,">locationafter");
     let vendorFilterData = {
       close_vendor: closeVendor,
       open_vendor: openVendor,
@@ -567,8 +578,7 @@ export default function Home({route, navigation}) {
 
   //On Press banner
   const bannerPress = (data) => {
-    console.log('data', data);
-    // return;
+    console.log('bannerdata>', data);
 
     let item = {};
     if (data?.redirect_id) {
