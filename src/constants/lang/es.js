@@ -866,4 +866,5 @@ export default {
   PENDING: 'Pendiente',
   REFUNDS: 'Reembolsos',
   ORDER_TOTAL: 'Total del pedido',
+  ORDER_CANCELLED: 'Order Cancelled',
 };
