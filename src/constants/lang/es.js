@@ -8,7 +8,7 @@ export default {
   CREATE_AN_ACCOUNT: 'Crear una cuenta',
   CREATE_NEW_ACCOUNT: 'Crear una cuenta nueva',
   DONT_HAVE_ACCOUNT: 'no tengo una cuenta ?',
-  GUEST_LOGIN: 'Pásele sin compromiso como invitado',
+  GUEST_LOGIN: 'ENTRAR COMO INVITADO',
   OR_SIGNUP_WITH: 'Continuar con:',
   OR_LOGIN_WITH: 'Continuar con:',
   ALREADY_HAVE_AN_ACCOUNT: '¿Ya tienes una cuenta?',
@@ -43,7 +43,7 @@ export default {
   RESEND_CODE_IN: 'Reenviar código',
   LOGIN_YOUR_ACCOUNT: 'Iniciar sesión',
   ENTE_REGISTERED_EMAIL:
-    'Apresúrese compa e introduzca el correo electrónico registrado y la contraseña para iniciar sesión',
+    'Introduzca el correo electrónico registrado y la contraseña para iniciar sesión',
   DID_NOT_HAVE_AN_ACCOUNT: `No manches, ¿aún sin cuenta?`,
   SIGN_UP: 'Registrarse',
   FORGOT_PASSWORD: 'Olvidé mi contraseña',
@@ -526,7 +526,7 @@ export default {
     'Tu carrito está vacío. Elige los productos de tu Tienda Aficionado favorita para verlos aquí',
   SHOP_FROM_WISHLIST: 'Productos favoritos',
   ALREADY_EXIST:
-    'tu ordnesn no puede tener productos de 2 distintos establecimientos. Deseas vaciar tu carrito y agregar el producto seleccionado? ',
+    'tu ordnesn no puede tener productos de 2 distintos establecimientos. Deseas vaciar tu carrito y agregar el producto seleccionado?',
   LABEL1: 'Etiqueta 1',
   LABEL2: 'Etiqueta 2',
   DOYOUHAVECLEANINGMATERIAL: '¿Necesitas elementos de higiene?',
