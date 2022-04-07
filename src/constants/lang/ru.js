@@ -52,7 +52,7 @@ export default {
   FORGOT: 'Забыли пароль?',
   FORGOT_DESCRIPTION:
     'Чтобы сбросить пароль, введите свой адрес электронной почты.',
-  WHAT_WOULD_YOU_LIKE_TO_DO: 'Что бы Вы хотели сделать?',
+  WHAT_WHOULD_YOU_LIKE_TO_DO: 'Что бы Вы хотели сделать?',
   TRACKING: 'Слежение',
   SEND_SOMETHING: 'Отправьте что-нибудь.',
   WE_WILL_PICK: 'Мы заберем и отдадим ваш товар',
@@ -837,4 +837,5 @@ export default {
   PENDING: 'Pending',
   REFUNDS: 'Refunds',
   ORDER_TOTAL: 'Order Total',
+  ORDERS: 'Orders',
 };

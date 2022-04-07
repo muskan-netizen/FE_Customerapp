@@ -51,6 +51,103 @@ const Stack = createStackNavigator();
 export default function () {
   const {appStyle, appData} = useSelector((state) => state?.initBoot);
   const businessType = appStyle?.homePageLayout;
+
+  const rendervendorScreen = () => {
+    switch (appStyle?.homePageLayout) {
+      case 2:
+        return Vendors2;
+      case 3:
+        return Vendors3;
+      case 5:
+        return Vendors3;
+      case 6:
+        return Vendors3;
+
+      default:
+        return VendorDetail;
+    }
+  };
+
+  const renderVendorDetailsScreens = () => {
+    switch (appStyle?.homePageLayout) {
+      case 2:
+        return VendorDetail2;
+      case 3:
+        return VendorDetail3;
+      case 5:
+        return VendorDetail3;
+      case 6:
+        return VendorDetail3;
+
+      default:
+        return VendorDetail;
+    }
+  };
+
+  const renderProductListScreen = () => {
+    switch (appStyle?.homePageLayout) {
+      case 2:
+        return ProductList2;
+      case 3:
+        return ProductList3;
+      case 5:
+        return ProductList3;
+      case 6:
+        return ProductList3;
+
+      default:
+        return ProductList;
+    }
+  };
+
+  const renderProductDetailsScreens = () => {
+    switch (appStyle?.homePageLayout) {
+      case 2:
+        return ProductDetail2;
+      case 3:
+        return ProductDetail;
+      case 5:
+        return ProductDetail;
+      case 6:
+        return ProductDetail;
+
+      default:
+        return ProductDetail;
+    }
+  };
+
+  const renderBrandProductsScreens = () => {
+    switch (appStyle?.homePageLayout) {
+      case 2:
+        return BrandProducts;
+      case 3:
+        return BrandProducts2;
+      case 5:
+        return BrandProducts2;
+      case 6:
+        return BrandProducts2;
+
+      default:
+        return BrandProducts;
+    }
+  };
+
+  const renderSearchProductVendorItem2Screens = () => {
+    switch (appStyle?.homePageLayout) {
+      case 2:
+        return SearchProductVendorItem;
+      case 3:
+        return SearchProductVendorItem2;
+      case 5:
+        return SearchProductVendorItem2;
+      case 6:
+        return SearchProductVendorItem2;
+
+      default:
+        return SearchProductVendorItem;
+    }
+  };
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -75,35 +172,17 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.VENDOR}
-        component={
-          appStyle?.homePageLayout === 2
-            ? Vendors2
-            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-              ? Vendors3
-              : Vendors
-        }
+        component={rendervendorScreen()}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.VENDOR_DETAIL}
-        component={
-          appStyle?.homePageLayout === 2
-            ? VendorDetail2
-            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-              ? VendorDetail3
-              : VendorDetail
-        }
+        component={renderVendorDetailsScreens()}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
-        component={
-          appStyle?.homePageLayout === 2
-            ? ProductList2
-            : appStyle?.homePageLayout === 3  || appStyle?.homePageLayout === 5
-              ? ProductList3
-              : ProductList
-        }
+        component={renderProductListScreen()}
         options={{headerShown: false}}
       />
 
@@ -141,18 +220,12 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
-        component={
-          appStyle?.homePageLayout === 2 ? ProductDetail2 : ProductDetail
-        }
+        component={renderProductDetailsScreens()}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
-        component={
-          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? SearchProductVendorItem2
-            : SearchProductVendorItem
-        }
+        component={renderSearchProductVendorItem2Screens()}
         options={verticalAnimation}
       />
 
@@ -170,9 +243,7 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.BRANDDETAIL}
-        component={
-          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5  ? BrandProducts2 : BrandProducts
-        }
+        component={renderBrandProductsScreens()}
         options={{headerShown: false}}
       />
       <Stack.Screen
