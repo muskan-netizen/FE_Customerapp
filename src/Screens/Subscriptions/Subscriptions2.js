@@ -223,13 +223,14 @@ export default function Subscriptions2({navigation, route}) {
   };
 
   const renderProduct = ({item, index}) => {
-    const {isSelectItem} = state;
-    if (item?.id == currentSubscription?.subscription_id) {
-      return null;
-    }
+    // const {isSelectItem} = state;
+    // if (item?.id == currentSubscription?.subscription_id) {
+    //   return null;
+    // }
+
     return (
       <View>
-        {!!allSubscriptions.length && index == 0 && (
+        {!!(index == 0) && (
           <View
             style={{
               marginTop: currentSubscription ? moderateScale(40) : null,

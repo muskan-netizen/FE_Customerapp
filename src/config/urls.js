@@ -2,7 +2,7 @@
 // export const API_BASE_URL = 'https://donepacked.com/api/v1';
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL =
 //   'https://yogofood-order.netsolutionindia.com/api/v1';
@@ -24,7 +24,7 @@
 // export const API_BASE_URL = 'http://192.168.97.160:9090/api/v1'; //inderjeet sir
 // export const API_BASE_URL = 'http://192.168.97.192:8005/api/v1'; // harbans
 // export const API_BASE_URL = 'https://876c-114-134-24-242.ngrok.io/api/v1'; // gourav sir
-export const API_BASE_URL = 'http://192.168.96.127:8005/api/v1'; // Gourav sir
+// export const API_BASE_URL = 'http://192.168.96.127:8005/api/v1'; // Gourav sir
 // export const API_BASE_URL = 'https://f6da-114-134-24-242.ngrok.io/api/v1';
 
 //export const API_BASE_URL = 'https://yummiidash.com/api/v1';

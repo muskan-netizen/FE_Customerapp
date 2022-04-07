@@ -123,13 +123,17 @@ const SubscriptionComponent2 = ({
 
         <View style={styles.subscriptionView}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={styles.title}>
-                {`${currencies?.primary_currency?.symbol} `}
-              </Text>
-              <Text style={styles.title}>
-                {Number(data?.price).toFixed(2)}
-                {/* {currencyNumberFormatter(
+            {subscriptionData?.plan?.deleted_at == null && (
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={styles.title}>
+                  {`${currencies?.primary_currency?.symbol} `}
+                </Text>
+                <Text style={styles.title}>
+                  {currencyNumberFormatter(
+                    Number(data?.price),
+                    appData?.profile?.preferences?.digit_after_decimal,
+                  )}
+                  {/* {currencyNumberFormatter(
                   currentSubscription
                     ? `${
                         (Number(subscriptionData?.subscription_amount),
@@ -140,11 +144,13 @@ const SubscriptionComponent2 = ({
                         appData?.profile?.preferences?.digit_after_decimal)
                       }`,
                 )} */}
-              </Text>
-            </View>
+                </Text>
+              </View>
+            )}
 
             {currentSubscription ? (
-              subscriptionData?.cancelled_at &&
+              !subscriptionData?.cancelled_at &&
+              subscriptionData?.plan?.deleted_at == null &&
               allSubscriptions &&
               allSubscriptions.length && (
                 <GradientButton
@@ -166,8 +172,18 @@ const SubscriptionComponent2 = ({
                   btnText={
                     currentDateValue == subscriptionDateValue ||
                     currentTimeValue > subscriptionTimeValue
-                      ? `${strings.RENEW} (${currencies?.primary_currency?.symbol}${data?.price})`
-                      : `${strings.PAY} (${currencies?.primary_currency?.symbol}${data?.price})`
+                      ? `${strings.RENEW} (${
+                          currencies?.primary_currency?.symbol
+                        }${currencyNumberFormatter(
+                          Number(data?.price),
+                          appData?.profile?.preferences?.digit_after_decimal,
+                        )})`
+                      : `${strings.PAY} (${
+                          currencies?.primary_currency?.symbol
+                        }${currencyNumberFormatter(
+                          Number(data?.price),
+                          appData?.profile?.preferences?.digit_after_decimal,
+                        )})`
                   }
                 />
               )
