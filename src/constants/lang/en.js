@@ -53,7 +53,7 @@ export default {
   FORGOT_YOUR_PASSWORD: 'Forget Password?',
   FORGOT: 'Forgot Password ?',
   FORGOT_DESCRIPTION: 'To reset your password, please enter your Email.',
-  WHAT_WOULD_YOU_LIKE_TO_DO: 'What would you like to do?',
+  WHAT_WHOULD_YOU_LIKE_TO_DO: 'What would you like to do?',
   TRACKING: 'Tracking',
   SEND_SOMETHING: 'Send something.',
   WE_WILL_PICK: 'We’ll pick up and drop off your item',
@@ -920,4 +920,5 @@ Amount`,
   ORDER_TOTAL: 'Order Total',
   PRODUCT_ORDER_FORM: 'Product Order Form',
   FIXED_FEE:'Fixed fee'
+  ORDERS: 'Orders',
 };

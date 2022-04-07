@@ -37,7 +37,9 @@ import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import HomeLoader from '../../Components/Loaders/HomeLoader';
 import ProductListLoader3 from '../../Components/Loaders/ProductListLoader3';
 import NoDataFound from '../../Components/NoDataFound';
+import ProductCard2 from '../../Components/ProductCard2';
 import ProductCard3 from '../../Components/ProductCard3';
+import ProductCard5 from '../../Components/ProductCard5';
 import RepeatModal from '../../Components/RepeatModal';
 import RoundImg from '../../Components/RoundImg';
 import SearchBar from '../../Components/SearchBar';
@@ -112,7 +114,7 @@ const filtersData = [
 export default function Products({route, navigation}) {
   const bottomSheetRef = useRef(null);
   let selectedFilters = useRef(null);
-  // console.log(route.params, 'route.params');
+  console.log(route.params, 'route.params');
   const {data} = route.params;
   const routeData = data?.fetchOffers;
   const {blurRef} = useRef();
@@ -2975,33 +2977,57 @@ export default function Products({route, navigation}) {
          * Height should be fixed as 180 to measure exact scroll position for browse menu
          */
         style={{
-          minHeight: moderateScaleVertical(200),
+          minHeight:
+            DeviceInfo?.getBundleId() == appIds.dlvrd
+              ? moderateScaleVertical(0)
+              : moderateScaleVertical(200),
           overflow: 'visible',
           // backgroundColor: 'red',
           // marginBottom: moderateScaleVertical(5),
         }}>
-        <ProductCard3
-          data={item}
-          index={index}
-          onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-          onAddtoWishlist={() => _onAddtoWishlist(item)}
-          addToCart={() => addSingleItem(item, section, index)}
-          onIncrement={() => checkIsCustomize(item, section, index, 1)}
-          onDecrement={() => checkIsCustomize(item, section, index, 2)}
-          selectedItemID={selectedItemID}
-          btnLoader={btnLoader}
-          selectedItemIndx={selectedItemIndx}
-          businessType={businessType}
-          categoryInfo={categoryInfo}
-          animateText={animateText}
-          section={section}
-        />
-        <View
-          style={{
-            ...styles.horizontalLine,
-            marginBottom: moderateScaleVertical(16),
-          }}
-        />
+        {DeviceInfo?.getBundleId() == appIds.dlvrd ? (
+          <View style={{marginVertical: moderateScaleVertical(10)}}>
+            <ProductCard5
+              data={item}
+              index={index}
+              onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+              onAddtoWishlist={() => _onAddtoWishlist(item)}
+              addToCart={() => addSingleItem(item, section, index)}
+              onIncrement={() => checkIsCustomize(item, section, index, 1)}
+              onDecrement={() => checkIsCustomize(item, section, index, 2)}
+              selectedItemID={selectedItemID}
+              btnLoader={btnLoader}
+              selectedItemIndx={selectedItemIndx}
+              businessType={businessType}
+              categoryInfo={categoryInfo}
+              animateText={animateText}
+            />
+          </View>
+        ) : (
+          <ProductCard3
+            data={item}
+            index={index}
+            onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+            onAddtoWishlist={() => _onAddtoWishlist(item)}
+            addToCart={() => addSingleItem(item, section, index)}
+            onIncrement={() => checkIsCustomize(item, section, index, 1)}
+            onDecrement={() => checkIsCustomize(item, section, index, 2)}
+            selectedItemID={selectedItemID}
+            btnLoader={btnLoader}
+            selectedItemIndx={selectedItemIndx}
+            businessType={businessType}
+            categoryInfo={categoryInfo}
+            animateText={animateText}
+          />
+        )}
+        {!(DeviceInfo?.getBundleId() == appIds.dlvrd) && (
+          <View
+            style={{
+              ...styles.horizontalLine,
+              marginBottom: moderateScaleVertical(16),
+            }}
+          />
+        )}
       </Animatable.View>
     );
   };

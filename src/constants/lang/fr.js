@@ -52,7 +52,7 @@ export default {
   FORGOT: ' Mot de passe oublié ? ',
   FORGOT_DESCRIPTION:
     'Pour réinitialiser votre mot de passe, veuillez saisir votre e-mail.',
-  WHAT_WOULD_YOU_LIKE_TO_DO: 'Que serait - vous comme à faire? ',
+  WHAT_WHOULD_YOU_LIKE_TO_DO: 'Que serait - vous comme à faire? ',
   TRACKING: 'Suivi ',
   SEND_SOMETHING: 'Envoyer quelque chose.',
   WE_WILL_PICK: 'Nous allons chercher jusquà et déposer de votre article ',
@@ -897,4 +897,5 @@ montant`,
   PENDING: 'Pending',
   REFUNDS: 'Refunds',
   ORDER_TOTAL: 'Order Total',
+  ORDERS: 'Orders',
 };

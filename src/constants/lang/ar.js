@@ -52,7 +52,7 @@ export default {
   FORGOT: 'هل نسيت كلمة المرور؟',
   FORGOT_DESCRIPTION:
     'لإعادة تعيين كلمة المرور الخاصة بك، يرجى إدخال بريدك الإلكتروني.',
-  WHAT_WOULD_YOU_LIKE_TO_DO: 'ماذا تريد ان تفعل؟',
+  WHAT_WHOULD_YOU_LIKE_TO_DO: 'ماذا تريد ان تفعل؟',
   TRACKING: 'تتبع',
   SEND_SOMETHING: 'إرسال شيء.',
   WE_WILL_PICK: 'سنقوم باستلام السلعة الخاصة بك وتوصيلها',
@@ -904,4 +904,5 @@ export default {
   REFUNDS: 'Refunds',
   ORDER_TOTAL: 'Order Total',
   PRODUCT_ORDER_FORM: 'Product Order Form',
+  ORDERS: 'Orders',
 };

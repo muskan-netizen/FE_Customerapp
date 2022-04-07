@@ -51,7 +51,7 @@ export default {
   FORGOT: 'Passwort vergessen?',
   FORGOT_DESCRIPTION:
     'Um Ihr Passwort zurückzusetzen, geben Sie bitte Ihre E-Mail- Adresse ein .',
-  WHAT_WOULD_YOU_LIKE_TO_DO: 'Was möchten Sie tun?',
+  WHAT_WHOULD_YOU_LIKE_TO_DO: 'Was möchten Sie tun?',
   TRACKING: 'Tracking',
   SEND_SOMETHING: 'Sende etwas.',
   WE_WILL_PICK: 'Wir holen Ihren Artikel ab und bringen ihn wieder ab',
@@ -854,4 +854,5 @@ export default {
   REFUNDS: 'Refunds',
   ORDER_TOTAL: 'Order Total',
   PRODUCT_ORDER_FORM: 'Product Order Form',
+  ORDERS: 'Orders',
 };

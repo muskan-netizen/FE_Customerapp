@@ -47,7 +47,7 @@ export default {
   FORGOT_YOUR_PASSWORD: '忘记密码？',
   FORGOT: '忘记密码？',
   FORGOT_DESCRIPTION: '要重置密码，请输入您的电子邮件。',
-  WHAT_WOULD_YOU_LIKE_TO_DO: '你想做什么？',
+  WHAT_WHOULD_YOU_LIKE_TO_DO: '你想做什么？',
   TRACKING: '跟踪',
   SEND_SOMETHING: '发送一些东西。',
   WE_WILL_PICK: '我们会接送您的物品',
@@ -808,4 +808,5 @@ export default {
   PENDING: 'Pending',
   REFUNDS: 'Refunds',
   ORDER_TOTAL: 'Order Total',
+  ORDERS: 'Orders',
 };

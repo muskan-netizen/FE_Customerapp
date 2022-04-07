@@ -33,6 +33,7 @@ import {
 } from './DashboardViews/Index';
 import Voice from '@react-native-voice/voice';
 import FastImage from 'react-native-fast-image';
+import DashBoardEight from './DashboardViews/DashBoardEight';
 
 // navigator.geolocation = require('react-native-geolocation-service');
 
@@ -633,13 +634,28 @@ export default function Home({route, navigation}) {
             // let dat2 = data;
             // dat2['id'] = data?.redirect_id;
             // moveToNewScreen(navigationStrings.VENDOR, dat2)();
-          } else
+          }
+          if (data.redirect_to == staticStrings.CATEGORY) {
+            moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
+              item,
+              rootProducts: true,
+              // categoryData: data,
+            })();
+          } else {
             moveToNewScreen(navigationStrings.PRODUCT_LIST, {
               id: data.redirect_id,
               // vendor: true,
               name: data.redirect_name,
               fetchOffers: true,
             })();
+          }
+        }
+        if (data.redirect_to == staticStrings.CATEGORY) {
+          moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
+            item,
+            rootProducts: true,
+            // categoryData: data,
+          })();
         }
       }
     }
@@ -841,6 +857,8 @@ export default function Home({route, navigation}) {
     }
   };
 
+  console.log(appStyle?.homePageLayout, 'appStyle?.homePageLayout');
+
   const renderHomeScreen = () => {
     const case_ = 5;
     // alert(appStyle?.homePageLayout)
@@ -967,6 +985,41 @@ export default function Home({route, navigation}) {
             />
 
             <DashBoardFive
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => {
+                onPressCategory(item);
+              }}
+              isDineInSelected={isDineInSelected}
+              selcetedToggle={selcetedToggle}
+              tempCartData={tempCartData}
+              toggleData={appData}
+              navigation={navigation}
+              onVendorFilterSeletion={onVendorFilterSeletion}
+              singleVendor={singleVendor}
+            />
+          </>
+        );
+      case 6:
+        return (
+          <>
+            <DashBoardHeaderFive
+              navigation={navigation}
+              location={location}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              isLoading={isLoading}
+              currentLocation={currentLocation}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+            />
+
+            <DashBoardEight
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}
               isLoading={isLoading}
