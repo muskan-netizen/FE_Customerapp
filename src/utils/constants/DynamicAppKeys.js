@@ -284,6 +284,7 @@ const shortCodes = {
   nineOneTwo:'f92fea',
   trip:'89e246',
   aauJau:'326d8e',
+  mediPick:'b92261',
 };
 
 const appIds = {
@@ -1415,6 +1416,10 @@ const appIds = {
   aauJau: Platform.select({
     ios: 'com.aauJau',
     android: 'com.aauJau',
+  }),
+  mediPick: Platform.select({
+    ios: 'com.mediPick',
+    android: 'com.mediPick',
   }),
 };
 
