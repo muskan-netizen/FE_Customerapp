@@ -1821,6 +1821,18 @@ export default function ShortCode({route, navigation}) {
               isShortcodePrefilled: true,
             });
           break;
+          case appIds.meltivers:
+            updateState({
+              shortCode: shortCodes.meltivers,
+              isShortcodePrefilled: true,
+            });
+          break;
+          case appIds.ensoDigitalAgency:
+            updateState({
+              shortCode: shortCodes.ensoDigitalAgency,
+              isShortcodePrefilled: true,
+            });
+          break;
       }
     })();
   }, []);

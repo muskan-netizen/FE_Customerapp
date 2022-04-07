@@ -1199,10 +1199,10 @@ end
   
 # end
 
-# #Hivefair Target
-# target 'Hivefair' do
+#Hivefair Target
+target 'Hivefair' do
   
-# end
+end
 
 #BeakMe Target
 target 'BeakMe' do

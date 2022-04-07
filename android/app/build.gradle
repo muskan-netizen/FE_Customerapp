@@ -4915,6 +4915,26 @@ android {
          resValue "string", "app_name", "MediPick"
          resValue "string", "host_name", ""
          }
+        meltivers{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.meltivers'
+         resValue "string", "app_name", "Meltivers"
+         resValue "string", "host_name", ""
+         }
+        ensoDigitalAgency{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.ensoDigitalAgency'
+         resValue "string", "app_name", " Enso Digital Agency"
+         resValue "string", "host_name", ""
+         }
     
     }
 }

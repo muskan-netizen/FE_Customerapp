@@ -285,6 +285,8 @@ const shortCodes = {
   trip:'89e246',
   aauJau:'326d8e',
   mediPick:'b92261',
+  meltivers:'deca6f',
+  ensoDigitalAgency:'419dc9',
 };
 
 const appIds = {
