@@ -721,6 +721,7 @@ function Cart({navigation, route}) {
 
   const checkPaymentOptions = (res) => {
     let paymentId = res?.data?.payment_option_id;
+    let order_number = res?.data?.order_number;
     setSelectedPayment(selectedPayment);
     console.log('selected payment id', selectedPayment);
 
@@ -753,6 +754,10 @@ function Cart({navigation, route}) {
     console.log(paymentId, 'paymentIdpaymentId');
 
     switch (paymentId) {
+      case 4:
+        updateState({placeLoader: false});
+        _offineLinePayment(order_number);
+        break;
       case 5: //Paystack Payment Getway
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.PAYSTACK, paymentData);
@@ -1056,10 +1061,10 @@ function Cart({navigation, route}) {
   };
 
   const _finalPayment = () => {
-    if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
-      _offineLinePayment();
-      return;
-    }
+    // if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
+    //   _offineLinePayment();
+    //   return;
+    // }
     if (
       selectedPayment?.id == 10 &&
       selectedPayment?.off_site == 0 &&
@@ -1500,7 +1505,13 @@ function Cart({navigation, route}) {
   //   }
   // };
 
-  const _paymentWithStripe = async (cardInfo, tokenInfo, paymentMethodId) => {
+  const _paymentWithStripe = async (
+    cardInfo,
+    tokenInfo,
+    paymentMethodId,
+    order_number,
+  ) => {
+    console.log(order_number, 'order_numberrrrr');
     actions
       .getStripePaymentIntent(
         // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
@@ -1513,6 +1524,8 @@ function Cart({navigation, route}) {
               ? Number(selectedTipAmount)
               : 0),
           payment_method_id: paymentMethodId,
+          order_number: order_number,
+          card: cardInfo,
         },
         {
           code: appData?.profile?.code,
@@ -1532,6 +1545,7 @@ function Cart({navigation, route}) {
               actions
                 .confirmPaymentIntentStripe(
                   {
+                    order_number: order_number,
                     payment_option_id: selectedPayment?.id,
                     action: 'cart',
                     amount:
@@ -1553,6 +1567,7 @@ function Cart({navigation, route}) {
                   },
                 )
                 .then((res) => {
+                  console.log(res, 'secondresponse');
                   updateState({isRefreshing: false});
                   if (res && res?.status == 'Success' && res?.data) {
                     // updateState({allAvailAblePaymentMethods: res?.data});
@@ -1613,11 +1628,11 @@ function Cart({navigation, route}) {
   };
 
   //Offline payments
-  const _offineLinePayment = async () => {
+  const _offineLinePayment = async (order_number) => {
     console.log(tokenInfo, 'tokenInfo>tokenInfo>tokenInfo');
     if (!!paymentMethodId) {
       // _createPaymentMethod(cardInfo, tokenInfo);
-      _paymentWithStripe(cardInfo, tokenInfo, paymentMethodId);
+      _paymentWithStripe(cardInfo, tokenInfo, paymentMethodId, order_number);
       // let selectedMethod = selectedPayment.code.toLowerCase();
       // actions
       //   .openPaymentWebUrl(
