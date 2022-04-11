@@ -900,7 +900,7 @@ export default function ProductDetail({route, navigation}) {
   };
 
   const renderProduct = ({item, index}) => {
-    item.showAddToCart = true;
+    // item.showAddToCart = true;
     return (
       <ProductsComp
         item={item}

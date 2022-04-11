@@ -345,6 +345,7 @@ export default function AllPaymentMethods({navigation, route}) {
   };
 
   const _onChangeStripeData = (cardDetails) => {
+    console.log(cardDetails, '_onChangeStripeData>');
     if (cardDetails?.complete) {
       updateState({
         cardInfo: {
@@ -353,9 +354,13 @@ export default function AllPaymentMethods({navigation, route}) {
           expiryMonth: cardDetails?.expiryMonth,
           expiryYear: cardDetails?.expiryYear,
           last4: cardDetails?.last4,
-          postalCode: cardDetails?.postalCode,
+          // postalCode: cardDetails?.postalCode,
         },
+      
       });
+      // updateState({
+      //   cardInfo: cardDetails
+      // });
     } else {
       updateState({cardInfo: null});
     }

@@ -50,7 +50,7 @@ export default {
   FORGOT: 'Olvidé mi contraseña',
   FORGOT_DESCRIPTION:
     'Introduce el correo electrónico de tu cuenta para cambiar tu contraseña',
-  WHAT_WOULD_YOU_LIKE_TO_DO: 'tu eres el jefe compadre,¿Qué quieres hacer?',
+  WHAT_WHOULD_YOU_LIKE_TO_DO: 'tu eres el jefe compadre,¿Qué quieres hacer?',
   TRACKING: 'Seguimiento',
   SEND_SOMETHING: 'Enviar un paquete',
   WE_WILL_PICK: 'Ya tenemos el paquete y será enviado al destino',
@@ -869,4 +869,5 @@ export default {
   PENDING: 'Pending',
   REFUNDS: 'Refunds',
   ORDER_TOTAL: 'Order Total',
+  ORDERS: 'Orders',
 };

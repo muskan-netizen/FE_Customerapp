@@ -355,6 +355,13 @@ export default function OrderDetail({navigation, route}) {
     _giveRatingToProduct(i, rating);
   };
 
+  {
+    console.log(
+      appData?.profile?.preferences?.digit_after_decimal,
+      'decimalDigitis',
+    );
+  }
+
   const _giveRatingToProduct = (productDetail, rating) => {
     let data = {};
     data['order_vendor_product_id'] = productDetail?.id;
@@ -878,6 +885,7 @@ export default function OrderDetail({navigation, route}) {
                   }>
                   {strings.DELIVERY_CHARGES}
                 </Text>
+
                 <Text
                   style={
                     isDarkMode
@@ -1945,6 +1953,11 @@ export default function OrderDetail({navigation, route}) {
                 MyDarkTheme={MyDarkTheme}
               />
             )}
+          {console.log(
+            Number(cartData?.total_service_fee) +
+              Number(cartData?.taxable_amount),
+            'fsdkjfjafks',
+          )}
           {(cartData?.total_service_fee > 0 ||
             cartData?.taxable_amount > 0) && (
             <LeftRightText
@@ -1988,6 +2001,7 @@ export default function OrderDetail({navigation, route}) {
                 MyDarkTheme={MyDarkTheme}
               />
             )}
+          {console.log(cartData?.tip_amount, 'cartData?.tip_amount>')}
           {!!cartData?.tip_amount && cartData?.tip_amount > 0 && (
             <LeftRightText
               leftText={strings.TIP_AMOUNT}

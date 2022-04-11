@@ -54,7 +54,7 @@ export default {
   FORGOT_YOUR_PASSWORD: 'Har du glömt lösenord?',
   FORGOT: 'Glömt lösenord ?',
   FORGOT_DESCRIPTION: 'Om du vill återställa lösenordet anger du din e-post.',
-  WHAT_WOULD_YOU_LIKE_TO_DO: 'Vad vill du göra?',
+  WHAT_WHOULD_YOU_LIKE_TO_DO: 'Vad vill du göra?',
   TRACKING: 'Spårning',
   SEND_SOMETHING: 'Skicka något.',
   WE_WILL_PICK: 'Vi hämtar och lämnar din vara',
@@ -910,4 +910,5 @@ export default {
   PENDING: 'Pending',
   REFUNDS: 'Refunds',
   ORDER_TOTAL: 'Order Total',
+  ORDERS: 'Orders',
 };

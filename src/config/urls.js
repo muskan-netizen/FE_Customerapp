@@ -5,7 +5,8 @@ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.97.192:8005/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
-// export const API_BASE_URL = 'https://api.focushires.com/api/v1';
+//export const API_BASE_URL = 'https://api.focushires.com/api/v1';
+// export const API_BASE_URL = 'http://192.168.97.160:9000/api/v1';//inderjit
 
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1';  //sales demo
@@ -267,6 +268,8 @@ export const VENDOR_PRODUCTS_OPTIMIZE_FILTERS = getApiUrl(
   '/vendor/vendorProductsFilterOptimize',
 );
 
+export const GET_PAYMENT_INTENT = getApiUrl('/create-payment-intent');
+export const CONFIRM_PAYMENT_INTENT = getApiUrl('/confirm-payment-intent');
 export const GET_PRODUCT_FAQS = getApiUrl('/products_faq');
 export const UPDATE_PRODUCT_FAQS_CART = getApiUrl('/cart/productfaq/update');
 export const RATE_TO_DRIVER = getApiUrl('/rating/update-driver-rating');

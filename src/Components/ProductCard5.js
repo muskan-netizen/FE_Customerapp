@@ -33,7 +33,7 @@ import {
 
 let numberOfHits = [];
 
-const ProductCard3 = ({
+const ProductCard5 = ({
   data = {},
   onPress = () => {},
   addToCart = () => {},
@@ -48,7 +48,6 @@ const ProductCard3 = ({
   categoryInfo = '',
   businessType,
   animateText = 0,
-  section = {},
 }) => {
   // console.log('item data++', data);
   // data['qty'] = 1
@@ -116,6 +115,8 @@ const ProductCard3 = ({
   useEffect(() => {
     updateState({qtyText: data?.qty || totalProductQty});
   }, [data?.qty]);
+
+  console.log('datadata', data.has_inventory);
 
   const changePositionForCartIcon = () => {
     let i = selectedIndexForCartIcon == -1 ? index : -1;
@@ -285,7 +286,39 @@ const ProductCard3 = ({
         <View
           style={{
             flex: 0.8,
+            flexDirection: 'row',
+            alignItems: 'center',
           }}>
+          {!!url1 ? (
+            <TouchableOpacity
+              disabled
+              onPress={changePosition}
+              activeOpacity={1}
+              style={{
+                ...commonStyles.shadowStyle,
+                margin: 2,
+                borderRadius: moderateScale(15),
+                height: moderateScale(72),
+                width: moderateScale(73),
+
+                // padding:5
+              }}>
+              <FastImage
+                style={{
+                  ...styles.imgStyle,
+                  backgroundColor: isDarkMode
+                    ? colors.whiteOpacity15
+                    : colors.greyColor,
+                  borderRadius: moderateScale(10),
+                }}
+                source={{
+                  uri: getImage('200/200'),
+                  cache: FastImage.cacheControl.immutable,
+                  priority: FastImage.priority.high,
+                }}
+              />
+            </TouchableOpacity>
+          ) : null}
           {/* Title View */}
           <View style={{}}>
             {data && !!data?.tags && data?.tags.length > 0 ? (
@@ -317,31 +350,31 @@ const ProductCard3 = ({
                 // fontFamily: 'Eina02-SemiBold',
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 fontFamily: fontFamily.regular,
-                fontSize: textScale(12),
+                fontSize: textScale(15),
                 width: width / 2.5,
                 textTransform: 'capitalize',
+                marginHorizontal: moderateScale(10),
                 // flex:1
               }}>
-              {data?.translation[0]?.title || data?.title || data?.sku}
+              {data?.translation_title || data?.title}
             </Text>
-            <Text style={{
-              fontSize: textScale(9),
-              color: colors.grayOpacity51,
-              marginVertical:moderateScaleVertical(4)
-            }} >{data?.vendor?.name}</Text>
-            {!!data?.title ? (
-              <Text
-                numberOfLines={1}
-                style={{
-                  ...styles.inTextStyle,
-                  color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.blackOpacity40,
-                }}>
-                {strings.IN}
-                {` ${section?.title}`}
-              </Text>
-            ) : null}
+            <Text
+              numberOfLines={1}
+              style={{
+                ...commonStyles.mediumFont14,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                fontSize: textScale(12),
+                fontFamily: fontFamily.regular,
+                marginHorizontal: moderateScale(10),
+              }}>
+              {`${
+                currencies?.primary_currency?.symbol
+              } ${currencyNumberFormatter(
+                Number(data?.variant_multiplier) *
+                  Number(data?.variant[0]?.price),
+                appData?.profile?.preferences?.digit_after_decimal,
+              )}`}
+            </Text>
           </View>
 
           {/* rating View */}
@@ -372,27 +405,9 @@ const ProductCard3 = ({
             style={{
               paddingTop: moderateScale(5),
               paddingBottom: moderateScale(5),
-            }}>
-            <Text
-              numberOfLines={1}
-              style={{
-                ...commonStyles.mediumFont14,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                fontSize: textScale(12),
-                fontFamily: fontFamily.regular,
-              }}>
-              {`${
-                currencies?.primary_currency?.symbol
-              } ${currencyNumberFormatter(
-                Number(data?.variant_multiplier) *
-                  Number(data?.variant[0]?.price),
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}`}
-            </Text>
-          </View>
+            }}></View>
           <View style={{}}>
             <Text
-              numberOfLines={3}
               style={{
                 fontSize: textScale(10),
                 fontFamily: fontFamily.regular,
@@ -402,8 +417,7 @@ const ProductCard3 = ({
                   : colors.blackOpacity66,
                 textAlign: 'left',
               }}>
-              {data?.translation[0]?.translation_description ||
-                data?.translation_description}
+              {data?.translation_description}
             </Text>
           </View>
         </View>
@@ -413,43 +427,12 @@ const ProductCard3 = ({
             flex: 0.35,
             marginRight: url1 ? 0 : moderateScale(60),
           }}>
-          {!!url1 ? (
-            <TouchableOpacity
-              disabled
-              onPress={changePosition}
-              activeOpacity={1}
-              style={{
-                ...commonStyles.shadowStyle,
-                margin: 2,
-                borderRadius: moderateScale(15),
-                height: moderateScale(100),
-                width: moderateScale(100),
-
-                // padding:5
-              }}>
-              <FastImage
-                style={{
-                  ...styles.imgStyle,
-                  backgroundColor: isDarkMode
-                    ? colors.whiteOpacity15
-                    : colors.greyColor,
-                  borderRadius: moderateScale(7),
-                }}
-                source={{
-                  uri: getImage('200/200'),
-                  cache: FastImage.cacheControl.immutable,
-                  priority: FastImage.priority.high,
-                }}
-              />
-            </TouchableOpacity>
-          ) : null}
-
           <View
             style={{
               // position: 'relative',
               // bottom: Platform.OS == 'ios' ? 10 : 0,
               flex: 1,
-              justifyContent: url1 ? 'flex-start' : 'center',
+              justifyContent: 'center',
             }}>
             {data?.has_inventory == 0 ||
             !!data?.variant[0].quantity ||
@@ -470,9 +453,9 @@ const ProductCard3 = ({
                     style={{
                       ...styles.addBtnStyle,
                       paddingVertical: 0,
-                      height: moderateScale(38),
+                      height: moderateScale(32),
                       // backgroundColor: themeColors.primary_color,
-                      backgroundColor: colors.greyColor2,
+                      backgroundColor: themeColors?.primary_color,
                       alignItems: 'center',
                       flexDirection: 'row',
                       justifyContent: 'space-between',
@@ -487,7 +470,7 @@ const ProductCard3 = ({
                       hitSlop={hitSlopProp}>
                       <Image
                         style={{
-                          tintColor: themeColors.primary_color,
+                          tintColor: colors.white,
                         }}
                         source={imagePath.icMinus2}
                       />
@@ -497,7 +480,7 @@ const ProductCard3 = ({
                       {selectedItemID == data?.id && btnLoader ? (
                         <UIActivityIndicator
                           size={moderateScale(16)}
-                          color={themeColors.primary_color}
+                          color={colors.white}
                           style={{
                             marginHorizontal: moderateScale(8),
                           }}
@@ -525,7 +508,7 @@ const ProductCard3 = ({
                               style={{
                                 fontFamily: fontFamily.medium,
                                 fontSize: moderateScale(14),
-                                color: themeColors.primary_color,
+                                color: colors.white,
                                 // height: moderateScale(100),
                                 marginHorizontal: moderateScale(8),
                               }}>
@@ -543,7 +526,7 @@ const ProductCard3 = ({
                       onPress={onIncrementQty}>
                       <Image
                         style={{
-                          tintColor: themeColors.primary_color,
+                          tintColor: colors.white,
                         }}
                         source={imagePath.icAdd4}
                       />
@@ -553,31 +536,10 @@ const ProductCard3 = ({
                   <>
                     <TouchableOpacity
                       // hitSlopProp={hitSlopProp}
+                      style={{marginLeft: moderateScale(30)}}
                       disabled={selectedItemID == data?.id}
-                      onPress={addToCart}
-                      style={{
-                        ...styles.addBtnStyle,
-                        backgroundColor: colors.greyColor2,
-                        width: moderateScale(100),
-                        minHeight: moderateScaleVertical(35),
-                      }}>
-                      {selectedItemID == data?.id ? (
-                        <UIActivityIndicator
-                          size={moderateScale(18)}
-                          color={themeColors.primary_color}
-                        />
-                      ) : (
-                        <View>
-                          <Text style={styles.addStyleText}>
-                            {strings.ADD}{' '}
-                            {data?.minimum_order_count > 1
-                              ? `(${data?.minimum_order_count})`
-                              : ''}
-                          </Text>
-                        </View>
-                      )}
-
-                      {/* <Image source={imagePath.greyRoundPlus} /> */}
+                      onPress={addToCart}>
+                      <Image source={imagePath.greyRoundPlus} />
                     </TouchableOpacity>
                   </>
                 )}
@@ -641,18 +603,18 @@ function styleData({themeColors, fontFamily}) {
     inTextStyle: {
       width: moderateScaleVertical(220),
       fontFamily: fontFamily.regular,
-      fontSize: textScale(9),
+      fontSize: textScale(15),
       width: width / 3,
       textAlign: 'left',
       marginTop: moderateScaleVertical(6),
       marginBottom: moderateScaleVertical(4),
     },
     imgStyle: {
-      height: moderateScale(100),
-      width: moderateScale(100),
+      height: moderateScale(72),
+      width: moderateScale(73),
       borderRadius: moderateScale(15),
     },
   });
   return styles;
 }
-export default React.memo(ProductCard3);
+export default React.memo(ProductCard5);
