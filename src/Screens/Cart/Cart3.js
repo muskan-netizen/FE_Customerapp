@@ -1166,8 +1166,8 @@ function Cart({navigation, route}) {
 
       updateState({placeLoader: true});
       var d1 = new Date();
-      var d2 = new Date(sheduledorderdate);
-      console.log(sheduledorderdate, 'Timetimetime');
+      var d2 = new Date(localeSheduledOrderDate);
+      console.log(d2, 'sheduledorderdate');
       // if (!!selectedTimeSlots) {
       //   d2 = new Date(localeSheduledOrderDate)
       // } else {
