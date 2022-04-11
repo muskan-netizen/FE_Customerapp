@@ -61,7 +61,7 @@ import FastImage from 'react-native-fast-image';
 import {enums} from '../../utils/enums';
 
 export default function ProductDetail({route, navigation}) {
-  console.log('my route', route);
+  console.log('my route', route.params.data);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const CartItems = useSelector((state) => state?.cart?.cartItemCount);
@@ -211,7 +211,7 @@ export default function ProductDetail({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res.data.products, 'res getProductDetail');
+        console.log(res.data, 'res getProductDetail');
 
         if (res?.data?.products?.product_media) {
           res?.data?.products?.product_media.map((val) => {
@@ -1299,12 +1299,11 @@ export default function ProductDetail({route, navigation}) {
               ) : null}
 
               {/* Add to Cart button */}
-              {!enums.isVendorStandloneApp &&
-                (productDetailData?.has_inventory == 0 ||
+              {(productDetailData?.has_inventory == 0 ||
                   (!!productTotalQuantity && !!productTotalQuantity != 0) ||
                   (!!typeId && typeId == 8) ||
                   !!productDetailData?.sell_when_out_of_stock) &&
-                (!!data?.showAddToCart ? null : showErrorMessageTitle ? null : (
+                (false? null : showErrorMessageTitle ? null : (
                   <View
                     style={{
                       marginBottom: moderateScaleVertical(25),

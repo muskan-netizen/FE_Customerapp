@@ -325,6 +325,11 @@ const ProductCard3 = ({
               }}>
               {data?.translation_title || data?.title}
             </Text>
+            <Text style={{
+              fontSize: textScale(9),
+              color: colors.grayOpacity51,
+              marginVertical:moderateScaleVertical(4)
+            }} >{data?.vendor?.name}</Text>
             {!!data?.title ? (
               <Text
                 numberOfLines={1}

@@ -611,7 +611,7 @@ export default function Products({ route, navigation }) {
       .then((res) => {
 
         if (!!res?.data) {
-          console.log(res.data.listData, 'getProductByCategoryId');
+          console.log(res.data, 'res getProductByCategoryId');
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
           // setCategoryInfo(res.data.category);
           setLoading(false);
