@@ -287,6 +287,7 @@ const shortCodes = {
   mediPick:'b92261',
   meltivers:'deca6f',
   ensoDigitalAgency:'419dc9',
+  hiperAbasto:'50cb7f',
 };
 
 const appIds = {
@@ -1243,8 +1244,8 @@ const appIds = {
     android: 'com.onscart',
   }),
   mandaExpress: Platform.select({
-    ios: 'com.mandaExpress',
-    android: 'com.mandaExpress',
+    ios: 'com.mandaExpress.customer',
+    android: 'com.mandaExpress.customer',
   }),
   gO: Platform.select({
     ios: 'com.customer.gO',
@@ -1422,6 +1423,18 @@ const appIds = {
   mediPick: Platform.select({
     ios: 'com.mediPick',
     android: 'com.mediPick',
+  }),
+  meltivers: Platform.select({
+    ios: 'com.meltivers',
+    android: 'com.meltivers',
+  }),
+  ensoDigitalAgency: Platform.select({
+    ios: 'com.ensoDigitalAgency',
+    android: 'com.ensoDigitalAgency',
+  }),
+  hiperAbasto: Platform.select({
+    ios: 'com.hiperAbasto',
+    android: 'com.hiperAbasto',
   }),
 };
 

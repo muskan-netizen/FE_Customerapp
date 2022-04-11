@@ -1433,6 +1433,21 @@ target 'MediPick' do
   
 end
 
+# Meltivers Target
+target 'Meltivers' do
+  
+end
+
+# EnsoDigitalAgency Target
+target 'EnsoDigitalAgency' do
+  
+end
+
+# HiperAbasto Target
+target 'HiperAbasto' do
+  
+end
+
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

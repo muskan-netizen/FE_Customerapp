@@ -1,12 +1,12 @@
 #include "Pods/Target Support Files/Pods-available_pods-MandaExpress/Pods-available_pods-MandaExpress.debug.xcconfig"
 
-PROJECT_APPLE_ID = 1610990032
-PROJECT_BUNDLE_ID =com.mandaExpress
+PROJECT_APPLE_ID = 1618221914
+PROJECT_BUNDLE_ID =com.mandaExpress.customer
 PROJECT_APP_VERSION = 1.0
 PROJECT_BUILD_NUMBER = 1
 PROJECT_APP_NAME = Manda Express
-PROJECT_GOOGLE_CLIENT_ID =674793384348-4d513c58o6ivjs1tp50jn9n7i0cdnjbp.apps.googleusercontent.com
-PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.674793384348-4d513c58o6ivjs1tp50jn9n7i0cdnjbp
+PROJECT_GOOGLE_CLIENT_ID =897711705883-tk4qc9hc76146j5oc6gd9neme52uu6g0.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.897711705883-tk4qc9hc76146j5oc6gd9neme52uu6g0
 PROJECT_FACEBOOK_ID = 462457952267451
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST =MandaExpressInfo
