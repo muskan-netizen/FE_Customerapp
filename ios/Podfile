@@ -1458,6 +1458,12 @@ target 'DropItOffUsa' do
   
 end
 
+# HandyPickup Target
+target 'HandyPickup' do
+  
+end
+
+
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
