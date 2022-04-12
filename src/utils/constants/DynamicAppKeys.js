@@ -288,6 +288,9 @@ const shortCodes = {
   meltivers:'deca6f',
   ensoDigitalAgency:'419dc9',
   hiperAbasto:'50cb7f',
+  redglee:'9e185e',
+  dropItOffUsa:'9524c4',
+  handyPickup:'530592',
 };
 
 const appIds = {
@@ -560,8 +563,8 @@ const appIds = {
     android: 'com.partnerproject',
   }),
   menus: Platform.select({
-    ios: 'com.menusvirtual',
-    android: 'com.menus',
+    ios: 'com.menus.customer',
+    android: 'com.menus.customer',
   }),
   doorstep: Platform.select({
     ios: 'com.doorstepone',
@@ -648,8 +651,8 @@ const appIds = {
     android: 'com.share',
   }),
   pickmeup: Platform.select({
-    ios: 'com.pickmeup.customer',
-    android: 'com.pickmeup',
+    ios: 'com.application.pickmeup',
+    android: 'com.application.pickmeup',
   }),
   taquick: Platform.select({
     ios: 'com.taquick',
@@ -1435,6 +1438,18 @@ const appIds = {
   hiperAbasto: Platform.select({
     ios: 'com.hiperAbasto',
     android: 'com.hiperAbasto',
+  }),
+  redglee: Platform.select({
+    ios: 'com.redglee',
+    android: 'com.redglee',
+  }),
+  dropItOffUsa: Platform.select({
+    ios: 'com.dropItOffUsa',
+    android: 'com.dropItOffUsa',
+  }),
+  handyPickup: Platform.select({
+    ios: 'com.handyPickup',
+    android: 'com.handyPickup',
   }),
 };
 

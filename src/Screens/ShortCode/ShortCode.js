@@ -1839,6 +1839,24 @@ export default function ShortCode({route, navigation}) {
               isShortcodePrefilled: true,
             });
           break;
+          case appIds.redglee:
+            updateState({
+              shortCode: shortCodes.redglee,
+              isShortcodePrefilled: true,
+            });
+          break;
+          case appIds.dropItOffUsa:
+            updateState({
+              shortCode: shortCodes.dropItOffUsa,
+              isShortcodePrefilled: true,
+            });
+          break;
+          case appIds.handyPickup:
+            updateState({
+              shortCode: shortCodes.handyPickup,
+              isShortcodePrefilled: true,
+            });
+          break;
       }
     })();
   }, []);

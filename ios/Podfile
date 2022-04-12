@@ -1448,6 +1448,17 @@ target 'HiperAbasto' do
   
 end
 
+# Redglee Target
+target 'Redglee' do
+  
+end
+
+# DropItOffUsa Target
+target 'DropItOffUsa' do
+  
+end
+
+
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
