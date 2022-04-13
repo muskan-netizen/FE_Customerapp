@@ -1857,6 +1857,12 @@ export default function ShortCode({route, navigation}) {
               isShortcodePrefilled: true,
             });
           break;
+          case appIds.TJJHub:
+            updateState({
+              shortCode: shortCodes.TJJHub,
+              isShortcodePrefilled: true,
+            });
+          break;
       }
     })();
   }, []);

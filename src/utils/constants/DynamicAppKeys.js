@@ -291,6 +291,7 @@ const shortCodes = {
   redglee:'9e185e',
   dropItOffUsa:'9524c4',
   handyPickup:'530592',
+  TJJHub:'41a3db',
 };
 
 const appIds = {
@@ -1450,6 +1451,10 @@ const appIds = {
   handyPickup: Platform.select({
     ios: 'com.handyPickup',
     android: 'com.handyPickup',
+  }),
+  TJJHub: Platform.select({
+    ios: 'com.TJJHub',
+    android: 'com.TJJHub',
   }),
 };
 
