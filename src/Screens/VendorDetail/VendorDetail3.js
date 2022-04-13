@@ -142,7 +142,6 @@ export default function VendorDetail3({ navigation, route }) {
       return;
     }
 
-
     navigation.navigate(navigationStrings.PRODUCT_LIST, {
       data: {
         id: item.id,
