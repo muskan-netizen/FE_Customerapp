@@ -17,7 +17,6 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://mandaexpress.com/api/v1';
 // export const API_BASE_URL = 'https://canupickmeup.com/api/v1';
 
-
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1';  //sales demo
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';

@@ -919,5 +919,6 @@ Amount`,
   REFUNDS: 'Refunds',
   ORDER_TOTAL: 'Order Total',
   PRODUCT_ORDER_FORM: 'Product Order Form',
-  FIXED_FEE:'Fixed fee'
+  FIXED_FEE: 'Fixed fee',
+  SELECT_VENDOR: 'Select a vendor',
 };

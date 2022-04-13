@@ -6,7 +6,7 @@ export default {
   VERIFY_NUMBER: 'Verifica tu Número de Teléfono',
   JOIN_US: '¡Crea una cuenta gratuita y únete a nosotros!',
   CREATE_AN_ACCOUNT: 'CREAR UNA NUEVA CUENTA',
-  DONT_HAVE_ACCOUNT: "¿No tienes una cuenta?",
+  DONT_HAVE_ACCOUNT: '¿No tienes una cuenta?',
   CREATE_NEW_ACCOUNT: 'Crear una nueva cuenta',
   GUEST_LOGIN: 'SALTAR',
   OR_SIGNUP_WITH: 'O Regístrate con',
@@ -19,7 +19,8 @@ export default {
   VERIFIED: 'Verificado',
   VERIFY_EMAIL: 'Verificar',
   VERIFY_PHONE: 'Verificar',
-  ENTER_DETAILS_BELOW: 'Ingrese los detalles a continuación para crear una nueva cuenta.',
+  ENTER_DETAILS_BELOW:
+    'Ingrese los detalles a continuación para crear una nueva cuenta.',
   TO_ENJOY_SHOPPING:
     'Para disfrutar de las compras desde nuestra aplicación, verifique la siguiente información. Por lo tanto, no enfrentará ninguna interrupción en el futuro.',
   YOUR_NAME: 'Tu nombre',
@@ -40,7 +41,7 @@ export default {
   ENTER_OTP_PHONE: 'Ingrese OTP enviado en su teléfono',
   ENTER_OTP_EMAIL: 'Ingrese OTP enviado en su ID de correo electrónico',
   VERIFY_ACCOUNT: 'VERIFICAR CUENTA',
-  DIDNT_GET_OTP: "No obtuve el código",
+  DIDNT_GET_OTP: 'No obtuve el código',
   RESEND_CODE: 'Reenviar código',
   RESEND_CODE_IN: 'Reenviar código en ',
   LOGIN_YOUR_ACCOUNT: 'Inicie Sesión en su Cuenta',
@@ -52,7 +53,8 @@ export default {
   FORGOT_PASSWORD: 'Has olvidado tu contraseña',
   FORGOT_YOUR_PASSWORD: '¿Contraseña olvidada?',
   FORGOT: '¿Has olvidado tu contraseña?',
-  FORGOT_DESCRIPTION: 'Para restablecer su contraseña, ingrese su correo electrónico.',
+  FORGOT_DESCRIPTION:
+    'Para restablecer su contraseña, ingrese su correo electrónico.',
   WHAT_WOULD_YOU_LIKE_TO_DO: '¿Qué te gustaría hacer?',
   TRACKING: 'Seguimiento',
   SEND_SOMETHING: 'Envía algo.',
@@ -128,7 +130,8 @@ export default {
   DIMENSIONS_PER_PACKAGE: 'Dimensiones por paquete',
   OPTIONAL_HEIGHT_WIDTH: '(L * W * H - opcional)',
   ENTER_SHORT_CODE: 'Ingrese el Código Corto',
-  ENTERSHORTCODEBELOW: 'Ingrese su código corto a continuación para acceder a las funciones',
+  ENTERSHORTCODEBELOW:
+    'Ingrese su código corto a continuación para acceder a las funciones',
   SETTINGS: 'Ajustes',
   CURRENCIES: 'Moneda',
   LANGUAGES: 'Idioma',
@@ -284,7 +287,8 @@ export default {
   EDITCODE: 'Editar código',
   MAX_25: 'Máx. 25',
   PICKUPANDDROP: 'Recoger y Dejar',
-  PICKUPDROPCONTENT:'Cualquier cosa que necesite, recíbala en el tiempo que lleva conducir hasta allí.',
+  PICKUPDROPCONTENT:
+    'Cualquier cosa que necesite, recíbala en el tiempo que lleva conducir hasta allí.',
   sendPackage: 'Enviar paquete',
   BYTAPPING: 'Al tocar en enviar paquete, estas aceptando el paquete ',
   DOESNTCONTAIN: 'no contiene nada',
@@ -321,7 +325,8 @@ export default {
   LINKS: '¡Únete a nosotros!',
   LOCATION_DISABLED_MSG: `¡Permiso de ubicación inhabilitado permanentemente! Permitir desde la configuración`,
   LOCATION_LIMITED: 'El permiso es limitado: algunas acciones son posibles',
-  LOCATION_UNAVAILABLE: 'Esta característica no está disponible en este dispositivo',
+  LOCATION_UNAVAILABLE:
+    'Esta característica no está disponible en este dispositivo',
   YOUR_PHONE_NUMBER_SECOND: 'Telefóno',
   ENTER_OTP: 'Ingresar OTP',
   CLEAR_CART: 'Limpia tu carrito',
@@ -345,7 +350,8 @@ export default {
   CONTINUE_APPLE: 'Continuar con Apple',
   RETURNORDER: 'Emisiones / Devoluciones',
   SELECTDATEANDTIME: 'Seleccionar Fecha y Hora',
-  DOYOUWANTTORETURNYOURORDER:'Informe aquí para registrar un problema o solicitar un reembolso..',
+  DOYOUWANTTORETURNYOURORDER:
+    'Informe aquí para registrar un problema o solicitar un reembolso..',
   SELECTITEMSFORRETURN: 'Seleccionar artículo(s)',
   RETURNREASONS: 'Motivo de la devolución del producto',
   COMMENTSOPTIONAL: 'Comentarios (opcional):',
@@ -406,20 +412,25 @@ export default {
   EMAIL: 'correo electrónico',
   PLEASE_ENTER_VALID_EMAIL: 'Por favor introduzca un correo electrónico válido',
   PHONE_NUMBER: 'número de teléfono',
-  PLEASE_ENTER_VALID_PHONE_NUMBER: 'Por favor, introduzca un número de celular válido',
+  PLEASE_ENTER_VALID_PHONE_NUMBER:
+    'Por favor, introduzca un número de celular válido',
   OTP: 'otp ',
   PASSWORD: 'contraseña',
-  PASSWORD_REQUIRE_SIX_CHARACTRES: 'La contraseña requiere un mínimo de 6 caracteres',
+  PASSWORD_REQUIRE_SIX_CHARACTRES:
+    'La contraseña requiere un mínimo de 6 caracteres',
   INVALID_PASSWORD: 'La contraseña es incorrecta',
   NEW_PASSWORD: 'Nueva contraseña',
-  NEW_PASSWORD_REQUIRE_SIX_CHARACTRES:'La nueva contraseña requiere un mínimo de 6 caracteres',
+  NEW_PASSWORD_REQUIRE_SIX_CHARACTRES:
+    'La nueva contraseña requiere un mínimo de 6 caracteres',
   NEW_INCORRECT_PASSWORD: 'La nueva contraseña es incorrecta',
   CONFIRM_PASSWORD: 'Confirmar contraseña',
-  PASSWORD_NOT_MATCH: 'Nueva contraseña y la confirmación de la contraseña no coinciden',
+  PASSWORD_NOT_MATCH:
+    'Nueva contraseña y la confirmación de la contraseña no coinciden',
   MESSAGE: 'Mensaje',
   YOUR_ORDER_HAS_BEEN_SUBMITTED: '¡Tu pedido ha sido enviado!',
   YOUR_ORDER_NUMBER: 'tu número de orden es',
-  ANY_RESTAURANT_REQUESTS:'¿Alguna solicitud de restaurante? Haremos todo lo posible para incorporarlo.',
+  ANY_RESTAURANT_REQUESTS:
+    '¿Alguna solicitud de restaurante? Haremos todo lo posible para incorporarlo.',
   TRACK_ORDER: 'Rastrear orden',
   CUSTOM: `Personalizar Cantidad`,
   ADD: 'AGREGAR',
@@ -430,7 +441,8 @@ export default {
   OPEN: 'Abierto',
   CONFIRM: 'Confirmar',
   NO_DATA_FOUND: 'Datos no encontrados',
-  THIS_CHANGE_WILL_REMOVE_YOUR_CART:'Este cambio eliminará los productos de su carrito. ¿Realmente quieres continuar?',
+  THIS_CHANGE_WILL_REMOVE_YOUR_CART:
+    'Este cambio eliminará los productos de su carrito. ¿Realmente quieres continuar?',
   CLEAR_CART2: 'Vaciar carrito',
   ENTER_CUSTOM_AMOUNT: 'Ingrese la cantidad personalizada',
   RECENTLY_SEARCH: 'Buscado recientemente',
@@ -438,10 +450,11 @@ export default {
   TRENDING_NEAR_YOU: 'Tendencias cerca de ti',
   RECOMMENDED_FOR_YOU: 'Recomendado para ti',
   PAYMENT_SUCCESS: 'Pago exitoso',
-  THIS_WILL_REMOVE_CART:'Esto eliminará su carrito. ¿Está seguro de que desea eliminar el carrito?',
+  THIS_WILL_REMOVE_CART:
+    'Esto eliminará su carrito. ¿Está seguro de que desea eliminar el carrito?',
   OK: 'Ok',
   ALERT: 'Alerta',
-  CAMERA_PERMISSION_DENIED_MSG: "No tengo permiso para abrir la cámara",
+  CAMERA_PERMISSION_DENIED_MSG: 'No tengo permiso para abrir la cámara',
   YOUR_REFFERAL_CODE: 'Su código de referencia:',
   SEND_REFFERAL: 'Enviar Recomendación',
   SAVE_AS: 'Guardar como',
@@ -451,13 +464,17 @@ export default {
   MAXIMUM_LIMIT_REACHED: 'Límite Máximo Alcanzado',
   PLEASE_SELECT_ORDER_TYPE: 'Seleccione un tipo de pedido',
   INVALID_SCHEDULED_DATE: 'Fecha programada no válida',
-  NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD: 'No ha agregado el detalle del carrito para el método de pago seleccionado',
+  NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD:
+    'No ha agregado el detalle del carrito para el método de pago seleccionado',
   PLEASE_SELECT_ADDRESS: 'Por favor, seleccione la dirección',
   PLEASE_SELECT_OPTION: 'Por favor seleccione una opción',
   PLEASE_SELECT_CAR: 'Por favor selecciona un vehículo',
-  PLEASE_SELECT_PICKUP_LOCATION: 'Por favor seleccione la ubicación de recolección',
-  PLEASE_SELECT_DROP_OFF_LOCATION:'Seleccione al menos una ubicación de entrega',
-  MAXIMUM_PHOTO_SELECTION_LIMIT_REACHED:'Límite máximo de selección de fotos alcanzado',
+  PLEASE_SELECT_PICKUP_LOCATION:
+    'Por favor seleccione la ubicación de recolección',
+  PLEASE_SELECT_DROP_OFF_LOCATION:
+    'Seleccione al menos una ubicación de entrega',
+  MAXIMUM_PHOTO_SELECTION_LIMIT_REACHED:
+    'Límite máximo de selección de fotos alcanzado',
   IMAGE_ALREADY_UPLOADED: 'La imagen ya está cargada',
   PLEASE_SELECT_DROP_LOCATION: 'Por favor seleccione la ubicación de entrega',
   COULD_NOT_LOAD_PAGE: 'No se pudo cargar la página',
@@ -509,9 +526,10 @@ export default {
   CONNECTING_YOU_TO_NEARBY_DERIVER: 'CONECTARLO CON CONDUCTORES CERCANOS',
   YOUR_RIDE_WILL_START_SOON: 'Su viaje comenzará pronto',
   RECOMMENDED_VENDORS: 'Proveedores Recomendados',
-  YOUR_CART_EMPTY_ADD_ITEMS: 'Su carrito está vacío, agregue artículos a la compra',
+  YOUR_CART_EMPTY_ADD_ITEMS:
+    'Su carrito está vacío, agregue artículos a la compra',
   SHOP_FROM_WISHLIST: 'Comprar de la lista de deseos',
-  ALREADY_EXIST:'Ya tienes artículos en tu carrito. ¿Quieres descartarlos?',
+  ALREADY_EXIST: 'Ya tienes artículos en tu carrito. ¿Quieres descartarlos?',
   LABEL1: 'Etiqueta 1',
   LABEL2: 'Etiqueta 2',
   DOYOUHAVECLEANINGMATERIAL: ' ¿Necesitas materiales de limpieza?',
@@ -577,25 +595,30 @@ export default {
   SETPICKUPTIME: 'Establecer hora de recolección',
   SEHEDLEDFOR: 'Programado para',
   BOOK_NOW_RIDE: 'Reservar viaje',
-  WHAT_TIME_WOULD_YOU_LIKE_US_TO_START:'¿A qué hora te gustaría que empezáramos?',
+  WHAT_TIME_WOULD_YOU_LIKE_US_TO_START:
+    '¿A qué hora te gustaría que empezáramos?',
   PLEASE_SELECT_DATE_FIRST: 'Seleccione la fecha primero para el servicio',
   CLEAR_SCHEDULE_DATE: 'Borrar fecha de programación',
   FREQUENTLY_BOUGHT_TOGETHER: 'Frecuentemente Compramos Juntos',
   YOU_MIGHT_INTERESTED: 'Te podría interesar',
-  VENDOR_NOT_ACCEPTING_ORDERS: 'El proveedor no está aceptando pedidos en este momento.',
+  VENDOR_NOT_ACCEPTING_ORDERS:
+    'El proveedor no está aceptando pedidos en este momento.',
   REJECTED: 'Rechazado',
   NORIDEAVAILABLE: 'No hay viaje disponible',
   SCHEDULED: 'Programado',
   VERIFY_EMAIL_ADDRESS: 'Confirme su dirección de correo electrónico',
-  ENTER_CODE_SENT_TO_EMAIL:'Introduce el código que te acabamos de enviar a tu dirección de correo electrónico',
+  ENTER_CODE_SENT_TO_EMAIL:
+    'Introduce el código que te acabamos de enviar a tu dirección de correo electrónico',
   SAVE_SEND: 'Guardar y Enviar',
-  DONT_RECEIVE_CODE: "¿Si no recibiste un código?",
+  DONT_RECEIVE_CODE: '¿Si no recibiste un código?',
   RESEND: 'REENVIAR',
   VERIFY_CAPITAL: 'VERIFICAR',
   VERIFY_PHONE_NUMBER: 'Verificar número de teléfono',
-  ENTER_CODE_SENT_TO_MOBILE: 'Introduce el código que te acabamos de enviar a tu celular',
+  ENTER_CODE_SENT_TO_MOBILE:
+    'Introduce el código que te acabamos de enviar a tu celular',
   REJECT_REASON: 'Motivo del Rechazo',
-  ENTER_REASON_FOR_REJECTING_ORDER: 'Introduce el motivo del rechazo del pedido.',
+  ENTER_REASON_FOR_REJECTING_ORDER:
+    'Introduce el motivo del rechazo del pedido.',
   VIEW_MORE: 'Ver más',
   START: 'INICIAR',
   TIP_AMOUNT: 'Cantidad de propina',
@@ -628,14 +651,17 @@ export default {
   COMMENTFORPICKUPDRIVER: 'Comentario para conductor que recolecta',
   COMMENTFORDROPUPDRIVER: 'Comentario para conductor que entrega',
   COMMENTFORVENDOR: 'Comentario para el proveedor',
-  PLACEHOLDERCOMMENTFORPICKUPDRIVER: 'Ej. Por favor llegar antes de tiempo si es posible',
+  PLACEHOLDERCOMMENTFORPICKUPDRIVER:
+    'Ej. Por favor llegar antes de tiempo si es posible',
   PLACEHOLDERCOMMENTFORDROPUPDRIVER: 'Ej. Llámame antes de dejar',
   PLACEHOLDERCOMMENTFORVENDOR: 'Ej. Por favor, haz los blancos por separado',
   ADD_TIP: 'Agregar sugerencia',
   TAP_HERE_ADD_ADDRESS: 'Toque aquí para agregar una dirección',
-  IM_NEW_SIGNUP: "Soy nuevo, regístrate",
-  ENTER_YOUR_PHONE_NUMBER: 'Ingrese su número de teléfono registrado para iniciar sesión',
-  ENTER_YOUR_EMAIL_PASSWORD: 'Ingrese su correo electrónico y contraseña para iniciar sesión',
+  IM_NEW_SIGNUP: 'Soy nuevo, regístrate',
+  ENTER_YOUR_PHONE_NUMBER:
+    'Ingrese su número de teléfono registrado para iniciar sesión',
+  ENTER_YOUR_EMAIL_PASSWORD:
+    'Ingrese su correo electrónico y contraseña para iniciar sesión',
   REFERRAL_CODE_OPTIONAL: 'Código de Referencia (Opcional)',
   CHOOSE_FROM_CUISINES: 'Elige entre cocinas',
   OTP_SENT: 'Código OTP enviado',
@@ -652,7 +678,8 @@ export default {
   CONNECTION_ERROR: 'Error de Conexión',
   INTERNET_CONNECTION_ERROR:
     '¡UPS! Parece que su dispositivo no está conectado a Internet.',
-  HERE_YOU_ARE_FOR_RETURN: 'Informar de un problema o solicitar una devolución/reembolso:',
+  HERE_YOU_ARE_FOR_RETURN:
+    'Informar de un problema o solicitar una devolución/reembolso:',
   BROWSE_MENU: 'Navegar Menú',
   MINS: 'min',
   AVAILABLE_OFFERS: 'Ofertas Disponibles',
@@ -678,7 +705,8 @@ export default {
   DELIVERY: 'ENTREGA',
   ITEM: 'Artículo',
   PAID_AMOUNT: 'Monto de pago',
-  SOMETHING_WENT_WRONG_PRINTER_MSG:'Algo salió mal, vuelva a establecer la conexión con la impresora.',
+  SOMETHING_WENT_WRONG_PRINTER_MSG:
+    'Algo salió mal, vuelva a establecer la conexión con la impresora.',
   PLACE_ID_NOT_FOUND: 'ID de lugar no encontrado',
   PLEASE_FILL_ADDRESS: 'Por favor complete la dirección existente',
   TAXES_FEES: 'Impuestos y Pagos',
@@ -689,11 +717,13 @@ export default {
   FOUND_DEVICES: 'Encontrado (toque para conectar)',
   DISCONNECT: 'Desconectar',
   PAIRED: 'Emparejado',
-  PRINTER_MSG:'Su impresora está conectada y el servicio continúa en segundo plano.',
+  PRINTER_MSG:
+    'Su impresora está conectada y el servicio continúa en segundo plano.',
   PRINTER: 'Impresora',
   PRINTER_ATTACHED: 'Impresora adjunta',
   UNPAIR: 'Desemparejar',
-  UNPAIR_DEVICE_WARNING: '¿Estás seguro de que quieres desemparejar este dispositivo?',
+  UNPAIR_DEVICE_WARNING:
+    '¿Estás seguro de que quieres desemparejar este dispositivo?',
   DOES_THIS_INCLUDE_GIFT: '¿Esto incluye un regalo?',
   VENDOR_ADDRESS: 'dirección del proveedor',
   ENTER_VENDOR_NAME: 'nombre del vendedor',
@@ -701,7 +731,8 @@ export default {
   ADDIMAGE1: ' Agregar imagén',
   INSTRUCTION: 'Instrucción',
   ANSWER: 'Responder',
-  PLEASEFILDALLREQUIREDFIELDS: 'Por favor, rellene todos los campos obligatorios en el formulario de detalle',
+  PLEASEFILDALLREQUIREDFIELDS:
+    'Por favor, rellene todos los campos obligatorios en el formulario de detalle',
   PLEASEFILDALL: 'Por favor llene todos los campos requeridos',
   SEARCHINGFORNEARBYDRIVERS: 'Buscando conductores cercanos',
   PROCESSING1: 'Procesando...',
@@ -802,12 +833,14 @@ export default {
   CURRENTLYUNAVAILABLE: 'Actualmente no disponible',
   TRANSFER_FUNDS: 'Transferir Fondos',
   PRODUCT: 'Producto',
-  WE_ARE_NOT_ACCEPTING:'No estamos aceptando pedidos en este momento. Puedes programar esto para',
+  WE_ARE_NOT_ACCEPTING:
+    'No estamos aceptando pedidos en este momento. Puedes programar esto para',
   EXTRA_INSTRUCTION: 'Instrucción Extra',
   YOURDRIVERHASMODIFIED: 'Su conductor ha modificado su orden',
   DIFFERENCEAMOUNT: 'Cantidad de diferencia',
   APPROVE: 'APROBADO',
-  INSUFFICIENT_FUNDS_IN_WALLET_PLEASERECHARGE:'Fondos insuficientes en la billetera. Recargue para continuar',
+  INSUFFICIENT_FUNDS_IN_WALLET_PLEASERECHARGE:
+    'Fondos insuficientes en la billetera. Recargue para continuar',
   ACTIVEDELEIVERIES: 'Entregas Activas',
   PASTDELEIVERIES: 'entregas Pasadas',
   MYDELIERIES: 'Mis Entregas',
@@ -882,7 +915,5 @@ export default {
   AMOUNT_RECIEVED: 'Monto Recibido',
   TRANSACTION_TIME: 'Tiempo de Transacciones',
   LIFETIME: 'Toda la vida',
-  MENU:"Menú"
+  MENU: 'Menú',
 };
-
-  
