@@ -1,7 +1,7 @@
-export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.97.192:8005/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
