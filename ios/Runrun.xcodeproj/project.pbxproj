@@ -103051,9 +103051,11 @@
 			baseConfigurationReference = 84C85486270747AA00D6B750 /* Ace(Development).xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 6FXUMT5X23;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.customer.ace;
 				PRODUCT_NAME = Runrun;
 				SWIFT_VERSION = 5.0;
