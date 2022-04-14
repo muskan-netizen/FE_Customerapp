@@ -566,6 +566,7 @@
     "werRelease": "cd android && ./gradlew assembleWerRelease",
     "beachhopRelease": "cd android && ./gradlew assembleBeachhopRelease",
     "qseekRelease": "cd android && ./gradlew assembleQseekRelease",
+    "delventoRelease": "cd android && ./gradlew assembleDelventoRelease",
     "rideshareRelease": "cd android && ./gradlew assembleRideshareRelease",
     "buaRelease": "cd android && ./gradlew assembleBuaRelease",
     "upstreetRelease": "cd android && ./gradlew assembleUpstreetRelease",
