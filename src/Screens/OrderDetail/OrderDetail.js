@@ -15,6 +15,7 @@ import {
   TouchableOpacity,
   View,
   Animated,
+  Linking,
 } from 'react-native';
 import Communications from 'react-native-communications';
 import {useDarkMode} from 'react-native-dark-mode';
@@ -26,6 +27,7 @@ import MapViewDirections from 'react-native-maps-directions';
 import StarRating from 'react-native-star-rating';
 import WebView from 'react-native-webview';
 import {useSelector} from 'react-redux';
+import Header from '../../Components/Header';
 import HeaderWithFilters from '../../Components/HeaderWithFilters';
 import LeftRightText from '../../Components/LeftRightText';
 import {
@@ -3087,13 +3089,38 @@ export default function OrderDetail({navigation, route}) {
     }
   };
 
+
+
+  const customRight = () => {
+    return (
+      <TouchableOpacity
+        onPress={() => Linking.openURL(cartData?.reports?.report?.original)}
+        activeOpacity={0.7}
+        style={{
+          backgroundColor: themeColors.primary_color,
+          paddingVertical: 3,
+          width: moderateScale(92),
+          alignItems: 'center',
+          borderRadius: 5,
+        }}>
+        <Text
+          style={{
+            fontFamily: fontFamily.regular,
+            color: colors.white,
+          }}>
+          Order Report
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
-      <HeaderWithFilters
+      <Header
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
@@ -3102,6 +3129,7 @@ export default function OrderDetail({navigation, route}) {
             : imagePath.back
         }
         centerTitle={strings.ORDER + `${'#'}${cartData?.order_number || ''}`}
+        customRight={!!cartData?.reports?.report?.original ? customRight:''}
       />
       <View
         style={{

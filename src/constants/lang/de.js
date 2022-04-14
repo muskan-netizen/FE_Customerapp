@@ -855,4 +855,5 @@ export default {
   ORDER_TOTAL: 'Order Total',
   PRODUCT_ORDER_FORM: 'Product Order Form',
   ORDERS: 'Orders',
+  ORDER_CANCELLED: 'Order Cancelled',
 };
