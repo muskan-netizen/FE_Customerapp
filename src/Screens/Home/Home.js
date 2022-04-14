@@ -369,9 +369,9 @@ export default function Home({ route, navigation }) {
               // ...latlongObj,
             },
           )
-          .then((res) => {
+          .then(async(res) => {
             console.log('Home data++++++', res);
-            preLoadImages(res.data);
+            await preLoadImages(res.data);
             updateState({ searchDataLoader: false });
             if (
               appData?.profile?.preferences?.is_hyperlocal &&
@@ -447,7 +447,7 @@ export default function Home({ route, navigation }) {
 
   const { viewRef2, viewRef3, bannerRef } = useRef();
 
-  const preLoadImages = (data) => {
+  const preLoadImages = async(data) => {
     if (data.categories.length > 0) {
       let preLoadCategories = data.categories.map((item, inx) => {
         return {
