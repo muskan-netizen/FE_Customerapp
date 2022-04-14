@@ -815,6 +815,10 @@ function Cart({navigation, route}) {
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.CASH_FREE, paymentData);
         break;
+      case 25: //Easebuzz Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.EASEBUZZ, paymentData);
+        break;
       default:
         if (
           !!businessType &&
@@ -5442,30 +5446,35 @@ function Cart({navigation, route}) {
           ) : (
             <View
               style={{
-                height: '100%',
+                flex: 1,
                 paddingHorizontal: moderateScale(15),
               }}>
-              {!isEmpty(kycTxtInpts) &&
-                kycTxtInpts.map((item, index) => {
-                  return getTextInputField(item, index);
-                })}
-
-              {!isEmpty(kycImages) && (
-                <View style={styles.viewStyleForUploadImage}>
-                  {kycImages.map((item, index) => {
-                    return getImageFieldView(item, index);
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{
+                  paddingBottom: moderateScaleVertical(60),
+                }}>
+                {!isEmpty(kycTxtInpts) &&
+                  kycTxtInpts.map((item, index) => {
+                    return getTextInputField(item, index);
                   })}
-                </View>
-              )}
 
-              {!isEmpty(kycPdfs) && (
-                <View style={styles.viewStyleForUploadImage}>
-                  {kycPdfs.map((item, index) => {
-                    return getPdfView(item, index);
-                  })}
-                </View>
-              )}
+                {!isEmpty(kycImages) && (
+                  <View style={styles.viewStyleForUploadImage}>
+                    {kycImages.map((item, index) => {
+                      return getImageFieldView(item, index);
+                    })}
+                  </View>
+                )}
 
+                {!isEmpty(kycPdfs) && (
+                  <View style={styles.viewStyleForUploadImage}>
+                    {kycPdfs.map((item, index) => {
+                      return getPdfView(item, index);
+                    })}
+                  </View>
+                )}
+              </ScrollView>
               <ButtonComponent
                 onPress={onSubmitKycDocs}
                 btnText={'Submit'}
