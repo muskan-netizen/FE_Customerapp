@@ -412,7 +412,7 @@ export default function Home({ route, navigation }) {
                 isLoadingB: false,
                 searchDataLoader: false,
               });
-            }, 1000);
+            }, 3000);
           })
           .catch(errorMethod)
         : null;
