@@ -293,6 +293,9 @@ const shortCodes = {
   handyPickup:'530592',
   TJJHub:'41a3db',
   curblerLLC:'959ecf',
+  cartnar:'7b87ed',
+  uven:'9b8db5',
+  pAS41:'4c0a17',
 };
 
 const appIds = {
@@ -1460,6 +1463,18 @@ const appIds = {
   curblerLLC: Platform.select({
     ios: 'com.curblerLLC',
     android: 'com.curblerLLC',
+  }),
+  cartnar: Platform.select({
+    ios: 'com.cartnar',
+    android: 'com.cartnar',
+  }),
+  uven: Platform.select({
+    ios: 'com.uven',
+    android: 'com.uven',
+  }),
+  pAS41: Platform.select({
+    ios: 'com.pAS41',
+    android: 'com.pAS41',
   }),
 };
 

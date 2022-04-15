@@ -1869,6 +1869,25 @@ export default function ShortCode({route, navigation}) {
               isShortcodePrefilled: true,
             });
             break;
+            case appIds.cartnar:
+            updateState({
+              shortCode: shortCodes.cartnar,
+              isShortcodePrefilled: true,
+            });
+            case appIds.uven:
+            updateState({
+              shortCode: shortCodes.uven,
+              isShortcodePrefilled: true,
+            });
+            break;
+            
+            break;
+            case appIds.pAS41:
+            updateState({
+              shortCode: shortCodes.pAS41,
+              isShortcodePrefilled: true,
+            });
+            break;
       }
     })();
   }, []);
