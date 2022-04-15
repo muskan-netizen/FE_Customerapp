@@ -314,7 +314,7 @@ export default function Account3({navigation}) {
             />
           </TouchableOpacity>
         )} */}
-          {!DeviceInfo.getBundleId() == appIds.dlvrd &&
+          {DeviceInfo.getBundleId() != appIds.dlvrd &&
             !!userData?.auth_token &&
             (businessType == 4 ? null : (
               <ListItemHorizontal
