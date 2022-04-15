@@ -1863,6 +1863,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+          case appIds.curblerLLC:
+            updateState({
+              shortCode: shortCodes.curblerLLC,
+              isShortcodePrefilled: true,
+            });
+            break;
       }
     })();
   }, []);

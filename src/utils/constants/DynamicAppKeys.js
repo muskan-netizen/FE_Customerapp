@@ -292,6 +292,7 @@ const shortCodes = {
   dropItOffUsa:'9524c4',
   handyPickup:'530592',
   TJJHub:'41a3db',
+  curblerLLC:'959ecf',
 };
 
 const appIds = {
@@ -1455,6 +1456,10 @@ const appIds = {
   TJJHub: Platform.select({
     ios: 'com.TJJHub',
     android: 'com.TJJHub',
+  }),
+  curblerLLC: Platform.select({
+    ios: 'com.curblerLLC',
+    android: 'com.curblerLLC',
   }),
 };
 

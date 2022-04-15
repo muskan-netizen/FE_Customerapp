@@ -27,6 +27,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
+import DeviceInfo from 'react-native-device-info';
 import {
   moderateScale,
   moderateScaleVertical,
