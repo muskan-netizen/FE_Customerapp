@@ -64,7 +64,7 @@ const BannerHome2 = ({
           '900/700',
         )
       : getImageUrl(item.image.image_fit, item.image.image_path, '900/700');
-    console.log(item, 'item item');
+
     return (
       <TouchableOpacity
         activeOpacity={1}

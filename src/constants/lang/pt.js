@@ -930,4 +930,5 @@ Amount`,
   REFUNDS: 'Reembolsos',
   ORDER_TOTAL: 'Total de pedidos',
   ORDERS: 'Orders',
+  ORDER_CANCELLED: 'Order Cancelled',
 };

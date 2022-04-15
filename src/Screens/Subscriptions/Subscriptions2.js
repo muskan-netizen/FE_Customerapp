@@ -223,13 +223,14 @@ export default function Subscriptions2({navigation, route}) {
   };
 
   const renderProduct = ({item, index}) => {
-    const {isSelectItem} = state;
-    if (item?.id == currentSubscription?.subscription_id) {
-      return null;
-    }
+    // const {isSelectItem} = state;
+    // if (item?.id == currentSubscription?.subscription_id) {
+    //   return null;
+    // }
+
     return (
       <View>
-        {!!allSubscriptions.length && index == 0 && (
+        {!!(index == 0) && (
           <View
             style={{
               marginTop: currentSubscription ? moderateScale(40) : null,
@@ -242,6 +243,7 @@ export default function Subscriptions2({navigation, route}) {
             </Text>
           </View>
         )}
+        {console.log(item, 'item>>>>')}
         <SubscriptionComponent2
           data={item}
           clientCurrency={clientCurrency}
@@ -251,7 +253,7 @@ export default function Subscriptions2({navigation, route}) {
           }
           subscriptionData={currentSubscription}
           currentSubscription={item?.id == currentSubscription?.subscription_id}
-          // cancelSubscription={()=>cancelSubscription(item)}
+          cancelSubscription={() => cancelSubscription(item)}
         />
       </View>
     );
@@ -624,6 +626,8 @@ export default function Subscriptions2({navigation, route}) {
                   payment_option_id: selectedPaymentMethod?.id,
                   amount: selectedPlan?.price,
                   payment_method_id: res?.paymentMethod?.id,
+                  action: 'subscription',
+                  subscription_slug: selectedPlan?.slug,
                 },
                 {
                   code: appData?.profile?.code,
@@ -656,7 +660,10 @@ export default function Subscriptions2({navigation, route}) {
                         },
                       )
                       .then((res) => {
-                        console.log(res,"confirmPaymentIntentStripe api reponse");
+                        console.log(
+                          res,
+                          'confirmPaymentIntentStripe api reponse',
+                        );
                         if (res) {
                           getAllSubscriptions(true);
                           updateState({
@@ -687,7 +694,7 @@ export default function Subscriptions2({navigation, route}) {
   const _offineLinePayment = async () => {
     if (cardInfo) {
       updateState({isModalVisibleForPayment: false});
-     
+
       await createToken(cardInfo)
         .then((res) => {
           console.log(res, 'res>');
@@ -737,8 +744,8 @@ export default function Subscriptions2({navigation, route}) {
         .catch((err) => {
           updateState({isLoadingB: false});
         });
-    }else{
-      updateState({isLoading:false})
+    } else {
+      updateState({isLoading: false});
     }
   };
 

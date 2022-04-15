@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "754504460570",
+    "project_id": "redglee-6cfb8",
+    "storage_bucket": "redglee-6cfb8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:754504460570:android:592a4652e12b971d3e64a3",
+        "android_client_info": {
+          "package_name": "com.redglee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "754504460570-518aedq6vd92dn53g59034dl0qe6ns1s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.redglee",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "754504460570-695np6duqim1nc5ttlv2p1odpn129dc0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.redglee",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "754504460570-su8a5j675p15qrhtp1m7cc8bnuu2vq94.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.redglee",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "754504460570-fkcm28k09n3b5nhatu683ta0vahp1mb4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeyDJ6DcM6cG_SaAKld5hVamv2XjP1qzE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "754504460570-fkcm28k09n3b5nhatu683ta0vahp1mb4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "754504460570-5mcfef7181q92f4n7not3a9lmkktmb35.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.redglee"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

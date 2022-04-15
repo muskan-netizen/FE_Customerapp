@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "84FA303527BFB7CF00AC4712"
-               BuildableName = "Runrun.app"
+               BlueprintIdentifier = "84C2715E27F57C0300D7D808"
+               BuildableName = "LocalDropoff.app"
                BlueprintName = "LocalDropoff"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -44,8 +44,8 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84FA303527BFB7CF00AC4712"
-            BuildableName = "Runrun.app"
+            BlueprintIdentifier = "84C2715E27F57C0300D7D808"
+            BuildableName = "LocalDropoff.app"
             BlueprintName = "LocalDropoff"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -61,8 +61,8 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84FA303527BFB7CF00AC4712"
-            BuildableName = "Runrun.app"
+            BlueprintIdentifier = "84C2715E27F57C0300D7D808"
+            BuildableName = "LocalDropoff.app"
             BlueprintName = "LocalDropoff"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

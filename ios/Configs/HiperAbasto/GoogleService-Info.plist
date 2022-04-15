@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>745673385640-mg0nctqlv6dagpvm2qfqannlkugkvjqc.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.745673385640-mg0nctqlv6dagpvm2qfqannlkugkvjqc</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>745673385640-f55qgrlksltahjdds1nn55hlnnqkd98m.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyABLopcXlQis_PizERyBaETAWEtakv5ZZ0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>745673385640</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.hiperAbasto</string>
+	<key>PROJECT_ID</key>
+	<string>hiper-abasto</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hiper-abasto.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:745673385640:ios:c7d04840222ee6c61b449d</string>
+</dict>
+</plist>
