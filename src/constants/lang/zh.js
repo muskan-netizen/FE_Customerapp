@@ -809,4 +809,5 @@ export default {
   REFUNDS: 'Refunds',
   ORDER_TOTAL: 'Order Total',
   ORDERS: 'Orders',
+  ORDER_CANCELLED: 'Order Cancelled',
 };

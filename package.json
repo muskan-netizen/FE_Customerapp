@@ -439,7 +439,7 @@
     "shoorafreshRelease": "cd android && ./gradlew assembleShooraFreshRelease",
     "click2deliverRelease": "cd android && ./gradlew assembleClick2DeliverRelease",
     "trucktirenowRelease": "cd android && ./gradlew assembleTruckTireNowRelease",
-    "yeboyRelease": "cd android && ./gradlew assembleYeboyRelease",
+    "yeboyRelease": "cd android && ./gradlew bundleYeboyRelease",
     "kel360Release": "cd android && ./gradlew assembleKel360Release",
     "moboserrandsserviceRelease": "cd android && ./gradlew assembleMobosErrandsServiceRelease",
     "cabwayRelease": "cd android && ./gradlew assembleCabWayRelease",
