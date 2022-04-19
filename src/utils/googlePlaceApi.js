@@ -17,6 +17,7 @@ export const googlePlacesApi = async (data, key, latLng, region) => {
             }
         );
 
+        
         let response = await res.json();
         console.log("ressss", response)
         return response

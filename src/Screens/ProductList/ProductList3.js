@@ -37,7 +37,9 @@ import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import HomeLoader from '../../Components/Loaders/HomeLoader';
 import ProductListLoader3 from '../../Components/Loaders/ProductListLoader3';
 import NoDataFound from '../../Components/NoDataFound';
+import ProductCard2 from '../../Components/ProductCard2';
 import ProductCard3 from '../../Components/ProductCard3';
+import ProductCard5 from '../../Components/ProductCard5';
 import RepeatModal from '../../Components/RepeatModal';
 import RoundImg from '../../Components/RoundImg';
 import SearchBar from '../../Components/SearchBar';
@@ -112,8 +114,8 @@ const filtersData = [
 export default function Products({ route, navigation }) {
   const bottomSheetRef = useRef(null);
   let selectedFilters = useRef(null);
-  // console.log(route.params, 'route.params');
-  const { data } = route.params;
+  console.log(route.params, 'route.params');
+  const {data} = route.params;
   const routeData = data?.fetchOffers;
   const { blurRef } = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -442,11 +444,12 @@ export default function Products({ route, navigation }) {
   /****Get all list items by vendor id */
   const getAllProductsByVendor = (pageNo) => {
     console.log('api hit getAllProductsByVendor');
-    let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id
+    let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
-    let apiData = `/${vendorId}?limit=${limit}&page=${pageNo}`
-    if (!!data?.categoryExist) { //sent category id if user comes from category>>vendor>>productList
-      apiData = apiData + `&category_id=${data?.categoryExist}`
+    let apiData = `/${vendorId}?limit=${limit}&page=${pageNo}`;
+    if (!!data?.categoryExist) {
+      //sent category id if user comes from category>>vendor>>productList
+      apiData = apiData + `&category_id=${data?.categoryExist}`;
     }
     actions
       .getProductByVendorIdOptamize(
@@ -494,7 +497,9 @@ export default function Products({ route, navigation }) {
               ...val,
               // ['data']: val?.products && val.products,
               ['data']: val?.category?.products && val?.category?.products,
-              title: val?.category && val?.category?.translation[0]?.name || val?.category?.translation[1]?.name,
+              title:
+                (val?.category && val?.category?.translation[0]?.name) ||
+                val?.category?.translation[1]?.name,
             };
             delete newKey['products'];
             return newKey;
@@ -513,9 +518,10 @@ export default function Products({ route, navigation }) {
             }
             setCategoryInfo(res?.data?.vendor);
             setLoading(false);
-            setProductListData(pageNo == 1
-              ? res.data.products.data
-              : [...productListData, ...res.data.products.data],
+            setProductListData(
+              pageNo == 1
+                ? res.data.products.data
+                : [...productListData, ...res.data.products.data],
             );
           } else {
             setLoading(false);
@@ -610,32 +616,35 @@ export default function Products({ route, navigation }) {
         },
       )
       .then((res) => {
-
         if (!!res?.data) {
-          console.log(res.data.listData, 'getProductByCategoryId');
+          console.log(res.data, 'res getProductByCategoryId');
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
           // setCategoryInfo(res.data.category);
           setLoading(false);
           if (res.data.listData.data.length == 0) {
-            loadMore = false
+            loadMore = false;
           }
-          setProductListData(pageNo == 1
-            ? res.data.listData.data
-            : [...productListData, ...res.data.listData.data])
-          updateState({ isLoadingC: false });
-          if (pageNo == 1 &&
+          setProductListData(
+            pageNo == 1
+              ? res.data.listData.data
+              : [...productListData, ...res.data.listData.data],
+          );
+          updateState({isLoadingC: false});
+          if (
+            pageNo == 1 &&
             res?.data?.listData?.data.length == 0 &&
             res?.data?.category &&
-            res?.data?.category?.childs.length) {
-            setSelectedCategory(res.data.category.childs[0])
-            setProductListId(res.data.category.childs[0])
+            res?.data?.category?.childs.length
+          ) {
+            setSelectedCategory(res.data.category.childs[0]);
+            setProductListId(res.data.category.childs[0]);
             updateState({
               pageNo: 1,
               limit: 10,
               isLoadingC: true,
-            })
+            });
           }
-          setLoading(false)
+          setLoading(false);
         }
         setLoading(false);
         // getAllVendorFilters()
@@ -2461,8 +2470,47 @@ export default function Products({ route, navigation }) {
                   />
                 </TouchableOpacity>
               )}
-            </View>
-          )}
+            {offerList?.length > 0 && (
+              <TouchableOpacity
+                onPress={() =>
+                  updateState({offersModalVisible: !offersModalVisible})
+                }
+                activeOpacity={0.7}
+                style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View
+                  style={{
+                    backgroundColor: colors.greyColor,
+                    width: moderateScale(30),
+                    height: moderateScale(30),
+                    borderRadius: moderateScale(30),
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Image source={imagePath.ic_offersIcon} />
+                </View>
+                <Text
+                  style={{
+                    ...styles.milesTxt,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    opacity: 1,
+                    fontSize: textScale(10),
+                  }}>
+                  {strings.OFFERS}
+                </Text>
+                <Image
+                  source={imagePath.icBackb}
+                  style={{
+                    transform: [{rotate: '-90deg'}],
+                    width: moderateScale(11),
+                    height: moderateScale(11),
+                    resizeMode: 'contain',
+                    marginLeft: moderateScale(6),
+                  }}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -2641,9 +2689,14 @@ export default function Products({ route, navigation }) {
         }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View>
-            {!!data?.categoryExist && !data?.isVerndorList ?
+            {!!data?.categoryExist && !data?.isVerndorList ? (
               <SafeAreaView>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -2659,7 +2712,7 @@ export default function Products({ route, navigation }) {
                       rx={20}
                       ry={20}
                     />
-                    <View style={{ marginRight: moderateScale(8) }} />
+                    <View style={{marginRight: moderateScale(8)}} />
                     <HomeLoader
                       height={12}
                       rectHeight={12}
@@ -2680,7 +2733,7 @@ export default function Products({ route, navigation }) {
                       rectWidth={25}
                       width={25}
                     />
-                    <View style={{ marginRight: moderateScale(16) }} />
+                    <View style={{marginRight: moderateScale(16)}} />
                     <HomeLoader
                       height={25}
                       rectHeight={25}
@@ -2690,7 +2743,7 @@ export default function Products({ route, navigation }) {
                   </View>
                 </View>
               </SafeAreaView>
-              :
+            ) : (
               <View>
                 <HeaderLoader
                   viewStyles={{
@@ -2748,7 +2801,7 @@ export default function Products({ route, navigation }) {
                     flexDirection: 'row',
                     alignItems: 'center',
                     marginHorizontal: moderateScale(16),
-                    marginBottom: moderateScaleVertical(16)
+                    marginBottom: moderateScaleVertical(16),
                   }}>
                   <HomeLoader
                     height={20}
@@ -2756,7 +2809,7 @@ export default function Products({ route, navigation }) {
                     rectWidth={60}
                     width={60}
                   />
-                  <View style={{ marginRight: moderateScale(16) }} />
+                  <View style={{marginRight: moderateScale(16)}} />
                   <HomeLoader
                     height={20}
                     rectHeight={20}
@@ -2764,7 +2817,7 @@ export default function Products({ route, navigation }) {
                     width={60}
                   />
                 </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <HomeLoader
                     width={width / 1.2}
                     height={34}
@@ -2783,8 +2836,7 @@ export default function Products({ route, navigation }) {
                   />
                 </View>
               </View>
-            }
-
+            )}
           </View>
 
           <View
@@ -2965,33 +3017,57 @@ export default function Products({ route, navigation }) {
          * Height should be fixed as 180 to measure exact scroll position for browse menu
          */
         style={{
-          minHeight: moderateScaleVertical(200),
+          minHeight:
+            DeviceInfo?.getBundleId() == appIds.dlvrd
+              ? moderateScaleVertical(0)
+              : moderateScaleVertical(200),
           overflow: 'visible',
           // backgroundColor: 'red',
           // marginBottom: moderateScaleVertical(5),
         }}>
-        <ProductCard3
-          data={item}
-          index={index}
-          onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-          onAddtoWishlist={() => _onAddtoWishlist(item)}
-          addToCart={() => addSingleItem(item, section, index)}
-          onIncrement={() => checkIsCustomize(item, section, index, 1)}
-          onDecrement={() => checkIsCustomize(item, section, index, 2)}
-          selectedItemID={selectedItemID}
-          btnLoader={btnLoader}
-          selectedItemIndx={selectedItemIndx}
-          businessType={businessType}
-          categoryInfo={categoryInfo}
-          animateText={animateText}
-          section={section}
-        />
-        <View
-          style={{
-            ...styles.horizontalLine,
-            marginBottom: moderateScaleVertical(16),
-          }}
-        />
+        {DeviceInfo?.getBundleId() == appIds.dlvrd ? (
+          <View style={{marginVertical: moderateScaleVertical(10)}}>
+            <ProductCard5
+              data={item}
+              index={index}
+              onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+              onAddtoWishlist={() => _onAddtoWishlist(item)}
+              addToCart={() => addSingleItem(item, section, index)}
+              onIncrement={() => checkIsCustomize(item, section, index, 1)}
+              onDecrement={() => checkIsCustomize(item, section, index, 2)}
+              selectedItemID={selectedItemID}
+              btnLoader={btnLoader}
+              selectedItemIndx={selectedItemIndx}
+              businessType={businessType}
+              categoryInfo={categoryInfo}
+              animateText={animateText}
+            />
+          </View>
+        ) : (
+          <ProductCard3
+            data={item}
+            index={index}
+            onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+            onAddtoWishlist={() => _onAddtoWishlist(item)}
+            addToCart={() => addSingleItem(item, section, index)}
+            onIncrement={() => checkIsCustomize(item, section, index, 1)}
+            onDecrement={() => checkIsCustomize(item, section, index, 2)}
+            selectedItemID={selectedItemID}
+            btnLoader={btnLoader}
+            selectedItemIndx={selectedItemIndx}
+            businessType={businessType}
+            categoryInfo={categoryInfo}
+            animateText={animateText}
+          />
+        )}
+        {!(DeviceInfo?.getBundleId() == appIds.dlvrd) && (
+          <View
+            style={{
+              ...styles.horizontalLine,
+              marginBottom: moderateScaleVertical(16),
+            }}
+          />
+        )}
       </Animatable.View>
     );
   };
@@ -3319,8 +3395,9 @@ export default function Products({ route, navigation }) {
             />
           )}
         </View>
-      ) : (
-        isVisibleModal && (
+      ) : <>
+        {isVisibleModal ?
+
           <BottomSheet
             ref={bottomSheetRef}
             index={1}
@@ -3333,15 +3410,14 @@ export default function Products({ route, navigation }) {
               if (index === 0) {
                 onCloseModal();
               }
-              playHapticEffect(hapticEffects.impactMedium);
+              // playHapticEffect(hapticEffects.impactMedium);
             }}
-            backdropComponent={() => (
-              <View style={{ height: 0 }}/>
-            )}
+            backdropComponent={() => <View style={{height: 0}} />}
             backgroundComponent={backgroundComponent}>
             <BottomSheetScrollView
               keyboardShouldPersistTaps="handled"
               showsVerticalScrollIndicator={false}
+              contentContainerStyle={{flexGrow:1}}
               style={{
                 flex: 1,
                 backgroundColor: isDarkMode
@@ -3360,8 +3436,9 @@ export default function Products({ route, navigation }) {
               />
             </BottomSheetScrollView>
           </BottomSheet>
-        )
-      )}
+          : null
+        }
+      </>}
 
       <CustomAnimatedLoader
         source={loaderOne}

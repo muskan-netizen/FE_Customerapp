@@ -41,7 +41,7 @@ const Banner2 = ({
     imageLoader: true,
     // profileInfo: null
   });
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({ ...state, ...data })); 
   const { slider1ActiveSlide, showLightboxView } = state;
   const setSnapState = (index) => {
     updateState({ slider1ActiveSlide: index });

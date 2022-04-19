@@ -1003,8 +1003,8 @@ end
   
 # end
 
-#FARMER SOUQ Target
-target 'FARMER SOUQ' do
+#FarmerSouq Target
+target 'FarmerSouq' do
   
 end
 
@@ -1174,7 +1174,7 @@ target 'MeatEasy' do
   
 end
 
-#Local dropoff Target
+#LocalDropoff Target
 target 'LocalDropoff' do
   
 end
@@ -1199,10 +1199,10 @@ end
   
 # end
 
-# #Hivefair Target
-# target 'Hivefair' do
+#Hivefair Target
+target 'Hivefair' do
   
-# end
+end
 
 #BeakMe Target
 target 'BeakMe' do
@@ -1415,6 +1415,61 @@ end
 
 # NineOneTwo Target
 target 'NineOneTwo' do
+  
+end
+
+# Trip Target
+target 'Trip' do
+  
+end
+
+# AauJau Target
+target 'AauJau' do
+  
+end
+
+# MediPick Target
+target 'MediPick' do
+  
+end
+
+# Meltivers Target
+target 'Meltivers' do
+  
+end
+
+# EnsoDigitalAgency Target
+target 'EnsoDigitalAgency' do
+  
+end
+
+# HiperAbasto Target
+target 'HiperAbasto' do
+  
+end
+
+# Redglee Target
+target 'Redglee' do
+  
+end
+
+# DropItOffUsa Target
+target 'DropItOffUsa' do
+  
+end
+
+# HandyPickup Target
+target 'HandyPickup' do
+  
+end
+
+# TJJHub Target
+target 'TJJHub' do
+  
+end
+
+# CurblerLLC Target
+target 'CurblerLLC' do
   
 end
 

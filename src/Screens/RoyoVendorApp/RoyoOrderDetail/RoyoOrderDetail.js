@@ -514,6 +514,7 @@ const RoyoOrderDetail = (props) => {
           </View>
         )}
         <View style={{margin: moderateScaleVertical(16)}}>
+        {!!Number(data.total_amount) && (
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>
             <Text style={styles.font15Semibold}>
@@ -521,6 +522,9 @@ const RoyoOrderDetail = (props) => {
               {Number(data.total_amount).toFixed(2)}
             </Text>
           </View>
+        )}
+
+          {!!Number(data.total_delivery_fee) && (
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>{strings.DELIVERYFEE}</Text>
             <Text style={styles.font15Semibold}>
@@ -528,7 +532,9 @@ const RoyoOrderDetail = (props) => {
               {Number(data.total_delivery_fee).toFixed(2)}
             </Text>
           </View>
+          )}
 
+          {!!Number(data.total_container_charges) && (
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>{strings.CONTAINERCHARGES}</Text>
             <Text style={styles.font15Semibold}>
@@ -536,7 +542,9 @@ const RoyoOrderDetail = (props) => {
               {Number(data.total_container_charges).toFixed(2)}
             </Text>
           </View>
+          )}
 
+          {!!Number(data.taxable_amount) && (
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>{strings.TAX_AMOUNT}</Text>
             <Text style={styles.font15Semibold}>
@@ -544,7 +552,9 @@ const RoyoOrderDetail = (props) => {
               {Number(data.taxable_amount).toFixed(2)}
             </Text>
           </View>
+          )}
 
+          {!!Number(data.total_service_fee) && (
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>{strings.TOTAL_SERVICE_FEE}</Text>
             <Text style={styles.font15Semibold}>
@@ -552,24 +562,27 @@ const RoyoOrderDetail = (props) => {
               {Number(data.total_service_fee).toFixed(2)}
             </Text>
           </View>
+           )}
 
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.font15Medium}>{strings.TOTAL_DISCOUNT}</Text>
-            <Text style={styles.font15Semibold}>
-              -{currencies?.primary_currency?.symbol}
-              {Number(data.total_discount).toFixed(2)}
-            </Text>
-          </View>
-
+          {!!Number(data.total_discount) && (
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.font15Medium}>{strings.TOTAL_DISCOUNT}</Text>
+              <Text style={styles.font15Semibold}>
+                -{currencies?.primary_currency?.symbol}
+                {Number(data.total_discount).toFixed(2)}
+              </Text>
+            </View>
+          )}
 
           <View style={styles.dashLine} />
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>{strings.TOTAL}</Text>
             <Text style={{...styles.font15Semibold, color: colors.themeColor2}}>
               {`${currencies?.primary_currency?.symbol} ${Number(
-                parseFloat(data.payable_amount)
+                parseFloat(data.payable_amount),
                 //  +
-                  // parseFloat(data.total_delivery_fee),
+                // parseFloat(data.total_delivery_fee),
               ).toFixed(2)}`}
             </Text>
           </View>

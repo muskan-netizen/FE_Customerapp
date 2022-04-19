@@ -28,6 +28,7 @@ export default function VendorDetail({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   // alert("312")
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const userData = useSelector((state) => state?.auth?.userData);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
@@ -145,19 +146,90 @@ export default function VendorDetail({ navigation, route }) {
     showError(error?.message || error?.error);
   };
 
-  const _renderItem = ({ item, index }) => {
-    return (
-      <ThreeColumnCard
-        onPress={moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+
+  const onPressItem = (item) =>{
+    console.log("item+++",item)
+
+    if (!!item?.type && item?.type?.id == 7) {
+      if (!!userData?.auth_token) {
+        item['pickup_taxi'] = true
+        item['redirect_to'] = item.type.redirect_to
+        navigation.navigate(navigationStrings.ADDADDRESS, { data: item })
+        return;
+      }
+      navigation.navigate(navigationStrings.OUTER_SCREEN, {})
+      return
+    }
+    if (!!item?.redirect_to && item?.redirect_to == staticStrings.PRODUCT) {
+      navigation.navigate(navigationStrings.PRODUCT_LIST, {
+        data: {
           id: item.id,
           rootProducts: vendorParams?.rootProducts,
           vendor: vendorParams?.rootProducts ? true : false,
-          // rootProducts:
           vendorData: vendorParams?.item,
           categoryInfo: item,
           name: item.name,
+          isVendorList: false,
+          category_slug: item?.slug,
           categoryExist: item?.id || null
-        })}
+        },
+      });
+      return
+    }
+    if (!!item?.type && item?.type.redirect_to == staticStrings.PRODUCT) {
+      navigation.navigate(navigationStrings.PRODUCT_LIST, {
+        data: {
+          id: item.id,
+          rootProducts: vendorParams?.rootProducts,
+          vendor: vendorParams?.rootProducts ? true : false,
+          vendorData: vendorParams?.item,
+          categoryInfo: item,
+          name: item.name,
+          isVendorList: false,
+          category_slug: item?.slug,
+          categoryExist: item?.id || null
+        },
+      });
+      return
+    }
+    if (item?.redirect_to == staticStrings.VENDOR) {
+      navigation.navigate(navigationStrings.VENDOR, { data: item });
+      return;
+    }
+
+    if (item?.redirect_to == staticStrings.SUBCATEGORY) {
+      navigation.push(navigationStrings.VENDOR_DETAIL, { data: {item: item} });
+      return;
+    }
+
+    // navigation.navigate(navigationStrings.PRODUCT_LIST, {
+    //   data: {
+    //     id: item.id,
+    //     rootProducts: vendorParams?.rootProducts,
+    //     vendor: vendorParams?.rootProducts ? true : false,
+    //     vendorData: vendorParams?.item,
+    //     categoryInfo: item,
+    //     name: item.name,
+    //     isVendorList: false,
+    //     category_slug: item?.slug,
+    //     categoryExist: item?.id || null
+    //   },
+    // });
+    moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+      id: item.id,
+      rootProducts: vendorParams?.rootProducts,
+      vendor: vendorParams?.rootProducts ? true : false,
+      // rootProducts:
+      vendorData: vendorParams?.item,
+      categoryInfo: item,
+      name: item.name,
+      categoryExist: item?.id || null
+    })
+  }
+  const _renderItem = ({ item, index }) => {
+    return (
+      <ThreeColumnCard
+        onPress={()=>onPressItem(item)}
         // onPress={() => navigation.navigate(navigationStrings.PRODUCT_LIST)}
         data={item}
         withTextBG

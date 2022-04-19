@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>173265613825-3a4ah51sj10l8at88sbosrhh1s03ec0k.apps.googleusercontent.com</string>
+	<string>236503350854-177jaopfu6mmpi1vu6cek4h99lqmja4s.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.173265613825-3a4ah51sj10l8at88sbosrhh1s03ec0k</string>
+	<string>com.googleusercontent.apps.236503350854-177jaopfu6mmpi1vu6cek4h99lqmja4s</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>173265613825-h1ho7hh9rhg9iioqiq9ga01rn019f2dg.apps.googleusercontent.com</string>
+	<string>236503350854-0kk30o9re4tp96kssn1e3nck0lltl40u.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBLeEQ2P9Mw1ugem4w977yaWUqH-Kt7y0U</string>
+	<string>AIzaSyBUJS9qZdLLR7JcxAVTqoG4R32vzAPFK60</string>
 	<key>GCM_SENDER_ID</key>
-	<string>173265613825</string>
+	<string>236503350854</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.localdropoff</string>
+	<string>com.app.localdropoff</string>
 	<key>PROJECT_ID</key>
-	<string>local-dropoff</string>
+	<string>local-dropoff-customer</string>
 	<key>STORAGE_BUCKET</key>
-	<string>local-dropoff.appspot.com</string>
+	<string>local-dropoff-customer.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:173265613825:ios:61d7c1bdf8ddb39f6d3c00</string>
+	<string>1:236503350854:ios:6228211e8b8c9e49451447</string>
 </dict>
 </plist>

@@ -324,7 +324,12 @@ const ProductCard3 = ({
               }}>
               {data?.translation[0]?.title || data?.title || data?.sku}
             </Text>
-            {!!section?.title ? (
+            <Text style={{
+              fontSize: textScale(9),
+              color: colors.grayOpacity51,
+              marginVertical:moderateScaleVertical(4)
+            }} >{data?.vendor?.name}</Text>
+            {!!data?.title ? (
               <Text
                 numberOfLines={1}
                 style={{
@@ -334,7 +339,7 @@ const ProductCard3 = ({
                     : colors.blackOpacity40,
                 }}>
                 {strings.IN}
-                {` ${section?.title}`}
+                {` ${data?.title}`}
               </Text>
             ) : null}
           </View>

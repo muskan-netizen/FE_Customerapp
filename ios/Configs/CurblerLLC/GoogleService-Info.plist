@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>606856614352-uihpf398u9dtal4gbth7rluque8aafsj.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.606856614352-uihpf398u9dtal4gbth7rluque8aafsj</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>606856614352-d46e4j3nu1nc803306khhk4qa4r53ufb.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBmul13AkOnrw7lTL_M_AythJjGD8O18FA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>606856614352</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.curblerLLC</string>
+	<key>PROJECT_ID</key>
+	<string>curbler-llc</string>
+	<key>STORAGE_BUCKET</key>
+	<string>curbler-llc.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:606856614352:ios:97351922a8f4795ec6e9d5</string>
+</dict>
+</plist>

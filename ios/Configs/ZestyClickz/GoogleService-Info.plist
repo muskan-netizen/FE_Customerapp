@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>16699357731-0hg5pupaaigv6livu11fuaoroncorqbm.apps.googleusercontent.com</string>
+	<string>342729040014-5s859bdt8rtplp42b23bu50k0e58rjt1.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.16699357731-0hg5pupaaigv6livu11fuaoroncorqbm</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>16699357731-5utjjqulrpuoetvub5k1j8ntqd5j062e.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.342729040014-5s859bdt8rtplp42b23bu50k0e58rjt1</string>
 	<key>API_KEY</key>
-	<string>AIzaSyC6j73rxGlSiCtGC6kqdEqEykAJRJYNNmw</string>
+	<string>AIzaSyBoO81ArqEPq2QuILhTjobtczucsyG_bK8</string>
 	<key>GCM_SENDER_ID</key>
-	<string>16699357731</string>
+	<string>342729040014</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.zestyclickz</string>
+	<string>com.app.zestyclickz</string>
 	<key>PROJECT_ID</key>
-	<string>zestyclickz</string>
+	<string>zestyclickz-1439b</string>
 	<key>STORAGE_BUCKET</key>
-	<string>zestyclickz.appspot.com</string>
+	<string>zestyclickz-1439b.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:16699357731:ios:43251bb11232093f178f96</string>
+	<string>1:342729040014:ios:1e490dcd517340767569df</string>
 </dict>
 </plist>
