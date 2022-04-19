@@ -16,7 +16,6 @@ import {
   moderateScale,
   moderateScaleVertical,
   width,
-  height,
 } from '../../styles/responsiveSize';
 import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
@@ -33,9 +32,6 @@ import {enums} from '../../utils/enums';
 import {MyDarkTheme} from '../../styles/theme';
 import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
-import Video from 'react-native-video';
-import DeviceInfo from 'react-native-device-info';
-// import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
 
 const fs = RNFetchBlob.fs;
 
@@ -51,9 +47,6 @@ export default function ShortCode({route, navigation}) {
     isLoading: false,
     changeInShortCode: false,
     LoadingScreen: true,
-    videoDurationEnded: false,
-    onInitApiResponseDone: false,
-    allAppData: null,
   });
   const {dispatch} = store;
 
@@ -64,9 +57,6 @@ export default function ShortCode({route, navigation}) {
     isLoading,
     isShortcodePrefilled,
     LoadingScreen,
-    videoDurationEnded,
-    onInitApiResponseDone,
-    allAppData,
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {appData, appStyle, currencies, languages} = useSelector(
@@ -2067,31 +2057,12 @@ export default function ShortCode({route, navigation}) {
         true,
       )
       .then((homeData) => {
-        updateState({
-          isLoading: false,
-          LoadingScreen: false,
-          onInitApiResponseDone: true,
-          allAppData: res,
-        });
-
-        DeviceInfo.getBundleId() != appIds.masa
-          ? navigateToNextScreen(res, homeData.data)
-          : null;
-
-        // navigateToNextScreen(res, homeData.data);
+        updateState({isLoading: false, LoadingScreen: false});
+        navigateToNextScreen(res, homeData.data);
       })
       .catch((error) => {
-        updateState({
-          isLoading: false,
-          onInitApiResponseDone: true,
-          allAppData: res,
-        });
-
-        DeviceInfo.getBundleId() != appIds.masa
-          ? navigateToNextScreen(res, homeData.data)
-          : null;
-
-        // navigateToNextScreen(res, homeData.data);
+        updateState({isLoading: false});
+        navigateToNextScreen(res, homeData.data);
       });
   };
 
@@ -2139,19 +2110,7 @@ export default function ShortCode({route, navigation}) {
   //   image = { uri: 'Splash' }
   //   console.log('checking image >>>>>', image, themeColors)
   // }
-  const onVideoDurationEnded = () => {
-    updateState({
-      videoDurationEnded: true,
-    });
-  };
 
-  useEffect(() => {
-    if (onInitApiResponseDone && videoDurationEnded) {
-      {
-        navigateToNextScreen(allAppData);
-      }
-    }
-  }, [videoDurationEnded, onInitApiResponseDone]);
   return (
     <View
       style={{
@@ -2161,58 +2120,26 @@ export default function ShortCode({route, navigation}) {
           : colors.white,
       }}>
       {isShortcodePrefilled ? (
-        DeviceInfo.getBundleId() == appIds.masa ? (
+        <View style={{flex: 1}}>
           <View
             style={{
-              height: height,
-              width: width,
+              flex: 1,
+              position: 'absolute',
+              zIndex: 99,
+              alignItems: 'center',
               justifyContent: 'center',
-              // alignItems: 'center',
-              backgroundColor: 'rgba(253,204,210,0.9)',
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'rgba(0,0,0,0.5',
             }}>
-            <Video
-              source={require('../../assets/masa.mp4')} // Can be a URL or a local file.
-              // Store reference
-              // Callback when video cannot be loaded
-              style={{height: width, width: width}}
-              resizeMode="cover"
-              onEnd={() => onVideoDurationEnded()}
-            />
-            {videoDurationEnded && (
-              <MaterialIndicator
-                style={{
-                  position: 'absolute',
-                  bottom: moderateScale(100),
-                  left: 0,
-                  right: 0,
-                }}
-                size={50}
-                color={colors.greyNew}
-              />
-            )}
-          </View>
-        ) : (
-          <View style={{flex: 1}}>
-            <View
-              style={{
-                flex: 1,
-                position: 'absolute',
-                zIndex: 99,
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '100%',
-                height: '100%',
-                backgroundColor: 'rgba(0,0,0,0.5',
-              }}>
-              <View style={{position: 'absolute', bottom: moderateScale(100)}}>
-                {LoadingScreen && (
-                  <MaterialIndicator size={50} color={colors.greyMedium} />
-                )}
-              </View>
+            <View style={{position: 'absolute', bottom: moderateScale(100)}}>
+              {LoadingScreen && (
+                <MaterialIndicator size={50} color={colors.greyMedium} />
+              )}
             </View>
-            <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
           </View>
-        )
+          <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
+        </View>
       ) : (
         <WrapperContainer
           statusBarColor={colors.white}

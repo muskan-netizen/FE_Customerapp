@@ -270,7 +270,7 @@ export default {
   CAMERA: 'Cámara',
   GALLERY: 'Galería',
   CANCEL: 'Cancelar',
-  MYSTORES: 'Mis historias',
+  MYSTORES: 'Administra tus Tiendas Aficiinado',
   ORDERS: 'Pedidos',
   PRODUCTS: 'Productos',
   REVENUE: 'Ingresos',
