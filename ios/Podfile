@@ -1473,6 +1473,28 @@ target 'CurblerLLC' do
   
 end
 
+# Cartnar Target
+target 'Cartnar' do
+  
+end
+
+# Uven Target
+target 'Uven' do
+  
+end
+
+# PAS41 Target
+target 'PAS41' do
+  
+end
+
+# FreshFarmz Target
+target 'FreshFarmz' do
+  
+end
+
+
+
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

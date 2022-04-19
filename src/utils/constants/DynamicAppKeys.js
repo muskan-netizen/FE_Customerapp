@@ -296,6 +296,8 @@ const shortCodes = {
   cartnar:'7b87ed',
   uven:'9b8db5',
   pAS41:'4c0a17',
+  freshFarmz:'eafe42',
+  ryde:'309c33',
 };
 
 const appIds = {
@@ -1475,6 +1477,14 @@ const appIds = {
   pAS41: Platform.select({
     ios: 'com.pAS41',
     android: 'com.pAS41',
+  }),
+  freshFarmz: Platform.select({
+    ios: 'com.freshFarmz',
+    android: 'com.freshFarmz',
+  }),
+  ryde: Platform.select({
+    ios: 'com.customer.ryde',
+    android: 'com.customer.ryde',
   }),
 };
 

@@ -204,167 +204,167 @@ android {
     flavorDimensions "appType"
 
     productFlavors {
-   //      royoorder {
-   //          dimension "appType"
-   //          versionCode 3
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion
-   //          // applicationIdSuffix ".royoorder"
-   //          applicationId 'com.codebrew.royoorder'
-   //          resValue "string", "app_name", "RoyoOrder"
-   //          resValue "string", "host_name", "sales.royoorders.com"
-   //      }
-   //      orderchekout{
-   //          dimension "appType"
-   //          versionCode 5
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion         
-   //          applicationId 'com.orderchekout'
-   //          resValue "string", "app_name", "Order Chekout"
-   //          resValue "string", "host_name", ""
-   //       }
+      //   royoorder {
+      //       dimension "appType"
+      //       versionCode 3
+      //       versionName "1.0"
+      //       minSdkVersion rootProject.ext.minSdkVersion
+      //       targetSdkVersion rootProject.ext.targetSdkVersion
+      //       // applicationIdSuffix ".royoorder"
+      //       applicationId 'com.codebrew.royoorder'
+      //       resValue "string", "app_name", "RoyoOrder"
+      //       resValue "string", "host_name", "sales.royoorders.com"
+      //   }
+      //   orderchekout{
+      //       dimension "appType"
+      //       versionCode 5
+      //       versionName "1.0"
+      //       minSdkVersion rootProject.ext.minSdkVersion
+      //       targetSdkVersion rootProject.ext.targetSdkVersion         
+      //       applicationId 'com.orderchekout'
+      //       resValue "string", "app_name", "Order Chekout"
+      //       resValue "string", "host_name", ""
+      //    }
     
-   //      runrun {
-   //          dimension "appType"
-   //          versionCode 1
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion
-   //          // applicationIdSuffix ".runrun"
-   //          applicationId 'com.codebrew.runrun'
-   //          resValue "string", "app_name", "Runrun"
-   //          resValue "string", "host_name", ""
-   //      }
-   //      tranzit {
-   //          dimension "appType"
-   //          versionCode 1
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion
-   //          // applicationIdSuffix ".tranzit"
-   //           applicationId 'com.app.tranzit'
-   //          resValue "string", "app_name", "Tranzit"
-   //          resValue "string", "host_name", ""
-   //      }
-   //       hmoobhub {
-   //          dimension "appType"
-   //          versionCode 1
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion
-   //          // applicationIdSuffix ".hmoobhhub"
-   //           applicationId 'com.codebrew.hmoobhub'
-   //          resValue "string", "app_name", "Hmoob Hub"
-   //          resValue "string", "host_name", ""
-   //      }
-   //       capcorp {
-   //          dimension "appType"
-   //          versionCode 2
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion
-   //          // applicationIdSuffix ".hmoobhhub"
-   //          applicationId 'com.capcorpapp'
-   //          resValue "string", "app_name", "Capcorp"
-   //          resValue "string", "host_name", ""
-   //      }
-   //      masa{
-   //          dimension "appType"
-   //          versionCode 1
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion
-   //          // applicationIdSuffix ".hmoobhhub"
-   //          applicationId 'com.app.masa'
-   //          resValue "string", "app_name", "Masa"
-   //          resValue "string", "host_name", ""
-   //      }
+      //   runrun {
+      //       dimension "appType"
+      //       versionCode 1
+      //       versionName "1.0"
+      //       minSdkVersion rootProject.ext.minSdkVersion
+      //       targetSdkVersion rootProject.ext.targetSdkVersion
+      //       // applicationIdSuffix ".runrun"
+      //       applicationId 'com.codebrew.runrun'
+      //       resValue "string", "app_name", "Runrun"
+      //       resValue "string", "host_name", ""
+      //   }
+      //   tranzit {
+      //       dimension "appType"
+      //       versionCode 1
+      //       versionName "1.0"
+      //       minSdkVersion rootProject.ext.minSdkVersion
+      //       targetSdkVersion rootProject.ext.targetSdkVersion
+      //       // applicationIdSuffix ".tranzit"
+      //        applicationId 'com.app.tranzit'
+      //       resValue "string", "app_name", "Tranzit"
+      //       resValue "string", "host_name", ""
+      //   }
+      //    hmoobhub {
+      //       dimension "appType"
+      //       versionCode 1
+      //       versionName "1.0"
+      //       minSdkVersion rootProject.ext.minSdkVersion
+      //       targetSdkVersion rootProject.ext.targetSdkVersion
+      //       // applicationIdSuffix ".hmoobhhub"
+      //        applicationId 'com.codebrew.hmoobhub'
+      //       resValue "string", "app_name", "Hmoob Hub"
+      //       resValue "string", "host_name", ""
+      //   }
+      //    capcorp {
+      //       dimension "appType"
+      //       versionCode 2
+      //       versionName "1.0"
+      //       minSdkVersion rootProject.ext.minSdkVersion
+      //       targetSdkVersion rootProject.ext.targetSdkVersion
+      //       // applicationIdSuffix ".hmoobhhub"
+      //       applicationId 'com.capcorpapp'
+      //       resValue "string", "app_name", "Capcorp"
+      //       resValue "string", "host_name", ""
+      //   }
+      //   masa{
+      //       dimension "appType"
+      //       versionCode 1
+      //       versionName "1.0"
+      //       minSdkVersion rootProject.ext.minSdkVersion
+      //       targetSdkVersion rootProject.ext.targetSdkVersion
+      //       // applicationIdSuffix ".hmoobhhub"
+      //       applicationId 'com.app.masa'
+      //       resValue "string", "app_name", "Masa"
+      //       resValue "string", "host_name", ""
+      //   }
 
-   //      yogofood{
-   //          dimension "appType"
-   //           versionCode 1
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion
-   //          // applicationIdSuffix ".hmoobhhub"
-   //          applicationId 'com.yogofood'
-   //          resValue "string", "app_name", "Yogo Food"
-   //          resValue "string", "host_name", "yogofood.royoorders.com"
-   //      }
+      //   yogofood{
+      //       dimension "appType"
+      //        versionCode 1
+      //       versionName "1.0"
+      //       minSdkVersion rootProject.ext.minSdkVersion
+      //       targetSdkVersion rootProject.ext.targetSdkVersion
+      //       // applicationIdSuffix ".hmoobhhub"
+      //       applicationId 'com.yogofood'
+      //       resValue "string", "app_name", "Yogo Food"
+      //       resValue "string", "host_name", "yogofood.royoorders.com"
+      //   }
      
-   //      clicktoeat{
-   //          dimension "appType"
-   //          versionCode 2
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion
-   //          applicationId 'com.clicktoeat'
-   //          resValue "string", "app_name", "Click Eat"
-   //          resValue "string", "host_name", ""
-   //      } 
-   //      instamobile{
-   //          dimension "appType"
-   //          versionCode 1
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion
-   //          applicationId 'com.instamobile'
-   //          resValue "string", "app_name", "InstaMobile"
-   //          resValue "string", "host_name", ""
-   //      } 
-   //      africanvillagemarket{
-   //          dimension "appType"
-   //          versionCode 1
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion
-   //          applicationId 'com.africanvillagemarket'
-   //          resValue "string", "app_name", "African village Market"
-   //          resValue "string", "host_name", ""
-   //      }
+      //   clicktoeat{
+      //       dimension "appType"
+      //       versionCode 2
+      //       versionName "1.0"
+      //       minSdkVersion rootProject.ext.minSdkVersion
+      //       targetSdkVersion rootProject.ext.targetSdkVersion
+      //       applicationId 'com.clicktoeat'
+      //       resValue "string", "app_name", "Click Eat"
+      //       resValue "string", "host_name", ""
+      //   } 
+      //   instamobile{
+      //       dimension "appType"
+      //       versionCode 1
+      //       versionName "1.0"
+      //       minSdkVersion rootProject.ext.minSdkVersion
+      //       targetSdkVersion rootProject.ext.targetSdkVersion
+      //       applicationId 'com.instamobile'
+      //       resValue "string", "app_name", "InstaMobile"
+      //       resValue "string", "host_name", ""
+      //   } 
+      //   africanvillagemarket{
+      //       dimension "appType"
+      //       versionCode 1
+      //       versionName "1.0"
+      //       minSdkVersion rootProject.ext.minSdkVersion
+      //       targetSdkVersion rootProject.ext.targetSdkVersion
+      //       applicationId 'com.africanvillagemarket'
+      //       resValue "string", "app_name", "African village Market"
+      //       resValue "string", "host_name", ""
+      //   }
 
-   //      bottomsup{
-   //          dimension "appType"
-   //          versionCode 1
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion
-   //          applicationId 'com.bottomsup'
-   //          resValue "string", "app_name", "Bottoms Up"
-   //          resValue "string", "host_name", ""
-   //      }
-   //       ufood{
-   //          dimension "appType"
-   //          versionCode 1
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion
-   //          applicationId 'com.order.ufood'
-   //          resValue "string", "app_name", "UFood"
-   //          resValue "string", "host_name", ""
-   //      }
-   //      martinionwheels{
-   //          dimension "appType"
-   //          versionCode 1
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion
-   //          applicationId 'com.martinionwheels'
-   //          resValue "string", "app_name", "Martini on wheels"
-   //           resValue "string", "host_name", ""
-   //      }
-   //      blip{
-   //          dimension "appType"
-   //          versionCode 1
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion
-   //          applicationId 'com.app.blip'
-   //          resValue "string", "app_name", "BLIP"
-   //          resValue "string", "host_name", ""
-   //      }
+      //   bottomsup{
+      //       dimension "appType"
+      //       versionCode 1
+      //       versionName "1.0"
+      //       minSdkVersion rootProject.ext.minSdkVersion
+      //       targetSdkVersion rootProject.ext.targetSdkVersion
+      //       applicationId 'com.bottomsup'
+      //       resValue "string", "app_name", "Bottoms Up"
+      //       resValue "string", "host_name", ""
+      //   }
+      //    ufood{
+      //       dimension "appType"
+      //       versionCode 1
+      //       versionName "1.0"
+      //       minSdkVersion rootProject.ext.minSdkVersion
+      //       targetSdkVersion rootProject.ext.targetSdkVersion
+      //       applicationId 'com.order.ufood'
+      //       resValue "string", "app_name", "UFood"
+      //       resValue "string", "host_name", ""
+      //   }
+      //   martinionwheels{
+      //       dimension "appType"
+      //       versionCode 1
+      //       versionName "1.0"
+      //       minSdkVersion rootProject.ext.minSdkVersion
+      //       targetSdkVersion rootProject.ext.targetSdkVersion
+      //       applicationId 'com.martinionwheels'
+      //       resValue "string", "app_name", "Martini on wheels"
+      //        resValue "string", "host_name", ""
+      //   }
+        blip{
+            dimension "appType"
+            versionCode 2
+            versionName "1.1"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.app.blip'
+            resValue "string", "app_name", "BLIP"
+            resValue "string", "host_name", ""
+        }
    //      helpnowrightnow{
    //          dimension "appType"
    //          versionCode 4
@@ -1303,16 +1303,16 @@ android {
    //          resValue "string", "app_name", "Boozie Doozie"
    //          resValue "string", "host_name", ""
    //       }
-         zestyclickz{
-            dimension "appType"
-            versionCode 6
-            versionName "1.5"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion         
-            applicationId 'com.app.zestyclickz'
-            resValue "string", "app_name", "Veg-Hub"
-            resValue "string", "host_name", ""
-         }
+   //       zestyclickz{
+   //          dimension "appType"
+   //          versionCode 6
+   //          versionName "1.5"
+   //          minSdkVersion rootProject.ext.minSdkVersion
+   //          targetSdkVersion rootProject.ext.targetSdkVersion         
+   //          applicationId 'com.app.zestyclickz'
+   //          resValue "string", "app_name", "Veg-Hub"
+   //          resValue "string", "host_name", ""
+   //       }
    //       bakesale{
    //          dimension "appType"
    //          versionCode 1
@@ -4995,34 +4995,54 @@ android {
    //       resValue "string", "app_name", "Curbler LLC"
    //       resValue "string", "host_name", ""
    //       }
-        cartnar{
+   //      cartnar{
+   //       dimension "appType"
+   //       versionCode 1
+   //       versionName "1.0"
+   //       minSdkVersion rootProject.ext.minSdkVersion
+   //       targetSdkVersion rootProject.ext.targetSdkVersion
+   //       applicationId 'com.cartnar'
+   //       resValue "string", "app_name", "Cartnar"
+   //       resValue "string", "host_name", ""
+   //       }
+   //      uven{
+   //       dimension "appType"
+   //       versionCode 1
+   //       versionName "1.0"
+   //       minSdkVersion rootProject.ext.minSdkVersion
+   //       targetSdkVersion rootProject.ext.targetSdkVersion
+   //       applicationId 'com.uven'
+   //       resValue "string", "app_name", "Uven"
+   //       resValue "string", "host_name", ""
+   //       }
+      //   pAS41{
+      //    dimension "appType"
+      //    versionCode 1
+      //    versionName "1.0"
+      //    minSdkVersion rootProject.ext.minSdkVersion
+      //    targetSdkVersion rootProject.ext.targetSdkVersion
+      //    applicationId 'com.pAS41'
+      //    resValue "string", "app_name", "PAS41"
+      //    resValue "string", "host_name", ""
+      //    }
+         freshFarmz{
          dimension "appType"
          versionCode 1
          versionName "1.0"
          minSdkVersion rootProject.ext.minSdkVersion
          targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.cartnar'
-         resValue "string", "app_name", "Cartnar"
+         applicationId 'com.freshFarmz'
+         resValue "string", "app_name", "Fresh Farmz"
          resValue "string", "host_name", ""
          }
-        uven{
+        ryde{
          dimension "appType"
          versionCode 1
          versionName "1.0"
          minSdkVersion rootProject.ext.minSdkVersion
          targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.uven'
-         resValue "string", "app_name", "Uven"
-         resValue "string", "host_name", ""
-         }
-        pAS41{
-         dimension "appType"
-         versionCode 1
-         versionName "1.0"
-         minSdkVersion rootProject.ext.minSdkVersion
-         targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.pAS41'
-         resValue "string", "app_name", "PAS41"
+         applicationId 'com.customer.ryde'
+         resValue "string", "app_name", "Ryde"
          resValue "string", "host_name", ""
          }
     }

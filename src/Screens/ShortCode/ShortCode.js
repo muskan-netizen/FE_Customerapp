@@ -1888,6 +1888,18 @@ export default function ShortCode({route, navigation}) {
               isShortcodePrefilled: true,
             });
             break;
+            case appIds.freshFarmz:
+            updateState({
+              shortCode: shortCodes.freshFarmz,
+              isShortcodePrefilled: true,
+            });
+            break;
+            case appIds.ryde:
+            updateState({
+              shortCode: shortCodes.ryde,
+              isShortcodePrefilled: true,
+            });
+            break;
       }
     })();
   }, []);
