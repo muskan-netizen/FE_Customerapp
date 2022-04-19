@@ -1,61 +1,61 @@
 {
   "project_info": {
-    "project_number": "763946330264",
-    "project_id": "tranzit-5643c",
-    "storage_bucket": "tranzit-5643c.appspot.com"
+    "project_number": "506859015704",
+    "project_id": "tranzit-b5e97",
+    "storage_bucket": "tranzit-b5e97.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:763946330264:android:6c6025447aa51ec8bc08ed",
+        "mobilesdk_app_id": "1:506859015704:android:a6d2dcac5a7fe531ccbd6d",
         "android_client_info": {
-          "package_name": "com.tranzit"
+          "package_name": "com.app.tranzit"
         }
       },
       "oauth_client": [
         {
-          "client_id": "763946330264-2mi193vfcid3onu4pfq3ausgkcvl0vok.apps.googleusercontent.com",
+          "client_id": "506859015704-d9knsmb91dpleco5d50fcj6elndjop2m.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.tranzit",
+            "package_name": "com.app.tranzit",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "763946330264-egein6a9ocid216r7uvdi6r35hg4uoaj.apps.googleusercontent.com",
+          "client_id": "506859015704-pdfe2achvicdlc4kb3o7li9gpssp7jhq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.tranzit",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "763946330264-q11ssaq6pkt15uvrsmbgar8mn7fks9hi.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tranzit",
+            "package_name": "com.app.tranzit",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "763946330264-g1t10mhp2o8uvo4838v3gsj0eaf0n1o5.apps.googleusercontent.com",
+          "client_id": "506859015704-ued26q3p3scmke0udskvc5n0gfmhq363.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.tranzit",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "506859015704-617io4ljji0hsvirnucu2jd1rq3mtb51.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCS05abC9G4lX7QBjbPTMB3Xn1xRJ5j8y0"
+          "current_key": "AIzaSyARWAJnusFKEUM9taXwSlbQpyRRfWIf_TQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "763946330264-g1t10mhp2o8uvo4838v3gsj0eaf0n1o5.apps.googleusercontent.com",
+              "client_id": "506859015704-617io4ljji0hsvirnucu2jd1rq3mtb51.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "763946330264-cdo8aerrunbot0fv1strlmhv5qnnvh0e.apps.googleusercontent.com",
+              "client_id": "506859015704-5h36nio3hmk1bbfpnav79tn37tcif8ia.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.tranzit"

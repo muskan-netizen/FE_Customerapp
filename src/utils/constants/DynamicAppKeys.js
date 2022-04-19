@@ -282,6 +282,20 @@ const shortCodes = {
   newYorkMiniMart:'5e4b3b',
   airlinesRecruiter:'deb34c',
   nineOneTwo:'f92fea',
+  trip:'89e246',
+  aauJau:'326d8e',
+  mediPick:'b92261',
+  meltivers:'deca6f',
+  ensoDigitalAgency:'419dc9',
+  hiperAbasto:'50cb7f',
+  redglee:'9e185e',
+  dropItOffUsa:'9524c4',
+  handyPickup:'530592',
+  TJJHub:'41a3db',
+  curblerLLC:'959ecf',
+  cartnar:'7b87ed',
+  uven:'9b8db5',
+  pAS41:'4c0a17',
 };
 
 const appIds = {
@@ -295,7 +309,7 @@ const appIds = {
   }),
   tranzit: Platform.select({
     ios: 'com.tranzit',
-    android: 'com.tranzit',
+    android: 'com.app.tranzit',
   }),
   hmoobhub: Platform.select({
     ios: 'com.codebrew.hmoobhub',
@@ -554,8 +568,8 @@ const appIds = {
     android: 'com.partnerproject',
   }),
   menus: Platform.select({
-    ios: 'com.menusvirtual',
-    android: 'com.menus',
+    ios: 'com.menus.customer',
+    android: 'com.menus.customer',
   }),
   doorstep: Platform.select({
     ios: 'com.doorstepone',
@@ -642,8 +656,8 @@ const appIds = {
     android: 'com.share',
   }),
   pickmeup: Platform.select({
-    ios: 'com.pickmeup.customer',
-    android: 'com.pickmeup',
+    ios: 'com.application.pickmeup',
+    android: 'com.application.pickmeup',
   }),
   taquick: Platform.select({
     ios: 'com.taquick',
@@ -694,8 +708,8 @@ const appIds = {
     android: 'com.customer.ace',
   }),
   empire: Platform.select({
-    ios: 'com.customer.empire',
-    android: 'com.empire',
+    ios: 'com.application.empire',
+    android: 'com.application.empire',
   }),
   expressdelivery: Platform.select({
     ios: 'com.customer.expressdelivery',
@@ -706,8 +720,8 @@ const appIds = {
     android: 'com.booziedoozie',
   }),
   zestyclickz: Platform.select({
-    ios: 'com.zestyclickz',
-    android: 'com.zestyclickz',
+    ios: 'com.app.zestyclickz',
+    android: 'com.app.zestyclickz',
   }),
   bakesale: Platform.select({
     ios: 'com.bakesale',
@@ -1222,8 +1236,8 @@ const appIds = {
     android: 'com.hivefair',
   }),
   localdropoff: Platform.select({
-    ios: 'com.localdropoff',
-    android: 'com.localdropoff',
+    ios: 'com.app.localdropoff',
+    android: 'com.app.localdropoff',
   }),
   ubi: Platform.select({
     ios: 'com.application.ubi',
@@ -1238,8 +1252,8 @@ const appIds = {
     android: 'com.onscart',
   }),
   mandaExpress: Platform.select({
-    ios: 'com.mandaExpress',
-    android: 'com.mandaExpress',
+    ios: 'com.mandaExpress.customer',
+    android: 'com.mandaExpress.customer',
   }),
   gO: Platform.select({
     ios: 'com.customer.gO',
@@ -1390,7 +1404,6 @@ const appIds = {
     ios: 'com.bua',
     android: 'com.bua',
   }),
-  // ////
   upstreet: Platform.select({
     ios: 'com.app.upstreet',
     android: 'com.upstreet',
@@ -1406,6 +1419,62 @@ const appIds = {
   nineOneTwo: Platform.select({
     ios: 'com.nineOneTwo',
     android: 'com.nineOneTwo',
+  }),
+  trip: Platform.select({
+    ios: 'com.app.trip',
+    android: 'com.trip',
+  }),
+  aauJau: Platform.select({
+    ios: 'com.aauJau',
+    android: 'com.aauJau',
+  }),
+  mediPick: Platform.select({
+    ios: 'com.mediPick',
+    android: 'com.mediPick',
+  }),
+  meltivers: Platform.select({
+    ios: 'com.meltivers',
+    android: 'com.meltivers',
+  }),
+  ensoDigitalAgency: Platform.select({
+    ios: 'com.ensoDigitalAgency',
+    android: 'com.ensoDigitalAgency',
+  }),
+  hiperAbasto: Platform.select({
+    ios: 'com.hiperAbasto',
+    android: 'com.hiperAbasto',
+  }),
+  redglee: Platform.select({
+    ios: 'com.redglee',
+    android: 'com.redglee',
+  }),
+  dropItOffUsa: Platform.select({
+    ios: 'com.dropItOffUsa',
+    android: 'com.dropItOffUsa',
+  }),
+  handyPickup: Platform.select({
+    ios: 'com.handyPickup',
+    android: 'com.handyPickup',
+  }),
+  TJJHub: Platform.select({
+    ios: 'com.TJJHub',
+    android: 'com.TJJHub',
+  }),
+  curblerLLC: Platform.select({
+    ios: 'com.curblerLLC',
+    android: 'com.curblerLLC',
+  }),
+  cartnar: Platform.select({
+    ios: 'com.cartnar',
+    android: 'com.cartnar',
+  }),
+  uven: Platform.select({
+    ios: 'com.uven',
+    android: 'com.uven',
+  }),
+  pAS41: Platform.select({
+    ios: 'com.pAS41',
+    android: 'com.pAS41',
   }),
 };
 
