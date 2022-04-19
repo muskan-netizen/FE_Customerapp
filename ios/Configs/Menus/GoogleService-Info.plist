@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>673566394556-k3ema4oppapq2sp78ov1s4apth4p3u20.apps.googleusercontent.com</string>
+	<string>583669388232-17s8thv560cokfdrsos0egr9nt67minj.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.673566394556-k3ema4oppapq2sp78ov1s4apth4p3u20</string>
+	<string>com.googleusercontent.apps.583669388232-17s8thv560cokfdrsos0egr9nt67minj</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>673566394556-h0h2r5tqbghaimvj9s9t3i8aa4l84haa.apps.googleusercontent.com</string>
+	<string>583669388232-1oiki49qlul2mv70dgdb50s4eeiv94v9.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCAGmtJ1FJCZp4tAZm8KGlXvTaF2xp6iJg</string>
+	<string>AIzaSyC9hrOo85VrzbJwGN5-Wj4WFlTkt6zZXAY</string>
 	<key>GCM_SENDER_ID</key>
-	<string>673566394556</string>
+	<string>583669388232</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.menusvirtual</string>
+	<string>com.menus.customer</string>
 	<key>PROJECT_ID</key>
-	<string>menus-8b485</string>
+	<string>menus-157e2</string>
 	<key>STORAGE_BUCKET</key>
-	<string>menus-8b485.appspot.com</string>
+	<string>menus-157e2.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:673566394556:ios:45282843972635d66968b9</string>
+	<string>1:583669388232:ios:66ac1ae6d656da7464e6fd</string>
 </dict>
 </plist>

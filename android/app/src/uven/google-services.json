@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "966210125268",
+    "project_id": "uven-2d9b3",
+    "storage_bucket": "uven-2d9b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:966210125268:android:08cde96d4049c22de9ea41",
+        "android_client_info": {
+          "package_name": "com.uven"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "966210125268-4mevrd8then6c26nat5ogho5mn87m86j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uven",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "966210125268-prrn4tv2dnom6b0l4vu4qecjrlb1038s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uven",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "966210125268-t6mmltmbsf4er3bjkc6mg52e5upgbcm3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uven",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "966210125268-nm9dubpstbc2r9ftc23rjdscb8duaemc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-i6YLao97l6L0wMVFfRKhWRu6bD_fcDA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "966210125268-nm9dubpstbc2r9ftc23rjdscb8duaemc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "966210125268-39lrv8s8gaogu8bd860ql2bp3tp3utp7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.uven"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

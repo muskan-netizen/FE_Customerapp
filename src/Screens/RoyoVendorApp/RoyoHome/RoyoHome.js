@@ -619,7 +619,7 @@ const RoyoHome = (props) => {
         centerTitle={`${
           !isEmpty(selectedVendor)
             ? `${selectedVendor?.name}`
-            : 'Select a vendor'
+            : strings.SELECT_VENDOR
         } `}
         onPressLeft={() => {
           navigation.navigate(navigationStrings.TAB_ROUTES);

@@ -31,6 +31,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
 import Share from 'react-native-share';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 
 export default function Account2({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -220,12 +222,15 @@ export default function Account2({navigation}) {
             />
           </TouchableOpacity>
         )} */}
-        {!!userData?.auth_token &&
-          (businessType == 4 ? null : (
+        {DeviceInfo.getBundleId() != appIds.dlvrd &&
+            !!userData?.auth_token &&
+            (businessType == 4 ? null : (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-              onPress={moveToNewScreen(navigationStrings.MY_ORDERS)}
+              onPress={moveToNewScreen(navigationStrings.MY_ORDERS, {
+                isBack: true,
+              })}
               iconLeft={imagePath.myOrder}
               centerHeading={strings.MY_ORDERS}
               containerStyle={styles.containerStyle2}

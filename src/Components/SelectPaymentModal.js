@@ -50,7 +50,7 @@ export default function SelectPaymentModal({
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const navigation = useNavigation();
   const userData = useSelector((state) => state?.auth?.userData);
-console.log(userData,"userData");
+  console.log(userData, 'userData');
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
@@ -158,27 +158,28 @@ console.log(userData,"userData");
   const errorMethod = (error) => {
     updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
     // showError(error?.message || error?.error);
+    console.log(error, 'error');
     alert(error?.message || error?.error);
   };
-
 
   const _createPaymentMethod = async (cardInfo, res2) => {
     console.log(cardInfo, '_createPaymentMethod>>>ardInfo');
     if (res2) {
-     await createPaymentMethod({
+      await createPaymentMethod({
         type: 'Card',
         // token:tokenInfo,
         card: cardInfo,
         billing_details: {
           name: 'Jenny Rosen',
         },
-      }).then((res) => {
+      })
+        .then((res) => {
           // updateState({isLoadingB: false});
           console.log('_createPaymentMethod res', res);
           if (res && res?.error && res?.error?.message) {
             showError(res?.error?.message);
-              updateState({isLoading: false});
-              paymentModalClose();
+            updateState({isLoading: false});
+            paymentModalClose();
           } else {
             console.log(res, 'success_createPaymentMethod ');
             updateState({isLoading: false});
@@ -186,7 +187,7 @@ console.log(userData,"userData");
               selectedPaymentMethod,
               cardInfo,
               tokenInfo: res2,
-              payment_method_id: res?.paymentMethod?.id
+              payment_method_id: res?.paymentMethod?.id,
             });
             paymentModalClose();
           }
@@ -214,7 +215,7 @@ console.log(userData,"userData");
                 return;
               }
               if (res && res?.token && res.token?.id) {
-                  _createPaymentMethod(cardInfo, res.token?.id);
+                _createPaymentMethod(cardInfo, res.token?.id);
 
                 // updateState({isLoading: false});
                 // onSelectPayment({

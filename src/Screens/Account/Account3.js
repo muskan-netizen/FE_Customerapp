@@ -27,6 +27,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
+import DeviceInfo from 'react-native-device-info';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -36,7 +37,6 @@ import {MyDarkTheme} from '../../styles/theme';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {getImageUrl, getRandomColor} from '../../utils/helperFunctions';
 import stylesFun from './styles';
-import DeviceInfo from 'react-native-device-info'
 export default function Account3({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);

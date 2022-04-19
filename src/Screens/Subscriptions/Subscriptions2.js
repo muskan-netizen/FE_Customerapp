@@ -626,6 +626,8 @@ export default function Subscriptions2({navigation, route}) {
                   payment_option_id: selectedPaymentMethod?.id,
                   amount: selectedPlan?.price,
                   payment_method_id: res?.paymentMethod?.id,
+                  action: 'subscription',
+                  subscription_slug: selectedPlan?.slug,
                 },
                 {
                   code: appData?.profile?.code,

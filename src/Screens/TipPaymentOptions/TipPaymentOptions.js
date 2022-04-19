@@ -105,7 +105,7 @@ export default function TipPaymentOptions({navigation, route}) {
   };
 
   const _createPaymentMethod = async (cardInfo, res2) => {
-    // console.log(cardInfo, 'cardInfo');
+    console.log(res2, 'cardInfo');
     if (res2) {
       await createPaymentMethod({
         type: 'Card',
@@ -124,8 +124,9 @@ export default function TipPaymentOptions({navigation, route}) {
                 {
                   payment_option_id: selectedPaymentMethod?.id,
                   action: 'tip',
-                  amount:data?.selectedTipAmount,
+                  amount: data?.selectedTipAmount,
                   payment_method_id: res?.paymentMethod?.id,
+                  order_number: data?.order_number,
                 },
                 {
                   code: appData?.profile?.code,
@@ -140,16 +141,16 @@ export default function TipPaymentOptions({navigation, route}) {
                     res?.client_secret,
                   );
                   if (paymentIntent) {
-                    console.log(paymentIntent, 'paymentIntent');
+                    console.log(data?.order_number, 'paymentIntent');
                     if (paymentIntent) {
                       actions
                         .confirmPaymentIntentStripe(
                           {
                             payment_option_id: selectedPaymentMethod?.id,
                             action: 'tip',
-                            tip_amount:data?.selectedTipAmount,
+                            tip_amount: data?.selectedTipAmount,
                             payment_intent_id: paymentIntent?.id,
-                            order_number:data?.order_number
+                            order_number: data?.order_number,
                           },
                           {
                             code: appData?.profile?.code,
@@ -169,7 +170,7 @@ export default function TipPaymentOptions({navigation, route}) {
                             navigation.navigate(navigationStrings.ORDER_DETAIL);
                           }
                         })
-                        .catch(errorMethod);
+                        .catch((error) => console.log(error, 'errrorrrer'));
                     }
                   } else {
                     updateState({isLoading: false});
@@ -195,7 +196,7 @@ export default function TipPaymentOptions({navigation, route}) {
         selectedPaymentMethod?.off_site == 0
       ) {
         if (cardInfo) {
-          updateState({isLoading: true})
+          updateState({isLoading: true});
           await createToken(cardInfo)
             .then((res) => {
               if (res && res?.token && res.token?.id) {
