@@ -190,7 +190,7 @@ export default function DashBoardFive({
     </View>
   );
 
-  const scaleInAnimated = new Animated.Value(0);
+
 
   const renderBanners = ({item}) => {
     const imageUrl = getImageUrl(
@@ -355,11 +355,6 @@ export default function DashBoardFive({
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={moveToNewScreen(navigationStrings.BRANDDETAIL, item)}
-        // style={{
-        //   ...getScaleTransformationStyle(scaleInAnimated),
-        // }}
-        // onPressIn={() => pressInAnimation(scaleInAnimated)}
-        // onPressOut={() => pressOutAnimation(scaleInAnimated)}
       >
         {isSVG ? (
           <SvgUri

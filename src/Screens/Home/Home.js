@@ -50,9 +50,7 @@ export default function Home({ route, navigation }) {
     themeToggle,
     allAddresss,
   } = useSelector((state) => state?.initBoot);
-  const { location, appMainData, dineInType } = useSelector(
-    (state) => state?.home,
-  );
+  const { location, appMainData, dineInType } = useSelector((state) => state?.home);
   console.log(location, ">location>location");
   console.log(appMainData, 'appMainData>appMainData');
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
@@ -212,7 +210,6 @@ export default function Home({ route, navigation }) {
   useEffect(() => {
     chekLocationPermission(true)
       .then((result) => {
-
         if (result !== 'goback' && result == 'granted') {
           console.log(result, "chekLocationPermission");
           getCurrentLocation('home')
@@ -371,7 +368,7 @@ export default function Home({ route, navigation }) {
           )
           .then(async (res) => {
             console.log('Home data++++++', res);
-            await preLoadImages(res.data);
+            // await preLoadImages(res.data);
             updateState({ searchDataLoader: false });
             if (
               appData?.profile?.preferences?.is_hyperlocal &&
@@ -412,7 +409,7 @@ export default function Home({ route, navigation }) {
                 isLoadingB: false,
                 searchDataLoader: false,
               });
-            }, 3000);
+            }, 1500);
           })
           .catch(errorMethod)
         : null;
@@ -455,7 +452,7 @@ export default function Home({ route, navigation }) {
           uri: getImageUrl(
             item?.icon?.image_fit,
             item?.icon?.image_path,
-            '160/160',
+            '140/140',
           ),
         };
       });
@@ -468,7 +465,7 @@ export default function Home({ route, navigation }) {
           uri: getImageUrl(
             item.image.image_fit,
             item.image.image_path,
-            appStyle?.homePageLayout === 5 ? '800/600' : '400/600',
+            appStyle?.homePageLayout === 5 ? '600/400' : '200/400',
           )
         }
       })
@@ -510,7 +507,7 @@ export default function Home({ route, navigation }) {
 
   //onPress Category
   const onPressCategory = (item) => {
-    console.log(item, 'itemitem');
+
 
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
@@ -634,11 +631,13 @@ export default function Home({ route, navigation }) {
             name: data.redirect_name,
             fetchOffers: true,
           })();
+
       } else if (data.redirect_to == staticStrings.CATEGORY) {
         if (data?.category?.type?.title == staticStrings.VENDOR) {
           let dat2 = data;
           dat2['id'] = data?.redirect_id;
           moveToNewScreen(navigationStrings.VENDOR, dat2)();
+          return;
         } else {
           if (data?.category?.type?.title == staticStrings.PRODUCT) {
             moveToNewScreen(navigationStrings.PRODUCT_LIST, {
@@ -647,6 +646,7 @@ export default function Home({ route, navigation }) {
               name: data.redirect_name,
               fetchOffers: true,
             })();
+            return;
             // let dat2 = data;
             // dat2['id'] = data?.redirect_id;
             // moveToNewScreen(navigationStrings.VENDOR, dat2)();
@@ -657,6 +657,7 @@ export default function Home({ route, navigation }) {
               rootProducts: true,
               // categoryData: data,
             })();
+            return;
           } else {
             moveToNewScreen(navigationStrings.PRODUCT_LIST, {
               id: data.redirect_id,
@@ -672,6 +673,7 @@ export default function Home({ route, navigation }) {
             rootProducts: true,
             // categoryData: data,
           })();
+          return;
         }
       }
     }
@@ -708,9 +710,7 @@ export default function Home({ route, navigation }) {
     initApiHit();
     // homeData();
   };
-  const updateCircleData = (data) => {
-    updateState({ updatedData: data });
-  };
+
 
   const selcetedToggle = (type) => {
     actions.dineInData(type);
