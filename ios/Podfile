@@ -1493,6 +1493,16 @@ target 'FreshFarmz' do
   
 end
 
+# Ryde Target
+target 'Ryde' do
+  
+end
+
+# WaterTaxi Target
+target 'WaterTaxi' do
+  
+end
+
 
 
 

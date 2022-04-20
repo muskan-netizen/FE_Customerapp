@@ -28,7 +28,7 @@ const shortCodes = {
   specialhalal: 'b0fc04',
   thehouse: 'edcbc0',
   tasmeem: '408d5a',
-  snabbhem: 'de2c54',
+  snabbhem: 'bad620',
   lastminutedress: '6e940e',
   rerak: 'f16959',
   yummiidash: 'c23640',
@@ -298,6 +298,7 @@ const shortCodes = {
   pAS41:'4c0a17',
   freshFarmz:'eafe42',
   ryde:'309c33',
+  waterTaxi:'f0f44c',
 };
 
 const appIds = {
@@ -410,8 +411,8 @@ const appIds = {
     android: 'com.codebrew.tasmeem',
   }),
   snabbhem: Platform.select({
-    ios: 'com.snabbhem',
-    android: 'com.snabbhem',
+    ios: 'com.customer.snabbhem',
+    android: 'com.customer.snabbhem',
   }),
   lastminutedress: Platform.select({
     ios: 'com.codebrewLab.lastminutedress',
@@ -1485,6 +1486,10 @@ const appIds = {
   ryde: Platform.select({
     ios: 'com.customer.ryde',
     android: 'com.customer.ryde',
+  }),
+  waterTaxi: Platform.select({
+    ios: 'com.customer.waterTaxi',
+    android: 'com.customer.waterTaxi',
   }),
 };
 

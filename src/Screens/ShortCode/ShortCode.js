@@ -1900,6 +1900,12 @@ export default function ShortCode({route, navigation}) {
               isShortcodePrefilled: true,
             });
             break;
+            case appIds.waterTaxi:
+            updateState({
+              shortCode: shortCodes.waterTaxi,
+              isShortcodePrefilled: true,
+            });
+            break;
       }
     })();
   }, []);
