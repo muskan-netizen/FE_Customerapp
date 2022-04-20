@@ -20,6 +20,9 @@ import {
   GET_VENDOR_PROFILE,
   GET_VENDOR_TRANSACTIONS,
   RATE_TO_DRIVER,
+  SOTRE_VENDORS,
+  STORE_VENDOR_COUNT,
+  ALL_VENDOR_ORDERS
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -304,4 +307,16 @@ export function ratingToDriver(data = {}, headers = {}) {
         reject(error);
       });
   });
+}
+
+export function storeVendors(query, headers = {}) {
+  return apiGet(SOTRE_VENDORS + query, {}, headers)
+}
+
+export function vendorOrderCount(query, headers = {}) {
+  return apiGet(STORE_VENDOR_COUNT + query, {}, headers)
+}
+
+export function allVendorOrders(query, headers = {}) {
+  return apiGet(ALL_VENDOR_ORDERS + query, {}, headers)
 }

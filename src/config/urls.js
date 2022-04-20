@@ -19,7 +19,7 @@
 
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1';  //sales demo
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://hemptify.com/api/v1';
 // export const API_BASE_URL = 'https://sirvu.ca/api/v1';
@@ -85,7 +85,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://marketplace.verofax.com/api/v1';
 // export const API_BASE_URL = 'https://order.loopwhole.ca/api/v1';
 // export const API_BASE_URL = 'https://elcheregio.mx/api/v1';
-// export const API_BASE_URL = 'https://donepacked.com/api/v1';
+export const API_BASE_URL = 'https://donepacked.com/api/v1';
 // export const API_BASE_URL = 'https://cannabusxpress.com/api/v1';
 // export const API_BASE_URL = 'https://order-dev.taquick.com/api/v1';
 // export const API_BASE_URL = 'https://yeboy.mx/api/v1';
@@ -290,3 +290,12 @@ export const UPDATE_PRODUCT_FAQS_CART = getApiUrl('/cart/productfaq/update');
 export const RATE_TO_DRIVER = getApiUrl('/rating/update-driver-rating');
 export const GET_CATEGORY_KYC_DOCUMENT = getApiUrl('/category_kyc_document');
 export const SUBMIT_CATEGORY_KYC = getApiUrl('/submit_category_kyc');
+
+export const SOTRE_VENDORS = getApiUrl('/mystore/vendors');
+export const STORE_VENDOR_COUNT = getApiUrl('/mystore/vendor/dashboard');
+export const ALL_VENDOR_ORDERS = getApiUrl('/mystore/vendor/orders');
+export const VENDOR_CATEGORIES = getApiUrl(
+  '/mystore/vendor/product-category/list',
+);
+export const ALL_VENDOR_DATA = getApiUrl(
+  '/mystore/vendor/products-with-category/list',);

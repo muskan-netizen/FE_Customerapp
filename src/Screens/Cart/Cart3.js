@@ -58,6 +58,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {hitSlopProp} from '../../styles/commonStyles';
+import staticStrings from '../../constants/staticStrings';
 import {
   height,
   moderateScale,
@@ -1990,7 +1991,22 @@ function Cart({navigation, route}) {
       </TouchableOpacity>
     );
   };
-
+   const _redirectVendorProducts=(item)=>{   
+        console.log(item,"itemmmmm");   
+      
+       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+        fetchOffers: true,
+        id: item?.vendor?.id,
+        vendor:
+          item.redirect_to == staticStrings.ONDEMANDSERVICE
+            ? false
+            : item.redirect_to == staticStrings.PRODUCT
+              ? false
+              : true,
+        name: item?.vendor?.name,
+        isVendorList: false,
+      })();
+   }
   const onModalDropDown = () => {
     setSelTypes(val?.code);
   };
@@ -2148,7 +2164,10 @@ function Cart({navigation, route}) {
               // paddingHorizontal: moderateScale(8),
               flexDirection: 'column',
             }}>
-            <Text
+           <TouchableOpacity
+           onPress={()=>_redirectVendorProducts(item)}
+           >
+           <Text
               numberOfLines={1}
               style={{
                 ...styles.priceItemLabel2,
@@ -2156,6 +2175,7 @@ function Cart({navigation, route}) {
               }}>
               {item?.vendor?.name}
             </Text>
+           </TouchableOpacity>
 
             {!!cartData?.closed_store_order_scheduled ? (
               <Text
