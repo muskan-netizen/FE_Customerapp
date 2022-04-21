@@ -22649,7 +22649,7 @@
 				847EE41027840F410003197D /* Frameworks */,
 				847EE41127840F410003197D /* Resources */,
 				847EE42C27840F410003197D /* Bundle React Native code and images */,
-				847EE42D27840F410003197D /* ShellScript */,
+				847EE42D27840F410003197D /* Run Script */,
 				84B086296D2C607F8EB7A2F5 /* Bundle React Native code and images */,
 				38D23A47DD1EC847E580352F /* [CP] Embed Pods Frameworks */,
 				2A16767D1316C854D0A907A6 /* [CP] Copy Pods Resources */,
@@ -67550,7 +67550,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		847EE42D27840F410003197D /* ShellScript */ = {
+		847EE42D27840F410003197D /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -67567,6 +67567,7 @@
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingSDK/MessagingSDK.framework/MessagingSDK",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework/SDKConfigurations",
 			);
+			name = "Run Script";
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Donepacked-checkManifestLockResult.txt",
 			);
