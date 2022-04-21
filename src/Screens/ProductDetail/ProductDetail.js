@@ -34,6 +34,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc, {hitSlopProp} from '../../styles/commonStyles';
+import RenderHtml, {HTML} from 'react-native-render-html';
 import {
   height,
   moderateScale,
@@ -1270,10 +1271,14 @@ export default function ProductDetail({route, navigation}) {
                         {strings.DESCRIPTION}
                       </Text>
 
-                      <HTMLView
-                        value={'<div>' + plainHtml + '</div>'}
-                        stylesheet={{div: styles.descriptionStyle}}
+                      <RenderHtml
+                        contentWidth={width}
+                        source={{html: plainHtml}}
                       />
+                      {/* <HTMLView
+                        value={plainHtml}
+                        stylesheet={{div: styles.descriptionStyle}}
+                      /> */}
                     </View>
                   </View>
                   <HorizontalLine
@@ -1300,10 +1305,10 @@ export default function ProductDetail({route, navigation}) {
 
               {/* Add to Cart button */}
               {(productDetailData?.has_inventory == 0 ||
-                  (!!productTotalQuantity && !!productTotalQuantity != 0) ||
-                  (!!typeId && typeId == 8) ||
-                  !!productDetailData?.sell_when_out_of_stock) &&
-                (false? null : showErrorMessageTitle ? null : (
+                (!!productTotalQuantity && !!productTotalQuantity != 0) ||
+                (!!typeId && typeId == 8) ||
+                !!productDetailData?.sell_when_out_of_stock) &&
+                (false ? null : showErrorMessageTitle ? null : (
                   <View
                     style={{
                       marginBottom: moderateScaleVertical(25),

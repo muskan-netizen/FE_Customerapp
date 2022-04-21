@@ -1,4 +1,5 @@
 import LocalizedStrings from 'react-native-localization';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import en from './en';
 import ar from './ar';
 import es from './es';
@@ -11,12 +12,24 @@ import ru from './ru';
 import pt from './pt';
 import vi from './vi';
 import hi from './hi';
+import es_elcheragio from './es_elcheragio';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 
+//Spanish fils
+
+const spanishfile = () => {
+  switch (DeviceInfo.getBundleId()) {
+    case appIds?.elcheregio:
+      return es_elcheragio;
+    default:
+      return es;
+  }
+};
 
 let strings = new LocalizedStrings({
   en: en,
   ar: ar,
-  es: es,
+  es: spanishfile(),
   de: de,
   fr: fr,
   tr: tr,

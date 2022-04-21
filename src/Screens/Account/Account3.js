@@ -12,7 +12,7 @@ import {
   View,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
-import {getBundleId} from 'react-native-device-info';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Share from 'react-native-share';
@@ -27,7 +27,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import DeviceInfo from 'react-native-device-info';
+
 import {
   moderateScale,
   moderateScaleVertical,
@@ -472,20 +472,23 @@ export default function Account3({navigation}) {
               />
             ))}
 
-          <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
-            iconLeft={imagePath.links}
-            centerHeading={strings.LINKS}
-            containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{
-              fontSize: textScale(14),
-              fontFamily: fontFamily.regular,
-            }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
+         {
+           DeviceInfo.getBundleId()!=appIds.elcheregio && 
+          ( <ListItemHorizontal
+           centerContainerStyle={{flexDirection: 'row'}}
+           leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+           onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
+           iconLeft={imagePath.links}
+           centerHeading={strings.LINKS}
+           containerStyle={styles.containerStyle2}
+           centerHeadingStyle={{
+             fontSize: textScale(14),
+             fontFamily: fontFamily.regular,
+           }}
+           // iconRight={imagePath.goRight}
+           // rightIconStyle={{tintColor: colors.textGreyLight}}
+         />)
+         }
           {!!userData?.auth_token && (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
