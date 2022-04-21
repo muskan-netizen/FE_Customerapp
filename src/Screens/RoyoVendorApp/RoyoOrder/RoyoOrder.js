@@ -1,10 +1,17 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { FlatList, Image, Platform, RefreshControl, TouchableOpacity, View } from 'react-native';
+import React, {useEffect, useState, useRef} from 'react';
+import {
+  FlatList,
+  Image,
+  Platform,
+  RefreshControl,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Modal from 'react-native-modal';
 import SunmiV2Printer from 'react-native-sunmi-v2-printer';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import Header from '../../../Components/Header';
-import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import MultiScreen from '../../../Components/MultiScreen';
 import OrderCard from '../../../Components/OrderCard';
 import SelectVendorListModal from '../../../Components/SelectVendorListModal';
@@ -15,33 +22,34 @@ import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import {
   moderateScale,
-  moderateScaleVertical
+  moderateScaleVertical,
 } from '../../../styles/responsiveSize';
-import { showError } from '../../../utils/helperFunctions';
-import { getItem } from '../../../utils/utils';
+import {showError} from '../../../utils/helperFunctions';
+import {getItem} from '../../../utils/utils';
 import stylesFunc from './styles';
-import _, { debounce } from 'lodash';
+import _, {debounce} from 'lodash';
 
-
-let dataLimit = 20
-let vendorLimit = 50
+let dataLimit = 20;
+let vendorLimit = 50;
 
 const RoyoOrder = (props) => {
-  const { navigation, route } = props;
-  const { params } = route;
+  const {navigation, route} = props;
+  const {params} = route;
   const currentTheme = useSelector((state) => state.initBoot);
-  const { storeSelectedVendor } = useSelector((state) => state?.order);
-  const { appData, appStyle, currencies, languages } = useSelector((state) => state?.initBoot,);
-  const { themeColors, themeLayouts } = currentTheme;
+  const {storeSelectedVendor} = useSelector((state) => state?.order);
+  const {appData, appStyle, currencies, languages} = useSelector(
+    (state) => state?.initBoot,
+  );
+  const {themeColors, themeLayouts} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ fontFamily, themeColors });
+  const styles = stylesFunc({fontFamily, themeColors});
 
-  const [availVendor, setAvailVendor] = useState([])
-  const [data, setData] = useState([])
-  const dataPage = useRef(1)
-  const dataLoadMore = useRef(true)
-  const vendorPage = useRef(1)
-  const vendorLoadMore = useRef(true)
+  const [availVendor, setAvailVendor] = useState([]);
+  const [data, setData] = useState([]);
+  const dataPage = useRef(1);
+  const dataLoadMore = useRef(true);
+  const vendorPage = useRef(1);
+  const vendorLoadMore = useRef(true);
 
   const [state, setState] = useState({
     isLoading: true,
@@ -49,7 +57,7 @@ const RoyoOrder = (props) => {
     isRefreshing: false,
     activeIndex: 0,
     isBleDevice: false,
-    isVendorSelectModal: false
+    isVendorSelectModal: false,
   });
   const {
     isLoadingB,
@@ -57,24 +65,24 @@ const RoyoOrder = (props) => {
     isRefreshing,
     activeIndex,
     isBleDevice,
-    isVendorSelectModal
+    isVendorSelectModal,
   } = state;
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   //reset pagination values
   useEffect(() => {
     const focus = navigation.addListener('focus', () => {
-      dataPage.current = 1
-      vendorPage.current = 1
-      vendorLoadMore.current = true
-      dataLoadMore.current = true
+      dataPage.current = 1;
+      vendorPage.current = 1;
+      vendorLoadMore.current = true;
+      dataLoadMore.current = true;
     });
     const blur = navigation.addListener('blur', () => {
-      dataPage.current = 1
-      vendorPage.current = 1
-      vendorLoadMore.current = true
-      dataLoadMore.current = true
+      dataPage.current = 1;
+      vendorPage.current = 1;
+      vendorLoadMore.current = true;
+      dataLoadMore.current = true;
     });
     return focus, blur;
   }, []);
@@ -82,47 +90,45 @@ const RoyoOrder = (props) => {
   useEffect(() => {
     if (params) {
       console.log('focused order screen >>>> ', params);
-      updateState({ activeIndex: params?.index });
+      updateState({activeIndex: params?.index});
     }
   }, [params]);
 
   useEffect(() => {
-    fetchAllVendors()
+    fetchAllVendors();
     _getBleDevice();
   }, []);
 
-
   useEffect(() => {
-    getAllVendorOrder()
-  }, [activeIndex, storeSelectedVendor])
-
+    getAllVendorOrder();
+  }, [activeIndex, storeSelectedVendor]);
 
   const selectedOrder = (index) => {
-    dataPage.current = 1
-    dataLoadMore.current = true
-    updateState({ activeIndex: index });
+    dataPage.current = 1;
+    dataLoadMore.current = true;
+    updateState({activeIndex: index});
   };
 
   const orderType = (inx) => {
-    let type = ''
+    let type = '';
     switch (inx) {
       case 0:
-        type = 'pending'
-        return type
+        type = 'pending';
+        return type;
       case 1:
-        type = 'active'
-        return type
+        type = 'active';
+        return type;
       case 2:
-        type = 'cancelled'
-        return type
+        type = 'cancelled';
+        return type;
       case 3:
-        type = 'completed'
-        return type
+        type = 'completed';
+        return type;
       default:
-        return type
+        return type;
     }
-  }
-
+  };
+  
   const getAllVendorOrder = async (isRefreshing = false) => {
     if (!isRefreshing) {
       updateState({ isLoadingB: true })
@@ -169,27 +175,30 @@ const RoyoOrder = (props) => {
   };
 
   const fetchAllVendors = async (value = null) => {
-    let query = `?limit=${vendorLimit}&page=${vendorPage.current}`
+    let query = `?limit=${vendorLimit}&page=${vendorPage.current}`;
     let headers = {
       code: appData?.profile?.code,
       currency: currencies?.primary_currency?.id,
       language: languages?.primary_language?.id,
-    }
+    };
     try {
-      const res = await actions.storeVendors(query, headers)
-      console.log("available vendors res", res)
+      const res = await actions.storeVendors(query, headers);
+      console.log('available vendors res', res);
       if (res.data.data.length == 0) {
-        vendorLoadMore.current = false
+        vendorLoadMore.current = false;
       }
       if (!!res?.data && res.data.data.length > 0) {
-        let meregeData = vendorPage.current == 1 ? res?.data?.data : [...availVendor, ...res?.data?.data]
-        setAvailVendor(meregeData)
+        let meregeData =
+          vendorPage.current == 1
+            ? res?.data?.data
+            : [...availVendor, ...res?.data?.data];
+        setAvailVendor(meregeData);
       }
     } catch (error) {
-      console.log('error riased', error)
-      showError(error?.message)
+      console.log('error riased', error);
+      showError(error?.message);
     }
-  }
+  };
 
   //error handling
   const errorMethod = (error) => {
@@ -201,24 +210,32 @@ const RoyoOrder = (props) => {
     });
     showError(error?.message || error?.error);
   };
-
+const removeItemfromData=(id)=>{
+     let newarray=[...data]
+     newarray =newarray.filter(item=>item.id!==id)
+     setData(newarray)
+    
+}
   const updateOrderStatus = (acceptRejectData, status) => {
+    console.log(acceptRejectData, 'item');
     let data = {};
     data['order_id'] = acceptRejectData?.id;
     data['vendor_id'] = storeSelectedVendor?.id;
     data['order_status_option_id'] = status;
-    updateState({ isLoadingB: true });
-    actions.updateOrderStatus(data, {
-      code: appData?.profile?.code,
-      currency: currencies?.primary_currency?.id,
-      language: languages?.primary_language?.id,
-      // systemuser: DeviceInfo.getUniqueId(),
-    })
+    updateState({isLoadingB: true});
+    actions
+      .updateOrderStatus(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
       .then((res) => {
-        console.log(res,"statausss")
-        
+        console.log(res, 'statausss');
+
         if (res && res.status == 'success') {
-          getAllVendorOrder(storeSelectedVendor?.id)
+          // getAllVendorOrder(storeSelectedVendor?.id);
+          removeItemfromData(acceptRejectData?.id)
         }
         updateState({
           isLoadingB: false,
@@ -229,19 +246,19 @@ const RoyoOrder = (props) => {
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({ isRefreshing: true });
-    dataPage.current = 1
-    vendorPage.current = 1
-    vendorLoadMore.current = true
-    dataLoadMore.current = true
-    getAllVendorOrder(true)
+    updateState({isRefreshing: true});
+    dataPage.current = 1;
+    vendorPage.current = 1;
+    vendorLoadMore.current = true;
+    dataLoadMore.current = true;
+    getAllVendorOrder(true);
   };
 
   //pagination of data
-  const onEndReached = ({ distanceFromEnd }) => {
+  const onEndReached = ({distanceFromEnd}) => {
     if (dataLoadMore.current) {
-      dataPage.current = dataPage.current + 1
-      getAllVendorOrder(true)
+      dataPage.current = dataPage.current + 1;
+      getAllVendorOrder(true);
     }
   };
 
@@ -256,9 +273,8 @@ const RoyoOrder = (props) => {
     });
   };
 
-
   const onVendorSelect = (item) => {
-    updateState({ isVendorSelectModal: false, pageNo: 1 });
+    updateState({isVendorSelectModal: false, pageNo: 1});
     setTimeout(() => {
       actions.savedSelectedVendor(item);
     }, 500);
@@ -268,9 +284,9 @@ const RoyoOrder = (props) => {
     navigation.navigate(navigationStrings.ORDER_DETAIL, {
       data: item,
       selectedVendor: storeSelectedVendor,
-    })
-  }
-  const renderOrders = ({ item, index }) => {
+    });
+  };
+  const renderOrders = ({item, index}) => {
     return (
       <TouchableOpacity
         onPress={() => orderDetail(item)}
@@ -287,16 +303,16 @@ const RoyoOrder = (props) => {
           isBleDevice={isBleDevice}
         />
       </TouchableOpacity>
-    )
-  }
+    );
+  };
 
   const onEndReachedVendor = () => {
     if (vendorLoadMore.current) {
-      vendorPage.current = vendorPage.current + 1
-      fetchAllVendors()
+      vendorPage.current = vendorPage.current + 1;
+      fetchAllVendors();
     }
-    console.log("end reached")
-  }
+    console.log('end reached');
+  };
 
   return (
     <WrapperContainer
@@ -306,7 +322,7 @@ const RoyoOrder = (props) => {
       isLoadingB={isLoadingB}
       source={loaderOne}>
       <Header
-        headerStyle={{ marginVertical: moderateScaleVertical(16) }}
+        headerStyle={{marginVertical: moderateScaleVertical(16)}}
         // centerTitle="Orders | Foodies hub  "
         centerTitle={'Orders | ' + storeSelectedVendor?.name || ''}
         onPressCenterTitle={() => _reDirectToVendorList()}
@@ -355,10 +371,10 @@ const RoyoOrder = (props) => {
         style={{
           margin: 0,
         }}>
-        <View style={{ flex: 1, backgroundColor: colors.white }}>
+        <View style={{flex: 1, backgroundColor: colors.white}}>
           <SelectVendorListModal
             vendorList={availVendor}
-            onCloseModal={() => updateState({ isVendorSelectModal: false })}
+            onCloseModal={() => updateState({isVendorSelectModal: false})}
             onVendorSelect={onVendorSelect}
             selectedVendor={storeSelectedVendor}
             onEndReachedVendor={onEndReachedVendor}
@@ -370,4 +386,3 @@ const RoyoOrder = (props) => {
 };
 
 export default RoyoOrder;
-
