@@ -1906,6 +1906,18 @@ export default function ShortCode({route, navigation}) {
               isShortcodePrefilled: true,
             });
             break;
+            case appIds.muvpod:
+            updateState({
+              shortCode: shortCodes.muvpod,
+              isShortcodePrefilled: true,
+            });
+            break;
+            case appIds.smile:
+              updateState({
+                shortCode: shortCodes.smile,
+                isShortcodePrefilled: true,
+              });
+              break;
       }
     })();
   }, []);

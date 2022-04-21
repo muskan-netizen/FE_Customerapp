@@ -5055,6 +5055,26 @@ android {
          resValue "string", "app_name", "WaterTaxi"
          resValue "string", "host_name", ""
          }
+        muvpod{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.muvpod'
+         resValue "string", "app_name", "Muvpod"
+         resValue "string", "host_name", ""
+         }
+         smile{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.customer.smile'
+         resValue "string", "app_name", "Smile"
+         resValue "string", "host_name", ""
+         }
     }
 }
 

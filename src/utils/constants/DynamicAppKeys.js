@@ -299,6 +299,8 @@ const shortCodes = {
   freshFarmz:'eafe42',
   ryde:'309c33',
   waterTaxi:'f0f44c',
+  muvpod:'3cc883',
+  smile:'d3a41c',
 };
 
 const appIds = {
@@ -1490,6 +1492,14 @@ const appIds = {
   waterTaxi: Platform.select({
     ios: 'com.customer.waterTaxi',
     android: 'com.customer.waterTaxi',
+  }),
+  muvpod: Platform.select({
+    ios: 'com.muvpod',
+    android: 'com.muvpod',
+  }),
+  smile: Platform.select({
+    ios: 'com.customer.smile',
+    android: 'com.customer.smile',
   }),
 };
 

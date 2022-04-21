@@ -1503,6 +1503,16 @@ target 'WaterTaxi' do
   
 end
 
+# Muvpod Target
+target 'Muvpod' do
+  
+end
+
+# Smile Target
+target 'Smile' do
+  
+end
+
 
 
 
