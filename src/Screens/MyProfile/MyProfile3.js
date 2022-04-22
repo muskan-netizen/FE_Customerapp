@@ -788,6 +788,7 @@ export default function MyProfile3({route, navigation}) {
               textTransform: 'uppercase',
               fontSize: textScale(12),
             }}
+            returnKeyType={'next'}
           />
 
           <TextInputWithUnderlineAndLabel
@@ -806,6 +807,7 @@ export default function MyProfile3({route, navigation}) {
               textTransform: 'uppercase',
               fontSize: textScale(12),
             }}
+            returnKeyType={'next'}
           />
 
           <PhoneNumberInputWithUnderline
@@ -886,6 +888,7 @@ export default function MyProfile3({route, navigation}) {
             textTransform: 'uppercase',
             fontSize: textScale(12),
           }}
+          returnKeyType={"next"}
         />
 
         <TextInputWithUnderlineAndLabel
@@ -900,6 +903,7 @@ export default function MyProfile3({route, navigation}) {
           }}
           secureTextEntry={true}
           containerStyle={{marginVertical: moderateScaleVertical(10)}}
+          returnKeyType={"next"}
         />
         <TextInputWithUnderlineAndLabel
           onChangeText={_onChangeText('confirmPassword')}
@@ -913,6 +917,7 @@ export default function MyProfile3({route, navigation}) {
           }}
           secureTextEntry={true}
           containerStyle={{marginVertical: moderateScaleVertical(10)}}
+          returnKeyType={"next"}
         />
         <GradientButton
           btnStyle={{marginTop: moderateScaleVertical(57)}}

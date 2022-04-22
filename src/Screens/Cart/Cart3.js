@@ -2335,7 +2335,8 @@ function Cart({ navigation, route }) {
                                   )
                                   }`}
                               </Text>{' '}
-                              X {i?.quantity} ={' '}
+                              {i?.quantity } 
+                              X  ={' '}
                               <Text
                                 style={{
                                   color: isDarkMode
@@ -3308,6 +3309,7 @@ function Cart({ navigation, route }) {
             isDarkMode ? colors.textGreyB : colors.textGreyB
           }
           placeholder={strings.SPECIAL_INSTRUCTION}
+          returnKeyType={"next"}
         />
         {/* <View style={{ height: moderateScaleVertical(20) }} /> */}
 
@@ -5566,12 +5568,12 @@ function Cart({ navigation, route }) {
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
       isLoadingB={deliveryFeeLoader}>
-      {/* <Header
+      <Header
         centerTitle={strings.CART}
         leftIcon={imagePath.icBackb}
         isRightText={cartItems && !!cartItems?.length}
         onPressRightTxt={() => openClearCartModal()}
-      /> */}
+      />
 
       {console.log(cartItems, 'cartItems>>>')}
       <FlatList
