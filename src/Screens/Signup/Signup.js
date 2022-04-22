@@ -57,6 +57,7 @@ export default function Signup({navigation}) {
     languages,
     themeColor,
     themeToggle,
+   
   } = useSelector((state) => state?.initBoot);
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -541,7 +542,10 @@ export default function Signup({navigation}) {
             />
             <BorderTextInput
               onChangeText={_onChangeText('referralCode')}
-              placeholder={strings.ENTERREFERALCODE}
+              placeholder={appData?.profile?.preferences?.referral_code
+                ?appData?.profile?.preferences?.referral_code:
+                strings.ENTERREFERALCODE
+              }
               value={referralCode}
             />
 
