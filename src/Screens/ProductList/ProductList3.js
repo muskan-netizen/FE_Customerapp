@@ -1581,7 +1581,7 @@ export default function Products({ route, navigation }) {
           businessType={businessType}
           categoryInfo={categoryInfo}
           animateText={animateText}
-          // section={section}
+          section={section}
         />
         <View style={styles.horizontalLine} />
       </Animatable.View>
