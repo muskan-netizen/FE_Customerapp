@@ -1666,8 +1666,11 @@ export default function Products({ route, navigation }) {
   };
 
   useEffect(() => {
+    console.log(ProductTags,"ProductTags");
     let EnabledTags = ProductTags.filter((el) => el.isSelected);
+    console.log(EnabledTags,"EnabledTags");
     if (EnabledTags.length > 0) {
+      console.log(sectionListData,"sectionListData>>>>BEFORE");
       const newArr = sectionListData.map((el) => {
         const records =
           el.data &&
@@ -1684,6 +1687,8 @@ export default function Products({ route, navigation }) {
         newObj.data = records;
         return newObj;
       });
+
+      console.log(newArr,"sectionListData>>>>AFTER");
       setCloneSectionList(newArr);
     } else {
       // getAllProductsByVendor();

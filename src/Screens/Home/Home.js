@@ -804,6 +804,7 @@ export default function Home({ route, navigation }) {
   };
 
   console.log(appStyle?.homePageLayout, 'appStyle?.homePageLayout');
+  console.log(location,"location>location")
 
   const renderHomeScreen = () => {
     const case_ = 5;
