@@ -13,6 +13,7 @@ import pt from './pt';
 import vi from './vi';
 import hi from './hi';
 import es_elcheragio from './es_elcheragio';
+import es_heybuddy from './es_heybuddy';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
 
 //Spanish fils
@@ -21,6 +22,8 @@ const spanishfile = () => {
   switch (DeviceInfo.getBundleId()) {
     case appIds?.elcheregio:
       return es_elcheragio;
+      case appIds?.heyBuddy:
+        return es_heybuddy;
     default:
       return es;
   }
