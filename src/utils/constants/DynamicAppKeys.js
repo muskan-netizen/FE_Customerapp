@@ -28,7 +28,7 @@ const shortCodes = {
   specialhalal: 'b0fc04',
   thehouse: 'edcbc0',
   tasmeem: '408d5a',
-  snabbhem: 'de2c54',
+  snabbhem: 'bad620',
   lastminutedress: '6e940e',
   rerak: 'f16959',
   yummiidash: 'c23640',
@@ -292,6 +292,15 @@ const shortCodes = {
   dropItOffUsa:'9524c4',
   handyPickup:'530592',
   TJJHub:'41a3db',
+  curblerLLC:'959ecf',
+  cartnar:'7b87ed',
+  uven:'9b8db5',
+  pAS41:'4c0a17',
+  freshFarmz:'eafe42',
+  ryde:'309c33',
+  waterTaxi:'f0f44c',
+  muvpod:'3cc883',
+  smile:'d3a41c',
 };
 
 const appIds = {
@@ -404,8 +413,8 @@ const appIds = {
     android: 'com.codebrew.tasmeem',
   }),
   snabbhem: Platform.select({
-    ios: 'com.snabbhem',
-    android: 'com.snabbhem',
+    ios: 'com.customer.snabbhem',
+    android: 'com.customer.snabbhem',
   }),
   lastminutedress: Platform.select({
     ios: 'com.codebrewLab.lastminutedress',
@@ -1455,6 +1464,42 @@ const appIds = {
   TJJHub: Platform.select({
     ios: 'com.TJJHub',
     android: 'com.TJJHub',
+  }),
+  curblerLLC: Platform.select({
+    ios: 'com.curblerLLC',
+    android: 'com.curblerLLC',
+  }),
+  cartnar: Platform.select({
+    ios: 'com.cartnar',
+    android: 'com.cartnar',
+  }),
+  uven: Platform.select({
+    ios: 'com.uven',
+    android: 'com.uven',
+  }),
+  pAS41: Platform.select({
+    ios: 'com.pAS41',
+    android: 'com.pAS41',
+  }),
+  freshFarmz: Platform.select({
+    ios: 'com.freshFarmz',
+    android: 'com.freshFarmz',
+  }),
+  ryde: Platform.select({
+    ios: 'com.customer.ryde',
+    android: 'com.customer.ryde',
+  }),
+  waterTaxi: Platform.select({
+    ios: 'com.customer.waterTaxi',
+    android: 'com.customer.waterTaxi',
+  }),
+  muvpod: Platform.select({
+    ios: 'com.muvpod',
+    android: 'com.muvpod',
+  }),
+  smile: Platform.select({
+    ios: 'com.customer.smile',
+    android: 'com.customer.smile',
   }),
 };
 

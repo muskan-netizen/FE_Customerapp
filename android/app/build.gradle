@@ -203,7 +203,7 @@ android {
 
     flavorDimensions "appType"
 
-     productFlavors {
+    productFlavors {
         royoorder {
             dimension "appType"
             versionCode 3
@@ -357,8 +357,8 @@ android {
         }
         blip{
             dimension "appType"
-            versionCode 1
-            versionName "1.0"
+            versionCode 2
+            versionName "1.1"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.app.blip'
@@ -488,11 +488,11 @@ android {
         }
          snabbhem{
             dimension "appType"
-            versionCode 3
+            versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.snabbhem'
+            applicationId 'com.customer.snabbhem'
             resValue "string", "app_name", "Snabbhem"
             resValue "string", "host_name", ""
         }
@@ -829,8 +829,8 @@ android {
          }
          vici{
             dimension "appType"
-            versionCode 7
-            versionName "1.1"
+            versionCode 8
+            versionName "1.2"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.app.vici'
@@ -1305,8 +1305,8 @@ android {
          }
          zestyclickz{
             dimension "appType"
-            versionCode 4
-            versionName "1.3"
+            versionCode 6
+            versionName "1.5"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.app.zestyclickz'
@@ -1325,7 +1325,7 @@ android {
          }
          elcheregio{
             dimension "appType"
-            versionCode 3
+            versionCode 4
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -2482,16 +2482,7 @@ android {
             resValue "string", "app_name", "Jet"
              resValue "string", "host_name", ""
          }
-         africanize{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.africanize'
-            resValue "string", "app_name", "Africanize"
-            resValue "string", "host_name", ""
-         }
+       
 
           markita{
             dimension "appType"
@@ -4975,7 +4966,96 @@ android {
          resValue "string", "app_name", "TJJ Hub"
          resValue "string", "host_name", ""
          }
-    
+         curblerLLC{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.curblerLLC'
+         resValue "string", "app_name", "Curbler LLC"
+         resValue "string", "host_name", ""
+         }
+        cartnar{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.cartnar'
+         resValue "string", "app_name", "Cartnar"
+         resValue "string", "host_name", ""
+         }
+        uven{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.uven'
+         resValue "string", "app_name", "Uven"
+         resValue "string", "host_name", ""
+         }
+        pAS41{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.pAS41'
+         resValue "string", "app_name", "PAS41"
+         resValue "string", "host_name", ""
+         }
+         freshFarmz{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.freshFarmz'
+         resValue "string", "app_name", "Fresh Farmz"
+         resValue "string", "host_name", ""
+         }
+        ryde{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.customer.ryde'
+         resValue "string", "app_name", "Ryde"
+         resValue "string", "host_name", ""
+         }
+         waterTaxi{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.customer.waterTaxi'
+         resValue "string", "app_name", "WaterTaxi"
+         resValue "string", "host_name", ""
+         }
+        muvpod{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.muvpod'
+         resValue "string", "app_name", "Muvpod"
+         resValue "string", "host_name", ""
+         }
+         smile{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.customer.smile'
+         resValue "string", "app_name", "Smile"
+         resValue "string", "host_name", ""
+         }
     }
 }
 

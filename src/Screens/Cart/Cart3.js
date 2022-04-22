@@ -57,7 +57,8 @@ import Vi from '../../constants/lang/vi';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import { hitSlopProp } from '../../styles/commonStyles';
+import {hitSlopProp} from '../../styles/commonStyles';
+import staticStrings from '../../constants/staticStrings';
 import {
   height,
   moderateScale,
@@ -621,6 +622,7 @@ function Cart({ navigation, route }) {
 
   //Clear cart
   const clearEntireCart = () => {
+ 
     actions
       .clearCart(
         {},
@@ -631,8 +633,8 @@ function Cart({ navigation, route }) {
           systemuser: DeviceInfo.getUniqueId(),
         },
       )
-      .then((res) => {
-        actions.cartItemQty(res);
+      .then((res) => { 
+        actions.cartItemQty({});
         setCartItems([]);
         setCartData({});
 
@@ -1978,7 +1980,22 @@ function Cart({ navigation, route }) {
       </TouchableOpacity>
     );
   };
-
+   const _redirectVendorProducts=(item)=>{   
+        console.log(item,"itemmmmm");   
+      
+       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+        fetchOffers: true,
+        id: item?.vendor?.id,
+        vendor:
+          item.redirect_to == staticStrings.ONDEMANDSERVICE
+            ? false
+            : item.redirect_to == staticStrings.PRODUCT
+              ? false
+              : true,
+        name: item?.vendor?.name,
+        isVendorList: false,
+      })();
+   }
   const onModalDropDown = () => {
     setSelTypes(val?.code);
   };
@@ -2136,7 +2153,10 @@ function Cart({ navigation, route }) {
               // paddingHorizontal: moderateScale(8),
               flexDirection: 'column',
             }}>
-            <Text
+           <TouchableOpacity
+           onPress={()=>_redirectVendorProducts(item)}
+           >
+           <Text
               numberOfLines={1}
               style={{
                 ...styles.priceItemLabel2,
@@ -2144,6 +2164,7 @@ function Cart({ navigation, route }) {
               }}>
               {item?.vendor?.name}
             </Text>
+           </TouchableOpacity>
 
             {!!cartData?.closed_store_order_scheduled ? (
               <Text
@@ -4085,8 +4106,10 @@ function Cart({ navigation, route }) {
                   //  moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
                   navigation.navigate(navigationStrings.OUTER_SCREEN, {})
               }
-              style={styles.paymentMainView}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              style={{...styles.paymentMainView,
+                backgroundColor: isDarkMode ?  MyDarkTheme.colors.background : colors.greyNew
+              }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <FastImage
                   source={imagePath.paymentMethod}
                   resizeMode="contain"
@@ -4097,6 +4120,9 @@ function Cart({ navigation, route }) {
                       ? MyDarkTheme.colors.text
                       : colors.black,
                   }}
+                  tintColor= {isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black}
                 />
 
                 <Text
@@ -4119,11 +4145,13 @@ function Cart({ navigation, route }) {
                   style={{
                     width: moderateScale(14),
                     height: moderateScale(14),
-                    tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
-                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    
                   }}
+                  tintColor= {isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black
+                   }
+                  transform= {[{scaleX: I18nManager.isRTL ? -1 : 1}]}
                 />
               </View>
             </TouchableOpacity>
@@ -4307,6 +4335,7 @@ function Cart({ navigation, route }) {
           ...styles.topLable,
           marginVertical: moderateScale(7),
           justifyContent: 'space-between',
+          backgroundColor:isDarkMode ? MyDarkTheme.colors.background : null,
         }}>
         <View style={{ flexDirection: 'row', flex: 0.85 }}>
           <FastImage
@@ -5537,12 +5566,12 @@ function Cart({ navigation, route }) {
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
       isLoadingB={deliveryFeeLoader}>
-      <Header
+      {/* <Header
         centerTitle={strings.CART}
         leftIcon={imagePath.icBackb}
         isRightText={cartItems && !!cartItems?.length}
         onPressRightTxt={() => openClearCartModal()}
-      />
+      /> */}
 
       {console.log(cartItems, 'cartItems>>>')}
       <FlatList
@@ -5553,7 +5582,7 @@ function Cart({ navigation, route }) {
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => String(index)}
         renderItem={_renderItem}
-        style={{ flex: 1, backgroundColor: colors.backgroundGrey }}
+        style={{flex: 1, backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey}}
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}

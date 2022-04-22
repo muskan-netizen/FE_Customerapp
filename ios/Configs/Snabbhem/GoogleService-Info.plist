@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>201647064711-r4rn10a4soankmrjb4jgnj9qcpsql021.apps.googleusercontent.com</string>
+	<string>234577435393-551n8k616fu48g0av21c8lrndf7mlo1g.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.201647064711-r4rn10a4soankmrjb4jgnj9qcpsql021</string>
+	<string>com.googleusercontent.apps.234577435393-551n8k616fu48g0av21c8lrndf7mlo1g</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>201647064711-18b7s89vodkusl17m3v3l70p8h45siuf.apps.googleusercontent.com</string>
+	<string>234577435393-9frqhbd9n5jgi8rsnrt7voa12l02rsgl.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDrM5msYLOCD2CDgv4iUD7zFw2CWgE0dO4</string>
+	<string>AIzaSyC5p0Z8DXpor6LrPHqPukO3p5RtnSuvXXc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>201647064711</string>
+	<string>234577435393</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.snabbhem</string>
+	<string>com.customer.snabbhem</string>
 	<key>PROJECT_ID</key>
-	<string>snabbhem-order</string>
+	<string>snabbhem-ce1de</string>
 	<key>STORAGE_BUCKET</key>
-	<string>snabbhem-order.appspot.com</string>
+	<string>snabbhem-ce1de.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:201647064711:ios:2e23cc22e6a468f1281a22</string>
+	<string>1:234577435393:ios:b01a6dfcf6ccee210a5900</string>
 </dict>
 </plist>

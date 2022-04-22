@@ -149,9 +149,7 @@ const RoyoTransactions = (props) => {
               : pendingOrdersArr,
           totalAmtRecieved:
             res?.data && res?.data?.totalEarning
-              ? Number(res?.data?.totalEarning).toFixed(
-                  appData?.profile?.preferences?.digit_after_decimal,
-                )
+              ? Number(res?.data?.totalEarning).toFixed(2)
               : 0,
         });
       })
@@ -225,9 +223,7 @@ const RoyoTransactions = (props) => {
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
         leftIcon={imagePath.backRoyo}
-        centerTitle={` ${strings.TRANSACTIONS} | ${
-          selectedVendor?.name || ''
-        }`}
+        centerTitle={'Transactions | ' + selectedVendor?.name || ''}
         onPressCenterTitle={() => _reDirectToVendorList()}
         onPressImageAlongwithTitle={() => _reDirectToVendorList()}
         showImageAlongwithTitle
@@ -254,13 +250,7 @@ const RoyoTransactions = (props) => {
           tabTextStyle={{
             marginTop: moderateScaleVertical(0),
           }}
-          screenName={[
-            strings.COMPLETED,
-            strings.PENDING,
-            strings.REFUNDS,
-            '',
-            '',
-          ]}
+          screenName={['Completed', 'Pending', 'Refunds', '', '']}
           selectedScreen={(index) => selectedOrder(index)}
           selectedScreenIndex={activeIndex}
         />

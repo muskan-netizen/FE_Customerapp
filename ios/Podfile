@@ -1468,6 +1468,53 @@ target 'TJJHub' do
   
 end
 
+# CurblerLLC Target
+target 'CurblerLLC' do
+  
+end
+
+# Cartnar Target
+target 'Cartnar' do
+  
+end
+
+# Uven Target
+target 'Uven' do
+  
+end
+
+# PAS41 Target
+target 'PAS41' do
+  
+end
+
+# FreshFarmz Target
+target 'FreshFarmz' do
+  
+end
+
+# Ryde Target
+target 'Ryde' do
+  
+end
+
+# WaterTaxi Target
+target 'WaterTaxi' do
+  
+end
+
+# Muvpod Target
+target 'Muvpod' do
+  
+end
+
+# Smile Target
+target 'Smile' do
+  
+end
+
+
+
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
