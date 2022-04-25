@@ -1706,12 +1706,11 @@ function Cart({ navigation, route }) {
       errorMethod(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }
   };
-
   const _renderRazor = () => {
     updateState({ isLoadingB: true });
     let options = {
       description: 'Payment for your order',
-      image: getImageUrl(
+      image: getImageUrl(   
         appData?.profile?.logo?.image_fit,
         appData?.profile?.logo?.image_path,
         '1000/1000',
