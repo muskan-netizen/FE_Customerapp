@@ -988,10 +988,10 @@ end
   
 # end
 
-# #GasGiant Target
-# target 'GasGiant' do
+#GasGiant Target
+target 'GasGiant' do
   
-# end
+end
 
 # #Releezer Target
  target 'Releezer' do

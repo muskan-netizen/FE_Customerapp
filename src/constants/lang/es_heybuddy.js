@@ -176,8 +176,8 @@ export default {
     NEWLY_ADDED: 'Recién agregado',
     HOME: 'Casa',
     HOME_1: 'Dirección',
-    HOLD_ON: 'Esperar',
-    EXIT_WARNING: 'Aguanta Compadre   Antes de que te arrepientas ¿Segurísimo de que quieres salir?',
+    HOLD_ON: 'Aguanta Compadre',
+    EXIT_WARNING: 'Antes de que te arrepientas ¿Segurísimo de que quieres salir?',
     YES: 'Sí',
     DISCOUNT: 'Descuento',
     LOYALTY: 'Lealtad (500 puntos)',
@@ -237,7 +237,7 @@ export default {
     TOTAL_DISCOUNT: 'Descuento Total',
     PACKAGE_CONTENTS: 'Contenidos del Paquete',
     REQUEST_SUBMITTED: 'Su solicitud ha sido enviada',
-    SUCCESSFULLY: '¡exitosamente!',
+    SUCCESSFULLY: '¡Gracias!',
     AWB_NUMBER: 'Su número AWB es 259856',
     INPUT_AMOUNT: 'Cantidad de Entrada',
     QTY: 'Cantidad: ',
@@ -426,6 +426,7 @@ export default {
     MESSAGE: 'Mensaje',
     YOUR_ORDER_HAS_BEEN_SUBMITTED:
       '!Ahuevo, tu pedido ha sido enviado a nuestro socio compadre! ¡Gracias por tu compra! .',
+      
     YOUR_ORDER_NUMBER: 'Tu número de pedido es',
     ANY_RESTAURANT_REQUESTS:
       '¿Alguna solicitud de restaurante? Haremos todo lo posible para incorporarlo.',

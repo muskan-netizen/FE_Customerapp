@@ -989,7 +989,7 @@ function Cart({ navigation, route }) {
     toHitApiForPlaceOrder = false,
     dateType = scheduleType,
     scheduleDate = sheduledorderdate,
-  ) => {
+   ) => {
     if (!userData?.auth_token) {
       return;
     }
@@ -1025,7 +1025,7 @@ function Cart({ navigation, route }) {
             ? new Date(scheduleDate).toISOString()
             : null;
       }
-      data['comment_for_vendor'] = instruction;
+      data['specific_instructions'] = instruction;
       data['slot'] = selectedTimeSlots;
     }
 
