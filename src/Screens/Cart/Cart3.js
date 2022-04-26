@@ -814,6 +814,10 @@ function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.EASEBUZZ, paymentData);
         break;
+      case 26: //ToyyibPay Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.TOYYIAPAY, paymentData);
+        break;
       default:
         if (
           !!businessType &&
