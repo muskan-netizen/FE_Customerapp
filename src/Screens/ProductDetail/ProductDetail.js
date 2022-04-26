@@ -1271,10 +1271,13 @@ export default function ProductDetail({route, navigation}) {
                         {strings.DESCRIPTION}
                       </Text>
 
-                      <RenderHtml
+                    
+                    
+                     <RenderHtml
                         contentWidth={width}
                         source={{html: plainHtml}}
                       />
+                
                       {/* <HTMLView
                         value={plainHtml}
                         stylesheet={{div: styles.descriptionStyle}}

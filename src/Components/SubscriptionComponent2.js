@@ -152,7 +152,7 @@ const SubscriptionComponent2 = ({
               !subscriptionData?.cancelled_at &&
               subscriptionData?.plan?.deleted_at == null &&
               allSubscriptions &&
-              allSubscriptions.length && (
+              !!allSubscriptions?.length && (
                 <GradientButton
                   colorsArray={[colors.white, colors.white]}
                   textStyle={{
