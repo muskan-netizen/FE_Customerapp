@@ -97,12 +97,17 @@ export async function apiReq(
   requestOptions = {},
 ) {
   console.log(endPoint, 'endPoint');
+
+  const source = axios.CancelToken.source();
+
+
   return new Promise(async (res, rej) => {
     const getTokenHeader = await getHeaders();
 
     headers = {
       ...getTokenHeader,
       ...headers,
+      // cancelToken:source.token
     };
 
     if (method === 'get' || method === 'delete') {
@@ -127,7 +132,7 @@ export async function apiReq(
         return res(data);
       })
       .catch((error) => {
-        console.log(error,"error>error");
+        console.log(error?.response,"error>error");
         if (error && error.response && error.response.status === 401) {
           sessionHandler(error.response.data.message);
           return rej(error);

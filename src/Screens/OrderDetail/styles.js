@@ -173,7 +173,6 @@ export default ({fontFamily}) => {
       opacity: 0.8,
     },
     cartItemDetailsCon: {
-      // backgroundColor: 'red',
       // height: width / 4.5,
       width: width - width / 4 - 20,
       paddingHorizontal: moderateScale(10),
@@ -288,16 +287,15 @@ export default ({fontFamily}) => {
       fontSize: textScale(10),
     },
     imageStyle: {
-      height: width / 4.5, 
+      height: width / 4.5,
       width: width / 4.5,
-      borderRadius:moderateScale(8)
+      borderRadius: moderateScale(8),
     },
     writeAReview: {
       fontFamily: fontFamily.bold,
       color: colors.lightGreyBgColor,
       fontSize: textScale(10),
       textAlign: 'left',
-
     },
     containerStyle: {
       flex: 1,

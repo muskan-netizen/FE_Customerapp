@@ -149,7 +149,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       justifyContent: 'space-between',
       paddingHorizontal: moderateScaleVertical(20),
       paddingVertical: moderateScaleVertical(10),
-      backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
+  
       marginHorizontal: 16,
       borderRadius: moderateScale(10),
     },
@@ -186,7 +186,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       color: colors.textGreyB,
     },
     cartItemWeight2: {
-      color: colors.textGreyB,
+      color: colors.textGreyOpcaity7,
       fontSize: moderateScaleVertical(11),
     },
     rattingContainer: {
@@ -398,6 +398,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       marginHorizontal: moderateScale(10),
       marginVertical: moderateScale(4),
       // justifyContent: 'space-between',
+
     },
     homeTxt: {
       fontFamily: fontFamily.medium,
@@ -488,6 +489,40 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       color: themeColors.primary_color,
       fontFamily: fontFamily.bold,
       textAlign: 'left',
+    },
+    insctructionText: {
+      flex: 1,
+      fontFamily: fontFamily.medium,
+      textAlign: I18nManager.isRTL ? 'right' : 'left',
+      fontSize: textScale(11),
+    },
+    viewStyleForUploadImage: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      // justifyContent: 'space-between',
+    },
+
+    imageUpload: {
+      borderStyle: 'dashed',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: moderateScaleVertical(10),
+    },
+    imageStyle2: {
+      height: 100,
+      width: 100,
+      borderRadius: moderateScale(4),
+    },
+    label3: {
+      marginBottom: moderateScaleVertical(10),
+      textAlign: 'center',
+      fontSize: textScale(12),
+      fontFamily: fontFamily.medium,
+      color: colors.greyLight,
+    },
+    uploadStyle: {
+      color: colors.blue,
+      fontFamily: fontFamily.medium,
     },
   });
   return styles;

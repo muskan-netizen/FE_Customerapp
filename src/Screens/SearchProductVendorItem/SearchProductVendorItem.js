@@ -275,6 +275,7 @@ export default function SearchProductVendorItem({navigation, route}) {
             rightIconPress={() =>
               updateState({searchInput: '', isLoading: false})
             }
+           
           />
         </View>
 

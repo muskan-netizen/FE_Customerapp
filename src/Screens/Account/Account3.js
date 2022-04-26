@@ -9,12 +9,15 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  Vibration,
   View,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Share from 'react-native-share';
+import SunmiV2Printer from 'react-native-sunmi-v2-printer';
+import ZendeskChat from 'react-native-zendesk-chat';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import ListItemHorizontal from '../../Components/ListItemHorizontalWithImage';
@@ -24,23 +27,16 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
+
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {
-  getColorCodeWithOpactiyNumber,
-  getImageUrl,
-  getRandomColor,
-} from '../../utils/helperFunctions';
-import stylesFun from './styles';
-import ZendeskChat from 'react-native-zendesk-chat';
-import Share from 'react-native-share';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
-import SunmiV2Printer from 'react-native-sunmi-v2-printer';
+import {getImageUrl, getRandomColor} from '../../utils/helperFunctions';
+import stylesFun from './styles';
 
 export default function Account3({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -131,8 +127,8 @@ export default function Account3({navigation}) {
 
   useEffect(() => {
     ZendeskChat.init(
-      `${appData?.profile?.preferences?.customer_support_key}`,
-      `${appData?.profile?.preferences?.customer_support_application_id}`,
+      'HHcdbCRPXg50IOREwHwMBxZskL21F4BK',
+      'c1fc7b86f377bad268b4796430a25dac3e54b985b5319f2e',
     );
   }, []);
 
@@ -146,6 +142,7 @@ export default function Account3({navigation}) {
       phone: userData?.phone_number ? userData?.phone_number : '',
       withChat: true,
       color: '#000',
+      messagingOptions: {},
     });
   };
 
@@ -317,7 +314,8 @@ export default function Account3({navigation}) {
             />
           </TouchableOpacity>
         )} */}
-          {!!userData?.auth_token &&
+          {DeviceInfo.getBundleId() != appIds.dlvrd &&
+            !!userData?.auth_token &&
             (businessType == 4 ? null : (
               <ListItemHorizontal
                 centerContainerStyle={{flexDirection: 'row'}}
@@ -474,20 +472,23 @@ export default function Account3({navigation}) {
               />
             ))}
 
-          <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
-            iconLeft={imagePath.links}
-            centerHeading={strings.LINKS}
-            containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{
-              fontSize: textScale(14),
-              fontFamily: fontFamily.regular,
-            }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
+         {
+           DeviceInfo.getBundleId()!=appIds.elcheregio && 
+          ( <ListItemHorizontal
+           centerContainerStyle={{flexDirection: 'row'}}
+           leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+           onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
+           iconLeft={imagePath.links}
+           centerHeading={strings.LINKS}
+           containerStyle={styles.containerStyle2}
+           centerHeadingStyle={{
+             fontSize: textScale(14),
+             fontFamily: fontFamily.regular,
+           }}
+           // iconRight={imagePath.goRight}
+           // rightIconStyle={{tintColor: colors.textGreyLight}}
+         />)
+         }
           {!!userData?.auth_token && (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}

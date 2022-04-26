@@ -276,7 +276,7 @@ const MarketCard3 = ({
             numberOfLines={1}
             style={{
               color: colors.greyLight,
-              fontSize: textScale(10),
+              fontSize: textScale(12),
               fontFamily: fontFamily.regular,
               textAlign: 'left',
               marginVertical: moderateScaleVertical(4),
@@ -357,7 +357,7 @@ export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
       ...extraStyles,
     },
     categoryText: {
-      fontSize: textScale(14),
+      fontSize: textScale(16),
       color: colors.black,
       fontFamily: fontFamily.medium,
       width: '85%',

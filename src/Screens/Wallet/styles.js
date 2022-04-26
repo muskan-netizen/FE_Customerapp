@@ -1,5 +1,5 @@
-import { I18nManager, StyleSheet } from 'react-native';
-import { color } from 'react-native-reanimated';
+import {I18nManager, StyleSheet} from 'react-native';
+import {color} from 'react-native-reanimated';
 import colors from '../../styles/colors';
 import {
   moderateScale,
@@ -8,8 +8,8 @@ import {
 } from '../../styles/responsiveSize';
 import commonStylesFun from '../../styles/commonStyles';
 
-export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
-  const commonStyles = commonStylesFun({ fontFamily });
+export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
+  const commonStyles = commonStylesFun({fontFamily});
   const styles = StyleSheet.create({
     availableBalanceCon: {
       flexDirection: 'row',
@@ -39,7 +39,7 @@ export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
       justifyContent: 'flex-end',
     },
     addMoneybtn: {
-      width: moderateScale(100),
+      // width: moderateScale(100),
       backgroundColor: themeColors?.primary_color,
       padding: moderateScaleVertical(8),
       marginHorizontal: moderateScaleVertical(8),
@@ -113,7 +113,7 @@ export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
     nameTextStyle: {
       fontSize: textScale(12),
       marginLeft: moderateScale(14),
-      fontFamily: fontFamily.medium
+      fontFamily: fontFamily.medium,
     },
     textInputStyle: {
       flex: 1,
@@ -136,13 +136,13 @@ export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
       borderBottomColor: isDarkMode
         ? MyDarkTheme.colors.text
         : colors.lightGreyBorder,
-      paddingHorizontal: moderateScale(12)
+      paddingHorizontal: moderateScale(12),
     },
     headingStyle: {
       fontSize: textScale(14),
       fontFamily: fontFamily.medium,
-      marginBottom: moderateScaleVertical(6)
-    }
+      marginBottom: moderateScaleVertical(6),
+    },
   });
   return styles;
 };

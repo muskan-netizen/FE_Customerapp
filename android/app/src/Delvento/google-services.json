@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "500894873633",
+    "project_id": "delvento-fcf4e",
+    "storage_bucket": "delvento-fcf4e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500894873633:android:3afd462cfcb7844a75cb60",
+        "android_client_info": {
+          "package_name": "com.delvento"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "500894873633-6f4jkhsjle9635ntf7ufe9padlt8kllk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.delvento",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "500894873633-9tgrpi1o22hp8pmnspa06f2n67o2d1cr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.delvento",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "500894873633-b1gtnkkdnk2d4nvhntjtdnec3ctukrdi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.delvento",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "500894873633-8jrcdr8cji305v51bi4vmn61fsm3802v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARnVAIIQ_8fa2Wl6-je8hRK3pIvWBUgwI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "500894873633-8jrcdr8cji305v51bi4vmn61fsm3802v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -48,8 +48,9 @@ const ProductCard3 = ({
   categoryInfo = '',
   businessType,
   animateText = 0,
+  section = {},
 }) => {
-  // console.log('item data++', data);
+  console.log('item data++', data);
   // data['qty'] = 1
   const [isAdd, setAdd] = useState(false);
   const [state, setState] = useState({
@@ -233,10 +234,9 @@ const ProductCard3 = ({
       (!!data?.add_on_count && data?.add_on_count !== 0) ||
       (!!data?.variant_set_count && data?.variant_set_count !== 0)
     ) {
-
       onIncrement();
     } else {
-      updateState({ ...state, isIncrement: true });
+      updateState({...state, isIncrement: true});
       // if (!disabledBtn) {
       //   const isEnabled = numberOfHits.length === 0;
       //   numberOfHits.push(data?.qty || totalProductQty);
@@ -256,7 +256,7 @@ const ProductCard3 = ({
     ) {
       onDecrement();
     } else {
-      updateState({ ...state, isIncrement: false });
+      updateState({...state, isIncrement: false});
       // if (!disabledBtn) {
       //   const isEnabled = numberOfHits.length === 0;
       //   numberOfHits.push(data?.qty || totalProductQty);
@@ -322,9 +322,14 @@ const ProductCard3 = ({
                 textTransform: 'capitalize',
                 // flex:1
               }}>
-              {data?.translation_title || data?.title}
+              {data?.translation[0]?.title || data?.title || data?.sku}
             </Text>
-            {!!data?.title ? (
+            <Text style={{
+              fontSize: textScale(9),
+              color: colors.grayOpacity51,
+              marginVertical:moderateScaleVertical(4)
+            }} >{data?.vendor?.name}</Text>
+            {!!section?.title ? (
               <Text
                 numberOfLines={1}
                 style={{
@@ -334,7 +339,7 @@ const ProductCard3 = ({
                     : colors.blackOpacity40,
                 }}>
                 {strings.IN}
-                {` ${data?.title}`}
+                {` ${section?.title}`}
               </Text>
             ) : null}
           </View>
@@ -379,15 +384,15 @@ const ProductCard3 = ({
               {`${
                 currencies?.primary_currency?.symbol
               } ${currencyNumberFormatter(
-                Number(
-                 data?.variant_multiplier,
-                ) * Number(data?.variant[0]?.price),
+                Number(data?.variant_multiplier) *
+                  Number(data?.variant[0]?.price),
                 appData?.profile?.preferences?.digit_after_decimal,
               )}`}
             </Text>
           </View>
           <View style={{}}>
             <Text
+              numberOfLines={3}
               style={{
                 fontSize: textScale(10),
                 fontFamily: fontFamily.regular,
@@ -397,7 +402,8 @@ const ProductCard3 = ({
                   : colors.blackOpacity66,
                 textAlign: 'left',
               }}>
-              {data?.translation_description}
+              {data?.translation[0]?.translation_description ||
+                data?.translation_description}
             </Text>
           </View>
         </View>
@@ -446,9 +452,9 @@ const ProductCard3 = ({
               justifyContent: url1 ? 'flex-start' : 'center',
             }}>
             {data?.has_inventory == 0 ||
-              !!data?.variant_quantity ||
-              (!!typeId && typeId == 8) ||
-              (!!businessType && businessType == 'laundry') ? (
+            !!data?.variant[0].quantity ||
+            (!!typeId && typeId == 8) ||
+            (!!businessType && businessType == 'laundry') ? (
               <View
                 style={{
                   marginTop:
@@ -576,7 +582,7 @@ const ProductCard3 = ({
                   </>
                 )}
                 {(!!data?.add_on_count && data?.add_on_count !== 0) ||
-                  (!!data?.variant_set_count && data?.variant_set_count !== 0) ? (
+                (!!data?.variant_set_count && data?.variant_set_count !== 0) ? (
                   <Text
                     style={{
                       ...styles.customTextStyle,

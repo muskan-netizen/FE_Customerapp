@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "858554549224",
+    "project_id": "medipick-4c5d0",
+    "storage_bucket": "medipick-4c5d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858554549224:android:2e129e81c9bfcd85f65a5d",
+        "android_client_info": {
+          "package_name": "com.mediPick"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "858554549224-753prndn7hp8r9ptnpombnutv7gb8j5h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mediPick",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "858554549224-9go995ego8vp2aurp2mr5gb4sh6b161r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mediPick",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "858554549224-kpr7uv1pbeicubth8qgq8vt30irqge3b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mediPick",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "858554549224-006igu5s5rsurekn088ref9l4c7216f8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1WNYyjM9K1sr6J116jM--QmCLmSOEbdU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "858554549224-006igu5s5rsurekn088ref9l4c7216f8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "858554549224-06pc29f95v98fk0n965nedh6pgr1e3v7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mediPick"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

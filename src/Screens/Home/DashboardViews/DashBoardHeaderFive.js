@@ -46,6 +46,7 @@ export default function DashBoardHeaderFive({
   _onVoiceListen = () => {},
   isVoiceRecord = false,
   _onVoiceStop = () => {},
+  showAboveView = true,
 }) {
   const navigation = useNavigation();
   const pickerRef = createRef();
@@ -66,6 +67,10 @@ export default function DashBoardHeaderFive({
   });
 
   const {isModalVisible, checked, tabs} = state;
+
+  console.log("tabstabs",tabs)
+
+  
 
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
@@ -396,80 +401,6 @@ export default function DashBoardHeaderFive({
     });
   };
 
-  if (false) {
-    return (
-      <View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginHorizontal: moderateScale(16),
-            marginBottom: moderateScaleVertical(12),
-          }}>
-          <HomeLoader rectWidth={60} width={60} rectHeight={38} height={38} />
-          <View style={{marginHorizontal: moderateScale(12)}}>
-            <HomeLoader
-              rectWidth={width / 2}
-              width={width / 2}
-              rectHeight={38}
-              height={38}
-            />
-          </View>
-
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <HomeLoader
-              rectWidth={30}
-              width={30}
-              rectHeight={30}
-              height={30}
-              rx={15}
-              ry={15}
-            />
-            <HomeLoader
-              rectWidth={30}
-              rectHeight={30}
-              width={30}
-              height={30}
-              rx={15}
-              ry={15}
-              viewStyles={{marginLeft: 8}}
-            />
-          </View>
-        </View>
-        <View
-          style={{
-            // ...styles.headerContainer,
-            borderBottomColor: isDarkMode
-              ? colors.whiteOpacity22
-              : colors.borderColorD,
-            borderBottomWidth: 0.8,
-          }}
-        />
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginHorizontal: moderateScale(16),
-            marginVertical: moderateScaleVertical(12),
-          }}>
-          <HomeLoader rectWidth={100} width={100} rectHeight={30} height={30} />
-          <HomeLoader rectWidth={100} width={100} rectHeight={30} height={30} />
-          <HomeLoader rectWidth={100} width={100} rectHeight={30} height={30} />
-        </View>
-        <View
-          style={{
-            // ...styles.headerContainer,
-            borderBottomColor: isDarkMode
-              ? colors.whiteOpacity22
-              : colors.borderColorD,
-            borderBottomWidth: 0.8,
-          }}
-        />
-      </View>
-    );
-  }
-
   return (
     <View
       style={{
@@ -479,7 +410,9 @@ export default function DashBoardHeaderFive({
           : colors.borderColorD,
         // paddingBottom: moderateScale(5),
       }}>
-      <View
+
+
+      {showAboveView ?<View
         style={{
           ...styles.headerContainer,
           borderBottomColor: isDarkMode
@@ -612,44 +545,7 @@ export default function DashBoardHeaderFive({
             </TouchableOpacity>
           )}
         </View>
-        {/* {tabs.length > 1 && (
-          <TouchableOpacity
-            activeOpacity={0.7}
-            style={{
-              paddingVertical: moderateScaleVertical(5),
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-            onPress={_onTableLabel}>
-            <Image
-              source={
-                !!(
-                  checked ==
-                  toggleData?.profile?.preferences?.delivery_nomenclature ||
-                  checked == strings.DELIVERY
-                )
-                  ? imagePath.delivery
-                  : !!(
-                    checked ==
-                    toggleData?.profile?.preferences?.dinein_nomenclature ||
-                    checked == strings.DINE_IN
-                  )
-                    ? imagePath.dineIn
-                    : imagePath.takeaway
-              }
-              style={styles.deliveryIcon}
-              resizeMode="contain"
-            />
-
-            <Text style={styles.checkedTxt}>{checked}</Text>
-
-            <Image
-              source={imagePath.dropDownNew}
-              style={styles.customDropDownIcon}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        )} */}
+    
         <Modal
           isVisible={isModalVisible}
           style={{
@@ -673,6 +569,8 @@ export default function DashBoardHeaderFive({
                     : colors.white,
                 },
               ]}>
+
+                
               <View style={{padding: moderateScale(10)}}>
                 {tabs.length > 1 &&
                   tabs.map((item, indx) => {
@@ -756,7 +654,9 @@ export default function DashBoardHeaderFive({
             </View>
           </View>
         </Modal>
-      </View>
+      </View>: null}
+
+
       <View
         style={{
           // alignSelf: 'center',
@@ -838,6 +738,7 @@ export default function DashBoardHeaderFive({
             );
           })}
       </View>
+
       <CustomAnimatedLoader
         source={loaderOne}
         loaderTitle={strings.LOADING}

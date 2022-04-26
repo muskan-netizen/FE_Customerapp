@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "745673385640",
+    "project_id": "hiper-abasto",
+    "storage_bucket": "hiper-abasto.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:745673385640:android:2b0f66f1bea6daed1b449d",
+        "android_client_info": {
+          "package_name": "com.hiperAbasto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "745673385640-f55qgrlksltahjdds1nn55hlnnqkd98m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hiperAbasto",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "745673385640-jstjiecspi57dlirdv5a00j0k2a0mn74.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hiperAbasto",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "745673385640-mtit4mocpjnb5mra6m9ir9fpos9ofndh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hiperAbasto",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "745673385640-731m2g80aiu1on0of3pc265egmr32550.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAby1oIJTqSsJ1HR9oip4QSQE5xmfYPFIg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "745673385640-731m2g80aiu1on0of3pc265egmr32550.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "745673385640-mg0nctqlv6dagpvm2qfqannlkugkvjqc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hiperAbasto"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

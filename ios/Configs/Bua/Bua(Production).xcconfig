@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-available_pods-Bua/Pods-available_pods-Bua.release.xcconfig"
+
+PROJECT_APPLE_ID = 1615710166
+PROJECT_BUNDLE_ID =com.bua
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 2
+PROJECT_APP_NAME = Bua
+PROJECT_GOOGLE_CLIENT_ID =1022934464896-e2vcr05o0teor9ktg5gn5ojp9gkr9rf3.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.1022934464896-e2vcr05o0teor9ktg5gn5ojp9gkr9rf3
+PROJECT_FACEBOOK_ID = 4892168337568244
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =BuaInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

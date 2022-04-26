@@ -1,4 +1,5 @@
 import LocalizedStrings from 'react-native-localization';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import en from './en';
 import ar from './ar';
 import es from './es';
@@ -11,12 +12,27 @@ import ru from './ru';
 import pt from './pt';
 import vi from './vi';
 import hi from './hi';
-import pr from './pr';
+import es_elcheragio from './es_elcheragio';
+import es_heybuddy from './es_heybuddy';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
+
+//Spanish fils
+
+const spanishfile = () => {
+  switch (DeviceInfo.getBundleId()) {
+    case appIds?.elcheregio:
+      return es_elcheragio;
+      case appIds?.heyBuddy:
+        return es_heybuddy;
+    default:
+      return es;
+  }
+};
 
 let strings = new LocalizedStrings({
   en: en,
   ar: ar,
-  es: es,
+  es: spanishfile(),
   de: de,
   fr: fr,
   tr: tr,
@@ -26,7 +42,6 @@ let strings = new LocalizedStrings({
   pt: pt,
   vi: vi,
   hi: hi,
-  pr: pr
 });
 export const changeLaguage = (languageKey) => {
   strings.setLanguage(languageKey);

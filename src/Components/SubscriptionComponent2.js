@@ -123,12 +123,17 @@ const SubscriptionComponent2 = ({
 
         <View style={styles.subscriptionView}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={styles.title}>
-                {`${currencies?.primary_currency?.symbol} `}
-              </Text>
-              <Text style={styles.title}>
-                {currencyNumberFormatter(
+            {subscriptionData?.plan?.deleted_at == null && (
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={styles.title}>
+                  {`${currencies?.primary_currency?.symbol} `}
+                </Text>
+                <Text style={styles.title}>
+                  {currencyNumberFormatter(
+                    Number(data?.price),
+                    appData?.profile?.preferences?.digit_after_decimal,
+                  )}
+                  {/* {currencyNumberFormatter(
                   currentSubscription
                     ? `${
                         (Number(subscriptionData?.subscription_amount),
@@ -138,14 +143,16 @@ const SubscriptionComponent2 = ({
                         (Number(data?.price),
                         appData?.profile?.preferences?.digit_after_decimal)
                       }`,
-                )}
-              </Text>
-            </View>
+                )} */}
+                </Text>
+              </View>
+            )}
 
             {currentSubscription ? (
-              subscriptionData?.cancelled_at &&
+              !subscriptionData?.cancelled_at &&
+              subscriptionData?.plan?.deleted_at == null &&
               allSubscriptions &&
-              allSubscriptions.length && (
+              !!allSubscriptions?.length && (
                 <GradientButton
                   colorsArray={[colors.white, colors.white]}
                   textStyle={{
@@ -165,8 +172,18 @@ const SubscriptionComponent2 = ({
                   btnText={
                     currentDateValue == subscriptionDateValue ||
                     currentTimeValue > subscriptionTimeValue
-                      ? `${strings.RENEW} (${currencies?.primary_currency?.symbol}${data?.price})`
-                      : `${strings.PAY} (${currencies?.primary_currency?.symbol}${data?.price})`
+                      ? `${strings.RENEW} (${
+                          currencies?.primary_currency?.symbol
+                        }${currencyNumberFormatter(
+                          Number(data?.price),
+                          appData?.profile?.preferences?.digit_after_decimal,
+                        )})`
+                      : `${strings.PAY} (${
+                          currencies?.primary_currency?.symbol
+                        }${currencyNumberFormatter(
+                          Number(data?.price),
+                          appData?.profile?.preferences?.digit_after_decimal,
+                        )})`
                   }
                 />
               )
@@ -249,8 +266,10 @@ const SubscriptionComponent2 = ({
           )}
         </View>
       </ImageBackground>
-
-      {subscriptionData?.subscription_id === data?.id && (
+      {!!(
+        !!subscriptionData?.plan?.deleted_at == null &&
+        subscriptionData?.subscription_id === data?.id
+      ) && (
         <View>
           {subscriptionData?.cancelled_at ||
           currentDateValue == subscriptionEndDateValue ||
@@ -274,7 +293,9 @@ const SubscriptionComponent2 = ({
                   width: width / 2,
                 }}
                 onPress={payNowUpcoming}
-                btnText={`${strings.PAYNOW} (${data?.price})`}
+                btnText={`${strings.PAYNOW} (${
+                  currencies?.primary_currency?.symbol
+                }${Number(data?.price).toFixed(2)})`}
               />
               <GradientButton
                 colorsArray={[

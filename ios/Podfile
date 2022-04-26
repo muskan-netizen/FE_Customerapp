@@ -993,7 +993,7 @@ end
   
 # end
 
-#Releezer Target
+# #Releezer Target
  target 'Releezer' do
   
  end
@@ -1003,8 +1003,8 @@ end
   
 # end
 
-#FARMER SOUQ Target
-target 'FARMER SOUQ' do
+#FarmerSouq Target
+target 'FarmerSouq' do
   
 end
 
@@ -1174,7 +1174,7 @@ target 'MeatEasy' do
   
 end
 
-#Local dropoff Target
+#LocalDropoff Target
 target 'LocalDropoff' do
   
 end
@@ -1184,25 +1184,25 @@ target 'Ubi' do
   
 end
 
-# #ScoopaTechnologies Target
-# target 'ScoopaTechnologies' do
+#ScoopaTechnologies Target
+target 'ScoopaTechnologies' do
   
-# end
+end
 
 # #BoltDelivery Target
 # target 'BoltDelivery' do
   
 # end
 
-#GamaDelivery Target
+# # GamaDelivery Target
 # target 'GamaDelivery' do
   
 # end
 
-# #Hivefair Target
-# target 'Hivefair' do
+#Hivefair Target
+target 'Hivefair' do
   
-# end
+end
 
 #BeakMe Target
 target 'BeakMe' do
@@ -1357,6 +1357,163 @@ end
 target 'Delivery' do
   
 end
+
+# Ola Target
+target 'Ola' do
+  
+end
+
+# Wer Target
+target 'Wer' do
+  
+end
+
+# Beachhop Target
+target 'Beachhop' do
+  
+end
+
+# SourcesServices Target
+target 'SourcesServices' do
+  
+end
+
+# Qseek Target
+target 'Qseek' do
+  
+end
+
+# Delvento Target
+target 'Delvento' do
+  
+end
+
+# Rideshare Target
+target 'Rideshare' do
+  
+end
+
+# Bua Target
+target 'Bua' do
+  
+end
+
+# Upstreet Target
+target 'Upstreet' do
+  
+end
+
+# NewYorkMiniMart Target
+target 'NewYorkMiniMart' do
+  
+end
+
+# AirlinesRecruiter Target
+target 'AirlinesRecruiter' do
+  
+end
+
+# NineOneTwo Target
+target 'NineOneTwo' do
+  
+end
+
+# Trip Target
+target 'Trip' do
+  
+end
+
+# AauJau Target
+target 'AauJau' do
+  
+end
+
+# MediPick Target
+target 'MediPick' do
+  
+end
+
+# Meltivers Target
+target 'Meltivers' do
+  
+end
+
+# EnsoDigitalAgency Target
+target 'EnsoDigitalAgency' do
+  
+end
+
+# HiperAbasto Target
+target 'HiperAbasto' do
+  
+end
+
+# Redglee Target
+target 'Redglee' do
+  
+end
+
+# DropItOffUsa Target
+target 'DropItOffUsa' do
+  
+end
+
+# HandyPickup Target
+target 'HandyPickup' do
+  
+end
+
+# TJJHub Target
+target 'TJJHub' do
+  
+end
+
+# CurblerLLC Target
+target 'CurblerLLC' do
+  
+end
+
+# Cartnar Target
+target 'Cartnar' do
+  
+end
+
+# Uven Target
+target 'Uven' do
+  
+end
+
+# PAS41 Target
+target 'PAS41' do
+  
+end
+
+# FreshFarmz Target
+target 'FreshFarmz' do
+  
+end
+
+# Ryde Target
+target 'Ryde' do
+  
+end
+
+# WaterTaxi Target
+target 'WaterTaxi' do
+  
+end
+
+# Muvpod Target
+target 'Muvpod' do
+  
+end
+
+# Smile Target
+target 'Smile' do
+  
+end
+
+
 
 
 post_install do |installer|

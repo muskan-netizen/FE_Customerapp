@@ -244,6 +244,7 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
       fontSize: textScale(10),
       fontFamily: fontFamily.regular,
       textAlign: 'left',
+
       // lineHeight: moderateScale(22),
     },
     flexView: {
@@ -289,6 +290,6 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
     horizontalLine: {
       width: '100%',
       borderBottomWidth: 0.5,
-      marginVertical: moderateScaleVertical(8)
-  },
+      marginVertical: moderateScaleVertical(8),
+    },
   });

@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "187230408620",
+    "project_id": "smile-9cb65",
+    "storage_bucket": "smile-9cb65.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:187230408620:android:0ddf1c845964066193f409",
+        "android_client_info": {
+          "package_name": "com.customer.smile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "187230408620-5dad2bn1fnqhlf6ma6hgd4lq8ia1isg4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.smile",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "187230408620-nq3m1ab9muhtquvg3l7g33i0v9rdcaks.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.smile",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "187230408620-oo55l3fpj0r5pul23jgubo1lpmjtlp4n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.smile",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "187230408620-3ce81jvon48d148tn2efb73fnsltq7t4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHZUjxidwPORWTUHz2_tpPPlGKV4rvUxo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "187230408620-3ce81jvon48d148tn2efb73fnsltq7t4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "187230408620-0nv1sh37816vvmtdn0rp59j80ud67bs8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.customer.smile"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

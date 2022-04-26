@@ -71,6 +71,7 @@ const SearchBar = ({
           placeholderTextColor={
             isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB
           }
+          returnKeyType={"next"}
         />
       </View>
       {

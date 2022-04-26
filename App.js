@@ -288,7 +288,7 @@ const App = () => {
   }, []);
   const {blurRef} = useRef();
   // let isVal = store.getState().pendingNotifications.isVendorNotification
-  // console.log("is val++",isVal)
+
 
   useEffect(() => {
     codePush.sync(

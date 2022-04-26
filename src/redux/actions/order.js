@@ -19,6 +19,10 @@ import {
   GET_VENDOR_REVENUE_DASHBOARD_DATA,
   GET_VENDOR_PROFILE,
   GET_VENDOR_TRANSACTIONS,
+  RATE_TO_DRIVER,
+  SOTRE_VENDORS,
+  STORE_VENDOR_COUNT,
+  ALL_VENDOR_ORDERS
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -291,4 +295,28 @@ export function acceptRejectDriveUpdate(data = {}, headers = {}) {
         reject(error);
       });
   });
+}
+
+export function ratingToDriver(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(RATE_TO_DRIVER, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function storeVendors(query, headers = {}) {
+  return apiGet(SOTRE_VENDORS + query, {}, headers)
+}
+
+export function vendorOrderCount(query, headers = {}) {
+  return apiGet(STORE_VENDOR_COUNT + query, {}, headers)
+}
+
+export function allVendorOrders(query, headers = {}) {
+  return apiGet(ALL_VENDOR_ORDERS + query, {}, headers)
 }

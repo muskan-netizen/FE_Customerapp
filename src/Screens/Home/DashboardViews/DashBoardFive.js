@@ -110,7 +110,7 @@ export default function DashBoardFive({
   useEffect(() => {
     if (appMainData?.vendors && appMainData?.vendors.length) {
       updateState({
-        vendorsData: appMainData?.vendors
+        vendorsData: appMainData?.vendors,
       });
       return;
     }

@@ -149,9 +149,7 @@ const RoyoTransactions = (props) => {
               : pendingOrdersArr,
           totalAmtRecieved:
             res?.data && res?.data?.totalEarning
-              ? Number(res?.data?.totalEarning).toFixed(
-                  appData?.profile?.preferences?.digit_after_decimal,
-                )
+              ? Number(res?.data?.totalEarning).toFixed(2)
               : 0,
         });
       })

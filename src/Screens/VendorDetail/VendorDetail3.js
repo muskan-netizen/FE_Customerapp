@@ -136,6 +136,12 @@ export default function VendorDetail3({ navigation, route }) {
       navigation.navigate(navigationStrings.VENDOR, { data: item });
       return;
     }
+
+    if (item?.redirect_to == staticStrings.SUBCATEGORY) {
+      navigation.push(navigationStrings.VENDOR_DETAIL, { data: {item: item} });
+      return;
+    }
+
     navigation.navigate(navigationStrings.PRODUCT_LIST, {
       data: {
         id: item.id,
