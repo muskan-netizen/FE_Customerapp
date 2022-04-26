@@ -1581,6 +1581,7 @@ export default function Products({ route, navigation }) {
           businessType={businessType}
           categoryInfo={categoryInfo}
           animateText={animateText}
+          // section={section}
           
         />
         <View style={styles.horizontalLine} />
@@ -3026,26 +3027,7 @@ export default function Products({ route, navigation }) {
           // backgroundColor: 'red',
           // marginBottom: moderateScaleVertical(5),
         }}>
-        {DeviceInfo?.getBundleId() == appIds.dlvrd ? (
-          <View style={{marginVertical: moderateScaleVertical(10)}}>
-            <ProductCard5
-              data={item}
-              index={index}
-              onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-              onAddtoWishlist={() => _onAddtoWishlist(item)}
-              addToCart={() => addSingleItem(item, section, index)}
-              onIncrement={() => checkIsCustomize(item, section, index, 1)}
-              onDecrement={() => checkIsCustomize(item, section, index, 2)}
-              selectedItemID={selectedItemID}
-              btnLoader={btnLoader}
-              selectedItemIndx={selectedItemIndx}
-              businessType={businessType}
-              categoryInfo={categoryInfo}
-              animateText={animateText}
-            />
-          </View>
-        ) : (
-          <ProductCard3
+           <ProductCard3
             data={item}
             index={index}
             onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
@@ -3059,16 +3041,9 @@ export default function Products({ route, navigation }) {
             businessType={businessType}
             categoryInfo={categoryInfo}
             animateText={animateText}
+            section={section}
           />
-        )}
-        {!(DeviceInfo?.getBundleId() == appIds.dlvrd) && (
-          <View
-            style={{
-              ...styles.horizontalLine,
-              marginBottom: moderateScaleVertical(16),
-            }}
-          />
-        )}
+      
       </Animatable.View>
     );
   };

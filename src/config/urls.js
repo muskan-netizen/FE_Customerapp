@@ -17,7 +17,7 @@
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1';
-// export const API_BASE_URL = 'https://order.veg-hub.com/api/v1';
+export const API_BASE_URL = 'https://order.veg-hub.com/api/v1';
 // export const API_BASE_URL = 'https://seratho.com/api/v1';
 // export const API_BASE_URL = 'https://bezaliohub.com/api/v1';
 // export const API_BASE_URL = 'https://mrhealth.in/api/v1';
@@ -40,11 +40,6 @@
 // export const API_BASE_URL = 'https://fastmikes.com/api/v1';
 
 // export const API_BASE_URL = 'https://ored.co/api/v1'; //ored
-
-
-
-
-
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 
@@ -102,7 +97,7 @@
 // export const API_BASE_URL = 'https://marketplace.verofax.com/api/v1';
 // export const API_BASE_URL = 'https://order.loopwhole.ca/api/v1';
 // export const API_BASE_URL = 'https://elcheregio.mx/api/v1';
-export const API_BASE_URL = 'https://donepacked.com/api/v1';
+// export const API_BASE_URL = 'https://donepacked.com/api/v1';
 // export const API_BASE_URL = 'https://cannabusxpress.com/api/v1';
 // export const API_BASE_URL = 'https://order-dev.taquick.com/api/v1';
 // export const API_BASE_URL = 'https://yeboy.mx/api/v1';

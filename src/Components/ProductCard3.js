@@ -329,7 +329,7 @@ const ProductCard3 = ({
               color: colors.grayOpacity51,
               marginVertical:moderateScaleVertical(4)
             }} >{data?.vendor?.name}</Text>
-            {!!section?.title ? (
+            {section?.title ? (
               <Text
                 numberOfLines={1}
                 style={{
