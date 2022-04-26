@@ -122,6 +122,9 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 
 android {
+     packagingOptions {
+        pickFirst '**/*.so'
+    }
    compileSdkVersion 31 //addded
     dexOptions {
         javaMaxHeapSize "4g"
@@ -357,8 +360,8 @@ android {
         }
         blip{
             dimension "appType"
-            versionCode 2
-            versionName "1.1"
+            versionCode 1
+            versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.app.blip'
@@ -488,11 +491,11 @@ android {
         }
          snabbhem{
             dimension "appType"
-            versionCode 1
+            versionCode 3
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.customer.snabbhem'
+            applicationId 'com.snabbhem'
             resValue "string", "app_name", "Snabbhem"
             resValue "string", "host_name", ""
         }
@@ -829,8 +832,8 @@ android {
          }
          vici{
             dimension "appType"
-            versionCode 8
-            versionName "1.2"
+            versionCode 7
+            versionName "1.1"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.app.vici'
@@ -1325,7 +1328,7 @@ android {
          }
          elcheregio{
             dimension "appType"
-            versionCode 4
+            versionCode 3
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -2482,7 +2485,16 @@ android {
             resValue "string", "app_name", "Jet"
              resValue "string", "host_name", ""
          }
-       
+         africanize{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.africanize'
+            resValue "string", "app_name", "Africanize"
+            resValue "string", "host_name", ""
+         }
 
           markita{
             dimension "appType"
@@ -3073,6 +3085,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.bakesale'
             resValue "string", "app_name", "BakeSale"
+            resValue "string", "host_name", ""
+         }
+         elcheregio{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.elcheregio'
+            resValue "string", "app_name", "El Che Regio"
             resValue "string", "host_name", ""
          }
           yaawi{
@@ -5004,56 +5026,6 @@ android {
          targetSdkVersion rootProject.ext.targetSdkVersion
          applicationId 'com.pAS41'
          resValue "string", "app_name", "PAS41"
-         resValue "string", "host_name", ""
-         }
-         freshFarmz{
-         dimension "appType"
-         versionCode 1
-         versionName "1.0"
-         minSdkVersion rootProject.ext.minSdkVersion
-         targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.freshFarmz'
-         resValue "string", "app_name", "Fresh Farmz"
-         resValue "string", "host_name", ""
-         }
-        ryde{
-         dimension "appType"
-         versionCode 1
-         versionName "1.0"
-         minSdkVersion rootProject.ext.minSdkVersion
-         targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.customer.ryde'
-         resValue "string", "app_name", "Ryde"
-         resValue "string", "host_name", ""
-         }
-         waterTaxi{
-         dimension "appType"
-         versionCode 1
-         versionName "1.0"
-         minSdkVersion rootProject.ext.minSdkVersion
-         targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.customer.waterTaxi'
-         resValue "string", "app_name", "WaterTaxi"
-         resValue "string", "host_name", ""
-         }
-        muvpod{
-         dimension "appType"
-         versionCode 1
-         versionName "1.0"
-         minSdkVersion rootProject.ext.minSdkVersion
-         targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.muvpod'
-         resValue "string", "app_name", "Muvpod"
-         resValue "string", "host_name", ""
-         }
-         smile{
-         dimension "appType"
-         versionCode 1
-         versionName "1.0"
-         minSdkVersion rootProject.ext.minSdkVersion
-         targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.customer.smile'
-         resValue "string", "app_name", "Smile"
          resValue "string", "host_name", ""
          }
     }

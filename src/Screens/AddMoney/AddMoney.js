@@ -44,6 +44,7 @@ import {
 import { MyDarkTheme } from '../../styles/theme';
 import { currencyNumberFormatter } from '../../utils/commonFunction';
 import { getImageUrl, showError } from '../../utils/helperFunctions';
+import { payWithCard } from '../../utils/paystackMethod';
 import stylesFun from './styles';
 
 export default function AddMoney({ navigation }) {
@@ -71,9 +72,9 @@ export default function AddMoney({ navigation }) {
   const { appData, themeColors, appStyle, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(appData, 'appData');
-  const userData = useSelector((state) => state.auth.userData);
 
+  const userData = useSelector((state) => state.auth.userData);
+  console.log(userData, 'userDatauserDatauserData');
   const { preferences } = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
@@ -358,28 +359,65 @@ export default function AddMoney({ navigation }) {
 
     if (amount == '') {
       showError(strings.PLEASE_ENTER_OR_SELECT_AMOUNT);
-    } else if (!selectedPaymentMethod) {
-      showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
-    } else {
-
-      if (
-        selectedPaymentMethod?.off_site == 0 &&
-        selectedPaymentMethod?.id == 10
-      ) {
-
-        renderRazorPay();
-        return;
-      }
-
-      if (selectedPaymentMethod?.off_site == 1) {
-        _webPayment();
-        return;
-      } else {
-
-        _offineLinePayment();
-      }
+      return;
+    } 
+    // if (!selectedPaymentMethod) {
+    //   showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
+    //   return;
+    // }
+    if (selectedPaymentMethod?.off_site == 0 && selectedPaymentMethod?.id == 1) {
+      renderRazorPay();
+      return;
     }
+    if(true){
+      let billingDetail = {
+        name: userData?.name,
+        email: userData?.email,
+        phone: userData?.phone_number,
+        amount
+      }
+      openPayTabs(billingDetail)
+      return;
+    } 
+    if (selectedPaymentMethod?.off_site == 1) {
+      _webPayment();
+      return;
+    }
+  
+    _offineLinePayment();
+
   };
+
+  const openPayTabs = async(data) =>{
+    console.log("datadata",data)
+    try {
+      const res = await payWithCard(data)
+      console.log("payWithCard res++++",res)
+  
+      if (!!res?.transactionReference) {
+        const data = {};
+        data['amount'] = amount;
+        data['transaction_id'] = res?.transactionReference
+        actions.walletCredit(data, {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+          })
+          .then((res) => {
+            Alert.alert('', strings.PAYMENT_SUCCESS, [
+              {
+                text: strings.OK,
+                onPress: () => console.log('Okay pressed'),
+              },
+            ]);
+            navigation.navigate(navigationStrings.WALLET);
+          })
+          .catch(errorMethod);
+      }
+    } catch (error) {
+      console.log('error raised',error)
+    }
+  }
 
   const _checkoutPayment = (token) => {
     if (amount == '') {
@@ -469,8 +507,7 @@ export default function AddMoney({ navigation }) {
             showError(res?.error?.message);
           } else {
             console.log(res, 'success_createPaymentMethod ');
-            actions
-              .getStripePaymentIntent(
+            actions.getStripePaymentIntent(
                 // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
                 {
                   payment_option_id: selectedPaymentMethod?.id,
@@ -487,16 +524,7 @@ export default function AddMoney({ navigation }) {
               .then(async (res) => {
                 console.log(res, 'getStripePaymentIntent response');
                 if (res && res?.client_secret) {
-                  // const {paymentIntent, error} = await confirmPayment(res?.client_secret, {
-                  //   type: 'Card',
-                  // });
-
-                  // if (error) {
-                  //   console.log('Payment confirmation error', error);
-                  // } else if (paymentIntent) {
-                  //   console.log('Success from promise', paymentIntent);
-                  // }
-                  const {paymentIntent, error} = await handleCardAction(
+                  const { paymentIntent, error } = await handleCardAction(
                     res?.client_secret,
                   );
                   if (paymentIntent) {
@@ -525,19 +553,19 @@ export default function AddMoney({ navigation }) {
                                 // style: 'destructive',
                               },
                             ]);
-                            updateState({isLoadingB: false});
+                            updateState({ isLoadingB: false });
                             navigation.navigate(navigationStrings.WALLET);
                           }
                         })
                         .catch(errorMethod);
                     }
                   } else {
-                    updateState({isLoadingB: false});
+                    updateState({ isLoadingB: false });
                     console.log(error, 'error');
                     showError(error?.message || 'payment failed');
                   }
                 } else {
-                  updateState({isLoadingB: false});
+                  updateState({ isLoadingB: false });
                 }
               })
               .catch(errorMethod);
@@ -551,7 +579,7 @@ export default function AddMoney({ navigation }) {
   const _offineLinePayment = async () => {
     if (cardInfo) {
       console.log(cardInfo, 'cardInfo>cardInfo>cardInfo');
-      updateState({isLoadingB: true});
+      updateState({ isLoadingB: true });
       await createToken(cardInfo)
         .then((res) => {
           console.log(res, 'res>>STRIpe');
@@ -769,7 +797,7 @@ export default function AddMoney({ navigation }) {
   };
 
   const _confirmCardPayment = async (paymentData) => {
-    const {paymentIntent, error} = await handleCardAction(
+    const { paymentIntent, error } = await handleCardAction(
       paymentData?.clientSecret,
     );
     if (paymentIntent) {
