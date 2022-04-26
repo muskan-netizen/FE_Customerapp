@@ -1523,6 +1523,29 @@ target 'Arwin' do
   
 end
 
+# MarjMarketplace Target
+target 'MarjMarketplace' do
+  
+end
+
+# EVSOnTheGo Target
+target 'EVSOnTheGo' do
+  
+end
+
+# Kazakazi Target
+target 'Kazakazi' do
+  
+end
+
+# Papiruki Target
+target 'Papiruki' do
+  
+end
+
+
+
+
 
 
 

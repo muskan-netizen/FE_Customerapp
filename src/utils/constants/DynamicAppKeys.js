@@ -303,6 +303,10 @@ const shortCodes = {
   smile:'d3a41c',
   caronaTaxi:'c12d06',
   arwin:'6a391a',
+  marjMarketplace:'aa4c64',
+  eVSOnTheGo:'0fa442',
+  kazakazi:'ec3bf6',
+  papiruki:'58e4d2',
 };
 
 const appIds = {
@@ -1510,6 +1514,22 @@ const appIds = {
   arwin: Platform.select({
     ios: 'com.arwin',
     android: 'com.arwin',
+  }),
+  marjMarketplace: Platform.select({
+    ios: 'com.marjMarketplace',
+    android: 'com.marjMarketplace',
+  }),
+  eVSOnTheGo: Platform.select({
+    ios: 'com.eVSOnTheGo',
+    android: 'com.eVSOnTheGo',
+  }),
+  kazakazi: Platform.select({
+    ios: 'com.kazakazi',
+    android: 'com.kazakazi',
+  }),
+  papiruki: Platform.select({
+    ios: 'com.papiruki',
+    android: 'com.papiruki',
   }),
 };
 

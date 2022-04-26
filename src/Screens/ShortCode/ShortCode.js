@@ -1924,9 +1924,33 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.arwin:
+        case appIds.arwin:
           updateState({
             shortCode: shortCodes.arwin,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.marjMarketplace:
+          updateState({
+            shortCode: shortCodes.marjMarketplace,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.eVSOnTheGo:
+          updateState({
+            shortCode: shortCodes.eVSOnTheGo,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kazakazi:
+          updateState({
+            shortCode: shortCodes.kazakazi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.papiruki:
+          updateState({
+            shortCode: shortCodes.papiruki,
             isShortcodePrefilled: true,
           });
           break;
