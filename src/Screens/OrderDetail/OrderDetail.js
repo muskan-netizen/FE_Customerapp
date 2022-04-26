@@ -681,7 +681,7 @@ export default function OrderDetail({ navigation, route }) {
                                           }
                                           numberOfLines={1}>
                                           {` ${currencies?.primary_currency
-                                              ?.symbol
+                                            ?.symbol
                                             } ${currencyNumberFormatter(
                                               Number(
                                                 j?.quantity_price,
@@ -784,7 +784,7 @@ export default function OrderDetail({ navigation, route }) {
                                             }
                                             numberOfLines={1}>
                                             {` ${currencies?.primary_currency
-                                                ?.symbol
+                                              ?.symbol
                                               } ${currencyNumberFormatter(
                                                 Number(j?.quantity_price),
                                                 appData?.profile?.preferences
@@ -811,9 +811,9 @@ export default function OrderDetail({ navigation, route }) {
                         color: colors.redFireBrick,
                         marginBottom: moderateScale(3),
                       }}>{`${i?.product.delay_order_hrs > 0 ||
-                          i?.product.delay_order_min > 0
-                          ? strings.PREPARATION_TIME_IS
-                          : ''
+                        i?.product.delay_order_min > 0
+                        ? strings.PREPARATION_TIME_IS
+                        : ''
                         }${i?.product.delay_order_hrs > 0
                           ? ` ${i?.product.delay_order_hrs} hrs`
                           : ''
@@ -1069,7 +1069,7 @@ export default function OrderDetail({ navigation, route }) {
                                         style={styles.cartItemWeight2}
                                         numberOfLines={1}>
                                         {` ${currencies?.primary_currency
-                                            ?.symbol
+                                          ?.symbol
                                           } ${currencyNumberFormatter(
                                             Number(j?.price),
                                             appData?.profile?.preferences
@@ -1697,8 +1697,8 @@ export default function OrderDetail({ navigation, route }) {
                   flex: 1,
                 }}>
                 {`${cartData?.address?.house_number === null
-                    ? ''
-                    : `${cartData?.address?.house_number}, `
+                  ? ''
+                  : `${cartData?.address?.house_number}, `
                   }`}
                 {cartData?.address?.address} {''}
                 {cartData?.address?.pincode}
@@ -1935,11 +1935,7 @@ export default function OrderDetail({ navigation, route }) {
                 MyDarkTheme={MyDarkTheme}
               />
             )}
-          {console.log(
-            Number(cartData?.total_service_fee) +
-            Number(cartData?.taxable_amount),
-            'fsdkjfjafks',
-          )}
+
 
           {Number(cartData?.fixed_fee_amount) > 0 && (
             <LeftRightText
