@@ -1,48 +1,39 @@
-import {useNavigation} from '@react-navigation/native';
-// import {CardField, createToken, initStripe} from '@stripe/stripe-react-native';
-import React, {useEffect, useState} from 'react';
+import { useNavigation } from '@react-navigation/native';
 import {
-  FlatList,
+  CardField, createPaymentMethod, createToken,
+  initStripe,
+  StripeProvider
+} from '@stripe/stripe-react-native';
+// import {CardField, createToken, initStripe} from '@stripe/stripe-react-native';
+import React, { useEffect, useState } from 'react';
+import {
   Image,
-  Keyboard,
-  StyleSheet,
+  Keyboard, ScrollView, StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  ScrollView,
+  View
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import * as Animatable from 'react-native-animatable';
+import { useDarkMode } from 'react-native-dark-mode';
+import { useSelector } from 'react-redux';
 import CheckoutPaymentView from '../Components/CheckoutPaymentView';
 import GradientButton from '../Components/GradientButton';
 import Header from '../Components/Header';
-import {loaderOne} from '../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../Components/WrapperContainer';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang/index';
-import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import colors from '../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
-import * as Animatable from 'react-native-animatable';
+import { MyDarkTheme } from '../styles/theme';
+import { getColorCodeWithOpactiyNumber } from '../utils/helperFunctions';
 import HomeLoader from './Loaders/HomeLoader';
-import {
-  CardField,
-  createToken,
-  initStripe,
-  StripeProvider,
-  handleCardAction,
-  createPaymentMethod,
-  confirmPayment,
-} from '@stripe/stripe-react-native';
 export default function SelectPaymentModal({
   onSelectPayment,
   paymentModalClose = () => {},
