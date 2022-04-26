@@ -41,7 +41,16 @@ import {
 } from './src/utils/notificationService';
 import { getItem, getUserData, setItem } from './src/utils/utils';
 import { MenuProvider } from 'react-native-popup-menu';
+import FastImage from 'react-native-fast-image';
+import {
+  RNPaymentSDKLibrary,
+  PaymentSDKConfiguration,
+  PaymentSDKBillingDetails,
+  PaymentSDKTheme,
+  PaymentSDKConstants,
+} from '@paytabs/react-native-paytabs';
 
+// import withCodePush from './withcodepush';
 
 let CodePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
 
@@ -340,9 +349,76 @@ const App = () => {
     setProgress(progress);
   }
 
- 
+  function onPressPay() {
+    let configuration = new PaymentSDKConfiguration();
+    configuration.profileID = '56491'
+    configuration.serverKey = 'SMJN92NJRN-JDHZZB6LK9-TZZ2TNGZGL'
+    configuration.clientKey = 'C6KM2B-2HBV6D-H992GB-MTPKRB'
+    configuration.cartID = "5445454454"
+    configuration.currency = "SAR"
+    configuration.cartDescription = "Flowers"
+    configuration.merchantCountryCode = "SA"
+    configuration.merchantName = "Flowers Store"
+    configuration.amount = 20
+    configuration.screenTitle = "Pay with Card"
+    configuration.hideCardScanner = false
+    configuration.showBillingInfo = true
 
+
+    let billingDetails = new PaymentSDKBillingDetails(
+      "Jone Smith",
+      "email@domain.com",
+      "97311111111",
+      "Flat 1,Building 123, Road 2345",
+      "Riyadh",
+      "Riyadh",
+      "SA",
+      "1234"
+      )
+    configuration.billingDetails = billingDetails
   
+    RNPaymentSDKLibrary.startCardPayment(JSON.stringify(configuration)).then( result => {
+      console.log("payment result",result)
+      if(result["PaymentDetails"] != null) {
+        let paymentDetails = result["PaymentDetails"]
+        console.log(paymentDetails)
+      } else if(result["Event"] == "CancelPayment") {
+        console.log("Cancel Payment Event")
+      } 
+     }, function(error) {
+      console.log("payment",error)
+     });
+  }
+
+  function onPressApplePay() {
+    let configuration = new PaymentSDKConfiguration();
+    configuration.profileID = '56491'
+    configuration.serverKey = 'SMJN92NJRN-JDHZZB6LK9-TZZ2TNGZGL'
+    configuration.clientKey = 'C6KM2B-2HBV6D-H992GB-MTPKRB'
+    configuration.cartID = "5445454454"
+    configuration.currency = "SAR"
+    configuration.cartDescription = "Flowers"
+    configuration.merchantCountryCode = "SA"
+    configuration.merchantName = 'Sand Box'
+    configuration.amount = 20;
+    configuration.merchantIdentifier = 'merchant.com.app.sponge'
+
+    RNPaymentSDKLibrary.startApplePayPayment(
+      JSON.stringify(configuration),
+    ).then(
+      (result) => {
+        if (result.PaymentDetails != null) {
+          let paymentDetails = result.PaymentDetails
+          console.log(paymentDetails);
+        } else if (result.Event == 'CancelPayment') {
+          console.log('Cancel Payment Event');
+        }
+     }, function(error) {
+        console.log(error);
+      },
+    );
+  }
+
   const progressView = () => {
     return (
       <View>
@@ -417,10 +493,20 @@ const App = () => {
     <SafeAreaProvider>
       <MenuProvider>
         <Provider ref={blurRef} store={store}>
-          <ForegroundHandler />
+
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Button onPress={onPressPay} title="Pay with Card" color="#c00" />
+            <Button
+          onPress={onPressApplePay}
+          title="Pay with Apple Pay"
+          color="#c00"
+          disabled={Platform.OS != 'ios'}
+        />
+          </View>
+          {/* <ForegroundHandler />
           {progress ? progressView() : null}
           <Routes />
-          <NotificationModal />
+          <NotificationModal /> */}
         </Provider>
       </MenuProvider>
       <Container

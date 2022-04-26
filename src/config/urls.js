@@ -1,4 +1,7 @@
 export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.focushires.com/api/v1';
+// export const API_BASE_URL = 'http://192.168.98.185:8060/api/v1'
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
@@ -189,3 +192,4 @@ export const UPDATE_PRODUCT_FAQS_CART = getApiUrl('/cart/productfaq/update');
 export const RATE_TO_DRIVER = getApiUrl('/rating/update-driver-rating');
 export const GET_CATEGORY_KYC_DOCUMENT = getApiUrl('/category_kyc_document');
 export const SUBMIT_CATEGORY_KYC = getApiUrl('/submit_category_kyc');
+export const ORDER_AFTER_PAYMENT = getApiUrl('/order/after/payment');

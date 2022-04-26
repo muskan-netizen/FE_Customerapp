@@ -156,10 +156,11 @@ export default function SelectPaymentModal({
 
   //Error handling in screen
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({isLoading: false, isLoadingB: false, isRefreshing: false,btnLoader:false});
     // showError(error?.message || error?.error);
     console.log(error, 'error');
     alert(error?.message || error?.error);
+
   };
 
   const _createPaymentMethod = async (cardInfo, res2) => {
@@ -205,13 +206,13 @@ export default function SelectPaymentModal({
         selectedPaymentMethod?.off_site == 0
       ) {
         if (cardInfo) {
-          await createToken(cardInfo)
+          await createToken({...cardInfo, type: 'Card'})
             .then((res) => {
               console.log(res, 'stripeTokenres>>');
               console.log(cardInfo, 'stripeTokencardInfo>>');
               if (!!res?.error) {
                 alert(res.error.localizedMessage);
-                updateState({isLoading: false});
+                updateState({isLoading: false,btnLoader:false});
                 return;
               }
               if (res && res?.token && res.token?.id) {
@@ -385,6 +386,7 @@ export default function SelectPaymentModal({
   };
 
   const _onChangeStripeData = (cardDetails) => {
+    console.log("_onChangeStripeData_onChangeStripeData",cardDetails)
     if (cardDetails?.complete) {
       // updateState({
       //   cardInfo: {
