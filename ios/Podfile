@@ -1513,6 +1513,16 @@ target 'Smile' do
   
 end
 
+# CaronaTaxi Target
+target 'CaronaTaxi' do
+  
+end
+
+# Arwin Target
+target 'Arwin' do
+  
+end
+
 
 
 

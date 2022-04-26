@@ -301,6 +301,8 @@ const shortCodes = {
   waterTaxi:'f0f44c',
   muvpod:'3cc883',
   smile:'d3a41c',
+  caronaTaxi:'c12d06',
+  arwin:'6a391a',
 };
 
 const appIds = {
@@ -1500,6 +1502,14 @@ const appIds = {
   smile: Platform.select({
     ios: 'com.customer.smile',
     android: 'com.customer.smile',
+  }),
+  caronaTaxi: Platform.select({
+    ios: 'com.caronaTaxi',
+    android: 'com.caronaTaxi',
+  }),
+  arwin: Platform.select({
+    ios: 'com.arwin',
+    android: 'com.arwin',
   }),
 };
 

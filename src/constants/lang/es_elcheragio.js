@@ -917,4 +917,6 @@ export default {
   TRANSACTION_TIME: 'Tiempo de Transacciones',
   LIFETIME: 'Toda la vida',
   MENU: 'Menú',
+  SPECIFIC_INSTRUCTIONS:'Specific Instructions',
+  THANKS_FOR_YOUR_PURCHASE:'Thanks for your purchase.',
 };

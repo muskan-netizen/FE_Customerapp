@@ -874,6 +874,7 @@ function Cart({ navigation, route }) {
 
     data['type'] = dineInType || '';
     data['is_gift'] = isGiftBoxSelected ? 1 : 0;
+    data['specific_instructions']=instruction
 
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;

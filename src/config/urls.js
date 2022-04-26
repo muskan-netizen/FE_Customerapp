@@ -6,6 +6,9 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 //Vishwas
 // export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
+// export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
+
+
 
 //owais nor
 // export const API_BASE_URL ='https://5f55-103-72-170-243.ngrok.io/api/v1';

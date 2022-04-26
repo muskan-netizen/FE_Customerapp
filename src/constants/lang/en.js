@@ -923,4 +923,6 @@ Amount`,
   SELECT_VENDOR: 'Select a vendor',
   ORDERS: 'Orders',
   ORDER_CANCELLED: 'Order Cancelled',
+  SPECIFIC_INSTRUCTIONS:'Specific Instructions',
+  THANKS_FOR_YOUR_PURCHASE:'Thank you for your purchase.',
 };

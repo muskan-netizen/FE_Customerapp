@@ -424,9 +424,8 @@ export default {
     PASSWORD_NOT_MATCH:
       'Nueva contraseña y la confirmación de la contraseña no coinciden',
     MESSAGE: 'Mensaje',
-    YOUR_ORDER_HAS_BEEN_SUBMITTED:
-      '!Ahuevo, tu pedido ha sido enviado a nuestro socio compadre! ¡Gracias por tu compra! .',
-      
+    YOUR_ORDER_HAS_BEEN_SUBMITTED:'!Ahuevo, tu pedido ha sido enviado a nuestro socio compadre!',
+    THANKS_FOR_YOUR_PURCHASE:'¡Gracias por tu compra!',
     YOUR_ORDER_NUMBER: 'Tu número de pedido es',
     ANY_RESTAURANT_REQUESTS:
       '¿Alguna solicitud de restaurante? Haremos todo lo posible para incorporarlo.',
@@ -916,5 +915,6 @@ export default {
     TRANSACTION_TIME: 'Tiempo de Transacciones',
     LIFETIME: 'Toda la vida',
     MENU: 'Menú',
+    SPECIFIC_INSTRUCTIONS:'Specific Instructions',
   };
   
