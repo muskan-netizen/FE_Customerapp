@@ -307,7 +307,9 @@ const shortCodes = {
   eVSOnTheGo:'0fa442',
   kazakazi:'ec3bf6',
   papiruki:'58e4d2',
+  markSoublet:'2b77d8',
 };
+
 
 const appIds = {
   royoorder: Platform.select({
@@ -1530,6 +1532,10 @@ const appIds = {
   papiruki: Platform.select({
     ios: 'com.papiruki',
     android: 'com.papiruki',
+  }),
+  markSoublet: Platform.select({
+    ios: 'com.markSoublet',
+    android: 'com.markSoublet',
   }),
 };
 
