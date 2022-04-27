@@ -4876,16 +4876,16 @@ android {
    //       resValue "string", "app_name", "Aau Jau"
    //       resValue "string", "host_name", ""
    //       }
-   //      mediPick{
-   //       dimension "appType"
-   //       versionCode 1
-   //       versionName "1.0"
-   //       minSdkVersion rootProject.ext.minSdkVersion
-   //       targetSdkVersion rootProject.ext.targetSdkVersion
-   //       applicationId 'com.mediPick'
-   //       resValue "string", "app_name", "MediPick"
-   //       resValue "string", "host_name", ""
-   //       }
+        mediPick{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.mediPick'
+         resValue "string", "app_name", "MediPick"
+         resValue "string", "host_name", ""
+         }
    //      meltivers{
    //       dimension "appType"
    //       versionCode 1
