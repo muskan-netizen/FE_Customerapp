@@ -316,7 +316,7 @@ export default ({themeColors, fontFamily}) => {
     },
     exploreStoresTxt: {
       fontFamily: fontFamily.medium,
-      fontSize: textScale(16),
+      fontSize: textScale(14),
       textAlign: 'left',
     },
     dotStyle: {

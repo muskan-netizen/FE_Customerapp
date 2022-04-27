@@ -26,6 +26,7 @@ import {
   UPDATE_PRODUCT_FAQS_CART,
   GET_CATEGORY_KYC_DOCUMENT,
   SUBMIT_CATEGORY_KYC,
+  ORDER_AFTER_PAYMENT,
 } from '../../config/urls';
 import {
   apiGet,
@@ -36,7 +37,7 @@ import {
 } from '../../utils/utils';
 import store from '../store';
 import types from '../types';
-const {dispatch} = store;
+const { dispatch } = store;
 
 export const saveAddress = (data) => {
   saveSelectedAddress(data).then((suc) => {
@@ -343,13 +344,13 @@ export function getStripePaymentIntent(data = {}, headers = {}) {
   // console.log("payment++ query", query)
   return new Promise((resolve, reject) => {
     apiPost(GET_PAYMENT_INTENT, data, headers)
-    .then((res) => {
-      resolve(res);
-    })
-    .catch((error) => {
-      reject(error);
-    });
-});
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 };
 
 export const getProductFaqs = (query, data, headers = {}) => {
@@ -381,13 +382,13 @@ export function confirmPaymentIntentStripe(data = {}, headers = {}) {
   // console.log("payment++ query", query)
   return new Promise((resolve, reject) => {
     apiPost(CONFIRM_PAYMENT_INTENT, data, headers)
-    .then((res) => {
-      resolve(res);
-    })
-    .catch((error) => {
-      reject(error);
-    });
-});
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 };
 
 export const getCategoryKycDocument = (data, headers = {}) => {
@@ -405,6 +406,20 @@ export const getCategoryKycDocument = (data, headers = {}) => {
 export const submitCategoryKYC = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(SUBMIT_CATEGORY_KYC, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+
+
+export const orderSuccessPayment = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(ORDER_AFTER_PAYMENT, data, headers)
       .then((res) => {
         resolve(res);
       })

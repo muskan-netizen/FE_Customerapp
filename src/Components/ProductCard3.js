@@ -50,7 +50,7 @@ const ProductCard3 = ({
   animateText = 0,
   section = {},
 }) => {
-  console.log('item data++', data);
+  // console.log('item data++', data);
   // data['qty'] = 1
   const [isAdd, setAdd] = useState(false);
   const [state, setState] = useState({
@@ -329,7 +329,7 @@ const ProductCard3 = ({
               color: colors.grayOpacity51,
               marginVertical:moderateScaleVertical(4)
             }} >{data?.vendor?.name}</Text>
-            {section?.title ? (
+            {!!section?.title ? (
               <Text
                 numberOfLines={1}
                 style={{
@@ -339,7 +339,7 @@ const ProductCard3 = ({
                     : colors.blackOpacity40,
                 }}>
                 {strings.IN}
-                {` ${section?.title}`}
+                {` ${data?.title}`}
               </Text>
             ) : null}
           </View>

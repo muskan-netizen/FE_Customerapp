@@ -7,6 +7,9 @@
 //Vishwas
 // export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
 
+//Gourav.s
+// export const API_BASE_URL = 'http://192.168.99.130:8005/api/v1';
+
 //owais nor
 // export const API_BASE_URL ='https://5f55-103-72-170-243.ngrok.io/api/v1';
 
@@ -17,7 +20,7 @@
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1';
-export const API_BASE_URL = 'https://order.veg-hub.com/api/v1';
+// export const API_BASE_URL = 'https://order.veg-hub.com/api/v1';
 // export const API_BASE_URL = 'https://seratho.com/api/v1';
 // export const API_BASE_URL = 'https://bezaliohub.com/api/v1';
 // export const API_BASE_URL = 'https://mrhealth.in/api/v1';
@@ -93,7 +96,7 @@ export const API_BASE_URL = 'https://order.veg-hub.com/api/v1';
 // export const API_BASE_URL = 'https://swiftandvalu.com/api/v1';
 // export const API_BASE_URL = 'https://baytukom.royoorders.com/api/v1';
 //export const API_BASE_URL = 'https://marketplace.verofax.com/api/v1';
-// export const API_BASE_URL = 'https://agrionline.ph/api/v1';
+export const API_BASE_URL = 'https://agrionline.ph/api/v1';
 // export const API_BASE_URL = 'https://marketplace.verofax.com/api/v1';
 // export const API_BASE_URL = 'https://order.loopwhole.ca/api/v1';
 // export const API_BASE_URL = 'https://elcheregio.mx/api/v1';
@@ -311,3 +314,4 @@ export const VENDOR_CATEGORIES = getApiUrl(
 );
 export const ALL_VENDOR_DATA = getApiUrl(
   '/mystore/vendor/products-with-category/list',);
+export const ORDER_AFTER_PAYMENT = getApiUrl('/order/after/payment');

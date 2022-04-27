@@ -1,15 +1,221 @@
-import React from 'react';
-import { StyleSheet, View, Text, Image, Dimensions, StatusBar } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import FastImage from 'react-native-fast-image';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import GradientButton from '../../Components/GradientButton';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import { height, moderateScale, moderateScaleVertical, width } from '../../styles/responsiveSize';
+import {
+    getCurrentLocation,
+    getImageUrl
+} from '../../utils/helperFunctions';
+import { chekLocationPermission } from '../../utils/permissions';
 import { setItem } from '../../utils/utils';
+
+const AppIntro = ({ route, navigation }) => {
+
+    const { appData, themeColors, currencies, languages, appStyle } = useSelector((state) => state?.initBoot);
+
+    const [state, setState] = useState({
+        slides: [],
+    });
+    const { slides } = state;
+    const updateState = (data) => setState((state) => ({ ...state, ...data }));
+
+
+    useEffect(() => {
+
+        getCurrLocation()
+        const temp = route.params.images.map((el, index) => {
+            console.log("route.params.images", route.params.images)
+            return {
+                key: index + 1,
+                title: '',
+                text: '',
+                image: `${el.file_name.image_fit}800/1600${el.file_name.image_path}`,
+                backgroundColor: '#22bcb5',
+            }
+        })
+
+        updateState({ slides: temp })
+        setItem('firstTime', true)
+    }, [])
+
+
+    const _renderItem = ({ item }) => {
+        return (
+            <View style={[styles.slide, { backgroundColor: 'white' }]}>
+                <FastImage
+                    source={{
+                        uri: item.image,
+                        priority: FastImage.priority.high,
+                        cache: FastImage.cacheControl.immutable,
+                    }}
+                    style={{
+                        height: height,
+                        width: width
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
+
+                />
+            </View>
+        );
+    }
+
+    const _renderDoneButton = () => {
+        return (
+            <View style={styles.buttonCircle}>
+                <GradientButton btnText={strings.START} btnStyle={{ paddingHorizontal: 10 }} onPress={() => navigation.push(navigationStrings.TAB_ROUTES)} />
+            </View>
+        );
+    };
+
+    const onSlideChange = (el, i) => {
+    }
+
+    const onScroll = () => {
+    }
+
+
+    const renderPagination = (index) => {
+        return (
+            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                {slides.map((val, i) => {
+                    return (
+                        <View
+                            style={{
+                                width: moderateScale(10),
+                                height: moderateScale(10),
+                                borderRadius: moderateScale(5),
+                                backgroundColor: index == i ? themeColors.primary_color : colors.blackOpacity30,
+                                marginBottom: moderateScaleVertical(12),
+                                marginLeft: moderateScale(4)
+                            }}
+                        />
+                    )
+                })}
+            </View>
+        )
+    }
+
+    const getCurrLocation = async() =>{
+        try {
+            let isPermission = await chekLocationPermission(true)
+            console.log("is permission",isPermission)
+            if (isPermission !== 'goback' && isPermission == 'granted') {
+                const res = await getCurrentLocation('home')
+                console.log("current location +++++",res)
+                if(!!res){
+                    homeData(res)
+                }
+            }else{
+                homeData(null)
+            }
+        } catch (error) {
+            console.log('error raised',error)
+        }
+    }
+
+    const homeData = (location) => {
+
+        let latlongObj = {};
+
+        if (appData?.profile?.preferences?.is_hyperlocal && !!location) {
+            latlongObj = {
+                address: location?.address,
+                latitude: location?.latitude,
+                longitude: location?.longitude
+            };
+        }
+        actions.homeData(
+            {
+                type: 'delivery',
+                ...latlongObj,
+            },
+            {
+                code: appData?.profile?.code,
+                currency: currencies?.primary_currency?.id,
+                language: languages?.primary_language?.id,
+            },
+        ).then(async (res) => {
+            console.log('Home data++++++', res);
+             preLoadImages(res.data);
+        }).catch((error)=>{
+            console.log("error raised",error)
+        })
+    };
+
+    const preLoadImages = async (data) => {
+
+        if (data.categories.length > 0) {
+          let preLoadCategories = data.categories.map((item, inx) => {
+            return {
+              uri: getImageUrl(
+                item?.icon?.image_fit,
+                item?.icon?.image_path,
+                '160/160',
+              ),
+            };
+          });
+          FastImage.preload(preLoadCategories); //preload categories
+        }
+    
+        if (!!appData?.mobile_banners && appData?.mobile_banners?.length > 0) {
+          let preLoadBanner = appData?.mobile_banners.map((item) => {
+            return {
+              uri: getImageUrl(
+                item.image.image_fit,
+                item.image.image_path,
+                appStyle?.homePageLayout === 5 ? '800/600' : '400/600',
+              )
+            }
+          })
+          FastImage.preload(preLoadBanner); //preload banners
+        }
+    
+        if (data.vendors.length > 0) {
+          let preLoadVendors = data.vendors.map((item, inx) => {
+            return {
+              uri: getImageUrl(
+                item.banner.proxy_url || item.image.proxy_url,
+                item.banner.image_path || item.image.image_path,
+                '700/300',
+              ),
+            };
+          });
+          FastImage.preload(preLoadVendors); //preload vendors
+        }
+      };
+
+
+
+    return (
+        <View style={{ flex: 1, backgroundColor: 'white' }}>
+            <StatusBar translucent backgroundColor="transparent" />
+            <View style={{ flex: 0.9 }}>
+                <AppIntroSlider
+                    data={slides}
+                    renderDoneButton={() => <View></View>}
+                    onEndReached={(el) => console.log(el)}
+                    renderItem={_renderItem}
+                    activeDotStyle={styles.activeDotStyle}
+                    onSlideChange={(el, i) => onSlideChange(el, i)}
+                    onScroll={() => onScroll()}
+                    renderNextButton={() => <View></View>}
+                    renderPagination={renderPagination}
+
+                />
+            </View>
+            <View style={{ flex: 0.1 }}>
+                {_renderDoneButton()}
+            </View>
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
     slide: {
@@ -43,124 +249,4 @@ const styles = StyleSheet.create({
     }
 });
 
-class AppIntro extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            index: 0,
-            lastIndex: -1,
-            slides: []
-        }
-    }
-
-
-    componentDidMount = () => {
-
-        const temp = this.props.route.params.images.map((el, index) => {
-            console.log("this.props.route.params.images",this.props.route.params.images)
-            return {
-                key: index + 1,
-                title: '',
-                text: '',
-                // image: {uri: `${el.file_name.image_fit}${Math.round(Dimensions.get('screen').width)}/${Math.round(Dimensions.get('screen').height)}${el.file_name.image_path}`},
-                image: `${el.file_name.image_fit}800/1600${el.file_name.image_path}`,
-                backgroundColor: '#22bcb5',
-            }
-        })
-
-        this.setState({ ...this.state, slides: temp })
-        setItem('firstTime', true)
-    }
-
-    _renderItem = ({ item }) => {
-        return (
-            <View style={[styles.slide, { backgroundColor: 'white' }]}>
-                <FastImage
-                    source={{
-                        uri: item.image,
-                        priority: FastImage.priority.high,
-                        cache: FastImage.cacheControl.immutable,
-                    }}
-                    style={{
-                        height: height,
-                        width: width
-                    }}
-                    resizeMode={FastImage.resizeMode.cover}
-
-                />
-            </View>
-        );
-    }
-
-    _renderDoneButton = () => {
-        return (
-            <View style={styles.buttonCircle}>
-                <GradientButton btnText={strings.START} btnStyle={{ paddingHorizontal: 10 }} onPress={() => this.props.navigation.push(navigationStrings.TAB_ROUTES)} />
-            </View>
-        );
-    };
-
-    onSlideChange = (el, i) => {
-    }
-
-    onScroll = () => {
-    }
-
-    renderPagination = (index) => {
-        const {mainData} = this.props
-        console.log("pagination prosp", mainData)
-        return (
-            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
-                {this.state.slides.map((val, i) => {
-                    return (
-                        <View
-                            style={{
-                                width: moderateScale(10),
-                                height: moderateScale(10),
-                                borderRadius: moderateScale(5),
-                                backgroundColor: index == i ? mainData?.themeColors.primary_color : colors.blackOpacity30,
-                                marginBottom: moderateScaleVertical(12),
-                                marginLeft: moderateScale(4)
-                            }}
-                        />
-                    )
-                })}
-            </View>
-        )
-    }
-
-    render() {
-        console.log("slides",this.state.slides)
-        return (
-            <View style={{ flex: 1, backgroundColor: 'white' }}>
-                <StatusBar translucent backgroundColor="transparent" />
-                <View style={{ flex: 0.9 }}>
-                    <AppIntroSlider
-                        data={this.state.slides}
-                        renderDoneButton={() => <View></View>}
-                        onEndReached={(el) => console.log(el)}
-                        renderItem={this._renderItem}
-                        activeDotStyle={styles.activeDotStyle}
-                        onSlideChange={(el, i) => this.onSlideChange(el, i)}
-                        onScroll={() => this.onScroll()}
-                        renderNextButton={() => <View></View>}
-                        renderPagination={this.renderPagination}
-
-                    />
-                </View>
-                <View style={{ flex: 0.1}}>
-                    {this._renderDoneButton()}
-                </View>
-            </View>
-        );
-    }
-}
-
-
-const mapStateToProps = state => {
-    return {
-        mainData: state?.initBoot,
-    };
-};
-
-export default connect(mapStateToProps)(AppIntro)
+export default AppIntro;

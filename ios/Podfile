@@ -1,7 +1,7 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
-platform :ios, '11.0'
+platform :ios, '12.0'
 
 abstract_target 'available_pods' do
   
@@ -1472,48 +1472,6 @@ end
 target 'CurblerLLC' do
   
 end
-
-# Cartnar Target
-target 'Cartnar' do
-  
-end
-
-# Uven Target
-target 'Uven' do
-  
-end
-
-# PAS41 Target
-target 'PAS41' do
-  
-end
-
-# FreshFarmz Target
-target 'FreshFarmz' do
-  
-end
-
-# Ryde Target
-target 'Ryde' do
-  
-end
-
-# WaterTaxi Target
-target 'WaterTaxi' do
-  
-end
-
-# Muvpod Target
-target 'Muvpod' do
-  
-end
-
-# Smile Target
-target 'Smile' do
-  
-end
-
-
 
 
 post_install do |installer|
