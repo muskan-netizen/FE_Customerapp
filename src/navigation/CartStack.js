@@ -35,6 +35,7 @@ import {
   MyProfile3,
   MyProfile2,
   Easebuzz,
+  ToyyibPay,
 } from '../Screens';
 import MyProfile from '../Screens/MyProfile/MyProfile2';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
@@ -205,6 +206,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.EASEBUZZ}
         component={Easebuzz}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name={navigationStrings.TOYYIAPAY}
+        component={ToyyibPay}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

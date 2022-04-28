@@ -131,4 +131,5 @@ export default {
   CASH_FREE: 'cashFree',
   MYORDERSSTACK: 'myOrdersStack',
   EASEBUZZ: 'easebuzz',
+  TOYYIAPAY:'toyyibPay'
 };
