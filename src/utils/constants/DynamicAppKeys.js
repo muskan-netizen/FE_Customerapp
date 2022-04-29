@@ -501,8 +501,8 @@ const appIds = {
     android: 'com.jet',
   }),
   africanize: Platform.select({
-    ios: 'com.africanize',
-    android: 'com.africanize',
+    ios: 'com.africanize.customer',
+    android: 'com.africanize.customer',
   }),
   markita: Platform.select({
     ios: 'com.markita',

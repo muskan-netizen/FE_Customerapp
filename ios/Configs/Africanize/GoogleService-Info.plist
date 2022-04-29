@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>924994763753-kgvhqp9l0rq5ehdutp7hb1q7fi30ipl6.apps.googleusercontent.com</string>
+	<string>924994763753-sq70j8gp4dhppc0pg9peth6bth0t5a25.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.924994763753-kgvhqp9l0rq5ehdutp7hb1q7fi30ipl6</string>
+	<string>com.googleusercontent.apps.924994763753-sq70j8gp4dhppc0pg9peth6bth0t5a25</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>924994763753-1adegnlgnm3iqd8b09cgmuifiq55tuqt.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.africanize</string>
+	<string>com.africanize.customer</string>
 	<key>PROJECT_ID</key>
 	<string>africanize-2dbb0</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:924994763753:ios:8d4f6c2b13e374edc7e978</string>
+	<string>1:924994763753:ios:84c943eeef40dc79c7e978</string>
 </dict>
 </plist>

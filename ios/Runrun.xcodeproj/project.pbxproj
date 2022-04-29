@@ -607,6 +607,7 @@
 		109C3F25280ECAA3004D7344 /* FreshFarmz(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 109C3F24280ECAA3004D7344 /* FreshFarmz(Production).xcconfig */; };
 		109C3F27280ECAB9004D7344 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 109C3F26280ECAB8004D7344 /* Images.xcassets */; };
 		109C3F29280ECAD2004D7344 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 109C3F28280ECAD0004D7344 /* GoogleService-Info.plist */; };
+		10A5AD65281AAF9600B92890 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10A5AD64281AAF9300B92890 /* GoogleService-Info.plist */; };
 		10AAEB54281674AB009BABED /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		10AAEB55281674AB009BABED /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		10AAEB56281674AB009BABED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -4924,7 +4925,7 @@
 		847F6E2427203FDA00C7A32F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847F6E2327203FDA00C7A32F /* Images.xcassets */; };
 		847F6F1A2720428800C7A32F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847F6F192720428700C7A32F /* GoogleService-Info.plist */; };
 		8480076A26CE20340014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		8480076B26CE20340014F500 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		8480076B26CE20340014F500 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8480076C26CE20340014F500 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8480076D26CE20340014F500 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848007AD26CE260D0014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -5749,7 +5750,7 @@
 		848CB12D278D662700DD824C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848CB12C278D662700DD824C /* Images.xcassets */; };
 		848CB1FB278D66F400DD824C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848CB1FA278D66F300DD824C /* GoogleService-Info.plist */; };
 		848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		848CEF8126CE229D0077C918 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		848CEF8126CE229D0077C918 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		848CEF8226CE229D0077C918 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848CEF8326CE229D0077C918 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848D76B92748F70100FE87AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -8281,7 +8282,6 @@
 		84DD36D92653D9EF00E2097D /* Plists in Resources */ = {isa = PBXBuildFile; fileRef = 84DD36D82653D9EF00E2097D /* Plists */; };
 		84DD374026CA451000F02437 /* Africanize(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84DD373F26CA451000F02437 /* Africanize(Production).xcconfig */; };
 		84DD377526CA452A00F02437 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84DD377426CA452A00F02437 /* Images.xcassets */; };
-		84DD37AA26CA459700F02437 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84DD37A926CA459600F02437 /* GoogleService-Info.plist */; };
 		84DF1BA32808382700FD900D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84DF1BA42808382700FD900D /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		84DF1BA52808382700FD900D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -9273,6 +9273,7 @@
 		109C3F26280ECAB8004D7344 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		109C3F28280ECAD0004D7344 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		109C3F2A280ECD93004D7344 /* FreshFarmz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FreshFarmz.entitlements; sourceTree = "<group>"; };
+		10A5AD64281AAF9300B92890 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		10AAEB7C281674AB009BABED /* CaronaTaxi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaronaTaxi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10AAEB7F281675A2009BABED /* CaronaTaxi(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "CaronaTaxi(Development).xcconfig"; sourceTree = "<group>"; };
 		10AAEB8128167607009BABED /* CaronaTaxi(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "CaronaTaxi(Production).xcconfig"; sourceTree = "<group>"; };
@@ -11264,7 +11265,6 @@
 		84DD36D82653D9EF00E2097D /* Plists */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Plists; path = Runrun/Plists; sourceTree = "<group>"; };
 		84DD373F26CA451000F02437 /* Africanize(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Africanize(Production).xcconfig"; sourceTree = "<group>"; };
 		84DD377426CA452A00F02437 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		84DD37A926CA459600F02437 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84DD387726CA483800F02437 /* Africanize.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Africanize.entitlements; sourceTree = "<group>"; };
 		84DF1BD12808382700FD900D /* Elixir.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elixir.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84DF21832808396400FD900D /* Elixir(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Elixir(Development).xcconfig"; sourceTree = "<group>"; };
@@ -19337,7 +19337,7 @@
 		84DD36D626CA44B600F02437 /* Africanize */ = {
 			isa = PBXGroup;
 			children = (
-				84DD37A926CA459600F02437 /* GoogleService-Info.plist */,
+				10A5AD64281AAF9300B92890 /* GoogleService-Info.plist */,
 				84DD36D726CA44E800F02437 /* Africanize(Development).xcconfig */,
 				84DD373F26CA451000F02437 /* Africanize(Production).xcconfig */,
 				84DD377426CA452A00F02437 /* Images.xcassets */,
@@ -27785,7 +27785,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					84DD35D426CA43E100F02437 = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = R38C53DX47;
 						ProvisioningStyle = Automatic;
 					};
 					84DF1B9F2808382700FD900D = {
@@ -37406,8 +37406,8 @@
 				84DD374026CA451000F02437 /* Africanize(Production).xcconfig in Resources */,
 				84D1CE0D2703529D00C05E36 /* notification.wav in Resources */,
 				84DD377526CA452A00F02437 /* Images.xcassets in Resources */,
+				10A5AD65281AAF9600B92890 /* GoogleService-Info.plist in Resources */,
 				84DD35F826CA43E100F02437 /* Plists in Resources */,
-				84DD37AA26CA459700F02437 /* GoogleService-Info.plist in Resources */,
 				8455CA6826DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84DD35F926CA43E100F02437 /* Futura-Normal.ttf in Resources */,
 				84DD35FA26CA43E100F02437 /* Futura-Book.ttf in Resources */,
@@ -99789,7 +99789,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */,
-				848CEF8126CE229D0077C918 /* BuildFile in Sources */,
+				848CEF8126CE229D0077C918 /* (null) in Sources */,
 				848CEF8226CE229D0077C918 /* Royo.swift in Sources */,
 				848CEF8326CE229D0077C918 /* main.m in Sources */,
 			);
@@ -99893,7 +99893,7 @@
 				84FFFF2026D672E600F2B059 /* Royo.swift in Sources */,
 				84FFFF2126D672E600F2B059 /* main.m in Sources */,
 				8480076A26CE20340014F500 /* AppDelegate.m in Sources */,
-				8480076B26CE20340014F500 /* BuildFile in Sources */,
+				8480076B26CE20340014F500 /* (null) in Sources */,
 				8480076C26CE20340014F500 /* Royo.swift in Sources */,
 				8480076D26CE20340014F500 /* main.m in Sources */,
 			);
@@ -118436,7 +118436,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = R38C53DX47;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -118468,7 +118468,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = R38C53DX47;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
