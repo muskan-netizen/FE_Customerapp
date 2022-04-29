@@ -3961,16 +3961,16 @@ android {
    //          resValue "string", "app_name", "My fiji"
    //          resValue "string", "host_name", ""
    //       } 
-          fastmikes{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion         
-            applicationId 'com.fastmikes.customer'
-            resValue "string", "app_name", "Fast Mikes"
-            resValue "string", "host_name", ""
-         } 
+         //  fastmikes{
+         //    dimension "appType"
+         //    versionCode 1
+         //    versionName "1.0"
+         //    minSdkVersion rootProject.ext.minSdkVersion
+         //    targetSdkVersion rootProject.ext.targetSdkVersion         
+         //    applicationId 'com.fastmikes.customer'
+         //    resValue "string", "app_name", "Fast Mikes"
+         //    resValue "string", "host_name", ""
+         // } 
    //       citysuds{
    //          dimension "appType"
    //          versionCode 1
@@ -4492,16 +4492,16 @@ android {
    //       resValue "string", "app_name", "MrHealth"
    //       resValue "string", "host_name", ""
    //       }
-   //       lopht{
-   //       dimension "appType"
-   //       versionCode 1
-   //       versionName "1.0"
-   //       minSdkVersion rootProject.ext.minSdkVersion
-   //       targetSdkVersion rootProject.ext.targetSdkVersion
-   //       applicationId 'com.lopht'
-   //       resValue "string", "app_name", "LOPHT"
-   //       resValue "string", "host_name", ""
-   //       }
+         lopht{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.lopht'
+         resValue "string", "app_name", "LOPHT"
+         resValue "string", "host_name", ""
+         }
 
    //       yalary{
    //       dimension "appType"
