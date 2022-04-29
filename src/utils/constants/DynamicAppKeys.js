@@ -502,7 +502,7 @@ const appIds = {
   }),
   africanize: Platform.select({
     ios: 'com.africanize.customer',
-    android: 'com.africanize.customer',
+    android: 'com.africanize',
   }),
   markita: Platform.select({
     ios: 'com.markita',
