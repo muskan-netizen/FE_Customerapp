@@ -27,6 +27,8 @@ import {
   GET_CATEGORY_KYC_DOCUMENT,
   SUBMIT_CATEGORY_KYC,
   ORDER_AFTER_PAYMENT,
+  PAYTABURL,
+  CANCELPAYTABURL,
 } from '../../config/urls';
 import {
   apiGet,
@@ -428,3 +430,35 @@ export const orderSuccessPayment = (data, headers = {}) => {
       });
   });
 };
+
+
+//Paytab card payment method
+export function openPaytabUrl(data = {}, headers = {}) {
+  console.log('payment++ data', data);
+  return new Promise((resolve, reject) => {
+    apiPost(PAYTABURL, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+
+
+//Cancel Paytab card payment method
+export function cancelPaytabUrl(data = {}, headers = {}) {
+  console.log('payment++ data', data);
+  return new Promise((resolve, reject) => {
+    apiPost(CANCELPAYTABURL, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+

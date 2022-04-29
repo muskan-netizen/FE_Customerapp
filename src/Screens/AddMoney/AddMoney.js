@@ -354,13 +354,62 @@ export default function AddMoney({ navigation }) {
       .catch(errorMethod);
   };
 
+  const openPayTabs = async (data) => {
+    console.log(appData, "openPayTabsappData")
+    console.log("openPayTabsdata", data)
+
+    data['serverKey'] = appData?.profile?.preferences?.paytab_server_key
+    data['clientKey'] = appData?.profile?.preferences?.paytab_client_key
+    data['profileID'] = appData?.profile?.preferences?.paytab_profile_id
+    data['currency'] = currencies?.primary_currency?.iso_code
+    data['merchantname'] = appData?.profile?.company_name
+    data['countrycode'] = appData?.profile?.country?.code
+
+    try {
+      const res = await payWithCard(data)
+      console.log("payWithCard res++++", res)
+      if (res && res?.transactionReference) {
+        let apiData = {
+          payment_option_id: data?.payment_option_id,
+          transaction_id: res?.transactionReference,
+          amount: data?.total_payable_amount,
+          action: 'wallet'
+        }
+
+        console.log(apiData, "apiData");
+        actions
+          .openPaytabUrl(
+            apiData,
+            {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+            },
+          )
+          .then((res) => {
+            console.log(res, "resfrompaytab");
+            if (res && res?.status == "Success") {
+              navigation.goBack()
+            }
+
+          })
+          .catch(errorMethod);
+      }
+
+    } catch (error) {
+      console.log('error raised', error)
+    }
+  }
+
+
+
   const _addMoneyToWallet = () => {
     console.log(selectedPaymentMethod, 'selectedPaymentMethod');
 
     if (amount == '') {
       showError(strings.PLEASE_ENTER_OR_SELECT_AMOUNT);
       return;
-    } 
+    }
     // if (!selectedPaymentMethod) {
     //   showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
     //   return;
@@ -369,55 +418,54 @@ export default function AddMoney({ navigation }) {
       renderRazorPay();
       return;
     }
-    if(true){
-      let billingDetail = {
-        name: userData?.name,
-        email: userData?.email,
-        phone: userData?.phone_number,
-        amount
+
+    if (selectedPaymentMethod?.id == 27) {
+      let paymentData = {
+        payment_option_id: selectedPaymentMethod?.id,
+        total_payable_amount: amount,
       }
-      openPayTabs(billingDetail)
-      return;
-    } 
+      openPayTabs(paymentData)
+      return
+    }
     if (selectedPaymentMethod?.off_site == 1) {
       _webPayment();
       return;
     }
-  
+
     _offineLinePayment();
 
   };
 
-  const openPayTabs = async(data) =>{
-    console.log("datadata",data)
-    try {
-      const res = await payWithCard(data)
-      console.log("payWithCard res++++",res)
-  
-      if (!!res?.transactionReference) {
-        const data = {};
-        data['amount'] = amount;
-        data['transaction_id'] = res?.transactionReference
-        actions.walletCredit(data, {
-            code: appData?.profile?.code,
-            currency: currencies?.primary_currency?.id,
-            language: languages?.primary_language?.id,
-          })
-          .then((res) => {
-            Alert.alert('', strings.PAYMENT_SUCCESS, [
-              {
-                text: strings.OK,
-                onPress: () => console.log('Okay pressed'),
-              },
-            ]);
-            navigation.navigate(navigationStrings.WALLET);
-          })
-          .catch(errorMethod);
-      }
-    } catch (error) {
-      console.log('error raised',error)
-    }
-  }
+  // const openPayTabs = async(data) =>{
+  //   console.log("datadata",data)
+  //   try {
+  //     const res = await payWithCard(data)
+  //     console.log("payWithCard res++++",res)
+
+  //     if (!!res?.transactionReference) {
+  //       const data = {};
+  //       data['amount'] = amount;
+  //       data['transaction_id'] = res?.transactionReference
+  //       actions.walletCredit(data, {
+  //           code: appData?.profile?.code,
+  //           currency: currencies?.primary_currency?.id,
+  //           language: languages?.primary_language?.id,
+  //         })
+  //         .then((res) => {
+  //           Alert.alert('', strings.PAYMENT_SUCCESS, [
+  //             {
+  //               text: strings.OK,
+  //               onPress: () => console.log('Okay pressed'),
+  //             },
+  //           ]);
+  //           navigation.navigate(navigationStrings.WALLET);
+  //         })
+  //         .catch(errorMethod);
+  //     }
+  //   } catch (error) {
+  //     console.log('error raised',error)
+  //   }
+  // }
 
   const _checkoutPayment = (token) => {
     if (amount == '') {
@@ -474,12 +522,12 @@ export default function AddMoney({ navigation }) {
         updateState({ isLoadingB: false, isRefreshing: false });
         // const URL = queryString.parseUrl(res.data);
         console.log('res==>>>>', res);
-        if (res && res?.status == 'Success' && res?.data) {
+        if (res && res?.status == 'Success' && (res?.data || res?.payment_link)) {
           let sendingData = {
             id: selectedPaymentMethod.id,
             title: selectedPaymentMethod.title,
             screenName: navigationStrings.WALLET,
-            paymentUrl: res.data,
+            paymentUrl: res?.data || res?.payment_link,
             action: 'wallet',
           };
 
@@ -508,19 +556,19 @@ export default function AddMoney({ navigation }) {
           } else {
             console.log(res, 'success_createPaymentMethod ');
             actions.getStripePaymentIntent(
-                // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
-                {
-                  payment_option_id: selectedPaymentMethod?.id,
-                  action: 'wallet',
-                  amount: amount,
-                  payment_method_id: res?.paymentMethod?.id,
-                },
-                {
-                  code: appData?.profile?.code,
-                  currency: currencies?.primary_currency?.id,
-                  language: languages?.primary_language?.id,
-                },
-              )
+              // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
+              {
+                payment_option_id: selectedPaymentMethod?.id,
+                action: 'wallet',
+                amount: amount,
+                payment_method_id: res?.paymentMethod?.id,
+              },
+              {
+                code: appData?.profile?.code,
+                currency: currencies?.primary_currency?.id,
+                language: languages?.primary_language?.id,
+              },
+            )
               .then(async (res) => {
                 console.log(res, 'getStripePaymentIntent response');
                 if (res && res?.client_secret) {

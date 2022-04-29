@@ -2052,12 +2052,12 @@ export default function OrderDetail({ navigation, route }) {
             }}
           />
 
-          {paramData?.orderStatus?.current_status?.title ===
+          {!!(paramData?.orderStatus?.current_status?.title ===
             strings.DELIVERED &&
-            !!appData?.profile?.preferences?.tip_after_order &&
-            (cartData?.tip_amount == 0 || cartData?.tip_amount == null) &&
+            appData?.profile?.preferences?.tip_after_order &&
+            (Number(cartData?.tip_amount) == 0 || Number(cartData?.tip_amount) == null) &&
             !!cartData?.tip &&
-            cartData?.tip.length && (
+            cartData?.tip.length) && (
               <View
                 style={{
                   flexDirection: 'column',
