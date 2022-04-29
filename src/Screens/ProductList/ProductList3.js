@@ -443,7 +443,7 @@ export default function Products({ route, navigation }) {
 
   /****Get all list items by vendor id */
   const getAllProductsByVendor = (pageNo) => {
-    console.log('api hit getAllProductsByVendor');
+    console.log('api hit getAllProductsByVendor',data);
     let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
     let apiData = `/${vendorId}?limit=${limit}&page=${pageNo}`;
