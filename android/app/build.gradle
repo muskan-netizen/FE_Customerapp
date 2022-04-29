@@ -2089,16 +2089,16 @@ android {
       //       resValue "string", "app_name", "MML"
       //       resValue "string", "host_name", ""
       //    }
-      //     bimol{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.bimol'
-      //       resValue "string", "app_name", "Bimol"
-      //       resValue "string", "host_name", ""
-      //    }
+         //  bimol{
+         //    dimension "appType"
+         //    versionCode 1
+         //    versionName "1.0"
+         //    minSdkVersion rootProject.ext.minSdkVersion
+         //    targetSdkVersion rootProject.ext.targetSdkVersion         
+         //    applicationId 'com.bimol'
+         //    resValue "string", "app_name", "Bimol"
+         //    resValue "string", "host_name", ""
+         // }
         
       //       vendorspot{
       //        dimension "appType"
@@ -2455,16 +2455,16 @@ android {
       //       resValue "string", "app_name", "Jet"
       //        resValue "string", "host_name", ""
       //    }
-         // africanize{
-         //    dimension "appType"
-         //    versionCode 3
-         //    versionName "2.1"
-         //    minSdkVersion rootProject.ext.minSdkVersion
-         //    targetSdkVersion rootProject.ext.targetSdkVersion
-         //    applicationId 'com.africanize'
-         //    resValue "string", "app_name", "Africanize"
-         //    resValue "string", "host_name", ""
-         // }
+         africanize{
+            dimension "appType"
+            versionCode 3
+            versionName "2.1"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.africanize'
+            resValue "string", "app_name", "Africanize"
+            resValue "string", "host_name", ""
+         }
 
    //        markita{
    //          dimension "appType"
@@ -3830,16 +3830,6 @@ android {
    //          resValue "string", "app_name", "MML"
    //          resValue "string", "host_name", ""
    //       }
-   //        bimol{
-   //          dimension "appType"
-   //          versionCode 1
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion         
-   //          applicationId 'com.bimol'
-   //          resValue "string", "app_name", "Bimol"
-   //          resValue "string", "host_name", ""
-   //       }
         
    //          vendorspot{
    //           dimension "appType"
@@ -4291,16 +4281,16 @@ android {
    //          resValue "string", "app_name", "Bluebolt"
    //          resValue "string", "host_name", ""
    //       }
-   //       meatEasy{
-   //          dimension "appType"
-   //          versionCode 1
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion         
-   //          applicationId 'com.meatEasy'
-   //          resValue "string", "app_name", "Meat Easy"
-   //          resValue "string", "host_name", ""
-   //       }
+         // meatEasy{
+         //    dimension "appType"
+         //    versionCode 1
+         //    versionName "1.0"
+         //    minSdkVersion rootProject.ext.minSdkVersion
+         //    targetSdkVersion rootProject.ext.targetSdkVersion         
+         //    applicationId 'com.meatEasy'
+         //    resValue "string", "app_name", "Meat Easy"
+         //    resValue "string", "host_name", ""
+         // }
    //       boltDelivery{
    //          dimension "appType"
    //          versionCode 1
