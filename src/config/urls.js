@@ -43,7 +43,7 @@
 // export const API_BASE_URL = 'https://ullaz.co.ke/api/v1';
 // export const API_BASE_URL = 'https://localdropoff.info/api/v1';
 // export const API_BASE_URL = 'https://onscart.com/api/v1';
-// export const API_BASE_URL = 'https://fastmikes.com/api/v1';
+export const API_BASE_URL = 'https://fastmikes.com/api/v1';
 
 // export const API_BASE_URL = 'https://ored.co/api/v1'; //ored
 
@@ -82,7 +82,7 @@
 // export const API_BASE_URL = 'https://snabbhem.se/api/v1';
 // export const API_BASE_URL = 'https://codiner.com/api/v1';
 // export const API_BASE_URL = 'https://somame-247.com/api/v1';
-export const API_BASE_URL = 'https://order.africanize.co/api/v1';
+// export const API_BASE_URL = 'https://order.africanize.co/api/v1';
 // export const API_BASE_URL = 'https://destinationops.com/api/v1';
 // export const API_BASE_URL = 'https://bustanfakieh.com/api/v1';
 // export const API_BASE_URL = 'https://cabdeliv.com/api/v1';

@@ -403,6 +403,7 @@
 		101A82742810113B00985603 /* WaterTaxi(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 101A82732810113B00985603 /* WaterTaxi(Production).xcconfig */; };
 		101A82762810116B00985603 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 101A82752810116B00985603 /* Images.xcassets */; };
 		101A82782810118E00985603 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 101A82772810118C00985603 /* GoogleService-Info.plist */; };
+		101A86EA281BC80100CBC8FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 101A86E9281BC80000CBC8FF /* GoogleService-Info.plist */; };
 		1066ADF12817F5A800846A58 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		1066ADF22817F5A800846A58 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		1066ADF32817F5A800846A58 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -5661,7 +5662,6 @@
 		848C91C5278D54A200DD824C /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
 		848C9758278D55D500DD824C /* FastMikes(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 848C9757278D55D500DD824C /* FastMikes(Development).xcconfig */; };
 		848C98F0278D560800DD824C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848C98EF278D560800DD824C /* Images.xcassets */; };
-		848C99BC278D56B500DD824C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848C99BB278D56B400DD824C /* GoogleService-Info.plist */; };
 		848C9F48278D5C9900DD824C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		848C9F49278D5C9900DD824C /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848C9F4A278D5C9900DD824C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -9225,6 +9225,7 @@
 		101A82732810113B00985603 /* WaterTaxi(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "WaterTaxi(Production).xcconfig"; sourceTree = "<group>"; };
 		101A82752810116B00985603 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		101A82772810118C00985603 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		101A86E9281BC80000CBC8FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		104583AA5B42D03FDD75B35E /* Pods-available_pods-TowTrek.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-TowTrek.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-TowTrek/Pods-available_pods-TowTrek.debug.xcconfig"; sourceTree = "<group>"; };
 		1066ADEB2817ECBE00846A58 /* EVSOnTheGo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EVSOnTheGo.entitlements; sourceTree = "<group>"; };
 		1066ADEC2817F07000846A58 /* Kazakazi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kazakazi.entitlements; sourceTree = "<group>"; };
@@ -10743,7 +10744,6 @@
 		848C9757278D55D500DD824C /* FastMikes(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "FastMikes(Development).xcconfig"; sourceTree = "<group>"; };
 		848C9823278D55F400DD824C /* FastMikes(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "FastMikes(Production).xcconfig"; sourceTree = "<group>"; };
 		848C98EF278D560800DD824C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		848C99BB278D56B400DD824C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		848C9DAF278D585D00DD824C /* fastmikes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = fastmikes.entitlements; sourceTree = "<group>"; };
 		848C9F71278D5C9900DD824C /* CitySuds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CitySuds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		848CA36B278D5D6D00DD824C /* CitySuds(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "CitySuds(Development).xcconfig"; sourceTree = "<group>"; };
@@ -18369,7 +18369,7 @@
 		848C942E278D554400DD824C /* FastMikes */ = {
 			isa = PBXGroup;
 			children = (
-				848C99BB278D56B400DD824C /* GoogleService-Info.plist */,
+				101A86E9281BC80000CBC8FF /* GoogleService-Info.plist */,
 				848C9757278D55D500DD824C /* FastMikes(Development).xcconfig */,
 				848C9823278D55F400DD824C /* FastMikes(Production).xcconfig */,
 				848C98EF278D560800DD824C /* Images.xcassets */,
@@ -34576,7 +34576,7 @@
 				848C91B4278D54A200DD824C /* SFProText-SemiBold.ttf in Resources */,
 				848C91B5278D54A200DD824C /* SFProText-Medium.ttf in Resources */,
 				848C91B7278D54A200DD824C /* notification.wav in Resources */,
-				848C99BC278D56B500DD824C /* GoogleService-Info.plist in Resources */,
+				101A86EA281BC80100CBC8FF /* GoogleService-Info.plist in Resources */,
 				848C91B9278D54A200DD824C /* Plists in Resources */,
 				848C91BA278D54A200DD824C /* Futura-Normal.ttf in Resources */,
 				848C91BB278D54A200DD824C /* Eina02-Bold.ttf in Resources */,

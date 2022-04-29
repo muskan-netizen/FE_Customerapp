@@ -1105,8 +1105,8 @@ const appIds = {
     android: 'com.myfiji',
   }),
   fastmikes: Platform.select({
-    ios: 'com.fastmikes',
-    android: 'com.fastmikes',
+    ios: 'com.fastmikes.customer',
+    android: 'com.fastmikes.customer',
   }),
   citysuds: Platform.select({
     ios: 'com.citysuds',

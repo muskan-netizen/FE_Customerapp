@@ -1,12 +1,12 @@
 #include "Pods/Target Support Files/Pods-available_pods-FastMikes/Pods-available_pods-FastMikes.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1604320788
-PROJECT_BUNDLE_ID = com.fastmikes
+PROJECT_BUNDLE_ID = com.fastmikes.customer
 PROJECT_APP_VERSION = 1.0
 PROJECT_BUILD_NUMBER = 3
 PROJECT_APP_NAME = Fast Mikes
-PROJECT_GOOGLE_CLIENT_ID = 852668129452-9apvnhkbb83ifuo3vnbdea1g4bj3e3qk.apps.googleusercontent.com
-PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.852668129452-9apvnhkbb83ifuo3vnbdea1g4bj3e3qk
+PROJECT_GOOGLE_CLIENT_ID = 426920008902-kv8qij3b8k7h7uddforrpen9fe0nl37b.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.426920008902-kv8qij3b8k7h7uddforrpen9fe0nl37b
 PROJECT_FACEBOOK_ID = 459784215776196
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST =FastMikesInfo
