@@ -9,7 +9,7 @@
 // export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
 
 
-
+export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1';  //swiffy
 //Gourav.s
 // export const API_BASE_URL = 'http://192.168.99.130:8005/api/v1';
 
@@ -82,7 +82,7 @@
 // export const API_BASE_URL = 'https://snabbhem.se/api/v1';
 // export const API_BASE_URL = 'https://codiner.com/api/v1';
 // export const API_BASE_URL = 'https://somame-247.com/api/v1';
-export const API_BASE_URL = 'https://order.africanize.co/api/v1';
+// export const API_BASE_URL = 'https://order.africanize.co/api/v1';
 // export const API_BASE_URL = 'https://destinationops.com/api/v1';
 // export const API_BASE_URL = 'https://bustanfakieh.com/api/v1';
 // export const API_BASE_URL = 'https://cabdeliv.com/api/v1';
