@@ -50,7 +50,6 @@ const ProductCard3 = ({
   animateText = 0,
   section = {},
 }) => {
-  console.log('item data++', data);
   // data['qty'] = 1
   const [isAdd, setAdd] = useState(false);
   const [state, setState] = useState({
@@ -324,11 +323,14 @@ const ProductCard3 = ({
               }}>
               {data?.translation[0]?.title || data?.title || data?.sku}
             </Text>
-            <Text style={{
-              fontSize: textScale(9),
-              color: colors.grayOpacity51,
-              marginVertical:moderateScaleVertical(4)
-            }} >{data?.vendor?.name}</Text>
+            <Text
+              style={{
+                fontSize: textScale(9),
+                color: colors.grayOpacity51,
+                marginVertical: moderateScaleVertical(4),
+              }}>
+              {data?.vendor?.name}
+            </Text>
             {!!section?.title ? (
               <Text
                 numberOfLines={1}

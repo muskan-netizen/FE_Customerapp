@@ -68,9 +68,7 @@ export default function DashBoardHeaderFive({
 
   const {isModalVisible, checked, tabs} = state;
 
-  console.log("tabstabs",tabs)
-
-  
+  console.log('tabstabs', tabs);
 
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
@@ -410,252 +408,249 @@ export default function DashBoardHeaderFive({
           : colors.borderColorD,
         // paddingBottom: moderateScale(5),
       }}>
-
-
-      {showAboveView ?<View
-        style={{
-          ...styles.headerContainer,
-          borderBottomColor: isDarkMode
-            ? colors.whiteOpacity22
-            : colors.borderColorD,
-          // borderBottomWidth: 0,
-        }}>
+      {showAboveView ? (
         <View
           style={{
-            flexDirection: 'row',
-            flex: 1,
-            alignItems: 'center',
+            ...styles.headerContainer,
+            borderBottomColor: isDarkMode
+              ? colors.whiteOpacity22
+              : colors.borderColorD,
+            // borderBottomWidth: 0,
           }}>
-          {!!(profileInfo && profileInfo?.logo) ? (
-            <FastImage
-              style={{
-                width: moderateScale(width / 6),
-                height: moderateScale(40),
-              }}
-              resizeMode={FastImage.resizeMode.contain}
-              source={{
-                uri: imageURI,
-                priority: FastImage.priority.high,
-                cache: FastImage.cacheControl.immutable,
-              }}
-            />
-          ) : null}
-          {!!appData?.profile?.preferences?.is_hyperlocal && (
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() =>
-                navigation.navigate(navigationStrings.LOCATION, {
-                  type: 'Home1',
-                })
-              }
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                flex: 0.85,
-                marginLeft: moderateScale(8),
-              }}>
-              <Image
-                style={styles.locationIcon}
-                source={imagePath.redLocation}
-                resizeMode="contain"
-              />
-              <View>
-                {!!location?.type && (
-                  <Text numberOfLines={1} style={styles.locationTypeTxt}>
-                    {location?.type === 3
-                      ? !!(location?.type_name && loction?.type !="0")
-                        ? location?.type_name
-                        : strings.UNKNOWN
-                      : location?.type === 2
-                      ? strings.WORK
-                      : strings.HOME}
-                  </Text>
-                )}
-                <Text
-                  numberOfLines={1}
-                  style={[
-                    styles.locationTxt,
-                    {
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.blackOpacity30,
-                      fontFamily: fontFamily.medium,
-                    },
-                  ]}>
-                  {location?.address}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        </View>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            height: moderateScale(30),
-            width: moderateScale(80),
-          }}>
-          <TouchableOpacity
-            style={{marginHorizontal: moderateScale(8)}}
-            onPress={() =>
-              navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-            }>
-            <Image
-              style={{tintColor: themeColors.primary_color}}
-              source={imagePath.search1}
-            />
-          </TouchableOpacity>
-          {isVoiceRecord ? (
-            <TouchableOpacity onPress={_onVoiceStop}>
-              <LottieView
+          <View
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+              alignItems: 'center',
+            }}>
+            {!!(profileInfo && profileInfo?.logo) ? (
+              <FastImage
                 style={{
-                  height: moderateScale(43),
-                  width: moderateScale(30),
-                  marginLeft: moderateScale(-2),
+                  width: moderateScale(width / 6),
+                  height: moderateScale(40),
                 }}
-                source={voiceListen}
-                autoPlay
-                loop
-                colorFilters={[
-                  {keypath: 'layers', color: themeColors.primary_color},
-                  {keypath: 'transparent2', color: themeColors.primary_color},
-                  {keypath: 'transparent1', color: themeColors.primary_color},
-                  {keypath: '01', color: themeColors.primary_color},
-                  {keypath: '02', color: themeColors.primary_color},
-                  {keypath: '03', color: themeColors.primary_color},
-                  {keypath: '04', color: themeColors.primary_color},
-                ]}
+                resizeMode={FastImage.resizeMode.contain}
+                source={{
+                  uri: imageURI,
+                  priority: FastImage.priority.high,
+                  cache: FastImage.cacheControl.immutable,
+                }}
               />
-            </TouchableOpacity>
-          ) : (
+            ) : null}
+            {!!appData?.profile?.preferences?.is_hyperlocal && (
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() =>
+                  navigation.navigate(navigationStrings.LOCATION, {
+                    type: 'Home1',
+                  })
+                }
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  flex: 0.85,
+                  marginLeft: moderateScale(8),
+                }}>
+                <Image
+                  style={styles.locationIcon}
+                  source={imagePath.redLocation}
+                  resizeMode="contain"
+                />
+                <View>
+                  {!!location?.type && (
+                    <Text numberOfLines={1} style={styles.locationTypeTxt}>
+                      {location?.type === 3
+                        ? !!(location?.type_name && loction?.type != '0')
+                          ? location?.type_name
+                          : strings.UNKNOWN
+                        : location?.type === 2
+                        ? strings.WORK
+                        : strings.HOME}
+                    </Text>
+                  )}
+                  <Text
+                    numberOfLines={1}
+                    style={[
+                      styles.locationTxt,
+                      {
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.blackOpacity30,
+                        fontFamily: fontFamily.medium,
+                      },
+                    ]}>
+                    {location?.address}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              height: moderateScale(30),
+              width: moderateScale(80),
+            }}>
             <TouchableOpacity
               style={{marginHorizontal: moderateScale(8)}}
-              onPress={_onVoiceListen}>
+              onPress={() =>
+                navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+              }>
               <Image
-                source={imagePath.icVoice}
-                style={{
-                  height: moderateScale(20),
-                  width: moderateScale(20),
-                  borderRadius: moderateScale(10),
-                  tintColor: themeColors.primary_color,
-                }}
-                resizeMode="contain"
+                style={{tintColor: themeColors.primary_color}}
+                source={imagePath.search1}
               />
             </TouchableOpacity>
-          )}
-        </View>
-    
-        <Modal
-          isVisible={isModalVisible}
-          style={{
-            justifyContent: 'flex-end',
-            margin: 0,
-          }}
-          onBackdropPress={() => updateState({isModalVisible: false})}>
-          <View>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => updateState({isModalVisible: false})}>
-              <Image source={imagePath.crossC} resizeMode="contain" />
-            </TouchableOpacity>
+            {isVoiceRecord ? (
+              <TouchableOpacity onPress={_onVoiceStop}>
+                <LottieView
+                  style={{
+                    height: moderateScale(43),
+                    width: moderateScale(30),
+                    marginLeft: moderateScale(-2),
+                  }}
+                  source={voiceListen}
+                  autoPlay
+                  loop
+                  colorFilters={[
+                    {keypath: 'layers', color: themeColors.primary_color},
+                    {keypath: 'transparent2', color: themeColors.primary_color},
+                    {keypath: 'transparent1', color: themeColors.primary_color},
+                    {keypath: '01', color: themeColors.primary_color},
+                    {keypath: '02', color: themeColors.primary_color},
+                    {keypath: '03', color: themeColors.primary_color},
+                    {keypath: '04', color: themeColors.primary_color},
+                  ]}
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={{marginHorizontal: moderateScale(8)}}
+                onPress={_onVoiceListen}>
+                <Image
+                  source={imagePath.icVoice}
+                  style={{
+                    height: moderateScale(20),
+                    width: moderateScale(20),
+                    borderRadius: moderateScale(10),
+                    tintColor: themeColors.primary_color,
+                  }}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+            )}
+          </View>
 
-            <View
-              style={[
-                styles.modalMainViewContainer,
-                {
-                  backgroundColor: isDarkMode
-                    ? MyDarkTheme.colors.background
-                    : colors.white,
-                },
-              ]}>
+          <Modal
+            isVisible={isModalVisible}
+            style={{
+              justifyContent: 'flex-end',
+              margin: 0,
+            }}
+            onBackdropPress={() => updateState({isModalVisible: false})}>
+            <View>
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={() => updateState({isModalVisible: false})}>
+                <Image source={imagePath.crossC} resizeMode="contain" />
+              </TouchableOpacity>
 
-                
-              <View style={{padding: moderateScale(10)}}>
-                {tabs.length > 1 &&
-                  tabs.map((item, indx) => {
-                    return (
-                      <TouchableOpacity
-                        key={indx}
-                        disabled={!!item.isActive}
-                        style={{
-                          borderColor: item.isActive
-                            ? themeColors.primary_color
-                            : colors.transparent,
-                          borderWidth: 0.7,
-                          flexDirection: 'row',
-                          paddingVertical: moderateScaleVertical(15),
-                          margin: moderateScale(5),
-                          borderRadius: moderateScale(10),
-                          alignItems: 'center',
-                          paddingHorizontal: moderateScale(20),
-                          justifyContent: 'space-between',
-                        }}
-                        onPress={() =>
-                          !(
-                            cartItemCount?.message == null &&
-                            cartItemCount?.data?.item_count > 0
-                          )
-                            ? _onTableItm(item, indx)
-                            : dineInFunction(item, indx)
-                        }>
-                        <View
+              <View
+                style={[
+                  styles.modalMainViewContainer,
+                  {
+                    backgroundColor: isDarkMode
+                      ? MyDarkTheme.colors.background
+                      : colors.white,
+                  },
+                ]}>
+                <View style={{padding: moderateScale(10)}}>
+                  {tabs.length > 1 &&
+                    tabs.map((item, indx) => {
+                      return (
+                        <TouchableOpacity
+                          key={indx}
+                          disabled={!!item.isActive}
                           style={{
+                            borderColor: item.isActive
+                              ? themeColors.primary_color
+                              : colors.transparent,
+                            borderWidth: 0.7,
                             flexDirection: 'row',
-                            justifyContent: 'center',
+                            paddingVertical: moderateScaleVertical(15),
+                            margin: moderateScale(5),
+                            borderRadius: moderateScale(10),
                             alignItems: 'center',
-                          }}>
+                            paddingHorizontal: moderateScale(20),
+                            justifyContent: 'space-between',
+                          }}
+                          onPress={() =>
+                            !(
+                              cartItemCount?.message == null &&
+                              cartItemCount?.data?.item_count > 0
+                            )
+                              ? _onTableItm(item, indx)
+                              : dineInFunction(item, indx)
+                          }>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                            }}>
+                            <Image
+                              source={
+                                item.isActive
+                                  ? imagePath.radioNewActive
+                                  : imagePath.radioNewInActive
+                              }
+                              style={{
+                                height: moderateScale(20),
+                                width: moderateScale(20),
+                                tintColor: item.isActive
+                                  ? themeColors.primary_color
+                                  : colors.blackOpacity43,
+                              }}
+                            />
+                            <Text
+                              style={{
+                                fontFamily: fontFamily.medium,
+                                color: item.isActive
+                                  ? themeColors.primary_color
+                                  : isDarkMode
+                                  ? MyDarkTheme.colors.text
+                                  : colors.blackOpacity43,
+                                fontSize: textScale(12),
+                                marginHorizontal: moderateScale(10),
+                              }}>
+                              {item.value}
+                            </Text>
+                          </View>
                           <Image
-                            source={
-                              item.isActive
-                                ? imagePath.radioNewActive
-                                : imagePath.radioNewInActive
-                            }
+                            source={item.icon}
                             style={{
-                              height: moderateScale(20),
-                              width: moderateScale(20),
+                              height: moderateScale(22),
+                              width: moderateScale(22),
                               tintColor: item.isActive
-                                ? themeColors.primary_color
-                                : colors.blackOpacity43,
-                            }}
-                          />
-                          <Text
-                            style={{
-                              fontFamily: fontFamily.medium,
-                              color: item.isActive
                                 ? themeColors.primary_color
                                 : isDarkMode
                                 ? MyDarkTheme.colors.text
-                                : colors.blackOpacity43,
-                              fontSize: textScale(12),
-                              marginHorizontal: moderateScale(10),
-                            }}>
-                            {item.value}
-                          </Text>
-                        </View>
-                        <Image
-                          source={item.icon}
-                          style={{
-                            height: moderateScale(22),
-                            width: moderateScale(22),
-                            tintColor: item.isActive
-                              ? themeColors.primary_color
-                              : isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.blackOpacity66,
-                            alignSelf: 'flex-end',
-                          }}
-                          resizeMode="contain"
-                        />
-                      </TouchableOpacity>
-                    );
-                  })}
+                                : colors.blackOpacity66,
+                              alignSelf: 'flex-end',
+                            }}
+                            resizeMode="contain"
+                          />
+                        </TouchableOpacity>
+                      );
+                    })}
+                </View>
               </View>
             </View>
-          </View>
-        </Modal>
-      </View>: null}
-
+          </Modal>
+        </View>
+      ) : null}
 
       <View
         style={{

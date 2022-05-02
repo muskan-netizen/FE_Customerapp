@@ -42,10 +42,6 @@ export const API_BASE_URL = 'https://order.veg-hub.com/api/v1';
 
 // export const API_BASE_URL = 'https://ored.co/api/v1'; //ored
 
-
-
-
-
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 
@@ -316,4 +312,5 @@ export const VENDOR_CATEGORIES = getApiUrl(
   '/mystore/vendor/product-category/list',
 );
 export const ALL_VENDOR_DATA = getApiUrl(
-  '/mystore/vendor/products-with-category/list',);
+  '/mystore/vendor/products-with-category/list',
+);

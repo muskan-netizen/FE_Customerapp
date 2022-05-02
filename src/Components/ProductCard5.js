@@ -49,7 +49,6 @@ const ProductCard5 = ({
   businessType,
   animateText = 0,
 }) => {
-  // console.log('item data++', data);
   // data['qty'] = 1
   const [isAdd, setAdd] = useState(false);
   const [state, setState] = useState({
