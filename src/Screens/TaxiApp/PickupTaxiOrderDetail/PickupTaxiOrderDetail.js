@@ -1013,11 +1013,11 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       {moment(
                         new Date(orderFullDetail?.order_details?.created_at),
                       ) 
-                      //  .locale(
-                      //    languages?.primary_language?.sort_code
-                      //       ? languages?.primary_language?.sort_code
-                      //       : 'en',
-                      //  )
+                       .locale(
+                         languages?.primary_language?.sort_code
+                            ? languages?.primary_language?.sort_code
+                            : 'en',
+                       )
                        .format('MMMM Do YYYY, h:mm a')}
                        
                     </Text>

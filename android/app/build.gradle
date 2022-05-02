@@ -1396,16 +1396,16 @@ android {
       //       resValue "string", "app_name", "Sambiga"
       //       resValue "string", "host_name", ""
       //    }
-      //    agrionline{
-      //       dimension "appType"
-      //       versionCode 3
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.agrionline'
-      //       resValue "string", "app_name", "AgriOnline"
-      //       resValue "string", "host_name", ""
-      //    }
+         agrionline{
+            dimension "appType"
+            versionCode 3
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.agrionline'
+            resValue "string", "app_name", "AgriOnline"
+            resValue "string", "host_name", ""
+         }
       //    quickquick{
       //       dimension "appType"
       //       versionCode 1
@@ -4989,16 +4989,16 @@ android {
    //       resValue "string", "app_name", "Curbler LLC"
    //       resValue "string", "host_name", ""
    //       }
-   //      cartnar{
-   //       dimension "appType"
-   //       versionCode 1
-   //       versionName "1.0"
-   //       minSdkVersion rootProject.ext.minSdkVersion
-   //       targetSdkVersion rootProject.ext.targetSdkVersion
-   //       applicationId 'com.cartnar'
-   //       resValue "string", "app_name", "Cartnar"
-   //       resValue "string", "host_name", ""
-   //       }
+        cartnar{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.cartnar'
+         resValue "string", "app_name", "Cartnar"
+         resValue "string", "host_name", ""
+         }
    //      uven{
    //       dimension "appType"
    //       versionCode 1
