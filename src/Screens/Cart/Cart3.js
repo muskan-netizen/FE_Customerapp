@@ -364,6 +364,7 @@ function Cart({ navigation, route }) {
       apiData = apiData + `&code=${sel_types}`;
     }
     console.log('Sending api data', apiData);
+    console.log(DeviceInfo.getUniqueId(),"timezoneeee")
     actions
       .getCartDetail(
         apiData,
@@ -750,7 +751,7 @@ function Cart({ navigation, route }) {
 
     switch (paymentId) {
       case 4:
-        updateState({ placeLoader: false });
+        // updateState({ placeLoader: false });
         _offineLinePayment(order_number);
         break;
       case 5: //Paystack Payment Getway
@@ -909,11 +910,11 @@ function Cart({ navigation, route }) {
         setSheduleddropoffdate(null);
         updateState({
           isLoadingB: false,
-          placeLoader: false,
+          // placeLoader: false,
         });
         console.log('paymebnt res', res);
         checkPaymentOptions(res);
-        if (selectedPayment?.id != 17) {
+        if (selectedPayment?.id != 17 && selectedPayment?.id !==4  ) {
           setCartItems([]);
           setCartData({});
           if (selectedPayment?.id == 1 || res?.data?.payable_amount == 0) {
@@ -1974,7 +1975,7 @@ function Cart({ navigation, route }) {
                 : fontFamily.regular,
             textAlign: 'left',
           }}>
-          {val?.rate}
+          {val?.rate} 
         </Text>
       </TouchableOpacity>
     );

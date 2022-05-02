@@ -3059,6 +3059,7 @@ export default function Products({ route, navigation }) {
             businessType={businessType}
             categoryInfo={categoryInfo}
             animateText={animateText}
+            section={section}
           />
         )}
         {!(DeviceInfo?.getBundleId() == appIds.dlvrd) && (

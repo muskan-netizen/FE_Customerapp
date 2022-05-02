@@ -209,6 +209,7 @@ export default function OtpVerification({navigation, route}) {
               marginBottom={0}
               onChangeText={_onChangeText('phoneOTP')}
               value={phoneOTP}
+              keyboardType="numeric"
             />
             <TouchableOpacity
               onPress={() => onVerify('phone', phoneOTP)}

@@ -119,7 +119,7 @@ export {default as FPX} from './PaymentGateways/FPX';
 export {default as OuterScreen4} from './OuterScreen/OuterScreen4';
 export {default as CategoryBrands} from './CategoryBrands/CategoryBrands';
 export {default as AllinonePyments} from './AllinonePyments/AllinonePyments';
-export {default as Simplify} from './PaymentGateways/Simplify';
+export {default as Simplify} from './PaymentGateways/Simplify'; 
 export {default as Square} from './PaymentGateways/Square';
 export {default as Inventory} from './Inventory/Inventory';
 export {default as SalesExpenses} from './SalesExpenses/SalesExpenses';
