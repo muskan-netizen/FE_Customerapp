@@ -308,6 +308,7 @@ const shortCodes = {
   kazakazi:'ec3bf6',
   papiruki:'58e4d2',
   markSoublet:'2b77d8',
+  amstaFood:'825037',
 };
 
 
@@ -1536,6 +1537,10 @@ const appIds = {
   markSoublet: Platform.select({
     ios: 'com.markSoublet',
     android: 'com.markSoublet',
+  }),
+  amstaFood: Platform.select({
+    ios: 'com.amstaFood',
+    android: 'com.amstaFood',
   }),
 };
 

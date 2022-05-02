@@ -1960,6 +1960,13 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.amstaFood:
+          updateState({
+            shortCode: shortCodes.amstaFood,
+            isShortcodePrefilled: true,
+          });
+          break;
+
       }
     })();
   }, []);

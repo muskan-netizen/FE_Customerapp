@@ -4482,16 +4482,16 @@ android {
    //       resValue "string", "app_name", "MrHealth"
    //       resValue "string", "host_name", ""
    //       }
-         lopht{
-         dimension "appType"
-         versionCode 1
-         versionName "1.0"
-         minSdkVersion rootProject.ext.minSdkVersion
-         targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.lopht'
-         resValue "string", "app_name", "LOPHT"
-         resValue "string", "host_name", ""
-         }
+        //  lopht{
+        //  dimension "appType"
+        //  versionCode 1
+        //  versionName "1.0"
+        //  minSdkVersion rootProject.ext.minSdkVersion
+        //  targetSdkVersion rootProject.ext.targetSdkVersion
+        //  applicationId 'com.lopht'
+        //  resValue "string", "app_name", "LOPHT"
+        //  resValue "string", "host_name", ""
+        //  }
 
    //       yalary{
    //       dimension "appType"
@@ -5098,16 +5098,26 @@ android {
    //       resValue "string", "app_name", "Papiruki"
    //       resValue "string", "host_name", ""
    //       }
-   //      markSoublet{
-   //       dimension "appType"
-   //       versionCode 1
-   //       versionName "1.0"
-   //       minSdkVersion rootProject.ext.minSdkVersion
-   //       targetSdkVersion rootProject.ext.targetSdkVersion
-   //       applicationId 'com.markSoublet'
-   //       resValue "string", "app_name", "Mark Soublet"
-   //       resValue "string", "host_name", ""
-   //       }
+        markSoublet{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.markSoublet'
+         resValue "string", "app_name", "Mark Soublet"
+         resValue "string", "host_name", ""
+         }
+         amstaFood{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.amstaFood'
+         resValue "string", "app_name", "Amsta Food"
+         resValue "string", "host_name", ""
+         }
     }
 }
 
