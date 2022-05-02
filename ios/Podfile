@@ -1548,6 +1548,11 @@ target 'MarkSoublet' do
   
 end
 
+# AmstaFood Target
+target 'AmstaFood' do
+  
+end
+
 
 
 
