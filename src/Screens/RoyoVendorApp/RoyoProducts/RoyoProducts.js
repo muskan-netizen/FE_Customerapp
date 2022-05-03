@@ -66,7 +66,7 @@ const RoyoProducts = (props) => {
 
   const [state, setState] = useState({
     activeIndex: 0,
-    headerText: 'Products',
+    headerText: strings.PRODUCTS,
     selectedVendor: {},
     isVisibleModal: false,
     isLoading: true,

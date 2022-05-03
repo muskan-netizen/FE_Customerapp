@@ -12,7 +12,7 @@ const DashboardCount = ({
     heading = 'Pending Order',
     onPress = () => {},
     count = 0,
-    desc = 'pending orders',
+    desc = strings.PENDING_ORDERS,
     index = 0,
     image = imagePath.timerRoyo
 }) => {

@@ -2477,45 +2477,7 @@ export default function Products({ route, navigation }) {
                   />
                 </TouchableOpacity>
               )}
-            {offerList?.length > 0 && (
-              <TouchableOpacity
-                onPress={() =>
-                  updateState({offersModalVisible: !offersModalVisible})
-                }
-                activeOpacity={0.7}
-                style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View
-                  style={{
-                    backgroundColor: colors.greyColor,
-                    width: moderateScale(30),
-                    height: moderateScale(30),
-                    borderRadius: moderateScale(30),
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Image source={imagePath.ic_offersIcon} />
-                </View>
-                <Text
-                  style={{
-                    ...styles.milesTxt,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                    opacity: 1,
-                    fontSize: textScale(10),
-                  }}>
-                  {strings.OFFERS}
-                </Text>
-                <Image
-                  source={imagePath.icBackb}
-                  style={{
-                    transform: [{rotate: '-90deg'}],
-                    width: moderateScale(11),
-                    height: moderateScale(11),
-                    resizeMode: 'contain',
-                    marginLeft: moderateScale(6),
-                  }}
-                />
-              </TouchableOpacity>
-            )}
+           
           </View>
         )}
         <ScrollView
