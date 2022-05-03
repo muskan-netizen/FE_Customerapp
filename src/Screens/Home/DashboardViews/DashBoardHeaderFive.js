@@ -460,7 +460,7 @@ export default function DashBoardHeaderFive({
                   {!!location?.type && (
                     <Text numberOfLines={1} style={styles.locationTypeTxt}>
                       {location?.type === 3
-                        ? !!(location?.type_name && loction?.type != '0')
+                        ? !!(location?.type_name != 0 && location?.type != '0')
                           ? location?.type_name
                           : strings.UNKNOWN
                         : location?.type === 2

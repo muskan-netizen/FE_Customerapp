@@ -144,6 +144,10 @@ export default function (state = initial_state, action) {
       };
     }
     case types.ADD_SEARCH_TEXT: {
+      if (action.payload == 'clear') {
+        return {...state, searchText: []};
+      }
+
       let searchRes = state.searchText;
 
       if (state.searchText.length == 10) {

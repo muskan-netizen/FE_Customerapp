@@ -114,6 +114,8 @@ export default function Account3({navigation}) {
           onPress: () => {
             actions.userLogout();
             actions.cartItemQty('');
+            actions.saveAddress('');
+            actions.addSearchResults('clear');
             moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
           },
         },
@@ -472,23 +474,22 @@ export default function Account3({navigation}) {
               />
             ))}
 
-         {
-           DeviceInfo.getBundleId()!=appIds.elcheregio && 
-          ( <ListItemHorizontal
-           centerContainerStyle={{flexDirection: 'row'}}
-           leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-           onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
-           iconLeft={imagePath.links}
-           centerHeading={strings.LINKS}
-           containerStyle={styles.containerStyle2}
-           centerHeadingStyle={{
-             fontSize: textScale(14),
-             fontFamily: fontFamily.regular,
-           }}
-           // iconRight={imagePath.goRight}
-           // rightIconStyle={{tintColor: colors.textGreyLight}}
-         />)
-         }
+          {DeviceInfo.getBundleId() != appIds.elcheregio && (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
+              iconLeft={imagePath.links}
+              centerHeading={strings.LINKS}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
           {!!userData?.auth_token && (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
