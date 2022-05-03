@@ -2970,6 +2970,8 @@ export default function Products({route, navigation}) {
     );
   };
   const renderSectionItem = ({item, index, section}) => {
+    const url1 = item?.media[0]?.image?.path.image_fit;
+
     return (
       <Animatable.View
         // animation={'slideInUp'}
@@ -2981,7 +2983,9 @@ export default function Products({route, navigation}) {
           minHeight:
             DeviceInfo?.getBundleId() == appIds.dlvrd
               ? moderateScaleVertical(0)
-              : moderateScaleVertical(200),
+              : url1
+              ? moderateScaleVertical(200)
+              : 0,
           overflow: 'visible',
           // backgroundColor: 'red',
           // marginBottom: moderateScaleVertical(5),

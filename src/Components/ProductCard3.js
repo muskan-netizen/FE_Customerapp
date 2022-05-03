@@ -32,6 +32,7 @@ import {
 } from '../utils/helperFunctions';
 
 let numberOfHits = [];
+let heightOfEveryView = 0;
 
 const ProductCard3 = ({
   data = {},
@@ -312,7 +313,7 @@ const ProductCard3 = ({
               // numberOfLines={1}
               style={{
                 ...commonStyles.futuraBtHeavyFont14,
-                width: moderateScaleVertical(220),
+                // width: moderateScaleVertical(220),
                 // fontFamily: 'Eina02-SemiBold',
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 fontFamily: fontFamily.regular,
@@ -323,14 +324,16 @@ const ProductCard3 = ({
               }}>
               {data?.translation[0]?.title || data?.title || data?.sku}
             </Text>
-            <Text
-              style={{
-                fontSize: textScale(9),
-                color: colors.grayOpacity51,
-                marginVertical: moderateScaleVertical(4),
-              }}>
-              {data?.vendor?.name}
-            </Text>
+            {data?.vendor?.name && (
+              <Text
+                style={{
+                  fontSize: textScale(9),
+                  color: colors.grayOpacity51,
+                  marginVertical: moderateScaleVertical(4),
+                }}>
+                {data?.vendor?.name}
+              </Text>
+            )}
             {!!section?.title ? (
               <Text
                 numberOfLines={1}
@@ -452,6 +455,15 @@ const ProductCard3 = ({
               // bottom: Platform.OS == 'ios' ? 10 : 0,
               flex: 1,
               justifyContent: url1 ? 'flex-start' : 'center',
+              marginLeft: url1 ? 0 : moderateScale(100),
+              marginTop: url1
+                ? 0
+                : !!(
+                    data?.translation[0]?.translation_description ||
+                    data?.translation_description
+                  )
+                ? moderateScale(65)
+                : moderateScale(20),
             }}>
             {data?.has_inventory == 0 ||
             !!data?.variant[0].quantity ||
