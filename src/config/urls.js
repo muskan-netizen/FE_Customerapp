@@ -16,7 +16,7 @@
 // export const API_BASE_URL =
 //   'https://yogofood-order.netsolutionindia.com/api/v1';
 
-// export const API_BASE_URL = 'http://192.168.101.187:8001/api/v1';
+// export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1';

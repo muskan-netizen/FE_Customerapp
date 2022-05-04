@@ -379,6 +379,7 @@ function Cart({ navigation, route }) {
         },
       )
       .then((res) => {
+        console.log(res,"ressssssss")
         closeForm();
         actions.cartItemQty(res);
         console.log('cart details>>>', res);
@@ -1166,7 +1167,7 @@ function Cart({ navigation, route }) {
 
     if (!!userData?.auth_token) {
       if (
-        !!cartData?.closed_store_order_scheduled &&
+        !!cartData?.closed_store_order_scheduled && cartData?.products[0]?.vendor?.is_vendor_closed &&
         !localeSheduledOrderDate
       ) {
         showInfo(strings.SCHEDULE_DATE_REQUIRED);
@@ -1411,7 +1412,7 @@ function Cart({ navigation, route }) {
       })
       .catch(errorMethod);
   };
-
+  console.log(cartData, 'cartDataaaaa');
   // const _createPaymentMethod = async (cardInfo, res2) => {
   //   console.log(cardInfo, '_createPaymentMethod>>>ardInfo');
   //   if (res2) {
@@ -2216,7 +2217,7 @@ function Cart({ navigation, route }) {
               </Text>
             </TouchableOpacity>
 
-            {!!cartData?.closed_store_order_scheduled ? (
+            {(!!cartData?.closed_store_order_scheduled && !!item?.vendor?.is_vendor_closed) ? (
               <Text
                 style={{
                   ...styles.priceItemLabel2,
