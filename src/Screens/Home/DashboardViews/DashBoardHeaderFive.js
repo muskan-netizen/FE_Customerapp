@@ -468,6 +468,7 @@ export default function DashBoardHeaderFive({
                         : strings.HOME}
                     </Text>
                   )}
+
                   <Text
                     numberOfLines={1}
                     style={[

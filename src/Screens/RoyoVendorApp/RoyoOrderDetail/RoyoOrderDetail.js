@@ -39,6 +39,7 @@ const RoyoOrderDetail = (props) => {
   const { appData, appStyle, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
+  console.log(data,"dataaaaaaaaaa")
   const [state, setState] = useState({
     address: '',
     isLoadingB: false,
@@ -244,9 +245,9 @@ const RoyoOrderDetail = (props) => {
         <View style={{ ...styles.orderNumberBox, zIndex: -1 }}>
           {/* <Text style={styles.orderNumber}>Order #{data.order_number}</Text> */}
           <Text style={styles.orderNumber}>{strings.ORDERAT}:</Text>
-          <Text style={styles.orderTime}>{`${moment(data?.date_time).format(
-            'DD MMM,YYYY',
-          )} ${moment(data?.date_time).format('LT')} `}</Text>
+          <Text style={styles.orderTime}>
+            {data?.date_time}
+            </Text>
         </View>
         <FlatList
           bounces={false}

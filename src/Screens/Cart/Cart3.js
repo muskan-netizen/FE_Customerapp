@@ -93,6 +93,7 @@ import {cameraHandler} from '../../utils/commonFunction';
 import ActionSheet from 'react-native-actionsheet';
 import {androidCameraPermission} from '../../utils/permissions';
 import DocumentPicker from 'react-native-document-picker';
+import {payWithCard} from '../../utils/paystackMethod';
 
 let clickedItem = {};
 let isFAQsSubmitted = true;
@@ -275,8 +276,6 @@ function Cart({navigation, route}) {
     ]),
   );
 
-  console.log(userData, 'userData>>>userData');
-
   useEffect(() => {
     if (
       !!checkCartItem?.data &&
@@ -367,7 +366,6 @@ function Cart({navigation, route}) {
       apiData = apiData + `&code=${sel_types}`;
     }
     console.log('Sending api data', apiData);
-    console.log(DeviceInfo.getUniqueId(), 'timezoneeee');
     actions
       .getCartDetail(
         apiData,
@@ -382,6 +380,7 @@ function Cart({navigation, route}) {
         },
       )
       .then((res) => {
+        console.log(res, 'ressssssss');
         closeForm();
         actions.cartItemQty(res);
         console.log('cart details>>>', res);
@@ -724,10 +723,11 @@ function Cart({navigation, route}) {
   console.log('cart data++++', cartData);
 
   const checkPaymentOptions = (res) => {
+    updateState({placeLoader: true});
     let paymentId = res?.data?.payment_option_id;
     let order_number = res?.data?.order_number;
     setSelectedPayment(selectedPayment);
-    console.log('selected payment id', selectedPayment);
+    console.log('api res success', res);
 
     let paymentData = {
       total_payable_amount: (
@@ -823,6 +823,28 @@ function Cart({navigation, route}) {
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.EASEBUZZ, paymentData);
         break;
+      case 26: //ToyyibPay Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.TOYYIAPAY, paymentData);
+        break;
+      case 27: //Paytab Payment Getway
+        updateState({placeLoader: false});
+        let billingDetail = {
+          name: userData?.name,
+          email: userData?.email,
+          phone: userData?.phone_number,
+          amount: Number(res.data.total_amount),
+          state: selectedAddressData?.state,
+          city: selectedAddressData?.city,
+          address:
+            selectedAddressData?.house_number +
+            ', ' +
+            selectedAddressData?.address,
+          order_number: res?.data?.order_number,
+        };
+        openPayTabs(billingDetail);
+
+        break;
       default:
         if (
           !!businessType &&
@@ -837,6 +859,33 @@ function Cart({navigation, route}) {
           actions.cartItemQty({});
         }
         break;
+    }
+  };
+
+  const openPayTabs = async (data) => {
+    console.log('datadata', data);
+    try {
+      const res = await payWithCard(data);
+      console.log('payWithCard res++++', res);
+      let apiData = {
+        payment_from: 'cart',
+        order_number: data?.order_number,
+        tranRef: res?.transactionReference,
+        auth_token: userData?.auth_token,
+        amount: data?.amount,
+        come_from: 'app',
+      };
+      const payRes = await actions.orderSuccessPayment(apiData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+        timezone: RNLocalize.getTimeZone(),
+        device_token: DeviceInfo.getUniqueId(),
+      });
+      console.log('payRespayRes', payRes);
+    } catch (error) {
+      console.log('error raised', error);
     }
   };
 
@@ -924,7 +973,7 @@ function Cart({navigation, route}) {
         });
         console.log('paymebnt res', res);
         checkPaymentOptions(res);
-        if (selectedPayment?.id != 17 && selectedPayment?.id !== 4) {
+        if (selectedPayment?.id != 17 && selectedPayment?.id != 4) {
           setCartItems([]);
           setCartData({});
           if (selectedPayment?.id == 1 || res?.data?.payable_amount == 0) {
@@ -1073,6 +1122,8 @@ function Cart({navigation, route}) {
     //   _offineLinePayment();
     //   return;
     // }
+    console.log('payment option', selectedPayment);
+
     if (
       selectedPayment?.id == 10 &&
       selectedPayment?.off_site == 0 &&
@@ -1127,6 +1178,7 @@ function Cart({navigation, route}) {
     if (!!userData?.auth_token) {
       if (
         !!cartData?.closed_store_order_scheduled &&
+        cartData?.products[0]?.vendor?.is_vendor_closed &&
         !localeSheduledOrderDate
       ) {
         showInfo(strings.SCHEDULE_DATE_REQUIRED);
@@ -1373,7 +1425,7 @@ function Cart({navigation, route}) {
       })
       .catch(errorMethod);
   };
-
+  console.log(cartData, 'cartDataaaaa');
   // const _createPaymentMethod = async (cardInfo, res2) => {
   //   console.log(cardInfo, '_createPaymentMethod>>>ardInfo');
   //   if (res2) {
@@ -2176,7 +2228,8 @@ function Cart({navigation, route}) {
               </Text>
             </TouchableOpacity>
 
-            {!!cartData?.closed_store_order_scheduled ? (
+            {!!cartData?.closed_store_order_scheduled &&
+            !!item?.vendor?.is_vendor_closed ? (
               <Text
                 style={{
                   ...styles.priceItemLabel2,
@@ -2815,90 +2868,90 @@ function Cart({navigation, route}) {
               </View>
             ) : (
               <>
-                {!!userData?.phone_number && dineInType == 'delivery' ? (
-                  <>
-                    {!!item?.delivery_types &&
-                    item?.delivery_types?.length > 0 ? (
-                      <Text
-                        style={{
-                          ...styles.priceItemLabel,
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.textGreyB,
-                          marginBottom: moderateScaleVertical(8),
-                        }}>
-                        {strings.DELIVERY_CHARGES}:
-                      </Text>
-                    ) : null}
-
-                    {!!item?.delivery_types &&
-                    item?.delivery_types.length > 0 ? (
-                      <ModalDropdown
-                        multipleSelect={false}
-                        options={item?.delivery_types}
-                        renderRow={(val) => renderDropDown(val, item)}
-                        dropdownStyle={{
-                          minWidth: '40%',
-                          // minHeight: 50,
-                          paddingHorizontal: moderateScale(6),
-                          paddingVertical: moderateScaleVertical(12),
-                        }}>
-                        <View
-                          style={{
-                            ...styles.deliveryFeeDropDown,
-                            borderColor: themeColors.primary_color,
-                          }}>
-                          <Text style={styles.dropDownTextStyle}>
-                            {
-                              item?.delivery_types.filter(
-                                (val2) =>
-                                  (sel_types || item?.sel_types) == val2?.code,
-                              )[0]?.courier_name
-                            }
-                          </Text>
-                          <Text
-                            style={{
-                              ...styles.dropDownTextStyle,
-                              marginHorizontal: moderateScale(8),
-                            }}>
-                            {
-                              item?.delivery_types.filter(
-                                (val2) =>
-                                  (sel_types || item?.sel_types) == val2?.code,
-                              )[0]?.rate
-                            }
-                          </Text>
-                          <FastImage
-                            style={{
-                              width: moderateScale(10),
-                              height: moderateScale(10),
-                            }}
-                            source={imagePath.icDropdown4}
-                            resizeMode="contain"
-                          />
-                        </View>
-                      </ModalDropdown>
-                    ) : null}
-                  </>
-                ) : (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}>
+              {!!userData?.phone_number && dineInType == 'delivery' ? (
+                <>
+                  {!!item?.delivery_types &&
+                  item?.delivery_types?.length > 0 ? (
                     <Text
                       style={{
-                        ...styles.priceItemLabel2,
-                        color: colors.redB,
-                        fontSize: textScale(11),
-                        marginBottom: 3,
+                        ...styles.priceItemLabel,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.textGreyB,
+                        marginBottom: moderateScaleVertical(8),
                       }}>
-                      Please add phone number to proceed!!
+                      {strings.DELIVERY_CHARGES}:
                     </Text>
-                  
-                  </View>
-                )}
-              </>
+                  ) : null}
+
+                  {!!item?.delivery_types &&
+                  item?.delivery_types.length > 0 ? (
+                    <ModalDropdown
+                      multipleSelect={false}
+                      options={item?.delivery_types}
+                      renderRow={(val) => renderDropDown(val, item)}
+                      dropdownStyle={{
+                        minWidth: '40%',
+                        // minHeight: 50,
+                        paddingHorizontal: moderateScale(6),
+                        paddingVertical: moderateScaleVertical(12),
+                      }}>
+                      <View
+                        style={{
+                          ...styles.deliveryFeeDropDown,
+                          borderColor: themeColors.primary_color,
+                        }}>
+                        <Text style={styles.dropDownTextStyle}>
+                          {
+                            item?.delivery_types.filter(
+                              (val2) =>
+                                (sel_types || item?.sel_types) == val2?.code,
+                            )[0]?.courier_name
+                          }
+                        </Text>
+                        <Text
+                          style={{
+                            ...styles.dropDownTextStyle,
+                            marginHorizontal: moderateScale(8),
+                          }}>
+                          {
+                            item?.delivery_types.filter(
+                              (val2) =>
+                                (sel_types || item?.sel_types) == val2?.code,
+                            )[0]?.rate
+                          }
+                        </Text>
+                        <FastImage
+                          style={{
+                            width: moderateScale(10),
+                            height: moderateScale(10),
+                          }}
+                          source={imagePath.icDropdown4}
+                          resizeMode="contain"
+                        />
+                      </View>
+                    </ModalDropdown>
+                  ) : null}
+                </>
+              ) : (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      ...styles.priceItemLabel2,
+                      color: colors.redB,
+                      fontSize: textScale(11),
+                      marginBottom: 3,
+                    }}>
+                    Please add phone number to proceed!!
+                  </Text>
+                
+                </View>
+              )}
+            </>
             )}
 
             {/* <View style={styles.itemPriceDiscountTaxView}>
@@ -4205,6 +4258,10 @@ function Cart({navigation, route}) {
                   style={{
                     width: moderateScale(14),
                     height: moderateScale(14),
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
                   }}
                   tintColor={
                     isDarkMode ? MyDarkTheme.colors.text : colors.black
@@ -4238,6 +4295,7 @@ function Cart({navigation, route}) {
               </Text>
             </TouchableOpacity>
           )}
+
         {!!userData?.phone_number && dineInType == 'delivery' ? (
           <>
             {!!cartData?.deliver_status ||
@@ -4297,7 +4355,6 @@ function Cart({navigation, route}) {
             />
           </View>
         )}
-
         {!!cartData &&
           !!cartData?.upSell_products &&
           !!cartData?.upSell_products.length > 0 && (

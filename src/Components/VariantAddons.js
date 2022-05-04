@@ -1207,12 +1207,18 @@ const VariantAddons = ({
     // );
     let addOnsAdditionalPrice = 0;
     if (addonSet && addonSet[0]) {
-      addonSet[0].setoptions.forEach((el) => {
+      console.log(addonSet,"addonSetttt")
+      for(let i=0;i<addonSet?.length;i++){ 
+         addonSet[i].setoptions.forEach((el) => {
         if (el.value) {
           addOnsAdditionalPrice = addOnsAdditionalPrice + Number(el.price);
         }
       });
+      }
+     
     }
+ 
+
     addOnsAdditionalPrice = currencyNumberFormatter(
       Number(productPriceData?.multiplier) *
         Number(productPriceData?.price) *

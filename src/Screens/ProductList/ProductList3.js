@@ -443,7 +443,7 @@ export default function Products({route, navigation}) {
 
   /****Get all list items by vendor id */
   const getAllProductsByVendor = (pageNo) => {
-    console.log('api hit getAllProductsByVendor');
+    console.log('api hit getAllProductsByVendor', data);
     let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
     let apiData = `/${vendorId}?limit=${limit}&page=${pageNo}`;
@@ -1581,6 +1581,7 @@ export default function Products({route, navigation}) {
           businessType={businessType}
           categoryInfo={categoryInfo}
           animateText={animateText}
+          // section={section}
         />
         <View style={styles.horizontalLine} />
       </Animatable.View>
@@ -1665,8 +1666,11 @@ export default function Products({route, navigation}) {
   };
 
   useEffect(() => {
+    console.log(ProductTags, 'ProductTags');
     let EnabledTags = ProductTags.filter((el) => el.isSelected);
+    console.log(EnabledTags, 'EnabledTags');
     if (EnabledTags.length > 0) {
+      console.log(sectionListData, 'sectionListData>>>>BEFORE');
       const newArr = sectionListData.map((el) => {
         const records =
           el.data &&
@@ -1683,6 +1687,8 @@ export default function Products({route, navigation}) {
         newObj.data = records;
         return newObj;
       });
+
+      console.log(newArr, 'sectionListData>>>>AFTER');
       setCloneSectionList(newArr);
     } else {
       // getAllProductsByVendor();
@@ -2979,6 +2985,7 @@ export default function Products({route, navigation}) {
         /*
          * Height should be fixed as 180 to measure exact scroll position for browse menu
          */
+
         style={{
           minHeight:
             DeviceInfo?.getBundleId() == appIds.dlvrd
@@ -2990,50 +2997,22 @@ export default function Products({route, navigation}) {
           // backgroundColor: 'red',
           // marginBottom: moderateScaleVertical(5),
         }}>
-        {DeviceInfo?.getBundleId() == appIds.dlvrd ? (
-          <View style={{marginVertical: moderateScaleVertical(10)}}>
-            <ProductCard5
-              data={item}
-              index={index}
-              onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-              onAddtoWishlist={() => _onAddtoWishlist(item)}
-              addToCart={() => addSingleItem(item, section, index)}
-              onIncrement={() => checkIsCustomize(item, section, index, 1)}
-              onDecrement={() => checkIsCustomize(item, section, index, 2)}
-              selectedItemID={selectedItemID}
-              btnLoader={btnLoader}
-              selectedItemIndx={selectedItemIndx}
-              businessType={businessType}
-              categoryInfo={categoryInfo}
-              animateText={animateText}
-            />
-          </View>
-        ) : (
-          <ProductCard3
-            data={item}
-            index={index}
-            onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-            onAddtoWishlist={() => _onAddtoWishlist(item)}
-            addToCart={() => addSingleItem(item, section, index)}
-            onIncrement={() => checkIsCustomize(item, section, index, 1)}
-            onDecrement={() => checkIsCustomize(item, section, index, 2)}
-            selectedItemID={selectedItemID}
-            btnLoader={btnLoader}
-            selectedItemIndx={selectedItemIndx}
-            businessType={businessType}
-            categoryInfo={categoryInfo}
-            animateText={animateText}
-            section={section}
-          />
-        )}
-        {!(DeviceInfo?.getBundleId() == appIds.dlvrd) && (
-          <View
-            style={{
-              ...styles.horizontalLine,
-              marginBottom: moderateScaleVertical(16),
-            }}
-          />
-        )}
+        <ProductCard3
+          data={item}
+          index={index}
+          onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+          onAddtoWishlist={() => _onAddtoWishlist(item)}
+          addToCart={() => addSingleItem(item, section, index)}
+          onIncrement={() => checkIsCustomize(item, section, index, 1)}
+          onDecrement={() => checkIsCustomize(item, section, index, 2)}
+          selectedItemID={selectedItemID}
+          btnLoader={btnLoader}
+          selectedItemIndx={selectedItemIndx}
+          businessType={businessType}
+          categoryInfo={categoryInfo}
+          animateText={animateText}
+          section={section}
+        />
       </Animatable.View>
     );
   };

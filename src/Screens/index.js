@@ -133,3 +133,4 @@ export {default as Avenue} from './PaymentGateways/Avenue';
 export {default as ScrollableCategory} from './ScrollableCategory/ScrollableCategory';
 export {default as Cashfree} from './PaymentGateways/Cashfree';
 export {default as Easebuzz} from './PaymentGateways/Easebuzz';
+export {default as ToyyibPay} from './PaymentGateways/ToyyibPay';

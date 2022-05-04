@@ -28,6 +28,7 @@ import {showError} from '../../../utils/helperFunctions';
 import {getItem} from '../../../utils/utils';
 import stylesFunc from './styles';
 import _, {debounce} from 'lodash';
+import strings from '../../../constants/lang';
 
 let dataLimit = 20;
 let vendorLimit = 50;
@@ -138,7 +139,7 @@ const RoyoOrder = (props) => {
     let query = `/${storeSelectedVendor?.id}?limit=${dataLimit}&page=${dataPage.current}&type=${type}`
     let headers = {
       code: appData?.profile?.code,
-      currency: currencies?.primary_currency?.id,
+      currency: currencies?.primary_currency?.id,   
       language: languages?.primary_language?.id,
     }
     console.log("sending query", query)
@@ -336,7 +337,7 @@ const removeItemfromData=(id)=>{
           tabTextStyle={{
             marginTop: moderateScaleVertical(0),
           }}
-          screenName={['New', 'Confirmed', 'Cancelled', 'Completed']}
+          screenName={[strings.NEW, strings.CONFIRMED, strings.CANCELLED, strings.COMPLETED]}
           selectedScreen={(index) => selectedOrder(index)}
           selectedScreenIndex={activeIndex}
         />

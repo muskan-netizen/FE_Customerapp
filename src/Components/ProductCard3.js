@@ -344,7 +344,7 @@ const ProductCard3 = ({
                     : colors.blackOpacity40,
                 }}>
                 {strings.IN}
-                {` ${section?.title}`}
+                {` ${data?.title}`}
               </Text>
             ) : null}
           </View>
