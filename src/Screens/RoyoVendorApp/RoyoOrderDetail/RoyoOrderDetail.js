@@ -39,6 +39,8 @@ const RoyoOrderDetail = (props) => {
   const { appData, appStyle, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
+  const { preferences } = appData?.profile;
+
   const [state, setState] = useState({
     address: '',
     isLoadingB: false,
@@ -296,6 +298,13 @@ const RoyoOrderDetail = (props) => {
         />
 
         <View style={{ margin: moderateScaleVertical(16) }}>
+          <Text style={styles.font15Medium}>{strings.INSTRUCTIONS}</Text>
+          <Text style={styles.font15Semibold}>{data?.specific_instructions}
+          </Text>
+        </View>
+
+
+        <View style={{ margin: moderateScaleVertical(16) }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>
             <Text style={styles.font15Semibold}>
@@ -310,6 +319,47 @@ const RoyoOrderDetail = (props) => {
               {Number(data.total_delivery_fee).toFixed(2)}
             </Text>
           </View>
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={styles.font15Medium}>{preferences?.fixed_fee_nomenclature != '' &&
+              preferences?.fixed_fee_nomenclature != null
+              ? preferences?.fixed_fee_nomenclature
+              : strings.FIXED_FEE}</Text>
+            <Text style={styles.font15Semibold}>
+              {currencies?.primary_currency?.symbol}{' '}
+              {Number(data.fixed_fee_amount).toFixed(2)}
+            </Text>
+          </View>
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={styles.font15Medium}>{strings.TAXES_FEES}</Text>
+            <Text style={styles.font15Semibold}>
+              {currencies?.primary_currency?.symbol}{' '}
+              {(Number(data?.total_service_fee) +
+                Number(data?.taxable_amount)).toFixed(2)}
+            </Text>
+          </View>
+
+
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={styles.font15Medium}>{strings.CONTAINER_CHARGES}</Text>
+            <Text style={styles.font15Semibold}>
+              {currencies?.primary_currency?.symbol}{' '}
+              {Number(data.total_container_charges).toFixed(2)}
+            </Text>
+          </View>
+
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={styles.font15Medium}>{strings.DISCOUNT}</Text>
+            <Text style={styles.font15Semibold}>
+              -{currencies?.primary_currency?.symbol}{' '}
+              {Number(data.total_discount).toFixed(2)}
+            </Text>
+          </View>
+
+
           <View style={styles.dashLine} />
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={styles.font15Medium}>{strings.TOTAL}</Text>

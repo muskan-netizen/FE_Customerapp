@@ -1986,7 +1986,7 @@ export default function OrderDetail({ navigation, route }) {
           {!!cartData?.vendors[0]?.total_container_charges &&
             Number(cartData?.total_container_charges) > 0 && (
               <LeftRightText
-                leftText={strings.WALLET}
+                leftText={strings.TOTALCONTAINERCHARGES}
                 rightText={`- ${currencies?.primary_currency?.symbol
                   }${currencyNumberFormatter(
                     Number(cartData?.total_container_charges),

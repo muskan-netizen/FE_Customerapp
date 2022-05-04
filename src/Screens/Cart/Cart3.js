@@ -916,19 +916,6 @@ function Cart({ navigation, route }) {
           .catch(errorMethod);
 
       }
-
-
-      // const payRes = await actions.orderSuccessPayment(apiData,
-      //   {
-      //     code: appData?.profile?.code,
-      //     currency: currencies?.primary_currency?.id,
-      //     language: languages?.primary_language?.id,
-      //     systemuser: DeviceInfo.getUniqueId(),
-      //     timezone: RNLocalize.getTimeZone(),
-      //     device_token: DeviceInfo.getUniqueId(),
-      //   })
-      // console.log("payRespayRes", payRes)
-
     } catch (error) {
       console.log('error raised', error)
     }
