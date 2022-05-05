@@ -93,7 +93,7 @@ import {cameraHandler} from '../../utils/commonFunction';
 import ActionSheet from 'react-native-actionsheet';
 import {androidCameraPermission} from '../../utils/permissions';
 import DocumentPicker from 'react-native-document-picker';
-import {payWithCard} from '../../utils/paystackMethod';
+// import {payWithCard} from '../../utils/paystackMethod';
 
 let clickedItem = {};
 let isFAQsSubmitted = true;
@@ -842,7 +842,7 @@ function Cart({navigation, route}) {
             selectedAddressData?.address,
           order_number: res?.data?.order_number,
         };
-        openPayTabs(billingDetail);
+        // openPayTabs(billingDetail);
 
         break;
       default:
@@ -862,32 +862,32 @@ function Cart({navigation, route}) {
     }
   };
 
-  const openPayTabs = async (data) => {
-    console.log('datadata', data);
-    try {
-      const res = await payWithCard(data);
-      console.log('payWithCard res++++', res);
-      let apiData = {
-        payment_from: 'cart',
-        order_number: data?.order_number,
-        tranRef: res?.transactionReference,
-        auth_token: userData?.auth_token,
-        amount: data?.amount,
-        come_from: 'app',
-      };
-      const payRes = await actions.orderSuccessPayment(apiData, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        systemuser: DeviceInfo.getUniqueId(),
-        timezone: RNLocalize.getTimeZone(),
-        device_token: DeviceInfo.getUniqueId(),
-      });
-      console.log('payRespayRes', payRes);
-    } catch (error) {
-      console.log('error raised', error);
-    }
-  };
+  // const openPayTabs = async (data) => {
+  //   console.log('datadata', data);
+  //   try {
+  //     const res = await payWithCard(data);
+  //     console.log('payWithCard res++++', res);
+  //     let apiData = {
+  //       payment_from: 'cart',
+  //       order_number: data?.order_number,
+  //       tranRef: res?.transactionReference,
+  //       auth_token: userData?.auth_token,
+  //       amount: data?.amount,
+  //       come_from: 'app',
+  //     };
+  //     const payRes = await actions.orderSuccessPayment(apiData, {
+  //       code: appData?.profile?.code,
+  //       currency: currencies?.primary_currency?.id,
+  //       language: languages?.primary_language?.id,
+  //       systemuser: DeviceInfo.getUniqueId(),
+  //       timezone: RNLocalize.getTimeZone(),
+  //       device_token: DeviceInfo.getUniqueId(),
+  //     });
+  //     console.log('payRespayRes', payRes);
+  //   } catch (error) {
+  //     console.log('error raised', error);
+  //   }
+  // };
 
   const checkoutPayment = (paymentData) => {
     let queryData = `/${paymentData?.selectedPayment?.code?.toLowerCase()}?amount=${
@@ -2868,90 +2868,89 @@ function Cart({navigation, route}) {
               </View>
             ) : (
               <>
-              {!!userData?.phone_number && dineInType == 'delivery' ? (
-                <>
-                  {!!item?.delivery_types &&
-                  item?.delivery_types?.length > 0 ? (
+                {!!userData?.phone_number && dineInType == 'delivery' ? (
+                  <>
+                    {!!item?.delivery_types &&
+                    item?.delivery_types?.length > 0 ? (
+                      <Text
+                        style={{
+                          ...styles.priceItemLabel,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.textGreyB,
+                          marginBottom: moderateScaleVertical(8),
+                        }}>
+                        {strings.DELIVERY_CHARGES}:
+                      </Text>
+                    ) : null}
+
+                    {!!item?.delivery_types &&
+                    item?.delivery_types.length > 0 ? (
+                      <ModalDropdown
+                        multipleSelect={false}
+                        options={item?.delivery_types}
+                        renderRow={(val) => renderDropDown(val, item)}
+                        dropdownStyle={{
+                          minWidth: '40%',
+                          // minHeight: 50,
+                          paddingHorizontal: moderateScale(6),
+                          paddingVertical: moderateScaleVertical(12),
+                        }}>
+                        <View
+                          style={{
+                            ...styles.deliveryFeeDropDown,
+                            borderColor: themeColors.primary_color,
+                          }}>
+                          <Text style={styles.dropDownTextStyle}>
+                            {
+                              item?.delivery_types.filter(
+                                (val2) =>
+                                  (sel_types || item?.sel_types) == val2?.code,
+                              )[0]?.courier_name
+                            }
+                          </Text>
+                          <Text
+                            style={{
+                              ...styles.dropDownTextStyle,
+                              marginHorizontal: moderateScale(8),
+                            }}>
+                            {
+                              item?.delivery_types.filter(
+                                (val2) =>
+                                  (sel_types || item?.sel_types) == val2?.code,
+                              )[0]?.rate
+                            }
+                          </Text>
+                          <FastImage
+                            style={{
+                              width: moderateScale(10),
+                              height: moderateScale(10),
+                            }}
+                            source={imagePath.icDropdown4}
+                            resizeMode="contain"
+                          />
+                        </View>
+                      </ModalDropdown>
+                    ) : null}
+                  </>
+                ) : (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
                     <Text
                       style={{
-                        ...styles.priceItemLabel,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.textGreyB,
-                        marginBottom: moderateScaleVertical(8),
+                        ...styles.priceItemLabel2,
+                        color: colors.redB,
+                        fontSize: textScale(11),
+                        marginBottom: 3,
                       }}>
-                      {strings.DELIVERY_CHARGES}:
+                      Please add phone number to proceed!!
                     </Text>
-                  ) : null}
-
-                  {!!item?.delivery_types &&
-                  item?.delivery_types.length > 0 ? (
-                    <ModalDropdown
-                      multipleSelect={false}
-                      options={item?.delivery_types}
-                      renderRow={(val) => renderDropDown(val, item)}
-                      dropdownStyle={{
-                        minWidth: '40%',
-                        // minHeight: 50,
-                        paddingHorizontal: moderateScale(6),
-                        paddingVertical: moderateScaleVertical(12),
-                      }}>
-                      <View
-                        style={{
-                          ...styles.deliveryFeeDropDown,
-                          borderColor: themeColors.primary_color,
-                        }}>
-                        <Text style={styles.dropDownTextStyle}>
-                          {
-                            item?.delivery_types.filter(
-                              (val2) =>
-                                (sel_types || item?.sel_types) == val2?.code,
-                            )[0]?.courier_name
-                          }
-                        </Text>
-                        <Text
-                          style={{
-                            ...styles.dropDownTextStyle,
-                            marginHorizontal: moderateScale(8),
-                          }}>
-                          {
-                            item?.delivery_types.filter(
-                              (val2) =>
-                                (sel_types || item?.sel_types) == val2?.code,
-                            )[0]?.rate
-                          }
-                        </Text>
-                        <FastImage
-                          style={{
-                            width: moderateScale(10),
-                            height: moderateScale(10),
-                          }}
-                          source={imagePath.icDropdown4}
-                          resizeMode="contain"
-                        />
-                      </View>
-                    </ModalDropdown>
-                  ) : null}
-                </>
-              ) : (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      ...styles.priceItemLabel2,
-                      color: colors.redB,
-                      fontSize: textScale(11),
-                      marginBottom: 3,
-                    }}>
-                    Please add phone number to proceed!!
-                  </Text>
-                
-                </View>
-              )}
-            </>
+                  </View>
+                )}
+              </>
             )}
 
             {/* <View style={styles.itemPriceDiscountTaxView}>

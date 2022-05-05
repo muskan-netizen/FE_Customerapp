@@ -1306,16 +1306,16 @@ android {
       //       resValue "string", "app_name", "Boozie Doozie"
       //       resValue "string", "host_name", ""
       //    }
-      //    zestyclickz{
-      //       dimension "appType"
-      //       versionCode 6
-      //       versionName "1.5"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.app.zestyclickz'
-      //       resValue "string", "app_name", "Veg-Hub"
-      //       resValue "string", "host_name", ""
-      //    }
+         zestyclickz{
+            dimension "appType"
+            versionCode 6
+            versionName "1.5"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.app.zestyclickz'
+            resValue "string", "app_name", "Veg-Hub"
+            resValue "string", "host_name", ""
+         }
       //    bakesale{
       //       dimension "appType"
       //       versionCode 1
