@@ -1874,6 +1874,7 @@ export default function ShortCode({ route, navigation }) {
             shortCode: shortCodes.cartnar,
             isShortcodePrefilled: true,
           });
+          break;
         case appIds.uven:
           updateState({
             shortCode: shortCodes.uven,
@@ -1881,7 +1882,7 @@ export default function ShortCode({ route, navigation }) {
           });
           break;
 
-          break;
+         
         case appIds.pAS41:
           updateState({
             shortCode: shortCodes.pAS41,

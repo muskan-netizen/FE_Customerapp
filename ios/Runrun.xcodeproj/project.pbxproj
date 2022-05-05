@@ -433,6 +433,7 @@
 		10386721281FBA96007B8D7E /* AmstaFood(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 10386720281FBA96007B8D7E /* AmstaFood(Production).xcconfig */; };
 		10386723281FBAAC007B8D7E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 10386722281FBAAB007B8D7E /* Images.xcassets */; };
 		10386725281FBAC5007B8D7E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10386724281FBABF007B8D7E /* GoogleService-Info.plist */; };
+		103D737C281FDB35000A95E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 103D737B281FDB34000A95E7 /* GoogleService-Info.plist */; };
 		1066ADF12817F5A800846A58 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		1066ADF22817F5A800846A58 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		1066ADF32817F5A800846A58 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -1038,7 +1039,6 @@
 		8400D0D727254B03003BF24A /* Ored(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8400D0D627254B02003BF24A /* Ored(Development).xcconfig */; };
 		8400D1DF27254B1E003BF24A /* Ored(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8400D1DE27254B1E003BF24A /* Ored(Production).xcconfig */; };
 		8400D1E127254B35003BF24A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8400D1E027254B35003BF24A /* Images.xcassets */; };
-		8400D26627254BA3003BF24A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8400D26527254BA3003BF24A /* GoogleService-Info.plist */; };
 		84050B1527218646002D52AF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84050B1627218646002D52AF /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		84050B1727218646002D52AF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -9264,6 +9264,7 @@
 		10386722281FBAAB007B8D7E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		10386724281FBABF007B8D7E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		10386726281FBC61007B8D7E /* AmstaFood.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AmstaFood.entitlements; sourceTree = "<group>"; };
+		103D737B281FDB34000A95E7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		104583AA5B42D03FDD75B35E /* Pods-available_pods-TowTrek.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-TowTrek.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-TowTrek/Pods-available_pods-TowTrek.debug.xcconfig"; sourceTree = "<group>"; };
 		1066ADEB2817ECBE00846A58 /* EVSOnTheGo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EVSOnTheGo.entitlements; sourceTree = "<group>"; };
 		1066ADEC2817F07000846A58 /* Kazakazi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kazakazi.entitlements; sourceTree = "<group>"; };
@@ -9793,7 +9794,6 @@
 		8400D0D627254B02003BF24A /* Ored(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Ored(Development).xcconfig"; sourceTree = "<group>"; };
 		8400D1DE27254B1E003BF24A /* Ored(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Ored(Production).xcconfig"; sourceTree = "<group>"; };
 		8400D1E027254B35003BF24A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		8400D26527254BA3003BF24A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8400D4F627254CD6003BF24A /* Ored.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ored.entitlements; sourceTree = "<group>"; };
 		84050B8227218646002D52AF /* AGBDeliveries.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AGBDeliveries.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84050EE22721875B002D52AF /* AGBDeliveries(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "AGBDeliveries(Development).xcconfig"; sourceTree = "<group>"; };
@@ -16320,7 +16320,7 @@
 		8400D05227254AE9003BF24A /* Ored */ = {
 			isa = PBXGroup;
 			children = (
-				8400D26527254BA3003BF24A /* GoogleService-Info.plist */,
+				103D737B281FDB34000A95E7 /* GoogleService-Info.plist */,
 				8400D0D627254B02003BF24A /* Ored(Development).xcconfig */,
 				8400D1DE27254B1E003BF24A /* Ored(Production).xcconfig */,
 				8400D1E027254B35003BF24A /* Images.xcassets */,
@@ -26844,7 +26844,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = 93PQLW7NWP;
 						LastSwiftMigration = 1240;
 						ProvisioningStyle = Automatic;
 					};
@@ -29331,7 +29331,7 @@
 				8400CD2627254A5C003BF24A /* SFProText-Medium.ttf in Resources */,
 				8400CD2827254A5C003BF24A /* notification.wav in Resources */,
 				8400CD2A27254A5C003BF24A /* Plists in Resources */,
-				8400D26627254BA3003BF24A /* GoogleService-Info.plist in Resources */,
+				103D737C281FDB35000A95E7 /* GoogleService-Info.plist in Resources */,
 				8400CD2B27254A5C003BF24A /* Futura-Normal.ttf in Resources */,
 				8400CD2C27254A5C003BF24A /* Eina02-Bold.ttf in Resources */,
 				8400D0D727254B03003BF24A /* Ored(Development).xcconfig in Resources */,
@@ -101875,7 +101875,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = 93PQLW7NWP;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -101908,7 +101908,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = 93PQLW7NWP;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -101922,7 +101922,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "${PROJECT_BUNDLE_ID}";
 				PRODUCT_NAME = Runrun;
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = tasmeemApp;
+				PROVISIONING_PROFILE_SPECIFIER = Ored;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runrun-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -102672,7 +102672,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = 93PQLW7NWP;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

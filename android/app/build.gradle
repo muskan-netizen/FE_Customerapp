@@ -1516,16 +1516,16 @@ android {
       //       resValue "string", "app_name", "Sea Change Vending"
       //       resValue "string", "host_name", ""
       //    }
-      //      ored{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.ored'
-      //       resValue "string", "app_name", "Ored"
-      //       resValue "string", "host_name", ""
-      //    }
+           ored{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ored.customer'
+            resValue "string", "app_name", "Ored"
+            resValue "string", "host_name", ""
+         }
        
       //    maxisdelivery{
       //       dimension "appType"
@@ -1687,16 +1687,16 @@ android {
       //       resValue "string", "app_name", "Click2Deliver"
       //       resValue "string", "host_name", ""
       //    }
-      // trucktirenow{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.trucktirenow'
-      //       resValue "string", "app_name", "TruckTireNow"
-      //       resValue "string", "host_name", ""
-      //    }
+      trucktirenow{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.trucktirenow'
+            resValue "string", "app_name", "TruckTireNow"
+            resValue "string", "host_name", ""
+         }
       //    yeboy{
       //       dimension "appType"
       //       versionCode 1
@@ -3227,16 +3227,16 @@ android {
    //          resValue "string", "app_name", "Noki"
    //          resValue "string", "host_name", ""
    //       }
-   //       driveree{
-   //          dimension "appType"
-   //          versionCode 1
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion         
-   //          applicationId 'com.driveree'
-   //          resValue "string", "app_name", "Driveree"
-   //          resValue "string", "host_name", ""
-   //       }
+         driveree{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.driveree'
+            resValue "string", "app_name", "Driveree"
+            resValue "string", "host_name", ""
+         }
    //        rxnow{
    //          dimension "appType"
    //          versionCode 1
@@ -4625,16 +4625,16 @@ android {
    //       resValue "string", "app_name", "Knockknock"
    //       resValue "string", "host_name", ""
    //       }
-   //       qrider{
-   //       dimension "appType"
-   //       versionCode 1
-   //       versionName "1.0"
-   //       minSdkVersion rootProject.ext.minSdkVersion
-   //       targetSdkVersion rootProject.ext.targetSdkVersion
-   //       applicationId 'com.app.qrider'
-   //       resValue "string", "app_name", "Qrider"
-   //       resValue "string", "host_name", ""
-   //       }
+         qrider{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.app.qrider'
+         resValue "string", "app_name", "Qrider"
+         resValue "string", "host_name", ""
+         }
    //       dlvrd{
    //       dimension "appType"
    //       versionCode 1

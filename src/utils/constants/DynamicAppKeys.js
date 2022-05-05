@@ -822,8 +822,8 @@ const appIds = {
     android: 'com.seachangevending',
   }),
   ored: Platform.select({
-    ios: 'com.ored',
-    android: 'com.ored',
+    ios: 'com.ored.customer',
+    android: 'com.ored.customer',
   }),
   orderchekout: Platform.select({
     ios: 'com.orderchekout.application',
