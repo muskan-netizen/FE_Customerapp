@@ -309,6 +309,11 @@ const shortCodes = {
   papiruki:'58e4d2',
   markSoublet:'2b77d8',
   amstaFood:'825037',
+
+  toor:'0388b6',
+  peerDeliveries:'cd7768',
+  swan:'0bd9cb',
+  SCOOTUP:'cf21cf',
 };
 
 
@@ -1542,6 +1547,24 @@ const appIds = {
     ios: 'com.amstaFood',
     android: 'com.amstaFood',
   }),
+// 
+  toor: Platform.select({
+    ios: 'com.app.toor',
+    android: 'com.app.toor',
+  }),
+  peerDeliveries: Platform.select({
+    ios: 'com.peerDeliveries',
+    android: 'com.PeerDeliveries',
+  }),
+  swan: Platform.select({
+    ios: 'com.swan',
+    android: 'com.swan',
+  }),
+  SCOOTUP: Platform.select({
+    ios: 'com.SCOOTUP',
+    android: 'com.SCOOTUP',
+  }),
+  
 };
 
 const socialKeys = {

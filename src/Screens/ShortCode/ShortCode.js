@@ -1967,6 +1967,31 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+// 
+          case appIds.toor:
+          updateState({
+            shortCode: shortCodes.toor,
+            isShortcodePrefilled: true,
+          });
+          break;
+          case appIds.peerDeliveries:
+          updateState({
+            shortCode: shortCodes.peerDeliveries,
+            isShortcodePrefilled: true,
+          });
+          break;
+          case appIds.swan:
+          updateState({
+            shortCode: shortCodes.swan,
+            isShortcodePrefilled: true,
+          });
+          break;
+          case appIds.SCOOTUP:
+          updateState({
+            shortCode: shortCodes.SCOOTUP,
+            isShortcodePrefilled: true,
+          });
+          break;
 
       }
     })();

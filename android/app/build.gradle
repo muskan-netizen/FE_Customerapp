@@ -1687,16 +1687,16 @@ android {
       //       resValue "string", "app_name", "Click2Deliver"
       //       resValue "string", "host_name", ""
       //    }
-      trucktirenow{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion         
-            applicationId 'com.trucktirenow'
-            resValue "string", "app_name", "TruckTireNow"
-            resValue "string", "host_name", ""
-         }
+    //   trucktirenow{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion         
+    //         applicationId 'com.trucktirenow'
+    //         resValue "string", "app_name", "TruckTireNow"
+    //         resValue "string", "host_name", ""
+    //      }
       //    yeboy{
       //       dimension "appType"
       //       versionCode 1
@@ -2079,16 +2079,16 @@ android {
       //       resValue "string", "app_name", "Sofia"
       //       resValue "string", "host_name", ""
       //    }
-      //    mml{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.app.mml'
-      //       resValue "string", "app_name", "MML"
-      //       resValue "string", "host_name", ""
-      //    }
+         mml{
+            dimension "appType"
+            versionCode 2
+            versionName "1.2"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.app.mml'
+            resValue "string", "app_name", "MML"
+            resValue "string", "host_name", ""
+         }
          //  bimol{
          //    dimension "appType"
          //    versionCode 1
@@ -2120,16 +2120,16 @@ android {
       //       resValue "string", "app_name", "Pinky Deli"
       //       resValue "string", "host_name", ""
       //    }
-      //     sxm2go{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.sxm2go'
-      //       resValue "string", "app_name", "SXM2GO"
-      //       resValue "string", "host_name", ""
-      //    }
+          sxm2go{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.sxm2go'
+            resValue "string", "app_name", "SXM2GO"
+            resValue "string", "host_name", ""
+         }
       //    gasgiant{
       //       dimension "appType"
       //       versionCode 1
@@ -4482,16 +4482,16 @@ android {
    //       resValue "string", "app_name", "MrHealth"
    //       resValue "string", "host_name", ""
    //       }
-        //  lopht{
-        //  dimension "appType"
-        //  versionCode 1
-        //  versionName "1.0"
-        //  minSdkVersion rootProject.ext.minSdkVersion
-        //  targetSdkVersion rootProject.ext.targetSdkVersion
-        //  applicationId 'com.lopht'
-        //  resValue "string", "app_name", "LOPHT"
-        //  resValue "string", "host_name", ""
-        //  }
+         lopht{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.lopht'
+         resValue "string", "app_name", "LOPHT"
+         resValue "string", "host_name", ""
+         }
 
    //       yalary{
    //       dimension "appType"
@@ -5105,17 +5105,57 @@ android {
          minSdkVersion rootProject.ext.minSdkVersion
          targetSdkVersion rootProject.ext.targetSdkVersion
          applicationId 'com.markSoublet'
-         resValue "string", "app_name", "Mark Soublet"
+         resValue "string", "app_name", "City Rides"
          resValue "string", "host_name", ""
          }
-         amstaFood{
+        //  amstaFood{
+        //  dimension "appType"
+        //  versionCode 1
+        //  versionName "1.0"
+        //  minSdkVersion rootProject.ext.minSdkVersion
+        //  targetSdkVersion rootProject.ext.targetSdkVersion
+        //  applicationId 'com.amstaFood'
+        //  resValue "string", "app_name", "Amsta Food"
+        //  resValue "string", "host_name", ""
+        //  }
+        toor{
          dimension "appType"
          versionCode 1
          versionName "1.0"
          minSdkVersion rootProject.ext.minSdkVersion
          targetSdkVersion rootProject.ext.targetSdkVersion
-         applicationId 'com.amstaFood'
-         resValue "string", "app_name", "Amsta Food"
+         applicationId 'com.app.toor'
+         resValue "string", "app_name", "Toor"
+         resValue "string", "host_name", ""
+         }
+        peerDeliveries{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.peerDeliveries'
+         resValue "string", "app_name", "PeerDeliveries"
+         resValue "string", "host_name", ""
+         }
+        swan{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.swan'
+         resValue "string", "app_name", "Swan"
+         resValue "string", "host_name", ""
+         }
+         SCOOTUP{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.SCOOTUP'
+         resValue "string", "app_name", "SCOOTUP"
          resValue "string", "host_name", ""
          }
     }
