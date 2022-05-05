@@ -317,8 +317,10 @@ export default function VendorDetail3({ navigation, route }) {
       />
       <View style={{ marginHorizontal: moderateScale(8) }}>
         <FlatList
+        showsVerticalScrollIndicator={false}
           data={vendorData || []}
           numColumns={3}
+          ListFooterComponent={<View style={{height:moderateScale(120)}}/>}
           ListHeaderComponent={<View style={{ height: 10 }} />}
           // columnWrapperStyle={{justifyContent: 'space-between'}}
           ItemSeparatorComponent={() => (

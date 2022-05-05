@@ -1463,6 +1463,28 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
+                   {!!orderFullDetail?.order_details?.order_detail?.subscription_discount 
+                      &&(
+                      <View>
+                        <LeftRightText
+                          leftText={"Subscription Discount"}
+                          rightText={` ${"-"} ${
+                            currencies?.primary_currency?.symbol
+                          } ${currencyNumberFormatter(
+                            Number(
+                              orderFullDetail?.order_details?.order_detail?.subscription_discount ,
+                            ),
+                            appData?.profile?.preferences?.digit_after_decimal,
+                          )}`}
+                          leftTextStyle={{color: themeColors.primary_color}}
+                          rightTextStyle={{color: themeColors.primary_color}}
+                          isDarkMode={isDarkMode}
+                          MyDarkTheme={MyDarkTheme}
+                          marginBottom={0}
+                        />
+                        <View style={styles.horizontalLine} />
+                      </View>
+                    )} 
                   {!!orderFullDetail?.order_details?.taxable_amount &&
                     orderFullDetail?.order_details?.taxable_amount !==
                       '0.00' && (
@@ -1516,7 +1538,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                             currencies?.primary_currency?.symbol
                           } ${currencyNumberFormatter(
                             Number(
-                              orderFullDetail?.order_details?.payable_amount,
+                              orderFullDetail?.order_details?.order_detail?.payable_amount,
                             ),
                             appData?.profile?.preferences?.digit_after_decimal,
                           )}`}

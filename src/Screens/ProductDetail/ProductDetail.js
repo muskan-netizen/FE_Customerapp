@@ -1408,7 +1408,8 @@ export default function ProductDetail({route, navigation}) {
                           <GradientButton
                             indicator={isLoadingC}
                             disabled={
-                              !productDetailData?.vendor?.show_slot &&
+                              // !productDetailData?.vendor?.closed_store_order_scheduled
+                              !productDetailData?.vendor?.closed_store_order_scheduled &&
                               !!productDetailData?.vendor?.is_vendor_closed
                             }
                             indicatorColor={colors.white}
@@ -1433,7 +1434,7 @@ export default function ProductDetail({route, navigation}) {
                             btnStyle={{
                               borderRadius: moderateScale(4),
                               height: moderateScale(38),
-                              opacity: productDetailData?.vendor?.show_slot
+                              opacity: productDetailData?.vendor?.closed_store_order_scheduled
                                 ? 1
                                 : productDetailData?.vendor?.is_vendor_closed
                                 ? 0.3
@@ -1443,7 +1444,7 @@ export default function ProductDetail({route, navigation}) {
                         </View>
                       </View>
                     ) : null}
-                    {!productDetailData?.vendor?.show_slot &&
+                    {!productDetailData?.vendor?.closed_store_order_scheduled &&
                     !!productDetailData?.vendor?.is_vendor_closed ? (
                       <Text
                         style={{

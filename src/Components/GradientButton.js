@@ -25,6 +25,7 @@ const GradientButton = ({
   const fontFamily = appStyle?.fontSizeData;
   const buttonTextColor = themeColors;
   const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
+  
   return (
     <TouchableOpacity
       disabled={disabled}
