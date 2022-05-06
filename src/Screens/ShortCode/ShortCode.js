@@ -91,9 +91,9 @@ export default function ShortCode({route, navigation}) {
             state;
             //updateState({shortCode: 'd0a898', isShortcodePrefilled: true});
             if (shortCodeParam) {
-              updateState({shortCode: '', isShortcodePrefilled: false});
+              updateState({shortCode: 'fb78f0', isShortcodePrefilled: false});
             } else {
-              updateState({shortCode: '245bae', isShortcodePrefilled: true});
+              updateState({shortCode: 'fb78f0', isShortcodePrefilled: true});
             }
           }
           break;
@@ -1858,60 +1858,60 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.curblerLLC:
-            updateState({
-              shortCode: shortCodes.curblerLLC,
-              isShortcodePrefilled: true,
-            });
-            break;
-          case appIds.cartnar:
-            updateState({
-              shortCode: shortCodes.cartnar,
-              isShortcodePrefilled: true,
-            });
-            break;
-          case appIds.uven:
-            updateState({
-              shortCode: shortCodes.uven,
-              isShortcodePrefilled: true,
-            });
-            break;
-          case appIds.pAS41:
-            updateState({
-              shortCode: shortCodes.pAS41,
-              isShortcodePrefilled: true,
-            });
-            break;
-            case appIds.freshFarmz:
-            updateState({
-              shortCode: shortCodes.freshFarmz,
-              isShortcodePrefilled: true,
-            });
-            break;
-            case appIds.ryde:
-            updateState({
-              shortCode: shortCodes.ryde,
-              isShortcodePrefilled: true,
-            });
-            break;
-            case appIds.waterTaxi:
-            updateState({
-              shortCode: shortCodes.waterTaxi,
-              isShortcodePrefilled: true,
-            });
-            break;
-            case appIds.muvpod:
-            updateState({
-              shortCode: shortCodes.muvpod,
-              isShortcodePrefilled: true,
-            });
-            break;
-            case appIds.smile:
-              updateState({
-                shortCode: shortCodes.smile,
-                isShortcodePrefilled: true,
-              });
-            break;
+        case appIds.curblerLLC:
+          updateState({
+            shortCode: shortCodes.curblerLLC,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.cartnar:
+          updateState({
+            shortCode: shortCodes.cartnar,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.uven:
+          updateState({
+            shortCode: shortCodes.uven,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.pAS41:
+          updateState({
+            shortCode: shortCodes.pAS41,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.freshFarmz:
+          updateState({
+            shortCode: shortCodes.freshFarmz,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ryde:
+          updateState({
+            shortCode: shortCodes.ryde,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.waterTaxi:
+          updateState({
+            shortCode: shortCodes.waterTaxi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.muvpod:
+          updateState({
+            shortCode: shortCodes.muvpod,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.smile:
+          updateState({
+            shortCode: shortCodes.smile,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

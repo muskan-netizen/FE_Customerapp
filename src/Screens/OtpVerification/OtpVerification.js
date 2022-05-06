@@ -1,5 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {I18nManager, Image, Text, TouchableOpacity, View} from 'react-native';
+import {
+  I18nManager,
+  Image,
+  Keyboard,
+  Platform,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
@@ -26,6 +34,7 @@ import stylesFunc from './styles';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import {checkIsAdmin} from '../../utils/utils';
 import {useNavigation} from '@react-navigation/native';
+import RNOtpVerify from 'react-native-otp-verify';
 
 export default function OtpVerification({navigation, route}) {
   const navigation_ = useNavigation();
@@ -52,6 +61,31 @@ export default function OtpVerification({navigation, route}) {
       if (timerId) clearTimeout(timerId);
     };
   }, [state.timer]);
+
+  const otpHandler = (message) => {
+    console.log(message, 'complete msg>>>');
+    if (!!message) {
+      var OTP = message.replace(/[^0-9]/g, '');
+      console.log(OTP, 'OTP without substring>>>');
+      console.log(OTP.substring(0, 6), 'OTP without substring>>>');
+      updateState({
+        phoneOTP: OTP.substring(0, 6),
+      });
+    }
+    RNOtpVerify.removeListener();
+    Keyboard.dismiss();
+  };
+
+  useEffect(() => {
+    RNOtpVerify.getOtp()
+      .then((res) => {
+        RNOtpVerify.addListener(otpHandler);
+      })
+      .catch((error) => console.log(error, 'error>>>>'));
+    return () => {
+      RNOtpVerify.removeListener();
+    };
+  }, []);
 
   const _onResend = async () => {
     let fcmToken = await AsyncStorage.getItem('fcmToken');

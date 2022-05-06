@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {Image, Text, TouchableOpacity, View, I18nManager} from 'react-native';
+import {
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+  I18nManager,
+  Keyboard,
+} from 'react-native';
 import {useSelector} from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -31,9 +38,10 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import {useNavigation} from '@react-navigation/native';
 import {checkIsAdmin} from '../../utils/utils';
+import RNOtpVerify from 'react-native-otp-verify';
 
 export default function VerifyAccount({navigation, route}) {
-  console.log("verify account route",route)
+  console.log('verify account route', route);
   const navigation_ = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -43,7 +51,7 @@ export default function VerifyAccount({navigation, route}) {
   let paramsData = route?.params;
   const userData = useSelector((state) => state?.auth?.userData);
 
-  console.log("user data",userData)
+  console.log('user data', userData);
   const [state, setState] = useState({
     timer2: 0,
     timer: 0,
@@ -160,6 +168,32 @@ export default function VerifyAccount({navigation, route}) {
       })
       .catch(errorMethod);
   };
+
+  const otpHandler = (message) => {
+    console.log(message, 'complete msg>>>');
+    if (!!message) {
+      var OTP = message.replace(/[^0-9]/g, '');
+      console.log(OTP, 'OTP without substring>>>');
+      console.log(OTP.substring(0, 6), 'OTP without substring>>>');
+      updateState({
+        phoneOtp: OTP.substring(0, 6),
+      });
+    }
+    RNOtpVerify.removeListener();
+    Keyboard.dismiss();
+  };
+
+  useEffect(() => {
+    RNOtpVerify.getOtp()
+      .then((res) => {
+        RNOtpVerify.addListener(otpHandler);
+      })
+      .catch((error) => console.log(error, 'error>>>>'));
+    return () => {
+      RNOtpVerify.removeListener();
+    };
+  }, []);
+
   useEffect(() => {
     let timerId;
     if (timer > 0) {
@@ -394,8 +428,7 @@ export default function VerifyAccount({navigation, route}) {
               // console.log(route.params.data.data);
               checkIsAdmin(navigation_, navigation, route?.params?.data?.data);
               // navigation.push(navigationStrings.TAB_ROUTES)
-            }}
-            >
+            }}>
             <Text style={styles.skipText}>{strings.SKIP}</Text>
           </TouchableOpacity>
         )}
