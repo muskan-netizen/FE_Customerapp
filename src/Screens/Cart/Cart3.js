@@ -921,6 +921,7 @@ function Cart({navigation, route}) {
 
   const _directOrderPlace = () => {
     let data = {};
+    data['vendor_id'] = cartData?.products[0]?.vendor_id;
     data['address_id'] =
       paramsData?.selectedAddressData?.id || selectedAddressData?.id;
     data['payment_option_id'] =
