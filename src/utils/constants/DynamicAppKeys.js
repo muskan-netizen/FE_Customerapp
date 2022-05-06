@@ -1235,8 +1235,8 @@ const appIds = {
     android: 'com.sabroson',
   }),
   swiffyllc: Platform.select({
-    ios: 'com.swiffyllc',
-    android: 'com.swiffyllc',
+    ios: 'com.swiffyllc.customer',
+    android: 'com.swiffyllc.customer',
   }),
   meatEasy: Platform.select({
     ios: 'com.meatEasy',
@@ -1547,7 +1547,6 @@ const appIds = {
     ios: 'com.amstaFood',
     android: 'com.amstaFood',
   }),
-// 
   toor: Platform.select({
     ios: 'com.app.toor',
     android: 'com.app.toor',

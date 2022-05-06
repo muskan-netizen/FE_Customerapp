@@ -1553,6 +1553,21 @@ target 'AmstaFood' do
   
 end
 
+# Toor Target
+target 'Toor' do
+  
+end
+
+# PeerDeliveries Target
+target 'PeerDeliveries' do
+  
+end
+
+# Swan Target
+target 'Swan' do
+  
+end
+
 
 
 
