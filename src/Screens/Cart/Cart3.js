@@ -379,6 +379,7 @@ function Cart({ navigation, route }) {
         },
       )
       .then((res) => {
+        console.log(res,"ressssssss")
         closeForm();
         actions.cartItemQty(res);
         console.log('cart details>>>', res);
@@ -1206,7 +1207,7 @@ function Cart({ navigation, route }) {
 
     if (!!userData?.auth_token) {
       if (
-        !!cartData?.closed_store_order_scheduled &&
+        !!cartData?.closed_store_order_scheduled && cartData?.products[0]?.vendor?.is_vendor_closed &&
         !localeSheduledOrderDate
       ) {
         showInfo(strings.SCHEDULE_DATE_REQUIRED);
@@ -1451,7 +1452,7 @@ function Cart({ navigation, route }) {
       })
       .catch(errorMethod);
   };
-
+  console.log(cartData, 'cartDataaaaa');
   // const _createPaymentMethod = async (cardInfo, res2) => {
   //   console.log(cardInfo, '_createPaymentMethod>>>ardInfo');
   //   if (res2) {
@@ -1710,7 +1711,9 @@ function Cart({ navigation, route }) {
           updateState({ isLoadingB: false });
         }
       })
-      .catch(errorMethod);
+      .catch(
+        errorMethod
+      );
   };
 
   //Offline payments
@@ -1797,12 +1800,11 @@ function Cart({ navigation, route }) {
       errorMethod(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }
   };
-
   const _renderRazor = () => {
     updateState({ isLoadingB: true });
     let options = {
       description: 'Payment for your order',
-      image: getImageUrl(
+      image: getImageUrl(   
         appData?.profile?.logo?.image_fit,
         appData?.profile?.logo?.image_path,
         '1000/1000',
@@ -2257,7 +2259,7 @@ function Cart({ navigation, route }) {
               </Text>
             </TouchableOpacity>
 
-            {!!cartData?.closed_store_order_scheduled ? (
+            {(!!cartData?.closed_store_order_scheduled && !!item?.vendor?.is_vendor_closed) ? (
               <Text
                 style={{
                   ...styles.priceItemLabel2,
@@ -2426,7 +2428,8 @@ function Cart({ navigation, route }) {
                                   )
                                   }`}
                               </Text>{' '}
-                              X {i?.quantity} ={' '}
+                              {i?.quantity } 
+                              X  ={' '}
                               <Text
                                 style={{
                                   color: isDarkMode
@@ -3399,6 +3402,7 @@ function Cart({ navigation, route }) {
             isDarkMode ? colors.textGreyB : colors.textGreyB
           }
           placeholder={strings.SPECIAL_INSTRUCTION}
+          returnKeyType={"next"}
         />
         {/* <View style={{ height: moderateScaleVertical(20) }} /> */}
 

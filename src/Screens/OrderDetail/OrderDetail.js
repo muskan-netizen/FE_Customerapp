@@ -1294,7 +1294,7 @@ export default function OrderDetail({ navigation, route }) {
               />
             </View>
           )}
-          {!!Number(item?.delivery_fee) && (
+          {!!Number(item?.delivery_fee)  &&(
             <View style={styles.itemPriceDiscountTaxView}>
               <Text
                 style={

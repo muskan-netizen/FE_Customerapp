@@ -443,7 +443,7 @@ export default function Products({ route, navigation }) {
 
   /****Get all list items by vendor id */
   const getAllProductsByVendor = (pageNo) => {
-    console.log('api hit getAllProductsByVendor');
+    console.log('api hit getAllProductsByVendor',data);
     let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
     let apiData = `/${vendorId}?limit=${limit}&page=${pageNo}`;
@@ -1582,6 +1582,7 @@ export default function Products({ route, navigation }) {
           categoryInfo={categoryInfo}
           animateText={animateText}
           // section={section}
+          
         />
         <View style={styles.horizontalLine} />
       </Animatable.View>
@@ -2476,45 +2477,7 @@ export default function Products({ route, navigation }) {
                   />
                 </TouchableOpacity>
               )}
-            {offerList?.length > 0 && (
-              <TouchableOpacity
-                onPress={() =>
-                  updateState({offersModalVisible: !offersModalVisible})
-                }
-                activeOpacity={0.7}
-                style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View
-                  style={{
-                    backgroundColor: colors.greyColor,
-                    width: moderateScale(30),
-                    height: moderateScale(30),
-                    borderRadius: moderateScale(30),
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Image source={imagePath.ic_offersIcon} />
-                </View>
-                <Text
-                  style={{
-                    ...styles.milesTxt,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                    opacity: 1,
-                    fontSize: textScale(10),
-                  }}>
-                  {strings.OFFERS}
-                </Text>
-                <Image
-                  source={imagePath.icBackb}
-                  style={{
-                    transform: [{rotate: '-90deg'}],
-                    width: moderateScale(11),
-                    height: moderateScale(11),
-                    resizeMode: 'contain',
-                    marginLeft: moderateScale(6),
-                  }}
-                />
-              </TouchableOpacity>
-            )}
+           
           </View>
         )}
         <ScrollView
@@ -3031,26 +2994,7 @@ export default function Products({ route, navigation }) {
           // backgroundColor: 'red',
           // marginBottom: moderateScaleVertical(5),
         }}>
-        {DeviceInfo?.getBundleId() == appIds.dlvrd ? (
-          <View style={{marginVertical: moderateScaleVertical(10)}}>
-            <ProductCard5
-              data={item}
-              index={index}
-              onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-              onAddtoWishlist={() => _onAddtoWishlist(item)}
-              addToCart={() => addSingleItem(item, section, index)}
-              onIncrement={() => checkIsCustomize(item, section, index, 1)}
-              onDecrement={() => checkIsCustomize(item, section, index, 2)}
-              selectedItemID={selectedItemID}
-              btnLoader={btnLoader}
-              selectedItemIndx={selectedItemIndx}
-              businessType={businessType}
-              categoryInfo={categoryInfo}
-              animateText={animateText}
-            />
-          </View>
-        ) : (
-          <ProductCard3
+           <ProductCard3
             data={item}
             index={index}
             onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
@@ -3064,16 +3008,9 @@ export default function Products({ route, navigation }) {
             businessType={businessType}
             categoryInfo={categoryInfo}
             animateText={animateText}
+            section={section}
           />
-        )}
-        {!(DeviceInfo?.getBundleId() == appIds.dlvrd) && (
-          <View
-            style={{
-              ...styles.horizontalLine,
-              marginBottom: moderateScaleVertical(16),
-            }}
-          />
-        )}
+      
       </Animatable.View>
     );
   };

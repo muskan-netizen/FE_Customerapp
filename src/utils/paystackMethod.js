@@ -1,6 +1,6 @@
 import {
     PaymentSDKBillingDetails, PaymentSDKConfiguration, RNPaymentSDKLibrary
-} from '@paytabs/react-native-paytabs';
+ } from '@paytabs/react-native-paytabs';
 
 export function payWithCard(detail) {
     console.log(detail, "payWithCarddetail");

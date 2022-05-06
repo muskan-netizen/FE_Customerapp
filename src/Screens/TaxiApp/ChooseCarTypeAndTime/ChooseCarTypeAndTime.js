@@ -270,6 +270,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         },
       )
       .then((res) => {
+        console.log(res,"ressssss")
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(
@@ -370,7 +371,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       isLoading: true,
       indicatorLoader: true,
     });
-    console.log(data, 'data>>>>>');
+    console.log(JSON.stringify(data), 'data>>>>>');
     actions
       .placeDelievryOrder(data, {
         code: appData?.profile?.code,
@@ -907,7 +908,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   //   }, 2000);
   // }, []);
 
-  console.log('paramData?.location', paramData);
+  console.log('paramData', paramData);
   // useEffect(() => {
   //   console.log('check state ref array >>>', refArr);
   //   refArr.forEach((element) => {

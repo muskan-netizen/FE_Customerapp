@@ -20,6 +20,7 @@ import ProgressiveImage from './ProgressiveImage';
 import moment from 'moment';
 import {MyDarkTheme} from '../styles/theme';
 
+
 const OffersCard2 = ({data = {}, onPress = () => {}}) => {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
@@ -129,9 +130,8 @@ const OffersCard2 = ({data = {}, onPress = () => {}}) => {
           }}>
           {strings.EXPIRES}
           {'  '}
-          {`${moment(data?.expiry_date).format('DD MMM,YYYY')} ${moment(
-            data?.expiry_date,
-          ).format('LT')} `}
+          {moment(data?.expiry_date).format('MMMM Do YYYY, h:mm:ss a')} 
+          {/* {data?.expiry_date} */}
         </Text>
         {/* <Text
           numberOfLines={1}

@@ -55,6 +55,7 @@ const RoyoHome = (props) => {
   const { navigation } = props;
   const { storeSelectedVendor } = useSelector((state) => state?.order);
   const { appData, currencies, languages } = useSelector((state) => state.initBoot);
+  console.log(languages,"languagessssssssss")
 
   const [state, setState] = useState({
     pageActive: 1,
@@ -254,8 +255,8 @@ const RoyoHome = (props) => {
       });
   };
   const onChageRevenueDate = (value, newDate) => {
-    // console.log('new datae', moment(newDate).startOf('month').format('MMMM'));
-
+    console.log('new datae',newDate);
+      
     if (newDate) {
       updateState({
         revenueDate: newDate,
@@ -267,7 +268,6 @@ const RoyoHome = (props) => {
         showRevenueDate: false,
       });
   };
-
 
   const _getRevenueDashboardData = (selectedVendorData, date, ...params) => {
     let data = {};
@@ -543,32 +543,32 @@ const RoyoHome = (props) => {
 
           <View style={styles.dashboard}>
             <DashboardCount
-              heading='Pending Order'
-              desc='pending orders'
+              heading={strings.PENDING_ORDERS}
+              desc={strings.PENDING_ORDERS}
               count={ordersCount?.pending}
               index={0}
               image={imagePath.timerRoyo}
               onPress={() => onPressDashboard(0)}
             />
             <DashboardCount
-              heading='Active Order'
-              desc='Active orders'
+              heading={strings.ACTIVE_ORDERS}
+              desc={strings.ACTIVE_ORDERS}
               count={ordersCount?.active}
               index={1}
               image={imagePath.activeRoyo}
               onPress={() => onPressDashboard(1)}
             />
             <DashboardCount
-              heading='Cancelled Order'
-              desc='orders cancelled'
+              heading={strings.CANCELLED_ORDER}
+              desc={strings.CANCELLED_ORDER}
               count={ordersCount?.cancelled}
               index={2}
               image={imagePath.cancelledRoyo}
               onPress={() => onPressDashboard(2)}
             />
             <DashboardCount
-              heading='Delivered order'
-              desc='orders delivered'
+              heading={strings.DELIVERED_ORDERS}
+              desc={strings.DELIVERED_ORDERS}
               count={ordersCount?.delivered}
               index={3}
               image={imagePath.deliveredRoyo}
@@ -584,8 +584,9 @@ const RoyoHome = (props) => {
                   onPress={toggleRevenueDate}
                   style={{ flexDirection: 'row' }}>
                   <Text style={{ ...styles.font14Regular, color: '#2E3E3A5f' }}>
-                    {String(revenueDate).slice(4, 7)}{' '}
-                    {String(revenueDate).slice(11, 15)}
+                    {/* {String(revenueDate).slice(4, 7)}{' '}
+                    {String(revenueDate).slice(11, 15)} */}
+                    {moment(revenueDate).locale(languages?.primary_language?.sort_code).format("MMMM YYYY")}
                   </Text>
 
                   <Image source={imagePath.dropdownTriangle} />
@@ -630,8 +631,7 @@ const RoyoHome = (props) => {
                   onPress={toggleOrderDate}
                   style={{ flexDirection: 'row' }}>
                   <Text style={{ ...styles.font14Regular, color: '#2E3E3A5f' }}>
-                    {String(orderDate).slice(4, 7)}{' '}
-                    {String(orderDate).slice(11, 15)}
+                  {moment(orderDate).locale(languages?.primary_language?.sort_code).format("MMMM YYYY")}
                   </Text>
                   <Image source={imagePath.dropdownTriangle} />
                 </TouchableOpacity>
@@ -670,7 +670,7 @@ const RoyoHome = (props) => {
                 ...styles.font18Semibold,
                 marginVertical: moderateScaleVertical(16),
               }}>
-              {'Recent Orders'}
+              {strings.RECENTORDERS}
             </Text>
             <FlatList
               onEndReached={onEndReachedDelayed}
@@ -722,7 +722,7 @@ const RoyoHome = (props) => {
               value={revenueDate}
               minimumDate={new Date(1999, 5)}
               maximumDate={new Date(2025, 5)}
-            // locale="ko"
+              locale={languages?.primary_language?.sort_code}
             />
           )}
           {showOrderDate && (
@@ -731,7 +731,7 @@ const RoyoHome = (props) => {
               value={orderDate}
               minimumDate={new Date(1999, 5)}
               maximumDate={new Date(2025, 5)}
-            // locale="ko"
+              locale={languages?.primary_language?.sort_code}
             />
           )}
         </View>

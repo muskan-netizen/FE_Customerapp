@@ -1549,7 +1549,7 @@ android {
          }
           donepacked{
             dimension "appType"
-            versionCode 4
+            versionCode 7
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -3308,16 +3308,7 @@ android {
             resValue "string", "app_name", "Maxis Delivery"
             resValue "string", "host_name", ""
          }
-          donepacked{
-            dimension "appType"
-            versionCode 4
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion         
-            applicationId 'com.donepacked'
-            resValue "string", "app_name", "Donepacked"
-            resValue "string", "host_name", ""
-         }
+         
          careworks{
             dimension "appType"
             versionCode 1
