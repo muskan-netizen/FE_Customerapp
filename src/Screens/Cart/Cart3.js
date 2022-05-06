@@ -1,12 +1,13 @@
 import { useFocusEffect } from '@react-navigation/native';
+import {
+  handleCardAction, StripeProvider
+} from '@stripe/stripe-react-native';
 import { cloneDeep, isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import {
   Alert,
-  Animated,
-  Dimensions,
-  FlatList,
+  Animated, FlatList,
   I18nManager,
   Image,
   Keyboard,
@@ -17,19 +18,19 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
-  TouchableWithoutFeedback,
+  View
 } from 'react-native';
+import ActionSheet from 'react-native-actionsheet';
 import * as Animatable from 'react-native-animatable';
 import { Calendar } from 'react-native-calendars';
 import { useDarkMode } from 'react-native-dark-mode';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo from 'react-native-device-info';
+import DocumentPicker from 'react-native-document-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { UIActivityIndicator } from 'react-native-indicators';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as RNLocalize from 'react-native-localize';
 import Modal from 'react-native-modal';
 import ModalDropdown from 'react-native-modal-dropdown';
@@ -53,7 +54,6 @@ import WishlistCard from '../../Components/WishlistCard';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
-import Vi from '../../constants/lang/vi';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
@@ -61,13 +61,11 @@ import { hitSlopProp } from '../../styles/commonStyles';
 import {
   height,
   moderateScale,
-  moderateScaleVertical,
-  StatusBarHeight,
-  textScale,
-  width,
+  moderateScaleVertical, textScale,
+  width
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
-import { currencyNumberFormatter } from '../../utils/commonFunction';
+import { cameraHandler, currencyNumberFormatter } from '../../utils/commonFunction';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   getImageUrl,
@@ -75,24 +73,12 @@ import {
   showError,
   showInfo,
   showSuccess,
-  timeInLocalLangauge,
+  timeInLocalLangauge
 } from '../../utils/helperFunctions';
+import { payWithCard } from '../../utils/paystackMethod';
+import { androidCameraPermission } from '../../utils/permissions';
 import { getItem, removeItem, setItem } from '../../utils/utils';
 import stylesFun from './styles';
-import {
-  CardField,
-  createToken,
-  initStripe,
-  StripeProvider,
-  handleCardAction,
-  createPaymentMethod,
-  confirmPayment,
-} from '@stripe/stripe-react-native';
-import { cameraHandler } from '../../utils/commonFunction';
-import ActionSheet from 'react-native-actionsheet';
-import { androidCameraPermission } from '../../utils/permissions';
-import DocumentPicker from 'react-native-document-picker';
-import { payWithCard } from '../../utils/paystackMethod';
 
 let clickedItem = {};
 let isFAQsSubmitted = true;

@@ -1,30 +1,31 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useScrollToTop } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import {
-  FlatList,
-  Platform,
+  FlatList, Image, Platform,
   RefreshControl,
   ScrollView,
   Text,
-  View,
-  Animated,
-  Image,
+  View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import AppLink from 'react-native-app-link';
 import { useDarkMode } from 'react-native-dark-mode';
+import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  Menu, MenuOption, MenuOptions, MenuTrigger
+} from 'react-native-popup-menu';
+import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
-import BlurImages from '../../../Components/BlurImages';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 import BannerLoader from '../../../Components/Loaders/BannerLoader';
 import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
-import SearchLoader from '../../../Components/Loaders/SearchLoader';
 import MarketCard3 from '../../../Components/MarketCard3';
 import ProductsComp from '../../../Components/ProductsComp';
-import SearchBar2 from '../../../Components/SearchBar2';
+import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
+import staticStrings from '../../../constants/staticStrings';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
 import {
@@ -32,30 +33,15 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
-import stylesFunc from '../styles';
-import { SvgUri } from 'react-native-svg';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
-  getImageUrl,
-  getScaleTransformationStyle,
-  pressInAnimation,
-  pressOutAnimation,
+  getImageUrl
 } from '../../../utils/helperFunctions';
-import { useScrollToTop } from '@react-navigation/native';
-import staticStrings from '../../../constants/staticStrings';
-import imagePath from '../../../constants/imagePath';
-import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import DeviceInfo from 'react-native-device-info';
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu';
-import { string } from 'is_js';
+import stylesFunc from '../styles';
 
 export default function DashBoardFive({
   handleRefresh = () => { },
