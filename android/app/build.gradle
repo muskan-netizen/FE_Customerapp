@@ -4879,16 +4879,16 @@ android {
    //       resValue "string", "app_name", "Trip"
    //       resValue "string", "host_name", ""
    //       }
-   //   localdropoff{
-   //       dimension "appType"
-   //       versionCode 1
-   //       versionName "1.0"
-   //       minSdkVersion rootProject.ext.minSdkVersion
-   //       targetSdkVersion rootProject.ext.targetSdkVersion
-   //       applicationId 'com.app.localdropoff'
-   //       resValue "string", "app_name", "Local dropoff"
-   //       resValue "string", "host_name", ""
-   //       }
+     localdropoff{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.app.localdropoff'
+         resValue "string", "app_name", "Local dropoff"
+         resValue "string", "host_name", ""
+         }
    //    aauJau{
    //       dimension "appType"
    //       versionCode 1
