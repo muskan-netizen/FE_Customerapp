@@ -759,7 +759,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       // );
       return;
     }
-
+ 
     updateState({isBtnLoader: true, cancelError: null});
 
     const apiData = {
@@ -786,7 +786,9 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       })
       .catch(errorMethod);
   };
-
+  
+  let subscription_percent=  
+  (orderFullDetail?.order_details?.order_detail?.subscription_discount/orderFullDetail?.order_details?.order_detail?.total_amount)*100
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -1467,7 +1469,15 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       &&(
                       <View>
                         <LeftRightText
-                          leftText={"Subscription Discount"}
+                          leftText={`${strings.SUBSCRIPTION_DISCOUNT} ${"("} ${
+                            currencyNumberFormatter(
+                              Number(
+                                subscription_percent
+                              ),
+                              appData?.profile?.preferences?.digit_after_decimal,
+                            )
+                          
+                          } ${'%)'}`}
                           rightText={` ${"-"} ${
                             currencies?.primary_currency?.symbol
                           } ${currencyNumberFormatter(
@@ -1475,7 +1485,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                               orderFullDetail?.order_details?.order_detail?.subscription_discount ,
                             ),
                             appData?.profile?.preferences?.digit_after_decimal,
-                          )}`}
+                          )} `}
                           leftTextStyle={{color: themeColors.primary_color}}
                           rightTextStyle={{color: themeColors.primary_color}}
                           isDarkMode={isDarkMode}

@@ -925,4 +925,5 @@ Amount`,
   ORDER_CANCELLED: 'Order Cancelled',
   RECENTORDERS:"Recent Orders",
   ORDER_CANCELLED:"orders cancelled",
+  SUBSCRIPTION_DISCOUNT:"Subscription Discount",
 };

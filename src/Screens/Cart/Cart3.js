@@ -1671,7 +1671,9 @@ function Cart({ navigation, route }) {
           updateState({ isLoadingB: false });
         }
       })
-      .catch(errorMethod);
+      .catch(
+        errorMethod
+      );
   };
 
   //Offline payments
