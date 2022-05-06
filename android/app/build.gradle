@@ -706,16 +706,16 @@ android {
       //       resValue "string", "app_name", "Markita"
       //       resValue "string", "host_name", ""
       //    }
-      //     sirvu{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion
-      //       applicationId 'com.sirvu'
-      //       resValue "string", "app_name", "SirVU"
-      //       resValue "string", "host_name", ""
-      //    }
+          sirvu{
+            dimension "appType"
+            versionCode 3
+            versionName "1.2"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.sirvu'
+            resValue "string", "app_name", "SirVU"
+            resValue "string", "host_name", ""
+         }
 
       //    ublue{
       //       dimension "appType"
@@ -4341,16 +4341,16 @@ android {
    //          resValue "string", "app_name", "Sabroson"
    //          resValue "string", "host_name", ""
    //       }
-   //       swiffyllc{
-   //          dimension "appType"
-   //          versionCode 1
-   //          versionName "1.0"
-   //          minSdkVersion rootProject.ext.minSdkVersion
-   //          targetSdkVersion rootProject.ext.targetSdkVersion         
-   //          applicationId 'com.swiffyllc'
-   //          resValue "string", "app_name", "Swiffy LLC"
-   //          resValue "string", "host_name", ""
-   //       }
+         swiffyllc{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.swiffyllc.customer'
+            resValue "string", "app_name", "Swiffy LLC"
+            resValue "string", "host_name", ""
+         }
    //       beakme{
    //          dimension "appType"
    //          versionCode 1

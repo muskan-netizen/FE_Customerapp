@@ -1,12 +1,14 @@
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 
 //Vishwas
 // export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
 // export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
+// export const API_BASE_URL = 'https://pideunfleety.com/api/v1';
+
 
 
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1';  //swiffy
@@ -45,7 +47,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://onscart.com/api/v1';
 // export const API_BASE_URL = 'https://fastmikes.com/api/v1';
 
-// export const API_BASE_URL = 'https://ored.co/api/v1'; //ored
+export const API_BASE_URL = 'https://ored.co/api/v1'; //ored
 
 
 
