@@ -50,7 +50,7 @@ const ProductCard3 = ({
   animateText = 0,
   section = {},
 }) => {
-  // console.log('item data++', data);
+  console.log('item data++', data);
   // data['qty'] = 1
   const [isAdd, setAdd] = useState(false);
   const [state, setState] = useState({
@@ -384,7 +384,7 @@ const ProductCard3 = ({
               {`${
                 currencies?.primary_currency?.symbol
               } ${currencyNumberFormatter(
-                Number(data?.variant_multiplier) *
+                // Number(data?.variant_multiplier) *
                   Number(data?.variant[0]?.price),
                 appData?.profile?.preferences?.digit_after_decimal,
               )}`}

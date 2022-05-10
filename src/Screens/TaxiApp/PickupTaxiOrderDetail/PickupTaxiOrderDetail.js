@@ -1142,12 +1142,13 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                         style={{flexDirection: 'row', alignItems: 'center'}}>
                         <RoundImg
                           img={orderFullDetail?.agent_image}
-                          size={34}
+                          size={90}
                         />
                         <View style={{flexDirection: 'column'}}>
                           <Text
                             style={{
                               ...styles.statusText,
+                              fontSize:moderateScale(20),
                               color: isDarkMode
                                 ? MyDarkTheme.colors.text
                                 : colors.black,
@@ -1270,8 +1271,8 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                                     priority: FastImage.priority.high,
                                   }}
                                   style={{
-                                    height: moderateScale(40),
-                                    width: moderateScale(40),
+                                    height: moderateScale(60),
+                                    width: moderateScale(60),
                                     borderRadius: moderateScale(4),
                                   }}
                                 />

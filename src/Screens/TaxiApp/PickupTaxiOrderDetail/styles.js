@@ -395,7 +395,7 @@ export default ({ fontFamily, isDarkMode, MyDarkTheme }) => {
       textAlign: 'left'
     },
     deliveryProof: {
-      fontSize: textScale(12),
+      fontSize: textScale(16),
       fontFamily: fontFamily.medium,
       marginBottom: moderateScaleVertical(4),
       color: isDarkMode
