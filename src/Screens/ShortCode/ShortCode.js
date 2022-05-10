@@ -1882,7 +1882,7 @@ export default function ShortCode({ route, navigation }) {
           });
           break;
 
-         
+
         case appIds.pAS41:
           updateState({
             shortCode: shortCodes.pAS41,
@@ -1967,31 +1967,48 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.toor:
+        case appIds.toor:
           updateState({
             shortCode: shortCodes.toor,
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.peerDeliveries:
+        case appIds.peerDeliveries:
           updateState({
             shortCode: shortCodes.peerDeliveries,
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.swan:
+        case appIds.swan:
           updateState({
             shortCode: shortCodes.swan,
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.SCOOTUP:
+        case appIds.SCOOTUP:
           updateState({
             shortCode: shortCodes.SCOOTUP,
             isShortcodePrefilled: true,
           });
           break;
-
+        case appIds.patrolNow:
+          updateState({
+            shortCode: shortCodes.patrolNow,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.butlerDelivery:
+          updateState({
+            shortCode: shortCodes.butlerDelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.swatiRX:
+          updateState({
+            shortCode: shortCodes.swatiRX,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

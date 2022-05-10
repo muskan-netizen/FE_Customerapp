@@ -309,11 +309,13 @@ const shortCodes = {
   papiruki:'58e4d2',
   markSoublet:'2b77d8',
   amstaFood:'825037',
-
   toor:'0388b6',
   peerDeliveries:'cd7768',
   swan:'0bd9cb',
   SCOOTUP:'cf21cf',
+  patrolNow:'ad0c7d',
+  butlerDelivery:'56086e',
+  swatiRX:'c7129e',
 };
 
 
@@ -1562,6 +1564,18 @@ const appIds = {
   SCOOTUP: Platform.select({
     ios: 'com.SCOOTUP',
     android: 'com.SCOOTUP',
+  }),
+  patrolNow: Platform.select({
+    ios: 'com.patrolNow',
+    android: 'com.patrolNow',
+  }),
+  butlerDelivery: Platform.select({
+    ios: 'com.butlerDelivery',
+    android: 'com.butlerDelivery',
+  }),
+  swatiRX: Platform.select({
+    ios: 'com.swatiRX',
+    android: 'com.swatiRX',
   }),
   
 };
