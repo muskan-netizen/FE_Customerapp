@@ -1583,6 +1583,11 @@ target 'PatrolNow' do
   
 end
 
+# SwatiRX Target
+target 'SwatiRX' do
+  
+end
+
 
 
 
