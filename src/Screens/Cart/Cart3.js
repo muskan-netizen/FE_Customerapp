@@ -146,12 +146,23 @@ function Cart({navigation, route}) {
   const [myAnswerdArray, setMyAllanswers] = useState([]);
   const [myFaqValidationArray, setMyFaqValidationArray] = useState([]);
   const [validationFucCalled, setvalidationFucCalled] = useState(true);
-  const [faqModalLayoutHeight, setfaqModalLayoutHeight] = useState(null);
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [paymentMethodId, setPaymentMethodId] = useState(null);
   const [kycTxtInpts, setKycTxtInpts] = useState([]);
   const [kycImages, setKycImages] = useState([]);
   const [kycPdfs, setKycPdfs] = useState([]);
+  const [laundrySelectedPickupDate, setLaundrySelectedPickupDate] =
+    useState(null);
+  const [laundrySelectedPickupSlot, setLaundrySelectedPickupSlot] =
+    useState('');
+  const [laundryAvailablePickupSlot, setLaundryAvailablePickupSlot] = useState(
+    [],
+  );
+  const [laundrySelectedDropOffDate, setLaundrySelectedDropOffDate] =
+    useState(null);
+  const [laundrySelectedDropOffSlot, setLaundrySelectedDropOffSlot] =
+    useState('');
+  const [laundryAvailableDropOffSlot, setLaundryAvailableDropOffSlot] =
+    useState([]);
 
   const [state, setState] = useState({
     showTaxFeeArea: false,
@@ -389,7 +400,6 @@ function Cart({navigation, route}) {
 
         if (!!checkDate && res.data.schedule_type == 'schedule') {
           let formatDate = new Date(res?.data?.scheduled_date_time);
-          console.log(res?.data?.scheduled_date_time, 'dateeeeeeeee');
           setLocaleSheduledOrderDate(
             timeInLocalLangauge(formatDate, selectedLanguage),
           );
@@ -483,6 +493,8 @@ function Cart({navigation, route}) {
 
           setCartItems(res.data.products);
           setAvailableTimeSlots(res.data.slots);
+          setLaundryAvailablePickupSlot(res.data.slots);
+          setLaundryAvailableDropOffSlot(res.data.slots);
           setCartData(res.data);
           setSelectedTipvalue(
             res?.data?.total_payable_amount == 0 ? 'custom' : null,
@@ -1860,28 +1872,39 @@ function Cart({navigation, route}) {
   };
 
   const selectOrderDate = () => {
-    if (availableTimeSlots.length > 0 || cartData.slots.length > 0) {
-      if (selectedDateFromCalendar == '' || selectedTimeSlots == '') {
-        alert('Please select date and time slots');
+    if (businessType == 'laundry') {
+      if (!laundrySelectedDropOffDate && !laundrySelectedPickupDate) {
+        alert('Please select dates');
         return;
       } else {
-        // let formatDate = new Date(selectedDateFromCalendar);
-        const date = selectedDateFromCalendar;
-        const time = selectedTimeSlots.split('-')[0];
-        const formatDate = moment(
-          `${date} ${time}`,
-          'YYYY-MM-DD HH:mm:ss',
-        ).format();
-        console.log('formate date', moment(new Date(formatDate)).format('lll'));
-        setLocaleSheduledOrderDate(moment(new Date(formatDate)).format('lll'));
+        onClose();
+        return;
       }
-    }
+    } else {
+      if (availableTimeSlots.length > 0 || cartData.slots.length > 0) {
+        if (selectedDateFromCalendar == '' || selectedTimeSlots == '') {
+          alert(strings.PLEASE_SELECT_DATETIME_SLOTS);
+          return;
+        } else {
+          // let formatDate = new Date(selectedDateFromCalendar);
+          const date = selectedDateFromCalendar;
+          const time = selectedTimeSlots.split('-')[0];
+          const formatDate = moment(
+            `${date} ${time}`,
+            'YYYY-MM-DD HH:mm:ss',
+          ).format();
+          setLocaleSheduledOrderDate(
+            moment(new Date(formatDate)).format('lll'),
+          );
+        }
+      }
 
-    onClose();
-    if (modalType != 'schedule' && businessType != 'laundry') {
-      setScheduleType('schedule');
+      onClose();
+      if (modalType != 'schedule' && businessType != 'laundry') {
+        setScheduleType('schedule');
+      }
+      setDateAndTimeSchedule();
     }
-    setDateAndTimeSchedule();
   };
 
   function makeid(length) {
@@ -3584,18 +3607,23 @@ function Cart({navigation, route}) {
                     }>
                     {strings.SCEDULEPICKUP}
                   </Text>
-                  {localePickupDate && (
+                  {laundrySelectedPickupDate && (
                     <Text
                       numberOfLines={2}
-                      style={
-                        isDarkMode
-                          ? [
-                              styles.LaundryApppriceItemLabel3,
-                              {color: MyDarkTheme.colors.text},
-                            ]
-                          : styles.LaundryApppriceItemLabel3
-                      }>
-                      {localePickupDate ? localePickupDate : ''}
+                      style={{
+                        ...styles.LaundryApppriceItemLabel3,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        marginLeft: 0,
+                      }}>
+                      {laundrySelectedPickupDate
+                        ? laundrySelectedPickupDate
+                        : ''}
+                      {', '}
+                      {laundrySelectedPickupSlot
+                        ? laundrySelectedPickupSlot
+                        : ''}
                     </Text>
                   )}
                 </View>
@@ -3632,6 +3660,25 @@ function Cart({navigation, route}) {
                       {localeDropOffDate
                         ? localeDropOffDate
                         : strings.SCEDULEDROP}
+                    </Text>
+                  )}
+                  {laundrySelectedDropOffDate && (
+                    <Text
+                      numberOfLines={2}
+                      style={{
+                        ...styles.LaundryApppriceItemLabel3,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        marginLeft: 0,
+                      }}>
+                      {laundrySelectedDropOffDate
+                        ? laundrySelectedDropOffDate
+                        : ''}
+                      {', '}
+                      {laundrySelectedDropOffSlot
+                        ? laundrySelectedDropOffSlot
+                        : ''}
                     </Text>
                   )}
                 </View>
@@ -5124,6 +5171,11 @@ function Cart({navigation, route}) {
         },
       );
       console.log('avail slots++', res);
+      if (modalType == 'pickup') {
+        setLaundryAvailablePickupSlot(res);
+      } else {
+        setLaundryAvailableDropOffSlot(res);
+      }
       setAvailableTimeSlots(res);
       if (res.length == 0) {
         setSelectedTimeSlots('');
@@ -5134,7 +5186,15 @@ function Cart({navigation, route}) {
   };
   const onSelectTime = (item) => {
     console.log('sleecte time slots', item);
-    setSelectedTimeSlots(item?.value);
+    if (businessType == 'laundry') {
+      if (modalType == 'pickup') {
+        setLaundrySelectedPickupSlot(item?.value);
+      } else {
+        setLaundrySelectedDropOffSlot(item?.value);
+      }
+    } else {
+      setSelectedTimeSlots(item?.value);
+    }
   };
 
   const onSelectPayment = (data) => {
@@ -5151,6 +5211,18 @@ function Cart({navigation, route}) {
     }
   };
 
+  const isSlotSelected = (item) => {
+    if (
+      selectedTimeSlots == item.value ||
+      laundrySelectedPickupSlot == item.value ||
+      laundrySelectedDropOffSlot == item.value
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const renderTimeSlots = ({item, index}) => {
     return (
       <TouchableOpacity
@@ -5158,18 +5230,16 @@ function Cart({navigation, route}) {
         activeOpacity={0.8}
         onPress={() => onSelectTime(item)}
         style={{
-          backgroundColor:
-            selectedTimeSlots == item.value
-              ? themeColors.primary_color
-              : colors.white,
+          backgroundColor: isSlotSelected(item)
+            ? themeColors.primary_color
+            : colors.white,
           padding: 8,
           borderRadius: 8,
-          borderWidth: selectedTimeSlots == item.value ? 0 : 1,
+          borderWidth: isSlotSelected(item) ? 0 : 1,
         }}>
         <Text
           style={{
-            color:
-              selectedTimeSlots == item.value ? colors.white : colors.black,
+            color: isSlotSelected(item) ? colors.white : colors.black,
             fontFamily: fontFamily.regular,
             fontSize: textScale(11),
           }}>
@@ -5185,6 +5255,17 @@ function Cart({navigation, route}) {
     setScheduleType('schedule');
     setModalType('schedule');
     setSheduledorderdate(day.dateString);
+    checkVendorSlots(day.dateString);
+  };
+
+  const laundrySlotSelection = (day) => {
+    if (modalType == 'pickup') {
+      setLaundrySelectedPickupDate(day.dateString);
+    } else {
+      setLaundrySelectedDropOffDate(day.dateString);
+    }
+    // setScheduleType('schedule');
+    // setModalType('schedule');
     checkVendorSlots(day.dateString);
   };
 
@@ -5819,13 +5900,92 @@ function Cart({navigation, route}) {
               </Text>
             </View>
 
-            {businessType == 'laundry' && modalType != 'schedule' ? (
+            {businessType == 'laundry' ? (
               <View
-                style={{
-                  alignItems: 'center',
-                  // height: height / 3.5,
-                }}>
-                {modalType == 'pickup' ? (
+                style={
+                  {
+                    // alignItems: 'center',
+                    // height: height / 3.5,
+                  }
+                }>
+                <Fragment>
+                  <ScrollView>
+                    <Calendar
+                      current={new Date()}
+                      minDate={
+                        !!minimumDelayVendorDate
+                          ? minimumDelayVendorDate
+                          : new Date()
+                      }
+                      onDayPress={laundrySlotSelection}
+                      markedDates={{
+                        [laundrySelectedPickupDate]: {
+                          selected: true,
+                          disableTouchEvent: true,
+                          selectedColor: themeColors.primary_color,
+                          selectedTextColor: colors.white,
+                        },
+                      }}
+                      theme={{
+                        arrowColor: themeColors.primary_color,
+                        textDayFontFamily: fontFamily.medium,
+                        textMonthFontFamily: fontFamily.medium,
+                        textDayHeaderFontFamily: fontFamily.bold,
+                        // textDayFontSize: textScale(12),
+                        // textMonthFontSize: textScale(10),
+                        // textDayHeaderFontSize: textScale(10),
+                      }}
+                    />
+
+                    {console.log(
+                      laundryAvailablePickupSlot,
+                      'laundryAvailablePickupSlot>>laundryAvailablePickupSlot',
+                    )}
+
+                    <View>
+                      <Text
+                        style={{
+                          marginHorizontal: moderateScale(24),
+                          fontFamily: fontFamily.medium,
+                          fontSize: textScale(12),
+                          marginBottom: moderateScaleVertical(8),
+                          // height:moderateScale(20)
+                        }}>
+                        {strings.TIME_SLOT}
+                      </Text>
+                      <FlatList
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        data={
+                          modalType == 'pickup'
+                            ? laundryAvailablePickupSlot
+                            : laundryAvailableDropOffSlot || []
+                        }
+                        renderItem={renderTimeSlots}
+                        keyExtractor={(item) => item.value || ''}
+                        ItemSeparatorComponent={() => (
+                          <View style={{marginRight: moderateScale(12)}} />
+                        )}
+                        ListHeaderComponent={() => (
+                          <View style={{marginLeft: moderateScale(24)}} />
+                        )}
+                        ListFooterComponent={() => (
+                          <View style={{marginRight: moderateScale(24)}} />
+                        )}
+                        ListEmptyComponent={() => (
+                          <View>
+                            <Text
+                              style={{
+                                fontFamily: fontFamily.medium,
+                                color: colors.redB,
+                              }}></Text>
+                          </View>
+                        )}
+                      />
+                    </View>
+                  </ScrollView>
+                </Fragment>
+                {/* {modalType == 'pickup' ? (
                   <DatePicker
                     locale={selectedLanguage}
                     date={
@@ -5865,7 +6025,7 @@ function Cart({navigation, route}) {
                     // onDateChange={setDate}
                     onDateChange={(value) => onDateChangeSecond(value)}
                   />
-                )}
+                ) */}
               </View>
             ) : (
               <View
@@ -5924,6 +6084,7 @@ function Cart({navigation, route}) {
                           data={availableTimeSlots || []}
                           renderItem={renderTimeSlots}
                           keyExtractor={(item) => item.value || ''}
+                          showsHorizontalScrollIndicator={false}
                           ItemSeparatorComponent={() => (
                             <View style={{marginRight: moderateScale(12)}} />
                           )}
@@ -5940,7 +6101,7 @@ function Cart({navigation, route}) {
                                   fontFamily: fontFamily.medium,
                                   color: colors.redB,
                                 }}>
-                                Slot not available please select another date
+                                {strings.SLOT_NOT_AVAILABAL}
                               </Text>
                             </View>
                           )}
@@ -6014,7 +6175,6 @@ function Cart({navigation, route}) {
         style={{
           margin: 0,
           justifyContent: 'flex-end',
-          // marginBottom: keyboardHeight,
         }}>
         {renderProductForm()}
       </Modal>
@@ -6025,7 +6185,6 @@ function Cart({navigation, route}) {
         style={{
           margin: 0,
           justifyContent: 'flex-end',
-          // marginBottom: keyboardHeight,
         }}>
         {renderCategoryKYC()}
       </Modal>

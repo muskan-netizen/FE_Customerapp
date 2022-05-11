@@ -77,14 +77,16 @@ export default function OtpVerification({navigation, route}) {
   };
 
   useEffect(() => {
-    RNOtpVerify.getOtp()
-      .then((res) => {
-        RNOtpVerify.addListener(otpHandler);
-      })
-      .catch((error) => console.log(error, 'error>>>>'));
-    return () => {
-      RNOtpVerify.removeListener();
-    };
+    if (Platform.OS === 'android') {
+      RNOtpVerify.getOtp()
+        .then((res) => {
+          RNOtpVerify.addListener(otpHandler);
+        })
+        .catch((error) => console.log(error, 'error>>>>'));
+      return () => {
+        RNOtpVerify.removeListener();
+      };
+    }
   }, []);
 
   const _onResend = async () => {

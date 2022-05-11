@@ -130,13 +130,15 @@ export default function Signup({navigation}) {
   };
 
   useEffect(() => {
-    RNOtpVerify.getHash()
-      .then((res) => {
-        updateState({
-          appHashKey: res[0],
-        });
-      })
-      .catch();
+    if (Platform.OS === 'android') {
+      RNOtpVerify.getHash()
+        .then((res) => {
+          updateState({
+            appHashKey: res[0],
+          });
+        })
+        .catch();
+    }
     actions
       .userRegistrationDocument(
         {},

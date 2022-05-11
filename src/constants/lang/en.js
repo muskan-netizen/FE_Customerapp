@@ -926,4 +926,5 @@ Amount`,
   RECENTORDERS: 'Recent Orders',
   SPECIFIC_INSTRUCTIONS: 'Specific Instructions',
   THANKS_FOR_YOUR_PURCHASE: 'Thank you for your purchase.',
+  PLEASE_SELECT_DATETIME_SLOTS: 'Please select date and time slots',
 };
