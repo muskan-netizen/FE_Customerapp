@@ -935,7 +935,7 @@ function Cart({navigation, route}) {
 
     data['type'] = dineInType || '';
     data['is_gift'] = isGiftBoxSelected ? 1 : 0;
-    data['specific_instructions']=instruction
+    data['specific_instructions'] = instruction;
 
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
@@ -1051,7 +1051,7 @@ function Cart({navigation, route}) {
     toHitApiForPlaceOrder = false,
     dateType = scheduleType,
     scheduleDate = sheduledorderdate,
-   ) => {
+  ) => {
     if (!userData?.auth_token) {
       return;
     }
@@ -2603,26 +2603,6 @@ function Cart({navigation, route}) {
                               alignSelf: 'flex-end',
                               marginTop: moderateScale(6),
                             }}>
-                            {!!(
-                              i?.faq_count && i?.user_product_order_form == null
-                            ) && (
-                              <>
-                                <TouchableOpacity
-                                  style={{
-                                    marginRight: moderateScale(14),
-                                  }}
-                                  onPress={() => getProductFAQs(i)}>
-                                  <FastImage
-                                    source={imagePath.edit1Royo}
-                                    resizeMode="contain"
-                                    style={{
-                                      width: moderateScale(16),
-                                      height: moderateScale(16),
-                                    }}
-                                  />
-                                </TouchableOpacity>
-                              </>
-                            )}
                             <TouchableOpacity onPress={() => openDeleteView(i)}>
                               <FastImage
                                 source={imagePath.deleteRed}
@@ -2660,6 +2640,23 @@ function Cart({navigation, route}) {
                       )}
 
                       {/* <View style={styles.dashedLine} /> */}
+                      {!!(
+                        i?.faq_count && i?.user_product_order_form == null
+                      ) && (
+                        <>
+                          <ButtonComponent
+                            onPress={() => getProductFAQs(i)}
+                            btnText={strings.PRODUCT_ORDER_FORM}
+                            textStyle={{
+                              textTransform: 'none',
+                            }}
+                            btnStyle={{
+                              backgroundColor: themeColors.primary_color,
+                              borderRadius: moderateScale(13),
+                            }}
+                          />
+                        </>
+                      )}
                     </Animated.View>
                   </Swipeable>
                 );
@@ -5329,24 +5326,24 @@ function Cart({navigation, route}) {
                     </View>
                   );
                 })}
-              </ScrollView>
 
-              <GradientButton
-                colorsArray={[
-                  themeColors.primary_color,
-                  themeColors.primary_color,
-                ]}
-                textStyle={{
-                  textTransform: 'none',
-                  fontSize: textScale(12),
-                }}
-                indicator={isSubmitFaqLoader}
-                indicatorColor={colors.white}
-                onPress={setAllFormData}
-                btnText={strings.SUBMIT}
-                marginTop={moderateScaleVertical(16)}
-                marginBottom={moderateScaleVertical(16)}
-              />
+                <GradientButton
+                  colorsArray={[
+                    themeColors.primary_color,
+                    themeColors.primary_color,
+                  ]}
+                  textStyle={{
+                    textTransform: 'none',
+                    fontSize: textScale(12),
+                  }}
+                  indicator={isSubmitFaqLoader}
+                  indicatorColor={colors.white}
+                  onPress={setAllFormData}
+                  btnText={strings.SUBMIT}
+                  marginTop={moderateScaleVertical(16)}
+                  marginBottom={moderateScaleVertical(20)}
+                />
+              </ScrollView>
             </View>
           )}
         </View>
