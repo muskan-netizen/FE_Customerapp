@@ -404,7 +404,12 @@ export const getCategoryKycDocument = (data, headers = {}) => {
   });
 };
 
-export const submitCategoryKYC = (data, headers = {}) => {
+export const submitCategoryKYC = (
+  data,
+  headers = {
+    'Content-Type': 'multipart/form-data',
+  },
+) => {
   return new Promise((resolve, reject) => {
     apiPost(SUBMIT_CATEGORY_KYC, data, headers)
       .then((res) => {
