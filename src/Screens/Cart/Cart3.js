@@ -935,6 +935,7 @@ function Cart({navigation, route}) {
 
     data['type'] = dineInType || '';
     data['is_gift'] = isGiftBoxSelected ? 1 : 0;
+    data['specific_instructions']=instruction
 
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
@@ -1050,7 +1051,7 @@ function Cart({navigation, route}) {
     toHitApiForPlaceOrder = false,
     dateType = scheduleType,
     scheduleDate = sheduledorderdate,
-  ) => {
+   ) => {
     if (!userData?.auth_token) {
       return;
     }
@@ -1086,7 +1087,7 @@ function Cart({navigation, route}) {
             ? new Date(scheduleDate).toISOString()
             : null;
       }
-      data['comment_for_vendor'] = instruction;
+      data['specific_instructions'] = instruction;
       data['slot'] = selectedTimeSlots;
     }
 

@@ -6,7 +6,14 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 //Vishwas
 // export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
+// export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
+// export const API_BASE_URL = 'https://pideunfleety.com/api/v1';
+// export const API_BASE_URL = 'https://heybuddy.com.mx/api/v1';
+// export const API_BASE_URL = 'https://peerdeliveries.com/api/v1';
+// export const API_BASE_URL = 'https://hometowndelivery21.com/api/v1';
+// export const API_BASE_URL = 'https://click2deliver.co.uk/api/v1';
 
+// export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1';  //swiffy
 //Gourav.s
 // export const API_BASE_URL = 'http://192.168.99.130:8005/api/v1';
 
@@ -33,7 +40,6 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://swiffy.us/api/v1';
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1';  //sales demo
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://hemptify.com/api/v1';
 // export const API_BASE_URL = 'https://sirvu.ca/api/v1';

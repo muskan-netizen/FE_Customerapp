@@ -988,10 +988,10 @@ end
   
 # end
 
-# #GasGiant Target
-# target 'GasGiant' do
+#GasGiant Target
+target 'GasGiant' do
   
-# end
+end
 
 # #Releezer Target
  target 'Releezer' do
@@ -1472,6 +1472,125 @@ end
 target 'CurblerLLC' do
   
 end
+
+# Cartnar Target
+target 'Cartnar' do
+  
+end
+
+# Uven Target
+target 'Uven' do
+  
+end
+
+# PAS41 Target
+target 'PAS41' do
+  
+end
+
+# FreshFarmz Target
+target 'FreshFarmz' do
+  
+end
+
+# Ryde Target
+target 'Ryde' do
+  
+end
+
+# WaterTaxi Target
+target 'WaterTaxi' do
+  
+end
+
+# Muvpod Target
+target 'Muvpod' do
+  
+end
+
+# Smile Target
+target 'Smile' do
+  
+end
+
+# CaronaTaxi Target
+target 'CaronaTaxi' do
+  
+end
+
+# Arwin Target
+target 'Arwin' do
+  
+end
+
+# MarjMarketplace Target
+target 'MarjMarketplace' do
+  
+end
+
+# EVSOnTheGo Target
+target 'EVSOnTheGo' do
+  
+end
+
+# Kazakazi Target
+target 'Kazakazi' do
+  
+end
+
+# Papiruki Target
+target 'Papiruki' do
+  
+end
+
+# MarkSoublet Target
+target 'MarkSoublet' do
+  
+end
+
+# AmstaFood Target
+target 'AmstaFood' do
+  
+end
+
+# Toor Target
+target 'Toor' do
+  
+end
+
+# PeerDeliveries Target
+target 'PeerDeliveries' do
+  
+end
+
+# Swan Target
+target 'Swan' do
+  
+end
+
+# SCOOTUP Target
+target 'SCOOTUP' do
+  
+end
+
+# ButlerDelivery Target
+target 'ButlerDelivery' do
+  
+end
+
+# PatrolNow Target
+target 'PatrolNow' do
+  
+end
+
+# SwatiRX Target
+target 'SwatiRX' do
+  
+end
+
+
+
+
 
 
 post_install do |installer|

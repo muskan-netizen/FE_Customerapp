@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "782386951690",
+    "project_id": "arwin-9f959",
+    "storage_bucket": "arwin-9f959.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:782386951690:android:04c4efd04a96ca9fef51f3",
+        "android_client_info": {
+          "package_name": "com.arwin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "782386951690-08vhtnqb851ufqod5sd5d37cj2r67pgr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arwin",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "782386951690-fu62ue5qgd362t4rfq9rrrml5rrgkegd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arwin",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "782386951690-vcqpcmscmk3rksuro2te3r0nuo71d43n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arwin",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "782386951690-urrbsms0ktcbmf09b9c3vkf4mfn7bh83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKQ8GZmwmumCwkxJ_rv-g7xxnQUlPpX4g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "782386951690-urrbsms0ktcbmf09b9c3vkf4mfn7bh83.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "782386951690-qokr0l3rsuvvll2e9fu8egvmglf7srr0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.arwin"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

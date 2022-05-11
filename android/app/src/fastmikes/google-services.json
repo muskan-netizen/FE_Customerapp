@@ -1,124 +1,64 @@
 {
   "project_info": {
-    "project_number": "852668129452",
-    "project_id": "fastmikes-dispatcher",
-    "storage_bucket": "fastmikes-dispatcher.appspot.com"
+    "project_number": "426920008902",
+    "project_id": "fastmikes-8d506",
+    "storage_bucket": "fastmikes-8d506.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:852668129452:android:2fdbb6f235d6c1d9bfff09",
+        "mobilesdk_app_id": "1:426920008902:android:40d9fe2d6612e05e884bc7",
         "android_client_info": {
-          "package_name": "com.fastMikes.royodispatcher"
+          "package_name": "com.fastmikes.customer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "852668129452-0rh1fjma6iqfjfj6mq19tl25mmonue2u.apps.googleusercontent.com",
+          "client_id": "426920008902-20d3iec2sq3f6t9jsk3n1e7080ruds0v.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.fastMikes.royodispatcher",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "852668129452-coctphe4aqa0c5but5qn4c758a2p4q69.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.fastMikes.royodispatcher",
+            "package_name": "com.fastmikes.customer",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "852668129452-pmjfbpemg14o8v4p737qn9e9i2ip8tre.apps.googleusercontent.com",
+          "client_id": "426920008902-45ucmmvjm7h6ulsoocvi29lvv1bqi1ha.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.fastMikes.royodispatcher",
+            "package_name": "com.fastmikes.customer",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "426920008902-880suo9e596kj6qi9e89s30nbq1tjr7l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fastmikes.customer",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "852668129452-oh89km8c0cg1ngrko8o6t734jmn5otpi.apps.googleusercontent.com",
+          "client_id": "426920008902-fb7auand5l9mu1su7rnj81u7c4iufcfs.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCG1lYZMBFVXlAXYz5RUQ_kaJwDj2vVg-Q"
+          "current_key": "AIzaSyBhLTfxiXCbSAD7IO5IhKse5VwdpNpnk0Q"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "852668129452-oh89km8c0cg1ngrko8o6t734jmn5otpi.apps.googleusercontent.com",
+              "client_id": "426920008902-fb7auand5l9mu1su7rnj81u7c4iufcfs.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "852668129452-9apvnhkbb83ifuo3vnbdea1g4bj3e3qk.apps.googleusercontent.com",
+              "client_id": "426920008902-kv8qij3b8k7h7uddforrpen9fe0nl37b.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fastmikes"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:852668129452:android:d24e67c7415e0ac1bfff09",
-        "android_client_info": {
-          "package_name": "com.fastmikes"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "852668129452-3h4g2uiac6g2vnh4i9plmj3qffl9nqka.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.fastmikes",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "852668129452-8ub72nnrpofd729afdjr26ck92v309rj.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.fastmikes",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "852668129452-p6m2fuj31ebr3dpdrhim89dfmm00m8qq.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.fastmikes",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "852668129452-oh89km8c0cg1ngrko8o6t734jmn5otpi.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCG1lYZMBFVXlAXYz5RUQ_kaJwDj2vVg-Q"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "852668129452-oh89km8c0cg1ngrko8o6t734jmn5otpi.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "852668129452-9apvnhkbb83ifuo3vnbdea1g4bj3e3qk.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.fastmikes"
+                "bundle_id": "com.fastmikes.customer"
               }
             }
           ]

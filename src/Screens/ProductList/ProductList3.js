@@ -971,7 +971,7 @@ export default function Products({route, navigation}) {
     setIsVisibleModal(false);
     setShowShimmer(true);
   };
-
+  console.log('categoryInfocategoryInfo', categoryInfo);
   const addDeleteCartItems = async (
     item,
     isExistqty,
@@ -2267,7 +2267,24 @@ export default function Products({route, navigation}) {
                         </View>
                       ) : null}
                     </View>
-
+                    {categoryInfo?.short_desc && (
+                      <View>
+                        <Text
+                          style={{
+                            ...styles.hdrTitleTxt,
+                            flex: 0,
+                            fontSize: textScale(12.5),
+                            fontFamily: fontFamily.regular,
+                            textAlign: 'left',
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.white,
+                            width: width,
+                          }}>
+                          {categoryInfo?.short_desc}
+                        </Text>
+                      </View>
+                    )}
                     {Number(categoryInfo?.order_min_amount) > 0 ? (
                       <View
                         style={{

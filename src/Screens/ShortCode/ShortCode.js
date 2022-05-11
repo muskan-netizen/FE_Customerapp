@@ -91,9 +91,9 @@ export default function ShortCode({route, navigation}) {
             state;
             //updateState({shortCode: 'd0a898', isShortcodePrefilled: true});
             if (shortCodeParam) {
-              updateState({shortCode: 'fb78f0', isShortcodePrefilled: false});
+              updateState({shortCode: '', isShortcodePrefilled: false});
             } else {
-              updateState({shortCode: 'fb78f0', isShortcodePrefilled: true});
+              updateState({shortCode: '245bae', isShortcodePrefilled: true});
             }
           }
           break;
@@ -1909,6 +1909,96 @@ export default function ShortCode({route, navigation}) {
         case appIds.smile:
           updateState({
             shortCode: shortCodes.smile,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.caronaTaxi:
+          updateState({
+            shortCode: shortCodes.caronaTaxi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.arwin:
+          updateState({
+            shortCode: shortCodes.arwin,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.marjMarketplace:
+          updateState({
+            shortCode: shortCodes.marjMarketplace,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.eVSOnTheGo:
+          updateState({
+            shortCode: shortCodes.eVSOnTheGo,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kazakazi:
+          updateState({
+            shortCode: shortCodes.kazakazi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.papiruki:
+          updateState({
+            shortCode: shortCodes.papiruki,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.markSoublet:
+          updateState({
+            shortCode: shortCodes.markSoublet,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.amstaFood:
+          updateState({
+            shortCode: shortCodes.amstaFood,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.toor:
+          updateState({
+            shortCode: shortCodes.toor,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.peerDeliveries:
+          updateState({
+            shortCode: shortCodes.peerDeliveries,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.swan:
+          updateState({
+            shortCode: shortCodes.swan,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.SCOOTUP:
+          updateState({
+            shortCode: shortCodes.SCOOTUP,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.patrolNow:
+          updateState({
+            shortCode: shortCodes.patrolNow,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.butlerDelivery:
+          updateState({
+            shortCode: shortCodes.butlerDelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.swatiRX:
+          updateState({
+            shortCode: shortCodes.swatiRX,
             isShortcodePrefilled: true,
           });
           break;

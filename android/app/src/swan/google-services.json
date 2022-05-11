@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "704963886440",
+    "project_id": "swan-c1649",
+    "storage_bucket": "swan-c1649.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:704963886440:android:e5ec4cb4ca8e06f35daadd",
+        "android_client_info": {
+          "package_name": "com.swan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "704963886440-p2dfkdemf99te8cou3rbirmtpdqnib40.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swan",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "704963886440-pkqd321t8homs4jeaf1dhcv3vc6pu6c8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swan",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "704963886440-fmu4gmh8ukhjogfeet05h7ojnrlrgf3k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeCWe5x-D0lBaNr7nAElj1Vd387o2HAOA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "704963886440-fmu4gmh8ukhjogfeet05h7ojnrlrgf3k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "704963886440-mbklloged6oa4dspg18h3ja44f7pru6f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.swan"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
