@@ -140,10 +140,11 @@ const VariantAddons = ({
   );
 
   const getProductDetailBasedOnFilter = (variantSetData) => {
-    console.log('api hit getProductDetailBasedOnFilter');
+    console.log('api hit getProductDetailBasedOnFilter', variantSetData);
     let data = {};
     data['variants'] = variantSetData.map((i) => i.variant_id);
     data['options'] = variantSetData.map((i) => i.optionId);
+    console.log(data,"datatataaa")
     actions
       .getProductDetailByVariants(`/${productDetailData.sku}`, data, {
         code: appData.profile.code,
@@ -166,7 +167,7 @@ const VariantAddons = ({
           selectedVariant: null,
         });
       })
-      .catch(errorMethod);
+      .catch(error=>console.log(error,"errrorrrr"));
   };
 
   const errorMethod = (error) => {
@@ -723,6 +724,7 @@ const VariantAddons = ({
                     }}>
                     {i?.title}
                   </Text>
+                  
                 </TouchableOpacity>
               );
             })}

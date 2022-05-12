@@ -1,3 +1,4 @@
+
 import React, {useEffect, useState} from 'react';
 import {Image, Linking, Text, View} from 'react-native';
 import {getBundleId} from 'react-native-device-info';

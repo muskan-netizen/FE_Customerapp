@@ -22,6 +22,8 @@ import {
 import {MyDarkTheme} from '../styles/theme';
 import {useDarkMode} from 'react-native-dark-mode';
 import {getImageUrl} from '../utils/helperFunctions';
+import { appIds } from '../utils/constants/DynamicAppKeys';
+import { getBundleId } from 'react-native-device-info';
 
 // create a component
 const UserDetail = ({
@@ -123,7 +125,9 @@ const UserDetail = ({
           )}
         </View>
 
-        {(data?.vendor?.phone_no || data?.order?.phone_number) && (
+        { getBundleId()==appIds.masa? null:
+         
+        (data?.vendor?.phone_no || data?.order?.phone_number) && (
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
               onPress={() =>

@@ -50,7 +50,7 @@ const ProductCard3 = ({
   animateText = 0,
   section = {},
 }) => {
-  console.log('item data++', data);
+  // console.log('item data++', data);
   // data['qty'] = 1
   const [isAdd, setAdd] = useState(false);
   const [state, setState] = useState({
@@ -372,6 +372,7 @@ const ProductCard3 = ({
             style={{
               paddingTop: moderateScale(5),
               paddingBottom: moderateScale(5),
+              flexDirection:'row'
             }}>
             <Text
               numberOfLines={1}
@@ -389,6 +390,26 @@ const ProductCard3 = ({
                 appData?.profile?.preferences?.digit_after_decimal,
               )}`}
             </Text>
+            {  ( data?.variant[0]?.compare_at_price >data?.variant[0]?.price) &&
+              
+              <Text
+              numberOfLines={1}
+              style={{
+                ...commonStyles.mediumFont14,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.redB,
+                fontSize: textScale(12),
+                fontFamily: fontFamily.regular,
+                textDecorationLine:'line-through',
+
+              }}>
+              {`${"   "}${
+                currencies?.primary_currency?.symbol
+              } ${currencyNumberFormatter(
+                // Number(data?.variant_multiplier) *
+                  Number(data?.variant[0]?.compare_at_price),
+                appData?.profile?.preferences?.digit_after_decimal,
+              )}`}
+            </Text>}
           </View>
           <View style={{}}>
             <Text
