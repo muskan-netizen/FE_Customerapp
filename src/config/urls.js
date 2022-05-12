@@ -12,7 +12,13 @@
 // export const API_BASE_URL = 'https://peerdeliveries.com/api/v1';
 // export const API_BASE_URL = 'https://hometowndelivery21.com/api/v1';
 // export const API_BASE_URL = 'https://click2deliver.co.uk/api/v1';
-export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
+// export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
+
+// export const API_BASE_URL = 'https://groupystore.com/api/v1';
+// export const API_BASE_URL = 'https://dimahalal.com/api/v1'; // dimaVega
+
+
+
 
 
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1';  //swiffy
@@ -67,7 +73,7 @@ export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
 //export const API_BASE_URL = 'https://yummiidash.com/api/v1';
 
 // WE EAT
-// export const API_BASE_URL = 'https://weeat.royoorders.com/api/v1';
+export const API_BASE_URL = 'https://weeat.royoorders.com/api/v1';
 
 //BEZALIO LIVE
 // export const API_BASE_URL = 'https://bezaliohub.com/api/v1';

@@ -6330,6 +6330,16 @@ android {
       //       resValue "string", "app_name", "PaySic"
       //       resValue "string", "host_name", ""
       //    }
+         groupy{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.groupy'
+            resValue "string", "app_name", "Groupy"
+            resValue "string", "host_name", ""
+         }
       //    chipetaxi{
       //       dimension "appType"
       //       versionCode 1
