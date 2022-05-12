@@ -92,6 +92,7 @@ export default function Login({navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   //CLone deep all the states
   useEffect(() => {
+    if(Platform.OS==="android"){
     RNOtpVerify.getHash()
       .then((res) => {
         updateState({
@@ -99,6 +100,7 @@ export default function Login({navigation}) {
         });
       })
       .catch();
+    }
     clonedState = cloneDeep(state);
   }, []);
 

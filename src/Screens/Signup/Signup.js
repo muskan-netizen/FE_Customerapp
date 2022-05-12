@@ -130,6 +130,7 @@ export default function Signup({navigation}) {
   };
 
   useEffect(() => {
+    if(Platform.OS==="android"){
     RNOtpVerify.getHash()
       .then((res) => {
         updateState({
@@ -137,6 +138,8 @@ export default function Signup({navigation}) {
         });
       })
       .catch();
+
+    }
     actions
       .userRegistrationDocument(
         {},

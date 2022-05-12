@@ -170,6 +170,7 @@ export default function VerifyAccount({navigation, route}) {
   };
 
   const otpHandler = (message) => {
+    
     console.log(message, 'complete msg>>>');
     if (!!message) {
       var OTP = message.replace(/[^0-9]/g, '');
@@ -184,6 +185,7 @@ export default function VerifyAccount({navigation, route}) {
   };
 
   useEffect(() => {
+    if(Platform.OS==="android"){
     RNOtpVerify.getOtp()
       .then((res) => {
         RNOtpVerify.addListener(otpHandler);
@@ -192,6 +194,7 @@ export default function VerifyAccount({navigation, route}) {
     return () => {
       RNOtpVerify.removeListener();
     };
+  }
   }, []);
 
   useEffect(() => {
