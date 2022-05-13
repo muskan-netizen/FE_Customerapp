@@ -654,7 +654,7 @@ const appIds = {
   }),
   weeat: Platform.select({
     ios: 'com.weeat.customer',
-    android: 'com.weeat',
+    android: 'com.weeat.customer',
   }),
   gorillas: Platform.select({
     ios: 'com.gorillas',

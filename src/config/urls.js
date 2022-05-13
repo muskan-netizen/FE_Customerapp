@@ -54,7 +54,7 @@
 // export const API_BASE_URL = 'https://empirehub.com/api/v1';
 // export const API_BASE_URL = 'https://ullaz.co.ke/api/v1';
 // export const API_BASE_URL = 'https://localdropoff.info/api/v1';
-// export const API_BASE_URL = 'https://onscart.com/api/v1';
+export const API_BASE_URL = 'https://onscart.com/api/v1';
 // export const API_BASE_URL = 'https://fastmikes.com/api/v1';
 
 // export const API_BASE_URL = 'https://ored.co/api/v1'; //ored
@@ -73,7 +73,7 @@
 //export const API_BASE_URL = 'https://yummiidash.com/api/v1';
 
 // WE EAT
-export const API_BASE_URL = 'https://weeat.royoorders.com/api/v1';
+// export const API_BASE_URL = 'https://weeat.royoorders.com/api/v1';
 
 //BEZALIO LIVE
 // export const API_BASE_URL = 'https://bezaliohub.com/api/v1';

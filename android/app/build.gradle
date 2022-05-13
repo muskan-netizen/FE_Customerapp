@@ -1073,16 +1073,16 @@ android {
       //       resValue "string", "app_name", "Groupy"
       //       resValue "string", "host_name", ""
       //    }
-      //     weeat{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion
-      //       applicationId 'com.weeat'
-      //       resValue "string", "app_name", "WeEat"
-      //       resValue "string", "host_name", ""
-      //    }
+        //   weeat{
+        //     dimension "appType"
+        //     versionCode 1
+        //     versionName "1.0"
+        //     minSdkVersion rootProject.ext.minSdkVersion
+        //     targetSdkVersion rootProject.ext.targetSdkVersion
+        //     applicationId 'com.weeat.customer'
+        //     resValue "string", "app_name", "WeEat"
+        //     resValue "string", "host_name", ""
+        //  }
       //   gorillas{
       //       dimension "appType"
       //       versionCode 1
@@ -4331,16 +4331,16 @@ android {
       //       resValue "string", "app_name", "AmbuTap"
       //       resValue "string", "host_name", ""
       //    }
-      //    sabroson{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.sabroson'
-      //       resValue "string", "app_name", "Sabroson"
-      //       resValue "string", "host_name", ""
-      //    }
+        //  sabroson{
+        //     dimension "appType"
+        //     versionCode 1
+        //     versionName "1.0"
+        //     minSdkVersion rootProject.ext.minSdkVersion
+        //     targetSdkVersion rootProject.ext.targetSdkVersion         
+        //     applicationId 'com.sabroson'
+        //     resValue "string", "app_name", "Sabroson"
+        //     resValue "string", "host_name", ""
+        //  }
       //    swiffyllc{
       //       dimension "appType"
       //       versionCode 1
@@ -4361,16 +4361,16 @@ android {
       //       resValue "string", "app_name", "BeakMe"
       //       resValue "string", "host_name", ""
       //    }
-      //    onscart{
-      //       dimension "appType"
-      //       versionCode 1
-      //       versionName "1.0"
-      //       minSdkVersion rootProject.ext.minSdkVersion
-      //       targetSdkVersion rootProject.ext.targetSdkVersion         
-      //       applicationId 'com.onscart'
-      //       resValue "string", "app_name", "Onscart"
-      //       resValue "string", "host_name", ""
-      //    }
+         onscart{
+            dimension "appType"
+            versionCode 2
+            versionName "1.1"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.onscart'
+            resValue "string", "app_name", "Onscart"
+            resValue "string", "host_name", ""
+         }
       //    gamaDelivery{
       //          dimension "appType"
       //          versionCode 1
@@ -4452,16 +4452,16 @@ android {
       //    resValue "string", "app_name", "Pets Choice"
       //    resValue "string", "host_name", ""
       //    }
-      //    heyBuddy{
-      //    dimension "appType"
-      //    versionCode 1
-      //    versionName "1.0"
-      //    minSdkVersion rootProject.ext.minSdkVersion
-      //    targetSdkVersion rootProject.ext.targetSdkVersion
-      //    applicationId 'com.app.heyBuddy'
-      //    resValue "string", "app_name", "Hey Buddy"
-      //    resValue "string", "host_name", ""
-      //    }
+        //  heyBuddy{
+        //  dimension "appType"
+        //  versionCode 1
+        //  versionName "1.0"
+        //  minSdkVersion rootProject.ext.minSdkVersion
+        //  targetSdkVersion rootProject.ext.targetSdkVersion
+        //  applicationId 'com.app.heyBuddy'
+        //  resValue "string", "app_name", "Hey Buddy"
+        //  resValue "string", "host_name", ""
+        //  }
       //    yoloSonic{
       //    dimension "appType"
       //    versionCode 1
@@ -9371,16 +9371,16 @@ android {
    //       resValue "string", "app_name", "Trip"
    //       resValue "string", "host_name", ""
    //       }
-   //   localdropoff{
-   //       dimension "appType"
-   //       versionCode 1
-   //       versionName "1.0"
-   //       minSdkVersion rootProject.ext.minSdkVersion
-   //       targetSdkVersion rootProject.ext.targetSdkVersion
-   //       applicationId 'com.app.localdropoff'
-   //       resValue "string", "app_name", "Local dropoff"
-   //       resValue "string", "host_name", ""
-   //       }
+    //  localdropoff{
+    //      dimension "appType"
+    //      versionCode 2
+    //      versionName "1.0"
+    //      minSdkVersion rootProject.ext.minSdkVersion
+    //      targetSdkVersion rootProject.ext.targetSdkVersion
+    //      applicationId 'com.app.localdropoff'
+    //      resValue "string", "app_name", "Local dropoff"
+    //      resValue "string", "host_name", ""
+    //      }
    //    aauJau{
    //       dimension "appType"
    //       versionCode 1
@@ -9651,16 +9651,16 @@ android {
       //    resValue "string", "app_name", "Toor"
       //    resValue "string", "host_name", ""
       //    }
-      //   peerDeliveries{
-      //    dimension "appType"
-      //    versionCode 1
-      //    versionName "1.0"
-      //    minSdkVersion rootProject.ext.minSdkVersion
-      //    targetSdkVersion rootProject.ext.targetSdkVersion
-      //    applicationId 'com.peerDeliveries'
-      //    resValue "string", "app_name", "PeerDeliveries"
-      //    resValue "string", "host_name", ""
-      //    }
+        peerDeliveries{
+         dimension "appType"
+         versionCode 1
+         versionName "1.0"
+         minSdkVersion rootProject.ext.minSdkVersion
+         targetSdkVersion rootProject.ext.targetSdkVersion
+         applicationId 'com.peerDeliveries'
+         resValue "string", "app_name", "PeerDeliveries"
+         resValue "string", "host_name", ""
+         }
       //   swan{
       //    dimension "appType"
       //    versionCode 1
