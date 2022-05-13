@@ -2,6 +2,9 @@ import {
     PaymentSDKBillingDetails, PaymentSDKConfiguration, RNPaymentSDKLibrary
 } from '@paytabs/react-native-paytabs';
 
+import { PayWithFlutterwave } from 'flutterwave-react-native';
+
+
 export function payWithCard(detail) {
     console.log(detail, "payWithCarddetail");
     return new Promise((resolve, reject) => {
@@ -78,3 +81,34 @@ export async function payWithApplePay(detail) {
         return error
     });
 }
+/* An example function to generate a random transaction reference */
+export const generateTransactionRef = (length) => {
+    var result = '';
+    var characters =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return `flw_tx_ref_${result}`;
+};
+
+export function payWithFlutterWave(detail, handleOnRedirect) {
+    console.log(detail, "payWithFlutterWave>payWithFlutterWave>detail");
+    return <PayWithFlutterwave
+        onRedirect={handleOnRedirect}
+        options={{
+            tx_ref: generateTransactionRef(10),
+            authorization: 'FLWPUBK_TEST-3d894b0ac8e67651eea04e8ddc4b384b-X',
+            customer: {
+                email: 'customer-email@example.com'
+            },
+            amount: 2000,
+            currency: 'NGN',
+            payment_options: 'card'
+        }}
+
+    />
+}
+
+
