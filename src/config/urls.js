@@ -1,7 +1,7 @@
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 
 //Vishwas
@@ -16,6 +16,7 @@
 
 // export const API_BASE_URL = 'https://groupystore.com/api/v1';
 // export const API_BASE_URL = 'https://dimahalal.com/api/v1'; // dimaVega
+// export const API_BASE_URL = 'https://sponge.rostaging.com/api/v1';
 
 
 
@@ -41,7 +42,7 @@
 // export const API_BASE_URL = 'https://mrhealth.in/api/v1';
 
 // export const API_BASE_URL = 'https://food-order.konga.com/api/v1';
-export const API_BASE_URL = 'https://order.menusat.app/api/v1';
+// export const API_BASE_URL = 'https://order.menusat.app/api/v1';
 // export const API_BASE_URL = 'https://mandaexpress.com/api/v1';
 // export const API_BASE_URL = 'https://canupickmeup.com/api/v1';
 

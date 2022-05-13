@@ -316,6 +316,10 @@ const shortCodes = {
   patrolNow:'ad0c7d',
   butlerDelivery:'56086e',
   swatiRX:'c7129e',
+  chowHub:'57bab0',
+  ginDeliver:'ee3d33',
+  orderFirst:'d760c8',
+  maiz:'3df0b6',
 };
 
 
@@ -1576,6 +1580,23 @@ const appIds = {
   swatiRX: Platform.select({
     ios: 'com.swatiRX',
     android: 'com.swatiRX',
+  }),
+  
+  chowHub: Platform.select({
+    ios: 'com.chowHub',
+    android: 'com.chowHub',
+  }),
+  ginDeliver: Platform.select({
+    ios: 'com.ginDeliver',
+    android: 'com.ginDeliver',
+  }),
+  orderFirst: Platform.select({
+    ios: 'com.orderFirst',
+    android: 'com.orderFirst',
+  }),
+  maiz: Platform.select({
+    ios: 'com.maiz',
+    android: 'com.maiz',
   }),
   
 };

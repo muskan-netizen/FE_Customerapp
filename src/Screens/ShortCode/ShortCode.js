@@ -2002,6 +2002,31 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+
+          case appIds.chowHub:
+          updateState({
+            shortCode: shortCodes.chowHub,
+            isShortcodePrefilled: true,
+          });
+          break;
+          case appIds.ginDeliver:
+          updateState({
+            shortCode: shortCodes.ginDeliver,
+            isShortcodePrefilled: true,
+          });
+          break;
+          case appIds.orderFirst:
+          updateState({
+            shortCode: shortCodes.orderFirst,
+            isShortcodePrefilled: true,
+          });
+          break;
+          case appIds.maiz:
+          updateState({
+            shortCode: shortCodes.maiz,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
