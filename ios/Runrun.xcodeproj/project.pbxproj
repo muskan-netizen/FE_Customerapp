@@ -405,6 +405,7 @@
 		101A82762810116B00985603 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 101A82752810116B00985603 /* Images.xcassets */; };
 		101A82782810118E00985603 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 101A82772810118C00985603 /* GoogleService-Info.plist */; };
 		101A86EA281BC80100CBC8FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 101A86E9281BC80000CBC8FF /* GoogleService-Info.plist */; };
+		102129A1282E3EA300A6AEEA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 102129A0282E3EA200A6AEEA /* GoogleService-Info.plist */; };
 		1022D086FBB1272D825ECE2E /* libPods-available_pods-DimaVega.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B76BE703552F5131DA29BB9B /* libPods-available_pods-DimaVega.a */; };
 		102F152C2825336100215A71 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 102F152B2825336000215A71 /* GoogleService-Info.plist */; };
 		1032F29D2824F31100D48388 /* Toor(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1032F29C2824F31100D48388 /* Toor(Development).xcconfig */; };
@@ -5555,7 +5556,6 @@
 		848A145B27425874003BD140 /* Click2Deliver(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 848A145A27425873003BD140 /* Click2Deliver(Development).xcconfig */; };
 		848A158727425892003BD140 /* Click2Deliver(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 848A158627425892003BD140 /* Click2Deliver(Production).xcconfig */; };
 		848A1589274258A4003BD140 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848A1588274258A4003BD140 /* Images.xcassets */; };
-		848A158B27425998003BD140 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848A158A27425997003BD140 /* GoogleService-Info.plist */; };
 		848A175027425B62003BD140 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		848A175127425B62003BD140 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848A175227425B62003BD140 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -9465,6 +9465,7 @@
 		101A82752810116B00985603 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		101A82772810118C00985603 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		101A86E9281BC80000CBC8FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		102129A0282E3EA200A6AEEA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		102F152B2825336000215A71 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1032F29C2824F31100D48388 /* Toor(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Toor(Development).xcconfig"; sourceTree = "<group>"; };
 		1032F2A02824F35B00D48388 /* Toor(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Toor(Production).xcconfig"; sourceTree = "<group>"; };
@@ -10974,7 +10975,6 @@
 		848A145A27425873003BD140 /* Click2Deliver(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Click2Deliver(Development).xcconfig"; sourceTree = "<group>"; };
 		848A158627425892003BD140 /* Click2Deliver(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Click2Deliver(Production).xcconfig"; sourceTree = "<group>"; };
 		848A1588274258A4003BD140 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		848A158A27425997003BD140 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		848A16B627425ADE003BD140 /* Click2Deliver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Click2Deliver.entitlements; sourceTree = "<group>"; };
 		848A178327425B63003BD140 /* TruckTireNow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TruckTireNow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		848A1A7427425C8F003BD140 /* TruckTireNow(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "TruckTireNow(Development).xcconfig"; sourceTree = "<group>"; };
@@ -18747,7 +18747,7 @@
 		848A145927425839003BD140 /* Click2Deliver */ = {
 			isa = PBXGroup;
 			children = (
-				848A158A27425997003BD140 /* GoogleService-Info.plist */,
+				102129A0282E3EA200A6AEEA /* GoogleService-Info.plist */,
 				848A145A27425873003BD140 /* Click2Deliver(Development).xcconfig */,
 				848A158627425892003BD140 /* Click2Deliver(Production).xcconfig */,
 				848A1588274258A4003BD140 /* Images.xcassets */,
@@ -28120,7 +28120,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					848A11CC27425640003BD140 = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = 9CLVYST533;
 						ProvisioningStyle = Automatic;
 					};
 					848A174C27425B62003BD140 = {
@@ -35178,7 +35178,7 @@
 				848A11EA27425640003BD140 /* SFProText-SemiBold.ttf in Resources */,
 				848A11EB27425640003BD140 /* SFProText-Medium.ttf in Resources */,
 				848A11ED27425640003BD140 /* notification.wav in Resources */,
-				848A158B27425998003BD140 /* GoogleService-Info.plist in Resources */,
+				102129A1282E3EA300A6AEEA /* GoogleService-Info.plist in Resources */,
 				848A158727425892003BD140 /* Click2Deliver(Production).xcconfig in Resources */,
 				848A11EF27425640003BD140 /* Plists in Resources */,
 				848A11F027425640003BD140 /* Futura-Normal.ttf in Resources */,
@@ -116825,7 +116825,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = 9CLVYST533;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -116859,7 +116859,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = A39UGATGY3;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -116874,7 +116874,7 @@
 				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = Click2Deliver;
+				PROVISIONING_PROFILE_SPECIFIER = "click2deliver customer";
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

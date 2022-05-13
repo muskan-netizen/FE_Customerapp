@@ -897,7 +897,7 @@ const appIds = {
     android: 'com.shoorafresh',
   }),
   click2deliver: Platform.select({
-    ios: 'com.click2deliver',
+    ios: 'com.click2deliver.customer',
     android: 'com.click2deliver',
   }),
   trucktirenow: Platform.select({

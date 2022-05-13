@@ -32,7 +32,7 @@
 //   'https://yogofood-order.netsolutionindia.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1';
-// export const API_BASE_URL = 'https://releezer.shop/api/v1';
+export const API_BASE_URL = 'https://releezer.shop/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://order.veg-hub.com/api/v1';
@@ -54,7 +54,7 @@
 // export const API_BASE_URL = 'https://empirehub.com/api/v1';
 // export const API_BASE_URL = 'https://ullaz.co.ke/api/v1';
 // export const API_BASE_URL = 'https://localdropoff.info/api/v1';
-export const API_BASE_URL = 'https://onscart.com/api/v1';
+// export const API_BASE_URL = 'https://onscart.com/api/v1';
 // export const API_BASE_URL = 'https://fastmikes.com/api/v1';
 
 // export const API_BASE_URL = 'https://ored.co/api/v1'; //ored
