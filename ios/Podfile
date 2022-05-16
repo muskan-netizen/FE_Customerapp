@@ -1588,6 +1588,26 @@ target 'SwatiRX' do
   
 end
 
+# ChowHub Target
+target 'ChowHub' do
+  
+end
+
+# GinDeliver Target
+target 'GinDeliver' do
+  
+end
+
+# OrderFirst Target
+target 'OrderFirst' do
+  
+end
+
+# Maiz Target
+target 'Maiz' do
+  
+end
+
 
 
 
