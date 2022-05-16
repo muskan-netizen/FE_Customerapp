@@ -100,7 +100,6 @@ export async function apiReq(
 
   const source = axios.CancelToken.source();
 
-
   return new Promise(async (res, rej) => {
     const getTokenHeader = await getHeaders();
 
@@ -118,8 +117,8 @@ export async function apiReq(
       };
     }
 
-    console.log(headers,"headersheaders")
-    console.log(data,"datadata")
+    console.log(headers, 'headersheaders');
+    console.log(data, 'datadata');
     //
     axios[method](endPoint, data, {headers})
       .then((result) => {
@@ -132,7 +131,7 @@ export async function apiReq(
         return res(data);
       })
       .catch((error) => {
-        console.log(error?.response,"error>error");
+        console.log(error?.response, 'error>error');
         if (error && error.response && error.response.status === 401) {
           sessionHandler(error.response.data.message);
           return rej(error);

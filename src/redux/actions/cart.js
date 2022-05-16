@@ -27,6 +27,7 @@ import {
   GET_CATEGORY_KYC_DOCUMENT,
   SUBMIT_CATEGORY_KYC,
   ORDER_AFTER_PAYMENT,
+  VENDOR_DROPOFF_SLOTS,
 } from '../../config/urls';
 import {
   apiGet,
@@ -432,3 +433,16 @@ export const orderSuccessPayment = (data, headers = {}) => {
       });
   });
 };
+
+//Get Vendor DropOff slots
+export function getVendorDropoffSlots(url, data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiGet(VENDOR_DROPOFF_SLOTS + url, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
