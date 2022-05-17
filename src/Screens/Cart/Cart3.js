@@ -165,6 +165,11 @@ function Cart({navigation, route}) {
   const [laundryAvailableDropOffSlot, setLaundryAvailableDropOffSlot] =
     useState([]);
 
+  const [minimumSelectedPickupDate, setMinimumSelectedPickupDate] =
+    useState('');
+  const [minimumSelectedDropOffDate, setMinimumSelectedDropOffDate] =
+    useState('');
+
   const [state, setState] = useState({
     showTaxFeeArea: false,
     isGiftBoxSelected: false,
@@ -484,11 +489,11 @@ function Cart({navigation, route}) {
             console.log('netxt festilval2', new Date(timeSlot.replace(' ')));
             setMinimumDelayVendorDate(timeSlot);
           }
-
           setCartItems(res.data.products);
           setAvailableTimeSlots(res.data.slots);
-          setLaundryAvailablePickupSlot(res.data.slots);
-          setLaundryAvailableDropOffSlot(res.data.slots);
+          // setLaundryAvailablePickupSlot(res.data.slots);
+          // setLaundryAvailableDropOffSlot(res.data.slots);
+
           setCartData(res.data);
           setSelectedTipvalue(
             res?.data?.total_payable_amount == 0 ? 'custom' : null,
@@ -761,8 +766,6 @@ function Cart({navigation, route}) {
       return;
     }
 
-    console.log(paymentId, 'paymentIdpaymentId');
-
     switch (paymentId) {
       case 4:
         // updateState({ placeLoader: false });
@@ -949,7 +952,6 @@ function Cart({navigation, route}) {
     if (!!selectedTipAmount) {
       data['tip'] = selectedTipAmount || '';
     }
-    console.log(data, '_directOrderPlace>_directOrderPlace');
     placeOrderData(data);
   };
 
@@ -1054,7 +1056,7 @@ function Cart({navigation, route}) {
 
   // false, 'schedule', value
   const setDateAndTimeSchedule = (
-    toHitApiForPlaceOrder = false,
+    // toHitApiForPlaceOrder = false,
     dateType = scheduleType,
     scheduleDate = sheduledorderdate,
   ) => {
@@ -1064,15 +1066,21 @@ function Cart({navigation, route}) {
 
     let data = {};
 
-    if (businessType == 'laundry' && toHitApiForPlaceOrder) {
+    if (businessType == 'laundry') {
       data['comment_for_pickup_driver'] = pickupDriverComment;
       data['comment_for_dropoff_driver'] = dropOffDriverComment;
       data['comment_for_vendor'] = vendorComment;
-      data['schedule_pickup'] = sheduledpickupdate
-        ? new Date(sheduledpickupdate).toISOString()
+      data['schedule_pickup'] = laundrySelectedPickupDate
+        ? new Date(laundrySelectedPickupDate).toISOString()
         : null;
-      data['schedule_dropoff'] = sheduleddropoffdate
-        ? new Date(sheduleddropoffdate).toISOString()
+      data['schedule_dropoff'] = laundrySelectedDropOffDate
+        ? new Date(laundrySelectedDropOffDate).toISOString()
+        : null;
+      data['slot'] = !!laundrySelectedPickupSlot
+        ? laundrySelectedPickupSlot
+        : null;
+      data['dropoff_scheduled_slot'] = !!laundrySelectedDropOffSlot
+        ? laundrySelectedDropOffSlot
         : null;
     } else {
       data['task_type'] = !!selectedTimeSlots ? 'schedule' : dateType;
@@ -1097,7 +1105,8 @@ function Cart({navigation, route}) {
       data['slot'] = selectedTimeSlots;
     }
 
-    console.log(data, 'setDateAndTimeSchedule>>>DATA');
+    console.log(data, 'fsdjkhfkjshfkjahsdkjfhak');
+
     // updateState({isLoading: false});
     actions
       .scheduledOrder(data, {
@@ -1882,6 +1891,7 @@ function Cart({navigation, route}) {
         return;
       } else {
         onClose();
+        setDateAndTimeSchedule();
         return;
       }
     } else {
@@ -3651,7 +3661,7 @@ function Cart({navigation, route}) {
                     {strings.SCEDULEDROP}
                   </Text>
 
-                  {localeDropOffDate && (
+                  {!!(businessType !== 'laundry' && localeDropOffDate) && (
                     <Text
                       numberOfLines={2}
                       style={
@@ -3667,6 +3677,7 @@ function Cart({navigation, route}) {
                         : strings.SCEDULEDROP}
                     </Text>
                   )}
+
                   {laundrySelectedDropOffDate && (
                     <Text
                       numberOfLines={2}
@@ -5233,11 +5244,23 @@ function Cart({navigation, route}) {
   };
 
   const isSlotSelected = (item) => {
-    if (
-      selectedTimeSlots == item.value ||
-      laundrySelectedPickupSlot == item.value ||
-      laundrySelectedDropOffSlot == item.value
-    ) {
+    if (selectedTimeSlots == item.value) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const isSlotSelected1 = (item) => {
+    if (laundrySelectedPickupSlot == item.value) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const isSlotSelected2 = (item) => {
+    if (laundrySelectedDropOffSlot == item.value) {
       return true;
     } else {
       return false;
@@ -5251,17 +5274,44 @@ function Cart({navigation, route}) {
         activeOpacity={0.8}
         onPress={() => onSelectTime(item)}
         style={{
-          backgroundColor: isSlotSelected(item)
+          backgroundColor: isSlotSelected1(item)
             ? themeColors.primary_color
             : colors.white,
           padding: 8,
           borderRadius: 8,
-          borderWidth: isSlotSelected(item) ? 0 : 1,
+          borderWidth: isSlotSelected1(item) ? 0 : 1,
           borderColor: colors.borderColorGrey,
         }}>
         <Text
           style={{
-            color: isSlotSelected(item) ? colors.white : colors.black,
+            color: isSlotSelected1(item) ? colors.white : colors.black,
+            fontFamily: fontFamily.regular,
+            fontSize: textScale(11),
+          }}>
+          {item?.value}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderTimeSlots2 = ({item, index}) => {
+    return (
+      <TouchableOpacity
+        key={String(index)}
+        activeOpacity={0.8}
+        onPress={() => onSelectTime(item)}
+        style={{
+          backgroundColor: isSlotSelected2(item)
+            ? themeColors.primary_color
+            : colors.white,
+          padding: 8,
+          borderRadius: 8,
+          borderWidth: isSlotSelected2(item) ? 0 : 1,
+          borderColor: colors.borderColorGrey,
+        }}>
+        <Text
+          style={{
+            color: isSlotSelected2(item) ? colors.white : colors.black,
             fontFamily: fontFamily.regular,
             fontSize: textScale(11),
           }}>
@@ -5803,6 +5853,8 @@ function Cart({navigation, route}) {
     setLaundrySelectedDropOffSlot('');
     setLaundrySelectedDropOffDate(null);
     setLaundrySelectedPickupDate(null);
+    setLaundryAvailablePickupSlot([]);
+    setLaundryAvailableDropOffSlot([]);
     updateState({
       isVisibleTimeModal: false,
     });
@@ -5998,47 +6050,6 @@ function Cart({navigation, route}) {
                     )}
 
                     {modalType == 'pickup' ? (
-               
-                        <View>
-                          <Text
-                            style={{
-                              marginHorizontal: moderateScale(24),
-                              fontFamily: fontFamily.medium,
-                              fontSize: textScale(12),
-                              marginBottom: moderateScaleVertical(8),
-                            }}>
-                            {strings.TIME_SLOT}
-                          </Text>
-                          <FlatList
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            data={laundryAvailablePickupSlot || []}
-                            renderItem={renderTimeSlots}
-                            keyExtractor={(item) => item.value || ''}
-                            ItemSeparatorComponent={() => (
-                              <View style={{marginRight: moderateScale(12)}} />
-                            )}
-                            ListHeaderComponent={() => (
-                              <View style={{marginLeft: moderateScale(24)}} />
-                            )}
-                            ListFooterComponent={() => (
-                              <View style={{marginRight: moderateScale(24)}} />
-                            )}
-                            ListEmptyComponent={() => (
-                              <View>
-                                <Text
-                                  style={{
-                                    fontFamily: fontFamily.medium,
-                                    color: colors.redB,
-                                  }}>
-                                  Time slots not available for selected date.
-                                </Text>
-                              </View>
-                            )}
-                          />
-                        </View>
-                   
-                    ) : (
                       <View>
                         <Text
                           style={{
@@ -6052,7 +6063,7 @@ function Cart({navigation, route}) {
                         <FlatList
                           horizontal
                           showsHorizontalScrollIndicator={false}
-                          data={laundryAvailableDropOffSlot || []}
+                          data={laundryAvailablePickupSlot || []}
                           renderItem={renderTimeSlots}
                           keyExtractor={(item) => item.value || ''}
                           ItemSeparatorComponent={() => (
@@ -6069,9 +6080,52 @@ function Cart({navigation, route}) {
                               <Text
                                 style={{
                                   fontFamily: fontFamily.medium,
-                                  color: colors.redB,
+                                  color: colors.blackOpacity66,
                                 }}>
-                                Time slots not available for selected date.
+                                {!laundrySelectedPickupDate
+                                  ? ' Please select date.'
+                                  : ' Slots are not found for selected date.'}
+                              </Text>
+                            </View>
+                          )}
+                        />
+                      </View>
+                    ) : (
+                      <View>
+                        <Text
+                          style={{
+                            marginHorizontal: moderateScale(24),
+                            fontFamily: fontFamily.medium,
+                            fontSize: textScale(12),
+                            marginBottom: moderateScaleVertical(8),
+                          }}>
+                          {strings.TIME_SLOT}
+                        </Text>
+                        <FlatList
+                          horizontal
+                          showsHorizontalScrollIndicator={false}
+                          data={laundryAvailableDropOffSlot || []}
+                          renderItem={renderTimeSlots2}
+                          keyExtractor={(item) => item.value || ''}
+                          ItemSeparatorComponent={() => (
+                            <View style={{marginRight: moderateScale(12)}} />
+                          )}
+                          ListHeaderComponent={() => (
+                            <View style={{marginLeft: moderateScale(24)}} />
+                          )}
+                          ListFooterComponent={() => (
+                            <View style={{marginRight: moderateScale(24)}} />
+                          )}
+                          ListEmptyComponent={() => (
+                            <View>
+                              <Text
+                                style={{
+                                  fontFamily: fontFamily.medium,
+                                  color: colors.blackOpacity66,
+                                }}>
+                                {!laundrySelectedDropOffDate
+                                  ? ' Please select date.'
+                                  : ' Slots are not found for selected date.'}
                               </Text>
                             </View>
                           )}
