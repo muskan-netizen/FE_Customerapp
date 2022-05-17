@@ -17,6 +17,10 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://groupystore.com/api/v1';
 // export const API_BASE_URL = 'https://dimahalal.com/api/v1'; // dimaVega
 // export const API_BASE_URL = 'https://sponge.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://yogo.gd/api/v1'; // yogoFood
+// export const API_BASE_URL = 'https://expresdeliverys.com/api/v1'; 
+
+
 
 
 
@@ -29,8 +33,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 //owais nor
 // export const API_BASE_URL ='https://5f55-103-72-170-243.ngrok.io/api/v1';
 
-// export const API_BASE_URL =
-//   'https://yogofood-order.netsolutionindia.com/api/v1';
+// export const API_BASE_URL = 'https://yogofood-order.netsolutionindia.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';

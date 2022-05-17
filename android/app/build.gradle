@@ -285,17 +285,17 @@ android {
         //         resValue "string", "host_name", ""
         //     }
 
-        //     yogofood{
-        //         dimension "appType"
-        //         versionCode 1
-        //         versionName "1.0"
-        //         minSdkVersion rootProject.ext.minSdkVersion
-        //         targetSdkVersion rootProject.ext.targetSdkVersion
-        //         // applicationIdSuffix ".hmoobhhub"
-        //         applicationId 'com.yogofood'
-        //         resValue "string", "app_name", "Yogo Food"
-        //         resValue "string", "host_name", "yogofood.royoorders.com"
-        //     }
+            yogofood{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                // applicationIdSuffix ".hmoobhhub"
+                applicationId 'com.yogofood'
+                resValue "string", "app_name", "Yogo Food"
+                resValue "string", "host_name", "yogofood.royoorders.com"
+            }
         
         //     clicktoeat{
         //         dimension "appType"
@@ -3048,16 +3048,16 @@ android {
         //         resValue "string", "app_name", "Ace"
         //         resValue "string", "host_name", ""
         //     }
-        //     expressdelivery{
-        //         dimension "appType"
-        //         versionCode 1
-        //         versionName "1.0"
-        //         minSdkVersion rootProject.ext.minSdkVersion
-        //         targetSdkVersion rootProject.ext.targetSdkVersion         
-        //         applicationId 'com.expressdelivery'
-        //         resValue "string", "app_name", "Express Delivery"
-        //         resValue "string", "host_name", ""
-        //     }
+            expressdelivery{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.expressdelivery'
+                resValue "string", "app_name", "Express Delivery"
+                resValue "string", "host_name", ""
+            }
         //     booziedoozie{
         //         dimension "appType"
         //         versionCode 1
@@ -4344,16 +4344,16 @@ android {
             //     resValue "string", "app_name", "Sabroson"
             //     resValue "string", "host_name", ""
             // }
-        //     swiffyllc{
-        //         dimension "appType"
-        //         versionCode 1
-        //         versionName "1.0"
-        //         minSdkVersion rootProject.ext.minSdkVersion
-        //         targetSdkVersion rootProject.ext.targetSdkVersion         
-        //         applicationId 'com.swiffyllc'
-        //         resValue "string", "app_name", "Swiffy LLC"
-        //         resValue "string", "host_name", ""
-        //     }
+            // swiffyllc{
+            //     dimension "appType"
+            //     versionCode 1
+            //     versionName "1.0"
+            //     minSdkVersion rootProject.ext.minSdkVersion
+            //     targetSdkVersion rootProject.ext.targetSdkVersion         
+            //     applicationId 'com.swiffyllc.customer'
+            //     resValue "string", "app_name", "Swiffy LLC"
+            //     resValue "string", "host_name", ""
+            // }
         //     beakme{
         //         dimension "appType"
         //         versionCode 1
@@ -5201,16 +5201,16 @@ android {
         //     resValue "string", "app_name", "ChowHub"
         //     resValue "string", "host_name", ""
         //     }
-            ginDeliver{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.ginDeliver'
-            resValue "string", "app_name", "Gin Deliver"
-            resValue "string", "host_name", ""
-            }
+            // ginDeliver{
+            // dimension "appType"
+            // versionCode 1
+            // versionName "1.0"
+            // minSdkVersion rootProject.ext.minSdkVersion
+            // targetSdkVersion rootProject.ext.targetSdkVersion
+            // applicationId 'com.ginDeliver'
+            // resValue "string", "app_name", "Gin Deliver"
+            // resValue "string", "host_name", ""
+            // }
         //     orderFirst{
         //     dimension "appType"
         //     versionCode 1
@@ -5221,16 +5221,46 @@ android {
         //     resValue "string", "app_name", "OrderFirst"
         //     resValue "string", "host_name", ""
         //     }
-        //     maiz{
-        //     dimension "appType"
-        //     versionCode 1
-        //     versionName "1.0"
-        //     minSdkVersion rootProject.ext.minSdkVersion
-        //     targetSdkVersion rootProject.ext.targetSdkVersion
-        //     applicationId 'com.maiz'
-        //     resValue "string", "app_name", "maiz"
-        //     resValue "string", "host_name", ""
-        //     }
+            // maiz{
+            // dimension "appType"
+            // versionCode 1
+            // versionName "1.0"
+            // minSdkVersion rootProject.ext.minSdkVersion
+            // targetSdkVersion rootProject.ext.targetSdkVersion
+            // applicationId 'com.maiz'
+            // resValue "string", "app_name", "maiz"
+            // resValue "string", "host_name", ""
+            // }
+            dingDongEat{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.dingDongEat'
+            resValue "string", "app_name", "DingDong Eat"
+            resValue "string", "host_name", ""
+            }
+            medicab{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.medicab'
+            resValue "string", "app_name", "Medicab"
+            resValue "string", "host_name", ""
+            }
+            fazeiTeam{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.fazeiTeam'
+            resValue "string", "app_name", "FazeiTeam"
+            resValue "string", "host_name", ""
+            }
     }
 }
 
