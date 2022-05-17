@@ -529,16 +529,16 @@ android {
         //         resValue "string", "app_name", "Yummiidash"
         //         resValue "string", "host_name", ""
         //     }
-        //     yoho{
-        //         dimension "appType"
-        //         versionCode 1
-        //         versionName "1.0"
-        //         minSdkVersion rootProject.ext.minSdkVersion
-        //         targetSdkVersion rootProject.ext.targetSdkVersion
-        //         applicationId 'com.codebrew.yoho'
-        //         resValue "string", "app_name", "Yoho"
-        //         resValue "string", "host_name", ""
-        //     }
+            // yoho{
+            //     dimension "appType"
+            //     versionCode 1
+            //     versionName "1.0"
+            //     minSdkVersion rootProject.ext.minSdkVersion
+            //     targetSdkVersion rootProject.ext.targetSdkVersion
+            //     applicationId 'com.codebrew.yoho'
+            //     resValue "string", "app_name", "Yoho"
+            //     resValue "string", "host_name", ""
+            // }
         //     glamsouq{
         //         dimension "appType"
         //         versionCode 1

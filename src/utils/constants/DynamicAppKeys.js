@@ -1602,7 +1602,7 @@ const appIds = {
     android: 'com.maiz',
   }),
   dingDongEat: Platform.select({
-    ios: 'com.dingDongEat',
+    ios: 'com.app.dingDongEat',
     android: 'com.dingDongEat',
   }),
   medicab: Platform.select({
