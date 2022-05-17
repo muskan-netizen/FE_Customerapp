@@ -5898,14 +5898,12 @@ function Cart({navigation, route}) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             bounces={false}
-            style={
-              isDarkMode
-                ? [
-                    styles.modalMainViewContainer,
-                    {backgroundColor: MyDarkTheme.colors.lightDark},
-                  ]
-                : styles.modalMainViewContainer
-            }>
+            style={{
+              ...styles.modalMainViewContainer,
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.white,
+            }}>
             <View
               style={{
                 // flex: 0.6,
@@ -5914,11 +5912,10 @@ function Cart({navigation, route}) {
                 marginTop: 10,
               }}>
               <Text
-                style={
-                  isDarkMode
-                    ? [styles.carType, {color: MyDarkTheme.colors.text}]
-                    : styles.carType
-                }>
+                style={{
+                  ...styles.carType,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.blackC,
+                }}>
                 {strings.SELECTDATEANDTIME}
               </Text>
             </View>
@@ -5960,17 +5957,16 @@ function Cart({navigation, route}) {
                     ) : (
                       <Calendar
                         current={
-                          // cartData?.same_day_delivery_for_schedule
-                          //   ? 
-                            new Date()
-                            // : dayAfterToday
+                          cartData?.same_day_delivery_for_schedule
+                            ? new Date()
+                            : dayAfterToday
                         }
                         minDate={
                           !!minimumDelayVendorDate
                             ? minimumDelayVendorDate
-                            // : cartData?.same_day_delivery_for_schedule
-                            : new Date()
-                            // : dayAfterToday
+                            : cartData?.same_day_delivery_for_schedule
+                            ? new Date()
+                            : dayAfterToday
                         }
                         onDayPress={laundrySlotSelection}
                         markedDates={{
