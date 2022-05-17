@@ -400,9 +400,10 @@ const ProductCard3 = ({
                 fontSize: textScale(12),
                 fontFamily: fontFamily.regular,
                 textDecorationLine:'line-through',
+                marginHorizontal:moderateScale(8)
 
               }}>
-              {`${"   "}${
+              {`${
                 currencies?.primary_currency?.symbol
               } ${currencyNumberFormatter(
                 // Number(data?.variant_multiplier) *

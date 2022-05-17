@@ -471,9 +471,9 @@ export default function Account3({navigation}) {
               />
             ))}
 
-         {
-           DeviceInfo.getBundleId()!=appIds.elcheregio && 
-          ( <ListItemHorizontal
+         
+            
+          <ListItemHorizontal
            centerContainerStyle={{flexDirection: 'row'}}
            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
            onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
@@ -486,8 +486,8 @@ export default function Account3({navigation}) {
            }}
            // iconRight={imagePath.goRight}
            // rightIconStyle={{tintColor: colors.textGreyLight}}
-         />)
-         }
+         />
+         
           {!!userData?.auth_token && (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
@@ -519,8 +519,8 @@ export default function Account3({navigation}) {
             // iconRight={imagePath.goRight}
             // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
-          {!!userData?.auth_token &&
-            Platform.OS === 'android' &&
+          {!!userData?.auth_token && 
+            Platform.OS === 'android' && getBundleId()==appIds.elcheregio &&
             !!appMainData?.is_admin &&
             (businessType == 'taxi' ? null : (
               <ListItemHorizontal

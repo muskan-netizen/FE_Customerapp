@@ -270,7 +270,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res,"ressssss")
+        console.log(res, 'ressssss');
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(
@@ -449,21 +449,77 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     }
     data['order_time_zone'] = RNLocalize.getTimeZone();
 
+    // if (!!userData) {
+    //   !!userData?.client_preference?.verify_email &&
+    //   !!userData?.client_preference?.verify_phone
+    //     ? (!!userData?.verify_details?.is_email_verified &&
+    //       !!userData?.verify_details?.is_phone_verified)
+    //       ? selectedPayment.id == 10
+    //         ? renderRazorPay(data)
+    //         : _finalPayment(data)
+    //       : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
+    //           formCart: true,
+    //         })()
+    //     : selectedPayment.id == 10
+    //     ? renderRazorPay(data)
+    //     : _finalPayment(data);
+    // }
+
     if (!!userData) {
-      !!userData?.client_preference?.verify_email ||
-      !!userData?.client_preference?.verify_phone
-        ? !!userData?.verify_details?.is_email_verified &&
-          !!userData?.verify_details?.is_phone_verified
-          ? selectedPayment.id == 10
+      console.log(userData, 'userData');
+      if (!!userData) {
+        if (
+          !!userData?.client_preference?.verify_email &&
+          !!userData?.client_preference?.verify_phone
+        ) {
+          if (
+            !!userData?.verify_details?.is_email_verified &&
+            !!userData?.verify_details?.is_phone_verified
+          ) {
+            // setDateAndTimeSchedule(true);
+
+           selectedPayment.id == 10
             ? renderRazorPay(data)
             : _finalPayment(data)
-          : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
+          } else {
+            moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
               formCart: true,
-            })()
-        : selectedPayment.id == 10
-        ? renderRazorPay(data)
-        : _finalPayment(data);
-    }
+            })();
+          }
+        } else if (
+          !!userData?.client_preference?.verify_email ||
+          !!userData?.client_preference?.verify_phone
+        ) {
+          if (
+            !!userData?.client_preference?.verify_email &&
+            !userData?.verify_details?.is_email_verified
+          ) {
+           
+
+            moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
+              formCart: true,
+            })();
+          } else if (
+            !!userData?.client_preference?.verify_phone &&
+            !userData?.verify_details?.is_phone_verified
+          ) {
+           
+
+            moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
+              formCart: true,
+            })();
+          } else {
+            selectedPayment.id == 10
+            ? renderRazorPay(data)
+            : _finalPayment(data)
+          }
+        } else {
+          selectedPayment.id == 10
+            ? renderRazorPay(data)
+            : _finalPayment(data)
+        }
+      }
+    } 
   };
 
   const renderRazorPay = (data) => {
