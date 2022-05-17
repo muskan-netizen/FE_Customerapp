@@ -18,7 +18,7 @@
 // export const API_BASE_URL = 'http://192.168.99.130:8005/api/v1';
 
 //owais nor
-export const API_BASE_URL = 'https://a429-103-72-170-243.ngrok.io/api/v1';
+export const API_BASE_URL = 'https://1204-112-196-88-218.ngrok.io/api/v1';
 
 // export const API_BASE_URL =
 //   'https://yogofood-order.netsolutionindia.com/api/v1';

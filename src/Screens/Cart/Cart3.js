@@ -4653,6 +4653,7 @@ function Cart({navigation, route}) {
   const onClose = () => {
     setSelectedDateFromCalendar('');
     setSelectedTimeSlots('');
+
     updateState({
       isVisibleTimeModal: false,
     });
@@ -5797,6 +5798,16 @@ function Cart({navigation, route}) {
     );
   };
 
+  const onCloseModal = () => {
+    setLaundrySelectedPickupSlot('');
+    setLaundrySelectedDropOffSlot('');
+    setLaundrySelectedDropOffDate(null);
+    setLaundrySelectedPickupDate(null);
+    updateState({
+      isVisibleTimeModal: false,
+    });
+  };
+
   // Category KYC end
 
   return (
@@ -5880,7 +5891,7 @@ function Cart({navigation, route}) {
         onLayout={(event) => {
           setViewHeight(event.nativeEvent.layout.height);
         }}>
-        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+        <TouchableOpacity style={styles.closeButton} onPress={onCloseModal}>
           <Image
             style={isDarkMode && {tintColor: MyDarkTheme.colors.white}}
             source={imagePath.crossB}
@@ -5987,94 +5998,84 @@ function Cart({navigation, route}) {
                     )}
 
                     {modalType == 'pickup' ? (
-                      <View>
-                        {!isEmpty(laundryAvailablePickupSlot) && (
-                          <View>
-                            <Text
-                              style={{
-                                marginHorizontal: moderateScale(24),
-                                fontFamily: fontFamily.medium,
-                                fontSize: textScale(12),
-                                marginBottom: moderateScaleVertical(8),
-                              }}>
-                              {strings.TIME_SLOT}
-                            </Text>
-                            <FlatList
-                              horizontal
-                              showsHorizontalScrollIndicator={false}
-                              data={laundryAvailablePickupSlot || []}
-                              renderItem={renderTimeSlots}
-                              keyExtractor={(item) => item.value || ''}
-                              ItemSeparatorComponent={() => (
-                                <View
-                                  style={{marginRight: moderateScale(12)}}
-                                />
-                              )}
-                              ListHeaderComponent={() => (
-                                <View style={{marginLeft: moderateScale(24)}} />
-                              )}
-                              ListFooterComponent={() => (
-                                <View
-                                  style={{marginRight: moderateScale(24)}}
-                                />
-                              )}
-                              ListEmptyComponent={() => (
-                                <View>
-                                  <Text
-                                    style={{
-                                      fontFamily: fontFamily.medium,
-                                      color: colors.redB,
-                                    }}></Text>
-                                </View>
-                              )}
-                            />
-                          </View>
-                        )}
-                      </View>
+               
+                        <View>
+                          <Text
+                            style={{
+                              marginHorizontal: moderateScale(24),
+                              fontFamily: fontFamily.medium,
+                              fontSize: textScale(12),
+                              marginBottom: moderateScaleVertical(8),
+                            }}>
+                            {strings.TIME_SLOT}
+                          </Text>
+                          <FlatList
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            data={laundryAvailablePickupSlot || []}
+                            renderItem={renderTimeSlots}
+                            keyExtractor={(item) => item.value || ''}
+                            ItemSeparatorComponent={() => (
+                              <View style={{marginRight: moderateScale(12)}} />
+                            )}
+                            ListHeaderComponent={() => (
+                              <View style={{marginLeft: moderateScale(24)}} />
+                            )}
+                            ListFooterComponent={() => (
+                              <View style={{marginRight: moderateScale(24)}} />
+                            )}
+                            ListEmptyComponent={() => (
+                              <View>
+                                <Text
+                                  style={{
+                                    fontFamily: fontFamily.medium,
+                                    color: colors.redB,
+                                  }}>
+                                  Time slots not available for selected date.
+                                </Text>
+                              </View>
+                            )}
+                          />
+                        </View>
+                   
                     ) : (
                       <View>
-                        {!isEmpty(laundryAvailableDropOffSlot) && (
-                          <View>
-                            <Text
-                              style={{
-                                marginHorizontal: moderateScale(24),
-                                fontFamily: fontFamily.medium,
-                                fontSize: textScale(12),
-                                marginBottom: moderateScaleVertical(8),
-                              }}>
-                              {strings.TIME_SLOT}
-                            </Text>
-                            <FlatList
-                              horizontal
-                              showsHorizontalScrollIndicator={false}
-                              data={laundryAvailableDropOffSlot || []}
-                              renderItem={renderTimeSlots}
-                              keyExtractor={(item) => item.value || ''}
-                              ItemSeparatorComponent={() => (
-                                <View
-                                  style={{marginRight: moderateScale(12)}}
-                                />
-                              )}
-                              ListHeaderComponent={() => (
-                                <View style={{marginLeft: moderateScale(24)}} />
-                              )}
-                              ListFooterComponent={() => (
-                                <View
-                                  style={{marginRight: moderateScale(24)}}
-                                />
-                              )}
-                              ListEmptyComponent={() => (
-                                <View>
-                                  <Text
-                                    style={{
-                                      fontFamily: fontFamily.medium,
-                                      color: colors.redB,
-                                    }}></Text>
-                                </View>
-                              )}
-                            />
-                          </View>
-                        )}
+                        <Text
+                          style={{
+                            marginHorizontal: moderateScale(24),
+                            fontFamily: fontFamily.medium,
+                            fontSize: textScale(12),
+                            marginBottom: moderateScaleVertical(8),
+                          }}>
+                          {strings.TIME_SLOT}
+                        </Text>
+                        <FlatList
+                          horizontal
+                          showsHorizontalScrollIndicator={false}
+                          data={laundryAvailableDropOffSlot || []}
+                          renderItem={renderTimeSlots}
+                          keyExtractor={(item) => item.value || ''}
+                          ItemSeparatorComponent={() => (
+                            <View style={{marginRight: moderateScale(12)}} />
+                          )}
+                          ListHeaderComponent={() => (
+                            <View style={{marginLeft: moderateScale(24)}} />
+                          )}
+                          ListFooterComponent={() => (
+                            <View style={{marginRight: moderateScale(24)}} />
+                          )}
+                          ListEmptyComponent={() => (
+                            <View>
+                              <Text
+                                style={{
+                                  fontFamily: fontFamily.medium,
+                                  color: colors.redB,
+                                }}>
+                                Time slots not available for selected date.
+                              </Text>
+                            </View>
+                          )}
+                        />
                       </View>
                     )}
                   </ScrollView>
