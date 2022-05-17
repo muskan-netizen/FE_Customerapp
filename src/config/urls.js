@@ -19,7 +19,10 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://sponge.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://yogo.gd/api/v1'; // yogoFood
 // export const API_BASE_URL = 'https://expresdeliverys.com/api/v1'; 
-// export const API_BASE_URL = 'https://gdotdelivery.com/api/v1'; 
+// export const API_BASE_URL = 'https://gdotdelivery.com/api/v1';
+// export const API_BASE_URL = 'https://cabio.rostaging.com/api/v1'; 
+
+
 
 
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1';  //swiffy

@@ -2080,16 +2080,16 @@ android {
         //         resValue "string", "app_name", "Sofia"
         //         resValue "string", "host_name", ""
         //     }
-        //     mml{
-        //         dimension "appType"
-        //         versionCode 1
-        //         versionName "1.0"
-        //         minSdkVersion rootProject.ext.minSdkVersion
-        //         targetSdkVersion rootProject.ext.targetSdkVersion         
-        //         applicationId 'com.app.mml'
-        //         resValue "string", "app_name", "MML"
-        //         resValue "string", "host_name", ""
-        //     }
+            mml{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.app.mml'
+                resValue "string", "app_name", "MML"
+                resValue "string", "host_name", ""
+            }
         //     bimol{
         //         dimension "appType"
         //         versionCode 1
@@ -4244,16 +4244,16 @@ android {
         //         resValue "string", "app_name", "kampick"
         //         resValue "string", "host_name", ""
         //     }
-        //     cabio{
-        //         dimension "appType"
-        //         versionCode 1
-        //         versionName "1.0"
-        //         minSdkVersion rootProject.ext.minSdkVersion
-        //         targetSdkVersion rootProject.ext.targetSdkVersion         
-        //         applicationId 'com.cabio'
-        //         resValue "string", "app_name", "Cabio"
-        //         resValue "string", "host_name", ""
-        //     }
+            // cabio{
+            //     dimension "appType"
+            //     versionCode 1
+            //     versionName "1.0"
+            //     minSdkVersion rootProject.ext.minSdkVersion
+            //     targetSdkVersion rootProject.ext.targetSdkVersion         
+            //     applicationId 'com.cabio'
+            //     resValue "string", "app_name", "Cabio"
+            //     resValue "string", "host_name", ""
+            // }
         //     tumbak{
         //         dimension "appType"
         //         versionCode 1

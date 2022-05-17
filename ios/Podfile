@@ -1613,6 +1613,15 @@ target 'DingDongEat' do
   
 end
 
+# Medicab Target
+target 'Medicab' do
+  
+end
+
+# FazeiTeam Target
+target 'FazeiTeam' do
+  
+end
 
 
 
