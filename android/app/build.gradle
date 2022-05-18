@@ -2241,16 +2241,16 @@ android {
         //         resValue "string", "app_name", "CitySuds"
         //         resValue "string", "host_name", ""
         //     } 
-        //     homeTownDelivery{
-        //         dimension "appType"
-        //         versionCode 1
-        //         versionName "1.0"
-        //         minSdkVersion rootProject.ext.minSdkVersion
-        //         targetSdkVersion rootProject.ext.targetSdkVersion         
-        //         applicationId 'com.homeTownDelivery'
-        //         resValue "string", "app_name", "Home Town Delivery LLC"
-        //         resValue "string", "host_name", ""
-        //     } 
+            // homeTownDelivery{
+            //     dimension "appType"
+            //     versionCode 1
+            //     versionName "1.0"
+            //     minSdkVersion rootProject.ext.minSdkVersion
+            //     targetSdkVersion rootProject.ext.targetSdkVersion         
+            //     applicationId 'com.homeTownDelivery'
+            //     resValue "string", "app_name", "Home Town Delivery LLC"
+            //     resValue "string", "host_name", ""
+            // } 
         //     ritenow{
         //         dimension "appType"
         //         versionCode 1
@@ -4334,16 +4334,16 @@ android {
         //         resValue "string", "app_name", "AmbuTap"
         //         resValue "string", "host_name", ""
         //     }
-            // sabroson{
-            //     dimension "appType"
-            //     versionCode 1
-            //     versionName "1.0"
-            //     minSdkVersion rootProject.ext.minSdkVersion
-            //     targetSdkVersion rootProject.ext.targetSdkVersion         
-            //     applicationId 'com.sabroson'
-            //     resValue "string", "app_name", "Sabroson"
-            //     resValue "string", "host_name", ""
-            // }
+            sabroson{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.sabroson'
+                resValue "string", "app_name", "Sabroson"
+                resValue "string", "host_name", ""
+            }
             // swiffyllc{
             //     dimension "appType"
             //     versionCode 1

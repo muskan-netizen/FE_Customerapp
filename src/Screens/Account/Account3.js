@@ -175,6 +175,7 @@ export default function Account3({navigation}) {
         }
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
       /> */}
+      
         {shortCodeStatus ? (
           <Header
             noLeftIcon={false}
