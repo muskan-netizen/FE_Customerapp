@@ -1623,6 +1623,16 @@ target 'FazeiTeam' do
   
 end
 
+# WeTogether Target
+target 'WeTogether' do
+  
+end
+
+# Jiffex Target
+target 'Jiffex' do
+  
+end
+
 
 
 
