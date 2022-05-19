@@ -322,7 +322,9 @@ const shortCodes = {
   maiz:'3df0b6',
   dingDongEat:'2f2b60',
   medicab:'b1f6f1',
-  fazeiTeam:'0eca90'
+  fazeiTeam:'0eca90',
+  weTogether:'686b6c',
+  jiffex:'67dcfd',
 };
 
 
@@ -1612,6 +1614,14 @@ const appIds = {
   fazeiTeam: Platform.select({
     ios: 'com.fazeiTeam',
     android: 'com.fazeiTeam',
+  }),
+  weTogether: Platform.select({
+    ios: 'com.weTogether',
+    android: 'com.weTogether',
+  }),
+  jiffex: Platform.select({
+    ios: 'com.jiffex',
+    android: 'com.jiffex',
   }),
 };
 
