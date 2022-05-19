@@ -9,6 +9,7 @@ import {
   Linking,
   Platform,
   Alert,
+  
 } from 'react-native';
 import Communications from 'react-native-communications';
 import {useSelector} from 'react-redux';
@@ -24,6 +25,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {getImageUrl} from '../utils/helperFunctions';
 import { appIds } from '../utils/constants/DynamicAppKeys';
 import { getBundleId } from 'react-native-device-info';
+import Share from 'react-native-share';
+
 
 // create a component
 const UserDetail = ({
@@ -41,11 +44,31 @@ const UserDetail = ({
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const fontFamily = appStyle?.fontSizeData;
 
+  const userData = useSelector((state) => state?.auth?.userData);
+
+
+  const shareOptions = {
+    title: 'Share via',
+    message: 'some message',
+    url: 'some share url',
+    social: Share.Social.WHATSAPP,
+    whatsAppNumber: `${userData?.dial_code}${data?.vendor?.phone_no}`,  // country code + phone number
+    filename: 'test' , // only for base64 file in Android
+  };
+
+  console.log(data?.vendor?.phone_no,"data?.vendor?.phone_no>")
+
   const dialCall = (number, type = 'phone') => {
     type === 'phone'
       ? Linking.openURL(`tel:${number}`)
       : Linking.openURL(`sms:${number}`);
   };
+
+  const onWhatsapp =async()=>{
+    Share.shareSingle(shareOptions)
+    .then((res) => { console.log(res) })
+    .catch((err) => { err && console.log(err); });
+  }
 
   return (
     <View
@@ -129,6 +152,16 @@ const UserDetail = ({
          
         (data?.vendor?.phone_no || data?.order?.phone_number) && (
           <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity onPress={onWhatsapp} >
+                <Image
+                  style={{
+                    height: moderateScale(20),
+                    width: moderateScale(20),
+                    marginRight:moderateScale(20)
+                  }}
+                  source={imagePath.whatsAppRoyo}
+                />
+              </TouchableOpacity>
             <TouchableOpacity
               onPress={() =>
                 dialCall(
@@ -146,6 +179,7 @@ const UserDetail = ({
                 }}
               />
             </TouchableOpacity>
+            
             <TouchableOpacity
               onPress={() =>
                 dialCall(
