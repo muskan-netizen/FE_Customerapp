@@ -403,7 +403,7 @@ export default ({ fontFamily, isDarkMode, MyDarkTheme }) => {
         : colors.blackOpacity86,
     },
     horizontalLine: {
-      borderBottomWidth: 0.8,
+      borderBottomWidth:0.8,
       borderBottomColor: isDarkMode ? colors.whiteOpacity22 : colors.lightGreyBg,
       marginVertical: moderateScaleVertical(10)
     }

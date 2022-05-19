@@ -370,6 +370,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         },
       )
       .then((res) => {
+        console.log(res, 'ressssssss');
         // console.log(res, 'agent location2');
         // if (JSON.stringify(tasks) !== JSON.stringify(res?.data?.tasks)) {
         updateState({
@@ -1149,17 +1150,39 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                           size={90}
                         />
                         <View style={{flexDirection: 'column'}}>
-                          <Text
-                            style={{
-                              ...styles.statusText,
-                              fontSize: moderateScale(20),
-                              color: isDarkMode
-                                ? MyDarkTheme.colors.text
-                                : colors.black,
-                              marginLeft: moderateScale(10),
-                            }}>
-                            {orderFullDetail?.order?.name || ''}
-                          </Text>
+                          <View style={{flexDirection: 'row'}}>
+                            <Text
+                              style={{
+                                ...styles.statusText,
+                                fontSize: moderateScale(20),
+                                color: isDarkMode
+                                  ? MyDarkTheme.colors.text
+                                  : colors.primary_color,
+                                marginLeft: moderateScale(10),
+                              }}>
+                              {orderFullDetail?.order?.name || ''}
+                            </Text>
+                            <View
+                              style={{
+                                backgroundColor: colors.blackOpacity05,
+                                marginLeft: moderateScale(38),
+                                borderStyle: 'dashed',
+                                borderWidth:1
+                              }}>
+                              <Text
+                                style={{
+                                  ...styles.statusText,
+                                  fontSize: moderateScale(16),
+                                  color: isDarkMode
+                                    ? MyDarkTheme.colors.text
+                                    : themeColors.primary_color,
+                                    padding:moderateScale(4)
+                                }}>
+                                {orderDetail?.plate_number}
+                              </Text>
+                            </View>
+                          </View>
+
                           <Text
                             style={{
                               ...styles.statusText,
@@ -1283,7 +1306,8 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                         />
                       </View>
                     )}
-                    <View style={styles.horizontalLine} />
+                    <View style={{...styles.horizontalLine,
+                    borderBottomColor: isDarkMode ? colors.whiteOpacity22 : colors.greyA,borderBottomWidth:0.6,}} />
                     <Text style={styles.deliveryProof}>
                       {strings.ORDER_DETAIL}
                     </Text>
@@ -1317,9 +1341,10 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                                     priority: FastImage.priority.high,
                                   }}
                                   style={{
-                                    height: moderateScale(60),
-                                    width: moderateScale(60),
-                                    borderRadius: moderateScale(4),
+                                    height: moderateScale(70),
+                                    width: moderateScale(70),
+                                    borderRadius: moderateScale(10),
+
                                   }}
                                 />
 
@@ -1332,6 +1357,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                                     marginLeft: moderateScale(10),
                                     width: moderateScale(200),
                                     // backgroundColor: 'red',
+                                    fontFamily: fontFamily.medium,
                                   }}>
                                   {val?.product_name || ''}
                                 </Text>
@@ -1392,6 +1418,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                                         ? MyDarkTheme.colors.text
                                         : colors.black,
                                       marginLeft: moderateScale(10),
+                                      fontFamily:fontFamily.bold
                                     }}>
                                     {
                                       orderFullDetail.order_details.products
@@ -1456,16 +1483,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                             // marginLeft: moderateScale(10),
                           }}>
                           {`${orderDetail?.color || ''}`}
-                        </Text>
-                        <Text
-                          style={{
-                            ...styles.statusText,
-                            color: isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.black,
-                            marginLeft: moderateScale(10),
-                          }}>
-                          {orderDetail?.plate_number}
                         </Text>
                       </View>
                     </View>

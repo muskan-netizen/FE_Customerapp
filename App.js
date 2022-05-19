@@ -41,6 +41,8 @@ import {
 } from './src/utils/notificationService';
 import { getItem, getUserData, setItem } from './src/utils/utils';
 import { MenuProvider } from 'react-native-popup-menu';
+import { getBundleId } from 'react-native-device-info';
+import { appIds } from './src/utils/constants/DynamicAppKeys';
 
 
 let CodePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
@@ -117,9 +119,16 @@ const App = () => {
   const isDarkMode = useDarkMode();
   useEffect(() => {
     //stop splahs screen from loading
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 3000);
+    if(getBundleId()==appIds.masa){
+      setTimeout(() => {
+        SplashScreen.hide();
+      }, 200);
+    }
+    else{
+      setTimeout(() => {
+        SplashScreen.hide();
+      }, 3000);
+    }
 
     AsyncStorage.getItem('autoConnectEnabled').then((res) => {
       if (res !== null) {

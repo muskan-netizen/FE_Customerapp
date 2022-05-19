@@ -951,7 +951,7 @@ function Cart({ navigation, route }) {
   };
 
   const _directOrderPlace = () => {
-    updateState({ placeLoader: false })
+   
     let data = {};
     data['address_id'] =
       paramsData?.selectedAddressData?.id || selectedAddressData?.id;
@@ -1001,7 +1001,7 @@ function Cart({ navigation, route }) {
         setSheduleddropoffdate(null);
         updateState({
           isLoadingB: false,
-          // placeLoader: false,
+          placeLoader: false,
         });
         console.log('paymebnt res', res);
         checkPaymentOptions(res);

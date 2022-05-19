@@ -449,6 +449,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     }
     data['order_time_zone'] = RNLocalize.getTimeZone();
 
+    console.log(JSON.stringify(data),"dataaaaa")
+
     // if (!!userData) {
     //   !!userData?.client_preference?.verify_email &&
     //   !!userData?.client_preference?.verify_phone
