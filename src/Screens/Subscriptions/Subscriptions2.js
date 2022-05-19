@@ -25,8 +25,9 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import { payWithCard } from '../../utils/paystackMethod';
-
+import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
+import { PayWithFlutterwave } from 'flutterwave-react-native';
+import Modal from 'react-native-modal';
 // import SubscriptionComponent from '../../Components/SubscriptionComponent';
 import {
   height,
@@ -69,9 +70,14 @@ export default function Subscriptions2({ navigation, route }) {
     selectedPaymentMethod: null,
     cardInfo: null,
     planPrice: 0,
+    paymentDataFlutterWave: null,
+    isModalVisibleForPayFlutterWave: false
+
   });
 
   const {
+    isModalVisibleForPayFlutterWave,
+    paymentDataFlutterWave,
     allSubscriptions,
     isRefreshing,
     isLoading,
@@ -159,7 +165,7 @@ export default function Subscriptions2({ navigation, route }) {
   //Subscribe for specific plan
   const selectSpecificSubscriptionPlan = (item) => {
     console.log(item, '>>>>>>>>>>>>>selectSpecificSubscriptionPlan');
-    updateState({ isLoading: true, planPrice: item?.price });
+    updateState({ isLoading: true, planPrice: 120.00 });
     actions
       .selectSpecificSubscriptionPlan(
         `/${item?.slug}`,
@@ -593,6 +599,71 @@ export default function Subscriptions2({ navigation, route }) {
     }
   }
 
+  //flutter wave
+  var redirectTimeout;
+  const handleOnRedirect = (data) => {
+    console.log("flutterwaveresponse", data);
+    clearTimeout(redirectTimeout);
+    redirectTimeout = setTimeout(() => {
+      // do something with the result
+      updateState({ isModalVisibleForPayFlutterWave: false })
+    }, 200);
+    try {
+
+      if (data && data?.transaction_id) {
+        let apiData = {
+          payment_option_id: paymentDataFlutterWave?.payment_option_id,
+          transaction_id: data?.transaction_id,
+          amount: paymentDataFlutterWave?.total_payable_amount,
+          action: 'subscription',
+          subscription_id: selectedPlan?.slug
+        }
+
+        console.log(apiData, "apiData");
+        actions
+          .openSdkUrl(
+            `/${paymentDataFlutterWave?.selectedPayment?.code?.toLowerCase()}`,
+            apiData,
+            {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+            },
+          )
+          .then((res) => {
+            console.log(res, "resfrompaytab");
+            if (res && res?.status == "Success") {
+              getAllSubscriptions(true);
+
+            } else {
+              redirectTimeout = setTimeout(() => {
+                // do something with the result
+                updateState({ isModalVisibleForPayFlutterWave: false })
+              }, 200);
+            }
+
+          })
+          .catch(errorMethod);
+      } else {
+        redirectTimeout = setTimeout(() => {
+          // do something with the result
+          updateState({ isModalVisibleForPayFlutterWave: false })
+        }, 200);
+
+      }
+    } catch (error) {
+      console.log('error raised', error)
+      redirectTimeout = setTimeout(() => {
+        // do something with the result
+        updateState({ isModalVisibleForPayFlutterWave: false })
+      }, 200);
+    }
+
+
+
+  }
+  //flutter wave
+
   const payAmount = () => {
     updateState({ isModalVisibleForPayment: false });
     if (!!selectedPaymentMethod) {
@@ -608,6 +679,19 @@ export default function Subscriptions2({ navigation, route }) {
           openPayTabs(paymentData)
         }, 500);
 
+      }
+      else if (selectedPaymentMethod?.id == 30) {
+        let paymentData = {
+          payment_option_id: selectedPaymentMethod?.id,
+          total_payable_amount: planPrice,
+          selectedPayment: selectedPaymentMethod,
+        }
+        setTimeout(() => {
+          updateState({
+            isModalVisibleForPayFlutterWave: true,
+            paymentDataFlutterWave: paymentData
+          })
+        }, 1000);
       }
       else {
         _webPayment();
@@ -985,6 +1069,34 @@ export default function Subscriptions2({ navigation, route }) {
         ref={explosion}
         fadeOut={false}
       /> */}
+
+      <Modal
+        onBackdropPress={() => updateState({ isModalVisibleForPayFlutterWave: false, })}
+        isVisible={isModalVisibleForPayFlutterWave}
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end',
+          // marginBottom: 20,
+        }}>
+        <View style={{ padding: moderateScale(20), backgroundColor: colors?.white, height: height / 8, justifyContent: 'flex-end' }}>
+          <PayWithFlutterwave
+            onAbort={() => updateState({ isModalVisibleForPayFlutterWave: false, })}
+            onRedirect={handleOnRedirect}
+            options={{
+              tx_ref: generateTransactionRef(10),
+              authorization: appData?.profile?.preferences?.flutterwave_public_key,
+              customer: {
+                email: userData?.email,
+                name: userData?.name,
+              },
+              amount: paymentDataFlutterWave?.total_payable_amount,
+              currency: currencies?.primary_currency?.iso_code,
+              payment_options: 'card'
+            }}
+
+          />
+        </View>
+      </Modal>
     </WrapperContainer>
   );
 }

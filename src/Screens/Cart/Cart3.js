@@ -93,7 +93,10 @@ import { cameraHandler } from '../../utils/commonFunction';
 import ActionSheet from 'react-native-actionsheet';
 import { androidCameraPermission } from '../../utils/permissions';
 import DocumentPicker from 'react-native-document-picker';
-import { payWithCard } from '../../utils/paystackMethod';
+import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
+import { PayWithFlutterwave } from 'flutterwave-react-native';
+
+import { FlutterwaveInit } from 'flutterwave-react-native';
 
 let clickedItem = {};
 let isFAQsSubmitted = true;
@@ -174,6 +177,8 @@ function Cart({ navigation, route }) {
     isCategoryKyc: false,
     isCategoryKycLoader: false,
     isSubmitKycLoader: false,
+    isModalVisibleForPayFlutterWave: false,
+    paymentDataFlutterWave: null
   });
 
   const {
@@ -197,6 +202,8 @@ function Cart({ navigation, route }) {
     isCategoryKyc,
     isCategoryKycLoader,
     isSubmitKycLoader,
+    isModalVisibleForPayFlutterWave,
+    paymentDataFlutterWave
   } = state;
 
   //Redux store data
@@ -379,7 +386,7 @@ function Cart({ navigation, route }) {
         },
       )
       .then((res) => {
-        console.log(res,"ressssssss")
+        console.log(res, "ressssssss")
         closeForm();
         actions.cartItemQty(res);
         console.log('cart details>>>', res);
@@ -663,6 +670,7 @@ function Cart({ navigation, route }) {
       isSubmitFaqLoader: false,
       isCategoryKycLoader: false,
       isSubmitKycLoader: false,
+      isModalVisibleForPayFlutterWave: false
     });
     showError(
       error?.error?.description ||
@@ -715,6 +723,98 @@ function Cart({ navigation, route }) {
   };
 
   console.log('cart data++++', cartData);
+
+  //flutter wave
+  var redirectTimeout;
+  const handleOnRedirect = (data) => {
+    console.log("flutterwaveresponse", data);
+    clearTimeout(redirectTimeout);
+    redirectTimeout = setTimeout(() => {
+      // do something with the result
+      updateState({ isModalVisibleForPayFlutterWave: false, })
+    }, 200);
+    try {
+
+      if (data && data?.transaction_id) {
+        let apiData = {
+          payment_option_id: paymentDataFlutterWave?.payment_option_id,
+          order_number: paymentDataFlutterWave?.orderDetail?.order_number,
+          transaction_id: data?.transaction_id,
+          amount: paymentDataFlutterWave?.total_payable_amount,
+          action: 'cart'
+        }
+
+        console.log(apiData, "apiData");
+        actions
+          .openSdkUrl(
+            `/${paymentDataFlutterWave?.selectedPayment?.code?.toLowerCase()}`,
+            apiData,
+            {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+            },
+          )
+          .then((res) => {
+            console.log(res, "openSdkUrl");
+            if (res && res?.status == "Success") {
+
+              setCartItems([]);
+              setCartData({});
+              moveToNewScreen(navigationStrings.ORDERSUCESS, {
+                orderDetail: {
+                  order_number: paymentDataFlutterWave?.orderDetail?.order_number,
+                  id: paymentDataFlutterWave?.orderDetail?.id,
+                },
+              })();
+            } else {
+              redirectTimeout = setTimeout(() => {
+                // do something with the result
+                updateState({ isModalVisibleForPayFlutterWave: false, placeLoader: false, deliveryFeeLoader: false })
+              }, 200);
+            }
+
+          })
+          .catch(errorMethod);
+      } else {
+
+        let apiData = {
+          order_number: paymentDataFlutterWave?.orderDetail?.order_number,
+          action: 'cart'
+        }
+        actions
+          .cancelSdkUrl(
+            `/${paymentDataFlutterWave?.selectedPayment?.code?.toLowerCase()}`,
+            apiData,
+            {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+            },
+          )
+          .then((res) => {
+            console.log(res, "cancelPaytabUrl---resfrompaytab");
+            redirectTimeout = setTimeout(() => {
+              // do something with the result
+              updateState({ isModalVisibleForPayFlutterWave: false, placeLoader: false, deliveryFeeLoader: false })
+            }, 200);
+
+          })
+          .catch(errorMethod);
+
+      }
+    } catch (error) {
+      console.log('error raised', error)
+      redirectTimeout = setTimeout(() => {
+        // do something with the result
+        updateState({ isModalVisibleForPayFlutterWave: false, placeLoader: false })
+      }, 200);
+    }
+
+
+
+  }
+  //flutter wave
 
   const checkPaymentOptions = (res) => {
     updateState({ placeLoader: true })
@@ -828,6 +928,36 @@ function Cart({ navigation, route }) {
         openPayTabs(paymentData)
 
         break;
+
+      case 30: //Paytab Payment Getway
+        // updateState({ placeLoader: false });
+        console.log(res.data, "res.data>res.data");
+        // payWithFlutterWave(paymentData.orderDetail, handleOnRedirect)
+        updateState({
+          isModalVisibleForPayFlutterWave: true,
+          paymentDataFlutterWave: paymentData
+        })
+
+        // openPayTabs(paymentData)
+
+        break;
+
+
+      case 29: //Easebuzz Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.MPAISA, paymentData);
+        break;
+
+      case 34: //Easebuzz Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.WINDCAVE, paymentData);
+        break;
+
+      case 32: //Easebuzz Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.PAYPHONE, paymentData);
+        break;
+
       default:
         if (
           !!businessType &&
@@ -844,7 +974,6 @@ function Cart({ navigation, route }) {
         break;
     }
   };
-
 
   const openPayTabs = async (data) => {
     data['serverKey'] = appData?.profile?.preferences?.paytab_server_key
@@ -1005,7 +1134,7 @@ function Cart({ navigation, route }) {
         });
         console.log('paymebnt res', res);
         checkPaymentOptions(res);
-        if (selectedPayment?.id != 17 && selectedPayment?.id != 4 && selectedPayment?.id != 27 && selectedPayment?.id != 26) {
+        if (selectedPayment?.id != 32 && selectedPayment?.id != 17 && selectedPayment?.id != 4 && selectedPayment?.id != 27 && selectedPayment?.id != 26 && selectedPayment?.id != 30 && selectedPayment?.id != 29 && selectedPayment?.id != 34) {
           setCartItems([]);
           setCartData({});
           if (selectedPayment?.id == 1 || res?.data?.payable_amount == 0) {
@@ -1804,7 +1933,7 @@ function Cart({ navigation, route }) {
     updateState({ isLoadingB: true });
     let options = {
       description: 'Payment for your order',
-      image: getImageUrl(   
+      image: getImageUrl(
         appData?.profile?.logo?.image_fit,
         appData?.profile?.logo?.image_path,
         '1000/1000',
@@ -2428,7 +2557,7 @@ function Cart({ navigation, route }) {
                                   )
                                   }`}
                               </Text>{' '}
-                              {i?.quantity } 
+                              {i?.quantity}
                               X  ={' '}
                               <Text
                                 style={{
@@ -6022,7 +6151,10 @@ function Cart({ navigation, route }) {
           // marginBottom: keyboardHeight,
         }}>
         {renderCategoryKYC()}
+
       </Modal>
+
+      { }
       <ActionSheet
         ref={actionSheet}
         // title={'Choose one option'}
@@ -6031,6 +6163,32 @@ function Cart({ navigation, route }) {
         destructiveButtonIndex={2}
         onPress={(index) => cameraHandle(index)}
       />
+      <Modal
+        onBackdropPress={() => updateState({ isModalVisibleForPayFlutterWave: false, placeLoader: false })}
+        isVisible={isModalVisibleForPayFlutterWave}
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end',
+          // marginBottom: 20,
+        }}>
+        <View style={{ padding: moderateScale(20), backgroundColor: colors?.white, height: height / 8, justifyContent: 'flex-end' }}>
+          <PayWithFlutterwave
+            onAbort={() => updateState({ isModalVisibleForPayFlutterWave: false, placeLoader: false })}
+            onRedirect={handleOnRedirect}
+            options={{
+              tx_ref: generateTransactionRef(10),
+              authorization: appData?.profile?.preferences?.flutterwave_public_key,
+              customer: {
+                email: userData?.email,
+                name: userData?.name,
+              },
+              amount: paymentDataFlutterWave?.total_payable_amount,
+              currency: currencies?.primary_currency?.iso_code,
+              payment_options: 'card'
+            }}
+          />
+        </View>
+      </Modal>
     </WrapperContainer>
   );
 }

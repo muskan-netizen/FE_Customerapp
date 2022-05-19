@@ -37,6 +37,7 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   width,
@@ -44,8 +45,10 @@ import {
 import { MyDarkTheme } from '../../styles/theme';
 import { currencyNumberFormatter } from '../../utils/commonFunction';
 import { getImageUrl, showError } from '../../utils/helperFunctions';
-import { payWithCard } from '../../utils/paystackMethod';
+import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
 import stylesFun from './styles';
+import { PayWithFlutterwave } from 'flutterwave-react-native';
+import Modal from 'react-native-modal';
 
 export default function AddMoney({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -64,6 +67,8 @@ export default function AddMoney({ navigation }) {
     selectedPaymentMethod: null,
     isLoadingB: false,
     cardInfo: null,
+    isModalVisibleForPayFlutterWave: false,
+    paymentDataFlutterWave: null
   });
   //update your state
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -85,6 +90,8 @@ export default function AddMoney({ navigation }) {
     amount,
     isLoadingB,
     cardInfo,
+    isModalVisibleForPayFlutterWave,
+    paymentDataFlutterWave
   } = state;
   useEffect(() => {
     getListOfPaymentMethod();
@@ -128,7 +135,7 @@ export default function AddMoney({ navigation }) {
   //Error handling in screen
   const errorMethod = (error) => {
     console.log(error, 'errorerrorerror');
-    updateState({ isLoading: false, isLoadingB: false, isRefreshing: false });
+    updateState({ isLoading: false, isLoadingB: false, isRefreshing: false, isModalVisibleForPayFlutterWave: false });
     showError(error?.message || error?.error);
   };
 
@@ -427,6 +434,18 @@ export default function AddMoney({ navigation }) {
       openPayTabs(paymentData)
       return
     }
+    if (selectedPaymentMethod?.id == 30) {
+      let paymentData = {
+        payment_option_id: selectedPaymentMethod?.id,
+        total_payable_amount: amount,
+        selectedPayment: selectedPaymentMethod,
+      }
+      updateState({
+        isModalVisibleForPayFlutterWave: true,
+        paymentDataFlutterWave: paymentData
+      })
+      return
+    }
     if (selectedPaymentMethod?.off_site == 1) {
       _webPayment();
       return;
@@ -436,36 +455,70 @@ export default function AddMoney({ navigation }) {
 
   };
 
-  // const openPayTabs = async(data) =>{
-  //   console.log("datadata",data)
-  //   try {
-  //     const res = await payWithCard(data)
-  //     console.log("payWithCard res++++",res)
+  //flutter wave
+  var redirectTimeout;
+  const handleOnRedirect = (data) => {
+    console.log("flutterwaveresponse", data);
+    clearTimeout(redirectTimeout);
+    redirectTimeout = setTimeout(() => {
+      // do something with the result
+      updateState({ isModalVisibleForPayFlutterWave: false })
+    }, 200);
+    try {
 
-  //     if (!!res?.transactionReference) {
-  //       const data = {};
-  //       data['amount'] = amount;
-  //       data['transaction_id'] = res?.transactionReference
-  //       actions.walletCredit(data, {
-  //           code: appData?.profile?.code,
-  //           currency: currencies?.primary_currency?.id,
-  //           language: languages?.primary_language?.id,
-  //         })
-  //         .then((res) => {
-  //           Alert.alert('', strings.PAYMENT_SUCCESS, [
-  //             {
-  //               text: strings.OK,
-  //               onPress: () => console.log('Okay pressed'),
-  //             },
-  //           ]);
-  //           navigation.navigate(navigationStrings.WALLET);
-  //         })
-  //         .catch(errorMethod);
-  //     }
-  //   } catch (error) {
-  //     console.log('error raised',error)
-  //   }
-  // }
+      if (data && data?.transaction_id) {
+        let apiData = {
+          payment_option_id: paymentDataFlutterWave?.payment_option_id,
+          transaction_id: data?.transaction_id,
+          amount: paymentDataFlutterWave?.total_payable_amount,
+          action: 'wallet',
+        }
+
+        console.log(apiData, "apiData");
+        actions
+          .openSdkUrl(
+            `/${paymentDataFlutterWave?.selectedPayment?.code?.toLowerCase()}`,
+            apiData,
+            {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+            },
+          )
+          .then((res) => {
+            console.log(res, "resfrompaytab");
+            if (res && res?.status == "Success") {
+              navigation.goBack()
+
+            } else {
+              redirectTimeout = setTimeout(() => {
+                // do something with the result
+                updateState({ isModalVisibleForPayFlutterWave: false })
+              }, 200);
+            }
+
+          })
+          .catch(errorMethod);
+      } else {
+        redirectTimeout = setTimeout(() => {
+          // do something with the result
+          updateState({ isModalVisibleForPayFlutterWave: false })
+        }, 200);
+
+      }
+    } catch (error) {
+      console.log('error raised', error)
+      redirectTimeout = setTimeout(() => {
+        // do something with the result
+        updateState({ isModalVisibleForPayFlutterWave: false })
+      }, 200);
+    }
+
+
+
+  }
+  //flutter wave
+
 
   const _checkoutPayment = (token) => {
     if (amount == '') {
@@ -889,6 +942,34 @@ export default function AddMoney({ navigation }) {
       ) : (
         mainView()
       )}
+
+      <Modal
+        onBackdropPress={() => updateState({ isModalVisibleForPayFlutterWave: false, })}
+        isVisible={isModalVisibleForPayFlutterWave}
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end',
+          // marginBottom: 20,
+        }}>
+        <View style={{ padding: moderateScale(20), backgroundColor: colors?.white, height: height / 8, justifyContent: 'flex-end' }}>
+          <PayWithFlutterwave
+            onAbort={() => updateState({ isModalVisibleForPayFlutterWave: false, })}
+            onRedirect={handleOnRedirect}
+            options={{
+              tx_ref: generateTransactionRef(10),
+              authorization: appData?.profile?.preferences?.flutterwave_public_key,
+              customer: {
+                email: userData?.email,
+                name: userData?.name,
+              },
+              amount: paymentDataFlutterWave?.total_payable_amount,
+              currency: currencies?.primary_currency?.iso_code,
+              payment_options: 'card'
+            }}
+
+          />
+        </View>
+      </Modal>
     </WrapperContainer>
   );
 }

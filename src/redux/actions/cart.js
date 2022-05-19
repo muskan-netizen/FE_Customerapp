@@ -29,6 +29,9 @@ import {
   ORDER_AFTER_PAYMENT,
   PAYTABURL,
   CANCELPAYTABURL,
+  FLUTTERWAVEURL,
+  SDKPAYMENTWAVEURL,
+  SDKPAYMENTCANCELWAVEURL,
 } from '../../config/urls';
 import {
   apiGet,
@@ -462,3 +465,35 @@ export function cancelPaytabUrl(data = {}, headers = {}) {
   });
 }
 
+
+//FLutterWave
+
+
+//Flutter wave card payment method
+export function openSdkUrl(query = '', data = {}, headers = {}) {
+  console.log('payment++ data', data);
+  return new Promise((resolve, reject) => {
+    apiPost(SDKPAYMENTWAVEURL + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+
+//Cancel Flutter wave card payment method
+export function cancelSdkUrl(query = '', data = {}, headers = {}) {
+  console.log('payment++ data', data);
+  return new Promise((resolve, reject) => {
+    apiPost(SDKPAYMENTCANCELWAVEURL + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}

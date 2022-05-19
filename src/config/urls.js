@@ -5,6 +5,10 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 
 
+
+
+
+// 
 //Vishwas
 // export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
 
@@ -30,6 +34,8 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://mandaexpress.com/api/v1';
 // export const API_BASE_URL = 'https://canupickmeup.com/api/v1';
 
+
+
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1';  //sales demo
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
@@ -49,7 +55,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://961a-112-196-88-218.ngrok.io/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.98.185:8060/api/v1'; // sujata
 // export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1'; //dinesh sir
-// export const API_BASE_URL = 'http://192.168.97.160:9090/api/v1'; //inderjeet sir
+// export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1'; //inderjeet sir
 //  export const API_BASE_URL = 'http://192.168.101.187:8003/api/v1'; 
 // export const API_BASE_URL = 'https://876c-114-134-24-242.ngrok.io/api/v1'; // gourav sir
 // export const API_BASE_URL = 'http://192.168.96.127:8005/api/v1'; // Gourav sir
@@ -313,9 +319,11 @@ export const VENDOR_CATEGORIES = getApiUrl(
   '/mystore/vendor/product-category/list',
 );
 export const ALL_VENDOR_DATA = getApiUrl(
-  '/mystore/vendor/products-with-category/list',);
+  '/mystore/vendor/products-with-category/list');
 export const ORDER_AFTER_PAYMENT = getApiUrl('/order/after/payment');
 
 export const PAYTABURL = getApiUrl('/payment/complete/paytab');
 export const CANCELPAYTABURL = getApiUrl('/payment/failed/paytab');
 
+export const SDKPAYMENTWAVEURL = getApiUrl('/payment/sdk_complete');
+export const SDKPAYMENTCANCELWAVEURL = getApiUrl('/payment/sdk_failed');
