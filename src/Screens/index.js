@@ -134,3 +134,9 @@ export {default as ScrollableCategory} from './ScrollableCategory/ScrollableCate
 export {default as Cashfree} from './PaymentGateways/Cashfree';
 export {default as Easebuzz} from './PaymentGateways/Easebuzz';
 export {default as ToyyibPay} from './PaymentGateways/ToyyibPay';
+export {default as Mpaisa} from './PaymentGateways/Mpaisa';
+export {default as WindCave} from './PaymentGateways/WindCave';
+export {default as PayPhone} from './PaymentGateways/PayPhone';
+
+
+

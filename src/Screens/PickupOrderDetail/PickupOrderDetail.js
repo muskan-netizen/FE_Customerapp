@@ -83,6 +83,7 @@ export default function PickupOrderDetail({navigation, route}) {
   //     )
   //   : null;
   const urlValue = `/pickup-delivery/order-tracking-details`;
+  
 
   useFocusEffect(
     React.useCallback(() => {

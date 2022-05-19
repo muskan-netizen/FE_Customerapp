@@ -165,7 +165,7 @@ export default function Subscriptions2({ navigation, route }) {
   //Subscribe for specific plan
   const selectSpecificSubscriptionPlan = (item) => {
     console.log(item, '>>>>>>>>>>>>>selectSpecificSubscriptionPlan');
-    updateState({ isLoading: true, planPrice: item?.price });
+    updateState({ isLoading: true, planPrice: 120.00 });
     actions
       .selectSpecificSubscriptionPlan(
         `/${item?.slug}`,

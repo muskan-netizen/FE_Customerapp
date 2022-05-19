@@ -641,14 +641,12 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
-
         case appIds.share:
           updateState({
             shortCode: shortCodes.share,
             isShortcodePrefilled: true,
           });
           break;
-
         case appIds.pickmeup:
           updateState({
             shortCode: shortCodes.pickmeup,
@@ -750,7 +748,6 @@ export default function ShortCode({ route, navigation }) {
             shortCode: shortCodes.zestyclickz,
             isShortcodePrefilled: true,
           });
-          break;
           break;
         case appIds.bakesale:
           updateState({
@@ -973,7 +970,6 @@ export default function ShortCode({ route, navigation }) {
             shortCode: shortCodes.instashop,
             isShortcodePrefilled: true,
           });
-          s;
           break;
         case appIds.shoorafresh:
           updateState({
@@ -1016,7 +1012,6 @@ export default function ShortCode({ route, navigation }) {
             shortCode: shortCodes.cabway,
             isShortcodePrefilled: true,
           });
-          break;
           break;
         case appIds.tajammul:
           updateState({
@@ -1874,13 +1869,12 @@ export default function ShortCode({ route, navigation }) {
             shortCode: shortCodes.cartnar,
             isShortcodePrefilled: true,
           });
+          break;
         case appIds.uven:
           updateState({
             shortCode: shortCodes.uven,
             isShortcodePrefilled: true,
           });
-          break;
-
           break;
         case appIds.pAS41:
           updateState({

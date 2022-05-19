@@ -386,6 +386,7 @@ function Cart({ navigation, route }) {
         },
       )
       .then((res) => {
+        console.log(res, "ressssssss")
         closeForm();
         actions.cartItemQty(res);
         console.log('cart details>>>', res);
@@ -941,6 +942,22 @@ function Cart({ navigation, route }) {
 
         break;
 
+
+      case 29: //Easebuzz Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.MPAISA, paymentData);
+        break;
+
+      case 34: //Easebuzz Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.WINDCAVE, paymentData);
+        break;
+
+      case 32: //Easebuzz Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.PAYPHONE, paymentData);
+        break;
+
       default:
         if (
           !!businessType &&
@@ -1117,7 +1134,7 @@ function Cart({ navigation, route }) {
         });
         console.log('paymebnt res', res);
         checkPaymentOptions(res);
-        if (selectedPayment?.id != 17 && selectedPayment?.id != 4 && selectedPayment?.id != 27 && selectedPayment?.id != 26 && selectedPayment?.id != 30) {
+        if (selectedPayment?.id != 32 && selectedPayment?.id != 17 && selectedPayment?.id != 4 && selectedPayment?.id != 27 && selectedPayment?.id != 26 && selectedPayment?.id != 30 && selectedPayment?.id != 29 && selectedPayment?.id != 34) {
           setCartItems([]);
           setCartData({});
           if (selectedPayment?.id == 1 || res?.data?.payable_amount == 0) {
@@ -1319,7 +1336,7 @@ function Cart({ navigation, route }) {
 
     if (!!userData?.auth_token) {
       if (
-        !!cartData?.closed_store_order_scheduled &&
+        !!cartData?.closed_store_order_scheduled && cartData?.products[0]?.vendor?.is_vendor_closed &&
         !localeSheduledOrderDate
       ) {
         showInfo(strings.SCHEDULE_DATE_REQUIRED);
@@ -1564,7 +1581,7 @@ function Cart({ navigation, route }) {
       })
       .catch(errorMethod);
   };
-
+  console.log(cartData, 'cartDataaaaa');
   // const _createPaymentMethod = async (cardInfo, res2) => {
   //   console.log(cardInfo, '_createPaymentMethod>>>ardInfo');
   //   if (res2) {
@@ -1823,7 +1840,9 @@ function Cart({ navigation, route }) {
           updateState({ isLoadingB: false });
         }
       })
-      .catch(errorMethod);
+      .catch(
+        errorMethod
+      );
   };
 
   //Offline payments
@@ -1910,7 +1929,6 @@ function Cart({ navigation, route }) {
       errorMethod(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }
   };
-
   const _renderRazor = () => {
     updateState({ isLoadingB: true });
     let options = {
@@ -2370,7 +2388,7 @@ function Cart({ navigation, route }) {
               </Text>
             </TouchableOpacity>
 
-            {!!cartData?.closed_store_order_scheduled ? (
+            {(!!cartData?.closed_store_order_scheduled && !!item?.vendor?.is_vendor_closed) ? (
               <Text
                 style={{
                   ...styles.priceItemLabel2,
@@ -2539,7 +2557,8 @@ function Cart({ navigation, route }) {
                                   )
                                   }`}
                               </Text>{' '}
-                              X {i?.quantity} ={' '}
+                              {i?.quantity}
+                              X  ={' '}
                               <Text
                                 style={{
                                   color: isDarkMode
@@ -3512,6 +3531,7 @@ function Cart({ navigation, route }) {
             isDarkMode ? colors.textGreyB : colors.textGreyB
           }
           placeholder={strings.SPECIAL_INSTRUCTION}
+          returnKeyType={"next"}
         />
         {/* <View style={{ height: moderateScaleVertical(20) }} /> */}
 

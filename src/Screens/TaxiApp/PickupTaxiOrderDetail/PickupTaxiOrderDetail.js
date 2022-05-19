@@ -66,6 +66,20 @@ import {currencyNumberFormatter} from '../../../utils/commonFunction';
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+// import 'moment/locale/fr';
+// import 'moment/locale/ar';
+// import 'moment/locale/de';
+// import 'moment/locale/es';
+// import 'moment/locale/hi';
+// import 'moment/locale/pt';
+// import 'moment/locale/ru';
+// import 'moment/locale/sv';
+// import 'moment/locale/tr';
+// import 'moment/locale/vi';
+// import 'moment/locale/zh-cn';
+// import 'moment/locale/zh-hk';
+// import 'moment/locale/zh-mo';
+// import 'moment/locale/zh-tw';
 
 export default function PickupTaxiOrderDetail({navigation, route}) {
   const {themeColor, themeToggle} = useSelector(
@@ -164,7 +178,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     () => {
       navigation.navigate(screenName, {data});
     };
-
   // const urlValue = paramData?.orderDetail?.dispatch_traking_url
   //   ? (paramData?.orderDetail?.dispatch_traking_url).replace(
   //       '/order/',
@@ -746,7 +759,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       // );
       return;
     }
-
+ 
     updateState({isBtnLoader: true, cancelError: null});
 
     const apiData = {
@@ -773,7 +786,9 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       })
       .catch(errorMethod);
   };
-
+  
+  let subscription_percent=  
+  (orderFullDetail?.order_details?.order_detail?.subscription_discount/orderFullDetail?.order_details?.order_detail?.total_amount)*100
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -999,13 +1014,14 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     <Text style={styles.datePriceText}>
                       {moment(
                         new Date(orderFullDetail?.order_details?.created_at),
-                      )
-                        .locale(
-                          languages?.primary_language?.sort_code
+                      ) 
+                       .locale(
+                         languages?.primary_language?.sort_code
                             ? languages?.primary_language?.sort_code
                             : 'en',
-                        )
-                        .format('MMMM Do YYYY, h:mm a')}
+                       )
+                       .format('MMMM Do YYYY, h:mm a')}
+                       
                     </Text>
                     <Text
                       style={{
@@ -1449,6 +1465,36 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
+                   {!!orderFullDetail?.order_details?.order_detail?.subscription_discount 
+                      &&(
+                      <View>
+                        <LeftRightText
+                          leftText={`${strings.SUBSCRIPTION_DISCOUNT} ${"("} ${
+                            currencyNumberFormatter(
+                              Number(
+                                subscription_percent
+                              ),
+                              appData?.profile?.preferences?.digit_after_decimal,
+                            )
+                          
+                          } ${'%)'}`}
+                          rightText={` ${"-"} ${
+                            currencies?.primary_currency?.symbol
+                          } ${currencyNumberFormatter(
+                            Number(
+                              orderFullDetail?.order_details?.order_detail?.subscription_discount ,
+                            ),
+                            appData?.profile?.preferences?.digit_after_decimal,
+                          )} `}
+                          leftTextStyle={{color: themeColors.primary_color}}
+                          rightTextStyle={{color: themeColors.primary_color}}
+                          isDarkMode={isDarkMode}
+                          MyDarkTheme={MyDarkTheme}
+                          marginBottom={0}
+                        />
+                        <View style={styles.horizontalLine} />
+                      </View>
+                    )} 
                   {!!orderFullDetail?.order_details?.taxable_amount &&
                     orderFullDetail?.order_details?.taxable_amount !==
                       '0.00' && (
@@ -1502,7 +1548,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                             currencies?.primary_currency?.symbol
                           } ${currencyNumberFormatter(
                             Number(
-                              orderFullDetail?.order_details?.payable_amount,
+                              orderFullDetail?.order_details?.order_detail?.payable_amount,
                             ),
                             appData?.profile?.preferences?.digit_after_decimal,
                           )}`}

@@ -1,6 +1,6 @@
 import {
     PaymentSDKBillingDetails, PaymentSDKConfiguration, RNPaymentSDKLibrary
-} from '@paytabs/react-native-paytabs';
+ } from '@paytabs/react-native-paytabs';
 
 import { PayWithFlutterwave } from 'flutterwave-react-native';
 

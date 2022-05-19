@@ -503,6 +503,7 @@ export default function Signup({navigation}) {
               onChangeText={_onChangeText('name')}
               placeholder={strings.YOUR_NAME}
               value={name}
+              returnKeyType={'next'}
             />
             <BorderTextInput
               // autoCapitalize={'none'}
@@ -510,6 +511,7 @@ export default function Signup({navigation}) {
               placeholder={strings.YOUR_EMAIL}
               value={email}
               keyboardType={'email-address'}
+              returnKeyType={'next'}
             />
             <PhoneNumberInput
               onCountryChange={_onCountryChange}
@@ -522,6 +524,7 @@ export default function Signup({navigation}) {
               placeholder={strings.YOUR_PHONE_NUMBER}
               keyboardType={'phone-pad'}
               color={isDarkMode ? MyDarkTheme.colors.text : null}
+              
             />
             <View style={{height: moderateScaleVertical(20)}} />
             <BorderTextInput
@@ -539,6 +542,7 @@ export default function Signup({navigation}) {
               onPressRight={showHidePassword}
               isShowPassword={isShowPassword}
               rightIconStyle={{}}
+              returnKeyType={'next'}
             />
             <BorderTextInput
               onChangeText={_onChangeText('referralCode')}
@@ -547,6 +551,7 @@ export default function Signup({navigation}) {
                 strings.ENTERREFERALCODE
               }
               value={referralCode}
+              returnKeyType={'next'}
             />
 
             {!isEmpty(addtionalTextInputs) &&
