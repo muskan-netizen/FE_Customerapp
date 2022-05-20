@@ -10,7 +10,7 @@
 // export const API_BASE_URL = 'https://pideunfleety.com/api/v1';
 // export const API_BASE_URL = 'https://heybuddy.com.mx/api/v1';
 // export const API_BASE_URL = 'https://peerdeliveries.com/api/v1';
-export const API_BASE_URL = 'https://hometowndelivery21.com/api/v1';
+// export const API_BASE_URL = 'https://hometowndelivery21.com/api/v1';
 // export const API_BASE_URL = 'https://click2deliver.co.uk/api/v1';
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
 
@@ -35,7 +35,7 @@ export const API_BASE_URL = 'https://hometowndelivery21.com/api/v1';
 // export const API_BASE_URL = 'https://yogofood-order.netsolutionindia.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1';
-// export const API_BASE_URL = 'https://releezer.shop/api/v1';
+export const API_BASE_URL = 'https://releezer.shop/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://order.veg-hub.com/api/v1';
@@ -111,7 +111,7 @@ export const API_BASE_URL = 'https://hometowndelivery21.com/api/v1';
 // export const API_BASE_URL = 'https://tranzonline.com/api/v1';
 // export const API_BASE_URL = 'https://hellodeliver.in/api/v1';
 // export const API_BASE_URL = 'https://yohopartner.com/api/v1'
-// export const API_BASE_URL = 'https://swiftandvalu.com/api/v1';
+// export const API_BASE_URL = 'https://order.swiftandvalu.com/api/v1';
 // export const API_BASE_URL = 'https://baytukom.royoorders.com/api/v1';
 //export const API_BASE_URL = 'https://marketplace.verofax.com/api/v1';
 // export const API_BASE_URL = 'https://agrionline.ph/api/v1';

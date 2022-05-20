@@ -2045,7 +2045,6 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
-          // ////
           case appIds.weTogether:
           updateState({
             shortCode: shortCodes.weTogether,
