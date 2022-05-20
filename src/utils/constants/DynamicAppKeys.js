@@ -744,7 +744,7 @@ const appIds = {
     android: 'com.application.empire',
   }),
   expressdelivery: Platform.select({
-    ios: 'com.customer.expressdelivery',
+    ios: 'com.expressdelivery.customer',
     android: 'com.expressdelivery',
   }),
   booziedoozie: Platform.select({
