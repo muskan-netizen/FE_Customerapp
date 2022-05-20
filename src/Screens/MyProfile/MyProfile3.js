@@ -48,9 +48,11 @@ import {
 import {androidCameraPermission} from '../../utils/permissions';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
-
+import codes from 'country-calling-code';
+import * as RNLocalize from "react-native-localize";
 var addtionSelectedImageIndex = null;
 var addtionSelectedImage = null;
+var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
 
 export default function MyProfile3({route, navigation}) {
   const darkthemeusingDevice = useDarkMode();

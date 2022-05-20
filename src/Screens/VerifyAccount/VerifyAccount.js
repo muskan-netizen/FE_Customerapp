@@ -31,6 +31,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import {useNavigation} from '@react-navigation/native';
 import {checkIsAdmin} from '../../utils/utils';
+import codes from 'country-calling-code';
+import * as RNLocalize from "react-native-localize";
 
 export default function VerifyAccount({navigation, route}) {
   console.log("verify account route",route)
@@ -42,6 +44,7 @@ export default function VerifyAccount({navigation, route}) {
   const appData = useSelector((state) => state?.initBoot?.appData);
   let paramsData = route?.params;
   const userData = useSelector((state) => state?.auth?.userData);
+  var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
 
   console.log("user data",userData)
   const [state, setState] = useState({

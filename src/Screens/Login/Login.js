@@ -25,6 +25,8 @@ import colors from '../../styles/colors';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import CountryPicker from 'react-native-country-picker-modal';
 import { enums } from '../../utils/enums';
+import * as RNLocalize from "react-native-localize";
+import codes from 'country-calling-code';
 
 import {
   moderateScale,
@@ -43,10 +45,11 @@ import { useDarkMode } from 'react-native-dark-mode';
 import { MyDarkTheme } from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { mobile } from 'is_js';
+// import { mobile } from 'is_js';
 import { useNavigation } from '@react-navigation/native';
 import { checkIsAdmin } from '../../utils/utils';
 import { resetStackAndNavigate } from '../../navigation/NavigationService';
+import PhoneInput from "react-native-phone-number-input";
 
 export default function Login({ navigation }) {
   const navigation_ = useNavigation();
@@ -61,7 +64,9 @@ export default function Login({ navigation }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   var clonedState = {};
-
+  console.log(codes, "codes")
+  var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
+  console.log(getPhonesCallingCodeAndCountryData, "getPhonesCallingCodeAndCountryData");
   const [state, setState] = useState({
     // email: '',
     password: '',
@@ -75,10 +80,10 @@ export default function Login({ navigation }) {
     },
     mobilNo: {
       phoneNo: '',
-      callingCode: appData?.profile.country?.phonecode
+      callingCode: getPhonesCallingCodeAndCountryData && getPhonesCallingCodeAndCountryData.length ? getPhonesCallingCodeAndCountryData[0].countryCodes[0] : appData?.profile.country?.phonecode
         ? appData?.profile?.country?.phonecode
         : '91',
-      cca2: appData?.profile?.country?.code
+      cca2: getPhonesCallingCodeAndCountryData && getPhonesCallingCodeAndCountryData.length ? getPhonesCallingCodeAndCountryData[0].isoCode2 : appData?.profile?.country?.code
         ? appData?.profile?.country?.code
         : 'IN',
       focus: false,
@@ -267,7 +272,7 @@ export default function Login({ navigation }) {
   //Error handling in api
   const errorMethod = (error) => {
     console.log(error, 'errorrrrr');
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     setTimeout(() => {
       showError(error?.message || error?.error);
     }, 500);
@@ -532,7 +537,7 @@ export default function Login({ navigation }) {
               onPressRight={showHidePassword}
               isShowPassword={isShowPassword}
               rightIconStyle={{}}
-              // returnKeyType={'next'}
+            // returnKeyType={'next'}
             />
           </>
         )}
@@ -549,6 +554,24 @@ export default function Login({ navigation }) {
               color={isDarkMode ? MyDarkTheme.colors.text : null}
               autoFocus={true}
             />
+
+            {/* <PhoneInput
+              // ref={phoneInput}
+              // defaultValue={value}
+              defaultCode="DM"
+              layout="first"
+              onChangeText={(text) => {
+                // setValue(text);
+                console.log(text, "text>text");
+              }}
+              onChangeFormattedText={(text) => {
+                // setFormattedValue(text);
+                console.log(text, "text>tex>>>>>>t");
+              }}
+              withDarkTheme
+              withShadow
+              autoFocus
+            /> */}
           </View>
         )}
 
