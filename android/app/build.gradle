@@ -644,7 +644,6 @@ android {
                 resValue "string", "app_name", "Drus"
                 resValue "string", "host_name", ""
             }
-        
             arenagrub{
                 dimension "appType"
                 versionCode 1
@@ -5279,6 +5278,26 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.jiffex'
             resValue "string", "app_name", "Jiffex"
+            resValue "string", "host_name", ""
+            }
+            clickService{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.clickService'
+            resValue "string", "app_name", "Click Service"
+            resValue "string", "host_name", ""
+            }
+            amazingTaxi{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.amazingTaxi'
+            resValue "string", "app_name", "Amazing Taxi"
             resValue "string", "host_name", ""
             }
     }

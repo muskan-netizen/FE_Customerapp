@@ -325,6 +325,8 @@ const shortCodes = {
   fazeiTeam:'0eca90',
   weTogether:'686b6c',
   jiffex:'67dcfd',
+  clickService:'cb17f2',
+  amazingTaxi:'32e266',
 };
 
 
@@ -1622,6 +1624,14 @@ const appIds = {
   jiffex: Platform.select({
     ios: 'com.jiffex',
     android: 'com.jiffex',
+  }),
+  clickService: Platform.select({
+    ios: 'com.clickService',
+    android: 'com.clickService',
+  }),
+  amazingTaxi: Platform.select({
+    ios: 'com.amazingTaxi',
+    android: 'com.amazingTaxi',
   }),
 };
 

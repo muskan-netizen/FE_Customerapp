@@ -2045,15 +2045,27 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.weTogether:
+        case appIds.weTogether:
           updateState({
             shortCode: shortCodes.weTogether,
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.jiffex:
+        case appIds.jiffex:
           updateState({
             shortCode: shortCodes.jiffex,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.clickService:
+          updateState({
+            shortCode: shortCodes.clickService,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.amazingTaxi:
+          updateState({
+            shortCode: shortCodes.amazingTaxi,
             isShortcodePrefilled: true,
           });
           break;

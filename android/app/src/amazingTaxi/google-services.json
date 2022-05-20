@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "600309201306",
+    "project_id": "amazingtaxi-bd0f7",
+    "storage_bucket": "amazingtaxi-bd0f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600309201306:android:7b744aec0d56122428a223",
+        "android_client_info": {
+          "package_name": "com.amazingTaxi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "600309201306-cbo2cjksg8drb3pkhp1rcudcs1qg4p0j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amazingTaxi",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "600309201306-k6p88du99rbs9e7euq79pft0ptjb7d3u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amazingTaxi",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "600309201306-llip2v936mmff314kspa3chp72gl14ib.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amazingTaxi",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "600309201306-pc4ugb684oahkgvggmcjfbt9vpbubn2q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcTUHAuTMQ7_GBVICGaadw9xD6WiH1hEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "600309201306-pc4ugb684oahkgvggmcjfbt9vpbubn2q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "600309201306-u5u9u0g8dau7vc6eg6hd0jo39rk051t6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.amazingTaxi"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
