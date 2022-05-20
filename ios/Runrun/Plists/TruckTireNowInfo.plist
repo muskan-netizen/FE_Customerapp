@@ -107,7 +107,7 @@
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play using while you are hiking</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to access to microphone to get your voice.</string>
+	<string>$(PRODUCT_NAME) would like to access to microphone to get your voice to search products and vendors.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to access to speech recognition to get speech results.</string>
 	<key>NSCameraUsageDescription</key>
