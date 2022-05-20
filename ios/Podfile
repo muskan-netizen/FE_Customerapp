@@ -1633,6 +1633,16 @@ target 'Jiffex' do
   
 end
 
+# ClickService Target
+target 'ClickService' do
+  
+end
+
+# AmazingTaxi Target
+target 'AmazingTaxi' do
+  
+end
+
 
 
 
