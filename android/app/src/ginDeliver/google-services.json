@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "10526771192",
+    "project_id": "gindeliver-c3384",
+    "storage_bucket": "gindeliver-c3384.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10526771192:android:dd2dfdd40e3d02e036380d",
+        "android_client_info": {
+          "package_name": "com.ginDeliver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10526771192-gt7p4mjderhhk63p7ugr9p3g4bvoeanc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ginDeliver",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "10526771192-irmgegoomgt9tjfa48r73pmk2jtk71ja.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ginDeliver",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "10526771192-rt5uinlq6242no9t8h66vr0fddc2dl6p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ginDeliver",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "10526771192-0sn1atqqaoo5pp5k46re446uphadvon8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuYn0HG4v5v2765fO3jZx_kn5n1hha5vo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10526771192-0sn1atqqaoo5pp5k46re446uphadvon8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "10526771192-tl5nfpbmglo9rp748nib8m7rkfsvk08a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ginDeliver"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

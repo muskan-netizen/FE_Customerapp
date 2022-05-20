@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>298214533870-42q02begbsbcra6sgk6a03pha9be9paq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.298214533870-42q02begbsbcra6sgk6a03pha9be9paq</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>298214533870-4g5nmubnkt6epsncpboclhqtbirjrjju.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD7FzyQLBwlQVCJSVOn7mlAulArZ1CzJbw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>298214533870</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.jiffex</string>
+	<key>PROJECT_ID</key>
+	<string>jiffex</string>
+	<key>STORAGE_BUCKET</key>
+	<string>jiffex.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:298214533870:ios:248cf825d3feb9d066a1ff</string>
+</dict>
+</plist>

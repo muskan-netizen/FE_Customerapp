@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>896798245087-22kiqlq6k3s9d89ap2gc6d1ubt1trn24.apps.googleusercontent.com</string>
+	<string>896798245087-39rnt4a2d1o4l5a5oh994mge89p6i02r.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.896798245087-22kiqlq6k3s9d89ap2gc6d1ubt1trn24</string>
+	<string>com.googleusercontent.apps.896798245087-39rnt4a2d1o4l5a5oh994mge89p6i02r</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>896798245087-ea80bc52b8f3gj26dc9n9t3ejlic58u5.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.click2deliver</string>
+	<string>com.click2deliver.customer</string>
 	<key>PROJECT_ID</key>
 	<string>click2deliver-ef20b</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:896798245087:ios:8668437057deb3d34ca96a</string>
+	<string>1:896798245087:ios:ba5334c19bd0f18b4ca96a</string>
 </dict>
 </plist>

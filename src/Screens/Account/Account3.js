@@ -54,6 +54,7 @@ export default function Account3({navigation}) {
 
   // const profileInfo = appData?.profile;
   // console.log("account profile info",profileInfo)
+  console.log(preferences,"appDataappDataappDataappDataappDataappData");
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -126,12 +127,14 @@ export default function Account3({navigation}) {
 
   // initalize Zendesk
 
+  console.log(preferences?.customer_support_application_id,  preferences?.customer_support_key,"preferencespreferences");
+
   useEffect(() => {
     ZendeskChat.init(
-      'HHcdbCRPXg50IOREwHwMBxZskL21F4BK',
-      'c1fc7b86f377bad268b4796430a25dac3e54b985b5319f2e',
+      `${preferences?.customer_support_key}`,
+      `${preferences?.customer_support_application_id}`,
     );
-  }, []);
+  }, [preferences?.customer_support_application_id,preferences?.customer_support_key]);
 
   const onStartSupportChat = () => {
     ZendeskChat.setVisitorInfo({
@@ -172,6 +175,7 @@ export default function Account3({navigation}) {
         }
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
       /> */}
+      
         {shortCodeStatus ? (
           <Header
             noLeftIcon={false}
