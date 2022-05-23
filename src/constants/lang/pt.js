@@ -933,4 +933,9 @@ Amount`,
   ORDER_CANCELLED: 'Order Cancelled',
   SPECIFIC_INSTRUCTIONS:'Specific Instructions',
   THANKS_FOR_YOUR_PURCHASE:'Thanks for your purchase.',
+  BOOK_FOR_A_FRIEND: 'Book For a friend',
+  ENTER_FRIEND_DETAILS: "Enter your Friend's details",
+  BOOK_FOR_ME: 'Book For Me',
+  BOOK_FOR_FRIEND:'Book For Friend'
+
 };

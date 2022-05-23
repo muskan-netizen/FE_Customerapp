@@ -407,7 +407,6 @@ export default {
   NAME: 'name',
   EMAIL: 'e-mail',
   PLEASE_ENTER_VALID_EMAIL: 'Please enter valid email',
-  PHONE_NUMBER: 'phone number',
   PLEASE_ENTER_VALID_PHONE_NUMBER: 'Please enter valid mobile number',
   OTP: 'otp ',
   PASSWORD: 'password',
@@ -929,4 +928,9 @@ Amount`,
   SPECIFIC_INSTRUCTIONS: 'Specific Instructions',
   THANKS_FOR_YOUR_PURCHASE: 'Thank you for your purchase.',
   PLEASE_SELECT_DATETIME_SLOTS: 'Please select date and time slots',
+  BOOK_FOR_A_FRIEND: 'Book For a friend',
+  ENTER_FRIEND_DETAILS: "Enter your Friend's details",
+  BOOK_FOR_ME: 'Book For Me',
+  BOOK_FOR_FRIEND:'Book For Friend'
+
 };

@@ -448,6 +448,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       data['coupon_id'] = couponInfo?.id;
     }
     data['order_time_zone'] = RNLocalize.getTimeZone();
+    data['type'] =paramData?.friendBookingDetails?.bookingType;
+    data['friendName']=paramData?.friendBookingDetails?.bookingType?paramData?.friendBookingDetails?.name:'',
+    data['friendPhoneNumber']=paramData?.friendBookingDetails?.bookingType?paramData?.friendBookingDetails?.mobileNumber:'',
 
     console.log(JSON.stringify(data),"dataaaaa")
 

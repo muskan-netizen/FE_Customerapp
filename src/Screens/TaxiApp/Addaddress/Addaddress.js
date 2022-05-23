@@ -1,5 +1,5 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import {
   Animated,
   Image,
@@ -9,13 +9,21 @@ import {
   ScrollView,
   Keyboard,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import {getBundleId} from 'react-native-device-info';
+import CountryPicker, { Flag } from 'react-native-country-picker-modal';
+import { useDarkMode } from 'react-native-dark-mode';
+import { getBundleId } from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
+import BorderTextInput from '../../../Components/BorderTextInput';
+import CustomSwitchTabBar from '../../../Components/CustomSwitchTabBar';
 import GradientButton from '../../../Components/GradientButton';
+import Modal from '../../../Components/Modal';
+import PhoneNumberInput from '../../../Components/PhoneNumberInput';
+import PhoneNumberInput2 from '../../../Components/PhoneNumberInput2';
+import PhoneNumberInputWithUnderline from '../../../Components/PhoneNumberInputWithUnderline';
 import SearchPlaces from '../../../Components/SearchPlaces';
+import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang/index';
@@ -27,33 +35,38 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
+  height
 } from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../../styles/theme';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import {
   getAddressFromLatLong,
   getCurrentLocationFromApi,
   getPlaceDetails,
   nearbySearch,
 } from '../../../utils/googlePlaceApi';
-import {getAddressComponent, showError} from '../../../utils/helperFunctions';
+import { getAddressComponent, showError, getColorCodeWithOpactiyNumber } from '../../../utils/helperFunctions';
 import {
   chekLocationPermission,
   locationPermission,
 } from '../../../utils/permissions';
+import validations from '../../../utils/validations';
 import stylesFun from './styles';
 
-export default function Addaddress({navigation, route}) {
+export default function Addaddress({ navigation, route }) {
   const paramData = route?.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const userData = useSelector((state) => state?.auth?.userData);
-  const {appData, allAddresss, themeColors, appStyle} = useSelector(
+  const { appData, allAddresss, themeColors, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
-  const {pickUpTimeType} = useSelector((state) => state?.home);
+
+  const { book_for_friend } = appData?.profile?.preferences
+  const { pickUpTimeType } = useSelector((state) => state?.home);
 
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
@@ -93,6 +106,13 @@ export default function Addaddress({navigation, route}) {
       },
     ],
     nearByAddressess: [],
+    selectedTab: 1,
+    bookForFriendModalVisible: false,
+    friendName: '',
+    friendMobileNumber: '',
+    countryPickerModalVisible: false,
+    cca2: 'IN',
+    callingCode: '91'
   });
   const {
     pageNo,
@@ -111,12 +131,19 @@ export default function Addaddress({navigation, route}) {
     dropLocationData,
     nearByAddressess,
     curLatLng,
+    selectedTab,
+    bookForFriendModalVisible,
+    friendName,
+    friendMobileNumber,
+    countryPickerModalVisible,
+    cca2,
+    callingCode
   } = state;
 
   useEffect(() => {
     if (!!paramData?.prefillAdress) {
       console.log('param data address', paramData);
-      const {prefillAdress} = paramData;
+      const { prefillAdress } = paramData;
       const cloneArr = dropLocationData;
       cloneArr[searchResult.currentIndex].pre_address =
         prefillAdress?.pre_address;
@@ -124,12 +151,13 @@ export default function Addaddress({navigation, route}) {
       cloneArr[searchResult.currentIndex].longitude = prefillAdress?.longitude;
       cloneArr[searchResult.currentIndex].task_type_id =
         prefillAdress?.task_type_id;
+
       // cloneArr[searchResult.currentIndex].post_code = addressData?.pincode
       // cloneArr[searchResult.currentIndex].short_name = addressData?.states || addressData?.state
       cloneArr[searchResult?.currentIndex].address = prefillAdress?.address;
       updateState({
         dropLocationData: cloneArr,
-        searchResult: {currentIndex: searchResult?.currentIndex, data: []},
+        searchResult: { currentIndex: searchResult?.currentIndex, data: [] },
       });
       console.log('clone array result', cloneArr);
     }
@@ -138,7 +166,6 @@ export default function Addaddress({navigation, route}) {
     }
   }, [paramData]);
 
-  console.log(appData, 'appData?.profile?');
   //get All address
   const getAllAddress = () => {
     actions
@@ -158,7 +185,7 @@ export default function Addaddress({navigation, route}) {
         });
       })
       .catch((error) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         showError(error?.message || error?.error);
       });
   };
@@ -169,20 +196,20 @@ export default function Addaddress({navigation, route}) {
         if (result === 'goback') {
           navigation.goBack();
         }
-        Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+        Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
       })
       .catch((error) => console.log('error while accessing location', error));
   }, []);
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const styles = stylesFun({
     fontFamily,
     themeColors,
     savedAddressViewHeight,
     avalibleValueInTextInput,
   });
-  const commonStyles = commonStylesFun({fontFamily});
-  const {profile} = appData;
+  const commonStyles = commonStylesFun({ fontFamily });
+  const { profile } = appData;
 
   // useFocusEffect(
   //   React.useCallback(() => {
@@ -194,16 +221,15 @@ export default function Addaddress({navigation, route}) {
     const latlongData = appData?.profile?.preferences
       ?.pickup_delivery_service_area
       ? {
-          code: appData?.profile?.code,
-          latitude: lat,
-          longitude: lng,
-        }
-      : {code: appData?.profile?.code};
+        code: appData?.profile?.code,
+        latitude: lat,
+        longitude: lng,
+      }
+      : { code: appData?.profile?.code };
 
     actions
       .getDataByCategoryId(
-        `/${
-          paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id
+        `/${paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id
         }?limit=${limit}&page=${pageNo}`,
         {},
         latlongData,
@@ -221,12 +247,12 @@ export default function Addaddress({navigation, route}) {
       })
       .catch((err) => {
         console.log(err, 'error in Api ');
-        updateState({isLoading: false, isRefreshing: false});
+        updateState({ isLoading: false, isRefreshing: false });
       });
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isRefreshing: false});
+    updateState({ isLoading: false, isRefreshing: false });
     showError(error?.message || error?.error);
   };
 
@@ -235,7 +261,7 @@ export default function Addaddress({navigation, route}) {
       latitude: dropLocationData[updateIndex]?.latitude || 0,
       longitude: dropLocationData[updateIndex]?.longitude || 0,
     };
-    updateState({searchResult: {...searchResult, currentIndex: updateIndex}});
+    updateState({ searchResult: { ...searchResult, currentIndex: updateIndex } });
     navigation.navigate(navigationStrings.PINADDRESSONMAP, {
       task_id: updateIndex == 0 ? 1 : 2,
       pickUpLocationLatLng:
@@ -258,7 +284,7 @@ export default function Addaddress({navigation, route}) {
                 themeColors.primary_color,
                 themeColors.primary_color,
               ]}
-              textStyle={{textTransform: 'none', fontSize: textScale(16)}}
+              textStyle={{ textTransform: 'none', fontSize: textScale(16) }}
               onPress={saveAddressAndRedirect}
               marginTop={moderateScaleVertical(10)}
               marginBottom={moderateScaleVertical(10)}
@@ -279,7 +305,7 @@ export default function Addaddress({navigation, route}) {
                 themeColors.primary_color,
                 themeColors.primary_color,
               ]}
-              textStyle={{textTransform: 'none', fontSize: textScale(16)}}
+              textStyle={{ textTransform: 'none', fontSize: textScale(16) }}
               onPress={saveAddressAndRedirect}
               marginTop={moderateScaleVertical(10)}
               marginBottom={moderateScaleVertical(10)}
@@ -306,20 +332,49 @@ export default function Addaddress({navigation, route}) {
     );
   };
 
-  const saveAddressAndRedirect = () => {
+
+
+
+  const isValidData = () => {
+    const error = validations({
+      name: friendName,
+      phoneNumber: friendMobileNumber
+    });
+    if (error) {
+      alert(error)
+      return;
+    }
+    return true;
+  };
+
+
+
+
+
+  const moveToNextScreenWithAddressData = () => {
     let location = [];
     if (
       dropLocationData[0].pre_address == '' ||
       dropLocationData[0].address == ''
     ) {
-      showError(strings.PLEASE_SELECT_PICKUP_LOCATION);
+      if (selectedTab == 2) {
+        alert(strings.PLEASE_SELECT_PICKUP_LOCATION)
+      } else {
+        showError(strings.PLEASE_SELECT_PICKUP_LOCATION);
+      }
+
       return;
     }
     if (
       dropLocationData[1].pre_address == '' ||
       dropLocationData[1].address == ''
     ) {
-      showError(strings.PLEASE_SELECT_DROP_OFF_LOCATION);
+      if (selectedTab == 2) {
+        alert(strings.PLEASE_SELECT_DROP_OFF_LOCATION)
+      } else {
+        showError(strings.PLEASE_SELECT_DROP_OFF_LOCATION);
+      }
+
       return;
     }
     dropLocationData.map((val) => {
@@ -343,8 +398,49 @@ export default function Addaddress({navigation, route}) {
       cabVendors: pickUpVendors,
       datetime: paramData?.datetime,
       pickUpTimeType: pickUpTimeType,
+      friendBookingDetails: {
+        bookingType:selectedTab==2?1:0,
+        name: friendName,
+        mobileNumber: `${callingCode[0]} ${friendMobileNumber}`
+      }
     });
+  }
+
+
+
+  const saveAddressAndRedirect = () => {
+    if (selectedTab == 2) {
+      updateState({
+        bookForFriendModalVisible: true
+      })
+    }
+    else {
+      moveToNextScreenWithAddressData()
+    }
   };
+
+
+  const setDataAndBookRideForFriend = () => {
+
+    const checkValid = isValidData();
+    if (!checkValid) {
+      return;
+    }
+    updateState({
+      bookForFriendModalVisible: false
+    })
+
+
+
+    moveToNextScreenWithAddressData()
+  }
+
+  const _onChangeText = (key) => (val) => {
+    updateState({ [key]: val });
+  };
+
+
+
 
   useEffect(() => {
     getLiveLocation();
@@ -353,9 +449,9 @@ export default function Addaddress({navigation, route}) {
   const getLiveLocation = async () => {
     const locPermissionDenied = await locationPermission();
     if (locPermissionDenied) {
-      const {latitude, longitude} = await getCurrentLocationFromApi();
+      const { latitude, longitude } = await getCurrentLocationFromApi();
       // console.log("get live location after 4 second")
-      updateState({curLatLng: {latitude, longitude}});
+      updateState({ curLatLng: { latitude, longitude } });
       getNearByAddress(`${latitude}, ${longitude}`);
       getAllPickUpVendors(latitude, longitude);
       if (!paramData?.prefillAdress) {
@@ -371,7 +467,7 @@ export default function Addaddress({navigation, route}) {
         cloneArr[0].latitude = latitude;
         cloneArr[0].longitude = longitude;
         cloneArr[0].task_type_id = 1;
-        updateState({dropLocationData: cloneArr});
+        updateState({ dropLocationData: cloneArr });
       }
     }
   };
@@ -398,9 +494,9 @@ export default function Addaddress({navigation, route}) {
             : colors.lightGreyBg,
         }}
         onPress={() =>
-          onPressAddress({place_id: item.place_id, name: item.name})
+          onPressAddress({ place_id: item.place_id, name: item.name })
         }>
-        <View style={{flex: 0.12}}>
+        <View style={{ flex: 0.12 }}>
           <Image
             style={{
               height: moderateScale(24),
@@ -410,7 +506,7 @@ export default function Addaddress({navigation, route}) {
             source={imagePath.RecentLocationImage}
           />
         </View>
-        <View style={{flex: 0.9}}>
+        <View style={{ flex: 0.9 }}>
           <Text
             style={{
               fontSize: textScale(12),
@@ -441,13 +537,13 @@ export default function Addaddress({navigation, route}) {
       // updateAddress(place.description)
       const cloneArr = dropLocationData;
       cloneArr[searchResult.currentIndex].pre_address = place?.name;
-      updateState({dropLocationData: cloneArr});
+      updateState({ dropLocationData: cloneArr });
       try {
         let res = await getPlaceDetails(
           place.place_id,
           profile?.preferences?.map_key,
         );
-        const {result} = res;
+        const { result } = res;
 
         let addressData = getAddressComponent(result);
         cloneArr[searchResult.currentIndex].latitude =
@@ -463,7 +559,7 @@ export default function Addaddress({navigation, route}) {
           result?.formatted_address;
         updateState({
           dropLocationData: cloneArr,
-          searchResult: {currentIndex: searchResult.currentIndex, data: []},
+          searchResult: { currentIndex: searchResult.currentIndex, data: [] },
         });
       } catch (error) {
         console.log("something wen't wrong");
@@ -488,10 +584,10 @@ export default function Addaddress({navigation, route}) {
             : colors.lightGreyBg,
         }}
         onPress={() => onPressAddress(item)}>
-        <View style={{flex: 0.15}}>
+        <View style={{ flex: 0.15 }}>
           <Image source={imagePath.RecentLocationImage} />
         </View>
-        <View style={{flex: 0.9}}>
+        <View style={{ flex: 0.9 }}>
           <Text
             style={{
               fontSize: textScale(12),
@@ -523,7 +619,7 @@ export default function Addaddress({navigation, route}) {
           return item;
         }
       });
-      updateState({dropLocationData: removeItem});
+      updateState({ dropLocationData: removeItem });
       return;
     }
 
@@ -546,7 +642,7 @@ export default function Addaddress({navigation, route}) {
           longitude: 0,
         });
         isFill = true;
-        updateState({dropLocationData: [...dropLocationData, ...x]});
+        updateState({ dropLocationData: [...dropLocationData, ...x] });
       }
     } else {
       alert(strings.PLEASE_FILL_ADDRESS);
@@ -556,14 +652,142 @@ export default function Addaddress({navigation, route}) {
   const updateCurValues = (text, i) => {
     const cloneArr = dropLocationData;
     cloneArr[i].pre_address = text;
-    updateState({dropLocationData: cloneArr});
+    updateState({ dropLocationData: cloneArr });
   };
 
   const onClearAddress = (text, i) => {
     const cloneArr = dropLocationData;
     cloneArr[i].pre_address = text;
-    updateState({dropLocationData: cloneArr});
+    updateState({ dropLocationData: cloneArr });
   };
+
+
+
+  const selecteSwitchTab = (selectedTab) => {
+    switch (selectedTab) {
+      case 1:
+        updateState({
+          selectedTab: 1
+        })
+        break;
+      case 2:
+        updateState({
+          selectedTab: 2
+        })
+      default:
+        break;
+    }
+  }
+  const onClose = () => {
+    updateState({
+      bookForFriendModalVisible: false
+    })
+  }
+
+
+  const _onCountryChange = (data) => {
+    updateState({
+      countryPickerModalVisible: false, bookForFriendModalVisible: true, cca2: data.cca2,
+      callingCode: data.callingCode,
+    });
+
+  };
+  const _openCountryPicker = () => {
+    updateState({
+      bookForFriendModalVisible: false
+    })
+    setTimeout(() => {
+      updateState({ countryPickerModalVisible: true });
+    }, 500);
+  };
+  const _onCountryPickerModalClose = () => {
+    updateState({ countryPickerModalVisible: false });
+  };
+
+  const modalHeaderContainer = () => {
+    return (
+      <View style={styles.modalHeaderMainContainer}>
+        <Text style={styles.bookFriendText}>{strings.BOOK_FOR_A_FRIEND}</Text>
+        <Text style={{ fontSize: textScale(11), }}>{strings.ENTER_FRIEND_DETAILS}</Text>
+      </View>
+    )
+  }
+
+  const modalMainContent = () => {
+    return (
+      <View style={styles.modalMainContainer} >
+        <TextInputWithUnderlineAndLabel
+          onChangeText={_onChangeText('friendName')}
+          label={'Full Name'}
+          value={friendName}
+          containerStyle={styles.textInputContainer}
+          undnerlinecolor={colors.textGreyB}
+          labelStyle={{
+            color: colors.textGreyB,
+            fontSize: textScale(12),
+          }}
+          txtInputStyle={styles.textInputStyle}
+          returnKeyType={'next'}
+        />
+        <View>
+          <Text style={styles.phoneNumberTextInputLabel}>{strings.PHONE_NUMBER}</Text>
+          <View style={styles.phoneNumberInnerContainer}>
+            <TouchableOpacity
+              style={styles.countryPickerContainer}
+              onPress={_openCountryPicker}
+            >
+              <View
+                style={styles.countryPickerInnerContainer}>
+                <Text>+</Text>
+                <Text
+                  style={styles.callingCodeText}>
+                  {callingCode}
+                </Text>
+              </View>
+
+              <View style={{ marginRight: moderateScale(-10) }}>
+                <Flag countryCode={cca2} />
+              </View>
+              <Image source={imagePath.dropdownTriangle} />
+            </TouchableOpacity>
+
+            <TextInputWithUnderlineAndLabel
+              onChangeText={_onChangeText('friendMobileNumber')}
+              value={friendMobileNumber}
+              containerStyle={styles.phoneNumberInnput}
+              undnerlinecolor={colors.textGreyB}
+              labelStyle={{
+                color: colors.textGreyB,
+                fontSize: textScale(12),
+              }}
+              txtInputStyle={styles.textInputStyle}
+              returnKeyType={'next'}
+              keyboardType={'numeric'}
+            />
+
+          </View>
+        </View>
+        <GradientButton
+          colorsArray={[
+            themeColors.primary_color,
+            themeColors.primary_color,
+          ]}
+          textStyle={{ textTransform: 'none', fontSize: textScale(16) }}
+          onPress={setDataAndBookRideForFriend}
+          marginTop={moderateScaleVertical(10)}
+          marginBottom={moderateScaleVertical(10)}
+          btnText={strings.CONTINUE}
+          btnStyle={{ borderRadius: moderateScale(8) }}
+        />
+
+      </View>
+    )
+  }
+
+
+
+
+
 
   return (
     <WrapperContainer
@@ -577,7 +801,7 @@ export default function Addaddress({navigation, route}) {
           marginHorizontal: moderateScale(16),
         }}>
         <TouchableOpacity
-          style={{flex: 0.5}}
+          style={{ flex: 0.5 }}
           onPress={() => navigation.goBack()}
           hitSlop={{
             top: 30,
@@ -602,8 +826,22 @@ export default function Addaddress({navigation, route}) {
         </Text>
       </View>
 
-      <View style={{flex: 1}}>
-        <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
+
+          {book_for_friend ? <CustomSwitchTabBar firstTabBarCustomStyle={{
+            backgroundColor: selectedTab == 1 ? themeColors?.primary_color : colors.lightGray,
+          }}
+            secondTabBarCustomStyle={{
+              backgroundColor: selectedTab == 2 ? themeColors?.primary_color : colors.lightGray,
+            }}
+            firstTabBarTextStyle={{ color: selectedTab == 1 ? colors?.white : colors.black, }}
+            SecondTabBarTextStyle={{ color: selectedTab == 2 ? colors?.white : colors.black, }}
+            selecteSwitchTab={selecteSwitchTab}
+          />
+            : null}
+
+
           <View
             style={{
               ...commonStyles.shadowStyle,
@@ -611,7 +849,7 @@ export default function Addaddress({navigation, route}) {
                 ? MyDarkTheme.colors.background
                 : colors.white,
               paddingBottom: moderateScaleVertical(8),
-              shadowOffset: {width: 0, height: moderateScale(6)},
+              shadowOffset: { width: 0, height: moderateScale(6) },
               borderRadius: 0,
             }}>
             {dropLocationData.map((val, i) => {
@@ -624,10 +862,10 @@ export default function Addaddress({navigation, route}) {
                     marginVertical: moderateScale(2),
                     justifyContent: 'space-between',
                   }}>
-                  <View style={{flex: 0.05, alignItems: 'center'}}>
+                  <View style={{ flex: 0.05, alignItems: 'center' }}>
                     {renderDotContainer(i)}
                   </View>
-                  <View style={{flex: 0.9, marginLeft: moderateScale(20)}}>
+                  <View style={{ flex: 0.9, marginLeft: moderateScale(20) }}>
                     <SearchPlaces
                       curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
                       autoFocus={
@@ -637,28 +875,28 @@ export default function Addaddress({navigation, route}) {
                         i == 0
                           ? strings.PICKUP_LOCATION
                           : i == 1
-                          ? strings.WHERETO
-                          : strings.ADD_A_STOP
+                            ? strings.WHERETO
+                            : strings.ADD_A_STOP
                       }
                       value={val.pre_address} // instant update search value
                       mapKey={profile?.preferences?.map_key} //send here google Key
                       fetchArrayResult={(data) =>
                         updateState({
-                          searchResult: {data: data, currentIndex: i},
+                          searchResult: { data: data, currentIndex: i },
                         })
                       }
                       setValue={(text) => updateCurValues(text, i)} //return & update on change text value
                       onFocus={() =>
                         updateState({
-                          searchResult: {...searchResult, currentIndex: i},
+                          searchResult: { ...searchResult, currentIndex: i },
                         })
                       }
                       _moveToNextScreen={() => _moveToNextScreen(i)}
                       onClear={() => onClearAddress('', i)}
                     />
                   </View>
-                  <View style={{marginHorizontal: moderateScale(8)}} />
-                  <View style={{flex: 0.1}}>
+                  <View style={{ marginHorizontal: moderateScale(8) }} />
+                  <View style={{ flex: 0.1 }}>
                     {i >= 1 && (
                       <TouchableOpacity
                         hitSlop={{
@@ -703,10 +941,10 @@ export default function Addaddress({navigation, route}) {
             showsVerticalScrollIndicator={false}
             onMomentumScrollBegin={() => Keyboard.dismiss()}>
             {!!searchResult?.data && searchResult?.data.length > 0 ? (
-              <View style={{marginTop: moderateScaleVertical(16)}}>
-                <View style={{...styles.savedAddressView}}>
+              <View style={{ marginTop: moderateScaleVertical(16) }}>
+                <View style={{ ...styles.savedAddressView }}>
                   <Image
-                    style={{marginHorizontal: moderateScale(12)}}
+                    style={{ marginHorizontal: moderateScale(12) }}
                     source={imagePath.starRoundedBackground}
                   />
                   <Text
@@ -725,10 +963,10 @@ export default function Addaddress({navigation, route}) {
                 })}
               </View>
             ) : (
-              <View style={{marginTop: moderateScaleVertical(16)}}>
-                <View style={{...styles.savedAddressView}}>
+              <View style={{ marginTop: moderateScaleVertical(16) }}>
+                <View style={{ ...styles.savedAddressView }}>
                   <Image
-                    style={{marginHorizontal: moderateScale(12)}}
+                    style={{ marginHorizontal: moderateScale(12) }}
                     source={imagePath.starRoundedBackground}
                   />
                   <Text
@@ -749,8 +987,29 @@ export default function Addaddress({navigation, route}) {
             )}
           </ScrollView>
         </View>
+
       </View>
       {renderbtn()}
+      <Modal
+        onClose={onClose}
+        mainViewStyle={{ position: 'absolute', bottom: 0, width: width, borderTopStartRadius: 0, borderTopRightRadius: 0 }}
+        isVisible={bookForFriendModalVisible} topCustomComponent={modalHeaderContainer}
+        modalMainContent={modalMainContent}
+        modalStyle={{ marginHorizontal: moderateScaleVertical(0), marginVertical: moderateScale(0) }}
+      />
+      {countryPickerModalVisible && (
+        <CountryPicker
+          cca2={cca2}
+          withCallingCode={callingCode}
+          visible={countryPickerModalVisible}
+          withFlagButton={false}
+          withFilter
+          onClose={_onCountryPickerModalClose}
+          onSelect={_onCountryChange}
+        />
+      )}
+
+
     </WrapperContainer>
   );
 }
