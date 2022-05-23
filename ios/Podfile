@@ -1473,120 +1473,120 @@ target 'CurblerLLC' do
   
 end
 
-# # Cartnar Target
-# target 'Cartnar' do
+# Cartnar Target
+target 'Cartnar' do
+  
+end
+
+# Uven Target
+target 'Uven' do
+  
+end
+
+# PAS41 Target
+target 'PAS41' do
+  
+end
+
+# FreshFarmz Target
+target 'FreshFarmz' do
+  
+end
+
+# Ryde Target
+target 'Ryde' do
+  
+end
+
+# WaterTaxi Target
+target 'WaterTaxi' do
+  
+end
+
+# Muvpod Target
+target 'Muvpod' do
+  
+end
+
+# Smile Target
+target 'Smile' do
+  
+end
+
+# # CaronaTaxi Target
+# target 'CaronaTaxi' do
   
 # end
 
-# # Uven Target
-# target 'Uven' do
+# Arwin Target
+# target 'Arwin' do
   
 # end
 
-# # PAS41 Target
-# target 'PAS41' do
+# # MarjMarketplace Target
+# target 'MarjMarketplace' do
   
 # end
 
-# # FreshFarmz Target
-# target 'FreshFarmz' do
+# EVSOnTheGo Target
+target 'EVSOnTheGo' do
   
-# end
+end
 
-# # Ryde Target
-# target 'Ryde' do
+# Kazakazi Target
+target 'Kazakazi' do
   
-# end
+end
 
-# # WaterTaxi Target
-# target 'WaterTaxi' do
+# Papiruki Target
+target 'Papiruki' do
   
-# end
+end
 
-# # Muvpod Target
-# target 'Muvpod' do
+# MarkSoublet Target
+target 'MarkSoublet' do
   
-# end
+end
 
-# # Smile Target
-# target 'Smile' do
+# AmstaFood Target
+target 'AmstaFood' do
   
-# end
+end
 
-# # # CaronaTaxi Target
-# # target 'CaronaTaxi' do
+# Toor Target
+target 'Toor' do
   
-# # end
+end
 
-# # Arwin Target
-# # target 'Arwin' do
+# PeerDeliveries Target
+target 'PeerDeliveries' do
   
-# # end
+end
 
-# # # MarjMarketplace Target
-# # target 'MarjMarketplace' do
+# Swan Target
+target 'Swan' do
   
-# # end
+end
 
-# # EVSOnTheGo Target
-# target 'EVSOnTheGo' do
+# SCOOTUP Target
+target 'SCOOTUP' do
   
-# end
+end
 
-# # Kazakazi Target
-# target 'Kazakazi' do
+# ButlerDelivery Target
+target 'ButlerDelivery' do
   
-# end
+end
 
-# # Papiruki Target
-# target 'Papiruki' do
+# PatrolNow Target
+target 'PatrolNow' do
   
-# end
+end
 
-# # MarkSoublet Target
-# target 'MarkSoublet' do
+# SwatiRX Target
+target 'SwatiRX' do
   
-# end
-
-# # AmstaFood Target
-# target 'AmstaFood' do
-  
-# end
-
-# # Toor Target
-# target 'Toor' do
-  
-# end
-
-# # PeerDeliveries Target
-# target 'PeerDeliveries' do
-  
-# end
-
-# # Swan Target
-# target 'Swan' do
-  
-# end
-
-# # SCOOTUP Target
-# target 'SCOOTUP' do
-  
-# end
-
-# # ButlerDelivery Target
-# target 'ButlerDelivery' do
-  
-# end
-
-# # PatrolNow Target
-# target 'PatrolNow' do
-  
-# end
-
-# # SwatiRX Target
-# target 'SwatiRX' do
-  
-# end
+end
 
 # ChowHub Target
 target 'ChowHub' do
@@ -1640,6 +1640,16 @@ end
 
 # AmazingTaxi Target
 target 'AmazingTaxi' do
+  
+end
+
+# JazzyBug Target
+target 'JazzyBug' do
+  
+end
+
+# Myfarma Target
+target 'Myfarma' do
   
 end
 

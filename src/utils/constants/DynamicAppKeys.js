@@ -327,6 +327,8 @@ const shortCodes = {
   jiffex:'67dcfd',
   clickService:'cb17f2',
   amazingTaxi:'32e266',
+  jazzyBug:'3441ec',
+  myfarma:'612a45',
 };
 
 
@@ -1633,6 +1635,15 @@ const appIds = {
     ios: 'com.amazingTaxi',
     android: 'com.amazingTaxi',
   }),
+  jazzyBug: Platform.select({
+    ios: 'com.jazzyBug',
+    android: 'com.jazzyBug',
+  }),
+  myfarma: Platform.select({
+    ios: 'com.myfarma',
+    android: 'com.myfarma',
+  }),
+  
 };
 
 const socialKeys = {

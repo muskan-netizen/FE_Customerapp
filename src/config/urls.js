@@ -1,7 +1,7 @@
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 
 //
@@ -44,7 +44,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://order.veg-hub.com/api/v1';
 // export const API_BASE_URL = 'https://seratho.com/api/v1';
 // export const API_BASE_URL = 'https://bezaliohub.com/api/v1';
-// export const API_BASE_URL = 'https://mrhealth.in/api/v1';
+export const API_BASE_URL = 'https://mrhealth.in/api/v1';
 
 // export const API_BASE_URL = 'https://food-order.konga.com/api/v1';
 // export const API_BASE_URL = 'https://order.menusat.app/api/v1';
