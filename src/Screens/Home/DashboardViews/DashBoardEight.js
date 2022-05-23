@@ -279,6 +279,9 @@ export default function DashBoardEight({
                           style={{
                             fontSize: textScale(10),
                             fontFamily: fontFamily.regular,
+                            color: isDarkMode
+                              ? colors.black
+                              : colors.white,
                           }}>
                           {!seeMore ? strings.SEE_MORE : strings.SEE_LESS}
                         </Text>
