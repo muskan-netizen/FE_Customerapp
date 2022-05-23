@@ -1189,10 +1189,10 @@ target 'ScoopaTechnologies' do
   
 end
 
-# #BoltDelivery Target
-# target 'BoltDelivery' do
+#BoltDelivery Target
+target 'BoltDelivery' do
   
-# end
+end
 
 # # GamaDelivery Target
 # target 'GamaDelivery' do
@@ -1513,20 +1513,20 @@ target 'Smile' do
   
 end
 
-# # CaronaTaxi Target
-# target 'CaronaTaxi' do
+# CaronaTaxi Target
+target 'CaronaTaxi' do
   
-# end
+end
 
 # Arwin Target
-# target 'Arwin' do
+target 'Arwin' do
   
-# end
+end
 
-# # MarjMarketplace Target
-# target 'MarjMarketplace' do
+# MarjMarketplace Target
+target 'MarjMarketplace' do
   
-# end
+end
 
 # EVSOnTheGo Target
 target 'EVSOnTheGo' do
