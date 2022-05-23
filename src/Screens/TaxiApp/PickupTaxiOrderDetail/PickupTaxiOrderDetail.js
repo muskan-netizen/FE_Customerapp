@@ -370,6 +370,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         },
       )
       .then((res) => {
+        console.log(res, 'ressssssss');
         // console.log(res, 'agent location2');
         // if (JSON.stringify(tasks) !== JSON.stringify(res?.data?.tasks)) {
         updateState({
@@ -498,7 +499,11 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     //   },
     // });
   };
-
+  const dialCall = (number, type = 'phone') => {
+    type === 'phone'
+      ? Communications.phonecall(number.toString(), true)
+      : Communications.text(number.toString());
+  };
   const _modalClose = () => {
     updateState({
       isVisible: false,
@@ -607,11 +612,11 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   const _selectOrderDetailView = () => {
     return (
       <TaxiOrderDetailView
-        orderDetail={orderDetail}
+        // orderDetail={orderDetail}
         isLoading={isLoading}
-        agent_image={agent_image}
-        agent_location={agent_location}
-        productDetail={paramData?.orderDetail}
+        // agent_image={agent_image}
+        // agent_location={agent_location}
+        // productDetail={paramData?.orderDetail}
         onPressCall={(orderDetail) => _onPressCall(orderDetail)}
         onPressChat={(orderDetail) => _onPressChat(orderDetail)}
       />
@@ -759,7 +764,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       // );
       return;
     }
- 
+
     updateState({isBtnLoader: true, cancelError: null});
 
     const apiData = {
@@ -786,9 +791,11 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       })
       .catch(errorMethod);
   };
-  
-  let subscription_percent=  
-  (orderFullDetail?.order_details?.order_detail?.subscription_discount/orderFullDetail?.order_details?.order_detail?.total_amount)*100
+
+  let subscription_percent =
+    (orderFullDetail?.order_details?.order_detail?.subscription_discount /
+      orderFullDetail?.order_details?.order_detail?.total_amount) *
+    100;
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -1014,14 +1021,13 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     <Text style={styles.datePriceText}>
                       {moment(
                         new Date(orderFullDetail?.order_details?.created_at),
-                      ) 
-                       .locale(
-                         languages?.primary_language?.sort_code
+                      )
+                        .locale(
+                          languages?.primary_language?.sort_code
                             ? languages?.primary_language?.sort_code
                             : 'en',
-                       )
-                       .format('MMMM Do YYYY, h:mm a')}
-                       
+                        )
+                        .format('MMMM Do YYYY, h:mm a')}
                     </Text>
                     <Text
                       style={{
@@ -1138,23 +1144,45 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                       }}>
-                      <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <View style={{flexDirection: 'row'}}>
                         <RoundImg
                           img={orderFullDetail?.agent_image}
-                          size={34}
+                          size={90}
                         />
                         <View style={{flexDirection: 'column'}}>
-                          <Text
-                            style={{
-                              ...styles.statusText,
-                              color: isDarkMode
-                                ? MyDarkTheme.colors.text
-                                : colors.black,
-                              marginLeft: moderateScale(10),
-                            }}>
-                            {orderFullDetail?.order?.name || ''}
-                          </Text>
+                          <View style={{flexDirection: 'row'}}>
+                            <Text
+                              style={{
+                                ...styles.statusText,
+                                fontSize: moderateScale(20),
+                                color: isDarkMode
+                                  ? MyDarkTheme.colors.text
+                                  : colors.primary_color,
+                                marginLeft: moderateScale(10),
+                              }}>
+                              {orderFullDetail?.order?.name || ''}
+                            </Text>
+                            <View
+                              style={{
+                                backgroundColor: colors.blackOpacity05,
+                                marginLeft: moderateScale(38),
+                                borderStyle: 'dashed',
+                                borderWidth:1
+                              }}>
+                              <Text
+                                style={{
+                                  ...styles.statusText,
+                                  fontSize: moderateScale(16),
+                                  color: isDarkMode
+                                    ? MyDarkTheme.colors.text
+                                    : themeColors.primary_color,
+                                    padding:moderateScale(4)
+                                }}>
+                                {orderDetail?.plate_number}
+                              </Text>
+                            </View>
+                          </View>
+
                           <Text
                             style={{
                               ...styles.statusText,
@@ -1174,6 +1202,48 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                               ),
                             ).join(0) + orderFullDetail?.order?.driver_id}
                           </Text>
+                          {orderFullDetail?.order?.phone_number && (
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                marginHorizontal: moderateScale(12),
+                                marginTop: moderateScale(12),
+                              }}>
+                              <TouchableOpacity
+                                onPress={() =>
+                                  dialCall(
+                                    orderFullDetail?.order?.phone_number,
+                                    'phone',
+                                  )
+                                }>
+                                <Image
+                                  source={imagePath.call2}
+                                  style={{
+                                    height: moderateScale(20),
+                                    width: moderateScale(20),
+                                    tintColor: themeColors.primary_color,
+                                    marginRight: moderateScale(20),
+                                  }}
+                                />
+                              </TouchableOpacity>
+                              <TouchableOpacity
+                                onPress={() =>
+                                  dialCall(
+                                    orderFullDetail?.order?.phone_number,
+                                    'text',
+                                  )
+                                }>
+                                <Image
+                                  source={imagePath.msg}
+                                  style={{
+                                    height: moderateScale(20),
+                                    width: moderateScale(20),
+                                    tintColor: themeColors.primary_color,
+                                  }}
+                                />
+                              </TouchableOpacity>
+                            </View>
+                          )}
                         </View>
                       </View>
 
@@ -1236,7 +1306,8 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                         />
                       </View>
                     )}
-                    <View style={styles.horizontalLine} />
+                    <View style={{...styles.horizontalLine,
+                    borderBottomColor: isDarkMode ? colors.whiteOpacity22 : colors.greyA,borderBottomWidth:0.6,}} />
                     <Text style={styles.deliveryProof}>
                       {strings.ORDER_DETAIL}
                     </Text>
@@ -1270,9 +1341,10 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                                     priority: FastImage.priority.high,
                                   }}
                                   style={{
-                                    height: moderateScale(40),
-                                    width: moderateScale(40),
-                                    borderRadius: moderateScale(4),
+                                    height: moderateScale(70),
+                                    width: moderateScale(70),
+                                    borderRadius: moderateScale(10),
+
                                   }}
                                 />
 
@@ -1285,6 +1357,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                                     marginLeft: moderateScale(10),
                                     width: moderateScale(200),
                                     // backgroundColor: 'red',
+                                    fontFamily: fontFamily.medium,
                                   }}>
                                   {val?.product_name || ''}
                                 </Text>
@@ -1345,6 +1418,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                                         ? MyDarkTheme.colors.text
                                         : colors.black,
                                       marginLeft: moderateScale(10),
+                                      fontFamily:fontFamily.bold
                                     }}>
                                     {
                                       orderFullDetail.order_details.products
@@ -1410,16 +1484,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                           }}>
                           {`${orderDetail?.color || ''}`}
                         </Text>
-                        <Text
-                          style={{
-                            ...styles.statusText,
-                            color: isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.black,
-                            marginLeft: moderateScale(10),
-                          }}>
-                          {orderDetail?.plate_number}
-                        </Text>
                       </View>
                     </View>
                   </View>
@@ -1434,81 +1498,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                         <LeftRightText
                           leftText={strings.DELIVERYFEE}
                           rightText={` ${currencies?.primary_currency?.symbol} ${orderFullDetail?.order_details?.delivery_fee}`}
-                          isDarkMode={isDarkMode}
-                          MyDarkTheme={MyDarkTheme}
-                          marginBottom={0}
-                        />
-                        <View style={styles.horizontalLine} />
-                      </View>
-                    )}
-
-                  {!!orderFullDetail?.order_details?.discount_amount &&
-                    orderFullDetail?.order_details?.discount_amount !==
-                      '0.00' && (
-                      <View>
-                        <LeftRightText
-                          leftText={strings.DISCOUNT}
-                          rightText={` ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
-                            Number(
-                              orderFullDetail?.order_details?.discount_amount,
-                            ),
-                            appData?.profile?.preferences?.digit_after_decimal,
-                          )}`}
-                          leftTextStyle={{color: themeColors.primary_color}}
-                          rightTextStyle={{color: themeColors.primary_color}}
-                          isDarkMode={isDarkMode}
-                          MyDarkTheme={MyDarkTheme}
-                          marginBottom={0}
-                        />
-                        <View style={styles.horizontalLine} />
-                      </View>
-                    )}
-                   {!!orderFullDetail?.order_details?.order_detail?.subscription_discount 
-                      &&(
-                      <View>
-                        <LeftRightText
-                          leftText={`${strings.SUBSCRIPTION_DISCOUNT} ${"("} ${
-                            currencyNumberFormatter(
-                              Number(
-                                subscription_percent
-                              ),
-                              appData?.profile?.preferences?.digit_after_decimal,
-                            )
-                          
-                          } ${'%)'}`}
-                          rightText={` ${"-"} ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
-                            Number(
-                              orderFullDetail?.order_details?.order_detail?.subscription_discount ,
-                            ),
-                            appData?.profile?.preferences?.digit_after_decimal,
-                          )} `}
-                          leftTextStyle={{color: themeColors.primary_color}}
-                          rightTextStyle={{color: themeColors.primary_color}}
-                          isDarkMode={isDarkMode}
-                          MyDarkTheme={MyDarkTheme}
-                          marginBottom={0}
-                        />
-                        <View style={styles.horizontalLine} />
-                      </View>
-                    )} 
-                  {!!orderFullDetail?.order_details?.taxable_amount &&
-                    orderFullDetail?.order_details?.taxable_amount !==
-                      '0.00' && (
-                      <View>
-                        <LeftRightText
-                          leftText={strings.TAX_AMOUNT}
-                          rightText={` ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
-                            Number(
-                              orderFullDetail?.order_details?.taxable_amount,
-                            ),
-                            appData?.profile?.preferences?.digit_after_decimal,
-                          )}`}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
                           marginBottom={0}
@@ -1537,6 +1526,78 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
+                  {!!orderFullDetail?.order_details?.discount_amount &&
+                    orderFullDetail?.order_details?.discount_amount !==
+                      '0.00' && (
+                      <View>
+                        <LeftRightText
+                          leftText={strings.DISCOUNT}
+                          rightText={` ${
+                            currencies?.primary_currency?.symbol
+                          } ${currencyNumberFormatter(
+                            Number(
+                              orderFullDetail?.order_details?.discount_amount,
+                            ),
+                            appData?.profile?.preferences?.digit_after_decimal,
+                          )}`}
+                          leftTextStyle={{color: themeColors.primary_color}}
+                          rightTextStyle={{color: themeColors.primary_color}}
+                          isDarkMode={isDarkMode}
+                          MyDarkTheme={MyDarkTheme}
+                          marginBottom={0}
+                        />
+                        <View style={styles.horizontalLine} />
+                      </View>
+                    )}
+                  {!!orderFullDetail?.order_details?.order_detail
+                    ?.subscription_discount && (
+                    <View>
+                      <LeftRightText
+                        leftText={`${
+                          strings.SUBSCRIPTION_DISCOUNT
+                        } ${'('} ${currencyNumberFormatter(
+                          Number(subscription_percent),
+                          appData?.profile?.preferences?.digit_after_decimal,
+                        )} ${'%)'}`}
+                        rightText={` ${'-'} ${
+                          currencies?.primary_currency?.symbol
+                        } ${currencyNumberFormatter(
+                          Number(
+                            orderFullDetail?.order_details?.order_detail
+                              ?.subscription_discount,
+                          ),
+                          appData?.profile?.preferences?.digit_after_decimal,
+                        )} `}
+                        leftTextStyle={{color: themeColors.primary_color}}
+                        rightTextStyle={{color: themeColors.primary_color}}
+                        isDarkMode={isDarkMode}
+                        MyDarkTheme={MyDarkTheme}
+                        marginBottom={0}
+                      />
+                      <View style={styles.horizontalLine} />
+                    </View>
+                  )}
+                  {!!orderFullDetail?.order_details?.taxable_amount &&
+                    orderFullDetail?.order_details?.taxable_amount !==
+                      '0.00' && (
+                      <View>
+                        <LeftRightText
+                          leftText={strings.TAX_AMOUNT}
+                          rightText={` ${
+                            currencies?.primary_currency?.symbol
+                          } ${currencyNumberFormatter(
+                            Number(
+                              orderFullDetail?.order_details?.taxable_amount,
+                            ),
+                            appData?.profile?.preferences?.digit_after_decimal,
+                          )}`}
+                          isDarkMode={isDarkMode}
+                          MyDarkTheme={MyDarkTheme}
+                          marginBottom={0}
+                        />
+                        <View style={styles.horizontalLine} />
+                      </View>
+                    )}
 
                   {!!orderFullDetail?.order_details?.payable_amount &&
                     orderFullDetail?.order_details?.payable_amount !==
@@ -1548,7 +1609,8 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                             currencies?.primary_currency?.symbol
                           } ${currencyNumberFormatter(
                             Number(
-                              orderFullDetail?.order_details?.order_detail?.payable_amount,
+                              orderFullDetail?.order_details?.order_detail
+                                ?.payable_amount,
                             ),
                             appData?.profile?.preferences?.digit_after_decimal,
                           )}`}

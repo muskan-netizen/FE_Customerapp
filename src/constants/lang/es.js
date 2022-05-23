@@ -940,4 +940,13 @@ export default {
   ORDER_TOTAL: 'Order Total',
   ORDERS: 'Orders',
   ORDER_CANCELLED: 'Order Cancelled',
+  SPECIFIC_INSTRUCTIONS:'Specific Instructions',
+  THANKS_FOR_YOUR_PURCHASE:'¡Gracias por tu compra!',
+  WHAT_WHOULD_YOU_LIKE_TO_DO: 'What would you like to do?',
+  ENTER_NEW_ADDRESS: 'new address',
+  PRODUCT_ORDER_FORM: 'Product Order Form',
+  FIXED_FEE: 'Fixed fee',
+  SELECT_VENDOR: 'Select a vendor',
+  ORDERS: 'Orders',
+  RECENTORDERS: 'Recent Orders',
 };

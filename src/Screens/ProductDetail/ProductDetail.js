@@ -1165,12 +1165,17 @@ export default function ProductDetail({route, navigation}) {
                         color: isDarkMode
                           ? MyDarkTheme.colors.text
                           : colors.black,
-                      }}>{`${currencies?.primary_currency.symbol} ${(
-                      Number(productPriceData?.multiplier) *
-                      Number(productPriceData?.price)
-                    ).toFixed(
-                      appData?.profile?.preferences?.digit_after_decimal,
-                    )}`}</Text>
+                      }}>
+                        {`${
+                              currencies?.primary_currency?.symbol
+                            } ${currencyNumberFormatter(
+                              // Number(productPriceData?.multiplier) *
+                                Number(productPriceData?.price) *
+                                Number(productQuantityForCart),
+                              appData?.profile?.preferences
+                                ?.digit_after_decimal,
+                            )}`}
+                      </Text>
                   </View>
                 </View>
 
@@ -1425,7 +1430,7 @@ export default function ProductDetail({route, navigation}) {
                             btnText={`${strings.ADD}  ${
                               currencies?.primary_currency?.symbol
                             } ${currencyNumberFormatter(
-                              Number(productPriceData?.multiplier) *
+                              // Number(productPriceData?.multiplier) *
                                 Number(productPriceData?.price) *
                                 Number(productQuantityForCart),
                               appData?.profile?.preferences

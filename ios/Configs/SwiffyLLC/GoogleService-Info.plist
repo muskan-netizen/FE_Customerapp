@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>620051186233-ng1jsn7mat2ulgcgt9ku5ovhr4jis3jg.apps.googleusercontent.com</string>
+	<string>1062617741416-4tb34lc1e43ra4a10n5pb4oir95cvj4c.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.620051186233-ng1jsn7mat2ulgcgt9ku5ovhr4jis3jg</string>
+	<string>com.googleusercontent.apps.1062617741416-4tb34lc1e43ra4a10n5pb4oir95cvj4c</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>620051186233-d61oobdnr4fqls3iu63e5kl24cp4eboq.apps.googleusercontent.com</string>
+	<string>1062617741416-2vuigvr74ect85i9gvlsj7228t6d3q4v.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCPyEoY9xeEz_bwGSh8DKISAd4X5FqZ-kk</string>
+	<string>AIzaSyCZ_PmgVAtwVEmViY6UpF203kPc0wYFnOo</string>
 	<key>GCM_SENDER_ID</key>
-	<string>620051186233</string>
+	<string>1062617741416</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.swiffyllc</string>
+	<string>com.swiffyllc.customer</string>
 	<key>PROJECT_ID</key>
-	<string>swiffyllc</string>
+	<string>swiffy-llc</string>
 	<key>STORAGE_BUCKET</key>
-	<string>swiffyllc.appspot.com</string>
+	<string>swiffy-llc.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:620051186233:ios:e8ca26348fbd7a5cf383e8</string>
+	<string>1:1062617741416:ios:e27c90dd351ba3e74a63dd</string>
 </dict>
 </plist>

@@ -54,6 +54,7 @@ export default function Account3({navigation}) {
 
   // const profileInfo = appData?.profile;
   // console.log("account profile info",profileInfo)
+  console.log(preferences,"appDataappDataappDataappDataappDataappData");
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -113,6 +114,8 @@ export default function Account3({navigation}) {
           onPress: () => {
             actions.userLogout();
             actions.cartItemQty('');
+            actions.saveAddress('');
+            actions.addSearchResults('clear');
             moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
           },
         },
@@ -124,12 +127,14 @@ export default function Account3({navigation}) {
 
   // initalize Zendesk
 
+  console.log(preferences?.customer_support_application_id,  preferences?.customer_support_key,"preferencespreferences");
+
   useEffect(() => {
     ZendeskChat.init(
-      'HHcdbCRPXg50IOREwHwMBxZskL21F4BK',
-      'c1fc7b86f377bad268b4796430a25dac3e54b985b5319f2e',
+      `${preferences?.customer_support_key}`,
+      `${preferences?.customer_support_application_id}`,
     );
-  }, []);
+  }, [preferences?.customer_support_application_id,preferences?.customer_support_key]);
 
   const onStartSupportChat = () => {
     ZendeskChat.setVisitorInfo({
@@ -170,6 +175,7 @@ export default function Account3({navigation}) {
         }
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
       /> */}
+      
         {shortCodeStatus ? (
           <Header
             noLeftIcon={false}
@@ -313,8 +319,7 @@ export default function Account3({navigation}) {
             />
           </TouchableOpacity>
         )} */}
-          {
-            !!userData?.auth_token &&
+          {!!userData?.auth_token &&
             (businessType == 4 ? null : (
               <ListItemHorizontal
                 centerContainerStyle={{flexDirection: 'row'}}
@@ -471,23 +476,21 @@ export default function Account3({navigation}) {
               />
             ))}
 
-         {
-           DeviceInfo.getBundleId()!=appIds.elcheregio && 
-          ( <ListItemHorizontal
-           centerContainerStyle={{flexDirection: 'row'}}
-           leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-           onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
-           iconLeft={imagePath.links}
-           centerHeading={strings.LINKS}
-           containerStyle={styles.containerStyle2}
-           centerHeadingStyle={{
-             fontSize: textScale(14),
-             fontFamily: fontFamily.regular,
-           }}
-           // iconRight={imagePath.goRight}
-           // rightIconStyle={{tintColor: colors.textGreyLight}}
-         />)
-         }
+          <ListItemHorizontal
+            centerContainerStyle={{flexDirection: 'row'}}
+            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+            onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
+            iconLeft={imagePath.links}
+            centerHeading={strings.LINKS}
+            containerStyle={styles.containerStyle2}
+            centerHeadingStyle={{
+              fontSize: textScale(14),
+              fontFamily: fontFamily.regular,
+            }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
+          />
+
           {!!userData?.auth_token && (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
@@ -521,6 +524,7 @@ export default function Account3({navigation}) {
           />
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&
+            getBundleId() == appIds.elcheregio &&
             !!appMainData?.is_admin &&
             (businessType == 'taxi' ? null : (
               <ListItemHorizontal

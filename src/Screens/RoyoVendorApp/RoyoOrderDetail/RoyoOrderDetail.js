@@ -298,11 +298,13 @@ const RoyoOrderDetail = (props) => {
           ItemSeparatorComponent={() => <View style={styles.itemSeperator} />}
         />
 
-        <View style={{ margin: moderateScaleVertical(16) }}>
+        {  !!data?.specific_instructions &&
+          <View style={{ margin: moderateScaleVertical(16) }}>
           <Text style={styles.font15Medium}>{strings.INSTRUCTIONS}</Text>
           <Text style={styles.font15Semibold}>{data?.specific_instructions}
           </Text>
         </View>
+        }
 
 
         <View style={{ margin: moderateScaleVertical(16) }}>

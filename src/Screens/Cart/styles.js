@@ -149,7 +149,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       justifyContent: 'space-between',
       paddingHorizontal: moderateScaleVertical(20),
       paddingVertical: moderateScaleVertical(10),
-  
+
       marginHorizontal: 16,
       borderRadius: moderateScale(10),
     },
@@ -398,7 +398,6 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       marginHorizontal: moderateScale(10),
       marginVertical: moderateScale(4),
       // justifyContent: 'space-between',
-
     },
     homeTxt: {
       fontFamily: fontFamily.medium,

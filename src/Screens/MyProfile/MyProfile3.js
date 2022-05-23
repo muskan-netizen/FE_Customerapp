@@ -890,7 +890,7 @@ export default function MyProfile3({route, navigation}) {
             textTransform: 'uppercase',
             fontSize: textScale(12),
           }}
-          returnKeyType={"next"}
+          returnKeyType={'next'}
         />
 
         <TextInputWithUnderlineAndLabel
@@ -905,7 +905,7 @@ export default function MyProfile3({route, navigation}) {
           }}
           secureTextEntry={true}
           containerStyle={{marginVertical: moderateScaleVertical(10)}}
-          returnKeyType={"next"}
+          returnKeyType={'next'}
         />
         <TextInputWithUnderlineAndLabel
           onChangeText={_onChangeText('confirmPassword')}
@@ -919,7 +919,7 @@ export default function MyProfile3({route, navigation}) {
           }}
           secureTextEntry={true}
           containerStyle={{marginVertical: moderateScaleVertical(10)}}
-          returnKeyType={"next"}
+          returnKeyType={'next'}
         />
         <GradientButton
           btnStyle={{marginTop: moderateScaleVertical(57)}}
@@ -940,7 +940,7 @@ export default function MyProfile3({route, navigation}) {
       <View
         style={{
           marginVertical: moderateScaleVertical(30),
-          height: height / 1.6,
+          minHeight: height / 1.6,
         }}>
         <View
           style={{
@@ -1150,7 +1150,10 @@ export default function MyProfile3({route, navigation}) {
       {/* top section user general info */}
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled">
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{
+          paddingBottom: 25,
+        }}>
         <View
           style={
             isDarkMode
@@ -1291,6 +1294,7 @@ export default function MyProfile3({route, navigation}) {
           selectViaMap={selectViaMap}
         />
       </KeyboardAwareScrollView>
+      <View style={{height: moderateScaleVertical(60)}} />
     </WrapperContainer>
   );
 }

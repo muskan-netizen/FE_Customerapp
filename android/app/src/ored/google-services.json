@@ -1,64 +1,64 @@
 {
   "project_info": {
-    "project_number": "727222041107",
-    "project_id": "ored-2cc63",
-    "storage_bucket": "ored-2cc63.appspot.com"
+    "project_number": "49544194086",
+    "project_id": "ored-f0c1b",
+    "storage_bucket": "ored-f0c1b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:727222041107:android:ec85c6203ffa34fa425de6",
+        "mobilesdk_app_id": "1:49544194086:android:e499d9df412dc8a0f71ee7",
         "android_client_info": {
-          "package_name": "com.ored"
+          "package_name": "com.ored.customer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "727222041107-bq3rk513n5mq61vdkku5c6i3g5797mhp.apps.googleusercontent.com",
+          "client_id": "49544194086-2ptqcaahbkmii4jti2pjeii9l75idq71.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ored",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "727222041107-c7dbsn53tm2icnu1ra1fc6a36a0gebql.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.ored",
+            "package_name": "com.ored.customer",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "727222041107-mbtlns0o4rfhck9ksvkf319goksmnk5s.apps.googleusercontent.com",
+          "client_id": "49544194086-gcncm0hg595bl7jbrh0gvf4l1egcuhjq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ored",
+            "package_name": "com.ored.customer",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "727222041107-fe6esvgsfnkugtpp31nj37dn31g7n4cj.apps.googleusercontent.com",
+          "client_id": "49544194086-onaab44ombkb050efis57s4v3mqlk5ot.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ored.customer",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "49544194086-fds1p2475s8fro4l363bilv06v6r82a7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAz566V6aytop-4lwEfm9e-L9hIbJ3R6H0"
+          "current_key": "AIzaSyBsiPLwFWo19EaaN7euVrGuDebuJr3rR7g"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "727222041107-fe6esvgsfnkugtpp31nj37dn31g7n4cj.apps.googleusercontent.com",
+              "client_id": "49544194086-fds1p2475s8fro4l363bilv06v6r82a7.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "727222041107-c94ugkg6ocn8ouc53lnn7m3sfvevlrlh.apps.googleusercontent.com",
+              "client_id": "49544194086-tc25vft4dtv4chj8e5q3nhgb5tk7v56j.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.ored"
+                "bundle_id": "com.ored.customer"
               }
             }
           ]

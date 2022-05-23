@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import RenderHtml, {HTML} from 'react-native-render-html';
 import ActionSheet from 'react-native-actionsheet';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
@@ -973,10 +974,14 @@ export default function WebLinks({navigation, route}) {
             marginHorizontal: moderateScale(20),
           }}>
           {htmlContent && (
-            <HTMLView
-              stylesheet={isDarkMode ? htmlStyle : null}
-              value={`<p>${htmlContent}</p>`}
-            />
+             <RenderHtml
+             contentWidth={width}
+             source={{html: htmlContent}}
+           />
+            // <HTMLView
+            //   stylesheet={isDarkMode ? htmlStyle : null}
+            //   value={`<p>${htmlContent}</p>`}
+            // />
           )}
         </View>
 

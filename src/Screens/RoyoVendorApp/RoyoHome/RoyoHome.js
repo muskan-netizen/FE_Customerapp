@@ -45,7 +45,20 @@ import strings from '../../../constants/lang';
 import DashboardCount from '../../../Components/DashboardCount';
 
 let vendorLimit = 50
-
+import 'moment/locale/fr';
+import 'moment/locale/ar';
+import 'moment/locale/de';
+import 'moment/locale/es';
+import 'moment/locale/hi';
+import 'moment/locale/pt';
+import 'moment/locale/ru';
+import 'moment/locale/sv';
+import 'moment/locale/tr';
+import 'moment/locale/vi';
+import 'moment/locale/zh-cn';
+import 'moment/locale/zh-hk';
+import 'moment/locale/zh-mo';
+import 'moment/locale/zh-tw';
 const commonStyle = commonStyles({
   fontFamily,
   buttonTextColor: colors.themeColor2,

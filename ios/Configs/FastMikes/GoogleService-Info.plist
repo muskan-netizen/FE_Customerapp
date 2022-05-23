@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>852668129452-9apvnhkbb83ifuo3vnbdea1g4bj3e3qk.apps.googleusercontent.com</string>
+	<string>426920008902-kv8qij3b8k7h7uddforrpen9fe0nl37b.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.852668129452-9apvnhkbb83ifuo3vnbdea1g4bj3e3qk</string>
+	<string>com.googleusercontent.apps.426920008902-kv8qij3b8k7h7uddforrpen9fe0nl37b</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>852668129452-0rh1fjma6iqfjfj6mq19tl25mmonue2u.apps.googleusercontent.com</string>
+	<string>426920008902-20d3iec2sq3f6t9jsk3n1e7080ruds0v.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyACpz7_jxBAX4fwvxN1FPb1qSFuDyI2uM0</string>
+	<string>AIzaSyDbfEcZOzSWwyWlu9knPXtHGntr-rsfrxk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>852668129452</string>
+	<string>426920008902</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.fastmikes</string>
+	<string>com.fastmikes.customer</string>
 	<key>PROJECT_ID</key>
-	<string>fastmikes-dispatcher</string>
+	<string>fastmikes-8d506</string>
 	<key>STORAGE_BUCKET</key>
-	<string>fastmikes-dispatcher.appspot.com</string>
+	<string>fastmikes-8d506.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:852668129452:ios:fc5ea0b86113baa2bfff09</string>
+	<string>1:426920008902:ios:33e2ec6e3e231d97884bc7</string>
 </dict>
 </plist>

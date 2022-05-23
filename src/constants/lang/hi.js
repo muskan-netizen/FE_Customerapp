@@ -914,4 +914,7 @@ Amount`,
   REFUNDS: 'Refunds',
   ORDER_TOTAL: 'Order Total',
   ORDER_CANCELLED: 'Order Cancelled',
+  SPECIFIC_INSTRUCTIONS:'Specific Instructions',
+  THANKS_FOR_YOUR_PURCHASE:'Thanks for your purchase.',
+
 };

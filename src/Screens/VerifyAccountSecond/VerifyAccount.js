@@ -35,7 +35,9 @@ import * as RNLocalize from "react-native-localize";
 export default function VerifyAccountSecond({ navigation, route }) {
   const navigation_ = useNavigation();
   let paramsData = route?.params;
+  console.log(paramsData,"paramsDataparamsData");
   const userData = useSelector((state) => state?.auth?.userData);
+  console.log(userData,"userDatauserData")
   const appData = useSelector((state) => state?.initBoot?.appData);
   var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
 
@@ -401,7 +403,7 @@ export default function VerifyAccountSecond({ navigation, route }) {
           flex: 1,
         }}>
         <View style={{ flex: 1 }}>
-          {!!userData?.client_preference?.verify_email ? (
+          {!!userData?.client_preference?.verify_email   ? (
             !userData?.verify_details?.is_email_verified && (
               <>
                 <View

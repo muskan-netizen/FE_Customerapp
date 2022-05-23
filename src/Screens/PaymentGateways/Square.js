@@ -25,7 +25,7 @@ export default function Square({navigation, route}) {
 
   const [state, setState] = useState({
     webData: '',
-    isLoading: true,
+    isLoading: true, 
   });
 
   //Update states on screens
