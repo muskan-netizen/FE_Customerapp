@@ -7,34 +7,34 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:670051101955:android:11c401739406ec6f17cd36",
+        "mobilesdk_app_id": "1:670051101955:android:14af6266d4c4692717cd36",
         "android_client_info": {
-          "package_name": "com.weeat"
+          "package_name": "com.weeat.customer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "670051101955-1jq6d747llats6besmm17oj6iu8ipj8f.apps.googleusercontent.com",
+          "client_id": "670051101955-dab1ibnon54mpo5le50c2kbbe5a5mcdj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.weeat",
+            "package_name": "com.weeat.customer",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "670051101955-g90gqfqmq0p5rfmnmc5nm6riemqspk6b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.weeat.customer",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "670051101955-dro6val22dce55v7fpdgeogb2cipv43s.apps.googleusercontent.com",
+          "client_id": "670051101955-jg9s3k8uu6je4fsm6athsjfnnuj12p92.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.weeat",
+            "package_name": "com.weeat.customer",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "670051101955-vmabi37g86t9o82vrr6ag30tnsli484v.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.weeat",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {

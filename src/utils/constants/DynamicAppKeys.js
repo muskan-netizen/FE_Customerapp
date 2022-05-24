@@ -316,6 +316,17 @@ const shortCodes = {
   patrolNow:'ad0c7d',
   butlerDelivery:'56086e',
   swatiRX:'c7129e',
+  chowHub:'57bab0',
+  ginDeliver:'ee3d33',
+  orderFirst:'d760c8',
+  maiz:'3df0b6',
+  dingDongEat:'2f2b60',
+  medicab:'b1f6f1',
+  fazeiTeam:'0eca90',
+  weTogether:'686b6c',
+  jiffex:'67dcfd',
+  clickService:'cb17f2',
+  amazingTaxi:'32e266',
 };
 
 
@@ -654,7 +665,7 @@ const appIds = {
   }),
   weeat: Platform.select({
     ios: 'com.weeat.customer',
-    android: 'com.weeat',
+    android: 'com.weeat.customer',
   }),
   gorillas: Platform.select({
     ios: 'com.gorillas',
@@ -733,7 +744,7 @@ const appIds = {
     android: 'com.application.empire',
   }),
   expressdelivery: Platform.select({
-    ios: 'com.customer.expressdelivery',
+    ios: 'com.expressdelivery.customer',
     android: 'com.expressdelivery',
   }),
   booziedoozie: Platform.select({
@@ -897,7 +908,7 @@ const appIds = {
     android: 'com.shoorafresh',
   }),
   click2deliver: Platform.select({
-    ios: 'com.click2deliver',
+    ios: 'com.click2deliver.customer',
     android: 'com.click2deliver',
   }),
   trucktirenow: Platform.select({
@@ -1578,6 +1589,50 @@ const appIds = {
     android: 'com.swatiRX',
   }),
   
+  chowHub: Platform.select({
+    ios: 'com.chowHub',
+    android: 'com.chowHub',
+  }),
+  ginDeliver: Platform.select({
+    ios: 'com.ginDeliver',
+    android: 'com.ginDeliver',
+  }),
+  orderFirst: Platform.select({
+    ios: 'com.orderFirst',
+    android: 'com.orderFirst',
+  }),
+  maiz: Platform.select({
+    ios: 'com.maiz',
+    android: 'com.maiz',
+  }),
+  dingDongEat: Platform.select({
+    ios: 'com.app.dingDongEat',
+    android: 'com.dingDongEat',
+  }),
+  medicab: Platform.select({
+    ios: 'com.medicab',
+    android: 'com.medicab',
+  }),
+  fazeiTeam: Platform.select({
+    ios: 'com.fazeiTeam',
+    android: 'com.fazeiTeam',
+  }),
+  weTogether: Platform.select({
+    ios: 'com.weTogether',
+    android: 'com.weTogether',
+  }),
+  jiffex: Platform.select({
+    ios: 'com.jiffex',
+    android: 'com.jiffex',
+  }),
+  clickService: Platform.select({
+    ios: 'com.clickService',
+    android: 'com.clickService',
+  }),
+  amazingTaxi: Platform.select({
+    ios: 'com.amazingTaxi',
+    android: 'com.amazingTaxi',
+  }),
 };
 
 const socialKeys = {

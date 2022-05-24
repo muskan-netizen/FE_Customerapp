@@ -1588,6 +1588,61 @@ end
   
 # end
 
+# ChowHub Target
+target 'ChowHub' do
+  
+end
+
+# GinDeliver Target
+target 'GinDeliver' do
+  
+end
+
+# OrderFirst Target
+target 'OrderFirst' do
+  
+end
+
+# Maiz Target
+target 'Maiz' do
+  
+end
+
+# DingDongEat Target
+target 'DingDongEat' do
+  
+end
+
+# Medicab Target
+target 'Medicab' do
+  
+end
+
+# FazeiTeam Target
+target 'FazeiTeam' do
+  
+end
+
+# WeTogether Target
+target 'WeTogether' do
+  
+end
+
+# Jiffex Target
+target 'Jiffex' do
+  
+end
+
+# ClickService Target
+target 'ClickService' do
+  
+end
+
+# AmazingTaxi Target
+target 'AmazingTaxi' do
+  
+end
+
 
 
 
