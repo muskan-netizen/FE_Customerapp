@@ -2089,6 +2089,30 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.valley:
+          updateState({
+            shortCode: shortCodes.valley,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kartAndKarry:
+          updateState({
+            shortCode: shortCodes.kartAndKarry,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.quickLube:
+          updateState({
+            shortCode: shortCodes.quickLube,
+            isShortcodePrefilled: true,
+          });
+          break;
+          case appIds.keystoneDelivery:
+          updateState({
+            shortCode: shortCodes.keystoneDelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
 
       }
     })();

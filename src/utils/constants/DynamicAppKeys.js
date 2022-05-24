@@ -329,6 +329,10 @@ const shortCodes = {
   amazingTaxi:'32e266',
   jazzyBug:'3441ec',
   myfarma:'612a45',
+  valley:'686b6c',
+  kartAndKarry:'4eaab9',
+  quickLube:'4ab432',
+  keystoneDelivery:'87ad74',
 };
 
 
@@ -1643,7 +1647,22 @@ const appIds = {
     ios: 'com.myfarma',
     android: 'com.myfarma',
   }),
-  
+  valley: Platform.select({
+    ios: 'com.valley',
+    android: 'com.valley',
+  }),
+  kartAndKarry: Platform.select({
+    ios: 'com.kartAndKarry',
+    android: 'com.kartAndKarry',
+  }),
+  quickLube: Platform.select({
+    ios: 'com.quickLube',
+    android: 'com.quickLube',
+  }),
+  keystoneDelivery: Platform.select({
+    ios: 'com.keystoneDelivery',
+    android: 'com.keystoneDelivery',
+  }),
 };
 
 const socialKeys = {
