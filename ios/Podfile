@@ -1523,10 +1523,10 @@ end
   
 # # end
 
-# # # MarjMarketplace Target
-# # target 'MarjMarketplace' do
+# MarjMarketplace Target
+target 'MarjMarketplace' do
   
-# # end
+end
 
 # # EVSOnTheGo Target
 # target 'EVSOnTheGo' do
