@@ -329,7 +329,7 @@ const shortCodes = {
   amazingTaxi:'32e266',
   jazzyBug:'3441ec',
   myfarma:'612a45',
-  valley:'686b6c',
+  valley:'b1add5',
   kartAndKarry:'4eaab9',
   quickLube:'4ab432',
   keystoneDelivery:'87ad74',

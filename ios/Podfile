@@ -1653,6 +1653,22 @@ target 'Myfarma' do
   
 end
 
+# Valley Target
+target 'Valley' do
+  
+end
+
+# QuickLube Target
+target 'QuickLube' do
+  
+end
+
+# KeystoneDelivery Target
+target 'KeystoneDelivery' do
+  
+end
+
+
 
 
 
