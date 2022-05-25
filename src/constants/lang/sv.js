@@ -520,7 +520,8 @@ export default {
   YOUR_CART_EMPTY_ADD_ITEMS:
     'Din varukorg är tom, lägg till artiklar i butiken',
   SHOP_FROM_WISHLIST: 'Handla från önskelistan',
-  ALREADY_EXIST: 'Du har redan varor i din varukorg. Vill du kasta bort dem?',
+  ALREADY_EXIST:
+  'You already have items from another store. Do you want to discard them?',
   LABEL1: 'Etikett 1',
   LABEL2: 'Etikett 2',
   DOYOUHAVECLEANINGMATERIAL: ' Behöver du rengöringsmaterial?',

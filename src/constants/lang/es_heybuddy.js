@@ -528,7 +528,7 @@ export default {
       'Tu carrito está vacío. Elige los productos de tu Tienda Aficionado favorita para verlos aquí',
     SHOP_FROM_WISHLIST: 'Productos favoritos',
     ALREADY_EXIST:
-      'tu orden no puede tener productos de 2 distintos establecimientos. Deseas vaciar tu carrito y agregar el producto seleccionado?',
+    'You already have items from another store. Do you want to discard them?',
     LABEL1: 'Etiqueta 1',
     LABEL2: 'Etiqueta 2',
     DOYOUHAVECLEANINGMATERIAL: ' ¿Necesitas materiales de limpieza?',

@@ -537,7 +537,7 @@ export default {
   WRITE_A_REVIEW: 'Schreiben Sie eine Bewertung',
   WHERETO: 'Wohin?',
   ALREADY_EXIST:
-    'Sie haben bereits Artikel in Ihrem Warenkorb. Möchten Sie sie entsorgen?',
+  'You already have items from another store. Do you want to discard them?',
   VIEW_ALL: 'Alle anzeigen',
   POPULAR_BRANDS: 'Beliebte Marken',
   FEATURED_PRODUCTS: 'Vorgestellte Produkte',

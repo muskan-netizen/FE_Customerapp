@@ -522,7 +522,8 @@ export default {
   RECOMMENDED_VENDORS: 'Nhà cung cấp được đề xuất',
   YOUR_CART_EMPTY_ADD_ITEMS: 'Giỏ hàng của bạn trống, thêm hàng vào giỏ',
   SHOP_FROM_WISHLIST: 'Mua hàng từ danh sách yêu thích',
-  ALREADY_EXIST: 'Sản phẩm đã có trong giỏ hàng . Bạn có muốn xóa chúng không?',
+  ALREADY_EXIST:
+    'You already have items from another store. Do you want to discard them?',
   LABEL1: 'Nhãn 1',
   LABEL2: 'Nhãn 2',
   DOYOUHAVECLEANINGMATERIAL: ' Bạn có muốn làm sạch nguyên liệu',

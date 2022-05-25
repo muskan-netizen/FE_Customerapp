@@ -112,7 +112,7 @@ export default function Addaddress({ navigation, route }) {
     friendMobileNumber: '',
     countryPickerModalVisible: false,
     cca2: 'IN',
-    callingCode: '91'
+    callingCode: '+91'
   });
   const {
     pageNo,
@@ -401,7 +401,7 @@ export default function Addaddress({ navigation, route }) {
       friendBookingDetails: {
         bookingType:selectedTab==2?1:0,
         name: friendName,
-        mobileNumber: `${callingCode[0]} ${friendMobileNumber}`
+        mobileNumber: `${callingCode}${friendMobileNumber}`
       }
     });
   }
@@ -738,7 +738,7 @@ export default function Addaddress({ navigation, route }) {
             >
               <View
                 style={styles.countryPickerInnerContainer}>
-                <Text>+</Text>
+               
                 <Text
                   style={styles.callingCodeText}>
                   {callingCode}

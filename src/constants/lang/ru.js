@@ -502,7 +502,8 @@ export default {
   RECOMMENDED_VENDORS: 'Рекомендуемые поставщики',
   YOUR_CART_EMPTY_ADD_ITEMS: 'Ваша корзина пуста, добавьте товары в магазин',
   SHOP_FROM_WISHLIST: 'Купить из списка желаний',
-  ALREADY_EXIST: 'У вас уже есть товары в корзине. Вы хотите их выбросить?',
+  ALREADY_EXIST:
+    'You already have items from another store. Do you want to discard them?',
   LABEL1: 'Этикетка 1',
   LABEL2: 'Этикетка 2',
   DOYOUHAVECLEANINGMATERIAL: ' Вам нужны чистящие средства?',

@@ -535,7 +535,7 @@ export default {
   WRITE_REVIEW: 'اكتب مراجعة',
   PICKUP: 'بيك أب',
   ALREADY_EXIST:
-    'لديك بالفعل عناصر في عربة التسوق الخاصة بك. هل تريد التخلص منها؟',
+  'You already have items from another store. Do you want to discard them?',
   VIEW_ALL: 'عرض الكل',
   POPULAR_BRANDS: 'ماركات مشهورة',
   FEATURED_PRODUCTS: 'المنتجات المميزة',

@@ -529,7 +529,8 @@ export default {
   YOUR_CART_EMPTY_ADD_ITEMS:
     'Su carrito está vacío, agregue artículos a la compra',
   SHOP_FROM_WISHLIST: 'Comprar de la lista de deseos',
-  ALREADY_EXIST: 'Ya tienes artículos en tu carrito. ¿Quieres descartarlos?',
+  ALREADY_EXIST:
+    'You already have items from another store. Do you want to discard them?',
   LABEL1: 'Etiqueta 1',
   LABEL2: 'Etiqueta 2',
   DOYOUHAVECLEANINGMATERIAL: ' ¿Necesitas materiales de limpieza?',

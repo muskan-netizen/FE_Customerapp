@@ -537,7 +537,7 @@ montant`,
   YOUR_CART_EMPTY_ADD_ITEMS: 'Votre panier est vide',
   SHOP_FROM_WISHLIST: 'Acheter dans la liste de souhaits',
   ALREADY_EXIST:
-    'Vous avez déjà des articles dans votre panier. Voulez-vous les supprimer ?',
+  'You already have items from another store. Do you want to discard them?',
   DROPOFFLOCATION: 'Point de chute',
   PICKUP_LOCATION: ' Lieu de ramassage',
   DROP_OFF: 'Livraison',

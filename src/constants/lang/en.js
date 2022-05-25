@@ -521,7 +521,7 @@ Amount`,
   YOUR_CART_EMPTY_ADD_ITEMS: 'Your cart is empty, add items to shop',
   SHOP_FROM_WISHLIST: 'Shop from wishlist',
   ALREADY_EXIST:
-    'Your already have items in your cart. Do you want to discard them?',
+    'You already have items from another store. Do you want to discard them?',
   LABEL1: 'Label 1',
   LABEL2: 'Label 2',
   DOYOUHAVECLEANINGMATERIAL: ' Do you require cleaning materials ?',

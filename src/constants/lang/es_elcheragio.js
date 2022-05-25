@@ -533,7 +533,7 @@ export default {
     'Tu carrito está vacío. Elige los productos de tu Tienda Aficionado favorita para verlos aquí',
   SHOP_FROM_WISHLIST: 'Compra tus deseos de parrillero',
   ALREADY_EXIST:
-    "Ya tienes productos de una Tienda Aficionado en tu carrito. ¿Quieres mandarlos a la ch!'#'? No puedes comprar en dos comercios en el mismo pedido.",
+  'You already have items from another store. Do you want to discard them?',
   LABEL1: 'Etiqueta 1',
   LABEL2: 'Etiqueta 2',
   DOYOUHAVECLEANINGMATERIAL: ' ¿Necesitas materiales de limpieza?',

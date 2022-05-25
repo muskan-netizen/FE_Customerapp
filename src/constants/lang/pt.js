@@ -524,7 +524,8 @@ Amount`,
   YOUR_CART_EMPTY_ADD_ITEMS:
     'Seu carrinho está vazio, adicione itens para compra',
   SHOP_FROM_WISHLIST: 'Compre da sua lista de desejos',
-  ALREADY_EXIST: 'Você já tem itens no seu carrinho. Você quer descartá-los?',
+  ALREADY_EXIST:
+  'You already have items from another store. Do you want to discard them?',
   LABEL1: 'Etiqueta 1',
   LABEL2: 'Etiqueta 2',
   DOYOUHAVECLEANINGMATERIAL: ' Você precisa de materiais de limpeza?',
