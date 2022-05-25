@@ -1075,6 +1075,7 @@ function Cart({navigation, route}) {
         },
       )
       .then((res) => {
+        console.log(res,"ressssss")
         setCartItems([]);
         setCartData({});
         moveToNewScreen(navigationStrings.ORDERSUCESS, {
@@ -4942,12 +4943,12 @@ function Cart({navigation, route}) {
                 height: moderateScale(120),
                 width: moderateScale(120),
               }}
-
+               tintColor={isDarkMode &&colors.white}
               // resizeMode="contain"s
             />
           )}
 
-          <Text style={{...styles.textStyle}}>
+          <Text style={{...styles.textStyle,color:isDarkMode?colors.white:colors.blackOpacity40}}>
             {strings.YOUR_CART_EMPTY_ADD_ITEMS}
           </Text>
         </View>
