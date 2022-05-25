@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -18,16 +18,17 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {showError, showSuccess} from '../../utils/helperFunctions';
+import { shortCodes } from '../../utils/constants/DynamicAppKeys';
+import { showError, showSuccess } from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
-
-export default function ContactUs({navigation}) {
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../styles/theme';
+import codes from 'country-calling-code';
+import * as RNLocalize from "react-native-localize";
+export default function ContactUs({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const {appData, currencies, languages, themeColors, appStyle} = useSelector(
+  const { appData, currencies, languages, themeColors, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -36,11 +37,14 @@ export default function ContactUs({navigation}) {
   const currentTheme = useSelector((state) => state.appTheme);
   const userData = useSelector((state) => state?.auth?.userData);
   console.log(appData, 'appDataa');
+
+  var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
+
   const [state, setState] = useState({
-    callingCode: appData?.profile?.country?.phonecode
+    callingCode: getPhonesCallingCodeAndCountryData && getPhonesCallingCodeAndCountryData.length ? getPhonesCallingCodeAndCountryData[0].countryCodes[0] : appData?.profile.country?.phonecode
       ? appData?.profile?.country?.phonecode
       : '91',
-    cca2: appData?.profile?.country?.code
+    cca2: getPhonesCallingCodeAndCountryData && getPhonesCallingCodeAndCountryData.length ? getPhonesCallingCodeAndCountryData[0].isoCode2 : appData?.profile?.country?.code
       ? appData?.profile?.country?.code
       : 'IN',
     name: userData && userData?.name ? userData?.name : '',
@@ -51,14 +55,14 @@ export default function ContactUs({navigation}) {
     isLoading: false,
   });
 
-  const {message, phoneNumber, cca2, name, email, isLoading, callingCode} =
+  const { message, phoneNumber, cca2, name, email, isLoading, callingCode } =
     state;
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily});
-  const commonStyles = commonStylesFun({fontFamily});
+  const styles = stylesFun({ fontFamily });
+  const commonStyles = commonStylesFun({ fontFamily });
   //Update states
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   useEffect(() => {
     updateState({
       cca2: appData?.profile?.country?.code
@@ -71,13 +75,13 @@ export default function ContactUs({navigation}) {
   }, [appData]);
   //select the country
   const _onCountryChange = (data) => {
-    updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
+    updateState({ cca2: data.cca2, callingCode: data.callingCode[0] });
     return;
   };
 
   // on change text
   const _onChangeText = (key) => (val) => {
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   //validate form
@@ -159,7 +163,7 @@ export default function ContactUs({navigation}) {
           onCountryChange={_onCountryChange}
           placeholder={strings.YOUR_PHONE_NUMBER}
           onChangePhone={(phoneNumber) =>
-            updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
+            updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })
           }
           cca2={cca2}
           phoneNumber={phoneNumber}
@@ -168,12 +172,12 @@ export default function ContactUs({navigation}) {
           returnKeyType={'done'}
           color={isDarkMode ? MyDarkTheme.colors.text : null}
         />
-        <View style={{height: moderateScaleVertical(20)}} />
+        <View style={{ height: moderateScaleVertical(20) }} />
         <BorderTextInput
           onChangeText={_onChangeText('message')}
           placeholder={strings.MESSSAGE_FOR_US}
           value={message}
-          containerStyle={{height: moderateScaleVertical(108), padding: 5}}
+          containerStyle={{ height: moderateScaleVertical(108), padding: 5 }}
           // textInputStyle={{height:moderateScaleVertical(108)}}
           textAlignVertical={'top'}
           multiline={true}
@@ -189,54 +193,54 @@ export default function ContactUs({navigation}) {
     );
   };
 
-    // Basic information tab
-    const basicInfoViewTemplateTwo = () => {
-      return (
-        <View
-          style={{
-            marginTop: moderateScaleVertical(40),
-            marginHorizontal: moderateScale(24),
-          }}>
-          
-          <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-            <Text  style={{ fontSize: textScale(13), color: colors.textGreyLight }}>Call Us: </Text>
-            <TouchableOpacity>
-              <Text style={{ fontSize: textScale(15), color: themeColors?.primary_color, fontFamily: fontFamily.medium }}>{'+1 6535489657'}</Text>
-            </TouchableOpacity>
-          </View>
+  // Basic information tab
+  const basicInfoViewTemplateTwo = () => {
+    return (
+      <View
+        style={{
+          marginTop: moderateScaleVertical(40),
+          marginHorizontal: moderateScale(24),
+        }}>
 
-          <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center', justifyContent: 'center', marginTop: moderateScale(10) }}>
-            <Text  style={{ fontSize: textScale(13), color: themeColors?.primary_color }}>Email: </Text>
-            <TouchableOpacity>
-              <Text style={{ fontSize: textScale(15), color: themeColors?.primary_color, fontFamily: fontFamily.medium }}>
-                {'towfinder@example.com'}
-                </Text>
-            </TouchableOpacity>
-          </View>
-          
-          <View style={{height: moderateScaleVertical(20)}} />
-
-          <BorderTextInput
-            onChangeText={_onChangeText('message')}
-            placeholder={'Write something here'}
-            value={message}
-            containerStyle={{height: moderateScaleVertical(108), padding: 10, borderRadius: 5, borderWidth: 0, backgroundColor: colors.greyColor1}}
-            // textInputStyle={{height:moderateScaleVertical(108)}}
-            textAlignVertical={'top'}
-            multiline={true}
-            textInputStyle={{ fontFamily: fontFamily.regular }}
-          />
-          <GradientButton
-            textStyle={styles.textStyle}
-            onPress={saveUserInfo}
-            marginTop={moderateScaleVertical(50)}
-            marginBottom={moderateScaleVertical(50)}
-            btnText={strings.SUBMIT}
-          />
+        <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ fontSize: textScale(13), color: colors.textGreyLight }}>Call Us: </Text>
+          <TouchableOpacity>
+            <Text style={{ fontSize: textScale(15), color: themeColors?.primary_color, fontFamily: fontFamily.medium }}>{'+1 6535489657'}</Text>
+          </TouchableOpacity>
         </View>
-      );
-    };
-  
+
+        <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center', justifyContent: 'center', marginTop: moderateScale(10) }}>
+          <Text style={{ fontSize: textScale(13), color: themeColors?.primary_color }}>Email: </Text>
+          <TouchableOpacity>
+            <Text style={{ fontSize: textScale(15), color: themeColors?.primary_color, fontFamily: fontFamily.medium }}>
+              {'towfinder@example.com'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{ height: moderateScaleVertical(20) }} />
+
+        <BorderTextInput
+          onChangeText={_onChangeText('message')}
+          placeholder={'Write something here'}
+          value={message}
+          containerStyle={{ height: moderateScaleVertical(108), padding: 10, borderRadius: 5, borderWidth: 0, backgroundColor: colors.greyColor1 }}
+          // textInputStyle={{height:moderateScaleVertical(108)}}
+          textAlignVertical={'top'}
+          multiline={true}
+          textInputStyle={{ fontFamily: fontFamily.regular }}
+        />
+        <GradientButton
+          textStyle={styles.textStyle}
+          onPress={saveUserInfo}
+          marginTop={moderateScaleVertical(50)}
+          marginBottom={moderateScaleVertical(50)}
+          btnText={strings.SUBMIT}
+        />
+      </View>
+    );
+  };
+
 
   return (
     <WrapperContainer
@@ -249,20 +253,20 @@ export default function ContactUs({navigation}) {
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? imagePath.icBackb
-            : imagePath.back
+              ? imagePath.icBackb
+              : imagePath.back
         }
         centerTitle={strings.CONTACT_USS}
         headerStyle={
           isDarkMode
-            ? {backgroundColor: MyDarkTheme.colors.background}
-            : {backgroundColor: colors.white}
+            ? { backgroundColor: MyDarkTheme.colors.background }
+            : { backgroundColor: colors.white }
         }
       />
-      <View style={{...commonStyles.headerTopLine}} />
+      <View style={{ ...commonStyles.headerTopLine }} />
       {/* top section user general info */}
       <KeyboardAwareScrollView
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         showsVerticalScrollIndicator={false}>
         <View style={styles.topSection}>
           <View style={styles.userProfileView}>

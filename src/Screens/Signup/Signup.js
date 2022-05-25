@@ -40,6 +40,8 @@ import {cameraHandler} from '../../utils/commonFunction';
 import ActionSheet from 'react-native-actionsheet';
 import {androidCameraPermission} from '../../utils/permissions';
 import DocumentPicker from 'react-native-document-picker';
+import codes from 'country-calling-code';
+import * as RNLocalize from "react-native-localize";
 import RNOtpVerify from 'react-native-otp-verify';
 
 let addtionSelectedImageIndex = null;
@@ -66,13 +68,13 @@ export default function Signup({navigation}) {
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-
+  var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
   const [state, setState] = useState({
     isLoading: false,
-    callingCode: appData?.profile.country?.phonecode
+    callingCode: getPhonesCallingCodeAndCountryData && getPhonesCallingCodeAndCountryData.length ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]: appData?.profile.country?.phonecode
       ? appData?.profile?.country?.phonecode
       : '91',
-    cca2: appData?.profile?.country?.code
+    cca2:  getPhonesCallingCodeAndCountryData && getPhonesCallingCodeAndCountryData.length ? getPhonesCallingCodeAndCountryData[0].isoCode2:appData?.profile?.country?.code
       ? appData?.profile?.country?.code
       : 'IN',
     name: '',

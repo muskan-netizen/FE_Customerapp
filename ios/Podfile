@@ -1643,15 +1643,15 @@ target 'AmazingTaxi' do
   
 end
 
-# JazzyBug Target
-target 'JazzyBug' do
+# # JazzyBug Target
+# target 'JazzyBug' do
   
-end
+# end
 
-# Myfarma Target
-target 'Myfarma' do
+# # Myfarma Target
+# target 'Myfarma' do
   
-end
+# end
 
 
 
