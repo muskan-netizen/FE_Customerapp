@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>331703141098-03gp7mrmdf7eev8lmuh2fir8shgk8vd4.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.331703141098-03gp7mrmdf7eev8lmuh2fir8shgk8vd4</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>331703141098-i5p36q3mo4jus4e4uesnholbveq34kmr.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBCnUoYeT51R8XOTgZWZemozScMUv2Cxog</string>
+	<key>GCM_SENDER_ID</key>
+	<string>331703141098</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.quickLube</string>
+	<key>PROJECT_ID</key>
+	<string>quicklube-6563e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>quicklube-6563e.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:331703141098:ios:7746af3e36adc4a7ad0d93</string>
+</dict>
+</plist>

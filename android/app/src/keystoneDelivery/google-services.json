@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "16395209863",
+    "project_id": "keystonedelivery-26e95",
+    "storage_bucket": "keystonedelivery-26e95.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:16395209863:android:5f7f5b0fa6dcaa458dbc22",
+        "android_client_info": {
+          "package_name": "com.keystoneDelivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "16395209863-0bciq629sb88qpc62m7g93kshoo6ltun.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.keystoneDelivery",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "16395209863-1jbbf20nj36osh5nfn3aerh4mcgqb5u3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.keystoneDelivery",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "16395209863-gfqslji86rac9prsc6h1s5fofqnj0osg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.keystoneDelivery",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "16395209863-5a3jdm8jhflhp6fe9cv18er13m9mcveo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEJd3R7QXPWpwHEz2jEipWiSD0zHUv214"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "16395209863-5a3jdm8jhflhp6fe9cv18er13m9mcveo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "16395209863-f4gu12bpo5vu42gs884tpessl436ciob.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.keystoneDelivery"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -985,7 +985,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                           ]
                         : styles.orderLableStyle
                     }>
-                    {`${strings.ORDER_ID}: #${paramData?.orderDetail?.order_number}`}
+                    {`${strings.ORDER_ID}: #${paramData?.orderDetail?.order_number || orderFullDetail?.order?.order_number}`}
                   </Text>
                   {!!(
                     orderStatus !== 'completed' ||

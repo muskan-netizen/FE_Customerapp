@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "164395537260",
+    "project_id": "myfarma-c62f3",
+    "storage_bucket": "myfarma-c62f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164395537260:android:a70f70949999302cc91949",
+        "android_client_info": {
+          "package_name": "com.myfarma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "164395537260-fonevttd3591ijlpud88uuq3o5q3327m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.myfarma",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "164395537260-h471psbgjnqc7jj55o7eh73chmhbneue.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.myfarma",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "164395537260-pcco5a1qe45ois50o7uce8u2no9o5vhc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.myfarma",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "164395537260-eee6lht29ck7dpcqe64q9060noukgter.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxeUiZWt5_ij2vMZWoDPMD1ZRhKeUX3ok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "164395537260-eee6lht29ck7dpcqe64q9060noukgter.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "164395537260-cu7uk0uahc27rb2lpbb42voqmrnc8e3e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.myfarma"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

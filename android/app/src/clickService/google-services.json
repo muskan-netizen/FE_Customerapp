@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "795180487928",
+    "project_id": "clickservice-8e193",
+    "storage_bucket": "clickservice-8e193.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795180487928:android:00a8d0930b9ee46b5b170d",
+        "android_client_info": {
+          "package_name": "com.clickService"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "795180487928-0ttahskv9b5a20jjt28q1lup0o60put5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.clickService",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "795180487928-cfn7bbvbg2f8n24aeehj34m0tqjdsu6q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.clickService",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "795180487928-d0otiomoktuqfob2lpmin5gj4re8sbjh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.clickService",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "795180487928-ugk23tliuukfvdo6jsqcca8ibdf765u1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiZIKF34Od3ySxp_Cvh4JUKoFTxeRUdvc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "795180487928-ugk23tliuukfvdo6jsqcca8ibdf765u1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "795180487928-7tctapgi07cnbb8a32lhbe9d0gs667pv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.clickService"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

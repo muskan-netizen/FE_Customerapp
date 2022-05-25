@@ -6,7 +6,31 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 //
 //Vishwas
-// export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
+// export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
+// export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
+// export const API_BASE_URL = 'https://pideunfleety.com/api/v1';
+// export const API_BASE_URL = 'https://heybuddy.com.mx/api/v1';
+// export const API_BASE_URL = 'https://peerdeliveries.com/api/v1';
+// export const API_BASE_URL = 'https://hometowndelivery21.com/api/v1';
+// export const API_BASE_URL = 'https://click2deliver.co.uk/api/v1';
+// export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
+// export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
+// export const API_BASE_URL = 'https://dbairro.com/api/v1';
+
+
+
+// export const API_BASE_URL = 'https://groupystore.com/api/v1';
+// export const API_BASE_URL = 'https://dimahalal.com/api/v1'; // dimaVega
+// export const API_BASE_URL = 'https://sponge.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://yogo.gd/api/v1'; // yogoFood
+// export const API_BASE_URL = 'https://expresdeliverys.com/api/v1'; 
+// export const API_BASE_URL = 'https://gdotdelivery.com/api/v1';
+// export const API_BASE_URL = 'https://cabio.rostaging.com/api/v1'; 
+// export const API_BASE_URL = 'https://glamsouq.com/api/v1'; 
+
+
+
+
 
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1';  //swiffy
 //Gourav.s
@@ -93,7 +117,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://tranzonline.com/api/v1';
 // export const API_BASE_URL = 'https://hellodeliver.in/api/v1';
 // export const API_BASE_URL = 'https://yohopartner.com/api/v1'
-// export const API_BASE_URL = 'https://swiftandvalu.com/api/v1';
+// export const API_BASE_URL = 'https://order.swiftandvalu.com/api/v1';
 // export const API_BASE_URL = 'https://baytukom.royoorders.com/api/v1';
 //export const API_BASE_URL = 'https://marketplace.verofax.com/api/v1';
 // export const API_BASE_URL = 'https://agrionline.ph/api/v1';
