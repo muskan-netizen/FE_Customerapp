@@ -41,7 +41,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://order.veg-hub.com/api/v1';
-export const API_BASE_URL = 'https://seratho.com/api/v1';
+// export const API_BASE_URL = 'https://seratho.com/api/v1';
 // export const API_BASE_URL = 'https://bezaliohub.com/api/v1';
 // export const API_BASE_URL = 'https://mrhealth.in/api/v1';
 
