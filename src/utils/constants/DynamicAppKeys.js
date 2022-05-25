@@ -1652,7 +1652,7 @@ const appIds = {
     android: 'com.valley',
   }),
   kartAndKarry: Platform.select({
-    ios: 'com.kartAndKarry',
+    ios: 'com.kartandkarry',
     android: 'com.kartAndKarry',
   }),
   quickLube: Platform.select({
