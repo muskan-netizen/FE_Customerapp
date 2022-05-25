@@ -1281,6 +1281,9 @@ export default function ProductDetail({route, navigation}) {
                      <RenderHtml
                         contentWidth={width}
                         source={{html: plainHtml}}
+                        tagsStyles={{p: {
+                          color: isDarkMode? colors.white : colors.black
+                        }}}
                       />
                 
                       {/* <HTMLView
@@ -1371,7 +1374,7 @@ export default function ProductDetail({route, navigation}) {
                               marginHorizontal: moderateScale(3),
                               textAlign: 'center',
                               alignSelf: 'center',
-                              flex: 0.8,
+                              flex: 0.8,color:isDarkMode?colors.white:colors.black
                             }}
                             keyboardType="number-pad"
                             onEndEditing={() => {

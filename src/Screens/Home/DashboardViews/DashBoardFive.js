@@ -48,7 +48,7 @@ import { useScrollToTop } from '@react-navigation/native';
 import staticStrings from '../../../constants/staticStrings';
 import imagePath from '../../../constants/imagePath';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import {
   Menu,
   MenuOptions,
@@ -196,9 +196,9 @@ export default function DashBoardFive({
     const imageUrl = getImageUrl(
       item.image.image_fit,
       item.image.image_path,
-      appStyle?.homePageLayout === 5 ? '800/600' : '400/600',
+      appStyle?.homePageLayout === 5 ?  '800/600' : getBundleId()==appIds.masa ?'800/600' :'400/600',
     );
-
+     
     return (
       <TouchableOpacity activeOpacity={0.8} onPress={() => bannerPress(item)}>
         <FastImage
@@ -209,9 +209,9 @@ export default function DashBoardFive({
           }}
           style={{
             height:
-              appStyle?.homePageLayout == 5 ? moderateScale(140) : height / 3.8,
+              appStyle?.homePageLayout == 5 ? moderateScale(140) : getBundleId()==appIds.masa ?moderateScale(260):height / 3.8,
             width:
-              appStyle?.homePageLayout == 5 ? width / 1.2 : moderateScale(160),
+              appStyle?.homePageLayout == 5 ? width / 1.2 :getBundleId()==appIds.masa?width / 1.1: moderateScale(160),
             borderRadius: moderateScale(16),
             backgroundColor: isDarkMode
               ? colors.whiteOpacity15
