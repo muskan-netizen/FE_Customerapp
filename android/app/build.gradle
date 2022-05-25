@@ -205,7 +205,18 @@ android {
     }
 
     flavorDimensions "appType"
-
+//  productFlavors {
+//       nineOneTwo{
+//          dimension "appType"
+//          versionCode 1
+//          versionName "1.0"
+//          minSdkVersion rootProject.ext.minSdkVersion
+//          targetSdkVersion rootProject.ext.targetSdkVersion
+//          applicationId 'com.nineOneTwo'
+//          resValue "string", "app_name", "912"
+//          resValue "string", "host_name", ""
+//          }
+//  }
     productFlavors {
         royoorder {
             dimension "appType"
