@@ -154,7 +154,7 @@ const PaymentOptions = ({navigation, route}) => {
       updateState({btnLoader: true});
       if (cardInfo) {
         console.log(cardInfo, 'cardInfo>>>');
-        await createToken(cardInfo)
+        await createToken({...cardInfo, type: 'Card'})
           .then((res) => {
             updateState({btnLoader: false});
             console.log(res, 'res>>>>>');
