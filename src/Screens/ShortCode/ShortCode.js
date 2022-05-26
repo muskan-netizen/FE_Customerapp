@@ -2113,6 +2113,12 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+          case appIds.blueBundles:
+            updateState({
+              shortCode: shortCodes.blueBundles,
+              isShortcodePrefilled: true,
+            });
+            break;
       }
     })();
   }, []);

@@ -333,6 +333,8 @@ const shortCodes = {
   kartAndKarry:'4eaab9',
   quickLube:'4ab432',
   keystoneDelivery:'87ad74',
+  blueBundles:'b245dd'
+
 };
 
 
@@ -1662,6 +1664,10 @@ const appIds = {
   keystoneDelivery: Platform.select({
     ios: 'com.keystoneDelivery',
     android: 'com.keystoneDelivery',
+  }),
+  blueBundles: Platform.select({
+    ios: 'com.bluebundles',
+    android: 'com.bluebundles',
   }),
 };
 
