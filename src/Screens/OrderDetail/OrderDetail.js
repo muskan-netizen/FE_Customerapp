@@ -2908,8 +2908,15 @@ export default function OrderDetail({navigation, route}) {
               style={{
                 height: moderateScaleVertical(100),
                 width: moderateScale(100),
+                
               }}
+              
               colorFilters={[
+                {
+                  keypath: 'layers',
+                  color: "#fff",
+                },
+                
                 {
                   keypath: 'right sand',
                   color: themeColors.primary_color,
@@ -2968,11 +2975,12 @@ export default function OrderDetail({navigation, route}) {
                   keypath: 'top right sand 1',
                   color: themeColors.primary_color,
                 },
+                
 
                 // top right sand 1
               ]}
             />
-            <Text style={styles.waitToAccept}>{strings.WAITINGTOACCEPT}</Text>
+            <Text style={{...styles.waitToAccept,color:isDarkMode?colors.white:colors.black}}>{strings.WAITINGTOACCEPT}</Text>
           </View>
         )}
         {!!orderStatus &&

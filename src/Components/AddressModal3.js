@@ -841,7 +841,7 @@ const AddressModal3 = ({
                     fontSize: textScale(12),
                     fontFamily: fontFamily.regular,
                     marginLeft: moderateScale(8),
-                    color: colors.blackOpacity66,
+                    color: isDarkMode? MyDarkTheme.colors.text: colors.blackOpacity66,
                     marginTop: moderateScaleVertical(4),
                   }}>
                   {constCurrLoc?.address}
