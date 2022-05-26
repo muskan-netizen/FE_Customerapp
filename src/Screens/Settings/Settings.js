@@ -54,6 +54,7 @@ export default function Settings({route, navigation}) {
   const {currencies, appData, languages, appStyle, themeColors} = useSelector(
     (state) => state?.initBoot,
   );
+  console.log(toggleTheme, "togletheme ")
   console.log(currencies, 'lang');
   const [state, setState] = useState({
     isLoading: false,
@@ -149,8 +150,9 @@ export default function Settings({route, navigation}) {
 
   //Update language
   const updateLanguage = (item) => {
+    console.log(item, "itemmmm")
     const data = languages.all_languages.filter((x) => x.id == item.id)[0];
-
+    // console.log(data, "setLang")
     if (data.sort_code !== languages.primary_language.sort_code) {
       let languagesData = {
         ...languages,

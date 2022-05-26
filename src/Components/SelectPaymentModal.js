@@ -1,48 +1,39 @@
-import {useNavigation} from '@react-navigation/native';
-// import {CardField, createToken, initStripe} from '@stripe/stripe-react-native';
-import React, {useEffect, useState} from 'react';
+import { useNavigation } from '@react-navigation/native';
 import {
-  FlatList,
+  CardField, createPaymentMethod, createToken,
+  initStripe,
+  StripeProvider
+} from '@stripe/stripe-react-native';
+// import {CardField, createToken, initStripe} from '@stripe/stripe-react-native';
+import React, { useEffect, useState } from 'react';
+import {
   Image,
-  Keyboard,
-  StyleSheet,
+  Keyboard, ScrollView, StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  ScrollView,
+  View
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import * as Animatable from 'react-native-animatable';
+import { useDarkMode } from 'react-native-dark-mode';
+import { useSelector } from 'react-redux';
 import CheckoutPaymentView from '../Components/CheckoutPaymentView';
 import GradientButton from '../Components/GradientButton';
 import Header from '../Components/Header';
-import {loaderOne} from '../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../Components/WrapperContainer';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang/index';
-import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import colors from '../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
-import * as Animatable from 'react-native-animatable';
+import { MyDarkTheme } from '../styles/theme';
+import { getColorCodeWithOpactiyNumber } from '../utils/helperFunctions';
 import HomeLoader from './Loaders/HomeLoader';
-import {
-  CardField,
-  createToken,
-  initStripe,
-  StripeProvider,
-  handleCardAction,
-  createPaymentMethod,
-  confirmPayment,
-} from '@stripe/stripe-react-native';
 export default function SelectPaymentModal({
   onSelectPayment,
   paymentModalClose = () => {},
@@ -50,7 +41,7 @@ export default function SelectPaymentModal({
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const navigation = useNavigation();
   const userData = useSelector((state) => state?.auth?.userData);
-console.log(userData,"userData");
+  console.log(userData, 'userData');
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
@@ -156,29 +147,31 @@ console.log(userData,"userData");
 
   //Error handling in screen
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({isLoading: false, isLoadingB: false, isRefreshing: false,btnLoader:false});
     // showError(error?.message || error?.error);
+    console.log(error, 'error');
     alert(error?.message || error?.error);
-  };
 
+  };
 
   const _createPaymentMethod = async (cardInfo, res2) => {
     console.log(cardInfo, '_createPaymentMethod>>>ardInfo');
     if (res2) {
-     await createPaymentMethod({
+      await createPaymentMethod({
         type: 'Card',
         // token:tokenInfo,
         card: cardInfo,
         billing_details: {
           name: 'Jenny Rosen',
         },
-      }).then((res) => {
+      })
+        .then((res) => {
           // updateState({isLoadingB: false});
           console.log('_createPaymentMethod res', res);
           if (res && res?.error && res?.error?.message) {
             showError(res?.error?.message);
-              updateState({isLoading: false});
-              paymentModalClose();
+            updateState({isLoading: false});
+            paymentModalClose();
           } else {
             console.log(res, 'success_createPaymentMethod ');
             updateState({isLoading: false});
@@ -186,7 +179,7 @@ console.log(userData,"userData");
               selectedPaymentMethod,
               cardInfo,
               tokenInfo: res2,
-              payment_method_id: res?.paymentMethod?.id
+              payment_method_id: res?.paymentMethod?.id,
             });
             paymentModalClose();
           }
@@ -204,17 +197,17 @@ console.log(userData,"userData");
         selectedPaymentMethod?.off_site == 0
       ) {
         if (cardInfo) {
-          await createToken(cardInfo)
+          await createToken({...cardInfo, type: 'Card'})
             .then((res) => {
               console.log(res, 'stripeTokenres>>');
               console.log(cardInfo, 'stripeTokencardInfo>>');
               if (!!res?.error) {
                 alert(res.error.localizedMessage);
-                updateState({isLoading: false});
+                updateState({isLoading: false,btnLoader:false});
                 return;
               }
               if (res && res?.token && res.token?.id) {
-                  _createPaymentMethod(cardInfo, res.token?.id);
+                _createPaymentMethod(cardInfo, res.token?.id);
 
                 // updateState({isLoading: false});
                 // onSelectPayment({
@@ -252,11 +245,22 @@ console.log(userData,"userData");
     }
   };
 
+  // //Select/ Update payment method
+  // const selectPaymentMethod = (data, inx) => {
+  //   console.log(selectedPaymentMethod,"selectedPaymentMethod")
+  //   console.log(data,"data")
+  //   if (selectedPaymentMethod?.id === 4) {
+  //     return;
+  //   }
+  //   {
+  //     selectedPaymentMethod && selectedPaymentMethod?.id == data?.id
+  //       ? updateState({selectedPaymentMethod: null})
+  //       : updateState({selectedPaymentMethod: data});
+  //   }
+  // };
+
   //Select/ Update payment method
   const selectPaymentMethod = (data, inx) => {
-    if (selectedPaymentMethod?.id === 4) {
-      return;
-    }
     {
       selectedPaymentMethod && selectedPaymentMethod?.id == data?.id
         ? updateState({selectedPaymentMethod: null})
@@ -384,6 +388,7 @@ console.log(userData,"userData");
   };
 
   const _onChangeStripeData = (cardDetails) => {
+    console.log("_onChangeStripeData_onChangeStripeData",cardDetails)
     if (cardDetails?.complete) {
       // updateState({
       //   cardInfo: {

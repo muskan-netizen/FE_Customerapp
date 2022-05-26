@@ -34,6 +34,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc, {hitSlopProp} from '../../styles/commonStyles';
+import RenderHtml, {HTML} from 'react-native-render-html';
 import {
   height,
   moderateScale,
@@ -61,7 +62,7 @@ import FastImage from 'react-native-fast-image';
 import {enums} from '../../utils/enums';
 
 export default function ProductDetail({route, navigation}) {
-  console.log('my route', route);
+  console.log('my route', route.params.data);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const CartItems = useSelector((state) => state?.cart?.cartItemCount);
@@ -211,7 +212,7 @@ export default function ProductDetail({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res.data.products, 'res getProductDetail');
+        console.log(res.data, 'res getProductDetail');
 
         if (res?.data?.products?.product_media) {
           res?.data?.products?.product_media.map((val) => {
@@ -900,7 +901,7 @@ export default function ProductDetail({route, navigation}) {
   };
 
   const renderProduct = ({item, index}) => {
-    item.showAddToCart = true;
+    // item.showAddToCart = true;
     return (
       <ProductsComp
         item={item}
@@ -1164,12 +1165,17 @@ export default function ProductDetail({route, navigation}) {
                         color: isDarkMode
                           ? MyDarkTheme.colors.text
                           : colors.black,
-                      }}>{`${currencies?.primary_currency.symbol} ${(
-                      Number(productPriceData?.multiplier) *
-                      Number(productPriceData?.price)
-                    ).toFixed(
-                      appData?.profile?.preferences?.digit_after_decimal,
-                    )}`}</Text>
+                      }}>
+                        {`${
+                              currencies?.primary_currency?.symbol
+                            } ${currencyNumberFormatter(
+                              // Number(productPriceData?.multiplier) *
+                                Number(productPriceData?.price) *
+                                Number(productQuantityForCart),
+                              appData?.profile?.preferences
+                                ?.digit_after_decimal,
+                            )}`}
+                      </Text>
                   </View>
                 </View>
 
@@ -1270,10 +1276,17 @@ export default function ProductDetail({route, navigation}) {
                         {strings.DESCRIPTION}
                       </Text>
 
-                      <HTMLView
-                        value={'<div>' + plainHtml + '</div>'}
-                        stylesheet={{div: styles.descriptionStyle}}
+                    
+                    
+                     <RenderHtml
+                        contentWidth={width}
+                        source={{html: plainHtml}}
                       />
+                
+                      {/* <HTMLView
+                        value={plainHtml}
+                        stylesheet={{div: styles.descriptionStyle}}
+                      /> */}
                     </View>
                   </View>
                   <HorizontalLine
@@ -1299,12 +1312,11 @@ export default function ProductDetail({route, navigation}) {
               ) : null}
 
               {/* Add to Cart button */}
-              {!enums.isVendorStandloneApp &&
-                (productDetailData?.has_inventory == 0 ||
-                  (!!productTotalQuantity && !!productTotalQuantity != 0) ||
-                  (!!typeId && typeId == 8) ||
-                  !!productDetailData?.sell_when_out_of_stock) &&
-                (!!data?.showAddToCart ? null : showErrorMessageTitle ? null : (
+              {(productDetailData?.has_inventory == 0 ||
+                (!!productTotalQuantity && !!productTotalQuantity != 0) ||
+                (!!typeId && typeId == 8) ||
+                !!productDetailData?.sell_when_out_of_stock) &&
+                (false ? null : showErrorMessageTitle ? null : (
                   <View
                     style={{
                       marginBottom: moderateScaleVertical(25),
@@ -1401,7 +1413,8 @@ export default function ProductDetail({route, navigation}) {
                           <GradientButton
                             indicator={isLoadingC}
                             disabled={
-                              !productDetailData?.vendor?.show_slot &&
+                              // !productDetailData?.vendor?.closed_store_order_scheduled
+                              !productDetailData?.vendor?.closed_store_order_scheduled &&
                               !!productDetailData?.vendor?.is_vendor_closed
                             }
                             indicatorColor={colors.white}
@@ -1417,7 +1430,7 @@ export default function ProductDetail({route, navigation}) {
                             btnText={`${strings.ADD}  ${
                               currencies?.primary_currency?.symbol
                             } ${currencyNumberFormatter(
-                              Number(productPriceData?.multiplier) *
+                              // Number(productPriceData?.multiplier) *
                                 Number(productPriceData?.price) *
                                 Number(productQuantityForCart),
                               appData?.profile?.preferences
@@ -1426,7 +1439,7 @@ export default function ProductDetail({route, navigation}) {
                             btnStyle={{
                               borderRadius: moderateScale(4),
                               height: moderateScale(38),
-                              opacity: productDetailData?.vendor?.show_slot
+                              opacity: productDetailData?.vendor?.closed_store_order_scheduled
                                 ? 1
                                 : productDetailData?.vendor?.is_vendor_closed
                                 ? 0.3
@@ -1436,7 +1449,7 @@ export default function ProductDetail({route, navigation}) {
                         </View>
                       </View>
                     ) : null}
-                    {!productDetailData?.vendor?.show_slot &&
+                    {!productDetailData?.vendor?.closed_store_order_scheduled &&
                     !!productDetailData?.vendor?.is_vendor_closed ? (
                       <Text
                         style={{

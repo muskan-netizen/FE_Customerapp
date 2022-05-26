@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8424623427073943005473D3"
+               BlueprintIdentifier = "84DF1B9F2808382700FD900D"
                BuildableName = "Elixir.app"
                BlueprintName = "Elixir"
                ReferencedContainer = "container:Runrun.xcodeproj">
@@ -44,7 +44,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8424623427073943005473D3"
+            BlueprintIdentifier = "84DF1B9F2808382700FD900D"
             BuildableName = "Elixir.app"
             BlueprintName = "Elixir"
             ReferencedContainer = "container:Runrun.xcodeproj">
@@ -61,7 +61,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8424623427073943005473D3"
+            BlueprintIdentifier = "84DF1B9F2808382700FD900D"
             BuildableName = "Elixir.app"
             BlueprintName = "Elixir"
             ReferencedContainer = "container:Runrun.xcodeproj">

@@ -1,64 +1,64 @@
 {
   "project_info": {
-    "project_number": "16699357731",
-    "project_id": "zestyclickz",
-    "storage_bucket": "zestyclickz.appspot.com"
+    "project_number": "342729040014",
+    "project_id": "zestyclickz-1439b",
+    "storage_bucket": "zestyclickz-1439b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:16699357731:android:eeda07c0efef6f4f178f96",
+        "mobilesdk_app_id": "1:342729040014:android:46ab323abd52f1d87569df",
         "android_client_info": {
-          "package_name": "com.zestyclickz"
+          "package_name": "com.app.zestyclickz"
         }
       },
       "oauth_client": [
         {
-          "client_id": "16699357731-5utjjqulrpuoetvub5k1j8ntqd5j062e.apps.googleusercontent.com",
+          "client_id": "342729040014-0dkdphv9lk2um7pqf5s0m4o04equ1hll.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.zestyclickz",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "16699357731-gum0768j3tuo7ortiitmk5rliqcu5emh.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.zestyclickz",
+            "package_name": "com.app.zestyclickz",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "16699357731-roimg2gig0f60q04re4anu9n5830209h.apps.googleusercontent.com",
+          "client_id": "342729040014-fhbdvllmf5ffs3dn9dkb170s2peakijj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.zestyclickz",
+            "package_name": "com.app.zestyclickz",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "342729040014-hc4ed3j5jel2r65411kg3ovqchbp9r2c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.zestyclickz",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "16699357731-f8fjfan64o0h8aultlfacc50g6se9bif.apps.googleusercontent.com",
+          "client_id": "342729040014-pdvclpn348rekd3fodjsevrhrru6d372.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCTtfPZejCg7JTHpnppWEBTcUNcLqKvBjs"
+          "current_key": "AIzaSyARjWECrpRS6uHA-0MiUychbufXKa3jsxk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "16699357731-f8fjfan64o0h8aultlfacc50g6se9bif.apps.googleusercontent.com",
+              "client_id": "342729040014-pdvclpn348rekd3fodjsevrhrru6d372.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "16699357731-0hg5pupaaigv6livu11fuaoroncorqbm.apps.googleusercontent.com",
+              "client_id": "342729040014-5s859bdt8rtplp42b23bu50k0e58rjt1.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.zestyclickz"
+                "bundle_id": "com.app.zestyclickz"
               }
             }
           ]

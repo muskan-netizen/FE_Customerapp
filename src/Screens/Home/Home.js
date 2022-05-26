@@ -53,6 +53,7 @@ export default function Home({route, navigation}) {
   const {location, appMainData, dineInType} = useSelector(
     (state) => state?.home,
   );
+  console.log(location, '>location>location');
   console.log(appMainData, 'appMainData>appMainData');
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const addressSearch = useSelector(
@@ -164,6 +165,7 @@ export default function Home({route, navigation}) {
     }
   };
 
+  // {alert(appData?.profile?.preferences?.is_hyperlocal)}
   const checkCartWithLatLang = (res) => {
     Alert.alert('', strings.THIS_WILL_REMOVE_CART, [
       {
@@ -208,9 +210,10 @@ export default function Home({route, navigation}) {
   }, []);
 
   useEffect(() => {
-    chekLocationPermission(false)
+    chekLocationPermission(true)
       .then((result) => {
-        if (result !== 'goback') {
+        if (result !== 'goback' && result == 'granted') {
+          console.log(result, 'chekLocationPermission');
           getCurrentLocation('home')
             .then((res) => {
               console.log(res, 'userCurrentLocation');
@@ -253,7 +256,19 @@ export default function Home({route, navigation}) {
                 return;
               }
             })
-            .catch((err) => {});
+            .catch((err) => {
+              console.log(err, 'chekLocationPermission error');
+            });
+        } else {
+          if (appData?.profile?.preferences?.is_hyperlocal) {
+            const data = {
+              address: appData?.profile?.preferences?.Default_location_name,
+              latitude: appData?.profile?.preferences?.Default_latitude,
+              longitude: appData?.profile?.preferences?.Default_longitude,
+            };
+
+            actions.locationData(data);
+          }
         }
       })
       .catch((error) => console.log('error while accessing location', error));
@@ -317,6 +332,7 @@ export default function Home({route, navigation}) {
       updateState({searchDataLoader: true});
     }
     let latlongObj = {};
+    console.log(location, '>location');
     if (appData?.profile?.preferences?.is_hyperlocal) {
       latlongObj = {
         address: slectedLocatonFromPreviousScreen
@@ -330,6 +346,7 @@ export default function Home({route, navigation}) {
           : location?.longitude,
       };
     }
+    console.log(location, '>locationafter');
     let vendorFilterData = {
       close_vendor: closeVendor,
       open_vendor: openVendor,
@@ -347,7 +364,7 @@ export default function Home({route, navigation}) {
         ? actions
             .homeData(
               {
-                type: dineInType ? dineInType : dineInType,
+                type: dineInType,
                 ...latlongObj,
                 ...vendorFilterData,
               },
@@ -358,9 +375,9 @@ export default function Home({route, navigation}) {
                 // ...latlongObj,
               },
             )
-            .then((res) => {
+            .then(async (res) => {
               console.log('Home data++++++', res);
-              preLoadImages(res.data);
+              // await preLoadImages(res.data);
               updateState({searchDataLoader: false});
               if (
                 appData?.profile?.preferences?.is_hyperlocal &&
@@ -401,7 +418,7 @@ export default function Home({route, navigation}) {
                   isLoadingB: false,
                   searchDataLoader: false,
                 });
-              }, 1000);
+              }, 1500);
             })
             .catch(errorMethod)
         : null;
@@ -435,19 +452,33 @@ export default function Home({route, navigation}) {
 
   const {viewRef2, viewRef3, bannerRef} = useRef();
 
-  const preLoadImages = (data) => {
+  const preLoadImages = async (data) => {
     if (data.categories.length > 0) {
       let preLoadCategories = data.categories.map((item, inx) => {
         return {
           uri: getImageUrl(
             item?.icon?.image_fit,
             item?.icon?.image_path,
-            '160/160',
+            '140/140',
           ),
         };
       });
       FastImage.preload(preLoadCategories); //preload categories
     }
+
+    if (!!appData?.mobile_banners && appData?.mobile_banners?.length > 0) {
+      let preLoadBanner = appData?.mobile_banners.map((item) => {
+        return {
+          uri: getImageUrl(
+            item.image.image_fit,
+            item.image.image_path,
+            appStyle?.homePageLayout === 5 ? '600/400' : '200/400',
+          ),
+        };
+      });
+      FastImage.preload(preLoadBanner); //preload banners
+    }
+
     if (data.vendors.length > 0) {
       let preLoadVendors = data.vendors.map((item, inx) => {
         return {
@@ -483,8 +514,6 @@ export default function Home({route, navigation}) {
 
   //onPress Category
   const onPressCategory = (item) => {
-    console.log(item, 'itemitem');
-
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -568,8 +597,7 @@ export default function Home({route, navigation}) {
 
   //On Press banner
   const bannerPress = (data) => {
-    console.log('data ++++++++++++++', data);
-    // return;
+    console.log('bannerdata>', data);
 
     let item = {};
     if (data?.redirect_id) {
@@ -613,6 +641,7 @@ export default function Home({route, navigation}) {
           let dat2 = data;
           dat2['id'] = data?.redirect_id;
           moveToNewScreen(navigationStrings.VENDOR, dat2)();
+          return;
         } else {
           if (data?.category?.type?.title == staticStrings.PRODUCT) {
             moveToNewScreen(navigationStrings.PRODUCT_LIST, {
@@ -621,6 +650,7 @@ export default function Home({route, navigation}) {
               name: data.redirect_name,
               fetchOffers: true,
             })();
+            return;
             // let dat2 = data;
             // dat2['id'] = data?.redirect_id;
             // moveToNewScreen(navigationStrings.VENDOR, dat2)();
@@ -631,6 +661,7 @@ export default function Home({route, navigation}) {
               rootProducts: true,
               // categoryData: data,
             })();
+            return;
           } else {
             moveToNewScreen(navigationStrings.PRODUCT_LIST, {
               id: data.redirect_id,
@@ -646,6 +677,7 @@ export default function Home({route, navigation}) {
             rootProducts: true,
             // categoryData: data,
           })();
+          return;
         }
       }
     }
@@ -682,9 +714,6 @@ export default function Home({route, navigation}) {
     initApiHit();
     // homeData();
   };
-  const updateCircleData = (data) => {
-    updateState({updatedData: data});
-  };
 
   const selcetedToggle = (type) => {
     actions.dineInData(type);
@@ -705,64 +734,6 @@ export default function Home({route, navigation}) {
   useEffect(() => {
     homeData();
   }, [selectedTabType, appData, dineInType]);
-  // location
-
-  ///onPressCategory2
-  const onPressCategory2 = (data) => {
-    if (data.redirect_to == staticStrings.VENDOR) {
-      moveToNewScreen(navigationStrings.VENDOR, data)();
-    } else if (
-      data.redirect_to == staticStrings.PRODUCT ||
-      data.redirect_to == staticStrings.CATEGORY
-    ) {
-      moveToNewScreen(navigationStrings.PRODUCT_LIST, data)();
-    } else if (data.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
-      if (!!userData?.auth_token) {
-        if (data?.warning_page_id) {
-          if (data?.warning_page_id == 2) {
-            moveToNewScreen(navigationStrings.DELIVERY, data)();
-          } else {
-            moveToNewScreen(navigationStrings.HOMESCREENCOURIER, data)();
-          }
-        } else {
-          if (data?.template_type_id == 1) {
-            moveToNewScreen(navigationStrings.SEND_PRODUCT, data)();
-          } else {
-            moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, data)();
-          }
-        }
-      } else {
-        // showError(strings.UNAUTHORIZED_MESSAGE);
-        moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
-      }
-    } else if (data.redirect_to == staticStrings.DISPATCHER) {
-      // moveToNewScreen(navigationStrings.DELIVERY, data)();
-    } else if (data.redirect_to == staticStrings.CELEBRITY) {
-      moveToNewScreen(navigationStrings.CELEBRITY)();
-    } else if (data.redirect_to == staticStrings.BRAND) {
-      moveToNewScreen(navigationStrings.BRANDS)();
-    } else if (data.redirect_to == staticStrings.SUBCATEGORY) {
-      // moveToNewScreen(navigationStrings.PRODUCT_LIST, data)();
-
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {data})();
-    } else if (!data.is_show_category || data.is_show_category) {
-      let item = data;
-      data?.is_show_category
-        ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
-        : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: data?.id,
-            vendor: true,
-            name: data?.name,
-            fetchOffers: true,
-          })();
-
-      // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
-    }
-  };
 
   const onVendorFilterSeletion = (selectedFilter) => {
     console.log('Selected filter', selectedFilter);
@@ -848,6 +819,7 @@ export default function Home({route, navigation}) {
   };
 
   console.log(appStyle?.homePageLayout, 'appStyle?.homePageLayout');
+  console.log(location, 'location>location');
 
   const renderHomeScreen = () => {
     const case_ = 5;
@@ -897,6 +869,7 @@ export default function Home({route, navigation}) {
         return (
           <>
             <DashBoardHeaderFive
+              showToggles={false}
               navigation={navigation}
               location={location}
               selcetedToggle={selcetedToggle}
@@ -933,6 +906,7 @@ export default function Home({route, navigation}) {
         return (
           <>
             <DashBoardHeaderFour
+              showToggles={false}
               navigation={navigation}
               location={location}
               selcetedToggle={selcetedToggle}
@@ -962,6 +936,7 @@ export default function Home({route, navigation}) {
         return (
           <>
             <DashBoardHeaderFive
+              showToggles={false}
               navigation={navigation}
               location={location}
               selcetedToggle={selcetedToggle}
@@ -997,6 +972,7 @@ export default function Home({route, navigation}) {
         return (
           <>
             <DashBoardHeaderFive
+              showToggles={false}
               navigation={navigation}
               location={location}
               selcetedToggle={selcetedToggle}

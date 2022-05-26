@@ -149,7 +149,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       justifyContent: 'space-between',
       paddingHorizontal: moderateScaleVertical(20),
       paddingVertical: moderateScaleVertical(10),
-      backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
+
       marginHorizontal: 16,
       borderRadius: moderateScale(10),
     },
@@ -494,6 +494,34 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       fontFamily: fontFamily.medium,
       textAlign: I18nManager.isRTL ? 'right' : 'left',
       fontSize: textScale(11),
+    },
+    viewStyleForUploadImage: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      // justifyContent: 'space-between',
+    },
+
+    imageUpload: {
+      borderStyle: 'dashed',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: moderateScaleVertical(10),
+    },
+    imageStyle2: {
+      height: 100,
+      width: 100,
+      borderRadius: moderateScale(4),
+    },
+    label3: {
+      marginBottom: moderateScaleVertical(10),
+      textAlign: 'center',
+      fontSize: textScale(12),
+      fontFamily: fontFamily.medium,
+      color: colors.greyLight,
+    },
+    uploadStyle: {
+      color: colors.blue,
+      fontFamily: fontFamily.medium,
     },
   });
   return styles;

@@ -522,7 +522,7 @@ Amount`,
   YOUR_CART_EMPTY_ADD_ITEMS: 'Your cart is empty, add items to shop',
   SHOP_FROM_WISHLIST: 'Shop from wishlist',
   ALREADY_EXIST:
-    'Your already have items in your cart. Do you want to discard them?',
+    'You already have items from another store. Do you want to discard them?',
   LABEL1: 'Label 1',
   LABEL2: 'Label 2',
   DOYOUHAVECLEANINGMATERIAL: ' Do you require cleaning materials ?',
@@ -913,5 +913,13 @@ Amount`,
   PENDING: 'Pending',
   REFUNDS: 'Refunds',
   ORDER_TOTAL: 'Order Total',
+  ORDER_CANCELLED: 'Order Cancelled',
+  SPECIFIC_INSTRUCTIONS:'Specific Instructions',
+  THANKS_FOR_YOUR_PURCHASE:'Thanks for your purchase.',
+  BOOK_FOR_A_FRIEND: 'Book For a friend',
+  ENTER_FRIEND_DETAILS: "Enter your Friend's details",
+  BOOK_FOR_ME: 'Book For Me',
+  BOOK_FOR_FRIEND:'Book For Friend'
+
 
 };

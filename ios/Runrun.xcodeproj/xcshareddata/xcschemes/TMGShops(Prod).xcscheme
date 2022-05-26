@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1220"
+   LastUpgradeVersion = "1240"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "844D900A278849DA0058A99A"
-               BuildableName = "TMGShops"
+               BlueprintIdentifier = "848AB71D27FD534C00E8CF04"
+               BuildableName = "TMGShops.app"
                BlueprintName = "TMGShops"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -44,8 +44,8 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "844D900A278849DA0058A99A"
-            BuildableName = "TMGShops"
+            BlueprintIdentifier = "848AB71D27FD534C00E8CF04"
+            BuildableName = "TMGShops.app"
             BlueprintName = "TMGShops"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -61,8 +61,8 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "844D900A278849DA0058A99A"
-            BuildableName = "TMGShops"
+            BlueprintIdentifier = "848AB71D27FD534C00E8CF04"
+            BuildableName = "TMGShops.app"
             BlueprintName = "TMGShops"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

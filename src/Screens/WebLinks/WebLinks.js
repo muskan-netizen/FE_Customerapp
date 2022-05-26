@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import RenderHtml, {HTML} from 'react-native-render-html';
 import ActionSheet from 'react-native-actionsheet';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
@@ -75,6 +76,7 @@ export default function WebLinks({navigation, route}) {
     themeColor,
     themeToggle,
   } = useSelector((state) => state?.initBoot);
+  console.log(appData, 'appData');
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
@@ -196,6 +198,12 @@ export default function WebLinks({navigation, route}) {
     driverTagsAry,
     activeSections,
   } = state;
+
+  useEffect(() => {
+    //  isDineIn: false,
+    // isTakeaway: false,
+    // isDelivery: false,
+  }, []);
 
   useEffect(() => {
     _getLocationFromParams();
@@ -966,10 +974,14 @@ export default function WebLinks({navigation, route}) {
             marginHorizontal: moderateScale(20),
           }}>
           {htmlContent && (
-            <HTMLView
-              stylesheet={isDarkMode ? htmlStyle : null}
-              value={`<p>${htmlContent}</p>`}
-            />
+             <RenderHtml
+             contentWidth={width}
+             source={{html: htmlContent}}
+           />
+            // <HTMLView
+            //   stylesheet={isDarkMode ? htmlStyle : null}
+            //   value={`<p>${htmlContent}</p>`}
+            // />
           )}
         </View>
 
@@ -1179,73 +1191,79 @@ export default function WebLinks({navigation, route}) {
                 marginHorizontal: moderateScale(10),
                 marginVertical: moderateScaleVertical(16),
               }}>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text
+              {!!appData?.profile?.preferences?.dinein_check && (
+                <View
                   style={{
-                    marginBottom: moderateScaleVertical(8),
-                    fontFamily: fontFamily.medium,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyOpcaity7,
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}>
-                  {strings.DINE_IN}
-                </Text>
-                <ToggleSwitch
-                  isOn={isDineIn}
-                  onColor={themeColors.primary_color}
-                  offColor={
-                    isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
-                  }
-                  size="small"
-                  onToggle={() => updateState({isDineIn: !isDineIn})}
-                />
-              </View>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Text
-                  style={{
-                    marginBottom: moderateScaleVertical(8),
-                    fontFamily: fontFamily.medium,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyOpcaity7,
-                  }}>
-                  {strings.TAKEAWAY}
-                </Text>
-                <ToggleSwitch
-                  isOn={isTakeaway}
-                  onColor={themeColors.primary_color}
-                  offColor={
-                    isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
-                  }
-                  size="small"
-                  onToggle={() => updateState({isTakeaway: !isTakeaway})}
-                />
-              </View>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Text
-                  style={{
-                    marginBottom: moderateScaleVertical(8),
-                    fontFamily: fontFamily.medium,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyOpcaity7,
-                  }}>
-                  {strings.DELIVERY}
-                </Text>
-                <ToggleSwitch
-                  isOn={isDelivery}
-                  onColor={themeColors.primary_color}
-                  offColor={
-                    isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
-                  }
-                  size="small"
-                  onToggle={() => updateState({isDelivery: !isDelivery})}
-                />
-              </View>
+                  <Text
+                    style={{
+                      marginBottom: moderateScaleVertical(8),
+                      fontFamily: fontFamily.medium,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyOpcaity7,
+                    }}>
+                    {strings.DINE_IN}
+                  </Text>
+                  <ToggleSwitch
+                    isOn={isDineIn}
+                    onColor={themeColors.primary_color}
+                    offColor={
+                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                    }
+                    size="small"
+                    onToggle={() => updateState({isDineIn: !isDineIn})}
+                  />
+                </View>
+              )}
+              {!!appData?.profile?.preferences?.takeaway_check && (
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <Text
+                    style={{
+                      marginBottom: moderateScaleVertical(8),
+                      fontFamily: fontFamily.medium,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyOpcaity7,
+                    }}>
+                    {strings.TAKEAWAY}
+                  </Text>
+                  <ToggleSwitch
+                    isOn={isTakeaway}
+                    onColor={themeColors.primary_color}
+                    offColor={
+                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                    }
+                    size="small"
+                    onToggle={() => updateState({isTakeaway: !isTakeaway})}
+                  />
+                </View>
+              )}
+              {!!appData?.profile?.preferences?.delivery_check && (
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <Text
+                    style={{
+                      marginBottom: moderateScaleVertical(8),
+                      fontFamily: fontFamily.medium,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyOpcaity7,
+                    }}>
+                    {strings.DELIVERY}
+                  </Text>
+                  <ToggleSwitch
+                    isOn={isDelivery}
+                    onColor={themeColors.primary_color}
+                    offColor={
+                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                    }
+                    size="small"
+                    onToggle={() => updateState({isDelivery: !isDelivery})}
+                  />
+                </View>
+              )}
             </View>
             <View
               style={{

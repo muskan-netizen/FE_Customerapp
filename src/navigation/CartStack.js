@@ -33,7 +33,12 @@ import {
   FPX,
   Cashfree,
   MyProfile3,
-  MyProfile2
+  MyProfile2,
+  Easebuzz,
+  ToyyibPay,
+  Mpaisa,
+  WindCave,
+  PayPhone
 } from '../Screens';
 import MyProfile from '../Screens/MyProfile/MyProfile2';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
@@ -88,7 +93,11 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.WISHLIST}
-        component={appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? Wishlist2 : Wishlist}
+        component={
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+            ? Wishlist2
+            : Wishlist
+        }
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -197,6 +206,33 @@ export default function () {
         component={Cashfree}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name={navigationStrings.EASEBUZZ}
+        component={Easebuzz}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={navigationStrings.TOYYIAPAY}
+        component={ToyyibPay}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={navigationStrings.MPAISA}
+        component={Mpaisa}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={navigationStrings.WINDCAVE}
+        component={WindCave}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.PAYPHONE}
+        component={PayPhone}
+        options={{ headerShown: false }}
+      />
+
     </Stack.Navigator>
   );
 }

@@ -116,11 +116,10 @@ export {default as TipPaymentOptions} from './TipPaymentOptions/TipPaymentOption
 export {default as Paylink} from './PaymentGateways/Paylink';
 export {default as FPX} from './PaymentGateways/FPX';
 
-
 export {default as OuterScreen4} from './OuterScreen/OuterScreen4';
 export {default as CategoryBrands} from './CategoryBrands/CategoryBrands';
 export {default as AllinonePyments} from './AllinonePyments/AllinonePyments';
-export {default as Simplify} from './PaymentGateways/Simplify';
+export {default as Simplify} from './PaymentGateways/Simplify'; 
 export {default as Square} from './PaymentGateways/Square';
 export {default as Inventory} from './Inventory/Inventory';
 export {default as SalesExpenses} from './SalesExpenses/SalesExpenses';
@@ -132,4 +131,12 @@ export {default as Paystack} from './PaymentGateways/Paystack';
 export {default as AuthorizeNet} from './PaymentGateways/AuthorizeNet';
 export {default as Avenue} from './PaymentGateways/Avenue';
 export {default as ScrollableCategory} from './ScrollableCategory/ScrollableCategory';
-export {default as Cashfree} from './PaymentGateways/Cashfree'
+export {default as Cashfree} from './PaymentGateways/Cashfree';
+export {default as Easebuzz} from './PaymentGateways/Easebuzz';
+export {default as ToyyibPay} from './PaymentGateways/ToyyibPay';
+export {default as Mpaisa} from './PaymentGateways/Mpaisa';
+export {default as WindCave} from './PaymentGateways/WindCave';
+export {default as PayPhone} from './PaymentGateways/PayPhone';
+
+
+

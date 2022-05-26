@@ -1,9 +1,9 @@
-#include "Pods/Target Support Files/Pods-TMGShops/Pods-TMGShops.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-TMGShops/Pods-available_pods-TMGShops.release.xcconfig"
 
 PROJECT_APPLE_ID = 1603813669
 PROJECT_BUNDLE_ID = com.tmgShops
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 1
+PROJECT_BUILD_NUMBER = 3
 PROJECT_APP_NAME = TMGShops
 PROJECT_GOOGLE_CLIENT_ID = 528960069350-853ntpjnfaortjit4a64m5il4p9v29rg.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.528960069350-853ntpjnfaortjit4a64m5il4p9v29rg

@@ -533,7 +533,7 @@ export default {
   WRITE_REVIEW: 'Write a Review',
   PICKUP: 'PICKUP',
   ALREADY_EXIST:
-    'Your already have items in your cart. Do you want to discard them?',
+  'You already have items from another store. Do you want to discard them?',
   VIEW_ALL: 'View All',
   POPULAR_BRANDS: 'Popular Brands',
   FEATURED_PRODUCTS: 'Featured products',
@@ -849,4 +849,12 @@ export default {
   REFUNDS: 'Refunds',
   ORDER_TOTAL: 'Order Total',
   ORDERS: 'Orders',
+  ORDER_CANCELLED: 'Order Cancelled',
+  SPECIFIC_INSTRUCTIONS:'Specific Instructions',
+  THANKS_FOR_YOUR_PURCHASE:'Thanks for your purchase.',
+  BOOK_FOR_A_FRIEND: 'Book For a friend',
+  ENTER_FRIEND_DETAILS: "Enter your Friend's details",
+  BOOK_FOR_ME: 'Book For Me',
+  BOOK_FOR_FRIEND:'Book For Friend'
+
 };

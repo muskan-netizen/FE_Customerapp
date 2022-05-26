@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "736289396839",
+    "project_id": "watertaxi-9d4f3",
+    "storage_bucket": "watertaxi-9d4f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736289396839:android:0b5663750d43632a4e9cc2",
+        "android_client_info": {
+          "package_name": "com.customer.waterTaxi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "736289396839-6j04pt3ovk4mjs0l48a8kap1bsjnnokm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.waterTaxi",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "736289396839-6vdn2vupv1ocetifc34qg3tq1k54lpb0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.waterTaxi",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "736289396839-u3jih0huc48vt7oj12vs631puh3va127.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.waterTaxi",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "736289396839-rrdg6pbfjvgisthslk3ld8pd7nu3gvu5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBm1SN7wRwdLp7rjT51AMpVEu3ER55qOqk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "736289396839-rrdg6pbfjvgisthslk3ld8pd7nu3gvu5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "736289396839-82cmerc03r3me5706eferh767v4e7log.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.customer.waterTaxi"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

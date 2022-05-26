@@ -46,6 +46,7 @@ export default function DashBoardHeaderFive({
   _onVoiceListen = () => {},
   isVoiceRecord = false,
   _onVoiceStop = () => {},
+  showAboveView = true,
 }) {
   const navigation = useNavigation();
   const pickerRef = createRef();
@@ -66,6 +67,8 @@ export default function DashBoardHeaderFive({
   });
 
   const {isModalVisible, checked, tabs} = state;
+
+  console.log('tabstabs', tabs);
 
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
@@ -396,80 +399,6 @@ export default function DashBoardHeaderFive({
     });
   };
 
-  if (false) {
-    return (
-      <View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginHorizontal: moderateScale(16),
-            marginBottom: moderateScaleVertical(12),
-          }}>
-          <HomeLoader rectWidth={60} width={60} rectHeight={38} height={38} />
-          <View style={{marginHorizontal: moderateScale(12)}}>
-            <HomeLoader
-              rectWidth={width / 2}
-              width={width / 2}
-              rectHeight={38}
-              height={38}
-            />
-          </View>
-
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <HomeLoader
-              rectWidth={30}
-              width={30}
-              rectHeight={30}
-              height={30}
-              rx={15}
-              ry={15}
-            />
-            <HomeLoader
-              rectWidth={30}
-              rectHeight={30}
-              width={30}
-              height={30}
-              rx={15}
-              ry={15}
-              viewStyles={{marginLeft: 8}}
-            />
-          </View>
-        </View>
-        <View
-          style={{
-            // ...styles.headerContainer,
-            borderBottomColor: isDarkMode
-              ? colors.whiteOpacity22
-              : colors.borderColorD,
-            borderBottomWidth: 0.8,
-          }}
-        />
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginHorizontal: moderateScale(16),
-            marginVertical: moderateScaleVertical(12),
-          }}>
-          <HomeLoader rectWidth={100} width={100} rectHeight={30} height={30} />
-          <HomeLoader rectWidth={100} width={100} rectHeight={30} height={30} />
-          <HomeLoader rectWidth={100} width={100} rectHeight={30} height={30} />
-        </View>
-        <View
-          style={{
-            // ...styles.headerContainer,
-            borderBottomColor: isDarkMode
-              ? colors.whiteOpacity22
-              : colors.borderColorD,
-            borderBottomWidth: 0.8,
-          }}
-        />
-      </View>
-    );
-  }
-
   return (
     <View
       style={{
@@ -479,284 +408,251 @@ export default function DashBoardHeaderFive({
           : colors.borderColorD,
         // paddingBottom: moderateScale(5),
       }}>
-      <View
-        style={{
-          ...styles.headerContainer,
-          borderBottomColor: isDarkMode
-            ? colors.whiteOpacity22
-            : colors.borderColorD,
-          // borderBottomWidth: 0,
-        }}>
+      {showAboveView ? (
         <View
           style={{
-            flexDirection: 'row',
-            flex: 1,
-            alignItems: 'center',
+            ...styles.headerContainer,
+            borderBottomColor: isDarkMode
+              ? colors.whiteOpacity22
+              : colors.borderColorD,
+            // borderBottomWidth: 0,
           }}>
-          {!!(profileInfo && profileInfo?.logo) ? (
-            <FastImage
-              style={{
-                width: moderateScale(width / 6),
-                height: moderateScale(40),
-              }}
-              resizeMode={FastImage.resizeMode.contain}
-              source={{
-                uri: imageURI,
-                priority: FastImage.priority.high,
-                cache: FastImage.cacheControl.immutable,
-              }}
-            />
-          ) : null}
-          {!!appData?.profile?.preferences?.is_hyperlocal && (
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() =>
-                navigation.navigate(navigationStrings.LOCATION, {
-                  type: 'Home1',
-                })
-              }
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                flex: 0.85,
-                marginLeft: moderateScale(8),
-              }}>
-              <Image
-                style={styles.locationIcon}
-                source={imagePath.redLocation}
-                resizeMode="contain"
-              />
-              <View>
-                {!!location?.type && (
-                  <Text numberOfLines={1} style={styles.locationTypeTxt}>
-                    {location?.type === 3
-                      ? !!location?.type_name
-                        ? location?.type_name
-                        : strings.UNKNOWN
-                      : location?.type === 2
-                      ? strings.WORK
-                      : strings.HOME}
-                  </Text>
-                )}
-                <Text
-                  numberOfLines={1}
-                  style={[
-                    styles.locationTxt,
-                    {
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.blackOpacity30,
-                      fontFamily: fontFamily.medium,
-                    },
-                  ]}>
-                  {location?.address}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        </View>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            height: moderateScale(30),
-            width: moderateScale(80),
-          }}>
-          <TouchableOpacity
-            style={{marginHorizontal: moderateScale(8)}}
-            onPress={() =>
-              navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-            }>
-            <Image
-              style={{tintColor: themeColors.primary_color}}
-              source={imagePath.search1}
-            />
-          </TouchableOpacity>
-          {isVoiceRecord ? (
-            <TouchableOpacity onPress={_onVoiceStop}>
-              <LottieView
-                style={{
-                  height: moderateScale(43),
-                  width: moderateScale(30),
-                  marginLeft: moderateScale(-2),
-                }}
-                source={voiceListen}
-                autoPlay
-                loop
-                colorFilters={[
-                  {keypath: 'layers', color: themeColors.primary_color},
-                  {keypath: 'transparent2', color: themeColors.primary_color},
-                  {keypath: 'transparent1', color: themeColors.primary_color},
-                  {keypath: '01', color: themeColors.primary_color},
-                  {keypath: '02', color: themeColors.primary_color},
-                  {keypath: '03', color: themeColors.primary_color},
-                  {keypath: '04', color: themeColors.primary_color},
-                ]}
-              />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              style={{marginHorizontal: moderateScale(8)}}
-              onPress={_onVoiceListen}>
-              <Image
-                source={imagePath.icVoice}
-                style={{
-                  height: moderateScale(20),
-                  width: moderateScale(20),
-                  borderRadius: moderateScale(10),
-                  tintColor: themeColors.primary_color,
-                }}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-          )}
-        </View>
-        {/* {tabs.length > 1 && (
-          <TouchableOpacity
-            activeOpacity={0.7}
+          <View
             style={{
-              paddingVertical: moderateScaleVertical(5),
+              flexDirection: 'row',
+              flex: 1,
+              alignItems: 'center',
+            }}>
+            {!!(profileInfo && profileInfo?.logo) ? (
+              <FastImage
+                style={{
+                  width: moderateScale(width / 6),
+                  height: moderateScale(40),
+                }}
+                resizeMode={FastImage.resizeMode.contain}
+                source={{
+                  uri: imageURI,
+                  priority: FastImage.priority.high,
+                  cache: FastImage.cacheControl.immutable,
+                }}
+              />
+            ) : null}
+            {!!appData?.profile?.preferences?.is_hyperlocal && (
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() =>
+                  navigation.navigate(navigationStrings.LOCATION, {
+                    type: 'Home1',
+                  })
+                }
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  flex: 0.85,
+                  marginLeft: moderateScale(8),
+                }}>
+                <Image
+                  style={styles.locationIcon}
+                  source={imagePath.redLocation}
+                  resizeMode="contain"
+                />
+                <View>
+                  {!!location?.type && (
+                    <Text numberOfLines={1} style={styles.locationTypeTxt}>
+                      {location?.type === 3
+                        ? !!(location?.type_name != 0 && location?.type != '0')
+                          ? location?.type_name
+                          : strings.UNKNOWN
+                        : location?.type === 2
+                        ? strings.WORK
+                        : strings.HOME}
+                    </Text>
+                  )}
+
+                  <Text
+                    numberOfLines={1}
+                    style={[
+                      styles.locationTxt,
+                      {
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.blackOpacity30,
+                        fontFamily: fontFamily.medium,
+                      },
+                    ]}>
+                    {location?.address}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
+          </View>
+
+          <View
+            style={{
               flexDirection: 'row',
               alignItems: 'center',
-            }}
-            onPress={_onTableLabel}>
-            <Image
-              source={
-                !!(
-                  checked ==
-                  toggleData?.profile?.preferences?.delivery_nomenclature ||
-                  checked == strings.DELIVERY
-                )
-                  ? imagePath.delivery
-                  : !!(
-                    checked ==
-                    toggleData?.profile?.preferences?.dinein_nomenclature ||
-                    checked == strings.DINE_IN
-                  )
-                    ? imagePath.dineIn
-                    : imagePath.takeaway
-              }
-              style={styles.deliveryIcon}
-              resizeMode="contain"
-            />
-
-            <Text style={styles.checkedTxt}>{checked}</Text>
-
-            <Image
-              source={imagePath.dropDownNew}
-              style={styles.customDropDownIcon}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        )} */}
-        <Modal
-          isVisible={isModalVisible}
-          style={{
-            justifyContent: 'flex-end',
-            margin: 0,
-          }}
-          onBackdropPress={() => updateState({isModalVisible: false})}>
-          <View>
+              height: moderateScale(30),
+              width: moderateScale(80),
+            }}>
             <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => updateState({isModalVisible: false})}>
-              <Image source={imagePath.crossC} resizeMode="contain" />
+              style={{marginHorizontal: moderateScale(8)}}
+              onPress={() =>
+                navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+              }>
+              <Image
+                style={{tintColor: themeColors.primary_color}}
+                source={imagePath.search1}
+              />
             </TouchableOpacity>
+            {isVoiceRecord ? (
+              <TouchableOpacity onPress={_onVoiceStop}>
+                <LottieView
+                  style={{
+                    height: moderateScale(43),
+                    width: moderateScale(30),
+                    marginLeft: moderateScale(-2),
+                  }}
+                  source={voiceListen}
+                  autoPlay
+                  loop
+                  colorFilters={[
+                    {keypath: 'layers', color: themeColors.primary_color},
+                    {keypath: 'transparent2', color: themeColors.primary_color},
+                    {keypath: 'transparent1', color: themeColors.primary_color},
+                    {keypath: '01', color: themeColors.primary_color},
+                    {keypath: '02', color: themeColors.primary_color},
+                    {keypath: '03', color: themeColors.primary_color},
+                    {keypath: '04', color: themeColors.primary_color},
+                  ]}
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={{marginHorizontal: moderateScale(8)}}
+                onPress={_onVoiceListen}>
+                <Image
+                  source={imagePath.icVoice}
+                  style={{
+                    height: moderateScale(20),
+                    width: moderateScale(20),
+                    borderRadius: moderateScale(10),
+                    tintColor: themeColors.primary_color,
+                  }}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+            )}
+          </View>
 
-            <View
-              style={[
-                styles.modalMainViewContainer,
-                {
-                  backgroundColor: isDarkMode
-                    ? MyDarkTheme.colors.background
-                    : colors.white,
-                },
-              ]}>
-              <View style={{padding: moderateScale(10)}}>
-                {tabs.length > 1 &&
-                  tabs.map((item, indx) => {
-                    return (
-                      <TouchableOpacity
-                        key={indx}
-                        disabled={!!item.isActive}
-                        style={{
-                          borderColor: item.isActive
-                            ? themeColors.primary_color
-                            : colors.transparent,
-                          borderWidth: 0.7,
-                          flexDirection: 'row',
-                          paddingVertical: moderateScaleVertical(15),
-                          margin: moderateScale(5),
-                          borderRadius: moderateScale(10),
-                          alignItems: 'center',
-                          paddingHorizontal: moderateScale(20),
-                          justifyContent: 'space-between',
-                        }}
-                        onPress={() =>
-                          !(
-                            cartItemCount?.message == null &&
-                            cartItemCount?.data?.item_count > 0
-                          )
-                            ? _onTableItm(item, indx)
-                            : dineInFunction(item, indx)
-                        }>
-                        <View
+          <Modal
+            isVisible={isModalVisible}
+            style={{
+              justifyContent: 'flex-end',
+              margin: 0,
+            }}
+            onBackdropPress={() => updateState({isModalVisible: false})}>
+            <View>
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={() => updateState({isModalVisible: false})}>
+                <Image source={imagePath.crossC} resizeMode="contain" />
+              </TouchableOpacity>
+
+              <View
+                style={[
+                  styles.modalMainViewContainer,
+                  {
+                    backgroundColor: isDarkMode
+                      ? MyDarkTheme.colors.background
+                      : colors.white,
+                  },
+                ]}>
+                <View style={{padding: moderateScale(10)}}>
+                  {tabs.length > 1 &&
+                    tabs.map((item, indx) => {
+                      return (
+                        <TouchableOpacity
+                          key={indx}
+                          disabled={!!item.isActive}
                           style={{
+                            borderColor: item.isActive
+                              ? themeColors.primary_color
+                              : colors.transparent,
+                            borderWidth: 0.7,
                             flexDirection: 'row',
-                            justifyContent: 'center',
+                            paddingVertical: moderateScaleVertical(15),
+                            margin: moderateScale(5),
+                            borderRadius: moderateScale(10),
                             alignItems: 'center',
-                          }}>
+                            paddingHorizontal: moderateScale(20),
+                            justifyContent: 'space-between',
+                          }}
+                          onPress={() =>
+                            !(
+                              cartItemCount?.message == null &&
+                              cartItemCount?.data?.item_count > 0
+                            )
+                              ? _onTableItm(item, indx)
+                              : dineInFunction(item, indx)
+                          }>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                            }}>
+                            <Image
+                              source={
+                                item.isActive
+                                  ? imagePath.radioNewActive
+                                  : imagePath.radioNewInActive
+                              }
+                              style={{
+                                height: moderateScale(20),
+                                width: moderateScale(20),
+                                tintColor: item.isActive
+                                  ? themeColors.primary_color
+                                  : colors.blackOpacity43,
+                              }}
+                            />
+                            <Text
+                              style={{
+                                fontFamily: fontFamily.medium,
+                                color: item.isActive
+                                  ? themeColors.primary_color
+                                  : isDarkMode
+                                  ? MyDarkTheme.colors.text
+                                  : colors.blackOpacity43,
+                                fontSize: textScale(12),
+                                marginHorizontal: moderateScale(10),
+                              }}>
+                              {item.value}
+                            </Text>
+                          </View>
                           <Image
-                            source={
-                              item.isActive
-                                ? imagePath.radioNewActive
-                                : imagePath.radioNewInActive
-                            }
+                            source={item.icon}
                             style={{
-                              height: moderateScale(20),
-                              width: moderateScale(20),
+                              height: moderateScale(22),
+                              width: moderateScale(22),
                               tintColor: item.isActive
-                                ? themeColors.primary_color
-                                : colors.blackOpacity43,
-                            }}
-                          />
-                          <Text
-                            style={{
-                              fontFamily: fontFamily.medium,
-                              color: item.isActive
                                 ? themeColors.primary_color
                                 : isDarkMode
                                 ? MyDarkTheme.colors.text
-                                : colors.blackOpacity43,
-                              fontSize: textScale(12),
-                              marginHorizontal: moderateScale(10),
-                            }}>
-                            {item.value}
-                          </Text>
-                        </View>
-                        <Image
-                          source={item.icon}
-                          style={{
-                            height: moderateScale(22),
-                            width: moderateScale(22),
-                            tintColor: item.isActive
-                              ? themeColors.primary_color
-                              : isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.blackOpacity66,
-                            alignSelf: 'flex-end',
-                          }}
-                          resizeMode="contain"
-                        />
-                      </TouchableOpacity>
-                    );
-                  })}
+                                : colors.blackOpacity66,
+                              alignSelf: 'flex-end',
+                            }}
+                            resizeMode="contain"
+                          />
+                        </TouchableOpacity>
+                      );
+                    })}
+                </View>
               </View>
             </View>
-          </View>
-        </Modal>
-      </View>
+          </Modal>
+        </View>
+      ) : null}
+
       <View
         style={{
           // alignSelf: 'center',
@@ -838,6 +734,7 @@ export default function DashBoardHeaderFive({
             );
           })}
       </View>
+
       <CustomAnimatedLoader
         source={loaderOne}
         loaderTitle={strings.LOADING}

@@ -443,7 +443,7 @@ export default function Products({route, navigation}) {
 
   /****Get all list items by vendor id */
   const getAllProductsByVendor = (pageNo) => {
-    console.log('api hit getAllProductsByVendor');
+    console.log('api hit getAllProductsByVendor', data);
     let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
     let apiData = `/${vendorId}?limit=${limit}&page=${pageNo}`;
@@ -616,37 +616,41 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res.data.listData, 'getProductByCategoryId >>>>res');
-        setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
-        // setCategoryInfo(res.data.category);
-        setLoading(false);
-        if (res.data.listData.data.length == 0) {
-          loadMore = false;
-        }
-        setProductListData(
-          pageNo == 1
-            ? res.data.listData.data
-            : [...productListData, ...res.data.listData.data],
-        );
-        updateState({isLoadingC: false});
-        if (
-          pageNo == 1 &&
-          res?.data?.listData?.data.length == 0 &&
-          res?.data?.category &&
-          res?.data?.category?.childs.length
-        ) {
-          setSelectedCategory(res.data.category.childs[0]);
-          setProductListId(res.data.category.childs[0]);
-          updateState({
-            pageNo: 1,
-            limit: 10,
-            isLoadingC: true,
-          });
+        if (!!res?.data) {
+          console.log(res.data, 'res getProductByCategoryId');
+          setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
+          // setCategoryInfo(res.data.category);
+          setLoading(false);
+          if (res.data.listData.data.length == 0) {
+            loadMore = false;
+          }
+          setProductListData(
+            pageNo == 1
+              ? res.data.listData.data
+              : [...productListData, ...res.data.listData.data],
+          );
+          updateState({isLoadingC: false});
+          if (
+            pageNo == 1 &&
+            res?.data?.listData?.data.length == 0 &&
+            res?.data?.category &&
+            res?.data?.category?.childs.length
+          ) {
+            setSelectedCategory(res.data.category.childs[0]);
+            setProductListId(res.data.category.childs[0]);
+            updateState({
+              pageNo: 1,
+              limit: 10,
+              isLoadingC: true,
+            });
+          }
+          setLoading(false);
         }
         setLoading(false);
         // getAllVendorFilters()
         // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
+
       .catch(errorMethod);
     // }
   };
@@ -967,7 +971,7 @@ export default function Products({route, navigation}) {
     setIsVisibleModal(false);
     setShowShimmer(true);
   };
-
+  console.log('categoryInfocategoryInfo', categoryInfo);
   const addDeleteCartItems = async (
     item,
     isExistqty,
@@ -1577,6 +1581,7 @@ export default function Products({route, navigation}) {
           businessType={businessType}
           categoryInfo={categoryInfo}
           animateText={animateText}
+          // section={section}
         />
         <View style={styles.horizontalLine} />
       </Animatable.View>
@@ -1661,8 +1666,11 @@ export default function Products({route, navigation}) {
   };
 
   useEffect(() => {
+    console.log(ProductTags, 'ProductTags');
     let EnabledTags = ProductTags.filter((el) => el.isSelected);
+    console.log(EnabledTags, 'EnabledTags');
     if (EnabledTags.length > 0) {
+      console.log(sectionListData, 'sectionListData>>>>BEFORE');
       const newArr = sectionListData.map((el) => {
         const records =
           el.data &&
@@ -1679,6 +1687,8 @@ export default function Products({route, navigation}) {
         newObj.data = records;
         return newObj;
       });
+
+      console.log(newArr, 'sectionListData>>>>AFTER');
       setCloneSectionList(newArr);
     } else {
       // getAllProductsByVendor();
@@ -2257,7 +2267,24 @@ export default function Products({route, navigation}) {
                         </View>
                       ) : null}
                     </View>
-
+                    {categoryInfo?.short_desc && (
+                      <View>
+                        <Text
+                          style={{
+                            ...styles.hdrTitleTxt,
+                            flex: 0,
+                            fontSize: textScale(12.5),
+                            fontFamily: fontFamily.regular,
+                            textAlign: 'left',
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.white,
+                            width: width,
+                          }}>
+                          {categoryInfo?.short_desc}
+                        </Text>
+                      </View>
+                    )}
                     {Number(categoryInfo?.order_min_amount) > 0 ? (
                       <View
                         style={{
@@ -2966,6 +2993,8 @@ export default function Products({route, navigation}) {
     );
   };
   const renderSectionItem = ({item, index, section}) => {
+    const url1 = item?.media[0]?.image?.path.image_fit;
+
     return (
       <Animatable.View
         // animation={'slideInUp'}
@@ -2973,58 +3002,34 @@ export default function Products({route, navigation}) {
         /*
          * Height should be fixed as 180 to measure exact scroll position for browse menu
          */
+
         style={{
           minHeight:
             DeviceInfo?.getBundleId() == appIds.dlvrd
               ? moderateScaleVertical(0)
-              : moderateScaleVertical(200),
+              : url1
+              ? moderateScaleVertical(200)
+              : 0,
           overflow: 'visible',
           // backgroundColor: 'red',
           // marginBottom: moderateScaleVertical(5),
         }}>
-        {DeviceInfo?.getBundleId() == appIds.dlvrd ? (
-          <View style={{marginVertical: moderateScaleVertical(10)}}>
-            <ProductCard5
-              data={item}
-              index={index}
-              onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-              onAddtoWishlist={() => _onAddtoWishlist(item)}
-              addToCart={() => addSingleItem(item, section, index)}
-              onIncrement={() => checkIsCustomize(item, section, index, 1)}
-              onDecrement={() => checkIsCustomize(item, section, index, 2)}
-              selectedItemID={selectedItemID}
-              btnLoader={btnLoader}
-              selectedItemIndx={selectedItemIndx}
-              businessType={businessType}
-              categoryInfo={categoryInfo}
-              animateText={animateText}
-            />
-          </View>
-        ) : (
-          <ProductCard3
-            data={item}
-            index={index}
-            onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-            onAddtoWishlist={() => _onAddtoWishlist(item)}
-            addToCart={() => addSingleItem(item, section, index)}
-            onIncrement={() => checkIsCustomize(item, section, index, 1)}
-            onDecrement={() => checkIsCustomize(item, section, index, 2)}
-            selectedItemID={selectedItemID}
-            btnLoader={btnLoader}
-            selectedItemIndx={selectedItemIndx}
-            businessType={businessType}
-            categoryInfo={categoryInfo}
-            animateText={animateText}
-          />
-        )}
-        {!(DeviceInfo?.getBundleId() == appIds.dlvrd) && (
-          <View
-            style={{
-              ...styles.horizontalLine,
-              marginBottom: moderateScaleVertical(16),
-            }}
-          />
-        )}
+        <ProductCard3
+          data={item}
+          index={index}
+          onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+          onAddtoWishlist={() => _onAddtoWishlist(item)}
+          addToCart={() => addSingleItem(item, section, index)}
+          onIncrement={() => checkIsCustomize(item, section, index, 1)}
+          onDecrement={() => checkIsCustomize(item, section, index, 2)}
+          selectedItemID={selectedItemID}
+          btnLoader={btnLoader}
+          selectedItemIndx={selectedItemIndx}
+          businessType={businessType}
+          categoryInfo={categoryInfo}
+          animateText={animateText}
+          section={section}
+        />
       </Animatable.View>
     );
   };
@@ -3353,45 +3358,48 @@ export default function Products({route, navigation}) {
           )}
         </View>
       ) : (
-        isVisibleModal && (
-          <BottomSheet
-            ref={bottomSheetRef}
-            index={1}
-            snapPoints={[0, height / 1.5, height / 1.25]}
-            activeOffsetY={[-1, 1]}
-            failOffsetX={[-5, 5]}
-            animateOnMount={true}
-            handleComponent={bottomSheetHeader}
-            onChange={(index) => {
-              if (index === 0) {
-                onCloseModal();
-              }
-              playHapticEffect(hapticEffects.impactMedium);
-            }}
-            backdropComponent={() => <View style={{height: 0}}></View>}
-            backgroundComponent={backgroundComponent}>
-            <BottomSheetScrollView
-              keyboardShouldPersistTaps="handled"
-              showsVerticalScrollIndicator={false}
-              style={{
-                flex: 1,
-                backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.lightDark
-                  : colors.white,
-              }}>
-              <VariantAddons
-                addonSet={selectedCartItem?.add_on}
-                isVisible={isVisibleModal}
-                productdetail={selectedCartItem}
-                onClose={onCloseModal}
-                typeId={typeId}
-                showShimmer={showShimmer}
-                shimmerClose={(val) => setShowShimmer(val)}
-                updateCartItems={updateCartItems}
-              />
-            </BottomSheetScrollView>
-          </BottomSheet>
-        )
+        <>
+          {isVisibleModal ? (
+            <BottomSheet
+              ref={bottomSheetRef}
+              index={1}
+              snapPoints={[0, height / 1.5, height / 1.25]}
+              activeOffsetY={[-1, 1]}
+              failOffsetX={[-5, 5]}
+              animateOnMount={true}
+              handleComponent={bottomSheetHeader}
+              onChange={(index) => {
+                if (index === 0) {
+                  onCloseModal();
+                }
+                // playHapticEffect(hapticEffects.impactMedium);
+              }}
+              backdropComponent={() => <View style={{height: 0}} />}
+              backgroundComponent={backgroundComponent}>
+              <BottomSheetScrollView
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{flexGrow: 1}}
+                style={{
+                  flex: 1,
+                  backgroundColor: isDarkMode
+                    ? MyDarkTheme.colors.lightDark
+                    : colors.white,
+                }}>
+                <VariantAddons
+                  addonSet={selectedCartItem?.add_on}
+                  isVisible={isVisibleModal}
+                  productdetail={selectedCartItem}
+                  onClose={onCloseModal}
+                  typeId={typeId}
+                  showShimmer={showShimmer}
+                  shimmerClose={(val) => setShowShimmer(val)}
+                  updateCartItems={updateCartItems}
+                />
+              </BottomSheetScrollView>
+            </BottomSheet>
+          ) : null}
+        </>
       )}
 
       <CustomAnimatedLoader

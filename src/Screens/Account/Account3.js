@@ -9,12 +9,15 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  Vibration,
   View,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Share from 'react-native-share';
+import SunmiV2Printer from 'react-native-sunmi-v2-printer';
+import ZendeskChat from 'react-native-zendesk-chat';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import ListItemHorizontal from '../../Components/ListItemHorizontalWithImage';
@@ -24,24 +27,16 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
+
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {
-  getColorCodeWithOpactiyNumber,
-  getImageUrl,
-  getRandomColor,
-} from '../../utils/helperFunctions';
-import stylesFun from './styles';
-import ZendeskChat from 'react-native-zendesk-chat';
-import Share from 'react-native-share';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
-import SunmiV2Printer from 'react-native-sunmi-v2-printer';
-
+import {getImageUrl, getRandomColor} from '../../utils/helperFunctions';
+import stylesFun from './styles';
 export default function Account3({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -59,6 +54,7 @@ export default function Account3({navigation}) {
 
   // const profileInfo = appData?.profile;
   // console.log("account profile info",profileInfo)
+  console.log(preferences,"appDataappDataappDataappDataappDataappData");
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -118,6 +114,8 @@ export default function Account3({navigation}) {
           onPress: () => {
             actions.userLogout();
             actions.cartItemQty('');
+            actions.saveAddress('');
+            actions.addSearchResults('clear');
             moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
           },
         },
@@ -129,12 +127,14 @@ export default function Account3({navigation}) {
 
   // initalize Zendesk
 
+  console.log(preferences?.customer_support_application_id,  preferences?.customer_support_key,"preferencespreferences");
+
   useEffect(() => {
     ZendeskChat.init(
-      `${appData?.profile?.preferences?.customer_support_key}`,
-      `${appData?.profile?.preferences?.customer_support_application_id}`,
+      `${preferences?.customer_support_key}`,
+      `${preferences?.customer_support_application_id}`,
     );
-  }, []);
+  }, [preferences?.customer_support_application_id,preferences?.customer_support_key]);
 
   const onStartSupportChat = () => {
     ZendeskChat.setVisitorInfo({
@@ -146,6 +146,7 @@ export default function Account3({navigation}) {
       phone: userData?.phone_number ? userData?.phone_number : '',
       withChat: true,
       color: '#000',
+      messagingOptions: {},
     });
   };
 
@@ -174,6 +175,7 @@ export default function Account3({navigation}) {
         }
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
       /> */}
+      
         {shortCodeStatus ? (
           <Header
             noLeftIcon={false}
@@ -317,8 +319,7 @@ export default function Account3({navigation}) {
             />
           </TouchableOpacity>
         )} */}
-          {!DeviceInfo.getBundleId() == appIds.dlvrd &&
-            !!userData?.auth_token &&
+          {!!userData?.auth_token &&
             (businessType == 4 ? null : (
               <ListItemHorizontal
                 centerContainerStyle={{flexDirection: 'row'}}
@@ -489,6 +490,7 @@ export default function Account3({navigation}) {
             // iconRight={imagePath.goRight}
             // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
+
           {!!userData?.auth_token && (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
@@ -522,6 +524,7 @@ export default function Account3({navigation}) {
           />
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&
+            getBundleId() == appIds.elcheregio &&
             !!appMainData?.is_admin &&
             (businessType == 'taxi' ? null : (
               <ListItemHorizontal

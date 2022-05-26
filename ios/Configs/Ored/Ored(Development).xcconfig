@@ -1,12 +1,12 @@
 #include "Pods/Target Support Files/Pods-available_pods-Ored/Pods-available_pods-Ored.debug.xcconfig"
 
-PROJECT_APPLE_ID =1591786858
-PROJECT_BUNDLE_ID =com.ored
+PROJECT_APPLE_ID =1622007991
+PROJECT_BUNDLE_ID =com.ored.customer
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 5
+PROJECT_BUILD_NUMBER = 2
 PROJECT_APP_NAME = Ored
-PROJECT_GOOGLE_CLIENT_ID =727222041107-c94ugkg6ocn8ouc53lnn7m3sfvevlrlh.apps.googleusercontent.com
-PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.727222041107-c94ugkg6ocn8ouc53lnn7m3sfvevlrlh
+PROJECT_GOOGLE_CLIENT_ID =49544194086-tc25vft4dtv4chj8e5q3nhgb5tk7v56j.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.49544194086-tc25vft4dtv4chj8e5q3nhgb5tk7v56j
 PROJECT_FACEBOOK_ID =592566298455464
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST =OredInfo

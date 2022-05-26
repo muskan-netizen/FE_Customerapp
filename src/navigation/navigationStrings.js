@@ -130,4 +130,9 @@ export default {
   AVENUE: 'Avenue',
   CASH_FREE: 'cashFree',
   MYORDERSSTACK: 'myOrdersStack',
+  EASEBUZZ: 'easebuzz',
+  TOYYIAPAY:'toyyibPay',
+  MPAISA:"Mpaisa",
+  WINDCAVE:'WindCave',
+  PAYPHONE:'PayPhone'
 };

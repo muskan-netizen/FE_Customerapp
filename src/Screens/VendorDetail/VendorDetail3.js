@@ -136,6 +136,12 @@ export default function VendorDetail3({ navigation, route }) {
       navigation.navigate(navigationStrings.VENDOR, { data: item });
       return;
     }
+
+    if (item?.redirect_to == staticStrings.SUBCATEGORY) {
+      navigation.push(navigationStrings.VENDOR_DETAIL, { data: {item: item} });
+      return;
+    }
+
     navigation.navigate(navigationStrings.PRODUCT_LIST, {
       data: {
         id: item.id,
@@ -311,8 +317,10 @@ export default function VendorDetail3({ navigation, route }) {
       />
       <View style={{ marginHorizontal: moderateScale(8) }}>
         <FlatList
+        showsVerticalScrollIndicator={false}
           data={vendorData || []}
           numColumns={3}
+          ListFooterComponent={<View style={{height:moderateScale(120)}}/>}
           ListHeaderComponent={<View style={{ height: 10 }} />}
           // columnWrapperStyle={{justifyContent: 'space-between'}}
           ItemSeparatorComponent={() => (

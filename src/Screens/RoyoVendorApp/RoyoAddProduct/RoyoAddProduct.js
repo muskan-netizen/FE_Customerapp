@@ -1,5 +1,5 @@
-import {cloneDeep, isEmpty, update} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { cloneDeep, isEmpty, update } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Image,
   ImageBackground,
@@ -12,17 +12,17 @@ import {
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
 import CustomDropDownWIthLabel from '../../../Components/CustomDropDownWIthLabel';
 import GradientButton from '../../../Components/GradientButton';
 import Header from '../../../Components/Header';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
-import strings, {changeLaguage} from '../../../constants/lang';
+import strings, { changeLaguage } from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import fontFamily from '../../../styles/fontFamily';
@@ -33,23 +33,23 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {cameraHandler} from '../../../utils/commonFunction';
+import { cameraHandler } from '../../../utils/commonFunction';
 import {
   getImageUrl,
   showError,
   showSuccess,
 } from '../../../utils/helperFunctions';
 import ModalDropdown from 'react-native-modal-dropdown';
-import {FlatList, TouchableHighlight} from 'react-native-gesture-handler';
-import {hitSlopProp} from '../../../styles/commonStyles';
+import { FlatList, TouchableHighlight } from 'react-native-gesture-handler';
+import { hitSlopProp } from '../../../styles/commonStyles';
 import ModalDropDownComp from '../../../Components/ModalDropDown';
 import ModalView from '../../../Components/Modal';
 
-const RoyoAddProduct = ({route, navigation}) => {
+const RoyoAddProduct = ({ route, navigation }) => {
   const paramData = route.params;
   const productDetailParam = paramData?.productDetail;
   console.log(productDetailParam, 'productDetailParamproductDetailParam');
-  const {appData, themeColors, currencies, languages} = useSelector(
+  const { appData, themeColors, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
   const [state, setState] = useState({
@@ -211,18 +211,18 @@ const RoyoAddProduct = ({route, navigation}) => {
   }, [isLoading, isVarientImageDeleted]);
 
   const getVendorProductDetailByID = () => {
-    actions
-      .getVendorProductDetail(
-        {
-          // product_id: '233',
-          product_id: productDetailParam?.id || '',
-        },
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      )
+    console.log("productDetailParamproductDetailParam", productDetailParam)
+    actions.getVendorProductDetail(
+      {
+        // product_id: '233',
+        product_id: productDetailParam?.id || '',
+      },
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      },
+    )
       .then((res) => {
         const productInfo = res?.data?.product_detail;
         console.log(productInfo, 'productDetails<<<<<');
@@ -239,31 +239,29 @@ const RoyoAddProduct = ({route, navigation}) => {
           taxCategory: res?.data?.tax_category,
           exisitingVariants: productInfo?.variant,
           otherProducts: res?.data?.other_products,
-          productName: productInfo?.title || productInfo?.primary.title,
+          productName: productInfo?.primary.title || productInfo?.title,
           productDescription:
             productInfo?.primary.body_html != null
               ? productInfo?.primary.body_html
               : productDetailParam?.translation
-              ? productDetailParam?.translation[0]?.body_html
-              : '',
+                ? productDetailParam?.translation[0]?.body_html
+                : '',
           price:
             productInfo?.variant &&
-            productInfo?.variant.length > 0 &&
-            productInfo?.variant[0].price
-              ? Number(productInfo?.variant[0].price)
-                  .toFixed(appData?.profile?.preferences?.digit_after_decimal)
-                  .toString()
+              productInfo?.variant.length > 0 &&
+              productInfo?.variant[0].price
+              ? Number(productInfo?.variant[0].price).toFixed(2).toString()
               : '',
           // compareAtPrice: productInfo?.variant[0].cost_price
           //   ? productInfo?.variant[0].cost_price
           //   : '',
           compareAtPrice:
             productInfo?.variant &&
-            productInfo?.variant.length > 0 &&
-            productInfo?.variant[0].compare_at_price
+              productInfo?.variant.length > 0 &&
+              productInfo?.variant[0].compare_at_price
               ? Number(productInfo?.variant[0].compare_at_price)
-                  .toFixed(appData?.profile?.preferences?.digit_after_decimal)
-                  .toString()
+                .toFixed(2)
+                .toString()
               : '',
           batchCount:
             productInfo?.batch_count > 0
@@ -312,14 +310,14 @@ const RoyoAddProduct = ({route, navigation}) => {
 
   const updateState = (data) => {
     setState((state) => {
-      return {...state, ...data};
+      return { ...state, ...data };
     });
   };
 
   const onUpdateProduct = () => {
     console.log('paramDataparamData', productDetailParam);
     console.log('paramDataparamData', productDetailParam);
-    updateState({isLoadingB: true});
+    updateState({ isLoadingB: true });
     let formData = new FormData();
     formData.append('product_id', productDetailParam?.id || '');
     formData.append('sku', productDetailParam?.sku);
@@ -396,12 +394,11 @@ const RoyoAddProduct = ({route, navigation}) => {
 
     console.log(formData, 'formData>>>Sending');
 
-    actions
-      .updateVendorProduct(formData, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-      })
+    actions.updateVendorProduct(formData, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    })
       .then(async (res) => {
         showSuccess(res?.message);
         updateState({
@@ -429,8 +426,8 @@ const RoyoAddProduct = ({route, navigation}) => {
         marginBottom={moderateScaleVertical(20)}
         btnText={strings.SAVE}
         onPress={onUpdateProduct}
-        containerStyle={{height: moderateScale(30), width: moderateScale(60)}}
-        btnStyle={{borderRadius: 5}}
+        containerStyle={{ height: moderateScale(30), width: moderateScale(60) }}
+        btnStyle={{ borderRadius: 5 }}
       />
     );
   };
@@ -445,7 +442,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     return (
       <TouchableOpacity
         onPress={() => onStepChange(item, index)}
-        style={{marginRight: moderateScale(12)}}>
+        style={{ marginRight: moderateScale(12) }}>
         <Text
           style={{
             color:
@@ -504,7 +501,7 @@ const RoyoAddProduct = ({route, navigation}) => {
             addProductImages(formData);
           }
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
@@ -517,12 +514,11 @@ const RoyoAddProduct = ({route, navigation}) => {
     formData.append('product_id', productDetailParam?.id || '');
     formData.append('media_id', selectdImage?.media_id);
     console.log(formData, 'formData>>>removeImage');
-    actions
-      .deleteProductImage(formData, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-      })
+    actions.deleteProductImage(formData, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    })
       .then((res) => {
         showSuccess(res?.message);
         updateState({
@@ -592,9 +588,9 @@ const RoyoAddProduct = ({route, navigation}) => {
 
   const renderProductVariants = (item, index) => {
     return (
-      <View style={{marginBottom: moderateScale(15)}}>
+      <View style={{ marginBottom: moderateScale(15) }}>
         <Text style={styles.variantName}>{item?.title}</Text>
-        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
           {item?.option.map((itm, indx) => {
             return (
               <TouchableOpacity
@@ -640,15 +636,14 @@ const RoyoAddProduct = ({route, navigation}) => {
     console.log(optionsSet, 'optionsSet>>>>');
     console.log(formData, 'formData>>>');
 
-    actions
-      .createProductVariant(formData, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-      })
+    actions.createProductVariant(formData, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    })
       .then((res) => {
         console.log(res, '>>>>>responseFromServer');
-        updateState({isLoadingB: false, createdVariantSets: res?.data});
+        updateState({ isLoadingB: false, createdVariantSets: res?.data });
       })
       .catch(errorMethod);
   };
@@ -657,18 +652,17 @@ const RoyoAddProduct = ({route, navigation}) => {
     updateState({
       isLoadingB: true,
     });
-    actions
-      .deleteProductVariant(
-        {
-          product_id: item?.product_id,
-          variant_id: item?.id,
-        },
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      )
+    actions.deleteProductVariant(
+      {
+        product_id: item?.product_id,
+        variant_id: item?.id,
+      },
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      },
+    )
       .then((res) => {
         showSuccess(res?.message);
         setTimeout(() => {
@@ -690,7 +684,7 @@ const RoyoAddProduct = ({route, navigation}) => {
         [key]: filteredAddons,
       });
     } else {
-      updateState({[key]: [...ary, item]});
+      updateState({ [key]: [...ary, item] });
     }
   };
 
@@ -710,7 +704,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     }
   };
 
-  const renderCreatedVariants = ({item, indx}) => {
+  const renderCreatedVariants = ({ item, indx }) => {
     return (
       <View
         style={{
@@ -727,7 +721,7 @@ const RoyoAddProduct = ({route, navigation}) => {
 
           <TouchableOpacity
             activeOpacity={0.7}
-            style={{alignItems: 'center'}}
+            style={{ alignItems: 'center' }}
             onPress={() =>
               updateState({
                 isImagePickerModal: true,
@@ -760,7 +754,7 @@ const RoyoAddProduct = ({route, navigation}) => {
             onChangeText={(value) =>
               onVariantFieldChange(value, item, 'variantName')
             }
-            mainStyle={{flex: 0.55}}
+            mainStyle={{ flex: 0.55 }}
             placeholderTextColor={colors.textGreyB}
             txtInputStyle={styles.textInputStyle}
             defaultValue={item?.title || item?.sku}
@@ -768,7 +762,7 @@ const RoyoAddProduct = ({route, navigation}) => {
           <TextInputWithUnderlineAndLabel
             label={strings.QUANTITY}
             placeholder={'0'}
-            mainStyle={{flex: 0.25}}
+            mainStyle={{ flex: 0.25 }}
             onChangeText={(value) =>
               onVariantFieldChange(value, item, 'variantQuantity')
             }
@@ -793,22 +787,16 @@ const RoyoAddProduct = ({route, navigation}) => {
             onChangeText={(value) =>
               onVariantFieldChange(value, item, 'variantPrice')
             }
-            mainStyle={{flex: 0.2}}
+            mainStyle={{ flex: 0.2 }}
             placeholderTextColor={colors.textGreyB}
             txtInputStyle={styles.textInputStyle}
-            value={
-              item.price
-                ? Number(item.price)
-                    .toFixed(appData?.profile?.preferences?.digit_after_decimal)
-                    .toString()
-                : ''
-            }
+            value={item.price ? Number(item.price).toFixed(2).toString() : ''}
           />
           <TextInputWithUnderlineAndLabel
             label={strings.COST_PRICE}
             labelStyle={styles.labelStyle}
             placeholder={'0'}
-            mainStyle={{flex: 0.25}}
+            mainStyle={{ flex: 0.25 }}
             onChangeText={(value) =>
               onVariantFieldChange(value, item, 'variantCostPrice')
             }
@@ -819,7 +807,7 @@ const RoyoAddProduct = ({route, navigation}) => {
           <TextInputWithUnderlineAndLabel
             label={strings.COMPARE_AT_PRICE}
             placeholder={'0'}
-            mainStyle={{flex: 0.45}}
+            mainStyle={{ flex: 0.45 }}
             labelStyle={styles.labelStyle}
             onChangeText={(value) =>
               onVariantFieldChange(value, item, 'variantCompareAtPrice')
@@ -828,9 +816,7 @@ const RoyoAddProduct = ({route, navigation}) => {
             txtInputStyle={styles.textInputStyle}
             value={
               item.compare_at_price
-                ? Number(item.compare_at_price)
-                    .toFixed(appData?.profile?.preferences?.digit_after_decimal)
-                    .toString()
+                ? Number(item.compare_at_price).toFixed(2).toString()
                 : ''
             }
           />
@@ -861,7 +847,7 @@ const RoyoAddProduct = ({route, navigation}) => {
           paddingHorizontal: moderateScale(20),
           paddingBottom: moderateScale(10),
         }}>
-        <Text style={{fontFamily: fontFamily.bold, fontSize: textScale(13)}}>
+        <Text style={{ fontFamily: fontFamily.bold, fontSize: textScale(13) }}>
           {strings.ADD_PRODUCT_IMAGE}
         </Text>
         <TouchableOpacity activeOpacity={0.7} onPress={onCloseModal}>
@@ -882,7 +868,7 @@ const RoyoAddProduct = ({route, navigation}) => {
       formData.append('file[]', item);
     });
 
-    updateState({tempImg: tempImg.uri});
+    updateState({ tempImg: tempImg.uri });
 
     setTimeout(() => {
       addProductImages(formData);
@@ -892,14 +878,13 @@ const RoyoAddProduct = ({route, navigation}) => {
   const addProductImages = (formData) => {
     console.log(formData, 'formData>>>>');
 
-    updateState({isLoadingB: true});
-    actions
-      .addProductImage(formData, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        'Content-Type': 'multipart/form-data',
-      })
+    updateState({ isLoadingB: true });
+    actions.addProductImage(formData, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      'Content-Type': 'multipart/form-data',
+    })
       .then((res) => {
         showSuccess(res?.message);
         updateState({
@@ -953,12 +938,12 @@ const RoyoAddProduct = ({route, navigation}) => {
               <TouchableOpacity
                 hitSlop={hitSlopProp}
                 onPress={() => {
-                  updateState({isImagePickerModal: false});
+                  updateState({ isImagePickerModal: false });
                   setTimeout(() => {
                     _removeImageFromList(selectedVariant.vimage?.pimage);
                   }, 500);
                 }}
-                style={{position: 'absolute', right: -5, top: -5}}>
+                style={{ position: 'absolute', right: -5, top: -5 }}>
                 <Image source={imagePath.icRemoveIcon} />
               </TouchableOpacity>
             </ImageBackground>
@@ -971,11 +956,11 @@ const RoyoAddProduct = ({route, navigation}) => {
                 marginRight: moderateScale(10),
                 marginBottom: moderateScale(10),
               }}
-              source={{uri: item?.uri}}>
+              source={{ uri: item?.uri }}>
               <TouchableOpacity
                 hitSlop={hitSlopProp}
                 onPress={() => _removeImageFromLocalList(item)}
-                style={{position: 'absolute', right: -5, top: -5}}>
+                style={{ position: 'absolute', right: -5, top: -5 }}>
                 <Image source={imagePath.icRemoveIcon} />
               </TouchableOpacity>
             </ImageBackground>
@@ -1003,7 +988,7 @@ const RoyoAddProduct = ({route, navigation}) => {
             borderRadius: moderateScale(5),
             marginTop: moderateScaleVertical(20),
           }}>
-          <Text style={{fontFamily: fontFamily.bold, color: colors.white}}>
+          <Text style={{ fontFamily: fontFamily.bold, color: colors.white }}>
             {strings.SELECT}
           </Text>
         </TouchableOpacity>
@@ -1017,7 +1002,7 @@ const RoyoAddProduct = ({route, navigation}) => {
         centerTitle={productDetailParam?.title || ''}
         customRight={customRight}
       />
-      <View style={{...styles.stepBarView, marginTop: moderateScale(10)}}>
+      <View style={{ ...styles.stepBarView, marginTop: moderateScale(10) }}>
         {stepPoints.map(renderStepIndicator)}
       </View>
 
@@ -1040,14 +1025,14 @@ const RoyoAddProduct = ({route, navigation}) => {
                   labelStyle={styles.labelStyle}
                   placeholder={'xyz.LocalMarket.Tshirt'}
                   value={productSKU}
-                  mainStyle={{flex: 0.6}}
+                  mainStyle={{ flex: 0.6 }}
                   placeholderTextColor={colors.textGreyB}
                   txtInputStyle={styles.textInputStyle}
                 />
                 <TextInputWithUnderlineAndLabel
                   label={strings.URL_SLUG}
                   placeholder={'tshirt'}
-                  mainStyle={{flex: 0.35}}
+                  mainStyle={{ flex: 0.35 }}
                   value={productSlug}
                   labelStyle={styles.labelStyle}
                   placeholderTextColor={colors.textGreyB}
@@ -1090,7 +1075,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                   <TouchableHighlight
                     activeOpacity={0.6}
                     underlayColor="cornflowerblue"
-                    style={{backgroundColor: colors.white}}>
+                    style={{ backgroundColor: colors.white }}>
                     <Text
                       style={{
                         paddingVertical: 10,
@@ -1120,7 +1105,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                 placeholder={strings.TSHIRT}
                 labelStyle={styles.labelStyle}
                 value={productName}
-                onChangeText={(value) => updateState({productName: value})}
+                onChangeText={(value) => updateState({ productName: value })}
                 placeholderTextColor={colors.textGreyB}
                 txtInputStyle={styles.textInputStyle}
                 mainStyle={{
@@ -1131,7 +1116,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                 label={strings.PRODUCT_DESC}
                 placeholder={strings.PRODUCT_DESC}
                 onChangeText={(value) =>
-                  updateState({productDescription: value})
+                  updateState({ productDescription: value })
                 }
                 value={productDescription}
                 labelStyle={styles.labelStyle}
@@ -1157,17 +1142,17 @@ const RoyoAddProduct = ({route, navigation}) => {
                     labelStyle={styles.labelStyle}
                     placeholder={strings.META_TITLE}
                     value={metaTitle}
-                    onChangeText={(value) => updateState({metaTitle: value})}
-                    mainStyle={{flex: 0.48}}
+                    onChangeText={(value) => updateState({ metaTitle: value })}
+                    mainStyle={{ flex: 0.48 }}
                     placeholderTextColor={colors.textGreyB}
                     txtInputStyle={styles.textInputStyle}
                   />
                   <TextInputWithUnderlineAndLabel
                     label={strings.META_KEYWORD}
                     placeholder={strings.META_KEYWORD}
-                    onChangeText={(value) => updateState({metaKeyword: value})}
+                    onChangeText={(value) => updateState({ metaKeyword: value })}
                     value={metaKeyword}
-                    mainStyle={{flex: 0.48}}
+                    mainStyle={{ flex: 0.48 }}
                     labelStyle={styles.labelStyle}
                     placeholderTextColor={colors.textGreyB}
                     txtInputStyle={styles.textInputStyle}
@@ -1177,7 +1162,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                   label={strings.META_DESC}
                   placeholder={strings.META_DESC}
                   onChangeText={(value) =>
-                    updateState({metaDescription: value})
+                    updateState({ metaDescription: value })
                   }
                   value={metaDescription}
                   labelStyle={styles.labelStyle}
@@ -1212,33 +1197,33 @@ const RoyoAddProduct = ({route, navigation}) => {
               }}>
               {!!(productImages && productImages.length)
                 ? productImages.map((i, inx) => {
-                    return (
-                      <ImageBackground
-                        source={{
-                          uri: getImageUrl(
-                            i.image?.path?.image_fit,
-                            i.image?.path?.image_path,
-                            '1000/1000',
-                          ),
-                        }}
-                        style={styles.imageOrderStyle}
-                        imageStyle={styles.imageOrderStyle}>
-                        <View style={styles.viewOverImage}>
-                          <View
-                            style={{
-                              position: 'absolute',
-                              top: -10,
-                              right: -10,
-                            }}>
-                            <TouchableOpacity
-                              onPress={() => _removeImageFromList(i)}>
-                              <Image source={imagePath.icRemoveIcon} />
-                            </TouchableOpacity>
-                          </View>
+                  return (
+                    <ImageBackground
+                      source={{
+                        uri: getImageUrl(
+                          i.image?.path?.image_fit,
+                          i.image?.path?.image_path,
+                          '1000/1000',
+                        ),
+                      }}
+                      style={styles.imageOrderStyle}
+                      imageStyle={styles.imageOrderStyle}>
+                      <View style={styles.viewOverImage}>
+                        <View
+                          style={{
+                            position: 'absolute',
+                            top: -10,
+                            right: -10,
+                          }}>
+                          <TouchableOpacity
+                            onPress={() => _removeImageFromList(i)}>
+                            <Image source={imagePath.icRemoveIcon} />
+                          </TouchableOpacity>
                         </View>
-                      </ImageBackground>
-                    );
-                  })
+                      </View>
+                    </ImageBackground>
+                  );
+                })
                 : null}
               <TouchableOpacity onPress={showActionSheet} activeOpacity={0.7}>
                 <Image source={imagePath.icPlaceholder} />
@@ -1266,7 +1251,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                   })
                 }
                 value={price}
-                mainStyle={{flex: 0.2}}
+                mainStyle={{ flex: 0.2 }}
                 placeholderTextColor={colors.textGreyB}
                 txtInputStyle={styles.textInputStyle}
               />
@@ -1279,12 +1264,12 @@ const RoyoAddProduct = ({route, navigation}) => {
                   })
                 }
                 value={compareAtPrice}
-                mainStyle={{flex: 0.4}}
+                mainStyle={{ flex: 0.4 }}
                 labelStyle={styles.labelStyle}
                 placeholderTextColor={colors.textGreyB}
                 txtInputStyle={styles.textInputStyle}
               />
-              <View style={{flex: 0.31}}>
+              <View style={{ flex: 0.31 }}>
                 <Text style={styles.labelStyle}>{strings.TRACK_INVENTORY}</Text>
                 <ToggleSwitch
                   isOn={isTrackInventory}
@@ -1318,12 +1303,12 @@ const RoyoAddProduct = ({route, navigation}) => {
                     }
                     keyboardType="number-pad"
                     value={quantity}
-                    mainStyle={{flex: 0.3}}
+                    mainStyle={{ flex: 0.3 }}
                     labelStyle={styles.labelStyle}
                     placeholderTextColor={colors.textGreyB}
                     txtInputStyle={styles.textInputStyle}
                   />
-                  <View style={{flex: 0.48}}>
+                  <View style={{ flex: 0.48 }}>
                     <Text numberOfLines={1} style={styles.labelStyle}>
                       {strings.SELL_WHEN_OUT_STOCK}
                     </Text>
@@ -1359,7 +1344,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                       })
                     }
                     value={minimumOrderCount}
-                    mainStyle={{flex: 0.48}}
+                    mainStyle={{ flex: 0.48 }}
                     labelStyle={styles.labelStyle}
                     placeholderTextColor={colors.textGreyB}
                     txtInputStyle={styles.textInputStyle}
@@ -1374,7 +1359,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                     }
                     keyboardType="number-pad"
                     value={batchCount}
-                    mainStyle={{flex: 0.28}}
+                    mainStyle={{ flex: 0.28 }}
                     labelStyle={styles.labelStyle}
                     placeholderTextColor={colors.textGreyB}
                     txtInputStyle={styles.textInputStyle}
@@ -1404,11 +1389,11 @@ const RoyoAddProduct = ({route, navigation}) => {
                   height: moderateScale(30),
                   width: moderateScale(130),
                 }}
-                btnStyle={{borderRadius: 5}}
+                btnStyle={{ borderRadius: 5 }}
               />
             </View>
             {productVariants.map(renderProductVariants)}
-            <View style={{height: 1, backgroundColor: colors.blackOpacity10}} />
+            <View style={{ height: 1, backgroundColor: colors.blackOpacity10 }} />
             {!isEmpty(exisitingVariants) && (
               <View>
                 <Text
@@ -1460,7 +1445,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                   borderBottomColor: colors.textGreyB,
                   paddingBottom: 5,
                 }}>
-                <Text style={{...styles.labelStyle}}>
+                <Text style={{ ...styles.labelStyle }}>
                   {strings.SELECT_ADDON_SET}
                 </Text>
                 <ModalDropdown
@@ -1482,7 +1467,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                     <TouchableHighlight
                       activeOpacity={0.6}
                       underlayColor="cornflowerblue"
-                      style={{backgroundColor: colors.white}}>
+                      style={{ backgroundColor: colors.white }}>
                       {isEmpty(addons) ? (
                         <View
                           style={{
@@ -1499,7 +1484,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                         </View>
                       ) : (
                         <View
-                          style={{flexDirection: 'row', alignItems: 'center'}}>
+                          style={{ flexDirection: 'row', alignItems: 'center' }}>
                           <Text
                             style={{
                               paddingVertical: 10,
@@ -1523,7 +1508,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                     fontSize: textScale(12),
                     fontFamily: fontFamily.regular,
                   }}>
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{ flexDirection: 'row' }}>
                     {isEmpty(selectedAddons) ? (
                       <View
                         style={{
@@ -1534,7 +1519,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                         <Text>{strings.SELECT}</Text>
                         <Image
                           source={imagePath.icDropdown}
-                          style={{marginLeft: moderateScale(65)}}
+                          style={{ marginLeft: moderateScale(65) }}
                         />
                       </View>
                     ) : (
@@ -1553,7 +1538,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                   borderBottomColor: colors.textGreyB,
                   overflow: 'hidden',
                 }}>
-                <Text style={{...styles.labelStyle}}>
+                <Text style={{ ...styles.labelStyle }}>
                   {strings.UP_SELL_PRODUCTS}
                 </Text>
                 <ModalDropdown
@@ -1579,7 +1564,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                     <TouchableHighlight
                       activeOpacity={0.6}
                       underlayColor="cornflowerblue"
-                      style={{backgroundColor: colors.white}}>
+                      style={{ backgroundColor: colors.white }}>
                       <View
                         style={{
                           flexDirection: 'row',
@@ -1608,7 +1593,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                     fontSize: textScale(12),
                     fontFamily: fontFamily.regular,
                   }}>
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{ flexDirection: 'row' }}>
                     {isEmpty(selectedUpSellProducts) ? (
                       <View
                         style={{
@@ -1619,7 +1604,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                         <Text>{strings.SELECT}</Text>
                         <Image
                           source={imagePath.icDropdown}
-                          style={{marginLeft: moderateScale(65)}}
+                          style={{ marginLeft: moderateScale(65) }}
                         />
                       </View>
                     ) : (
@@ -1643,7 +1628,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                   borderBottomColor: colors.textGreyB,
                   overflow: 'hidden',
                 }}>
-                <Text style={{...styles.labelStyle}}>
+                <Text style={{ ...styles.labelStyle }}>
                   {strings.CROSS_SELL_PRODUCTS}
                 </Text>
                 <ModalDropdown
@@ -1669,9 +1654,9 @@ const RoyoAddProduct = ({route, navigation}) => {
                     <TouchableHighlight
                       activeOpacity={0.6}
                       underlayColor="cornflowerblue"
-                      style={{backgroundColor: colors.white}}>
+                      style={{ backgroundColor: colors.white }}>
                       <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text
                           style={{
                             paddingVertical: 10,
@@ -1694,7 +1679,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                     fontSize: textScale(12),
                     fontFamily: fontFamily.regular,
                   }}>
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{ flexDirection: 'row' }}>
                     {isEmpty(selectedCrossSellProducts) ? (
                       <View
                         style={{
@@ -1705,7 +1690,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                         <Text>{strings.SELECT}</Text>
                         <Image
                           source={imagePath.icDropdown}
-                          style={{marginLeft: moderateScale(65)}}
+                          style={{ marginLeft: moderateScale(65) }}
                         />
                       </View>
                     ) : (
@@ -1725,7 +1710,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                   overflow: 'hidden',
                   paddingBottom: 5,
                 }}>
-                <Text style={{...styles.labelStyle}}>
+                <Text style={{ ...styles.labelStyle }}>
                   {strings.RELATED_PRODUCTS}
                 </Text>
                 <ModalDropdown
@@ -1751,9 +1736,9 @@ const RoyoAddProduct = ({route, navigation}) => {
                     <TouchableHighlight
                       activeOpacity={0.6}
                       underlayColor="cornflowerblue"
-                      style={{backgroundColor: colors.white}}>
+                      style={{ backgroundColor: colors.white }}>
                       <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text
                           style={{
                             paddingVertical: 10,
@@ -1776,7 +1761,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                     fontSize: textScale(12),
                     fontFamily: fontFamily.regular,
                   }}>
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{ flexDirection: 'row' }}>
                     {isEmpty(selectedRelatedProducts) ? (
                       <View
                         style={{
@@ -1787,7 +1772,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                         <Text>{strings.SELECT}</Text>
                         <Image
                           source={imagePath.icDropdown}
-                          style={{marginLeft: moderateScale(65)}}
+                          style={{ marginLeft: moderateScale(65) }}
                         />
                       </View>
                     ) : (
@@ -1812,7 +1797,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                   alignItems: 'center',
                   marginTop: moderateScale(20),
                 }}>
-                <View style={{width: '32.50%'}}>
+                <View style={{ width: '32.50%' }}>
                   <Text style={styles.labelStyle}>{strings.NEW}</Text>
                   <ToggleSwitch
                     isOn={isNew}
@@ -1827,7 +1812,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                     animationSpeed={400}
                   />
                 </View>
-                <View style={{width: '32.50%'}}>
+                <View style={{ width: '32.50%' }}>
                   <Text style={styles.labelStyle}>{strings.FEATURED}</Text>
                   <ToggleSwitch
                     isOn={isFeatured}
@@ -1842,7 +1827,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                     animationSpeed={400}
                   />
                 </View>
-                <View style={{width: '32.50%'}}>
+                <View style={{ width: '32.50%' }}>
                   <Text style={styles.labelStyle}>{strings.INQUIRY_ONLY}</Text>
                   <ToggleSwitch
                     isOn={isInquiryOnly}
@@ -1866,7 +1851,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                   marginBottom: moderateScale(35),
                   flexDirection: 'row',
                 }}>
-                <View style={{width: '32.50%'}}>
+                <View style={{ width: '32.50%' }}>
                   <Text style={styles.labelStyle}>
                     {strings.REQUIRES_PRESCRIPTION}
                   </Text>
@@ -1883,7 +1868,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                     animationSpeed={400}
                   />
                 </View>
-                <View style={{width: '32.50%'}}>
+                <View style={{ width: '32.50%' }}>
                   <Text style={styles.labelStyle}>
                     {strings.REQUIRES_LAST_MILE}
                   </Text>
@@ -1914,7 +1899,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                     borderBottomColor: colors.textGreyB,
                     paddingBottom: moderateScale(10),
                   }}>
-                  <Text style={{...styles.labelStyle}}>{strings.LIVE}</Text>
+                  <Text style={{ ...styles.labelStyle }}>{strings.LIVE}</Text>
                   <ModalDropDownComp
                     options={productStatus}
                     defaultValue={
@@ -1923,7 +1908,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                         : selectedProductStatus.title
                     }
                     _onSelect={(idx, value) =>
-                      updateState({selectedProductStatus: value})
+                      updateState({ selectedProductStatus: value })
                     }
                     _renderButtonText={(rowData) => (
                       <Text>{rowData?.title}</Text>
@@ -1932,7 +1917,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                       <TouchableHighlight
                         activeOpacity={0.6}
                         underlayColor="cornflowerblue"
-                        style={{backgroundColor: colors.white}}>
+                        style={{ backgroundColor: colors.white }}>
                         <Text
                           style={{
                             paddingVertical: 10,
@@ -1963,14 +1948,14 @@ const RoyoAddProduct = ({route, navigation}) => {
                     borderBottomWidth: StyleSheet.hairlineWidth,
                     borderBottomColor: colors.textGreyB,
                   }}>
-                  <Text style={{...styles.labelStyle}}>{strings.BRANDS}</Text>
+                  <Text style={{ ...styles.labelStyle }}>{strings.BRANDS}</Text>
                   <ModalDropDownComp
                     options={brands}
                     defaultValue={
                       isEmpty(selectedBrand) ? 'Select' : selectedBrand.title
                     }
                     _onSelect={(idx, value) =>
-                      updateState({selectedBrand: value})
+                      updateState({ selectedBrand: value })
                     }
                     _renderButtonText={(rowData) => (
                       <Text>{rowData?.title}</Text>
@@ -1979,7 +1964,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                       <TouchableHighlight
                         activeOpacity={0.6}
                         underlayColor="cornflowerblue"
-                        style={{backgroundColor: colors.white}}>
+                        style={{ backgroundColor: colors.white }}>
                         <Text
                           style={{
                             paddingVertical: 10,
@@ -2010,7 +1995,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                     borderBottomWidth: StyleSheet.hairlineWidth,
                     borderBottomColor: colors.textGreyB,
                   }}>
-                  <Text style={{...styles.labelStyle}}>
+                  <Text style={{ ...styles.labelStyle }}>
                     {strings.TAX_CATEGORY}
                   </Text>
                   <ModalDropdown
@@ -2021,7 +2006,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                     }}
                     defaultValue={'Select'}
                     onSelect={(idx, value) =>
-                      updateState({selectedTaxCategory: value})
+                      updateState({ selectedTaxCategory: value })
                     }
                     renderButtonText={(rowData) => (
                       <Text>{rowData?.title}</Text>
@@ -2030,7 +2015,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                       <TouchableHighlight
                         activeOpacity={0.6}
                         underlayColor="cornflowerblue"
-                        style={{backgroundColor: colors.white}}>
+                        style={{ backgroundColor: colors.white }}>
                         <Text
                           style={{
                             paddingVertical: 10,
@@ -2067,18 +2052,18 @@ const RoyoAddProduct = ({route, navigation}) => {
                   label={strings.DELAY_HOURS}
                   labelStyle={styles.labelStyle}
                   placeholder={strings.HRS}
-                  onChangeText={(value) => updateState({delayHrs: value})}
+                  onChangeText={(value) => updateState({ delayHrs: value })}
                   value={delayHrs}
-                  mainStyle={{flex: 0.45}}
+                  mainStyle={{ flex: 0.45 }}
                   placeholderTextColor={colors.textGreyB}
                   txtInputStyle={styles.textInputStyle}
                 />
                 <TextInputWithUnderlineAndLabel
                   label={strings.DELAY_MINUTES}
                   placeholder={strings.MINUTES}
-                  onChangeText={(value) => updateState({delayMinutes: value})}
+                  onChangeText={(value) => updateState({ delayMinutes: value })}
                   value={delayMinutes}
-                  mainStyle={{flex: 0.45}}
+                  mainStyle={{ flex: 0.45 }}
                   labelStyle={styles.labelStyle}
                   placeholderTextColor={colors.textGreyB}
                   txtInputStyle={styles.textInputStyle}
@@ -2100,7 +2085,7 @@ const RoyoAddProduct = ({route, navigation}) => {
         topCustomComponent={topCustomComponent}
         leftIcon={false}
         rightIcon={imagePath.ic_cross}
-        rightIconStyle={{tintColor: colors.black}}
+        rightIconStyle={{ tintColor: colors.black }}
       />
       <ActionSheet
         ref={actionSheet}
