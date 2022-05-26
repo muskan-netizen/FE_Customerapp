@@ -327,6 +327,12 @@ const shortCodes = {
   jiffex:'67dcfd',
   clickService:'cb17f2',
   amazingTaxi:'32e266',
+  jazzyBug:'3441ec',
+  myfarma:'612a45',
+  valley:'b1add5',
+  kartAndKarry:'4eaab9',
+  quickLube:'4ab432',
+  keystoneDelivery:'87ad74',
 };
 
 
@@ -1632,6 +1638,30 @@ const appIds = {
   amazingTaxi: Platform.select({
     ios: 'com.amazingTaxi',
     android: 'com.amazingTaxi',
+  }),
+  jazzyBug: Platform.select({
+    ios: 'com.jazzyBug',
+    android: 'com.jazzyBug',
+  }),
+  myfarma: Platform.select({
+    ios: 'com.myfarma',
+    android: 'com.myfarma',
+  }),
+  valley: Platform.select({
+    ios: 'com.valley',
+    android: 'com.valley',
+  }),
+  kartAndKarry: Platform.select({
+    ios: 'com.kartandkarry',
+    android: 'com.kartAndKarry',
+  }),
+  quickLube: Platform.select({
+    ios: 'com.quickLube',
+    android: 'com.quickLube',
+  }),
+  keystoneDelivery: Platform.select({
+    ios: 'com.keystoneDelivery',
+    android: 'com.keystoneDelivery',
   }),
 };
 

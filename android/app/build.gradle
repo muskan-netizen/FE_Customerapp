@@ -5300,6 +5300,66 @@ android {
             resValue "string", "app_name", "Amazing Taxi"
             resValue "string", "host_name", ""
             }
+            jazzyBug{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.jazzyBug'
+            resValue "string", "app_name", "Jazzy Bug"
+            resValue "string", "host_name", ""
+            }
+            myfarma{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.myfarma'
+            resValue "string", "app_name", "MyFarma"
+            resValue "string", "host_name", ""
+            }
+            valley{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.valley'
+            resValue "string", "app_name", "Valley"
+            resValue "string", "host_name", ""
+            }
+            kartAndKarry{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.kartAndKarry'
+            resValue "string", "app_name", "KartAndKarry"
+            resValue "string", "host_name", ""
+            }
+            quickLube{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.quickLube'
+            resValue "string", "app_name", "Quick Lube"
+            resValue "string", "host_name", ""
+            }
+            keystoneDelivery{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.keystoneDelivery'
+            resValue "string", "app_name", "Keystone Delivery"
+            resValue "string", "host_name", ""
+            }
     }
 }
 
