@@ -1117,6 +1117,8 @@ function Cart({navigation, route}) {
     placeOrderData(data);
   };
 
+  console.log(dineInType,"dineInTypedineInTypedineInType");
+
   const placeOrderData = (data) => {
     console.log('Sending data', data);
 
