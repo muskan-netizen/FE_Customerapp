@@ -206,16 +206,16 @@ android {
 
     flavorDimensions "appType"
 //  productFlavors {
-//       nineOneTwo{
-//          dimension "appType"
-//          versionCode 1
-//          versionName "1.0"
-//          minSdkVersion rootProject.ext.minSdkVersion
-//          targetSdkVersion rootProject.ext.targetSdkVersion
-//          applicationId 'com.nineOneTwo'
-//          resValue "string", "app_name", "912"
-//          resValue "string", "host_name", ""
-//          }
+//       busTaMove{
+//             dimension "appType"
+//             versionCode 1
+//             versionName "1.0"
+//             minSdkVersion rootProject.ext.minSdkVersion
+//             targetSdkVersion rootProject.ext.targetSdkVersion
+//             applicationId 'com.bustamove'
+//             resValue "string", "app_name", "busTaMove"
+//             resValue "string", "host_name", ""
+//             }
 //  }
     productFlavors {
             royoorder {
@@ -5379,6 +5379,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.bluebundles'
             resValue "string", "app_name", "Blue Bundles"
+            resValue "string", "host_name", ""
+            }
+            busTaMove{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.bustamove'
+            resValue "string", "app_name", "busTaMove"
             resValue "string", "host_name", ""
             }
     }

@@ -333,7 +333,8 @@ const shortCodes = {
   kartAndKarry:'4eaab9',
   quickLube:'4ab432',
   keystoneDelivery:'87ad74',
-  blueBundles:'b245dd'
+  blueBundles:'b245dd',
+  busTaMove:'9d065e'
 
 };
 
@@ -1668,6 +1669,10 @@ const appIds = {
   blueBundles: Platform.select({
     ios: 'com.bluebundles',
     android: 'com.bluebundles',
+  }),
+  busTaMove: Platform.select({
+    ios: 'com.bustamove',
+    android: 'com.bustamove',
   }),
 };
 
