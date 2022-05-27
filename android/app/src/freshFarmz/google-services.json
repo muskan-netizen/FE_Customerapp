@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "551844774040",
+    "project_id": "fresh-farmz-44d66",
+    "storage_bucket": "fresh-farmz-44d66.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551844774040:android:e6386b01425db849f790ed",
+        "android_client_info": {
+          "package_name": "com.freshFarmz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "551844774040-o4jd620d8dktlj4oo48ll75m7513254j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.freshFarmz",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "551844774040-rk3eea6bn1an9p80h1scth1151mphrq8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.freshFarmz",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "551844774040-v1i50gnjodjgbjd93bg7td88vqgt94lc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.freshFarmz",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "551844774040-l33ul8rje1qh67jotj524udeka70gh2n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgPiuQDtq123I5xtvyQf7rpc68BkoIDR4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "551844774040-l33ul8rje1qh67jotj524udeka70gh2n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "551844774040-iku1ooht45rtv82dvipm3sjpc3mb1ds8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.freshFarmz"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

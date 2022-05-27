@@ -40,6 +40,7 @@ import {cameraHandler} from '../../utils/commonFunction';
 import ActionSheet from 'react-native-actionsheet';
 import {androidCameraPermission} from '../../utils/permissions';
 import DocumentPicker from 'react-native-document-picker';
+import RNOtpVerify from 'react-native-otp-verify';
 
 let addtionSelectedImageIndex = null;
 
@@ -84,6 +85,7 @@ export default function Signup({navigation}) {
     addtionalTextInputs: [],
     addtionalImages: [],
     addtionalPdfs: [],
+    appHashKey: 'WpV3+5pgxIH',
   });
   const {
     phoneNumber,
@@ -98,6 +100,7 @@ export default function Signup({navigation}) {
     addtionalTextInputs,
     addtionalImages,
     addtionalPdfs,
+    appHashKey,
   } = state;
   const _onCountryChange = (data) => {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
@@ -127,6 +130,15 @@ export default function Signup({navigation}) {
   };
 
   useEffect(() => {
+    if (Platform.OS === 'android') {
+      RNOtpVerify.getHash()
+        .then((res) => {
+          updateState({
+            appHashKey: res[0],
+          });
+        })
+        .catch();
+    }
     actions
       .userRegistrationDocument(
         {},
@@ -164,6 +176,7 @@ export default function Signup({navigation}) {
     }
 
     formdata.append('name', name);
+    formdata.append('app_hash_key', appHashKey);
     formdata.append('phone_number', phoneNumber);
     formdata.append('dial_code', callingCode.toString());
     formdata.append('country_code', cca2);
@@ -502,6 +515,7 @@ export default function Signup({navigation}) {
               onChangeText={_onChangeText('name')}
               placeholder={strings.YOUR_NAME}
               value={name}
+              returnKeyType={'next'}
             />
             <BorderTextInput
               // autoCapitalize={'none'}
@@ -509,6 +523,7 @@ export default function Signup({navigation}) {
               placeholder={strings.YOUR_EMAIL}
               value={email}
               keyboardType={'email-address'}
+              returnKeyType={'next'}
             />
             <PhoneNumberInput
               onCountryChange={_onCountryChange}
@@ -538,11 +553,17 @@ export default function Signup({navigation}) {
               onPressRight={showHidePassword}
               isShowPassword={isShowPassword}
               rightIconStyle={{}}
+              returnKeyType={'next'}
             />
             <BorderTextInput
               onChangeText={_onChangeText('referralCode')}
-              placeholder={strings.ENTERREFERALCODE}
+              placeholder={
+                appData?.profile?.preferences?.referral_code
+                  ? appData?.profile?.preferences?.referral_code
+                  : strings.ENTERREFERALCODE
+              }
               value={referralCode}
+              returnKeyType={'next'}
             />
 
             {!isEmpty(addtionalTextInputs) &&

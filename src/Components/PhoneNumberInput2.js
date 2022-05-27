@@ -20,6 +20,7 @@ const PhoneNumberInput2 = ({
   phoneNumber,
   placeholder,
   textInputStyle = {},
+  textInputStyle1={}
 }) => {
   const {themeColors, appStyle} = useSelector((state) => state?.initBoot);
   const [state, setState] = useState({
@@ -93,7 +94,9 @@ const PhoneNumberInput2 = ({
         style={{
           width: '75%',
           backgroundColor: colors.textGreyK,
+          ...textInputStyle1,
           ...textInputStyle,
+         
         }}
       />
 

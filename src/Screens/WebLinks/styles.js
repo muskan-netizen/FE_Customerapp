@@ -21,6 +21,7 @@ export default ({fontFamily}) => {
       borderRadius: 8,
       height: moderateScaleVertical(44),
       marginBottom: moderateScaleVertical(14),
+      
     },
 
     imageView: {
@@ -51,7 +52,7 @@ export default ({fontFamily}) => {
       marginHorizontal: moderateScale(20),
     },
     labelTxt: {
-      color: colors.blackOpacity43,
+      color: isDarkMode?colors.white:colors.blackOpacity43,
       fontFamily: fontFamily.medium,
       fontSize: textScale(13),
       marginBottom: moderateScale(5),

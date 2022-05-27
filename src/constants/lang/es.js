@@ -529,7 +529,8 @@ export default {
   YOUR_CART_EMPTY_ADD_ITEMS:
     'Su carrito está vacío, agregue artículos a la compra',
   SHOP_FROM_WISHLIST: 'Comprar de la lista de deseos',
-  ALREADY_EXIST: 'Ya tienes artículos en tu carrito. ¿Quieres descartarlos?',
+  ALREADY_EXIST:
+    'You already have items from another store. Do you want to discard them?',
   LABEL1: 'Etiqueta 1',
   LABEL2: 'Etiqueta 2',
   DOYOUHAVECLEANINGMATERIAL: ' ¿Necesitas materiales de limpieza?',
@@ -940,4 +941,18 @@ export default {
   ORDER_TOTAL: 'Order Total',
   ORDERS: 'Orders',
   ORDER_CANCELLED: 'Order Cancelled',
+  SPECIFIC_INSTRUCTIONS:'Specific Instructions',
+  THANKS_FOR_YOUR_PURCHASE:'¡Gracias por tu compra!',
+  WHAT_WHOULD_YOU_LIKE_TO_DO: 'What would you like to do?',
+  ENTER_NEW_ADDRESS: 'new address',
+  PRODUCT_ORDER_FORM: 'Product Order Form',
+  FIXED_FEE: 'Fixed fee',
+  SELECT_VENDOR: 'Select a vendor',
+  ORDERS: 'Orders',
+  RECENTORDERS: 'Recent Orders',
+  BOOK_FOR_A_FRIEND: 'Book For a friend',
+  ENTER_FRIEND_DETAILS: "Enter your Friend's details",
+  BOOK_FOR_ME: 'Book For Me',
+  BOOK_FOR_FRIEND:'Book For Friend'
+
 };

@@ -21,6 +21,7 @@ const OrderCard = (props) => {
     onPress = () => {},
     updateOrderStatus,
     isBleDevice = false,
+    index,
   } = props;
   const {currencies} = useSelector((state) => state?.initBoot);
   let count = item.item_count - 1;
@@ -164,7 +165,7 @@ const OrderCard = (props) => {
                 backgroundColor: colors.themeColor2,
                 marginLeft: moderateScale(10),
               }}
-              onPress={() => updateOrderStatus(item, 7)}
+              onPress={() => updateOrderStatus(item, 7,index)}
             />
           </View>
         )}

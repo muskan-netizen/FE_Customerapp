@@ -1,0 +1,14 @@
+#include "Pods/Target Support Files/Pods-available_pods-Toor/Pods-available_pods-Toor.debug.xcconfig"
+
+PROJECT_APPLE_ID = 1622537893
+PROJECT_BUNDLE_ID = com.app.toor
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 2
+PROJECT_APP_NAME = Toor
+PROJECT_GOOGLE_CLIENT_ID = 704878548584-mmv5lclroihahuu0ed5sjg10014btbb9.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.704878548584-mmv5lclroihahuu0ed5sjg10014btbb9
+PROJECT_FACEBOOK_ID = 387461899926736
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =ToorInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4
+

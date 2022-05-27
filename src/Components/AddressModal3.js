@@ -841,7 +841,7 @@ const AddressModal3 = ({
                     fontSize: textScale(12),
                     fontFamily: fontFamily.regular,
                     marginLeft: moderateScale(8),
-                    color: colors.blackOpacity66,
+                    color: isDarkMode? MyDarkTheme.colors.text: colors.blackOpacity66,
                     marginTop: moderateScaleVertical(4),
                   }}>
                   {constCurrLoc?.address}
@@ -902,6 +902,8 @@ const AddressModal3 = ({
                 containerStyle={{borderBottomWidth: 1}}
                 mainStyle={{marginTop: 10}}
                 labelStyle={styles.labelStyle}
+                returnKeyType={"next"}
+                
               />
 
               <BorderTextInputWithLable
@@ -912,6 +914,7 @@ const AddressModal3 = ({
                 borderWidth={0}
                 marginBottomTxt={0}
                 containerStyle={{borderBottomWidth: 1}}
+                returnKeyType={"next"}
               />
               {isStreet && (
                 <Text
@@ -936,6 +939,7 @@ const AddressModal3 = ({
                 borderWidth={0}
                 marginBottomTxt={0}
                 containerStyle={{borderBottomWidth: 1}}
+                returnKeyType={"next"}
               />
               {isCity && (
                 <Text
@@ -960,6 +964,7 @@ const AddressModal3 = ({
                 borderWidth={0}
                 marginBottomTxt={0}
                 containerStyle={{borderBottomWidth: 1}}
+                returnKeyType={"next"}
               />
               {isState && (
                 <Text
@@ -1008,6 +1013,7 @@ const AddressModal3 = ({
                           : colors.textGreyOpcaity7
                       }
                       onChangeText={_onChangeText('country')}
+                      returnKeyType={"next"}
                       placeholder={strings.COUNTRY}
                       // textInputStyle={[getTextInputStyle(country)]}
                       value={country}
@@ -1056,6 +1062,7 @@ const AddressModal3 = ({
                     keyboardType={'numeric'}
                     borderWidth={0}
                     borderRadius={0}
+                    returnKeyType={"next"}
                   />
                   {isPincode && (
                     <Text
@@ -1082,6 +1089,7 @@ const AddressModal3 = ({
                 borderWidth={0}
                 marginBottomTxt={0}
                 containerStyle={{borderBottomWidth: 1}}
+                returnKeyType={"next"}
               />
 
               <Text
@@ -1136,6 +1144,7 @@ const AddressModal3 = ({
                   textInputStyle={getTextInputStyle(city)}
                   borderWidth={0}
                   marginBottomTxt={0}
+                  returnKeyType={"next"}
                   containerStyle={{
                     borderBottomWidth: 1,
                     marginTop: moderateScale(5),

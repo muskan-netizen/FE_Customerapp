@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>737290127256-a4ul9mfjbfajfslpob05eb5sgu8h0dao.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.737290127256-a4ul9mfjbfajfslpob05eb5sgu8h0dao</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>737290127256-g0lujsipbd8rdhjmrigk2kl2pacphnfo.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAJMnEkM7vsY0GLuw_zC727QWGhu-rE2RU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>737290127256</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.jazzyBug</string>
+	<key>PROJECT_ID</key>
+	<string>jazzybug</string>
+	<key>STORAGE_BUCKET</key>
+	<string>jazzybug.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:737290127256:ios:4e6ee91feee5ab18f3cded</string>
+</dict>
+</plist>

@@ -31,6 +31,9 @@ import {
   VENDOR_PRODUCTS_OPTIMIZE_FILTERS,
   GET_DATA_BY_CATEGORY_OPTAMIZE,
   GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE,
+  VENDOR_CATEGORIES,
+  ALL_VENDOR_DATA
+
 } from '../../config/urls';
 import {apiGet, apiPost, setWalletData} from '../../utils/utils';
 import store from '../store';
@@ -514,3 +517,12 @@ export function getProductByVendorIdOptamize(query = '', data = {}, headers = {}
       });
   });
 }
+
+export function allVendorCategories(query, headers) {
+  return apiGet(VENDOR_CATEGORIES + query, {}, headers)
+}
+
+export function allVendorData(query, headers) {
+  return apiGet(ALL_VENDOR_DATA + query, {}, headers)
+}
+

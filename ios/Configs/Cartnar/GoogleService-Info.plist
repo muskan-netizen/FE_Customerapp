@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>153706150562-3qlg970kjn4mekbu9ls75vh48ag7eqdu.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.153706150562-3qlg970kjn4mekbu9ls75vh48ag7eqdu</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>153706150562-d1tl3rkfdhbeslie9horj1drm1juan6i.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDKRjJcYq7hFYERGh2TqgiyrdLam7K2ztY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>153706150562</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.cartnar</string>
+	<key>PROJECT_ID</key>
+	<string>cartnar-d96dd</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cartnar-d96dd.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:153706150562:ios:5b68e22355beb7f951b5fb</string>
+</dict>
+</plist>

@@ -102,7 +102,6 @@ const NotificationModal = () => {
     data['order_id'] = acceptRejectData?.id;
     data['vendor_id'] = vendors[0]?.vendor_id;
     data['order_status_option_id'] = status;
-    console.log(data, 'data>>data');
     actions
       .updateOrderStatus(data, {
         code: appData?.profile?.code,

@@ -481,7 +481,8 @@ export default {
   RECOMMENDED_VENDORS: '推荐供应商',
   YOUR_CART_EMPTY_ADD_ITEMS: '您的购物车是空的，添加物品到商店',
   SHOP_FROM_WISHLIST: '从心愿单上购物',
-  ALREADY_EXIST: '你的车里已经有物品了你想抛弃它们吗？',
+  ALREADY_EXIST:
+    'You already have items from another store. Do you want to discard them?',
   LABEL1: '标签 1',
   LABEL2: '标签 2',
   DOYOUHAVECLEANINGMATERIAL: '你需要清洁材料吗？',
@@ -810,4 +811,11 @@ export default {
   ORDER_TOTAL: 'Order Total',
   ORDERS: 'Orders',
   ORDER_CANCELLED: 'Order Cancelled',
+  SPECIFIC_INSTRUCTIONS:'Specific Instructions',
+  THANKS_FOR_YOUR_PURCHASE:'Thanks for your purchase.',
+  BOOK_FOR_A_FRIEND: 'Book For a friend',
+  ENTER_FRIEND_DETAILS: "Enter your Friend's details",
+  BOOK_FOR_ME: 'Book For Me',
+  BOOK_FOR_FRIEND:'Book For Friend'
+
 };
