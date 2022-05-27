@@ -2853,7 +2853,7 @@ export default function OrderDetail({navigation, route}) {
                 <Marker.Animated
                   ref={markerRef}
                   coordinate={state.animateDriver}
-                  flat>
+                 >
                   <Image
                     source={imagePath.icScooter}
                     style={{
