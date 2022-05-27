@@ -1366,7 +1366,7 @@ const appIds = {
     android: 'com.app.scoopaTechnologies',
   }),
   dbairro: Platform.select({
-    ios: 'com.dbairro',
+    ios: 'com.app.dbairro',
     android: 'com.dbairro',
   }),
   knockknock: Platform.select({
@@ -1424,7 +1424,7 @@ const appIds = {
   }),
   beachhop: Platform.select({
     ios: 'com.beachhop',
-    android: 'com.beachhop',
+    android: 'com.beachhop.customer',
   }),
   qseek: Platform.select({
     ios: 'com.qseek',
