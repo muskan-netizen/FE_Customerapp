@@ -2540,7 +2540,7 @@ function Cart({navigation, route}) {
                                   fontFamily: fontFamily.medium,
                                   flex: 0.7,
                                 }}>
-                                {i?.product?.translation[0]?.title},
+                                {i?.product?.translation[0]?.title}
                               </Text>
 
                               <View
@@ -2596,6 +2596,9 @@ function Cart({navigation, route}) {
                                 marginTop: moderateScaleVertical(4),
                                 fontFamily: fontFamily.regular,
                               }}>
+                              {' '}
+                              {i?.quantity}{' '}
+                               X {''}
                               <Text style={{}}>
                                 {`${currencies?.primary_currency?.symbol}${
                                   // Number(i?.pvariant?.multiplier) *
@@ -2605,9 +2608,8 @@ function Cart({navigation, route}) {
                                       ?.digit_after_decimal,
                                   )
                                   }`}
-                              </Text>{' '}
-                              {i?.quantity}
-                              X  ={' '}
+                              </Text>
+                               ={' '}
                               <Text
                                 style={{
                                   color: isDarkMode
