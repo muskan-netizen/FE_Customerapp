@@ -2912,10 +2912,7 @@ export default function OrderDetail({navigation, route}) {
               }}
               
               colorFilters={[
-                {
-                  keypath: 'layers',
-                  color: "#fff",
-                },
+               
                 
                 {
                   keypath: 'right sand',

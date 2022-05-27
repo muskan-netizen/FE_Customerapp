@@ -1569,7 +1569,7 @@ export default function Products({route, navigation}) {
         <ProductCard3
           data={item}
           index={index}
-          onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+          onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, {item})}
           onAddtoWishlist={() => _onAddtoWishlist(item)}
           addToCart={() => addSingleItem(item, null, index)}
           onIncrement={() => checkIsCustomize(item, null, index, 1)}
@@ -3290,7 +3290,7 @@ export default function Products({route, navigation}) {
             onScroll={onScroll}
             disableScrollViewPanResponder
             showsVerticalScrollIndicator={false}
-            data={productListData}
+            data={[]}
             renderItem={renderProduct}
             ListHeaderComponent={listHeaderComponent2()}
             keyExtractor={(item, index) => String(index)}
