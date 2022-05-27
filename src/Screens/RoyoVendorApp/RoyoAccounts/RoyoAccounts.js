@@ -172,7 +172,7 @@ const RoyoAccounts = (props) => {
     //     navigation.navigate(navigationStrings.ROYO_VENDOR_PAYMENT_SETTINGS),
     // },
     {
-      text: strings.SIGN_OUT,
+      text:strings.SIGN_OUT,
       image: imagePath.signoutRoyo,
       onPress: userlogout,
     },

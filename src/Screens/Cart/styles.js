@@ -149,7 +149,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       justifyContent: 'space-between',
       paddingHorizontal: moderateScaleVertical(20),
       paddingVertical: moderateScaleVertical(10),
-      backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
+
       marginHorizontal: 16,
       borderRadius: moderateScale(10),
     },

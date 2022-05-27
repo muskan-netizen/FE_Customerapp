@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "167274780828",
+    "project_id": "scootup-89a89",
+    "storage_bucket": "scootup-89a89.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167274780828:android:ed6f6abec3f83129cf3559",
+        "android_client_info": {
+          "package_name": "com.SCOOTUP"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "167274780828-35tk5ln5q3jsrrd6afkck9krlnv52lbu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.SCOOTUP",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "167274780828-3n8hu8o7obblts1mje69ons3sl7ta17n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.SCOOTUP",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "167274780828-n9bhpubihcjvtdq5kj8130se6f6fmdit.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.SCOOTUP",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "167274780828-65q4h56m3ltfdjah14ao2h87c0tsaome.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEJH_vrs6vs91bc7-VhZT68zKkIy3keAY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "167274780828-65q4h56m3ltfdjah14ao2h87c0tsaome.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "167274780828-5ck9ilgekmn9p5t6srkg28adnamohvgo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.SCOOTUP"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

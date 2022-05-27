@@ -26,6 +26,13 @@ import {
   UPDATE_PRODUCT_FAQS_CART,
   GET_CATEGORY_KYC_DOCUMENT,
   SUBMIT_CATEGORY_KYC,
+  ORDER_AFTER_PAYMENT,
+  PAYTABURL,
+  CANCELPAYTABURL,
+  FLUTTERWAVEURL,
+  SDKPAYMENTWAVEURL,
+  SDKPAYMENTCANCELWAVEURL,
+  VENDOR_DROPOFF_SLOTS,
 } from '../../config/urls';
 import {
   apiGet,
@@ -39,6 +46,7 @@ import types from '../types';
 const {dispatch} = store;
 
 export const saveAddress = (data) => {
+  console.log(data, 'data>>>>data>>>data');
   saveSelectedAddress(data).then((suc) => {
     dispatch({
       type: types.SELECTED_ADDRESS,
@@ -343,14 +351,14 @@ export function getStripePaymentIntent(data = {}, headers = {}) {
   // console.log("payment++ query", query)
   return new Promise((resolve, reject) => {
     apiPost(GET_PAYMENT_INTENT, data, headers)
-    .then((res) => {
-      resolve(res);
-    })
-    .catch((error) => {
-      reject(error);
-    });
-});
-};
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
 
 export const getProductFaqs = (query, data, headers = {}) => {
   return new Promise((resolve, reject) => {
@@ -374,21 +382,21 @@ export const updateProductFAQs = (data, headers = {}) => {
         reject(error);
       });
   });
-}
+};
 
 //Confirm payment intent stripe
 export function confirmPaymentIntentStripe(data = {}, headers = {}) {
   // console.log("payment++ query", query)
   return new Promise((resolve, reject) => {
     apiPost(CONFIRM_PAYMENT_INTENT, data, headers)
-    .then((res) => {
-      resolve(res);
-    })
-    .catch((error) => {
-      reject(error);
-    });
-});
-};
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
 
 export const getCategoryKycDocument = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
@@ -402,7 +410,12 @@ export const getCategoryKycDocument = (data, headers = {}) => {
   });
 };
 
-export const submitCategoryKYC = (data, headers = {}) => {
+export const submitCategoryKYC = (
+  data,
+  headers = {
+    'Content-Type': 'multipart/form-data',
+  },
+) => {
   return new Promise((resolve, reject) => {
     apiPost(SUBMIT_CATEGORY_KYC, data, headers)
       .then((res) => {
@@ -413,3 +426,86 @@ export const submitCategoryKYC = (data, headers = {}) => {
       });
   });
 };
+
+export const orderSuccessPayment = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(ORDER_AFTER_PAYMENT, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+//Paytab card payment method
+export function openPaytabUrl(data = {}, headers = {}) {
+  console.log('payment++ data', data);
+  return new Promise((resolve, reject) => {
+    apiPost(PAYTABURL, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+//Cancel Paytab card payment method
+export function cancelPaytabUrl(data = {}, headers = {}) {
+  console.log('payment++ data', data);
+  return new Promise((resolve, reject) => {
+    apiPost(CANCELPAYTABURL, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+//FLutterWave
+
+//Flutter wave card payment method
+export function openSdkUrl(query = '', data = {}, headers = {}) {
+  console.log('payment++ data', data);
+  return new Promise((resolve, reject) => {
+    apiPost(SDKPAYMENTWAVEURL + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+//Cancel Flutter wave card payment method
+export function cancelSdkUrl(query = '', data = {}, headers = {}) {
+  console.log('payment++ data', data);
+  return new Promise((resolve, reject) => {
+    apiPost(SDKPAYMENTCANCELWAVEURL + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+//Get Vendor DropOff slots
+export function getVendorDropoffSlots(url, data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiGet(VENDOR_DROPOFF_SLOTS + url, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}

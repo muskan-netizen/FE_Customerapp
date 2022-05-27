@@ -57,7 +57,7 @@ class AppIntro extends React.Component {
     componentDidMount = () => {
 
         const temp = this.props.route.params.images.map((el, index) => {
-            console.log("this.props.route.params.images",this.props.route.params.images)
+            console.log("this.props.route.params.images", this.props.route.params.images)
             return {
                 key: index + 1,
                 title: '',
@@ -107,7 +107,7 @@ class AppIntro extends React.Component {
     }
 
     renderPagination = (index) => {
-        const {mainData} = this.props
+        const { mainData } = this.props
         console.log("pagination prosp", mainData)
         return (
             <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
@@ -130,7 +130,7 @@ class AppIntro extends React.Component {
     }
 
     render() {
-        console.log("slides",this.state.slides)
+        console.log("slides", this.state.slides)
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <StatusBar translucent backgroundColor="transparent" />
@@ -148,7 +148,7 @@ class AppIntro extends React.Component {
 
                     />
                 </View>
-                <View style={{ flex: 0.1}}>
+                <View style={{ flex: 0.1 }}>
                     {this._renderDoneButton()}
                 </View>
             </View>

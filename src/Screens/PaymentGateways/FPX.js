@@ -40,7 +40,7 @@ const FPX = ({ navigation, route }) => {
     //Update states on screens
     const updateState = (data) => setState((state) => ({ ...state, ...data }));
     const { webUrl, isLoading } = state;
-
+      console.log(webUrl,"weburllll")
     useEffect(() => {
         apiHit();
     }, []);
@@ -54,7 +54,7 @@ const FPX = ({ navigation, route }) => {
     const apiHit = async () => {
         let queryData = `/${paramsData?.selectedPayment?.code?.toLowerCase()}?amount=${paramsData?.total_payable_amount
             }&payment_option_id=${paramsData?.payment_option_id}&action=cart&order_number=${paramsData?.orderDetail?.order_number}&address_id=${paramsData?.orderDetail?.address_id}`;
-
+        console.log(queryData,"queryData")
         try {
             const res = await actions.openPaymentWebUrl(
                 queryData,
@@ -78,25 +78,29 @@ const FPX = ({ navigation, route }) => {
     const onNavigationStateChange = (props) => {
         const { url } = props;
         const URL = queryString.parseUrl(url);
-        const queryParams = URL.query;
-        const nonQueryURL = URL.url;
+       
+        const queryParams = URL?.query;
+        console.log(queryParams,"urllll")
+        const nonQueryURL = URL?.url;
         console.log(props, 'propsFPX');
 
         setTimeout(() => {
             if (queryParams.status == 200) {
-                moveToNewScreen(navigationStrings.ORDERSUCESS, {
+                moveToNewScreen(navigationStrings.ORDERSUCESS
+                    , {
                     orderDetail: {
-                        order_number: queryParams.order,
+                        order_number: queryParams?.order,
                         id: paramsData?.orderDetail?.id,
                     },
-                })();
+                }
+                )();
             }
             if (queryParams.status == 0) {
                 moveToNewScreen(navigationStrings.CART, {
                     queryURL: url.replace(`${nonQueryURL}?`, ''),
                 })();
             }
-        }, 3000);
+        }, 2000);
     };
 
     return (
@@ -116,12 +120,22 @@ const FPX = ({ navigation, route }) => {
             />
             {webUrl !== '' && (
                 <WebView
+                    showsVerticalScrollIndicator={false}
                     onLoad={() => updateState({ isLoading: false })}
                     source={{ uri: webUrl }}
                     onNavigationStateChange={onNavigationStateChange}
+                    androidLayerType="software"
                     style={{
-                        backgroundColor:colors.white
+                        backgroundColor:colors.white,
+                        opacity:0.99,
+                        overflow: 'hidden' 
                     }}
+                    screenOptions={{
+                        animationEnabled: Platform.select({
+                        ios: true,
+                        android: false,
+                    })
+                   }}                     
                 />
             )}
             <View

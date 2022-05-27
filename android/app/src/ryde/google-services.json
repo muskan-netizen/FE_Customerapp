@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "442176362835",
+    "project_id": "ryde-edc55",
+    "storage_bucket": "ryde-edc55.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442176362835:android:4f03ff0536c929706469a6",
+        "android_client_info": {
+          "package_name": "com.customer.ryde"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "442176362835-1njtttg1pj2bpp6dr5fte99sddep355d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.ryde",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "442176362835-7l168rr6q5t14l184up55ct6t1ccvb14.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.ryde",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "442176362835-j2meisg3q0agulb9rnab70hqi45uh71i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.ryde",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "442176362835-b8hmog12nctte26pgfrm6a2bunks17fo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwj7MzLKnk50Me_8cghjavM8-O886JXk4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "442176362835-b8hmog12nctte26pgfrm6a2bunks17fo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "442176362835-femfhas4daqfdp5co35hq0tmlvh1vgar.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.customer.ryde"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

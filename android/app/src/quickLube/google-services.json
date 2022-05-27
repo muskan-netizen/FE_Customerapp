@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "331703141098",
+    "project_id": "quicklube-6563e",
+    "storage_bucket": "quicklube-6563e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331703141098:android:8662faf8d0ba45efad0d93",
+        "android_client_info": {
+          "package_name": "com.quickLube"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "331703141098-i5p36q3mo4jus4e4uesnholbveq34kmr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quickLube",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "331703141098-im3hnv1hpgv9tabtklrrdlsan3dj9ha1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quickLube",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "331703141098-k60s7uhkjr1b9ib94u2moc8t9jm1hv23.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quickLube",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "331703141098-r873mdoo672515frhmp9oana8vn7lt37.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArQRYnoxraE9nsk5R6AtiINMcm9kGGL-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "331703141098-r873mdoo672515frhmp9oana8vn7lt37.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "331703141098-03gp7mrmdf7eev8lmuh2fir8shgk8vd4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.quickLube"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

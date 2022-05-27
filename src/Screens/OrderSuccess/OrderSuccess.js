@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {Platform} from 'react-native';
-import {Image, Text, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import React, { useState } from 'react';
+import { Platform } from 'react-native';
+import { Image, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 import ButtonComponent from '../../Components/ButtonComponent';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -16,25 +16,25 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import stylesFunc from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../styles/theme';
 
-export default function OrderSuccess({navigation, route}) {
+export default function OrderSuccess({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state.appTheme);
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily});
+  const styles = stylesFunc({ fontFamily });
   const paramData = route?.params?.data;
   console.log(paramData, 'paramData');
   const [state, setState] = useState({});
-  const {} = state;
+  const { } = state;
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   // const {themeColors, themeLayouts} = currentTheme;
 
   const viewOrderDetail = () => {
@@ -52,13 +52,13 @@ export default function OrderSuccess({navigation, route}) {
       <KeyboardAwareScrollView
         alwaysBounceVertical={false}
         showsVerticalScrollIndicator={false}
-        style={{marginHorizontal: moderateScaleVertical(20)}}>
+        style={{ marginHorizontal: moderateScaleVertical(20) }}>
         <TouchableOpacity
           onPress={() => {
             navigation.goBack();
           }}>
           <Image
-            style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
+            style={isDarkMode && { tintColor: MyDarkTheme.colors.text }}
             source={imagePath.cross}
           />
         </TouchableOpacity>
@@ -74,18 +74,23 @@ export default function OrderSuccess({navigation, route}) {
           <Text
             style={
               isDarkMode
-                ? [styles.requestSubmitText, {color: MyDarkTheme.colors.text}]
+                ? [styles.requestSubmitText, { color: MyDarkTheme.colors.text }]
                 : styles.requestSubmitText
             }>
-            {strings.YOUR_ORDER_HAS_BEEN_SUBMITTED}
+            {strings.YOUR_ORDER_HAS_BEEN_SUBMITTED} {''}
+            {/* <Text style={
+              isDarkMode
+                ? [styles.thanksForyourPurchase, { color: MyDarkTheme.colors.text }]
+                : styles.thanksForyourPurchase
+            } >{ strings.THANKS_FOR_YOUR_PURCHASE}</Text> */}
           </Text>
           <Text
             style={
               isDarkMode
-                ? [styles.successfully, {color: MyDarkTheme.colors.text}]
+                ? [styles.successfully, { color: MyDarkTheme.colors.text }]
                 : styles.successfully
             }>
-            {strings.SUCCESSFULLY}
+            {strings.THANKS_FOR_YOUR_PURCHASE}
           </Text>
         </View>
         <View
@@ -96,14 +101,13 @@ export default function OrderSuccess({navigation, route}) {
           <Text
             style={
               isDarkMode
-                ? [styles.yourAWBText, {color: MyDarkTheme.colors.text}]
+                ? [styles.yourAWBText, { color: MyDarkTheme.colors.text }]
                 : styles.yourAWBText
             }>
-            {`${strings.YOUR_ORDER_NUMBER} ${
-              paramData && paramData?.orderDetail
+            {`${strings.YOUR_ORDER_NUMBER} ${paramData && paramData?.orderDetail
                 ? paramData?.orderDetail?.order_number
                 : ''
-            }`}
+              }`}
           </Text>
         </View>
       </KeyboardAwareScrollView>
@@ -115,7 +119,7 @@ export default function OrderSuccess({navigation, route}) {
         <ButtonComponent
           btnText={strings.VIEW_DETAIL}
           onPress={viewOrderDetail}
-          textStyle={{color: themeColors.secondary_color}}
+          textStyle={{ color: themeColors.secondary_color }}
           borderRadius={moderateScale(13)}
           containerStyle={{
             backgroundColor: themeColors.primary_color,
