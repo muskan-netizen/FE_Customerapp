@@ -1,9 +1,9 @@
-#include "Pods/Target Support Files/Pods-available_pods-Kartandkarry/Pods-available_pods-Kartandkarry.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-BusTaMove/Pods-available_pods-BusTaMove.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1626290155
 PROJECT_BUNDLE_ID = com.bustamove
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 1
+PROJECT_BUILD_NUMBER = 2
 PROJECT_APP_NAME = BusTaMove
 PROJECT_GOOGLE_CLIENT_ID = 1056329031809-9l73a8th1gbsui6vnr9g89e6thlut27k.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.1056329031809-9l73a8th1gbsui6vnr9g89e6thlut27k
