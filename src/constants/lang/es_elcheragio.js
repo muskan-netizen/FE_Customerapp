@@ -942,4 +942,5 @@ export default {
   ORDER_CANCELLED: 'Orden cancelada',
   SPECIFIC_INSTRUCTIONS: 'Specific Instructions',
   THANKS_FOR_YOUR_PURCHASE: 'Thanks for your purchase.',
+  BOOK_A_TABLE:'Book a Table',
 };

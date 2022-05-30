@@ -949,4 +949,5 @@ export default {
   SELECT_VENDOR: 'Select a vendor',
   ORDERS: 'Orders',
   RECENTORDERS: 'Recent Orders',
+  BOOK_A_TABLE:'Book a Table',
 };

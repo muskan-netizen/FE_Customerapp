@@ -154,6 +154,7 @@ function Cart({navigation, route}) {
   const [kycTxtInpts, setKycTxtInpts] = useState([]);
   const [kycImages, setKycImages] = useState([]);
   const [kycPdfs, setKycPdfs] = useState([]);
+  const [table, setTable] = useState('Select Table')
   const [laundrySelectedPickupDate, setLaundrySelectedPickupDate] =
     useState(null);
   const [laundrySelectedPickupSlot, setLaundrySelectedPickupSlot] =
@@ -251,6 +252,7 @@ function Cart({navigation, route}) {
   const {dineInType, appMainData, location} = useSelector(
     (state) => state?.home,
   );
+  {console.log({dineInType, appMainData, location}, "checkk>>>")}
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -454,6 +456,7 @@ function Cart({navigation, route}) {
         });
         setScheduleType(res?.data?.schedule_type);
         if (res && res.data) {
+          {console.log(res.data, "responceeee")}
           if (
             !!res.data.vendor_details.vendor_tables &&
             res.data.vendor_details.vendor_tables.length > 0
@@ -481,6 +484,7 @@ function Cart({navigation, route}) {
                   seating_number: item.seating_number,
                   vendor_id: res.data.vendor_details.vendor_address.id,
                 }),
+              
               setTableData(tableData),
             );
             const data = {
@@ -2361,6 +2365,7 @@ function Cart({navigation, route}) {
 
   const _renderItem = ({ item, index }) => {
     console.log(item, 'item>>><>>>');
+    
     return (
       <View>
         {index === 0 && (
@@ -2369,6 +2374,9 @@ function Cart({navigation, route}) {
               userData?.auth_token &&
               !!cartData?.vendor_details?.vendor_tables &&
               cartData?.vendor_details?.vendor_tables.length > 0 && (
+                
+                <View style={{marginTop:moderateScaleVertical(15)}}>
+                <Text style={{marginLeft:moderateScale(22), marginBottom: moderateScale(-8), fontWeight:'bold'}}>{strings.BOOK_A_TABLE}</Text>
                 <DropDownPicker
                   items={tableData}
                   onOpen={() => updateState({ isTableDropDown: true })}
@@ -2405,6 +2413,7 @@ function Cart({navigation, route}) {
                   }}
                   onChangeItem={(item) => _onTableSelection(item)}
                 />
+                </View>
               )}
           </View>
         )}
@@ -4859,6 +4868,7 @@ function Cart({navigation, route}) {
         .then((res) => {
           removeItem('deepLinkUrl');
           setItem('selectedTable', item?.label);
+          setTable(item?.label)
         })
         .catch(errorMethod);
       return;

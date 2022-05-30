@@ -415,7 +415,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       // zIndex: 5000,
     },
     dropDownContainerStyle: {
-      height: 20,
+      height: 50,
       marginVertical: moderateScaleVertical(10),
       // zIndex: 10,
     },

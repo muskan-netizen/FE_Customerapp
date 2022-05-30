@@ -916,5 +916,6 @@ export default {
     LIFETIME: 'Toda la vida',
     MENU: 'Menú',
     SPECIFIC_INSTRUCTIONS:'Specific Instructions',
+    BOOK_A_TABLE:'Book a Table',
   };
   
