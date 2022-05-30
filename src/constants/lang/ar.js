@@ -908,4 +908,6 @@ export default {
   ORDER_CANCELLED: 'Order Cancelled',
   SPECIFIC_INSTRUCTIONS:'Specific Instructions',
   THANKS_FOR_YOUR_PURCHASE:'Thanks for your purchase.',
+  NOPRODUCTFOUND:"No Product Found"
+  
 };

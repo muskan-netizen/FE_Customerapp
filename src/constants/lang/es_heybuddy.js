@@ -916,5 +916,6 @@ export default {
     LIFETIME: 'Toda la vida',
     MENU: 'Menú',
     SPECIFIC_INSTRUCTIONS:'Specific Instructions',
+    NOPRODUCTFOUND:"No Product Found"
   };
   

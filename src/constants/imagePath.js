@@ -507,4 +507,6 @@ export default {
   icMinus2: require('../assets/images/ic_minus.png'),
 
   //Video
+  masa: require('../assets/masa.mp4'),
+  ipd: require('../assets/ipd.mp4')
 };

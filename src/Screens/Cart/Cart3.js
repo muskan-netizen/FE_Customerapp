@@ -1265,8 +1265,8 @@ function Cart({navigation, route}) {
         data['schedule_dt'] = formatDate;
       } else {
         data['schedule_dt'] =
-          dateType != 'now' && scheduleDate
-            ? new Date(scheduleDate).toISOString()
+         ( dateType != 'now' && scheduleDate)
+            ? new Date(scheduleDate)
             : null;
       }
       data['specific_instructions'] = instruction;

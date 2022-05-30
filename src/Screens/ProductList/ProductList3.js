@@ -3280,7 +3280,7 @@ export default function Products({route, navigation}) {
             )}
             renderSectionHeader={renderSectionHeader}
             ListEmptyComponent={
-              <NoDataFound isLoading={isLoading} containerStyle={{}} />
+              <NoDataFound isLoading={isLoading} containerStyle={{}} text={strings.NOPRODUCTFOUND}/>
             }
             initialNumToRender={1000}
             onScrollToIndexFailed={(val) => console.log('indexed failed')}
@@ -3290,7 +3290,7 @@ export default function Products({route, navigation}) {
             onScroll={onScroll}
             disableScrollViewPanResponder
             showsVerticalScrollIndicator={false}
-            data={[]}
+            data={productListData}
             renderItem={renderProduct}
             ListHeaderComponent={listHeaderComponent2()}
             keyExtractor={(item, index) => String(index)}
@@ -3318,7 +3318,7 @@ export default function Products({route, navigation}) {
               <View style={{height: moderateScale(60)}} />
             )}
             ListEmptyComponent={
-              <NoDataFound isLoading={isLoading} containerStyle={{}} />
+              <NoDataFound isLoading={isLoading} containerStyle={{}} text={strings.NOPRODUCTFOUND}/>
             }
           />
         )}
