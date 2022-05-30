@@ -1539,7 +1539,7 @@ android {
             }
             donepacked{
                 dimension "appType"
-                versionCode 7
+                versionCode 9
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
