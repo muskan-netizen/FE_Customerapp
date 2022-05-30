@@ -999,9 +999,9 @@ end
  end
 
 #Vendoor Target
-# target 'Vendoor' do
+target 'Vendoor' do
   
-# end
+end
 
 #FarmerSouq Target
 target 'FarmerSouq' do
