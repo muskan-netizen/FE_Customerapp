@@ -20,7 +20,7 @@ import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {
   getImageUrl,
@@ -836,7 +836,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}>
             {orderStatus == 'unassigned'
-              ? strings.YOUR_RIDE_WILL_START_SOON
+              ? appIds.jiffex == getBundleId()?strings.YOUR_ORDER_WILL_START_SOON:strings.YOUR_RIDE_WILL_START_SOON
               : strings.INVOICE}
           </Text>
         </View>

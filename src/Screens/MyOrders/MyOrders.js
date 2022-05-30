@@ -70,7 +70,7 @@ export default function MyOrders(props) {
             title:
               appIds.mml == getBundleId()
                 ? strings.ACTIVEDELEIVERIES
-                : strings.ACTIVERIDES,
+                :  appIds.jiffex == getBundleId()? strings.ACTIVE_ORDERS: strings.ACTIVERIDES,
             isActive: true,
           }
         : {title: strings.ACTIVE_ORDERS, isActive: true},
@@ -79,7 +79,7 @@ export default function MyOrders(props) {
             title:
               appIds.mml == getBundleId()
                 ? strings.PASTDELEIVERIES
-                : strings.PASTRIDES,
+                :  appIds.jiffex == getBundleId()? strings.PAST_ORDERS:strings.PASTRIDES,
             isActive: false,
           }
         : {title: strings.PAST_ORDERS, isActive: false},
@@ -602,7 +602,7 @@ export default function MyOrders(props) {
           businessType === 4
             ? appIds.mml == getBundleId()
               ? strings.MYDELIERIES
-              : strings.MYRIDES
+              : appIds.jiffex == getBundleId()? strings.MY_ORDERS:strings.MYRIDES
             : strings.MY_ORDERS
         }
         headerStyle={
@@ -625,7 +625,6 @@ export default function MyOrders(props) {
         onPress={(tabData) => changeTab(tabData)}
         customTextContainerStyle={{width: width / 2}}
       />
-
       <FlatList
         // ref={_scrollRef}
         data={orders}
@@ -675,7 +674,9 @@ export default function MyOrders(props) {
                   businessType === 4
                     ? appIds.mml == getBundleId()
                       ? strings.NODELIVERIESFOUND
-                      : strings.NO_ORDERS_FOUND
+                      :appIds.jiffex == getBundleId()?
+                        strings.NO_ORDERS_FOUND
+                      : strings.NO_RIDE_FOUND
                     : strings.NODATAFOUND
                 }
               />
