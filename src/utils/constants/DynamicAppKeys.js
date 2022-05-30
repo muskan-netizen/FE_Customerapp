@@ -329,10 +329,15 @@ const shortCodes = {
   amazingTaxi:'32e266',
   jazzyBug:'3441ec',
   myfarma:'612a45',
-  valley:'686b6c',
+  valley:'b1add5',
   kartAndKarry:'4eaab9',
   quickLube:'4ab432',
   keystoneDelivery:'87ad74',
+  blueBundles:'b245dd',
+  busTaMove:'9d065e',
+  atasktt: '9bbd4e',
+  lunchboxSpecials: 'cfa64c',
+
 };
 
 
@@ -1652,7 +1657,7 @@ const appIds = {
     android: 'com.valley',
   }),
   kartAndKarry: Platform.select({
-    ios: 'com.kartAndKarry',
+    ios: 'com.kartandkarry',
     android: 'com.kartAndKarry',
   }),
   quickLube: Platform.select({
@@ -1662,6 +1667,22 @@ const appIds = {
   keystoneDelivery: Platform.select({
     ios: 'com.keystoneDelivery',
     android: 'com.keystoneDelivery',
+  }),
+  blueBundles: Platform.select({
+    ios: 'com.bluebundles',
+    android: 'com.bluebundles',
+  }),
+  busTaMove: Platform.select({
+    ios: 'com.bustamove',
+    android: 'com.bustamove',
+  }),
+  atasktt: Platform.select({
+    ios: 'com.atasktt',
+    android: 'com.atasktt',
+  }),
+  lunchboxSpecials: Platform.select({
+    ios: 'com.lunchboxspecials',
+    android: 'com.lunchboxspecials',
   }),
 };
 

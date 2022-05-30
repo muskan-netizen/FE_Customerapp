@@ -2113,7 +2113,30 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-
+          case appIds.blueBundles:
+            updateState({
+              shortCode: shortCodes.blueBundles,
+              isShortcodePrefilled: true,
+            });
+            break;
+            case appIds.busTaMove:
+              updateState({
+                shortCode: shortCodes.busTaMove,
+                isShortcodePrefilled: true,
+              });
+              break;
+              case appIds.atasktt:
+                updateState({
+                  shortCode: shortCodes.atasktt,
+                  isShortcodePrefilled: true,
+                });
+                break;
+                case appIds.lunchboxSpecials:
+                  updateState({
+                    shortCode: shortCodes.lunchboxSpecials,
+                    isShortcodePrefilled: true,
+                  });
+                  break;
       }
     })();
   }, []);

@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "ic_splash.png",
+      "filename" : "ic_splash@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },

@@ -1653,6 +1653,43 @@ end
   
 # end
 
+# Valley Target
+target 'Valley' do
+  
+end
+
+# QuickLube Target
+target 'QuickLube' do
+  
+end
+
+# KeystoneDelivery Target
+target 'KeystoneDelivery' do
+  
+end
+
+# Kartandkarry Target
+target 'Kartandkarry' do
+  
+end
+# BlueBundles Target
+target 'BlueBundles' do
+  
+end
+# BusTaMove Target
+target 'BusTaMove' do
+  
+end
+# Atasktt Target
+target 'Atasktt' do
+  
+end
+
+# LunchboxSpecials Target
+target 'LunchboxSpecials' do
+  
+end
+
 
 
 
