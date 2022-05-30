@@ -739,6 +739,7 @@
     "react-native-dashed-line": "^1.1.0",
     "react-native-date-picker": "^4.1.0",
     "react-native-daterange-picker": "^1.5.1",
+    "react-native-device-country": "^1.0.2",
     "react-native-device-info": "^5.6.2",
     "react-native-document-picker": "^6.0.4",
     "react-native-dropdown-picker": "^4.0.2",

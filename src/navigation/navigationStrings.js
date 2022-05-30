@@ -134,5 +134,7 @@ export default {
   TOYYIAPAY:'toyyibPay',
   MPAISA:"Mpaisa",
   WINDCAVE:'WindCave',
-  PAYPHONE:'PayPhone'
+  PAYPHONE:'PayPhone',
+  STRIPEOXXO:'StripeOXXO',
+  VIVAWALLET:"Vivawallet"
 };
