@@ -1550,7 +1550,7 @@ android {
             }
             donepacked{
                 dimension "appType"
-                versionCode 7
+                versionCode 9
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -5409,6 +5409,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.lunchboxspecials'
             resValue "string", "app_name", "Lunchbox Specials"
+            resValue "string", "host_name", ""
+            }
+            sorDelivery{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.sordelivery'
+            resValue "string", "app_name", "Sor Delivery"
             resValue "string", "host_name", ""
             }
     }

@@ -130,7 +130,8 @@ const OffersCard2 = ({data = {}, onPress = () => {}}) => {
           }}>
           {strings.EXPIRES}
           {'  '}
-          {moment(data?.expiry_date).format('MMMM Do YYYY, h:mm:ss a')} 
+          {/* {data?.expiry_date} */}
+          {moment(data?.expiry_date).format('MMMM Do YYYY, h:mm a')} 
           {/* {data?.expiry_date} */}
         </Text>
         {/* <Text

@@ -1569,7 +1569,7 @@ export default function Products({route, navigation}) {
         <ProductCard3
           data={item}
           index={index}
-          onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+          onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, {item})}
           onAddtoWishlist={() => _onAddtoWishlist(item)}
           addToCart={() => addSingleItem(item, null, index)}
           onIncrement={() => checkIsCustomize(item, null, index, 1)}
@@ -3280,7 +3280,7 @@ export default function Products({route, navigation}) {
             )}
             renderSectionHeader={renderSectionHeader}
             ListEmptyComponent={
-              <NoDataFound isLoading={isLoading} containerStyle={{}} />
+              <NoDataFound isLoading={isLoading} containerStyle={{}} text={strings.NOPRODUCTFOUND}/>
             }
             initialNumToRender={1000}
             onScrollToIndexFailed={(val) => console.log('indexed failed')}
@@ -3318,7 +3318,7 @@ export default function Products({route, navigation}) {
               <View style={{height: moderateScale(60)}} />
             )}
             ListEmptyComponent={
-              <NoDataFound isLoading={isLoading} containerStyle={{}} />
+              <NoDataFound isLoading={isLoading} containerStyle={{}} text={strings.NOPRODUCTFOUND}/>
             }
           />
         )}

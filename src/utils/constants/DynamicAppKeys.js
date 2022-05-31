@@ -337,7 +337,7 @@ const shortCodes = {
   busTaMove:'9d065e',
   atasktt: '9bbd4e',
   lunchboxSpecials: 'cfa64c',
-
+  sorDelivery: '732007'
 };
 
 
@@ -1683,6 +1683,10 @@ const appIds = {
   lunchboxSpecials: Platform.select({
     ios: 'com.lunchboxspecials',
     android: 'com.lunchboxspecials',
+  }),
+  sorDelivery: Platform.select({
+    ios: 'com.sordelivery',
+    android: 'com.sordelivery',
   }),
 };
 
