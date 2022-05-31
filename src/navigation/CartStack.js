@@ -38,7 +38,9 @@ import {
   ToyyibPay,
   Mpaisa,
   WindCave,
-  PayPhone
+  PayPhone,
+  StripeOXXO,
+  VivaWallet
 } from '../Screens';
 import MyProfile from '../Screens/MyProfile/MyProfile2';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
@@ -230,6 +232,17 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PAYPHONE}
         component={PayPhone}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.STRIPEOXXO}
+        component={StripeOXXO}
+        options={{ headerShown: false }}
+      />
+       <Stack.Screen
+        name={navigationStrings.VIVAWALLET}
+        component={VivaWallet}
         options={{ headerShown: false }}
       />
 
