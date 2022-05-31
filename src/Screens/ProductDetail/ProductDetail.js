@@ -75,13 +75,13 @@ export default function ProductDetail({route, navigation}) {
   const styles = stylesFunc({themeColors, fontFamily});
   const commonStyles = commonStylesFunc({fontFamily});
   const {data} = route.params;
-
+ console.log(data,"dataaaaaa")
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     isLoading: true,
     isLoadingB: false,
     isLoadingC: false,
-    productId: data?.id,
+    productId: data?.item?.id || data?.id,
     productDetailData: null,
     productPriceData: null,
     variantSet: [],
@@ -200,7 +200,7 @@ export default function ProductDetail({route, navigation}) {
   };
 
   const getProductDetail = () => {
-    console.log('api hit getProductDetail');
+    console.log('api hit getProductDetail',state.productId);
     actions
       .getProductDetailByProductId(
         `/${state.productId}`,
@@ -257,7 +257,7 @@ export default function ProductDetail({route, navigation}) {
           updateState({variantSet: res.data.products.variant_set});
         }
       })
-      .catch(errorMethod);
+      .catch(error=>console.log(error,"error"));
   };
 
   //Get Product detail based on varint selection

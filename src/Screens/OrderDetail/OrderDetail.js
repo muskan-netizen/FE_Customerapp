@@ -970,6 +970,7 @@ export default function OrderDetail({navigation, route}) {
   const _renderItem = ({item, index}) => {
     return (
       <View
+      key={index}
         style={{
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.background
@@ -978,7 +979,13 @@ export default function OrderDetail({navigation, route}) {
         }}>
         {/* show ETA Time */}
         <View style={{paddingHorizontal: moderateScale(10)}}>
-          <UserDetail data={item} type={strings.VENDER} />
+          <UserDetail data={item} type={strings.VENDER}  containerStyle={{ backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.background
+          : colors.white,}}
+          textStyle={{ color: isDarkMode
+            ? MyDarkTheme.colors.text
+            : colors.blackOpacity86,}}
+          />
 
           {item?.products.length
             ? item?.products.map((i, inx) => {
@@ -2805,7 +2812,7 @@ export default function OrderDetail({navigation, route}) {
                 }}
                 apikey={appData.profile?.preferences?.map_key}
                 strokeWidth={3}
-                strokeColor={themeColors.primary_color}
+                strokeColor={themeColors?.primary_color}
                 optimizeWaypoints={true}
                 onStart={(params) => {}}
                 precision={'high'}
@@ -2910,6 +2917,8 @@ export default function OrderDetail({navigation, route}) {
                 width: moderateScale(100),
               }}
               colorFilters={[
+                
+                
                 {
                   keypath: 'right sand',
                   color: themeColors.primary_color,
@@ -3192,7 +3201,7 @@ export default function OrderDetail({navigation, route}) {
           ListHeaderComponent={cartItems.length ? getHeader() : null}
           ListFooterComponent={cartItems.length ? getFooter() : null}
           showsVerticalScrollIndicator={false}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item, index) => {return index.toString()}}
           renderItem={_renderItem}
           ListEmptyComponent={<ListEmptyCart isLoading={isLoading} />}
           style={{flex: 1}}

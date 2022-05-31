@@ -949,4 +949,5 @@ export default {
   SELECT_VENDOR: 'Select a vendor',
   ORDERS: 'Orders',
   RECENTORDERS: 'Recent Orders',
+  NOPRODUCTFOUND:"No Product Found"
 };

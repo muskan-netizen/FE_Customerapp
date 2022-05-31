@@ -989,19 +989,19 @@ end
 # end
 
 #GasGiant Target
-# target 'GasGiant' do
+target 'GasGiant' do
   
-# end
+end
 
 # #Releezer Target
  target 'Releezer' do
   
  end
 
-# #Vendoor Target
-# target 'Vendoor' do
+#Vendoor Target
+target 'Vendoor' do
   
-# end
+end
 
 #FarmerSouq Target
 target 'FarmerSouq' do
@@ -1194,7 +1194,7 @@ target 'BoltDelivery' do
   
 end
 
-# # GamaDelivery Target
+# GamaDelivery Target
 # target 'GamaDelivery' do
   
 # end
@@ -1643,15 +1643,15 @@ target 'AmazingTaxi' do
   
 end
 
-# JazzyBug Target
-target 'JazzyBug' do
+# # JazzyBug Target
+# target 'JazzyBug' do
   
-end
+# end
 
-# Myfarma Target
-target 'Myfarma' do
+# # Myfarma Target
+# target 'Myfarma' do
   
-end
+# end
 
 # Valley Target
 target 'Valley' do
@@ -1680,9 +1680,20 @@ end
 target 'BusTaMove' do
   
 end
+# Atasktt Target
+target 'Atasktt' do
+  
+end
 
+# LunchboxSpecials Target
+target 'LunchboxSpecials' do
+  
+end
 
-
+# SorDelivery Target
+target 'SorDelivery' do
+  
+end
 
 
 
