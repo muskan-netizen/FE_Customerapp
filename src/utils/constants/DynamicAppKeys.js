@@ -918,7 +918,7 @@ const appIds = {
     android: 'com.click2deliver',
   }),
   trucktirenow: Platform.select({
-    ios: 'com.trucktirenow',
+    ios: 'com.trucktirenow.customer',
     android: 'com.trucktirenow',
   }),
   yeboy: Platform.select({

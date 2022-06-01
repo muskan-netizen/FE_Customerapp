@@ -155,6 +155,8 @@ function Cart({navigation, route}) {
   const [kycImages, setKycImages] = useState([]);
   const [kycPdfs, setKycPdfs] = useState([]);
   const [table, setTable] = useState('Select Table')
+  const [tableCheck, setTableCheck] = useState({})
+
   const [laundrySelectedPickupDate, setLaundrySelectedPickupDate] =
     useState(null);
   const [laundrySelectedPickupSlot, setLaundrySelectedPickupSlot] =
@@ -252,7 +254,6 @@ function Cart({navigation, route}) {
   const {dineInType, appMainData, location} = useSelector(
     (state) => state?.home,
   );
-  {console.log({dineInType, appMainData, location}, "checkk>>>")}
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -455,8 +456,11 @@ function Cart({navigation, route}) {
           isLoadingB: false,
         });
         setScheduleType(res?.data?.schedule_type);
+
         if (res && res.data) {
-          {console.log(res.data, "responceeee")}
+          setTableCheck(res.data)
+          console.log(res.data, "responceeee")
+          
           if (
             !!res.data.vendor_details.vendor_tables &&
             res.data.vendor_details.vendor_tables.length > 0
@@ -1362,7 +1366,7 @@ function Cart({navigation, route}) {
   //Clear cart
   const placeOrder = () => {
     isFAQsSubmitted = true;
-
+    
     if (!!userData?.auth_token) {
       if (
         !!cartData?.closed_store_order_scheduled &&
@@ -1380,6 +1384,14 @@ function Cart({navigation, route}) {
         showInfo(strings.SCHEDULE_DATE_REQUIRED);
         return;
       }
+      
+      if (!!tableData.length > 0 ) {
+        if (table == 'Select Table') {
+          showError(strings.PLEASE_SELECT_A_TABLE);
+          return
+        } 
+      }
+    
       if (
         Number(cartData?.total_payable_amount) +
           (selectedTipAmount != null && selectedTipAmount != ''
@@ -1421,7 +1433,7 @@ function Cart({navigation, route}) {
       // } else {
       //   d2 = new Date(sheduledorderdate);
       // }
-
+     
       console.log('shceduleORderdata', sheduledorderdate);
       if (!selectedAddressData) {
         // showError(strings.PLEASE_SELECT_ADDRESS);
@@ -2362,10 +2374,9 @@ function Cart({navigation, route}) {
         .catch(errorMethod);
     }
   };
-
   const _renderItem = ({ item, index }) => {
     console.log(item, 'item>>><>>>');
-    
+    console.log(tableData,"tabledataaaa")
     return (
       <View>
         {index === 0 && (
@@ -2381,13 +2392,14 @@ function Cart({navigation, route}) {
                   items={tableData}
                   onOpen={() => updateState({ isTableDropDown: true })}
                   onClose={() => updateState({ isTableDropDown: false })}
-                  defaultValue={
-                    deepLinkUrl
-                      ? deepLinkUrl == 1
-                        ? tableData[0]?.label
-                        : tableData[1]?.label
-                      : tableData[0]?.label || ''
-                  }
+                  // defaultValue={
+                  //   deepLinkUrl
+                  //     ? deepLinkUrl == 1
+                  //       ? tableData[0]?.label
+                  //       : tableData[1]?.label
+                  //     : tableData[0]?.label || ''
+                  // }
+                  defaultValue={table}
                   containerStyle={styles.dropDownContainerStyle}
                   style={{
                     marginHorizontal: moderateScale(20),
@@ -4842,6 +4854,7 @@ function Cart({navigation, route}) {
       console.log('useEffect 5');
       getItem('deepLinkUrl')
         .then((res) => {
+          // {console.log(res ,"tableRessss")} 
           if (res) {
             let table_number = getParameterByName('table', res);
             setDeepLinkUrl(table_number);
@@ -4857,6 +4870,7 @@ function Cart({navigation, route}) {
       table: item?.id,
     };
     _vendorTableCart(data, item);
+    setTable(item?.label)
   };
 
   const _vendorTableCart = (data, item) => {
@@ -4868,14 +4882,14 @@ function Cart({navigation, route}) {
         .then((res) => {
           removeItem('deepLinkUrl');
           setItem('selectedTable', item?.label);
-          setTable(item?.label)
+          // setTable(item?.label)
         })
         .catch(errorMethod);
       return;
     }
     return;
   };
-
+{console.log(table, "tableresss")}
   const onPressRecommendedVendors = (item) => {
     if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category

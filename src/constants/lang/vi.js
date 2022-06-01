@@ -923,4 +923,5 @@ export default {
   SPECIFIC_INSTRUCTIONS:'Specific Instructions',
   THANKS_FOR_YOUR_PURCHASE:'Thanks for your purchase.',
   BOOK_A_TABLE:'Book a Table',
+  PLEASE_SELECT_A_TABLE:'Please Select a Table',
 };

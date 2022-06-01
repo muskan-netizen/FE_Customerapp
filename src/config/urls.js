@@ -17,7 +17,7 @@
 // export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
 // export const API_BASE_URL = 'https://dbairro.com/api/v1';
 // export const API_BASE_URL = 'https://beachhopdelivery.com/api/v1';
-// export const API_BASE_URL = 'https://grub.royoorders.com/api/v1';
+export const API_BASE_URL = 'https://grub.royoorders.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
 // export const API_BASE_URL = 'https://d8f2-103-72-170-243.ngrok.io/api/v1';
 
@@ -36,7 +36,8 @@
 // export const API_BASE_URL = 'https://gdotdelivery.com/api/v1';
 // export const API_BASE_URL = 'https://cabio.rostaging.com/api/v1'; 
 // export const API_BASE_URL = 'https://glamsouq.com/api/v1'; 
-export const API_BASE_URL = 'https://getfix.com.my/api/v1'; 
+// export const API_BASE_URL = 'https://getfix.com.my/api/v1'; 
+// export const API_BASE_URL = 'https://order.swiftandvalu.com/api/v1';  
 
 
 

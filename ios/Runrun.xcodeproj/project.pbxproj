@@ -693,6 +693,7 @@
 		104E1B15283B70C200F6061D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 104E1B14283B70C200F6061D /* Images.xcassets */; };
 		104E1B17283B867400F6061D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 104E1B16283B867200F6061D /* GoogleService-Info.plist */; };
 		104E1B19283B878B00F6061D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 104E1B18283B878900F6061D /* GoogleService-Info.plist */; };
+		1058C01D2844FAEE0074B0DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1058C01C2844FAEC0074B0DC /* GoogleService-Info.plist */; };
 		105E85D928321DD700243FA4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		105E85DA28321DD700243FA4 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		105E85DB28321DD700243FA4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -6055,7 +6056,6 @@
 		848A1A7527425C8F003BD140 /* TruckTireNow(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 848A1A7427425C8F003BD140 /* TruckTireNow(Development).xcconfig */; };
 		848A1B0D27425CAA003BD140 /* TruckTireNow(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 848A1B0C27425CAA003BD140 /* TruckTireNow(Production).xcconfig */; };
 		848A1B0F27425CC7003BD140 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848A1B0E27425CC7003BD140 /* Images.xcassets */; };
-		848A1BA727425D2D003BD140 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848A1BA627425D2C003BD140 /* GoogleService-Info.plist */; };
 		848AB72127FD534C00E8CF04 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		848AB72227FD534C00E8CF04 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848AB72327FD534C00E8CF04 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -10060,6 +10060,7 @@
 		104E1B18283B878900F6061D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		104E1B1A283B8A0C00F6061D /* JazzyBug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JazzyBug.entitlements; sourceTree = "<group>"; };
 		104E1B1B283B8A1100F6061D /* Myfarma.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Myfarma.entitlements; sourceTree = "<group>"; };
+		1058C01C2844FAEC0074B0DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		105E860028321DD700243FA4 /* ChowHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChowHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		105E862D283225D700243FA4 /* GinDeliver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GinDeliver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		105E865A283225E000243FA4 /* OrderFirst.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrderFirst.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -11620,7 +11621,6 @@
 		848A1A7427425C8F003BD140 /* TruckTireNow(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "TruckTireNow(Development).xcconfig"; sourceTree = "<group>"; };
 		848A1B0C27425CAA003BD140 /* TruckTireNow(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "TruckTireNow(Production).xcconfig"; sourceTree = "<group>"; };
 		848A1B0E27425CC7003BD140 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		848A1BA627425D2C003BD140 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		848A1D6A27425EC6003BD140 /* TruckTireNow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TruckTireNow.entitlements; sourceTree = "<group>"; };
 		848AB74D27FD534C00E8CF04 /* TMGShops.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TMGShops.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		848ABBB927FD54A500E8CF04 /* TMGShops(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "TMGShops(Development).xcconfig"; sourceTree = "<group>"; };
@@ -19852,7 +19852,7 @@
 		848A194727425C70003BD140 /* TruckTireNow */ = {
 			isa = PBXGroup;
 			children = (
-				848A1BA627425D2C003BD140 /* GoogleService-Info.plist */,
+				1058C01C2844FAEC0074B0DC /* GoogleService-Info.plist */,
 				848A1A7427425C8F003BD140 /* TruckTireNow(Development).xcconfig */,
 				848A1B0C27425CAA003BD140 /* TruckTireNow(Production).xcconfig */,
 				848A1B0E27425CC7003BD140 /* Images.xcassets */,
@@ -29675,7 +29675,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					848A174C27425B62003BD140 = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = BLURHLKG4J;
 						ProvisioningStyle = Automatic;
 					};
 					848AB71D27FD534C00E8CF04 = {
@@ -37336,7 +37336,7 @@
 				848A176A27425B62003BD140 /* SFProText-SemiBold.ttf in Resources */,
 				848A176B27425B62003BD140 /* SFProText-Medium.ttf in Resources */,
 				848A176D27425B62003BD140 /* notification.wav in Resources */,
-				848A1BA727425D2D003BD140 /* GoogleService-Info.plist in Resources */,
+				1058C01D2844FAEE0074B0DC /* GoogleService-Info.plist in Resources */,
 				848A176F27425B62003BD140 /* Plists in Resources */,
 				848A177027425B62003BD140 /* Futura-Normal.ttf in Resources */,
 				848A177127425B62003BD140 /* Eina02-Bold.ttf in Resources */,
@@ -124129,7 +124129,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = BLURHLKG4J;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -124163,7 +124163,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = BLURHLKG4J;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -124178,7 +124178,7 @@
 				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = TruckTireNow;
+				PROVISIONING_PROFILE_SPECIFIER = Trucktirenow;
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
