@@ -946,6 +946,8 @@ export default {
   ENTER_FRIEND_DETAILS: "Enter your Friend's details",
   BOOK_FOR_ME: 'Book For Me',
   BOOK_FOR_FRIEND:'Book For Friend',
-  NOPRODUCTFOUND:"No Product Found"
-
+  NOPRODUCTFOUND:"No Product Found",
+  BOOK_A_TABLE:'Book a Table',
+  PLEASE_SELECT_A_TABLE:'Please Select a Table',
+  SELECT_A_TABLE:'Select a Table',
 };

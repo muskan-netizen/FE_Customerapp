@@ -148,6 +148,9 @@ function Cart({ navigation, route }) {
   const [kycTxtInpts, setKycTxtInpts] = useState([]);
   const [kycImages, setKycImages] = useState([]);
   const [kycPdfs, setKycPdfs] = useState([]);
+  const [table, setTable] = useState('Select Table')
+  const [tableCheck, setTableCheck] = useState({})
+
   const [laundrySelectedPickupDate, setLaundrySelectedPickupDate] =
     useState(null);
   const [laundrySelectedPickupSlot, setLaundrySelectedPickupSlot] =
@@ -448,7 +451,11 @@ function Cart({ navigation, route }) {
           isLoadingB: false,
         });
         setScheduleType(res?.data?.schedule_type);
+
         if (res && res.data) {
+          setTableCheck(res.data)
+          console.log(res.data, "responceeee")
+
           if (
             !!res.data.vendor_details.vendor_tables &&
             res.data.vendor_details.vendor_tables.length > 0
@@ -469,7 +476,6 @@ function Cart({ navigation, route }) {
                 table_number: item.table_number,
                 seating_number: item.seating_number,
                 vendor_id: res.data.vendor_details.vendor_address.id,
-
               }),
               setTableData(tableData),
             );
@@ -1411,6 +1417,14 @@ function Cart({ navigation, route }) {
         showInfo(strings.SCHEDULE_DATE_REQUIRED);
         return;
       }
+
+      if (!!tableData.length > 0) {
+        if (table == 'Select Table') {
+          showError(strings.PLEASE_SELECT_A_TABLE);
+          return
+        }
+      }
+
       if (
         Number(cartData?.total_payable_amount) +
         (selectedTipAmount != null && selectedTipAmount != ''
@@ -2394,9 +2408,9 @@ function Cart({ navigation, route }) {
         .catch(errorMethod);
     }
   };
-
   const _renderItem = ({ item, index }) => {
     console.log(item, 'item>>><>>>');
+    console.log(tableData, "tabledataaaa")
     return (
       <View>
         {index === 0 && (
@@ -2405,42 +2419,53 @@ function Cart({ navigation, route }) {
               userData?.auth_token &&
               !!cartData?.vendor_details?.vendor_tables &&
               cartData?.vendor_details?.vendor_tables.length > 0 && (
-                <DropDownPicker
-                  items={tableData}
-                  onOpen={() => updateState({ isTableDropDown: true })}
-                  onClose={() => updateState({ isTableDropDown: false })}
-                  defaultValue={
-                    deepLinkUrl
-                      ? deepLinkUrl == 1
-                        ? tableData[0]?.label
-                        : tableData[1]?.label
-                      : tableData[0]?.label || ''
-                  }
-                  containerStyle={styles.dropDownContainerStyle}
-                  style={{
-                    marginHorizontal: moderateScale(20),
-                    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-                    backgroundColor: isDarkMode
-                      ? MyDarkTheme.colors.lightDark
-                      : colors.greyColor1,
-                  }}
-                  labelStyle={
-                    isDarkMode
-                      ? { color: MyDarkTheme.colors.text }
-                      : { color: colors.textGrey }
-                  }
-                  itemStyle={{
-                    justifyContent: 'flex-start',
-                    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-                  }}
-                  dropDownStyle={{
-                    ...styles.dropDownStyle,
-                    backgroundColor: isDarkMode
-                      ? MyDarkTheme.colors.lightDark
-                      : colors.greyColor1,
-                  }}
-                  onChangeItem={(item) => _onTableSelection(item)}
-                />
+
+                <View style={{ marginTop: moderateScaleVertical(15) }}>
+                  <Text style={{
+                    ...styles.bookAtable,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  }}>{strings.BOOK_A_TABLE}
+                  </Text>
+                  <DropDownPicker
+                    placeholder={strings.SELECT_A_TABLE}
+                    placeholderStyle={{ color: isDarkMode ? MyDarkTheme.colors.lightDark : colors.textGreyB }}
+                    items={tableData}
+                    onOpen={() => updateState({ isTableDropDown: true })}
+                    onClose={() => updateState({ isTableDropDown: false })}
+                    // defaultValue={
+                    //   deepLinkUrl
+                    //     ? deepLinkUrl == 1
+                    //       ? tableData[0]?.label
+                    //       : tableData[1]?.label
+                    //     : tableData[0]?.label || ''
+                    // }
+                    defaultValue={table}
+                    containerStyle={styles.dropDownContainerStyle}
+                    style={{
+                      marginHorizontal: moderateScale(20),
+                      flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                      backgroundColor: isDarkMode
+                        ? MyDarkTheme.colors.lightDark
+                        : colors.greyColor1,
+                    }}
+                    labelStyle={
+                      isDarkMode
+                        ? { color: MyDarkTheme.colors.text }
+                        : { color: colors.textGrey }
+                    }
+                    itemStyle={{
+                      justifyContent: 'flex-start',
+                      flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                    }}
+                    dropDownStyle={{
+                      ...styles.dropDownStyle,
+                      backgroundColor: isDarkMode
+                        ? MyDarkTheme.colors.lightDark
+                        : colors.greyColor1,
+                    }}
+                    onChangeItem={(item) => _onTableSelection(item)}
+                  />
+                </View>
               )}
           </View>
         )}
@@ -4763,7 +4788,7 @@ function Cart({ navigation, route }) {
   //Add and update the addreess
   const addUpdateLocation = (childData) => {
     // setModalVisible(false);
-    console.log("childDatachildData",childData)
+
     updateState({ isLoading: true });
     actions
       .addAddress(childData, {
@@ -4860,6 +4885,7 @@ function Cart({ navigation, route }) {
       console.log('useEffect 5');
       getItem('deepLinkUrl')
         .then((res) => {
+          // {console.log(res ,"tableRessss")} 
           if (res) {
             let table_number = getParameterByName('table', res);
             setDeepLinkUrl(table_number);
@@ -4875,6 +4901,7 @@ function Cart({ navigation, route }) {
       table: item?.id,
     };
     _vendorTableCart(data, item);
+    setTable(item?.label)
   };
 
   const _vendorTableCart = (data, item) => {
@@ -4886,13 +4913,14 @@ function Cart({ navigation, route }) {
         .then((res) => {
           removeItem('deepLinkUrl');
           setItem('selectedTable', item?.label);
+          // setTable(item?.label)
         })
         .catch(errorMethod);
       return;
     }
     return;
   };
-
+  { console.log(table, "tableresss") }
   const onPressRecommendedVendors = (item) => {
     if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category

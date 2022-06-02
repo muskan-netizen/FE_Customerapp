@@ -1,58 +1,65 @@
 {
   "project_info": {
-    "project_number": "860516399181",
-    "project_id": "beachhop-7a46f",
-    "storage_bucket": "beachhop-7a46f.appspot.com"
+    "project_number": "537255412621",
+    "project_id": "beachhop-306a8",
+    "storage_bucket": "beachhop-306a8.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:860516399181:android:ba2544b2e91f0f47718404",
+        "mobilesdk_app_id": "1:537255412621:android:e30f13bc1a8b8dbde9b3c4",
         "android_client_info": {
-          "package_name": "com.beachhop"
+          "package_name": "com.beachhop.customer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "860516399181-11bidhl7nu12ach8lq41jkv6u8g3ssqi.apps.googleusercontent.com",
+          "client_id": "537255412621-672rbi2fhtbmlqd4lakpec0u2agg5lvj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.beachhop",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "860516399181-d5d9ajtr8c517grj8autm46nhuk1dven.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.beachhop",
+            "package_name": "com.beachhop.customer",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "860516399181-gm0qlr1d7ivfn53oaubabvfuprdv5n4m.apps.googleusercontent.com",
+          "client_id": "537255412621-oqheiq5voqnouqgdln440v0bva5i0i0l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.beachhop",
+            "package_name": "com.beachhop.customer",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "537255412621-qfnbqe4ri6h7oknpqcvv0jacu6di8k8f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beachhop.customer",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "860516399181-p0u8b50ijqb18pujnlgj8li4hbj468j6.apps.googleusercontent.com",
+          "client_id": "537255412621-ab49f998mk2oo261bv4p1j83ccrejkpc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD4vgv49jIxqS-lHMQOW8UvTww1oghWfNk"
+          "current_key": "AIzaSyDSk2ltAGqGeSlL2c_-JXxh8o78Qz0k0Do"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "860516399181-p0u8b50ijqb18pujnlgj8li4hbj468j6.apps.googleusercontent.com",
+              "client_id": "537255412621-ab49f998mk2oo261bv4p1j83ccrejkpc.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "537255412621-hptvtujp7b69rtsil6t3hb5urqp4d7k2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.beachhop.customer"
+              }
             }
           ]
         }

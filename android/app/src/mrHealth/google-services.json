@@ -1,40 +1,64 @@
 {
   "project_info": {
-    "project_number": "180042591829",
-    "project_id": "mrhealth-463eb",
-    "storage_bucket": "mrhealth-463eb.appspot.com"
+    "project_number": "961386007920",
+    "project_id": "mrhealth-27ddb",
+    "storage_bucket": "mrhealth-27ddb.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:180042591829:android:6e8bb67411bd6bd1c6eedc",
+        "mobilesdk_app_id": "1:961386007920:android:f490032c400b7dc15593b5",
         "android_client_info": {
-          "package_name": "com.mrHealth"
+          "package_name": "com.mrHealth.customer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "180042591829-5qdkf68k8p2fqufgviksfia5rfi23tuc.apps.googleusercontent.com",
+          "client_id": "961386007920-ianulck1bpi7osnfv40sh6b8a4dkslhh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mrHealth.customer",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "961386007920-sf5cg7ln6nf2rjur85db3vc18bm4jj6p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mrHealth.customer",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "961386007920-ve8fb0h217tok1u9ipagsklmmq7cb7k2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mrHealth.customer",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "961386007920-qgtokiuo89turrkiiajnq9udnu4phevn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAb9-YArJC6HpnU7QaYaUS30sUZfeJ2CKs"
+          "current_key": "AIzaSyDeL4AnrmoyjxRyNjfw2YOqSLF5CuVGoF4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "180042591829-5qdkf68k8p2fqufgviksfia5rfi23tuc.apps.googleusercontent.com",
+              "client_id": "961386007920-qgtokiuo89turrkiiajnq9udnu4phevn.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "180042591829-dfkf1l86tc7s5j8gp7a7it6dgpgfqmeg.apps.googleusercontent.com",
+              "client_id": "961386007920-tt95s0gul5chsja1so5g1samt7sp3usr.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.mrHealth"
+                "bundle_id": "com.mrHealth.customer"
               }
             }
           ]

@@ -943,5 +943,8 @@ Amount`,
   SWITCH_RIDER:'Switch Rider',
   ADD_MANUALLY:'Add Manually',
   ADD_FROM_PHONEBOOK:'Add from Phonebook',
-  NOPRODUCTFOUND:"No Product Found"
+  NOPRODUCTFOUND:"No Product Found",
+  BOOK_A_TABLE:'Book a Table',
+  PLEASE_SELECT_A_TABLE:'Please Select a Table',
+  SELECT_A_TABLE:'Select a Table',
 };
