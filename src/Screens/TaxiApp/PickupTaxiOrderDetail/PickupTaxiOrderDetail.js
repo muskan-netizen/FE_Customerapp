@@ -868,16 +868,16 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     <Image
                       style={{
                         zIndex: 99,
-                        height: 35,
-                        width: 35,
+                        // height:46,
+                        // width: 32,
                         transform: [
                           {
-                            rotate: `${Number(agent_location?.heading_angle) + 110
+                            rotate: `${Number(agent_location?.heading_angle)
                               }deg`,
                           },
                         ],
                       }}
-                      source={imagePath.icScooter}
+                      source={imagePath.icCar}
                     />
                   </Marker.Animated>
                 )}
