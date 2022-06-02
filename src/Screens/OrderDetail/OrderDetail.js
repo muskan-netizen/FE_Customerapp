@@ -967,6 +967,7 @@ export default function OrderDetail({navigation, route}) {
     );
   };
 
+  console.log(cartData,"cartData?.address?.addresscartData?.address?.address");
   const _renderItem = ({item, index}) => {
     return (
       <View
@@ -1706,23 +1707,39 @@ export default function OrderDetail({navigation, route}) {
             )}
 
             <View style={{marginLeft: moderateScale(12), flex: 1}}>
+              {cartData?.luxury_option_id ==3 ?
+               <Text
+               style={{
+                 ...styles.summaryText,
+                 fontSize: textScale(12),
+                 color: isDarkMode
+                   ? MyDarkTheme.colors.text
+                   : colors.blackOpacity43,
+                 flex: 1,
+               }}>
+                 { cartData?.vendors[0]?.vendor?.address }
+              
+             </Text>:
               <Text
-                style={{
-                  ...styles.summaryText,
-                  fontSize: textScale(12),
-                  color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.blackOpacity43,
-                  flex: 1,
-                }}>
-                {`${
-                  cartData?.address?.house_number === null
-                    ? ''
-                    : `${cartData?.address?.house_number}, `
-                }`}
-                {cartData?.address?.address} {''}
-                {cartData?.address?.pincode}
-              </Text>
+              style={{
+                ...styles.summaryText,
+                fontSize: textScale(12),
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity43,
+                flex: 1,
+              }}>
+              
+              {`${
+                cartData?.address?.house_number === null
+                  ? ''
+                  : `${cartData?.address?.house_number}, `
+              }`}
+              {cartData?.address?.address} {''}
+              {cartData?.address?.pincode}
+            </Text>
+              }
+             
             </View>
           </View>
 
@@ -2912,8 +2929,7 @@ export default function OrderDetail({navigation, route}) {
               }}
               
               colorFilters={[
-               
-                
+      
                 {
                   keypath: 'right sand',
                   color: themeColors.primary_color,

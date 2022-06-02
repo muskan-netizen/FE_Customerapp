@@ -68,6 +68,7 @@ export default function SelctFromMap({
   const styles = stylesFun({fontFamily, themeColors});
 
   const _onRegionChange = (region) => {
+
     updateState({region: region});
     _getAddressBasedOnCoordinates(region);
     // animate(region);
@@ -79,7 +80,7 @@ export default function SelctFromMap({
       longitude: region.longitude,
     })
       .then((json) => {
-        // console.log(json, 'json');
+        console.log(json, 'jsonjsonjsonjson');
         updateState({
           formattedAddress: json.results[0].formatted_address,
         });
@@ -155,7 +156,7 @@ export default function SelctFromMap({
     <>
       <MapView
         ref={mapRef}
-        // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={{
           ...StyleSheet.absoluteFillObject,
           height: height,
