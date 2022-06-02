@@ -1,28 +1,33 @@
-//import liraries
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Modal from 'react-native-modal';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
 } from '../styles/responsiveSize';
 import imagePath from '../constants/imagePath';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import ButtonWithLoader from './ButtonWithLoader';
 import strings from '../constants/lang';
+import { UIActivityIndicator } from 'react-native-indicators';
+
+import BannerLoader from './Loaders/BannerLoader';
+import HeaderLoader from './Loaders/HeaderLoader';
+import CardLoader from './Loaders/CardLoader';
 
 const RepeatModal = ({
   data = {},
-  modalHide = () => {},
-  onRepeat = () => {},
-  onAddNew = () => {},
+  modalHide = () => { },
+  onRepeat = () => { },
+  onAddNew = () => { },
 }) => {
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
+  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state?.auth?.userData);
   const fontFamily = appStyle?.fontSizeData;
-  console.log('data', data);
+  console.log('RepeatModal data', data);
   return (
     <Modal
       isVisible={!!data ? true : false}
@@ -38,21 +43,17 @@ const RepeatModal = ({
           borderTopRightRadius: 12,
           borderTopLeftRadius: 12,
           padding: moderateScale(12),
+          height:moderateScale(130)
         }}>
-        <Text
-          style={{
-            fontSize: textScale(14),
-            fontFamily: fontFamily.regular,
-          }}>
-          {strings.REPEAT_LAST_CUSTOMIZATION}
-        </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: moderateScaleVertical(4),
-          }}>
-          {/* <Image source={imagePath.icVeg} /> */}
+        <View>
+          <Text
+            style={{
+              fontSize: textScale(14),
+              fontFamily: fontFamily.regular,
+            }}>
+            {strings.REPEAT_LAST_CUSTOMIZATION}
+          </Text>
+
           <Text
             style={{
               fontSize: textScale(14),
@@ -61,39 +62,55 @@ const RepeatModal = ({
             }}>
             {data?.translation_title}
           </Text>
-        </View>
-        <View style={{flexDirection: 'row', marginBottom: 16}}>
-          <ButtonWithLoader
-            btnText={strings.ADD_NEW}
-            btnTextStyle={{
-              color: 'blue',
-              textTransform: 'none',
-              fontFamily: fontFamily.regular,
-            }}
-            btnStyle={{
-              flex: 1,
-              borderColor: 'blue',
-              borderRadius: moderateScale(6),
-              borderWidth: 0.5,
-            }}
-            onPress={onAddNew}
-          />
-          <View style={{marginHorizontal: moderateScale(6)}} />
-          <ButtonWithLoader
-            btnText={strings.REPEAT_LAST}
-            btnTextStyle={{
-              color: 'red',
-              textTransform: 'none',
-              fontFamily: fontFamily.regular,
-            }}
-            onPress={onRepeat}
-            btnStyle={{
-              flex: 1,
-              borderColor: 'red',
-              borderRadius: moderateScale(6),
-              borderWidth: 0.5,
-            }}
-          />
+
+          {!!data?.category_id ? <View style={{ flexDirection: 'row', marginBottom: 16 }}>
+            <ButtonWithLoader
+              btnText={strings.ADD_NEW}
+              btnTextStyle={{
+                color: 'blue',
+                textTransform: 'none',
+                fontFamily: fontFamily.regular,
+              }}
+              btnStyle={{
+                flex: 1,
+                borderColor: 'blue',
+                borderRadius: moderateScale(6),
+                borderWidth: 0.5,
+              }}
+              onPress={onAddNew}
+            />
+            <View style={{ marginHorizontal: moderateScale(6) }} />
+            <ButtonWithLoader
+              btnText={strings.REPEAT_LAST}
+              btnTextStyle={{
+                color: 'red',
+                textTransform: 'none',
+                fontFamily: fontFamily.regular,
+              }}
+              onPress={onRepeat}
+              btnStyle={{
+                flex: 1,
+                borderColor: 'red',
+                borderRadius: moderateScale(6),
+                borderWidth: 0.5,
+              }}
+            />
+          </View> : <View style={{ flexDirection: 'row', marginTop: 16 }}>
+          <View style={{flex:1}}>
+            <CardLoader
+              height={moderateScale(46)}
+
+            />
+            </View>
+            <View style={{ marginHorizontal: moderateScale(6) }} />
+            <View style={{flex:1}}>
+            <CardLoader
+              height={moderateScale(46)}
+
+            />
+            </View>
+            {/* <UIActivityIndicator size={36} color={themeColors.primary_color} /> */}
+          </View>}
         </View>
       </View>
     </Modal>

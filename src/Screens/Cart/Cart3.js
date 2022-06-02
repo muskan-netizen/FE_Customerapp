@@ -1233,7 +1233,7 @@ function Cart({ navigation, route }) {
 
   // false, 'schedule', value
   const setDateAndTimeSchedule = (
-    // toHitApiForPlaceOrder = false,
+    toHitApiForPlaceOrder = false,
     dateType = scheduleType,
     scheduleDate = sheduledorderdate,
   ) => {
@@ -4760,6 +4760,7 @@ function Cart({ navigation, route }) {
   //Add and update the addreess
   const addUpdateLocation = (childData) => {
     // setModalVisible(false);
+    console.log("childDatachildData",childData)
     updateState({ isLoading: true });
     actions
       .addAddress(childData, {
