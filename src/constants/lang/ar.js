@@ -535,7 +535,7 @@ export default {
   WRITE_REVIEW: 'اكتب مراجعة',
   PICKUP: 'بيك أب',
   ALREADY_EXIST:
-  'You already have items from another store. Do you want to discard them?',
+    'You already have items from another store. Do you want to discard them?',
   VIEW_ALL: 'عرض الكل',
   POPULAR_BRANDS: 'ماركات مشهورة',
   FEATURED_PRODUCTS: 'المنتجات المميزة',
@@ -906,11 +906,12 @@ export default {
   PRODUCT_ORDER_FORM: 'Product Order Form',
   ORDERS: 'Orders',
   ORDER_CANCELLED: 'Order Cancelled',
-  SPECIFIC_INSTRUCTIONS:'Specific Instructions',
-  THANKS_FOR_YOUR_PURCHASE:'Thanks for your purchase.',
+  SPECIFIC_INSTRUCTIONS: 'Specific Instructions',
+  THANKS_FOR_YOUR_PURCHASE: 'Thanks for your purchase.',
   BOOK_FOR_A_FRIEND: 'Book For a friend',
   ENTER_FRIEND_DETAILS: "Enter your Friend's details",
   BOOK_FOR_ME: 'Book For Me',
-  BOOK_FOR_FRIEND:'Book For Friend'
+  BOOK_FOR_FRIEND: 'Book For Friend',
 
+  NOPRODUCTFOUND: 'No Product Found',
 };

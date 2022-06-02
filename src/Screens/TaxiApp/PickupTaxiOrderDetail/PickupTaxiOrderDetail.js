@@ -1002,7 +1002,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                           color: colors.redB,
                         }}>
                         {orderStatus == 'cancelled'
-                          ? strings.ORDER_CANCELLED
+                          ? strings.ORDER_CANCELLED :orderStatus == 'completed'?null
                           : strings.CANCEL_ORDER}
                       </Text>
                     </TouchableOpacity>
@@ -1162,7 +1162,8 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                               }}>
                               {orderFullDetail?.order?.name || ''}
                             </Text>
-                            <View
+                            { !!orderDetail?.plate_number &&
+                              <View
                               style={{
                                 backgroundColor: colors.blackOpacity05,
                                 marginLeft: moderateScale(38),
@@ -1181,6 +1182,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                                 {orderDetail?.plate_number}
                               </Text>
                             </View>
+                            }
                           </View>
 
                           <Text

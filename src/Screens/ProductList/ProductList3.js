@@ -325,7 +325,7 @@ export default function Products({ route, navigation }) {
 
   const listEmptyComponent = useCallback(() => {
     return (
-      <NoDataFound isLoading={isLoading} containerStyle={{}} />
+      <NoDataFound isLoading={isLoading} containerStyle={{}}  text={strings.NOPRODUCTFOUND}/>
     )
   }, [isLoading, productListData]);
 
@@ -1652,7 +1652,6 @@ export default function Products({ route, navigation }) {
     );
     setDifferentAddsOns(updateLocallyAddOns);
   };
-
 
 
   const updateCartItems = (item, quanitity, productId, cartID) => {
@@ -3180,7 +3179,7 @@ export default function Products({ route, navigation }) {
             )}
             renderSectionHeader={renderSectionHeader}
             ListEmptyComponent={
-              <NoDataFound isLoading={isLoading} containerStyle={{}} />
+              <NoDataFound isLoading={isLoading} containerStyle={{}} text={strings.NOPRODUCTFOUND}/>
             }
             initialNumToRender={1000}
             // windowSize={10}

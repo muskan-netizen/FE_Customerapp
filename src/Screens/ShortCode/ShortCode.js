@@ -52,6 +52,7 @@ export default function ShortCode({route, navigation}) {
     videoDurationEnded: false,
     allAppData: null,
     responseData: null,
+    initapiresponse:false
   });
   const {dispatch} = store;
 
@@ -65,6 +66,7 @@ export default function ShortCode({route, navigation}) {
     videoDurationEnded,
     allAppData,
     responseData,
+    initapiresponse
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {appData, appStyle, currencies, languages} = useSelector(
@@ -2123,12 +2125,13 @@ export default function ShortCode({route, navigation}) {
     }
   }, [shortCode, isShortcodePrefilled]);
 
-  // useEffect(() => {
-  //     if(videoDurationEnded)
-  //     {
-  //       navigateToNextScreen(allAppData, responseData);
-  //     }
-  // }, [videoDurationEnded]);
+  useEffect(() => {
+    if(videoDurationEnded&&initapiresponse)
+      { 
+        
+        navigateToNextScreen(allAppData, responseData);
+      }
+  },[videoDurationEnded,initapiresponse]);
 
   const checkScreen = () => {
     initApiHit();
@@ -2314,6 +2317,7 @@ export default function ShortCode({route, navigation}) {
         true,
       )
       .then((homeData) => {
+        console.log(res,"ressssss")
         switch (getBundleId()) {
           case appIds.masa:
             updateState({
@@ -2321,9 +2325,20 @@ export default function ShortCode({route, navigation}) {
               LoadingScreen: false,
               allAppData: res,
               responseData: homeData.data,
+              initapiresponse:true
             });
 
             break;
+          case appIds.iPicknDrop:
+              updateState({
+                isLoading: false,
+                LoadingScreen: false,
+                allAppData: res,
+                responseData: homeData.data,
+                initapiresponse:true
+              });
+  
+              break;
           default:
             updateState({ isLoading: false, LoadingScreen: false });
             navigateToNextScreen(res, homeData.data);
@@ -2335,7 +2350,7 @@ export default function ShortCode({route, navigation}) {
         navigateToNextScreen(res, homeData.data);
       });
   };
-
+ 
   const onOtpInput = (code) => {
     (async () => {
       updateState({
@@ -2384,7 +2399,8 @@ export default function ShortCode({route, navigation}) {
     switch (getBundleId()) {
       case appIds.masa:
         return animatedSplash();
-       
+      case appIds.iPicknDrop:
+          return animatedSplash();
       default:
         return imageSplash();
     }
@@ -2413,6 +2429,26 @@ export default function ShortCode({route, navigation}) {
       </View>
     );
   };
+
+const animationVideo = () =>{
+  switch (getBundleId()) {
+    case appIds?.masa:
+      return imagePath.masa
+    case appIds?.iPicknDrop:
+      return imagePath.ipd
+  } 
+}
+
+const onVideoDurationEnded = () => {
+   
+   updateState({
+     videoDurationEnded:true
+   })
+    // navigateToNextScreen(allAppData, responseData);
+    
+   
+  };
+
   const animatedSplash = () => {
     return (
       <View
@@ -2423,24 +2459,21 @@ export default function ShortCode({route, navigation}) {
           backgroundColor: colors.white,
         }}>
         <Video
-          source={require('../../assets/masa.mp4')} // Can be a URL or a local file.
+          source={animationVideo()} // Can be a URL or a local file.
           style={{
             height: width,
             width: width,
-            
-           
           }}
           resizeMode="cover"
           onEnd={() => onVideoDurationEnded()}
-          onError={(error) => console.log(error)}
+          
         />
       </View>
     );
   };
 
-  const onVideoDurationEnded = () => {
-    navigateToNextScreen(allAppData, responseData);
-  };
+
+  
   return (
     <View
       style={{

@@ -505,4 +505,8 @@ export default {
   icPhoto: require('../assets/images/ic_photo.png'),
   icAdd4: require('../assets/images/ic_add2.png'),
   icMinus2: require('../assets/images/ic_minus.png'),
+
+  //Video
+  masa: require('../assets/masa.mp4'),
+  ipd: require('../assets/ipd.mp4')
 };
