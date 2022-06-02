@@ -911,6 +911,7 @@ export default {
   BOOK_FOR_A_FRIEND: 'Book For a friend',
   ENTER_FRIEND_DETAILS: "Enter your Friend's details",
   BOOK_FOR_ME: 'Book For Me',
-  BOOK_FOR_FRIEND:'Book For Friend'
-
+  BOOK_FOR_FRIEND:'Book For Friend',
+  NOPRODUCTFOUND:"No Product Found"
+  
 };

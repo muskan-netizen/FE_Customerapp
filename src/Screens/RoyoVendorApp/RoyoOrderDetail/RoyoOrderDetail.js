@@ -251,6 +251,13 @@ const RoyoOrderDetail = (props) => {
             {data?.date_time}
             </Text>
         </View>
+        {!!data?.scheduled_date_time &&<View style={{ ...styles.orderNumberBox, zIndex: -1 }}>
+          {/* <Text style={styles.orderNumber}>Order #{data.order_number}</Text> */}
+          <Text style={styles.orderNumber}>{strings.SCHEDULE_FOR}:</Text>
+          <Text style={styles.orderTime}>
+            {data?.scheduled_date_time}
+            </Text>
+        </View>}
         <FlatList
           bounces={false}
           showsVerticalScrollIndicator={false}

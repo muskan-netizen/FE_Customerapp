@@ -30112,7 +30112,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					84F31BC12719823D00130594 = {
-						DevelopmentTeam = 6MFM9CR7R2;
+						DevelopmentTeam = 6FXUMT5X23;
 						ProvisioningStyle = Automatic;
 					};
 					84F3239B271986D400130594 = {
@@ -131303,7 +131303,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6MFM9CR7R2;
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

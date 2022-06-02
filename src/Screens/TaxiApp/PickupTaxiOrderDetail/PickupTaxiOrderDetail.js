@@ -1002,7 +1002,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                           color: colors.redB,
                         }}>
                         {orderStatus == 'cancelled'
-                          ? strings.ORDER_CANCELLED
+                          ? strings.ORDER_CANCELLED :orderStatus == 'completed'?null
                           : strings.CANCEL_ORDER}
                       </Text>
                     </TouchableOpacity>
@@ -1021,13 +1021,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     <Text style={styles.datePriceText}>
                       {moment(
                         new Date(orderFullDetail?.order_details?.created_at),
-                      )
-                        .locale(
-                          languages?.primary_language?.sort_code
-                            ? languages?.primary_language?.sort_code
-                            : 'en',
-                        )
-                        .format('MMMM Do YYYY, h:mm a')}
+                      ).format('MMMM Do YYYY, h:mm a')}
                     </Text>
                     <Text
                       style={{
@@ -1162,7 +1156,8 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                               }}>
                               {orderFullDetail?.order?.name || ''}
                             </Text>
-                            <View
+                            { !!orderDetail?.plate_number &&
+                              <View
                               style={{
                                 backgroundColor: colors.blackOpacity05,
                                 marginLeft: moderateScale(38),
@@ -1181,6 +1176,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                                 {orderDetail?.plate_number}
                               </Text>
                             </View>
+                            }
                           </View>
 
                           <Text
