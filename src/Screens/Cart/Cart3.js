@@ -1078,7 +1078,7 @@ function Cart({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res,"ressssss")
+        console.log(res, 'ressssss');
         setCartItems([]);
         setCartData({});
         moveToNewScreen(navigationStrings.ORDERSUCESS, {
@@ -1368,7 +1368,10 @@ function Cart({navigation, route}) {
   const placeOrder = () => {
     isFAQsSubmitted = true;
     if (!!userData?.auth_token) {
-      if (businessType == 'laundry') {
+      if (
+        businessType == 'laundry' &&
+        !appData?.profile?.preferences?.off_scheduling_at_cart
+      ) {
         const pickupTime = laundrySelectedPickupSlot.split('-')[0];
         const dropTime = laundrySelectedDropOffSlot.split('-')[0];
         const formattedPickup = formatDateSlot(
@@ -4975,12 +4978,16 @@ function Cart({navigation, route}) {
                 height: moderateScale(120),
                 width: moderateScale(120),
               }}
-               tintColor={isDarkMode &&colors.white}
+              tintColor={isDarkMode && colors.white}
               // resizeMode="contain"s
             />
           )}
 
-          <Text style={{...styles.textStyle,color:isDarkMode?colors.white:colors.blackOpacity40}}>
+          <Text
+            style={{
+              ...styles.textStyle,
+              color: isDarkMode ? colors.white : colors.blackOpacity40,
+            }}>
             {strings.YOUR_CART_EMPTY_ADD_ITEMS}
           </Text>
         </View>
