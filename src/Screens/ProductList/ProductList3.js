@@ -337,7 +337,6 @@ export default function Products({ route, navigation }) {
 
   const renderProduct = useCallback(({item, index}) => {
     
-
     return (
       <View 
       key={String(index)}
@@ -1653,32 +1652,7 @@ export default function Products({ route, navigation }) {
     setDifferentAddsOns(updateLocallyAddOns);
   };
 
-  const renderProduct = ({item, index}) => {
-    return (
-      <Animatable.View
-      // animation={'slideInUp'} delay={index * 5}
-      >
-        <ProductCard3
-          data={item}
-          index={index}
-          onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-          onAddtoWishlist={() => _onAddtoWishlist(item)}
-          addToCart={() => addSingleItem(item, null, index)}
-          onIncrement={() => checkIsCustomize(item, null, index, 1)}
-          onDecrement={() => checkIsCustomize(item, null, index, 2)}
-          selectedItemID={selectedItemID}
-          btnLoader={false}
-          selectedItemIndx={selectedItemIndx}
-          differentAddsOns={differentAddsOns}
-          businessType={businessType}
-          categoryInfo={categoryInfo}
-          animateText={animateText}
-          // section={section}
-        />
-        <View style={styles.horizontalLine} />
-      </Animatable.View>
-    );
-  };
+ 
 
   const updateCartItems = (item, quanitity, productId, cartID) => {
     playHapticEffect(hapticEffects.impactLight);
