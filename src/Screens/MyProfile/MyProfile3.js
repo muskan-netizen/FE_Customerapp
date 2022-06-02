@@ -50,9 +50,25 @@ import validations from '../../utils/validations';
 import stylesFunc from './styles';
 import codes from 'country-calling-code';
 import * as RNLocalize from "react-native-localize";
+import DeviceCountry, {
+  TYPE_ANY,
+  TYPE_TELEPHONY,
+  TYPE_CONFIGURATION,
+} from 'react-native-device-country';
+var getPhonesCallingCodeAndCountryData = null
+DeviceCountry.getCountryCode()
+  .then((result) => {
+    console.log(result, "getCountryCoderesult");
+    // {"code": "BY", "type": "telephony"}
+    getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == (result.code).toUpperCase())
+  })
+  .catch((e) => {
+    console.log(e);
+  });
+
 var addtionSelectedImageIndex = null;
 var addtionSelectedImage = null;
-var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
+// var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
 
 export default function MyProfile3({route, navigation}) {
   const darkthemeusingDevice = useDarkMode();

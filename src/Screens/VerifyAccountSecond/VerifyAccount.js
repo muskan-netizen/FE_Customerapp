@@ -31,7 +31,21 @@ import { useNavigation } from '@react-navigation/native';
 import { checkIsAdmin } from '../../utils/utils';
 import codes from 'country-calling-code';
 import * as RNLocalize from "react-native-localize";
-
+import DeviceCountry, {
+  TYPE_ANY,
+  TYPE_TELEPHONY,
+  TYPE_CONFIGURATION,
+} from 'react-native-device-country';
+var getPhonesCallingCodeAndCountryData = null
+DeviceCountry.getCountryCode()
+  .then((result) => {
+    console.log(result, "getCountryCoderesult");
+    // {"code": "BY", "type": "telephony"}
+    getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == (result.code).toUpperCase())
+  })
+  .catch((e) => {
+    console.log(e);
+  });
 export default function VerifyAccountSecond({ navigation, route }) {
   const navigation_ = useNavigation();
   let paramsData = route?.params;
@@ -39,7 +53,7 @@ export default function VerifyAccountSecond({ navigation, route }) {
   const userData = useSelector((state) => state?.auth?.userData);
   console.log(userData,"userDatauserData")
   const appData = useSelector((state) => state?.initBoot?.appData);
-  var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
+  // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
 
   const [state, setState] = useState({
     timer2: 0,

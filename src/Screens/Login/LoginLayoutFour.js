@@ -50,7 +50,21 @@ import PhoneNumberInputWithUnderline from '../../Components/PhoneNumberInputWith
 import {useNavigation} from '@react-navigation/native';
 import {checkIsAdmin} from '../../utils/utils';
 import codes from 'country-calling-code';
-
+import DeviceCountry, {
+  TYPE_ANY,
+  TYPE_TELEPHONY,
+  TYPE_CONFIGURATION,
+} from 'react-native-device-country';
+var getPhonesCallingCodeAndCountryData = null
+DeviceCountry.getCountryCode()
+  .then((result) => {
+    console.log(result, "getCountryCoderesult");
+    // {"code": "BY", "type": "telephony"}
+    getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == (result.code).toUpperCase())
+  })
+  .catch((e) => {
+    console.log(e);
+  });
 export default function LoginLayoutFour({navigation}) {
   const navigation_ = useNavigation();
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
@@ -64,7 +78,7 @@ export default function LoginLayoutFour({navigation}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   var clonedState = {};
-  var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
+  // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
   console.log(getPhonesCallingCodeAndCountryData, "getPhonesCallingCodeAndCountryData");
   const [state, setState] = useState({
     // email: '',
