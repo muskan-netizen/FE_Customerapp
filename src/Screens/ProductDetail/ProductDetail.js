@@ -34,6 +34,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc, {hitSlopProp} from '../../styles/commonStyles';
+import RenderHtml, {HTML} from 'react-native-render-html';
 import {
   height,
   moderateScale,
@@ -73,6 +74,7 @@ export default function ProductDetail({route, navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
   const commonStyles = commonStylesFunc({fontFamily});
+  const reloadData = useSelector((state) => state?.reloadData?.reloadData);
   const {data} = route.params;
 
   const [state, setState] = useState({
@@ -851,6 +853,7 @@ export default function ProductDetail({route, navigation}) {
       .then((res) => {
         console.log(res, 'res.data');
         actions.cartItemQty(res);
+        actions.reloadData(!reloadData)
 
         showSuccess(strings.PRODUCT_ADDED_SUCCESS);
 
@@ -1164,12 +1167,17 @@ export default function ProductDetail({route, navigation}) {
                         color: isDarkMode
                           ? MyDarkTheme.colors.text
                           : colors.black,
-                      }}>{`${currencies?.primary_currency.symbol} ${(
-                      Number(productPriceData?.multiplier) *
-                      Number(productPriceData?.price)
-                    ).toFixed(
-                      appData?.profile?.preferences?.digit_after_decimal,
-                    )}`}</Text>
+                      }}>
+                        {`${
+                              currencies?.primary_currency?.symbol
+                            } ${currencyNumberFormatter(
+                              // Number(productPriceData?.multiplier) *
+                                Number(productPriceData?.price) *
+                                Number(productQuantityForCart),
+                              appData?.profile?.preferences
+                                ?.digit_after_decimal,
+                            )}`}
+                      </Text>
                   </View>
                 </View>
 
@@ -1270,10 +1278,20 @@ export default function ProductDetail({route, navigation}) {
                         {strings.DESCRIPTION}
                       </Text>
 
-                      <HTMLView
-                        value={'<div>' + plainHtml + '</div>'}
-                        stylesheet={{div: styles.descriptionStyle}}
+                    
+                    
+                     <RenderHtml
+                        contentWidth={width}
+                        source={{html: plainHtml}}
+                        tagsStyles={{p: {
+                          color: isDarkMode? colors.white : colors.black
+                        }}}
                       />
+                
+                      {/* <HTMLView
+                        value={plainHtml}
+                        stylesheet={{div: styles.descriptionStyle}}
+                      /> */}
                     </View>
                   </View>
                   <HorizontalLine
@@ -1300,10 +1318,10 @@ export default function ProductDetail({route, navigation}) {
 
               {/* Add to Cart button */}
               {(productDetailData?.has_inventory == 0 ||
-                  (!!productTotalQuantity && !!productTotalQuantity != 0) ||
-                  (!!typeId && typeId == 8) ||
-                  !!productDetailData?.sell_when_out_of_stock) &&
-                (false? null : showErrorMessageTitle ? null : (
+                (!!productTotalQuantity && !!productTotalQuantity != 0) ||
+                (!!typeId && typeId == 8) ||
+                !!productDetailData?.sell_when_out_of_stock) &&
+                (false ? null : showErrorMessageTitle ? null : (
                   <View
                     style={{
                       marginBottom: moderateScaleVertical(25),
@@ -1358,7 +1376,7 @@ export default function ProductDetail({route, navigation}) {
                               marginHorizontal: moderateScale(3),
                               textAlign: 'center',
                               alignSelf: 'center',
-                              flex: 0.8,
+                              flex: 0.8,color:isDarkMode?colors.white:colors.black
                             }}
                             keyboardType="number-pad"
                             onEndEditing={() => {
@@ -1400,7 +1418,8 @@ export default function ProductDetail({route, navigation}) {
                           <GradientButton
                             indicator={isLoadingC}
                             disabled={
-                              !productDetailData?.vendor?.show_slot &&
+                              // !productDetailData?.vendor?.closed_store_order_scheduled
+                              !productDetailData?.vendor?.closed_store_order_scheduled &&
                               !!productDetailData?.vendor?.is_vendor_closed
                             }
                             indicatorColor={colors.white}
@@ -1416,7 +1435,7 @@ export default function ProductDetail({route, navigation}) {
                             btnText={`${strings.ADD}  ${
                               currencies?.primary_currency?.symbol
                             } ${currencyNumberFormatter(
-                              Number(productPriceData?.multiplier) *
+                              // Number(productPriceData?.multiplier) *
                                 Number(productPriceData?.price) *
                                 Number(productQuantityForCart),
                               appData?.profile?.preferences
@@ -1425,7 +1444,7 @@ export default function ProductDetail({route, navigation}) {
                             btnStyle={{
                               borderRadius: moderateScale(4),
                               height: moderateScale(38),
-                              opacity: productDetailData?.vendor?.show_slot
+                              opacity: productDetailData?.vendor?.closed_store_order_scheduled
                                 ? 1
                                 : productDetailData?.vendor?.is_vendor_closed
                                 ? 0.3
@@ -1435,7 +1454,7 @@ export default function ProductDetail({route, navigation}) {
                         </View>
                       </View>
                     ) : null}
-                    {!productDetailData?.vendor?.show_slot &&
+                    {!productDetailData?.vendor?.closed_store_order_scheduled &&
                     !!productDetailData?.vendor?.is_vendor_closed ? (
                       <Text
                         style={{

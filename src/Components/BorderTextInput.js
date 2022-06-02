@@ -81,7 +81,7 @@ const BorderTextInput = ({
         style={{
           flex: 1,
           opacity: 0.7,
-          color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7,
+          color: isDarkMode ?colors.white : colors.textGreyOpcaity7,
           fontFamily: fontFamily.medium,
           fontSize: textScale(14),
           paddingHorizontal: 8,

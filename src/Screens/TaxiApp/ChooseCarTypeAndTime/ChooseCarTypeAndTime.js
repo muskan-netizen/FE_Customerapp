@@ -270,6 +270,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         },
       )
       .then((res) => {
+        console.log(res, 'ressssss');
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(
@@ -370,7 +371,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       isLoading: true,
       indicatorLoader: true,
     });
-    console.log(data, 'data>>>>>');
+    console.log(JSON.stringify(data), 'data>>>>>');
     actions
       .placeDelievryOrder(data, {
         code: appData?.profile?.code,
@@ -447,22 +448,83 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       data['coupon_id'] = couponInfo?.id;
     }
     data['order_time_zone'] = RNLocalize.getTimeZone();
+    data['type'] =paramData?.friendBookingDetails?.bookingType;
+    data['friendName']=paramData?.friendBookingDetails?.bookingType?paramData?.friendBookingDetails?.name:'',
+    data['friendPhoneNumber']=paramData?.friendBookingDetails?.bookingType?paramData?.friendBookingDetails?.mobileNumber:'',
+
+    console.log(JSON.stringify(data),"dataaaaa")
+
+    // if (!!userData) {
+    //   !!userData?.client_preference?.verify_email &&
+    //   !!userData?.client_preference?.verify_phone
+    //     ? (!!userData?.verify_details?.is_email_verified &&
+    //       !!userData?.verify_details?.is_phone_verified)
+    //       ? selectedPayment.id == 10
+    //         ? renderRazorPay(data)
+    //         : _finalPayment(data)
+    //       : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
+    //           formCart: true,
+    //         })()
+    //     : selectedPayment.id == 10
+    //     ? renderRazorPay(data)
+    //     : _finalPayment(data);
+    // }
 
     if (!!userData) {
-      !!userData?.client_preference?.verify_email ||
-      !!userData?.client_preference?.verify_phone
-        ? !!userData?.verify_details?.is_email_verified &&
-          !!userData?.verify_details?.is_phone_verified
-          ? selectedPayment.id == 10
+      console.log(userData, 'userData');
+      if (!!userData) {
+        if (
+          !!userData?.client_preference?.verify_email &&
+          !!userData?.client_preference?.verify_phone
+        ) {
+          if (
+            !!userData?.verify_details?.is_email_verified &&
+            !!userData?.verify_details?.is_phone_verified
+          ) {
+            // setDateAndTimeSchedule(true);
+
+           selectedPayment.id == 10
             ? renderRazorPay(data)
             : _finalPayment(data)
-          : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
+          } else {
+            moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
               formCart: true,
-            })()
-        : selectedPayment.id == 10
-        ? renderRazorPay(data)
-        : _finalPayment(data);
-    }
+            })();
+          }
+        } else if (
+          !!userData?.client_preference?.verify_email ||
+          !!userData?.client_preference?.verify_phone
+        ) {
+          if (
+            !!userData?.client_preference?.verify_email &&
+            !userData?.verify_details?.is_email_verified
+          ) {
+           
+
+            moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
+              formCart: true,
+            })();
+          } else if (
+            !!userData?.client_preference?.verify_phone &&
+            !userData?.verify_details?.is_phone_verified
+          ) {
+           
+
+            moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
+              formCart: true,
+            })();
+          } else {
+            selectedPayment.id == 10
+            ? renderRazorPay(data)
+            : _finalPayment(data)
+          }
+        } else {
+          selectedPayment.id == 10
+            ? renderRazorPay(data)
+            : _finalPayment(data)
+        }
+      }
+    } 
   };
 
   const renderRazorPay = (data) => {
@@ -907,7 +969,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   //   }, 2000);
   // }, []);
 
-  console.log('paramData?.location', paramData);
+  console.log('paramData', paramData);
   // useEffect(() => {
   //   console.log('check state ref array >>>', refArr);
   //   refArr.forEach((element) => {

@@ -398,6 +398,52 @@ const OrderCardVendorComponent2 = ({
         </View>
 
         <View style={[styles.borderStyle, {marginHorizontal: -15}]}></View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginHorizontal: moderateScale(10),
+            marginTop: moderateScale(15),
+          }}>
+          <Text
+            style={{
+              fontFamily: fontFamily.bold,
+              color: colors.black,
+            }}>
+            Pickup Schedule Date:
+          </Text>
+          <Text
+            style={{
+              fontFamily: fontFamily.regular,
+              color: colors.blackOpacity66,
+            }}>
+            {data?.schedule_pickup} | {data?.scheduled_slot}
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginHorizontal: moderateScale(10),
+            marginTop: moderateScale(15),
+          }}>
+          <Text
+            style={{
+              fontFamily: fontFamily.bold,
+              color: colors.black,
+            }}>
+            Drop Off Schedule Date:
+          </Text>
+          <Text
+            style={{
+              fontFamily: fontFamily.regular,
+              color: colors.blackOpacity66,
+            }}>
+            {data?.schedule_dropoff} | {data?.dropoff_scheduled_slot}
+          </Text>
+        </View>
 
         {selectedTab && selectedTab == strings.PAST_ORDERS ? (
           <View

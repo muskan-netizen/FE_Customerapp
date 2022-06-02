@@ -1,7 +1,4 @@
 import { useFocusEffect } from '@react-navigation/native';
-import {
-  handleCardAction, StripeProvider
-} from '@stripe/stripe-react-native';
 import { cloneDeep, isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { Fragment, useEffect, useRef, useState } from 'react';
@@ -20,7 +17,6 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import ActionSheet from 'react-native-actionsheet';
 import * as Animatable from 'react-native-animatable';
 import { Calendar } from 'react-native-calendars';
 import { useDarkMode } from 'react-native-dark-mode';
@@ -58,6 +54,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import { hitSlopProp } from '../../styles/commonStyles';
+import staticStrings from '../../constants/staticStrings';
 import {
   height,
   moderateScale,
@@ -75,15 +72,28 @@ import {
   showSuccess,
   timeInLocalLangauge
 } from '../../utils/helperFunctions';
-import { payWithCard } from '../../utils/paystackMethod';
 import { androidCameraPermission } from '../../utils/permissions';
 import { getItem, removeItem, setItem } from '../../utils/utils';
 import stylesFun from './styles';
+import {
+  CardField,
+  createToken,
+  initStripe,
+  StripeProvider,
+  handleCardAction,
+  createPaymentMethod,
+  confirmPayment,
+} from '@stripe/stripe-react-native';
+import ActionSheet from 'react-native-actionsheet';
+import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
+import { PayWithFlutterwave } from 'flutterwave-react-native';
+
 
 let clickedItem = {};
 let isFAQsSubmitted = true;
 let addtionSelectedImageIndex = null;
 let addtionSelectedImage = null;
+let dayAfterToday = new Date().getTime() + 24 * 60 * 60 * 1000;
 
 function Cart({ navigation, route }) {
   let paramsData = route?.params;
@@ -91,11 +101,13 @@ function Cart({ navigation, route }) {
   let actionSheet = useRef(null);
 
   const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
+  const reloadData = useSelector((state) => state?.reloadData?.reloadData);
   const darkthemeusingDevice = useDarkMode();
 
   const [defaultSelectedTable, setDefaultSelectedTable] = useState('');
   const [type, setType] = useState('');
   const [vendorAddress, setVendorAddress] = useState('');
+  const [vendorAddressId,setVendorAddressId]=useState('');
   const [instruction, setInstruction] = useState('');
   const [selectedDateFromCalendar, setSelectedDateFromCalendar] = useState('');
   const [selectedTimeSlots, setSelectedTimeSlots] = useState('');
@@ -131,12 +143,28 @@ function Cart({ navigation, route }) {
   const [myAnswerdArray, setMyAllanswers] = useState([]);
   const [myFaqValidationArray, setMyFaqValidationArray] = useState([]);
   const [validationFucCalled, setvalidationFucCalled] = useState(true);
-  const [faqModalLayoutHeight, setfaqModalLayoutHeight] = useState(null);
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [paymentMethodId, setPaymentMethodId] = useState(null);
   const [kycTxtInpts, setKycTxtInpts] = useState([]);
   const [kycImages, setKycImages] = useState([]);
   const [kycPdfs, setKycPdfs] = useState([]);
+  const [laundrySelectedPickupDate, setLaundrySelectedPickupDate] =
+    useState(null);
+  const [laundrySelectedPickupSlot, setLaundrySelectedPickupSlot] =
+    useState('');
+  const [laundryAvailablePickupSlot, setLaundryAvailablePickupSlot] = useState(
+    [],
+  );
+  const [laundrySelectedDropOffDate, setLaundrySelectedDropOffDate] =
+    useState(null);
+  const [laundrySelectedDropOffSlot, setLaundrySelectedDropOffSlot] =
+    useState('');
+  const [laundryAvailableDropOffSlot, setLaundryAvailableDropOffSlot] =
+    useState([]);
+
+  const [minimumSelectedPickupDate, setMinimumSelectedPickupDate] =
+    useState('');
+  const [minimumSelectedDropOffDate, setMinimumSelectedDropOffDate] =
+    useState('');
 
   const [state, setState] = useState({
     showTaxFeeArea: false,
@@ -159,6 +187,8 @@ function Cart({ navigation, route }) {
     isCategoryKyc: false,
     isCategoryKycLoader: false,
     isSubmitKycLoader: false,
+    isModalVisibleForPayFlutterWave: false,
+    paymentDataFlutterWave: null,
   });
 
   const {
@@ -182,6 +212,8 @@ function Cart({ navigation, route }) {
     isCategoryKyc,
     isCategoryKycLoader,
     isSubmitKycLoader,
+    isModalVisibleForPayFlutterWave,
+    paymentDataFlutterWave,
   } = state;
 
   //Redux store data
@@ -215,7 +247,7 @@ function Cart({ navigation, route }) {
   //Update states on screens
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
-  console.log('closed_store_order_scheduled', cartData);
+  console.log('closed_store_order_scheduled', vendorAddressId);
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -329,13 +361,6 @@ function Cart({ navigation, route }) {
     }
   };
 
-  // function formatDate(date) {
-  //   var year = date.getFullYear().toString();
-  //   var month = (date.getMonth() + 101).toString().substring(1);
-  //   var day = (date.getDate() + 100).toString().substring(1);
-  //   return year + "-" + month + "-" + day;
-  // }
-
   const getDate = (date) => {
     const local = moment.utc(date).local().format('DD MMM YYYY hhðŸ‡²ðŸ‡²a');
     return local;
@@ -364,15 +389,14 @@ function Cart({ navigation, route }) {
         },
       )
       .then((res) => {
+        console.log('cart details>>>', res);
         closeForm();
         actions.cartItemQty(res);
-        console.log('cart details>>>', res);
         let checkDate = !!res?.data?.scheduled_date_time;
         updateState({ deliveryFeeLoader: false, isSubmitFaqLoader: false });
 
         if (!!checkDate && res.data.schedule_type == 'schedule') {
           let formatDate = new Date(res?.data?.scheduled_date_time);
-          console.log(res?.data?.scheduled_date_time, 'dateeeeeeeee');
           setLocaleSheduledOrderDate(
             timeInLocalLangauge(formatDate, selectedLanguage),
           );
@@ -442,6 +466,7 @@ function Cart({ navigation, route }) {
                 table_number: item.table_number,
                 seating_number: item.seating_number,
                 vendor_id: res.data.vendor_details.vendor_address.id,
+
               }),
               setTableData(tableData),
             );
@@ -457,10 +482,21 @@ function Cart({ navigation, route }) {
             console.log('netxt festilval2', new Date(timeSlot.replace(' ')));
             setMinimumDelayVendorDate(timeSlot);
           }
-
           setCartItems(res.data.products);
           setAvailableTimeSlots(res.data.slots);
+          // setLaundryAvailablePickupSlot(res.data.slots);
+          // setLaundryAvailableDropOffSlot(res.data.slots);
+
           setCartData(res.data);
+
+          console.log(dineInType,'dineInTypedineInType');
+
+          if(res.data.vendor_details?.vendor_address?.address && dineInType != 'delivery'){
+            setVendorAddressId(res.data.vendor_details?.vendor_address?.id)
+            setVendorAddress(res.data.vendor_details?.vendor_address?.address)
+          }
+           
+
           setSelectedTipvalue(
             res?.data?.total_payable_amount == 0 ? 'custom' : null,
           );
@@ -619,10 +655,10 @@ function Cart({ navigation, route }) {
         },
       )
       .then((res) => {
-        actions.cartItemQty(res);
+        actions.cartItemQty({});
         setCartItems([]);
         setCartData({});
-
+        actions.reloadData(!reloadData);
         updateState({
           isLoadingB: false,
         });
@@ -646,6 +682,7 @@ function Cart({ navigation, route }) {
       isSubmitFaqLoader: false,
       isCategoryKycLoader: false,
       isSubmitKycLoader: false,
+      isModalVisibleForPayFlutterWave: false,
     });
     showError(
       error?.error?.description ||
@@ -699,7 +736,103 @@ function Cart({ navigation, route }) {
 
   console.log('cart data++++', cartData);
 
+  //flutter wave
+  var redirectTimeout;
+  const handleOnRedirect = (data) => {
+    console.log('flutterwaveresponse', data);
+    clearTimeout(redirectTimeout);
+    redirectTimeout = setTimeout(() => {
+      // do something with the result
+      updateState({ isModalVisibleForPayFlutterWave: false });
+    }, 200);
+    try {
+      if (data && data?.transaction_id) {
+        let apiData = {
+          payment_option_id: paymentDataFlutterWave?.payment_option_id,
+          order_number: paymentDataFlutterWave?.orderDetail?.order_number,
+          transaction_id: data?.transaction_id,
+          amount: paymentDataFlutterWave?.total_payable_amount,
+          action: 'cart',
+        };
+
+        console.log(apiData, 'apiData');
+        actions
+          .openSdkUrl(
+            `/${paymentDataFlutterWave?.selectedPayment?.code?.toLowerCase()}`,
+            apiData,
+            {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+            },
+          )
+          .then((res) => {
+            console.log(res, 'openSdkUrl');
+            if (res && res?.status == 'Success') {
+              setCartItems([]);
+              setCartData({});
+              moveToNewScreen(navigationStrings.ORDERSUCESS, {
+                orderDetail: {
+                  order_number:
+                    paymentDataFlutterWave?.orderDetail?.order_number,
+                  id: paymentDataFlutterWave?.orderDetail?.id,
+                },
+              })();
+            } else {
+              redirectTimeout = setTimeout(() => {
+                // do something with the result
+                updateState({
+                  isModalVisibleForPayFlutterWave: false,
+                  placeLoader: false,
+                  deliveryFeeLoader: false,
+                });
+              }, 200);
+            }
+          })
+          .catch(errorMethod);
+      } else {
+        let apiData = {
+          order_number: paymentDataFlutterWave?.orderDetail?.order_number,
+          action: 'cart',
+        };
+        actions
+          .cancelSdkUrl(
+            `/${paymentDataFlutterWave?.selectedPayment?.code?.toLowerCase()}`,
+            apiData,
+            {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+            },
+          )
+          .then((res) => {
+            console.log(res, 'cancelPaytabUrl---resfrompaytab');
+            redirectTimeout = setTimeout(() => {
+              // do something with the result
+              updateState({
+                isModalVisibleForPayFlutterWave: false,
+                placeLoader: false,
+                deliveryFeeLoader: false,
+              });
+            }, 200);
+          })
+          .catch(errorMethod);
+      }
+    } catch (error) {
+      console.log('error raised', error);
+      redirectTimeout = setTimeout(() => {
+        // do something with the result
+        updateState({
+          isModalVisibleForPayFlutterWave: false,
+          placeLoader: false,
+        });
+      }, 200);
+    }
+  };
+  //flutter wave
+
   const checkPaymentOptions = (res) => {
+    updateState({ placeLoader: true });
     let paymentId = res?.data?.payment_option_id;
     let order_number = res?.data?.order_number;
     setSelectedPayment(selectedPayment);
@@ -724,6 +857,7 @@ function Cart({ navigation, route }) {
         0
       )
     ) {
+      actions.reloadData(!reloadData);
       moveToNewScreen(navigationStrings.ORDERSUCESS, {
         orderDetail: res.data,
       })();
@@ -731,11 +865,9 @@ function Cart({ navigation, route }) {
       return;
     }
 
-    console.log(paymentId, 'paymentIdpaymentId');
-
     switch (paymentId) {
       case 4:
-        updateState({ placeLoader: false });
+        // updateState({ placeLoader: false });
         _offineLinePayment(order_number);
         break;
       case 5: //Paystack Payment Getway
@@ -799,21 +931,49 @@ function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.EASEBUZZ, paymentData);
         break;
-      case 27: //Easebuzz Payment Getway
+      case 28: //Easebuzz Payment Getway
         updateState({ placeLoader: false });
-        let billingDetail = {
-          name: userData?.name,
-          email: userData?.email,
-          phone: userData?.phone_number,
-          amount: Number(res.data.total_amount),
-          state: selectedAddressData?.state,
-          city: selectedAddressData?.city,
-          address: selectedAddressData?.house_number + ", " + selectedAddressData?.address,
-          order_number: res?.data?.order_number
-        }
-        openPayTabs(billingDetail)
+        navigation.navigate(navigationStrings.VNPAY, paymentData);
+      case 26: //ToyyibPay Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.TOYYIAPAY, paymentData);
+        break;
+      case 27: //Paytab Payment Getway
+        // updateState({ placeLoader: false });
+        console.log(res.data, 'res.data>res.data');
+
+        openPayTabs(paymentData);
 
         break;
+
+      case 30: //Paytab Payment Getway
+        // updateState({ placeLoader: false });
+        console.log(res.data, 'res.data>res.data');
+        // payWithFlutterWave(paymentData.orderDetail, handleOnRedirect)
+        updateState({
+          isModalVisibleForPayFlutterWave: true,
+          paymentDataFlutterWave: paymentData,
+        });
+
+        // openPayTabs(paymentData)
+
+        break;
+
+      case 29: //Easebuzz Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.MPAISA, paymentData);
+        break;
+
+      case 34: //Easebuzz Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.WINDCAVE, paymentData);
+        break;
+
+      case 32: //Easebuzz Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.PAYPHONE, paymentData);
+        break;
+
       default:
         if (
           !!businessType &&
@@ -831,35 +991,71 @@ function Cart({ navigation, route }) {
     }
   };
 
-
   const openPayTabs = async (data) => {
-    console.log("datadata", data)
+    data['serverKey'] = appData?.profile?.preferences?.paytab_server_key;
+    data['clientKey'] = appData?.profile?.preferences?.paytab_client_key;
+    data['profileID'] = appData?.profile?.preferences?.paytab_profile_id;
+    data['currency'] = currencies?.primary_currency?.iso_code;
+    data['merchantname'] = appData?.profile?.company_name;
+    data['countrycode'] = appData?.profile?.country?.code;
+    console.log('openPayTabsdata', data);
     try {
-      const res = await payWithCard(data)
-      console.log("payWithCard res++++", res)
-      let apiData = {
-        payment_from: 'cart',
-        order_number: data?.order_number,
-        tranRef: res?.transactionReference,
-        auth_token: userData?.auth_token,
-        amount: data?.amount,
-        come_from: 'app'
-      }
-      const payRes = await actions.orderSuccessPayment(apiData,
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-          timezone: RNLocalize.getTimeZone(),
-          device_token: DeviceInfo.getUniqueId(),
-        })
-      console.log("payRespayRes", payRes)
+      const res = await payWithCard(data);
+      console.log('payWithCard res++++', res);
+      if (res && res?.transactionReference) {
+        let apiData = {
+          payment_option_id: data?.payment_option_id,
+          order_number: data?.orderDetail?.order_number,
+          transaction_id: res?.transactionReference,
+          amount: data?.total_payable_amount,
+          action: 'cart',
+        };
 
+        console.log(apiData, 'apiData');
+        actions
+          .openPaytabUrl(apiData, {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+          })
+          .then((res) => {
+            console.log(res, 'resfrompaytab');
+            if (res && res?.status == 'Success') {
+              updateState({ placeLoader: false, deliveryFeeLoader: false });
+              setCartItems([]);
+              setCartData({});
+              moveToNewScreen(navigationStrings.ORDERSUCESS, {
+                orderDetail: {
+                  order_number: data?.orderDetail?.order_number,
+                  id: data?.orderDetail?.id,
+                },
+              })();
+            } else {
+              updateState({ placeLoader: false, deliveryFeeLoader: false });
+            }
+          })
+          .catch(errorMethod);
+      } else {
+        let apiData = {
+          order_number: data?.orderDetail?.order_number,
+          action: 'cart',
+        };
+        actions
+          .cancelPaytabUrl(apiData, {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+          })
+          .then((res) => {
+            console.log(res, 'cancelPaytabUrl---resfrompaytab');
+            updateState({ placeLoader: false, deliveryFeeLoader: false });
+          })
+          .catch(errorMethod);
+      }
     } catch (error) {
-      console.log('error raised', error)
+      console.log('error raised', error);
     }
-  }
+  };
 
   const checkoutPayment = (paymentData) => {
     let queryData = `/${paymentData?.selectedPayment?.code?.toLowerCase()}?amount=${paymentData?.total_payable_amount
@@ -877,6 +1073,7 @@ function Cart({ navigation, route }) {
         },
       )
       .then((res) => {
+        console.log(res, "ressssss")
         setCartItems([]);
         setCartData({});
         moveToNewScreen(navigationStrings.ORDERSUCESS, {
@@ -889,9 +1086,11 @@ function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
+  console.log(dineInType,"vendorAddress?");
   const _directOrderPlace = () => {
     let data = {};
-    data['address_id'] =
+    data['vendor_id'] = cartData?.products[0]?.vendor_id;
+    data['address_id'] =dineInType !='delivery' ?'': 
       paramsData?.selectedAddressData?.id || selectedAddressData?.id;
     data['payment_option_id'] =
       Number(cartData?.total_payable_amount) +
@@ -904,19 +1103,25 @@ function Cart({ navigation, route }) {
 
     data['type'] = dineInType || '';
     data['is_gift'] = isGiftBoxSelected ? 1 : 0;
-
+    data['specific_instructions'] = instruction;
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
     }
     if (!!selectedTipAmount) {
       data['tip'] = selectedTipAmount || '';
     }
-    console.log(data, '_directOrderPlace>_directOrderPlace');
+
+   
     placeOrderData(data);
   };
 
+
   const placeOrderData = (data) => {
     console.log('Sending data', data);
+    if (!!instruction) {
+      setDateAndTimeSchedule()
+    }
+
 
     actions
       .placeOrder(data, {
@@ -928,6 +1133,7 @@ function Cart({ navigation, route }) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        actions.reloadData(!reloadData);
         setSelectedTipvalue(null);
         setPickupDriverComment(null);
         setDropOffDriverComment(null);
@@ -943,7 +1149,16 @@ function Cart({ navigation, route }) {
         });
         console.log('paymebnt res', res);
         checkPaymentOptions(res);
-        if (selectedPayment?.id != 17) {
+        if (
+          selectedPayment?.id != 32 &&
+          selectedPayment?.id != 17 &&
+          selectedPayment?.id != 4 &&
+          selectedPayment?.id != 27 &&
+          selectedPayment?.id != 26 &&
+          selectedPayment?.id != 30 &&
+          selectedPayment?.id != 29 &&
+          selectedPayment?.id != 34
+        ) {
           setCartItems([]);
           setCartData({});
           if (selectedPayment?.id == 1 || res?.data?.payable_amount == 0) {
@@ -996,11 +1211,13 @@ function Cart({ navigation, route }) {
                   ? false
                   : true,
             });
+            actions.reloadData(!reloadData);
             actions.cartItemQty({});
           } else {
             moveToNewScreen(navigationStrings.ORDERSUCESS, {
               orderDetail: res.data,
             })();
+            actions.reloadData(!reloadData);
             setCartItems([]);
             setCartData({});
 
@@ -1016,7 +1233,7 @@ function Cart({ navigation, route }) {
 
   // false, 'schedule', value
   const setDateAndTimeSchedule = (
-    toHitApiForPlaceOrder = false,
+    // toHitApiForPlaceOrder = false,
     dateType = scheduleType,
     scheduleDate = sheduledorderdate,
   ) => {
@@ -1026,15 +1243,21 @@ function Cart({ navigation, route }) {
 
     let data = {};
 
-    if (businessType == 'laundry' && toHitApiForPlaceOrder) {
+    if (businessType == 'laundry') {
       data['comment_for_pickup_driver'] = pickupDriverComment;
       data['comment_for_dropoff_driver'] = dropOffDriverComment;
       data['comment_for_vendor'] = vendorComment;
-      data['schedule_pickup'] = sheduledpickupdate
-        ? new Date(sheduledpickupdate).toISOString()
+      data['schedule_pickup'] = laundrySelectedPickupDate
+        ? laundrySelectedPickupDate
         : null;
-      data['schedule_dropoff'] = sheduleddropoffdate
-        ? new Date(sheduleddropoffdate).toISOString()
+      data['schedule_dropoff'] = laundrySelectedDropOffDate
+        ? laundrySelectedDropOffDate
+        : null;
+      data['slot'] = !!laundrySelectedPickupSlot
+        ? laundrySelectedPickupSlot
+        : null;
+      data['dropoff_scheduled_slot'] = !!laundrySelectedDropOffSlot
+        ? laundrySelectedDropOffSlot
         : null;
     } else {
       data['task_type'] = !!selectedTimeSlots ? 'schedule' : dateType;
@@ -1055,11 +1278,12 @@ function Cart({ navigation, route }) {
             ? new Date(scheduleDate).toISOString()
             : null;
       }
-      data['comment_for_vendor'] = instruction;
+      data['specific_instructions'] = instruction;
       data['slot'] = selectedTimeSlots;
     }
 
-    console.log(data, 'setDateAndTimeSchedule>>>DATA');
+    console.log(data, 'fsdjkhfkjshfkjahsdkjfhak');
+
     // updateState({isLoading: false});
     actions
       .scheduledOrder(data, {
@@ -1092,9 +1316,11 @@ function Cart({ navigation, route }) {
     //   _offineLinePayment();
     //   return;
     // }
-    console.log("payment option", selectedPayment)
+    console.log('payment option', selectedPayment);
 
-    if (selectedPayment?.id == 10 && selectedPayment?.off_site == 0 &&
+    if (
+      selectedPayment?.id == 10 &&
+      selectedPayment?.off_site == 0 &&
       !!(
         Number(cartData?.total_payable_amount) + Number(selectedTipAmount) !==
         0
@@ -1139,13 +1365,36 @@ function Cart({ navigation, route }) {
     // }
     // _offineLinePayment();
   };
+
+  const formatDateSlot = (date, time) => {
+    return moment(`${date} ${time}`, 'YYYY-MM-DD HH:mm:ss').format();
+  };
+
   //Clear cart
   const placeOrder = () => {
     isFAQsSubmitted = true;
-
     if (!!userData?.auth_token) {
+      if (businessType == 'laundry') {
+        const pickupTime = laundrySelectedPickupSlot.split('-')[0];
+        const dropTime = laundrySelectedDropOffSlot.split('-')[0];
+        const formattedPickup = formatDateSlot(
+          laundrySelectedPickupDate,
+          pickupTime,
+        );
+        const formattedDrop = formatDateSlot(
+          laundrySelectedDropOffDate,
+          dropTime,
+        );
+
+        if (formattedPickup >= formattedDrop) {
+          showError('Drop off date time must be greater then pickup date time');
+          return;
+        }
+      }
+
       if (
         !!cartData?.closed_store_order_scheduled &&
+        cartData?.products[0]?.vendor?.is_vendor_closed &&
         !localeSheduledOrderDate
       ) {
         showInfo(strings.SCHEDULE_DATE_REQUIRED);
@@ -1174,7 +1423,7 @@ function Cart({ navigation, route }) {
         return;
       }
 
-      if (cartData?.category_kyc_count > 0) {
+      if (cartData?.without_category_kyc === 0) {
         showError('Please submit KYC form!');
         return;
       }
@@ -1202,10 +1451,13 @@ function Cart({ navigation, route }) {
       // }
 
       console.log('shceduleORderdata', sheduledorderdate);
-      if (!selectedAddressData) {
-        // showError(strings.PLEASE_SELECT_ADDRESS);
-        setModalVisible(true);
-      } else if (!selectedPayment) {
+      if((vendorAddress?.address && dineInType != 'delivery')){
+        if (!selectedAddressData) {
+          // showError(strings.PLEASE_SELECT_ADDRESS);
+          setModalVisible(true);
+        }
+      }
+       else if (!selectedPayment) {
         errorMethod(strings.PLEASE_SELECT_PAYMENT_METHOD);
       } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
         errorMethod(strings.INVALID_SCHEDULED_DATE);
@@ -1338,8 +1590,8 @@ function Cart({ navigation, route }) {
     console.log(returnUrl, 'returnUrl');
     console.log(cancelUrl, 'cancelUrl');
     let queryData = `/${selectedMethod}?tip=${selectedTipAmount && selectedTipAmount != ''
-      ? Number(selectedTipAmount)
-      : 0
+        ? Number(selectedTipAmount)
+        : 0
       }&amount=${(
         Number(cartData?.total_payable_amount) +
         (selectedTipAmount != null && selectedTipAmount != ''
@@ -1390,7 +1642,7 @@ function Cart({ navigation, route }) {
       })
       .catch(errorMethod);
   };
-
+  console.log(cartData, 'cartDataaaaa');
   // const _createPaymentMethod = async (cardInfo, res2) => {
   //   console.log(cardInfo, '_createPaymentMethod>>>ardInfo');
   //   if (res2) {
@@ -1736,7 +1988,6 @@ function Cart({ navigation, route }) {
       errorMethod(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }
   };
-
   const _renderRazor = () => {
     updateState({ isLoadingB: true });
     let options = {
@@ -1824,28 +2075,50 @@ function Cart({ navigation, route }) {
   };
 
   const selectOrderDate = () => {
-    if (availableTimeSlots.length > 0 || cartData.slots.length > 0) {
-      if (selectedDateFromCalendar == '' || selectedTimeSlots == '') {
-        alert('Please select date and time slots');
+    if (businessType == 'laundry') {
+      if (
+        modalType == 'pickup' &&
+        (!laundrySelectedPickupDate || !laundrySelectedPickupSlot)
+      ) {
+        alert('Please select pickup date and time slots');
+        return;
+      }
+      if (
+        modalType !== 'pickup' &&
+        (!laundrySelectedDropOffDate || !laundrySelectedDropOffSlot)
+      ) {
+        alert('Please select drop-off date and time slots');
         return;
       } else {
-        // let formatDate = new Date(selectedDateFromCalendar);
-        const date = selectedDateFromCalendar;
-        const time = selectedTimeSlots.split('-')[0];
-        const formatDate = moment(
-          `${date} ${time}`,
-          'YYYY-MM-DD HH:mm:ss',
-        ).format();
-        console.log('formate date', moment(new Date(formatDate)).format('lll'));
-        setLocaleSheduledOrderDate(moment(new Date(formatDate)).format('lll'));
+        onClose();
+        setDateAndTimeSchedule();
+        return;
       }
-    }
+    } else {
+      if (availableTimeSlots.length > 0 || cartData.slots.length > 0) {
+        if (selectedDateFromCalendar == '' || selectedTimeSlots == '') {
+          alert(strings.PLEASE_SELECT_DATETIME_SLOTS);
+          return;
+        } else {
+          // let formatDate = new Date(selectedDateFromCalendar);
+          const date = selectedDateFromCalendar;
+          const time = selectedTimeSlots.split('-')[0];
+          const formatDate = moment(
+            `${date} ${time}`,
+            'YYYY-MM-DD HH:mm:ss',
+          ).format();
+          setLocaleSheduledOrderDate(
+            moment(new Date(formatDate)).format('lll'),
+          );
+        }
+      }
 
-    onClose();
-    if (modalType != 'schedule' && businessType != 'laundry') {
-      setScheduleType('schedule');
+      onClose();
+      if (modalType != 'schedule' && businessType != 'laundry') {
+        setScheduleType('schedule');
+      }
+      setDateAndTimeSchedule();
     }
-    setDateAndTimeSchedule();
   };
 
   function makeid(length) {
@@ -2010,7 +2283,22 @@ function Cart({ navigation, route }) {
       </TouchableOpacity>
     );
   };
+  const _redirectVendorProducts = (item) => {
+    console.log(item, 'itemmmmm');
 
+    moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+      fetchOffers: true,
+      id: item?.vendor?.id,
+      vendor:
+        item.redirect_to == staticStrings.ONDEMANDSERVICE
+          ? false
+          : item.redirect_to == staticStrings.PRODUCT
+            ? false
+            : true,
+      name: item?.vendor?.name,
+      isVendorList: false,
+    })();
+  };
   const onModalDropDown = () => {
     setSelTypes(val?.code);
   };
@@ -2168,16 +2456,19 @@ function Cart({ navigation, route }) {
               // paddingHorizontal: moderateScale(8),
               flexDirection: 'column',
             }}>
-            <Text
-              numberOfLines={1}
-              style={{
-                ...styles.priceItemLabel2,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              }}>
-              {item?.vendor?.name}
-            </Text>
+            <TouchableOpacity onPress={() => _redirectVendorProducts(item)}>
+              <Text
+                numberOfLines={1}
+                style={{
+                  ...styles.priceItemLabel2,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
+                {item?.vendor?.name}
+              </Text>
+            </TouchableOpacity>
 
-            {!!cartData?.closed_store_order_scheduled ? (
+            {!!cartData?.closed_store_order_scheduled &&
+              !!item?.vendor?.is_vendor_closed ? (
               <Text
                 style={{
                   ...styles.priceItemLabel2,
@@ -2346,7 +2637,7 @@ function Cart({ navigation, route }) {
                                   )
                                   }`}
                               </Text>{' '}
-                              X {i?.quantity} ={' '}
+                              {i?.quantity}X ={' '}
                               <Text
                                 style={{
                                   color: isDarkMode
@@ -2461,7 +2752,7 @@ function Cart({ navigation, route }) {
                                           {j.addon_title}{' '}
                                           {`(${j.option_title})`} ={' '}
                                           {`${currencies?.primary_currency
-                                            ?.symbol
+                                              ?.symbol
                                             }${currencyNumberFormatter(
                                               Number(j.price),
                                               appData?.profile?.preferences
@@ -2588,9 +2879,9 @@ function Cart({ navigation, route }) {
                           color: colors.redFireBrick,
                           marginBottom: moderateScale(3),
                         }}>{`${i?.product.delay_order_hrs > 0 ||
-                          i?.product.delay_order_min > 0
-                          ? strings.PREPARATION_TIME_IS
-                          : ''
+                            i?.product.delay_order_min > 0
+                            ? strings.PREPARATION_TIME_IS
+                            : ''
                           }${i?.product.delay_order_hrs > 0
                             ? ` ${i?.product.delay_order_hrs} hrs`
                             : ''
@@ -2769,64 +3060,107 @@ function Cart({ navigation, route }) {
               </View>
             )}
 
-            {!!item?.delivery_types && item?.delivery_types?.length > 0 ? (
-              <Text
-                style={{
-                  ...styles.priceItemLabel,
-                  color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.textGreyB,
-                  marginBottom: moderateScaleVertical(8),
-                }}>
-                {strings.DELIVERY_CHARGES}:
-              </Text>
-            ) : null}
-
-            {!!item?.delivery_types && item?.delivery_types.length > 0 ? (
-              <ModalDropdown
-                multipleSelect={false}
-                options={item?.delivery_types}
-                renderRow={(val) => renderDropDown(val, item)}
-                dropdownStyle={{
-                  minWidth: '40%',
-                  // minHeight: 50,
-                  paddingHorizontal: moderateScale(6),
-                  paddingVertical: moderateScaleVertical(12),
-                }}>
-                <View
-                  style={{
-                    ...styles.deliveryFeeDropDown,
-                    borderColor: themeColors.primary_color,
-                  }}>
-                  <Text style={styles.dropDownTextStyle}>
-                    {
-                      item?.delivery_types.filter(
-                        (val2) => (sel_types || item?.sel_types) == val2?.code,
-                      )[0]?.courier_name
-                    }
-                  </Text>
+            {appIds?.meatEasy == DeviceInfo.getBundleId() ? (
+              <View style={styles.itemPriceDiscountTaxView}>
+                {!!item?.delivery_types && item?.delivery_types?.length > 0 ? (
                   <Text
                     style={{
-                      ...styles.dropDownTextStyle,
-                      marginHorizontal: moderateScale(8),
+                      ...styles.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      marginBottom: moderateScaleVertical(8),
                     }}>
-                    {
-                      item?.delivery_types.filter(
-                        (val2) => (sel_types || item?.sel_types) == val2?.code,
-                      )[0]?.rate
-                    }
+                    {strings.DELIVERY_CHARGES}:
                   </Text>
-                  <FastImage
+                ) : null}
+
+                {!!item?.delivery_types && item?.delivery_types.length > 0 ? (
+                  <Text
+                    style={
+                      isDarkMode
+                        ? [
+                          styles.priceItemLabel,
+                          {
+                            color: MyDarkTheme.colors.text,
+                          },
+                        ]
+                        : styles.priceItemLabel
+                    }>{`${currencies?.primary_currency?.symbol
+                      }${currencyNumberFormatter(
+                        Number(
+                          item?.delivery_types.filter(
+                            (val2) => (sel_types || item?.sel_types) == val2?.code,
+                          )[0]?.rate,
+                        ),
+                        appData?.profile?.preferences?.digit_after_decimal,
+                      )}`}</Text>
+                ) : null}
+              </View>
+            ) : (
+              <>
+                {!!item?.delivery_types && item?.delivery_types?.length > 0 ? (
+                  <Text
                     style={{
-                      width: moderateScale(10),
-                      height: moderateScale(10),
-                    }}
-                    source={imagePath.icDropdown4}
-                    resizeMode="contain"
-                  />
-                </View>
-              </ModalDropdown>
-            ) : null}
+                      ...styles.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      marginBottom: moderateScaleVertical(8),
+                    }}>
+                    {strings.DELIVERY_CHARGES}:
+                  </Text>
+                ) : null}
+
+                {!!item?.delivery_types && item?.delivery_types.length > 0 ? (
+                  <ModalDropdown
+                    multipleSelect={false}
+                    options={item?.delivery_types}
+                    renderRow={(val) => renderDropDown(val, item)}
+                    dropdownStyle={{
+                      minWidth: '40%',
+                      // minHeight: 50,
+                      paddingHorizontal: moderateScale(6),
+                      paddingVertical: moderateScaleVertical(12),
+                    }}>
+                    <View
+                      style={{
+                        ...styles.deliveryFeeDropDown,
+                        borderColor: themeColors.primary_color,
+                      }}>
+                      <Text style={styles.dropDownTextStyle}>
+                        {
+                          item?.delivery_types.filter(
+                            (val2) =>
+                              (sel_types || item?.sel_types) == val2?.code,
+                          )[0]?.courier_name
+                        }
+                      </Text>
+                      <Text
+                        style={{
+                          ...styles.dropDownTextStyle,
+                          marginHorizontal: moderateScale(8),
+                        }}>
+                        {
+                          item?.delivery_types.filter(
+                            (val2) =>
+                              (sel_types || item?.sel_types) == val2?.code,
+                          )[0]?.rate
+                        }
+                      </Text>
+                      <FastImage
+                        style={{
+                          width: moderateScale(10),
+                          height: moderateScale(10),
+                        }}
+                        source={imagePath.icDropdown4}
+                        resizeMode="contain"
+                      />
+                    </View>
+                  </ModalDropdown>
+                ) : null}
+              </>
+            )}
 
             {/* <View style={styles.itemPriceDiscountTaxView}>
               <Text
@@ -3243,6 +3577,8 @@ function Cart({ navigation, route }) {
     updateState({ isGiftBoxSelected: !isGiftBoxSelected });
   };
 
+  // {console.log(preferences,"preferences>>>>")}
+
   //get footer start
   const getFooter = () => {
     return (
@@ -3276,6 +3612,7 @@ function Cart({ navigation, route }) {
             isDarkMode ? colors.textGreyB : colors.textGreyB
           }
           placeholder={strings.SPECIAL_INSTRUCTION}
+          returnKeyType={'next'}
         />
         {/* <View style={{ height: moderateScaleVertical(20) }} /> */}
 
@@ -3457,18 +3794,24 @@ function Cart({ navigation, route }) {
                     }>
                     {strings.SCEDULEPICKUP}
                   </Text>
-                  {localePickupDate && (
+                  {/* Schedule Pickup */}
+                  {laundrySelectedPickupDate && (
                     <Text
                       numberOfLines={2}
-                      style={
-                        isDarkMode
-                          ? [
-                            styles.LaundryApppriceItemLabel3,
-                            { color: MyDarkTheme.colors.text },
-                          ]
-                          : styles.LaundryApppriceItemLabel3
-                      }>
-                      {localePickupDate ? localePickupDate : ''}
+                      style={{
+                        ...styles.LaundryApppriceItemLabel3,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        marginLeft: 0,
+                      }}>
+                      {laundrySelectedPickupDate
+                        ? laundrySelectedPickupDate
+                        : ''}
+                      {', '}
+                      {laundrySelectedPickupSlot
+                        ? laundrySelectedPickupSlot
+                        : ''}
                     </Text>
                   )}
                 </View>
@@ -3491,7 +3834,7 @@ function Cart({ navigation, route }) {
                     {strings.SCEDULEDROP}
                   </Text>
 
-                  {localeDropOffDate && (
+                  {!!(businessType !== 'laundry' && localeDropOffDate) && (
                     <Text
                       numberOfLines={2}
                       style={
@@ -3505,6 +3848,26 @@ function Cart({ navigation, route }) {
                       {localeDropOffDate
                         ? localeDropOffDate
                         : strings.SCEDULEDROP}
+                    </Text>
+                  )}
+
+                  {laundrySelectedDropOffDate && (
+                    <Text
+                      numberOfLines={2}
+                      style={{
+                        ...styles.LaundryApppriceItemLabel3,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        marginLeft: 0,
+                      }}>
+                      {laundrySelectedDropOffDate
+                        ? laundrySelectedDropOffDate
+                        : ''}
+                      {', '}
+                      {laundrySelectedDropOffSlot
+                        ? laundrySelectedDropOffSlot
+                        : ''}
                     </Text>
                   )}
                 </View>
@@ -3531,9 +3894,9 @@ function Cart({ navigation, route }) {
                     ? [styles.priceTipLabel, { color: MyDarkTheme.colors.text }]
                     : [styles.priceTipLabel]
                 }>
-                {preferences?.want_to_tip != '' &&
-                  preferences?.want_to_tip != null
-                  ? preferences?.want_to_tip
+                {preferences?.want_to_tip_nomenclature != '' &&
+                  preferences?.want_to_tip_nomenclature != null
+                  ? preferences?.want_to_tip_nomenclature
                   : strings.DOYOUWANTTOGIVEATIP}
               </Text>
               <ScrollView
@@ -3742,7 +4105,9 @@ function Cart({ navigation, route }) {
                   ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                   : styles.priceItemLabel
               }>
-              {strings.TOTAL_DELIVERY_FEE}
+              {appIds?.meatEasy == DeviceInfo.getBundleId()
+                ? strings?.DELIVERY_FEE
+                : strings.TOTAL_DELIVERY_FEE}
             </Text>
             <Text
               style={
@@ -3777,6 +4142,26 @@ function Cart({ navigation, route }) {
               }>{`${currencies?.primary_currency?.symbol
                 }${currencyNumberFormatter(
                   Number(cartData?.wallet_amount ? cartData?.wallet_amount : 0),
+                  appData?.profile?.preferences?.digit_after_decimal,
+                )}`}</Text>
+          </View>
+        )}
+
+        {!!cartData?.total_discount_amount && (
+          <View style={styles.bottomTabLableValue}>
+            <Text style={styles.priceItemLabel}>{strings.TOTAL_DISCOUNT}</Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                  : styles.priceItemLabel
+              }>{`-${currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(
+                    cartData?.total_discount_amount
+                      ? cartData?.total_discount_amount
+                      : 0,
+                  ),
                   appData?.profile?.preferences?.digit_after_decimal,
                 )}`}</Text>
           </View>
@@ -4055,7 +4440,12 @@ function Cart({ navigation, route }) {
                   //  moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
                   navigation.navigate(navigationStrings.OUTER_SCREEN, {})
               }
-              style={styles.paymentMainView}>
+              style={{
+                ...styles.paymentMainView,
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.background
+                  : colors.greyNew,
+              }}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <FastImage
                   source={imagePath.paymentMethod}
@@ -4063,10 +4453,10 @@ function Cart({ navigation, route }) {
                   style={{
                     width: moderateScale(32),
                     height: moderateScale(32),
-                    tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
                   }}
+                  tintColor={
+                    isDarkMode ? MyDarkTheme.colors.text : colors.black
+                  }
                 />
 
                 <Text
@@ -4089,11 +4479,12 @@ function Cart({ navigation, route }) {
                   style={{
                     width: moderateScale(14),
                     height: moderateScale(14),
-                    tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
                     transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                   }}
+                  tintColor={
+                    isDarkMode ? MyDarkTheme.colors.text : colors.black
+                  }
+                  transform={[{ scaleX: I18nManager.isRTL ? -1 : 1 }]}
                 />
               </View>
             </TouchableOpacity>
@@ -4231,7 +4622,8 @@ function Cart({ navigation, route }) {
           style={{
             height: moderateScaleVertical(80),
             backgroundColor: colors.transparent,
-          }}></View>
+          }}
+        />
       </View>
     );
   };
@@ -4268,15 +4660,18 @@ function Cart({ navigation, route }) {
     }
     return value;
   };
+
+  console.log(vendorAddress, "vendorAddressvendorAddressvendorAddress");
   const getHeader = () => {
     return (
       <TouchableOpacity
-        disabled={!!vendorAddress}
+        disabled={dineInType == 'delivery' ? false : true}
         onPress={() => setModalVisible(true)}
         style={{
           ...styles.topLable,
           marginVertical: moderateScale(7),
           justifyContent: 'space-between',
+          backgroundColor: isDarkMode ? MyDarkTheme.colors.background : null,
         }}>
         <View style={{ flexDirection: 'row', flex: 0.85 }}>
           <FastImage
@@ -4570,12 +4965,12 @@ function Cart({ navigation, route }) {
                 height: moderateScale(120),
                 width: moderateScale(120),
               }}
-
+              tintColor={isDarkMode && colors.white}
             // resizeMode="contain"s
             />
           )}
 
-          <Text style={{ ...styles.textStyle }}>
+          <Text style={{ ...styles.textStyle, color: isDarkMode ? colors.white : colors.blackOpacity40 }}>
             {strings.YOUR_CART_EMPTY_ADD_ITEMS}
           </Text>
         </View>
@@ -4761,7 +5156,8 @@ function Cart({ navigation, route }) {
               marginTop: moderateScaleVertical(10),
               alignSelf: 'center',
             }}
-            isRight={false}
+
+          // resizeMode="contain"s
           />
           {renderCardItemLoader()}
           {renderCardItemLoader()}
@@ -4914,7 +5310,25 @@ function Cart({ navigation, route }) {
   };
 
   const checkVendorSlots = async (date) => {
-    console.log('vendro slot date', date);
+    if (modalType !== 'pickup') {
+      try {
+        let vendorId = cartItems[0].vendor.id;
+        // vendor_id,date,delivery
+        const res = await actions.getVendorDropoffSlots(
+          `?vendor_id=${vendorId}&date=${date}&delivery=${dineInType}`,
+          {},
+          {
+            code: appData?.profile?.code,
+            timezone: RNLocalize.getTimeZone(),
+          },
+        );
+        setLaundryAvailableDropOffSlot(res);
+      } catch (error) {
+        console.log('error riased', error);
+      }
+      return;
+    }
+
     try {
       let vendorId = cartItems[0].vendor.id;
       // vendor_id,date,delivery
@@ -4930,6 +5344,9 @@ function Cart({ navigation, route }) {
         },
       );
       console.log('avail slots++', res);
+      if (modalType == 'pickup') {
+        setLaundryAvailablePickupSlot(res);
+      }
       setAvailableTimeSlots(res);
       if (res.length == 0) {
         setSelectedTimeSlots('');
@@ -4939,8 +5356,15 @@ function Cart({ navigation, route }) {
     }
   };
   const onSelectTime = (item) => {
-    console.log('sleecte time slots', item);
-    setSelectedTimeSlots(item?.value);
+    if (businessType == 'laundry') {
+      if (modalType == 'pickup') {
+        setLaundrySelectedPickupSlot(item?.value);
+      } else {
+        setLaundrySelectedDropOffSlot(item?.value);
+      }
+    } else {
+      setSelectedTimeSlots(item?.value);
+    }
   };
 
   const onSelectPayment = (data) => {
@@ -4957,6 +5381,30 @@ function Cart({ navigation, route }) {
     }
   };
 
+  const isSlotSelected = (item) => {
+    if (selectedTimeSlots == item.value) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const isSlotSelected1 = (item) => {
+    if (laundrySelectedPickupSlot == item.value) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const isSlotSelected2 = (item) => {
+    if (laundrySelectedDropOffSlot == item.value) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const renderTimeSlots = ({ item, index }) => {
     return (
       <TouchableOpacity
@@ -4964,18 +5412,44 @@ function Cart({ navigation, route }) {
         activeOpacity={0.8}
         onPress={() => onSelectTime(item)}
         style={{
-          backgroundColor:
-            selectedTimeSlots == item.value
-              ? themeColors.primary_color
-              : colors.white,
+          backgroundColor: isSlotSelected1(item)
+            ? themeColors.primary_color
+            : colors.white,
           padding: 8,
           borderRadius: 8,
-          borderWidth: selectedTimeSlots == item.value ? 0 : 1,
+          borderWidth: isSlotSelected1(item) ? 0 : 1,
+          borderColor: colors.borderColorGrey,
         }}>
         <Text
           style={{
-            color:
-              selectedTimeSlots == item.value ? colors.white : colors.black,
+            color: isSlotSelected1(item) ? colors.white : colors.black,
+            fontFamily: fontFamily.regular,
+            fontSize: textScale(11),
+          }}>
+          {item?.value}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderTimeSlots2 = ({ item, index }) => {
+    return (
+      <TouchableOpacity
+        key={String(index)}
+        activeOpacity={0.8}
+        onPress={() => onSelectTime(item)}
+        style={{
+          backgroundColor: isSlotSelected2(item)
+            ? themeColors.primary_color
+            : colors.white,
+          padding: 8,
+          borderRadius: 8,
+          borderWidth: isSlotSelected2(item) ? 0 : 1,
+          borderColor: colors.borderColorGrey,
+        }}>
+        <Text
+          style={{
+            color: isSlotSelected2(item) ? colors.white : colors.black,
             fontFamily: fontFamily.regular,
             fontSize: textScale(11),
           }}>
@@ -4991,6 +5465,19 @@ function Cart({ navigation, route }) {
     setScheduleType('schedule');
     setModalType('schedule');
     setSheduledorderdate(day.dateString);
+    checkVendorSlots(day.dateString);
+  };
+
+  const laundrySlotSelection = (day) => {
+    if (modalType == 'pickup') {
+      setLaundrySelectedPickupDate(day.dateString);
+      setLaundrySelectedPickupSlot('');
+    } else {
+      setLaundrySelectedDropOffDate(day.dateString);
+      setLaundrySelectedDropOffSlot('');
+    }
+    // setScheduleType('schedule');
+    // setModalType('schedule');
     checkVendorSlots(day.dateString);
   };
 
@@ -5497,6 +5984,18 @@ function Cart({ navigation, route }) {
     );
   };
 
+  const onCloseModal = () => {
+    setLaundrySelectedPickupSlot('');
+    setLaundrySelectedDropOffSlot('');
+    setLaundrySelectedDropOffDate(null);
+    setLaundrySelectedPickupDate(null);
+    setLaundryAvailablePickupSlot([]);
+    setLaundryAvailableDropOffSlot([]);
+    updateState({
+      isVisibleTimeModal: false,
+    });
+  };
+
   // Category KYC end
 
   return (
@@ -5523,7 +6022,12 @@ function Cart({ navigation, route }) {
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => String(index)}
         renderItem={_renderItem}
-        style={{ flex: 1, backgroundColor: colors.backgroundGrey }}
+        style={{
+          flex: 1,
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.backgroundGrey,
+        }}
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}
@@ -5575,7 +6079,7 @@ function Cart({ navigation, route }) {
         onLayout={(event) => {
           setViewHeight(event.nativeEvent.layout.height);
         }}>
-        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+        <TouchableOpacity style={styles.closeButton} onPress={onCloseModal}>
           <Image
             style={isDarkMode && { tintColor: MyDarkTheme.colors.white }}
             source={imagePath.crossB}
@@ -5593,14 +6097,12 @@ function Cart({ navigation, route }) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             bounces={false}
-            style={
-              isDarkMode
-                ? [
-                  styles.modalMainViewContainer,
-                  { backgroundColor: MyDarkTheme.colors.lightDark },
-                ]
-                : styles.modalMainViewContainer
-            }>
+            style={{
+              ...styles.modalMainViewContainer,
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.white,
+            }}>
             <View
               style={{
                 // flex: 0.6,
@@ -5609,71 +6111,168 @@ function Cart({ navigation, route }) {
                 marginTop: 10,
               }}>
               <Text
-                style={
-                  isDarkMode
-                    ? [styles.carType, { color: MyDarkTheme.colors.text }]
-                    : styles.carType
-                }>
+                style={{
+                  ...styles.carType,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.blackC,
+                }}>
                 {strings.SELECTDATEANDTIME}
               </Text>
             </View>
 
-            {businessType == 'laundry' && modalType != 'schedule' ? (
-              <View
-                style={{
-                  alignItems: 'center',
-                  // height: height / 3.5,
-                }}>
-                {modalType == 'pickup' ? (
-                  <DatePicker
-                    locale={selectedLanguage}
-                    date={
-                      sheduledpickupdate
-                        ? new Date(sheduledpickupdate)
-                        : new Date()
-                    }
-                    textColor={isDarkMode ? colors.white : colors.blackB}
-                    mode="datetime"
-                    minimumDate={
-                      !!cartData?.pickup_delay_date
-                        ? new Date(cartData?.pickup_delay_date)
-                        : new Date()
-                    }
-                    maximumDate={undefined}
-                    // style={styles.datetimePickerText}
-                    // onDateChange={setDate}
-                    onDateChange={(value) => onDateChangeSecond(value)}
-                  />
-                ) : (
-                  <DatePicker
-                    locale={selectedLanguage}
-                    date={
-                      sheduleddropoffdate
-                        ? new Date(sheduleddropoffdate)
-                        : new Date()
-                    }
-                    textColor={isDarkMode ? colors.white : colors.blackB}
-                    mode="datetime"
-                    minimumDate={
-                      !!cartData?.dropoff_delay_date
-                        ? new Date(cartData?.dropoff_delay_date)
-                        : new Date()
-                    }
-                    maximumDate={undefined}
-                    // style={styles.datetimePickerText}
-                    // onDateChange={setDate}
-                    onDateChange={(value) => onDateChangeSecond(value)}
-                  />
-                )}
+            {businessType == 'laundry' ? (
+              <View>
+                <Fragment>
+                  <ScrollView>
+                    {modalType == 'pickup' ? (
+                      <Calendar
+                        current={
+                          cartData?.same_day_delivery_for_schedule
+                            ? new Date()
+                            : dayAfterToday
+                        }
+                        minDate={
+                          !!minimumDelayVendorDate
+                            ? minimumDelayVendorDate
+                            : cartData?.same_day_delivery_for_schedule
+                              ? new Date()
+                              : dayAfterToday
+                        }
+                        onDayPress={laundrySlotSelection}
+                        markedDates={{
+                          [laundrySelectedPickupDate]: {
+                            selected: true,
+                            disableTouchEvent: true,
+                            selectedColor: themeColors.primary_color,
+                            selectedTextColor: colors.white,
+                          },
+                        }}
+                        theme={{
+                          arrowColor: themeColors.primary_color,
+                          textDayFontFamily: fontFamily.medium,
+                          textMonthFontFamily: fontFamily.medium,
+                          textDayHeaderFontFamily: fontFamily.bold,
+                        }}
+                      />
+                    ) : (
+                      <Calendar
+                        current={
+                          cartData?.same_day_delivery_for_schedule
+                            ? new Date()
+                            : dayAfterToday
+                        }
+                        minDate={
+                          !!minimumDelayVendorDate
+                            ? minimumDelayVendorDate
+                            : cartData?.same_day_delivery_for_schedule
+                              ? new Date()
+                              : dayAfterToday
+                        }
+                        onDayPress={laundrySlotSelection}
+                        markedDates={{
+                          [laundrySelectedDropOffDate]: {
+                            selected: true,
+                            disableTouchEvent: true,
+                            selectedColor: themeColors.primary_color,
+                            selectedTextColor: colors.white,
+                          },
+                        }}
+                        theme={{
+                          arrowColor: themeColors.primary_color,
+                          textDayFontFamily: fontFamily.medium,
+                          textMonthFontFamily: fontFamily.medium,
+                          textDayHeaderFontFamily: fontFamily.bold,
+                        }}
+                      />
+                    )}
+
+                    {modalType == 'pickup' ? (
+                      <View>
+                        <Text
+                          style={{
+                            marginHorizontal: moderateScale(24),
+                            fontFamily: fontFamily.medium,
+                            fontSize: textScale(12),
+                            marginBottom: moderateScaleVertical(8),
+                          }}>
+                          {strings.TIME_SLOT}
+                        </Text>
+                        <FlatList
+                          horizontal
+                          showsHorizontalScrollIndicator={false}
+                          data={laundryAvailablePickupSlot || []}
+                          renderItem={renderTimeSlots}
+                          keyExtractor={(item) => item.value || ''}
+                          ItemSeparatorComponent={() => (
+                            <View style={{ marginRight: moderateScale(12) }} />
+                          )}
+                          ListHeaderComponent={() => (
+                            <View style={{ marginLeft: moderateScale(24) }} />
+                          )}
+                          ListFooterComponent={() => (
+                            <View style={{ marginRight: moderateScale(24) }} />
+                          )}
+                          ListEmptyComponent={() => (
+                            <View>
+                              <Text
+                                style={{
+                                  fontFamily: fontFamily.medium,
+                                  color: colors.blackOpacity66,
+                                }}>
+                                {!laundrySelectedPickupDate
+                                  ? ' Please select date.'
+                                  : ' Slots are not found for selected date.'}
+                              </Text>
+                            </View>
+                          )}
+                        />
+                      </View>
+                    ) : (
+                      <View>
+                        <Text
+                          style={{
+                            marginHorizontal: moderateScale(24),
+                            fontFamily: fontFamily.medium,
+                            fontSize: textScale(12),
+                            marginBottom: moderateScaleVertical(8),
+                          }}>
+                          {strings.TIME_SLOT}
+                        </Text>
+                        <FlatList
+                          horizontal
+                          showsHorizontalScrollIndicator={false}
+                          data={laundryAvailableDropOffSlot || []}
+                          renderItem={renderTimeSlots2}
+                          keyExtractor={(item) => item.value || ''}
+                          ItemSeparatorComponent={() => (
+                            <View style={{ marginRight: moderateScale(12) }} />
+                          )}
+                          ListHeaderComponent={() => (
+                            <View style={{ marginLeft: moderateScale(24) }} />
+                          )}
+                          ListFooterComponent={() => (
+                            <View style={{ marginRight: moderateScale(24) }} />
+                          )}
+                          ListEmptyComponent={() => (
+                            <View>
+                              <Text
+                                style={{
+                                  fontFamily: fontFamily.medium,
+                                  color: colors.blackOpacity66,
+                                }}>
+                                {!laundrySelectedDropOffDate
+                                  ? ' Please select date.'
+                                  : ' Slots are not found for selected date.'}
+                              </Text>
+                            </View>
+                          )}
+                        />
+                      </View>
+                    )}
+                  </ScrollView>
+                </Fragment>
               </View>
             ) : (
-              <View
-                style={
-                  {
-                    // alignItems: 'center',
-                    // height: height / 4,
-                  }
-                }>
+              <View>
                 {(!!availableTimeSlots && availableTimeSlots.length > 0) ||
                   (!!cartData &&
                     !!cartData?.slots &&
@@ -5723,6 +6322,7 @@ function Cart({ navigation, route }) {
                           data={availableTimeSlots || []}
                           renderItem={renderTimeSlots}
                           keyExtractor={(item) => item.value || ''}
+                          showsHorizontalScrollIndicator={false}
                           ItemSeparatorComponent={() => (
                             <View style={{ marginRight: moderateScale(12) }} />
                           )}
@@ -5739,7 +6339,7 @@ function Cart({ navigation, route }) {
                                   fontFamily: fontFamily.medium,
                                   color: colors.redB,
                                 }}>
-                                Slot not available please select another date
+                                {strings.SLOT_NOT_AVAILABAL}
                               </Text>
                             </View>
                           )}
@@ -5828,6 +6428,7 @@ function Cart({ navigation, route }) {
         }}>
         {renderCategoryKYC()}
       </Modal>
+
       <ActionSheet
         ref={actionSheet}
         // title={'Choose one option'}
@@ -5836,6 +6437,49 @@ function Cart({ navigation, route }) {
         destructiveButtonIndex={2}
         onPress={(index) => cameraHandle(index)}
       />
+      <Modal
+        onBackdropPress={() =>
+          updateState({
+            isModalVisibleForPayFlutterWave: false,
+            placeLoader: false,
+          })
+        }
+        isVisible={isModalVisibleForPayFlutterWave}
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end',
+          // marginBottom: 20,
+        }}>
+        <View
+          style={{
+            padding: moderateScale(20),
+            backgroundColor: colors?.white,
+            height: height / 8,
+            justifyContent: 'flex-end',
+          }}>
+          <PayWithFlutterwave
+            onAbort={() =>
+              updateState({
+                isModalVisibleForPayFlutterWave: false,
+                placeLoader: false,
+              })
+            }
+            onRedirect={handleOnRedirect}
+            options={{
+              tx_ref: generateTransactionRef(10),
+              authorization:
+                appData?.profile?.preferences?.flutterwave_public_key,
+              customer: {
+                email: userData?.email,
+                name: userData?.name,
+              },
+              amount: paymentDataFlutterWave?.total_payable_amount,
+              currency: currencies?.primary_currency?.iso_code,
+              payment_options: 'card',
+            }}
+          />
+        </View>
+      </Modal>
     </WrapperContainer>
   );
 }

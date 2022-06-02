@@ -171,7 +171,44 @@ export default ({
       paddingHorizontal: moderateScale(10),
       borderBottomWidth: 0.5,
       marginBottom: moderateScaleVertical(4),
-    }
+    }, modalHeaderMainContainer: {
+      paddingHorizontal: moderateScale(20)
+    }, bookFriendText: {
+      fontSize: textScale(18.8),
+      marginTop: moderateScaleVertical(-10),
+      fontFamily: fontFamily?.bold
+    }, modalMainContainer: {
+      paddingVertical: moderateScaleVertical(20),
+      marginVertical: moderateScaleVertical(20),
+      paddingHorizontal: moderateScale(20)
+    }, textInputContainer: {
+      marginVertical: moderateScaleVertical(10),
+      borderColor: colors.textGreyB,
+      borderWidth: 1,
+    }, textInputStyle: {
+      height: moderateScaleVertical(30),
+      paddingTop: moderateScaleVertical(10)
+    }, phoneNumberTextInputLabel: {
+      color: colors.textGreyLight
+    }, phoneNumberInnerContainer: {
+      flexDirection: 'row',
+      alignItems: 'center'
+    }, countryPickerContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: moderateScale(88),
+    }, countryPickerInnerContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    }, callingCodeText: {
+      fontFamily: fontFamily.medium,
+      color: colors.textGreyOpcaity7,
+    }, phoneNumberInnput: {
+      borderColor: colors.textGreyB,
+      borderWidth: 1,
+      width: moderateScale(width / 1.6)
+    }, textInputStyle: { height: moderateScaleVertical(30), paddingTop: moderateScaleVertical(10) }
   });
   return styles;
 };

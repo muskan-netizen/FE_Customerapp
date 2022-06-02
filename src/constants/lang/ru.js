@@ -502,7 +502,8 @@ export default {
   RECOMMENDED_VENDORS: 'Рекомендуемые поставщики',
   YOUR_CART_EMPTY_ADD_ITEMS: 'Ваша корзина пуста, добавьте товары в магазин',
   SHOP_FROM_WISHLIST: 'Купить из списка желаний',
-  ALREADY_EXIST: 'У вас уже есть товары в корзине. Вы хотите их выбросить?',
+  ALREADY_EXIST:
+    'You already have items from another store. Do you want to discard them?',
   LABEL1: 'Этикетка 1',
   LABEL2: 'Этикетка 2',
   DOYOUHAVECLEANINGMATERIAL: ' Вам нужны чистящие средства?',
@@ -839,4 +840,11 @@ export default {
   ORDER_TOTAL: 'Order Total',
   ORDERS: 'Orders',
   ORDER_CANCELLED: 'Order Cancelled',
+  SPECIFIC_INSTRUCTIONS:'Specific Instructions',
+  THANKS_FOR_YOUR_PURCHASE:'Thanks for your purchase.',
+  BOOK_FOR_A_FRIEND: 'Book For a friend',
+  ENTER_FRIEND_DETAILS: "Enter your Friend's details",
+  BOOK_FOR_ME: 'Book For Me',
+  BOOK_FOR_FRIEND:'Book For Friend'
+
 };

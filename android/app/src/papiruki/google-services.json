@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "146453560969",
+    "project_id": "papiruki-d5c66",
+    "storage_bucket": "papiruki-d5c66.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:146453560969:android:5761582d3c1da12b5a9058",
+        "android_client_info": {
+          "package_name": "com.papiruki"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "146453560969-ajc9p3er0h3tgc2oup646d0u06n2j47v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.papiruki",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "146453560969-dt0r540i387jn2b23rmpo74u4m1vimdj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.papiruki",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "146453560969-vd8huh4f99696ks1irmc38f34a7efeu6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.papiruki",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "146453560969-t2fbdvccjavs53g39neld7cdcmlj8iot.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqfbE1ig_oG8HsMpsreM6_65wOfHQsIeE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "146453560969-t2fbdvccjavs53g39neld7cdcmlj8iot.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "146453560969-nmbbnj0esuhss0rt99kfmcag1985eung.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.papiruki"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,31 +1,30 @@
-import { useScrollToTop } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-  FlatList, Image, Platform,
+  FlatList,
+  Platform,
   RefreshControl,
   ScrollView,
   Text,
-  View
+  View,
+  Animated,
+  Image,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import AppLink from 'react-native-app-link';
 import { useDarkMode } from 'react-native-dark-mode';
-import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import {
-  Menu, MenuOption, MenuOptions, MenuTrigger
-} from 'react-native-popup-menu';
-import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
+import BlurImages from '../../../Components/BlurImages';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 import BannerLoader from '../../../Components/Loaders/BannerLoader';
 import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import SearchLoader from '../../../Components/Loaders/SearchLoader';
 import MarketCard3 from '../../../Components/MarketCard3';
 import ProductsComp from '../../../Components/ProductsComp';
-import imagePath from '../../../constants/imagePath';
+import SearchBar2 from '../../../Components/SearchBar2';
 import strings from '../../../constants/lang';
-import staticStrings from '../../../constants/staticStrings';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
 import {
@@ -33,15 +32,30 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width
+  width,
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
-import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import stylesFunc from '../styles';
+import { SvgUri } from 'react-native-svg';
 import {
   getColorCodeWithOpactiyNumber,
-  getImageUrl
+  getImageUrl,
+  getScaleTransformationStyle,
+  pressInAnimation,
+  pressOutAnimation,
 } from '../../../utils/helperFunctions';
-import stylesFunc from '../styles';
+import { useScrollToTop } from '@react-navigation/native';
+import staticStrings from '../../../constants/staticStrings';
+import imagePath from '../../../constants/imagePath';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+import { string } from 'is_js';
 
 export default function DashBoardFive({
   handleRefresh = () => { },
@@ -182,9 +196,9 @@ export default function DashBoardFive({
     const imageUrl = getImageUrl(
       item.image.image_fit,
       item.image.image_path,
-      appStyle?.homePageLayout === 5 ? '800/600' : '400/600',
+      appStyle?.homePageLayout === 5 ?  '800/600' : getBundleId()==appIds.masa ?'800/600' :'400/600',
     );
-
+     
     return (
       <TouchableOpacity activeOpacity={0.8} onPress={() => bannerPress(item)}>
         <FastImage
@@ -195,9 +209,9 @@ export default function DashBoardFive({
           }}
           style={{
             height:
-              appStyle?.homePageLayout == 5 ? moderateScale(140) : height / 3.8,
+              appStyle?.homePageLayout == 5 ? moderateScale(140) : getBundleId()==appIds.masa ?moderateScale(260):height / 3.8,
             width:
-              appStyle?.homePageLayout == 5 ? width / 1.2 : moderateScale(160),
+              appStyle?.homePageLayout == 5 ? width / 1.2 :getBundleId()==appIds.masa?width / 1.1: moderateScale(160),
             borderRadius: moderateScale(16),
             backgroundColor: isDarkMode
               ? colors.whiteOpacity15
@@ -282,6 +296,9 @@ export default function DashBoardFive({
                           style={{
                             fontSize: textScale(10),
                             fontFamily: fontFamily.regular,
+                            color: isDarkMode
+                              ? colors.black
+                              : colors.white,
                           }}>
                           {!seeMore ? strings.SEE_MORE : strings.SEE_LESS}
                         </Text>

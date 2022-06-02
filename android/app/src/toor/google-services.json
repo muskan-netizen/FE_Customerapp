@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "704878548584",
+    "project_id": "toor-97946",
+    "storage_bucket": "toor-97946.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:704878548584:android:c03bc1d35d3e40d0968ddd",
+        "android_client_info": {
+          "package_name": "com.app.toor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "704878548584-7avohrkdh2km72g7umm4r85sii3k61sp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.toor",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "704878548584-lahhe18un9sjq0fc8ikc51760eoepohm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.toor",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "704878548584-t2e21of3upsueloqlcjmu57a7e925hha.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.toor",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "704878548584-pg80ft8r8i448dfg5plm3j6nskkbfaoq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6jUn1HuR7f8E4pzKAVjBbaa39OpGCCq8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "704878548584-pg80ft8r8i448dfg5plm3j6nskkbfaoq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "704878548584-mmv5lclroihahuu0ed5sjg10014btbb9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.toor"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

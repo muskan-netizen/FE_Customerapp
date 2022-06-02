@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "848727796618",
+    "project_id": "valley-ece5b",
+    "storage_bucket": "valley-ece5b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:848727796618:android:6d6a66e94402c7d997b673",
+        "android_client_info": {
+          "package_name": "com.valley"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "848727796618-gafclr9vhf7vuuq2nb3mcjutdeu2d6ik.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.valley",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "848727796618-p66c1ndecic19hu840jduap174j2j52h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.valley",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "848727796618-tvj013fjitqk1gnhtmqha840s6mep8qr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.valley",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "848727796618-s8q93rb1ist7f61a4658rbm1b06apv4i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGZCfVGkDX9VJIpS-BA-prqKi-vzSfLwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "848727796618-s8q93rb1ist7f61a4658rbm1b06apv4i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "848727796618-rog7afamcifd3q2daqoo9mhiui1j7lid.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.valley"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

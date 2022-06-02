@@ -35,6 +35,7 @@ import {
   loaderOne,
 } from '../../Components/Loaders/AnimatedLoaderFiles';
 import RatingModal from '../../Components/RatingModal';
+import SpecificInstruction from '../../Components/SpecificInstruction';
 import StepIndicators from '../../Components/StepIndicator';
 import UserDetail from '../../Components/UserDetail';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -149,6 +150,8 @@ export default function OrderDetail({navigation, route}) {
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
+  const {preferences} = appData?.profile;
+
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
   const styles2 = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
@@ -964,6 +967,7 @@ export default function OrderDetail({navigation, route}) {
     );
   };
 
+  console.log(cartData,"cartData?.address?.addresscartData?.address?.address");
   const _renderItem = ({item, index}) => {
     return (
       <View
@@ -1703,23 +1707,39 @@ export default function OrderDetail({navigation, route}) {
             )}
 
             <View style={{marginLeft: moderateScale(12), flex: 1}}>
+              {cartData?.luxury_option_id ==3 ?
+               <Text
+               style={{
+                 ...styles.summaryText,
+                 fontSize: textScale(12),
+                 color: isDarkMode
+                   ? MyDarkTheme.colors.text
+                   : colors.blackOpacity43,
+                 flex: 1,
+               }}>
+                 { cartData?.vendors[0]?.vendor?.address }
+              
+             </Text>:
               <Text
-                style={{
-                  ...styles.summaryText,
-                  fontSize: textScale(12),
-                  color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.blackOpacity43,
-                  flex: 1,
-                }}>
-                {`${
-                  cartData?.address?.house_number === null
-                    ? ''
-                    : `${cartData?.address?.house_number}, `
-                }`}
-                {cartData?.address?.address} {''}
-                {cartData?.address?.pincode}
-              </Text>
+              style={{
+                ...styles.summaryText,
+                fontSize: textScale(12),
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity43,
+                flex: 1,
+              }}>
+              
+              {`${
+                cartData?.address?.house_number === null
+                  ? ''
+                  : `${cartData?.address?.house_number}, `
+              }`}
+              {cartData?.address?.address} {''}
+              {cartData?.address?.pincode}
+            </Text>
+              }
+             
             </View>
           </View>
 
@@ -1782,6 +1802,27 @@ export default function OrderDetail({navigation, route}) {
                 : colors.blackOpacity86,
             }}
           />
+
+          {!!cartData && !!cartData?.specific_instructions && (
+            <SpecificInstruction
+              leftText={strings.SPECIFIC_INSTRUCTIONS}
+              rightText={cartData?.specific_instructions}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+              leftTextStyle={{
+                fontSize: textScale(12),
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity43,
+              }}
+              rightTextStyle={{
+                fontSize: textScale(12),
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity86,
+              }}
+            />
+          )}
 
           {!!cartData?.scheduled_date_time && (
             <LeftRightText
@@ -1955,10 +1996,26 @@ export default function OrderDetail({navigation, route}) {
                 MyDarkTheme={MyDarkTheme}
               />
             )}
-          {console.log(
-            Number(cartData?.total_service_fee) +
-              Number(cartData?.taxable_amount),
-            'fsdkjfjafks',
+
+          {Number(cartData?.fixed_fee_amount) > 0 && (
+            <LeftRightText
+              leftText={
+                preferences?.fixed_fee_nomenclature != '' &&
+                preferences?.fixed_fee_nomenclature != null
+                  ? preferences?.fixed_fee_nomenclature
+                  : strings.FIXED_FEE
+              }
+              rightText={`${
+                currencies?.primary_currency?.symbol
+              }${currencyNumberFormatter(
+                Number(
+                  cartData?.fixed_fee_amount ? cartData?.fixed_fee_amount : 0,
+                ),
+                appData?.profile?.preferences?.digit_after_decimal,
+              )}`}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+            />
           )}
           {(cartData?.total_service_fee > 0 ||
             cartData?.taxable_amount > 0) && (
@@ -1992,7 +2049,7 @@ export default function OrderDetail({navigation, route}) {
           {!!cartData?.vendors[0]?.total_container_charges &&
             Number(cartData?.total_container_charges) > 0 && (
               <LeftRightText
-                leftText={strings.WALLET}
+                leftText={strings.TOTALCONTAINERCHARGES}
                 rightText={`- ${
                   currencies?.primary_currency?.symbol
                 }${currencyNumberFormatter(
@@ -2062,189 +2119,191 @@ export default function OrderDetail({navigation, route}) {
             }}
           />
 
-          {paramData?.orderStatus?.current_status?.title ===
-            strings.DELIVERED &&
-            !!appData?.profile?.preferences?.tip_after_order &&
-            (cartData?.tip_amount == 0 || cartData?.tip_amount == null) &&
+          {!!(
+            paramData?.orderStatus?.current_status?.title ===
+              strings.DELIVERED &&
+            appData?.profile?.preferences?.tip_after_order &&
+            (Number(cartData?.tip_amount) == 0 ||
+              Number(cartData?.tip_amount) == null) &&
             !!cartData?.tip &&
-            cartData?.tip.length && (
-              <View
+            cartData?.tip.length
+          ) && (
+            <View
+              style={{
+                flexDirection: 'column',
+                marginTop: 20,
+                justifyContent: 'space-between',
+                marginVertical: moderateScaleVertical(5),
+              }}>
+              <Text
                 style={{
-                  flexDirection: 'column',
-                  marginTop: 20,
-                  justifyContent: 'space-between',
-                  marginVertical: moderateScaleVertical(5),
+                  color: colors.textGreyB,
+                  fontFamily: fontFamily.regular,
+                  fontSize: textScale(12),
+                }}>
+                {strings.DOYOUWANTTOGIVEATIP}
+              </Text>
+
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{flexGrow: 1}}>
+                {cartData?.payable_amount !== '0.00' &&
+                  cartData?.tip.map((j, jnx) => {
+                    return (
+                      <TouchableOpacity
+                        key={String(jnx)}
+                        style={{
+                          backgroundColor:
+                            selectedTipvalue?.value == j?.value
+                              ? themeColors.primary_color
+                              : 'transparent',
+                          flex: 0.18,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          borderWidth: 0.7,
+                          paddingHorizontal: 10,
+                          paddingVertical: 5,
+                          marginRight: 5,
+                          marginVertical: 20,
+                          borderRadius: moderateScale(5),
+                          borderColor: themeColors.primary_color,
+                        }}
+                        onPress={() => selectedTip(j)}>
+                        <Text
+                          style={
+                            isDarkMode
+                              ? {
+                                  color:
+                                    selectedTipvalue?.value == j?.value
+                                      ? colors.white
+                                      : MyDarkTheme.colors.text,
+                                }
+                              : {
+                                  color:
+                                    selectedTipvalue?.value == j?.value
+                                      ? colors.white
+                                      : colors.black,
+                                }
+                          }>
+                          {`${
+                            currencies?.primary_currency?.symbol
+                          } ${currencyNumberFormatter(
+                            j.value,
+                            appData?.profile?.preferences?.digit_after_decimal,
+                          )}`}
+                        </Text>
+                        <Text
+                          style={{
+                            color:
+                              selectedTipvalue?.value == j?.value
+                                ? colors.white
+                                : colors.textGreyB,
+                          }}>
+                          {j.label}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+
+                {cartData?.payable_amount !== '0.00' && (
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor:
+                        selectedTipvalue == 'custom'
+                          ? themeColors.primary_color
+                          : 'transparent',
+                      flex: cartData?.total_payable_amount !== 0 ? 0.45 : 0.2,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      borderWidth: 0.7,
+                      paddingHorizontal: 15,
+                      paddingVertical: 5,
+                      marginLeft: 2,
+                      marginVertical: 20,
+                      borderRadius: moderateScale(5),
+                      borderColor: themeColors.primary_color,
+                    }}
+                    onPress={() => selectedTip('custom')}>
+                    <Text
+                      style={
+                        isDarkMode
+                          ? {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : MyDarkTheme.colors.text,
+                            }
+                          : {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : colors.black,
+                            }
+                      }>
+                      {strings.CUSTOM}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </ScrollView>
+
+              {!!selectedTipvalue && selectedTipvalue == 'custom' && (
+                <View
+                  style={{
+                    borderRadius: 5,
+                    borderWidth: 0.5,
+                    borderColor: colors.textGreyB,
+                    height: 40,
+                    marginTop: moderateScaleVertical(12),
+                  }}>
+                  <TextInput
+                    value={selectedTipAmount}
+                    onChangeText={(text) =>
+                      updateState({selectedTipAmount: text})
+                    }
+                    style={{
+                      height: 40,
+                      alignItems: 'center',
+                      paddingHorizontal: 10,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyOpcaity7,
+                    }}
+                    maxLength={5}
+                    returnKeyType={'done'}
+                    keyboardType={'number-pad'}
+                    placeholder={strings.ENTER_CUSTOM_AMOUNT}
+                    placeholderTextColor={
+                      isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyOpcaity7
+                    }
+                  />
+                </View>
+              )}
+              <TouchableOpacity
+                // onPress={onPressRateOrder}
+                onPress={_onAddTip}
+                // style={{flex:0.6}}
+                style={{
+                  justifyContent: 'center',
+                  backgroundColor: themeColors.primary_color,
+                  alignItems: 'center',
+                  borderRadius: moderateScale(10),
+                  paddingVertical: moderateScaleVertical(10),
+                  marginTop: moderateScaleVertical(10),
                 }}>
                 <Text
                   style={{
-                    color: colors.textGreyB,
-                    fontFamily: fontFamily.regular,
-                    fontSize: textScale(12),
+                    color: colors.white,
+                    fontFamily: fontFamily.medium,
+                    fontSize: textScale(10),
                   }}>
-                  {strings.DOYOUWANTTOGIVEATIP}
+                  {strings.ADD_TIP}
                 </Text>
-
-                <ScrollView
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={{flexGrow: 1}}>
-                  {cartData?.payable_amount !== '0.00' &&
-                    cartData?.tip.map((j, jnx) => {
-                      return (
-                        <TouchableOpacity
-                          key={String(jnx)}
-                          style={{
-                            backgroundColor:
-                              selectedTipvalue?.value == j?.value
-                                ? themeColors.primary_color
-                                : 'transparent',
-                            flex: 0.18,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderWidth: 0.7,
-                            paddingHorizontal: 10,
-                            paddingVertical: 5,
-                            marginRight: 5,
-                            marginVertical: 20,
-                            borderRadius: moderateScale(5),
-                            borderColor: themeColors.primary_color,
-                          }}
-                          onPress={() => selectedTip(j)}>
-                          <Text
-                            style={
-                              isDarkMode
-                                ? {
-                                    color:
-                                      selectedTipvalue?.value == j?.value
-                                        ? colors.white
-                                        : MyDarkTheme.colors.text,
-                                  }
-                                : {
-                                    color:
-                                      selectedTipvalue?.value == j?.value
-                                        ? colors.white
-                                        : colors.black,
-                                  }
-                            }>
-                            {`${
-                              currencies?.primary_currency?.symbol
-                            } ${currencyNumberFormatter(
-                              j.value,
-                              appData?.profile?.preferences
-                                ?.digit_after_decimal,
-                            )}`}
-                          </Text>
-                          <Text
-                            style={{
-                              color:
-                                selectedTipvalue?.value == j?.value
-                                  ? colors.white
-                                  : colors.textGreyB,
-                            }}>
-                            {j.label}
-                          </Text>
-                        </TouchableOpacity>
-                      );
-                    })}
-
-                  {cartData?.payable_amount !== '0.00' && (
-                    <TouchableOpacity
-                      style={{
-                        backgroundColor:
-                          selectedTipvalue == 'custom'
-                            ? themeColors.primary_color
-                            : 'transparent',
-                        flex: cartData?.total_payable_amount !== 0 ? 0.45 : 0.2,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderWidth: 0.7,
-                        paddingHorizontal: 15,
-                        paddingVertical: 5,
-                        marginLeft: 2,
-                        marginVertical: 20,
-                        borderRadius: moderateScale(5),
-                        borderColor: themeColors.primary_color,
-                      }}
-                      onPress={() => selectedTip('custom')}>
-                      <Text
-                        style={
-                          isDarkMode
-                            ? {
-                                color:
-                                  selectedTipvalue == 'custom'
-                                    ? colors.white
-                                    : MyDarkTheme.colors.text,
-                              }
-                            : {
-                                color:
-                                  selectedTipvalue == 'custom'
-                                    ? colors.white
-                                    : colors.black,
-                              }
-                        }>
-                        {strings.CUSTOM}
-                      </Text>
-                    </TouchableOpacity>
-                  )}
-                </ScrollView>
-
-                {!!selectedTipvalue && selectedTipvalue == 'custom' && (
-                  <View
-                    style={{
-                      borderRadius: 5,
-                      borderWidth: 0.5,
-                      borderColor: colors.textGreyB,
-                      height: 40,
-                      marginTop: moderateScaleVertical(12),
-                    }}>
-                    <TextInput
-                      value={selectedTipAmount}
-                      onChangeText={(text) =>
-                        updateState({selectedTipAmount: text})
-                      }
-                      style={{
-                        height: 40,
-                        alignItems: 'center',
-                        paddingHorizontal: 10,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.textGreyOpcaity7,
-                      }}
-                      maxLength={5}
-                      returnKeyType={'done'}
-                      keyboardType={'number-pad'}
-                      placeholder={strings.ENTER_CUSTOM_AMOUNT}
-                      placeholderTextColor={
-                        isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.textGreyOpcaity7
-                      }
-                    />
-                  </View>
-                )}
-                <TouchableOpacity
-                  // onPress={onPressRateOrder}
-                  onPress={_onAddTip}
-                  // style={{flex:0.6}}
-                  style={{
-                    justifyContent: 'center',
-                    backgroundColor: themeColors.primary_color,
-                    alignItems: 'center',
-                    borderRadius: moderateScale(10),
-                    paddingVertical: moderateScaleVertical(10),
-                    marginTop: moderateScaleVertical(10),
-                  }}>
-                  <Text
-                    style={{
-                      color: colors.white,
-                      fontFamily: fontFamily.medium,
-                      fontSize: textScale(10),
-                    }}>
-                    {strings.ADD_TIP}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            )}
+              </TouchableOpacity>
+            </View>
+          )}
 
           <View
             style={{
@@ -2866,8 +2925,11 @@ export default function OrderDetail({navigation, route}) {
               style={{
                 height: moderateScaleVertical(100),
                 width: moderateScale(100),
+                
               }}
+              
               colorFilters={[
+          
                 {
                   keypath: 'right sand',
                   color: themeColors.primary_color,
@@ -2926,11 +2988,12 @@ export default function OrderDetail({navigation, route}) {
                   keypath: 'top right sand 1',
                   color: themeColors.primary_color,
                 },
+                
 
                 // top right sand 1
               ]}
             />
-            <Text style={styles.waitToAccept}>{strings.WAITINGTOACCEPT}</Text>
+            <Text style={{...styles.waitToAccept,color:isDarkMode?colors.white:colors.black}}>{strings.WAITINGTOACCEPT}</Text>
           </View>
         )}
         {!!orderStatus &&
@@ -3089,8 +3152,6 @@ export default function OrderDetail({navigation, route}) {
     }
   };
 
-
-
   const customRight = () => {
     return (
       <TouchableOpacity
@@ -3129,7 +3190,7 @@ export default function OrderDetail({navigation, route}) {
             : imagePath.back
         }
         centerTitle={strings.ORDER + `${'#'}${cartData?.order_number || ''}`}
-        customRight={!!cartData?.reports?.report?.original ? customRight:''}
+        customRight={!!cartData?.reports?.report?.original ? customRight : ''}
       />
       <View
         style={{

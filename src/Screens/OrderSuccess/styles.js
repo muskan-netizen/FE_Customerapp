@@ -35,6 +35,11 @@ export default ({fontFamily}) => {
       marginVertical: moderateScaleVertical(10),
       fontSize: textScale(22),
     },
+    thanksForyourPurchase:{
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(18),
+      textAlign: 'center',
+    },
 
     yourAWBText: {
       flexDirection: 'row',

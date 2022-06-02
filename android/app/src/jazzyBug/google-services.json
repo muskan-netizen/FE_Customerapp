@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "737290127256",
+    "project_id": "jazzybug",
+    "storage_bucket": "jazzybug.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737290127256:android:23a9da8861c81e29f3cded",
+        "android_client_info": {
+          "package_name": "com.jazzyBug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "737290127256-g0lujsipbd8rdhjmrigk2kl2pacphnfo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jazzyBug",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "737290127256-qr61ll3o1kq8pi3a3np0uof30quk38if.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jazzyBug",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "737290127256-snfj2tf6spti18bln0v3d14st2ih3gvg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jazzyBug",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "737290127256-4677dugr4s4ue7f2536s2o4i36dtuud9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoUWHogpsodAffTEbOljgWEjLjPOJBEl4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "737290127256-4677dugr4s4ue7f2536s2o4i36dtuud9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "737290127256-a4ul9mfjbfajfslpob05eb5sgu8h0dao.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jazzyBug"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
