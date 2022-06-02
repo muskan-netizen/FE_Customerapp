@@ -16,6 +16,12 @@ import { min } from 'moment';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/core';
 import { selectContactPhone } from 'react-native-select-contact';
+import codes from 'country-calling-code';
+import DeviceCountry, {
+  TYPE_ANY,
+  TYPE_TELEPHONY,
+  TYPE_CONFIGURATION,
+} from 'react-native-device-country';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {
@@ -523,6 +529,23 @@ export function getPhoneNumberFromPhoneBook() {
 
 }
 
+
+export function deviceCountryCode() {
+  return new Promise((resolve, reject) => {
+    DeviceCountry.getCountryCode()
+      .then(result => {
+        resolve(codes.filter(x => x.isoCode2 == (result.code).toUpperCase()));
+      }).catch(error => {
+        reject(error);
+      })
+  });
+
+
+
+}
+
+
+
 export {
   showError,
   showSuccess,
@@ -539,5 +562,5 @@ export {
   playHapticEffect,
   hapticEffects,
   getTabBarVisibility,
-  
+
 };

@@ -512,7 +512,8 @@ export default {
   addRider : require('../assets/images/BookAFriend/ic_addrider.png'),
   closeFriendList : require('../assets/images/BookAFriend/ic_addrider.png'),
   selectFriendList : require('../assets/images/BookAFriend/ic_drpdwn.png'),
-  riderImage : require('../assets/images/BookAFriend/ic_image.png'),
+  riderImage : require('../assets/images/ic_profilegrey.png'),
+
   
   
 };

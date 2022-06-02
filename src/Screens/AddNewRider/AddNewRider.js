@@ -31,11 +31,14 @@ import {
 import { MyDarkTheme } from '../../styles/theme';
 import CountryPicker, { Flag } from 'react-native-country-picker-modal';
 import stylesFun from './styles';
-import { getColorCodeWithOpactiyNumber } from '../../utils/helperFunctions';
+import { getColorCodeWithOpactiyNumber, showError } from '../../utils/helperFunctions';
+import actions from '../../redux/actions';
+import validations from '../../utils/validations';
 
 
 export default function AddNewRider({ navigation, route }) {
   const paramData = route?.params;
+  console.log(paramData, "paramDataparamDataparamData");
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -46,13 +49,12 @@ export default function AddNewRider({ navigation, route }) {
   );
 
   const [state, setState] = useState({
-    friendName: '',
-    friendMobileNumber: '',
-    countryPickerModalVisible: false,
-    cca2: 'IN',
-    callingCode: '+91',
+    firstName: paramData?.contact?.name ? paramData?.contact?.name : '',
+    lastName: paramData?.contact?.name ? paramData?.contact?.name : '',
+    friendMobileNumber: paramData?.selectedPhone?.number ? paramData?.selectedPhone?.number : '',
+    isLoading:false
   });
-  const { friendName, friendMobileNumber, countryPickerModalVisible, cca2, callingCode } = state;
+  const { firstName, lastName, friendMobileNumber,isLoading } = state;
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
 
@@ -69,38 +71,43 @@ export default function AddNewRider({ navigation, route }) {
     updateState({ [key]: val });
   };
 
-  const _onCountryChange = (data) => {
-    updateState({
-      countryPickerModalVisible: false, bookForFriendModalVisible: true, cca2: data.cca2,
-      callingCode: data.callingCode,
-    });
 
-  };
-  const _openCountryPicker = () => {
-    updateState({
-      bookForFriendModalVisible: false
-    })
-    setTimeout(() => {
-      updateState({ countryPickerModalVisible: true });
-    }, 500);
-  };
 
-  const setDataAndBookRideForFriend = () => {
-    const checkValid = isValidData();
-    if (!checkValid) {
-      return;
+  const _onAddRider = () => {
+    if (firstName == '') {
+      showError(strings.PLEASE_ENTER_RIDER_FIRST_NAME)
+      return
+    }
+    if (lastName == '') {
+      showError(strings.PLEASE_ENTER_RIDER_LAST_NAME)
+      return
+    }
+    if (friendMobileNumber == ''
+    ) {   
+      showError(strings.PLEASE_RIDER_MOBILE_NUMER)
+      return
     }
     updateState({
-      bookForFriendModalVisible: false
+      isLoading:true
     })
+
+    const data = {
+      first_name: firstName,
+      last_name: lastName,
+      phone_number: friendMobileNumber.replace(/\s+/g, '')
+    }
+    actions.addRider(data, { code: appData?.profile?.code }).then((res) => {
+      updateState({
+        isLoading:false
+      })
+      navigation.goBack()
+    }).catch(errorMethod)
   }
 
-
-
-  const _onCountryPickerModalClose = () => {
-    updateState({ countryPickerModalVisible: false });
+  const errorMethod = (error) => {
+    updateState({ isLoading: false, isRefreshing: false });
+    showError(error?.message || error?.error);
   };
-
 
 
 
@@ -111,7 +118,7 @@ export default function AddNewRider({ navigation, route }) {
         // colors.white
       }
       statusBarColor={colors.white}
-      // isLoadingB={isLoadingB}
+     isLoadingB={isLoading}
       source={loaderOne}>
       <View style={{ paddingHorizontal: moderateScale(20) }}>
         <View
@@ -144,7 +151,7 @@ export default function AddNewRider({ navigation, route }) {
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 marginHorizontal: moderateScale(20)
               }}>
-              New Rider
+              {strings.NEW_RIDER}
             </Text>
           </TouchableOpacity>
 
@@ -152,21 +159,21 @@ export default function AddNewRider({ navigation, route }) {
         </View>
 
 
-        <View style={{ paddingVertical: moderateScaleVertical(14), alignItems: 'center', marginVertical: moderateScaleVertical(25), borderRadius: 4, paddingHorizontal: moderateScale(12), backgroundColor: getColorCodeWithOpactiyNumber(themeColors.primary_color.substring(1), 20) }}>
-          <Text style={{ letterSpacing: 0.5, fontFamily: fontFamily.medium, color: colors.black, fontSize: textScale(14) }}>
-            Drivers will see this name. Do you want to make any changes?
+        <View style={[styles.messageMainContainer, { backgroundColor: getColorCodeWithOpactiyNumber(themeColors.primary_color.substring(1), 20) }]}>
+          {paramData?.addNewRiderContact ? <Text style={{ fontFamily: fontFamily.regular, color: colors.blackLight, textAlign: 'left' }}>
+            {strings.THIS_CONTACT_WILL_NOT_SAVE_IN_ADDRESS_BOOK}
+          </Text> : <Text style={styles.messageText}>
+            {strings.DRIVER_WILL_SEE_NAME}
             <Text style={{ fontFamily: fontFamily.regular, color: colors.blackLight }}>
-              {` Changing the name here won't affect how it appears in your device's contacts`}
+
+              {strings.CHNAGING_THE_NAME_WILL_NOT_AFFECT_IN_YOUR_DEVICE_CONTACT}
             </Text>
-          </Text>
-
+          </Text>}
         </View>
-
-
         <TextInputWithUnderlineAndLabel
-          onChangeText={_onChangeText('friendName')}
+          onChangeText={_onChangeText('firstName')}
           label={'First Name'}
-          value={friendName}
+          value={firstName}
           containerStyle={styles.textInputContainer}
           undnerlinecolor={colors.textGreyB}
           labelStyle={{
@@ -177,9 +184,9 @@ export default function AddNewRider({ navigation, route }) {
           returnKeyType={'next'}
         />
         <TextInputWithUnderlineAndLabel
-          onChangeText={_onChangeText('friendName')}
+          onChangeText={_onChangeText('lastName')}
           label={'Last Name'}
-          value={friendName}
+          value={lastName}
           containerStyle={styles.textInputContainer}
           undnerlinecolor={colors.textGreyB}
           labelStyle={{
@@ -192,25 +199,6 @@ export default function AddNewRider({ navigation, route }) {
         <View>
           <Text style={styles.phoneNumberTextInputLabel}>{strings.PHONE_NUMBER}</Text>
           <View style={styles.phoneNumberInnerContainer}>
-            <TouchableOpacity
-              style={styles.countryPickerContainer}
-              onPress={_openCountryPicker}
-            >
-              <View
-                style={styles.countryPickerInnerContainer}>
-                <View style={{ marginRight: moderateScale(-10) }}>
-                  <Flag countryCode={cca2} />
-                </View>
-                <Text
-                  style={styles.callingCodeText}>
-                  {callingCode}
-                </Text>
-              </View>
-
-
-              <Image source={imagePath.dropdownTriangle} />
-            </TouchableOpacity>
-
             <TextInputWithUnderlineAndLabel
               onChangeText={_onChangeText('friendMobileNumber')}
               value={friendMobileNumber}
@@ -233,28 +221,13 @@ export default function AddNewRider({ navigation, route }) {
             themeColors.primary_color,
           ]}
           textStyle={{ textTransform: 'none', fontSize: textScale(16) }}
-          onPress={setDataAndBookRideForFriend}
+          onPress={_onAddRider}
           marginTop={moderateScaleVertical(30)}
           marginBottom={moderateScaleVertical(10)}
-          btnText={'Add Rider'}
+          btnText={strings.ADD_RIDER}
           btnStyle={{ borderRadius: moderateScale(4) }}
         />
       </View>
-      {countryPickerModalVisible && (
-        <CountryPicker
-          cca2={cca2}
-          withCallingCode={callingCode}
-          visible={countryPickerModalVisible}
-          withFlagButton={false}
-          withFilter
-          onClose={_onCountryPickerModalClose}
-          onSelect={_onCountryChange}
-        />
-      )}
-
-
     </WrapperContainer>
   );
 }
-
-const styles = StyleSheet.create({});

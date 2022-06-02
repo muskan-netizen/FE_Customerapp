@@ -236,7 +236,7 @@ export const saveSchduleTime = (data) => {
 
 export const addRider = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
-    apiPost(ADD_RIDER, data, headers)
+    apiPost(ADD_RIDER, data,headers)
       .then((res) => {
         resolve(res);
       })
@@ -245,3 +245,16 @@ export const addRider = (data, headers = {}) => {
       });
   });
 };
+
+export const getAllRiderList = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiGet(ADD_RIDER, data,headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+

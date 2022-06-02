@@ -106,6 +106,7 @@ let dayAfterToday = new Date().getTime() + 24 * 60 * 60 * 1000;
 
 function Cart({navigation, route}) {
   let paramsData = route?.params;
+  console.log(paramsData,"paramsData");
 
   let actionSheet = useRef(null);
 
@@ -299,6 +300,8 @@ function Cart({navigation, route}) {
       sel_types,
     ]),
   );
+
+  console.log(route?.params,"route?.params?.promocodeDetail");
 
   useEffect(() => {
     if (
@@ -4414,7 +4417,7 @@ function Cart({navigation, route}) {
             </Animatable.View>
           </View>
         )}
-
+{console.log(cartData,"cartData?.total_payable_amount")}
         <View style={styles.amountPayable}>
           <Text
             style={{
@@ -5393,21 +5396,23 @@ function Cart({navigation, route}) {
     }
   };
 
-  const isSlotSelected = (item) => {
-    if (selectedTimeSlots == item.value) {
-      return true;
-    } else {
-      return false;
+  const isSlotSelected1 = (item,type) => {
+    if(type == 'normalOrder'){
+      if (selectedTimeSlots == item.value) {
+        return true;
+      } else {
+        return false;
+      }
+    } else if(type =='laundryOrderSlot'){
+      if (laundrySelectedPickupSlot == item.value) {
+        return true;
+      } else {
+        return false;
+      }
     }
+ 
   };
 
-  const isSlotSelected1 = (item) => {
-    if (laundrySelectedPickupSlot == item.value) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 
   const isSlotSelected2 = (item) => {
     if (laundrySelectedDropOffSlot == item.value) {
@@ -5424,17 +5429,17 @@ function Cart({navigation, route}) {
         activeOpacity={0.8}
         onPress={() => onSelectTime(item)}
         style={{
-          backgroundColor: isSlotSelected1(item)
+          backgroundColor: isSlotSelected1(item,laundrySelectedPickupSlot?'laundryOrderSlot':'normalOrder')
             ? themeColors.primary_color
             : colors.white,
           padding: 8,
           borderRadius: 8,
-          borderWidth: isSlotSelected1(item) ? 0 : 1,
+          borderWidth: isSlotSelected1(item,laundrySelectedPickupSlot?'laundryOrderSlot':'normalOrder') ? 0 : 1,
           borderColor: colors.borderColorGrey,
         }}>
         <Text
           style={{
-            color: isSlotSelected1(item) ? colors.white : colors.black,
+            color: isSlotSelected1(item,laundrySelectedPickupSlot?'laundryOrderSlot':'normalOrder') ? colors.white : colors.black,
             fontFamily: fontFamily.regular,
             fontSize: textScale(11),
           }}>
@@ -6027,7 +6032,6 @@ function Cart({navigation, route}) {
         onPressRightTxt={() => openClearCartModal()}
       />
 
-      {console.log(cartItems, 'cartItems>>>')}
       <FlatList
         data={cartItems}
         extraData={cartItems}
