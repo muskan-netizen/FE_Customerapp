@@ -84,10 +84,14 @@ import {
   createPaymentMethod,
   confirmPayment,
 } from '@stripe/stripe-react-native';
+import { cameraHandler } from '../../utils/commonFunction';
 import ActionSheet from 'react-native-actionsheet';
+import { androidCameraPermission } from '../../utils/permissions';
+import DocumentPicker from 'react-native-document-picker';
 import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
 
+import { FlutterwaveInit } from 'flutterwave-react-native';
 
 let clickedItem = {};
 let isFAQsSubmitted = true;
@@ -983,6 +987,16 @@ function Cart({ navigation, route }) {
         navigation.navigate(navigationStrings.PAYPHONE, paymentData);
         break;
 
+      case 37: //STRIPEOXXO Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.STRIPEOXXO, paymentData);
+        break;
+
+        case 21: //VIVAWALLET Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.VIVAWALLET, paymentData);
+        break;
+
       default:
         if (
           !!businessType &&
@@ -1160,12 +1174,15 @@ function Cart({ navigation, route }) {
         checkPaymentOptions(res);
         if (
           selectedPayment?.id != 32 &&
+          selectedPayment?.id != 19 &&
           selectedPayment?.id != 17 &&
           selectedPayment?.id != 4 &&
           selectedPayment?.id != 27 &&
           selectedPayment?.id != 26 &&
           selectedPayment?.id != 30 &&
           selectedPayment?.id != 29 &&
+          selectedPayment?.id != 37 &&
+          selectedPayment?.id != 21 &&
           selectedPayment?.id != 34
         ) {
           setCartItems([]);
@@ -1252,7 +1269,7 @@ function Cart({ navigation, route }) {
 
     let data = {};
 
-    if (businessType == 'laundry') {
+    if (businessType == 'laundry' && toHitApiForPlaceOrder) {
       data['comment_for_pickup_driver'] = pickupDriverComment;
       data['comment_for_dropoff_driver'] = dropOffDriverComment;
       data['comment_for_vendor'] = vendorComment;
@@ -4788,7 +4805,6 @@ function Cart({ navigation, route }) {
   //Add and update the addreess
   const addUpdateLocation = (childData) => {
     // setModalVisible(false);
-
     updateState({ isLoading: true });
     actions
       .addAddress(childData, {

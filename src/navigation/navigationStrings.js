@@ -135,5 +135,7 @@ export default {
   MPAISA:"Mpaisa",
   WINDCAVE:'WindCave',
   PAYPHONE:'PayPhone',
- ADD_NEW_RIDER:'AddNewRider'
+ ADD_NEW_RIDER:'AddNewRider',
+  STRIPEOXXO:'StripeOXXO',
+  VIVAWALLET:"Vivawallet"
 };

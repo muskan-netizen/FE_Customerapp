@@ -205,9 +205,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const styles = stylesFun({ fontFamily, themeColors });
   const commonStyles = commonStylesFun({ fontFamily });
-
-
-  console.log(profile?.country?.phonecode, "profileprofileprofile")
+  const { profile } = appData;
 
   const walletAmount = useSelector(
     (state) => state?.product?.walletData?.wallet_amount,
@@ -351,6 +349,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     updateState({ showTimeModal: false, showPaymentModal: true });
   };
 
+
+
   const sendStripeToken = (extraData, data) => {
     data['order_number'] = extraData?.orderDetail?.order_number;
     data['action'] = 'pickup_delivery';
@@ -383,6 +383,49 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       .catch(errorMethod);
   };
 
+  const checkPaymentOptions = (extraData, res) => {
+    console.log(extraData, "extraData")
+    console.log(res, "res")
+    let paymentId = selectedPayment?.id;
+    // let order_number = res?.orderDetail?.order_number;
+    // console.log('api res success', res);
+
+    let paymentData = {
+      total_payable_amount: (
+        Number(extraData?.orderDetail?.payable_amount)
+      ).toFixed(appData?.profile?.preferences?.digit_after_decimal),
+      payment_option_id: selectedPayment?.id,
+      orderDetail: extraData?.orderDetail,
+      redirectFrom: 'pickup_delivery',
+      selectedPayment: selectedPayment,
+      extraData:extraData
+    };
+
+    console.log(paymentData, "paymentData>paymentData")
+    updateState({
+      isModalVisible: false,
+      isLoading: false,
+      isRefreshing: false,
+      indicatorLoader: false,
+    });
+    switch (paymentId) {
+      case 4: //Stripe Payment Getway
+        sendStripeToken(extraData, data);
+        break;
+      case 6: //Payfast Payment Getway
+        navigation.navigate(navigationStrings.PAYFAST, paymentData);
+        break;
+      default:
+
+        navigation.navigate(
+          navigationStrings.PICKUPTAXIORDERDETAILS,
+          extraData,
+        );
+        break;
+    }
+  };
+
+
   const _finalPayment = (data) => {
     if (isEmpty(selectedPayment)) {
       // showError(strings.PLEASE_SELECT_A_PAYMENT_METHOD);
@@ -414,20 +457,9 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             totalDuration: totalDuration,
             selectedCarOption: selectedCarOption?.sku,
           };
-          if (selectedPayment?.id == 4) {
-            sendStripeToken(extraData, data);
-            return;
-          }
-          updateState({
-            isModalVisible: false,
-            isLoading: false,
-            isRefreshing: false,
-            indicatorLoader: false,
-          });
-          navigation.navigate(
-            navigationStrings.PICKUPTAXIORDERDETAILS,
-            extraData,
-          );
+          checkPaymentOptions(extraData, data);
+
+
         } else {
           console.log(res, 'res>>>>>');
           updateState({

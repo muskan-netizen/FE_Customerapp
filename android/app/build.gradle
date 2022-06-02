@@ -1539,7 +1539,7 @@ android {
             }
             donepacked{
                 dimension "appType"
-                versionCode 10
+                versionCode 7
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -4073,7 +4073,16 @@ android {
                 resValue "string", "app_name", "Sijang"
                 resValue "string", "host_name", ""
             }
-  
+            fairex{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.fairex'
+                resValue "string", "app_name", "Fairex"
+                resValue "string", "host_name", ""
+            }
             everywhere{
                 dimension "appType"
                 versionCode 1
@@ -5291,8 +5300,7 @@ android {
             resValue "string", "app_name", "Amazing Taxi"
             resValue "string", "host_name", ""
             }
-
-             jazzyBug{
+            jazzyBug{
             dimension "appType"
             versionCode 1
             versionName "1.0"

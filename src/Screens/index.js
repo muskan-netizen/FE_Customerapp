@@ -138,6 +138,8 @@ export {default as Mpaisa} from './PaymentGateways/Mpaisa';
 export {default as WindCave} from './PaymentGateways/WindCave';
 export {default as PayPhone} from './PaymentGateways/PayPhone';
 export {default as AddNewRider} from './AddNewRider/AddNewRider';
+export {default as StripeOXXO} from './PaymentGateways/StripeOXXO';
+export {default as VivaWallet} from './PaymentGateways/VivaWallet';
 
 
 

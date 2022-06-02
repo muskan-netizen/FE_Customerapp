@@ -46,6 +46,10 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 
 
+// 
+//Vishwas
+// export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
+
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1';  //swiffy
 //Gourav.s
 // export const API_BASE_URL = 'http://192.168.99.130:8005/api/v1';
@@ -55,7 +59,12 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL ='https://yogo.gd/api/v1';
 
-// export const API_BASE_URL = 'http://192.168.101.187:8001/api/v1';
+
+//Dlvrd
+// export const API_BASE_URL = 'https://dlvrd-order.netsolutionindia.com/api/v1';
+
+
+// export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1';

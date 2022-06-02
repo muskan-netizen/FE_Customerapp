@@ -514,5 +514,7 @@ export default {
   riderImage : require('../assets/images/ic_profilegrey.png'),
   //Video
   masa: require('../assets/masa.mp4'),
-  ipd: require('../assets/ipd.mp4')
+  ipd: require('../assets/ipd.mp4'),
+  icCar: require('../assets/images/ic_topviewcar.png'),
+
 };

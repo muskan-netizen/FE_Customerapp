@@ -29,7 +29,23 @@ import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import validations from '../../utils/validations';
 import { useNavigation } from '@react-navigation/native';
 import { checkIsAdmin } from '../../utils/utils';
-
+import codes from 'country-calling-code';
+import * as RNLocalize from "react-native-localize";
+import DeviceCountry, {
+  TYPE_ANY,
+  TYPE_TELEPHONY,
+  TYPE_CONFIGURATION,
+} from 'react-native-device-country';
+var getPhonesCallingCodeAndCountryData = null
+DeviceCountry.getCountryCode()
+  .then((result) => {
+    console.log(result, "getCountryCoderesult");
+    // {"code": "BY", "type": "telephony"}
+    getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == (result.code).toUpperCase())
+  })
+  .catch((e) => {
+    console.log(e);
+  });
 export default function VerifyAccountSecond({ navigation, route }) {
   const navigation_ = useNavigation();
   let paramsData = route?.params;
@@ -37,16 +53,18 @@ export default function VerifyAccountSecond({ navigation, route }) {
   const userData = useSelector((state) => state?.auth?.userData);
   console.log(userData,"userDatauserData")
   const appData = useSelector((state) => state?.initBoot?.appData);
+  // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
+
   const [state, setState] = useState({
     timer2: 0,
     timer: 0,
     isLoading: false,
-    callingCode: appData?.profile?.country?.phonecode
-      ? appData?.profile?.country?.phonecode
-      : '91',
-    cca2: appData?.profile?.country?.code
-      ? appData?.profile?.country?.code
-      : 'IN',
+    callingCode: getPhonesCallingCodeAndCountryData && getPhonesCallingCodeAndCountryData.length ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]: appData?.profile.country?.phonecode
+    ? appData?.profile?.country?.phonecode
+    : '91',
+  cca2:  getPhonesCallingCodeAndCountryData && getPhonesCallingCodeAndCountryData.length ? getPhonesCallingCodeAndCountryData[0].isoCode2:appData?.profile?.country?.code
+    ? appData?.profile?.country?.code
+    : 'IN',
     name: '',
     email: userData?.email || '',
     password: '',
