@@ -1558,10 +1558,10 @@ end
   
 # end
 
-# # PeerDeliveries Target
-# target 'PeerDeliveries' do
+# PeerDeliveries Target
+target 'PeerDeliveries' do
   
-# end
+end
 
 # # Swan Target
 # target 'Swan' do

@@ -88,6 +88,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const paramData = route?.params;
+  console.log(paramData,"PickupTaxiOrderDetail>paramData");
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [state, setState] = useState({
     isLoading: true,
@@ -291,7 +292,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         ? new_dispatch_traking_url
         : null,
     };
-    if (!!paramData?.orderId && !!new_dispatch_traking_url) {
+    if (!!paramData?.orderId || !!new_dispatch_traking_url) {
       console.log(apiData, 'apiData>?');
       try {
         const res = await actions.getOrderDetailPickUp(apiData, {
@@ -299,7 +300,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
         });
-        console.log(res?.data, 'res---agent>>>>');
+        console.log(res, 'res---agent>>>>');
         if (!!res?.data) {
           updateState({
             agent_location: res?.data?.agent_location,
