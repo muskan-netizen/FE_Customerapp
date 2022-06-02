@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View,I18nManager} from 'react-native';
 import {
   Frames,
   CardNumber,
@@ -46,6 +46,8 @@ export default function CheckoutPaymentView({
           style={styles.cardNumber}
           placeholder="4242 4242 4242 4242"
           placeholderTextColor={colors.greyD}
+          
+    
         />
 
         <View style={styles.dateAndCode}>
@@ -89,6 +91,7 @@ export function stylesFunc({fontFamily, themeColors}) {
       alignItems: 'center',
       justifyContent: 'flex-start',
       paddingHorizontal: moderateScale(10),
+      
     },
     dateAndCode: {
       marginTop: moderateScaleVertical(15),
@@ -103,6 +106,7 @@ export function stylesFunc({fontFamily, themeColors}) {
       backgroundColor: colors.white,
       borderRadius: moderateScale(5),
       borderWidth: 0,
+      textAlign: I18nManager.isRTL ? 'right' : 'left',
     },
     expiryDate: {
       fontSize: textScale(14),
@@ -112,6 +116,7 @@ export function stylesFunc({fontFamily, themeColors}) {
       color: colors.black,
       backgroundColor: colors.white,
       borderWidth: 0,
+      textAlign: I18nManager.isRTL ? 'right' : 'left',
     },
     cvv: {
       fontSize: textScale(14),
@@ -121,6 +126,7 @@ export function stylesFunc({fontFamily, themeColors}) {
       color: colors.black,
       backgroundColor: colors.white,
       borderWidth: 0,
+      textAlign: I18nManager.isRTL ? 'right' : 'left',
     },
     button: {
       height: moderateScaleVertical(50),
