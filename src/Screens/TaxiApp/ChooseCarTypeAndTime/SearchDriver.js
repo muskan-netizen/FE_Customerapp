@@ -2,6 +2,7 @@ import LottieView from 'lottie-react-native';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { useDarkMode } from 'react-native-dark-mode';
+import { getBundleId } from 'react-native-device-info';
 import { useSelector } from 'react-redux';
 import { searchingLoader } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import strings from '../../../constants/lang';
@@ -13,6 +14,7 @@ import {
   textScale
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import stylesFun from './styles';
 
 export default function () {
@@ -84,7 +86,7 @@ export default function () {
             fontFamily: fontFamily.medium,
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           }}>
-          {strings.CONNECTING_YOU_TO_NEARBY_DERIVER}
+          {appIds.jiffex == getBundleId() ?strings.CONNECTING_YOU_TO_NEARBY_DELIVERY_AGENT :strings.CONNECTING_YOU_TO_NEARBY_DERIVER}
         </Text>
         <Text
           style={{
@@ -93,7 +95,7 @@ export default function () {
             marginVertical: moderateScaleVertical(20),
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           }}>
-          {strings.YOUR_RIDE_WILL_START_SOON}
+          {appIds.jiffex == getBundleId()?strings.YOUR_ORDER_WILL_START_SOON:strings.YOUR_RIDE_WILL_START_SOON}
         </Text>
       </View>
     </View>

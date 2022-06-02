@@ -1,0 +1,14 @@
+#include "Pods/Target Support Files/Pods-available_pods-SorDelivery/Pods-available_pods-SorDelivery.debug.xcconfig"
+
+PROJECT_APPLE_ID = 1626831120
+PROJECT_BUNDLE_ID = com.sordelivery
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 2
+PROJECT_APP_NAME = Sor Delivery
+PROJECT_GOOGLE_CLIENT_ID = 1081070158733-t98hu0uo99pnri7vud67f2m794ld62e4.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.1081070158733-t98hu0uo99pnri7vud67f2m794ld62e4
+PROJECT_FACEBOOK_ID = 577700170541895
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =SorDeliveryInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4
+CODE_PUSH_KEY=WklhcIdiZHGCFAea8xiB00_1uI-VLygaW6LeT

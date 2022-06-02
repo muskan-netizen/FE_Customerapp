@@ -488,7 +488,7 @@ const ProductCard3 = ({
                 : moderateScale(20),
             }}>
             {data?.has_inventory == 0 ||
-            !!data?.variant[0]?.quantity ||
+            !!data?.variant[0].quantity ||
             (!!typeId && typeId == 8) ||
             (!!businessType && businessType == 'laundry') ? (
               <View

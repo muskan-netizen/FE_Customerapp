@@ -333,6 +333,11 @@ const shortCodes = {
   kartAndKarry:'4eaab9',
   quickLube:'4ab432',
   keystoneDelivery:'87ad74',
+  blueBundles:'b245dd',
+  busTaMove:'9d065e',
+  atasktt: '9bbd4e',
+  lunchboxSpecials: 'cfa64c',
+  sorDelivery: '732007'
 };
 
 
@@ -1662,6 +1667,26 @@ const appIds = {
   keystoneDelivery: Platform.select({
     ios: 'com.keystoneDelivery',
     android: 'com.keystoneDelivery',
+  }),
+  blueBundles: Platform.select({
+    ios: 'com.bluebundles',
+    android: 'com.bluebundles',
+  }),
+  busTaMove: Platform.select({
+    ios: 'com.bustamove',
+    android: 'com.bustamove',
+  }),
+  atasktt: Platform.select({
+    ios: 'com.atasktt',
+    android: 'com.atasktt',
+  }),
+  lunchboxSpecials: Platform.select({
+    ios: 'com.lunchboxspecials',
+    android: 'com.lunchboxspecials',
+  }),
+  sorDelivery: Platform.select({
+    ios: 'com.sordelivery',
+    android: 'com.sordelivery',
   }),
 };
 

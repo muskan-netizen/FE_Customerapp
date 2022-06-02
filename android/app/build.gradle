@@ -5048,7 +5048,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.arwin'
-            resValue "string", "app_name", "Arwin"
+            resValue "string", "app_name", "Smarter Shopper"
             resValue "string", "host_name", ""
             }
             marjMarketplace{
@@ -5318,7 +5318,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.valley'
-            resValue "string", "app_name", "Valley"
+            resValue "string", "app_name", "valley"
             resValue "string", "host_name", ""
             }
             kartAndKarry{
@@ -5349,6 +5349,56 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.keystoneDelivery'
             resValue "string", "app_name", "Keystone Delivery"
+            resValue "string", "host_name", ""
+            }
+             blueBundles{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.bluebundles'
+            resValue "string", "app_name", "Blue Bundles"
+            resValue "string", "host_name", ""
+            }
+            busTaMove{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.bustamove'
+            resValue "string", "app_name", "busTaMove"
+            resValue "string", "host_name", ""
+            }
+             atasktt{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.atasktt'
+            resValue "string", "app_name", "Atasktt"
+            resValue "string", "host_name", ""
+            }
+            lunchboxSpecials{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.lunchboxspecials'
+            resValue "string", "app_name", "Lunchbox Specials"
+            resValue "string", "host_name", ""
+            }
+            sorDelivery{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.sordelivery'
+            resValue "string", "app_name", "Sor Delivery"
             resValue "string", "host_name", ""
             }
     }
