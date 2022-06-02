@@ -4480,7 +4480,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.mrHealth'
+            applicationId 'com.mrHealth.customer'
             resValue "string", "app_name", "MrHealth"
             resValue "string", "host_name", ""
             }

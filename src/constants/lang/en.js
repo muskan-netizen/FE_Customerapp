@@ -930,5 +930,6 @@ Amount`,
   THANKS_FOR_YOUR_PURCHASE: 'Thank you for your purchase.',
   PLEASE_SELECT_DATETIME_SLOTS: 'Please select date and time slots',
   BOOK_A_TABLE:'Book a Table',
-  PLEASE_SELECT_A_TABLE:'Please Select a Table'
+  PLEASE_SELECT_A_TABLE:'Please Select a Table',
+  SELECT_A_TABLE:'Select a Table',
 };

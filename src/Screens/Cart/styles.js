@@ -523,6 +523,13 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       color: colors.blue,
       fontFamily: fontFamily.medium,
     },
+    bookAtable : {
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(14),
+      color: colors.black,
+      marginLeft:moderateScale(20), 
+      marginBottom: moderateScale(-6),
+    }
   });
   return styles;
 };

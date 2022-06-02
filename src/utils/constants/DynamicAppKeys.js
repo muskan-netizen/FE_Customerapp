@@ -1323,7 +1323,7 @@ const appIds = {
   }),
   mrHealth: Platform.select({
     ios: 'com.mrHealth',
-    android: 'com.mrHealth',
+    android: 'com.mrHealth.customer',
   }),
   lopht: Platform.select({
     ios: 'com.lopht',
