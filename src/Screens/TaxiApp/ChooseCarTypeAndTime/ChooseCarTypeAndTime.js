@@ -205,7 +205,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const styles = stylesFun({ fontFamily, themeColors });
   const commonStyles = commonStylesFun({ fontFamily });
-  const { profile } = appData;
+
 
   const walletAmount = useSelector(
     (state) => state?.product?.walletData?.wallet_amount,

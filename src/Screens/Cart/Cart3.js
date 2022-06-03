@@ -84,14 +84,12 @@ import {
   createPaymentMethod,
   confirmPayment,
 } from '@stripe/stripe-react-native';
-import { cameraHandler } from '../../utils/commonFunction';
+
 import ActionSheet from 'react-native-actionsheet';
-import { androidCameraPermission } from '../../utils/permissions';
-import DocumentPicker from 'react-native-document-picker';
+
+
 import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
-
-import { FlutterwaveInit } from 'flutterwave-react-native';
 
 let clickedItem = {};
 let isFAQsSubmitted = true;
