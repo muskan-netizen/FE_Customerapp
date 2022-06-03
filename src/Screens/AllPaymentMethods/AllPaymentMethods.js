@@ -180,7 +180,7 @@ export default function AllPaymentMethods({navigation, route}) {
         selectedPaymentMethod?.off_site == 0
       ) {
         if (cardInfo) {
-          await createToken(cardInfo)
+          await createToken({...cardInfo, type: 'Card'})
             .then((res) => {
               console.log(res?.error, 'stripeTokenres>>');
               if (!!res?.error) {
@@ -356,7 +356,6 @@ export default function AllPaymentMethods({navigation, route}) {
           last4: cardDetails?.last4,
           // postalCode: cardDetails?.postalCode,
         },
-      
       });
       // updateState({
       //   cardInfo: cardDetails

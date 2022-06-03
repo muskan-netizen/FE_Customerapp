@@ -1400,7 +1400,10 @@ function Cart({ navigation, route }) {
   const placeOrder = () => {
     isFAQsSubmitted = true;
     if (!!userData?.auth_token) {
-      if (businessType == 'laundry') {
+      if (
+        businessType == 'laundry' &&
+        !appData?.profile?.preferences?.off_scheduling_at_cart
+      ) {
         const pickupTime = laundrySelectedPickupSlot.split('-')[0];
         const dropTime = laundrySelectedDropOffSlot.split('-')[0];
         const formattedPickup = formatDateSlot(
