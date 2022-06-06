@@ -24,18 +24,24 @@ const ModalView = ({
   mainViewStyle = {},
   topCustomComponent = () => {},
   rightIconStyle = {},
+  hasBackdrop=true,
+  ...props
 }) => {
   return (
     <Modal
       isVisible={isVisible}
       onBackButtonPress={onClose}
       onBackdropPress={onClose}
+      
       backdropTransitionInTiming={transistionIn}
-      backdropTransitionInTiming={transistionOut}
+  
+     hasBackdrop={hasBackdrop}
       style={{
         ...styles.modalStyle,
         ...modalStyle,
-      }}>
+      }}
+      {...props}
+      >
       <View
         style={{
           // flex: 1,

@@ -88,6 +88,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const paramData = route?.params;
+  console.log(paramData,"PickupTaxiOrderDetail>paramData");
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [state, setState] = useState({
     isLoading: true,
@@ -291,7 +292,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         ? new_dispatch_traking_url
         : null,
     };
-    if (!!paramData?.orderId && !!new_dispatch_traking_url) {
+    if (!!paramData?.orderId || !!new_dispatch_traking_url) {
       console.log(apiData, 'apiData>?');
       try {
         const res = await actions.getOrderDetailPickUp(apiData, {
@@ -299,7 +300,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
         });
-        console.log(res?.data, 'res---agent>>>>');
+        console.log(res, 'res---agent>>>>');
         if (!!res?.data) {
           updateState({
             agent_location: res?.data?.agent_location,
@@ -867,16 +868,16 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     <Image
                       style={{
                         zIndex: 99,
-                        height: 35,
-                        width: 35,
+                        // height:46,
+                        // width: 32,
                         transform: [
                           {
-                            rotate: `${Number(agent_location?.heading_angle) + 110
+                            rotate: `${Number(agent_location?.heading_angle)
                               }deg`,
                           },
                         ],
                       }}
-                      source={imagePath.icScooter}
+                      source={imagePath.icCar}
                     />
                   </Marker.Animated>
                 )}
@@ -1020,13 +1021,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     <Text style={styles.datePriceText}>
                       {moment(
                         new Date(orderFullDetail?.order_details?.created_at),
-                      )
-                        .locale(
-                          languages?.primary_language?.sort_code
-                            ? languages?.primary_language?.sort_code
-                            : 'en',
-                        )
-                        .format('MMMM Do YYYY, h:mm a')}
+                      ).format('MMMM Do YYYY, h:mm a')}
                     </Text>
                     <Text
                       style={{

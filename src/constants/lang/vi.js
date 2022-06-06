@@ -522,7 +522,8 @@ export default {
   RECOMMENDED_VENDORS: 'Nhà cung cấp được đề xuất',
   YOUR_CART_EMPTY_ADD_ITEMS: 'Giỏ hàng của bạn trống, thêm hàng vào giỏ',
   SHOP_FROM_WISHLIST: 'Mua hàng từ danh sách yêu thích',
-  ALREADY_EXIST: 'Sản phẩm đã có trong giỏ hàng . Bạn có muốn xóa chúng không?',
+  ALREADY_EXIST:
+    'You already have items from another store. Do you want to discard them?',
   LABEL1: 'Nhãn 1',
   LABEL2: 'Nhãn 2',
   DOYOUHAVECLEANINGMATERIAL: ' Bạn có muốn làm sạch nguyên liệu',
@@ -922,5 +923,12 @@ export default {
   ORDER_CANCELLED: 'Order Cancelled',
   SPECIFIC_INSTRUCTIONS:'Specific Instructions',
   THANKS_FOR_YOUR_PURCHASE:'Thanks for your purchase.',
-  NOPRODUCTFOUND:"No Product Found"
+  BOOK_FOR_A_FRIEND: 'Book For a friend',
+  ENTER_FRIEND_DETAILS: "Enter your Friend's details",
+  BOOK_FOR_ME: 'Book For Me',
+  BOOK_FOR_FRIEND:'Book For Friend',
+  NOPRODUCTFOUND:"No Product Found",
+  BOOK_A_TABLE:'Book a Table',
+  PLEASE_SELECT_A_TABLE:'Please Select a Table',
+  SELECT_A_TABLE:'Select a Table',
 };

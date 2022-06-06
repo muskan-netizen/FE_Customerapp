@@ -11,7 +11,7 @@ import pickupdelivery from './pickupdelivery';
 import order from './order';
 import pendingNotifications from './pendingNotifications';
 import addressSearch from './addressSearch';
-
+import reloadData from './reloadData';
 
 const appReducer = combineReducers({
   auth,
@@ -24,7 +24,8 @@ const appReducer = combineReducers({
   pickupdelivery,
   order,
   pendingNotifications,
-  addressSearch
+  addressSearch,
+  reloadData
 });
 
 const rootReducer = (state, action) => {

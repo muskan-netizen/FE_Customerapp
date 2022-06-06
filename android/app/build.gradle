@@ -1539,7 +1539,7 @@ android {
             }
             donepacked{
                 dimension "appType"
-                versionCode 9
+                versionCode 7
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -1810,7 +1810,7 @@ android {
             }
             swiftandvalu{
                 dimension "appType"
-                versionCode 2
+                versionCode 3
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -4480,7 +4480,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.mrHealth'
+            applicationId 'com.mrHealth.customer'
             resValue "string", "app_name", "MrHealth"
             resValue "string", "host_name", ""
             }
@@ -4609,7 +4609,7 @@ android {
 
             dbairro{
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -4754,7 +4754,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.beachhop'
+            applicationId 'com.beachhop.customer'
             resValue "string", "app_name", "Beachhop"
             resValue "string", "host_name", ""
             }
@@ -4850,9 +4850,9 @@ android {
             resValue "string", "app_name", "Trip"
             resValue "string", "host_name", ""
             }
-        localdropoff{
+            localdropoff{
             dimension "appType"
-            versionCode 1
+            versionCode 4
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion

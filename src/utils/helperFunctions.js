@@ -1,20 +1,27 @@
 import * as React from 'react';
-import {Vibration} from 'react-native';
-import {showMessage} from 'react-native-flash-message';
+import { Vibration } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 import Geocoder from 'react-native-geocoder';
 import Geolocation from 'react-native-geolocation-service';
-import {BackHandler, Alert, Animated, Text} from 'react-native';
+import { BackHandler, Alert, Animated, Text } from 'react-native';
 import strings from './../constants/lang/index';
-import {callingCountries} from 'country-data';
+import { callingCountries } from 'country-data';
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import * as NavigationService from '../navigation/NavigationService';
 import Toast from 'react-native-simple-toast';
-import {StatusBarHeight} from '../styles/responsiveSize';
-import {getDistance} from 'geolib';
-import {min} from 'moment';
+import { StatusBarHeight } from '../styles/responsiveSize';
+import { getDistance } from 'geolib';
+import { min } from 'moment';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
-import {getFocusedRouteNameFromRoute} from '@react-navigation/core';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/core';
+import { selectContactPhone } from 'react-native-select-contact';
+import codes from 'country-calling-code';
+import DeviceCountry, {
+  TYPE_ANY,
+  TYPE_TELEPHONY,
+  TYPE_CONFIGURATION,
+} from 'react-native-device-country';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {
@@ -51,20 +58,20 @@ const getCurrentLocation = (type) =>
         // alert(error.message)
         reject(error.message);
       },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
     );
   });
 
 const getLocation = async (lat, lng, type) => {
   if (type == 'home') {
     try {
-      let res = await Geocoder.geocodePosition({lat, lng});
+      let res = await Geocoder.geocodePosition({ lat, lng });
       let addr = res[0].formattedAddress;
       return addr;
-    } catch (err) {}
+    } catch (err) { }
   } else if (type == 'address') {
     try {
-      let res = await Geocoder.geocodePosition({lat, lng});
+      let res = await Geocoder.geocodePosition({ lat, lng });
 
       let addr = res[0].formattedAddress;
 
@@ -90,9 +97,9 @@ const getLocation = async (lat, lng, type) => {
       };
 
       return data;
-    } catch (err) {}
+    } catch (err) { }
   } else {
-    return await Geocoder.geocodePosition({lat, lng});
+    return await Geocoder.geocodePosition({ lat, lng });
   }
 };
 
@@ -184,7 +191,7 @@ const androidBackButtonHandler = () => {
       onPress: () => null,
       style: 'cancel',
     },
-    {text: strings.YES, onPress: () => BackHandler.exitApp()},
+    { text: strings.YES, onPress: () => BackHandler.exitApp() },
   ]);
   return true;
 };
@@ -298,7 +305,7 @@ export const getScaleTransformationStyle = (
     outputRange: [startSize, endSize],
   });
   return {
-    transform: [{scale: interpolation}],
+    transform: [{ scale: interpolation }],
   };
 };
 
@@ -367,7 +374,7 @@ const getNearestLocation = (currentLocation, savedLocations) => {
         latitude: currentLocation?.latitude,
         longitude: currentLocation?.longitude,
       },
-      {latitude: item?.latitude, longitude: item?.longitude},
+      { latitude: item?.latitude, longitude: item?.longitude },
     );
     var newAddressArray = Object.assign({}, indx);
     newAddressArray.distance = distance;
@@ -508,6 +515,37 @@ const getTabBarVisibility = (route, navigation, screen) => {
   }
 };
 
+
+
+export function getPhoneNumberFromPhoneBook() {
+  return new Promise((resolve, reject) => {
+    selectContactPhone()
+      .then(selection => {
+        resolve(selection);
+      }).catch(error => {
+        reject(error);
+      })
+  });
+
+}
+
+
+export function deviceCountryCode() {
+  return new Promise((resolve, reject) => {
+    DeviceCountry.getCountryCode()
+      .then(result => {
+        resolve(codes.filter(x => x.isoCode2 == (result.code).toUpperCase()));
+      }).catch(error => {
+        reject(error);
+      })
+  });
+
+
+
+}
+
+
+
 export {
   showError,
   showSuccess,
@@ -524,4 +562,5 @@ export {
   playHapticEffect,
   hapticEffects,
   getTabBarVisibility,
+
 };

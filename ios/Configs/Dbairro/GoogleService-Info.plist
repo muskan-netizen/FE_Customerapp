@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>93441502791-m2bpilnrq6eisvap0cm78k04gk3qus6b.apps.googleusercontent.com</string>
+	<string>1077772636620-gpn0c6ghv8pjugsi86de7ba466m2184b.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.93441502791-m2bpilnrq6eisvap0cm78k04gk3qus6b</string>
+	<string>com.googleusercontent.apps.1077772636620-gpn0c6ghv8pjugsi86de7ba466m2184b</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>93441502791-03dqq13dgnl10kr09evk9b94rnava1n7.apps.googleusercontent.com</string>
+	<string>1077772636620-qcr14u7npfba71ek2eqbm4vjtkh7srjs.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDK-M3UecmrN1ksuht4ysx4PlTIx7xr7yQ</string>
+	<string>AIzaSyAeT_3lAnC09B1VtYBMXii0wWboDN78Ip8</string>
 	<key>GCM_SENDER_ID</key>
-	<string>93441502791</string>
+	<string>1077772636620</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.dbairro</string>
+	<string>com.app.dbairro</string>
 	<key>PROJECT_ID</key>
-	<string>royodispatcher8</string>
+	<string>dbairro-2062f</string>
 	<key>STORAGE_BUCKET</key>
-	<string>royodispatcher8.appspot.com</string>
+	<string>dbairro-2062f.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:93441502791:ios:40aa17e3be6be5bea08b62</string>
+	<string>1:1077772636620:ios:6171455833f6dbcd330d69</string>
 </dict>
 </plist>

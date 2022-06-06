@@ -50,11 +50,10 @@ export default function Account3({navigation}) {
     isLoading: false,
   });
 
-  const {preferences} = appData?.profile;
+  const {preferences,phone_number,contact_phone_number} = appData?.profile;
 
   // const profileInfo = appData?.profile;
   // console.log("account profile info",profileInfo)
-  console.log(preferences,"appDataappDataappDataappDataappDataappData");
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -73,7 +72,7 @@ export default function Account3({navigation}) {
   const appMainData = useSelector((state) => state?.home?.appMainData);
 
   console.log(
-    appData?.profile?.preferences?.customer_support_application_id,
+    contact_phone_number,
     'userDAta',
   );
   // useFocusEffect(
@@ -126,9 +125,6 @@ export default function Account3({navigation}) {
   };
 
   // initalize Zendesk
-
-  console.log(preferences?.customer_support_application_id,  preferences?.customer_support_key,"preferencespreferences");
-
   useEffect(() => {
     ZendeskChat.init(
       `${preferences?.customer_support_key}`,
@@ -616,17 +612,18 @@ export default function Account3({navigation}) {
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )} */}
-          <ListItemHorizontal
+        {!!userData?.auth_token && <ListItemHorizontal
             centerContainerStyle={{flexDirection: 'row'}}
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             onPress={
               appIds.hokitch == getBundleId()
                 ? () =>
                     Linking.openURL(
-                      'https://api.whatsapp.com/send?phone=9902792830',
+                      `https://api.whatsapp.com/send?phone=${contact_phone_number?contact_phone_number:phone_number}`,
                     )
                 : moveToNewScreen(navigationStrings.CONTACT_US)
             }
+            
             iconLeft={imagePath.contactUs}
             centerHeading={strings.CONTACT_US}
             containerStyle={styles.containerStyle2}
@@ -636,7 +633,8 @@ export default function Account3({navigation}) {
             }}
             // iconRight={imagePath.goRight}
             // rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
+          />}
+          
           {!!userData?.auth_token && (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}

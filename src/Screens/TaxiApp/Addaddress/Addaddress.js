@@ -1,5 +1,5 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Animated,
   Image,
@@ -8,14 +8,23 @@ import {
   View,
   ScrollView,
   Keyboard,
+  FlatList,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import {getBundleId} from 'react-native-device-info';
+import CountryPicker, { Flag } from 'react-native-country-picker-modal';
+import { useDarkMode } from 'react-native-dark-mode';
+import { getBundleId } from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
+import BorderTextInput from '../../../Components/BorderTextInput';
+import CustomSwitchTabBar from '../../../Components/CustomSwitchTabBar';
 import GradientButton from '../../../Components/GradientButton';
+import Modal from '../../../Components/Modal';
+import PhoneNumberInput from '../../../Components/PhoneNumberInput';
+import PhoneNumberInput2 from '../../../Components/PhoneNumberInput2';
+import PhoneNumberInputWithUnderline from '../../../Components/PhoneNumberInputWithUnderline';
 import SearchPlaces from '../../../Components/SearchPlaces';
+import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang/index';
@@ -27,33 +36,41 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
+  height
 } from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../../styles/theme';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import {
   getAddressFromLatLong,
   getCurrentLocationFromApi,
   getPlaceDetails,
   nearbySearch,
 } from '../../../utils/googlePlaceApi';
-import {getAddressComponent, showError} from '../../../utils/helperFunctions';
+import { getAddressComponent, showError, getColorCodeWithOpactiyNumber, getPhoneNumberFromPhoneBook } from '../../../utils/helperFunctions';
 import {
+  checkContactPermission,
   chekLocationPermission,
   locationPermission,
 } from '../../../utils/permissions';
+import validations from '../../../utils/validations';
 import stylesFun from './styles';
 
-export default function Addaddress({navigation, route}) {
+export default function Addaddress({ navigation, route }) {
   const paramData = route?.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const userData = useSelector((state) => state?.auth?.userData);
-  const {appData, allAddresss, themeColors, appStyle} = useSelector(
+  const { appData, allAddresss, themeColors, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
-  const {pickUpTimeType} = useSelector((state) => state?.home);
+
+  const { book_for_friend } = appData?.profile?.preferences
+  const { pickUpTimeType } = useSelector((state) => state?.home);
+
+  console.log(appData, "appDataappDataappData");
 
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
@@ -93,6 +110,16 @@ export default function Addaddress({navigation, route}) {
       },
     ],
     nearByAddressess: [],
+    selectedTab: 1,
+    bookForFriendModalVisible: false,
+    friendName: '',
+    friendMobileNumber: '',
+    countryPickerModalVisible: false,
+    cca2: 'IN',
+    callingCode: '+91',
+    showFriendListModal: false,
+    allAddedFriends: [],
+    selectedFriendForRide: { id: 0 }
   });
   const {
     pageNo,
@@ -111,12 +138,22 @@ export default function Addaddress({navigation, route}) {
     dropLocationData,
     nearByAddressess,
     curLatLng,
+    selectedTab,
+    bookForFriendModalVisible,
+    friendName,
+    friendMobileNumber,
+    countryPickerModalVisible,
+    cca2,
+    callingCode,
+    showFriendListModal,
+    allAddedFriends,
+    selectedFriendForRide
   } = state;
 
   useEffect(() => {
     if (!!paramData?.prefillAdress) {
       console.log('param data address', paramData);
-      const {prefillAdress} = paramData;
+      const { prefillAdress } = paramData;
       const cloneArr = dropLocationData;
       cloneArr[searchResult.currentIndex].pre_address =
         prefillAdress?.pre_address;
@@ -124,12 +161,13 @@ export default function Addaddress({navigation, route}) {
       cloneArr[searchResult.currentIndex].longitude = prefillAdress?.longitude;
       cloneArr[searchResult.currentIndex].task_type_id =
         prefillAdress?.task_type_id;
+
       // cloneArr[searchResult.currentIndex].post_code = addressData?.pincode
       // cloneArr[searchResult.currentIndex].short_name = addressData?.states || addressData?.state
       cloneArr[searchResult?.currentIndex].address = prefillAdress?.address;
       updateState({
         dropLocationData: cloneArr,
-        searchResult: {currentIndex: searchResult?.currentIndex, data: []},
+        searchResult: { currentIndex: searchResult?.currentIndex, data: [] },
       });
       console.log('clone array result', cloneArr);
     }
@@ -138,7 +176,6 @@ export default function Addaddress({navigation, route}) {
     }
   }, [paramData]);
 
-  console.log(appData, 'appData?.profile?');
   //get All address
   const getAllAddress = () => {
     actions
@@ -158,7 +195,7 @@ export default function Addaddress({navigation, route}) {
         });
       })
       .catch((error) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         showError(error?.message || error?.error);
       });
   };
@@ -169,41 +206,34 @@ export default function Addaddress({navigation, route}) {
         if (result === 'goback') {
           navigation.goBack();
         }
-        Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+        Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
       })
       .catch((error) => console.log('error while accessing location', error));
   }, []);
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const styles = stylesFun({
     fontFamily,
     themeColors,
     savedAddressViewHeight,
     avalibleValueInTextInput,
   });
-  const commonStyles = commonStylesFun({fontFamily});
-  const {profile} = appData;
-
-  // useFocusEffect(
-  //   React.useCallback(() => {
-
-  //   }, [pageNo]),
-  // );
+  const commonStyles = commonStylesFun({ fontFamily });
+  const { profile } = appData;
 
   const getAllPickUpVendors = (lat, lng) => {
     const latlongData = appData?.profile?.preferences
       ?.pickup_delivery_service_area
       ? {
-          code: appData?.profile?.code,
-          latitude: lat,
-          longitude: lng,
-        }
-      : {code: appData?.profile?.code};
+        code: appData?.profile?.code,
+        latitude: lat,
+        longitude: lng,
+      }
+      : { code: appData?.profile?.code };
 
     actions
       .getDataByCategoryId(
-        `/${
-          paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id
+        `/${paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id
         }?limit=${limit}&page=${pageNo}`,
         {},
         latlongData,
@@ -221,12 +251,12 @@ export default function Addaddress({navigation, route}) {
       })
       .catch((err) => {
         console.log(err, 'error in Api ');
-        updateState({isLoading: false, isRefreshing: false});
+        updateState({ isLoading: false, isRefreshing: false });
       });
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isRefreshing: false});
+    updateState({ isLoading: false, isRefreshing: false });
     showError(error?.message || error?.error);
   };
 
@@ -235,13 +265,20 @@ export default function Addaddress({navigation, route}) {
       latitude: dropLocationData[updateIndex]?.latitude || 0,
       longitude: dropLocationData[updateIndex]?.longitude || 0,
     };
-    updateState({searchResult: {...searchResult, currentIndex: updateIndex}});
+    updateState({ searchResult: { ...searchResult, currentIndex: updateIndex } });
     navigation.navigate(navigationStrings.PINADDRESSONMAP, {
       task_id: updateIndex == 0 ? 1 : 2,
       pickUpLocationLatLng:
         existLatLng?.latitude !== 0 ? existLatLng : curLatLng,
     });
   };
+
+  const moveToNewScreen =
+    (screenName, data = {}) =>
+      () => {
+        navigation.navigate(screenName, { data });
+      };
+
 
   const renderbtn = () => {
     switch (getBundleId()) {
@@ -258,7 +295,7 @@ export default function Addaddress({navigation, route}) {
                 themeColors.primary_color,
                 themeColors.primary_color,
               ]}
-              textStyle={{textTransform: 'none', fontSize: textScale(16)}}
+              textStyle={{ textTransform: 'none', fontSize: textScale(16) }}
               onPress={saveAddressAndRedirect}
               marginTop={moderateScaleVertical(10)}
               marginBottom={moderateScaleVertical(10)}
@@ -279,7 +316,7 @@ export default function Addaddress({navigation, route}) {
                 themeColors.primary_color,
                 themeColors.primary_color,
               ]}
-              textStyle={{textTransform: 'none', fontSize: textScale(16)}}
+              textStyle={{ textTransform: 'none', fontSize: textScale(16) }}
               onPress={saveAddressAndRedirect}
               marginTop={moderateScaleVertical(10)}
               marginBottom={moderateScaleVertical(10)}
@@ -306,20 +343,38 @@ export default function Addaddress({navigation, route}) {
     );
   };
 
-  const saveAddressAndRedirect = () => {
+
+
+
+
+
+
+
+
+  const moveToNextScreenWithAddressData = () => {
     let location = [];
     if (
       dropLocationData[0].pre_address == '' ||
       dropLocationData[0].address == ''
     ) {
-      showError(strings.PLEASE_SELECT_PICKUP_LOCATION);
+      if (selectedTab == 2) {
+        alert(strings.PLEASE_SELECT_PICKUP_LOCATION)
+      } else {
+        showError(strings.PLEASE_SELECT_PICKUP_LOCATION);
+      }
+
       return;
     }
     if (
       dropLocationData[1].pre_address == '' ||
       dropLocationData[1].address == ''
     ) {
-      showError(strings.PLEASE_SELECT_DROP_OFF_LOCATION);
+      if (selectedTab == 2) {
+        alert(strings.PLEASE_SELECT_DROP_OFF_LOCATION)
+      } else {
+        showError(strings.PLEASE_SELECT_DROP_OFF_LOCATION);
+      }
+
       return;
     }
     dropLocationData.map((val) => {
@@ -343,19 +398,55 @@ export default function Addaddress({navigation, route}) {
       cabVendors: pickUpVendors,
       datetime: paramData?.datetime,
       pickUpTimeType: pickUpTimeType,
+      friendBookingDetails: {
+        bookingType: selectedFriendForRide?.id != 0 ? 1 : 0,
+        firstName: selectedFriendForRide?.first_name ? selectedFriendForRide?.first_name : '',
+        lastName: selectedFriendForRide?.last_name ? selectedFriendForRide?.last_name : '',
+        mobileNumber: selectedFriendForRide?.phone_number ? `${selectedFriendForRide?.phone_number}` : ''
+      }
     });
+  }
+
+  console.log(selectedFriendForRide, "selectedFriendForRideselectedFriendForRide");
+
+
+
+  const saveAddressAndRedirect = () => {
+    moveToNextScreenWithAddressData()
   };
+
+
+
+
+  const _onChangeText = (key) => (val) => {
+    updateState({ [key]: val });
+  };
+
+  const onShowHideFriendListModal = () => {
+    updateState({
+      showFriendListModal: !showFriendListModal
+    })
+  }
+
+
+
 
   useEffect(() => {
     getLiveLocation();
   }, []);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      getAllRiderList();
+    }, []),
+  );
+
   const getLiveLocation = async () => {
     const locPermissionDenied = await locationPermission();
     if (locPermissionDenied) {
-      const {latitude, longitude} = await getCurrentLocationFromApi();
+      const { latitude, longitude } = await getCurrentLocationFromApi();
       // console.log("get live location after 4 second")
-      updateState({curLatLng: {latitude, longitude}});
+      updateState({ curLatLng: { latitude, longitude } });
       getNearByAddress(`${latitude}, ${longitude}`);
       getAllPickUpVendors(latitude, longitude);
       if (!paramData?.prefillAdress) {
@@ -371,7 +462,7 @@ export default function Addaddress({navigation, route}) {
         cloneArr[0].latitude = latitude;
         cloneArr[0].longitude = longitude;
         cloneArr[0].task_type_id = 1;
-        updateState({dropLocationData: cloneArr});
+        updateState({ dropLocationData: cloneArr });
       }
     }
   };
@@ -398,9 +489,9 @@ export default function Addaddress({navigation, route}) {
             : colors.lightGreyBg,
         }}
         onPress={() =>
-          onPressAddress({place_id: item.place_id, name: item.name})
+          onPressAddress({ place_id: item.place_id, name: item.name })
         }>
-        <View style={{flex: 0.12}}>
+        <View style={{ flex: 0.12 }}>
           <Image
             style={{
               height: moderateScale(24),
@@ -410,7 +501,7 @@ export default function Addaddress({navigation, route}) {
             source={imagePath.RecentLocationImage}
           />
         </View>
-        <View style={{flex: 0.9}}>
+        <View style={{ flex: 0.9 }}>
           <Text
             style={{
               fontSize: textScale(12),
@@ -441,13 +532,13 @@ export default function Addaddress({navigation, route}) {
       // updateAddress(place.description)
       const cloneArr = dropLocationData;
       cloneArr[searchResult.currentIndex].pre_address = place?.name;
-      updateState({dropLocationData: cloneArr});
+      updateState({ dropLocationData: cloneArr });
       try {
         let res = await getPlaceDetails(
           place.place_id,
           profile?.preferences?.map_key,
         );
-        const {result} = res;
+        const { result } = res;
 
         let addressData = getAddressComponent(result);
         cloneArr[searchResult.currentIndex].latitude =
@@ -463,7 +554,7 @@ export default function Addaddress({navigation, route}) {
           result?.formatted_address;
         updateState({
           dropLocationData: cloneArr,
-          searchResult: {currentIndex: searchResult.currentIndex, data: []},
+          searchResult: { currentIndex: searchResult.currentIndex, data: [] },
         });
       } catch (error) {
         console.log("something wen't wrong");
@@ -488,10 +579,10 @@ export default function Addaddress({navigation, route}) {
             : colors.lightGreyBg,
         }}
         onPress={() => onPressAddress(item)}>
-        <View style={{flex: 0.15}}>
+        <View style={{ flex: 0.15 }}>
           <Image source={imagePath.RecentLocationImage} />
         </View>
-        <View style={{flex: 0.9}}>
+        <View style={{ flex: 0.9 }}>
           <Text
             style={{
               fontSize: textScale(12),
@@ -523,7 +614,7 @@ export default function Addaddress({navigation, route}) {
           return item;
         }
       });
-      updateState({dropLocationData: removeItem});
+      updateState({ dropLocationData: removeItem });
       return;
     }
 
@@ -546,7 +637,7 @@ export default function Addaddress({navigation, route}) {
           longitude: 0,
         });
         isFill = true;
-        updateState({dropLocationData: [...dropLocationData, ...x]});
+        updateState({ dropLocationData: [...dropLocationData, ...x] });
       }
     } else {
       alert(strings.PLEASE_FILL_ADDRESS);
@@ -556,14 +647,194 @@ export default function Addaddress({navigation, route}) {
   const updateCurValues = (text, i) => {
     const cloneArr = dropLocationData;
     cloneArr[i].pre_address = text;
-    updateState({dropLocationData: cloneArr});
+    updateState({ dropLocationData: cloneArr });
   };
 
   const onClearAddress = (text, i) => {
     const cloneArr = dropLocationData;
     cloneArr[i].pre_address = text;
-    updateState({dropLocationData: cloneArr});
+    updateState({ dropLocationData: cloneArr });
   };
+
+
+  const onClose = () => {
+    updateState({
+      showFriendListModal: false
+    })
+  }
+  const onSelectFriend = (item) => {
+    updateState({
+      showFriendListModal: false,
+      selectedFriendForRide: item
+    })
+  }
+
+
+
+  const getAllRiderList = () => {
+    actions.getAllRiderList({}, { code: appData?.profile?.code }).then((res) => {
+      updateState({
+        allAddedFriends: res?.riders
+      })
+    }).catch((error) => {
+      console.log(error, "reosoeoseooseose");
+    })
+  }
+
+
+
+  const renderBookFriendListFooter = () => (
+    <>
+      <TouchableOpacity
+        onPress={() => _onAddRiderContact(1)}
+        style={styles.friendListFooter} >
+        <Image style={{ tintColor: themeColors?.primary_color }} source={imagePath.addRider} />
+        <Text style={styles.addFriendText}>{strings.ADD_MANUALLY}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => _onAddRiderContact(2)}
+        style={styles.friendListFooter} >
+        <Image style={{ tintColor: themeColors?.primary_color }} source={imagePath.addFriend} />
+        <Text style={styles.addFriendText}>{strings.ADD_FROM_PHONEBOOK}</Text>
+      </TouchableOpacity></>
+
+  )
+
+
+
+  const renderAllFriends = (({ item, index }) => {
+    return (
+      <View style={{ padding: 5 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => onSelectFriend(item)}>
+            <Image source={imagePath.riderImage} />
+            <Text style={{
+              fontFamily: fontFamily.regular,
+              color: colors.black,
+              fontSize: textScale(14),
+              marginHorizontal: moderateScale(10)
+            }}>{item?.first_name} {item?.last_name}</Text>
+
+          </TouchableOpacity>
+          {
+            item?.id == selectedFriendForRide?.id ? <Image style={{ tintColor: themeColors?.primary_color }} source={imagePath.tickBlack} /> : null
+          }
+
+        </View>
+
+        <View style={{ borderWidth: 0.5, height: 1, borderColor: colors.blackOpacity10, marginVertical: moderateScaleVertical(14) }} />
+      </View>
+
+    )
+
+  })
+
+  const allListFriendModalContent = () => {
+    return (
+      <>
+        <View style={[styles.modalMainContainer, {
+          paddingHorizontal:
+            moderateScale(10), marginVertical: 1, paddingVertical: 1
+        }]} >
+          <View
+            style={styles.friendListModalInnerContainer}>
+            <TouchableOpacity
+              style={{ flex: 0.5 }}
+              onPress={onShowHideFriendListModal}
+              hitSlop={styles.hitSlop}>
+              <Image
+                style={{
+                  tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}
+                source={imagePath.backArrowCourier}
+              />
+            </TouchableOpacity>
+            <View>
+              <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}
+                onPress={onShowHideFriendListModal}>
+                <Image source={imagePath.user} />
+                <Text
+                  style={[styles.switchRiderText, { color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }]}>
+                  {strings.SWITCH_RIDER}
+                </Text>
+                <Image source={imagePath.icDropdown4} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+        <View style={{ height: height / 1.1 }}>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={allAddedFriends}
+            contentContainerStyle={{ flexGrow: 1 }}
+            ListHeaderComponent={() => (
+              <View>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <TouchableOpacity
+                    onPress={() => _onAddRiderContact(0)}
+                    style={styles.showFriendListModalHeaderContainer} >
+                    <Image source={imagePath.riderImage} />
+                    <Text style={styles.forMeText}>For Me</Text>
+
+                  </TouchableOpacity>
+                  {
+                    selectedFriendForRide?.id == 0 ? <Image style={{ tintColor: themeColors?.primary_color }} source={imagePath.tickBlack} /> : null
+                  }
+                </View>
+                <View style={styles.lineViewStyle} />
+              </View>
+            )}
+            renderItem={renderAllFriends}
+            style={styles.friendListStyle}
+            ListFooterComponent={renderBookFriendListFooter}
+          />
+        </View>
+      </>
+    )
+  }
+
+
+  const _onAddRiderContact = (type) => {
+    switch (type) {
+      case 0:
+        updateState({
+          showFriendListModal: false,
+          selectedFriendForRide: { id: type }
+        })
+        break;
+      case 1:
+        updateState({
+          showFriendListModal: false
+        })
+        navigation.navigate(navigationStrings.ADD_NEW_RIDER, { addNewRiderContact: true })
+        break;
+      case 2:
+        _selectRiderContactFromPhoneBook()
+        break;
+    }
+
+
+  }
+
+  const _selectRiderContactFromPhoneBook = () => {
+    checkContactPermission().then((res) => {
+      if (res == 'granted') {
+        getPhoneNumberFromPhoneBook().then((res) => {
+          if (res) {
+            updateState({
+              showFriendListModal: false
+            })
+            navigation.navigate(navigationStrings.ADD_NEW_RIDER, res)
+          }
+
+        }).catch((error) => {
+          alert(error)
+        })
+      }
+    }).catch(errorMethod)
+
+
+  }
 
   return (
     <WrapperContainer
@@ -577,7 +848,7 @@ export default function Addaddress({navigation, route}) {
           marginHorizontal: moderateScale(16),
         }}>
         <TouchableOpacity
-          style={{flex: 0.5}}
+          style={{ flex: 0.5 }}
           onPress={() => navigation.goBack()}
           hitSlop={{
             top: 30,
@@ -592,18 +863,36 @@ export default function Addaddress({navigation, route}) {
             source={imagePath.backArrowCourier}
           />
         </TouchableOpacity>
-        <Text
-          style={{
-            fontSize: textScale(12),
-            fontFamily: fontFamily.medium,
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-          }}>
-          {strings.SELECT_LOCATION}
-        </Text>
+        <View>
+          {
+            book_for_friend
+              ?
+              <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}
+                onPress={onShowHideFriendListModal}>
+                <Image source={imagePath.riderImage} />
+                {selectedFriendForRide?.first_name ?
+                  <Text
+                    style={[styles.addAddressScreenTitle, { color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }]}>
+                    {selectedFriendForRide?.first_name} {selectedFriendForRide?.last_name}
+                  </Text> : <Text
+                    style={[styles.addAddressScreenTitle, { color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }]}>
+                    {strings.BOOK_FOR_ME}
+                  </Text>
+
+                }
+                <Image source={imagePath.icDropdown4} />
+              </TouchableOpacity>
+              : <Text
+                style={[styles.addAddressScreenTitle, { color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }]}>
+                {strings.ADD_ADDRESS}
+              </Text>
+          }
+        </View>
+
       </View>
 
-      <View style={{flex: 1}}>
-        <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
           <View
             style={{
               ...commonStyles.shadowStyle,
@@ -611,7 +900,7 @@ export default function Addaddress({navigation, route}) {
                 ? MyDarkTheme.colors.background
                 : colors.white,
               paddingBottom: moderateScaleVertical(8),
-              shadowOffset: {width: 0, height: moderateScale(6)},
+              shadowOffset: { width: 0, height: moderateScale(6) },
               borderRadius: 0,
             }}>
             {dropLocationData.map((val, i) => {
@@ -624,10 +913,10 @@ export default function Addaddress({navigation, route}) {
                     marginVertical: moderateScale(2),
                     justifyContent: 'space-between',
                   }}>
-                  <View style={{flex: 0.05, alignItems: 'center'}}>
+                  <View style={{ flex: 0.05, alignItems: 'center' }}>
                     {renderDotContainer(i)}
                   </View>
-                  <View style={{flex: 0.9, marginLeft: moderateScale(20)}}>
+                  <View style={{ flex: 0.9, marginLeft: moderateScale(20) }}>
                     <SearchPlaces
                       curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
                       autoFocus={
@@ -637,28 +926,28 @@ export default function Addaddress({navigation, route}) {
                         i == 0
                           ? strings.PICKUP_LOCATION
                           : i == 1
-                          ? strings.WHERETO
-                          : strings.ADD_A_STOP
+                            ? strings.WHERETO
+                            : strings.ADD_A_STOP
                       }
                       value={val.pre_address} // instant update search value
                       mapKey={profile?.preferences?.map_key} //send here google Key
                       fetchArrayResult={(data) =>
                         updateState({
-                          searchResult: {data: data, currentIndex: i},
+                          searchResult: { data: data, currentIndex: i },
                         })
                       }
                       setValue={(text) => updateCurValues(text, i)} //return & update on change text value
                       onFocus={() =>
                         updateState({
-                          searchResult: {...searchResult, currentIndex: i},
+                          searchResult: { ...searchResult, currentIndex: i },
                         })
                       }
                       _moveToNextScreen={() => _moveToNextScreen(i)}
                       onClear={() => onClearAddress('', i)}
                     />
                   </View>
-                  <View style={{marginHorizontal: moderateScale(8)}} />
-                  <View style={{flex: 0.1}}>
+                  <View style={{ marginHorizontal: moderateScale(8) }} />
+                  <View style={{ flex: 0.1 }}>
                     {i >= 1 && (
                       <TouchableOpacity
                         hitSlop={{
@@ -703,10 +992,10 @@ export default function Addaddress({navigation, route}) {
             showsVerticalScrollIndicator={false}
             onMomentumScrollBegin={() => Keyboard.dismiss()}>
             {!!searchResult?.data && searchResult?.data.length > 0 ? (
-              <View style={{marginTop: moderateScaleVertical(16)}}>
-                <View style={{...styles.savedAddressView}}>
+              <View style={{ marginTop: moderateScaleVertical(16) }}>
+                <View style={{ ...styles.savedAddressView }}>
                   <Image
-                    style={{marginHorizontal: moderateScale(12)}}
+                    style={{ marginHorizontal: moderateScale(12) }}
                     source={imagePath.starRoundedBackground}
                   />
                   <Text
@@ -725,10 +1014,10 @@ export default function Addaddress({navigation, route}) {
                 })}
               </View>
             ) : (
-              <View style={{marginTop: moderateScaleVertical(16)}}>
-                <View style={{...styles.savedAddressView}}>
+              <View style={{ marginTop: moderateScaleVertical(16) }}>
+                <View style={{ ...styles.savedAddressView }}>
                   <Image
-                    style={{marginHorizontal: moderateScale(12)}}
+                    style={{ marginHorizontal: moderateScale(12) }}
                     source={imagePath.starRoundedBackground}
                   />
                   <Text
@@ -749,8 +1038,19 @@ export default function Addaddress({navigation, route}) {
             )}
           </ScrollView>
         </View>
+
       </View>
       {renderbtn()}
+
+      <Modal
+        onClose={onClose}
+        mainViewStyle={{ position: 'absolute', top: 0, width: width, borderTopStartRadius: 0, borderTopRightRadius: 0 }}
+        isVisible={showFriendListModal}
+        modalMainContent={allListFriendModalContent}
+        modalStyle={{ marginHorizontal: moderateScaleVertical(0), marginVertical: moderateScale(0) }}
+        animationIn='slideInDown'
+        animationOut='slideOutDown'
+      />
     </WrapperContainer>
   );
 }

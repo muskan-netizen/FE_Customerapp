@@ -9,10 +9,10 @@ import {
   Linking,
   Platform,
   Alert,
-  
+
 } from 'react-native';
 import Communications from 'react-native-communications';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import imagePath from '../constants/imagePath';
 import {
@@ -20,9 +20,9 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {useDarkMode} from 'react-native-dark-mode';
-import {getImageUrl} from '../utils/helperFunctions';
+import { MyDarkTheme } from '../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { getImageUrl } from '../utils/helperFunctions';
 import { appIds } from '../utils/constants/DynamicAppKeys';
 import { getBundleId } from 'react-native-device-info';
 import Share from 'react-native-share';
@@ -38,7 +38,7 @@ const UserDetail = ({
   textStyle,
   _onRateDriver = () => {},
 }) => {
-  const {toggleTheme, themeColors, theme, appStyle} = useSelector(
+  const { toggleTheme, themeColors, theme, appStyle } = useSelector(
     (state) => state.initBoot,
   );
   const darkthemeusingDevice = useDarkMode();
@@ -48,16 +48,8 @@ const UserDetail = ({
   const userData = useSelector((state) => state?.auth?.userData);
 
 
-  const shareOptions = {
-    title: 'Share via',
-    message: 'some message',
-    url: 'some share url',
-    social: Share.Social.WHATSAPP,
-    whatsAppNumber: `${userData?.dial_code}${data?.vendor?.phone_no}`,  // country code + phone number
-    filename: 'test' , // only for base64 file in Android
-  };
 
-  console.log(data?.vendor?.phone_no,"data?.vendor?.phone_no>")
+  console.log(data?.vendor?.phone_no, "data?.vendor?.phone_no>")
 
   const dialCall = (number, type = 'phone') => {
     type === 'phone'
@@ -65,10 +57,26 @@ const UserDetail = ({
       : Linking.openURL(`sms:${number}`);
   };
 
-  const onWhatsapp =async()=>{
-    Share.shareSingle(shareOptions)
-    .then((res) => { console.log(res) })
-    .catch((err) => { err && console.log(err); });
+  const onWhatsapp = async () => {
+    // Share.shareSingle(shareOptions)
+    // .then((res) => { console.log(res) })
+    // .catch((err) => { err && console.log(err); });
+    const link = `https://api.whatsapp.com/send?phone=${userData?.dial_code}${data?.vendor?.phone_no}`;
+    if (link) {
+      Linking.canOpenURL(link)
+        .then(supported => {
+          if (!supported) {
+            Alert.alert(
+              'Please install whats app to send direct message to Vendor via whats app'
+            );
+          } else {
+            return Linking.openURL(link);
+          }
+        })
+        .catch(err => console.error('An error occurred', err));
+    } else {
+      console.log('sendWhatsAppMessage -----> ', 'message link is undefined');
+    }
   }
 
   return (
@@ -88,10 +96,10 @@ const UserDetail = ({
           uri: !!data?.agent_image
             ? data?.agent_image
             : getImageUrl(
-                data?.vendor?.banner?.image_fit,
-                data?.vendor?.banner?.image_path,
-                '600/600',
-              ),
+              data?.vendor?.banner?.image_fit,
+              data?.vendor?.banner?.image_path,
+              '600/600',
+            ),
         }}
         style={{
           height: moderateScale(40),
@@ -100,7 +108,7 @@ const UserDetail = ({
           backgroundColor: colors.blackOpacity10,
           ...imgStyle,
         }}
-        // resizeMode="cover"
+      // resizeMode="cover"
       />
 
       <View
@@ -146,61 +154,61 @@ const UserDetail = ({
                 marginTop: moderateScaleVertical(10),
                 paddingHorizontal: 2,
               }}>
-              <Text style={{color: colors.white}}>Rate Driver</Text>
+              <Text style={{ color: colors.white }}>Rate Driver</Text>
             </TouchableOpacity>
           )}
         </View>
 
-        { getBundleId()==appIds.masa? null:
-         
-        (data?.vendor?.phone_no || data?.order?.phone_number) && (
-          <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity onPress={onWhatsapp} >
+        {getBundleId() == appIds.masa ? null :
+
+          (data?.vendor?.phone_no || data?.order?.phone_number) && (
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity onPress={onWhatsapp} >
                 <Image
                   style={{
                     height: moderateScale(20),
                     width: moderateScale(20),
-                    marginRight:moderateScale(20)
+                    marginRight: moderateScale(20)
                   }}
                   source={imagePath.whatsAppRoyo}
                 />
               </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() =>
-                dialCall(
-                  data?.order?.phone_number || data?.vendor?.phone_no,
-                  (type = 'phone'),
-                )
-              }>
-              <Image
-                source={imagePath.call2}
-                style={{
-                  height: moderateScale(20),
-                  width: moderateScale(20),
-                  tintColor: themeColors.primary_color,
-                  marginRight: moderateScale(20),
-                }}
-              />
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-              onPress={() =>
-                dialCall(
-                  data?.order?.phone_number || data?.vendor?.phone_no,
-                  'text',
-                )
-              }>
-              <Image
-                source={imagePath.msg}
-                style={{
-                  height: moderateScale(20),
-                  width: moderateScale(20),
-                  tintColor: themeColors.primary_color,
-                }}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
+              <TouchableOpacity
+                onPress={() =>
+                  dialCall(
+                    data?.order?.phone_number || data?.vendor?.phone_no,
+                    (type = 'phone'),
+                  )
+                }>
+                <Image
+                  source={imagePath.call2}
+                  style={{
+                    height: moderateScale(20),
+                    width: moderateScale(20),
+                    tintColor: themeColors.primary_color,
+                    marginRight: moderateScale(20),
+                  }}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() =>
+                  dialCall(
+                    data?.order?.phone_number || data?.vendor?.phone_no,
+                    'text',
+                  )
+                }>
+                <Image
+                  source={imagePath.msg}
+                  style={{
+                    height: moderateScale(20),
+                    width: moderateScale(20),
+                    tintColor: themeColors.primary_color,
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
       </View>
     </View>
   );

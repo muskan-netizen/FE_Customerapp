@@ -4,9 +4,7 @@ import moment from 'moment';
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import {
   Alert,
-  Animated,
-  Dimensions,
-  FlatList,
+  Animated, FlatList,
   I18nManager,
   Image,
   Keyboard,
@@ -17,19 +15,18 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
-  TouchableWithoutFeedback,
+  View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { Calendar } from 'react-native-calendars';
 import { useDarkMode } from 'react-native-dark-mode';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo from 'react-native-device-info';
+import DocumentPicker from 'react-native-document-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { UIActivityIndicator } from 'react-native-indicators';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as RNLocalize from 'react-native-localize';
 import Modal from 'react-native-modal';
 import ModalDropdown from 'react-native-modal-dropdown';
@@ -53,7 +50,6 @@ import WishlistCard from '../../Components/WishlistCard';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
-import Vi from '../../constants/lang/vi';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
@@ -62,13 +58,11 @@ import staticStrings from '../../constants/staticStrings';
 import {
   height,
   moderateScale,
-  moderateScaleVertical,
-  StatusBarHeight,
-  textScale,
-  width,
+  moderateScaleVertical, textScale,
+  width
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
-import { currencyNumberFormatter } from '../../utils/commonFunction';
+import { cameraHandler, currencyNumberFormatter } from '../../utils/commonFunction';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   getImageUrl,
@@ -76,8 +70,9 @@ import {
   showError,
   showInfo,
   showSuccess,
-  timeInLocalLangauge,
+  timeInLocalLangauge
 } from '../../utils/helperFunctions';
+import { androidCameraPermission } from '../../utils/permissions';
 import { getItem, removeItem, setItem } from '../../utils/utils';
 import stylesFun from './styles';
 import {
@@ -89,14 +84,12 @@ import {
   createPaymentMethod,
   confirmPayment,
 } from '@stripe/stripe-react-native';
-import { cameraHandler } from '../../utils/commonFunction';
+
 import ActionSheet from 'react-native-actionsheet';
-import { androidCameraPermission } from '../../utils/permissions';
-import DocumentPicker from 'react-native-document-picker';
+
+
 import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
-
-import { FlutterwaveInit } from 'flutterwave-react-native';
 
 let clickedItem = {};
 let isFAQsSubmitted = true;
@@ -106,15 +99,18 @@ let dayAfterToday = new Date().getTime() + 24 * 60 * 60 * 1000;
 
 function Cart({ navigation, route }) {
   let paramsData = route?.params;
+  console.log(paramsData,"paramsData");
 
   let actionSheet = useRef(null);
 
   const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
+  const reloadData = useSelector((state) => state?.reloadData?.reloadData);
   const darkthemeusingDevice = useDarkMode();
 
   const [defaultSelectedTable, setDefaultSelectedTable] = useState('');
   const [type, setType] = useState('');
   const [vendorAddress, setVendorAddress] = useState('');
+  const [vendorAddressId,setVendorAddressId]=useState('');
   const [instruction, setInstruction] = useState('');
   const [selectedDateFromCalendar, setSelectedDateFromCalendar] = useState('');
   const [selectedTimeSlots, setSelectedTimeSlots] = useState('');
@@ -154,6 +150,9 @@ function Cart({ navigation, route }) {
   const [kycTxtInpts, setKycTxtInpts] = useState([]);
   const [kycImages, setKycImages] = useState([]);
   const [kycPdfs, setKycPdfs] = useState([]);
+  const [table, setTable] = useState('Select Table')
+  const [tableCheck, setTableCheck] = useState({})
+
   const [laundrySelectedPickupDate, setLaundrySelectedPickupDate] =
     useState(null);
   const [laundrySelectedPickupSlot, setLaundrySelectedPickupSlot] =
@@ -254,7 +253,7 @@ function Cart({ navigation, route }) {
   //Update states on screens
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
-  console.log('closed_store_order_scheduled', cartData);
+  console.log('closed_store_order_scheduled', vendorAddressId);
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -299,6 +298,8 @@ function Cart({ navigation, route }) {
       sel_types,
     ]),
   );
+
+  console.log(route?.params,"route?.params?.promocodeDetail");
 
   useEffect(() => {
     if (
@@ -452,7 +453,11 @@ function Cart({ navigation, route }) {
           isLoadingB: false,
         });
         setScheduleType(res?.data?.schedule_type);
+
         if (res && res.data) {
+          setTableCheck(res.data)
+          console.log(res.data, "responceeee")
+
           if (
             !!res.data.vendor_details.vendor_tables &&
             res.data.vendor_details.vendor_tables.length > 0
@@ -494,6 +499,15 @@ function Cart({ navigation, route }) {
           // setLaundryAvailableDropOffSlot(res.data.slots);
 
           setCartData(res.data);
+
+          console.log(dineInType,'dineInTypedineInType');
+
+          if(res.data.vendor_details?.vendor_address?.address && dineInType != 'delivery'){
+            setVendorAddressId(res.data.vendor_details?.vendor_address?.id)
+            setVendorAddress(res.data.vendor_details?.vendor_address?.address)
+          }
+           
+
           setSelectedTipvalue(
             res?.data?.total_payable_amount == 0 ? 'custom' : null,
           );
@@ -655,7 +669,7 @@ function Cart({ navigation, route }) {
         actions.cartItemQty({});
         setCartItems([]);
         setCartData({});
-
+        actions.reloadData(!reloadData);
         updateState({
           isLoadingB: false,
         });
@@ -854,6 +868,7 @@ function Cart({ navigation, route }) {
         0
       )
     ) {
+      actions.reloadData(!reloadData);
       moveToNewScreen(navigationStrings.ORDERSUCESS, {
         orderDetail: res.data,
       })();
@@ -927,6 +942,9 @@ function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.EASEBUZZ, paymentData);
         break;
+      case 28: //Easebuzz Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.VNPAY, paymentData);
       case 26: //ToyyibPay Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.TOYYIAPAY, paymentData);
@@ -952,17 +970,17 @@ function Cart({ navigation, route }) {
 
         break;
 
-      case 29: //MPAISA Payment Getway
+      case 29: //Easebuzz Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.MPAISA, paymentData);
         break;
 
-      case 34: //WINDCAVE Payment Getway
+      case 34: //Easebuzz Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.WINDCAVE, paymentData);
         break;
 
-      case 32: //PAYPHONE Payment Getway
+      case 32: //Easebuzz Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PAYPHONE, paymentData);
         break;
@@ -1088,10 +1106,11 @@ function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
+  console.log(dineInType,"vendorAddress?");
   const _directOrderPlace = () => {
     let data = {};
     data['vendor_id'] = cartData?.products[0]?.vendor_id;
-    data['address_id'] =
+    data['address_id'] =dineInType !='delivery' ?'': 
       paramsData?.selectedAddressData?.id || selectedAddressData?.id;
     data['payment_option_id'] =
       Number(cartData?.total_payable_amount) +
@@ -1111,11 +1130,18 @@ function Cart({ navigation, route }) {
     if (!!selectedTipAmount) {
       data['tip'] = selectedTipAmount || '';
     }
+
+   
     placeOrderData(data);
   };
 
+
   const placeOrderData = (data) => {
     console.log('Sending data', data);
+    if (!!instruction) {
+      setDateAndTimeSchedule()
+    }
+
 
     actions
       .placeOrder(data, {
@@ -1127,6 +1153,7 @@ function Cart({ navigation, route }) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        actions.reloadData(!reloadData);
         setSelectedTipvalue(null);
         setPickupDriverComment(null);
         setDropOffDriverComment(null);
@@ -1207,11 +1234,13 @@ function Cart({ navigation, route }) {
                   ? false
                   : true,
             });
+            actions.reloadData(!reloadData);
             actions.cartItemQty({});
           } else {
             moveToNewScreen(navigationStrings.ORDERSUCESS, {
               orderDetail: res.data,
             })();
+            actions.reloadData(!reloadData);
             setCartItems([]);
             setCartData({});
 
@@ -1242,10 +1271,10 @@ function Cart({ navigation, route }) {
       data['comment_for_dropoff_driver'] = dropOffDriverComment;
       data['comment_for_vendor'] = vendorComment;
       data['schedule_pickup'] = laundrySelectedPickupDate
-        ? new Date(laundrySelectedPickupDate).toISOString()
+        ? laundrySelectedPickupDate
         : null;
       data['schedule_dropoff'] = laundrySelectedDropOffDate
-        ? new Date(laundrySelectedDropOffDate).toISOString()
+        ? laundrySelectedDropOffDate
         : null;
       data['slot'] = !!laundrySelectedPickupSlot
         ? laundrySelectedPickupSlot
@@ -1359,11 +1388,36 @@ function Cart({ navigation, route }) {
     // }
     // _offineLinePayment();
   };
+
+  const formatDateSlot = (date, time) => {
+    return moment(`${date} ${time}`, 'YYYY-MM-DD HH:mm:ss').format();
+  };
+
   //Clear cart
   const placeOrder = () => {
     isFAQsSubmitted = true;
-
     if (!!userData?.auth_token) {
+      if (
+        businessType == 'laundry' &&
+        !appData?.profile?.preferences?.off_scheduling_at_cart
+      ) {
+        const pickupTime = laundrySelectedPickupSlot.split('-')[0];
+        const dropTime = laundrySelectedDropOffSlot.split('-')[0];
+        const formattedPickup = formatDateSlot(
+          laundrySelectedPickupDate,
+          pickupTime,
+        );
+        const formattedDrop = formatDateSlot(
+          laundrySelectedDropOffDate,
+          dropTime,
+        );
+
+        if (formattedPickup >= formattedDrop) {
+          showError('Drop off date time must be greater then pickup date time');
+          return;
+        }
+      }
+
       if (
         !!cartData?.closed_store_order_scheduled &&
         cartData?.products[0]?.vendor?.is_vendor_closed &&
@@ -1380,6 +1434,14 @@ function Cart({ navigation, route }) {
         showInfo(strings.SCHEDULE_DATE_REQUIRED);
         return;
       }
+
+      if (!!tableData.length > 0) {
+        if (table == 'Select Table') {
+          showError(strings.PLEASE_SELECT_A_TABLE);
+          return
+        }
+      }
+
       if (
         Number(cartData?.total_payable_amount) +
         (selectedTipAmount != null && selectedTipAmount != ''
@@ -1395,7 +1457,7 @@ function Cart({ navigation, route }) {
         return;
       }
 
-      if (cartData?.category_kyc_count > 0) {
+      if (cartData?.without_category_kyc === 0) {
         showError('Please submit KYC form!');
         return;
       }
@@ -1423,10 +1485,13 @@ function Cart({ navigation, route }) {
       // }
 
       console.log('shceduleORderdata', sheduledorderdate);
-      if (!selectedAddressData) {
-        // showError(strings.PLEASE_SELECT_ADDRESS);
-        setModalVisible(true);
-      } else if (!selectedPayment) {
+      if((vendorAddress?.address && dineInType != 'delivery')){
+        if (!selectedAddressData) {
+          // showError(strings.PLEASE_SELECT_ADDRESS);
+          setModalVisible(true);
+        }
+      }
+       else if (!selectedPayment) {
         errorMethod(strings.PLEASE_SELECT_PAYMENT_METHOD);
       } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
         errorMethod(strings.INVALID_SCHEDULED_DATE);
@@ -1559,8 +1624,8 @@ function Cart({ navigation, route }) {
     console.log(returnUrl, 'returnUrl');
     console.log(cancelUrl, 'cancelUrl');
     let queryData = `/${selectedMethod}?tip=${selectedTipAmount && selectedTipAmount != ''
-      ? Number(selectedTipAmount)
-      : 0
+        ? Number(selectedTipAmount)
+        : 0
       }&amount=${(
         Number(cartData?.total_payable_amount) +
         (selectedTipAmount != null && selectedTipAmount != ''
@@ -2360,9 +2425,9 @@ function Cart({ navigation, route }) {
         .catch(errorMethod);
     }
   };
-
   const _renderItem = ({ item, index }) => {
     console.log(item, 'item>>><>>>');
+    console.log(tableData, "tabledataaaa")
     return (
       <View>
         {index === 0 && (
@@ -2371,42 +2436,53 @@ function Cart({ navigation, route }) {
               userData?.auth_token &&
               !!cartData?.vendor_details?.vendor_tables &&
               cartData?.vendor_details?.vendor_tables.length > 0 && (
-                <DropDownPicker
-                  items={tableData}
-                  onOpen={() => updateState({ isTableDropDown: true })}
-                  onClose={() => updateState({ isTableDropDown: false })}
-                  defaultValue={
-                    deepLinkUrl
-                      ? deepLinkUrl == 1
-                        ? tableData[0]?.label
-                        : tableData[1]?.label
-                      : tableData[0]?.label || ''
-                  }
-                  containerStyle={styles.dropDownContainerStyle}
-                  style={{
-                    marginHorizontal: moderateScale(20),
-                    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-                    backgroundColor: isDarkMode
-                      ? MyDarkTheme.colors.lightDark
-                      : colors.greyColor1,
-                  }}
-                  labelStyle={
-                    isDarkMode
-                      ? { color: MyDarkTheme.colors.text }
-                      : { color: colors.textGrey }
-                  }
-                  itemStyle={{
-                    justifyContent: 'flex-start',
-                    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-                  }}
-                  dropDownStyle={{
-                    ...styles.dropDownStyle,
-                    backgroundColor: isDarkMode
-                      ? MyDarkTheme.colors.lightDark
-                      : colors.greyColor1,
-                  }}
-                  onChangeItem={(item) => _onTableSelection(item)}
-                />
+
+                <View style={{ marginTop: moderateScaleVertical(15) }}>
+                  <Text style={{
+                    ...styles.bookAtable,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  }}>{strings.BOOK_A_TABLE}
+                  </Text>
+                  <DropDownPicker
+                    placeholder={strings.SELECT_A_TABLE}
+                    placeholderStyle={{ color: isDarkMode ? MyDarkTheme.colors.lightDark : colors.textGreyB }}
+                    items={tableData}
+                    onOpen={() => updateState({ isTableDropDown: true })}
+                    onClose={() => updateState({ isTableDropDown: false })}
+                    // defaultValue={
+                    //   deepLinkUrl
+                    //     ? deepLinkUrl == 1
+                    //       ? tableData[0]?.label
+                    //       : tableData[1]?.label
+                    //     : tableData[0]?.label || ''
+                    // }
+                    defaultValue={table}
+                    containerStyle={styles.dropDownContainerStyle}
+                    style={{
+                      marginHorizontal: moderateScale(20),
+                      flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                      backgroundColor: isDarkMode
+                        ? MyDarkTheme.colors.lightDark
+                        : colors.greyColor1,
+                    }}
+                    labelStyle={
+                      isDarkMode
+                        ? { color: MyDarkTheme.colors.text }
+                        : { color: colors.textGrey }
+                    }
+                    itemStyle={{
+                      justifyContent: 'flex-start',
+                      flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                    }}
+                    dropDownStyle={{
+                      ...styles.dropDownStyle,
+                      backgroundColor: isDarkMode
+                        ? MyDarkTheme.colors.lightDark
+                        : colors.greyColor1,
+                    }}
+                    onChangeItem={(item) => _onTableSelection(item)}
+                  />
+                </View>
               )}
           </View>
         )}
@@ -2425,9 +2501,7 @@ function Cart({ navigation, route }) {
               // paddingHorizontal: moderateScale(8),
               flexDirection: 'column',
             }}>
-            <TouchableOpacity
-              onPress={() => _redirectVendorProducts(item)}
-            >
+            <TouchableOpacity onPress={() => _redirectVendorProducts(item)}>
               <Text
                 numberOfLines={1}
                 style={{
@@ -2438,7 +2512,8 @@ function Cart({ navigation, route }) {
               </Text>
             </TouchableOpacity>
 
-            {(!!cartData?.closed_store_order_scheduled && !!item?.vendor?.is_vendor_closed) ? (
+            {!!cartData?.closed_store_order_scheduled &&
+              !!item?.vendor?.is_vendor_closed ? (
               <Text
                 style={{
                   ...styles.priceItemLabel2,
@@ -2541,7 +2616,7 @@ function Cart({ navigation, route }) {
                                   fontFamily: fontFamily.medium,
                                   flex: 0.7,
                                 }}>
-                                {i?.product?.translation[0]?.title}
+                                {i?.product?.translation[0]?.title},
                               </Text>
 
                               <View
@@ -2597,9 +2672,6 @@ function Cart({ navigation, route }) {
                                 marginTop: moderateScaleVertical(4),
                                 fontFamily: fontFamily.regular,
                               }}>
-                              {' '}
-                              {i?.quantity}{' '}
-                               X {''}
                               <Text style={{}}>
                                 {`${currencies?.primary_currency?.symbol}${
                                   // Number(i?.pvariant?.multiplier) *
@@ -2609,8 +2681,8 @@ function Cart({ navigation, route }) {
                                       ?.digit_after_decimal,
                                   )
                                   }`}
-                              </Text>
-                               ={' '}
+                              </Text>{' '}
+                              {i?.quantity}X ={' '}
                               <Text
                                 style={{
                                   color: isDarkMode
@@ -2725,7 +2797,7 @@ function Cart({ navigation, route }) {
                                           {j.addon_title}{' '}
                                           {`(${j.option_title})`} ={' '}
                                           {`${currencies?.primary_currency
-                                            ?.symbol
+                                              ?.symbol
                                             }${currencyNumberFormatter(
                                               Number(j.price),
                                               appData?.profile?.preferences
@@ -2852,9 +2924,9 @@ function Cart({ navigation, route }) {
                           color: colors.redFireBrick,
                           marginBottom: moderateScale(3),
                         }}>{`${i?.product.delay_order_hrs > 0 ||
-                          i?.product.delay_order_min > 0
-                          ? strings.PREPARATION_TIME_IS
-                          : ''
+                            i?.product.delay_order_min > 0
+                            ? strings.PREPARATION_TIME_IS
+                            : ''
                           }${i?.product.delay_order_hrs > 0
                             ? ` ${i?.product.delay_order_hrs} hrs`
                             : ''
@@ -3033,44 +3105,44 @@ function Cart({ navigation, route }) {
               </View>
             )}
 
+            {appIds?.meatEasy == DeviceInfo.getBundleId() ? (
+              <View style={styles.itemPriceDiscountTaxView}>
+                {!!item?.delivery_types && item?.delivery_types?.length > 0 ? (
+                  <Text
+                    style={{
+                      ...styles.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      marginBottom: moderateScaleVertical(8),
+                    }}>
+                    {strings.DELIVERY_CHARGES}:
+                  </Text>
+                ) : null}
 
-
-            {appIds?.meatEasy == DeviceInfo.getBundleId() ? <View style={styles.itemPriceDiscountTaxView}>
-              {!!item?.delivery_types && item?.delivery_types?.length > 0 ? (
-                <Text
-                  style={{
-                    ...styles.priceItemLabel,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyB,
-                    marginBottom: moderateScaleVertical(8),
-                  }}>
-                  {strings.DELIVERY_CHARGES}:
-                </Text>
-              ) : null}
-
-              {!!item?.delivery_types && item?.delivery_types.length > 0 ? (<Text
-                style={
-                  isDarkMode
-                    ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                      },
-                    ]
-                    : styles.priceItemLabel
-                }>{`${currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
-                    Number(
-                      item?.delivery_types.filter(
-                        (val2) => (sel_types || item?.sel_types) == val2?.code,
-                      )[0]?.rate
-                    ),
-                    appData?.profile?.preferences?.digit_after_decimal,
-                  )}`}</Text>) : null
-              }
-            </View>
-              :
+                {!!item?.delivery_types && item?.delivery_types.length > 0 ? (
+                  <Text
+                    style={
+                      isDarkMode
+                        ? [
+                          styles.priceItemLabel,
+                          {
+                            color: MyDarkTheme.colors.text,
+                          },
+                        ]
+                        : styles.priceItemLabel
+                    }>{`${currencies?.primary_currency?.symbol
+                      }${currencyNumberFormatter(
+                        Number(
+                          item?.delivery_types.filter(
+                            (val2) => (sel_types || item?.sel_types) == val2?.code,
+                          )[0]?.rate,
+                        ),
+                        appData?.profile?.preferences?.digit_after_decimal,
+                      )}`}</Text>
+                ) : null}
+              </View>
+            ) : (
               <>
                 {!!item?.delivery_types && item?.delivery_types?.length > 0 ? (
                   <Text
@@ -3104,7 +3176,8 @@ function Cart({ navigation, route }) {
                       <Text style={styles.dropDownTextStyle}>
                         {
                           item?.delivery_types.filter(
-                            (val2) => (sel_types || item?.sel_types) == val2?.code,
+                            (val2) =>
+                              (sel_types || item?.sel_types) == val2?.code,
                           )[0]?.courier_name
                         }
                       </Text>
@@ -3115,7 +3188,8 @@ function Cart({ navigation, route }) {
                         }}>
                         {
                           item?.delivery_types.filter(
-                            (val2) => (sel_types || item?.sel_types) == val2?.code,
+                            (val2) =>
+                              (sel_types || item?.sel_types) == val2?.code,
                           )[0]?.rate
                         }
                       </Text>
@@ -3131,7 +3205,7 @@ function Cart({ navigation, route }) {
                   </ModalDropdown>
                 ) : null}
               </>
-            }
+            )}
 
             {/* <View style={styles.itemPriceDiscountTaxView}>
               <Text
@@ -3496,7 +3570,6 @@ function Cart({ navigation, route }) {
       </View>
     );
   };
-
 
   const setModalVisible = (visible, type, id, data) => {
     if (!!userData?.auth_token) {
@@ -4374,7 +4447,7 @@ function Cart({ navigation, route }) {
             </Animatable.View>
           </View>
         )}
-
+{console.log(cartData,"cartData?.total_payable_amount")}
         <View style={styles.amountPayable}>
           <Text
             style={{
@@ -4632,10 +4705,12 @@ function Cart({ navigation, route }) {
     }
     return value;
   };
+
+  console.log(vendorAddress, "vendorAddressvendorAddressvendorAddress");
   const getHeader = () => {
     return (
       <TouchableOpacity
-        disabled={!!vendorAddress}
+        disabled={dineInType == 'delivery' ? false : true}
         onPress={() => setModalVisible(true)}
         style={{
           ...styles.topLable,
@@ -4826,6 +4901,7 @@ function Cart({ navigation, route }) {
       console.log('useEffect 5');
       getItem('deepLinkUrl')
         .then((res) => {
+          // {console.log(res ,"tableRessss")} 
           if (res) {
             let table_number = getParameterByName('table', res);
             setDeepLinkUrl(table_number);
@@ -4841,6 +4917,7 @@ function Cart({ navigation, route }) {
       table: item?.id,
     };
     _vendorTableCart(data, item);
+    setTable(item?.label)
   };
 
   const _vendorTableCart = (data, item) => {
@@ -4852,13 +4929,14 @@ function Cart({ navigation, route }) {
         .then((res) => {
           removeItem('deepLinkUrl');
           setItem('selectedTable', item?.label);
+          // setTable(item?.label)
         })
         .catch(errorMethod);
       return;
     }
     return;
   };
-
+  { console.log(table, "tableresss") }
   const onPressRecommendedVendors = (item) => {
     if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category
@@ -4935,12 +5013,11 @@ function Cart({ navigation, route }) {
                 height: moderateScale(120),
                 width: moderateScale(120),
               }}
-
+              tintColor={isDarkMode && colors.white}
             // resizeMode="contain"s
             />
           )}
-
-          <Text style={{ ...styles.textStyle }}>
+          <Text style={{ ...styles.textStyle, color: isDarkMode ? colors.white : colors.blackOpacity40 }}>
             {strings.YOUR_CART_EMPTY_ADD_ITEMS}
           </Text>
         </View>
@@ -5126,7 +5203,8 @@ function Cart({ navigation, route }) {
               marginTop: moderateScaleVertical(10),
               alignSelf: 'center',
             }}
-            isRight={false}
+
+          // resizeMode="contain"s
           />
           {renderCardItemLoader()}
           {renderCardItemLoader()}
@@ -5350,21 +5428,23 @@ function Cart({ navigation, route }) {
     }
   };
 
-  const isSlotSelected = (item) => {
-    if (selectedTimeSlots == item.value) {
-      return true;
-    } else {
-      return false;
+  const isSlotSelected1 = (item,type) => {
+    if(type == 'normalOrder'){
+      if (selectedTimeSlots == item.value) {
+        return true;
+      } else {
+        return false;
+      }
+    } else if(type =='laundryOrderSlot'){
+      if (laundrySelectedPickupSlot == item.value) {
+        return true;
+      } else {
+        return false;
+      }
     }
+ 
   };
 
-  const isSlotSelected1 = (item) => {
-    if (laundrySelectedPickupSlot == item.value) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 
   const isSlotSelected2 = (item) => {
     if (laundrySelectedDropOffSlot == item.value) {
@@ -5381,17 +5461,17 @@ function Cart({ navigation, route }) {
         activeOpacity={0.8}
         onPress={() => onSelectTime(item)}
         style={{
-          backgroundColor: isSlotSelected1(item)
+          backgroundColor: isSlotSelected1(item,laundrySelectedPickupSlot?'laundryOrderSlot':'normalOrder')
             ? themeColors.primary_color
             : colors.white,
           padding: 8,
           borderRadius: 8,
-          borderWidth: isSlotSelected1(item) ? 0 : 1,
+          borderWidth: isSlotSelected1(item,laundrySelectedPickupSlot?'laundryOrderSlot':'normalOrder') ? 0 : 1,
           borderColor: colors.borderColorGrey,
         }}>
         <Text
           style={{
-            color: isSlotSelected1(item) ? colors.white : colors.black,
+            color: isSlotSelected1(item,laundrySelectedPickupSlot?'laundryOrderSlot':'normalOrder') ? colors.white : colors.black,
             fontFamily: fontFamily.regular,
             fontSize: textScale(11),
           }}>
@@ -5982,7 +6062,6 @@ function Cart({ navigation, route }) {
         onPressRightTxt={() => openClearCartModal()}
       />
 
-      {console.log(cartItems, 'cartItems>>>')}
       <FlatList
         data={cartItems}
         extraData={cartItems}
