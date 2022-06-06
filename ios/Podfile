@@ -983,10 +983,10 @@ target 'Kampick' do
 end
 
 
-# #VendorSpot Target
-# target 'VendorSpot' do
+#VendorSpot Target
+target 'VendorSpot' do
   
-# end
+end
 
 #GasGiant Target
 target 'GasGiant' do
@@ -1649,9 +1649,9 @@ end
 # end
 
 # # Myfarma Target
-# target 'Myfarma' do
+ target 'Myfarma' do
   
-# end
+ end
 
 # Valley Target
 target 'Valley' do
@@ -1692,6 +1692,10 @@ end
 
 # SorDelivery Target
 target 'SorDelivery' do
+  
+end
+# GrubHouse Target
+target 'GrubHouse' do
   
 end
 

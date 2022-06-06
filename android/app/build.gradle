@@ -5410,6 +5410,16 @@ android {
             resValue "string", "app_name", "Sor Delivery"
             resValue "string", "host_name", ""
             }
+             grubHouse{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.grubHouse'
+            resValue "string", "app_name", "Grub House"
+            resValue "string", "host_name", ""
+            }
     }
 }
 
