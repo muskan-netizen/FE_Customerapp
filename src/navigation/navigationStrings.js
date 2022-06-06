@@ -136,5 +136,6 @@ export default {
   WINDCAVE:'WindCave',
   PAYPHONE:'PayPhone',
   STRIPEOXXO:'StripeOXXO',
-  VIVAWALLET:"Vivawallet"
+  VIVAWALLET:"Vivawallet",
+  MYCASH:"MyCash"
 };
