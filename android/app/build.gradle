@@ -4592,7 +4592,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.app.getfix'
+            applicationId 'com.getfix.customer'
             resValue "string", "app_name", "Getfix"
             resValue "string", "host_name", ""
             }
@@ -5418,6 +5418,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.grubHouse'
             resValue "string", "app_name", "Grub House"
+            resValue "string", "host_name", ""
+            }
+             hitchDelivery{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.hitchDelivery'
+            resValue "string", "app_name", "Hitch Delivery"
             resValue "string", "host_name", ""
             }
     }
