@@ -99,7 +99,7 @@ let dayAfterToday = new Date().getTime() + 24 * 60 * 60 * 1000;
 
 function Cart({ navigation, route }) {
   let paramsData = route?.params;
-  console.log(paramsData,"paramsData");
+  console.log(paramsData, "paramsData");
 
   let actionSheet = useRef(null);
 
@@ -110,7 +110,7 @@ function Cart({ navigation, route }) {
   const [defaultSelectedTable, setDefaultSelectedTable] = useState('');
   const [type, setType] = useState('');
   const [vendorAddress, setVendorAddress] = useState('');
-  const [vendorAddressId,setVendorAddressId]=useState('');
+  const [vendorAddressId, setVendorAddressId] = useState('');
   const [instruction, setInstruction] = useState('');
   const [selectedDateFromCalendar, setSelectedDateFromCalendar] = useState('');
   const [selectedTimeSlots, setSelectedTimeSlots] = useState('');
@@ -299,7 +299,7 @@ function Cart({ navigation, route }) {
     ]),
   );
 
-  console.log(route?.params,"route?.params?.promocodeDetail");
+  console.log(route?.params, "route?.params?.promocodeDetail");
 
   useEffect(() => {
     if (
@@ -500,13 +500,13 @@ function Cart({ navigation, route }) {
 
           setCartData(res.data);
 
-          console.log(dineInType,'dineInTypedineInType');
+          console.log(dineInType, 'dineInTypedineInType');
 
-          if(res.data.vendor_details?.vendor_address?.address && dineInType != 'delivery'){
+          if (res.data.vendor_details?.vendor_address?.address && dineInType != 'delivery') {
             setVendorAddressId(res.data.vendor_details?.vendor_address?.id)
             setVendorAddress(res.data.vendor_details?.vendor_address?.address)
           }
-           
+
 
           setSelectedTipvalue(
             res?.data?.total_payable_amount == 0 ? 'custom' : null,
@@ -990,7 +990,7 @@ function Cart({ navigation, route }) {
         navigation.navigate(navigationStrings.STRIPEOXXO, paymentData);
         break;
 
-        case 21: //VIVAWALLET Payment Getway
+      case 21: //VIVAWALLET Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.VIVAWALLET, paymentData);
         break;
@@ -1107,11 +1107,11 @@ function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  console.log(dineInType,"vendorAddress?");
+  console.log(dineInType, "vendorAddress?");
   const _directOrderPlace = () => {
     let data = {};
     data['vendor_id'] = cartData?.products[0]?.vendor_id;
-    data['address_id'] =dineInType !='delivery' ?'': 
+    data['address_id'] = dineInType != 'delivery' ? '' :
       paramsData?.selectedAddressData?.id || selectedAddressData?.id;
     data['payment_option_id'] =
       Number(cartData?.total_payable_amount) +
@@ -1132,7 +1132,7 @@ function Cart({ navigation, route }) {
       data['tip'] = selectedTipAmount || '';
     }
 
-   
+
     placeOrderData(data);
   };
 
@@ -1298,7 +1298,7 @@ function Cart({ navigation, route }) {
         data['schedule_dt'] = formatDate;
       } else {
         data['schedule_dt'] =
-         ( dateType != 'now' && scheduleDate)
+          (dateType != 'now' && scheduleDate)
             ? new Date(scheduleDate)
             : null;
       }
@@ -1486,13 +1486,13 @@ function Cart({ navigation, route }) {
       // }
 
       console.log('shceduleORderdata', sheduledorderdate);
-      if((vendorAddress?.address && dineInType != 'delivery')){
+      if ((vendorAddress?.address && dineInType != 'delivery')) {
         if (!selectedAddressData) {
           // showError(strings.PLEASE_SELECT_ADDRESS);
           setModalVisible(true);
         }
       }
-       else if (!selectedPayment) {
+      else if (!selectedPayment) {
         errorMethod(strings.PLEASE_SELECT_PAYMENT_METHOD);
       } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
         errorMethod(strings.INVALID_SCHEDULED_DATE);
@@ -1625,8 +1625,8 @@ function Cart({ navigation, route }) {
     console.log(returnUrl, 'returnUrl');
     console.log(cancelUrl, 'cancelUrl');
     let queryData = `/${selectedMethod}?tip=${selectedTipAmount && selectedTipAmount != ''
-        ? Number(selectedTipAmount)
-        : 0
+      ? Number(selectedTipAmount)
+      : 0
       }&amount=${(
         Number(cartData?.total_payable_amount) +
         (selectedTipAmount != null && selectedTipAmount != ''
@@ -2798,7 +2798,7 @@ function Cart({ navigation, route }) {
                                           {j.addon_title}{' '}
                                           {`(${j.option_title})`} ={' '}
                                           {`${currencies?.primary_currency
-                                              ?.symbol
+                                            ?.symbol
                                             }${currencyNumberFormatter(
                                               Number(j.price),
                                               appData?.profile?.preferences
@@ -2879,31 +2879,11 @@ function Cart({ navigation, route }) {
 
                         <View
                           style={{
-                            flexDirection: 'row',
+
                             alignItems: 'center',
                             alignSelf: 'flex-end',
                             marginTop: moderateScale(6),
                           }}>
-                          {!!(
-                            i?.faq_count && i?.user_product_order_form == null
-                          ) && (
-                              <>
-                                <TouchableOpacity
-                                  style={{
-                                    marginRight: moderateScale(14),
-                                  }}
-                                  onPress={() => getProductFAQs(i)}>
-                                  <FastImage
-                                    source={imagePath.edit1Royo}
-                                    resizeMode="contain"
-                                    style={{
-                                      width: moderateScale(16),
-                                      height: moderateScale(16),
-                                    }}
-                                  />
-                                </TouchableOpacity>
-                              </>
-                            )}
                           <TouchableOpacity onPress={() => openDeleteView(i)}>
                             <FastImage
                               source={imagePath.deleteRed}
@@ -2917,6 +2897,20 @@ function Cart({ navigation, route }) {
                         </View>
                       </View>
                     </View>
+                    {!!(
+                      i?.faq_count && i?.user_product_order_form == null
+                    ) && (
+                        <>
+                          <ButtonComponent
+                            onPress={() => getProductFAQs(i)}
+                            btnText={strings.PRODUCT_ORDER_FORM}
+                            borderRadius={moderateScale(13)}
+                            textStyle={{ color: colors.white }}
+                            containerStyle={styles.placeOrderButtonStyle}
+                            placeLoader={placeLoader}
+                          />
+                        </>
+                      )}
                     {!!cartData?.delay_date && (
                       <Text
                         style={{
@@ -2925,9 +2919,9 @@ function Cart({ navigation, route }) {
                           color: colors.redFireBrick,
                           marginBottom: moderateScale(3),
                         }}>{`${i?.product.delay_order_hrs > 0 ||
-                            i?.product.delay_order_min > 0
-                            ? strings.PREPARATION_TIME_IS
-                            : ''
+                          i?.product.delay_order_min > 0
+                          ? strings.PREPARATION_TIME_IS
+                          : ''
                           }${i?.product.delay_order_hrs > 0
                             ? ` ${i?.product.delay_order_hrs} hrs`
                             : ''
@@ -2943,6 +2937,7 @@ function Cart({ navigation, route }) {
               );
             })
             : null}
+
           {/************ end render cart items *************/}
           {item?.isDeliverable ? null : (
             <View style={{ marginHorizontal: moderateScale(10) }}>
@@ -2956,6 +2951,7 @@ function Cart({ navigation, route }) {
               </Text>
             </View>
           )}
+
           {/* offerview */}
           {!!item?.is_promo_code_available && (
             <TouchableOpacity
@@ -4448,7 +4444,7 @@ function Cart({ navigation, route }) {
             </Animatable.View>
           </View>
         )}
-{console.log(cartData,"cartData?.total_payable_amount")}
+        {console.log(cartData, "cartData?.total_payable_amount")}
         <View style={styles.amountPayable}>
           <Text
             style={{
@@ -5430,21 +5426,21 @@ function Cart({ navigation, route }) {
     }
   };
 
-  const isSlotSelected1 = (item,type) => {
-    if(type == 'normalOrder'){
+  const isSlotSelected1 = (item, type) => {
+    if (type == 'normalOrder') {
       if (selectedTimeSlots == item.value) {
         return true;
       } else {
         return false;
       }
-    } else if(type =='laundryOrderSlot'){
+    } else if (type == 'laundryOrderSlot') {
       if (laundrySelectedPickupSlot == item.value) {
         return true;
       } else {
         return false;
       }
     }
- 
+
   };
 
 
@@ -5463,17 +5459,17 @@ function Cart({ navigation, route }) {
         activeOpacity={0.8}
         onPress={() => onSelectTime(item)}
         style={{
-          backgroundColor: isSlotSelected1(item,laundrySelectedPickupSlot?'laundryOrderSlot':'normalOrder')
+          backgroundColor: isSlotSelected1(item, laundrySelectedPickupSlot ? 'laundryOrderSlot' : 'normalOrder')
             ? themeColors.primary_color
             : colors.white,
           padding: 8,
           borderRadius: 8,
-          borderWidth: isSlotSelected1(item,laundrySelectedPickupSlot?'laundryOrderSlot':'normalOrder') ? 0 : 1,
+          borderWidth: isSlotSelected1(item, laundrySelectedPickupSlot ? 'laundryOrderSlot' : 'normalOrder') ? 0 : 1,
           borderColor: colors.borderColorGrey,
         }}>
         <Text
           style={{
-            color: isSlotSelected1(item,laundrySelectedPickupSlot?'laundryOrderSlot':'normalOrder') ? colors.white : colors.black,
+            color: isSlotSelected1(item, laundrySelectedPickupSlot ? 'laundryOrderSlot' : 'normalOrder') ? colors.white : colors.black,
             fontFamily: fontFamily.regular,
             fontSize: textScale(11),
           }}>

@@ -9,6 +9,7 @@ import {
   ScrollView,
   Keyboard,
   FlatList,
+  Platform,
 } from 'react-native';
 import CountryPicker, { Flag } from 'react-native-country-picker-modal';
 import { useDarkMode } from 'react-native-dark-mode';
@@ -732,12 +733,13 @@ export default function Addaddress({ navigation, route }) {
   const allListFriendModalContent = () => {
     return (
       <>
-        <View style={[styles.modalMainContainer, {
+        <View style={{
+          ...styles.modalMainContainer,
           paddingHorizontal:
             moderateScale(10), marginVertical: 1, paddingVertical: 1
-        }]} >
+        }} >
           <View
-            style={styles.friendListModalInnerContainer}>
+            style={{ ...styles.friendListModalInnerContainer, marginTop: Platform.OS == 'android' ? moderateScaleVertical(-10) : moderateScaleVertical(0) }}>
             <TouchableOpacity
               style={{ flex: 0.5 }}
               onPress={onShowHideFriendListModal}
@@ -750,7 +752,7 @@ export default function Addaddress({ navigation, route }) {
               />
             </TouchableOpacity>
             <View>
-              <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}
+              <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}
                 onPress={onShowHideFriendListModal}>
                 <Image source={imagePath.user} />
                 <Text
@@ -762,7 +764,7 @@ export default function Addaddress({ navigation, route }) {
             </View>
           </View>
         </View>
-        <View style={{ height: height / 1.1 }}>
+        <View>
           <FlatList
             showsVerticalScrollIndicator={false}
             data={allAddedFriends}
