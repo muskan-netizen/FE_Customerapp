@@ -338,7 +338,8 @@ const shortCodes = {
   atasktt: '9bbd4e',
   lunchboxSpecials: 'cfa64c',
   sorDelivery: '732007',
-  grubHouse:'d9c5ee'
+  grubHouse:'d9c5ee',
+  hitchDelivery:'3bc1d7'
 };
 
 
@@ -1365,7 +1366,7 @@ const appIds = {
   }),
   getfix: Platform.select({
     ios: 'com.app.getfix',
-    android: 'com.app.getfix',
+    android: 'com.getfix.customer',
   }),
   scoopaTechnologies: Platform.select({
     ios: 'com.scoopaTechnologies',
@@ -1692,6 +1693,10 @@ const appIds = {
   grubHouse: Platform.select({
     ios: 'com.grubHouse',
     android: 'com.grubHouse',
+  }),
+  hitchDelivery: Platform.select({
+    ios: 'com.hitchDelivery',
+    android: 'com.hitchDelivery',
   }),
 };
 
