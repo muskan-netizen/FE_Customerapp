@@ -66,20 +66,19 @@ import { currencyNumberFormatter } from '../../../utils/commonFunction';
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-import 'moment/locale/fr';
-import 'moment/locale/ar';
-import 'moment/locale/de';
-import 'moment/locale/es';
-import 'moment/locale/hi';
-import 'moment/locale/pt';
-import 'moment/locale/ru';
-import 'moment/locale/sv';
-import 'moment/locale/tr';
-import 'moment/locale/vi';
-import 'moment/locale/zh-cn';
-import 'moment/locale/zh-hk';
-import 'moment/locale/zh-mo';
-import 'moment/locale/zh-tw';
+// import 'moment/locale/fr';
+
+// import 'moment/locale/de';
+// import 'moment/locale/es';
+// import 'moment/locale/hi';
+// import 'moment/locale/pt';
+// import 'moment/locale/ru';
+// import 'moment/locale/sv';
+// import 'moment/locale/tr';
+// import 'moment/locale/vi';
+// import 'moment/locale/ar';
+import "moment/min/locales"; // Import all moment-locales -- it's just 400kb
+import "moment-timezone";
 
 export default function PickupTaxiOrderDetail({ navigation, route }) {
   const { themeColor, themeToggle } = useSelector(
@@ -164,7 +163,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const { appData, themeColors, currencies, languages, appStyle } = useSelector(
     (state) => state.initBoot,
   );
-
+console.log(languages,"languageslanguages")
   const isFocused = useIsFocused();
   const bottomSheetRef = useRef(null);
 
@@ -187,7 +186,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   //   : null;
 
   const urlValue = `/pickup-delivery/order-tracking-details`;
-
+ 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
@@ -1021,7 +1020,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     <Text style={styles.datePriceText}>
                       {moment(
                         new Date(orderFullDetail?.order_details?.created_at),
-                      ).format('MMMM Do YYYY, h:mm a')}
+                      ).locale(languages?.primary_language?.sort_code || "en").format('MMMM Do YYYY, h:mm a')}
                     </Text>
                     <Text
                       style={{
@@ -1491,11 +1490,18 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
 
                 <View style={{ marginHorizontal: moderateScale(16) }}>
                   {!!orderFullDetail?.order_details?.delivery_fee &&
-                    orderFullDetail?.order_details?.delivery_fee !== '0.00' && (
+                    Number(orderFullDetail?.order_details?.delivery_fee) !== 0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.DELIVERYFEE}
-                          rightText={` ${currencies?.primary_currency?.symbol} ${orderFullDetail?.order_details?.delivery_fee}`}
+                          rightText={` ${currencies?.primary_currency?.symbol
+                          } ${currencyNumberFormatter(
+                            Number(
+                              orderFullDetail?.order_details?.delivery_fee,
+                            ),
+                            appData?.profile?.preferences?.digit_after_decimal,
+                          )}`}
+                          
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
                           marginBottom={0}
@@ -1504,8 +1510,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                       </View>
                     )}
                   {!!orderFullDetail?.order_details?.subtotal_amount &&
-                    orderFullDetail?.order_details?.subtotal_amount !==
-                    '0.00' && (
+                   Number( orderFullDetail?.order_details?.subtotal_amount) !==
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.SUBTOTAL}
@@ -1524,8 +1530,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                       </View>
                     )}
                   {!!orderFullDetail?.order_details?.discount_amount &&
-                    orderFullDetail?.order_details?.discount_amount !==
-                    '0.00' && (
+                    Number(orderFullDetail?.order_details?.discount_amount) !==
+                    0&& (
                       <View>
                         <LeftRightText
                           leftText={strings.DISCOUNT}
@@ -1546,7 +1552,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                       </View>
                     )}
                   {!!orderFullDetail?.order_details?.order_detail
-                    ?.subscription_discount && (
+                    ?.subscription_discount && Number(orderFullDetail?.order_details?.order_detail
+                      ?.subscription_discount)!==0&&(
                       <View>
                         <LeftRightText
                           leftText={`${strings.SUBSCRIPTION_DISCOUNT
@@ -1572,8 +1579,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                       </View>
                     )}
                   {!!orderFullDetail?.order_details?.taxable_amount &&
-                    orderFullDetail?.order_details?.taxable_amount !==
-                    '0.00' && (
+                    Number(orderFullDetail?.order_details?.taxable_amount) !==
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.TAX_AMOUNT}
@@ -1593,8 +1600,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     )}
 
                   {!!orderFullDetail?.order_details?.payable_amount &&
-                    orderFullDetail?.order_details?.payable_amount !==
-                    '0.00' && (
+                    Number(orderFullDetail?.order_details?.payable_amount) !==
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.TOTAL}

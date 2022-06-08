@@ -3,6 +3,7 @@ import {cloneDeep} from 'lodash';
 import LottieView from 'lottie-react-native';
 import moment from 'moment';
 import React, {useEffect, useRef, useState} from 'react';
+import * as Animatable from 'react-native-animatable';
 import {
   Dimensions,
   FlatList,
@@ -16,6 +17,7 @@ import {
   View,
   Animated,
   Linking,
+  
 } from 'react-native';
 import Communications from 'react-native-communications';
 import {useDarkMode} from 'react-native-dark-mode';
