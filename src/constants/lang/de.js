@@ -537,7 +537,7 @@ export default {
   WRITE_A_REVIEW: 'Schreiben Sie eine Bewertung',
   WHERETO: 'Wohin?',
   ALREADY_EXIST:
-    'Sie haben bereits Artikel in Ihrem Warenkorb. Möchten Sie sie entsorgen?',
+  'You already have items from another store. Do you want to discard them?',
   VIEW_ALL: 'Alle anzeigen',
   POPULAR_BRANDS: 'Beliebte Marken',
   FEATURED_PRODUCTS: 'Vorgestellte Produkte',
@@ -858,5 +858,12 @@ export default {
   ORDER_CANCELLED: 'Order Cancelled',
   SPECIFIC_INSTRUCTIONS:'Specific Instructions',
   THANKS_FOR_YOUR_PURCHASE:'Thanks for your purchase.',
-  NOPRODUCTFOUND:"No Product Found"
+  BOOK_FOR_A_FRIEND: 'Book For a friend',
+  ENTER_FRIEND_DETAILS: "Enter your Friend's details",
+  BOOK_FOR_ME: 'Book For Me',
+  BOOK_FOR_FRIEND:'Book For Friend',
+  NOPRODUCTFOUND:"No Product Found",
+  BOOK_A_TABLE:'Book a Table',
+  PLEASE_SELECT_A_TABLE:'Please Select a Table',
+  SELECT_A_TABLE:'Select a Table',
 };

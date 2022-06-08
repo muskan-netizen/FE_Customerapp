@@ -129,36 +129,35 @@ const RoyoOrder = (props) => {
         return type;
     }
   };
-
+  
   const getAllVendorOrder = async (isRefreshing = false) => {
     if (!isRefreshing) {
-      updateState({isLoadingB: true});
+      updateState({ isLoadingB: true })
     }
-    let type = orderType(activeIndex);
-    console.log(activeIndex, 'type++++', type);
-    let query = `/${storeSelectedVendor?.id}?limit=${dataLimit}&page=${dataPage.current}&type=${type}`;
+    let type = orderType(activeIndex)
+    console.log(activeIndex, "type++++", type)
+    let query = `/${storeSelectedVendor?.id}?limit=${dataLimit}&page=${dataPage.current}&type=${type}`
     let headers = {
       code: appData?.profile?.code,
-      currency: currencies?.primary_currency?.id,
+      currency: currencies?.primary_currency?.id,   
       language: languages?.primary_language?.id,
-    };
-    console.log('sending query', query);
-    try {
-      const res = await actions.allVendorOrders(query, headers);
-      console.log('all vendor orders', res.data);
-      if (res.data.data.length == 0) {
-        dataLoadMore.current = false;
-      }
-      let mergeData =
-        dataPage.current == 1 ? res.data.data : [...data, ...res.data.data];
-      setData(mergeData);
-      updateState({isLoadingB: false, isRefreshing: false});
-    } catch (error) {
-      console.log('error riased', error);
-      showError(error?.error);
-      updateState({isLoadingB: false, isRefreshing: false});
     }
-  };
+    console.log("sending query", query)
+    try {
+      const res = await actions.allVendorOrders(query, headers)
+      console.log("all vendor orders", res.data)
+      if (res.data.data.length == 0) {
+        dataLoadMore.current = false
+      }
+      let mergeData = dataPage.current == 1 ? res.data.data : [...data, ...res.data.data]
+      setData(mergeData)
+      updateState({ isLoadingB: false, isRefreshing: false })
+    } catch (error) {
+      console.log('error riased', error)
+      showError(error?.error)
+      updateState({ isLoadingB: false, isRefreshing: false })
+    }
+  }
 
   const _getBleDevice = async () => {
     if (Platform.OS == 'android') {
@@ -212,11 +211,12 @@ const RoyoOrder = (props) => {
     });
     showError(error?.message || error?.error);
   };
-  const removeItemfromData = (id) => {
-    let newarray = [...data];
-    newarray = newarray.filter((item) => item.id !== id);
-    setData(newarray);
-  };
+const removeItemfromData=(id)=>{
+     let newarray=[...data]
+     newarray =newarray.filter(item=>item.id!==id)
+     setData(newarray)
+    
+}
   const updateOrderStatus = (acceptRejectData, status) => {
     console.log(acceptRejectData, 'item');
     let data = {};
@@ -236,7 +236,7 @@ const RoyoOrder = (props) => {
 
         if (res && res.status == 'success') {
           // getAllVendorOrder(storeSelectedVendor?.id);
-          removeItemfromData(acceptRejectData?.id);
+          removeItemfromData(acceptRejectData?.id)
         }
         updateState({
           isLoadingB: false,
@@ -337,12 +337,7 @@ const RoyoOrder = (props) => {
           tabTextStyle={{
             marginTop: moderateScaleVertical(0),
           }}
-          screenName={[
-            strings.NEW,
-            strings.CONFIRMED,
-            strings.CANCELLED,
-            strings.COMPLETED,
-          ]}
+          screenName={[strings.NEW, strings.CONFIRMED, strings.CANCELLED, strings.COMPLETED]}
           selectedScreen={(index) => selectedOrder(index)}
           selectedScreenIndex={activeIndex}
         />

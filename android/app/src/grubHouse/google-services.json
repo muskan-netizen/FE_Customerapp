@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "466956514824",
+    "project_id": "grub-house-6638c",
+    "storage_bucket": "grub-house-6638c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466956514824:android:7648e19f709b57d97e83bd",
+        "android_client_info": {
+          "package_name": "com.grubHouse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466956514824-4rsskh68ko7j880sgjk59ts0clg1de5k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grubHouse",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "466956514824-c85digbaf0vkbiouj3vuo8nd0a8n9s98.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grubHouse",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "466956514824-up9s2is39so6bhc2do79ji8ldh84sipt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grubHouse",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "466956514824-7aof06bcofo0ginar10vummne54jvjn8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyuYwxAlNAqHfRjVKwiiEuN2UaG_aiwm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466956514824-7aof06bcofo0ginar10vummne54jvjn8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "466956514824-dhj5osn0jevbf4b862tsua7f5nahv30s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.grubHouse"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

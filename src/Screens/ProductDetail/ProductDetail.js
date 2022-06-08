@@ -74,6 +74,7 @@ export default function ProductDetail({route, navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
   const commonStyles = commonStylesFunc({fontFamily});
+  const reloadData = useSelector((state) => state?.reloadData?.reloadData);
   const {data} = route.params;
  console.log(data,"dataaaaaa")
   const [state, setState] = useState({
@@ -852,6 +853,7 @@ export default function ProductDetail({route, navigation}) {
       .then((res) => {
         console.log(res, 'res.data');
         actions.cartItemQty(res);
+        actions.reloadData(!reloadData)
 
         showSuccess(strings.PRODUCT_ADDED_SUCCESS);
 
@@ -1281,9 +1283,6 @@ export default function ProductDetail({route, navigation}) {
                      <RenderHtml
                         contentWidth={width}
                         source={{html: plainHtml}}
-                        tagsStyles={{p: {
-                          color: isDarkMode? colors.white : colors.black
-                        }}}
                       />
                 
                       {/* <HTMLView
@@ -1374,7 +1373,7 @@ export default function ProductDetail({route, navigation}) {
                               marginHorizontal: moderateScale(3),
                               textAlign: 'center',
                               alignSelf: 'center',
-                              flex: 0.8,color:isDarkMode?colors.white:colors.black
+                              flex: 0.8,
                             }}
                             keyboardType="number-pad"
                             onEndEditing={() => {

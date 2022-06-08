@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+     <uses-permission android:name="android.permission.READ_CONTACTS" />
+      <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
     <application
       android:name=".MainApplication"
@@ -104,5 +106,12 @@
             </intent-filter>
         </service>
     </application>
+     <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <data android:mimeType="vnd.android.cursor.dir/contact" />
+        </intent>
+    </queries>
 
 </manifest>

@@ -113,7 +113,7 @@ export default function TaxiTabRoutes(props) {
               ? strings.SERVICES
               : appIds.mml == getBundleId()
               ? strings.MYDELIERIES
-              : strings.MYRIDES,
+              : appIds.jiffex == getBundleId()? strings.MY_ORDERS: strings.MYRIDES,
           tabBarIcon: ({focused, tintColor}) => {
             let tabIconColor =
               appStyle?.tabBarLayout == 4

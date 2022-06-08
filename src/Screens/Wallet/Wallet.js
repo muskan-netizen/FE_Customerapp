@@ -304,7 +304,7 @@ export default function Wallet({navigation}) {
             style={[styles.addMoneyListDesc, {backgroundColor: 'transparent'}]}>
             <HTMLView
               stylesheet={isDarkMode ? htmlStyle : null}
-              value={`<p>${item?.meta}</p>`}
+              value={`<p>${item?.meta?.description || item?.meta}</p>`}
             />
             {/* <Text numberOfLines={2} style={styles.addedText}>
               {item.description}
@@ -320,7 +320,7 @@ export default function Wallet({navigation}) {
               }>
               {item.type == 'deposit'
                 ? `+${currencies?.primary_currency?.symbol}`
-                : `-${currencies?.primary_currency?.symbol}`}
+                : `${currencies?.primary_currency?.symbol}`}
               {currencyNumberFormatter(
                 item.amount,
                 appData?.profile?.preferences?.digit_after_decimal,

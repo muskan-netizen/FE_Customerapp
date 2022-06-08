@@ -107,7 +107,7 @@ const TextInputWithUnderlineAndLabel = ({
           minHeight: moderateScaleVertical(30),
           color: colors.white,
           marginBottom,
-          borderBottomWidth: StyleSheet.hairlineWidth,
+           borderBottomWidth: StyleSheet.hairlineWidth,
           borderBottomColor: underlineColor,
           paddingBottom: 11,
           alignItems: 'center',

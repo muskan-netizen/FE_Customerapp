@@ -20,8 +20,8 @@ import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 
-import DeviceInfo from 'react-native-device-info';
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {
   getImageUrl,
   hapticEffects,
@@ -66,20 +66,20 @@ import { currencyNumberFormatter } from '../../../utils/commonFunction';
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-import 'moment/locale/fr';
-import 'moment/locale/ar';
-import 'moment/locale/de';
-import 'moment/locale/es';
-import 'moment/locale/hi';
-import 'moment/locale/pt';
-import 'moment/locale/ru';
-import 'moment/locale/sv';
-import 'moment/locale/tr';
-import 'moment/locale/vi';
-import 'moment/locale/zh-cn';
-import 'moment/locale/zh-hk';
-import 'moment/locale/zh-mo';
-import 'moment/locale/zh-tw';
+// import 'moment/locale/fr';
+// import 'moment/locale/ar';
+// import 'moment/locale/de';
+// import 'moment/locale/es';
+// import 'moment/locale/hi';
+// import 'moment/locale/pt';
+// import 'moment/locale/ru';
+// import 'moment/locale/sv';
+// import 'moment/locale/tr';
+// import 'moment/locale/vi';
+// import 'moment/locale/zh-cn';
+// import 'moment/locale/zh-hk';
+// import 'moment/locale/zh-mo';
+// import 'moment/locale/zh-tw';
 
 export default function PickupTaxiOrderDetail({ navigation, route }) {
   const { themeColor, themeToggle } = useSelector(
@@ -837,7 +837,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}>
             {orderStatus == 'unassigned'
-              ? strings.YOUR_RIDE_WILL_START_SOON
+              ? appIds.jiffex == getBundleId()?strings.YOUR_ORDER_WILL_START_SOON:strings.YOUR_RIDE_WILL_START_SOON
               : strings.INVOICE}
           </Text>
         </View>
@@ -868,16 +868,16 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     <Image
                       style={{
                         zIndex: 99,
-                        height: 35,
-                        width: 35,
+                        // height:46,
+                        // width: 32,
                         transform: [
                           {
-                            rotate: `${Number(agent_location?.heading_angle) + 110
+                            rotate: `${Number(agent_location?.heading_angle)
                               }deg`,
                           },
                         ],
                       }}
-                      source={imagePath.icScooter}
+                      source={imagePath.icCar}
                     />
                   </Marker.Animated>
                 )}

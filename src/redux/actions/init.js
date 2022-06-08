@@ -26,6 +26,7 @@ export function initApp(
   refreshlang = false,
 ) {
   return new Promise((resolve, reject) => {
+    console.log(headers,"headersheadersheaders");
     apiPost(APP_INITIAL_SETTINGS, data, headers)
       .then(async (res) => {
         let data = res?.data;
@@ -119,7 +120,6 @@ export function initApp(
         }
 
         //Set Language
-
         if (reload) {
           setItem('setPrimaryLanguage', languagesData);
           setLanguage(languagesData);

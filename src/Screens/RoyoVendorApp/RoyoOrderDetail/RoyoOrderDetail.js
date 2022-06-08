@@ -319,7 +319,7 @@ const RoyoOrderDetail = (props) => {
             <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>
             <Text style={styles.font15Semibold}>
               {currencies?.primary_currency?.symbol}{' '}
-              {Number(data?.vendors[0].subtotal_amount).toFixed(2)}
+              {Number(data.payable_amount).toFixed(2)}
             </Text>
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -375,7 +375,8 @@ const RoyoOrderDetail = (props) => {
             <Text style={styles.font15Medium}>{strings.TOTAL}</Text>
             <Text style={{ ...styles.font15Semibold, color: colors.themeColor2 }}>
               {`${currencies?.primary_currency?.symbol} ${Number(
-                data?.payable_amount
+                parseFloat(data.payable_amount) +
+                parseFloat(data.total_delivery_fee),
               ).toFixed(2)}`}
             </Text>
           </View>

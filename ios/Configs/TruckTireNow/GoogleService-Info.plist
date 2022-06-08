@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>350033689545-hqkkcsqbctpmbv5tnt12q65q4u3094iv.apps.googleusercontent.com</string>
+	<string>350033689545-4p9h18be7u4t5ealfq3mngu5qfhob1vu.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.350033689545-hqkkcsqbctpmbv5tnt12q65q4u3094iv</string>
+	<string>com.googleusercontent.apps.350033689545-4p9h18be7u4t5ealfq3mngu5qfhob1vu</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>350033689545-3segpe9kb5l6tc6j0n4j1gg5n868bu4j.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.trucktirenow</string>
+	<string>com.trucktirenow.customer</string>
 	<key>PROJECT_ID</key>
 	<string>trucktirenow</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:350033689545:ios:d9d5f84a6c363be27bc618</string>
+	<string>1:350033689545:ios:d2060f0f35e3447d7bc618</string>
 </dict>
 </plist>

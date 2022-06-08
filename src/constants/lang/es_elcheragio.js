@@ -533,7 +533,7 @@ export default {
     'Tu carrito está vacío. Elige los productos de tu Tienda Aficionado favorita para verlos aquí',
   SHOP_FROM_WISHLIST: 'Compra tus deseos de parrillero',
   ALREADY_EXIST:
-    "Ya tienes productos de una Tienda Aficionado en tu carrito. ¿Quieres mandarlos a la ch!'#'? No puedes comprar en dos comercios en el mismo pedido.",
+  'You already have items from another store. Do you want to discard them?',
   LABEL1: 'Etiqueta 1',
   LABEL2: 'Etiqueta 2',
   DOYOUHAVECLEANINGMATERIAL: ' ¿Necesitas materiales de limpieza?',
@@ -942,6 +942,12 @@ export default {
   ORDER_CANCELLED: 'Orden cancelada',
   SPECIFIC_INSTRUCTIONS: 'Specific Instructions',
   THANKS_FOR_YOUR_PURCHASE: 'Thanks for your purchase.',
-  NOPRODUCTFOUND:"No Product Found"
-
+  BOOK_FOR_A_FRIEND: 'Book For a friend',
+  ENTER_FRIEND_DETAILS: "Enter your Friend's details",
+  BOOK_FOR_ME: 'Book For Me',
+  BOOK_FOR_FRIEND:'Book For Friend',
+  NOPRODUCTFOUND:"No Product Found",
+  BOOK_A_TABLE:'Book a Table',
+  PLEASE_SELECT_A_TABLE:'Please Select a Table',
+  SELECT_A_TABLE:'Select a Table',
 };

@@ -529,7 +529,8 @@ export default {
   YOUR_CART_EMPTY_ADD_ITEMS:
     'Su carrito está vacío, agregue artículos a la compra',
   SHOP_FROM_WISHLIST: 'Comprar de la lista de deseos',
-  ALREADY_EXIST: 'Ya tienes artículos en tu carrito. ¿Quieres descartarlos?',
+  ALREADY_EXIST:
+    'You already have items from another store. Do you want to discard them?',
   LABEL1: 'Etiqueta 1',
   LABEL2: 'Etiqueta 2',
   DOYOUHAVECLEANINGMATERIAL: ' ¿Necesitas materiales de limpieza?',
@@ -949,5 +950,12 @@ export default {
   SELECT_VENDOR: 'Select a vendor',
   ORDERS: 'Orders',
   RECENTORDERS: 'Recent Orders',
-  NOPRODUCTFOUND:"No Product Found"
+  BOOK_FOR_A_FRIEND: 'Book For a friend',
+  ENTER_FRIEND_DETAILS: "Enter your Friend's details",
+  BOOK_FOR_ME: 'Book For Me',
+  BOOK_FOR_FRIEND:'Book For Friend',
+  NOPRODUCTFOUND:"No Product Found",
+  BOOK_A_TABLE:'Book a Table',
+  PLEASE_SELECT_A_TABLE:'Please Select a Table',
+  SELECT_A_TABLE:'Select a Table',
 };

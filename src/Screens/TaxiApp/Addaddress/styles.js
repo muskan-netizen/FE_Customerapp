@@ -171,6 +171,94 @@ export default ({
       paddingHorizontal: moderateScale(10),
       borderBottomWidth: 0.5,
       marginBottom: moderateScaleVertical(4),
+    }, modalHeaderMainContainer: {
+      paddingHorizontal: moderateScale(20)
+    }, bookFriendText: {
+      fontSize: textScale(18.8),
+      marginTop: moderateScaleVertical(-10),
+      fontFamily: fontFamily?.bold
+    }, modalMainContainer: {
+      paddingVertical: moderateScaleVertical(20),
+      marginVertical: moderateScaleVertical(20),
+      paddingHorizontal: moderateScale(20)
+    }, textInputContainer: {
+      marginVertical: moderateScaleVertical(10),
+      borderColor: colors.textGreyB,
+      borderWidth: 1,
+    }, textInputStyle: {
+      height: moderateScaleVertical(30),
+      paddingTop: moderateScaleVertical(10)
+    }, phoneNumberTextInputLabel: {
+      color: colors.textGreyLight
+    }, phoneNumberInnerContainer: {
+      flexDirection: 'row',
+      alignItems: 'center'
+    }, countryPickerContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: moderateScale(88),
+    }, countryPickerInnerContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    }, callingCodeText: {
+      fontFamily: fontFamily.medium,
+      color: colors.textGreyOpcaity7,
+    }, phoneNumberInnput: {
+      borderColor: colors.textGreyB,
+      borderWidth: 1,
+      width: moderateScale(width / 1.6)
+    }, textInputStyle: { height: moderateScaleVertical(30), paddingTop: moderateScaleVertical(10) },
+    friendListModalInnerContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      // height: moderateScale(40),
+      marginHorizontal: moderateScale(16),
+      marginTop:moderateScaleVertical(-10)
+    }, hitSlop: {
+      top: 30,
+      right: 30,
+      left: 30,
+      bottom: 30,
+    }, switchRiderText: {
+      fontSize: textScale(12),
+      fontFamily: fontFamily.medium,
+
+      marginHorizontal: moderateScale(10)
+    }, showFriendListModalHeaderContainer: {
+      marginHorizontal: moderateScale(7),
+      flexDirection: 'row',
+      alignItems: 'center'
+    }
+
+    , forMeText: {
+      color: colors.black,
+      marginHorizontal: moderateScale(10),
+      fontSize: textScale(14)
+    }, lineViewStyle: {
+      borderWidth: 0.5,
+      height: 1,
+      borderColor: colors.blackOpacity10,
+      marginBottom: moderateScaleVertical(20),
+      marginVertical: moderateScaleVertical(14)
+    }, friendListStyle: {
+      marginHorizontal: moderateScale(10),
+      marginVertical: moderateScaleVertical(10),
+      marginTop: moderateScaleVertical(18)
+    }, friendListFooter: {
+      marginHorizontal: moderateScale(7),
+      marginBottom: moderateScaleVertical(13),
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginVertical:moderateScaleVertical(5)
+    }, addFriendText: {
+      color: themeColors?.primary_color,
+      marginHorizontal: moderateScale(10),
+      fontSize: textScale(14)
+    },addAddressScreenTitle:{
+      fontSize: textScale(12),
+      fontFamily: fontFamily.medium,
+      marginHorizontal: moderateScale(10)
     }
   });
   return styles;

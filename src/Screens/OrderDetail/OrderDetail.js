@@ -967,6 +967,7 @@ export default function OrderDetail({navigation, route}) {
     );
   };
 
+  console.log(cartData,"cartData?.address?.addresscartData?.address?.address");
   const _renderItem = ({item, index}) => {
     return (
       <View
@@ -1713,23 +1714,39 @@ export default function OrderDetail({navigation, route}) {
             )}
 
             <View style={{marginLeft: moderateScale(12), flex: 1}}>
+              {cartData?.luxury_option_id ==3 ?
+               <Text
+               style={{
+                 ...styles.summaryText,
+                 fontSize: textScale(12),
+                 color: isDarkMode
+                   ? MyDarkTheme.colors.text
+                   : colors.blackOpacity43,
+                 flex: 1,
+               }}>
+                 { cartData?.vendors[0]?.vendor?.address }
+              
+             </Text>:
               <Text
-                style={{
-                  ...styles.summaryText,
-                  fontSize: textScale(12),
-                  color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.blackOpacity43,
-                  flex: 1,
-                }}>
-                {`${
-                  cartData?.address?.house_number === null
-                    ? ''
-                    : `${cartData?.address?.house_number}, `
-                }`}
-                {cartData?.address?.address} {''}
-                {cartData?.address?.pincode}
-              </Text>
+              style={{
+                ...styles.summaryText,
+                fontSize: textScale(12),
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity43,
+                flex: 1,
+              }}>
+              
+              {`${
+                cartData?.address?.house_number === null
+                  ? ''
+                  : `${cartData?.address?.house_number}, `
+              }`}
+              {cartData?.address?.address} {''}
+              {cartData?.address?.pincode}
+            </Text>
+              }
+             
             </View>
           </View>
 
@@ -2860,7 +2877,7 @@ export default function OrderDetail({navigation, route}) {
                 <Marker.Animated
                   ref={markerRef}
                   coordinate={state.animateDriver}
-                  >
+                 >
                   <Image
                     source={imagePath.icScooter}
                     style={{
@@ -2915,12 +2932,8 @@ export default function OrderDetail({navigation, route}) {
               style={{
                 height: moderateScaleVertical(100),
                 width: moderateScale(100),
-                
               }}
-              
               colorFilters={[
-                
-                
                 {
                   keypath: 'right sand',
                   color: themeColors.primary_color,
@@ -2979,12 +2992,11 @@ export default function OrderDetail({navigation, route}) {
                   keypath: 'top right sand 1',
                   color: themeColors.primary_color,
                 },
-                
 
                 // top right sand 1
               ]}
             />
-            <Text style={{...styles.waitToAccept,color:isDarkMode?colors.white:colors.black}}>{strings.WAITINGTOACCEPT}</Text>
+            <Text style={styles.waitToAccept}>{strings.WAITINGTOACCEPT}</Text>
           </View>
         )}
         {!!orderStatus &&

@@ -448,7 +448,7 @@ export default function Subscriptions({navigation, route}) {
       console.log(cardInfo, 'cardInfo>cardInfo>cardInfo');
       updateState({isModalVisibleForPayment: false});
 
-      await createToken(cardInfo)
+      await createToken({...cardInfo, type: 'Card'})
         .then((res) => {
           console.log(res, 'stripe res>>');
           if (res && res?.token && res.token?.id) {
