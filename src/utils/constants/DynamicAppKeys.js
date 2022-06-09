@@ -337,7 +337,11 @@ const shortCodes = {
   busTaMove:'9d065e',
   atasktt: '9bbd4e',
   lunchboxSpecials: 'cfa64c',
-  sorDelivery: '732007'
+  sorDelivery: '732007',
+  grubHouse:'d9c5ee',
+  hitchDelivery:'3bc1d7',
+  zoodMarket:'b077a9'
+
 };
 
 
@@ -472,7 +476,7 @@ const appIds = {
   }),
   glamsouq: Platform.select({
     ios: 'com.codebrew.glamsouq',
-    android: 'com.codebrew.glamsouq',
+    android: 'com.glamsouq.customer',
   }),
   doctatransportation: Platform.select({
     ios: 'com.codebrew.doctatransportation',
@@ -923,7 +927,7 @@ const appIds = {
     android: 'com.click2deliver',
   }),
   trucktirenow: Platform.select({
-    ios: 'com.trucktirenow',
+    ios: 'com.trucktirenow.customer',
     android: 'com.trucktirenow',
   }),
   yeboy: Platform.select({
@@ -1200,7 +1204,7 @@ const appIds = {
   }),
   palmettoplus: Platform.select({
     ios: 'com.palmettoplus',
-    android: 'com.palmettoplus',
+    android: 'com.palmettoplus.customer',
   }),
   allotaxi: Platform.select({
     ios: 'com.allotaxi',
@@ -1328,7 +1332,7 @@ const appIds = {
   }),
   mrHealth: Platform.select({
     ios: 'com.mrHealth',
-    android: 'com.mrHealth',
+    android: 'com.mrHealth.customer',
   }),
   lopht: Platform.select({
     ios: 'com.lopht',
@@ -1364,14 +1368,14 @@ const appIds = {
   }),
   getfix: Platform.select({
     ios: 'com.app.getfix',
-    android: 'com.app.getfix',
+    android: 'com.getfix.customer',
   }),
   scoopaTechnologies: Platform.select({
     ios: 'com.scoopaTechnologies',
     android: 'com.app.scoopaTechnologies',
   }),
   dbairro: Platform.select({
-    ios: 'com.dbairro',
+    ios: 'com.app.dbairro',
     android: 'com.dbairro',
   }),
   knockknock: Platform.select({
@@ -1429,7 +1433,7 @@ const appIds = {
   }),
   beachhop: Platform.select({
     ios: 'com.beachhop',
-    android: 'com.beachhop',
+    android: 'com.beachhop.customer',
   }),
   qseek: Platform.select({
     ios: 'com.qseek',
@@ -1687,6 +1691,18 @@ const appIds = {
   sorDelivery: Platform.select({
     ios: 'com.sordelivery',
     android: 'com.sordelivery',
+  }),
+  grubHouse: Platform.select({
+    ios: 'com.grubHouse',
+    android: 'com.grubHouse',
+  }),
+  hitchDelivery: Platform.select({
+    ios: 'com.hitchDelivery',
+    android: 'com.hitchDelivery',
+  }),
+  zoodMarket: Platform.select({
+    ios: 'com.zoodMarket',
+    android: 'com.zoodMarket',
   }),
 };
 

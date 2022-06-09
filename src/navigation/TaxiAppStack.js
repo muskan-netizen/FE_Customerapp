@@ -2,6 +2,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {
   Addaddress,
+  AddNewRider,
+  AllContacts,
   ChooseCarTypeAndTimeTaxi,
   HomeScreenTaxi,
   Offers,
@@ -31,6 +33,12 @@ export default function (Stack) {
         component={Addaddress}
         options={{headerShown: false}}
       />
+       <Stack.Screen
+        name={navigationStrings.ADD_NEW_RIDER}
+        component={AddNewRider}
+        options={{headerShown: false}}
+      />
+  
       <Stack.Screen
         name={navigationStrings.PINADDRESSONMAP}
         component={PinAddressOnMap}

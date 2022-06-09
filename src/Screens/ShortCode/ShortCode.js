@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Image, Linking, Text, View, Platform } from 'react-native';
-import { getBundleId } from 'react-native-device-info';
+import React, {useEffect, useState} from 'react';
+import {Image, Linking, Text, View, Platform} from 'react-native';
+import {getBundleId} from 'react-native-device-info';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -19,25 +19,25 @@ import {
   width,
   height,
 } from '../../styles/responsiveSize';
-import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
+import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   getImageUrl,
   getUrlRoutes,
   showError,
 } from '../../utils/helperFunctions';
-import { getItem, setItem } from '../../utils/utils';
+import {getItem, setItem} from '../../utils/utils';
 import styles from './styles';
 import RNFetchBlob from 'rn-fetch-blob-v2';
-import { MaterialIndicator } from 'react-native-indicators';
+import {MaterialIndicator} from 'react-native-indicators';
 import * as NavigationService from '../../navigation/NavigationService';
-import { enums } from '../../utils/enums';
-import { MyDarkTheme } from '../../styles/theme';
-import { useDarkMode } from 'react-native-dark-mode';
+import {enums} from '../../utils/enums';
+import {MyDarkTheme} from '../../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
 
 const fs = RNFetchBlob.fs;
 
-export default function ShortCode({ route, navigation }) {
+export default function ShortCode({route, navigation}) {
   const shortCodeParam = route?.params?.shortCodeParam;
   // alert(shortCodeParam)
   const [state, setState] = useState({
@@ -52,9 +52,9 @@ export default function ShortCode({ route, navigation }) {
     videoDurationEnded: false,
     allAppData: null,
     responseData: null,
-    initapiresponse:false
+    initapiresponse: false,
   });
-  const { dispatch } = store;
+  const {dispatch} = store;
 
   const {
     shortCode,
@@ -66,14 +66,14 @@ export default function ShortCode({ route, navigation }) {
     videoDurationEnded,
     allAppData,
     responseData,
-    initapiresponse
+    initapiresponse,
   } = state;
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
-  const { appData, appStyle, currencies, languages } = useSelector(
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const {appData, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
   const userData = useSelector((state) => state.auth.userData);
-  const { themeColors } = useSelector((state) => state?.initBoot);
+  const {themeColors} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -101,9 +101,9 @@ export default function ShortCode({ route, navigation }) {
             state;
             //updateState({shortCode: 'd0a898', isShortcodePrefilled: true});
             if (shortCodeParam) {
-              updateState({ shortCode: '', isShortcodePrefilled: false });
+              updateState({shortCode: '', isShortcodePrefilled: false});
             } else {
-              updateState({ shortCode: '245bae', isShortcodePrefilled: true });
+              updateState({shortCode: '245bae', isShortcodePrefilled: true});
             }
           }
           break;
@@ -132,7 +132,7 @@ export default function ShortCode({ route, navigation }) {
           });
           break;
         case appIds.masa:
-          updateState({ shortCode: shortCodes.masa, isShortcodePrefilled: true });
+          updateState({shortCode: shortCodes.masa, isShortcodePrefilled: true});
           break;
         case appIds.yogofood:
           updateState({
@@ -2109,42 +2109,60 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.keystoneDelivery:
+        case appIds.keystoneDelivery:
           updateState({
             shortCode: shortCodes.keystoneDelivery,
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.blueBundles:
-            updateState({
-              shortCode: shortCodes.blueBundles,
-              isShortcodePrefilled: true,
-            });
-            break;
-            case appIds.busTaMove:
-              updateState({
-                shortCode: shortCodes.busTaMove,
-                isShortcodePrefilled: true,
-              });
-              break;
-              case appIds.atasktt:
-                updateState({
-                  shortCode: shortCodes.atasktt,
-                  isShortcodePrefilled: true,
-                });
-                break;
-                case appIds.lunchboxSpecials:
-                  updateState({
-                    shortCode: shortCodes.lunchboxSpecials,
-                    isShortcodePrefilled: true,
-                  });
-                  break;
-                  case appIds.sorDelivery:
-                    updateState({
-                      shortCode: shortCodes.sorDelivery,
-                      isShortcodePrefilled: true,
-                    });
-                    break;
+        case appIds.blueBundles:
+          updateState({
+            shortCode: shortCodes.blueBundles,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.busTaMove:
+          updateState({
+            shortCode: shortCodes.busTaMove,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.atasktt:
+          updateState({
+            shortCode: shortCodes.atasktt,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.lunchboxSpecials:
+          updateState({
+            shortCode: shortCodes.lunchboxSpecials,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sorDelivery:
+          updateState({
+            shortCode: shortCodes.sorDelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.grubHouse:
+          updateState({
+            shortCode: shortCodes.grubHouse,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hitchDelivery:
+          updateState({
+            shortCode: shortCodes.hitchDelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.zoodMarket:
+          updateState({
+            shortCode: shortCodes.zoodMarket,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2156,16 +2174,14 @@ export default function ShortCode({ route, navigation }) {
   }, [shortCode, isShortcodePrefilled]);
 
   useEffect(() => {
-    if(videoDurationEnded&&initapiresponse)
-      { 
-        
-        navigateToNextScreen(allAppData, responseData);
-      }
-  },[videoDurationEnded,initapiresponse]);
+    if (videoDurationEnded && initapiresponse) {
+      navigateToNextScreen(allAppData, responseData);
+    }
+  }, [videoDurationEnded, initapiresponse]);
 
   const checkScreen = () => {
     initApiHit();
-    updateState({ isShortcodePrefilled: true });
+    updateState({isShortcodePrefilled: true});
   };
 
   const moveToNewScreen = (screenName, data) => () => {
@@ -2174,7 +2190,7 @@ export default function ShortCode({ route, navigation }) {
 
   //i did added in this fun signup page replace with tabroutes
   const _onSubmitShortCode = () => {
-    updateState({ isLoading: true });
+    updateState({isLoading: true});
     setTimeout(() => {
       initApiHit();
     }, 1000);
@@ -2224,7 +2240,7 @@ export default function ShortCode({ route, navigation }) {
           FastImage.preload(preLoadTutorial); //preload tutorial images
         }
 
-        updateState({ changeInShortCode: false });
+        updateState({changeInShortCode: false});
         if (getBundleId() == appIds.royoorder) {
           actions.saveShortCode(shortCode);
         }
@@ -2290,7 +2306,7 @@ export default function ShortCode({ route, navigation }) {
     if (deepLinkUrl != null) {
       navigation.navigate(navigationStrings.TABROUTESVENDORNEW, {
         screen: navigationStrings.ROYO_VENDOR_ORDER,
-        params: { index: 1 },
+        params: {index: 1},
       });
     } else {
       navigation.navigate(navigationStrings.TABROUTESVENDORNEW);
@@ -2347,7 +2363,7 @@ export default function ShortCode({ route, navigation }) {
         true,
       )
       .then((homeData) => {
-        console.log(res,"ressssss")
+        console.log(res, 'ressssss');
         switch (getBundleId()) {
           case appIds.masa:
             updateState({
@@ -2355,32 +2371,32 @@ export default function ShortCode({ route, navigation }) {
               LoadingScreen: false,
               allAppData: res,
               responseData: homeData.data,
-              initapiresponse:true
+              initapiresponse: true,
             });
 
             break;
           case appIds.iPicknDrop:
-              updateState({
-                isLoading: false,
-                LoadingScreen: false,
-                allAppData: res,
-                responseData: homeData.data,
-                initapiresponse:true
-              });
-  
-              break;
+            updateState({
+              isLoading: false,
+              LoadingScreen: false,
+              allAppData: res,
+              responseData: homeData.data,
+              initapiresponse: true,
+            });
+
+            break;
           default:
-            updateState({ isLoading: false, LoadingScreen: false });
+            updateState({isLoading: false, LoadingScreen: false});
             navigateToNextScreen(res, homeData.data);
             break;
         }
       })
       .catch((error) => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
         navigateToNextScreen(res, homeData.data);
       });
   };
- 
+
   const onOtpInput = (code) => {
     (async () => {
       updateState({
@@ -2409,9 +2425,9 @@ export default function ShortCode({ route, navigation }) {
 
   useEffect(() => {
     if (shortCode?.length === 6) {
-      updateState({ isBtnDisabled: false });
+      updateState({isBtnDisabled: false});
     } else {
-      updateState({ isBtnDisabled: true });
+      updateState({isBtnDisabled: true});
     }
   }, [shortCode, isLoading]);
 
@@ -2430,14 +2446,14 @@ export default function ShortCode({ route, navigation }) {
       case appIds.masa:
         return animatedSplash();
       case appIds.iPicknDrop:
-          return animatedSplash();
+        return animatedSplash();
       default:
         return imageSplash();
     }
   };
   const imageSplash = () => {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <View
           style={{
             flex: 1,
@@ -2449,34 +2465,31 @@ export default function ShortCode({ route, navigation }) {
             height: '100%',
             backgroundColor: 'rgba(0,0,0,0.5)',
           }}>
-          <View style={{ position: 'absolute', bottom: moderateScale(100) }}>
+          <View style={{position: 'absolute', bottom: moderateScale(100)}}>
             {LoadingScreen && (
               <MaterialIndicator size={50} color={colors.greyMedium} />
             )}
           </View>
         </View>
-        <Image source={{ uri: 'Splash' }} style={{ flex: 1, zIndex: -1 }} />
+        <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
       </View>
     );
   };
 
-const animationVideo = () =>{
-  switch (getBundleId()) {
-    case appIds?.masa:
-      return imagePath.masa
-    case appIds?.iPicknDrop:
-      return imagePath.ipd
-  } 
-}
+  const animationVideo = () => {
+    switch (getBundleId()) {
+      case appIds?.masa:
+        return imagePath.masa;
+      case appIds?.iPicknDrop:
+        return imagePath.ipd;
+    }
+  };
 
-const onVideoDurationEnded = () => {
-   
-   updateState({
-     videoDurationEnded:true
-   })
+  const onVideoDurationEnded = () => {
+    updateState({
+      videoDurationEnded: true,
+    });
     // navigateToNextScreen(allAppData, responseData);
-    
-   
   };
 
   const animatedSplash = () => {
@@ -2496,14 +2509,11 @@ const onVideoDurationEnded = () => {
           }}
           resizeMode="cover"
           onEnd={() => onVideoDurationEnded()}
-          
         />
       </View>
     );
   };
 
-
-  
   return (
     <View
       style={{
@@ -2526,19 +2536,19 @@ const onVideoDurationEnded = () => {
               flex: 1,
               marginTop: width / 3,
             }}>
-            <Image style={{ alignSelf: 'center' }} source={imagePath.logo} />
-            <View style={{ height: moderateScaleVertical(50) }} />
+            <Image style={{alignSelf: 'center'}} source={imagePath.logo} />
+            <View style={{height: moderateScaleVertical(50)}} />
             <Text style={styles.enterShortCode}>
               {strings.ENTER_SHORT_CODE}
             </Text>
-            <View style={{ height: 10 }} />
+            <View style={{height: 10}} />
             <Text style={styles.enterShortCode2}>
               {strings.ENTERSHORTCODEBELOW}
             </Text>
 
-            <View style={{ height: 10 }} />
+            <View style={{height: 10}} />
             <SmoothPinCodeInput
-              containerStyle={{ alignSelf: 'center' }}
+              containerStyle={{alignSelf: 'center'}}
               password
               mask={
                 <View
@@ -2574,13 +2584,13 @@ const onVideoDurationEnded = () => {
               value={shortCode}
               autoFocus={false}
               keyboardType={'default'}
-              onTextChange={(shortCode) => updateState({ shortCode })}
+              onTextChange={(shortCode) => updateState({shortCode})}
               onFulfill={(code) => onOtpInput(code)}
             />
 
-            <View style={{ height: 20 }} />
+            <View style={{height: 20}} />
 
-            <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+            <View style={{flex: 1, justifyContent: 'flex-end'}}>
               <ButtonWithLoader
                 // isLoading={isLoading}
                 color={colors.black}
@@ -2601,7 +2611,7 @@ const onVideoDurationEnded = () => {
               />
             </View>
 
-            <View style={{ height: 20 }} />
+            <View style={{height: 20}} />
           </View>
         </WrapperContainer>
         // </KeyboardAwareScrollView>

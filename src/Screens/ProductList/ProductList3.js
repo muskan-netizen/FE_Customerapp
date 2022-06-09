@@ -264,7 +264,7 @@ export default function Products({ route, navigation }) {
         />
       </View>
     );
-  }, [cloneSectionList, btnLoader, productListId])
+  }, [cloneSectionList, btnLoader, productListId, repeatItems, cartId])
 
 
   const renderSectionHeader = useCallback((props) => {
@@ -338,9 +338,9 @@ export default function Products({ route, navigation }) {
   const renderProduct = useCallback(({item, index}) => {
     
     return (
-      <View 
-      key={String(index)}
-      style={{ flex: 1 }}>
+      <View
+        key={String(index)}
+        style={{ flex: 1 }}>
         <ProductCard3
           data={item}
           index={index}
@@ -361,7 +361,7 @@ export default function Products({ route, navigation }) {
         <View style={styles.horizontalLine} />
       </View>
     );
-  }, [productListData, btnLoader, productListId])
+  }, [productListData, btnLoader, productListId, repeatItems, cartId])
 
 
 
@@ -1405,9 +1405,8 @@ export default function Products({ route, navigation }) {
   };
 
   const onRepeat = async () => {
-    // console.log("repeate items", repeatItems)
-    const { item, isExistqty, productId, parentCartId, updateLocalQty } =
-      repeatItems;
+    console.log("repeate items", repeatItems)
+    const { item, isExistqty, productId, parentCartId, updateLocalQty } = repeatItems;
     await addDeleteCartItems(
       item,
       isExistqty,
@@ -2604,40 +2603,47 @@ export default function Products({ route, navigation }) {
               );
             })}
         </ScrollView>
-        {true ? (
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginBottom: moderateScaleVertical(8),
-              marginHorizontal: moderateScale(12),
-            }}>
-            {categoryInfo?.is_show_products_with_category ? (
-              <SearchBar
-                autoFocus={false}
-                containerStyle={{
-                  flex: 1,
-                  // marginHorizontal: moderateScale(18),
-                  borderRadius: moderateScale(8),
-                  backgroundColor: isDarkMode
-                    ? colors.whiteOpacity15
-                    : colors.greyColor,
-                  height: moderateScaleVertical(37),
-                }}
-                searchValue={searchInput}
-                placeholder={strings.SEARCH_WITHIN_MENU}
-                onChangeText={(value) => onSearchWithinMenu(value)}
-                showRightIcon={searchInput ? true : false}
-                rightIconStyle={{
-                  tintColor: isDarkMode ? colors.white : colors.black,
-                }}
-                rightIconPress={() => onSearchWithinMenu('')}
-                showVoiceRecord={false}
-              />
-            ) : null}
 
-          </View>
-        ) : null}
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginBottom: moderateScaleVertical(8),
+            marginHorizontal: moderateScale(12),
+          }}>
+          {categoryInfo?.is_show_products_with_category ? (
+            <SearchBar
+              autoFocus={false}
+              containerStyle={{
+                flex: 1,
+                // marginHorizontal: moderateScale(18),
+                borderRadius: moderateScale(8),
+                backgroundColor: isDarkMode
+                  ? colors.whiteOpacity15
+                  : colors.greyColor,
+                height: moderateScaleVertical(37),
+              }}
+              searchValue={searchInput}
+              placeholder={strings.SEARCH_WITHIN_MENU}
+              onChangeText={(value) => onSearchWithinMenu(value)}
+              showRightIcon={searchInput ? true : false}
+              rightIconStyle={{
+                tintColor: isDarkMode ? colors.white : colors.black,
+              }}
+              rightIconPress={() => onSearchWithinMenu('')}
+              showVoiceRecord={false}
+            />
+          ) : null}
+
+        <TouchableOpacity 
+        onPress={onShowHideFilter}
+        style={{
+          marginLeft:moderateScale(12)
+        }}>
+          <Image source={imagePath.filter} />
+        </TouchableOpacity>
+        </View>
+
         {!!categoryInfo && categoryInfo?.childs?.length > 0 && (
           <View style={{ marginHorizontal: moderateScale(20) }}>
             <ScrollView
@@ -3013,7 +3019,7 @@ export default function Products({ route, navigation }) {
     );
   };
 
-  console.log("productListDataproductListData",productListData)
+  console.log("productListDataproductListData", productListData)
 
   return (
     <View

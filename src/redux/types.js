@@ -41,4 +41,5 @@ export default {
   ADDRESS_SEARCH: 'ADDRESS_SEARCH',
   REFRESH_NOTIFICATION: 'refreshNotification',
   SAVE_SCHEDULE_TIME: 'saveScheduleTime',
+  RELOAD_DATA:"RELOAD_DATA"
 };

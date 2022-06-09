@@ -12,6 +12,7 @@ import {
   GETALLTEMPLCARDS,
   VENDOR_ALL,
   GETALLVENDORS,
+  ADD_RIDER,
 } from '../../config/urls';
 import {apiPost, setItem, getItem, apiGet} from '../../utils/utils';
 import store from '../store';
@@ -231,3 +232,29 @@ export const saveSchduleTime = (data) => {
     payload: data,
   });
 };
+
+
+export const addRider = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(ADD_RIDER, data,headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const getAllRiderList = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiGet(ADD_RIDER, data,headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+

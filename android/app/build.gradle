@@ -205,6 +205,18 @@ android {
     }
 
     flavorDimensions "appType"
+    // productFlavors{
+    //    muvpod{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.muvpod'
+    //         resValue "string", "app_name", "Muvpod"
+    //         resValue "string", "host_name", ""
+    //         }
+    // }
 
     productFlavors {
             royoorder {
@@ -545,7 +557,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.glamsouq'
+                applicationId 'com.glamsouq.customer'
                 resValue "string", "app_name", "Glamsouq"
                 resValue "string", "host_name", ""
             }
@@ -1029,7 +1041,7 @@ android {
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
                 applicationId 'com.hemptyfy'
-                resValue "string", "app_name", "HemptiFy"
+                resValue "string", "app_name", "Hempti Fy"
                 resValue "string", "host_name", ""
             }
             sharu{
@@ -1539,7 +1551,7 @@ android {
             }
             donepacked{
                 dimension "appType"
-                versionCode 10
+                versionCode 7
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -1810,7 +1822,7 @@ android {
             }
             swiftandvalu{
                 dimension "appType"
-                versionCode 2
+                versionCode 3
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -4073,7 +4085,16 @@ android {
                 resValue "string", "app_name", "Sijang"
                 resValue "string", "host_name", ""
             }
-  
+            fairex{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.fairex'
+                resValue "string", "app_name", "Fairex"
+                resValue "string", "host_name", ""
+            }
             everywhere{
                 dimension "appType"
                 versionCode 1
@@ -4120,7 +4141,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.palmettoplus'
+                applicationId 'com.palmettoplus.customer'
                 resValue "string", "app_name", "Palmetto Plus"
                 resValue "string", "host_name", ""
             }
@@ -4471,7 +4492,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.mrHealth'
+            applicationId 'com.mrHealth.customer'
             resValue "string", "app_name", "MrHealth"
             resValue "string", "host_name", ""
             }
@@ -4583,7 +4604,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.app.getfix'
+            applicationId 'com.getfix.customer'
             resValue "string", "app_name", "Getfix"
             resValue "string", "host_name", ""
             }
@@ -4600,7 +4621,7 @@ android {
 
             dbairro{
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -4745,7 +4766,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.beachhop'
+            applicationId 'com.beachhop.customer'
             resValue "string", "app_name", "Beachhop"
             resValue "string", "host_name", ""
             }
@@ -4841,9 +4862,9 @@ android {
             resValue "string", "app_name", "Trip"
             resValue "string", "host_name", ""
             }
-        localdropoff{
+            localdropoff{
             dimension "appType"
-            versionCode 1
+            versionCode 4
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -5401,6 +5422,36 @@ android {
             resValue "string", "app_name", "Sor Delivery"
             resValue "string", "host_name", ""
             }
+             grubHouse{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.grubHouse'
+            resValue "string", "app_name", "Grub House"
+            resValue "string", "host_name", ""
+            }
+             hitchDelivery{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.hitchDelivery'
+            resValue "string", "app_name", "Hitch Delivery"
+            resValue "string", "host_name", ""
+            }
+            zoodMarket{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.zoodMarket'
+            resValue "string", "app_name", "Zood Market"
+            resValue "string", "host_name", ""
+            }
     }
 }
 
@@ -5411,7 +5462,7 @@ dependencies {
     // For WebP support, including animated WebP
     implementation 'com.facebook.fresco:animated-webp:1.+'
     implementation 'com.facebook.fresco:webpsupport:1.+'
-    implementation project(':react-native-charts-wrapper')
+    // implementation project(':react-native-charts-wrapper')
     
 
 

@@ -3,7 +3,7 @@ import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 import {TouchableOpacity} from 'react-native';
 import {processColor, View, Text, ScrollView} from 'react-native';
-import {CombinedChart} from 'react-native-charts-wrapper';
+// import {CombinedChart} from 'react-native-charts-wrapper';
 import {useSelector} from 'react-redux';
 import Header from '../../../Components/Header';
 import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';

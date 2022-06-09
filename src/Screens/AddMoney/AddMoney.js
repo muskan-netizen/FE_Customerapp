@@ -677,7 +677,7 @@ export default function AddMoney({navigation}) {
     if (cardInfo) {
       console.log(cardInfo, 'cardInfo>cardInfo>cardInfo');
       updateState({isLoadingB: true});
-      await createToken(cardInfo)
+      await createToken({...cardInfo, type: 'Card'})
         .then((res) => {
           console.log(res, 'res>>STRIpe');
           if (!!res?.error && !!res?.error?.localizedMessage) {
@@ -880,6 +880,9 @@ export default function AddMoney({navigation}) {
                   {strings.NO_PAYMENT_METHOD}
                 </Text>
               )}
+              contentContainerStyle={{
+                paddingBottom: moderateScaleVertical(100),
+              }}
             />
           </View>
         </View>

@@ -31,6 +31,7 @@ import { MyDarkTheme } from '../../../styles/theme';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import { mapStyleGrey } from '../../../utils/constants/MapStyle';
 import {
+  deviceCountryCode,
   getImageUrl,
   hapticEffects,
   playHapticEffect,
@@ -59,6 +60,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   const { appData, currencies, languages, themeColors, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
+  const { profile } = appData;
   const userData = useSelector((state) => state?.auth?.userData);
   const { pickUpTimeType } = useSelector((state) => state?.home);
 
@@ -152,6 +154,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     productFaqQuestionAnswers: [],
     allSubmittedAnswers: null,
     indicatorLoader: false,
+    defaultDeviceCountryCode: null
   });
   const {
     selectedPayment,
@@ -196,12 +199,13 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     productFaqQuestionAnswers,
     allSubmittedAnswers,
     indicatorLoader,
+    defaultDeviceCountryCode
   } = state;
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const styles = stylesFun({ fontFamily, themeColors });
   const commonStyles = commonStylesFun({ fontFamily });
-  const { profile } = appData;
+
 
   const walletAmount = useSelector(
     (state) => state?.product?.walletData?.wallet_amount,
@@ -244,7 +248,24 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     {
       !!selectedVendorOption && _getAllCarAndPrices();
     }
+    getDeviceCounrtyCode()
   }, [selectedVendorOption]);
+
+
+
+
+  const getDeviceCounrtyCode = () => {
+    deviceCountryCode().then((res) => {
+      updateState({
+        defaultDeviceCountryCode: `+${res[0]?.countryCodes[0]}`
+      })
+    }).catch((error) => {
+      console.log(error, "erroror");
+    })
+  }
+
+  console.log(defaultDeviceCountryCode, "defaultDeviceCountryCodedefaultDeviceCountryCode");
+
 
   useEffect(() => {
     updateState({
@@ -453,6 +474,10 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       .catch(errorMethod);
   };
 
+
+
+
+
   const _confirmAndPay = () => {
     console.log(selectedCarOption, 'selectedCarOption');
     console.log(selectedPayment?.id, 'selectedPayment?.id ');
@@ -482,12 +507,11 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       data['coupon_id'] = couponInfo?.id;
     }
     data['order_time_zone'] = RNLocalize.getTimeZone();
-    data['type'] =paramData?.friendBookingDetails?.bookingType;
-    data['friendName']=paramData?.friendBookingDetails?.bookingType?paramData?.friendBookingDetails?.name:'',
-    data['friendPhoneNumber']=paramData?.friendBookingDetails?.bookingType?paramData?.friendBookingDetails?.mobileNumber:'',
+    data['type'] = paramData?.friendBookingDetails?.bookingType;
+    data['friendName'] = `${paramData?.friendBookingDetails?.firstName} ${paramData?.friendBookingDetails?.lastName}`,
+    data['friendPhoneNumber'] = paramData?.friendBookingDetails?.bookingType ? paramData?.friendBookingDetails?.mobileNumber?.includes('+') ? paramData?.friendBookingDetails?.mobileNumber : ` ${defaultDeviceCountryCode}${paramData?.friendBookingDetails?.mobileNumber}` : '',
 
-    console.log(JSON.stringify(data), "dataaaaa")
-
+     console.log(JSON.stringify(data), "dataaaaa")
     // if (!!userData) {
     //   !!userData?.client_preference?.verify_email &&
     //   !!userData?.client_preference?.verify_phone
@@ -503,6 +527,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     //     ? renderRazorPay(data)
     //     : _finalPayment(data);
     // }
+
+
 
     if (!!userData) {
       console.log(userData, 'userData');
