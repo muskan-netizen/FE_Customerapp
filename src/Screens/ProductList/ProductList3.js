@@ -264,7 +264,7 @@ export default function Products({ route, navigation }) {
         />
       </View>
     );
-  }, [cloneSectionList, btnLoader, productListId, repeatItems, cartId])
+  }, [cloneSectionList, btnLoader, productListId, repeatItems, cartId,categoryInfo])
 
 
   const renderSectionHeader = useCallback((props) => {
@@ -360,7 +360,7 @@ export default function Products({ route, navigation }) {
         <View style={styles.horizontalLine} />
       </View>
     );
-  }, [productListData, btnLoader, productListId, repeatItems, cartId])
+  }, [productListData, btnLoader, productListId, repeatItems, cartId,categoryInfo])
 
 
 
