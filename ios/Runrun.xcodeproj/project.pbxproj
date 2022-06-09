@@ -221,6 +221,7 @@
 		09CC58BF1811577176FE6318 /* libPods-available_pods-Tasmeem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA663EB2708708098372F2A5 /* libPods-available_pods-Tasmeem.a */; };
 		09D369D8CDCE2A7C33C6A4E8 /* libPods-available_pods-KeystoneDelivery.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B24A4B5B88C5ECA8EFDE2080 /* libPods-available_pods-KeystoneDelivery.a */; };
 		0C998881A9312F43D004E58B /* libPods-available_pods-LaundryOrders.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 176B918D8C299240A32F1AB0 /* libPods-available_pods-LaundryOrders.a */; };
+		0CAB88B6284DE75200A5BE8F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB88B5284DE75000A5BE8F /* GoogleService-Info.plist */; };
 		0D8C36151BE498F193500350 /* libPods-available_pods-Goody.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74685471888B80D6462275B4 /* libPods-available_pods-Goody.a */; };
 		0EC89FC7BE57D924F51A46B0 /* libPods-available_pods-HomeTownDelivery.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2100033D900D2618BF3AD6 /* libPods-available_pods-HomeTownDelivery.a */; };
 		0EEA2D9387CDC9CDE886C424 /* libPods-available_pods-MandaExpress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B889E1419170C2277703A8EC /* libPods-available_pods-MandaExpress.a */; };
@@ -9950,6 +9951,7 @@
 		0BD2DC4E6C3B39705A9D9929 /* Pods-available_pods-GRN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-GRN.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-GRN/Pods-available_pods-GRN.debug.xcconfig"; sourceTree = "<group>"; };
 		0C606FD2C3DBF9D2D2E86134 /* libPods-available_pods-Noki.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-Noki.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C93EB8FB43C9D107D07B994 /* Pods-available_pods-YoloSonic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-YoloSonic.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-YoloSonic/Pods-available_pods-YoloSonic.debug.xcconfig"; sourceTree = "<group>"; };
+		0CAB88B5284DE75000A5BE8F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0D12C1A1CBDC9A47DC932657 /* Pods-available_pods-Driveree.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Driveree.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-Driveree/Pods-available_pods-Driveree.debug.xcconfig"; sourceTree = "<group>"; };
 		0D8BC6D1C11CFEE1E6F72E7D /* libPods-available_pods-Masa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-Masa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DAC3E9CED531A74C4EE60A0 /* Pods-available_pods-Zip.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Zip.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-Zip/Pods-available_pods-Zip.debug.xcconfig"; sourceTree = "<group>"; };
@@ -17924,6 +17926,7 @@
 		840CC36927D739BF00DC97BF /* ScoopaTechnologies */ = {
 			isa = PBXGroup;
 			children = (
+				0CAB88B5284DE75000A5BE8F /* GoogleService-Info.plist */,
 				840CC36A27D73FB100DC97BF /* ScoopaTechnologies(Development).xcconfig */,
 				840CC56C27D73FEA00DC97BF /* ScoopaTechnologies(Production).xcconfig */,
 				840CC66E27D7406200DC97BF /* Images.xcassets */,
@@ -32597,6 +32600,7 @@
 				840CC04E27D737EC00DC97BF /* SFProText-SemiBold.ttf in Resources */,
 				840CC04F27D737EC00DC97BF /* SFProText-Medium.ttf in Resources */,
 				840CC05127D737EC00DC97BF /* notification.wav in Resources */,
+				0CAB88B6284DE75200A5BE8F /* GoogleService-Info.plist in Resources */,
 				840CC05427D737EC00DC97BF /* Plists in Resources */,
 				840CC36B27D73FB200DC97BF /* ScoopaTechnologies(Development).xcconfig in Resources */,
 				840CC05527D737EC00DC97BF /* Futura-Normal.ttf in Resources */,
