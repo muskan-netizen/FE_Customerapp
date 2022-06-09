@@ -1203,7 +1203,7 @@ const appIds = {
     android: 'com.halaTalabat',
   }),
   palmettoplus: Platform.select({
-    ios: 'com.palmettoplus',
+    ios: 'com.palmettoplus.customer',
     android: 'com.palmettoplus.customer',
   }),
   allotaxi: Platform.select({
