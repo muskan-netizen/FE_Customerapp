@@ -111,7 +111,7 @@ function Cart({navigation, route}) {
 
   const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
   const darkthemeusingDevice = useDarkMode();
-
+  const reloadData = useSelector((state) => state?.reloadData?.reloadData);
   const [defaultSelectedTable, setDefaultSelectedTable] = useState('');
   const [type, setType] = useState('');
   const [vendorAddress, setVendorAddress] = useState('');
@@ -585,6 +585,7 @@ function Cart({navigation, route}) {
           actions.cartItemQty(res);
           setCartItems(res.data.products);
           setCartData(res.data);
+          actions.reloadData(!reloadData);
 
           updateState({
             btnLoader: false,
@@ -613,10 +614,12 @@ function Cart({navigation, route}) {
       })
       .then((res) => {
         console.log('cart res remove', res);
+        actions.reloadData(!reloadData);
         if (!!res?.data && !!res?.data?.products) {
           actions.cartItemQty(res);
           setCartItems(res.data.products || []);
           setCartData(res.data);
+          actions.reloadData(!reloadData);
           updateState({
             isLoadingB: false,
             btnLoader: false,
@@ -775,6 +778,7 @@ function Cart({navigation, route}) {
             if (res && res?.status == 'Success') {
               setCartItems([]);
               setCartData({});
+              actions.reloadData(!reloadData);
               moveToNewScreen(navigationStrings.ORDERSUCESS, {
                 orderDetail: {
                   order_number:
@@ -1027,6 +1031,7 @@ function Cart({navigation, route}) {
               updateState({placeLoader: false, deliveryFeeLoader: false});
               setCartItems([]);
               setCartData({});
+              actions.reloadData(!reloadData);
               moveToNewScreen(navigationStrings.ORDERSUCESS, {
                 orderDetail: {
                   order_number: data?.orderDetail?.order_number,
@@ -1081,6 +1086,7 @@ function Cart({navigation, route}) {
         console.log(res, 'ressssss');
         setCartItems([]);
         setCartData({});
+        actions.reloadData(!reloadData);
         moveToNewScreen(navigationStrings.ORDERSUCESS, {
           orderDetail: {
             order_number: paymentData?.orderDetail?.order_number,
@@ -1157,6 +1163,7 @@ function Cart({navigation, route}) {
         ) {
           setCartItems([]);
           setCartData({});
+          actions.reloadData(!reloadData);
           if (selectedPayment?.id == 1 || res?.data?.payable_amount == 0) {
             showSuccess(res?.message);
             return;
@@ -1192,6 +1199,7 @@ function Cart({navigation, route}) {
           ) {
             setCartItems([]);
             setCartData({});
+            actions.reloadData(!reloadData);
 
             updateState({
               isLoadingB: false,
@@ -1214,7 +1222,7 @@ function Cart({navigation, route}) {
             })();
             setCartItems([]);
             setCartData({});
-
+            actions.reloadData(!reloadData);
             updateState({
               isLoadingB: false,
               placeLoader: false,
@@ -1844,6 +1852,7 @@ function Cart({navigation, route}) {
                     actions.cartItemQty({});
                     setCartItems([]);
                     setCartData({});
+                    actions.reloadData(!reloadData);
                     setSelectedPayment({
                       id: 1,
                       off_site: 0,
