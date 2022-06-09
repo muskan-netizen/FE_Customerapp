@@ -119,6 +119,7 @@ export default function VendorProducts({route, navigation}) {
   );
 
   /**********Get all list items by store  id and category id */
+  console.log(selectedVendor?.id,"resres");
   const getAllProducts = () => {
     actions
       .getProductBySpecificId(
@@ -135,6 +136,7 @@ export default function VendorProducts({route, navigation}) {
         },
       )
       .then((res) => {
+        console.log(res,selectedVendor?.id,"resres");
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -288,7 +290,6 @@ export default function VendorProducts({route, navigation}) {
         centerTitle={selectedVendor?.name || ''}
         showImageAlongwithTitle={true}
         hideRight={true}
-        headerStyle={{backgroundColor: colors.white}}
         rightIcon={gridView ? imagePath.gridViewIcon : imagePath.listViewIcon}
         onPressRight={() => updateState({gridView: !gridView})}
         rightIconStyle={{tintColor: colors.black}}

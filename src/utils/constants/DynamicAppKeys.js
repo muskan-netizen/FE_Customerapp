@@ -918,7 +918,7 @@ const appIds = {
     android: 'com.click2deliver',
   }),
   trucktirenow: Platform.select({
-    ios: 'com.trucktirenow',
+    ios: 'com.trucktirenow.customer',
     android: 'com.trucktirenow',
   }),
   yeboy: Platform.select({
@@ -1323,7 +1323,7 @@ const appIds = {
   }),
   mrHealth: Platform.select({
     ios: 'com.mrHealth',
-    android: 'com.mrHealth',
+    android: 'com.mrHealth.customer',
   }),
   lopht: Platform.select({
     ios: 'com.lopht',
@@ -1366,7 +1366,7 @@ const appIds = {
     android: 'com.app.scoopaTechnologies',
   }),
   dbairro: Platform.select({
-    ios: 'com.dbairro',
+    ios: 'com.app.dbairro',
     android: 'com.dbairro',
   }),
   knockknock: Platform.select({
@@ -1424,7 +1424,7 @@ const appIds = {
   }),
   beachhop: Platform.select({
     ios: 'com.beachhop',
-    android: 'com.beachhop',
+    android: 'com.beachhop.customer',
   }),
   qseek: Platform.select({
     ios: 'com.qseek',
@@ -1572,7 +1572,7 @@ const appIds = {
   }),
   peerDeliveries: Platform.select({
     ios: 'com.peerDeliveries',
-    android: 'com.PeerDeliveries',
+    android: 'com.peerDeliveries',
   }),
   swan: Platform.select({
     ios: 'com.swan',

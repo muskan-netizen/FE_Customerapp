@@ -1,5 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Animated,
   Image,
@@ -8,6 +8,8 @@ import {
   View,
   ScrollView,
   Keyboard,
+  FlatList,
+  Platform,
 } from 'react-native';
 import CountryPicker, { Flag } from 'react-native-country-picker-modal';
 import { useDarkMode } from 'react-native-dark-mode';
@@ -46,8 +48,9 @@ import {
   getPlaceDetails,
   nearbySearch,
 } from '../../../utils/googlePlaceApi';
-import { getAddressComponent, showError, getColorCodeWithOpactiyNumber } from '../../../utils/helperFunctions';
+import { getAddressComponent, showError, getColorCodeWithOpactiyNumber, getPhoneNumberFromPhoneBook } from '../../../utils/helperFunctions';
 import {
+  checkContactPermission,
   chekLocationPermission,
   locationPermission,
 } from '../../../utils/permissions';
@@ -67,6 +70,8 @@ export default function Addaddress({ navigation, route }) {
 
   const { book_for_friend } = appData?.profile?.preferences
   const { pickUpTimeType } = useSelector((state) => state?.home);
+
+  console.log(appData, "appDataappDataappData");
 
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
@@ -112,7 +117,10 @@ export default function Addaddress({ navigation, route }) {
     friendMobileNumber: '',
     countryPickerModalVisible: false,
     cca2: 'IN',
-    callingCode: '+91'
+    callingCode: '+91',
+    showFriendListModal: false,
+    allAddedFriends: [],
+    selectedFriendForRide: { id: 0 }
   });
   const {
     pageNo,
@@ -137,7 +145,10 @@ export default function Addaddress({ navigation, route }) {
     friendMobileNumber,
     countryPickerModalVisible,
     cca2,
-    callingCode
+    callingCode,
+    showFriendListModal,
+    allAddedFriends,
+    selectedFriendForRide
   } = state;
 
   useEffect(() => {
@@ -211,12 +222,6 @@ export default function Addaddress({ navigation, route }) {
   const commonStyles = commonStylesFun({ fontFamily });
   const { profile } = appData;
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-
-  //   }, [pageNo]),
-  // );
-
   const getAllPickUpVendors = (lat, lng) => {
     const latlongData = appData?.profile?.preferences
       ?.pickup_delivery_service_area
@@ -268,6 +273,13 @@ export default function Addaddress({ navigation, route }) {
         existLatLng?.latitude !== 0 ? existLatLng : curLatLng,
     });
   };
+
+  const moveToNewScreen =
+    (screenName, data = {}) =>
+      () => {
+        navigation.navigate(screenName, { data });
+      };
+
 
   const renderbtn = () => {
     switch (getBundleId()) {
@@ -335,17 +347,6 @@ export default function Addaddress({ navigation, route }) {
 
 
 
-  const isValidData = () => {
-    const error = validations({
-      name: friendName,
-      phoneNumber: friendMobileNumber
-    });
-    if (error) {
-      alert(error)
-      return;
-    }
-    return true;
-  };
 
 
 
@@ -399,45 +400,34 @@ export default function Addaddress({ navigation, route }) {
       datetime: paramData?.datetime,
       pickUpTimeType: pickUpTimeType,
       friendBookingDetails: {
-        bookingType:selectedTab==2?1:0,
-        name: friendName,
-        mobileNumber: `${callingCode}${friendMobileNumber}`
+        bookingType: selectedFriendForRide?.id != 0 ? 1 : 0,
+        firstName: selectedFriendForRide?.first_name ? selectedFriendForRide?.first_name : '',
+        lastName: selectedFriendForRide?.last_name ? selectedFriendForRide?.last_name : '',
+        mobileNumber: selectedFriendForRide?.phone_number ? `${selectedFriendForRide?.phone_number}` : ''
       }
     });
   }
 
+  console.log(selectedFriendForRide, "selectedFriendForRideselectedFriendForRide");
+
 
 
   const saveAddressAndRedirect = () => {
-    if (selectedTab == 2) {
-      updateState({
-        bookForFriendModalVisible: true
-      })
-    }
-    else {
-      moveToNextScreenWithAddressData()
-    }
+    moveToNextScreenWithAddressData()
   };
 
 
-  const setDataAndBookRideForFriend = () => {
 
-    const checkValid = isValidData();
-    if (!checkValid) {
-      return;
-    }
-    updateState({
-      bookForFriendModalVisible: false
-    })
-
-
-
-    moveToNextScreenWithAddressData()
-  }
 
   const _onChangeText = (key) => (val) => {
     updateState({ [key]: val });
   };
+
+  const onShowHideFriendListModal = () => {
+    updateState({
+      showFriendListModal: !showFriendListModal
+    })
+  }
 
 
 
@@ -445,6 +435,12 @@ export default function Addaddress({ navigation, route }) {
   useEffect(() => {
     getLiveLocation();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getAllRiderList();
+    }, []),
+  );
 
   const getLiveLocation = async () => {
     const locPermissionDenied = await locationPermission();
@@ -662,132 +658,185 @@ export default function Addaddress({ navigation, route }) {
   };
 
 
-
-  const selecteSwitchTab = (selectedTab) => {
-    switch (selectedTab) {
-      case 1:
-        updateState({
-          selectedTab: 1
-        })
-        break;
-      case 2:
-        updateState({
-          selectedTab: 2
-        })
-      default:
-        break;
-    }
-  }
   const onClose = () => {
     updateState({
-      bookForFriendModalVisible: false
+      showFriendListModal: false
+    })
+  }
+  const onSelectFriend = (item) => {
+    updateState({
+      showFriendListModal: false,
+      selectedFriendForRide: item
     })
   }
 
 
-  const _onCountryChange = (data) => {
-    updateState({
-      countryPickerModalVisible: false, bookForFriendModalVisible: true, cca2: data.cca2,
-      callingCode: data.callingCode,
-    });
 
-  };
-  const _openCountryPicker = () => {
-    updateState({
-      bookForFriendModalVisible: false
+  const getAllRiderList = () => {
+    actions.getAllRiderList({}, { code: appData?.profile?.code }).then((res) => {
+      updateState({
+        allAddedFriends: res?.riders
+      })
+    }).catch((error) => {
+      console.log(error, "reosoeoseooseose");
     })
-    setTimeout(() => {
-      updateState({ countryPickerModalVisible: true });
-    }, 500);
-  };
-  const _onCountryPickerModalClose = () => {
-    updateState({ countryPickerModalVisible: false });
-  };
+  }
 
-  const modalHeaderContainer = () => {
+
+
+  const renderBookFriendListFooter = () => (
+    <>
+      <TouchableOpacity
+        onPress={() => _onAddRiderContact(1)}
+        style={styles.friendListFooter} >
+        <Image style={{ tintColor: themeColors?.primary_color }} source={imagePath.addRider} />
+        <Text style={styles.addFriendText}>{strings.ADD_MANUALLY}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => _onAddRiderContact(2)}
+        style={styles.friendListFooter} >
+        <Image style={{ tintColor: themeColors?.primary_color }} source={imagePath.addFriend} />
+        <Text style={styles.addFriendText}>{strings.ADD_FROM_PHONEBOOK}</Text>
+      </TouchableOpacity></>
+
+  )
+
+
+
+  const renderAllFriends = (({ item, index }) => {
     return (
-      <View style={styles.modalHeaderMainContainer}>
-        <Text style={styles.bookFriendText}>{strings.BOOK_FOR_A_FRIEND}</Text>
-        <Text style={{ fontSize: textScale(11), }}>{strings.ENTER_FRIEND_DETAILS}</Text>
+      <View style={{ padding: 5 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => onSelectFriend(item)}>
+            <Image source={imagePath.riderImage} />
+            <Text style={{
+              fontFamily: fontFamily.regular,
+              color: colors.black,
+              fontSize: textScale(14),
+              marginHorizontal: moderateScale(10)
+            }}>{item?.first_name} {item?.last_name}</Text>
+
+          </TouchableOpacity>
+          {
+            item?.id == selectedFriendForRide?.id ? <Image style={{ tintColor: themeColors?.primary_color }} source={imagePath.tickBlack} /> : null
+          }
+
+        </View>
+
+        <View style={{ borderWidth: 0.5, height: 1, borderColor: colors.blackOpacity10, marginVertical: moderateScaleVertical(14) }} />
       </View>
+
     )
-  }
 
-  const modalMainContent = () => {
+  })
+
+  const allListFriendModalContent = () => {
     return (
-      <View style={styles.modalMainContainer} >
-        <TextInputWithUnderlineAndLabel
-          onChangeText={_onChangeText('friendName')}
-          label={'Full Name'}
-          value={friendName}
-          containerStyle={styles.textInputContainer}
-          undnerlinecolor={colors.textGreyB}
-          labelStyle={{
-            color: colors.textGreyB,
-            fontSize: textScale(12),
-          }}
-          txtInputStyle={styles.textInputStyle}
-          returnKeyType={'next'}
-        />
-        <View>
-          <Text style={styles.phoneNumberTextInputLabel}>{strings.PHONE_NUMBER}</Text>
-          <View style={styles.phoneNumberInnerContainer}>
+      <>
+        <View style={{
+          ...styles.modalMainContainer,
+          paddingHorizontal:
+            moderateScale(10), marginVertical: 1, paddingVertical: 1
+        }} >
+          <View
+            style={{ ...styles.friendListModalInnerContainer, marginTop: Platform.OS == 'android' ? moderateScaleVertical(-10) : moderateScaleVertical(0) }}>
             <TouchableOpacity
-              style={styles.countryPickerContainer}
-              onPress={_openCountryPicker}
-            >
-              <View
-                style={styles.countryPickerInnerContainer}>
-               
-                <Text
-                  style={styles.callingCodeText}>
-                  {callingCode}
-                </Text>
-              </View>
-
-              <View style={{ marginRight: moderateScale(-10) }}>
-                <Flag countryCode={cca2} />
-              </View>
-              <Image source={imagePath.dropdownTriangle} />
+              style={{ flex: 0.5 }}
+              onPress={onShowHideFriendListModal}
+              hitSlop={styles.hitSlop}>
+              <Image
+                style={{
+                  tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}
+                source={imagePath.backArrowCourier}
+              />
             </TouchableOpacity>
-
-            <TextInputWithUnderlineAndLabel
-              onChangeText={_onChangeText('friendMobileNumber')}
-              value={friendMobileNumber}
-              containerStyle={styles.phoneNumberInnput}
-              undnerlinecolor={colors.textGreyB}
-              labelStyle={{
-                color: colors.textGreyB,
-                fontSize: textScale(12),
-              }}
-              txtInputStyle={styles.textInputStyle}
-              returnKeyType={'next'}
-              keyboardType={'numeric'}
-            />
-
+            <View>
+              <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}
+                onPress={onShowHideFriendListModal}>
+                <Image source={imagePath.user} />
+                <Text
+                  style={[styles.switchRiderText, { color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }]}>
+                  {strings.SWITCH_RIDER}
+                </Text>
+                <Image source={imagePath.icDropdown4} />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-        <GradientButton
-          colorsArray={[
-            themeColors.primary_color,
-            themeColors.primary_color,
-          ]}
-          textStyle={{ textTransform: 'none', fontSize: textScale(16) }}
-          onPress={setDataAndBookRideForFriend}
-          marginTop={moderateScaleVertical(10)}
-          marginBottom={moderateScaleVertical(10)}
-          btnText={strings.CONTINUE}
-          btnStyle={{ borderRadius: moderateScale(8) }}
-        />
+        <View>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={allAddedFriends}
+            contentContainerStyle={{ flexGrow: 1 }}
+            ListHeaderComponent={() => (
+              <View>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <TouchableOpacity
+                    onPress={() => _onAddRiderContact(0)}
+                    style={styles.showFriendListModalHeaderContainer} >
+                    <Image source={imagePath.riderImage} />
+                    <Text style={styles.forMeText}>For Me</Text>
 
-      </View>
+                  </TouchableOpacity>
+                  {
+                    selectedFriendForRide?.id == 0 ? <Image style={{ tintColor: themeColors?.primary_color }} source={imagePath.tickBlack} /> : null
+                  }
+                </View>
+                <View style={styles.lineViewStyle} />
+              </View>
+            )}
+            renderItem={renderAllFriends}
+            style={styles.friendListStyle}
+            ListFooterComponent={renderBookFriendListFooter}
+          />
+        </View>
+      </>
     )
   }
 
 
+  const _onAddRiderContact = (type) => {
+    switch (type) {
+      case 0:
+        updateState({
+          showFriendListModal: false,
+          selectedFriendForRide: { id: type }
+        })
+        break;
+      case 1:
+        updateState({
+          showFriendListModal: false
+        })
+        navigation.navigate(navigationStrings.ADD_NEW_RIDER, { addNewRiderContact: true })
+        break;
+      case 2:
+        _selectRiderContactFromPhoneBook()
+        break;
+    }
 
 
+  }
 
+  const _selectRiderContactFromPhoneBook = () => {
+    checkContactPermission().then((res) => {
+      if (res == 'granted') {
+        getPhoneNumberFromPhoneBook().then((res) => {
+          if (res) {
+            updateState({
+              showFriendListModal: false
+            })
+            navigation.navigate(navigationStrings.ADD_NEW_RIDER, res)
+          }
+
+        }).catch((error) => {
+          alert(error)
+        })
+      }
+    }).catch(errorMethod)
+
+
+  }
 
   return (
     <WrapperContainer
@@ -816,32 +865,36 @@ export default function Addaddress({ navigation, route }) {
             source={imagePath.backArrowCourier}
           />
         </TouchableOpacity>
-        <Text
-          style={{
-            fontSize: textScale(12),
-            fontFamily: fontFamily.medium,
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-          }}>
-          {strings.SELECT_LOCATION}
-        </Text>
+        <View>
+          {
+            book_for_friend
+              ?
+              <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}
+                onPress={onShowHideFriendListModal}>
+                <Image source={imagePath.riderImage} />
+                {selectedFriendForRide?.first_name ?
+                  <Text
+                    style={[styles.addAddressScreenTitle, { color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }]}>
+                    {selectedFriendForRide?.first_name} {selectedFriendForRide?.last_name}
+                  </Text> : <Text
+                    style={[styles.addAddressScreenTitle, { color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }]}>
+                    {strings.BOOK_FOR_ME}
+                  </Text>
+
+                }
+                <Image source={imagePath.icDropdown4} />
+              </TouchableOpacity>
+              : <Text
+                style={[styles.addAddressScreenTitle, { color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }]}>
+                {strings.ADD_ADDRESS}
+              </Text>
+          }
+        </View>
+
       </View>
 
       <View style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
-
-          {book_for_friend ? <CustomSwitchTabBar firstTabBarCustomStyle={{
-            backgroundColor: selectedTab == 1 ? themeColors?.primary_color : colors.lightGray,
-          }}
-            secondTabBarCustomStyle={{
-              backgroundColor: selectedTab == 2 ? themeColors?.primary_color : colors.lightGray,
-            }}
-            firstTabBarTextStyle={{ color: selectedTab == 1 ? colors?.white : colors.black, }}
-            SecondTabBarTextStyle={{ color: selectedTab == 2 ? colors?.white : colors.black, }}
-            selecteSwitchTab={selecteSwitchTab}
-          />
-            : null}
-
-
           <View
             style={{
               ...commonStyles.shadowStyle,
@@ -990,26 +1043,16 @@ export default function Addaddress({ navigation, route }) {
 
       </View>
       {renderbtn()}
+
       <Modal
         onClose={onClose}
-        mainViewStyle={{ position: 'absolute', bottom: 0, width: width, borderTopStartRadius: 0, borderTopRightRadius: 0 }}
-        isVisible={bookForFriendModalVisible} topCustomComponent={modalHeaderContainer}
-        modalMainContent={modalMainContent}
+        mainViewStyle={{ position: 'absolute', top: 0, width: width, borderTopStartRadius: 0, borderTopRightRadius: 0 }}
+        isVisible={showFriendListModal}
+        modalMainContent={allListFriendModalContent}
         modalStyle={{ marginHorizontal: moderateScaleVertical(0), marginVertical: moderateScale(0) }}
+        animationIn='slideInDown'
+        animationOut='slideOutDown'
       />
-      {countryPickerModalVisible && (
-        <CountryPicker
-          cca2={cca2}
-          withCallingCode={callingCode}
-          visible={countryPickerModalVisible}
-          withFlagButton={false}
-          withFilter
-          onClose={_onCountryPickerModalClose}
-          onSelect={_onCountryChange}
-        />
-      )}
-
-
     </WrapperContainer>
   );
 }

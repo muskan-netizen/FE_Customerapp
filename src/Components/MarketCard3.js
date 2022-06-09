@@ -189,7 +189,7 @@ const MarketCard3 = ({
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       <View>
-        {!!data?.is_vendor_closed ? (
+        {!!data?.is_vendor_closed && !!data?.closed_store_order_scheduled ? (
           <Grayscale>
             <View style={{justifyContent: 'center'}}>
               <FastImage
@@ -205,7 +205,33 @@ const MarketCard3 = ({
                 }}
                 resizeMode={FastImage.resizeMode.cover}
               />
-              <Text style={styles.currentlyUnavailable}>
+              <Text
+                style={{
+                  ...styles.currentlyUnavailable,
+                  fontSize: textScale(12),
+                }}>
+                {strings.WE_ARE_NOT_ACCEPTING} {data?.delaySlot}{' '}
+              </Text>
+            </View>
+          </Grayscale>
+        ) : !!data?.is_vendor_closed &&
+          data?.closed_store_order_scheduled == 0 ? (
+          <Grayscale>
+            <View style={{justifyContent: 'center'}}>
+              <FastImage
+                source={{
+                  uri: imageUrl,
+                  priority: FastImage.priority.high,
+                  cache: FastImage.cacheControl.immutable,
+                }}
+                style={{
+                  ...styles.mainImage,
+                  ...fastImageStyle,
+                  opacity: 0.8,
+                }}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+              <Text style={{...styles.currentlyUnavailable}}>
                 {strings.CURRENTLYUNAVAILABLE}
               </Text>
             </View>

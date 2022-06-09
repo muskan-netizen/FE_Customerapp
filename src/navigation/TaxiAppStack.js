@@ -2,14 +2,19 @@ import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {
   Addaddress,
+  AddNewRider,
+  AllContacts,
   ChooseCarTypeAndTimeTaxi,
   HomeScreenTaxi,
   Offers,
+  OrderDetail,
+  Payfast,
   PaymentOptions,
   PickupTaxiOrderDetail,
   PinAddressOnMap,
   RateOrder,
 } from '../Screens';
+import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
 
 import VerifyAccountSecond from '../Screens/VerifyAccountSecond/VerifyAccount';
 import navigationStrings from './navigationStrings';
@@ -28,6 +33,12 @@ export default function (Stack) {
         component={Addaddress}
         options={{headerShown: false}}
       />
+       <Stack.Screen
+        name={navigationStrings.ADD_NEW_RIDER}
+        component={AddNewRider}
+        options={{headerShown: false}}
+      />
+  
       <Stack.Screen
         name={navigationStrings.PINADDRESSONMAP}
         component={PinAddressOnMap}
@@ -54,6 +65,21 @@ export default function (Stack) {
         name={navigationStrings.PICKUPTAXIORDERDETAILS}
         component={PickupTaxiOrderDetail}
         options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name={navigationStrings.ORDER_DETAIL}
+        component={OrderDetail}
+        options={{headerShown: false}}
+        />
+       <Stack.Screen
+        name={navigationStrings.ORDERSUCESS}
+        component={OrderSuccess}
+        options={{ headerShown: false }}
+      />
+        <Stack.Screen
+        name={navigationStrings.PAYFAST}
+        component={Payfast}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.RATEORDER}

@@ -415,7 +415,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       // zIndex: 5000,
     },
     dropDownContainerStyle: {
-      height: 20,
+      height: 50,
       marginVertical: moderateScaleVertical(10),
       // zIndex: 10,
     },
@@ -523,6 +523,13 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       color: colors.blue,
       fontFamily: fontFamily.medium,
     },
+    bookAtable : {
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(14),
+      color: colors.black,
+      marginLeft:moderateScale(20), 
+      marginBottom: moderateScale(-6),
+    }
   });
   return styles;
 };

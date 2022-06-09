@@ -74,14 +74,15 @@ export default function ProductDetail({route, navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
   const commonStyles = commonStylesFunc({fontFamily});
+  const reloadData = useSelector((state) => state?.reloadData?.reloadData);
   const {data} = route.params;
-
+ console.log(data,"dataaaaaa")
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     isLoading: true,
     isLoadingB: false,
     isLoadingC: false,
-    productId: data?.id,
+    productId: data?.item?.id || data?.id,
     productDetailData: null,
     productPriceData: null,
     variantSet: [],
@@ -200,7 +201,7 @@ export default function ProductDetail({route, navigation}) {
   };
 
   const getProductDetail = () => {
-    console.log('api hit getProductDetail');
+    console.log('api hit getProductDetail',state.productId);
     actions
       .getProductDetailByProductId(
         `/${state.productId}`,
@@ -257,7 +258,7 @@ export default function ProductDetail({route, navigation}) {
           updateState({variantSet: res.data.products.variant_set});
         }
       })
-      .catch(errorMethod);
+      .catch(error=>console.log(error,"error"));
   };
 
   //Get Product detail based on varint selection
@@ -852,6 +853,7 @@ export default function ProductDetail({route, navigation}) {
       .then((res) => {
         console.log(res, 'res.data');
         actions.cartItemQty(res);
+        actions.reloadData(!reloadData)
 
         showSuccess(strings.PRODUCT_ADDED_SUCCESS);
 
