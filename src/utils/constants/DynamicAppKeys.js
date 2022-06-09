@@ -339,7 +339,9 @@ const shortCodes = {
   lunchboxSpecials: 'cfa64c',
   sorDelivery: '732007',
   grubHouse:'d9c5ee',
-  hitchDelivery:'3bc1d7'
+  hitchDelivery:'3bc1d7',
+  zoodMarket:'b077a9'
+
 };
 
 
@@ -474,7 +476,7 @@ const appIds = {
   }),
   glamsouq: Platform.select({
     ios: 'com.codebrew.glamsouq',
-    android: 'com.codebrew.glamsouq',
+    android: 'com.glamsouq.customer',
   }),
   doctatransportation: Platform.select({
     ios: 'com.codebrew.doctatransportation',
@@ -1202,7 +1204,7 @@ const appIds = {
   }),
   palmettoplus: Platform.select({
     ios: 'com.palmettoplus',
-    android: 'com.palmettoplus',
+    android: 'com.palmettoplus.customer',
   }),
   allotaxi: Platform.select({
     ios: 'com.allotaxi',
@@ -1697,6 +1699,10 @@ const appIds = {
   hitchDelivery: Platform.select({
     ios: 'com.hitchDelivery',
     android: 'com.hitchDelivery',
+  }),
+  zoodMarket: Platform.select({
+    ios: 'com.zoodMarket',
+    android: 'com.zoodMarket',
   }),
 };
 
