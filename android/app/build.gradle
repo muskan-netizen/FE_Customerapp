@@ -4979,7 +4979,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.cartnar'
-            resValue "string", "app_name", "Cartnar"
+            resValue "string", "app_name", "Shoparix"
             resValue "string", "host_name", ""
             }
             uven{
