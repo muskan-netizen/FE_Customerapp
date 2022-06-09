@@ -1078,7 +1078,7 @@ function Cart({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res,"ressssss")
+        console.log(res, 'ressssss');
         setCartItems([]);
         setCartData({});
         moveToNewScreen(navigationStrings.ORDERSUCESS, {
@@ -1260,12 +1260,12 @@ function Cart({navigation, route}) {
         const date = selectedDateFromCalendar;
         const time = selectedTimeSlots.split('-')[0];
 
-        const formatDate = moment(
-          `${date} ${time}`,
-          'YYYY-MM-DD HH:mm:ss',
-        ).format();
-        console.log('formatDate', formatDate);
-        data['schedule_dt'] = formatDate;
+        // const formatDate = moment(
+        //   `${date} ${time}`,
+        //   'YYYY-MM-DD HH:mm:ss',
+        // ).format();
+        // console.log('formatDate', formatDate);
+        data['schedule_dt'] = selectedDateFromCalendar;
       } else {
         data['schedule_dt'] =
           dateType != 'now' && scheduleDate
@@ -4975,12 +4975,16 @@ function Cart({navigation, route}) {
                 height: moderateScale(120),
                 width: moderateScale(120),
               }}
-               tintColor={isDarkMode &&colors.white}
+              tintColor={isDarkMode && colors.white}
               // resizeMode="contain"s
             />
           )}
 
-          <Text style={{...styles.textStyle,color:isDarkMode?colors.white:colors.blackOpacity40}}>
+          <Text
+            style={{
+              ...styles.textStyle,
+              color: isDarkMode ? colors.white : colors.blackOpacity40,
+            }}>
             {strings.YOUR_CART_EMPTY_ADD_ITEMS}
           </Text>
         </View>
@@ -5320,23 +5324,25 @@ function Cart({navigation, route}) {
   };
 
   const checkVendorSlots = async (date) => {
-    if (modalType !== 'pickup') {
-      try {
-        let vendorId = cartItems[0].vendor.id;
-        // vendor_id,date,delivery
-        const res = await actions.getVendorDropoffSlots(
-          `?vendor_id=${vendorId}&date=${date}&delivery=${dineInType}`,
-          {},
-          {
-            code: appData?.profile?.code,
-            timezone: RNLocalize.getTimeZone(),
-          },
-        );
-        setLaundryAvailableDropOffSlot(res);
-      } catch (error) {
-        console.log('error riased', error);
+    if (businessType == 'laundry') {
+      if (modalType !== 'pickup') {
+        try {
+          let vendorId = cartItems[0].vendor.id;
+          // vendor_id,date,delivery
+          const res = await actions.getVendorDropoffSlots(
+            `?vendor_id=${vendorId}&date=${date}&delivery=${dineInType}`,
+            {},
+            {
+              code: appData?.profile?.code,
+              timezone: RNLocalize.getTimeZone(),
+            },
+          );
+          setLaundryAvailableDropOffSlot(res);
+        } catch (error) {
+          console.log('error riased', error);
+        }
+        return;
       }
-      return;
     }
 
     try {
@@ -5377,6 +5383,7 @@ function Cart({navigation, route}) {
     }
   };
 
+  console.log(selectedTimeSlots, 'SelectedTimeSlots');
   const onSelectPayment = (data) => {
     console.log('my data++++', data);
 
@@ -5422,17 +5429,36 @@ function Cart({navigation, route}) {
         activeOpacity={0.8}
         onPress={() => onSelectTime(item)}
         style={{
-          backgroundColor: isSlotSelected1(item)
-            ? themeColors.primary_color
-            : colors.white,
+          backgroundColor:
+            businessType == 'laundry'
+              ? isSlotSelected1(item)
+                ? themeColors?.primary_color
+                : colors.white
+              : isSlotSelected(item)
+              ? themeColors.primary_color
+              : colors.white,
           padding: 8,
           borderRadius: 8,
-          borderWidth: isSlotSelected1(item) ? 0 : 1,
+          borderWidth:
+            businessType == 'laundry'
+              ? isSlotSelected1(item)
+                ? 0
+                : 1
+              : isSlotSelected(item)
+              ? 0
+              : 1,
           borderColor: colors.borderColorGrey,
         }}>
         <Text
           style={{
-            color: isSlotSelected1(item) ? colors.white : colors.black,
+            color:
+              businessType == 'laundry'
+                ? isSlotSelected1(item)
+                  ? colors.white
+                  : colors.black
+                : isSlotSelected(item)
+                ? colors.white
+                : colors.black,
             fontFamily: fontFamily.regular,
             fontSize: textScale(11),
           }}>

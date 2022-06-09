@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Image, Linking, Text, View, Platform } from 'react-native';
-import { getBundleId } from 'react-native-device-info';
+import React, {useEffect, useState} from 'react';
+import {Image, Linking, Text, View, Platform} from 'react-native';
+import {getBundleId} from 'react-native-device-info';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 import {useSelector} from 'react-redux';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
@@ -2107,7 +2107,7 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.keystoneDelivery:
+        case appIds.keystoneDelivery:
           updateState({
             shortCode: shortCodes.keystoneDelivery,
             isShortcodePrefilled: true,
@@ -2325,7 +2325,7 @@ export default function ShortCode({route, navigation}) {
 
             break;
           default:
-            updateState({ isLoading: false, LoadingScreen: false });
+            updateState({isLoading: false, LoadingScreen: false});
             navigateToNextScreen(res, homeData.data);
             break;
         }
@@ -2384,14 +2384,14 @@ export default function ShortCode({route, navigation}) {
     switch (getBundleId()) {
       case appIds.masa:
         return animatedSplash();
-       
+
       default:
         return imageSplash();
     }
   };
   const imageSplash = () => {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <View
           style={{
             flex: 1,
@@ -2403,13 +2403,13 @@ export default function ShortCode({route, navigation}) {
             height: '100%',
             backgroundColor: 'rgba(0,0,0,0.5)',
           }}>
-          <View style={{ position: 'absolute', bottom: moderateScale(100) }}>
+          <View style={{position: 'absolute', bottom: moderateScale(100)}}>
             {LoadingScreen && (
               <MaterialIndicator size={50} color={colors.greyMedium} />
             )}
           </View>
         </View>
-        <Image source={{ uri: 'Splash' }} style={{ flex: 1, zIndex: -1 }} />
+        <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
       </View>
     );
   };
@@ -2427,8 +2427,6 @@ export default function ShortCode({route, navigation}) {
           style={{
             height: width,
             width: width,
-            
-           
           }}
           resizeMode="cover"
           onEnd={() => onVideoDurationEnded()}

@@ -5,7 +5,7 @@
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 
 //sujata
-// export const API_BASE_URL ='http://192.168.99.152:8060/api/v1'
+export const API_BASE_URL = 'http://192.168.99.124:8005/api/v1';
 
 //
 //Vishwas
@@ -19,8 +19,6 @@
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
 // export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
 // export const API_BASE_URL = 'https://dbairro.com/api/v1';
-
-
 
 // export const API_BASE_URL = 'https://groupystore.com/api/v1';
 // export const API_BASE_URL = 'https://dimahalal.com/api/v1'; // dimaVega
@@ -123,7 +121,7 @@
 // export const API_BASE_URL = 'https://marketplace.verofax.com/api/v1';
 // export const API_BASE_URL = 'https://order.loopwhole.ca/api/v1';
 // export const API_BASE_URL = 'https://elcheregio.mx/api/v1';
-export const API_BASE_URL = 'https://donepacked.com/api/v1';
+// export const API_BASE_URL = 'https://donepacked.com/api/v1';
 // export const API_BASE_URL = 'https://cannabusxpress.com/api/v1';
 // export const API_BASE_URL = 'https://order-dev.taquick.com/api/v1';
 // export const API_BASE_URL = 'https://yeboy.mx/api/v1';
