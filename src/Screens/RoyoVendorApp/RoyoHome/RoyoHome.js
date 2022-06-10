@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
   RefreshControl,
   BackHandler,
 } from 'react-native';
-import { useState } from 'react';
+import {useState} from 'react';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import {
@@ -19,8 +19,8 @@ import {
 import fontFamily from '../../../styles/fontFamily';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
-import { BarChart } from 'react-native-chart-kit';
-import { FlatList } from 'react-native';
+import {BarChart} from 'react-native-chart-kit';
+import {FlatList} from 'react-native';
 import OrderCard from '../../../Components/OrderCard';
 import commonStyles from '../../../styles/commonStyles';
 import {
@@ -29,23 +29,22 @@ import {
   customMarginLeftForBox,
 } from '../../../utils/constants/constants';
 import Header from '../../../Components/Header';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import actions from '../../../redux/actions';
 import moment from 'moment';
-import { showError } from '../../../utils/helperFunctions';
+import {showError} from '../../../utils/helperFunctions';
 import debounce from 'lodash.debounce';
-import { cloneDeep, isEmpty } from 'lodash';
-import { TouchableOpacity } from 'react-native';
+import {cloneDeep, isEmpty} from 'lodash';
+import {TouchableOpacity} from 'react-native';
 import MonthPicker from 'react-native-month-year-picker';
 import Modal from 'react-native-modal';
 import SelectVendorListModal from '../../../Components/SelectVendorListModal';
-import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
-import { enums } from '../../../utils/enums';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import {enums} from '../../../utils/enums';
 import strings from '../../../constants/lang';
 import DashboardCount from '../../../Components/DashboardCount';
 
-let vendorLimit = 50
-// import 'moment/locale/en-in';
+let vendorLimit = 50;
 // import 'moment/locale/fr';
 // import 'moment/locale/ar';
 // import 'moment/locale/de';
@@ -66,10 +65,12 @@ const commonStyle = commonStyles({
 });
 
 const RoyoHome = (props) => {
-  const { navigation } = props;
-  const { storeSelectedVendor } = useSelector((state) => state?.order);
-  const { appData, currencies, languages } = useSelector((state) => state.initBoot);
-  console.log(languages,"languagessssssssss")
+  const {navigation} = props;
+  const {storeSelectedVendor} = useSelector((state) => state?.order);
+  const {appData, currencies, languages} = useSelector(
+    (state) => state.initBoot,
+  );
+  console.log(languages, 'languagessssssssss');
 
   const [state, setState] = useState({
     pageActive: 1,
@@ -103,133 +104,131 @@ const RoyoHome = (props) => {
     sales,
   } = state;
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
-  const [currentVendor, setCurrVendor] = useState(null)
-  const [availVendor, setAvailVendor] = useState([])
+  const [currentVendor, setCurrVendor] = useState(null);
+  const [availVendor, setAvailVendor] = useState([]);
   const [ordersCount, setOrdersCount] = useState({
     pending: 0,
     active: 0,
     cancelled: 0,
-    delivered: 0
-  })
-  const [allNewOrder, setAllNewOrder] = useState([])
-  const [totalOrder, setTotalOrder] = useState(0)
-  const vendorPage = useRef(1)
-  const vendorLoadMore = useRef(true)
+    delivered: 0,
+  });
+  const [allNewOrder, setAllNewOrder] = useState([]);
+  const [totalOrder, setTotalOrder] = useState(0);
+  const vendorPage = useRef(1);
+  const vendorLoadMore = useRef(true);
 
   //reset pagination values
   useEffect(() => {
-   
     const focus = navigation.addListener('focus', () => {
-      vendorPage.current = 1
-      vendorLoadMore.current = true
+      vendorPage.current = 1;
+      vendorLoadMore.current = true;
     });
     const blur = navigation.addListener('blur', () => {
-      vendorPage.current = 1
-      vendorLoadMore.current = true
+      vendorPage.current = 1;
+      vendorLoadMore.current = true;
     });
     return focus, blur;
   }, []);
 
   useEffect(() => {
-    fetchAllVendors()
-  }, [isRefreshing])
+    fetchAllVendors();
+  }, [isRefreshing]);
 
   const fetchAllVendors = async () => {
-    let query = `?limit=${vendorLimit}&page=1`
+    let query = `?limit=${vendorLimit}&page=1`;
     let headers = {
       code: appData?.profile?.code,
       currency: currencies?.primary_currency?.id,
       language: languages?.primary_language?.id,
-    }
+    };
     try {
-      const res = await actions.storeVendors(query, headers)
-      console.log("available vendors res", isEmpty(res?.data?.data))
+      const res = await actions.storeVendors(query, headers);
+      console.log('available vendors res', isEmpty(res?.data?.data));
       if (!!res?.data && res?.data?.data?.length > 0) {
-        let firstVendor = !!currentVendor ? currentVendor : res?.data?.data[0]
-        setAvailVendor(res.data.data)
-        setCurrVendor(firstVendor)
-        await availVendorCount(firstVendor?.id) //sent vendor id to fetch available vendors
-        await getAllVendorOrder(firstVendor?.id) //sent vendor id to fetch selected vendor orders
+        let firstVendor = !!currentVendor ? currentVendor : res?.data?.data[0];
+        setAvailVendor(res.data.data);
+        setCurrVendor(firstVendor);
+        await availVendorCount(firstVendor?.id); //sent vendor id to fetch available vendors
+        await getAllVendorOrder(firstVendor?.id); //sent vendor id to fetch selected vendor orders
         _getRevenueDashboardData(firstVendor, new Date(), 0);
         actions.savedSelectedVendor(firstVendor);
-        updateState({ isRefreshing: false, isLoading: false })
+        updateState({isRefreshing: false, isLoading: false});
         // _getVendorProfile(firstVendor);
       }
-      updateState({ isRefreshing: false, isLoading: false })
+      updateState({isRefreshing: false, isLoading: false});
     } catch (error) {
-      console.log('error riased', error)
-      updateState({ isRefreshing: false, isLoading: false })
-      showError(error?.message || error?.error)
+      console.log('error riased', error);
+      updateState({isRefreshing: false, isLoading: false});
+      showError(error?.message || error?.error);
     }
-  }
+  };
 
   const fetchVendorPagination = async () => {
-    let query = `?limit=${vendorLimit}&page=${vendorPage.current}`
+    let query = `?limit=${vendorLimit}&page=${vendorPage.current}`;
     let headers = {
       code: appData?.profile?.code,
       currency: currencies?.primary_currency?.id,
       language: languages?.primary_language?.id,
-    }
+    };
     try {
-      const res = await actions.storeVendors(query, headers)
-      console.log("available vendors res", res?.data?.data)
+      const res = await actions.storeVendors(query, headers);
+      console.log('available vendors res', res?.data?.data);
 
       if (res?.data?.data?.length == 0) {
-        vendorLoadMore.current = false
+        vendorLoadMore.current = false;
       }
-      let meregeData = vendorPage.current == 1 ? res?.data?.data : [...availVendor, ...res?.data?.data]
-      setAvailVendor(meregeData)
-      updateState({ isRefreshing: false })
+      let meregeData =
+        vendorPage.current == 1
+          ? res?.data?.data
+          : [...availVendor, ...res?.data?.data];
+      setAvailVendor(meregeData);
+      updateState({isRefreshing: false});
     } catch (error) {
-      console.log('error riased', error)
+      console.log('error riased', error);
     }
-  }
-
-
+  };
 
   const availVendorCount = async (id) => {
     let headers = {
       code: appData?.profile?.code,
       currency: currencies?.primary_currency?.id,
       language: languages?.primary_language?.id,
-    }
+    };
     try {
-      const res = await actions.vendorOrderCount(`/${id}`, headers)
-      console.log("available vendors count res", res.data)
-      updateState({ isLoading: false })
+      const res = await actions.vendorOrderCount(`/${id}`, headers);
+      console.log('available vendors count res', res.data);
+      updateState({isLoading: false});
       setOrdersCount({
         pending: res?.data?.pending_orders,
         active: res?.data?.active_orders,
         cancelled: res?.data?.cancelled_orders,
-        delivered: res?.data?.completed_orders
-      })
+        delivered: res?.data?.completed_orders,
+      });
     } catch (error) {
-      updateState({ isLoading: false })
-      console.log('error riased', error)
-      showError(error?.error || error?.message)
+      updateState({isLoading: false});
+      console.log('error riased', error);
+      showError(error?.error || error?.message);
     }
-  }
+  };
 
   const getAllVendorOrder = async (id) => {
-    let query = `/${id}?limit=${10}&page=${1}&type=pending`
+    let query = `/${id}?limit=${10}&page=${1}&type=pending`;
     let headers = {
       code: appData?.profile?.code,
       currency: currencies?.primary_currency?.id,
       language: languages?.primary_language?.id,
-    }
+    };
     try {
-      const res = await actions.allVendorOrders(query, headers)
-      console.log("all vendor orders count", res)
-      setAllNewOrder(res.data.data)
-
+      const res = await actions.allVendorOrders(query, headers);
+      console.log('all vendor orders count', res);
+      setAllNewOrder(res.data.data);
     } catch (error) {
-      console.log('error riased', error)
-      showError(error?.error)
+      console.log('error riased', error);
+      showError(error?.error);
     }
-  }
-
+  };
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -244,7 +243,6 @@ const RoyoHome = (props) => {
     );
     return () => backHandler.remove();
   }, []);
-
 
   const toggleRevenueDate = () => {
     updateState({
@@ -269,8 +267,8 @@ const RoyoHome = (props) => {
       });
   };
   const onChageRevenueDate = (value, newDate) => {
-    console.log('new datae',newDate);
-      
+    console.log('new datae', newDate);
+
     if (newDate) {
       updateState({
         revenueDate: newDate,
@@ -296,11 +294,12 @@ const RoyoHome = (props) => {
       .startOf('month')
       .format('MM')}-${moment(date).endOf('month').format('DD')}`;
 
-    actions.getRevenueDashboardData(data, {
-      code: appData?.profile?.code,
-      currency: currencies?.primary_currency?.id,
-      language: languages?.primary_language?.id,
-    })
+    actions
+      .getRevenueDashboardData(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
       .then((res) => {
         console.log(res, 'res__getRevnueData>>>dashboard', params);
 
@@ -316,14 +315,15 @@ const RoyoHome = (props) => {
           //   parseFloat(0),
           // );
           if (params[0] == 2) {
-            setTotalOrder(res.data.total_order)
+            setTotalOrder(res.data.total_order);
           }
           updateState({
             isRefreshing: false,
             isLoading: false,
             labels: dates,
             datasets: params[0] == 2 ? datasets : res?.data?.revenue,
-            totalRevenue:params[0] == 2 ?totalRevenue:res?.data?.total_revenue,
+            totalRevenue:
+              params[0] == 2 ? totalRevenue : res?.data?.total_revenue,
             sales:
               params[0] == 1
                 ? sales
@@ -335,13 +335,14 @@ const RoyoHome = (props) => {
           });
         } else {
           if (params[0] == 2) {
-            setTotalOrder(res.data.total_order)
+            setTotalOrder(res.data.total_order);
           }
           updateState({
             isLoading: false,
             isRefreshing: false,
             labels: dates,
-            totalRevenue:params[0] == 2?totalRevenue:res.data.total_revenue,
+            totalRevenue:
+              params[0] == 2 ? totalRevenue : res.data.total_revenue,
             datasets: params[0] == 2 ? datasets : res.data.revenue,
             sales:
               params[0] == 1
@@ -360,8 +361,6 @@ const RoyoHome = (props) => {
     });
     showError(error?.message || error?.error);
   };
-
-
 
   const barData = {
     labels: labels,
@@ -406,8 +405,8 @@ const RoyoHome = (props) => {
       },
     ],
   };
-  const onEndReached = ({ distanceFromEnd }) => {
-    updateState({ pageActive: pageActive + 1 });
+  const onEndReached = ({distanceFromEnd}) => {
+    updateState({pageActive: pageActive + 1});
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -433,34 +432,32 @@ const RoyoHome = (props) => {
     },
   };
   const updateOrderStatus = (acceptRejectData, status) => {
-
     let data = {};
     data['order_id'] = acceptRejectData?.id;
     data['vendor_id'] = currentVendor?.id;
     data['order_status_option_id'] = status;
-    updateState({ isLoadingB: true });
-    actions.updateOrderStatus(data, {
-      code: appData?.profile?.code,
-      currency: currencies?.primary_currency?.id,
-      language: languages?.primary_language?.id,
-      // systemuser: DeviceInfo.getUniqueId(),
-    })
+    updateState({isLoadingB: true});
+    actions
+      .updateOrderStatus(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
       .then((res) => {
         if (res && res.status == 'success') {
-          getAllVendorOrder(currentVendor.id)
-          availVendorCount(currentVendor.id)
+          getAllVendorOrder(currentVendor.id);
+          availVendorCount(currentVendor.id);
         }
       })
       .catch(errorMethod);
   };
 
-
   const handleRefresh = () => {
-    vendorPage.current = 1
-    vendorLoadMore.current = true
-    updateState({ isRefreshing: true });
+    vendorPage.current = 1;
+    vendorLoadMore.current = true;
+    updateState({isRefreshing: true});
   };
-
 
   const _reDirectToVendorList = () => {
     updateState({
@@ -469,13 +466,13 @@ const RoyoHome = (props) => {
   };
 
   const onVendorSelect = (item) => {
-    updateState({ isVendorSelectModal: false, pageNo: 1 });
+    updateState({isVendorSelectModal: false, pageNo: 1});
     setTimeout(() => {
-      updateState({ isLoading: true })
-      setCurrVendor(item)
-      availVendorCount(item.id) // by defa
+      updateState({isLoading: true});
+      setCurrVendor(item);
+      availVendorCount(item.id); // by defa
       actions.savedSelectedVendor(item);
-      _getRevenueDashboardData(item,new Date(), 0);
+      _getRevenueDashboardData(item, new Date(), 0);
     }, 500);
   };
 
@@ -485,11 +482,11 @@ const RoyoHome = (props) => {
     // navigation.navigate(navigationStrings.VENDOR_ORDER, {index: index})
     navigation.navigate(navigationStrings.ROYO_VENDOR_ORDER, {
       screen: navigationStrings.VENDOR_ORDER,
-      params: { index: index },
-    })
-  }
+      params: {index: index},
+    });
+  };
 
-  const renderNewOrder = ({ item, index }) => {
+  const renderNewOrder = ({item, index}) => {
     return (
       <View
         style={{
@@ -507,16 +504,16 @@ const RoyoHome = (props) => {
           item={item}
         />
       </View>
-    )
-  }
+    );
+  };
 
   const onEndReachedVendor = () => {
     if (vendorLoadMore.current) {
-      vendorPage.current = vendorPage.current + 1
-      fetchVendorPagination()
+      vendorPage.current = vendorPage.current + 1;
+      fetchVendorPagination();
     }
-    console.log("end reached")
-  }
+    console.log('end reached');
+  };
 
   return (
     <WrapperContainer
@@ -525,10 +522,9 @@ const RoyoHome = (props) => {
       isLoadingB={isLoading}
       source={loaderOne}>
       <Header
-        centerTitle={`${!isEmpty(currentVendor)
-          ? `${currentVendor?.name}`
-          : 'Select a vendor'
-          } `}
+        centerTitle={`${
+          !isEmpty(currentVendor) ? `${currentVendor?.name}` : 'Select a vendor'
+        } `}
         onPressLeft={() => {
           navigation.navigate(navigationStrings.TAB_ROUTES);
         }}
@@ -538,12 +534,12 @@ const RoyoHome = (props) => {
         onPressImageAlongwithTitle={() => _reDirectToVendorList()}
         imageAlongwithTitle={imagePath.dropdownTriangle}
         showImageAlongwithTitle
-      // rightIcon={status ? imagePath.onlineRoyo : imagePath.offlineRoyo}
-      // onPressRight={toggleStatus}
+        // rightIcon={status ? imagePath.onlineRoyo : imagePath.offlineRoyo}
+        // onPressRight={toggleStatus}
       />
 
       <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
+        contentContainerStyle={{flexGrow: 1}}
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}
@@ -554,7 +550,6 @@ const RoyoHome = (props) => {
         style={styles.container}
         showsVerticalScrollIndicator={false}>
         <View>
-
           <View style={styles.dashboard}>
             <DashboardCount
               heading={strings.PENDING_ORDERS}
@@ -596,20 +591,21 @@ const RoyoHome = (props) => {
                 <Text style={styles.font18Semibold}>{strings.REVENUE}</Text>
                 <TouchableOpacity
                   onPress={toggleRevenueDate}
-                  style={{ flexDirection: 'row' }}>
-                  <Text style={{ ...styles.font14Regular, color: '#2E3E3A5f' }}>
+                  style={{flexDirection: 'row'}}>
+                  <Text style={{...styles.font14Regular, color: '#2E3E3A5f'}}>
                     {/* {String(revenueDate).slice(4, 7)}{' '}
                     {String(revenueDate).slice(11, 15)} */}
-                    {moment(revenueDate).locale(languages?.primary_language?.sort_code).format("MMMM YYYY")}
+                    {moment(revenueDate)
+                      .locale(languages?.primary_language?.sort_code)
+                      .format('MMMM YYYY')}
                   </Text>
 
                   <Image source={imagePath.dropdownTriangle} />
                 </TouchableOpacity>
-
               </View>
-              <View style={{ ...styles.graphContainer, zIndex: -1 }}>
+              <View style={{...styles.graphContainer, zIndex: -1}}>
                 <View style={styles.graphHeader}>
-                  <Text style={{ ...styles.font13Regular, color: '#2E3E3A5f' }}>
+                  <Text style={{...styles.font13Regular, color: '#2E3E3A5f'}}>
                     {strings.TOTAL_REVENUE}
                   </Text>
                   <Text style={styles.font16Bold}>
@@ -620,7 +616,7 @@ const RoyoHome = (props) => {
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                   <BarChart
                     withCustomBarColorFromData={true}
-                    style={{ margin: 0, padding: 0, flex: 1, marginLeft: 0 }}
+                    style={{margin: 0, padding: 0, flex: 1, marginLeft: 0}}
                     // yLabelsOffset={30}
                     data={barData}
                     width={labels.length > 6 ? BarWidth() : boxWidth()}
@@ -643,9 +639,11 @@ const RoyoHome = (props) => {
                 <Text style={styles.font18Semibold}>{strings.ORDERS}</Text>
                 <TouchableOpacity
                   onPress={toggleOrderDate}
-                  style={{ flexDirection: 'row' }}>
-                  <Text style={{ ...styles.font14Regular, color: '#2E3E3A5f' }}>
-                  {moment(orderDate).locale(languages?.primary_language?.sort_code).format("MMMM YYYY")}
+                  style={{flexDirection: 'row'}}>
+                  <Text style={{...styles.font14Regular, color: '#2E3E3A5f'}}>
+                    {moment(orderDate)
+                      .locale(languages?.primary_language?.sort_code)
+                      .format('MMMM YYYY')}
                   </Text>
                   <Image source={imagePath.dropdownTriangle} />
                 </TouchableOpacity>
@@ -711,10 +709,10 @@ const RoyoHome = (props) => {
         style={{
           margin: 0,
         }}>
-        <View style={{ flex: 1, backgroundColor: colors.white }}>
+        <View style={{flex: 1, backgroundColor: colors.white}}>
           <SelectVendorListModal
             vendorList={availVendor}
-            onCloseModal={() => updateState({ isVendorSelectModal: false })}
+            onCloseModal={() => updateState({isVendorSelectModal: false})}
             onVendorSelect={onVendorSelect}
             selectedVendor={currentVendor}
             onEndReachedVendor={onEndReachedVendor}
@@ -723,11 +721,13 @@ const RoyoHome = (props) => {
       </Modal>
 
       <Modal
-        onBackdropPress={() => updateState({ showRevenueDate: false, showRevenueDate: false })}
+        onBackdropPress={() =>
+          updateState({showRevenueDate: false, showRevenueDate: false})
+        }
         isVisible={showRevenueDate || showOrderDate}
         style={{
           margin: 0,
-          justifyContent: 'flex-end'
+          justifyContent: 'flex-end',
         }}>
         <View style={{}}>
           {showRevenueDate && (
@@ -750,7 +750,6 @@ const RoyoHome = (props) => {
           )}
         </View>
       </Modal>
-
     </WrapperContainer>
   );
 };

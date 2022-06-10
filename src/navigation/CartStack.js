@@ -40,7 +40,8 @@ import {
   WindCave,
   PayPhone,
   StripeOXXO,
-  VivaWallet
+  VivaWallet,
+  MyCash
 } from '../Screens';
 import MyProfile from '../Screens/MyProfile/MyProfile2';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
@@ -240,12 +241,16 @@ export default function () {
         component={StripeOXXO}
         options={{ headerShown: false }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.VIVAWALLET}
         component={VivaWallet}
         options={{ headerShown: false }}
       />
-
+      <Stack.Screen
+        name={navigationStrings.MYCASH}
+        component={MyCash}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }

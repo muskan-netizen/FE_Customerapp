@@ -340,7 +340,8 @@ const shortCodes = {
   sorDelivery: '732007',
   grubHouse:'d9c5ee',
   hitchDelivery:'3bc1d7',
-  zoodMarket:'b077a9'
+  zoodMarket:'b077a9',
+  meow:'71f36c'
 
 };
 
@@ -1203,7 +1204,7 @@ const appIds = {
     android: 'com.halaTalabat',
   }),
   palmettoplus: Platform.select({
-    ios: 'com.palmettoplus',
+    ios: 'com.palmettoplus.customer',
     android: 'com.palmettoplus.customer',
   }),
   allotaxi: Platform.select({
@@ -1703,6 +1704,10 @@ const appIds = {
   zoodMarket: Platform.select({
     ios: 'com.zoodMarket',
     android: 'com.zoodMarket',
+  }),
+  meow: Platform.select({
+    ios: 'com.meow.order',
+    android: 'com.meow.order',
   }),
 };
 

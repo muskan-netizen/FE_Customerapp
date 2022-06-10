@@ -65,7 +65,7 @@ export default function AllinonePyments({ navigation, route }) {
           }
         }
         if (paramsData?.action == 'subscription') {
-          console.log(transId,"transId>transId");
+          console.log(transId, "transId>transId");
           //Payfast(6), Paystack(6), FPX(19) // Cashfree(24)
           if (paramsData?.id != 6 && paramsData?.id != 5 && paramsData?.id != 19 && paramsData?.id != 24) {
             subscriptionApiHit(transId);
@@ -152,7 +152,7 @@ export default function AllinonePyments({ navigation, route }) {
         centerTitle={paramsData?.selectedPayment?.title || paramsData?.title}
         headerStyle={{ backgroundColor: colors.white }}
       />
-      {!!paramsData?.paymentUrl && paramsData?.id != 6 ? (
+      {!!paramsData?.paymentUrl && paramsData?.id != 6 && paramsData?.id != 36 ? (
         <WebView
           // onLoad={() => updateState({ isLoading: false })}
           source={{ uri: paramsData?.paymentUrl }}
