@@ -2469,9 +2469,9 @@ const onVideoDurationEnded = () => {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          // backgroundColor: colors.white, 
+          backgroundColor: colors.white, 
           // backgroundColor: getBundleId()== appIds.muvpod ? '#EFEDEF' : colors.white,
-          backgroundColor: getBundleId()== appIds.muvpod ? 'rgb(214,209,214)' : colors.white,
+          // backgroundColor: getBundleId()== appIds.muvpod ? 'rgb(214,209,214)' : colors.white,
         }}>
           
         <Video
@@ -2480,7 +2480,7 @@ const onVideoDurationEnded = () => {
             height: width ,
             width: width,
           }}
-          resizeMode = {getBundleId()== appIds.muvpod ? "stretch" : "cover"}
+          resizeMode = {getBundleId()== appIds.muvpod ? "contain" : "cover"}
           // resizeMode="contain"
           onEnd={() => onVideoDurationEnded()}
           
