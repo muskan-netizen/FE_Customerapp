@@ -945,6 +945,10 @@ function Cart({navigation, route}) {
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.TOYYIAPAY, paymentData);
         break;
+      case 36: //ToyyibPay Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.MYCASH, paymentData);
+        break;
       case 27: //Paytab Payment Getway
         // updateState({ placeLoader: false });
         console.log(res.data, 'res.data>res.data');
@@ -979,6 +983,16 @@ function Cart({navigation, route}) {
       case 32: //Easebuzz Payment Getway
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.PAYPHONE, paymentData);
+        break;
+
+      case 37: //STRIPEOXXO Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.STRIPEOXXO, paymentData);
+        break;
+
+      case 21: //VIVAWALLET Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.VIVAWALLET, paymentData);
         break;
 
       default:
@@ -1159,6 +1173,9 @@ function Cart({navigation, route}) {
           selectedPayment?.id != 26 &&
           selectedPayment?.id != 30 &&
           selectedPayment?.id != 29 &&
+          selectedPayment?.id != 37 &&
+          selectedPayment?.id != 21 &&
+          selectedPayment?.id != 36 &&
           selectedPayment?.id != 34
         ) {
           setCartItems([]);
