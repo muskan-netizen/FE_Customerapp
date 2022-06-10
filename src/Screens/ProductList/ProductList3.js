@@ -264,7 +264,7 @@ export default function Products({ route, navigation }) {
         />
       </View>
     );
-  }, [cloneSectionList, btnLoader, productListId, repeatItems, cartId,categoryInfo])
+  }, [cloneSectionList, btnLoader, productListId, repeatItems, cartId, categoryInfo])
 
 
   const renderSectionHeader = useCallback((props) => {
@@ -325,7 +325,7 @@ export default function Products({ route, navigation }) {
 
   const listEmptyComponent = useCallback(() => {
     return (
-      <NoDataFound isLoading={isLoading} containerStyle={{}}  text={strings.NOPRODUCTFOUND} />
+      <NoDataFound isLoading={isLoading} containerStyle={{}} text={strings.NOPRODUCTFOUND} />
     )
   }, [isLoading, productListData]);
 
@@ -335,7 +335,7 @@ export default function Products({ route, navigation }) {
     )
   }, [isLoading]);
 
-  const renderProduct = useCallback(({item, index}) => {
+  const renderProduct = useCallback(({ item, index }) => {
     return (
       <View
         key={String(index)}
@@ -360,7 +360,7 @@ export default function Products({ route, navigation }) {
         <View style={styles.horizontalLine} />
       </View>
     );
-  }, [productListData, btnLoader, productListId, repeatItems, cartId,categoryInfo])
+  }, [productListData, btnLoader, productListId, repeatItems, cartId, categoryInfo])
 
 
 
@@ -380,17 +380,16 @@ export default function Products({ route, navigation }) {
   }, [navigation, languages, currencies, reloadData]);
 
   const getAllProductTags = () => {
-    actions
-      .getAllProductTags(
-        '',
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        },
-      )
+    actions.getAllProductTags(
+      '',
+      {},
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      },
+    )
       .then((res) => {
         const productTagsArr = res?.data?.map((el) => {
           return {
@@ -432,17 +431,16 @@ export default function Products({ route, navigation }) {
   }, []);
 
   const getAllVendorFilters = () => {
-    actions
-      .getVendorFilters(
-        `/${productListId?.id}`,
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        },
-      )
+    actions.getVendorFilters(
+      `/${productListId?.id}`,
+      {},
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      },
+    )
       .then((res) => {
         console.log(res, 'getVendorFilter with variants');
 
@@ -473,17 +471,16 @@ export default function Products({ route, navigation }) {
   /****Get all list items by vendor id */
   const getAllProductsByVendorCategory = () => {
     console.log('api hit getAllProductsByVendorCategory', data);
-    actions
-      .getProductByVendorCategoryId(
-        `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
-        {},
-        {
-          code: appData.profile.code,
-          currency: currencies.primary_currency.id,
-          language: languages.primary_language.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        },
-      )
+    actions.getProductByVendorCategoryId(
+      `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
+      {},
+      {
+        code: appData.profile.code,
+        currency: currencies.primary_currency.id,
+        language: languages.primary_language.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      },
+    )
       .then((res) => {
         console.log(res, 'getProductByVendorCategoryId');
         // setFilterData(res?.data?.filterData)
@@ -567,19 +564,18 @@ export default function Products({ route, navigation }) {
       //sent category id if user comes from category>>vendor>>productList
       apiData = apiData + `&category_id=${data?.categoryExist}`;
     }
-    actions
-      .getProductByVendorIdOptamize(
-        apiData,
-        {},
-        {
-          code: appData.profile.code,
-          currency: currencies.primary_currency.id,
-          language: languages.primary_language.id,
-          latitude: appMainData?.reqData?.latitude,
-          longitude: appMainData?.reqData?.longitude,
-          systemuser: DeviceInfo.getUniqueId(),
-        },
-      )
+    actions.getProductByVendorIdOptamize(
+      apiData,
+      {},
+      {
+        code: appData.profile.code,
+        currency: currencies.primary_currency.id,
+        language: languages.primary_language.id,
+        latitude: appMainData?.reqData?.latitude,
+        longitude: appMainData?.reqData?.longitude,
+        systemuser: DeviceInfo.getUniqueId(),
+      },
+    )
       .then((res) => {
         console.log('get all products by vendor res', res);
         if (res?.data?.vendor) {
@@ -666,13 +662,12 @@ export default function Products({ route, navigation }) {
     data['page'] = pageNo;
     console.log('sending data', data);
     setLoading(true)
-    actions
-      .newVendorFilters(data, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      })
+    actions.newVendorFilters(data, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      systemuser: DeviceInfo.getUniqueId(),
+    })
       .then((res) => {
         console.log('filter vendor res', res);
         if (!!res?.data?.vendor?.is_show_products_with_category) {
@@ -724,18 +719,17 @@ export default function Products({ route, navigation }) {
   /**********Get all list items by category id */
   const getAllProductsByCategoryId = (pageNo) => {
     console.log('api hit getProductByCategoryId', data);
-    actions
-      .getProductByCategoryIdOptamize(
-        `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${data?.rootProducts ? true : false
-        }`,
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        },
-      )
+    actions.getProductByCategoryIdOptamize(
+      `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${data?.rootProducts ? true : false
+      }`,
+      {},
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      },
+    )
       .then((res) => {
         if (!!res?.data) {
           console.log(res.data, 'res getProductByCategoryId');
@@ -788,18 +782,17 @@ export default function Products({ route, navigation }) {
     data['range'] = `${minimumPrice};${maximumPrice}`;
     console.log('api hit getAllProductsCategoryFilter', data);
 
-    actions
-      .getProductByCategoryFiltersOptamize(
-        `/${productListId.id}?limit=${limit}&page=${pageNo}&product_list=${data?.rootProducts ? true : false
-        }`,
-        data,
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        },
-      )
+    actions.getProductByCategoryFiltersOptamize(
+      `/${productListId.id}?limit=${limit}&page=${pageNo}&product_list=${data?.rootProducts ? true : false
+      }`,
+      data,
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      },
+    )
       .then((res) => {
         console.log(res, 'getAllProductsCategoryFilter  res ++++++');
         setLoading(false)
@@ -838,16 +831,15 @@ export default function Products({ route, navigation }) {
   const _onAddtoWishlist = (item) => {
     playHapticEffect(hapticEffects.impactLight);
     if (!!userData?.auth_token) {
-      actions
-        .updateProductWishListData(
-          `/${item.id}`,
-          {},
-          {
-            code: appData?.profile?.code,
-            currency: currencies?.primary_currency?.id,
-            language: languages?.primary_language?.id,
-          },
-        )
+      actions.updateProductWishListData(
+        `/${item.id}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
         .then((res) => {
           console.log(res, 'updateProductWishListData');
           showSuccess(res.message);
@@ -914,13 +906,12 @@ export default function Products({ route, navigation }) {
 
     let vendorData = { vendor_id: vendor.id };
     return new Promise((resolve, reject) => {
-      actions
-        .checkSingleVendor(vendorData, {
-          code: appData.profile.code,
-          currency: currencies.primary_currency.id,
-          language: languages.primary_language.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        })
+      actions.checkSingleVendor(vendorData, {
+        code: appData.profile.code,
+        currency: currencies.primary_currency.id,
+        language: languages.primary_language.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
         .then((res) => {
           // console.log('res check singel vendro==>>>>>>', res);
           setIsSingleVendor(res)
@@ -936,16 +927,15 @@ export default function Products({ route, navigation }) {
 
   const clearCartAndAddProduct = async (item, section = null) => {
     updateState({ updateQtyLoader: true });
-    actions
-      .clearCart(
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        },
-      )
+    actions.clearCart(
+      {},
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      },
+    )
       .then((res) => {
         actions.cartItemQty(res);
         console.log('clear cart and add product res', res);
@@ -1269,13 +1259,12 @@ export default function Products({ route, navigation }) {
     data['cart_product_id'] = isExistproductId;
     data['type'] = dineInType;
     updateState({ btnLoader: true });
-    actions
-      .removeProductFromCart(data, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      })
+    actions.removeProductFromCart(data, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      systemuser: DeviceInfo.getUniqueId(),
+    })
       .then((res) => {
         actions.cartItemQty(res);
         if (!!section) {
@@ -1381,16 +1370,15 @@ export default function Products({ route, navigation }) {
   };
 
   const clearCart = async (addonSet = [], item, section, inx) => {
-    actions
-      .clearCart(
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        },
-      )
+    actions.clearCart(
+      {},
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      },
+    )
       .then((res) => {
         actions.cartItemQty(res);
         addSingleItem(item, section, inx);
@@ -1833,13 +1821,12 @@ export default function Products({ route, navigation }) {
     data['vendor_id'] = productListId?.id;
     // data['cart_id'] = vendorInfo.cartId;
     // console.log(data, 'vendor_id');
-    actions
-      .getAllPromoCodesForProductList(data, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      })
+    actions.getAllPromoCodesForProductList(data, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      systemuser: DeviceInfo.getUniqueId(),
+    })
       .then((res) => {
         // console.log('res >>>>>>> offers >>>', res);
         if (res && res.data) {
@@ -2633,13 +2620,13 @@ export default function Products({ route, navigation }) {
             />
           ) : null}
 
-        <TouchableOpacity 
-        onPress={onShowHideFilter}
-        style={{
-          marginLeft:moderateScale(12)
-        }}>
-          <Image source={imagePath.filter} />
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={onShowHideFilter}
+            style={{
+              marginLeft: moderateScale(12)
+            }}>
+            <Image source={imagePath.filter} />
+          </TouchableOpacity>
         </View>
 
         {!!categoryInfo && categoryInfo?.childs?.length > 0 && (
@@ -3183,7 +3170,7 @@ export default function Products({ route, navigation }) {
             )}
             renderSectionHeader={renderSectionHeader}
             ListEmptyComponent={
-              <NoDataFound isLoading={isLoading} containerStyle={{}} text={strings.NOPRODUCTFOUND}/>
+              <NoDataFound isLoading={isLoading} containerStyle={{}} text={strings.NOPRODUCTFOUND} />
             }
             initialNumToRender={1000}
             // windowSize={10}
