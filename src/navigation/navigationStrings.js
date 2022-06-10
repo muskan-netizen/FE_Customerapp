@@ -137,5 +137,6 @@ export default {
   PAYPHONE:'PayPhone',
  ADD_NEW_RIDER:'AddNewRider',
   STRIPEOXXO:'StripeOXXO',
-  VIVAWALLET:"Vivawallet"
+  VIVAWALLET:"Vivawallet",
+  MYCASH:"MyCash"
 };

@@ -398,8 +398,8 @@ const OrderCardVendorComponent2 = ({
         </View>
 
         <View style={[styles.borderStyle, {marginHorizontal: -15}]}></View>
-        {(data?.scheduled_slot || data?.dropoff_scheduled_slot) && (
-          <View>
+        {businessType == 'laundry' && (
+          <>
             <View
               style={{
                 flexDirection: 'row',
@@ -446,8 +446,9 @@ const OrderCardVendorComponent2 = ({
                 {data?.schedule_dropoff} | {data?.dropoff_scheduled_slot}
               </Text>
             </View>
-          </View>
+          </>
         )}
+
         {selectedTab && selectedTab == strings.PAST_ORDERS ? (
           <View
             style={{

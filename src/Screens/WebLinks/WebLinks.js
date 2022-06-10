@@ -1,4 +1,4 @@
-import {isEmpty} from 'lodash';
+// import {isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
@@ -48,6 +48,7 @@ import {androidCameraPermission} from '../../utils/permissions';
 import validator from '../../utils/validations';
 import stylesFun from './styles';
 import Accordion from 'react-native-collapsible/Accordion';
+import {WebView} from 'react-native-webview';
 
 let clickedIndx = null;
 let clickedItem = null;
@@ -769,6 +770,7 @@ export default function WebLinks({navigation, route}) {
           style={{
             height: moderateScale(50),
             width: moderateScale(57),
+            tintColor: isDarkMode ? colors.white : colors.black,
           }}
         />
       </TouchableOpacity>
@@ -937,6 +939,8 @@ export default function WebLinks({navigation, route}) {
     }
   };
 
+  console.log(htmlContent, 'htmlContenthtmlContent');
+
   return (
     <WrapperContainer
       bgColor={
@@ -974,14 +978,14 @@ export default function WebLinks({navigation, route}) {
             marginHorizontal: moderateScale(20),
           }}>
           {htmlContent && (
-             <RenderHtml
-             contentWidth={width}
-             source={{html: htmlContent}}
-           />
-            // <HTMLView
-            //   stylesheet={isDarkMode ? htmlStyle : null}
-            //   value={`<p>${htmlContent}</p>`}
-            // />
+            //    <RenderHtml
+            //    contentWidth={width}
+            //    source={{html: htmlContent}}
+            //  />
+            <HTMLView
+              stylesheet={isDarkMode ? htmlStyle : htmlStyle1}
+              value={`<p>${htmlContent}</p>`}
+            />
           )}
         </View>
 
@@ -1297,6 +1301,7 @@ export default function WebLinks({navigation, route}) {
                 style={{
                   fontFamily: fontFamily.regular,
                   marginLeft: moderateScale(3),
+                  color: isDarkMode ? colors.white : colors.black,
                 }}>
                 {strings.I_ACCEPT}{' '}
               </Text>
@@ -1311,7 +1316,11 @@ export default function WebLinks({navigation, route}) {
                   {strings.TERMS_CONDITIONS}
                 </Text>
               </TouchableOpacity>
-              <Text style={{fontFamily: fontFamily.regular}}>
+              <Text
+                style={{
+                  fontFamily: fontFamily.regular,
+                  color: isDarkMode ? colors.white : colors.black,
+                }}>
                 {' '}
                 {strings.HAVE_READ}{' '}
               </Text>
@@ -1348,7 +1357,13 @@ export default function WebLinks({navigation, route}) {
               <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
             </View>
 
-            <Text style={{...styles.labelTxt}}>{strings.UPLOAD_PHOTO}</Text>
+            <Text
+              style={{
+                ...styles.labelTxt,
+                color: isDarkMode ? colors.white : colors.blackOpacity43,
+              }}>
+              {strings.UPLOAD_PHOTO}
+            </Text>
             <TouchableOpacity
               activeOpacity={0.7}
               onPress={() => {
@@ -1404,7 +1419,7 @@ export default function WebLinks({navigation, route}) {
                   marginBottom: moderateScaleVertical(14),
                   paddingHorizontal: moderateScale(5),
                   borderWidth: 1,
-                  borderColor: colors.borderLight,
+                  borderColor: isDarkMode ? colors.white : colors.borderLight,
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'space-between',
@@ -1422,7 +1437,10 @@ export default function WebLinks({navigation, route}) {
                     ? selectedDriverType.name
                     : strings.TYPE}
                 </Text>
-                <Image source={imagePath.dropDownNew} />
+                <Image
+                  source={imagePath.dropDownNew}
+                  style={{tintColor: isDarkMode ? colors.white : colors.black}}
+                />
               </TouchableOpacity>
               {isDriverType && (
                 <View
@@ -1467,7 +1485,7 @@ export default function WebLinks({navigation, route}) {
                   marginBottom: moderateScaleVertical(14),
                   paddingHorizontal: moderateScale(5),
                   borderWidth: 1,
-                  borderColor: colors.borderLight,
+                  borderColor: isDarkMode ? colors.white : colors.borderLight,
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'space-between',
@@ -1483,7 +1501,10 @@ export default function WebLinks({navigation, route}) {
                 <Text style={{...styles.labelTxt, marginBottom: 0}}>
                   {!!selectedTeam ? selectedTeam?.name : strings.TEAMS}
                 </Text>
-                <Image source={imagePath.dropDownNew} />
+                <Image
+                  source={imagePath.dropDownNew}
+                  style={{tintColor: isDarkMode ? colors.white : colors.black}}
+                />
               </TouchableOpacity>
 
               {isTeams && (
@@ -1771,7 +1792,14 @@ export default function WebLinks({navigation, route}) {
 
 const htmlStyle = StyleSheet.create({
   p: {
-    fontWeight: '300',
     color: '#e5e5e7', // make links coloured pink
+    justifyContent: 'center',
+  },
+});
+
+const htmlStyle1 = StyleSheet.create({
+  p: {
+    color: colors.black, // make links coloured pink
+    alignItems: 'flex-start',
   },
 });

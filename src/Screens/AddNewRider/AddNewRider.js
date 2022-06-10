@@ -96,6 +96,7 @@ export default function AddNewRider({ navigation, route }) {
       last_name: lastName,
       phone_number: friendMobileNumber.replace(/\s+/g, '')
     }
+    console.log(data,"data");
     actions.addRider(data, { code: appData?.profile?.code }).then((res) => {
       updateState({
         isLoading:false
