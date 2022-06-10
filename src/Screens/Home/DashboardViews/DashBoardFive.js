@@ -579,8 +579,12 @@ export default function DashBoardFive({
               marginTop: 0,
               flex: 1
             }}>
-            {strings.EXPLORE_STORES}{' '}
-            {appData?.profile?.preferences?.vendors_nomenclature}
+              
+              {getBundleId() == appIds.quickLube && vendorsData.length>1 ? `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}` : 'Vendor'
+
+              }
+            {/* {strings.EXPLORE_STORES}{' '}
+            {appData?.profile?.preferences?.vendors_nomenclature} */}
           </Text>
 
           {!!vendorsData && vendorsData.length > 1 && (

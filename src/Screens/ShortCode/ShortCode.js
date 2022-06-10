@@ -2126,7 +2126,7 @@ export default function ShortCode({route, navigation}) {
   }, [shortCode, isShortcodePrefilled]);
 
   useEffect(() => {
-    if(videoDurationEnded&&initapiresponse)
+    if(videoDurationEnded && initapiresponse)
       { 
         
         navigateToNextScreen(allAppData, responseData);
@@ -2411,6 +2411,7 @@ export default function ShortCode({route, navigation}) {
       case appIds.iPicknDrop:
           return animatedSplash();
       case appIds.muvpod:
+        //  () => {updateState({LoadingScreen:true, isLoading:true})}
           return animatedSplash();
       default:
         return imageSplash();
@@ -2448,6 +2449,7 @@ const animationVideo = () =>{
     case appIds?.iPicknDrop:
       return imagePath.ipd
     case appIds?.muvpod:
+      // () => {updateState({LoadingScreen:false, isLoading:false})}
       return {uri : imagePath.muvpod}
   } 
 }
@@ -2463,6 +2465,7 @@ const onVideoDurationEnded = () => {
   };
 
   const animatedSplash = () => {
+    
     return (
       <View
         style={{
@@ -2471,8 +2474,12 @@ const onVideoDurationEnded = () => {
           alignItems: 'center',
           backgroundColor: colors.white, 
           // backgroundColor: getBundleId()== appIds.muvpod ? '#EFEDEF' : colors.white,
-          // backgroundColor: getBundleId()== appIds.muvpod ? 'rgb(214,209,214)' : colors.white,
         }}>
+          {/* <View style={{ position: 'absolute', bottom: moderateScale(100) }}>
+            {LoadingScreen && (
+              <MaterialIndicator size={50} color={colors.greyMedium} />
+            )}
+          </View> */}
           
         <Video
           source={animationVideo()} // Can be a URL or a local file.
@@ -2481,15 +2488,11 @@ const onVideoDurationEnded = () => {
             width: width,
           }}
           resizeMode = {getBundleId()== appIds.muvpod ? "contain" : "cover"}
-          // resizeMode="contain"
           onEnd={() => onVideoDurationEnded()}
-          
         />
       </View>
     );
   };
-
-
   
   return (
     <View
