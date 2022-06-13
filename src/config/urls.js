@@ -37,11 +37,19 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://yogo.gd/api/v1'; // yogoFood
 // export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
 // export const API_BASE_URL = 'https://gdotdelivery.com/api/v1';
-// export const API_BASE_URL = 'https://cabio.rostaging.com/api/v1';
-// export const API_BASE_URL = 'https://glamsouq.com/api/v1';
-// export const API_BASE_URL = 'https://getfix.com.my/api/v1';
-// export const API_BASE_URL = 'https://order.swiftandvalu.com/api/v1';
-// export const API_BASE_URL = 'https://ubercann.com/api/v1';
+// export const API_BASE_URL = 'https://cabio.rostaging.com/api/v1'; 
+// export const API_BASE_URL = 'https://glamsouq.com/api/v1'; 
+// export const API_BASE_URL = 'https://getfix.com.my/api/v1'; 
+// export const API_BASE_URL = 'https://order.swiftandvalu.com/api/v1'; 
+// export const API_BASE_URL = 'https://ubercann.com/api/v1'; 
+// export const API_BASE_URL = 'https://palmettoplusdelivered.com/api/v1'; 
+
+
+
+
+
+
+
 
 //
 //Vishwas

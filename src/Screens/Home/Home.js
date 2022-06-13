@@ -66,6 +66,8 @@ export default function Home({route, navigation}) {
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const businessTypes = appStyle?.homePageLayout;
+  console.log(appData,"businessTypesbusinessTypes");
 
   const [state, setState] = useState({
     isLoading: true,
