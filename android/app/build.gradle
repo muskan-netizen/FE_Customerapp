@@ -4377,8 +4377,8 @@ android {
             }
             onscart{
                 dimension "appType"
-                versionCode 1
-                versionName "1.0"
+                versionCode 4
+                versionName "1.2"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
                 applicationId 'com.onscart'
@@ -4979,7 +4979,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.cartnar'
-            resValue "string", "app_name", "Cartnar"
+            resValue "string", "app_name", "Shoparix"
             resValue "string", "host_name", ""
             }
             uven{
@@ -5460,6 +5460,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.meow.order'
             resValue "string", "app_name", "Meow"
+            resValue "string", "host_name", ""
+            }
+             dingDongDelivers{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.dingDongDelivers'
+            resValue "string", "app_name", "DingDong Delivers"
             resValue "string", "host_name", ""
             }
     }

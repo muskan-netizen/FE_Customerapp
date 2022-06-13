@@ -341,7 +341,8 @@ const shortCodes = {
   grubHouse:'d9c5ee',
   hitchDelivery:'3bc1d7',
   zoodMarket:'b077a9',
-  meow:'71f36c'
+  meow:'71f36c',
+  dingDongDelivers:'380c49'
 
 };
 
@@ -1708,6 +1709,10 @@ const appIds = {
   meow: Platform.select({
     ios: 'com.meow.order',
     android: 'com.meow.order',
+  }),
+  dingDongDelivers: Platform.select({
+    ios: 'com.dingDongDelivers',
+    android: 'com.dingDongDelivers',
   }),
 };
 
