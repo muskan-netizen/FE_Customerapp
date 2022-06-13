@@ -650,7 +650,7 @@ const appIds = {
   }),
   mobi: Platform.select({
     ios: 'com.mobi.customer',
-    android: 'com.mobi',
+    android: 'com.mobi.orders',
   }),
   yourlaundryapp: Platform.select({
     ios: 'com.yourlaundryapp',
