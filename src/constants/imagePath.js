@@ -505,4 +505,5 @@ export default {
   icPhoto: require('../assets/images/ic_photo.png'),
   icAdd4: require('../assets/images/ic_add2.png'),
   icMinus2: require('../assets/images/ic_minus.png'),
+  icSos: require('../assets/images/RoyoorderNewImages/ic_sos.png'),
 };
