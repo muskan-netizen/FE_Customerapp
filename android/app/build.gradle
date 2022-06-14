@@ -206,18 +206,7 @@ android {
 
     flavorDimensions "appType"
 
-    // productFlavors{
-    //     myfiji{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion         
-    //         applicationId 'com.myfiji'
-    //         resValue "string", "app_name", "My fiji"
-    //         resValue "string", "host_name", ""
-    //     }
-    // }
+    
     productFlavors {
             royoorder {
                 dimension "appType"
