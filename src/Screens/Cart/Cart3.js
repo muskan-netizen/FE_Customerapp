@@ -1250,85 +1250,79 @@ function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
-  // false, 'schedule', value
   const setDateAndTimeSchedule = (
-    // toHitApiForPlaceOrder = false,
+    toHitApiForPlaceOrder = false,
     dateType = scheduleType,
     scheduleDate = sheduledorderdate,
-  ) => {
+    ) => {
     if (!userData?.auth_token) {
-      return;
+    return;
     }
-
+    
     let data = {};
-
+    
     if (businessType == 'laundry') {
-      data['comment_for_pickup_driver'] = pickupDriverComment;
-      data['comment_for_dropoff_driver'] = dropOffDriverComment;
-      data['comment_for_vendor'] = vendorComment;
-      data['schedule_pickup'] = laundrySelectedPickupDate
-        ? laundrySelectedPickupDate
-        : null;
-      data['schedule_dropoff'] = laundrySelectedDropOffDate
-        ? laundrySelectedDropOffDate
-        : null;
-      data['slot'] = !!laundrySelectedPickupSlot
-        ? laundrySelectedPickupSlot
-        : null;
-      data['dropoff_scheduled_slot'] = !!laundrySelectedDropOffSlot
-        ? laundrySelectedDropOffSlot
-        : null;
+    data['comment_for_pickup_driver'] = pickupDriverComment;
+    data['comment_for_dropoff_driver'] = dropOffDriverComment;
+    data['comment_for_vendor'] = vendorComment;
+    data['schedule_pickup'] = laundrySelectedPickupDate
+    ? laundrySelectedPickupDate
+    : null;
+    data['schedule_dropoff'] = laundrySelectedDropOffDate
+    ? laundrySelectedDropOffDate
+    : null;
+    data['slot'] = !!laundrySelectedPickupSlot
+    ? laundrySelectedPickupSlot
+    : null;
+    data['dropoff_scheduled_slot'] = !!laundrySelectedDropOffSlot
+    ? laundrySelectedDropOffSlot
+    : null;
     } else {
-      data['task_type'] = !!selectedTimeSlots ? 'schedule' : dateType;
-
-      if (!!selectedTimeSlots) {
-        const date = selectedDateFromCalendar;
-        const time = selectedTimeSlots.split('-')[0];
-
-        // const formatDate = moment(
-        //   `${date} ${time}`,
-        //   'YYYY-MM-DD HH:mm:ss',
-        // ).format();
-        // console.log('formatDate', formatDate);
-        data['schedule_dt'] = selectedDateFromCalendar;
-      } else {
-        data['schedule_dt'] =
-          dateType != 'now' && scheduleDate
-            ? new Date(scheduleDate).toISOString()
-            : null;
-      }
-      data['specific_instructions'] = instruction;
-      data['slot'] = selectedTimeSlots;
+    data['task_type'] = !!selectedTimeSlots ? 'schedule' : dateType;
+    
+    if (!!selectedTimeSlots) {
+    const date = selectedDateFromCalendar;
+    const time = selectedTimeSlots.split('-')[0];
+    data['schedule_dt'] = selectedDateFromCalendar;
+    } else {
+    data['schedule_dt'] =
+    dateType != 'now' && scheduleDate
+    ? new Date(scheduleDate).toISOString()
+    : null;
     }
-
+    data['specific_instructions'] = instruction;
+    data['slot'] = selectedTimeSlots;
+    }
     console.log(data, 'fsdjkhfkjshfkjahsdkjfhak');
+        actions
+    .scheduledOrder(data, {
+    code: appData?.profile?.code,
+    currency: currencies?.primary_currency?.id,
+    language: languages?.primary_language?.id,
+    // systemuser: DeviceInfo.getUniqueId(),
+    })
+    .then((res) => {
+    console.log(res, 'schedulte api res res>>>');
+    if (res && res?.status == 'Success') {
+    if (toHitApiForPlaceOrder && businessType == 'laundry') {
+    _finalPayment();
+    }
+    updateState({
+    // isLoadingB: toHitApiForPlaceOrder ? true : false,
+    });
+    } else {
+    updateState({
+    isLoadingB: false,
+    });
+    }
+    // getCartDetail();
+    });
+    // .catch(errorMethod);
+    };
 
-    // updateState({isLoading: false});
-    actions
-      .scheduledOrder(data, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        // systemuser: DeviceInfo.getUniqueId(),
-      })
-      .then((res) => {
-        console.log(res, 'schedulte api res res>>>');
-        if (res && res?.status == 'Success') {
-          if (toHitApiForPlaceOrder && businessType == 'laundry') {
-            _finalPayment();
-          }
-          updateState({
-            // isLoadingB: toHitApiForPlaceOrder ? true : false,
-          });
-        } else {
-          updateState({
-            isLoadingB: false,
-          });
-        }
-        // getCartDetail();
-      });
-    //   .catch(errorMethod);
-  };
+    
+  // false, 'schedule', value
+  
 
   const _finalPayment = () => {
     // if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {

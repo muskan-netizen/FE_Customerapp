@@ -2175,6 +2175,13 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+          case appIds.torunz:
+          updateState({
+            shortCode: shortCodes.torunz,
+            isShortcodePrefilled: true,
+          });
+          break;
+          
       }
     })();
   }, []);

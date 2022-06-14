@@ -342,7 +342,8 @@ const shortCodes = {
   hitchDelivery:'3bc1d7',
   zoodMarket:'b077a9',
   meow:'71f36c',
-  dingDongDelivers:'380c49'
+  dingDongDelivers:'380c49',
+  torunz: 'f23b31'
 
 };
 
@@ -1713,6 +1714,10 @@ const appIds = {
   dingDongDelivers: Platform.select({
     ios: 'com.dingDongDelivers',
     android: 'com.dingDongDelivers',
+  }),
+  torunz: Platform.select({
+    ios: 'com.torunz',
+    android: 'com.torunz',
   }),
 };
 
