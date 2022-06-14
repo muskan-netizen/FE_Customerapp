@@ -822,7 +822,7 @@ export default {
   PRICE_RANGE: 'نطاق السعر',
   SORRY_MSG: `عذرا ، نحن حاليا لا نوصل هنا ولكننا نقوم بذلك
   يتوسع بسرعة. يرجى التحقق مرة أخرى قريبا!`,
-  TOTAL_DELIVERY_FEE: 'Total delivery fee',
+  TOTAL_DELIVERY_FEE: 'إجمالي رسوم التوصيل',
   TOTAL_REVENUE: 'Total revenue (Delivered order)',
   ADD_LOGO: 'Add Logo',
   IMAGE: 'Image',
@@ -907,7 +907,7 @@ export default {
   ORDERS: 'Orders',
   ORDER_CANCELLED: 'Order Cancelled',
   SPECIFIC_INSTRUCTIONS:'Specific Instructions',
-  THANKS_FOR_YOUR_PURCHASE:'Thanks for your purchase.',
+  THANKS_FOR_YOUR_PURCHASE:'شكرا لشرائك.',
   BOOK_FOR_A_FRIEND: 'Book For a friend',
   ENTER_FRIEND_DETAILS: "Enter your Friend's details",
   BOOK_FOR_ME: 'Book For Me',
