@@ -580,7 +580,7 @@ export default function TaxiHomeDashbord({
           <TaxiBannerHome
             bannerRef={bannerRef}
             slider1ActiveSlide={slider1ActiveSlide}
-            bannerData={[appData?.mobile_banners[0]]}
+            bannerData={[...appData?.mobile_banners]}
             sliderWidth={sliderWidth + 20}
             itemWidth={itemWidth + 20}
             onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}
