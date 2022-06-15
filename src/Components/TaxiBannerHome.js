@@ -111,6 +111,7 @@ const TaxiBannerHome = ({
         sliderWidth={sliderWidth}
         itemWidth={itemWidth}
         onSnapToItem={(index) => setSnapState(index)}
+       
       />
     </CardView>
   );
