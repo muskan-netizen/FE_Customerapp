@@ -5315,6 +5315,7 @@ android {
     }
 }
 
+         
 dependencies {
    implementation 'androidx.work:work-runtime-ktx:2.6.0' // added line here
     implementation 'androidx.multidex:multidex:2.0.1'
@@ -5323,9 +5324,6 @@ dependencies {
     implementation 'com.facebook.fresco:animated-webp:1.+'
     implementation 'com.facebook.fresco:webpsupport:1.+'
     implementation project(':react-native-charts-wrapper')
-    
-
-
     implementation 'com.facebook.android:facebook-android-sdk:9.0.0'
     // implementation 'com.google.firebase:firebase-analytics:17.3.0'
     implementation fileTree(dir: "libs", include: ["*.jar"])
