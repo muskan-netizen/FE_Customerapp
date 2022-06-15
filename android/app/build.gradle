@@ -207,7 +207,16 @@ android {
     flavorDimensions "appType"
    
 //    productFlavors{
-    
+//      onscart{
+//                 dimension "appType"
+//                 versionCode 6
+//                 versionName "1.2"
+//                 minSdkVersion rootProject.ext.minSdkVersion
+//                 targetSdkVersion rootProject.ext.targetSdkVersion         
+//                 applicationId 'com.onscart'
+//                 resValue "string", "app_name", "Onscart"
+//                 resValue "string", "host_name", ""
+//             }
 //    }
 
     productFlavors {

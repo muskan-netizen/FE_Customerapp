@@ -67,6 +67,7 @@ const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 // import 'moment/locale/fr';
+// import 'moment/locale/ar';
 // import 'moment/locale/de';
 // import 'moment/locale/es';
 // import 'moment/locale/hi';
