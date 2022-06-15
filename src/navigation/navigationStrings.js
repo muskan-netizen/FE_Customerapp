@@ -139,5 +139,6 @@ export default {
  ADD_NEW_RIDER:'AddNewRider',
   STRIPEOXXO:'StripeOXXO',
   VIVAWALLET:"Vivawallet",
-  MYCASH:"MyCash"
+  MYCASH:"MyCash",
+  STRIPEIDEAL:"StripeIdeal"
 };

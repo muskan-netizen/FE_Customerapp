@@ -2155,14 +2155,14 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        //  code: '245bae',
-        code: shortCode,
+        code: '66c095',
+        // code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        //  code: '245bae',
-        code: shortCode,
+        code: '66c095',
+        // code: shortCode,
       };
     }
     console.log(header, 'header');

@@ -37,7 +37,9 @@
 // export const API_BASE_URL = 'https://order.swiftandvalu.com/api/v1';
 // export const API_BASE_URL = 'https://ubercann.com/api/v1';
 
-//
+//Harbans
+// export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
+
 //Vishwas
 // export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
 
