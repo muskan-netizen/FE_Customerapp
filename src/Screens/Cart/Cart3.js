@@ -1257,7 +1257,7 @@ function Cart({navigation, route}) {
 
   // false, 'schedule', value
   const setDateAndTimeSchedule = (
-    // toHitApiForPlaceOrder = false,
+    toHitApiForPlaceOrder = false,
     dateType = scheduleType,
     scheduleDate = sheduledorderdate,
   ) => {
