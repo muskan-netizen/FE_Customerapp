@@ -1156,6 +1156,7 @@ function Cart({ navigation, route }) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        console.log(res,"ressssssss")
         actions.reloadData(!reloadData);
         setSelectedTipvalue(null);
         setPickupDriverComment(null);
@@ -5374,6 +5375,7 @@ function Cart({ navigation, route }) {
             timezone: RNLocalize.getTimeZone(),
           },
         );
+       
         setLaundryAvailableDropOffSlot(res);
       } catch (error) {
         console.log('error riased', error);
