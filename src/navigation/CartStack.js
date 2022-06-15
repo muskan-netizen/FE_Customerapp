@@ -13,6 +13,7 @@ import {
   ProductList,
   ProductList2,
   ProductList3,
+  ProductWithCategory,
   VerifyAccount,
   WebPayment,
   Wishlist,
@@ -114,6 +115,19 @@ export default function () {
         }
         options={{ headerShown: false }}
       />
+
+      <Stack.Screen
+        name={navigationStrings.PRODUCTWITHCATEGORY}
+        component={
+          appStyle?.homePageLayout === 2
+            ? ProductList2
+            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+              ? ProductWithCategory
+              : ProductList
+        }
+        options={{ headerShown: false }}
+      />
+
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={

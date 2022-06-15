@@ -98,6 +98,7 @@ export {default as PrinterConnection} from './PrinterConnection/PrinterScreen';
 export {default as PrinterConnectionSunmi} from './PrinterConnection/PrinterScreenSunmi';
 export {default as TaxiHomeScreen} from './Home/TaxiHomeScreen/TaxiHomeScreen';
 export {default as ViewAllData} from './ViewAllData/ViewAllData';
+export {default as ProductWithCategory} from './ProductWithCategory/ProductWithCategory';
 
 // vendor App screens
 export {default as RoyoHome} from './RoyoVendorApp/RoyoHome/RoyoHome';

@@ -68,7 +68,7 @@ export default function DashBoardHeaderFive({
 
   const { isModalVisible, checked, tabs } = state;
 
-  console.log('tabstabs', tabs);
+  console.log('locationlocationlocationlocation', location);
 
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
