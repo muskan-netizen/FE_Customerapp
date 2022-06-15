@@ -930,6 +930,7 @@ Amount`,
   PLEASE_SELECT_DATETIME_SLOTS: 'Please select date and time slots',
   BOOK_FOR_A_FRIEND: 'Book For a friend',
   ENTER_FRIEND_DETAILS: "Enter your Friend's details",
+<<<<<<< HEAD
   BOOK_FOR_ME: 'For Me',
   BOOK_FOR_FRIEND:'Book For Friend',
   NEW_RIDER:'New Rider',
@@ -947,4 +948,10 @@ Amount`,
   BOOK_A_TABLE:'Book a Table',
   PLEASE_SELECT_A_TABLE:'Please Select a Table',
   SELECT_A_TABLE:'Select a Table',
+=======
+  BOOK_FOR_ME: 'Book For Me',
+  BOOK_FOR_FRIEND: 'Book For Friend',
+  POLICE: 'Police',
+  AMBULANCE: 'Ambulance',
+>>>>>>> 2ea1b11d3bd0cd6506093ded375b329990097d72
 };
