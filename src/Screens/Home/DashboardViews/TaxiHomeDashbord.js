@@ -174,6 +174,7 @@ export default function TaxiHomeDashbord({
     pickupAddress,
   } = state;
   const styles = stylesFunc({themeColors, fontFamily});
+ 
 
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -571,6 +572,7 @@ export default function TaxiHomeDashbord({
             refreshing={isRefreshing}
             onRefresh={handleRefresh}
             tintColor={themeColors.primary_color}
+            
           />
         }
         alwaysBounceVertical={true}
