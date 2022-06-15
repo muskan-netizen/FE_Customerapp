@@ -205,7 +205,6 @@ android {
     }
 
     flavorDimensions "appType"
-
     
     productFlavors {
             royoorder {
