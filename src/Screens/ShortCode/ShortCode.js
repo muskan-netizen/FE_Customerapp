@@ -2181,6 +2181,13 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+
+          case appIds.kurs:
+            updateState({
+              shortCode: shortCodes.kurs,
+              isShortcodePrefilled: true,
+            });
+            break;
           
       }
     })();

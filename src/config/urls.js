@@ -5,6 +5,8 @@
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
 export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://ineed.do/api/v1'
+// export const API_BASE_URL = 'https://fairexglobal.com/api/v1'
 // export const API_BASE_URL = 'https://drusdeliveries.com/api/v1';
 // export const API_BASE_URL = 'https://palmettoplusdelivered.com/api/v1';
 // export const API_BASE_URL = 'https://dispatcher.releezer.shop';

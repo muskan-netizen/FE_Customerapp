@@ -343,7 +343,8 @@ const shortCodes = {
   zoodMarket:'b077a9',
   meow:'71f36c',
   dingDongDelivers:'380c49',
-  torunz: 'f23b31'
+  torunz: 'f23b31',
+  kurs: '046761'
 
 };
 
@@ -1718,6 +1719,10 @@ const appIds = {
   torunz: Platform.select({
     ios: 'com.torunz',
     android: 'com.torunz',
+  }),
+  kurs: Platform.select({
+    ios: 'com.app.kurs',
+    android: 'com.app.kurs',
   }),
 };
 

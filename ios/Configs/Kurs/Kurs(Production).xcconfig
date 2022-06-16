@@ -1,0 +1,14 @@
+#include "Pods/Target Support Files/Pods-available_pods-Kurs/Pods-available_pods-Kurs.release.xcconfig"
+
+PROJECT_APPLE_ID = 1629855417
+PROJECT_BUNDLE_ID = com.app.kurs
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = KURS
+PROJECT_GOOGLE_CLIENT_ID =75935043569-vqh2nc269ugup69tcjellmg7o2t3sjg1.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.75935043569-vqh2nc269ugup69tcjellmg7o2t3sjg1
+PROJECT_FACEBOOK_ID = 1169709513880892
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =KursInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4
+CODE_PUSH_KEY=WklhcIdiZHGCFAea8xiB00_1uI-VLygaW6LeT

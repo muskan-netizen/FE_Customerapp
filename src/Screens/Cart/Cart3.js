@@ -1111,10 +1111,13 @@ function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
+  console.log(dineInType,"vendorAddress?");
+
+  
   const _directOrderPlace = () => {
     let data = {};
     data['vendor_id'] = cartData?.products[0]?.vendor_id;
-    data['address_id'] =
+    data['address_id'] =dineInType !='delivery' ? '': 
       paramsData?.selectedAddressData?.id || selectedAddressData?.id;
     data['payment_option_id'] =
       Number(cartData?.total_payable_amount) +
