@@ -1,5 +1,5 @@
-import {isEmpty} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { isEmpty } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   I18nManager,
@@ -11,27 +11,27 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import RenderHtml, {HTML} from 'react-native-render-html';
+import RenderHtml, { HTML } from 'react-native-render-html';
 import ActionSheet from 'react-native-actionsheet';
-import {useDarkMode} from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
 import HTMLView from 'react-native-htmlview';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {useSelector} from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { useSelector } from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
-import {getReturnOrderDetailData} from '../../redux/actions/order';
+import { getReturnOrderDetailData } from '../../redux/actions/order';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
@@ -41,13 +41,14 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {cameraHandler} from '../../utils/commonFunction';
-import {showError, showSuccess} from '../../utils/helperFunctions';
-import {androidCameraPermission} from '../../utils/permissions';
+import { MyDarkTheme } from '../../styles/theme';
+import { cameraHandler } from '../../utils/commonFunction';
+import { showError, showSuccess } from '../../utils/helperFunctions';
+import { androidCameraPermission } from '../../utils/permissions';
 import validator from '../../utils/validations';
 import stylesFun from './styles';
 import Accordion from 'react-native-collapsible/Accordion';
+import {WebView} from 'react-native-webview';
 
 let clickedIndx = null;
 let clickedItem = null;
@@ -64,7 +65,7 @@ const SECTIONS = [
   },
 ];
 
-export default function WebLinks({navigation, route}) {
+export default function WebLinks({ navigation, route }) {
   let actionSheet = useRef();
 
   const {
@@ -87,13 +88,13 @@ export default function WebLinks({navigation, route}) {
     callingCode: userData?.dial_code
       ? userData?.dial_code
       : appData?.profile?.country?.phonecode
-      ? appData?.profile?.country?.phonecode
-      : '91',
+        ? appData?.profile?.country?.phonecode
+        : '91',
     cca2: userData?.cca2
       ? userData?.cca2
       : appData?.profile?.country?.code
-      ? appData?.profile?.country?.code
-      : 'IN',
+        ? appData?.profile?.country?.code
+        : 'IN',
     phoneNumber: '',
     fullname: '',
     email: '',
@@ -114,8 +115,8 @@ export default function WebLinks({navigation, route}) {
     driverName: '',
     driverPhoneNumber: '',
     driverTypes: [
-      {id: 1, name: strings.EMPLOYEE},
-      {id: 2, name: strings.FREELANCER},
+      { id: 1, name: strings.EMPLOYEE },
+      { id: 2, name: strings.FREELANCER },
     ],
     driverTransportDetails: '',
     driverUID: '',
@@ -141,15 +142,15 @@ export default function WebLinks({navigation, route}) {
     activeSections: [],
   });
   //update your state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Redux Store Data
 
   const userData = useSelector((state) => state.auth.userData);
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily});
-  const commonStyles = commonStylesFun({fontFamily});
-  const {location, appMainData, dineInType} = useSelector(
+  const styles = stylesFun({ fontFamily });
+  const commonStyles = commonStylesFun({ fontFamily });
+  const { location, appMainData, dineInType } = useSelector(
     (state) => state?.home,
   );
 
@@ -213,7 +214,7 @@ export default function WebLinks({navigation, route}) {
   }, [paramData?.details]);
 
   useEffect(() => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     getCmsPageDetail();
   }, []);
 
@@ -229,7 +230,7 @@ export default function WebLinks({navigation, route}) {
       })
       .then((res) => {
         console.log('Cms page detail', res);
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         updateState({
           htmlContent: res?.data?.page_detail?.primary?.description,
           vendorRegDocs: res?.data?.vendor_registration_documents,
@@ -242,14 +243,14 @@ export default function WebLinks({navigation, route}) {
 
   const errorMethod = (error) => {
     console.log(error, 'error');
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     showError(error?.message || error?.error);
   };
   const _onChangeText = (key) => (val) => {
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
   const _onCountryChange = (data) => {
-    updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
+    updateState({ cca2: data.cca2, callingCode: data.callingCode[0] });
     return;
   };
 
@@ -356,15 +357,15 @@ export default function WebLinks({navigation, route}) {
           item?.item?.slug,
           item?.item.file_type === 'Image'
             ? {
-                uri: item.fileData.path,
-                name: item.fileData.filename,
-                filename: item.fileData.filename,
-                type: item.fileData.mime,
-              }
+              uri: item.fileData.path,
+              name: item.fileData.filename,
+              filename: item.fileData.filename,
+              type: item.fileData.mime,
+            }
             : item?.fileData,
         );
       });
-      updateState({isLoading: true});
+      updateState({ isLoading: true });
       actions
         .driverRegisteration(formData, {
           code: appData?.profile?.code,
@@ -446,18 +447,18 @@ export default function WebLinks({navigation, route}) {
 
       // return;
       // if (isRequired) {
-      updateState({isLoading: true});
+      updateState({ isLoading: true });
 
       vendorRegisterationDocs.map((item, indx) => {
         formData.append(
           item?.item?.primary?.slug,
           item?.item?.file_type == 'Image'
             ? {
-                uri: item.fileData.path,
-                name: item.fileData.filename,
-                filename: item.fileData.filename,
-                type: item.fileData.mime,
-              }
+              uri: item.fileData.path,
+              name: item.fileData.filename,
+              filename: item.fileData.filename,
+              type: item.fileData.mime,
+            }
             : item?.fileData,
         );
       });
@@ -624,7 +625,7 @@ export default function WebLinks({navigation, route}) {
     }
   };
 
-  const _renderFields = ({item, index}) => {
+  const _renderFields = ({ item, index }) => {
     return (
       <View
         style={{
@@ -635,6 +636,9 @@ export default function WebLinks({navigation, route}) {
             color: colors.blackOpacity43,
             fontFamily: fontFamily.bold,
             fontSize: textScale(13),
+            color: isDarkMode
+              ? MyDarkTheme.colors.text
+              : colors.borderLight,
           }}>
           {item.primary?.name || item?.name}
           {item?.is_required ? '*' : ''}
@@ -663,14 +667,18 @@ export default function WebLinks({navigation, route}) {
                   {strings.CHOOSE_FILE}
                 </Text>
               </TouchableOpacity>
-              <Text style={{fontFamily: fontFamily.regular, marginLeft: 6}}>
+              <Text style={{
+                fontFamily: fontFamily.regular, marginLeft: 6, color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.borderLight,
+              }}>
                 {driverRegDocs?.page_detail?.primary?.type_of_form == 2
                   ? driverRegistrationDocs[index]?.fileData
                     ? driverRegistrationDocs[index]?.fileData?.name
                     : strings.NO_FILE_CHOSEN
                   : vendorRegisterationDocs[index]?.fileData
-                  ? vendorRegisterationDocs[index]?.fileData?.name
-                  : strings.NO_FILE_CHOSEN}
+                    ? vendorRegisterationDocs[index]?.fileData?.name
+                    : strings.NO_FILE_CHOSEN}
               </Text>
             </View>
           )}
@@ -689,14 +697,14 @@ export default function WebLinks({navigation, route}) {
                   driverRegDocs?.page_detail?.primary?.type_of_form == 2
                     ? driverRegistrationDocs[index]?.fileData?.path
                       ? {
-                          uri: driverRegistrationDocs[index]?.fileData?.path,
-                        }
+                        uri: driverRegistrationDocs[index]?.fileData?.path,
+                      }
                       : imagePath.icCamIcon
                     : vendorRegisterationDocs[index]?.fileData?.path
-                    ? {
+                      ? {
                         uri: vendorRegisterationDocs[index]?.fileData?.path,
                       }
-                    : imagePath.icCamIcon
+                      : imagePath.icCamIcon
                 }
                 style={{
                   // tintColor:
@@ -713,16 +721,16 @@ export default function WebLinks({navigation, route}) {
                         ? height / 6 - moderateScale(15)
                         : 30
                       : vendorRegisterationDocs[index]?.fileData?.path
-                      ? height / 6 - moderateScale(15)
-                      : 30,
+                        ? height / 6 - moderateScale(15)
+                        : 30,
                   width:
                     driverRegDocs?.page_detail?.primary?.type_of_form == 2
                       ? driverRegistrationDocs[index]?.fileData?.path
                         ? width - moderateScale(80)
                         : 30
                       : vendorRegisterationDocs[index]?.fileData?.path
-                      ? width - moderateScale(80)
-                      : 30,
+                        ? width - moderateScale(80)
+                        : 30,
                 }}
                 resizeMode={'cover'}
               />
@@ -752,7 +760,7 @@ export default function WebLinks({navigation, route}) {
     });
   };
 
-  const _renderTransportTypes = ({item, index}) => {
+  const _renderTransportTypes = ({ item, index }) => {
     return (
       <TouchableOpacity
         onPress={() => _transportTypeSelect(item, index)}
@@ -765,10 +773,11 @@ export default function WebLinks({navigation, route}) {
           borderRadius: moderateScale(5),
         }}>
         <Image
-          source={{uri: item?.image}}
+          source={{ uri: item?.image }}
           style={{
             height: moderateScale(50),
             width: moderateScale(57),
+            tintColor: isDarkMode ? colors.white : colors.black
           }}
         />
       </TouchableOpacity>
@@ -820,9 +829,9 @@ export default function WebLinks({navigation, route}) {
       searchedAry = driverTagsNewAry.filter((item) => {
         return item?.name.toLowerCase().includes(text.toLowerCase());
       });
-      updateState({driverTagsAry: searchedAry});
+      updateState({ driverTagsAry: searchedAry });
     } else {
-      updateState({driverTagsAry: driverRegDocs?.tags});
+      updateState({ driverTagsAry: driverRegDocs?.tags });
     }
   };
 
@@ -839,7 +848,9 @@ export default function WebLinks({navigation, route}) {
     return (
       <View
         style={{
-          backgroundColor: colors.white,
+          backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.lightDark
+          : colors.backGroundGrey,
           height: moderateScaleVertical(50),
           justifyContent: 'center',
           borderLeftWidth: 4,
@@ -847,6 +858,9 @@ export default function WebLinks({navigation, route}) {
         }}>
         <Text
           style={{
+            color: isDarkMode
+            ? MyDarkTheme.colors.text
+            : colors.blackC,
             marginLeft: moderateScale(15),
             fontFamily: fontFamily.bold,
             fontSize: textScale(13),
@@ -861,12 +875,17 @@ export default function WebLinks({navigation, route}) {
     return (
       <View
         style={{
-          backgroundColor: colors.white,
+          backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.lightDark
+          : colors.backGroundGreyD,
           paddingHorizontal: moderateScale(20),
           paddingBottom: moderateScaleVertical(15),
         }}>
         <Text
           style={{
+            color: isDarkMode
+            ? MyDarkTheme.colors.text
+            : colors.blackC,
             fontFamily: fontFamily.regular,
             fontSize: textScale(11),
           }}>
@@ -892,17 +911,22 @@ export default function WebLinks({navigation, route}) {
             appStyle?.homePageLayout === 2
               ? imagePath.backArrow
               : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-              ? imagePath.icBackb
-              : imagePath.back
+                ? imagePath.icBackb
+                : imagePath.back
           }
           centerTitle={(paramData && paramData?.title) || ''}
           headerStyle={
             isDarkMode
-              ? {backgroundColor: MyDarkTheme.colors.background}
-              : {backgroundColor: colors.backGroundGreyD}
+              ? { backgroundColor: MyDarkTheme.colors.background }
+              : { backgroundColor: colors.backGroundGreyD }
           }
         />
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView style={{
+          backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.background
+          : colors.backGroundGreyD,
+        }} showsVerticalScrollIndicator={false}
+        >
           <Accordion
             sections={driverRegDocs?.faq_data}
             activeSections={activeSections}
@@ -914,7 +938,7 @@ export default function WebLinks({navigation, route}) {
               paddingHorizontal: moderateScale(15),
             }}
           />
-          <View style={{height: 50}} />
+          <View style={{ height: 50 }} />
         </ScrollView>
       </WrapperContainer>
     );
@@ -937,6 +961,8 @@ export default function WebLinks({navigation, route}) {
     }
   };
 
+  console.log(htmlContent, 'htmlContenthtmlContent');
+
   return (
     <WrapperContainer
       bgColor={
@@ -950,17 +976,17 @@ export default function WebLinks({navigation, route}) {
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? imagePath.icBackb
-            : imagePath.back
+              ? imagePath.icBackb
+              : imagePath.back
         }
         centerTitle={(paramData && paramData?.title) || ''}
         headerStyle={
           isDarkMode
-            ? {backgroundColor: MyDarkTheme.colors.background}
-            : {backgroundColor: Colors.white}
+            ? { backgroundColor: MyDarkTheme.colors.background }
+            : { backgroundColor: Colors.white }
         }
       />
-      <View style={{...commonStyles.headerTopLine}} />
+      <View style={{ ...commonStyles.headerTopLine }} />
 
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps="handled"
@@ -974,10 +1000,15 @@ export default function WebLinks({navigation, route}) {
             marginHorizontal: moderateScale(20),
           }}>
           {htmlContent && (
-             <RenderHtml
-             contentWidth={width}
-             source={{html: htmlContent}}
-           />
+            <RenderHtml
+              contentWidth={width}
+              source={{ html: htmlContent }}
+              tagsStyles={{
+                p: {
+                  color: isDarkMode ? colors.white : colors.black
+                }
+              }}
+            />
             // <HTMLView
             //   stylesheet={isDarkMode ? htmlStyle : null}
             //   value={`<p>${htmlContent}</p>`}
@@ -987,7 +1018,7 @@ export default function WebLinks({navigation, route}) {
 
         {driverRegDocs?.page_detail?.primary?.type_of_form == 1 && (
           <View style={styles.mainView}>
-            <View style={{marginBottom: moderateScaleVertical(12)}}>
+            <View style={{ marginBottom: moderateScaleVertical(12) }}>
               <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
             </View>
             <BorderTextInput
@@ -1005,7 +1036,7 @@ export default function WebLinks({navigation, route}) {
             <PhoneNumberInput
               onCountryChange={_onCountryChange}
               onChangePhone={(phoneNumber) =>
-                updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
+                updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })
               }
               cca2={cca2}
               phoneNumber={phoneNumber}
@@ -1034,10 +1065,10 @@ export default function WebLinks({navigation, route}) {
               onChangeText={_onChangeText('confirm_password')}
               containerStyle={styles.containerStyle}
             />
-            <View style={{marginVertical: moderateScaleVertical(10)}}>
+            <View style={{ marginVertical: moderateScaleVertical(10) }}>
               <Text style={styles.detailStyle}>{strings.STORE_DETAILS}</Text>
-              <View style={{marginVertical: moderateScaleVertical(20)}}>
-                <View style={{flexDirection: 'row'}}>
+              <View style={{ marginVertical: moderateScaleVertical(20) }}>
+                <View style={{ flexDirection: 'row' }}>
                   <View
                     style={{
                       width: width / 2 - moderateScale(22),
@@ -1054,12 +1085,12 @@ export default function WebLinks({navigation, route}) {
                         <View
                           style={[
                             styles.viewOverImage2,
-                            {borderStyle: 'dashed'},
+                            { borderStyle: 'dashed' },
                           ]}>
                           <Image
                             source={
                               vendorLogo?.path
-                                ? {uri: vendorLogo.path}
+                                ? { uri: vendorLogo.path }
                                 : imagePath.icCamIcon
                             }
                             // source={{uri:'file:///storage/emulated/0/Android/data/com.donepacked/files/Pictures/111fa92e-6b97-46e9-a459-a50b57c91641.jpg'}}
@@ -1095,12 +1126,12 @@ export default function WebLinks({navigation, route}) {
                         }}
                         style={[
                           styles.viewOverImage2,
-                          {borderStyle: 'dashed'},
+                          { borderStyle: 'dashed' },
                         ]}>
                         <Image
                           source={
                             vendorBanner.path
-                              ? {uri: vendorBanner.path}
+                              ? { uri: vendorBanner.path }
                               : imagePath.icCamIcon
                           }
                           style={{
@@ -1214,12 +1245,12 @@ export default function WebLinks({navigation, route}) {
                       isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
                     }
                     size="small"
-                    onToggle={() => updateState({isDineIn: !isDineIn})}
+                    onToggle={() => updateState({ isDineIn: !isDineIn })}
                   />
                 </View>
               )}
               {!!appData?.profile?.preferences?.takeaway_check && (
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <Text
                     style={{
                       marginBottom: moderateScaleVertical(8),
@@ -1237,12 +1268,12 @@ export default function WebLinks({navigation, route}) {
                       isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
                     }
                     size="small"
-                    onToggle={() => updateState({isTakeaway: !isTakeaway})}
+                    onToggle={() => updateState({ isTakeaway: !isTakeaway })}
                   />
                 </View>
               )}
               {!!appData?.profile?.preferences?.delivery_check && (
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <Text
                     style={{
                       marginBottom: moderateScaleVertical(8),
@@ -1260,7 +1291,7 @@ export default function WebLinks({navigation, route}) {
                       isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
                     }
                     size="small"
-                    onToggle={() => updateState({isDelivery: !isDelivery})}
+                    onToggle={() => updateState({ isDelivery: !isDelivery })}
                   />
                 </View>
               )}
@@ -1285,7 +1316,7 @@ export default function WebLinks({navigation, route}) {
               }}>
               <TouchableOpacity
                 onPress={() =>
-                  updateState({isTermsConditions: !isTermsConditions})
+                  updateState({ isTermsConditions: !isTermsConditions })
                 }>
                 <Image
                   source={
@@ -1297,6 +1328,7 @@ export default function WebLinks({navigation, route}) {
                 style={{
                   fontFamily: fontFamily.regular,
                   marginLeft: moderateScale(3),
+                  color: isDarkMode ? colors.white : colors.black
                 }}>
                 {strings.I_ACCEPT}{' '}
               </Text>
@@ -1308,10 +1340,10 @@ export default function WebLinks({navigation, route}) {
                     fontFamily: fontFamily.regular,
                     color: colors.blueColor,
                   }}>
-                  {strings.TERMS_CONDITIONS}
+                  {/* {strings.TERMS_CONDITIONS} */}
                 </Text>
               </TouchableOpacity>
-              <Text style={{fontFamily: fontFamily.regular}}>
+              <Text style={{ fontFamily: fontFamily.regular, color: isDarkMode ? colors.white : colors.black }}>
                 {' '}
                 {strings.HAVE_READ}{' '}
               </Text>
@@ -1329,6 +1361,11 @@ export default function WebLinks({navigation, route}) {
             </View>
 
             <GradientButton
+              textStyle={{
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.borderLight
+              }}
               onPress={_onSubmit}
               marginTop={moderateScaleVertical(5)}
               btnText={strings.SUBMIT}
@@ -1344,11 +1381,11 @@ export default function WebLinks({navigation, route}) {
 
         {driverRegDocs?.page_detail?.primary?.type_of_form == 2 && (
           <View style={styles.mainView}>
-            <View style={{marginBottom: moderateScaleVertical(12)}}>
+            <View style={{ marginBottom: moderateScaleVertical(12) }}>
               <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
             </View>
 
-            <Text style={{...styles.labelTxt}}>{strings.UPLOAD_PHOTO}</Text>
+            <Text style={{ ...styles.labelTxt, color: isDarkMode ? colors.white : colors.blackOpacity43 }}>{strings.UPLOAD_PHOTO}</Text>
             <TouchableOpacity
               activeOpacity={0.7}
               onPress={() => {
@@ -1361,7 +1398,7 @@ export default function WebLinks({navigation, route}) {
                 marginBottom: moderateScaleVertical(14),
               }}>
               <Image
-                source={driverPic ? {uri: driverPic.path} : imagePath.icCamIcon}
+                source={driverPic ? { uri: driverPic.path } : imagePath.icCamIcon}
                 style={{
                   // tintColor: !driverPic ? themeColors.primary_color : null,
                   height: driverPic ? height / 6 - moderateScale(15) : 30,
@@ -1396,7 +1433,7 @@ export default function WebLinks({navigation, route}) {
               containerStyle={styles.containerStyle}
             />
 
-            <View style={{zIndex: 10}}>
+            <View style={{ zIndex: 10 }}>
               <TouchableOpacity
                 style={{
                   borderRadius: 8,
@@ -1404,7 +1441,7 @@ export default function WebLinks({navigation, route}) {
                   marginBottom: moderateScaleVertical(14),
                   paddingHorizontal: moderateScale(5),
                   borderWidth: 1,
-                  borderColor: colors.borderLight,
+                  borderColor: isDarkMode ? colors.white : colors.borderLight,
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'space-between',
@@ -1417,12 +1454,12 @@ export default function WebLinks({navigation, route}) {
                     isTagsShow: false,
                   })
                 }>
-                <Text style={{...styles.labelTxt, marginBottom: 0}}>
+                <Text style={{ ...styles.labelTxt, marginBottom: 0 }}>
                   {!!selectedDriverType
                     ? selectedDriverType.name
                     : strings.TYPE}
                 </Text>
-                <Image source={imagePath.dropDownNew} />
+                <Image source={imagePath.dropDownNew} style={{ tintColor: isDarkMode ? colors.white : colors.black }} />
               </TouchableOpacity>
               {isDriverType && (
                 <View
@@ -1435,7 +1472,7 @@ export default function WebLinks({navigation, route}) {
                     position: 'absolute',
                     paddingHorizontal: moderateScale(10),
                     paddingVertical: moderateScale(5),
-                    shadowOffset: {width: 0, height: 1},
+                    shadowOffset: { width: 0, height: 1 },
                     shadowOpacity: 0.1,
                   }}>
                   {driverTypes.map((itm, indx) => {
@@ -1459,7 +1496,7 @@ export default function WebLinks({navigation, route}) {
               )}
             </View>
 
-            <View style={{zIndex: 5}}>
+            <View style={{ zIndex: 5 }}>
               <TouchableOpacity
                 style={{
                   borderRadius: 8,
@@ -1467,7 +1504,7 @@ export default function WebLinks({navigation, route}) {
                   marginBottom: moderateScaleVertical(14),
                   paddingHorizontal: moderateScale(5),
                   borderWidth: 1,
-                  borderColor: colors.borderLight,
+                  borderColor: isDarkMode ? colors.white : colors.borderLight,
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'space-between',
@@ -1480,10 +1517,10 @@ export default function WebLinks({navigation, route}) {
                     isTagsShow: false,
                   })
                 }>
-                <Text style={{...styles.labelTxt, marginBottom: 0}}>
+                <Text style={{ ...styles.labelTxt, marginBottom: 0 }}>
                   {!!selectedTeam ? selectedTeam?.name : strings.TEAMS}
                 </Text>
-                <Image source={imagePath.dropDownNew} />
+                <Image source={imagePath.dropDownNew} style={{ tintColor: isDarkMode ? colors.white : colors.black }} />
               </TouchableOpacity>
 
               {isTeams && (
@@ -1497,7 +1534,7 @@ export default function WebLinks({navigation, route}) {
                     width: '100%',
                     paddingHorizontal: moderateScale(10),
                     paddingVertical: moderateScale(5),
-                    shadowOffset: {width: 0, height: 1},
+                    shadowOffset: { width: 0, height: 1 },
                     shadowOpacity: 0.1,
                   }}>
                   {driverRegDocs?.teams.length > 0 ? (
@@ -1542,7 +1579,7 @@ export default function WebLinks({navigation, route}) {
               )}
             </View>
 
-            <View style={{marginBottom: moderateScaleVertical(14), zIndex: 2}}>
+            <View style={{ marginBottom: moderateScaleVertical(14), zIndex: 2 }}>
               <View
                 onLayout={(event) => {
                   updateState({
@@ -1561,13 +1598,13 @@ export default function WebLinks({navigation, route}) {
                   paddingHorizontal: 3,
                   justifyContent: 'center',
                 }}>
-                <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                   {selectedTags.length > 0 && (
-                    <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+                    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                       <FlatList
                         numColumns={3}
                         data={selectedTags}
-                        renderItem={({item, index}) => (
+                        renderItem={({ item, index }) => (
                           <TouchableOpacity
                             onPress={() => removeTag(item, index)}
                             activeOpacity={0.7}
@@ -1605,9 +1642,12 @@ export default function WebLinks({navigation, route}) {
                     </View>
                   )}
                   <TextInput
+                    placeholderTextColor={isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.borderLight}
                     placeholder={strings.TAGS}
-                    onFocus={() => updateState({isTagsShow: true})}
-                    onBlur={() => updateState({isTagsShow: false})}
+                    onFocus={() => updateState({ isTagsShow: true })}
+                    onBlur={() => updateState({ isTagsShow: false })}
                     onChangeText={onSearchTags}
                     style={{
                       opacity: 0.7,
@@ -1629,14 +1669,14 @@ export default function WebLinks({navigation, route}) {
                   style={{
                     backgroundColor: colors.white,
                     position: 'absolute',
-                    shadowOffset: {width: 0, height: 1},
+                    shadowOffset: { width: 0, height: 1 },
                     shadowOpacity: 0.1,
                     width: '100%',
 
                     top: tagsViewHeight,
                   }}>
                   {driverTagsAry.length > 0 ? (
-                    <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                    <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
                       {driverTagsAry.map((item, index) => {
                         return (
                           <TouchableOpacity
@@ -1722,7 +1762,9 @@ export default function WebLinks({navigation, route}) {
             {!!driverRegDocs && (
               <Text
                 style={{
-                  color: colors.blackOpacity43,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.borderLight,
                   fontFamily: fontFamily.bold,
                   fontSize: textScale(13),
                   marginVertical: moderateScaleVertical(5),
@@ -1734,7 +1776,7 @@ export default function WebLinks({navigation, route}) {
               keyExtractor={(itm, indx) => indx.toString()}
               data={driverRegDocs?.transport_types}
               horizontal={true}
-              ItemSeparatorComponent={() => <View style={{width: 10}} />}
+              ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
               renderItem={_renderTransportTypes}
             />
 
@@ -1745,6 +1787,11 @@ export default function WebLinks({navigation, route}) {
             />
 
             <GradientButton
+              textStyle={{
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.borderLight
+              }}
               onPress={_onSubmit}
               marginTop={moderateScaleVertical(10)}
               btnText={strings.SUBMIT}
@@ -1771,7 +1818,14 @@ export default function WebLinks({navigation, route}) {
 
 const htmlStyle = StyleSheet.create({
   p: {
-    fontWeight: '300',
     color: '#e5e5e7', // make links coloured pink
+    justifyContent: 'center',
+  },
+});
+
+const htmlStyle1 = StyleSheet.create({
+  p: {
+    color: colors.black, // make links coloured pink
+    alignItems: 'flex-start',
   },
 });

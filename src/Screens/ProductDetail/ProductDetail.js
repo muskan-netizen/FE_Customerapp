@@ -76,7 +76,7 @@ export default function ProductDetail({route, navigation}) {
   const commonStyles = commonStylesFunc({fontFamily});
   const reloadData = useSelector((state) => state?.reloadData?.reloadData);
   const {data} = route.params;
- console.log(data,"dataaaaaa")
+  console.log(data, 'dataaaaaa');
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     isLoading: true,
@@ -201,7 +201,7 @@ export default function ProductDetail({route, navigation}) {
   };
 
   const getProductDetail = () => {
-    console.log('api hit getProductDetail',state.productId);
+    console.log('api hit getProductDetail', state.productId);
     actions
       .getProductDetailByProductId(
         `/${state.productId}`,
@@ -258,7 +258,7 @@ export default function ProductDetail({route, navigation}) {
           updateState({variantSet: res.data.products.variant_set});
         }
       })
-      .catch(error=>console.log(error,"error"));
+      .catch((error) => console.log(error, 'error'));
   };
 
   //Get Product detail based on varint selection
@@ -853,7 +853,7 @@ export default function ProductDetail({route, navigation}) {
       .then((res) => {
         console.log(res, 'res.data');
         actions.cartItemQty(res);
-        actions.reloadData(!reloadData)
+        actions.reloadData(!reloadData);
 
         showSuccess(strings.PRODUCT_ADDED_SUCCESS);
 
@@ -1168,16 +1168,15 @@ export default function ProductDetail({route, navigation}) {
                           ? MyDarkTheme.colors.text
                           : colors.black,
                       }}>
-                        {`${
-                              currencies?.primary_currency?.symbol
-                            } ${currencyNumberFormatter(
-                              // Number(productPriceData?.multiplier) *
-                                Number(productPriceData?.price) *
-                                Number(productQuantityForCart),
-                              appData?.profile?.preferences
-                                ?.digit_after_decimal,
-                            )}`}
-                      </Text>
+                      {`${
+                        currencies?.primary_currency?.symbol
+                      } ${currencyNumberFormatter(
+                        // Number(productPriceData?.multiplier) *
+                        Number(productPriceData?.price) *
+                          Number(productQuantityForCart),
+                        appData?.profile?.preferences?.digit_after_decimal,
+                      )}`}
+                    </Text>
                   </View>
                 </View>
 
@@ -1278,13 +1277,16 @@ export default function ProductDetail({route, navigation}) {
                         {strings.DESCRIPTION}
                       </Text>
 
-                    
-                    
-                     <RenderHtml
+                      <RenderHtml
                         contentWidth={width}
                         source={{html: plainHtml}}
+                        tagsStyles={{
+                          p: {
+                            color: isDarkMode ? colors.white : colors.black,
+                          },
+                        }}
                       />
-                
+
                       {/* <HTMLView
                         value={plainHtml}
                         stylesheet={{div: styles.descriptionStyle}}
@@ -1374,6 +1376,7 @@ export default function ProductDetail({route, navigation}) {
                               textAlign: 'center',
                               alignSelf: 'center',
                               flex: 0.8,
+                              color: isDarkMode ? colors.white : colors.black,
                             }}
                             keyboardType="number-pad"
                             onEndEditing={() => {
@@ -1416,7 +1419,8 @@ export default function ProductDetail({route, navigation}) {
                             indicator={isLoadingC}
                             disabled={
                               // !productDetailData?.vendor?.closed_store_order_scheduled
-                              !productDetailData?.vendor?.closed_store_order_scheduled &&
+                              !productDetailData?.vendor
+                                ?.closed_store_order_scheduled &&
                               !!productDetailData?.vendor?.is_vendor_closed
                             }
                             indicatorColor={colors.white}
@@ -1427,13 +1431,16 @@ export default function ProductDetail({route, navigation}) {
                             textStyle={{
                               fontFamily: fontFamily.medium,
                               textTransform: 'capitalize',
+                              color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.borderLight,
                             }}
                             onPress={addToCart}
                             btnText={`${strings.ADD}  ${
                               currencies?.primary_currency?.symbol
                             } ${currencyNumberFormatter(
                               // Number(productPriceData?.multiplier) *
-                                Number(productPriceData?.price) *
+                              Number(productPriceData?.price) *
                                 Number(productQuantityForCart),
                               appData?.profile?.preferences
                                 ?.digit_after_decimal,
@@ -1441,7 +1448,8 @@ export default function ProductDetail({route, navigation}) {
                             btnStyle={{
                               borderRadius: moderateScale(4),
                               height: moderateScale(38),
-                              opacity: productDetailData?.vendor?.closed_store_order_scheduled
+                              opacity: productDetailData?.vendor
+                                ?.closed_store_order_scheduled
                                 ? 1
                                 : productDetailData?.vendor?.is_vendor_closed
                                 ? 0.3

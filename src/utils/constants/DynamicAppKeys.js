@@ -340,7 +340,9 @@ const shortCodes = {
   sorDelivery: '732007',
   grubHouse:'d9c5ee',
   hitchDelivery:'3bc1d7',
-  zoodMarket:'b077a9'
+  zoodMarket:'b077a9',
+  meow:'71f36c',
+  dingDongDelivers:'380c49'
 
 };
 
@@ -648,7 +650,7 @@ const appIds = {
   }),
   mobi: Platform.select({
     ios: 'com.mobi.customer',
-    android: 'com.mobi',
+    android: 'com.mobi.orders',
   }),
   yourlaundryapp: Platform.select({
     ios: 'com.yourlaundryapp',
@@ -1703,6 +1705,14 @@ const appIds = {
   zoodMarket: Platform.select({
     ios: 'com.zoodMarket',
     android: 'com.zoodMarket',
+  }),
+  meow: Platform.select({
+    ios: 'com.meow.order',
+    android: 'com.meow.order',
+  }),
+  dingDongDelivers: Platform.select({
+    ios: 'com.dingDongDelivers',
+    android: 'com.dingDongDelivers',
   }),
 };
 

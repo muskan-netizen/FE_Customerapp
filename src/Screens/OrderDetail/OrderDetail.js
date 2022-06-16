@@ -19,6 +19,7 @@ import {
 } from 'react-native';
 import Communications from 'react-native-communications';
 import {useDarkMode} from 'react-native-dark-mode';
+import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 // import { showMessage } from 'react-native-flash-message';
 import * as RNLocalize from 'react-native-localize';
@@ -52,6 +53,7 @@ import {
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {currencyNumberFormatter} from '../../utils/commonFunction';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {getImageUrl, showSuccess, showError} from '../../utils/helperFunctions';
 import useInterval from '../../utils/useInterval';
 import ListEmptyCart from './ListEmptyCart';
@@ -147,10 +149,12 @@ export default function OrderDetail({navigation, route}) {
   const userData = useSelector((state) => state?.auth?.userData);
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
+  const businessTypes = appStyle?.homePageLayout;
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
   const {preferences} = appData?.profile;
+  console.log(preferences?.business_type,"preferencespreferencespreferences");
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
@@ -348,6 +352,9 @@ export default function OrderDetail({navigation, route}) {
       })
       .catch(errorMethod);
   };
+
+
+
 
   const errorMethod = (error) => {
     console.log(error, 'Error>>>>>>');
@@ -1664,7 +1671,9 @@ export default function OrderDetail({navigation, route}) {
                 ? MyDarkTheme.colors.text
                 : colors.blackOpacity43,
             }}>
-            {strings.DELIEVERY_ADDRESS}
+              {/* {console.log(preferences?.business_type, "preferences?.business_type")}
+            { (preferences?.business_type == 'home_service') ? strings.DELIEVERY_ADDRESS: 'Service Address' } */}
+            { getBundleId() == appIds.quickLube  &&  preferences?.business_type == 'home_service' ? strings.SERVICE_ADDRESS :  strings.DELIEVERY_ADDRESS }
           </Text>
 
           <View
@@ -1712,7 +1721,9 @@ export default function OrderDetail({navigation, route}) {
             ) : (
               <Image source={imagePath.mapIcon} />
             )}
-
+            {/* Service Address */}
+            {console.log( businessTypes, 'businessTypes iported>>>>>')}
+            {console.log( businessType, 'businessType>>>')}
             <View style={{marginLeft: moderateScale(12), flex: 1}}>
               {cartData?.luxury_option_id ==3 ?
                <Text

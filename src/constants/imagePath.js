@@ -516,5 +516,6 @@ export default {
   masa: require('../assets/masa.mp4'),
   ipd: require('../assets/ipd.mp4'),
   icCar: require('../assets/images/ic_topviewcar.png'),
+  muvpod:'https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/app_splashscreen/73jvbtlLAQCkDgO58NZ8Zx9tdoOnoxlgNICcS7Gp.mp4',
 
 };

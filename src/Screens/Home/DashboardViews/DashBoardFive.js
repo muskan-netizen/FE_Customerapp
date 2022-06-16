@@ -48,7 +48,7 @@ import { useScrollToTop } from '@react-navigation/native';
 import staticStrings from '../../../constants/staticStrings';
 import imagePath from '../../../constants/imagePath';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import {
   Menu,
   MenuOptions,
@@ -56,6 +56,7 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import { string } from 'is_js';
+import { getBuildId } from 'react-native-device-info';
 
 export default function DashBoardFive({
   handleRefresh = () => { },
@@ -579,8 +580,12 @@ export default function DashBoardFive({
               marginTop: 0,
               flex: 1
             }}>
-            {strings.EXPLORE_STORES}{' '}
-            {appData?.profile?.preferences?.vendors_nomenclature}
+              
+              {getBundleId() == appIds.quickLube && vendorsData.length>1 ? `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}` : 'Vendor'
+
+              }
+            {/* {strings.EXPLORE_STORES}{' '}
+            {appData?.profile?.preferences?.vendors_nomenclature} */}
           </Text>
 
           {!!vendorsData && vendorsData.length > 1 && (
