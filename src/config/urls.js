@@ -1,6 +1,6 @@
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1'
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
@@ -107,7 +107,7 @@
 // export const API_BASE_URL = 'https://b724-103-72-170-243.ngrok.io/api/v1';
 // export const API_BASE_URL = 'https://zuzu.alerthire.com/api/v1';
 // export const API_BASE_URL = 'https://click-eat.com/api/v1';
-export const API_BASE_URL = 'https://tranzit.app/api/v1';
+// export const API_BASE_URL = 'https://tranzit.app/api/v1';
 // export const API_BASE_URL = 'https://pinkjettaxi.com/api/v1';
 // export const API_BASE_URL = 'https://snabbhem.se/api/v1';
 // export const API_BASE_URL = 'https://codiner.com/api/v1';
