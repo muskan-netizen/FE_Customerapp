@@ -352,7 +352,7 @@ const MarketCard3 = ({
             </View>
           </View>
         ) : null}
-        {!!data?.closed_store_order_scheduled ? (
+        {/* {!!data?.closed_store_order_scheduled ? (
           <Text
             style={{
               ...commonStyles.mediumFont14Normal,
@@ -363,7 +363,7 @@ const MarketCard3 = ({
             }}>
             {strings.WE_ARE_NOT_ACCEPTING} {data?.delaySlot}{' '}
           </Text>
-        ) : null}
+        ) : null} */}
       </View>
     </TouchableOpacity>
   );

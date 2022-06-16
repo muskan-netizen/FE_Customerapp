@@ -67,22 +67,22 @@ export default function TaxiTabRoutes(props) {
               style={[
                 appStyle?.tabBarLayout == 4
                   ? {
-                      tintColor: focused
-                        ? themeColors.primary_color
-                        : getColorCodeWithOpactiyNumber(
-                            themeColors?.secondary_color.substr(1),
-                            70,
-                          ),
+                      // tintColor: focused
+                      //   ? themeColors?.primary_color
+                      //   : getColorCodeWithOpactiyNumber(
+                      //       themeColors?.secondary_color.substr(1),
+                      //       70,
+                      //     ),
                     }
                   : appStyle?.tabBarLayout == 5
                   ? null
                   : {
-                      tintColor: focused
-                        ? themeColors.secondary_color
-                        : getColorCodeWithOpactiyNumber(
-                            themeColors?.secondary_color.substr(1),
-                            70,
-                          ),
+                      // tintColor: focused
+                      //   ? themeColors?.secondary_color
+                      //   : getColorCodeWithOpactiyNumber(
+                      //       themeColors?.secondary_color.substr(1),
+                      //       70,
+                      //     ),
                     },
                 appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
               ]}
@@ -118,22 +118,22 @@ export default function TaxiTabRoutes(props) {
             let tabIconColor =
               appStyle?.tabBarLayout == 4
                 ? {
-                    tintColor: focused
-                      ? themeColors.primary_color
-                      : getColorCodeWithOpactiyNumber(
-                          themeColors?.secondary_color.substr(1),
-                          70,
-                        ),
+                    // tintColor: focused
+                    //   ? themeColors?.primary_color
+                    //   : getColorCodeWithOpactiyNumber(
+                    //       themeColors?.secondary_color.substr(1),
+                    //       70,
+                    //     ),
                   }
                 : appStyle?.tabBarLayout == 5
                 ? null
                 : {
-                    tintColor: focused
-                      ? themeColors.secondary_color
-                      : getColorCodeWithOpactiyNumber(
-                          themeColors?.secondary_color.substr(1),
-                          70,
-                        ),
+                    // tintColor: focused
+                    //   ? themeColors?.secondary_color
+                    //   : getColorCodeWithOpactiyNumber(
+                    //       themeColors?.secondary_color.substr(1),
+                    //       70,
+                    //     ),
                   };
             return (
               <Image
@@ -183,22 +183,22 @@ export default function TaxiTabRoutes(props) {
               style={[
                 appStyle?.tabBarLayout == 4
                   ? {
-                      tintColor: focused
-                        ? themeColors.primary_color
-                        : getColorCodeWithOpactiyNumber(
-                            themeColors?.secondary_color.substr(1),
-                            70,
-                          ),
+                      // tintColor: focused
+                      //   ? themeColors.primary_color
+                      //   : getColorCodeWithOpactiyNumber(
+                      //       themeColors?.secondary_color.substr(1),
+                      //       70,
+                      //     ),
                     }
                   : appStyle?.tabBarLayout == 5
                   ? null
                   : {
-                      tintColor: focused
-                        ? themeColors.secondary_color
-                        : getColorCodeWithOpactiyNumber(
-                            themeColors?.secondary_color.substr(1),
-                            70,
-                          ),
+                      // tintColor: focused
+                      //   ? themeColors.secondary_color
+                      //   : getColorCodeWithOpactiyNumber(
+                      //       themeColors?.secondary_color.substr(1),
+                      //       70,
+                      //     ),
                     },
                 appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
               ]}

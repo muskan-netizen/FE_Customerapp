@@ -990,6 +990,11 @@ function Cart({navigation, route}) {
         navigation.navigate(navigationStrings.STRIPEOXXO, paymentData);
         break;
 
+        case 39: //STRIPEOXXO Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.STRIPEIDEAL, paymentData);
+        break;
+
       case 21: //VIVAWALLET Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.VIVAWALLET, paymentData);
@@ -1111,10 +1116,13 @@ function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
+  console.log(dineInType,"vendorAddress?");
+
+  
   const _directOrderPlace = () => {
     let data = {};
     data['vendor_id'] = cartData?.products[0]?.vendor_id;
-    data['address_id'] =
+    data['address_id'] =dineInType !='delivery' ? '': 
       paramsData?.selectedAddressData?.id || selectedAddressData?.id;
     data['payment_option_id'] =
       Number(cartData?.total_payable_amount) +
@@ -1150,6 +1158,8 @@ function Cart({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+     
+        actions.reloadData(!reloadData);
         setSelectedTipvalue(null);
         setPickupDriverComment(null);
         setDropOffDriverComment(null);
@@ -1176,6 +1186,7 @@ function Cart({navigation, route}) {
           selectedPayment?.id != 37 &&
           selectedPayment?.id != 21 &&
           selectedPayment?.id != 36 &&
+          selectedPayment?.id != 39 &&
           selectedPayment?.id != 34
         ) {
           setCartItems([]);
@@ -1252,7 +1263,7 @@ function Cart({navigation, route}) {
 
   // false, 'schedule', value
   const setDateAndTimeSchedule = (
-    // toHitApiForPlaceOrder = false,
+    toHitApiForPlaceOrder = false,
     dateType = scheduleType,
     scheduleDate = sheduledorderdate,
   ) => {
@@ -1799,7 +1810,7 @@ function Cart({navigation, route}) {
   //       .catch(errorMethod);
   //   }
   // };
-
+  console.log(paymentMethodId,"paymentMethodId")
   const _paymentWithStripe = async (
     cardInfo,
     tokenInfo,
@@ -1807,6 +1818,7 @@ function Cart({navigation, route}) {
     order_number,
   ) => {
     console.log(order_number, 'order_numberrrrr');
+    
     actions
       .getStripePaymentIntent(
         // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,

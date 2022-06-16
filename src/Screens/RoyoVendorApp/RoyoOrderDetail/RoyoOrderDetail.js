@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import * as MyShare from 'react-native-share';
 import {
   View,
@@ -12,7 +12,7 @@ import {
   FlatList,
   Linking,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import Header from '../../../Components/Header';
 import WrapperContainer from '../../../Components/WrapperContainer';
@@ -26,22 +26,23 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import { customMarginBottom } from '../../../utils/constants/constants';
-import { getImageUrl, showError } from '../../../utils/helperFunctions';
-import { dialCall } from '../../../utils/openNativeApp';
-import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
-import { isEmpty } from 'lodash';
+import {customMarginBottom} from '../../../utils/constants/constants';
+import {getImageUrl, showError} from '../../../utils/helperFunctions';
+import {dialCall} from '../../../utils/openNativeApp';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import {isEmpty} from 'lodash';
 import FastImage from 'react-native-fast-image';
 import strings from '../../../constants/lang';
+import {currencyNumberFormatter} from '../../../utils/commonFunction';
 
 const RoyoOrderDetail = (props) => {
-  const { data, selectedVendor } = props.route.params;
-  const { appData, appStyle, currencies, languages } = useSelector(
+  const {data, selectedVendor} = props.route.params;
+  const {appData, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
-  const { preferences } = appData?.profile;
+  const {preferences} = appData?.profile;
 
-  console.log(data,"dataaaaaaaaaa")
+  console.log(data, 'dataaaaaaaaaa');
   const [state, setState] = useState({
     address: '',
     isLoadingB: false,
@@ -90,15 +91,16 @@ const RoyoOrderDetail = (props) => {
       collectedData['vendor_id'] = selectedVendor?.id;
     }
     console.log(data, '=====res');
-    updateState({ isLoadingB: true });
-    actions.getOrderDetail(collectedData, {
-      code: appData?.profile?.code,
-      currency: currencies?.primary_currency?.id,
-      language: languages?.primary_language?.id,
-    })
+    updateState({isLoadingB: true});
+    actions
+      .getOrderDetail(collectedData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
       .then((res) => {
         console.log(res.data, '=====res');
-        updateState({ isLoadingB: false });
+        updateState({isLoadingB: false});
         if (res?.data) {
           updateState({
             address: res.data.address,
@@ -111,7 +113,12 @@ const RoyoOrderDetail = (props) => {
       .catch(errorMethod);
   };
   const errorMethod = (error) => {
-    updateState({ isLoading: false, isLoadingB: false, isLoading: false, isLoadingC: false });
+    updateState({
+      isLoading: false,
+      isLoadingB: false,
+      isLoading: false,
+      isLoadingC: false,
+    });
     showError(error?.message || error?.error);
   };
   const updateOrderStatus = (acceptRejectData, status) => {
@@ -119,12 +126,13 @@ const RoyoOrderDetail = (props) => {
     data['order_id'] = acceptRejectData?.id;
     data['vendor_id'] = selectedVendor?.id;
     data['order_status_option_id'] = status;
-    updateState({ isLoadingB: true });
-    actions.updateOrderStatus(data, {
-      code: appData?.profile?.code,
-      currency: currencies?.primary_currency?.id,
-      language: languages?.primary_language?.id,
-    })
+    updateState({isLoadingB: true});
+    actions
+      .updateOrderStatus(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
       .then((res) => {
         console.log(res, 'res>>>acceptRejectOrder and the hello');
         updateState({
@@ -146,7 +154,7 @@ const RoyoOrderDetail = (props) => {
       });
   };
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
   const toggleUpcomingStatus = () => {
     updateState({
       showUpcomingStatus: !showUpcomingStatus,
@@ -155,12 +163,12 @@ const RoyoOrderDetail = (props) => {
 
   const renderUserDetails = (item, index) => {
     return (
-      <View style={{ marginTop: moderateScaleVertical(15) }}>
-        <Text style={{ fontFamily: fontFamily.bold, fontSize: textScale(13) }}>
+      <View style={{marginTop: moderateScaleVertical(15)}}>
+        <Text style={{fontFamily: fontFamily.bold, fontSize: textScale(13)}}>
           {'• '}
           {item?.primary?.name}
         </Text>
-        <View style={{ marginHorizontal: moderateScale(5), marginTop: 5 }}>
+        <View style={{marginHorizontal: moderateScale(5), marginTop: 5}}>
           {item?.file_type == 'Text' ? (
             <Text>{item?.user_document?.file_name}</Text>
           ) : item?.file_type == 'Image' ? (
@@ -172,7 +180,7 @@ const RoyoOrderDetail = (props) => {
                   '500/500',
                 ),
               }}
-              style={{ height: 70, width: 70 }}
+              style={{height: 70, width: 70}}
             />
           ) : (
             <TouchableOpacity
@@ -201,7 +209,7 @@ const RoyoOrderDetail = (props) => {
       barStyle="dark-content"
       source={loaderOne}>
       <Header
-        headerStyle={{ marginVertical: moderateScaleVertical(16) }}
+        headerStyle={{marginVertical: moderateScaleVertical(16)}}
         leftIcon={imagePath.backRoyo}
         centerTitle={`Order #${data.order_number}`}
       />
@@ -215,49 +223,47 @@ const RoyoOrderDetail = (props) => {
         {current_status.id != 1 ? (
           <View>
             <Text style={styles.jobStatus}>{strings.JOB_STATUS}</Text>
-            <View style={styles.preparingBox}>
-              <Text style={{ ...styles.font16Semibold, color: colors.white }}>
+            <TouchableOpacity
+              style={styles.preparingBox}
+              disabled={!data?.order_status?.upcoming_status}
+              onPress={toggleUpcomingStatus}
+              activeOpacity={0.8}>
+              <Text style={{...styles.font16Semibold, color: colors.white}}>
                 {current_status.title}
               </Text>
-              <TouchableOpacity
-                disabled={!data?.order_status?.upcoming_status}
-                onPress={toggleUpcomingStatus}>
+              <View>
                 <Image source={imagePath.dropdownTriangle} />
-              </TouchableOpacity>
-            </View>
+              </View>
+            </TouchableOpacity>
             {showUpcomingStatus && upcoming_status ? (
               <TouchableOpacity
                 activeOpacity={1}
                 style={styles.upcomingStatus}
-                onPress={() => updateOrderStatus(data, upcoming_status.id)}
-              >
-                <Text style={{ ...styles.font16Semibold, color: colors.white }}>
+                onPress={() => updateOrderStatus(data, upcoming_status.id)}>
+                <Text style={{...styles.font16Semibold, color: colors.white}}>
                   {upcoming_status.title}
                 </Text>
 
                 <Image
-                  style={{ tintColor: colors.white }}
+                  style={{tintColor: colors.white}}
                   source={imagePath.selectedRoyo}
                 />
-
               </TouchableOpacity>
             ) : null}
           </View>
         ) : null}
-        <View style={{ ...styles.orderNumberBox, zIndex: -1 }}>
+        <View style={{...styles.orderNumberBox, zIndex: -1}}>
           {/* <Text style={styles.orderNumber}>Order #{data.order_number}</Text> */}
           <Text style={styles.orderNumber}>{strings.ORDERAT}:</Text>
-          <Text style={styles.orderTime}>
-            {data?.date_time}
-            </Text>
+          <Text style={styles.orderTime}>{data?.date_time}</Text>
         </View>
-        {!!data?.scheduled_date_time &&<View style={{ ...styles.orderNumberBox, zIndex: -1 }}>
-          {/* <Text style={styles.orderNumber}>Order #{data.order_number}</Text> */}
-          <Text style={styles.orderNumber}>{strings.SCHEDULE_FOR}:</Text>
-          <Text style={styles.orderTime}>
-            {data?.scheduled_date_time}
-            </Text>
-        </View>}
+        {!!data?.scheduled_date_time && (
+          <View style={{...styles.orderNumberBox, zIndex: -1}}>
+            {/* <Text style={styles.orderNumber}>Order #{data.order_number}</Text> */}
+            <Text style={styles.orderNumber}>{strings.SCHEDULE_FOR}:</Text>
+            <Text style={styles.orderTime}>{data?.scheduled_date_time}</Text>
+          </View>
+        )}
         <FlatList
           bounces={false}
           showsVerticalScrollIndicator={false}
@@ -267,7 +273,7 @@ const RoyoOrderDetail = (props) => {
               : []
           }
           keyExtractor={(val, index) => index}
-          renderItem={({ item, index }) => {
+          renderItem={({item, index}) => {
             return (
               <View style={styles.itemBox}>
                 <Image
@@ -280,18 +286,39 @@ const RoyoOrderDetail = (props) => {
                     ),
                   }}
                 />
-                <View style={{ flex: 1, justifyContent: 'space-around' }}>
+                <View style={{flex: 1, justifyContent: 'space-around'}}>
                   <Text style={styles.font16Medium}>
                     {item?.translation?.title}
                   </Text>
+                  <View style={{flexDirection:'row'}}>
                   <Text style={styles.font13Regular}>
                     {item.quantity}
-                    {strings.UNIT}
+                    {strings.UNIT} { ' '}{ 'x'} { ' '}
                   </Text>
                   <Text style={styles.font14Regular}>
                     {currencies?.primary_currency?.symbol}{' '}
                     {Number(item.price).toFixed(2)}
                   </Text>
+                  </View>
+                  {item?.product_addons.length > 0
+                    ? item?.product_addons.map((j) => {
+                        return (
+                          <View>
+                            <Text>
+                              {`(${j.option_title})`} ={' '}
+                              {`${
+                                currencies?.primary_currency?.symbol
+                              }${currencyNumberFormatter(
+                                Number(j.price),
+                                appData?.profile?.preferences
+                                  ?.digit_after_decimal,
+                              )}`}
+                            </Text>
+                          </View>
+                        );
+                      })
+                    : null}
+                 
                 </View>
                 <Text style={styles.font16Semibold}>
                   {`${currencies?.primary_currency?.symbol} ${Number(
@@ -305,78 +332,99 @@ const RoyoOrderDetail = (props) => {
           ItemSeparatorComponent={() => <View style={styles.itemSeperator} />}
         />
 
-        {  !!data?.specific_instructions &&
-          <View style={{ margin: moderateScaleVertical(16) }}>
-          <Text style={styles.font15Medium}>{strings.INSTRUCTIONS}</Text>
-          <Text style={styles.font15Semibold}>{data?.specific_instructions}
-          </Text>
-        </View>
-        }
-
-
-        <View style={{ margin: moderateScaleVertical(16) }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>
+        {!!data?.specific_instructions && (
+          <View style={{margin: moderateScaleVertical(16)}}>
+            <Text style={styles.font15Medium}>{strings.INSTRUCTIONS}</Text>
             <Text style={styles.font15Semibold}>
-              {currencies?.primary_currency?.symbol}{' '}
-              {Number(data.payable_amount).toFixed(2)}
+              {data?.specific_instructions}
             </Text>
           </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.font15Medium}>{strings.DELIVERYFEE}</Text>
-            <Text style={styles.font15Semibold}>
-              {currencies?.primary_currency?.symbol}{' '}
-              {Number(data.total_delivery_fee).toFixed(2)}
-            </Text>
-          </View>
+        )}
 
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.font15Medium}>{preferences?.fixed_fee_nomenclature != '' &&
-              preferences?.fixed_fee_nomenclature != null
-              ? preferences?.fixed_fee_nomenclature
-              : strings.FIXED_FEE}</Text>
-            <Text style={styles.font15Semibold}>
-              {currencies?.primary_currency?.symbol}{' '}
-              {Number(data.fixed_fee_amount).toFixed(2)}
-            </Text>
-          </View>
+        <View style={{margin: moderateScaleVertical(16)}}>
+          {data?.vendors[0].subtotal_amount &&
+            Number(data?.vendors[0].subtotal_amount) !== 0 && (
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>
+                <Text style={styles.font15Semibold}>
+                  {currencies?.primary_currency?.symbol}{' '}
+                  {Number(data?.vendors[0].subtotal_amount).toFixed(2)}
+                </Text>
+              </View>
+            )}
+          {!!data?.total_delivery_fee && Number(data?.total_delivery_fee) && (
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.font15Medium}>{strings.DELIVERYFEE}</Text>
+              <Text style={styles.font15Semibold}>
+                {currencies?.primary_currency?.symbol}{' '}
+                {Number(data.total_delivery_fee).toFixed(2)}
+              </Text>
+            </View>
+          )}
 
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.font15Medium}>{strings.TAXES_FEES}</Text>
-            <Text style={styles.font15Semibold}>
-              {currencies?.primary_currency?.symbol}{' '}
-              {(Number(data?.total_service_fee) +
-                Number(data?.taxable_amount)).toFixed(2)}
-            </Text>
-          </View>
+          {!!data?.fixed_fee_amount && Number(data.fixed_fee_amount) !== 0 && (
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.font15Medium}>
+                {preferences?.fixed_fee_nomenclature != '' &&
+                preferences?.fixed_fee_nomenclature != null
+                  ? preferences?.fixed_fee_nomenclature
+                  : strings.FIXED_FEE}
+              </Text>
+              <Text style={styles.font15Semibold}>
+                {currencies?.primary_currency?.symbol}{' '}
+                {Number(data.fixed_fee_amount).toFixed(2)}
+              </Text>
+            </View>
+          )}
 
+          {Number(data?.total_service_fee) + Number(data?.taxable_amount) !==
+            0 && (
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.font15Medium}>{strings.TAXES_FEES}</Text>
+              <Text style={styles.font15Semibold}>
+                {currencies?.primary_currency?.symbol}{' '}
+                {(
+                  Number(data?.total_service_fee) + Number(data?.taxable_amount)
+                ).toFixed(2)}
+              </Text>
+            </View>
+          )}
 
+          {data?.total_container_charges &&
+            Number(data?.total_container_charges) !== 0 && (
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Text style={styles.font15Medium}>
+                  {strings.CONTAINER_CHARGES}
+                </Text>
+                <Text style={styles.font15Semibold}>
+                  {currencies?.primary_currency?.symbol}{' '}
+                  {Number(data?.total_container_charges).toFixed(2)}
+                </Text>
+              </View>
+            )}
 
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.font15Medium}>{strings.CONTAINER_CHARGES}</Text>
-            <Text style={styles.font15Semibold}>
-              {currencies?.primary_currency?.symbol}{' '}
-              {Number(data.total_container_charges).toFixed(2)}
-            </Text>
-          </View>
-
-
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.font15Medium}>{strings.DISCOUNT}</Text>
-            <Text style={styles.font15Semibold}>
-              -{currencies?.primary_currency?.symbol}{' '}
-              {Number(data.total_discount).toFixed(2)}
-            </Text>
-          </View>
-
+          {!!data?.total_discount && Number(data?.total_discount) !== 0 && (
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.font15Medium}>{strings.DISCOUNT}</Text>
+              <Text style={styles.font15Semibold}>
+                -{currencies?.primary_currency?.symbol}{' '}
+                {Number(data.total_discount).toFixed(2)}
+              </Text>
+            </View>
+          )}
 
           <View style={styles.dashLine} />
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>{strings.TOTAL}</Text>
-            <Text style={{ ...styles.font15Semibold, color: colors.themeColor2 }}>
+            <Text style={{...styles.font15Semibold, color: colors.themeColor2}}>
               {`${currencies?.primary_currency?.symbol} ${Number(
-                parseFloat(data.payable_amount) +
-                parseFloat(data.total_delivery_fee),
+                data?.payable_amount,
               ).toFixed(2)}`}
             </Text>
           </View>
@@ -390,11 +438,11 @@ const RoyoOrderDetail = (props) => {
             <Text style={styles.font14Semibold}>
               {strings.DELIEVERY_ADDRESS}
             </Text>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
               <TouchableOpacity onPress={() => dialCall(1234567890)}>
                 <Image source={imagePath.callRoyo} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={fun}>
+              {/* <TouchableOpacity onPress={fun}>
                 <Image
                   style={{
                     marginLeft: moderateScaleVertical(10),
@@ -402,7 +450,7 @@ const RoyoOrderDetail = (props) => {
                   }}
                   source={imagePath.whatsAppRoyo}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity
                 onPress={() =>
                   Share.share({
@@ -423,8 +471,8 @@ const RoyoOrderDetail = (props) => {
 
           <View style={styles.locationBox}>
             <Image style={styles.locationImage} source={imagePath.icMap} />
-            <View style={{ justifyContent: 'space-evenly' }}>
-              <Text style={{ fontFamily: fontFamily.semiBold, fontSize: 16 }}>
+            <View style={{justifyContent: 'space-evenly'}}>
+              <Text style={{fontFamily: fontFamily.semiBold, fontSize: 16}}>
                 {data.user_name}
               </Text>
               <Text
@@ -439,16 +487,16 @@ const RoyoOrderDetail = (props) => {
               </Text>
             </View>
           </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={{ ...styles.font14Semibold }}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={{...styles.font14Semibold}}>
               {strings.PAYMENT_METHOD}
             </Text>
-            <Text style={{ ...styles.font14Semibold, color: colors.black }}>
+            <Text style={{...styles.font14Semibold, color: colors.black}}>
               {data.payment_option_title}
             </Text>
           </View>
         </View>
-        <View style={{ marginHorizontal: moderateScale(20) }}>
+        <View style={{marginHorizontal: moderateScale(20)}}>
           {!isEmpty(userDocumentList) &&
             userDocumentList.map(renderUserDetails)}
         </View>
@@ -462,7 +510,7 @@ const RoyoOrderDetail = (props) => {
             />
             <ButtonWithLoader
               btnText={strings.CONFIRM}
-              btnTextStyle={{ ...styles.btnText, color: colors.white }}
+              btnTextStyle={{...styles.btnText, color: colors.white}}
               btnStyle={{
                 ...styles.btnContainer,
                 backgroundColor: colors.themeColor2,

@@ -87,6 +87,7 @@ export default {
   OFFERS2: 'OFFERS2',
   PICKUPTAXIORDERDETAILS: 'PickupTaxiOrderDetails',
   PICKUPORDERDETAIL2: 'pickOrderDetail2',
+  PRODUCTWITHCATEGORY:"productWithCategory",
 
   // royo order
 
@@ -138,5 +139,6 @@ export default {
  ADD_NEW_RIDER:'AddNewRider',
   STRIPEOXXO:'StripeOXXO',
   VIVAWALLET:"Vivawallet",
-  MYCASH:"MyCash"
+  MYCASH:"MyCash",
+  STRIPEIDEAL:"StripeIdeal"
 };

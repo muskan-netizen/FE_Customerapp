@@ -451,7 +451,6 @@ export default function AddMoney({navigation}) {
       _webPayment();
       return;
     }
-
     _offineLinePayment();
   };
 

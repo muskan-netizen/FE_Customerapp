@@ -52,23 +52,24 @@ const TaxiHomeCategoryCard = ({
         alignItems: 'center',
         // height: moderateScale(90),
       }}>
-      {imageURI ? (
+      {!!imageURI ? (
         <View
           style={{
             flex: 0.8,
             backgroundColor: getColorCodeWithOpactiyNumber(
-              colors.taxiCategoryGrayColor.substr(1),
+              colors.taxiCategoryGrayColor,
               30,
             ),
             paddingHorizontal:  moderateScale(8),
             borderRadius: 10,
           }}>
-          {isSVG ? (
+          {!!isSVG ? (
             <View style={{ height: moderateScale(50), width: moderateScale(50) }}>
               <SvgUri
                 height={moderateScale(50)}
                 width={moderateScale(50)}
                 uri={imageURI}
+                
               />
             </View>
           ) : (
