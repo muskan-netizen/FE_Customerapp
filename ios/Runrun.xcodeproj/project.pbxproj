@@ -1191,6 +1191,7 @@
 		10AAEBBB2816C2C7009BABED /* Arwin(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 10AAEBBA2816C2C6009BABED /* Arwin(Production).xcconfig */; };
 		10AAEBBD2816C2E1009BABED /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 10AAEBBC2816C2E0009BABED /* Images.xcassets */; };
 		10AAEBBF2816C315009BABED /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10AAEBBE2816C311009BABED /* GoogleService-Info.plist */; };
+		10AE156228586BE000D615CA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10AE156128586BDC00D615CA /* GoogleService-Info.plist */; };
 		10B01F87282A96A7001B2FC4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		10B01F88282A96A7001B2FC4 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		10B01F89282A96A7001B2FC4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -2054,7 +2055,6 @@
 		8416E7FD26CD24B300D9B686 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8416E7FC26CD24B300D9B686 /* GoogleService-Info.plist */; };
 		8416E87226CD263500D9B686 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8416E7C026CD23A000D9B686 /* Images.xcassets */; };
 		841C00A027ACFD04004AC6FE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 841C009F27ACFD04004AC6FE /* Images.xcassets */; };
-		841C017E27ACFDCA004AC6FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 841C017D27ACFDC9004AC6FE /* GoogleService-Info.plist */; };
 		841C065227AD0E60004AC6FE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		841C065327AD0E60004AC6FE /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		841C065427AD0E60004AC6FE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -5682,7 +5682,7 @@
 		847F6E2427203FDA00C7A32F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847F6E2327203FDA00C7A32F /* Images.xcassets */; };
 		847F6F1A2720428800C7A32F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847F6F192720428700C7A32F /* GoogleService-Info.plist */; };
 		8480076A26CE20340014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		8480076B26CE20340014F500 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		8480076B26CE20340014F500 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8480076C26CE20340014F500 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8480076D26CE20340014F500 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848007AD26CE260D0014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -6503,7 +6503,7 @@
 		848CB12D278D662700DD824C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848CB12C278D662700DD824C /* Images.xcassets */; };
 		848CB1FB278D66F400DD824C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848CB1FA278D66F300DD824C /* GoogleService-Info.plist */; };
 		848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		848CEF8126CE229D0077C918 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		848CEF8126CE229D0077C918 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		848CEF8226CE229D0077C918 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848CEF8326CE229D0077C918 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848D76B92748F70100FE87AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -10159,6 +10159,7 @@
 		10AAEBBC2816C2E0009BABED /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		10AAEBBE2816C311009BABED /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		10AAEBC02816C935009BABED /* Arwin.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Arwin.entitlements; sourceTree = "<group>"; };
+		10AE156128586BDC00D615CA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		10B01FAE282A96A7001B2FC4 /* SwatiRX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwatiRX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10B6D07E283DF968009E2ACD /* Kartandkarry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kartandkarry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10B6D081283DFB3A009E2ACD /* Kartandkarry(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Kartandkarry(Development).xcconfig"; sourceTree = "<group>"; };
@@ -10771,7 +10772,6 @@
 		8416E99526CD27C700D9B686 /* Ridemate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ridemate.entitlements; sourceTree = "<group>"; };
 		8416EED226CD381800D9B686 /* CodinerDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CodinerDebug.entitlements; sourceTree = "<group>"; };
 		841C009F27ACFD04004AC6FE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		841C017D27ACFDC9004AC6FE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		841C025B27ACFE6E004AC6FE /* UBERCANN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UBERCANN.entitlements; sourceTree = "<group>"; };
 		841C067B27AD0E60004AC6FE /* Launch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Launch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		841C0BAC27AD0F38004AC6FE /* Launch(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Launch(Development).xcconfig"; sourceTree = "<group>"; };
@@ -18007,7 +18007,7 @@
 		841CFE0627ACFC5A004AC6FE /* UBERCANN */ = {
 			isa = PBXGroup;
 			children = (
-				841C017D27ACFDC9004AC6FE /* GoogleService-Info.plist */,
+				10AE156128586BDC00D615CA /* GoogleService-Info.plist */,
 				841CFE0727ACFC7F004AC6FE /* UBERCANN(Development).xcconfig */,
 				841CFFC127ACFCC0004AC6FE /* UBERCANN(Production).xcconfig */,
 				841C009F27ACFD04004AC6FE /* Images.xcassets */,
@@ -32889,7 +32889,7 @@
 				841CFA7A27ACFA14004AC6FE /* SFProText-Regular.ttf in Resources */,
 				841CFA7B27ACFA14004AC6FE /* SFProText-SemiBold.ttf in Resources */,
 				841CFA7C27ACFA14004AC6FE /* SFProText-Medium.ttf in Resources */,
-				841C017E27ACFDCA004AC6FE /* GoogleService-Info.plist in Resources */,
+				10AE156228586BE000D615CA /* GoogleService-Info.plist in Resources */,
 				841CFA7E27ACFA14004AC6FE /* notification.wav in Resources */,
 				841CFA8027ACFA14004AC6FE /* Plists in Resources */,
 				841CFA8127ACFA14004AC6FE /* Futura-Normal.ttf in Resources */,
@@ -110225,7 +110225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */,
-				848CEF8126CE229D0077C918 /* BuildFile in Sources */,
+				848CEF8126CE229D0077C918 /* (null) in Sources */,
 				848CEF8226CE229D0077C918 /* Royo.swift in Sources */,
 				848CEF8326CE229D0077C918 /* main.m in Sources */,
 			);
@@ -110319,7 +110319,7 @@
 				84FFFF2026D672E600F2B059 /* Royo.swift in Sources */,
 				84FFFF2126D672E600F2B059 /* main.m in Sources */,
 				8480076A26CE20340014F500 /* AppDelegate.m in Sources */,
-				8480076B26CE20340014F500 /* BuildFile in Sources */,
+				8480076B26CE20340014F500 /* (null) in Sources */,
 				8480076C26CE20340014F500 /* Royo.swift in Sources */,
 				8480076D26CE20340014F500 /* main.m in Sources */,
 			);
@@ -115369,7 +115369,7 @@
 				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = UBERCANN;
+				PROVISIONING_PROFILE_SPECIFIER = UCANN;
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

@@ -1206,7 +1206,7 @@ const appIds = {
     android: 'com.jadorDrive',
   }),
   ubercann: Platform.select({
-    ios: 'com.ubercann',
+    ios: 'com.UCANN',
     android: 'com.ubercann',
   }),
   kongafood: Platform.select({

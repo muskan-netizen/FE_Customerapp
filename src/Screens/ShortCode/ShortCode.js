@@ -2451,8 +2451,12 @@ const animationVideo = () =>{
     case appIds?.muvpod:
       // () => {updateState({LoadingScreen:false, isLoading:false})}
       return {uri : imagePath.muvpod}
+      // return imagePath.muvpodmp4
+      
+      
   } 
 }
+console.log(animationVideo(),"animationVideo");
 
 const onVideoDurationEnded = () => {
    

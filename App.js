@@ -122,7 +122,7 @@ const App = () => {
     if(getBundleId()==(appIds.masa || appIds.iPicknDrop || appIds.muvpod)){
       setTimeout(() => {
         SplashScreen.hide();
-      },200);
+      },100);
     }
     else{
       setTimeout(() => {
