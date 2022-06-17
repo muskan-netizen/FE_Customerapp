@@ -1,11 +1,11 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
-import {Image, Text, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Image, Text, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useDarkMode } from 'react-native-dark-mode';
 import Geocoder from 'react-native-geocoding';
 import Geolocation from 'react-native-geolocation-service';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
-import {useSelector} from 'react-redux';
+import MapView, { PROVIDER_GOOGLE, MarkerAnimated } from 'react-native-maps';
+import { useSelector } from 'react-redux';
 import GradientButton from '../Components/GradientButton';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
@@ -18,15 +18,15 @@ import {
   StatusBarHeightSecond,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {getCurrentLocation} from '../utils/helperFunctions';
-import {chekLocationPermission} from '../utils/permissions';
+import { MyDarkTheme } from '../styles/theme';
+import { getCurrentLocation } from '../utils/helperFunctions';
+import { chekLocationPermission } from '../utils/permissions';
 
 import stylesFun from './styles';
 
 export default function SelctFromMap({
-  addressDone = () => {},
-  mapClose = () => {},
+  addressDone = () => { },
+  mapClose = () => { },
   constCurrLoc,
 }) {
   const navigation = useNavigation();
@@ -36,6 +36,8 @@ export default function SelctFromMap({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+
+
   const [state, setState] = useState({
     region: {
       latitude: constCurrLoc?.latitude || 30.7333,
@@ -59,17 +61,16 @@ export default function SelctFromMap({
     task_type_id: null,
   });
 
-  const {region, details} = state;
+  const { region, details } = state;
 
-  const {themeColors, appStyle} = useSelector((state) => state?.initBoot);
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const { themeColors, appStyle } = useSelector((state) => state?.initBoot);
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily, themeColors});
+  const styles = stylesFun({ fontFamily, themeColors });
 
   const _onRegionChange = (region) => {
-
-    updateState({region: region});
+    updateState({ region: region });
     _getAddressBasedOnCoordinates(region);
     // animate(region);
   };
@@ -81,27 +82,46 @@ export default function SelctFromMap({
     })
       .then((json) => {
         console.log(json, 'jsonjsonjsonjson');
-        updateState({
-          formattedAddress: json.results[0].formatted_address,
-        });
-        let detail = {};
-        detail = {
-          formatted_address: json.results[0].formatted_address,
-          geometry: {
-            location: {
-              lat: region.latitude,
-              lng: region.longitude,
+
+        let finalResult = {}
+        if (json?.results?.length > 0) {
+          json.results.every((val, i) => {
+            console.log("my val", val)
+            if (val.types.includes("street_address") || val.types.includes("route") || val.types.includes("postal_code") || val.types.includes("administrative_area_level_1")) {
+              finalResult = val
+              return false;
+            } else {
+              finalResult = val
+              return true
+            }
+          })
+        }
+
+        console.log("final result", finalResult)
+
+        if (Object.keys(finalResult).length > 0) {
+          updateState({ formattedAddress: finalResult?.formatted_address });
+          let detail = {};
+          detail = {
+            formatted_address: finalResult?.formatted_address,
+            geometry: {
+              location: {
+                lat: region.latitude,
+                lng: region.longitude,
+              },
             },
-          },
-          address_components: json.results[0].address_components,
-          place_id: json.results[0].place_id,
-        };
-        updateState({details: detail});
+            address_components: finalResult?.address_components,
+            place_id: finalResult?.place_id,
+          };
+          updateState({ details: detail });
+        } else {
+          alert("location not found")
+        }
       })
       .catch((error) => console.log(error, 'errro geocode'));
   };
 
-  console.log(details, 'detaildetaildetail');
+
 
   useEffect(() => {
     chekLocationPermission()
@@ -134,7 +154,7 @@ export default function SelctFromMap({
                 },
               );
             })
-            .catch((err) => {});
+            .catch((err) => { });
         }
       })
       .catch((error) => console.log('error while accessing location', error));
@@ -152,6 +172,38 @@ export default function SelctFromMap({
     addressDone(pickuplocationAllData);
   };
 
+  const markerRef = useRef();
+
+
+  const MARKER_WIDTH = 20;
+  /** Marker's height */
+  const MARKER_HEIGHT = 40; // marker height
+
+  const getCenterOffsetForAnchor = (
+    anchor = {},
+    markerWidth = number,
+    markerHeight = number
+  ) => {
+    return {
+      x: markerWidth * 0.5 - markerWidth * anchor.x,
+      y: markerHeight * 0.5 - markerHeight * anchor.y,
+    };
+  };
+
+  /** Customizable anchor prop - Specify your desired anchor adjustements here */
+  const ANCHOR = { x: 0.5, y: 0.5 }; // in my case I customized this based on marker dimensions like this: { x: 0.5, y: 1 - 10 / MARKER_HEIGHT } lifting the marker up a bit
+  /** auto generated centerOffset prop based on the anchor property */
+  const CENTEROFFSET = getCenterOffsetForAnchor(
+    ANCHOR,
+    MARKER_WIDTH,
+    MARKER_HEIGHT
+  );
+
+  const _onDrag = (res) => {
+    console.log(res, "ondrag res");
+    _getAddressBasedOnCoordinates(res?.coordinate);
+  };
+
   return (
     <>
       <MapView
@@ -164,9 +216,27 @@ export default function SelctFromMap({
         // region={region}
         initialRegion={region}
         // pointerEvents={'none'}
+        // minZoomLevel={20}
         onRegionChangeComplete={_onRegionChange}
-      />
-      <View style={[styles.backbutton, {marginHorizontal: moderateScale(15)}]}>
+      >
+        {/* <MarkerAnimated
+          ref={markerRef}
+
+          // centerOffset={(2,2)}
+          // calloutOffset={(2,2)}
+          // anchor={ANCHOR}
+          centerOffset={CENTEROFFSET}
+          draggable={true}
+          onDragEnd={(e) => _onDrag(e?.nativeEvent)}
+
+          coordinate={{
+            latitude: region?.latitude,
+            longitude: region?.longitude,
+          }}
+        /> */}
+
+      </MapView>
+      <View style={[styles.backbutton, { marginHorizontal: moderateScale(15) }]}>
         <TouchableOpacity onPress={mapClose}>
           <View
             style={{
@@ -182,7 +252,7 @@ export default function SelctFromMap({
           </View>
         </TouchableOpacity>
       </View>
-
+      
       <View
         style={{
           position: 'absolute',
@@ -196,9 +266,10 @@ export default function SelctFromMap({
         }}>
         <Image
           source={imagePath.icLocationPin_}
-          style={{tintColor: themeColors.primary_color}}
+          style={{ tintColor: themeColors.primary_color }}
         />
       </View>
+
       <View
         style={{
           position: 'absolute',
@@ -213,7 +284,8 @@ export default function SelctFromMap({
             color: colors.black,
             fontFamily: fontFamily.medium,
           }}>
-          {strings.PLACE_PIN_ON_MAP}
+          {state.formattedAddress}
+          {/* {strings.PLACE_PIN_ON_MAP} */}
         </Text>
         <GradientButton
           btnText={strings.DONE}

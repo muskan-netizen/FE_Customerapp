@@ -506,15 +506,17 @@ export default {
   icAdd4: require('../assets/images/ic_add2.png'),
   icMinus2: require('../assets/images/ic_minus.png'),
 
-  // fook a Friend Images
-  addFriend : require('../assets/images/BookAFriend/ic_add.png'),
-  addRider : require('../assets/images/BookAFriend/ic_addrider.png'),
-  closeFriendList : require('../assets/images/BookAFriend/ic_addrider.png'),
-  selectFriendList : require('../assets/images/BookAFriend/ic_drpdwn.png'),
-  riderImage : require('../assets/images/ic_profilegrey.png'),
+  // Book a Friend Images
+  addFriend: require('../assets/images/BookAFriend/ic_add.png'),
+  addRider: require('../assets/images/BookAFriend/ic_addrider.png'),
+  closeFriendList: require('../assets/images/BookAFriend/ic_addrider.png'),
+  selectFriendList: require('../assets/images/BookAFriend/ic_drpdwn.png'),
+  riderImage: require('../assets/images/ic_profilegrey.png'),
   //Video
   masa: require('../assets/masa.mp4'),
   ipd: require('../assets/ipd.mp4'),
   icCar: require('../assets/images/ic_topviewcar.png'),
+  muvpod:'https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/app_splashscreen/73jvbtlLAQCkDgO58NZ8Zx9tdoOnoxlgNICcS7Gp.mp4',
 
+  icSos: require('../assets/images/RoyoorderNewImages/ic_sos.png'),
 };

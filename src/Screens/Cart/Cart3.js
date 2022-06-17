@@ -990,6 +990,11 @@ function Cart({navigation, route}) {
         navigation.navigate(navigationStrings.STRIPEOXXO, paymentData);
         break;
 
+        case 39: //STRIPEOXXO Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.STRIPEIDEAL, paymentData);
+        break;
+
       case 21: //VIVAWALLET Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.VIVAWALLET, paymentData);
@@ -1153,6 +1158,8 @@ function Cart({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+     
+        actions.reloadData(!reloadData);
         setSelectedTipvalue(null);
         setPickupDriverComment(null);
         setDropOffDriverComment(null);
@@ -1179,6 +1186,7 @@ function Cart({navigation, route}) {
           selectedPayment?.id != 37 &&
           selectedPayment?.id != 21 &&
           selectedPayment?.id != 36 &&
+          selectedPayment?.id != 39 &&
           selectedPayment?.id != 34
         ) {
           setCartItems([]);

@@ -652,7 +652,7 @@ const appIds = {
   }),
   mobi: Platform.select({
     ios: 'com.mobi.customer',
-    android: 'com.mobi',
+    android: 'com.mobi.orders',
   }),
   yourlaundryapp: Platform.select({
     ios: 'com.yourlaundryapp',
@@ -1436,7 +1436,7 @@ const appIds = {
     android: 'com.wer',
   }),
   beachhop: Platform.select({
-    ios: 'com.beachhop',
+    ios: 'com.beachhop.customer',
     android: 'com.beachhop.customer',
   }),
   qseek: Platform.select({
