@@ -32,7 +32,9 @@ import {
   GET_DATA_BY_CATEGORY_OPTAMIZE,
   GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE,
   VENDOR_CATEGORIES,
-  ALL_VENDOR_DATA
+  ALL_VENDOR_DATA,
+  GET_MORE_CATEGORIES,
+  VENDOR_OPTIMIZE_V2
 
 } from '../../config/urls';
 import {apiGet, apiPost, setWalletData} from '../../utils/utils';
@@ -526,3 +528,11 @@ export function allVendorData(query, headers) {
   return apiGet(ALL_VENDOR_DATA + query, {}, headers)
 }
 
+
+export function getProductByVendorIdOptamizeV2(query = '', data = {}, headers = {}) {
+  return apiGet(VENDOR_OPTIMIZE_V2 + query, data, headers)   
+}
+
+export function getMoreCategories(query = '', data = {}, headers = {}) {
+  return apiGet(GET_MORE_CATEGORIES + query, data, headers)
+}

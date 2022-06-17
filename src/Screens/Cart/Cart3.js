@@ -946,7 +946,7 @@ function Cart({navigation, route}) {
         navigation.navigate(navigationStrings.TOYYIAPAY, paymentData);
         break;
       case 36: //ToyyibPay Payment Getway
-        updateState({ placeLoader: false });
+        updateState({placeLoader: false});
         navigation.navigate(navigationStrings.MYCASH, paymentData);
         break;
       case 27: //Paytab Payment Getway
@@ -986,17 +986,17 @@ function Cart({navigation, route}) {
         break;
 
       case 37: //STRIPEOXXO Payment Getway
-        updateState({ placeLoader: false });
+        updateState({placeLoader: false});
         navigation.navigate(navigationStrings.STRIPEOXXO, paymentData);
         break;
 
-        case 39: //STRIPEOXXO Payment Getway
-        updateState({ placeLoader: false });
+      case 39: //STRIPEOXXO Payment Getway
+        updateState({placeLoader: false});
         navigation.navigate(navigationStrings.STRIPEIDEAL, paymentData);
         break;
 
       case 21: //VIVAWALLET Payment Getway
-        updateState({ placeLoader: false });
+        updateState({placeLoader: false});
         navigation.navigate(navigationStrings.VIVAWALLET, paymentData);
         break;
 
@@ -2585,19 +2585,36 @@ function Cart({navigation, route}) {
                                   justifyContent: 'space-between',
                                   flex: 1,
                                 }}>
-                                <Text
-                                  numberOfLines={1}
-                                  style={{
-                                    ...styles.priceItemLabel2,
-                                    color: isDarkMode
-                                      ? MyDarkTheme.colors.text
-                                      : colors.blackOpacity86,
-                                    fontSize: textScale(12),
-                                    fontFamily: fontFamily.medium,
-                                    flex: 0.7,
-                                  }}>
-                                  {i?.product?.translation[0]?.title},
-                                </Text>
+                                <View>
+                                  {!!(i?.product?.category_name?.name) && (
+                                    <Text
+                                      numberOfLines={1}
+                                      style={{
+                                        ...styles.priceItemLabel2,
+                                        color: isDarkMode
+                                          ? MyDarkTheme.colors.text
+                                          : colors.textGreyB,
+                                        fontSize: textScale(12),
+                                        fontFamily: fontFamily.medium,
+                                        flex: 0.7,
+                                      }}>
+                                      {i?.product?.category_name.name},
+                                    </Text>
+                                  )}
+                                  <Text
+                                    numberOfLines={1}
+                                    style={{
+                                      ...styles.priceItemLabel2,
+                                      color: isDarkMode
+                                        ? MyDarkTheme.colors.text
+                                        : colors.blackOpacity86,
+                                      fontSize: textScale(12),
+                                      fontFamily: fontFamily.medium,
+                                      flex: 0.7,
+                                    }}>
+                                    {i?.product?.translation[0]?.title},
+                                  </Text>
+                                </View>
 
                                 <View
                                   pointerEvents={btnLoader ? 'none' : 'auto'}
