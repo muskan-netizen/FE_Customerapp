@@ -205,19 +205,10 @@ android {
     }
 
     flavorDimensions "appType"
-//     productFlavors{
-//   meow{
-//             dimension "appType"
-//             versionCode 1
-//             versionName "1.0"
-//             minSdkVersion rootProject.ext.minSdkVersion
-//             targetSdkVersion rootProject.ext.targetSdkVersion
-//             applicationId 'com.meow.order'
-//             resValue "string", "app_name", "Meow"
-//             resValue "string", "host_name", ""
-//             }
-//     }
+   
 
+
+}
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -1595,7 +1586,7 @@ android {
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
                 applicationId 'com.mokabfix'
-                resValue "string", "app_name", "MokabFix"
+                resValue "string", "app_name", "Trkeb"
                 resValue "string", "host_name", ""
             }
             botseats{
@@ -4376,7 +4367,7 @@ android {
             }
             onscart{
                 dimension "appType"
-                versionCode 4
+                versionCode 6
                 versionName "1.2"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -5470,6 +5461,27 @@ android {
             applicationId 'com.dingDongDelivers'
             resValue "string", "app_name", "DingDong Delivers"
             resValue "string", "host_name", ""
+            }
+            torunz{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.torunz'
+            resValue "string", "app_name", "Torunz"
+            resValue "string", "host_name", ""
+            }
+             kurs{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                // applicationIdSuffix ".hmoobhhub"
+                applicationId 'com.app.kurs'
+                resValue "string", "app_name", "KURS"
+                resValue "string", "host_name", ""
             }
     }
 }

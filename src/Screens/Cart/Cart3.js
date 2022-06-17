@@ -990,6 +990,11 @@ function Cart({navigation, route}) {
         navigation.navigate(navigationStrings.STRIPEOXXO, paymentData);
         break;
 
+        case 39: //STRIPEOXXO Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.STRIPEIDEAL, paymentData);
+        break;
+
       case 21: //VIVAWALLET Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.VIVAWALLET, paymentData);
@@ -1111,10 +1116,13 @@ function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
+  console.log(dineInType,"vendorAddress?");
+
+  
   const _directOrderPlace = () => {
     let data = {};
     data['vendor_id'] = cartData?.products[0]?.vendor_id;
-    data['address_id'] =
+    data['address_id'] =dineInType !='delivery' ? '': 
       paramsData?.selectedAddressData?.id || selectedAddressData?.id;
     data['payment_option_id'] =
       Number(cartData?.total_payable_amount) +
@@ -1150,6 +1158,8 @@ function Cart({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+     
+        actions.reloadData(!reloadData);
         setSelectedTipvalue(null);
         setPickupDriverComment(null);
         setDropOffDriverComment(null);
@@ -1176,6 +1186,7 @@ function Cart({navigation, route}) {
           selectedPayment?.id != 37 &&
           selectedPayment?.id != 21 &&
           selectedPayment?.id != 36 &&
+          selectedPayment?.id != 39 &&
           selectedPayment?.id != 34
         ) {
           setCartItems([]);
@@ -1250,85 +1261,79 @@ function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
-  // false, 'schedule', value
   const setDateAndTimeSchedule = (
-    // toHitApiForPlaceOrder = false,
+    toHitApiForPlaceOrder = false,
     dateType = scheduleType,
     scheduleDate = sheduledorderdate,
-  ) => {
+    ) => {
     if (!userData?.auth_token) {
-      return;
+    return;
     }
-
+    
     let data = {};
-
+    
     if (businessType == 'laundry') {
-      data['comment_for_pickup_driver'] = pickupDriverComment;
-      data['comment_for_dropoff_driver'] = dropOffDriverComment;
-      data['comment_for_vendor'] = vendorComment;
-      data['schedule_pickup'] = laundrySelectedPickupDate
-        ? new Date(laundrySelectedPickupDate).toISOString()
-        : null;
-      data['schedule_dropoff'] = laundrySelectedDropOffDate
-        ? new Date(laundrySelectedDropOffDate).toISOString()
-        : null;
-      data['slot'] = !!laundrySelectedPickupSlot
-        ? laundrySelectedPickupSlot
-        : null;
-      data['dropoff_scheduled_slot'] = !!laundrySelectedDropOffSlot
-        ? laundrySelectedDropOffSlot
-        : null;
+    data['comment_for_pickup_driver'] = pickupDriverComment;
+    data['comment_for_dropoff_driver'] = dropOffDriverComment;
+    data['comment_for_vendor'] = vendorComment;
+    data['schedule_pickup'] = laundrySelectedPickupDate
+    ? laundrySelectedPickupDate
+    : null;
+    data['schedule_dropoff'] = laundrySelectedDropOffDate
+    ? laundrySelectedDropOffDate
+    : null;
+    data['slot'] = !!laundrySelectedPickupSlot
+    ? laundrySelectedPickupSlot
+    : null;
+    data['dropoff_scheduled_slot'] = !!laundrySelectedDropOffSlot
+    ? laundrySelectedDropOffSlot
+    : null;
     } else {
-      data['task_type'] = !!selectedTimeSlots ? 'schedule' : dateType;
-
-      if (!!selectedTimeSlots) {
-        const date = selectedDateFromCalendar;
-        const time = selectedTimeSlots.split('-')[0];
-
-        // const formatDate = moment(
-        //   `${date} ${time}`,
-        //   'YYYY-MM-DD HH:mm:ss',
-        // ).format();
-        // console.log('formatDate', formatDate);
-        data['schedule_dt'] = selectedDateFromCalendar;
-      } else {
-        data['schedule_dt'] =
-          dateType != 'now' && scheduleDate
-            ? new Date(scheduleDate).toISOString()
-            : null;
-      }
-      data['specific_instructions'] = instruction;
-      data['slot'] = selectedTimeSlots;
+    data['task_type'] = !!selectedTimeSlots ? 'schedule' : dateType;
+    
+    if (!!selectedTimeSlots) {
+    const date = selectedDateFromCalendar;
+    const time = selectedTimeSlots.split('-')[0];
+    data['schedule_dt'] = selectedDateFromCalendar;
+    } else {
+    data['schedule_dt'] =
+    dateType != 'now' && scheduleDate
+    ? new Date(scheduleDate).toISOString()
+    : null;
     }
-
+    data['specific_instructions'] = instruction;
+    data['slot'] = selectedTimeSlots;
+    }
     console.log(data, 'fsdjkhfkjshfkjahsdkjfhak');
+        actions
+    .scheduledOrder(data, {
+    code: appData?.profile?.code,
+    currency: currencies?.primary_currency?.id,
+    language: languages?.primary_language?.id,
+    // systemuser: DeviceInfo.getUniqueId(),
+    })
+    .then((res) => {
+    console.log(res, 'schedulte api res res>>>');
+    if (res && res?.status == 'Success') {
+    if (toHitApiForPlaceOrder && businessType == 'laundry') {
+    _finalPayment();
+    }
+    updateState({
+    // isLoadingB: toHitApiForPlaceOrder ? true : false,
+    });
+    } else {
+    updateState({
+    isLoadingB: false,
+    });
+    }
+    // getCartDetail();
+    });
+    // .catch(errorMethod);
+    };
 
-    // updateState({isLoading: false});
-    actions
-      .scheduledOrder(data, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        // systemuser: DeviceInfo.getUniqueId(),
-      })
-      .then((res) => {
-        console.log(res, 'schedulte api res res>>>');
-        if (res && res?.status == 'Success') {
-          if (toHitApiForPlaceOrder && businessType == 'laundry') {
-            _finalPayment();
-          }
-          updateState({
-            // isLoadingB: toHitApiForPlaceOrder ? true : false,
-          });
-        } else {
-          updateState({
-            isLoadingB: false,
-          });
-        }
-        // getCartDetail();
-      });
-    //   .catch(errorMethod);
-  };
+    
+  // false, 'schedule', value
+  
 
   const _finalPayment = () => {
     // if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
@@ -1384,6 +1389,11 @@ function Cart({navigation, route}) {
     // }
     // _offineLinePayment();
   };
+
+  const formatDateSlot = (date, time) => {
+    return moment(`${date} ${time}`, 'YYYY-MM-DD HH:mm:ss').format();
+  };
+
   //Clear cart
   const placeOrder = () => {
     isFAQsSubmitted = true;
@@ -1406,7 +1416,6 @@ function Cart({navigation, route}) {
         }
       }
 
-    if (!!userData?.auth_token) {
       if (
         !!cartData?.closed_store_order_scheduled &&
         cartData?.products[0]?.vendor?.is_vendor_closed &&
@@ -1438,7 +1447,7 @@ function Cart({navigation, route}) {
         return;
       }
 
-      if (cartData?.category_kyc_count > 0) {
+      if (cartData?.without_category_kyc === 0) {
         showError('Please submit KYC form!');
         return;
       }
@@ -1795,7 +1804,7 @@ function Cart({navigation, route}) {
   //       .catch(errorMethod);
   //   }
   // };
-
+  console.log(paymentMethodId,"paymentMethodId")
   const _paymentWithStripe = async (
     cardInfo,
     tokenInfo,
@@ -1803,6 +1812,7 @@ function Cart({navigation, route}) {
     order_number,
   ) => {
     console.log(order_number, 'order_numberrrrr');
+    
     actions
       .getStripePaymentIntent(
         // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
@@ -2471,9 +2481,7 @@ function Cart({navigation, route}) {
               // paddingHorizontal: moderateScale(8),
               flexDirection: 'column',
             }}>
-            <TouchableOpacity
-              onPress={() => _redirectVendorProducts(item)}
-            >
+            <TouchableOpacity onPress={() => _redirectVendorProducts(item)}>
               <Text
                 numberOfLines={1}
                 style={{
@@ -3084,6 +3092,20 @@ function Cart({navigation, route}) {
               </View>
             )}
 
+            {appIds?.meatEasy == DeviceInfo.getBundleId() ? (
+              <View style={styles.itemPriceDiscountTaxView}>
+                {!!item?.delivery_types && item?.delivery_types?.length > 0 ? (
+                  <Text
+                    style={{
+                      ...styles.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      marginBottom: moderateScaleVertical(8),
+                    }}>
+                    {strings.DELIVERY_CHARGES}:
+                  </Text>
+                ) : null}
 
                 {!!item?.delivery_types && item?.delivery_types.length > 0 ? (
                   <Text
@@ -3142,7 +3164,8 @@ function Cart({navigation, route}) {
                       <Text style={styles.dropDownTextStyle}>
                         {
                           item?.delivery_types.filter(
-                            (val2) => (sel_types || item?.sel_types) == val2?.code,
+                            (val2) =>
+                              (sel_types || item?.sel_types) == val2?.code,
                           )[0]?.courier_name
                         }
                       </Text>
@@ -3153,7 +3176,8 @@ function Cart({navigation, route}) {
                         }}>
                         {
                           item?.delivery_types.filter(
-                            (val2) => (sel_types || item?.sel_types) == val2?.code,
+                            (val2) =>
+                              (sel_types || item?.sel_types) == val2?.code,
                           )[0]?.rate
                         }
                       </Text>
@@ -3169,7 +3193,7 @@ function Cart({navigation, route}) {
                   </ModalDropdown>
                 ) : null}
               </>
-            }
+            )}
 
             {/* <View style={styles.itemPriceDiscountTaxView}>
               <Text
@@ -3534,7 +3558,6 @@ function Cart({navigation, route}) {
       </View>
     );
   };
- 
 
   const setModalVisible = (visible, type, id, data) => {
     if (!!userData?.auth_token) {

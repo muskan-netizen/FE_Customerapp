@@ -232,6 +232,7 @@ export function getProductDetailByVariants(
         resolve(res);
       })
       .catch((error) => {
+       
         reject(error);
       });
   });

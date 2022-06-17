@@ -1715,7 +1715,15 @@ target 'DingDongDelivers' do
   
 end
 
+# Torunz Target
+target 'Torunz' do
+  
+end
 
+# Kurs Target
+target 'Kurs' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
