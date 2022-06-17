@@ -84,7 +84,7 @@ export default function SelectPaymentModalView({
   const userData = useSelector((state) => state?.auth?.userData);
   const [image, setImage] = useState([]);
   const [taskInstruction, setInstruction] = useState('');
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [isError, setError] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [myAnswerdArray, setMyAllanswers] = useState([]);
