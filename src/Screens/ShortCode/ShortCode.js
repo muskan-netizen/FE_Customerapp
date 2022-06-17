@@ -2450,8 +2450,9 @@ const animationVideo = () =>{
       return imagePath.ipd
     case appIds?.muvpod:
       // () => {updateState({LoadingScreen:false, isLoading:false})}
-      return {uri : imagePath.muvpod}
-      // return imagePath.muvpodmp4
+      // return {uri : imagePath.muvpod}
+      
+      return imagePath.ipd
       
       
   } 

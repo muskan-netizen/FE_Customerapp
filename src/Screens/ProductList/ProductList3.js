@@ -17,7 +17,7 @@ import {
   View
 } from 'react-native';
 import { useDarkMode } from 'react-native-dark-mode';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import Share from 'react-native-share';
@@ -57,6 +57,7 @@ import {
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { currencyNumberFormatter } from '../../utils/commonFunction';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   checkEvenOdd,
   getImageUrl,
@@ -325,7 +326,7 @@ export default function Products({ route, navigation }) {
 
   const listEmptyComponent = useCallback(() => {
     return (
-      <NoDataFound isLoading={isLoading} containerStyle={{}}  text={strings.NOPRODUCTFOUND} />
+      <NoDataFound isLoading={isLoading} containerStyle={{}} text={strings.NOPRODUCTFOUND} />
     )
   }, [isLoading, productListData]);
 
@@ -335,7 +336,8 @@ export default function Products({ route, navigation }) {
     )
   }, [isLoading]);
 
-  const renderProduct = useCallback(({item, index}) => {
+  const renderProduct = useCallback(({ item, index }) => {
+    console.log(item,"itemmm")
     return (
       <View
         key={String(index)}
@@ -1927,6 +1929,7 @@ export default function Products({ route, navigation }) {
   };
 
   const RenderOfferView = () => {
+
     return (
       <View>
         <Text
@@ -2633,13 +2636,22 @@ export default function Products({ route, navigation }) {
             />
           ) : null}
 
-        <TouchableOpacity 
-        onPress={onShowHideFilter}
-        style={{
-          marginLeft:moderateScale(12)
-        }}>
-          <Image source={imagePath.filter} />
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={onShowHideFilter}
+            style={{
+              marginLeft: moderateScale(12)
+            }}>
+            {getBundleId() == appIds.muvpod ? (<View style={{ flexDirection: 'row' }} >
+              <Image source={imagePath.filter} />
+              <Text style={{
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.black,
+                fontSize: moderateScale(16),
+                fontFamily: fontFamily.medium
+              }} > Sort By </Text>
+            </View>) : <Image source={imagePath.filter} />}
+          </TouchableOpacity>
         </View>
 
         {!!categoryInfo && categoryInfo?.childs?.length > 0 && (
@@ -3183,7 +3195,7 @@ export default function Products({ route, navigation }) {
             )}
             renderSectionHeader={renderSectionHeader}
             ListEmptyComponent={
-              <NoDataFound isLoading={isLoading} containerStyle={{}} text={strings.NOPRODUCTFOUND}/>
+              <NoDataFound isLoading={isLoading} containerStyle={{}} text={strings.NOPRODUCTFOUND} />
             }
             initialNumToRender={1000}
             // windowSize={10}

@@ -1,3 +1,4 @@
+import { string } from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import {
   Animated,
@@ -429,8 +430,9 @@ const ProductCard3 = ({
                   : colors.blackOpacity66,
                 textAlign: 'left',
               }}>
+                {console.log(data?.translation[0]?.translation_description,"data?.translation_description")}
               {data?.translation[0]?.translation_description ||
-                data?.translation_description}
+              data?.translation_description.toString()}
             </Text>
           </View>
         </View>
