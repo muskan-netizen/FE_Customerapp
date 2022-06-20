@@ -68,6 +68,7 @@ export default function DashBoardFive({
   toggleData = {},
   onVendorFilterSeletion = () => { },
   tempCartData = null,
+  onPressVendor = () => { },
 }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -185,7 +186,7 @@ export default function DashBoardFive({
     <View style={{ marginHorizontal: moderateScale(16) }}>
       <MarketCard3
         data={item}
-        onPress={() => onPressCategory(item)}
+        onPress={() => onPressVendor(item)}
         extraStyles={{ margin: 2 }}
       />
     </View>

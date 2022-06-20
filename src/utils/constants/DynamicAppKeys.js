@@ -1436,7 +1436,7 @@ const appIds = {
     android: 'com.wer',
   }),
   beachhop: Platform.select({
-    ios: 'com.beachhop',
+    ios: 'com.beachhop.customer',
     android: 'com.beachhop.customer',
   }),
   qseek: Platform.select({
