@@ -344,7 +344,10 @@ const shortCodes = {
   meow:'71f36c',
   dingDongDelivers:'380c49',
   torunz: 'f23b31',
-  kurs: '046761'
+  kurs: '046761',
+  spa: '9022c6',
+  capitalDiagnostic: 'fd6dd6',
+  abbeRides: '8501b6',
 
 };
 
@@ -1720,10 +1723,21 @@ const appIds = {
     ios: 'com.torunz',
     android: 'com.torunz',
   }),
-  kurs: Platform.select({
-    ios: 'com.app.kurs',
-    android: 'com.app.kurs',
+  spa: Platform.select({
+    ios: 'com.customerApp.spa',
+    android: 'com.customerApp.spa',
   }),
+
+  capitalDiagnostic: Platform.select({
+    ios: 'com.capitaldiagnostic',
+    android: 'com.capitaldiagnostic',
+  }),
+
+  abbeRides: Platform.select({
+    ios: 'com.abbeRides',
+    android: 'com.abbeRides',
+  }),
+
 };
 
 const socialKeys = {

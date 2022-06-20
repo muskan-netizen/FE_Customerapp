@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "867584751923",
+    "project_id": "spa-fee1b",
+    "storage_bucket": "spa-fee1b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867584751923:android:c8c042578e329a79f72646",
+        "android_client_info": {
+          "package_name": "com.customerApp.spa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "867584751923-bv0ec342d6ai8ud4o5vg5t22ep5sspar.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customerApp.spa",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "867584751923-n8gqqa8nvada3puuntf4psg8j7cdm4v6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customerApp.spa",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "867584751923-udd80060r8q4egtvorlpcbp8efmv80v5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customerApp.spa",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "867584751923-ut3oh7r3ee85jti0ks2qklbsupkf7tfs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD65myt_XZBd5Zu9--M-O1GHTn5QYtzQQo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "867584751923-ut3oh7r3ee85jti0ks2qklbsupkf7tfs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "867584751923-n3ggqtoms5qoobm35i8rkotstcnh07s4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.customerApp.spa"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

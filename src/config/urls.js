@@ -4,7 +4,10 @@
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://shariff.rostaging.com/api/v1'
+// export const API_BASE_URL = 'https://pas41.com/api/v1'
+// export const API_BASE_URL ='https://meltivers.com/api/v1'
 // export const API_BASE_URL = 'https://foodnests.com/api/v1'
 // export const API_BASE_URL = 'https://bluebundles.org/api/v1'
 // export const API_BASE_URL = 'https://ineed.do/api/v1'

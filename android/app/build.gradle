@@ -208,14 +208,14 @@ android {
    
 
 // productFlavors{
-//            meltivers{
+//               spa{
 //             dimension "appType"
 //             versionCode 1
 //             versionName "1.0"
 //             minSdkVersion rootProject.ext.minSdkVersion
 //             targetSdkVersion rootProject.ext.targetSdkVersion
-//             applicationId 'com.meltivers'
-//             resValue "string", "app_name", "Meltivers"
+//             applicationId 'com.customerApp.spa'
+//             resValue "string", "app_name", "Spa"
 //             resValue "string", "host_name", ""
 //             }
 // }
@@ -5493,6 +5493,37 @@ android {
                 applicationId 'com.app.kurs'
                 resValue "string", "app_name", "KURS"
                 resValue "string", "host_name", ""
+            }
+              spa{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.customerApp.spa'
+            resValue "string", "app_name", "Spa"
+            resValue "string", "host_name", ""
+            }
+ 
+      capitalDiagnostic{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.capitaldiagnostic'
+            resValue "string", "app_name", "Capital Diagnostic"
+            resValue "string", "host_name", ""
+            }
+            abbeRides{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.abbeRides'
+            resValue "string", "app_name", "Abbe Rides"
+            resValue "string", "host_name", ""
             }
     }
 }
