@@ -159,7 +159,7 @@ export default function SelectPaymentModal({
     if (res2) {
       await createPaymentMethod({
         type: 'Card',
-        // token:tokenInfo,
+        token:res2,
         card: cardInfo,
         billing_details: {
           name: 'Jenny Rosen',
