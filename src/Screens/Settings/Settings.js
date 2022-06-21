@@ -691,11 +691,12 @@ export default function Settings({route, navigation}) {
             }}>
             {`${DeviceInfo.getVersion()}`}
             <Text>{`(${DeviceInfo.getBuildNumber()})`}</Text>
-            <Text>
-              {API_BASE_URL == 'https://api.rostaging.com/api/v1' ? 'S' : ''}
+            <Text style={{color:colors.textGreyLight}}>
+              {API_BASE_URL == 'https://api.rostaging.com/api/v1' ? ' 21-June Staging' : ''}
             </Text>
           </Text>
         </View>
+       
       </ScrollView>
     </WrapperContainer>
   );
