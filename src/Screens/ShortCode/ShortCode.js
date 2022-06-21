@@ -2175,6 +2175,20 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+          case appIds.torunz:
+          updateState({
+            shortCode: shortCodes.torunz,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+          case appIds.kurs:
+            updateState({
+              shortCode: shortCodes.kurs,
+              isShortcodePrefilled: true,
+            });
+            break;
+          
       }
     })();
   }, []);
@@ -2217,13 +2231,13 @@ export default function ShortCode({ route, navigation }) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '245bae',
+       //  code: '245bae',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '245bae',
+       //  code: '245bae',
         code: shortCode,
       };
     }

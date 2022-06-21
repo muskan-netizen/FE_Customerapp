@@ -331,7 +331,7 @@ export default function Products({ route, navigation }) {
 
   const listEmptyComponent = useCallback(() => {
     return (
-      <NoDataFound isLoading={isLoading} containerStyle={{}} text={strings.NOPRODUCTFOUND} />
+      <NoDataFound isLoading={isLoading} containerStyle={{}}  text={strings.NOPRODUCTFOUND}/>
     )
   }, [isLoading, productListData, sectionListData]);
 
@@ -341,7 +341,8 @@ export default function Products({ route, navigation }) {
     )
   }, [isLoading]);
 
-  const renderProduct = useCallback(({ item, index }) => {
+  const renderProduct = useCallback(({item, index}) => {
+    
     return (
       <View
         key={String(index)}
@@ -1897,6 +1898,7 @@ export default function Products({ route, navigation }) {
       index
     );
 
+ 
 
     timeOut = setTimeout(
       () => {

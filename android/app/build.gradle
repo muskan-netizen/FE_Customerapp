@@ -205,19 +205,10 @@ android {
     }
 
     flavorDimensions "appType"
-//     productFlavors{
-//   ored{
-//                 dimension "appType"
-//                 versionCode 2
-//                 versionName "1.0"
-//                 minSdkVersion rootProject.ext.minSdkVersion
-//                 targetSdkVersion rootProject.ext.targetSdkVersion         
-//                 applicationId 'com.ored.customer'
-//                 resValue "string", "app_name", "Ored"
-//                 resValue "string", "host_name", ""
-//             }
-//     }
+   
 
+
+}
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -1595,7 +1586,7 @@ android {
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
                 applicationId 'com.mokabfix'
-                resValue "string", "app_name", "MokabFix"
+                resValue "string", "app_name", "Trkeb"
                 resValue "string", "host_name", ""
             }
             botseats{
@@ -4376,7 +4367,7 @@ android {
             }
             onscart{
                 dimension "appType"
-                versionCode 4
+                versionCode 6
                 versionName "1.2"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -5441,7 +5432,7 @@ android {
             resValue "string", "app_name", "Hitch Delivery"
             resValue "string", "host_name", ""
             }
-               zoodMarket{
+            zoodMarket{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -5471,6 +5462,27 @@ android {
             resValue "string", "app_name", "DingDong Delivers"
             resValue "string", "host_name", ""
             }
+            torunz{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.torunz'
+            resValue "string", "app_name", "Torunz"
+            resValue "string", "host_name", ""
+            }
+             kurs{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                // applicationIdSuffix ".hmoobhhub"
+                applicationId 'com.app.kurs'
+                resValue "string", "app_name", "KURS"
+                resValue "string", "host_name", ""
+            }
     }
 }
 
@@ -5483,6 +5495,9 @@ dependencies {
     implementation 'com.facebook.fresco:animated-webp:1.+'
     implementation 'com.facebook.fresco:webpsupport:1.+'
     // implementation project(':react-native-charts-wrapper')
+    
+
+
     implementation 'com.facebook.android:facebook-android-sdk:9.0.0'
     // implementation 'com.google.firebase:firebase-analytics:17.3.0'
     implementation fileTree(dir: "libs", include: ["*.jar"])
