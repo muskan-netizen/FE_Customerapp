@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>134671540319-pd1vs89104c5thcfc0qkb7es452tp6ob.apps.googleusercontent.com</string>
+	<string>1009474657845-5nq5at4mp332crtifrq3tk52vqfmu34t.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.134671540319-pd1vs89104c5thcfc0qkb7es452tp6ob</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>134671540319-9n1ihduv210ffacpl5fv25gilgaba7st.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.1009474657845-5nq5at4mp332crtifrq3tk52vqfmu34t</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBrcoOrA8WQp2fdghTMrRMNcj8muzqMdxc</string>
+	<string>AIzaSyDhcOEIxiTlZNMoPtOYfK8hUFmZVFWjCFQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>134671540319</string>
+	<string>1009474657845</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.ubercann</string>
+	<string>com.UCANN</string>
 	<key>PROJECT_ID</key>
-	<string>ubercann-25db0</string>
+	<string>ucann-a8c68</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ubercann-25db0.appspot.com</string>
+	<string>ucann-a8c68.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:134671540319:ios:35d548863719f5d0ba3bea</string>
+	<string>1:1009474657845:ios:cddea035f4d1b477db5b7c</string>
 </dict>
 </plist>

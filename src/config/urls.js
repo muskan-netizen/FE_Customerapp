@@ -17,8 +17,10 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://peerdeliveries.com/api/v1';
 // export const API_BASE_URL = 'https://hometowndelivery21.com/api/v1';
 // export const API_BASE_URL = 'https://click2deliver.co.uk/api/v1';
-// export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
-// export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
+//export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
+
+ //export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
+//  export const API_BASE_URL = 'https://fairexglobal.com/api/v1';
 // export const API_BASE_URL = 'https://dbairro.com/api/v1';
 // export const API_BASE_URL = 'https://beachhopdelivery.com/api/v1';
 // export const API_BASE_URL = 'https://grub.royoorders.com/api/v1';
@@ -31,14 +33,25 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://yogo.gd/api/v1'; // yogoFood
 // export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
 // export const API_BASE_URL = 'https://gdotdelivery.com/api/v1';
-// export const API_BASE_URL = 'https://cabio.rostaging.com/api/v1';
-// export const API_BASE_URL = 'https://glamsouq.com/api/v1';
-// export const API_BASE_URL = 'https://getfix.com.my/api/v1';
-// export const API_BASE_URL = 'https://order.swiftandvalu.com/api/v1';
-// export const API_BASE_URL = 'https://ubercann.com/api/v1';
+// export const API_BASE_URL = 'https://cabio.rostaging.com/api/v1'; 
+// export const API_BASE_URL = 'https://glamsouq.com/api/v1'; 
+// export const API_BASE_URL = 'https://getfix.com.my/api/v1'; 
+// export const API_BASE_URL = 'https://order.swiftandvalu.com/api/v1'; 
+// export const API_BASE_URL = 'https://ubercann.com/api/v1'; 
+// export const API_BASE_URL = 'https://palmettoplusdelivered.com/api/v1'; 
+// export const API_BASE_URL = 'https://uvennow.com/api/v1'; 
+// export const API_BASE_URL = 'https://grn.green/api/v1'; 
 
-//Harbans
-// export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
+
+
+
+
+
+
+
+
+//Harbans 
+// export const API_BASE_URL = 'http://192.168.99.124:8005/api/v1';
 
 //Vishwas
 // export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
@@ -294,7 +307,7 @@ export const CANCEL_ORDER = getApiUrl('/return-order/vendor-order-for-cancel');
 export const WALLET_USER_VERIFY = getApiUrl('/wallet/transfer/user/verify');
 export const WALLET_TRANSFER_CONFIRM = getApiUrl('/wallet/transfer/confirm');
 export const VENDOR_SLOTS = getApiUrl('/vendor/slots');
-export const NEW_VENDOR_FILTER = getApiUrl('/vendor/vendorProductsFilter');
+export const NEW_VENDOR_FILTER = getApiUrl('/v2/vendor/vendorProductsFilterOptimize');
 export const GETALLTEMPLCARDS = getApiUrl('/get/edited-orders');
 export const ACCEPTREJECTDRIVERUPDATE = getApiUrl('/edit-order/approve/reject');
 
@@ -363,3 +376,9 @@ export const SDKPAYMENTCANCELWAVEURL = getApiUrl('/payment/sdk_failed');
 
 export const VENDOR_DROPOFF_SLOTS = getApiUrl('/vendor/dropoffslots');
 export const ADD_RIDER = getApiUrl('/pickup-delivery/add-rider');
+
+
+
+export const VENDOR_OPTIMIZE_V2 = getApiUrl('/v2/vendor-optimize');
+export const GET_MORE_CATEGORIES = getApiUrl('/v2/vendor-optimize-category');
+// export const GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE = getApiUrl('/v2/category/filters',);
