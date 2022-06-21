@@ -2616,7 +2616,8 @@ function Cart({navigation, route}) {
                                         : colors.blackOpacity86,
                                       fontSize: textScale(12),
                                       fontFamily: fontFamily.medium,
-                                      flex: 0.7,
+                                     width:width/2.1
+                                      
                                     }}>
                                     {i?.product?.translation[0]?.title},
                                   </Text>
