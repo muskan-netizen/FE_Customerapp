@@ -166,6 +166,7 @@ export default function TabRoutes(props) {
           tabBarVisible: getTabBarVisibility(route, navigation, [
             navigationStrings.PRODUCT_LIST,
             navigationStrings.PRODUCTDETAIL,
+            navigationStrings.PRODUCTWITHCATEGORY
           ]),
           tabBarLabel: strings.HOME,
           tabBarIcon: ({focused, tintColor}) => (
@@ -200,6 +201,7 @@ export default function TabRoutes(props) {
           tabBarVisible: getTabBarVisibility(route, navigation, [
             navigationStrings.PRODUCT_LIST,
             navigationStrings.PRODUCTDETAIL,
+            navigationStrings.PRODUCTWITHCATEGORY
           ]),
           tabBarLabel: strings.CART,
           tabBarIcon: ({focused, tintColor}) => (

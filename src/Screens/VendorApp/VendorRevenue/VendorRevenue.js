@@ -3,7 +3,6 @@ import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 import {TouchableOpacity} from 'react-native';
 import {processColor, View, Text, ScrollView} from 'react-native';
-import {CombinedChart} from 'react-native-charts-wrapper';
 import {useSelector} from 'react-redux';
 import Header from '../../../Components/Header';
 import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
@@ -462,26 +461,7 @@ export default function VendorRevenue({navigation, route}) {
         data={{dataSets: [{label: 'demo', values: [{y: 1}, {y: 2}, {y: 1}]}]}}
       /> */}
       {!!(mapData && mapData?.barData && mapData?.lineData) ? (
-        <CombinedChart
-          data={mapData}
-          xAxis={xAxis}
-          yAxis={yAxis}
-          // onSelect={this.handleSelect.bind(this)}
-          // onChange={(event) => console.log(event.nativeEvent)}
-          // marker={this.state.marker}
-          // highlights={this.state.highlights}
-          highlightFullBarEnabled={false}
-          drawOrder={['LINE', 'BAR']}
-          style={{
-            flex: 0.6,
-            marginTop: moderateScaleVertical(40),
-            justifyContent: 'center',
-            alignItems: 'stretch',
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.text
-              : 'transparent',
-          }}
-        />
+        <Text>Chart</Text>
       ) : (
         // <NoDataFound isLoading={isLoading} containerStyle={{flex: 0.6}} />
         <></>

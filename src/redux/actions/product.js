@@ -234,6 +234,7 @@ export function getProductDetailByVariants(
         resolve(res);
       })
       .catch((error) => {
+       
         reject(error);
       });
   });
@@ -534,5 +535,5 @@ export function getProductByVendorIdOptamizeV2(query = '', data = {}, headers = 
 }
 
 export function getMoreCategories(query = '', data = {}, headers = {}) {
-  return apiGet(GET_MORE_CATEGORIES + query, data, headers)
+  return apiPost(GET_MORE_CATEGORIES + query, data, headers)
 }

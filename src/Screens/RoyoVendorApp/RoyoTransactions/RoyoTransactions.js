@@ -207,7 +207,7 @@ const RoyoTransactions = (props) => {
             styles.font16Semibold,
             {color: activeIndex == 2 ? colors.redColor : colors.themeColor2},
           ]}>
-          {activeIndex == 0 ? '+' : activeIndex == 1 ? '' : '-'} $
+          {activeIndex == 0 ? '+' : activeIndex == 1 ? '' : '-'} {currencies?.primary_currency?.symbol}
           {Number(item.payable_amount).toFixed(2)}
         </Text>
       </View>
