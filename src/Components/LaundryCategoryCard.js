@@ -14,17 +14,19 @@ import {SvgUri} from 'react-native-svg';
 import Elevations from 'react-native-elevation';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import ButtonWithLoader from './ButtonWithLoader';
 
 const LaundryCategoryCard = ({
   data = {},
   onPress = () => {},
   isLoading = false,
 }) => {
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const {appStyle, themeToggle, themeColor, themeColors} = useSelector(
+    (state) => state?.initBoot,
+  );
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+
   const fontFamily = appStyle?.fontSizeData;
 
   const imageURI = getImageUrl(
@@ -37,38 +39,29 @@ const LaundryCategoryCard = ({
 
   const onLoad = (evl) => {};
 
-  console.log('isSVGisSVG', isSVG);
-
-  let imgHeight =
-    appStyle?.homePageLayout === 5 ? moderateScale(80) : moderateScale(50);
-  let imgWidth =
-    appStyle?.homePageLayout === 5 ? moderateScale(80) : moderateScale(50);
-  let imgRadius =
-    appStyle?.homePageLayout === 5 ? moderateScale(40) : moderateScale(25);
-
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      activeOpacity={0.9}
+    <View
+      // onPress={onPress}
+
       style={{
-        // width: (width - moderateScale(16)) / 4,
-        marginVertical: moderateScale(0),
-        justifyContent: 'center',
         alignItems: 'center',
+        borderRadius: moderateScale(10),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: moderateScale(20),
+        backgroundColor: colors.white,
       }}>
       <View
         style={{
-          flex: 0.8,
           borderRadius: moderateScale(40),
-          width: moderateScale(80),
-          height: moderateScale(80),
-          justifyContent: 'center',
+          height: moderateScale(75),
           alignItems: 'center',
+          flexDirection: 'row',
         }}>
         {isSVG ? (
           <SvgUri
-            height={imgHeight}
-            width={imgWidth}
+            height={moderateScale(50)}
+            width={moderateScale(50)}
             uri={imageURI}
             style={{}}
           />
@@ -76,9 +69,9 @@ const LaundryCategoryCard = ({
           <View>
             <FastImage
               style={{
-                height: imgHeight,
-                width: imgWidth,
-                borderRadius: imgRadius,
+                height: moderateScale(50),
+                width: moderateScale(50),
+                borderRadius: moderateScale(25),
               }}
               source={{
                 uri: imageURI,
@@ -90,21 +83,31 @@ const LaundryCategoryCard = ({
             />
           </View>
         )}
-      </View>
-      <View style={{flex: 0.2}}>
+
         <Text
-          // numberOfLines={1}
           style={{
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             fontFamily: fontFamily.regular,
-            fontSize: textScale(9),
-            textAlign: 'center',
-            marginTop: moderateScaleVertical(4),
+            fontSize: textScale(12),
+            marginLeft: moderateScale(20),
           }}>
           {data.name}
         </Text>
       </View>
-    </TouchableOpacity>
+      <ButtonWithLoader
+        btnText="+ Add"
+        btnTextStyle={{
+          color: themeColors.primary_color,
+        }}
+        btnStyle={{
+          width: moderateScale(90),
+          marginTop: 0,
+          height: moderateScaleVertical(35),
+          borderRadius: moderateScale(5),
+          borderColor: themeColors.primary_color,
+        }}
+      />
+    </View>
   );
 };
 export default React.memo(LaundryCategoryCard);

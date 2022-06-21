@@ -1,19 +1,19 @@
-import { useFocusEffect } from '@react-navigation/native';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, BackHandler, Linking } from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {Alert, BackHandler, Linking} from 'react-native';
 import AppLink from 'react-native-app-link';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
 import strings from '../../constants/lang';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import { MyDarkTheme } from '../../styles/theme';
-import { shortCodes } from '../../utils/constants/DynamicAppKeys';
+import {MyDarkTheme} from '../../styles/theme';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
@@ -21,7 +21,7 @@ import {
   getNearestLocation,
   showError,
 } from '../../utils/helperFunctions';
-import { chekLocationPermission } from '../../utils/permissions';
+import {chekLocationPermission} from '../../utils/permissions';
 import {
   DashBoardFive,
   DashBoardFour,
@@ -37,7 +37,7 @@ import DashBoardEight from './DashboardViews/DashBoardEight';
 
 // navigator.geolocation = require('react-native-geolocation-service');
 
-export default function Home({ route, navigation }) {
+export default function Home({route, navigation}) {
   const paramData = route?.params;
 
   const {
@@ -50,7 +50,9 @@ export default function Home({ route, navigation }) {
     themeToggle,
     allAddresss,
   } = useSelector((state) => state?.initBoot);
-  const { location, appMainData, dineInType } = useSelector((state) => state?.home);
+  const {location, appMainData, dineInType} = useSelector(
+    (state) => state?.home,
+  );
   console.log(location, '>location>location');
   console.log(appMainData, 'appMainData>appMainData');
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
@@ -65,7 +67,7 @@ export default function Home({ route, navigation }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const businessTypes = appStyle?.homePageLayout;
-  console.log(appData,"businessTypesbusinessTypes");
+  console.log(appData, 'businessTypesbusinessTypes');
 
   const [state, setState] = useState({
     isLoading: true,
@@ -106,7 +108,7 @@ export default function Home({ route, navigation }) {
     singleVendor,
   } = state;
 
-  const { profile } = appData;
+  const {profile} = appData;
   useFocusEffect(
     useCallback(() => {
       const backHandler = BackHandler.addEventListener(
@@ -118,7 +120,7 @@ export default function Home({ route, navigation }) {
   );
 
   useEffect(() => {
-    updateState({ updatedData: appMainData?.categories });
+    updateState({updatedData: appMainData?.categories});
   }, [appMainData]);
 
   useEffect(() => {
@@ -173,7 +175,7 @@ export default function Home({ route, navigation }) {
         onPress: () => console.log('Cancel Pressed'),
         // style: 'destructive',
       },
-      { text: strings.CLEAR_CART2, onPress: () => clearCart(res) },
+      {text: strings.CLEAR_CART2, onPress: () => clearCart(res)},
     ]);
   };
 
@@ -197,7 +199,7 @@ export default function Home({ route, navigation }) {
   };
 
   const updateLatLang = (res) => {
-    updateState({ updateTime: Math.random() });
+    updateState({updateTime: Math.random()});
     actions.locationData(res);
   };
   useEffect(() => {
@@ -206,7 +208,7 @@ export default function Home({ route, navigation }) {
     }
   }, [updateTime]);
   useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
+    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
   }, []);
 
   useEffect(() => {
@@ -258,7 +260,7 @@ export default function Home({ route, navigation }) {
               console.log(err, 'chekLocationPermission error');
             });
         } else {
-          console.log('appDataappDataappData', appData.profile.preferences)
+          console.log('appDataappDataappData', appData.profile.preferences);
           if (appData?.profile?.preferences?.is_hyperlocal) {
             const data = {
               address: appData?.profile?.preferences?.Default_location_name,
@@ -300,7 +302,7 @@ export default function Home({ route, navigation }) {
         .then((res) => {
           if (res.data) {
             actions.saveAllUserAddress(res.data);
-            updateState({ saveAllUserAddress: res?.data });
+            updateState({saveAllUserAddress: res?.data});
           }
         })
         .catch(errorMethod);
@@ -328,7 +330,7 @@ export default function Home({ route, navigation }) {
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
     if (!!paramData) {
-      updateState({ searchDataLoader: true });
+      updateState({searchDataLoader: true});
     }
     let latlongObj = {};
     console.log(location, '>location');
@@ -353,73 +355,73 @@ export default function Home({ route, navigation }) {
       // near_me: nearMe,
     };
     if (closeVendor == 0 && openVendor == 0 && bestSeller == 0) {
-      updateState({ singleVendor: true });
+      updateState({singleVendor: true});
     } else {
-      updateState({ singleVendor: false });
+      updateState({singleVendor: false});
     }
 
     {
       selectedTabType
         ? actions
-          .homeData(
-            {
-              type: dineInType,
-              ...latlongObj,
-              ...vendorFilterData,
-            },
-            {
-              code: appData?.profile?.code,
-              currency: currencies?.primary_currency?.id,
-              language: languages?.primary_language?.id,
-              // ...latlongObj,
-            },
-          )
-          .then(async (res) => {
-            console.log('Home data++++++', res);
-            // await preLoadImages(res.data);
-            updateState({ searchDataLoader: false });
-            if (
-              appData?.profile?.preferences?.is_hyperlocal &&
-              location?.latitude == '' &&
-              location?.longitude == ''
-            ) {
-              if (
-                typeof res?.data?.reqData == 'object' &&
-                res?.data?.reqData?.latitude &&
-                res?.data?.reqData?.longitude
-              ) {
-                const data = {
-                  address: res?.data?.reqData?.address,
-                  latitude: res?.data?.reqData?.latitude,
-                  longitude: res?.data?.reqData?.longitude,
-                };
-
-                actions.locationData(data);
-              }
-            } else {
+            .homeData(
+              {
+                type: dineInType,
+                ...latlongObj,
+                ...vendorFilterData,
+              },
+              {
+                code: appData?.profile?.code,
+                currency: currencies?.primary_currency?.id,
+                language: languages?.primary_language?.id,
+                // ...latlongObj,
+              },
+            )
+            .then(async (res) => {
+              console.log('Home data++++++', res);
+              // await preLoadImages(res.data);
+              updateState({searchDataLoader: false});
               if (
                 appData?.profile?.preferences?.is_hyperlocal &&
-                location?.latitude != '' &&
-                location?.longitude != ''
+                location?.latitude == '' &&
+                location?.longitude == ''
               ) {
+                if (
+                  typeof res?.data?.reqData == 'object' &&
+                  res?.data?.reqData?.latitude &&
+                  res?.data?.reqData?.longitude
+                ) {
+                  const data = {
+                    address: res?.data?.reqData?.address,
+                    latitude: res?.data?.reqData?.latitude,
+                    longitude: res?.data?.reqData?.longitude,
+                  };
+
+                  actions.locationData(data);
+                }
               } else {
-                const data = {
-                  address: '',
-                  latitude: '',
-                  longitude: '',
-                };
-                // actions.locationData(data);
+                if (
+                  appData?.profile?.preferences?.is_hyperlocal &&
+                  location?.latitude != '' &&
+                  location?.longitude != ''
+                ) {
+                } else {
+                  const data = {
+                    address: '',
+                    latitude: '',
+                    longitude: '',
+                  };
+                  // actions.locationData(data);
+                }
               }
-            }
-            setTimeout(() => {
-              updateState({
-                isLoading: false,
-                isLoadingB: false,
-                searchDataLoader: false,
-              });
-            }, 1500);
-          })
-          .catch(errorMethod)
+              setTimeout(() => {
+                updateState({
+                  isLoading: false,
+                  isLoadingB: false,
+                  searchDataLoader: false,
+                });
+              }, 1500);
+            })
+            .catch(errorMethod)
         : null;
     }
   };
@@ -440,16 +442,16 @@ export default function Home({ route, navigation }) {
   };
 
   //update state
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
-  const { viewRef2, viewRef3, bannerRef } = useRef();
+  const {viewRef2, viewRef3, bannerRef} = useRef();
 
   const preLoadImages = async (data) => {
     if (data.categories.length > 0) {
@@ -503,7 +505,7 @@ export default function Home({ route, navigation }) {
       appStoreLocale: appStoreLocale,
       playStoreId: playStoreId,
     })
-      .then((res) => { })
+      .then((res) => {})
       .catch((err) => {
         Linking.openURL('https://www.uber.com/in/en/');
         console.log('errro raised', err);
@@ -512,7 +514,7 @@ export default function Home({ route, navigation }) {
   };
 
   const onPressVendor = (item) => {
-    console.log("item+++", item)
+    console.log('item+++', item);
 
     if (item?.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
@@ -530,7 +532,7 @@ export default function Home({ route, navigation }) {
         item,
         rootProducts: true,
         // categoryData: data,
-      })()
+      })();
     } else {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
         id: item?.id,
@@ -540,7 +542,7 @@ export default function Home({ route, navigation }) {
         fetchOffers: true,
       })();
     }
-  }
+  };
   //onPress Category
   const onPressCategory = (item) => {
     if (item.redirect_to == staticStrings.VENDOR) {
@@ -558,8 +560,8 @@ export default function Home({ route, navigation }) {
           item.redirect_to == staticStrings.ONDEMANDSERVICE
             ? false
             : item.redirect_to == staticStrings.PRODUCT
-              ? false
-              : true,
+            ? false
+            : true,
         name: item.name,
         isVendorList: false,
       })();
@@ -600,21 +602,21 @@ export default function Home({ route, navigation }) {
       moveToNewScreen(navigationStrings.CATEGORY_BRANDS, item)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { item })();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     } else if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-          item,
-          rootProducts: true,
-          // categoryData: data,
-        })()
+            item,
+            rootProducts: true,
+            // categoryData: data,
+          })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-          id: item?.id,
-          vendor: true,
-          name: item?.name,
-          isVendorList: true,
-          fetchOffers: true,
-        })();
+            id: item?.id,
+            vendor: true,
+            name: item?.name,
+            isVendorList: true,
+            fetchOffers: true,
+          })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
@@ -655,16 +657,16 @@ export default function Home({ route, navigation }) {
       if (data.redirect_to == staticStrings.VENDOR) {
         data?.is_show_category
           ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+              item,
+              rootProducts: true,
+              // categoryData: data,
+            })()
           : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: data.redirect_id,
-            vendor: true,
-            name: data.redirect_name,
-            fetchOffers: true,
-          })();
+              id: data.redirect_id,
+              vendor: true,
+              name: data.redirect_name,
+              fetchOffers: true,
+            })();
       } else if (data.redirect_to == staticStrings.CATEGORY) {
         if (data?.category?.type?.title == staticStrings.VENDOR) {
           let dat2 = data;
@@ -730,16 +732,16 @@ export default function Home({ route, navigation }) {
       )
       .then((res) => {
         console.log(res, 'initApp');
-        updateState({ isRefreshing: false });
+        updateState({isRefreshing: false});
       })
       .catch((error) => {
-        updateState({ isRefreshing: false });
+        updateState({isRefreshing: false});
       });
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({ isRefreshing: true });
+    updateState({isRefreshing: true});
     initApiHit();
     // homeData();
   };
@@ -808,7 +810,7 @@ export default function Home({ route, navigation }) {
     }
   };
 
-  const onSpeechStartHandler = (e) => { };
+  const onSpeechStartHandler = (e) => {};
   const onSpeechEndHandler = (e) => {
     updateState({
       isVoiceRecord: false,
@@ -851,7 +853,6 @@ export default function Home({ route, navigation }) {
   console.log(location, 'location>location');
 
   const renderHomeScreen = () => {
-
     switch (appStyle?.homePageLayout) {
       // switch (case_) {
       case 1:
@@ -866,7 +867,9 @@ export default function Home({ route, navigation }) {
               appMainData={appMainData}
               tempCartData={tempCartData}
               onPressCategory={(item) => onPressCategory(item)}
-              onPressVendor={(item) => { onPressVendor(item) }}
+              onPressVendor={(item) => {
+                onPressVendor(item);
+              }}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
               navigation={navigation}
@@ -884,8 +887,12 @@ export default function Home({ route, navigation }) {
               isLoading={isLoading}
               isRefreshing={isRefreshing}
               appMainData={appMainData}
-              onPressCategory={(item) => { onPressCategory(item) }}
-              onPressVendor={(item) => { onPressVendor(item) }}
+              onPressCategory={(item) => {
+                onPressCategory(item);
+              }}
+              onPressVendor={(item) => {
+                onPressVendor(item);
+              }}
               tempCartData={tempCartData}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
@@ -916,8 +923,12 @@ export default function Home({ route, navigation }) {
               isLoading={isLoading}
               isRefreshing={isRefreshing}
               appMainData={appMainData}
-              onPressCategory={(item) => { onPressCategory(item) }}
-              onPressVendor={(item) => { onPressVendor(item) }}
+              onPressCategory={(item) => {
+                onPressCategory(item);
+              }}
+              onPressVendor={(item) => {
+                onPressVendor(item);
+              }}
               isDineInSelected={isDineInSelected}
               selcetedToggle={selcetedToggle}
               tempCartData={tempCartData}
@@ -947,8 +958,12 @@ export default function Home({ route, navigation }) {
               isLoading={isLoading}
               isRefreshing={isRefreshing}
               appMainData={appMainData}
-              onPressCategory={(item) => { onPressCategory(item) }}
-              onPressVendor={(item) => { onPressVendor(item) }}
+              onPressCategory={(item) => {
+                onPressCategory(item);
+              }}
+              onPressVendor={(item) => {
+                onPressVendor(item);
+              }}
               tempCartData={tempCartData}
               isDineInSelected={isDineInSelected}
               selcetedToggle={selcetedToggle}
@@ -981,8 +996,12 @@ export default function Home({ route, navigation }) {
               isLoading={isLoading}
               isRefreshing={isRefreshing}
               appMainData={appMainData}
-              onPressCategory={(item) => { onPressCategory(item) }}
-              onPressVendor={(item) => { onPressVendor(item) }}
+              onPressCategory={(item) => {
+                onPressCategory(item);
+              }}
+              onPressVendor={(item) => {
+                onPressVendor(item);
+              }}
               isDineInSelected={isDineInSelected}
               selcetedToggle={selcetedToggle}
               tempCartData={tempCartData}
@@ -1016,8 +1035,12 @@ export default function Home({ route, navigation }) {
               isLoading={isLoading}
               isRefreshing={isRefreshing}
               appMainData={appMainData}
-              onPressCategory={(item) => { onPressCategory(item) }}
-              onPressVendor={(item) => { onPressVendor(item) }}
+              onPressCategory={(item) => {
+                onPressCategory(item);
+              }}
+              onPressVendor={(item) => {
+                onPressVendor(item);
+              }}
               isDineInSelected={isDineInSelected}
               selcetedToggle={selcetedToggle}
               tempCartData={tempCartData}
@@ -1059,13 +1082,11 @@ export default function Home({ route, navigation }) {
   }, []);
   // console.log(appMainData, 'appMainData');
 
-  const { blurRef } = useRef();
+  const {blurRef} = useRef();
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
-      bgColor={
-        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-      }
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : '#F4F8FB'}
       isLoading={searchDataLoader}>
       {/* <View style={{flex: 1}}>{}</View> */}
       <>{renderHomeScreen()}</>
