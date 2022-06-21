@@ -946,7 +946,7 @@ function Cart({navigation, route}) {
         navigation.navigate(navigationStrings.TOYYIAPAY, paymentData);
         break;
       case 36: //ToyyibPay Payment Getway
-        updateState({ placeLoader: false });
+        updateState({placeLoader: false});
         navigation.navigate(navigationStrings.MYCASH, paymentData);
         break;
       case 27: //Paytab Payment Getway
@@ -986,17 +986,17 @@ function Cart({navigation, route}) {
         break;
 
       case 37: //STRIPEOXXO Payment Getway
-        updateState({ placeLoader: false });
+        updateState({placeLoader: false});
         navigation.navigate(navigationStrings.STRIPEOXXO, paymentData);
         break;
 
-        case 39: //STRIPEOXXO Payment Getway
-        updateState({ placeLoader: false });
+      case 39: //STRIPEOXXO Payment Getway
+        updateState({placeLoader: false});
         navigation.navigate(navigationStrings.STRIPEIDEAL, paymentData);
         break;
 
       case 21: //VIVAWALLET Payment Getway
-        updateState({ placeLoader: false });
+        updateState({placeLoader: false});
         navigation.navigate(navigationStrings.VIVAWALLET, paymentData);
         break;
 
@@ -1261,79 +1261,85 @@ function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
+  // false, 'schedule', value
   const setDateAndTimeSchedule = (
     toHitApiForPlaceOrder = false,
     dateType = scheduleType,
     scheduleDate = sheduledorderdate,
-    ) => {
+  ) => {
     if (!userData?.auth_token) {
-    return;
+      return;
     }
-    
-    let data = {};
-    
-    if (businessType == 'laundry') {
-    data['comment_for_pickup_driver'] = pickupDriverComment;
-    data['comment_for_dropoff_driver'] = dropOffDriverComment;
-    data['comment_for_vendor'] = vendorComment;
-    data['schedule_pickup'] = laundrySelectedPickupDate
-    ? laundrySelectedPickupDate
-    : null;
-    data['schedule_dropoff'] = laundrySelectedDropOffDate
-    ? laundrySelectedDropOffDate
-    : null;
-    data['slot'] = !!laundrySelectedPickupSlot
-    ? laundrySelectedPickupSlot
-    : null;
-    data['dropoff_scheduled_slot'] = !!laundrySelectedDropOffSlot
-    ? laundrySelectedDropOffSlot
-    : null;
-    } else {
-    data['task_type'] = !!selectedTimeSlots ? 'schedule' : dateType;
-    
-    if (!!selectedTimeSlots) {
-    const date = selectedDateFromCalendar;
-    const time = selectedTimeSlots.split('-')[0];
-    data['schedule_dt'] = selectedDateFromCalendar;
-    } else {
-    data['schedule_dt'] =
-    dateType != 'now' && scheduleDate
-    ? new Date(scheduleDate).toISOString()
-    : null;
-    }
-    data['specific_instructions'] = instruction;
-    data['slot'] = selectedTimeSlots;
-    }
-    console.log(data, 'fsdjkhfkjshfkjahsdkjfhak');
-        actions
-    .scheduledOrder(data, {
-    code: appData?.profile?.code,
-    currency: currencies?.primary_currency?.id,
-    language: languages?.primary_language?.id,
-    // systemuser: DeviceInfo.getUniqueId(),
-    })
-    .then((res) => {
-    console.log(res, 'schedulte api res res>>>');
-    if (res && res?.status == 'Success') {
-    if (toHitApiForPlaceOrder && businessType == 'laundry') {
-    _finalPayment();
-    }
-    updateState({
-    // isLoadingB: toHitApiForPlaceOrder ? true : false,
-    });
-    } else {
-    updateState({
-    isLoadingB: false,
-    });
-    }
-    // getCartDetail();
-    });
-    // .catch(errorMethod);
-    };
 
-    
-  // false, 'schedule', value
-  
+    let data = {};
+
+    if (businessType == 'laundry') {
+      data['comment_for_pickup_driver'] = pickupDriverComment;
+      data['comment_for_dropoff_driver'] = dropOffDriverComment;
+      data['comment_for_vendor'] = vendorComment;
+      data['schedule_pickup'] = laundrySelectedPickupDate
+        ? laundrySelectedPickupDate
+        : null;
+      data['schedule_dropoff'] = laundrySelectedDropOffDate
+        ? laundrySelectedDropOffDate
+        : null;
+      data['slot'] = !!laundrySelectedPickupSlot
+        ? laundrySelectedPickupSlot
+        : null;
+      data['dropoff_scheduled_slot'] = !!laundrySelectedDropOffSlot
+        ? laundrySelectedDropOffSlot
+        : null;
+    } else {
+      data['task_type'] = !!selectedTimeSlots ? 'schedule' : dateType;
+
+      if (!!selectedTimeSlots) {
+        const date = selectedDateFromCalendar;
+        const time = selectedTimeSlots.split('-')[0];
+
+        // const formatDate = moment(
+        //   `${date} ${time}`,
+        //   'YYYY-MM-DD HH:mm:ss',
+        // ).format();
+        // console.log('formatDate', formatDate);
+        data['schedule_dt'] = selectedDateFromCalendar;
+      } else {
+        data['schedule_dt'] =
+          dateType != 'now' && scheduleDate
+            ? new Date(scheduleDate).toISOString()
+            : null;
+      }
+      data['specific_instructions'] = instruction;
+      data['slot'] = selectedTimeSlots;
+    }
+
+    console.log(data, 'fsdjkhfkjshfkjahsdkjfhak');
+
+    // updateState({isLoading: false});
+    actions
+      .scheduledOrder(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res, 'schedulte api res res>>>');
+        if (res && res?.status == 'Success') {
+          if (toHitApiForPlaceOrder && businessType == 'laundry') {
+            _finalPayment();
+          }
+          updateState({
+            // isLoadingB: toHitApiForPlaceOrder ? true : false,
+          });
+        } else {
+          updateState({
+            isLoadingB: false,
+          });
+        }
+        // getCartDetail();
+      });
+    //   .catch(errorMethod);
+  };
 
   const _finalPayment = () => {
     // if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
@@ -2585,19 +2591,36 @@ function Cart({navigation, route}) {
                                   justifyContent: 'space-between',
                                   flex: 1,
                                 }}>
-                                <Text
-                                  numberOfLines={1}
-                                  style={{
-                                    ...styles.priceItemLabel2,
-                                    color: isDarkMode
-                                      ? MyDarkTheme.colors.text
-                                      : colors.blackOpacity86,
-                                    fontSize: textScale(12),
-                                    fontFamily: fontFamily.medium,
-                                    flex: 0.7,
-                                  }}>
-                                  {i?.product?.translation[0]?.title},
-                                </Text>
+                                <View>
+                                  {!!(i?.product?.category_name?.name) && (
+                                    <Text
+                                      numberOfLines={1}
+                                      style={{
+                                        ...styles.priceItemLabel2,
+                                        color: isDarkMode
+                                          ? MyDarkTheme.colors.text
+                                          : colors.textGreyB,
+                                        fontSize: textScale(12),
+                                        fontFamily: fontFamily.medium,
+                                        flex: 0.7,
+                                      }}>
+                                      {i?.product?.category_name.name},
+                                    </Text>
+                                  )}
+                                  <Text
+                                    numberOfLines={1}
+                                    style={{
+                                      ...styles.priceItemLabel2,
+                                      color: isDarkMode
+                                        ? MyDarkTheme.colors.text
+                                        : colors.blackOpacity86,
+                                      fontSize: textScale(12),
+                                      fontFamily: fontFamily.medium,
+                                      flex: 0.7,
+                                    }}>
+                                    {i?.product?.translation[0]?.title},
+                                  </Text>
+                                </View>
 
                                 <View
                                   pointerEvents={btnLoader ? 'none' : 'auto'}

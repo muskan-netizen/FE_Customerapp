@@ -208,15 +208,15 @@ android {
    
 
 // productFlavors{
-//               spa{
-//             dimension "appType"
-//             versionCode 1
-//             versionName "1.0"
-//             minSdkVersion rootProject.ext.minSdkVersion
-//             targetSdkVersion rootProject.ext.targetSdkVersion
-//             applicationId 'com.customerApp.spa'
-//             resValue "string", "app_name", "Spa"
-//             resValue "string", "host_name", ""
+//             ubercann{
+//                 dimension "appType"
+//                 versionCode 1
+//                 versionName "1.0"
+//                 minSdkVersion rootProject.ext.minSdkVersion
+//                 targetSdkVersion rootProject.ext.targetSdkVersion         
+//                 applicationId 'com.UCANN'
+//                 resValue "string", "app_name", "UCANN"
+//                 resValue "string", "host_name", ""
 //             }
 // }
 
@@ -7333,7 +7333,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.ubercann'
+                applicationId 'com.UCANN'
                 resValue "string", "app_name", "UBERCANN"
                 resValue "string", "host_name", ""
             }
