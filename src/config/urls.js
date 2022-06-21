@@ -1,6 +1,6 @@
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 //  export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
 //sujata
@@ -113,7 +113,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 //export const API_BASE_URL = 'https://yummiidash.com/api/v1';
 
 // WE EAT
-// export const API_BASE_URL = 'https://weeat.royoorders.com/api/v1';
+export const API_BASE_URL = 'https://weeat.royoorders.com/api/v1';
 
 //BEZALIO LIVE
 // export const API_BASE_URL = 'https://bezaliohub.com/api/v1';

@@ -2411,10 +2411,9 @@ export default function ShortCode({route, navigation}) {
       case appIds.iPicknDrop:
           return animatedSplash();
       case appIds.muvpod:
-        //  () => {updateState({LoadingScreen:true, isLoading:true})}
           return animatedSplash();
       default:
-        return imageSplash();
+        return imageSplash(); 
     }
   };
   const imageSplash = () => {
@@ -2450,11 +2449,7 @@ const animationVideo = () =>{
       return imagePath.ipd
     case appIds?.muvpod:
       // () => {updateState({LoadingScreen:false, isLoading:false})}
-      // return {uri : imagePath.muvpod}
-      
-      return imagePath.ipd
-      
-      
+      return {uri : imagePath.muvpod}
   } 
 }
 console.log(animationVideo(),"animationVideo");

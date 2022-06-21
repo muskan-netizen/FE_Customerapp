@@ -337,7 +337,7 @@ export default function Products({ route, navigation }) {
   }, [isLoading]);
 
   const renderProduct = useCallback(({ item, index }) => {
-    console.log(item,"itemmm")
+    console.log(item, "itemmm")
     return (
       <View
         key={String(index)}
@@ -363,7 +363,6 @@ export default function Products({ route, navigation }) {
       </View>
     );
   }, [productListData, btnLoader, productListId, repeatItems, cartId])
-
 
 
 
@@ -2056,7 +2055,8 @@ export default function Products({ route, navigation }) {
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => navigation.goBack()}
-                hitSlop={styles.hitSlopProp}>
+                hitSlop={styles.hitSlopProp}
+              >
                 <Image
                   style={{
                     tintColor: isDarkMode
@@ -2068,7 +2068,7 @@ export default function Products({ route, navigation }) {
                 />
               </TouchableOpacity>
 
-              <View style={{ marginLeft: moderateScale(8), flex: 0.7 }}>
+              <View style={{ marginLeft: moderateScale(8) }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   {isSVG ? (
                     <SvgUri
@@ -2084,7 +2084,7 @@ export default function Products({ route, navigation }) {
                       MyDarkTheme={MyDarkTheme}
                     />
                   )}
-                  <View style={{ marginLeft: moderateScale(8) }}>
+                  <View style={{ marginLeft: moderateScale(8), width: width / 1.5 }}>
                     <Text
                       numberOfLines={1}
                       style={{
@@ -2106,7 +2106,7 @@ export default function Products({ route, navigation }) {
               >
                 <SearchBar
                   containerStyle={{
-                    marginHorizontal: moderateScale(18),
+                    // marginHorizontal: moderateScale(10),
                     borderRadius: 8,
                     width: width / 1.15,
                     backgroundColor: isDarkMode
@@ -2122,7 +2122,7 @@ export default function Products({ route, navigation }) {
                 />
               </View>
             ) : (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', height: '100%' }}>
                 <TouchableOpacity
                   activeOpacity={0.8}
                   // onPress={() => updateState({isSearch: true})}
@@ -2141,11 +2141,12 @@ export default function Products({ route, navigation }) {
                         ? MyDarkTheme.colors.text
                         : colors.black,
                       transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+
                     }}
                     source={!!data?.showAddToCart ? false : imagePath.icSearchb}
                   />
                 </TouchableOpacity>
-                <View style={{ marginHorizontal: moderateScale(8) }} />
+                <View style={{ marginHorizontal: moderateScale(10) }} />
                 <TouchableOpacity
                   onPress={onShare}
                   hitSlop={hitSlopProp}
@@ -2636,22 +2637,24 @@ export default function Products({ route, navigation }) {
             />
           ) : null}
 
-          <TouchableOpacity
-            onPress={onShowHideFilter}
-            style={{
-              marginLeft: moderateScale(12)
-            }}>
-            {getBundleId() == appIds.muvpod ? (<View style={{ flexDirection: 'row' }} >
-              <Image source={imagePath.filter} />
+          <View >
+            {getBundleId() == appIds.muvpod ? ( <View style={{ flexDirection: 'row', justifyContent: 'space-between', width:width/1.1, alignItems:'center' }} >
+          <View/>
+           <TouchableOpacity  onPress={onShowHideFilter} style={{flexDirection:'row', alignItems:'center'}} >
+           <Image source={imagePath.filter} />
               <Text style={{
                 color: isDarkMode
                   ? MyDarkTheme.colors.text
                   : colors.black,
                 fontSize: moderateScale(16),
-                fontFamily: fontFamily.medium
-              }} > Sort By </Text>
-            </View>) : <Image source={imagePath.filter} />}
-          </TouchableOpacity>
+                fontFamily: fontFamily.regular,
+                // marginRight: moderateScale(),
+              }} > {strings.SORT_BY} {selectedSortFilter == null ? 'Popularity' : selectedSortFilter?.label} </Text>
+              
+           </TouchableOpacity >
+
+            </View> ) : <Image source={imagePath.filter} /> }
+          </View>
         </View>
 
         {!!categoryInfo && categoryInfo?.childs?.length > 0 && (

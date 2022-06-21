@@ -2682,8 +2682,8 @@ function Cart({ navigation, route }) {
                                       ?.digit_after_decimal,
                                   )
                                   }`}
-                              </Text>{' '}
-                              {i?.quantity}X ={' '}
+                              </Text>{' '}X 
+                              {i?.quantity} ={' '}
                               <Text
                                 style={{
                                   color: isDarkMode
@@ -5194,20 +5194,7 @@ function Cart({ navigation, route }) {
             }}
             isRight={false}
           />
-          <HeaderLoader
-            widthLeft={moderateScale(100)}
-            rectWidthLeft={moderateScale(100)}
-            heightLeft={15}
-            rectHeightLeft={15}
-            rx={5}
-            ry={5}
-            viewStyles={{
-              marginTop: moderateScaleVertical(10),
-              alignSelf: 'center',
-            }}
-
-          // resizeMode="contain"s
-          />
+        
           {renderCardItemLoader()}
           {renderCardItemLoader()}
           <HeaderLoader
