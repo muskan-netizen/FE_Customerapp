@@ -201,6 +201,20 @@ export default function VerifyAccount({navigation, route}) {
     Keyboard.dismiss();
   };
 
+
+  useEffect(() => {
+    if (!!email) {
+      updateState({editableEmail: false});
+      sendOTP('email');
+    }
+    if (!!phoneNumber) {
+      updateState({editablePhone: false});
+      sendOTP('phone');
+    }
+  },[])
+  
+  
+
   useEffect(() => {
     if (Platform.OS === 'android') {
       RNOtpVerify.getOtp()
@@ -237,6 +251,8 @@ export default function VerifyAccount({navigation, route}) {
       if (timerId2) clearTimeout(timerId2);
     };
   }, [timer2]);
+
+
 
   const isValidData = (otp) => {
     const error = validations({
@@ -329,8 +345,10 @@ export default function VerifyAccount({navigation, route}) {
   };
 
   const onclickSaveAndSend = (type, editable) => {
+    // alert(type, 'email');
+    // alert(editable, 'email');
     if (type == 'email') {
-      // alert('21');
+      // alert(email, 'email');
       if (editable) {
         updateState({editableEmail: false});
         sendOTP(type);
