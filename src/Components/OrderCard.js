@@ -23,8 +23,19 @@ const OrderCard = (props) => {
     isBleDevice = false,
     index,
   } = props;
-  const {currencies} = useSelector((state) => state?.initBoot);
   let count = item.item_count - 1;
+  const {
+    appData,
+    allAddresss,
+    themeColors,
+    currencies,
+    languages,
+    appStyle,
+    themeColor,
+    themeToggle,
+  } = useSelector((state) => state?.initBoot);
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+
   return (
     <View style={styles.container}>
       {!!(Platform.OS === 'android' && isBleDevice) && (
@@ -100,12 +111,32 @@ const OrderCard = (props) => {
                 />
               ))}
             </View>
-            <Text style={[styles.font16Regular, {flex: 1}]}>
-              {item.product_details && item.product_details[0]
-                ? item.product_details[0].title
-                : ''}{' '}
-              {count == 0 ? '' : 'x' + ' ' + count + ' more'}
-            </Text>
+            <View style={{flex: 1}}>
+              {!!(
+                item.product_details && item.product_details[0]?.category_name!="" && item.product_details[0]?.category_name!=null
+              ) && (
+                <Text
+                  style={[
+                    styles.font16Regular,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                    },
+                  ]}>
+                  {item.product_details &&
+                  item.product_details[0]?.category_name
+                    ? item.product_details[0].category_name
+                    : ''}{' '}
+                </Text>
+              )}
+              <Text style={[styles.font16Regular]}>
+                {item.product_details && item.product_details[0]
+                  ? item.product_details[0].title
+                  : ''}{' '}
+                {count == 0 ? '' : 'x' + ' ' + count + ' more'}
+              </Text>
+            </View>
           </View>
           <Text
             style={{
@@ -165,7 +196,7 @@ const OrderCard = (props) => {
                 backgroundColor: colors.themeColor2,
                 marginLeft: moderateScale(10),
               }}
-              onPress={() => updateOrderStatus(item, 7,index)}
+              onPress={() => updateOrderStatus(item, 7, index)}
             />
           </View>
         )}
