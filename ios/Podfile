@@ -1725,6 +1725,21 @@ target 'Kurs' do
   
 end
 
+# Spa Target
+target 'Spa' do
+  
+end
+
+# CapitalDiagnostic Target
+target 'CapitalDiagnostic' do
+  
+end
+
+# AbbeRides Target
+target 'AbbeRides' do
+  
+end
+
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

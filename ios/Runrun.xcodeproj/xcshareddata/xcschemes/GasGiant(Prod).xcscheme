@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "10C1E85F28128FF300D73DCD"
+               BlueprintIdentifier = "F4A15E32285C5074007D3D78"
                BuildableName = "GasGiant.app"
                BlueprintName = "GasGiant"
                ReferencedContainer = "container:Runrun.xcodeproj">
@@ -44,7 +44,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "10C1E85F28128FF300D73DCD"
+            BlueprintIdentifier = "F4A15E32285C5074007D3D78"
             BuildableName = "GasGiant.app"
             BlueprintName = "GasGiant"
             ReferencedContainer = "container:Runrun.xcodeproj">
@@ -61,7 +61,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "10C1E85F28128FF300D73DCD"
+            BlueprintIdentifier = "F4A15E32285C5074007D3D78"
             BuildableName = "GasGiant.app"
             BlueprintName = "GasGiant"
             ReferencedContainer = "container:Runrun.xcodeproj">
