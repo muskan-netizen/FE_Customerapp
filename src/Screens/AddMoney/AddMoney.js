@@ -451,7 +451,6 @@ export default function AddMoney({navigation}) {
       _webPayment();
       return;
     }
-
     _offineLinePayment();
   };
 
@@ -592,9 +591,7 @@ export default function AddMoney({navigation}) {
       await createPaymentMethod({
         type: 'Card',
         card: cardInfo,
-        billing_details: {
-          name: 'Jenny Rosen',
-        },
+        token: res2,
       })
         .then((res) => {
           // updateState({isLoadingB: false});
@@ -687,10 +684,10 @@ export default function AddMoney({navigation}) {
           }
 
           //Creating the createPaymentMehod
-
           if (res && res?.token && res.token?.id) {
-            _createPaymentMethod(cardInfo, res);
+            _createPaymentMethod(cardInfo, res.token?.id);
           }
+         
 
           // if (res && res?.token && res.token?.id) {
           //   let selectedMethod = selectedPaymentMethod.code.toLowerCase();

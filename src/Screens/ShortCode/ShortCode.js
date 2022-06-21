@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Image, Linking, Text, View, Platform } from 'react-native';
-import { getBundleId } from 'react-native-device-info';
+import React, {useEffect, useState} from 'react';
+import {Image, Linking, Text, View, Platform} from 'react-native';
+import {getBundleId} from 'react-native-device-info';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 import {useSelector} from 'react-redux';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
@@ -52,7 +52,7 @@ export default function ShortCode({route, navigation}) {
     videoDurationEnded: false,
     allAppData: null,
     responseData: null,
-    initapiresponse:false
+    initapiresponse: false,
   });
   const {dispatch} = store;
 
@@ -66,7 +66,7 @@ export default function ShortCode({route, navigation}) {
     videoDurationEnded,
     allAppData,
     responseData,
-    initapiresponse
+    initapiresponse,
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {appData, appStyle, currencies, languages} = useSelector(
@@ -2109,7 +2109,7 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.keystoneDelivery:
+        case appIds.keystoneDelivery:
           updateState({
             shortCode: shortCodes.keystoneDelivery,
             isShortcodePrefilled: true,
@@ -2126,12 +2126,10 @@ export default function ShortCode({route, navigation}) {
   }, [shortCode, isShortcodePrefilled]);
 
   useEffect(() => {
-    if(videoDurationEnded&&initapiresponse)
-      { 
-        
-        navigateToNextScreen(allAppData, responseData);
-      }
-  },[videoDurationEnded,initapiresponse]);
+    if (videoDurationEnded && initapiresponse) {
+      navigateToNextScreen(allAppData, responseData);
+    }
+  }, [videoDurationEnded, initapiresponse]);
 
   const checkScreen = () => {
     initApiHit();
@@ -2157,14 +2155,14 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-       //  code: '245bae',
+        // code: '66c095',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-       //  code: '245bae',
-        code: shortCode,
+        // code: '66c095',
+      code: shortCode,
       };
     }
     console.log(header, 'header');
@@ -2317,7 +2315,7 @@ export default function ShortCode({route, navigation}) {
         true,
       )
       .then((homeData) => {
-        console.log(res,"ressssss")
+        console.log(res, 'ressssss');
         switch (getBundleId()) {
           case appIds.masa:
             updateState({
@@ -2325,22 +2323,22 @@ export default function ShortCode({route, navigation}) {
               LoadingScreen: false,
               allAppData: res,
               responseData: homeData.data,
-              initapiresponse:true
+              initapiresponse: true,
             });
 
             break;
           case appIds.iPicknDrop:
-              updateState({
-                isLoading: false,
-                LoadingScreen: false,
-                allAppData: res,
-                responseData: homeData.data,
-                initapiresponse:true
-              });
-  
-              break;
+            updateState({
+              isLoading: false,
+              LoadingScreen: false,
+              allAppData: res,
+              responseData: homeData.data,
+              initapiresponse: true,
+            });
+
+            break;
           default:
-            updateState({ isLoading: false, LoadingScreen: false });
+            updateState({isLoading: false, LoadingScreen: false});
             navigateToNextScreen(res, homeData.data);
             break;
         }
@@ -2350,7 +2348,7 @@ export default function ShortCode({route, navigation}) {
         navigateToNextScreen(res, homeData.data);
       });
   };
- 
+
   const onOtpInput = (code) => {
     (async () => {
       updateState({
@@ -2399,15 +2397,13 @@ export default function ShortCode({route, navigation}) {
     switch (getBundleId()) {
       case appIds.masa:
         return animatedSplash();
-      case appIds.iPicknDrop:
-          return animatedSplash();
       default:
         return imageSplash();
     }
   };
   const imageSplash = () => {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <View
           style={{
             flex: 1,
@@ -2419,34 +2415,31 @@ export default function ShortCode({route, navigation}) {
             height: '100%',
             backgroundColor: 'rgba(0,0,0,0.5)',
           }}>
-          <View style={{ position: 'absolute', bottom: moderateScale(100) }}>
+          <View style={{position: 'absolute', bottom: moderateScale(100)}}>
             {LoadingScreen && (
               <MaterialIndicator size={50} color={colors.greyMedium} />
             )}
           </View>
         </View>
-        <Image source={{ uri: 'Splash' }} style={{ flex: 1, zIndex: -1 }} />
+        <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
       </View>
     );
   };
 
-const animationVideo = () =>{
-  switch (getBundleId()) {
-    case appIds?.masa:
-      return imagePath.masa
-    case appIds?.iPicknDrop:
-      return imagePath.ipd
-  } 
-}
+  const animationVideo = () => {
+    switch (getBundleId()) {
+      case appIds?.masa:
+        return imagePath.masa;
+      case appIds?.iPicknDrop:
+        return imagePath.ipd;
+    }
+  };
 
-const onVideoDurationEnded = () => {
-   
-   updateState({
-     videoDurationEnded:true
-   })
+  const onVideoDurationEnded = () => {
+    updateState({
+      videoDurationEnded: true,
+    });
     // navigateToNextScreen(allAppData, responseData);
-    
-   
   };
 
   const animatedSplash = () => {
@@ -2466,14 +2459,11 @@ const onVideoDurationEnded = () => {
           }}
           resizeMode="cover"
           onEnd={() => onVideoDurationEnded()}
-          
         />
       </View>
     );
   };
 
-
-  
   return (
     <View
       style={{

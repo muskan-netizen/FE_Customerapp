@@ -9,6 +9,7 @@ import {
   ScrollView,
   Keyboard,
   FlatList,
+  Platform,
 } from 'react-native';
 import CountryPicker, { Flag } from 'react-native-country-picker-modal';
 import { useDarkMode } from 'react-native-dark-mode';
@@ -47,7 +48,7 @@ import {
   getPlaceDetails,
   nearbySearch,
 } from '../../../utils/googlePlaceApi';
-import { getAddressComponent, showError, getColorCodeWithOpactiyNumber, getPhoneNumberFromPhoneBook } from '../../../utils/helperFunctions';
+import { getAddressComponent, showError, getColorCodeWithOpactiyNumber, getPhoneNumberFromPhoneBook, getRandomColor } from '../../../utils/helperFunctions';
 import {
   checkContactPermission,
   chekLocationPermission,
@@ -150,6 +151,9 @@ export default function Addaddress({ navigation, route }) {
     selectedFriendForRide
   } = state;
 
+
+  const [modalLayoutHeight, setModalLayoutHeight] = useState(0)
+
   useEffect(() => {
     if (!!paramData?.prefillAdress) {
       console.log('param data address', paramData);
@@ -165,6 +169,11 @@ export default function Addaddress({ navigation, route }) {
       // cloneArr[searchResult.currentIndex].post_code = addressData?.pincode
       // cloneArr[searchResult.currentIndex].short_name = addressData?.states || addressData?.state
       cloneArr[searchResult?.currentIndex].address = prefillAdress?.address;
+
+
+
+
+
       updateState({
         dropLocationData: cloneArr,
         searchResult: { currentIndex: searchResult?.currentIndex, data: [] },
@@ -683,6 +692,14 @@ export default function Addaddress({ navigation, route }) {
 
 
 
+  const onLayout = (event) => {
+    const { x, y, height, width } = event.nativeEvent.layout;
+
+    setModalLayoutHeight(height)
+
+  }
+
+
   const renderBookFriendListFooter = () => (
     <>
       <TouchableOpacity
@@ -729,15 +746,24 @@ export default function Addaddress({ navigation, route }) {
 
   })
 
+  console.log(allAddedFriends.length, "allAddedFriends.length>10");
+
+
   const allListFriendModalContent = () => {
     return (
       <>
-        <View style={[styles.modalMainContainer, {
-          paddingHorizontal:
-            moderateScale(10), marginVertical: 1, paddingVertical: 1
-        }]} >
+        <View
+          onLayout={onLayout}
+          style={{
+            ...styles.modalMainContainer,
+            paddingHorizontal: moderateScale(10),
+            marginVertical: 1,
+            paddingVertical: 1,
+
+
+          }} >
           <View
-            style={styles.friendListModalInnerContainer}>
+            style={{ ...styles.friendListModalInnerContainer, marginTop: Platform.OS == 'android' ? moderateScaleVertical(-10) : moderateScaleVertical(0) }}>
             <TouchableOpacity
               style={{ flex: 0.5 }}
               onPress={onShowHideFriendListModal}
@@ -750,7 +776,7 @@ export default function Addaddress({ navigation, route }) {
               />
             </TouchableOpacity>
             <View>
-              <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}
+              <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}
                 onPress={onShowHideFriendListModal}>
                 <Image source={imagePath.user} />
                 <Text
@@ -762,7 +788,7 @@ export default function Addaddress({ navigation, route }) {
             </View>
           </View>
         </View>
-        <View style={{ height: height / 1.1 }}>
+        <View style={allAddedFriends.length >= 10 ? { height: moderateScaleVertical(height / 1.05) } : {}}>
           <FlatList
             showsVerticalScrollIndicator={false}
             data={allAddedFriends}
@@ -836,6 +862,9 @@ export default function Addaddress({ navigation, route }) {
 
   }
 
+
+  const usernameFirstlater = !!userData?.name && userData?.name?.charAt(0);
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -869,7 +898,14 @@ export default function Addaddress({ navigation, route }) {
               ?
               <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}
                 onPress={onShowHideFriendListModal}>
-                <Image source={imagePath.riderImage} />
+
+                {selectedFriendForRide?.first_name ? <View style={{ backgroundColor: getRandomColor(), alignItems: 'center', justifyContent: 'center', borderRadius: moderateScale(20), paddingVertical: moderateScaleVertical(3), paddingHorizontal: moderateScale(9) }}><Text style={{
+                  fontSize: textScale(16),
+                  textTransform: 'uppercase',
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackB,
+                }}>{selectedFriendForRide?.first_name?.charAt(0)}</Text></View> : <Image source={imagePath.riderImage} />}
                 {selectedFriendForRide?.first_name ?
                   <Text
                     style={[styles.addAddressScreenTitle, { color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }]}>

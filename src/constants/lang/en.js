@@ -947,4 +947,7 @@ Amount`,
   BOOK_A_TABLE:'Book a Table',
   PLEASE_SELECT_A_TABLE:'Please Select a Table',
   SELECT_A_TABLE:'Select a Table',
+  POLICE: 'Police',
+  AMBULANCE: 'Ambulance',
+  REQUEST_RIDE:'Request Ride'
 };

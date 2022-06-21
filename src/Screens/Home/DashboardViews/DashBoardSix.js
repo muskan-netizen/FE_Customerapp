@@ -40,6 +40,7 @@ export default function DashBoardFour({
   onPressCategory = () => { },
   selcetedToggle,
   toggleData,
+  onPressVendor = () => { },
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -69,7 +70,7 @@ export default function DashBoardFour({
   );
 
   const _renderVendors = ({ item }) => (
-    <MarketCard2 data={item} onPress={() => onPressCategory(item)} />
+    <MarketCard2 data={item} onPress={() => onPressVendor(item)} />
   );
   const _changeVendorListStyle = () =>
     updateState({ isVendorColumnList: !isVendorColumnList });
