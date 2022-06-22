@@ -18,7 +18,7 @@
 // export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1';
 
 //classicab
-export const API_BASE_URL = 'https://classicab.org/api/v1';
+// export const API_BASE_URL = 'https://classicab.org/api/v1';
 
 //
 //Vishwas
@@ -47,7 +47,7 @@ export const API_BASE_URL = 'https://classicab.org/api/v1';
 // export const API_BASE_URL = 'https://gdotdelivery.com/api/v1';
 // export const API_BASE_URL = 'https://cabio.rostaging.com/api/v1'; 
 // export const API_BASE_URL = 'https://glamsouq.com/api/v1'; 
-// export const API_BASE_URL = 'https://getfix.com.my/api/v1'; 
+export const API_BASE_URL = 'https://getfix.com.my/api/v1'; 
 // export const API_BASE_URL = 'https://order.swiftandvalu.com/api/v1'; 
 // export const API_BASE_URL = 'https://ubercann.com/api/v1'; 
 // export const API_BASE_URL = 'https://palmettoplusdelivered.com/api/v1'; 
