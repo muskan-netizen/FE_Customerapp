@@ -926,4 +926,5 @@ Amount`,
   SELECT_A_TABLE:'Select a Table',
   SERVICE_ADDRESS:'Service Address',
   BOOK_HERE:'Book Here',
+  WR_ARE_CURRENTLY_NOT_OPERATING:'We are currently not operating in your location',
 };
