@@ -59,6 +59,8 @@ import {string} from 'is_js';
 import {isEmpty} from 'lodash';
 import LaundryCategoryCard from '../../../Components/LaundryCategoryCard';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
+import DifferentAddOns from '../../../Components/DifferentAddOns ';
+import LaundryAddonModal from '../../../Components/LaundryAddonModal';
 
 export default function DashBoardFive({
   handleRefresh = () => {},
@@ -71,6 +73,9 @@ export default function DashBoardFive({
   onVendorFilterSeletion = () => {},
   tempCartData = null,
   onPressVendor = () => {},
+  onPressAddLaundryItem = () => {},
+  selectedAddonSet = [],
+  onFindVendors = () => {},
 }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -757,7 +762,7 @@ export default function DashBoardFive({
     return (
       <LaundryCategoryCard
         data={item}
-        onPress={() => onPressCategory(item)}
+        onPress={() => onPressAddLaundryItem(item)}
         isLoading={isLoading}
       />
     );
@@ -821,17 +826,20 @@ export default function DashBoardFive({
               ListFooterComponent={() => {
                 return (
                   <ButtonWithLoader
+                    onPress={onFindVendors}
                     btnText="Find Vendors"
                     btnTextStyle={{
                       color: colors.white,
                       textTransform: 'none',
                       fontSize: textScale(14),
                     }}
+                    disabled={isEmpty(selectedAddonSet)}
                     btnStyle={{
                       marginTop: 0,
                       height: moderateScaleVertical(45),
                       borderRadius: moderateScale(5),
                       backgroundColor: themeColors.primary_color,
+                      opacity: isEmpty(selectedAddonSet) ? 0.5 : 1,
                       borderWidth: 0,
                       marginTop: moderateScaleVertical(10),
                     }}

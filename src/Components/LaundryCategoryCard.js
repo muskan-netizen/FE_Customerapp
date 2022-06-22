@@ -41,8 +41,6 @@ const LaundryCategoryCard = ({
 
   return (
     <View
-      // onPress={onPress}
-
       style={{
         alignItems: 'center',
         borderRadius: moderateScale(10),
@@ -95,6 +93,7 @@ const LaundryCategoryCard = ({
         </Text>
       </View>
       <ButtonWithLoader
+        onPress={onPress}
         btnText="+ Add"
         btnTextStyle={{
           color: themeColors.primary_color,

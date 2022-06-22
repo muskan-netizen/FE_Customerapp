@@ -20,6 +20,7 @@ import {
   getImageUrl,
   getNearestLocation,
   showError,
+  showSuccess,
 } from '../../utils/helperFunctions';
 import {chekLocationPermission} from '../../utils/permissions';
 import {
@@ -34,6 +35,8 @@ import {
 import Voice from '@react-native-voice/voice';
 import FastImage from 'react-native-fast-image';
 import DashBoardEight from './DashboardViews/DashBoardEight';
+import LaundryAddonModal from '../../Components/LaundryAddonModal';
+import _ from 'lodash';
 
 // navigator.geolocation = require('react-native-geolocation-service');
 
@@ -53,8 +56,7 @@ export default function Home({route, navigation}) {
   const {location, appMainData, dineInType} = useSelector(
     (state) => state?.home,
   );
-  console.log(location, '>location>location');
-  console.log(appMainData, 'appMainData>appMainData');
+
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const addressSearch = useSelector(
     (state) => state?.addressSearch.addressSearch,
@@ -67,7 +69,11 @@ export default function Home({route, navigation}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const businessTypes = appStyle?.homePageLayout;
-  console.log(appData, 'businessTypesbusinessTypes');
+
+  const [isLaundryAddonModal, setLaundryAddonModal] = useState(false);
+  const [isLoadingAddons, setLoadingAddons] = useState(true);
+  const [selectedLaundryCategory, setSelectedLaundryCategory] = useState({});
+  const [esitmatedLaundryProducts, setEsitmatedLaundryProducts] = useState([]);
 
   const [state, setState] = useState({
     isLoading: true,
@@ -87,6 +93,7 @@ export default function Home({route, navigation}) {
     tempCartData: null,
     isVoiceRecord: false,
     singleVendor: false,
+    selectedAddonSet: [],
   });
 
   const {
@@ -106,6 +113,7 @@ export default function Home({route, navigation}) {
     nearMe,
     isVoiceRecord,
     singleVendor,
+    selectedAddonSet,
   } = state;
 
   const {profile} = appData;
@@ -429,6 +437,7 @@ export default function Home({route, navigation}) {
   //Error handling in screen
   const errorMethod = (error) => {
     console.log(error, 'erro>>>>>>errorerrorr');
+    setLoadingAddons(false);
     updateState({
       isLoading: false,
       isRefreshing: false,
@@ -852,6 +861,82 @@ export default function Home({route, navigation}) {
   console.log(appStyle?.homePageLayout, 'appStyle?.homePageLayout');
   console.log(location, 'location>location');
 
+  const onPressAddLaundryItem = (item) => {
+    setLaundryAddonModal(true);
+
+    actions
+      .getProductEstimationWithAddons(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'res>>>>res');
+        setEsitmatedLaundryProducts(res?.data);
+        setSelectedLaundryCategory(res?.data[0]);
+        setLoadingAddons(false);
+      })
+      .catch(errorMethod);
+  };
+
+  const onPressLaundryCategory = (item) => {
+    setSelectedLaundryCategory(item);
+    updateState({
+      selectedAddonSet: [],
+    });
+  };
+
+  const onLaundryAddonSelect = (item, categoryDetails) => {
+    console.log(categoryDetails, 'categoryDetails>>');
+    let newSelectedAddonSet = [...selectedAddonSet];
+    let counter = 0;
+    newSelectedAddonSet.map((item) => {
+      if (item?.estimate_addon_id == categoryDetails.estimate_addon_set?.id) {
+        counter++;
+      }
+    });
+
+    let selectedSetIndex = newSelectedAddonSet.findIndex(
+      (x) => x?.id === item?.id,
+    );
+
+    item.estimate_product_id = categoryDetails?.estimate_product_id;
+
+    if (
+      selectedSetIndex == -1 &&
+      counter !== categoryDetails.estimate_addon_set?.max_select
+    ) {
+      updateState({
+        selectedAddonSet: [...newSelectedAddonSet, item],
+      });
+
+      return;
+    } else if (
+      selectedSetIndex == -1 &&
+      counter == categoryDetails.estimate_addon_set?.max_select
+    ) {
+      showError('Max limit reached');
+    } else {
+      let filteredAddonSet = newSelectedAddonSet.filter(
+        (item, index) => index !== selectedSetIndex,
+      );
+      updateState({
+        selectedAddonSet: filteredAddonSet,
+      });
+    }
+  };
+
+  const onPressProceed = () => {};
+
+  const onFindVendors = () => {
+    moveToNewScreen(navigationStrings.LAUNDRY_AVAILABLE_VENDORS, {
+      selectedAddonSet: selectedAddonSet,
+    })();
+  };
+
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
       // switch (case_) {
@@ -936,6 +1021,9 @@ export default function Home({route, navigation}) {
               navigation={navigation}
               onVendorFilterSeletion={onVendorFilterSeletion}
               singleVendor={singleVendor}
+              onPressAddLaundryItem={onPressAddLaundryItem}
+              selectedAddonSet={selectedAddonSet}
+              onFindVendors={onFindVendors}
             />
           </>
         );
@@ -1009,6 +1097,9 @@ export default function Home({route, navigation}) {
               navigation={navigation}
               onVendorFilterSeletion={onVendorFilterSeletion}
               singleVendor={singleVendor}
+              onPressAddLaundryItem={onPressAddLaundryItem}
+              selectedAddonSet={selectedAddonSet}
+              onFindVendors={onFindVendors}
             />
           </>
         );
@@ -1090,6 +1181,17 @@ export default function Home({route, navigation}) {
       isLoading={searchDataLoader}>
       {/* <View style={{flex: 1}}>{}</View> */}
       <>{renderHomeScreen()}</>
+      <LaundryAddonModal
+        isVisible={isLaundryAddonModal}
+        hideModal={() => setLaundryAddonModal(false)}
+        isLoadingAddons={isLoadingAddons}
+        selectedLaundryCategory={selectedLaundryCategory}
+        onPressLaundryCategory={onPressLaundryCategory}
+        flatlistData={esitmatedLaundryProducts}
+        onLaundryAddonSelect={onLaundryAddonSelect}
+        selectedAddonSet={selectedAddonSet}
+        onPressProceed={onPressProceed}
+      />
     </WrapperContainer>
   );
 }
