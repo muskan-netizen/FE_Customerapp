@@ -37,6 +37,7 @@ import {androidCameraPermission} from '../../../utils/permissions';
 import stylesFun from './styles';
 import Modal from 'react-native-modal';
 import {isEmpty} from 'lodash';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
 
 export default function SelectPaymentModalView({
   isLoading = false,
@@ -84,7 +85,7 @@ export default function SelectPaymentModalView({
   const userData = useSelector((state) => state?.auth?.userData);
   const [image, setImage] = useState([]);
   const [taskInstruction, setInstruction] = useState('');
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [isError, setError] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [myAnswerdArray, setMyAllanswers] = useState([]);
@@ -342,7 +343,7 @@ export default function SelectPaymentModalView({
               styles.distanceDurationDeliveryLable,
               {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
             ]}>
-            {`${totalDistance} kms`}
+            {`${totalDistance} ${appIds?.weTogether ? 'Miles':'kms'} `}
           </Text>
         </View>
         <View style={{flex: 0.33}}>
@@ -700,7 +701,7 @@ export default function SelectPaymentModalView({
           // btnText={`${slectedDate}  -  ${selectedTime}`}
           btnText={
             pickup_taxi
-              ? strings.BOOK_NOW_RIDE
+              ? appIds?.weTogether ? strings.REQUEST_RIDE : strings.BOOK_NOW_RIDE
               : pickUpTimeType === 'now'
               ? strings.BOOK_NOW
               : strings.SCHEDULE_RIDE_FOR +
