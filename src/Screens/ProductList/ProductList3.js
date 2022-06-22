@@ -1897,6 +1897,7 @@ export default function Products({ route, navigation }) {
       index
     );
 
+ 
 
     timeOut = setTimeout(
       () => {

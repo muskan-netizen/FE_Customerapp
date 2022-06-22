@@ -1,5 +1,5 @@
 import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   I18nManager,
@@ -37,12 +37,7 @@ import {MyDarkTheme} from '../../styles/theme';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {getImageUrl, getRandomColor} from '../../utils/helperFunctions';
 import stylesFun from './styles';
-import ActionSheet from 'react-native-actionsheet';
-import {dialCall} from '../../utils/openNativeApp';
-
 export default function Account3({navigation}) {
-  let actionSheet = useRef();
-
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -55,7 +50,7 @@ export default function Account3({navigation}) {
     isLoading: false,
   });
 
-  const {preferences, phone_number, contact_phone_number} = appData?.profile;
+  const {preferences,phone_number,contact_phone_number} = appData?.profile;
 
   // const profileInfo = appData?.profile;
   // console.log("account profile info",profileInfo)
@@ -76,7 +71,10 @@ export default function Account3({navigation}) {
   const userData = useSelector((state) => state.auth.userData);
   const appMainData = useSelector((state) => state?.home?.appMainData);
 
-  console.log(contact_phone_number, 'userDAta');
+  console.log(
+    contact_phone_number,
+    'userDAta',
+  );
   // useFocusEffect(
   //   React.useCallback(() => {
   //     _scrollRef.current.scrollTo(0);
@@ -132,10 +130,7 @@ export default function Account3({navigation}) {
       `${preferences?.customer_support_key}`,
       `${preferences?.customer_support_application_id}`,
     );
-  }, [
-    preferences?.customer_support_application_id,
-    preferences?.customer_support_key,
-  ]);
+  }, [preferences?.customer_support_application_id,preferences?.customer_support_key]);
 
   const onStartSupportChat = () => {
     ZendeskChat.setVisitorInfo({
@@ -152,16 +147,6 @@ export default function Account3({navigation}) {
   };
 
   const usernameFirstlater = !!userData?.name && userData?.name?.charAt(0);
-
-  const onEmergencyNumber = (index) => {
-    if (index == 0) {
-      dialCall(appData?.profile?.preferences?.sos_police_contact);
-      return;
-    }
-    if (index == 1) {
-      dialCall(appData?.profile?.preferences?.sos_ambulance_contact);
-    }
-  };
 
   return (
     <View
@@ -186,7 +171,7 @@ export default function Account3({navigation}) {
         }
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
       /> */}
-
+      
         {shortCodeStatus ? (
           <Header
             noLeftIcon={false}
@@ -627,34 +612,29 @@ export default function Account3({navigation}) {
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )} */}
-          {!!userData?.auth_token && (
-            <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-              onPress={
-                appIds.hokitch == getBundleId()
-                  ? () =>
-                      Linking.openURL(
-                        `https://api.whatsapp.com/send?phone=${
-                          contact_phone_number
-                            ? contact_phone_number
-                            : phone_number
-                        }`,
-                      )
-                  : moveToNewScreen(navigationStrings.CONTACT_US)
-              }
-              iconLeft={imagePath.contactUs}
-              centerHeading={strings.CONTACT_US}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
-            />
-          )}
-
+        {!!userData?.auth_token && <ListItemHorizontal
+            centerContainerStyle={{flexDirection: 'row'}}
+            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+            onPress={
+              appIds.hokitch == getBundleId()
+                ? () =>
+                    Linking.openURL(
+                      `https://api.whatsapp.com/send?phone=${contact_phone_number?contact_phone_number:phone_number}`,
+                    )
+                : moveToNewScreen(navigationStrings.CONTACT_US)
+            }
+            
+            iconLeft={imagePath.contactUs}
+            centerHeading={strings.CONTACT_US}
+            containerStyle={styles.containerStyle2}
+            centerHeadingStyle={{
+              fontSize: textScale(14),
+              fontFamily: fontFamily.regular,
+            }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
+          />}
+          
           {!!userData?.auth_token && (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
@@ -691,25 +671,6 @@ export default function Account3({navigation}) {
               />
             )}
 
-          {appData?.profile?.preferences?.sos &&
-            (!!appData?.profile?.preferences?.sos_police_contact ||
-              !!appData?.profile?.preferences?.sos_ambulance_contact) && (
-              <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-                onPress={() => actionSheet.current.show()}
-                iconLeft={imagePath.icSos}
-                centerHeading={'SOS'}
-                containerStyle={styles.containerStyle2}
-                centerHeadingStyle={{
-                  fontSize: textScale(14),
-                  fontFamily: fontFamily.regular,
-                }}
-                // iconRight={imagePath.goRight}
-                // rightIconStyle={{tintColor: colors.textGreyLight}}
-              />
-            )}
-
           <View style={styles.loginView}>
             <TouchableOpacity
               // onPress={()=>actions.isVendorNotification(true)}
@@ -727,14 +688,6 @@ export default function Account3({navigation}) {
           <View style={{height: 100}} />
         </ScrollView>
       </SafeAreaView>
-
-      <ActionSheet
-        ref={actionSheet}
-        options={[strings.POLICE, strings.AMBULANCE, strings.CANCEL]}
-        cancelButtonIndex={2}
-        destructiveButtonIndex={2}
-        onPress={(index) => onEmergencyNumber(index)}
-      />
     </View>
   );
 }

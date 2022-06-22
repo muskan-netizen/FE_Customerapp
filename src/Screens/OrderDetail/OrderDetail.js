@@ -2947,6 +2947,8 @@ export default function OrderDetail({navigation, route}) {
                 width: moderateScale(100),
               }}
               colorFilters={[
+                
+                
                 {
                   keypath: 'right sand',
                   color: themeColors.primary_color,
