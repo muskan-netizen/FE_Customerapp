@@ -14,7 +14,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
+import { MyDarkTheme } from '../../../styles/theme';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import stylesFun from './styles';
 
 export default function ({
@@ -95,52 +96,23 @@ export default function ({
             />
           )}
         </View>
-        {isWaitingOver ? (
-          <View style={{marginBottom: moderateScaleVertical(40)}}>
-            <Text
-              style={{
-                fontSize: textScale(12),
-                fontFamily: fontFamily.medium,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              }}>
-              {'No drivers available now!!'}
-            </Text>
-            <ButtonWithLoader
-              color={colors.redB}
-              isLoading={isBtnLoader}
-              btnStyle={{
-                borderColor: colors.redB,
-                height: 40,
-              }}
-              btnTextStyle={{
-                color: colors.redB,
-              }}
-              onPress={cancleOrder}
-              btnText="Cancel Order"
-            />
-          </View>
-        ) : (
-          <View>
-            <Text
-              style={{
-                fontSize: textScale(12),
-                fontFamily: fontFamily.medium,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              }}>
-              {strings.CONNECTING_YOU_TO_NEARBY_DERIVER}
-            </Text>
-            <Text
-              style={{
-                fontSize: textScale(12),
-                fontFamily: fontFamily.regular,
-                marginVertical: moderateScaleVertical(20),
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                textAlign: 'center',
-              }}>
-              {strings.YOUR_RIDE_WILL_START_SOON}
-            </Text>
-          </View>
-        )}
+        <Text
+          style={{
+            fontSize: textScale(12),
+            fontFamily: fontFamily.medium,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          }}>
+          {appIds.jiffex == getBundleId() ?strings.CONNECTING_YOU_TO_NEARBY_DELIVERY_AGENT :strings.CONNECTING_YOU_TO_NEARBY_DERIVER}
+        </Text>
+        <Text
+          style={{
+            fontSize: textScale(12),
+            fontFamily: fontFamily.regular,
+            marginVertical: moderateScaleVertical(20),
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          }}>
+          {appIds.jiffex == getBundleId()?strings.YOUR_ORDER_WILL_START_SOON:strings.YOUR_RIDE_WILL_START_SOON}
+        </Text>
       </View>
     </View>
   );
