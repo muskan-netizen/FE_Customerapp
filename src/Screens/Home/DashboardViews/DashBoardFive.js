@@ -76,17 +76,23 @@ export default function DashBoardFive({
   onPressAddLaundryItem = () => {},
   selectedAddonSet = [],
   onFindVendors = () => {},
+  isLoadingAddons = false,
+  selectedHomeCategory = {},
 }) {
-  const userData = useSelector((state) => state?.auth?.userData);
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
-  const isSingleVendor = appData?.profile?.preferences?.single_vendor;
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-
-  const {appData, themeColors, appStyle} = useSelector(
+  const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
   );
+
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const appMainData = useSelector((state) => state?.home?.appMainData);
+  let businessType = appData?.profile?.preferences?.business_type || null;
+  const allCategory = appMainData?.categories;
+  const checkForBrand =
+    allCategory &&
+    allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
+
+  const isGetEstimation = appData?.profile?.preferences?.get_estimations;
 
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -98,16 +104,6 @@ export default function DashBoardFive({
     categoriesData: [],
     seeMore: false,
   });
-
-  const appMainData = useSelector((state) => state?.home?.appMainData);
-
-  let businessType = appData?.profile?.preferences?.business_type || null;
-
-  const allCategory = appMainData?.categories;
-  const checkForBrand =
-    allCategory &&
-    allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
-  // const {bannerRef} = useRef();
   const {slider1ActiveSlide, vendorsData, showMenu, categoriesData, seeMore} =
     state;
   const fontFamily = appStyle?.fontSizeData;
@@ -763,39 +759,39 @@ export default function DashBoardFive({
       <LaundryCategoryCard
         data={item}
         onPress={() => onPressAddLaundryItem(item)}
-        isLoading={isLoading}
+        isLoading={
+          selectedHomeCategory?.id == item?.id ? isLoadingAddons : false
+        }
       />
     );
   };
 
   const laundryCategoriesBanners = () => {
     return (
-      <View style={{}}>
-        <View style={{}}>
-          {!!appData?.mobile_banners?.length && (
-            <View
-              style={{
-                marginTop: moderateScaleVertical(4),
-              }}>
-              <FlatList
-                horizontal
-                data={appData?.mobile_banners}
-                keyExtractor={(item) => item.id.toString()}
-                showsHorizontalScrollIndicator={false}
-                renderItem={renderLaundryBanners}
-                ItemSeparatorComponent={() => (
-                  <View style={{marginRight: moderateScale(12)}} />
-                )}
-                ListHeaderComponent={() => (
-                  <View style={{marginLeft: moderateScale(16)}} />
-                )}
-                ListFooterComponent={() => (
-                  <View style={{marginRight: moderateScale(16)}} />
-                )}
-              />
-            </View>
-          )}
-        </View>
+      <View>
+        {!!appData?.mobile_banners?.length && (
+          <View
+            style={{
+              marginTop: moderateScaleVertical(4),
+            }}>
+            <FlatList
+              horizontal
+              data={appData?.mobile_banners}
+              keyExtractor={(item) => item.id.toString()}
+              showsHorizontalScrollIndicator={false}
+              renderItem={renderLaundryBanners}
+              ItemSeparatorComponent={() => (
+                <View style={{marginRight: moderateScale(12)}} />
+              )}
+              ListHeaderComponent={() => (
+                <View style={{marginLeft: moderateScale(16)}} />
+              )}
+              ListFooterComponent={() => (
+                <View style={{marginRight: moderateScale(16)}} />
+              )}
+            />
+          </View>
+        )}
 
         {!isEmpty(appMainData?.categories) && (
           <View style={{marginBottom: moderateScaleVertical(16)}}>
@@ -828,63 +824,16 @@ export default function DashBoardFive({
                   <ButtonWithLoader
                     onPress={onFindVendors}
                     btnText="Find Vendors"
-                    btnTextStyle={{
-                      color: colors.white,
-                      textTransform: 'none',
-                      fontSize: textScale(14),
-                    }}
+                    btnTextStyle={styles.findVendorBtnTitle}
                     disabled={isEmpty(selectedAddonSet)}
                     btnStyle={{
-                      marginTop: 0,
-                      height: moderateScaleVertical(45),
-                      borderRadius: moderateScale(5),
-                      backgroundColor: themeColors.primary_color,
+                      ...styles.findVendorBtnStyle,
                       opacity: isEmpty(selectedAddonSet) ? 0.5 : 1,
-                      borderWidth: 0,
-                      marginTop: moderateScaleVertical(10),
                     }}
                   />
                 );
               }}
             />
-
-            <View>
-              {appMainData?.categories.length > 8 &&
-                appStyle?.homePageLayout === 5 && (
-                  <TouchableOpacity
-                    onPress={seeMoreCategories}
-                    activeOpacity={0.8}
-                    style={{
-                      borderWidth: 1,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      paddingVertical: moderateScaleVertical(6),
-                      marginHorizontal: moderateScale(8),
-                      borderRadius: moderateScale(6),
-                      marginTop: moderateScaleVertical(16),
-                      borderColor: colors.borderColorB,
-                    }}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                      <Text
-                        style={{
-                          fontSize: textScale(10),
-                          fontFamily: fontFamily.regular,
-                          color: isDarkMode ? colors.white : colors.black,
-                        }}>
-                        {!seeMore ? strings.SEE_MORE : strings.SEE_LESS}
-                      </Text>
-                      <Image
-                        source={imagePath.icDropdown4}
-                        style={{
-                          tintColor: isDarkMode ? colors.white : colors.black,
-                          transform: [{rotate: seeMore ? '180deg' : '0deg'}],
-                          marginLeft: moderateScale(4),
-                        }}
-                      />
-                    </View>
-                  </TouchableOpacity>
-                )}
-            </View>
           </View>
         )}
       </View>
@@ -893,13 +842,6 @@ export default function DashBoardFive({
 
   return (
     <View style={{flex: 1}}>
-      {/* <SearchBar2
-        placeHolderTxt={
-          toggleData?.profile?.preferences?.search_nomenclature ||
-          strings.SEARCH_HERE
-        }
-        navigation={navigation}``
-      /> */}
       <ScrollView
         ref={scrollRef}
         showsVerticalScrollIndicator={false}
@@ -913,9 +855,7 @@ export default function DashBoardFive({
         }>
         {showAllTempCartOrders()}
         <Animatable.View animation={'fadeInUp'} delay={200}>
-          {businessType == 'laundry'
-            ? laundryCategoriesBanners()
-            : categoriesBanners()}
+          {!!isGetEstimation ? laundryCategoriesBanners() : categoriesBanners()}
           {
             <>
               <FlatList

@@ -15,6 +15,8 @@ import {
 import FastImage from 'react-native-fast-image';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import colors from '../../styles/colors';
+import DeviceInfo from 'react-native-device-info';
+import {isEmpty} from 'lodash';
 
 export default function LaundryAvailableVendors({navigation, route}) {
   const paramData = route?.params?.data;
@@ -23,19 +25,18 @@ export default function LaundryAvailableVendors({navigation, route}) {
     currencies,
     languages,
     appStyle,
-    isDineInSelected,
-    themeColor,
-    themeToggle,
-    allAddresss,
+
     themeColors,
   } = useSelector((state) => state?.initBoot);
+
+  const {dineInType} = useSelector((state) => state?.home);
   const fontFamily = appStyle?.fontSizeData;
+  const styles = stylesFunc({fontFamily, themeColors});
 
   const [isLoading, setLoading] = useState(true);
   const [allVendors, setAllVendors] = useState([]);
 
   useEffect(() => {
-    // return;
     actions
       .productEstimation(
         {product: paramData?.selectedAddonSet},
@@ -46,7 +47,6 @@ export default function LaundryAvailableVendors({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res, '>>>>>res');
         setLoading(false);
         setAllVendors(res?.data);
       })
@@ -54,21 +54,45 @@ export default function LaundryAvailableVendors({navigation, route}) {
   }, []);
 
   const errorMethod = (error) => {
-    console.log(error, 'erro>>>>>>errorerrorr');
-
+    console.log(error, 'errorinErrorMethod....');
     showError(error?.message || error?.error);
+  };
+
+  const onSelectVendorAddToCart = (item) => {
+    let addonIds = [];
+    let addonOptionIds = [];
+    paramData?.selectedAddonSet.map((item, index) => {
+      addonIds[index] = item?.estimate_addon_id;
+      addonOptionIds[index] = item?.id;
+    });
+    let data = {};
+    data['sku'] = item?.products_live[0]?.sku;
+    data['quantity'] = 1;
+    data['product_variant_id'] =
+      paramData?.selectedAddonSet[0]?.estimate_product_id;
+    data['type'] = dineInType;
+    if (!isEmpty(addonIds)) {
+      data['addon_ids'] = addonIds;
+      data['addon_options'] = addonOptionIds;
+    }
+    console.log(data, 'data sendin in API');
+
+    actions
+      .addProductsToCart(data, {
+        code: appData.profile.code,
+        currency: currencies.primary_currency.id,
+        language: languages.primary_language.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res, 'res>>>>....');
+      })
+      .catch(errorMethod);
   };
 
   const renderItem = ({item, index}) => {
     return (
-      <View
-        style={{
-          backgroundColor: '#F2F7FA',
-          flexDirection: 'row',
-          paddingLeft: moderateScale(15),
-          paddingVertical: moderateScaleVertical(10),
-          borderRadius: moderateScale(5),
-        }}>
+      <View style={styles.mainRowStyle}>
         <View style={{flex: 0.2}}>
           <FastImage
             source={{
@@ -80,86 +104,35 @@ export default function LaundryAvailableVendors({navigation, route}) {
               priority: FastImage.priority.high,
               cache: FastImage.cacheControl.immutable,
             }}
-            style={{
-              height: moderateScale(70),
-              width: moderateScale(70),
-              borderRadius: moderateScale(35),
-            }}
+            style={styles.vendorImgStyle}
           />
         </View>
-        <View
-          style={{
-            backgroundColor: '#77B700',
-            alignItems: 'center',
-            justifyContent: 'center',
-            paddingHorizontal: moderateScale(4),
-            paddingVertical: moderateScale(4),
-            position: 'absolute',
-            right: 10,
-            top: 10,
-            borderRadius: moderateScale(2),
-          }}>
-          <Text
-            style={{
-              fontFamily: fontFamily.regular,
-              fontSize: textScale(9),
-            }}>
-            COMPLETE MATCH
-          </Text>
+        <View style={styles.completePartialMatchView}>
+          <Text style={styles.completePartialMatchTxt}>COMPLETE MATCH</Text>
         </View>
         <View
           style={{
             paddingHorizontal: moderateScale(20),
             flex: 0.8,
           }}>
-          <Text
-            style={{
-              fontFamily: fontFamily?.bold,
-              fontSize: textScale(14),
-              color: colors.black,
-            }}>
-            {item?.name}
-          </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginTop: moderateScaleVertical(6),
-            }}>
-            <Image source={imagePath.icLocation1} />
-            <Text
+          <Text style={styles.vendorTitle}>{item?.name}</Text>
+          <View style={styles.locationImgView}>
+            <Image
+              source={imagePath.icLocationBlue}
               style={{
-                marginLeft: 5,
-                fontFamily: fontFamily?.regular,
-                fontSize: textScale(12),
-                color: colors.blackOpacity43,
-              }}>
-              {item?.address}
-            </Text>
+                tintColor: themeColors.primary_color,
+              }}
+            />
+            <Text style={styles.addressTxt}>{item?.address}</Text>
           </View>
-          <Text
-            style={{
-              marginTop: moderateScaleVertical(6),
-              fontFamily: fontFamily?.bold,
-              fontSize: textScale(14),
-              color: colors.black,
-            }}>
-            {'$ 120'}
+          <Text style={styles.priceText}>
+            {currencies?.primary_currency?.symbol} {item?.product_price}
           </Text>
           <ButtonWithLoader
+            onPress={() => onSelectVendorAddToCart(item)}
             btnText="Select Vendor"
-            btnTextStyle={{
-              color: themeColors.primary_color,
-              textTransform: 'none',
-              fontSize: textScale(14),
-            }}
-            btnStyle={{
-              marginTop: moderateScaleVertical(20),
-              height: moderateScaleVertical(40),
-              borderRadius: moderateScale(5),
-              borderColor: themeColors.primary_color,
-              borderWidth: 1,
-            }}
+            btnTextStyle={styles.selectVendorBtnTxt}
+            btnStyle={styles.selectVendorBtnStyle}
           />
         </View>
       </View>
@@ -185,4 +158,70 @@ export default function LaundryAvailableVendors({navigation, route}) {
   );
 }
 
-const styles = StyleSheet.create({});
+export function stylesFunc({fontFamily, themeColors, isDarkMode}) {
+  const styles = StyleSheet.create({
+    mainRowStyle: {
+      backgroundColor: '#F2F7FA',
+      flexDirection: 'row',
+      paddingLeft: moderateScale(15),
+      paddingVertical: moderateScaleVertical(10),
+      borderRadius: moderateScale(5),
+    },
+    vendorImgStyle: {
+      height: moderateScale(70),
+      width: moderateScale(70),
+      borderRadius: moderateScale(35),
+    },
+    completePartialMatchView: {
+      backgroundColor: '#DBEBCB',
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: moderateScale(4),
+      paddingVertical: moderateScale(4),
+      position: 'absolute',
+      right: 10,
+      top: 10,
+      borderRadius: moderateScale(2),
+    },
+    completePartialMatchTxt: {
+      fontFamily: fontFamily.medium,
+      fontSize: textScale(8),
+      color: '#719F1C',
+    },
+    vendorTitle: {
+      fontFamily: fontFamily?.bold,
+      fontSize: textScale(14),
+      color: colors.black,
+    },
+    locationImgView: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: moderateScaleVertical(6),
+    },
+    addressTxt: {
+      marginLeft: 5,
+      fontFamily: fontFamily?.regular,
+      fontSize: textScale(12),
+      color: colors.blackOpacity43,
+    },
+    priceText: {
+      marginTop: moderateScaleVertical(6),
+      fontFamily: fontFamily?.bold,
+      fontSize: textScale(14),
+      color: colors.black,
+    },
+    selectVendorBtnTxt: {
+      color: themeColors.primary_color,
+      textTransform: 'none',
+      fontSize: textScale(14),
+    },
+    selectVendorBtnStyle: {
+      marginTop: moderateScaleVertical(20),
+      height: moderateScaleVertical(40),
+      borderRadius: moderateScale(5),
+      borderColor: themeColors.primary_color,
+      borderWidth: 1,
+    },
+  });
+  return styles;
+}

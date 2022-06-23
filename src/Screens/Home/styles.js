@@ -364,7 +364,7 @@ export default ({themeColors, fontFamily}) => {
     viewAllText: {
       color: themeColors.primary_color,
       fontFamily: fontFamily.medium,
-      fontSize:textScale(12)
+      fontSize: textScale(12),
     },
     viewAllVeiw: {
       flexDirection: 'row',
@@ -424,6 +424,19 @@ export default ({themeColors, fontFamily}) => {
       fontSize: moderateScale(15),
       marginLeft: 2,
       color: themeColors.primary_color,
+    },
+    findVendorBtnTitle: {
+      color: colors.white,
+      textTransform: 'none',
+      fontSize: textScale(14),
+    },
+    findVendorBtnStyle: {
+      marginTop: 0,
+      height: moderateScaleVertical(45),
+      borderRadius: moderateScale(5),
+      backgroundColor: themeColors.primary_color,
+      borderWidth: 0,
+      marginTop: moderateScaleVertical(10),
     },
   });
 

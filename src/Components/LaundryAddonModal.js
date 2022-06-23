@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   FlatList,
   Image,
@@ -6,32 +7,31 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import {useDarkMode} from 'react-native-dark-mode';
 import Modal from 'react-native-modal';
+import {useSelector} from 'react-redux';
+import imagePath from '../constants/imagePath';
+import colors from '../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
-import colors from '../styles/colors';
-import strings from '../constants/lang';
-import imagePath from '../constants/imagePath';
-import ButtonWithLoader from './ButtonWithLoader';
 import {getImageUrl} from '../utils/helperFunctions';
+import ButtonWithLoader from './ButtonWithLoader';
 
 const LaundryAddonModal = ({
   isVisible = false,
   hideModal = () => {},
   flatlistData = [],
-  isLoadingAddons = true,
   selectedLaundryCategory = {},
   onPressLaundryCategory = () => {},
   onLaundryAddonSelect = () => {},
   selectedAddonSet = [],
   onPressProceed = () => {},
+  minMaxError = [],
+  isOnPressed = false,
 }) => {
   const {
     themeColor,
@@ -46,12 +46,17 @@ const LaundryAddonModal = ({
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors, isDarkMode});
 
-  console.log(selectedAddonSet, 'selectedAddonSet>>>>');
-
-  const checkIdPresetinAddon = (itmId, addonId) => {
+  const checkIdPresentInAddon = (itmId, addonId) => {
     return selectedAddonSet.some(
       (item) => item?.id == itmId && item?.estimate_addon_id == addonId,
     );
+  };
+
+  const checkValidation = (addonset, indx, min_limit = 3) => {
+    // if (addonset?.min_select == 0) {
+    //   return true;
+    // }
+    return minMaxError.some((item) => item == indx);
   };
 
   const renderLaundryCategoryItem = ({item, index}) => {
@@ -70,21 +75,11 @@ const LaundryAddonModal = ({
             ),
           }}
           style={{
-            height: moderateScaleVertical(100),
-            width: moderateScaleVertical(100),
-            borderRadius: moderateScale(10),
+            ...styles.categoryImgStyle,
             borderWidth: selectedLaundryCategory?.id == item?.id ? 4 : 0,
-            borderColor: themeColors.primary_color,
           }}
         />
-        <Text
-          style={{
-            width: moderateScaleVertical(100),
-            textAlign: 'center',
-            marginTop: moderateScaleVertical(15),
-            fontSize: textScale(12),
-            fontFamily: fontFamily.regular,
-          }}>
+        <Text style={styles.categoryTitle}>
           {item?.estimate_product_translation?.name ||
             item?.estimate_product_translation?.slug ||
             ''}
@@ -93,8 +88,7 @@ const LaundryAddonModal = ({
     );
   };
 
-  const renderEstimateProductAddons = (itm) => {
-    console.log(itm, 'itm>>>>>>itm');
+  const renderEstimateProductAddons = (itm, indx) => {
     return (
       <View>
         <Text
@@ -106,12 +100,15 @@ const LaundryAddonModal = ({
         </Text>
         <Text
           style={{
-            fontFamily: fontFamily.regular,
-            fontSize: textScale(12),
-
-            color: colors.black,
-            opacity: 0.5,
-            marginVertical: moderateScaleVertical(10),
+            ...styles.minMaxTxt,
+            color:
+              isOnPressed && !checkValidation(itm?.estimate_addon_set, indx)
+                ? colors.redB
+                : colors.black,
+            opacity:
+              isOnPressed && !checkValidation(itm?.estimate_addon_set, indx)
+                ? 1
+                : 0.5,
           }}>
           Min {itm?.estimate_addon_set?.min_select} Max{' '}
           {itm?.estimate_addon_set?.max_select} sellections allowed
@@ -131,11 +128,7 @@ const LaundryAddonModal = ({
     return (
       <TouchableOpacity
         onPress={() => onLaundryAddonSelect(item, categoryDetails)}
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
+        style={styles.addonRowTouchable}>
         <Text
           style={{
             fontFamily: fontFamily.regular,
@@ -144,16 +137,11 @@ const LaundryAddonModal = ({
           {item?.title}
         </Text>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text
-            style={{
-              fontFamily: fontFamily.regular,
-              fontSize: textScale(11),
-              marginRight: moderateScale(10),
-            }}>
-            {item?.price}
+          <Text style={styles.itmPrice}>
+            {currencies?.primary_currency?.symbol} {item?.price}
           </Text>
 
-          {checkIdPresetinAddon(
+          {checkIdPresentInAddon(
             item?.id,
             categoryDetails?.estimate_addon_set?.id,
           ) ? (
@@ -171,94 +159,72 @@ const LaundryAddonModal = ({
       isVisible={isVisible}
       style={{margin: 0, justifyContent: 'flex-end'}}
       onBackdropPress={hideModal}>
-      {isLoadingAddons ? (
+      <View style={styles.mainContainer}>
+        <Text
+          style={{
+            ...styles.titleText,
+            paddingHorizontal: moderateScale(12),
+          }}>
+          {'LAUNDRY SERVICES'}{' '}
+        </Text>
         <View
           style={{
-            height: moderateScaleVertical(100),
-            backgroundColor: colors.white,
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderTopRightRadius: moderateScale(10),
-            borderTopLeftRadius: moderateScale(15),
+            paddingHorizontal: moderateScale(12),
+            paddingVertical: moderateScaleVertical(15),
           }}>
-          <Text>Loading... </Text>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            horizontal
+            data={flatlistData || []}
+            renderItem={renderLaundryCategoryItem}
+            showsHorizontalScrollIndicator={false}
+            ItemSeparatorComponent={() => (
+              <View
+                style={{
+                  width: moderateScale(15),
+                }}
+              />
+            )}
+          />
         </View>
-      ) : (
-        <View style={styles.mainContainer}>
+        <View style={styles.horizontaLine} />
+        <View
+          style={{
+            paddingHorizontal: moderateScale(12),
+          }}>
           <Text
             style={{
               ...styles.titleText,
-              paddingHorizontal: moderateScale(12),
-            }}>
-            {'LAUNDRY SERVICES'}{' '}
-          </Text>
-          <View
-            style={{
-              paddingHorizontal: moderateScale(12),
               paddingVertical: moderateScaleVertical(15),
             }}>
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              horizontal
-              data={flatlistData || []}
-              renderItem={renderLaundryCategoryItem}
-              showsHorizontalScrollIndicator={false}
-              ItemSeparatorComponent={() => (
-                <View
-                  style={{
-                    width: moderateScale(15),
-                  }}
-                />
-              )}
-            />
-          </View>
-          <View style={styles.horizontaLine} />
-          <View
-            style={{
-              paddingHorizontal: moderateScale(12),
-            }}>
-            <Text
-              style={{
-                ...styles.titleText,
-                paddingVertical: moderateScaleVertical(15),
-              }}>
-              {'ADD ONS'}{' '}
-            </Text>
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              data={selectedLaundryCategory?.estimate_product_addons || []}
-              renderItem={({item}) => renderEstimateProductAddons(item)}
-              showsHorizontalScrollIndicator={false}
-              ItemSeparatorComponent={() => (
-                <View
-                  style={{
-                    height: moderateScale(20),
-                  }}
-                />
-              )}
-              ListFooterComponent={() => (
-                <ButtonWithLoader
-                  btnText="PROCEED"
-                  onPress={hideModal}
-                  btnTextStyle={{
-                    color: colors.white,
-                    textTransform: 'none',
-                    fontSize: textScale(14),
-                  }}
-                  btnStyle={{
-                    marginTop: moderateScaleVertical(20),
-                    height: moderateScaleVertical(45),
-                    borderRadius: moderateScale(5),
-                    backgroundColor: themeColors.primary_color,
-                    borderWidth: 0,
-                    marginBottom: moderateScaleVertical(300),
-                  }}
-                />
-              )}
-            />
-          </View>
+            {'ADD ONS'}{' '}
+          </Text>
+
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={selectedLaundryCategory?.estimate_product_addons || []}
+            renderItem={({item, index}) =>
+              renderEstimateProductAddons(item, index)
+            }
+            showsHorizontalScrollIndicator={false}
+            ItemSeparatorComponent={() => (
+              <View
+                style={{
+                  height: moderateScale(20),
+                }}
+              />
+            )}
+            ListFooterComponent={() => (
+              <ButtonWithLoader
+                btnText="PROCEED"
+                onPress={onPressProceed}
+                btnTextStyle={styles.proceedBtnTitle}
+                btnStyle={styles.proceedBtn}
+              />
+            )}
+          />
         </View>
-      )}
+      </View>
     </Modal>
   );
 };
@@ -285,6 +251,47 @@ export function stylesFunc({fontFamily, themeColors, isDarkMode}) {
       borderBottomColor: isDarkMode
         ? colors.whiteOpacity22
         : colors.lightGreyBg,
+    },
+    proceedBtn: {
+      marginTop: moderateScaleVertical(20),
+      height: moderateScaleVertical(45),
+      borderRadius: moderateScale(5),
+      backgroundColor: themeColors.primary_color,
+      borderWidth: 0,
+      marginBottom: moderateScaleVertical(300),
+    },
+    proceedBtnTitle: {
+      color: colors.white,
+      textTransform: 'none',
+      fontSize: textScale(14),
+    },
+    itmPrice: {
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(11),
+      marginRight: moderateScale(10),
+    },
+    addonRowTouchable: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    minMaxTxt: {
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(12),
+      marginVertical: moderateScaleVertical(10),
+    },
+    categoryTitle: {
+      width: moderateScaleVertical(100),
+      textAlign: 'center',
+      marginTop: moderateScaleVertical(15),
+      fontSize: textScale(12),
+      fontFamily: fontFamily.regular,
+    },
+    categoryImgStyle: {
+      height: moderateScaleVertical(100),
+      width: moderateScaleVertical(100),
+      borderRadius: moderateScale(10),
+      borderColor: themeColors.primary_color,
     },
   });
   return styles;

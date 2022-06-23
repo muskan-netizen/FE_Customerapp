@@ -259,9 +259,9 @@ export const getAllRiderList = (data, headers = {}) => {
   });
 };
 
-export const getProductEstimationWithAddons = (data, headers = {}) => {
+export const getProductEstimationWithAddons = (url, data, headers = {}) => {
   return new Promise((resolve, reject) => {
-    apiGet(GET_PRODUCT_ESTIMATION_WITH_ADDONS, data, headers)
+    apiGet(GET_PRODUCT_ESTIMATION_WITH_ADDONS + url, data, headers)
       .then((res) => {
         resolve(res);
       })
