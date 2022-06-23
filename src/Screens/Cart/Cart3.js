@@ -2665,6 +2665,7 @@ function Cart({navigation, route}) {
                                   </View>
                                 </View>
                               </View>
+                              
                               <Text
                                 style={{
                                   ...styles.priceItemLabel2,
@@ -2684,8 +2685,8 @@ function Cart({navigation, route}) {
                                         ?.digit_after_decimal,
                                     )
                                   }`}
-                                </Text>{' '}
-                                {i?.quantity}X ={' '}
+                                </Text>{' '}X
+                                {i?.quantity} ={' '}
                                 <Text
                                   style={{
                                     color: isDarkMode

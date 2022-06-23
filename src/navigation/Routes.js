@@ -56,6 +56,7 @@ export default function Routes() {
   const userData = useSelector((state) => state?.auth?.userData);
   const {shortCodeStatus, appStyle} = useSelector((state) => state?.initBoot);
   const businessType = appStyle?.homePageLayout;
+ 
 
   const MyTheme = {
     ...DefaultTheme,

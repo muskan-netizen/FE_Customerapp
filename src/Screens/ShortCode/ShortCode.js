@@ -2221,12 +2221,10 @@ export default function ShortCode({ route, navigation }) {
   }, [shortCode, isShortcodePrefilled]);
 
   useEffect(() => {
-    if(videoDurationEnded && initapiresponse)
-      { 
-        
-        navigateToNextScreen(allAppData, responseData);
-      }
-  },[videoDurationEnded,initapiresponse]);
+    if (videoDurationEnded && initapiresponse) {
+      navigateToNextScreen(allAppData, responseData);
+    }
+  }, [videoDurationEnded, initapiresponse]);
 
   const checkScreen = () => {
     initApiHit();
@@ -2252,14 +2250,14 @@ export default function ShortCode({ route, navigation }) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '2d98b5',
+        // code: '3cc883',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '2d98b5',
-        code: shortCode,
+        // code: '3cc883',
+      code: shortCode,
       };
     }
     console.log(header, 'header');
@@ -2506,10 +2504,9 @@ export default function ShortCode({ route, navigation }) {
       case appIds.iPicknDrop:
           return animatedSplash();
       case appIds.muvpod:
-        //  () => {updateState({LoadingScreen:true, isLoading:true})}
           return animatedSplash();
       default:
-        return imageSplash();
+        return imageSplash(); 
     }
 
     // return imageSplash();
@@ -2551,6 +2548,7 @@ const animationVideo = () =>{
       return {uri : imagePath.muvpod}
   } 
 }
+
 
   const onVideoDurationEnded = () => {
     updateState({
