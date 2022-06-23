@@ -348,6 +348,7 @@ const shortCodes = {
   spa: '9022c6',
   capitalDiagnostic: 'fd6dd6',
   abbeRides: '8501b6',
+  nrsa:'e9f97c',
 
 };
 
@@ -1736,6 +1737,10 @@ const appIds = {
   abbeRides: Platform.select({
     ios: 'com.abbeRides',
     android: 'com.abbeRides',
+  }),
+  nrsa: Platform.select({
+    ios: 'com.nrsa',
+    android: 'com.nrsa',
   }),
 
 };

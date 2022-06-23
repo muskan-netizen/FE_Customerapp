@@ -1004,11 +1004,11 @@ android {
             }
             mobi{
                 dimension "appType"
-                versionCode 1
+                versionCode 3
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.mobi'
+                applicationId 'com.mobi.orders'
                 resValue "string", "app_name", "MOBI"
                 resValue "string", "host_name", ""
             }
@@ -5510,6 +5510,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.abbeRides'
             resValue "string", "app_name", "Abbe Rides"
+            resValue "string", "host_name", ""
+            }
+             nrsa{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.nrsa'
+            resValue "string", "app_name", "NRSA"
             resValue "string", "host_name", ""
             }
     }
