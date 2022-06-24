@@ -17,6 +17,7 @@ import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import colors from '../../styles/colors';
 import DeviceInfo from 'react-native-device-info';
 import {isEmpty} from 'lodash';
+import navigationStrings from '../../navigation/navigationStrings';
 
 export default function LaundryAvailableVendors({navigation, route}) {
   const paramData = route?.params?.data;
@@ -36,6 +37,12 @@ export default function LaundryAvailableVendors({navigation, route}) {
   const [isLoading, setLoading] = useState(true);
   const [allVendors, setAllVendors] = useState([]);
 
+  //Naviagtion to specific screen
+  const moveToNewScreen =
+    (screenName, data = {}) =>
+    () => {
+      navigation.navigate(screenName, {data});
+    };
   useEffect(() => {
     actions
       .productEstimation(
@@ -47,6 +54,7 @@ export default function LaundryAvailableVendors({navigation, route}) {
         },
       )
       .then((res) => {
+        console.log(res, 'res>>>>>>res');
         setLoading(false);
         setAllVendors(res?.data);
       })
@@ -59,21 +67,22 @@ export default function LaundryAvailableVendors({navigation, route}) {
   };
 
   const onSelectVendorAddToCart = (item) => {
+    console.log(item, 'item>>>>>item');
     let addonIds = [];
     let addonOptionIds = [];
-    paramData?.selectedAddonSet.map((item, index) => {
-      addonIds[index] = item?.estimate_addon_id;
-      addonOptionIds[index] = item?.id;
+    item?.products_live[0]?.sets?.map((item, index) => {
+      addonIds[index] = item?.addon_id;
+      // addonOptionIds[index] = item?.id;
     });
     let data = {};
     data['sku'] = item?.products_live[0]?.sku;
     data['quantity'] = 1;
-    data['product_variant_id'] =
-      paramData?.selectedAddonSet[0]?.estimate_product_id;
+    data['product_variant_id'] = item?.products_live[0]?.variant_id;
+
     data['type'] = dineInType;
     if (!isEmpty(addonIds)) {
       data['addon_ids'] = addonIds;
-      data['addon_options'] = addonOptionIds;
+      // data['addon_options'] = addonOptionIds;
     }
     console.log(data, 'data sendin in API');
 
@@ -85,7 +94,9 @@ export default function LaundryAvailableVendors({navigation, route}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'res>>>>....');
+        actions.cartItemQty(res);
+        showSuccess(strings.PRODUCT_ADDED_SUCCESS);
+        moveToNewScreen(navigationStrings.CART)();
       })
       .catch(errorMethod);
   };

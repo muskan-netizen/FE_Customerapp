@@ -425,19 +425,6 @@ export default ({themeColors, fontFamily}) => {
       marginLeft: 2,
       color: themeColors.primary_color,
     },
-    findVendorBtnTitle: {
-      color: colors.white,
-      textTransform: 'none',
-      fontSize: textScale(14),
-    },
-    findVendorBtnStyle: {
-      marginTop: 0,
-      height: moderateScaleVertical(45),
-      borderRadius: moderateScale(5),
-      backgroundColor: themeColors.primary_color,
-      borderWidth: 0,
-      marginTop: moderateScaleVertical(10),
-    },
   });
 
   return styles;

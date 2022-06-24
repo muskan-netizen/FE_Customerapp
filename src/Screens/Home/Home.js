@@ -870,7 +870,6 @@ export default function Home({route, navigation}) {
         setLoadingAddons(false);
         setEsitmatedLaundryProducts(res?.data);
         setSelectedLaundryCategory(res?.data[0]);
-
         setLaundryAddonModal(true);
       })
       .catch(errorMethod);
@@ -920,7 +919,7 @@ export default function Home({route, navigation}) {
     }
   };
 
-  const onPressProceed = () => {
+  const onFindVendors = () => {
     let containsAll = selectedAddonSet.map((element) => {
       return selectedLaundryCategory?.estimate_product_addons.findIndex(
         (item) => item?.estimate_addon_id === element?.estimate_addon_id,
@@ -933,18 +932,15 @@ export default function Home({route, navigation}) {
       selectedLaundryCategory?.estimate_product_addons.length
     ) {
       onHideModal();
+      moveToNewScreen(navigationStrings.LAUNDRY_AVAILABLE_VENDORS, {
+        selectedAddonSet: selectedAddonSet,
+      })();
     }
   };
 
   const onHideModal = () => {
     setIsOnPressed(false);
     setLaundryAddonModal(false);
-  };
-
-  const onFindVendors = () => {
-    moveToNewScreen(navigationStrings.LAUNDRY_AVAILABLE_VENDORS, {
-      selectedAddonSet: selectedAddonSet,
-    })();
   };
 
   const renderHomeScreen = () => {
@@ -1032,8 +1028,6 @@ export default function Home({route, navigation}) {
               onVendorFilterSeletion={onVendorFilterSeletion}
               singleVendor={singleVendor}
               onPressAddLaundryItem={onPressAddLaundryItem}
-              selectedAddonSet={selectedAddonSet}
-              onFindVendors={onFindVendors}
               isLoadingAddons={isLoadingAddons}
               selectedHomeCategory={selectedHomeCategory}
             />
@@ -1110,8 +1104,6 @@ export default function Home({route, navigation}) {
               onVendorFilterSeletion={onVendorFilterSeletion}
               singleVendor={singleVendor}
               onPressAddLaundryItem={onPressAddLaundryItem}
-              selectedAddonSet={selectedAddonSet}
-              onFindVendors={onFindVendors}
               isLoadingAddons={isLoadingAddons}
               selectedHomeCategory={selectedHomeCategory}
             />
@@ -1204,7 +1196,7 @@ export default function Home({route, navigation}) {
         flatlistData={esitmatedLaundryProducts}
         onLaundryAddonSelect={onLaundryAddonSelect}
         selectedAddonSet={selectedAddonSet}
-        onPressProceed={onPressProceed}
+        onFindVendors={onFindVendors}
         minMaxError={minMaxError}
         isOnPressed={isOnPressed}
       />

@@ -74,8 +74,6 @@ export default function DashBoardFive({
   tempCartData = null,
   onPressVendor = () => {},
   onPressAddLaundryItem = () => {},
-  selectedAddonSet = [],
-  onFindVendors = () => {},
   isLoadingAddons = false,
   selectedHomeCategory = {},
 }) {
@@ -819,20 +817,7 @@ export default function DashBoardFive({
               ListHeaderComponent={() => (
                 <View style={{marginLeft: moderateScale(12)}} />
               )}
-              ListFooterComponent={() => {
-                return (
-                  <ButtonWithLoader
-                    onPress={onFindVendors}
-                    btnText="Find Vendors"
-                    btnTextStyle={styles.findVendorBtnTitle}
-                    disabled={isEmpty(selectedAddonSet)}
-                    btnStyle={{
-                      ...styles.findVendorBtnStyle,
-                      opacity: isEmpty(selectedAddonSet) ? 0.5 : 1,
-                    }}
-                  />
-                );
-              }}
+          
             />
           </View>
         )}

@@ -29,7 +29,7 @@ const LaundryAddonModal = ({
   onPressLaundryCategory = () => {},
   onLaundryAddonSelect = () => {},
   selectedAddonSet = [],
-  onPressProceed = () => {},
+  onFindVendors = () => {},
   minMaxError = [],
   isOnPressed = false,
 }) => {
@@ -136,20 +136,15 @@ const LaundryAddonModal = ({
           }}>
           {item?.title}
         </Text>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={styles.itmPrice}>
-            {currencies?.primary_currency?.symbol} {item?.price}
-          </Text>
 
-          {checkIdPresentInAddon(
-            item?.id,
-            categoryDetails?.estimate_addon_set?.id,
-          ) ? (
-            <Image source={imagePath.checkBox2Active} />
-          ) : (
-            <Image source={imagePath.checkBox2InActive} />
-          )}
-        </View>
+        {checkIdPresentInAddon(
+          item?.id,
+          categoryDetails?.estimate_addon_set?.id,
+        ) ? (
+          <Image source={imagePath.checkBox2Active} />
+        ) : (
+          <Image source={imagePath.checkBox2InActive} />
+        )}
       </TouchableOpacity>
     );
   };
@@ -216,8 +211,8 @@ const LaundryAddonModal = ({
             )}
             ListFooterComponent={() => (
               <ButtonWithLoader
-                btnText="PROCEED"
-                onPress={onPressProceed}
+                btnText="Find Vendors"
+                onPress={onFindVendors}
                 btnTextStyle={styles.proceedBtnTitle}
                 btnStyle={styles.proceedBtn}
               />
