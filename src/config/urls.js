@@ -30,6 +30,8 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://hometowndelivery21.com/api/v1';
 // export const API_BASE_URL = 'https://click2deliver.co.uk/api/v1';
 //export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
+// export const API_BASE_URL = 'https://tmgshops.com/api/v1';
+
 
  //export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
 //  export const API_BASE_URL = 'https://fairexglobal.com/api/v1';
