@@ -44,6 +44,7 @@ const SearchPlaces = ({
   mapClose = () => {},
   addressDone = () => {},
   isMapSelectLocation = false,
+  currentLatLong={}
 }) => {
   console.log(mapKey, 'in MapPlaceComp map key');
 
@@ -56,7 +57,7 @@ const SearchPlaces = ({
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const {constCurrLoc} = useSelector((state) => state?.home);
 
-  console.log("cur lag lng",curLatLng)
+  console.log("cur lag lng",currentLatLong)
 
   const textChangeHandler = async (data) => {
     setValue(data);
@@ -85,7 +86,7 @@ const SearchPlaces = ({
         <SelctFromMap
           addressDone={addressDone}
           mapClose={mapClose} //address map close
-          constCurrLoc={constCurrLoc}
+          constCurrLoc={currentLatLong}
         />
       </View>
     );
