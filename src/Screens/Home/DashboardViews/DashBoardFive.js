@@ -817,7 +817,6 @@ export default function DashBoardFive({
               ListHeaderComponent={() => (
                 <View style={{marginLeft: moderateScale(12)}} />
               )}
-          
             />
           </View>
         )}

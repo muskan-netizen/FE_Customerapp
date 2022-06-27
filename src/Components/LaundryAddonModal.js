@@ -56,6 +56,7 @@ const LaundryAddonModal = ({
     // if (addonset?.min_select == 0) {
     //   return true;
     // }
+
     return minMaxError.some((item) => item == indx);
   };
 

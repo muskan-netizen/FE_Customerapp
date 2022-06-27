@@ -40,6 +40,11 @@ import _, {isEmpty} from 'lodash';
 
 // navigator.geolocation = require('react-native-geolocation-service');
 
+let maxMinObj = {
+  max_select: 1,
+  min_select: 1,
+};
+
 export default function Home({route, navigation}) {
   const paramData = route?.params;
 
@@ -919,14 +924,29 @@ export default function Home({route, navigation}) {
     }
   };
 
+  console.log(selectedLaundryCategory, 'selectedLaundryCategory>>>');
+
   const onFindVendors = () => {
     let containsAll = selectedAddonSet.map((element) => {
-      return selectedLaundryCategory?.estimate_product_addons.findIndex(
+      let indx = selectedLaundryCategory?.estimate_product_addons.findIndex(
         (item) => item?.estimate_addon_id === element?.estimate_addon_id,
       );
+      return indx;
     });
+    let allIndx = selectedLaundryCategory?.estimate_product_addons.map(
+      (element) => {
+        let indx = selectedLaundryCategory?.estimate_product_addons.findIndex(
+          (item) => item?.estimate_addon_set?.max_select === 1,
+        );
+        return indx;
+      },
+    );
+
+    console.log(allIndx, '>>>>>allIndx');
+
     setIsOnPressed(true);
     setMinMaxError(containsAll);
+    return;
     if (
       containsAll.length ==
       selectedLaundryCategory?.estimate_product_addons.length
