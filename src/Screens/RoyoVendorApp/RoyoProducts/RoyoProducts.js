@@ -852,6 +852,7 @@ const RoyoProducts = (props) => {
                 alignSelf: categories.length > 2 ? 'center' : 'flex-start',
                 marginLeft: categories.length > 2 ? 0 : moderateScale(20),
               }}
+            
             />
           </View>
         ) : null}

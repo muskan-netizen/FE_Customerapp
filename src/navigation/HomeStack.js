@@ -40,6 +40,8 @@ import {
   Cart,
   AllPaymentMethods,
   ScrollableCategory,
+  Subscriptions,
+  Subscriptions2,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import { shortCodes } from '../utils/constants/DynamicAppKeys';
@@ -301,6 +303,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.SCROLLABLE_CATEGORY}
         component={ScrollableCategory}
+        options={{ headerShown: false }}
+      />
+       <Stack.Screen
+        name={navigationStrings.SUBSCRIPTION}
+        component={Subscriptions2}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

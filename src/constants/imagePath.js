@@ -518,4 +518,5 @@ export default {
   icCar: require('../assets/images/ic_topviewcar.png'),
 
   icSos: require('../assets/images/RoyoorderNewImages/ic_sos.png'),
+  subscribe:require('../assets/images/subscribe.png')
 };

@@ -48,6 +48,7 @@ import DeviceCountry, {
   TYPE_TELEPHONY,
   TYPE_CONFIGURATION,
 } from 'react-native-device-country';
+import SubscriptionModal from '../../Components/SubscriptionModal';
 var getPhonesCallingCodeAndCountryData = null
 DeviceCountry.getCountryCode()
   .then((result) => {
@@ -103,6 +104,7 @@ export default function Signup({navigation}) {
     addtionalImages: [],
     addtionalPdfs: [],
     appHashKey: 'WpV3+5pgxIH',
+    subscriptionPopup:false
   });
   const {
     phoneNumber,
@@ -118,6 +120,7 @@ export default function Signup({navigation}) {
     addtionalImages,
     addtionalPdfs,
     appHashKey,
+    subscriptionPopup
   } = state;
   const _onCountryChange = (data) => {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
@@ -281,6 +284,9 @@ export default function Signup({navigation}) {
               !!res.data?.verify_details?.is_phone_verified
             ) {
               checkIsAdmin(navigation_, navigation, res.data);
+              updateState({
+                subscriptionPopup:res?.data?.client_preference?.show_subscription_plan_popup_signup
+              })
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
@@ -293,11 +299,17 @@ export default function Signup({navigation}) {
               !!res.data?.verify_details?.is_phone_verified
             ) {
               checkIsAdmin(navigation_, navigation, res.data);
+              updateState({
+                subscriptionPopup:res?.data?.client_preference?.show_subscription_plan_popup_signup
+              })
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
           } else {
             checkIsAdmin(navigation_, navigation, res.data);
+            updateState({
+              subscriptionPopup:res?.data?.client_preference?.show_subscription_plan_popup_signup
+            })
           }
         }
       })
@@ -465,7 +477,17 @@ export default function Signup({navigation}) {
       }
     }
   };
-
+  const _closeModal=()=>{
+    updateState({
+      subscriptionPopup:false
+    })
+  }
+  const _onPressSubscribe = () => {
+    moveToNewScreen(navigationStrings.SUBSCRIPTION)();
+    updateState({
+      subscriptionPopup: false,
+    });
+  };
   return (
     <WrapperContainer
       isLoadingB={isLoading}
@@ -638,6 +660,13 @@ export default function Signup({navigation}) {
         destructiveButtonIndex={2}
         onPress={(index) => cameraHandle(index)}
       />
+      { (!!subscriptionPopup)  && (
+        <SubscriptionModal
+          isVisible={subscriptionPopup}
+          onClose={_closeModal}
+          onPressSubscribe={_onPressSubscribe}
+        />
+      )}
     </WrapperContainer>
   );
 }

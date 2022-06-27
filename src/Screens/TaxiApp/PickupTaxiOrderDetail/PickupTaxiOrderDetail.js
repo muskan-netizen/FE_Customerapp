@@ -282,7 +282,7 @@ console.log(languages,"languageslanguages")
       '/order-details/',
     )
     : null;
-  // console.log(new_dispatch_traking_url, 'new_dispatch_traking_url');
+  console.log(new_dispatch_traking_url, 'new_dispatch_traking_url');
   /*********Update driver detail screen********* */
   const _updateDriverLocationLocation = async (url) => {
     let apiData = {

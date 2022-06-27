@@ -239,7 +239,7 @@ export default function Products({ route, navigation }) {
       <View
         key={String(index)}
         style={{
-          // height: 200,
+          // height: 180,
           // minHeight: url1
           //   ? moderateScaleVertical(200)
           //   : 0,
@@ -269,7 +269,7 @@ export default function Products({ route, navigation }) {
 
 
   const getItemLayout = useCallback((data, index) => {
-    return { length: 200, offset: 200 * index, index }
+    return { length: 180, offset: 180 * index, index }
   }, [])
 
 
@@ -3174,10 +3174,10 @@ export default function Products({ route, navigation }) {
             getItemLayout={getItemLayout}
             // Performance settings
             removeClippedSubviews={true} // Unmount components when outside of window 
-            initialNumToRender={2} // Reduce initial render amount
-            maxToRenderPerBatch={1} // Redu ce number in each render batch
+            // initialNumToRender={2} // Reduce initial render amount
+            // maxToRenderPerBatch={10} // Redu ce number in each render batch
             updateCellsBatchingPeriod={100} // Increase time between renders
-            windowSize={7} // Reduce the window size
+            // windowSize={7} // Reduce the window size
 
           />
         ) : (

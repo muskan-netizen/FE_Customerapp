@@ -415,6 +415,10 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       case 6: //Payfast Payment Getway
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
         break;
+      case 18://Authorize.net Payment Gatway
+     
+        navigation.navigate(navigationStrings.AuthorizeNet, paymentData);
+        break;
       default:
 
         navigation.navigate(
@@ -511,7 +515,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     data['friendName'] = `${paramData?.friendBookingDetails?.firstName} ${paramData?.friendBookingDetails?.lastName}`,
     data['friendPhoneNumber'] = paramData?.friendBookingDetails?.bookingType ? paramData?.friendBookingDetails?.mobileNumber?.includes('+') ? paramData?.friendBookingDetails?.mobileNumber : ` ${defaultDeviceCountryCode}${paramData?.friendBookingDetails?.mobileNumber}` : '',
 
-     console.log(JSON.stringify(data), "dataaaaa")
+     console.log(data, "dataaaaa")
     // if (!!userData) {
     //   !!userData?.client_preference?.verify_email &&
     //   !!userData?.client_preference?.verify_phone
