@@ -2155,13 +2155,13 @@ export default function ShortCode({ route, navigation }) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '3cc883',
+        //  code: '245bae',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '3cc883',
+        // code: '245bae',
         code: shortCode,
       };
     }
@@ -2346,6 +2346,15 @@ export default function ShortCode({ route, navigation }) {
               initapiresponse: true
             });
             break;
+            case appIds.sabroson:
+            updateState({
+              isLoading: false,
+              LoadingScreen: false,
+              allAppData: res,
+              responseData: homeData.data,
+              initapiresponse: true
+            });
+            break;
           default:
             updateState({ isLoading: false, LoadingScreen: false });
             navigateToNextScreen(res, homeData.data);
@@ -2451,7 +2460,6 @@ export default function ShortCode({ route, navigation }) {
         return { uri: imagePath.muvpod }
       case appIds?.sabroson:
         return imagePath.sabroson
-        // return imagePath.ipd
     }
   }
   console.log(animationVideo(), "animationVideo");
@@ -2483,7 +2491,8 @@ export default function ShortCode({ route, navigation }) {
         <Video
           source={animationVideo()} // Can be a URL or a local file.
           style={{
-            height: width,
+            // flex: getBundleId() == appIds.sabroson ? 1 : 0,
+            height: height,
             width: width,
           }}
           resizeMode={getBundleId() == appIds.muvpod ? "contain" : "cover"}

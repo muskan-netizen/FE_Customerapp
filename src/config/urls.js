@@ -1,6 +1,6 @@
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1'
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
@@ -21,7 +21,7 @@
 // export const API_BASE_URL = 'https://click2deliver.co.uk/api/v1';
 //export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
 
- //export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
+//  export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
 //  export const API_BASE_URL = 'https://fairexglobal.com/api/v1';
 // export const API_BASE_URL = 'https://dbairro.com/api/v1';
 // export const API_BASE_URL = 'https://beachhopdelivery.com/api/v1';
@@ -72,7 +72,7 @@
 
 // export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
-// export const API_BASE_URL = 'https://api.focushires.com/api/v1';
+// export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://order.veg-hub.com/api/v1';
 // export const API_BASE_URL = 'https://seratho.com/api/v1';
@@ -81,7 +81,7 @@
 
 // export const API_BASE_URL = 'https://food-order.konga.com/api/v1';
 // export const API_BASE_URL = 'https://order.menusat.app/api/v1';
-export const API_BASE_URL = 'https://mandaexpress.com/api/v1';
+// export const API_BASE_URL = 'https://mandaexpress.com/api/v1';
 // export const API_BASE_URL = 'https://canupickmeup.com/api/v1';
 
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
@@ -97,7 +97,7 @@ export const API_BASE_URL = 'https://mandaexpress.com/api/v1';
 
 // export const API_BASE_URL = 'https://ored.co/api/v1'; //ored
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
-// export const API_BASE_URL = 'https://api.focushires.com/api/v1';
+
 
 // export const API_BASE_URL = 'https://961a-112-196-88-218.ngrok.io/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.98.185:8060/api/v1'; // sujata

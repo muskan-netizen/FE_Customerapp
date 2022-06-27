@@ -5029,7 +5029,7 @@ android {
             applicationId 'com.muvpod'
             resValue "string", "app_name", "Muvpod"
             resValue "string", "host_name", ""
-            }
+            // }
             smile{
             dimension "appType"
             versionCode 1
