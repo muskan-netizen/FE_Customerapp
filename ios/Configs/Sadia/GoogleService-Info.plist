@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>252616412496-3vmm73k7cgcvkkb73igv7affadnvbp9k.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.252616412496-3vmm73k7cgcvkkb73igv7affadnvbp9k</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAMc7dhZktVnAHea-ZK8-KXA3zcBkQ__bg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>252616412496</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.Sadia</string>
+	<key>PROJECT_ID</key>
+	<string>sadia-9e661</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sadia-9e661.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:252616412496:ios:fa75606899a0fec9957055</string>
+</dict>
+</plist>

@@ -349,6 +349,7 @@ const shortCodes = {
   capitalDiagnostic: 'fd6dd6',
   abbeRides: '8501b6',
   nrsa:'e9f97c',
+  sadia:'312528'
 
 };
 
@@ -1741,6 +1742,10 @@ const appIds = {
   nrsa: Platform.select({
     ios: 'com.nrsa',
     android: 'com.nrsa',
+  }),
+  sadia: Platform.select({
+    ios: 'com.Sadia',
+    android: 'com.Sadia',
   }),
 
 };
