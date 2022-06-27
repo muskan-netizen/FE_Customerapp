@@ -1603,8 +1603,8 @@ const appIds = {
     android: 'com.patrolNow',
   }),
   butlerDelivery: Platform.select({
-    ios: 'com.butlerDelivery',
-    android: 'com.butlerDelivery',
+    ios: 'com.order.butlerDelivery',
+    android: 'com.order.butlerDelivery',
   }),
   swatiRX: Platform.select({
     ios: 'com.swatiRX',
@@ -1681,7 +1681,7 @@ const appIds = {
   }),
   blueBundles: Platform.select({
     ios: 'com.bluebundles',
-    android: 'com.bluebundles',
+    android: 'com.bluebundles.customer',
   }),
   busTaMove: Platform.select({
     ios: 'com.bustamove',

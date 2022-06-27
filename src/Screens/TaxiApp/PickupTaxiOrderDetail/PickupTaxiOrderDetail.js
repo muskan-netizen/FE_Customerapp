@@ -78,8 +78,8 @@ const CANCLE_TASK_TIME = 45000;
 // import 'moment/locale/tr';
 // import 'moment/locale/vi';
 // import 'moment/locale/ar';
-// import "moment/min/locales"; // Import all moment-locales -- it's just 400kb
-// import "moment-timezone";
+import "moment/min/locales"; // Import all moment-locales -- it's just 400kb
+import "moment-timezone";
 
 export default function PickupTaxiOrderDetail({navigation, route}) {
   const {themeColor, themeToggle} = useSelector(
