@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>833873568733-0f9k6lp2qb719nqr7f9oc33rnqd70tkd.apps.googleusercontent.com</string>
+	<string>333968937334-k5ufem0ci60cn6qas8jduocfi977evge.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.833873568733-0f9k6lp2qb719nqr7f9oc33rnqd70tkd</string>
+	<string>com.googleusercontent.apps.333968937334-k5ufem0ci60cn6qas8jduocfi977evge</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>833873568733-0el1pv9rbqh2hf3i5quotahnd4oi1p08.apps.googleusercontent.com</string>
+	<string>333968937334-7ihg9fu7r7ndebr0jdps3r1865uacs3k.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBp8dkvkumAA5jc1qYlSlpUgG78jEPMimI</string>
+	<string>AIzaSyDEILC1cCjWbSaKmebR3qpHGE89Lw8Usww</string>
 	<key>GCM_SENDER_ID</key>
-	<string>833873568733</string>
+	<string>333968937334</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.codebrew.glamsouq</string>
+	<string>com.glamsouq.customer</string>
 	<key>PROJECT_ID</key>
-	<string>rerak-da539</string>
+	<string>glamsouq-75278</string>
 	<key>STORAGE_BUCKET</key>
-	<string>rerak-da539.appspot.com</string>
+	<string>glamsouq-75278.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:833873568733:ios:2403c8e407bcdfe6208c34</string>
+	<string>1:333968937334:ios:f400a435677fd2bea1aa57</string>
 </dict>
 </plist>

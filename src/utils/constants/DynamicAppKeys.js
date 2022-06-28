@@ -482,7 +482,7 @@ const appIds = {
     android: 'com.codebrew.yoho',
   }),
   glamsouq: Platform.select({
-    ios: 'com.codebrew.glamsouq',
+    ios: 'com.glamsouq.customer',
     android: 'com.glamsouq.customer',
   }),
   doctatransportation: Platform.select({
@@ -1374,7 +1374,7 @@ const appIds = {
     android: 'com.app.myRide',
   }),
   getfix: Platform.select({
-    ios: 'com.app.getfix',
+    ios: 'com.getfix.customer',
     android: 'com.getfix.customer',
   }),
   scoopaTechnologies: Platform.select({

@@ -17,6 +17,7 @@ import {
 import { MyDarkTheme } from '../../../styles/theme';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import stylesFun from './styles';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 
 export default function ({
   isWaitingOver = false,

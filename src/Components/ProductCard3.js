@@ -1,4 +1,4 @@
-import { string } from 'prop-types';
+import {string} from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import {
   Animated,
@@ -248,7 +248,7 @@ const ProductCard3 = ({
       onIncrement();
     }
   };
-
+  console.log();
   const onDecrementQty = () => {
     setAdd(false);
     if (
@@ -418,7 +418,7 @@ const ProductCard3 = ({
               </Text>
             )}
           </View>
-          <View style={{}}>
+          {!!data?.translation_description || !!data?.translation[0]?.translation_description ? <View style={{}}>
             <Text
               numberOfLines={3}
               style={{
@@ -430,11 +430,10 @@ const ProductCard3 = ({
                   : colors.blackOpacity66,
                 textAlign: 'left',
               }}>
-                {console.log(data?.translation[0]?.translation_description,"data?.translation_description")}
-              {data?.translation[0]?.translation_description ||
-              data?.translation_description.toString()}
+              {!!data?.translation_description ? data?.translation_description.toString() :
+              !!data?.translation[0]?.translation_description ? data?.translation[0]?.translation_description: ''}
             </Text>
-          </View>
+          </View>:null}
         </View>
         <View
           style={{
