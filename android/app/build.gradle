@@ -207,16 +207,16 @@ android {
     flavorDimensions "appType"
     
     // productFlavors {
-              //         kel360{
-    //             dimension "appType"
-    //             versionCode 1
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion         
-    //             applicationId 'com.kel'
-    //             resValue "string", "app_name", "360kel"
-    //             resValue "string", "host_name", ""
-    //         }
+//    myfiji{
+//                 dimension "appType"
+//                 versionCode 1
+//                 versionName "1.0"
+//                 minSdkVersion rootProject.ext.minSdkVersion
+//                 targetSdkVersion rootProject.ext.targetSdkVersion         
+//                 applicationId 'com.myfiji'
+//                 resValue "string", "app_name", "FijiEats"
+//                 resValue "string", "host_name", ""
+//             } 
     // }
     productFlavors {
             royoorder {
@@ -3972,7 +3972,7 @@ android {
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
                 applicationId 'com.myfiji'
-                resValue "string", "app_name", "My fiji"
+                resValue "string", "app_name", "Fiji Eats"
                 resValue "string", "host_name", ""
             } 
             fastmikes{

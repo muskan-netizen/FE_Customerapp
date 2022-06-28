@@ -1350,6 +1350,7 @@ export default function Products({ route, navigation }) {
 
   const getAllListItems = (pageNo = 1) => {
     if (data?.vendor) {
+     console.log(data,"getAllListItemsdata")
       {
         !!selectedFilters.current
           ? newVendorFilter(pageNo)
