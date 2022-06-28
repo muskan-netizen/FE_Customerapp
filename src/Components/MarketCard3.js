@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {Grayscale} from 'react-native-color-matrix-image-filters';
 import {useDarkMode} from 'react-native-dark-mode';
+import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
@@ -21,6 +22,7 @@ import {
   textScale,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
+import { appIds } from '../utils/constants/DynamicAppKeys';
 import {
   checkEvenOdd,
   getColorCodeWithOpactiyNumber,
@@ -210,7 +212,7 @@ const MarketCard3 = ({
                   ...styles.currentlyUnavailable,
                   fontSize: textScale(12),
                 }}>
-                {strings.WE_ARE_NOT_ACCEPTING} {data?.delaySlot}{' '}
+                {appIds?.masa===getBundleId()? strings.YOU_CAN_SEHEDULE + ' ' +data?.delaySlot: strings.WE_ARE_NOT_ACCEPTING + data?.delaySlot}
               </Text>
             </View>
           </Grayscale>

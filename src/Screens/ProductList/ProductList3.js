@@ -17,7 +17,7 @@ import {
   View
 } from 'react-native';
 import { useDarkMode } from 'react-native-dark-mode';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import Share from 'react-native-share';
@@ -57,6 +57,7 @@ import {
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { currencyNumberFormatter } from '../../utils/commonFunction';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   checkEvenOdd,
   getImageUrl,
@@ -749,7 +750,7 @@ export default function Products({ route, navigation }) {
                       color: colors.redB,
                       // marginTop: moderateScaleVertical(4)
                     }}>
-                    {strings.WE_ARE_NOT_ACCEPTING} {categoryInfo?.delaySlot}
+                    {appIds?.masa===getBundleId()? strings.YOU_CAN_SEHEDULE + ' ' +categoryInfo?.delaySlot: strings.WE_ARE_NOT_ACCEPTING + categoryInfo?.delaySlot}
                   </Text>
                 ) : null}
               </View>
