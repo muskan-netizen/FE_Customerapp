@@ -32,6 +32,7 @@ const LaundryAddonModal = ({
   onFindVendors = () => {},
   minMaxError = [],
   isOnPressed = false,
+  selectedHomeCategory = {},
 }) => {
   const {
     themeColor,
@@ -160,8 +161,9 @@ const LaundryAddonModal = ({
           style={{
             ...styles.titleText,
             paddingHorizontal: moderateScale(12),
+            textTransform: 'uppercase',
           }}>
-          {'LAUNDRY SERVICES'}{' '}
+          {selectedHomeCategory?.name}
         </Text>
         <View
           style={{

@@ -933,20 +933,21 @@ export default function Home({route, navigation}) {
       );
       return indx;
     });
-    let allIndx = selectedLaundryCategory?.estimate_product_addons.map(
-      (element) => {
-        let indx = selectedLaundryCategory?.estimate_product_addons.findIndex(
-          (item) => item?.estimate_addon_set?.max_select === 1,
-        );
-        return indx;
-      },
-    );
 
-    console.log(allIndx, '>>>>>allIndx');
+    // let allIndx = selectedLaundryCategory?.estimate_product_addons.map(
+    //   (element) => {
+    //     let indx = selectedLaundryCategory?.estimate_product_addons.findIndex(
+    //       (item) => item?.estimate_addon_set?.max_select === 1,
+    //     );
+    //     return indx;
+    //   },
+    // );
+
+    // console.log(allIndx, '>>>>>allIndx');
 
     setIsOnPressed(true);
     setMinMaxError(containsAll);
-    return;
+
     if (
       containsAll.length ==
       selectedLaundryCategory?.estimate_product_addons.length
@@ -1219,6 +1220,7 @@ export default function Home({route, navigation}) {
         onFindVendors={onFindVendors}
         minMaxError={minMaxError}
         isOnPressed={isOnPressed}
+        selectedHomeCategory={selectedHomeCategory}
       />
     </WrapperContainer>
   );

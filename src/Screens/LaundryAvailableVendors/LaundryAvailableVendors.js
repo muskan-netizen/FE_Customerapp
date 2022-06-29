@@ -44,6 +44,7 @@ export default function LaundryAvailableVendors({navigation, route}) {
       navigation.navigate(screenName, {data});
     };
   useEffect(() => {
+    console.log(paramData?.selectedAddonSet, 'kljdlkajlkjdsad');
     actions
       .productEstimation(
         {product: paramData?.selectedAddonSet},
@@ -67,7 +68,6 @@ export default function LaundryAvailableVendors({navigation, route}) {
   };
 
   const onSelectVendorAddToCart = (item) => {
-    console.log(item, 'item>>>>>item');
     let addonIds = [];
     let addonOptionIds = [];
     item?.products_live[0]?.sets?.map((item, index) => {
