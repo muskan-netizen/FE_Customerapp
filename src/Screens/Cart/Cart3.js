@@ -999,6 +999,11 @@ function Cart({navigation, route}) {
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.VIVAWALLET, paymentData);
         break;
+      
+        case 42: //Direct Pay Online Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.DIRECTPAYONLINE, paymentData);
+        break;
 
       default:
         if (
@@ -1091,6 +1096,7 @@ function Cart({navigation, route}) {
       paymentData?.orderDetail?.order_number
     }&token=${!!cardInfo ? cardInfo : null}&action=cart`;
 
+    {alert('heyyyy')}
     actions
       .openPaymentWebUrl(
         queryData,
@@ -1147,7 +1153,16 @@ function Cart({navigation, route}) {
 
   const placeOrderData = (data) => {
     console.log('Sending data', data);
-
+    let headerData = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      latitude: !isEmpty(location) ? location?.latitude.toString() : '',
+      longitude: !isEmpty(location) ? location?.longitude.toString() : '',
+      // systemuser: DeviceInfo.getUniqueId(),
+    }
+    console.log(headerData, "headerData")
+ 
     actions
       .placeOrder(data, {
         code: appData?.profile?.code,
@@ -1159,6 +1174,7 @@ function Cart({navigation, route}) {
       })
       .then((res) => {
      
+        
         actions.reloadData(!reloadData);
         setSelectedTipvalue(null);
         setPickupDriverComment(null);
@@ -1965,6 +1981,7 @@ function Cart({navigation, route}) {
       //       language: languages?.primary_language?.id,
       //     },
       //   )
+
       //   .then((res) => {
       //     updateState({isRefreshing: false});
       //     if (res && res?.status == 'Success' && res?.data) {

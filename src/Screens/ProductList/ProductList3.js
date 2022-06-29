@@ -1370,48 +1370,48 @@ export default function Products({ route, navigation }) {
   };
 
   //  to load  catagerios by A-z
-  const onAtoZFilter  =  () => {
-    try {
-      let allFilterData = cloneDeep(allFilters);
-      var newData = [];
-      var variants = [];
-      var options = [];
+  // const onAtoZFilter  =  () => {
+  //   try {
+  //     let allFilterData = cloneDeep(allFilters);
+  //     var newData = [];
+  //     var variants = [];
+  //     var options = [];
 
-      var allSelectedVariantOptionsPairs = allFilterData
-          .filter((i) => i?.id != -1 && i?.id != -2)
-          .map((itm, inx) => {
-              return itm?.value;
-          })
-          .map((j, jnx) => {
-              if (j.length) return j.filter((x) => x?.value?.selected);
-          })
-          .filter((final) => final?.length)
-          .map((finalArray, finalIndex) => {
-              finalArray?.map((z, znx) => {
-                  newData?.push(z);
-              });
-              return finalArray;
-          });
+  //     var allSelectedVariantOptionsPairs = allFilterData
+  //         .filter((i) => i?.id != -1 && i?.id != -2)
+  //         .map((itm, inx) => {
+  //             return itm?.value;
+  //         })
+  //         .map((j, jnx) => {
+  //             if (j.length) return j.filter((x) => x?.value?.selected);
+  //         })
+  //         .filter((final) => final?.length)
+  //         .map((finalArray, finalIndex) => {
+  //             finalArray?.map((z, znx) => {
+  //                 newData?.push(z);
+  //             });
+  //             return finalArray;
+  //         });
 
-      if (newData.length) {
-          newData.map((i) => {
-              variants.push(i?.variant_type_id);
-              options.push(i?.id);
-          });
-          allSelectedVariantOptionsPairs = newData;
-      }
+  //     if (newData.length) {
+  //         newData.map((i) => {
+  //             variants.push(i?.variant_type_id);
+  //             options.push(i?.id);
+  //         });
+  //         allSelectedVariantOptionsPairs = newData;
+  //     }
 
-      let filterData = {
-          selectedSorting: 'a_to_z',
-          selectedVariants: variants,
-          selectedOptions: options,
-          sleectdBrands: []
-      }
-      onFilterApply(filterData)
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  //     let filterData = {
+  //         selectedSorting: 'a_to_z',
+  //         selectedVariants: variants,
+  //         selectedOptions: options,
+  //         sleectdBrands: []
+  //     }
+  //     onFilterApply(filterData)
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
 
   useEffect(() => {
@@ -1530,7 +1530,7 @@ export default function Products({ route, navigation }) {
   const onFilterApply = (filterData = {}) => {
     console.log(filterData, "filterDatafilterData")
     selectedFilters.current = filterData;
-    setFilteredAtoZData(filterData)
+    // setFilteredAtoZData(filterData)
     updateState({ pageNo: 1 });
     getAllListItems(1);
   };

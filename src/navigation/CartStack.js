@@ -46,6 +46,7 @@ import {
 } from '../Screens';
 import MyProfile from '../Screens/MyProfile/MyProfile2';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
+import DirectPayOnline from '../Screens/PaymentGateways/DirectPayOnline';
 import KongaPay from '../Screens/PaymentGateways/KongaPay';
 import Pagarme from '../Screens/PaymentGateways/Pagarme';
 import StripeIdeal from '../Screens/PaymentGateways/StripeIdeal';
@@ -270,6 +271,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.STRIPEIDEAL}
         component={StripeIdeal}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.DIRECTPAYONLINE}
+        component={DirectPayOnline}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

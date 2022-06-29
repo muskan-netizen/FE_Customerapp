@@ -416,7 +416,6 @@ const ProductCard3 = ({
                 </Text>
               )}
           </View>
-          <Text>Hello</Text>
           <View style={{}}>
             <Text
               numberOfLines={3}
