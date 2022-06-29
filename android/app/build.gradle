@@ -1677,16 +1677,16 @@ android {
         //         resValue "string", "app_name", "Shoora Fresh"
         //         resValue "string", "host_name", ""
         //     }
-        //     click2deliver{
-        //         dimension "appType"
-        //         versionCode 1
-        //         versionName "1.0"
-        //         minSdkVersion rootProject.ext.minSdkVersion
-        //         targetSdkVersion rootProject.ext.targetSdkVersion         
-        //         applicationId 'com.click2deliver'
-        //         resValue "string", "app_name", "Click2Deliver"
-        //         resValue "string", "host_name", ""
-        //     }
+            click2deliver{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.click2deliver'
+                resValue "string", "app_name", "Click2Deliver"
+                resValue "string", "host_name", ""
+            }
         // trucktirenow{
         //         dimension "appType"
         //         versionCode 1
@@ -2475,16 +2475,16 @@ android {
         //         resValue "string", "app_name", "Jet"
         //         resValue "string", "host_name", ""
         //     }
-        //     africanize{
-        //         dimension "appType"
-        //         versionCode 1
-        //         versionName "1.0"
-        //         minSdkVersion rootProject.ext.minSdkVersion
-        //         targetSdkVersion rootProject.ext.targetSdkVersion
-        //         applicationId 'com.africanize'
-        //         resValue "string", "app_name", "Africanize"
-        //         resValue "string", "host_name", ""
-        //     }
+            africanize{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.africanize'
+                resValue "string", "app_name", "Africanize"
+                resValue "string", "host_name", ""
+            }
 
         //     markita{
         //         dimension "appType"

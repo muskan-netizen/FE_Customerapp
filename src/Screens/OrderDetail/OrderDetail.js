@@ -231,6 +231,7 @@ export default function OrderDetail({navigation, route}) {
     }
 
     console.log('sending api data', data);
+  
     actions
       .getOrderDetail(data, {
         code: appData?.profile?.code,
