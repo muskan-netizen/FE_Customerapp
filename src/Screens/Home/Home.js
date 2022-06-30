@@ -71,6 +71,8 @@ export default function Home({route, navigation}) {
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const businessTypes = appStyle?.homePageLayout;
+  console.log(appData,"businessTypesbusinessTypes");
 
   const [state, setState] = useState({
     isLoading: true,
@@ -550,6 +552,7 @@ export default function Home({route, navigation}) {
   };
   //onPress Category
   const onPressCategory = (item) => {
+    console.log(item,"item>item")
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (

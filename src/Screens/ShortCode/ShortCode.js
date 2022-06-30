@@ -2328,15 +2328,24 @@ export default function ShortCode({route, navigation}) {
 
             break;
           case appIds.iPicknDrop:
-            updateState({
-              isLoading: false,
-              LoadingScreen: false,
-              allAppData: res,
-              responseData: homeData.data,
-              initapiresponse: true,
-            });
-
-            break;
+              updateState({
+                isLoading: false,
+                LoadingScreen: false,
+                allAppData: res,
+                responseData: homeData.data,
+                initapiresponse:true
+              });
+  
+              break;
+            case appIds.muvpod:
+                updateState({
+                  isLoading: false,
+                  LoadingScreen: false,
+                  allAppData: res,
+                  responseData: homeData.data,
+                  initapiresponse:true
+                });
+                break;
           default:
             updateState({isLoading: false, LoadingScreen: false});
             navigateToNextScreen(res, homeData.data);
@@ -2397,8 +2406,12 @@ export default function ShortCode({route, navigation}) {
     switch (getBundleId()) {
       case appIds.masa:
         return animatedSplash();
+      case appIds.iPicknDrop:
+          return animatedSplash();
+      case appIds.muvpod:
+          return animatedSplash();
       default:
-        return imageSplash();
+        return imageSplash(); 
     }
   };
   const imageSplash = () => {
@@ -2426,14 +2439,18 @@ export default function ShortCode({route, navigation}) {
     );
   };
 
-  const animationVideo = () => {
-    switch (getBundleId()) {
-      case appIds?.masa:
-        return imagePath.masa;
-      case appIds?.iPicknDrop:
-        return imagePath.ipd;
-    }
-  };
+const animationVideo = () =>{
+  switch (getBundleId()) {
+    case appIds?.masa:
+      return imagePath.masa
+    case appIds?.iPicknDrop:
+      return imagePath.ipd
+    case appIds?.muvpod:
+      // () => {updateState({LoadingScreen:false, isLoading:false})}
+      return {uri : imagePath.muvpod}
+  } 
+}
+console.log(animationVideo(),"animationVideo");
 
   const onVideoDurationEnded = () => {
     updateState({
@@ -2443,27 +2460,34 @@ export default function ShortCode({route, navigation}) {
   };
 
   const animatedSplash = () => {
+    
     return (
       <View
         style={{
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: colors.white,
+          backgroundColor: colors.white, 
+          // backgroundColor: getBundleId()== appIds.muvpod ? '#EFEDEF' : colors.white,
         }}>
+          {/* <View style={{ position: 'absolute', bottom: moderateScale(100) }}>
+            {LoadingScreen && (
+              <MaterialIndicator size={50} color={colors.greyMedium} />
+            )}
+          </View> */}
+          
         <Video
           source={animationVideo()} // Can be a URL or a local file.
           style={{
-            height: width,
+            height: width ,
             width: width,
           }}
-          resizeMode="cover"
+          resizeMode = {getBundleId()== appIds.muvpod ? "contain" : "cover"}
           onEnd={() => onVideoDurationEnded()}
         />
       </View>
     );
   };
-
   return (
     <View
       style={{

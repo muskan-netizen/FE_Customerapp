@@ -315,7 +315,7 @@ const RoyoProducts = (props) => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={styles.font16Semibold}>{strings.IN_STOCK}</Text>
               <TouchableOpacity
-                onPress={() => updateIsLiveStatus(item.id, item.is_live)}>
+                onPress={() => updateIsLiveStatus(item?.id, item?.is_live)}>
                 <Image
                   source={
                     item.is_live

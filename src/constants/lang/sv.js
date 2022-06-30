@@ -923,4 +923,6 @@ export default {
   BOOK_A_TABLE:'Book a Table',
   PLEASE_SELECT_A_TABLE:'Please Select a Table',
   SELECT_A_TABLE:'Select a Table',
+  SERVICE_ADDRESS:'Service Address',
+  BOOK_HERE:'Book Here',
 };

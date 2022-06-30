@@ -1199,7 +1199,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
                 // startcolor={{x: 0.0, y: 0.0}}
                 colorsArray={[
                   themeColors.primary_color,
-
                   themeColors.primary_color,
                 ]}
                 textStyle={{ textTransform: 'none', fontSize: textScale(14) }}
