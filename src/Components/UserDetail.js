@@ -156,7 +156,7 @@ const UserDetail = ({
           )}
         </View>
 
-        {getBundleId() == appIds.masa ? null :
+        {getBundleId() == appIds.masa || appIds.hokitch? null :
 
           (data?.vendor?.phone_no || data?.order?.phone_number) && (
             <View style={{ flexDirection: 'row' }}>

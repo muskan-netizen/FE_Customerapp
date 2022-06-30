@@ -3194,6 +3194,7 @@ export default function OrderDetail({navigation, route}) {
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
+        
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2
@@ -3204,7 +3205,7 @@ export default function OrderDetail({navigation, route}) {
         }
         centerTitle={strings.ORDER + `${'#'}${cartData?.order_number || ''}`}
         customRight={!!cartData?.reports?.report?.original ? customRight : ''}
-      />
+      /> 
       <View
         style={{
           height: 1,

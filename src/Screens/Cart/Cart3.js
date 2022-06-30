@@ -1315,6 +1315,7 @@ function Cart({navigation, route}) {
     console.log(data, 'fsdjkhfkjshfkjahsdkjfhak');
 
     // updateState({isLoading: false});
+ 
     actions
       .scheduledOrder(data, {
         code: appData?.profile?.code,
@@ -1337,8 +1338,8 @@ function Cart({navigation, route}) {
           });
         }
         // getCartDetail();
-      });
-    //   .catch(errorMethod);
+      })
+      .catch(error=>console.log(error,"errororor"));
   };
 
   const _finalPayment = () => {
