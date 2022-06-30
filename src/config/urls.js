@@ -213,6 +213,7 @@ export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
 export const LOGIN_BY_USERNAME = getApiUrl('/auth/loginViaUsername');
 export const VENDOR_LOGIN_BY_USERNAME = getApiUrl('/auth/login');
+export const DELETE_ACCOUNT = getApiUrl('/auth/deleteUser');
 export const PHONE_LOGIN_OTP = getApiUrl('/auth/verify/phoneLoginOtp');
 export const LOGIN_API = getApiUrl('/auth/login');
 export const SIGN_UP_API = getApiUrl('/auth/register');
@@ -423,6 +424,7 @@ export const ADD_RIDER = getApiUrl('/pickup-delivery/add-rider');
 
 export const VENDOR_OPTIMIZE_V2 = getApiUrl('/v2/vendor-optimize');
 export const GET_MORE_CATEGORIES = getApiUrl('/v2/vendor-optimize-category');
+
 // export const GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE = getApiUrl('/v2/category/filters',);
 
 //Laundry Service APIs

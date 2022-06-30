@@ -25,7 +25,7 @@ import DeviceInfo from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dark-mode';
 import { MyDarkTheme } from '../../styles/theme';
 import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
-import { getImageUrl, getRandomColor } from '../../utils/helperFunctions';
+import { getImageUrl, getRandomColor, showError } from '../../utils/helperFunctions';
 import FastImage from 'react-native-fast-image';
 import { color } from 'react-native-reanimated';
 import ListItemHorizontalWithRightText from '../../Components/ListItemHorizontalWithImageWithRightText';
@@ -34,7 +34,7 @@ export default function AccountTemplateFive({ navigation }) {
   const [state, setState] = useState({
     isLoading: false,
   });
-  const { shortCodeStatus, themeColors, appStyle, appData } = useSelector(
+  const { shortCodeStatus, themeColors, appStyle, appData,languages,currencies } = useSelector(
     (state) => state?.initBoot,
   );
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -104,6 +104,45 @@ export default function AccountTemplateFive({ navigation }) {
     }
   };
   const _scrollRef = useRef();
+
+
+  const onDeleteAccount = () => {
+    if (!!userData?.auth_token) {
+      Alert.alert(strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, '', [
+        {
+          text: strings.CANCEL,
+          onPress: () => console.log('Cancel Pressed'),
+          // style: 'destructive',
+        },
+        {
+          text: strings.CONFIRM,
+          onPress: deleleUserAccount,
+        },
+      ]);
+    } else {
+      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+    }
+  }
+  const deleleUserAccount = async() => {
+    try {
+      const res = await actions.deleteAccount(
+      {},
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      console.log("delete user account res",res)
+      actions.userLogout();
+      actions.cartItemQty('');
+      actions.saveAddress('');
+      actions.addSearchResults('clear');
+      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+    } catch (error) {
+      console.log('erro raised',error)
+      showError(error?.message)
+    }
+  }
 
   return (
     <WrapperContainer
@@ -244,7 +283,7 @@ export default function AccountTemplateFive({ navigation }) {
                 )}
               </View>
               <TouchableOpacity style={{ alignItems: 'flex-end', flex: 1, paddingRight: moderateScale(20) }}>
-                <Image source={imagePath.editBlue } style={{ tintColor: colors.grayOpacity51 }} />
+                <Image source={imagePath.editBlue} style={{ tintColor: colors.grayOpacity51 }} />
               </TouchableOpacity>
             </TouchableOpacity>
             <View style={{ backgroundColor: colors.redColor, flexDirection: 'row', borderRadius: moderateScale(5), alignItems: 'center', marginHorizontal: moderateScale(20), justifyContent: 'space-between', paddingHorizontal: moderateScale(17), paddingVertical: moderateScale(15) }}>
@@ -286,8 +325,8 @@ export default function AccountTemplateFive({ navigation }) {
               containerStyle={styles.containerStyle}
               centerHeadingStyle={
                 isDarkMode
-                  ? { fontSize: textScale(14), fontFamily: fontFamily.medium , color: MyDarkTheme.colors.text }
-                  : { fontSize: textScale(14), fontFamily: fontFamily.medium  }
+                  ? { fontSize: textScale(14), fontFamily: fontFamily.medium, color: MyDarkTheme.colors.text }
+                  : { fontSize: textScale(14), fontFamily: fontFamily.medium }
               }
               iconRight={imagePath.goRight}
               rightIconStyle={{ tintColor: colors.textGreyLight }}
@@ -305,8 +344,8 @@ export default function AccountTemplateFive({ navigation }) {
             containerStyle={styles.containerStyle}
             centerHeadingStyle={
               isDarkMode
-                ? { fontSize: textScale(14), fontFamily: fontFamily.medium , color: MyDarkTheme.colors.text }
-                : { fontSize: textScale(14), fontFamily: fontFamily.medium  }
+                ? { fontSize: textScale(14), fontFamily: fontFamily.medium, color: MyDarkTheme.colors.text }
+                : { fontSize: textScale(14), fontFamily: fontFamily.medium }
             }
             iconRight={imagePath.goRight}
             rightIconStyle={{ tintColor: colors.textGreyLight }}
@@ -323,8 +362,8 @@ export default function AccountTemplateFive({ navigation }) {
             containerStyle={styles.containerStyle}
             centerHeadingStyle={
               isDarkMode
-                ? { fontSize: textScale(14), fontFamily: fontFamily.medium , color: MyDarkTheme.colors.text }
-                : { fontSize: textScale(14), fontFamily: fontFamily.medium  }
+                ? { fontSize: textScale(14), fontFamily: fontFamily.medium, color: MyDarkTheme.colors.text }
+                : { fontSize: textScale(14), fontFamily: fontFamily.medium }
             }
             iconRight={imagePath.goRight}
             rightIconStyle={{ tintColor: colors.textGreyLight }}
@@ -354,8 +393,8 @@ export default function AccountTemplateFive({ navigation }) {
             containerStyle={styles.containerStyle}
             centerHeadingStyle={
               isDarkMode
-                ? { fontSize: textScale(14), fontFamily: fontFamily.medium , color: MyDarkTheme.colors.text }
-                : { fontSize: textScale(14), fontFamily: fontFamily.medium  }
+                ? { fontSize: textScale(14), fontFamily: fontFamily.medium, color: MyDarkTheme.colors.text }
+                : { fontSize: textScale(14), fontFamily: fontFamily.medium }
             }
             iconRight={imagePath.goRight}
             rightIconStyle={{ tintColor: colors.textGreyLight }}
@@ -372,8 +411,8 @@ export default function AccountTemplateFive({ navigation }) {
               containerStyle={styles.containerStyle}
               centerHeadingStyle={
                 isDarkMode
-                  ? { fontSize: textScale(14), fontFamily: fontFamily.medium , color: MyDarkTheme.colors.text }
-                  : { fontSize: textScale(14), fontFamily: fontFamily.medium  }
+                  ? { fontSize: textScale(14), fontFamily: fontFamily.medium, color: MyDarkTheme.colors.text }
+                  : { fontSize: textScale(14), fontFamily: fontFamily.medium }
               }
               iconRight={imagePath.goRight}
               rightIconStyle={{ tintColor: colors.textGreyLight }}
@@ -487,8 +526,8 @@ export default function AccountTemplateFive({ navigation }) {
               containerStyle={styles.containerStyle}
               centerHeadingStyle={
                 isDarkMode
-                  ? { fontSize: textScale(14), fontFamily: fontFamily.medium , color: MyDarkTheme.colors.text }
-                  : { fontSize: textScale(14), fontFamily: fontFamily.medium  }
+                  ? { fontSize: textScale(14), fontFamily: fontFamily.medium, color: MyDarkTheme.colors.text }
+                  : { fontSize: textScale(14), fontFamily: fontFamily.medium }
               }
               iconRight={imagePath.goRight}
               rightIconStyle={{ tintColor: colors.textGreyLight }}
@@ -507,13 +546,32 @@ export default function AccountTemplateFive({ navigation }) {
               containerStyle={styles.containerStyle2}
               centerHeadingStyle={
                 isDarkMode
-                  ? { fontSize: textScale(14), fontFamily: fontFamily.medium , color: MyDarkTheme.colors.text }
-                  : { fontSize: textScale(14), fontFamily: fontFamily.medium  }
+                  ? { fontSize: textScale(14), fontFamily: fontFamily.medium, color: MyDarkTheme.colors.text }
+                  : { fontSize: textScale(14), fontFamily: fontFamily.medium }
               }
               iconRight={imagePath.goRight}
               rightIconStyle={{ tintColor: colors.textGreyLight }}
             />
           ))}
+
+        {!!userData?.auth_token && (
+          <ListItemHorizontal
+            centerContainerStyle={{ flexDirection: 'row' }}
+            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+            onPress={onDeleteAccount}
+            iconLeft={imagePath.user}
+            centerHeading={strings.DELETE_ACCOUNT}
+            containerStyle={styles.containerStyle2}
+            centerHeadingStyle={{
+              fontSize: textScale(14),
+              fontFamily: fontFamily.regular,
+            }}
+          // iconRight={imagePath.goRight}
+          // rightIconStyle={{tintColor: colors.textGreyLight}}
+          />
+        )}
+
+
 
         <View style={styles.loginView}>
           <TouchableOpacity
