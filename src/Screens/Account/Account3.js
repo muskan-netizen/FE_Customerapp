@@ -155,7 +155,7 @@ export default function Account3({ navigation }) {
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
       })
-      console.log("delete user account res",res)
+      console.log("delete user account res++++",res)
       showSuccess(res?.massage)
       actions.userLogout();
       actions.cartItemQty('');
