@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>191185414285-gfgg82bkthgh6eliqshgbu0qv06plnso.apps.googleusercontent.com</string>
+	<string>1053276041071-osrc8vb2ibv6polg5lo81jnacpmf6knq.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.191185414285-gfgg82bkthgh6eliqshgbu0qv06plnso</string>
+	<string>com.googleusercontent.apps.1053276041071-osrc8vb2ibv6polg5lo81jnacpmf6knq</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>191185414285-bjv433g4dp0irt52tqdr1r19qtaeidb9.apps.googleusercontent.com</string>
+	<string>1053276041071-90fpda3isj7vpe0b92dphkdpgpuu0c0d.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAlgVnrfcSm9kSzS80VcG_MOEBPLQzn5k8</string>
+	<string>AIzaSyBcRktYUTWYh_3uXqIDH6DxbkcHrO9d-rE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>191185414285</string>
+	<string>1053276041071</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.butlerDelivery</string>
+	<string>com.order.butlerDelivery</string>
 	<key>PROJECT_ID</key>
-	<string>butler-delivery</string>
+	<string>butlerdelivery-d4302</string>
 	<key>STORAGE_BUCKET</key>
-	<string>butler-delivery.appspot.com</string>
+	<string>butlerdelivery-d4302.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:191185414285:ios:5753834e19bf97900edac4</string>
+	<string>1:1053276041071:ios:1a912ccfdb83adc79e029a</string>
 </dict>
 </plist>

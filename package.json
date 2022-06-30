@@ -142,6 +142,7 @@
     "botseats": "react-native run-android --variant=botseatsDebug --appIdSuffix=botseats",
     "gumastas": "react-native run-android --variant=gumastasDebug --appIdSuffix=gumastas",
     "dishefs": "react-native run-android --variant=dishefsDebug --appIdSuffix=dishefs",
+    "bimol": "react-native run-android --variant=bimolDebug --appIdSuffix=bimol",
     "bilionza": "react-native run-android --variant=bilionzaDebug --appIdSuffix=bilionza",
     "bezalio": "react-native run-android --variant=bezalioDebug --appIdSuffix=bezalio",
     "doleypharmacy": "react-native run-android --variant=doleypharmacyDebug --appIdSuffix=doleypharmacy",

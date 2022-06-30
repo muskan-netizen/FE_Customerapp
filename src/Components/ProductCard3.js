@@ -248,7 +248,7 @@ const ProductCard3 = ({
       onIncrement();
     }
   };
-
+  console.log();
   const onDecrementQty = () => {
     setAdd(false);
     if (
@@ -418,28 +418,22 @@ const ProductCard3 = ({
               </Text>
             )}
           </View>
-          {!!data?.translation_description ||
-          !!data?.translation[0]?.translation_description ? (
-            <View style={{}}>
-              <Text
-                numberOfLines={3}
-                style={{
-                  fontSize: textScale(10),
-                  fontFamily: fontFamily.regular,
-                  lineHeight: moderateScale(14),
-                  color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.blackOpacity66,
-                  textAlign: 'left',
-                }}>
-                {!!data?.translation_description
-                  ? data?.translation_description.toString()
-                  : !!data?.translation[0]?.translation_description
-                  ? data?.translation[0]?.translation_description
-                  : ''}
-              </Text>
-            </View>
-          ) : null}
+          {!!data?.translation_description || !!data?.translation[0]?.translation_description ? <View style={{}}>
+            <Text
+              numberOfLines={3}
+              style={{
+                fontSize: textScale(10),
+                fontFamily: fontFamily.regular,
+                lineHeight: moderateScale(14),
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity66,
+                textAlign: 'left',
+              }}>
+              {!!data?.translation_description ? data?.translation_description.toString() :
+              !!data?.translation[0]?.translation_description ? data?.translation[0]?.translation_description: ''}
+            </Text>
+          </View>:null}
         </View>
         <View
           style={{

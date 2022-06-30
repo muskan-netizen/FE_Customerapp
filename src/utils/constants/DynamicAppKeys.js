@@ -1099,7 +1099,7 @@ const appIds = {
   }),
   bimol: Platform.select({
     ios: 'com.bimol',
-    android: 'com.bimol',
+    android: 'com.bimol.user',
   }),
   vendorspot: Platform.select({
     ios: 'com.vendorspot',
@@ -1491,8 +1491,8 @@ const appIds = {
     android: 'com.mediPick',
   }),
   meltivers: Platform.select({
-    ios: 'com.meltivers',
-    android: 'com.meltivers',
+    ios: 'com.meltiverse.user',
+    android: 'com.meltiverse.user',
   }),
   ensoDigitalAgency: Platform.select({
     ios: 'com.ensoDigitalAgency',
@@ -1607,8 +1607,8 @@ const appIds = {
     android: 'com.patrolNow',
   }),
   butlerDelivery: Platform.select({
-    ios: 'com.butlerDelivery',
-    android: 'com.butlerDelivery',
+    ios: 'com.order.butlerDelivery',
+    android: 'com.order.butlerDelivery',
   }),
   swatiRX: Platform.select({
     ios: 'com.swatiRX',
@@ -1685,7 +1685,7 @@ const appIds = {
   }),
   blueBundles: Platform.select({
     ios: 'com.bluebundles',
-    android: 'com.bluebundles',
+    android: 'com.bluebundles.customer',
   }),
   busTaMove: Platform.select({
     ios: 'com.bustamove',
