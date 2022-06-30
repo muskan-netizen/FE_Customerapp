@@ -351,6 +351,7 @@ const shortCodes = {
   nrsa:'e9f97c',
   sadia:'312528',
   elentaMart:'e084cc',
+  exprexPro :'cb98e8',
 
 };
 
@@ -1751,6 +1752,10 @@ const appIds = {
   elentaMart: Platform.select({
     ios: 'com.ElentaMart',
     android: 'com.ElentaMart',
+  }),
+  exprexPro: Platform.select({
+    ios: 'com.exprexPro',
+    android: 'com.exprexPro',
   }),
 
 };

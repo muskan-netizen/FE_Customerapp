@@ -2227,6 +2227,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+          case appIds.exprexPro:
+            updateState({
+              shortCode: shortCodes.exprexPro,
+              isShortcodePrefilled: true,
+            });
+            break;
       }
     })();
   }, []);
