@@ -248,7 +248,7 @@ const ProductCard3 = ({
       onIncrement();
     }
   };
-
+  console.log();
   const onDecrementQty = () => {
     setAdd(false);
     if (

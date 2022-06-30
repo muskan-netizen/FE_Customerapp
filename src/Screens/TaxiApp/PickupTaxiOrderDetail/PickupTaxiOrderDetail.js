@@ -11,6 +11,8 @@ import {
   Animated,
   TextInput,
   Keyboard,
+  Linking,
+  Alert,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
@@ -20,7 +22,7 @@ import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {
   getImageUrl,
@@ -78,8 +80,8 @@ const CANCLE_TASK_TIME = 45000;
 // import 'moment/locale/tr';
 // import 'moment/locale/vi';
 // import 'moment/locale/ar';
-// import "moment/min/locales"; // Import all moment-locales -- it's just 400kb
-// import "moment-timezone";
+import "moment/min/locales"; // Import all moment-locales -- it's just 400kb
+import "moment-timezone";
 
 export default function PickupTaxiOrderDetail({navigation, route}) {
   const {themeColor, themeToggle} = useSelector(
@@ -88,7 +90,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const paramData = route?.params;
-  console.log(paramData, 'PickupTaxiOrderDetail>paramData');
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [state, setState] = useState({
     isLoading: true,
@@ -166,7 +167,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
-  console.log(languages, 'languageslanguages');
   const isFocused = useIsFocused();
   const bottomSheetRef = useRef(null);
 
@@ -809,6 +809,27 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     (orderFullDetail?.order_details?.order_detail?.subscription_discount /
       orderFullDetail?.order_details?.order_detail?.total_amount) *
     100;
+
+  const onWhatsapp = async () => {
+    const link = `https://api.whatsapp.com/send?phone=${orderFullDetail?.order?.phone_number.replace(
+      '+',
+      '',
+    )}`;
+    if (link) {
+      Linking.canOpenURL(link)
+        .then((supported) => {
+          if (!supported) {
+            Alert.alert('Please install Whatsapp to send direct message.');
+          } else {
+            return Linking.openURL(link);
+          }
+        })
+        .catch((err) => console.error('An error occurred', err));
+    } else {
+      console.log('sendWhatsAppMessage -----> ', 'message link is undefined');
+    }
+  };
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -849,7 +870,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}>
             {orderStatus == 'unassigned'
-              ? strings.YOUR_RIDE_WILL_START_SOON
+              ? appIds.jiffex == getBundleId()?strings.YOUR_ORDER_WILL_START_SOON:strings.YOUR_RIDE_WILL_START_SOON
               : strings.INVOICE}
           </Text>
         </View>
@@ -1218,7 +1239,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                                 : colors.black,
                               marginLeft: moderateScale(10),
                             }}>
-                            {`Driver Id: `}
+                            {`Driver ID: `}
                             {Array(
                               Math.max(
                                 4 -
@@ -1236,6 +1257,16 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                                 marginHorizontal: moderateScale(12),
                                 marginTop: moderateScale(12),
                               }}>
+                              <TouchableOpacity onPress={onWhatsapp}>
+                                <Image
+                                  source={imagePath.whatsAppRoyo}
+                                  style={{
+                                    height: moderateScale(20),
+                                    width: moderateScale(20),
+                                    marginRight: moderateScale(20),
+                                  }}
+                                />
+                              </TouchableOpacity>
                               <TouchableOpacity
                                 onPress={() =>
                                   dialCall(

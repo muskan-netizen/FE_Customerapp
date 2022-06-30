@@ -175,7 +175,7 @@ export default function TaxiHomeDashbord({
   } = state;
   const styles = stylesFunc({themeColors, fontFamily});
  
-
+ 
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 

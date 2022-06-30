@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "476185024325",
+    "project_id": "abbe-rides-8f79f",
+    "storage_bucket": "abbe-rides-8f79f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:476185024325:android:47817c4e9d022f0c06102c",
+        "android_client_info": {
+          "package_name": "com.abbeRides"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "476185024325-gpsggv7lr425f3qn6b6du3vpm9ip1nqg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.abbeRides",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "476185024325-qm6479jkerls0icace4gib3el33sldsm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.abbeRides",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "476185024325-us6u1rbklabo82oj0sa97th4r0hlb63m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.abbeRides",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "476185024325-715m6j1sseovu1sh589ogen4cedqofio.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCH3HvBYhF1f5dWF-beIpNnKc_P3R1j9po"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "476185024325-715m6j1sseovu1sh589ogen4cedqofio.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "476185024325-horn8mvgei9r9v2p0evs0t4hlc1qa92s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.abbeRides"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
