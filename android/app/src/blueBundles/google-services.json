@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "647983075564",
+    "project_id": "bluebundles-55188",
+    "storage_bucket": "bluebundles-55188.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647983075564:android:e7e3da24d4fde15d9e15c9",
+        "android_client_info": {
+          "package_name": "com.bluebundles"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "647983075564-agtancbt12jcaemskhnq9u16of2pqvdb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bluebundles",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "647983075564-h4ren68l0m10lkiphanplco00oqf6gpi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bluebundles",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "647983075564-kopppauj1micps7k4o3v5c9r3miqqm0h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bluebundles",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "647983075564-15mmapug2n6i7d10dnmpre13jhm1ause.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnEN8ywjW6QU6L6irDHKzuVkZbvaiyD7o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "647983075564-15mmapug2n6i7d10dnmpre13jhm1ause.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "647983075564-m8vrmlcuae0mtelrkm0e0549e06vcom6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bluebundles"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

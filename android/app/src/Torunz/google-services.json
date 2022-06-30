@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "387737638245",
+    "project_id": "torunz-a49c2",
+    "storage_bucket": "torunz-a49c2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:387737638245:android:d71698637259a31cacbd8c",
+        "android_client_info": {
+          "package_name": "com.torunz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "387737638245-6l2ve153g3075i24a156iqeho4da5vod.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.torunz",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "387737638245-dbhd0d91cnef23dvf23nb6j7c94dmr72.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.torunz",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "387737638245-q68g5u6pio6n4samoadj412l82ehvf72.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.torunz",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "387737638245-6clramrbtolmecpj6a4mkm7r9mudbo6k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoNCcJV0r7HWB914MQQs09s-NusZyrb10"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "387737638245-6clramrbtolmecpj6a4mkm7r9mudbo6k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "387737638245-4qo9k95k0akhqgerf6aki9m7tchsr26n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.torunz"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

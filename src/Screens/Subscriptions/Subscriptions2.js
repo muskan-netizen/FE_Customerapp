@@ -4,6 +4,7 @@ import {
   FlatList,
   Image,
   Keyboard,
+  Platform,
   RefreshControl,
   Text,
   TouchableOpacity,
@@ -305,7 +306,7 @@ export default function Subscriptions2({ navigation, route }) {
   };
 
   const _onChangeStripeData = (cardDetails) => {
-    console.log(_onChangeStripeData, '_onChangeStripeData>');
+    console.log(cardDetails, '_onChangeStripeData>');
     if (cardDetails?.complete) {
       updateState({
         cardInfo: cardDetails,
@@ -316,6 +317,7 @@ export default function Subscriptions2({ navigation, route }) {
   };
 
   const _checkoutPayment = (token) => {
+    console.log(token,'tokentokentokentoken');
     let selectedMethod = selectedPaymentMethod.code.toLowerCase();
     actions
       .openPaymentWebUrl(
@@ -383,6 +385,7 @@ export default function Subscriptions2({ navigation, route }) {
             <View>
     
               <CardField
+            
                 postalCodeEnabled={false}
                 placeholder={{
                   number: '4242 4242 4242 4242',
@@ -653,10 +656,16 @@ export default function Subscriptions2({ navigation, route }) {
   //flutter wave
 
   const payAmount = () => {
-    updateState({ isModalVisibleForPayment: false });
+  
+    updateState({isModalVisibleForPayment: false});
     if (!!selectedPaymentMethod) {
       if (selectedPaymentMethod?.id == 4) {
+          console.log(selectedPaymentMethod?.id,'selectedPaymentMethod?.id');
+
+         
         _offineLinePayment();
+        return
+        
       } else if (selectedPaymentMethod?.id == 27) {
         let paymentData = {
           payment_option_id: selectedPaymentMethod?.id,
@@ -734,10 +743,12 @@ export default function Subscriptions2({ navigation, route }) {
   };
 
   const _createPaymentMethod = async (cardInfo, res2) => {
-    console.log(cardInfo, 'cardInfo');
+   
+    console.log(cardInfo,res2, 'cardInfo');
     if (res2) {
       await createPaymentMethod({
         type: 'Card',
+        token:res2,
         card: cardInfo,
         billing_details: {
           name: 'Jenny Rosen',
@@ -823,16 +834,20 @@ export default function Subscriptions2({ navigation, route }) {
 
   //Offline payments
   const _offineLinePayment = async () => {
+    console.log(cardInfo,"cardInfocardInfocardInfo+++++++");
+   
     if (cardInfo) {
-      updateState({ isModalVisibleForPayment: false });
+    //  updateState({isModalVisibleForPayment: false});
 
-      await createToken({ ...cardInfo, type: 'Card' })
+     
+      await createToken({...cardInfo, type:'Card'})
         .then((res) => {
           console.log(res, 'res>');
           console.log(selectedPlan, 'selectedPlan>');
           updateState({ isLoading: true });
           if (res && res?.token && res.token?.id) {
-            _createPaymentMethod(cardInfo, res);
+            console.log(res.token,'i am here');
+            _createPaymentMethod(cardInfo, res.token?.id);
           }
 
           // if (res && res?.token && res.token?.id) {
@@ -873,7 +888,8 @@ export default function Subscriptions2({ navigation, route }) {
           // }
         })
         .catch((err) => {
-          updateState({ isLoadingB: false });
+          console.log(err,"errerrerr");
+          updateState({isLoadingB: false});
         });
     } else {
       updateState({ isLoading: false });
@@ -1047,21 +1063,15 @@ export default function Subscriptions2({ navigation, route }) {
       <ModalView
         data={selectedPlan}
         isVisible={isModalVisibleForPayment}
-        onClose={() => updateState({ isModalVisibleForPayment: false })}
-        mainViewStyle={{ minHeight: height / 3, maxHeight: height }}
+        // onClose={() => updateState({isModalVisibleForPayment: false})}
+     
         leftIcon={imagePath.cross}
         topCustomComponent={topCustomComponent}
         modalMainContent={modalMainContent}
         modalBottomContent={modalBottomContent}
+        avoidKeyboard={Platform.OS=='ios'?  true: false}
       />
-      {/* <ConfettiCannon
-        count={200}
-        origin={{x: -10, y: 0}}
-        autoStart={false}
-        ref={explosion}
-        fadeOut={false}
-      /> */}
-
+   
       <Modal
         onBackdropPress={() =>
           updateState({ isModalVisibleForPayFlutterWave: false })
@@ -1070,7 +1080,6 @@ export default function Subscriptions2({ navigation, route }) {
         style={{
           margin: 0,
           justifyContent: 'flex-end',
-          // marginBottom: 20,
         }}>
         <View
           style={{

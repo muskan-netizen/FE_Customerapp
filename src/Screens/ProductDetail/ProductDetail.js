@@ -1431,6 +1431,9 @@ export default function ProductDetail({route, navigation}) {
                             textStyle={{
                               fontFamily: fontFamily.medium,
                               textTransform: 'capitalize',
+                              color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.white,
                             }}
                             onPress={addToCart}
                             btnText={`${strings.ADD}  ${

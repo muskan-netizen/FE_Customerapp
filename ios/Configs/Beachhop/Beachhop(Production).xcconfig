@@ -1,9 +1,9 @@
 #include "Pods/Target Support Files/Pods-available_pods-Beachhop/Pods-available_pods-Beachhop.release.xcconfig"
 
-PROJECT_APPLE_ID = 1614411494
-PROJECT_BUNDLE_ID =com.beachhop
+PROJECT_APPLE_ID = 1630705384
+PROJECT_BUNDLE_ID =com.beachhop.customer
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 3
+PROJECT_BUILD_NUMBER = 2
 PROJECT_APP_NAME = Beachhop
 PROJECT_GOOGLE_CLIENT_ID =860516399181-d5hlridcrs4spqorqjtg8u080i2b2f3d.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.860516399181-d5hlridcrs4spqorqjtg8u080i2b2f3d

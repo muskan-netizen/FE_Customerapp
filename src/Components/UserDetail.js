@@ -35,7 +35,8 @@ const UserDetail = ({
   containerStyle,
   imgStyle,
   isDriver = false,
-  _onRateDriver = () => { },
+  textStyle,
+  _onRateDriver = () => {},
 }) => {
   const { toggleTheme, themeColors, theme, appStyle } = useSelector(
     (state) => state.initBoot,
@@ -126,6 +127,7 @@ const UserDetail = ({
                 : colors.blackOpacity86,
               fontSize: textScale(13),
               fontFamily: fontFamily.bold,
+              ...textStyle
             }}>
             {data?.vendor_name || data?.order?.name}
           </Text>
@@ -136,6 +138,7 @@ const UserDetail = ({
                 : colors.blackOpacity43,
               fontSize: textScale(10),
               fontFamily: fontFamily.regular,
+              ...textStyle
             }}>
             {type}
           </Text>
