@@ -48,7 +48,7 @@ import { androidCameraPermission } from '../../utils/permissions';
 import validator from '../../utils/validations';
 import stylesFun from './styles';
 import Accordion from 'react-native-collapsible/Accordion';
-import { WebView } from 'react-native-webview';
+import {WebView} from 'react-native-webview';
 
 let clickedIndx = null;
 let clickedItem = null;
@@ -961,7 +961,7 @@ export default function WebLinks({ navigation, route }) {
     }
   };
 
-  console.log(htmlContent, "htmlContenthtmlContent");
+  console.log(htmlContent, 'htmlContenthtmlContent');
 
   return (
     <WrapperContainer
@@ -1044,7 +1044,6 @@ export default function WebLinks({ navigation, route }) {
               placeholder={`${strings.YOUR_PHONE_NUMBER}*`}
               keyboardType={'phone-pad'}
               containerStyle={styles.containerStyle}
-
             />
 
             <BorderTextInput
@@ -1653,7 +1652,7 @@ export default function WebLinks({ navigation, route }) {
                     style={{
                       opacity: 0.7,
                       color: isDarkMode
-                        ? MyDarkTheme.white
+                        ? MyDarkTheme.colors.text
                         : colors.textGreyOpcaity7,
                       fontFamily: fontFamily.medium,
                       fontSize: textScale(14),
@@ -1738,7 +1737,6 @@ export default function WebLinks({ navigation, route }) {
               placeholder={strings.EXAMPLE_TEXT}
               onChangeText={_onChangeText('driverTransportDetails')}
               containerStyle={styles.containerStyle}
-
             />
             <Text style={styles.labelTxt}>{strings.UID}</Text>
 
@@ -1822,15 +1820,12 @@ const htmlStyle = StyleSheet.create({
   p: {
     color: '#e5e5e7', // make links coloured pink
     justifyContent: 'center',
-
   },
 });
-
 
 const htmlStyle1 = StyleSheet.create({
   p: {
     color: colors.black, // make links coloured pink
-   alignItems:'flex-start',
-   
+    alignItems: 'flex-start',
   },
 });

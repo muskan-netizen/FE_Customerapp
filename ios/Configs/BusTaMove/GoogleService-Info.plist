@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1056329031809-9l73a8th1gbsui6vnr9g89e6thlut27k.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1056329031809-9l73a8th1gbsui6vnr9g89e6thlut27k</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1056329031809-37hfo4us4qgo4lon47uianr0h7hf3tfg.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBfcMq8X_sldmgDN8ZxC-Oey73HW_C9qv0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1056329031809</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.bustamove</string>
+	<key>PROJECT_ID</key>
+	<string>bustamove-2b7b7</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bustamove-2b7b7.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1056329031809:ios:cb6562a6e5998b4d9a2d80</string>
+</dict>
+</plist>

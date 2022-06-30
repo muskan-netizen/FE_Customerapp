@@ -535,7 +535,7 @@ export default {
   WRITE_REVIEW: 'اكتب مراجعة',
   PICKUP: 'بيك أب',
   ALREADY_EXIST:
-  'You already have items from another store. Do you want to discard them?',
+    'You already have items from another store. Do you want to discard them?',
   VIEW_ALL: 'عرض الكل',
   POPULAR_BRANDS: 'ماركات مشهورة',
   FEATURED_PRODUCTS: 'المنتجات المميزة',
@@ -918,4 +918,6 @@ export default {
   SELECT_A_TABLE:'Select a Table',
   SERVICE_ADDRESS:'Service Address',
   BOOK_HERE:'Book Here',
+  DELETE_ACCOUNT:"Delete Account",
+  ARE_YOU_SURE_YOU_WANT_TO_DELETE:'Are you sure, you want to delete your account? Deleting your account is permanent and will remove all content and profile settings.'
 };

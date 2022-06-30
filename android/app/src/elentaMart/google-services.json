@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "457286859168",
+    "project_id": "elentamart-808ea",
+    "storage_bucket": "elentamart-808ea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:457286859168:android:0e828328a51a659b974cc5",
+        "android_client_info": {
+          "package_name": "com.ElentaMart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "457286859168-41v0p3o5i7afq87flr4kdh7pj5h0u00f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ElentaMart",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "457286859168-g5ju4rgo6fagsjclnkneqddgkqfru1bt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ElentaMart",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "457286859168-q813gs1h2u989llfhod0gpcqf9i0sjog.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ElentaMart",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "457286859168-qnjp4m67le82iuig6guofs74nav1afvt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTx19cReP3caUKyKVIr7WFmcGyjQN8bTE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "457286859168-qnjp4m67le82iuig6guofs74nav1afvt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "457286859168-sk9b29gk1ueqr12lq480aomsphfheovq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ElentaMart"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

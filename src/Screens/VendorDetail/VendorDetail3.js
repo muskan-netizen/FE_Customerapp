@@ -85,7 +85,6 @@ export default function VendorDetail3({ navigation, route }) {
   const commonStyles = commonStylesFun({ fontFamily });
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
-
   //Naviagtion to specific screen
   const moveToNewScreen = (item) => {
     console.log('item++++ upper', item);

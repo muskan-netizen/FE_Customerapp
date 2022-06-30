@@ -1315,6 +1315,7 @@ function Cart({navigation, route}) {
     console.log(data, 'fsdjkhfkjshfkjahsdkjfhak');
 
     // updateState({isLoading: false});
+ 
     actions
       .scheduledOrder(data, {
         code: appData?.profile?.code,
@@ -1337,8 +1338,8 @@ function Cart({navigation, route}) {
           });
         }
         // getCartDetail();
-      });
-    //   .catch(errorMethod);
+      })
+      .catch(error=>console.log(error,"errororor"));
   };
 
   const _finalPayment = () => {
@@ -2616,7 +2617,8 @@ function Cart({navigation, route}) {
                                         : colors.blackOpacity86,
                                       fontSize: textScale(12),
                                       fontFamily: fontFamily.medium,
-                                      flex: 0.7,
+                                     width:width/2.1
+                                      
                                     }}>
                                     {i?.product?.translation[0]?.title},
                                   </Text>

@@ -2115,6 +2115,124 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.blueBundles:
+          updateState({
+            shortCode: shortCodes.blueBundles,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.busTaMove:
+          updateState({
+            shortCode: shortCodes.busTaMove,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.atasktt:
+          updateState({
+            shortCode: shortCodes.atasktt,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.lunchboxSpecials:
+          updateState({
+            shortCode: shortCodes.lunchboxSpecials,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sorDelivery:
+          updateState({
+            shortCode: shortCodes.sorDelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.grubHouse:
+          updateState({
+            shortCode: shortCodes.grubHouse,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hitchDelivery:
+          updateState({
+            shortCode: shortCodes.hitchDelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.zoodMarket:
+          updateState({
+            shortCode: shortCodes.zoodMarket,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.meow:
+          updateState({
+            shortCode: shortCodes.meow,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.dingDongDelivers:
+          updateState({
+            shortCode: shortCodes.dingDongDelivers,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.torunz:
+          updateState({
+            shortCode: shortCodes.torunz,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.kurs:
+          updateState({
+            shortCode: shortCodes.kurs,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.spa:
+          updateState({
+            shortCode: shortCodes.spa,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.capitalDiagnostic:
+          updateState({
+            shortCode: shortCodes.capitalDiagnostic,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.abbeRides:
+          updateState({
+            shortCode: shortCodes.abbeRides,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.nrsa:
+          updateState({
+            shortCode: shortCodes.nrsa,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sadia:
+          updateState({
+            shortCode: shortCodes.sadia,
+            isShortcodePrefilled: true,
+          });
+          break;
+          case appIds.elentaMart:
+          updateState({
+            shortCode: shortCodes.elentaMart,
+            isShortcodePrefilled: true,
+          });
+          break;
+          case appIds.exprexPro:
+            updateState({
+              shortCode: shortCodes.exprexPro,
+              isShortcodePrefilled: true,
+            });
+            break;
       }
     })();
   }, []);
@@ -2155,14 +2273,14 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '3cc883',
+        // code: '245bae'
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
         // code: '3cc883',
-      code: shortCode,
+        code: shortCode,
       };
     }
     console.log(header, 'header');
@@ -2328,24 +2446,24 @@ export default function ShortCode({route, navigation}) {
 
             break;
           case appIds.iPicknDrop:
-              updateState({
-                isLoading: false,
-                LoadingScreen: false,
-                allAppData: res,
-                responseData: homeData.data,
-                initapiresponse:true
-              });
-  
-              break;
-            case appIds.muvpod:
-                updateState({
-                  isLoading: false,
-                  LoadingScreen: false,
-                  allAppData: res,
-                  responseData: homeData.data,
-                  initapiresponse:true
-                });
-                break;
+            updateState({
+              isLoading: false,
+              LoadingScreen: false,
+              allAppData: res,
+              responseData: homeData.data,
+              initapiresponse: true,
+            });
+
+            break;
+          case appIds.muvpod:
+            updateState({
+              isLoading: false,
+              LoadingScreen: false,
+              allAppData: res,
+              responseData: homeData.data,
+              initapiresponse: true,
+            });
+            break;
           default:
             updateState({isLoading: false, LoadingScreen: false});
             navigateToNextScreen(res, homeData.data);
@@ -2407,12 +2525,14 @@ export default function ShortCode({route, navigation}) {
       case appIds.masa:
         return animatedSplash();
       case appIds.iPicknDrop:
-          return animatedSplash();
+        return animatedSplash();
       case appIds.muvpod:
-          return animatedSplash();
+        return animatedSplash();
       default:
-        return imageSplash(); 
+        return imageSplash();
     }
+
+    // return imageSplash();
   };
   const imageSplash = () => {
     return (
@@ -2439,18 +2559,17 @@ export default function ShortCode({route, navigation}) {
     );
   };
 
-const animationVideo = () =>{
-  switch (getBundleId()) {
-    case appIds?.masa:
-      return imagePath.masa
-    case appIds?.iPicknDrop:
-      return imagePath.ipd
-    case appIds?.muvpod:
-      // () => {updateState({LoadingScreen:false, isLoading:false})}
-      return {uri : imagePath.muvpod}
-  } 
-}
-console.log(animationVideo(),"animationVideo");
+  const animationVideo = () => {
+    switch (getBundleId()) {
+      case appIds?.masa:
+        return imagePath.masa;
+      case appIds?.iPicknDrop:
+        return imagePath.ipd;
+      case appIds?.muvpod:
+        // () => {updateState({LoadingScreen:false, isLoading:false})}
+        return {uri: imagePath.muvpod};
+    }
+  };
 
   const onVideoDurationEnded = () => {
     updateState({
@@ -2460,29 +2579,28 @@ console.log(animationVideo(),"animationVideo");
   };
 
   const animatedSplash = () => {
-    
     return (
       <View
         style={{
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: colors.white, 
+          backgroundColor: colors.white,
           // backgroundColor: getBundleId()== appIds.muvpod ? '#EFEDEF' : colors.white,
         }}>
-          {/* <View style={{ position: 'absolute', bottom: moderateScale(100) }}>
+        {/* <View style={{ position: 'absolute', bottom: moderateScale(100) }}>
             {LoadingScreen && (
               <MaterialIndicator size={50} color={colors.greyMedium} />
             )}
           </View> */}
-          
+
         <Video
           source={animationVideo()} // Can be a URL or a local file.
           style={{
-            height: width ,
+            height: width,
             width: width,
           }}
-          resizeMode = {getBundleId()== appIds.muvpod ? "contain" : "cover"}
+          resizeMode={getBundleId() == appIds.muvpod ? 'contain' : 'cover'}
           onEnd={() => onVideoDurationEnded()}
         />
       </View>

@@ -84,6 +84,9 @@ const manageRedirectionsForVendorApp = async (data) => {
 };
 
 export const notificationListener = async () => {
+  console.log('shjdjdvsfvhfsfj');
+  // _openApp()
+ 
   PushNotification.configure({
     permissions: {
       alert: true,
@@ -121,30 +124,16 @@ export const notificationListener = async () => {
       (created) =>
         console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
     );
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log(
+        'Notification caused app to open from background state bla bla:',
+        remoteMessage,
+      );
+    });
+
   }
-
-  messaging().onNotificationOpenedApp(async (remoteMessage) => {
-    console.log(
-      'Notification caused app to open from background state bla bla:',
-      remoteMessage,
-    );
-    const {data, messageId, notification} = remoteMessage;
-    if (enums.isVendorStandloneApp) {
-      manageRedirectionsForVendorApp(data);
-    } else {
-      manageRedirections(data);
-    }
-
-    if (
-      Platform.OS == 'android' &&
-      notification.android.sound == 'notification'
-    ) {
-      actions.isVendorNotification(true);
-    }
-    if (Platform.OS == 'ios' && notification.sound == 'notification.wav') {
-      actions.isVendorNotification(true);
-    }
-  });
+    
+ 
 
   messaging()
     .getInitialNotification()
@@ -166,3 +155,30 @@ export const notificationListener = async () => {
 
   return null;
 };
+
+
+const _openApp= ()=>{
+  messaging().onNotificationOpenedApp(remoteMessage => {
+    console.log(
+      'Notification caused app to open from background state bla bla:',
+      remoteMessage,
+    );
+    const {data, messageId, notification} = remoteMessage;
+    if (enums.isVendorStandloneApp) {
+      manageRedirectionsForVendorApp(data);
+    } else {
+      manageRedirections(data);
+    }
+
+    if (
+      Platform.OS == 'android' &&
+      notification.android.sound == 'notification'
+    ) {
+      actions.isVendorNotification(true);
+    }
+    if (Platform.OS == 'ios' && notification.sound == 'notification.wav') {
+      actions.isVendorNotification(true);
+    }
+  });
+  console.log('i am here>>>>>');
+}

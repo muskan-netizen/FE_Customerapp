@@ -342,8 +342,8 @@ const RoyoOrderDetail = (props) => {
         )}
 
         <View style={{margin: moderateScaleVertical(16)}}>
-          {data?.vendors[0].subtotal_amount &&
-            Number(data?.vendors[0].subtotal_amount) !== 0 && (
+          {!!(Number(data?.vendors[0].subtotal_amount) &&
+            Number(data?.vendors[0].subtotal_amount) !== 0) && (
               <View
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>
@@ -353,7 +353,7 @@ const RoyoOrderDetail = (props) => {
                 </Text>
               </View>
             )}
-          {!!data?.total_delivery_fee && Number(data?.total_delivery_fee) && (
+          {!!(!!data?.total_delivery_fee && Number(data?.total_delivery_fee)) && (
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.font15Medium}>{strings.DELIVERYFEE}</Text>

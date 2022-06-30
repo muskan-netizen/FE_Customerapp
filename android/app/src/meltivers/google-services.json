@@ -1,64 +1,64 @@
 {
   "project_info": {
-    "project_number": "362041514506",
-    "project_id": "meltivers",
-    "storage_bucket": "meltivers.appspot.com"
+    "project_number": "722858283953",
+    "project_id": "meltivers-user",
+    "storage_bucket": "meltivers-user.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:362041514506:android:90d538c08a49db1cd39df3",
+        "mobilesdk_app_id": "1:722858283953:android:82cbcc95c8889c86cbe390",
         "android_client_info": {
-          "package_name": "com.meltivers"
+          "package_name": "com.meltiverse.user"
         }
       },
       "oauth_client": [
         {
-          "client_id": "362041514506-7ibcjgjsk80okgrtis14bgpg60cpqndr.apps.googleusercontent.com",
+          "client_id": "722858283953-1ublvoeu4ijre8h65481805ri1ij4lgr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.meltivers",
+            "package_name": "com.meltiverse.user",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "362041514506-8hh8ooq8647j788lau0l65elof65vro9.apps.googleusercontent.com",
+          "client_id": "722858283953-4vqeg432acbe3rscar6em3qq01jggnk3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.meltivers",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "362041514506-t1apchpdj74le4sjru19ukcn3n4kq0af.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.meltivers",
+            "package_name": "com.meltiverse.user",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "362041514506-nv8iupbava8sukdgqlcajfs4e3j1jbbi.apps.googleusercontent.com",
+          "client_id": "722858283953-j3ql4djsuu7cnh18o9jpf6o64u8rku4a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.meltiverse.user",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "722858283953-vnm8p7toveuhakdovpskndvmn7onsq8b.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC7YuEck86Q-TB2pcCekLekXy7capB8UKw"
+          "current_key": "AIzaSyD7f95jWE64inHX0QGR4b4zGwXc_zXM3gI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "362041514506-nv8iupbava8sukdgqlcajfs4e3j1jbbi.apps.googleusercontent.com",
+              "client_id": "722858283953-vnm8p7toveuhakdovpskndvmn7onsq8b.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "362041514506-eulrqceoi3rh2dnprk4vhbft1921r29u.apps.googleusercontent.com",
+              "client_id": "722858283953-ba4pklnngl3o81pannq9ottuqi1euecv.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.meltivers"
+                "bundle_id": "com.meltiverse.user"
               }
             }
           ]
