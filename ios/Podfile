@@ -10,6 +10,7 @@ abstract_target 'available_pods' do
    use_react_native!(:path => config["reactNativePath"])
    pod 'react-native-google-maps', :path => rn_maps_path
    pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+  #  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
    pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
    pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
    pod 'react-native-contacts', :path => '../node_modules/react-native-contacts'
@@ -981,25 +982,25 @@ target 'Kampick' do
 end
 
 
-# #VendorSpot Target
-# target 'VendorSpot' do
+#VendorSpot Target
+target 'VendorSpot' do
   
-# end
+end
 
 #GasGiant Target
-# target 'GasGiant' do
+target 'GasGiant' do
   
-# end
+end
 
 # #Releezer Target
  target 'Releezer' do
   
  end
 
-# #Vendoor Target
-# target 'Vendoor' do
+#Vendoor Target
+target 'Vendoor' do
   
-# end
+end
 
 #FarmerSouq Target
 target 'FarmerSouq' do
@@ -1192,7 +1193,7 @@ target 'BoltDelivery' do
   
 end
 
-# # GamaDelivery Target
+# GamaDelivery Target
 # target 'GamaDelivery' do
   
 # end
@@ -1641,15 +1642,15 @@ target 'AmazingTaxi' do
   
 end
 
-# JazzyBug Target
-target 'JazzyBug' do
+# # JazzyBug Target
+# target 'JazzyBug' do
   
-end
+# end
 
-# Myfarma Target
-target 'Myfarma' do
+# # Myfarma Target
+ target 'Myfarma' do
   
-end
+ end
 
 # Valley Target
 target 'Valley' do
@@ -1670,12 +1671,89 @@ end
 target 'Kartandkarry' do
   
 end
+# BlueBundles Target
+target 'BlueBundles' do
+  
+end
+# BusTaMove Target
+target 'BusTaMove' do
+  
+end
+# Atasktt Target
+target 'Atasktt' do
+  
+end
 
+# LunchboxSpecials Target
+target 'LunchboxSpecials' do
+  
+end
 
+# SorDelivery Target
+target 'SorDelivery' do
+  
+end
+# GrubHouse Target
+target 'GrubHouse' do
+  
+end
+# HitchDelivery Target
+target 'HitchDelivery' do
+  
+end
+# ZoodMarket Target
+target 'ZoodMarket' do
+  
+end
+# Meow Target
+target 'Meow' do
+  
+end
+# DingDongDelivers Target
+target 'DingDongDelivers' do
+  
+end
 
+# Torunz Target
+target 'Torunz' do
+  
+end
 
+# Kurs Target
+target 'Kurs' do
+  
+end
 
+# Spa Target
+target 'Spa' do
+  
+end
 
+# CapitalDiagnostic Target
+target 'CapitalDiagnostic' do
+  
+end
+
+# AbbeRides Target
+target 'AbbeRides' do
+  
+end
+# NRSA Target
+target 'NRSA' do
+  
+end
+# Sadia Target
+target 'Sadia' do
+  
+end
+# ElentaMart Target
+target 'ElentaMart' do
+  
+end
+# ExprexPro Target
+target 'ExprexPro' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

@@ -2,6 +2,7 @@ import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
 import React, {useRef} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
+import { getBundleId } from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
@@ -15,6 +16,7 @@ import {
 } from '../../../styles/responsiveSize';
 import {MyDarkTheme} from '../../../styles/theme';
 import {currencyNumberFormatter} from '../../../utils/commonFunction';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import {getImageUrl} from '../../../utils/helperFunctions';
 import ListEmptyCar from './ListEmptyCar';
 import stylesFun from './styles';
@@ -184,7 +186,8 @@ export default function AvailableDriver({
                 ...styles.noCarsAvailable,
                 color: isDarkMode ? colors.white : colors.blackC,
               }}>
-              {strings.NO_CARS_AVAILABLE}
+              {
+              appIds.jiffex == getBundleId() ? strings.NODELIVERIESAGENTAVAILABLE:strings.NO_CARS_AVAILABLE}
             </Text>
           </View>
         )}

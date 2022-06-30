@@ -1,65 +1,58 @@
 {
   "project_info": {
-    "project_number": "306514027447",
-    "project_id": "bimol-8d6ed",
-    "storage_bucket": "bimol-8d6ed.appspot.com"
+    "project_number": "928740311212",
+    "project_id": "bimol-88a12",
+    "storage_bucket": "bimol-88a12.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:306514027447:android:455f9aecc4da5dd143be32",
+        "mobilesdk_app_id": "1:928740311212:android:3e46724ed5ee4f1ec51f09",
         "android_client_info": {
-          "package_name": "com.bimol"
+          "package_name": "com.bimol.user"
         }
       },
       "oauth_client": [
         {
-          "client_id": "306514027447-a5944t3b0sh20sf700dl64s3kaik4atv.apps.googleusercontent.com",
+          "client_id": "928740311212-09h3lhs221s8pqe474hf2m2kco3pvjhg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.bimol",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "306514027447-ech8khtrf5pdcdprfokl11gbqdt0gggk.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.bimol",
+            "package_name": "com.bimol.user",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "306514027447-mj9sgjjlk81jk3id62ahicgjjjra5g8a.apps.googleusercontent.com",
+          "client_id": "928740311212-adj0abngv4j30623udo89ps5tnjl8gkl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.bimol",
+            "package_name": "com.bimol.user",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "306514027447-9dhnt39nijumb16pu59coaep7mho3bor.apps.googleusercontent.com",
+          "client_id": "928740311212-nmsvrglh3031v363kaiv2ok82jknlbhf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bimol.user",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "928740311212-ljifas5qff0t8591et2ejje7fon01sc7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDZ_1MVfCaoSUoQaTONBlxrJFJa91KZ5NY"
+          "current_key": "AIzaSyBhQeMgJGuSSUpkj4WEJuh4NVi38gYa4fo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "306514027447-9dhnt39nijumb16pu59coaep7mho3bor.apps.googleusercontent.com",
+              "client_id": "928740311212-ljifas5qff0t8591et2ejje7fon01sc7.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "306514027447-u9hlh1dk0m2r6q2k428qqh52kf35vl29.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.bimol"
-              }
             }
           ]
         }
