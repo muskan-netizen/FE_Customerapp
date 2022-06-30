@@ -115,6 +115,7 @@ export default function Vendors3({ route, navigation }) {
 
   //************Check the redirecton screen********/
   const _checkRedirectScreen = (item) => {
+    
 
     {
       item?.is_show_category

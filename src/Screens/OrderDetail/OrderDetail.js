@@ -21,6 +21,7 @@ import {
 } from 'react-native';
 import Communications from 'react-native-communications';
 import {useDarkMode} from 'react-native-dark-mode';
+import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 // import { showMessage } from 'react-native-flash-message';
 import * as RNLocalize from 'react-native-localize';
@@ -54,6 +55,7 @@ import {
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {currencyNumberFormatter} from '../../utils/commonFunction';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {getImageUrl, showSuccess, showError} from '../../utils/helperFunctions';
 import useInterval from '../../utils/useInterval';
 import ListEmptyCart from './ListEmptyCart';
@@ -149,10 +151,12 @@ export default function OrderDetail({navigation, route}) {
   const userData = useSelector((state) => state?.auth?.userData);
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
+  const businessTypes = appStyle?.homePageLayout;
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
   const {preferences} = appData?.profile;
+  console.log(preferences?.business_type,"preferencespreferencespreferences");
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
@@ -350,6 +354,9 @@ export default function OrderDetail({navigation, route}) {
       })
       .catch(errorMethod);
   };
+
+
+
 
   const errorMethod = (error) => {
     console.log(error, 'Error>>>>>>');
@@ -973,6 +980,7 @@ export default function OrderDetail({navigation, route}) {
   const _renderItem = ({item, index}) => {
     return (
       <View
+      key={index}
         style={{
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.background
@@ -981,7 +989,13 @@ export default function OrderDetail({navigation, route}) {
         }}>
         {/* show ETA Time */}
         <View style={{paddingHorizontal: moderateScale(10)}}>
-          <UserDetail data={item} type={strings.VENDER} />
+          <UserDetail data={item} type={strings.VENDER}  containerStyle={{ backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.background
+          : colors.white,}}
+          textStyle={{ color: isDarkMode
+            ? MyDarkTheme.colors.text
+            : colors.blackOpacity86,}}
+          />
 
           {item?.products.length
             ? item?.products.map((i, inx) => {
@@ -1659,7 +1673,9 @@ export default function OrderDetail({navigation, route}) {
                 ? MyDarkTheme.colors.text
                 : colors.blackOpacity43,
             }}>
-            {strings.DELIEVERY_ADDRESS}
+              {/* {console.log(preferences?.business_type, "preferences?.business_type")}
+            { (preferences?.business_type == 'home_service') ? strings.DELIEVERY_ADDRESS: 'Service Address' } */}
+            { getBundleId() == appIds.quickLube  &&  preferences?.business_type == 'home_service' ? strings.SERVICE_ADDRESS :  strings.DELIEVERY_ADDRESS }
           </Text>
 
           <View
@@ -1707,7 +1723,9 @@ export default function OrderDetail({navigation, route}) {
             ) : (
               <Image source={imagePath.mapIcon} />
             )}
-
+            {/* Service Address */}
+            {console.log( businessTypes, 'businessTypes iported>>>>>')}
+            {console.log( businessType, 'businessType>>>')}
             <View style={{marginLeft: moderateScale(12), flex: 1}}>
               {cartData?.luxury_option_id ==3 ?
                <Text
@@ -2824,7 +2842,7 @@ export default function OrderDetail({navigation, route}) {
                 }}
                 apikey={appData.profile?.preferences?.map_key}
                 strokeWidth={3}
-                strokeColor={themeColors.primary_color}
+                strokeColor={themeColors?.primary_color}
                 optimizeWaypoints={true}
                 onStart={(params) => {}}
                 precision={'high'}
@@ -2872,7 +2890,7 @@ export default function OrderDetail({navigation, route}) {
                 <Marker.Animated
                   ref={markerRef}
                   coordinate={state.animateDriver}
-                  flat>
+                 >
                   <Image
                     source={imagePath.icScooter}
                     style={{
@@ -2927,11 +2945,10 @@ export default function OrderDetail({navigation, route}) {
               style={{
                 height: moderateScaleVertical(100),
                 width: moderateScale(100),
-                
               }}
-              
               colorFilters={[
-      
+                
+                
                 {
                   keypath: 'right sand',
                   color: themeColors.primary_color,
@@ -2990,12 +3007,11 @@ export default function OrderDetail({navigation, route}) {
                   keypath: 'top right sand 1',
                   color: themeColors.primary_color,
                 },
-                
 
                 // top right sand 1
               ]}
             />
-            <Text style={{...styles.waitToAccept,color:isDarkMode?colors.white:colors.black}}>{strings.WAITINGTOACCEPT}</Text>
+            <Text style={styles.waitToAccept}>{strings.WAITINGTOACCEPT}</Text>
           </View>
         )}
         {!!orderStatus &&
@@ -3183,6 +3199,7 @@ export default function OrderDetail({navigation, route}) {
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
+        
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2
@@ -3193,7 +3210,7 @@ export default function OrderDetail({navigation, route}) {
         }
         centerTitle={strings.ORDER + `${'#'}${cartData?.order_number || ''}`}
         customRight={!!cartData?.reports?.report?.original ? customRight : ''}
-      />
+      /> 
       <View
         style={{
           height: 1,
@@ -3215,7 +3232,7 @@ export default function OrderDetail({navigation, route}) {
           ListHeaderComponent={cartItems.length ? getHeader() : null}
           ListFooterComponent={cartItems.length ? getFooter() : null}
           showsVerticalScrollIndicator={false}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item, index) => {return index.toString()}}
           renderItem={_renderItem}
           ListEmptyComponent={<ListEmptyCart isLoading={isLoading} />}
           style={{flex: 1}}

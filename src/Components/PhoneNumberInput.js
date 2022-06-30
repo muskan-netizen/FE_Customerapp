@@ -74,7 +74,7 @@ const PhoneNumberInput = ({
         onPress={_openCountryPicker}>
         {showCountryCode && (
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={{color:isDarkMode?colors.white:colors.black}}> +</Text>
+            <Text> +</Text>
             <Text
               style={{
                 fontFamily: fontFamily.medium,
@@ -93,7 +93,7 @@ const PhoneNumberInput = ({
 
         <Image
           source={imagePath.dropdownTriangle}
-          style={{...downArrowStyle,tintColor:isDarkMode?colors.white:colors.black}}
+          style={{...downArrowStyle}}
         />
       </TouchableOpacity>
       <TextInput

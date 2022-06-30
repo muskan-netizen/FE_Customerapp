@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>394041010718-bpia7t60fkp0vgq7cl3kjcmvtgtol4lp.apps.googleusercontent.com</string>
+	<string>348865288613-o47pthfvejl7evsal7nl8lgmdb0rf1bh.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.394041010718-bpia7t60fkp0vgq7cl3kjcmvtgtol4lp</string>
+	<string>com.googleusercontent.apps.348865288613-o47pthfvejl7evsal7nl8lgmdb0rf1bh</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>394041010718-1i0veaftfqt2sutchdev5tmpvasdj6bv.apps.googleusercontent.com</string>
+	<string>348865288613-56q71fjhtbbt41quvtjf22mpoc1vikde.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCzbdMLnT6rKIyM5zbG2R1NvN_LBg4ai5I</string>
+	<string>AIzaSyCGXPljaCEYn3qBvF83sxZZRsz2_b7r4mo</string>
 	<key>GCM_SENDER_ID</key>
-	<string>394041010718</string>
+	<string>348865288613</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.palmettoplus</string>
+	<string>com.palmettoplus.customer</string>
 	<key>PROJECT_ID</key>
-	<string>palmetto-plus-8447f</string>
+	<string>palmettoplus-d21fa</string>
 	<key>STORAGE_BUCKET</key>
-	<string>palmetto-plus-8447f.appspot.com</string>
+	<string>palmettoplus-d21fa.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:394041010718:ios:3b7fc5c4963e1fe71adc0f</string>
+	<string>1:348865288613:ios:6387407fd1026a1b2ff04c</string>
 </dict>
 </plist>

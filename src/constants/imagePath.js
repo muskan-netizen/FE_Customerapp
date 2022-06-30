@@ -516,7 +516,12 @@ export default {
   masa: require('../assets/masa.mp4'),
   ipd: require('../assets/ipd.mp4'),
   icCar: require('../assets/images/ic_topviewcar.png'),
+  muvpodmp4: require('../assets/muvpod.mp4'),
+  // muvpodmp4: require('../assets/muvpod.mp4'),
+  muvpod:
+    'https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/app_splashscreen/73jvbtlLAQCkDgO58NZ8Zx9tdoOnoxlgNICcS7Gp.mp4',
 
   icSos: require('../assets/images/RoyoorderNewImages/ic_sos.png'),
   icNoDrivers: require('../assets/images/RoyoorderNewImages/ic_nodrivers.png'),
+  icLocationBlue: require('../assets/images/RoyoorderNewImages/ic_location_blue.png'),
 };

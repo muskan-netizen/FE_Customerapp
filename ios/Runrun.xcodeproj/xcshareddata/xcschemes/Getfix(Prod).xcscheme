@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1006FD372847377700506744"
+               BlueprintIdentifier = "F49D6A342861E1E700A82B0E"
                BuildableName = "Getfix.app"
                BlueprintName = "Getfix"
                ReferencedContainer = "container:Runrun.xcodeproj">
@@ -44,7 +44,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1006FD372847377700506744"
+            BlueprintIdentifier = "F49D6A342861E1E700A82B0E"
             BuildableName = "Getfix.app"
             BlueprintName = "Getfix"
             ReferencedContainer = "container:Runrun.xcodeproj">
@@ -61,7 +61,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1006FD372847377700506744"
+            BlueprintIdentifier = "F49D6A342861E1E700A82B0E"
             BuildableName = "Getfix.app"
             BlueprintName = "Getfix"
             ReferencedContainer = "container:Runrun.xcodeproj">

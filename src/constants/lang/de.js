@@ -866,4 +866,8 @@ export default {
   BOOK_A_TABLE:'Book a Table',
   PLEASE_SELECT_A_TABLE:'Please Select a Table',
   SELECT_A_TABLE:'Select a Table',
+  SERVICE_ADDRESS:'Service Address',
+  BOOK_HERE:'Book Here',
+  DELETE_ACCOUNT:"Delete Account",
+  ARE_YOU_SURE_YOU_WANT_TO_DELETE:'Are you sure, you want to delete your account? Deleting your account is permanent and will remove all content and profile settings.'
 };
