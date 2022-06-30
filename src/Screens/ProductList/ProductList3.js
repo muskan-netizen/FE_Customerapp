@@ -14,10 +14,10 @@ import {
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View
+  View,
 } from 'react-native';
 import { useDarkMode } from 'react-native-dark-mode';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import Share from 'react-native-share';
@@ -53,21 +53,21 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width
+  width,
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { currencyNumberFormatter } from '../../utils/commonFunction';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   checkEvenOdd,
   getImageUrl,
   hapticEffects,
   playHapticEffect,
   showError,
-  showSuccess
+  showSuccess,
 } from '../../utils/helperFunctions';
 import { removeItem } from '../../utils/utils';
 import stylesFunc from './styles';
-
 
 let timeOut = undefined;
 
@@ -162,7 +162,6 @@ export default function Products({ route, navigation }) {
     appStyle,
   } = useSelector((state) => state?.initBoot);
 
-
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   const {
@@ -198,7 +197,8 @@ export default function Products({ route, navigation }) {
   const [selectedCartItem, setSelectedCarItems] = useState(null);
   const [differentAddsOns, setDifferentAddsOns] = useState([]);
   const [selectedDiffAdsOnItem, setSelectedDiffAdsOnItem] = useState(null);
-  const [selectedDiffAdsOnSection, setSelectedDiffAdsOnSection] = useState(null);
+  const [selectedDiffAdsOnSection, setSelectedDiffAdsOnSection] =
+    useState(null);
   const [allFilters, setAllFilter] = useState([]);
   const [ProductTags, setProductTags] = useState([]);
   const [offerList, setOfferList] = useState([]);
@@ -209,8 +209,11 @@ export default function Products({ route, navigation }) {
   const [isLoading, setLoading] = useState(true);
   const [apiHitAgain, setApiHitAgain] = useState(false);
   const [animateText, setAnimateText] = useState(0);
-  const [isSingleVendor, setIsSingleVendor] = useState({})
-
+  const [isSingleVendor, setIsSingleVendor] = useState({});
+  const [currentPage, setCurrentPage] = useState({
+    current_page: 1,
+    id: 0,
+  });
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
   const styles = stylesFunc({ themeColors, fontFamily, isDarkMode, MyDarkTheme });
@@ -233,141 +236,179 @@ export default function Products({ route, navigation }) {
 
   //usecallback functions
 
-  const renderSectionItem = useCallback(({ item, index, section }) => {
-    // const url1 = item?.media[0]?.image?.path.image_fit;
-    return (
-      <View
-        key={String(index)}
-        style={{
-          // height: 200,
-          // minHeight: url1
-          //   ? moderateScaleVertical(200)
-          //   : 0,
-          // overflow: 'visible',
-          // backgroundColor: 'red',
-          // marginBottom: moderateScaleVertical(5),
-        }}>
-        <ProductCard3
-          data={item}
-          index={index}
-          onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-          onAddtoWishlist={() => _onAddtoWishlist(item)}
-          addToCart={() => addSingleItem(item, section, index)}
-          onIncrement={() => checkIsCustomize(item, section, index, 1)}
-          onDecrement={() => checkIsCustomize(item, section, index, 2)}
-          selectedItemID={selectedItemID}
-          btnLoader={btnLoader}
-          selectedItemIndx={selectedItemIndx}
-          businessType={businessType}
-          categoryInfo={categoryInfo}
-          animateText={animateText}
-          section={section}
-        />
-      </View>
-    );
-  }, [cloneSectionList, btnLoader, productListId, repeatItems, cartId, categoryInfo])
-
+  const renderSectionItem = useCallback(
+    ({ item, index, section }) => {
+      // const url1 = item?.media[0]?.image?.path.image_fit;
+      return (
+        <View
+          key={String(index)}
+          style={{
+            height: 185,
+            // minHeight: url1
+            //   ? moderateScaleVertical(200)
+            //   : 0,
+            // overflow: 'visible',
+            // backgroundColor: 'red',
+            // marginBottom: moderateScaleVertical(5),
+          }}>
+          <ProductCard3
+            data={item}
+            index={index}
+            onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+            onAddtoWishlist={() => _onAddtoWishlist(item)}
+            addToCart={() => addSingleItem(item, section, index)}
+            onIncrement={() => checkIsCustomize(item, section, index, 1)}
+            onDecrement={() => checkIsCustomize(item, section, index, 2)}
+            selectedItemID={selectedItemID}
+            btnLoader={btnLoader}
+            selectedItemIndx={selectedItemIndx}
+            businessType={businessType}
+            categoryInfo={categoryInfo}
+            animateText={animateText}
+            section={section}
+          />
+        </View>
+      );
+    },
+    [
+      cloneSectionList,
+      btnLoader,
+      productListId,
+      repeatItems,
+      cartId,
+      categoryInfo,
+    ],
+  );
 
   const getItemLayout = useCallback((data, index) => {
-    return { length: 200, offset: 200 * index, index }
-  }, [])
+    return { length: 185, offset: 185 * index, index };
+  }, []);
 
-
-  const renderSectionHeader = useCallback((props) => {
-    const { section } = props;
-    return (
-      <View
-        style={{
-          marginHorizontal: moderateScale(16),
-          marginVertical: moderateScaleVertical(8),
-        }}>
-        <Text
+  const renderSectionHeader = useCallback(
+    (props) => {
+      const { section } = props;
+      return (
+        <View
           style={{
-            ...styles.hdrTitleTxt,
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            marginHorizontal: moderateScale(16),
+            marginVertical: moderateScaleVertical(8),
           }}>
-          {section?.title}
-        </Text>
-      </View>
-    );
-  }, [cloneSectionList])
-
-  const renderSectionTab = useCallback((props) => {
-    const { title, isActive, index } = props;
-    if (isActive) {
-      // activeIdx = props.index;
-    }
-    if (!AnimatedHeaderValue) {
-      return <TouchableOpacity style={{ width: 40 }} />;
-    }
-    return (
-      <View
-        // animation={'fadeInUp'}
-        style={{
-          marginTop: moderateScaleVertical(4),
-          marginLeft: moderateScale(12),
-          marginBottom: moderateScaleVertical(16),
-          padding: 4,
-          borderBottomWidth: 3,
-          borderColor: props.isActive
-            ? themeColors.primary_color
-            : colors.transparent,
-        }}>
-        <TouchableOpacity onPress={() => scrollHeader(index)}>
           <Text
             style={{
-              fontFamily: fontFamily.medium,
+              ...styles.hdrTitleTxt,
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}>
-            {title}
+            {section?.translation[0]?.name}
           </Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }, [AnimatedHeaderValue]);
+        </View>
+      );
+    },
+    [cloneSectionList],
+  );
 
+  const renderSectionTab = useCallback(
+    (props) => {
+      const { translation, isActive, index } = props;
 
-  const awesomeChildListKeyExtractor = useCallback((item) => `awesome-child-key-${item?.id}`, [productListData, cloneSectionList]);
+      if (isActive) {
+        // activeIdx = props.index;
+      }
+      if (!AnimatedHeaderValue) {
+        return <TouchableOpacity style={{ width: 40 }} />;
+      }
+      return (
+        <View
+          // animation={'fadeInUp'}
+          style={{
+            marginTop: moderateScaleVertical(4),
+            marginLeft: moderateScale(12),
+            marginBottom: moderateScaleVertical(16),
+            padding: 4,
+            borderBottomWidth: 3,
+            borderColor: props.isActive
+              ? themeColors.primary_color
+              : colors.transparent,
+          }}>
+          <TouchableOpacity onPress={() => scrollHeader(index)}>
+            <Text
+              style={{
+                fontFamily: fontFamily.medium,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
+              {translation[0]?.name}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      );
+    },
+    [AnimatedHeaderValue],
+  );
+
+  const awesomeChildListKeyExtractor = useCallback(
+    (item) => `awesome-child-key-${item?.id}`,
+    [productListData, cloneSectionList],
+  );
 
   const listEmptyComponent = useCallback(() => {
     return (
-      <NoDataFound isLoading={isLoading} containerStyle={{}} text={strings.NOPRODUCTFOUND} />
-    )
+      <NoDataFound
+        isLoading={isLoading}
+        containerStyle={{}}
+        text={strings.NOPRODUCTFOUND}
+      />
+    );
   }, [isLoading, productListData, sectionListData]);
 
   const listFooterComponent = useCallback(() => {
-    return (
-      <View style={{ height: moderateScale(60) }} />
-    )
+    return <View style={{ height: moderateScale(60) }} />;
   }, [isLoading]);
 
-  const renderProduct = useCallback(({ item, index }) => {
-    return (
-      <View
-        key={String(index)}
-        style={{ flex: 1 }}>
-        <ProductCard3
-          data={item}
-          index={index}
-          onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-          onAddtoWishlist={() => _onAddtoWishlist(item)}
-          addToCart={() => addSingleItem(item, null, index)}
-          onIncrement={() => checkIsCustomize(item, null, index, 1)}
-          onDecrement={() => checkIsCustomize(item, null, index, 2)}
-          selectedItemID={selectedItemID}
-          btnLoader={false}
-          selectedItemIndx={selectedItemIndx}
-          differentAddsOns={differentAddsOns}
-          businessType={businessType}
-          categoryInfo={categoryInfo}
-          animateText={animateText}
-        // section={section}
-        />
-        <View style={styles.horizontalLine} />
-      </View>
-    );
-  }, [productListData, btnLoader, productListId, repeatItems, cartId, categoryInfo])
+  const renderProduct = useCallback(
+    ({ item, index }) => {
+      return (
+        <View key={String(index)} style={{ flex: 1 }}>
+          <ProductCard3
+            data={item}
+            index={index}
+            onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+            onAddtoWishlist={() => _onAddtoWishlist(item)}
+            addToCart={() => addSingleItem(item, null, index)}
+            onIncrement={() => checkIsCustomize(item, null, index, 1)}
+            onDecrement={() => checkIsCustomize(item, null, index, 2)}
+            selectedItemID={selectedItemID}
+            btnLoader={false}
+            selectedItemIndx={selectedItemIndx}
+            differentAddsOns={differentAddsOns}
+            businessType={businessType}
+            categoryInfo={categoryInfo}
+            animateText={animateText}
+          // section={section}
+          />
+          <View style={styles.horizontalLine} />
+        </View>
+      );
+    },
+    [
+      productListData,
+      btnLoader,
+      productListId,
+      repeatItems,
+      cartId,
+      categoryInfo,
+    ],
+  );
 
+  const preLoadImages = async (data) => {
+    data.map((item) => {
+      item?.data.map((val) => {
+        if (val?.media?.length > 0) {
+          const url1 = val?.media[0]?.image?.path?.image_fit;
+          const url2 = val?.media[0]?.image?.path?.image_path;
+          FastImage.preload([{ uri: getImageUrl(url1, url2, '200/200') }]);
+        }
+      });
+    });
+  };
 
   const listHeaderComponent2 = () => {
     return (
@@ -402,7 +443,7 @@ export default function Products({ route, navigation }) {
                 />
               </TouchableOpacity>
 
-              <View style={{ marginLeft: moderateScale(8), flex: 0.7 }}>
+              <View style={{ marginLeft: moderateScale(8) }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   {isSVG ? (
                     <SvgUri
@@ -418,7 +459,7 @@ export default function Products({ route, navigation }) {
                       MyDarkTheme={MyDarkTheme}
                     />
                   )}
-                  <View style={{ marginLeft: moderateScale(8) }}>
+                  <View style={{ marginLeft: moderateScale(8), width: moderateScale(width / 1.5) }}>
                     <Text
                       numberOfLines={1}
                       style={{
@@ -436,8 +477,7 @@ export default function Products({ route, navigation }) {
             </View>
 
             {isSearch ? (
-              <View
-              >
+              <View>
                 <SearchBar
                   containerStyle={{
                     marginHorizontal: moderateScale(18),
@@ -479,7 +519,7 @@ export default function Products({ route, navigation }) {
                     source={!!data?.showAddToCart ? false : imagePath.icSearchb}
                   />
                 </TouchableOpacity>
-                <View style={{ marginHorizontal: moderateScale(8) }} />
+                <View style={{ marginHorizontal: moderateScale(8), marginRight: moderateScale(3) }} />
                 <TouchableOpacity
                   onPress={onShare}
                   hitSlop={hitSlopProp}
@@ -970,13 +1010,32 @@ export default function Products({ route, navigation }) {
             />
           ) : null}
 
+          {/* 
           <TouchableOpacity
             onPress={onShowHideFilter}
             style={{
-              marginLeft: moderateScale(12)
+              marginLeft: moderateScale(12),
             }}>
             <Image source={imagePath.filter} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
+          <View >
+            {getBundleId() == appIds.muvpod ? (<View style={{ flexDirection: 'row', justifyContent: 'space-between', width: width / 1.1, alignItems: 'center' }} >
+              <View />
+              <TouchableOpacity onPress={onShowHideFilter} style={{ flexDirection: 'row', alignItems: 'center' }} >
+                <Image source={imagePath.filter} />
+                <Text style={{
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.black,
+                  fontSize: moderateScale(16),
+                  fontFamily: fontFamily.regular,
+                  // marginRight: moderateScale(),
+                }} > {strings.SORT_BY} {selectedSortFilter == null ? 'Popularity' : selectedSortFilter?.label} </Text>
+
+              </TouchableOpacity >
+
+            </View>) : <Image source={imagePath.filter} />}
+          </View>
         </View>
 
         {!!categoryInfo && categoryInfo?.childs?.length > 0 && (
@@ -1028,217 +1087,222 @@ export default function Products({ route, navigation }) {
         )}
       </View>
     );
-  }
+  };
 
-  const addSingleItem = useCallback(async (item, section = null, inx) => {
-    if (
-      !!categoryInfo?.is_vendor_closed &&
-      !categoryInfo?.show_slot &&
-      !categoryInfo?.closed_store_order_scheduled
-    ) {
-      alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
-      return;
-    }
-    // playHapticEffect(hapticEffects.impactLight);
-    let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
-    updateState({ selectedItemID: item?.id, btnLoader: true });
+  const addSingleItem = useCallback(
+    async (item, section = null, inx) => {
+      if (
+        !!categoryInfo?.is_vendor_closed &&
+        !categoryInfo?.show_slot &&
+        !categoryInfo?.closed_store_order_scheduled
+      ) {
+        alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
+        return;
+      }
+      // playHapticEffect(hapticEffects.impactLight);
+      let getTypeId =
+        !!item?.category && item?.category.category_detail?.type_id;
+      updateState({ selectedItemID: item?.id, btnLoader: true });
 
-
-    if (item?.add_on_count !== 0 || item?.variant_set_count !== 0) {
-      setSelectedSection(section);
-      setSelectedCarItems(item);
-      setIsVisibleModal(true);
-      updateState({
-        updateQtyLoader: false,
-        typeId: getTypeId,
-        selectedItemID: -1,
-        btnLoader: false,
-      });
-      return;
-    }
-    if (item?.add_on_count === 0 && item?.mode_of_service === 'schedule') {
-      setSelectedSection(section);
-      setSelectedCarItems(item);
-      setIsVisibleModal(true);
-      updateState({
-        updateQtyLoader: false,
-        typeId: getTypeId,
-        selectedItemID: -1,
-        btnLoader: false,
-      });
-      return;
-    }
-
-    let data = {};
-    data['sku'] = item.sku;
-    data['quantity'] = !!item?.minimum_order_count
-      ? Number(item?.minimum_order_count)
-      : 1;
-    data['product_variant_id'] = item?.variant[0].id;
-    data['type'] = dine_In_Type;
-
-    console.log("Sending api data", data)
-    actions.addProductsToCart(data, {
-      code: appData.profile.code,
-      currency: currencies.primary_currency.id,
-      language: languages.primary_language.id,
-      systemuser: DeviceInfo.getUniqueId(),
-    })
-      .then((res) => {
-        console.log(res.data, 'add single item addProductsToCart');
-        actions.cartItemQty(res);
-        updateState({ cartId: res.data.id });
-        // showSuccess('Product successfully added');
-        if (!!section) {
-
-          console.log("itemSectionUpdateitemSectionUpdate", section)
-          //here we updated particular item of array with the help of item index and section index.
-          let itemSectionUpdate = cloneDeep(section)
-          itemSectionUpdate.data[inx].qty = !!itemSectionUpdate?.data[inx]?.minimum_order_count ? //here we added new key name as qty
-            Number(itemSectionUpdate?.data[inx]?.minimum_order_count) : 1
-          itemSectionUpdate.data[inx].cart_product_id = res.data.cart_product_id;
-          let sectionItem = cloneDeep(sectionListData)
-          sectionItem[section.index] = itemSectionUpdate
-          setSectionListData(sectionItem);
-          setCloneSectionList(sectionItem);
-          fetchTags(sectionItem)
-        } else {
-          let updateArray = productListData.map((val, i) => {
-            if (val.id == item.id) {
-              return {
-                ...val,
-                qty: !!item?.minimum_order_count
-                  ? Number(item?.minimum_order_count)
-                  : 1,
-                cart_product_id: res.data.cart_product_id,
-                isRemove: false,
-              };
-            }
-            return val;
-          });
-          setProductListData(updateArray);
-        }
+      if (item?.add_on_count !== 0 || item?.variant_set_count !== 0) {
         setSelectedSection(section);
         setSelectedCarItems(item);
+        setIsVisibleModal(true);
         updateState({
           updateQtyLoader: false,
+          typeId: getTypeId,
           selectedItemID: -1,
           btnLoader: false,
         });
-      })
-      .catch((error) => errorMethodSecond(error, [], item, section, inx));
-  }, [cloneSectionList, productListData, selectedCartItem])
-
-
-  const checkIsCustomize = useCallback(async (item, section = null, index, type) => {
-    let itemToUpdate = cloneDeep(item);
-    // console.log('check item to update', itemToUpdate);
-    // return;
-
-    if (
-      itemToUpdate?.add_on_count == 0 &&
-      itemToUpdate?.variant_set_count == 0
-    ) {
-      // hit in case of simple products withou any customization
-      addProductsWithoutCustomize(item, section, index, type);
-      return;
-    }
-
-    let productId = !!itemToUpdate?.cart_product_id
-      ? itemToUpdate?.cart_product_id
-      : itemToUpdate?.check_if_in_cart_app[0]?.id;
-    let parentCartId = !!cartId
-      ? cartId
-      : itemToUpdate.check_if_in_cart_app[0]?.cart_id;
-
-    var totalProductQty = 0;
-    if (itemToUpdate?.variant && itemToUpdate?.check_if_in_cart_app) {
-      itemToUpdate?.check_if_in_cart_app.map((val) => {
-        totalProductQty = totalProductQty + val?.quantity;
-      });
-    }
-    console.log('totalProductQty', totalProductQty);
-
-    // return;
-
-    var isExistqty = itemToUpdate?.qty ? itemToUpdate?.qty : totalProductQty; //this variable contain only local product quantity
-    var tempQty = 0; //this variable contain latest updated quantity of products
-
-    if (
-      (type == 2 && itemToUpdate?.add_on_count !== 0) ||
-      (type == 2 && itemToUpdate?.variant_set_count !== 0)
-    ) {
-
-      //hit in case of subtruction
-      let apiData = { cart_id: parentCartId, product_id: item.id };
-      let checkIsAvailable = await getDiffAddsOn(apiData, section, item); //check products with different addOns is exist or not.
-      // console.log("check available", checkIsAvailable)
-      !!checkIsAvailable?.data &&
-        checkIsAvailable?.data.map((val) => {
-          console.log('check available', val);
-          tempQty = tempQty + val?.quantity; //store updated total quantity of products
-        });
-
-      if (!!checkIsAvailable?.goNext) {
-        //if different adOns is exist then open DifferentAddOns Modal.
         return;
       }
-    }
-
-    if (type == 2) {
-      // direct subtract customize items if products added with same addons
-      addDeleteCartItems(
-        itemToUpdate,
-        tempQty == 0 ? isExistqty : tempQty,
-        productId,
-        parentCartId,
-        section,
-        index,
-        2,
-      );
-      return;
-    }
-
-    if (type == 1) {
-      //hit in case of add new products
-      let apiData = { cart_id: parentCartId, product_id: item.id };
-      let header = {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      };
-      console.log('api data checkLastAdded', apiData);
-      try {
-        setRepeatItems(true)
-        const res = await actions.checkLastAdded(apiData, header);
-        console.log('check last addedres++++++', res);
-        if (!!res.data) {
-          //open RepeatModal
-          const addData = {
-            item: itemToUpdate,
-            index: index,
-            type: type,
-            section: section,
-            isExistqty: tempQty == 0 ? isExistqty : tempQty,
-            updateLocalQty: res.data?.quantity,
-            productId: res?.data?.id,
-            parentCartId: res.data.cart_id,
-          };
-          setSelectedSection(section);
-          setRepeatItems(addData);
-        }
-      } catch (error) {
-        console.log('error riased++++', error);
-        showError(error?.message || error?.error);
+      if (item?.add_on_count === 0 && item?.mode_of_service === 'schedule') {
+        setSelectedSection(section);
+        setSelectedCarItems(item);
+        setIsVisibleModal(true);
+        updateState({
+          updateQtyLoader: false,
+          typeId: getTypeId,
+          selectedItemID: -1,
+          btnLoader: false,
+        });
+        return;
       }
-      return;
-    }
-  }, [cloneSectionList, productListData, selectedCartItem])
 
+      let data = {};
+      data['sku'] = item.sku;
+      data['quantity'] = !!item?.minimum_order_count
+        ? Number(item?.minimum_order_count)
+        : 1;
+      data['product_variant_id'] = item?.variant[0].id;
+      data['type'] = dine_In_Type;
+
+      console.log('Sending api data', data);
+      actions
+        .addProductsToCart(data, {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        })
+        .then((res) => {
+          console.log(res.data, 'add single item addProductsToCart');
+          actions.cartItemQty(res);
+          updateState({ cartId: res.data.id });
+          // showSuccess('Product successfully added');
+          if (!!section) {
+            console.log('itemSectionUpdateitemSectionUpdate', section);
+            //here we updated particular item of array with the help of item index and section index.
+            let itemSectionUpdate = cloneDeep(section);
+            itemSectionUpdate.data[inx].qty = !!itemSectionUpdate?.data[inx]
+              ?.minimum_order_count //here we added new key name as qty
+              ? Number(itemSectionUpdate?.data[inx]?.minimum_order_count)
+              : 1;
+            itemSectionUpdate.data[inx].cart_product_id =
+              res.data.cart_product_id;
+            let sectionItem = cloneDeep(sectionListData);
+            sectionItem[section.index] = itemSectionUpdate;
+            setSectionListData(sectionItem);
+            setCloneSectionList(sectionItem);
+            fetchTags(sectionItem);
+          } else {
+            let updateArray = productListData.map((val, i) => {
+              if (val.id == item.id) {
+                return {
+                  ...val,
+                  qty: !!item?.minimum_order_count
+                    ? Number(item?.minimum_order_count)
+                    : 1,
+                  cart_product_id: res.data.cart_product_id,
+                  isRemove: false,
+                };
+              }
+              return val;
+            });
+            setProductListData(updateArray);
+          }
+          setSelectedSection(section);
+          setSelectedCarItems(item);
+          updateState({
+            updateQtyLoader: false,
+            selectedItemID: -1,
+            btnLoader: false,
+          });
+        })
+        .catch((error) => errorMethodSecond(error, [], item, section, inx));
+    },
+    [cloneSectionList, productListData, selectedCartItem],
+  );
+
+  const checkIsCustomize = useCallback(
+    async (item, section = null, index, type) => {
+      let itemToUpdate = cloneDeep(item);
+      // console.log('check item to update', itemToUpdate);
+      // return;
+
+      if (
+        itemToUpdate?.add_on_count == 0 &&
+        itemToUpdate?.variant_set_count == 0
+      ) {
+        // hit in case of simple products withou any customization
+        addProductsWithoutCustomize(item, section, index, type);
+        return;
+      }
+
+      let productId = !!itemToUpdate?.cart_product_id
+        ? itemToUpdate?.cart_product_id
+        : itemToUpdate?.check_if_in_cart_app[0]?.id;
+      let parentCartId = !!cartId
+        ? cartId
+        : itemToUpdate.check_if_in_cart_app[0]?.cart_id;
+
+      var totalProductQty = 0;
+      if (itemToUpdate?.variant && itemToUpdate?.check_if_in_cart_app) {
+        itemToUpdate?.check_if_in_cart_app.map((val) => {
+          totalProductQty = totalProductQty + val?.quantity;
+        });
+      }
+      console.log('totalProductQty', totalProductQty);
+
+      // return;
+
+      var isExistqty = itemToUpdate?.qty ? itemToUpdate?.qty : totalProductQty; //this variable contain only local product quantity
+      var tempQty = 0; //this variable contain latest updated quantity of products
+
+      if (
+        (type == 2 && itemToUpdate?.add_on_count !== 0) ||
+        (type == 2 && itemToUpdate?.variant_set_count !== 0)
+      ) {
+        //hit in case of subtruction
+        let apiData = { cart_id: parentCartId, product_id: item.id };
+        let checkIsAvailable = await getDiffAddsOn(apiData, section, item); //check products with different addOns is exist or not.
+        // console.log("check available", checkIsAvailable)
+        !!checkIsAvailable?.data &&
+          checkIsAvailable?.data.map((val) => {
+            console.log('check available', val);
+            tempQty = tempQty + val?.quantity; //store updated total quantity of products
+          });
+
+        if (!!checkIsAvailable?.goNext) {
+          //if different adOns is exist then open DifferentAddOns Modal.
+          return;
+        }
+      }
+
+      if (type == 2) {
+        // direct subtract customize items if products added with same addons
+        addDeleteCartItems(
+          itemToUpdate,
+          tempQty == 0 ? isExistqty : tempQty,
+          productId,
+          parentCartId,
+          section,
+          index,
+          2,
+        );
+        return;
+      }
+
+      if (type == 1) {
+        //hit in case of add new products
+        let apiData = { cart_id: parentCartId, product_id: item.id };
+        let header = {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        };
+        console.log('api data checkLastAdded', apiData);
+        try {
+          setRepeatItems(true);
+          const res = await actions.checkLastAdded(apiData, header);
+          console.log('check last addedres++++++', res);
+          if (!!res.data) {
+            //open RepeatModal
+            const addData = {
+              item: itemToUpdate,
+              index: index,
+              type: type,
+              section: section,
+              isExistqty: tempQty == 0 ? isExistqty : tempQty,
+              updateLocalQty: res.data?.quantity,
+              productId: res?.data?.id,
+              parentCartId: res.data.cart_id,
+            };
+            setSelectedSection(section);
+            setRepeatItems(addData);
+          }
+        } catch (error) {
+          console.log('error riased++++', error);
+          showError(error?.message || error?.error);
+        }
+        return;
+      }
+    },
+    [cloneSectionList, productListData, selectedCartItem],
+  );
 
   //useCallback end
-
 
   useEffect(() => {
     // setLoading(true)
@@ -1251,20 +1315,20 @@ export default function Products({ route, navigation }) {
     if (isLoadingC) {
       getAllProductsByCategoryId(true);
     }
-
   }, [navigation, languages, currencies, reloadData]);
 
   const getAllProductTags = () => {
-    actions.getAllProductTags(
-      '',
-      {},
-      {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      },
-    )
+    actions
+      .getAllProductTags(
+        '',
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
       .then((res) => {
         const productTagsArr = res?.data?.map((el) => {
           return {
@@ -1285,8 +1349,8 @@ export default function Products({ route, navigation }) {
   };
 
   const getAllListItems = (pageNo = 1) => {
-
     if (data?.vendor) {
+     console.log(data,"getAllListItemsdata")
       {
         !!selectedFilters.current
           ? newVendorFilter(pageNo)
@@ -1306,16 +1370,17 @@ export default function Products({ route, navigation }) {
   }, []);
 
   const getAllVendorFilters = () => {
-    actions.getVendorFilters(
-      `/${productListId?.id}`,
-      {},
-      {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      },
-    )
+    actions
+      .getVendorFilters(
+        `/${productListId?.id}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
       .then((res) => {
         console.log(res, 'getVendorFilter with variants');
 
@@ -1346,16 +1411,17 @@ export default function Products({ route, navigation }) {
   /****Get all list items by vendor id */
   const getAllProductsByVendorCategory = () => {
     console.log('api hit getAllProductsByVendorCategory', data);
-    actions.getProductByVendorCategoryId(
-      `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
-      {},
-      {
-        code: appData.profile.code,
-        currency: currencies.primary_currency.id,
-        language: languages.primary_language.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      },
-    )
+    actions
+      .getProductByVendorCategoryId(
+        `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?page=${pageNo}`,
+        {},
+        {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
       .then((res) => {
         console.log(res, 'getProductByVendorCategoryId');
         // setFilterData(res?.data?.filterData)
@@ -1412,7 +1478,6 @@ export default function Products({ route, navigation }) {
     }
   };
 
-
   const onFilterApply = (filterData = {}) => {
     selectedFilters.current = filterData;
     updateState({ pageNo: 1 });
@@ -1431,28 +1496,31 @@ export default function Products({ route, navigation }) {
 
   /****Get all list items by vendor id */
   const getAllProductsByVendor = (pageNo) => {
-    console.log('api hit getAllProductsByVendor', data);
+    console.log('api hit getAllProductsByVendor');
     let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
-    let apiData = `/${vendorId}?limit=${limit}&page=${pageNo}`;
+    let apiData = `/${vendorId}?page=${pageNo}`;
     if (!!data?.categoryExist) {
       //sent category id if user comes from category>>vendor>>productList
+
       apiData = apiData + `&category_id=${data?.categoryExist}`;
     }
-    actions.getProductByVendorIdOptamize(
-      apiData,
-      {},
-      {
-        code: appData.profile.code,
-        currency: currencies.primary_currency.id,
-        language: languages.primary_language.id,
-        latitude: appMainData?.reqData?.latitude,
-        longitude: appMainData?.reqData?.longitude,
-        systemuser: DeviceInfo.getUniqueId(),
-      },
-    )
-      .then((res) => {
-        console.log('get all products by vendor res', res);
+    actions
+      .getProductByVendorIdOptamizeV2(
+        apiData,
+        {},
+        {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+          latitude: appMainData?.reqData?.latitude,
+          longitude: appMainData?.reqData?.longitude,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then(async (res) => {
+        console.log('get all products by vendor res', res.data);
+        // return;
         if (res?.data?.vendor) {
           FastImage.preload([
             {
@@ -1468,35 +1536,13 @@ export default function Products({ route, navigation }) {
         }
 
         if (res?.data?.vendor?.is_show_products_with_category) {
-          res.data.categories.map((item) => {
-            item?.category.products.map((val) => {
-              if (val?.media?.length > 0) {
-                const url1 = val?.media[0]?.image?.path?.image_fit;
-                const url2 = val?.media[0]?.image?.path?.image_path;
-                FastImage.preload([{ uri: getImageUrl(url1, url2, '200/200') }]);
-              }
-            });
-          });
-
-          // var totalProduct = 1;
-          let filterArray = res?.data?.categories?.map((val) => {
-            let newKey = {
-              ...val,
-              // ['data']: val?.products && val.products,
-              ['data']: val?.category?.products && val?.category?.products,
-              title:
-                (val?.category && val?.category?.translation[0]?.name) ||
-                val?.category?.translation[1]?.name,
-            };
-            delete newKey['products'];
-            return newKey;
-          });
-          setSectionListData(filterArray);
-          setCloneSectionList(filterArray);
+          let resData = res?.data?.categories || [];
+          await preLoadImages(resData);
+          setSectionListData(resData);
+          setCloneSectionList(resData);
           // setFilterData(res?.data?.filterData)
           setCategoryInfo(res?.data?.vendor);
-          // checkSingleVendor(res?.data?.vendor)
-          fetchTags(filterArray);
+          fetchTags(resData);
           setLoading(false);
         } else {
           // console.log('get product list by vendor id >>>> ', res);
@@ -1505,7 +1551,6 @@ export default function Products({ route, navigation }) {
               loadMore = false;
             }
             setCategoryInfo(res?.data?.vendor);
-            // checkSingleVendor(res?.data?.vendor)
             setLoading(false);
             setProductListData(
               pageNo == 1
@@ -1524,7 +1569,7 @@ export default function Products({ route, navigation }) {
   };
 
   //***************get products by vendor filter**************
-  const newVendorFilter = (pageNo) => {
+  const newVendorFilter = async (pageNo, loading = false) => {
     console.log('api hit new vendorFilter', selectedFilters);
     let data = {};
     data['variants'] = selectedFilters?.current?.selectedVariants || [];
@@ -1533,52 +1578,48 @@ export default function Products({ route, navigation }) {
     data['order_type'] = selectedFilters?.current?.selectedSorting || 0;
     data['range'] = `${minimumPrice};${maximumPrice}`;
     data['vendor_id'] = productListId.id;
-    data['limit'] = limit;
+    // data['limit'] = limit;
     data['page'] = pageNo;
+    data['tag_products'] =
+      ProductTags && ProductTags?.length
+        ? ProductTags.map((i) => {
+          return i?.isSelected ? i?.id : null;
+        }).filter((x) => x != null)
+        : [];
+    console.log(data, '>data>data');
     console.log('sending data', data);
-    setLoading(true)
-    actions.newVendorFilters(data, {
-      code: appData?.profile?.code,
-      currency: currencies?.primary_currency?.id,
-      language: languages?.primary_language?.id,
-      systemuser: DeviceInfo.getUniqueId(),
-    })
-      .then((res) => {
+    setLoading(loading ? false : true);
+    actions
+      .newVendorFilters(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then(async (res) => {
         console.log('filter vendor res', res);
-        if (!!res?.data?.vendor?.is_show_products_with_category) {
-          var totalProduct = 1;
-          let filterArray = res?.data?.categories?.map((val) => {
-            let newKey = {
-              ...val,
-              ['data']: val?.products && val.products,
-              title: val?.category && val.category?.translation[0]?.name,
-              totalProduct: totalProduct + val.products.length,
-            };
-            delete newKey['products'];
-            return newKey;
-          });
-          setSectionListData(filterArray);
-          setCloneSectionList(filterArray);
-          setCategoryInfo(res?.data?.vendor);
-          // checkSingleVendor(res?.data?.vendor)
+        if (res?.data?.vendor?.is_show_products_with_category) {
+          let resData = res?.data?.categories || [];
+          // await preLoadImages(resData);
+          setSectionListData(resData);
+          setCloneSectionList(resData);
           // setFilterData(res?.data?.filterData)
-          console.log(filterArray, 'filterArrayfilterArray');
-          fetchTags(filterArray);
-          setLoading(false)
+          setCategoryInfo(res?.data?.vendor);
+          // fetchTags(resData);
+          setLoading(false);
         } else {
           // console.log('get product list by vendor id >>>> ', res);
-          if (!!res?.data?.products?.data) {
-            // setFilterData(res?.data?.filterData)
+          if (res?.data) {
+            if (res.data.products.data.length == 0) {
+              loadMore = false;
+            }
             setCategoryInfo(res?.data?.vendor);
-            // checkSingleVendor(res?.data?.vendor)
-            setProductListData(
-              !!res?.data?.vendor?.is_show_products_with_category
-                ? res?.data?.categories[0]?.products
-                : pageNo == 1
-                  ? res.data.products.data
-                  : [...productListData, ...res.data.products.data],
-            );
             setLoading(false);
+            setProductListData(
+              pageNo == 1
+                ? res.data.products.data
+                : [...productListData, ...res.data.products.data],
+            );
           } else {
             setLoading(false);
           }
@@ -1594,17 +1635,18 @@ export default function Products({ route, navigation }) {
   /**********Get all list items by category id */
   const getAllProductsByCategoryId = (pageNo) => {
     console.log('api hit getProductByCategoryId', data);
-    actions.getProductByCategoryIdOptamize(
-      `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${data?.rootProducts ? true : false
-      }`,
-      {},
-      {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      },
-    )
+    actions
+      .getProductByCategoryIdOptamize(
+        `/${productListId?.id}?page=${pageNo}&product_list=${data?.rootProducts ? true : false
+        }`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
       .then((res) => {
         if (!!res?.data) {
           console.log(res.data, 'res getProductByCategoryId');
@@ -1648,7 +1690,7 @@ export default function Products({ route, navigation }) {
 
   /**********Get all list items category filters */
   const getAllProductsCategoryFilter = (pageNo) => {
-    setLoading(true)
+    setLoading(true);
     let data = {};
     data['variants'] = selectedFilters?.current?.selectedVariants || [];
     data['options'] = selectedFilters?.current?.selectedOptions || [];
@@ -1657,20 +1699,21 @@ export default function Products({ route, navigation }) {
     data['range'] = `${minimumPrice};${maximumPrice}`;
     console.log('api hit getAllProductsCategoryFilter', data);
 
-    actions.getProductByCategoryFiltersOptamize(
-      `/${productListId.id}?limit=${limit}&page=${pageNo}&product_list=${data?.rootProducts ? true : false
-      }`,
-      data,
-      {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      },
-    )
+    actions
+      .getProductByCategoryFiltersOptamize(
+        `/${productListId.id}?page=${pageNo}&product_list=${data?.rootProducts ? true : false
+        }`,
+        data,
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
       .then((res) => {
         console.log(res, 'getAllProductsCategoryFilter  res ++++++');
-        setLoading(false)
+        setLoading(false);
         setProductListData(
           pageNo == 1 ? res.data.data : [...productListData, ...res.data.data],
         );
@@ -1706,15 +1749,16 @@ export default function Products({ route, navigation }) {
   const _onAddtoWishlist = (item) => {
     playHapticEffect(hapticEffects.impactLight);
     if (!!userData?.auth_token) {
-      actions.updateProductWishListData(
-        `/${item.id}`,
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      )
+      actions
+        .updateProductWishListData(
+          `/${item.id}`,
+          {},
+          {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+          },
+        )
         .then((res) => {
           console.log(res, 'updateProductWishListData');
           showSuccess(res.message);
@@ -1780,17 +1824,17 @@ export default function Products({ route, navigation }) {
   const checkSingleVendor = async (vendor) => {
     let vendorData = { vendor_id: vendor.id };
     return new Promise((resolve, reject) => {
-      actions.checkSingleVendor(vendorData, {
-        code: appData.profile.code,
-        currency: currencies.primary_currency.id,
-        language: languages.primary_language.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      })
+      actions
+        .checkSingleVendor(vendorData, {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        })
         .then((res) => {
           // console.log('res check singel vendro==>>>>>>', res);
-          setIsSingleVendor(res)
+          setIsSingleVendor(res);
           resolve(res);
-
         })
         .catch((error) => {
           reject(error);
@@ -1800,15 +1844,16 @@ export default function Products({ route, navigation }) {
   };
   const clearCartAndAddProduct = async (item, section = null) => {
     updateState({ updateQtyLoader: true });
-    actions.clearCart(
-      {},
-      {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      },
-    )
+    actions
+      .clearCart(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
       .then((res) => {
         actions.cartItemQty(res);
         console.log('clear cart and add product res', res);
@@ -1823,11 +1868,6 @@ export default function Products({ route, navigation }) {
     updateState({ differentAddsOnsModal: false });
     setDifferentAddsOns([]);
   };
-
-
-
-
-
 
   const onCloseModal = () => {
     setIsVisibleModal(false);
@@ -1894,9 +1934,8 @@ export default function Products({ route, navigation }) {
       item,
       isExistproductId,
       differentAddsOnsQty,
-      index
+      index,
     );
-
 
     timeOut = setTimeout(
       () => {
@@ -1917,12 +1956,13 @@ export default function Products({ route, navigation }) {
           data['type'] = dineInType;
           console.log('sending api data', data);
 
-          actions.increaseDecreaseItemQty(data, {
-            code: appData?.profile?.code,
-            currency: currencies?.primary_currency?.id,
-            language: languages?.primary_language?.id,
-            systemuser: DeviceInfo.getUniqueId(),
-          })
+          actions
+            .increaseDecreaseItemQty(data, {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+              systemuser: DeviceInfo.getUniqueId(),
+            })
             .then((res) => {
               console.log('update qty res', res);
               tempQty = 0;
@@ -1965,24 +2005,24 @@ export default function Products({ route, navigation }) {
     item,
     isExistproductId,
     differentAddsOnsQty,
-    index
+    index,
   ) => {
     console.log('quanitity', quanitity);
     console.log('quanitity localy', differentAddsOnsQty);
 
     // return;
     if (!!section) {
-
-      let itemSectionUpdate = cloneDeep(section)
-      itemSectionUpdate.data[index].qty = !!differentAddsOnsQty ? differentAddsOnsQty : quanitity;
+      let itemSectionUpdate = cloneDeep(section);
+      itemSectionUpdate.data[index].qty = !!differentAddsOnsQty
+        ? differentAddsOnsQty
+        : quanitity;
       itemSectionUpdate.data[index].cart_product_id = isExistproductId;
 
-      let sectionItem = cloneDeep(sectionListData)
-      sectionItem[section.index] = itemSectionUpdate
+      let sectionItem = cloneDeep(sectionListData);
+      sectionItem[section.index] = itemSectionUpdate;
       setSectionListData(sectionItem);
       setCloneSectionList(sectionItem);
-      fetchTags(sectionItem)
-
+      fetchTags(sectionItem);
     } else {
       let updateArray = productListData.map((val, i) => {
         if (val.id == item.id) {
@@ -2007,7 +2047,6 @@ export default function Products({ route, navigation }) {
     section = null,
     diffAdOnId = 0,
   ) => {
-
     // console.log("item to update remove item", itemToUpdate)
 
     let updateLocallyAddOns = [];
@@ -2034,12 +2073,13 @@ export default function Products({ route, navigation }) {
     data['cart_product_id'] = isExistproductId;
     data['type'] = dineInType;
     updateState({ btnLoader: true });
-    actions.removeProductFromCart(data, {
-      code: appData?.profile?.code,
-      currency: currencies?.primary_currency?.id,
-      language: languages?.primary_language?.id,
-      systemuser: DeviceInfo.getUniqueId(),
-    })
+    actions
+      .removeProductFromCart(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
       .then((res) => {
         actions.cartItemQty(res);
         if (!!section) {
@@ -2111,8 +2151,8 @@ export default function Products({ route, navigation }) {
 
   const errorMethodSecond = (error, addonSet = [], item, section, inx) => {
     console.log(error, 'Error>>>>>');
-    console.log("item+++++", item)
-    console.log("sectin++++", section)
+    console.log('item+++++', item);
+    console.log('sectin++++', section);
     updateState({ updateQtyLoader: false });
     if (error?.message?.alert == 1) {
       updateState({
@@ -2145,15 +2185,16 @@ export default function Products({ route, navigation }) {
   };
 
   const clearCart = async (addonSet = [], item, section, inx) => {
-    actions.clearCart(
-      {},
-      {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      },
-    )
+    actions
+      .clearCart(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
       .then((res) => {
         actions.cartItemQty(res);
         addSingleItem(item, section, inx);
@@ -2167,8 +2208,9 @@ export default function Products({ route, navigation }) {
   };
 
   const onRepeat = async () => {
-    console.log("repeate items", repeatItems)
-    const { item, isExistqty, productId, parentCartId, updateLocalQty } = repeatItems;
+    console.log('repeate items', repeatItems);
+    const { item, isExistqty, productId, parentCartId, updateLocalQty } =
+      repeatItems;
     await addDeleteCartItems(
       item,
       isExistqty,
@@ -2242,10 +2284,7 @@ export default function Products({ route, navigation }) {
     }
   };
 
-
-
   const getDiffAddsOn = async (apiData, section, item) => {
-
     console.log('get diffadds on data', apiData);
     let header = {
       code: appData?.profile?.code,
@@ -2307,7 +2346,6 @@ export default function Products({ route, navigation }) {
     );
     setDifferentAddsOns(updateLocallyAddOns);
   };
-
 
   const updateCartItems = (item, quanitity, productId, cartID) => {
     playHapticEffect(hapticEffects.impactLight);
@@ -2386,66 +2424,74 @@ export default function Products({ route, navigation }) {
     return result;
   };
 
-  useEffect(() => {
-    // console.log(ProductTags, 'ProductTags');
-    let EnabledTags = ProductTags.filter((el) => el.isSelected);
-    console.log(EnabledTags, 'EnabledTags');
-    if (EnabledTags.length > 0) {
-      console.log(sectionListData, 'sectionListData>>>>BEFORE');
-      const newArr = sectionListData.map((el) => {
-        const records =
-          el.data &&
-          el.data.filter((item) => {
-            if (
-              item.tags.length > 0 &&
-              checkIfItemExist(item.tags[0], EnabledTags)
-            )
-              return item;
-          });
-        const newObj = {
-          ...el,
-        };
-        newObj.data = records;
-        return newObj;
-      });
+  // useEffect(() => {
+  //   // console.log(ProductTags, 'ProductTags');
+  //   let EnabledTags = ProductTags.filter((el) => el.isSelected);
+  //   console.log(EnabledTags, 'EnabledTags');
+  //   if (EnabledTags.length > 0) {
+  //     console.log(sectionListData, 'sectionListData>>>>BEFORE');
+  //     const newArr = sectionListData.map((el) => {
+  //       const records =
+  //         el.data &&
+  //         el.data.filter((item) => {
+  //           if (
+  //             item.tags.length > 0 &&
+  //             checkIfItemExist(item.tags[0], EnabledTags)
+  //           )
+  //             return item;
+  //         });
+  //       const newObj = {
+  //         ...el,
+  //       };
+  //       newObj.data = records;
+  //       return newObj;
+  //     });
 
-      console.log(newArr, 'sectionListData>>>>AFTER');
-      setCloneSectionList(newArr);
-    } else {
-      // getAllProductsByVendor();
-    }
-  }, [ProductTags]);
+  //     console.log(newArr, 'sectionListData>>>>AFTER');
+  //     setCloneSectionList(newArr);
+  //   } else {
+  //     // getAllProductsByVendor();
+  //   }
+  // }, [ProductTags]);
 
   useEffect(() => {
     let EnabledTags = ProductTags.filter((el) => el.isSelected);
     if (EnabledTags.length > 0) {
       setApiHitAgain(true);
-      const newArr = sectionListData.map((el) => {
-        const records =
-          el.data &&
-          el.data.filter((item) => {
-            if (
-              item.tags.length > 0 &&
-              checkIfItemExist(item.tags[0], EnabledTags)
-            )
-              return item;
-          });
-        const newObj = {
-          ...el,
-        };
-        newObj.data = records;
-        return newObj;
-      });
-      updateState({ cloneSectionList: newArr });
+      // appendData(null,1)
+      newVendorFilter(1, true)
+      // const newArr = sectionListData
+      //   .map((el) => {
+      //     const records =
+      //       el.data &&
+      //       el.data.filter((item) => {
+      //         if (
+      //           item.tags.length > 0 &&
+      //           checkIfItemExist(item.tags[0], EnabledTags)
+      //         )
+      //           return item;
+      //       });
+      //     const newObj = {
+      //       ...el,
+      //     };
+      //     if (records && records.length) {
+      //       newObj.data = records;
+      //       return newObj;
+      //     } else {
+      //       return null;
+      //     }
+      //   })
+      //   .filter((x) => x != null);
+      // setCloneSectionList(newArr);
     } else {
-      updateState({ cloneSectionList: sectionListData });
+      setCloneSectionList(sectionListData);
       if (apiHitAgain) {
         setApiHitAgain(false);
-        setLoading(true)
+        setLoading(true);
         getAllProductsByVendor();
       }
     }
-  }, [updateTagFilter]);
+  }, [updateTagFilter, ProductTags]);
 
   const onPressChildCards = (item) => {
     console.log(item, 'item upload');
@@ -2491,12 +2537,13 @@ export default function Products({ route, navigation }) {
     data['vendor_id'] = productListId?.id;
     // data['cart_id'] = vendorInfo.cartId;
     // console.log(data, 'vendor_id');
-    actions.getAllPromoCodesForProductList(data, {
-      code: appData?.profile?.code,
-      currency: currencies?.primary_currency?.id,
-      language: languages?.primary_language?.id,
-      systemuser: DeviceInfo.getUniqueId(),
-    })
+    actions
+      .getAllPromoCodesForProductList(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
       .then((res) => {
         // console.log('res >>>>>>> offers >>>', res);
         if (res && res.data) {
@@ -2546,6 +2593,7 @@ export default function Products({ route, navigation }) {
             }}
           />
           {cloneSectionList.map((el, index) => {
+            console.log("cloneSectionList>>>el", el);
             return (
               <TouchableOpacity
                 key={index}
@@ -2561,7 +2609,7 @@ export default function Products({ route, navigation }) {
                         ? fontFamily.medium
                         : fontFamily.regular,
                   }}>
-                  {el.title}
+                  {el?.translation[0]?.name}
                 </Text>
                 <Text
                   style={{
@@ -2687,7 +2735,6 @@ export default function Products({ route, navigation }) {
       </View>
     );
   };
-
 
   if (isLoading) {
     return (
@@ -2945,7 +2992,6 @@ export default function Products({ route, navigation }) {
     });
   };
 
-
   const onScroll = (props) => {
     const { nativeEvent } = props;
     if (
@@ -2992,7 +3038,6 @@ export default function Products({ route, navigation }) {
     (!!categoryInfo?.translation &&
       categoryInfo?.translation[0]?.meta_description);
 
-
   const backgroundComponent = () => {
     return (
       <TouchableOpacity
@@ -3003,7 +3048,106 @@ export default function Products({ route, navigation }) {
     );
   };
 
-  console.log("productListDataproductListData", productListData)
+  console.log('productListDataproductListData', productListData);
+
+  const appendData = async (section) => {
+    console.log('section', section);
+
+    console.log('currentPagecurrentPage', currentPage);
+    try {
+      let vendorId = !!data?.vendorData
+        ? data?.vendorData.id
+        : productListId.id;
+      let currPage =
+        section?.id == currentPage?.id
+          ? `&page=${currentPage.current_page + 1}`
+          : `&page=2`;
+
+      let apiData = `/${vendorId}?category_id=${section?.id}` + currPage;
+
+      let data = {};
+      data['variants'] = selectedFilters?.current?.selectedVariants || [];
+      data['options'] = selectedFilters?.current?.selectedOptions || [];
+      data['brands'] = selectedFilters?.current?.sleectdBrands || [];
+      data['order_type'] = selectedFilters?.current?.selectedSorting || 0;
+      data['range'] = `${minimumPrice};${maximumPrice}`;
+      data['vendor_id'] = productListId.id;
+
+      data['tag_products'] =
+        ProductTags && ProductTags?.length
+          ? ProductTags.map((i) => {
+            return i?.isSelected ? i?.id : null;
+          }).filter((x) => x != null)
+          : [];
+      console.log(data, '>data>data');
+      console.log(ProductTags, 'ProductTags?ProductTags');
+      let headers = {
+        code: appData.profile.code,
+        currency: currencies.primary_currency.id,
+        language: languages.primary_language.id,
+        latitude: appMainData?.reqData?.latitude,
+        longitude: appMainData?.reqData?.longitude,
+        systemuser: DeviceInfo.getUniqueId(),
+      };
+      console.log('sending header', headers);
+      const res = await actions.getMoreCategories(apiData, data, headers);
+      console.log('get more cat res', res.data.products);
+      // console.log("res++++", res)
+      let cloneArry = cloneSectionList[section.index];
+      console.log('append clonearry', cloneArry.data);
+      let arry = [...cloneArry?.data, ...res?.data.products.data];
+      console.log('append item', arry);
+      let dummyData = cloneSectionList;
+      dummyData[section.index].data = arry;
+      console.log('append last data', dummyData);
+
+      updateState({
+        cloneSectionList: dummyData,
+      });
+      setCurrentPage({
+        ...section,
+        current_page:
+          section?.id == currentPage?.id ? currentPage.current_page + 1 : 2,
+        total: res?.data?.products?.total,
+      });
+    } catch (error) {
+      console.log('error riased', error);
+      showError(error?.message);
+    }
+  };
+
+  const renderSectionFooter = (props) => {
+    const { section } = props;
+    return (
+      section?.data.length !== section?.data_count ? <View>
+        <TouchableOpacity
+          onPress={() => appendData(section)}
+          style={{
+            // alignSelf: 'center',
+            padding: 7,
+            borderRadius: 5,
+            marginHorizontal: moderateScale(20),
+            borderWidth: 1,
+            borderColor: themeColors?.primary_color,
+            // backgroundColor: colors?.greyColor3,
+            justifyContent: 'center',
+          }}>
+          {section?.data.length !== section?.data_count ? (
+            <Text
+              style={{
+                textAlign: 'center',
+                color: themeColors?.primary_color,
+                fontSize: textScale(12),
+                fontFamily: fontFamily?.medium,
+              }}>
+              View More
+            </Text>
+          ) : null}
+        </TouchableOpacity>
+      </View>
+        : null
+    );
+  };
 
   return (
     <View
@@ -3164,21 +3308,21 @@ export default function Products({ route, navigation }) {
             // ItemSeparatorComponent={() => <View style={styles.separator} />}
             renderTab={renderSectionTab}
             renderItem={renderSectionItem}
-            ListFooterComponent={() => (
-              <View style={{ height: moderateScale(80) }} />
-            )}
+            // ListFooterComponent={() => (
+            //   <View style={{height: moderateScale(80)}} />
+            // )}
             renderSectionHeader={renderSectionHeader}
             ListEmptyComponent={listEmptyComponent}
             onScrollToIndexFailed={(val) => console.log('indexed failed')}
             extraData={cloneSectionList}
             getItemLayout={getItemLayout}
             // Performance settings
-            removeClippedSubviews={true} // Unmount components when outside of window 
-            initialNumToRender={2} // Reduce initial render amount
+            removeClippedSubviews={true} // Unmount components when outside of window
+            initialNumToRender={10} // Reduce initial render amount
             maxToRenderPerBatch={1} // Redu ce number in each render batch
             updateCellsBatchingPeriod={100} // Increase time between renders
             windowSize={7} // Reduce the window size
-
+            renderSectionFooter={renderSectionFooter}
           />
         ) : (
           <FlatList

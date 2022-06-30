@@ -1,3 +1,4 @@
+import {string} from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import {
   Animated,
@@ -247,7 +248,7 @@ const ProductCard3 = ({
       onIncrement();
     }
   };
-
+  console.log();
   const onDecrementQty = () => {
     setAdd(false);
     if (
@@ -377,7 +378,7 @@ const ProductCard3 = ({
             style={{
               paddingTop: moderateScale(5),
               paddingBottom: moderateScale(5),
-              flexDirection:'row'
+              flexDirection: 'row',
             }}>
             <Text
               numberOfLines={1}
@@ -391,33 +392,33 @@ const ProductCard3 = ({
                 currencies?.primary_currency?.symbol
               } ${currencyNumberFormatter(
                 // Number(data?.variant_multiplier) *
-                  Number(data?.variant[0]?.price),
+                Number(data?.variant[0]?.price),
                 appData?.profile?.preferences?.digit_after_decimal,
               )}`}
             </Text>
-            {  ( data?.variant[0]?.compare_at_price >data?.variant[0]?.price) &&
-              
+            {Number(data?.variant[0]?.compare_at_price) >
+              Number(data?.variant[0]?.price) && (
               <Text
-              numberOfLines={1}
-              style={{
-                ...commonStyles.mediumFont14,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.redB,
-                fontSize: textScale(12),
-                fontFamily: fontFamily.regular,
-                textDecorationLine:'line-through',
-                marginHorizontal:moderateScale(8)
-
-              }}>
-              {`${
-                currencies?.primary_currency?.symbol
-              } ${currencyNumberFormatter(
-                // Number(data?.variant_multiplier) *
+                numberOfLines={1}
+                style={{
+                  ...commonStyles.mediumFont14,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.redB,
+                  fontSize: textScale(12),
+                  fontFamily: fontFamily.regular,
+                  textDecorationLine: 'line-through',
+                  marginHorizontal: moderateScale(8),
+                }}>
+                {`${
+                  currencies?.primary_currency?.symbol
+                } ${currencyNumberFormatter(
+                  // Number(data?.variant_multiplier) *
                   Number(data?.variant[0]?.compare_at_price),
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}`}
-            </Text>}
+                  appData?.profile?.preferences?.digit_after_decimal,
+                )}`}
+              </Text>
+            )}
           </View>
-          <View style={{}}>
+          {!!data?.translation_description || !!data?.translation[0]?.translation_description ? <View style={{}}>
             <Text
               numberOfLines={3}
               style={{
@@ -429,10 +430,10 @@ const ProductCard3 = ({
                   : colors.blackOpacity66,
                 textAlign: 'left',
               }}>
-              {data?.translation[0]?.translation_description ||
-                data?.translation_description}
+              {!!data?.translation_description ? data?.translation_description.toString() :
+              !!data?.translation[0]?.translation_description ? data?.translation[0]?.translation_description: ''}
             </Text>
-          </View>
+          </View>:null}
         </View>
         <View
           style={{

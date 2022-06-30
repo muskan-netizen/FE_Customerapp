@@ -61,6 +61,7 @@ DeviceCountry.getCountryCode()
 
 let addtionSelectedImageIndex = null;
 
+// alert("SignUp")
 let addtionSelectedImage = null;
 
 export default function Signup({navigation}) {
@@ -166,6 +167,7 @@ export default function Signup({navigation}) {
         },
       )
       .then((res) => {
+        console.log(res,"userRegistrationDocumentres");
         updateState({
           addtionalTextInputs: res?.data.filter((x) => x?.file_type == 'Text'),
           addtionalImages: res?.data.filter((x) => x?.file_type == 'Image'),

@@ -1,9 +1,9 @@
-#include "Pods/Target Support Files/Pods-VendorSpot/Pods-VendorSpot.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-vendorSpot/Pods-available_pods-vendorSpot.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1603405634
 PROJECT_BUNDLE_ID = com.vendorspot
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 1
+PROJECT_BUILD_NUMBER = 3
 PROJECT_APP_NAME = VendorSpot
 PROJECT_GOOGLE_CLIENT_ID = 964402586633-9ms91i4t990rd4m8lns8hmj2sbi29c6l.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.964402586633-9ms91i4t990rd4m8lns8hmj2sbi29c6l

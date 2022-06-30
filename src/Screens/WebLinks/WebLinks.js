@@ -48,7 +48,7 @@ import { androidCameraPermission } from '../../utils/permissions';
 import validator from '../../utils/validations';
 import stylesFun from './styles';
 import Accordion from 'react-native-collapsible/Accordion';
-import { WebView } from 'react-native-webview';
+import {WebView} from 'react-native-webview';
 
 let clickedIndx = null;
 let clickedItem = null;
@@ -636,6 +636,9 @@ export default function WebLinks({ navigation, route }) {
             color: colors.blackOpacity43,
             fontFamily: fontFamily.bold,
             fontSize: textScale(13),
+            color: isDarkMode
+              ? MyDarkTheme.colors.text
+              : colors.borderLight,
           }}>
           {item.primary?.name || item?.name}
           {item?.is_required ? '*' : ''}
@@ -664,7 +667,11 @@ export default function WebLinks({ navigation, route }) {
                   {strings.CHOOSE_FILE}
                 </Text>
               </TouchableOpacity>
-              <Text style={{ fontFamily: fontFamily.regular, marginLeft: 6 }}>
+              <Text style={{
+                fontFamily: fontFamily.regular, marginLeft: 6, color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.borderLight,
+              }}>
                 {driverRegDocs?.page_detail?.primary?.type_of_form == 2
                   ? driverRegistrationDocs[index]?.fileData
                     ? driverRegistrationDocs[index]?.fileData?.name
@@ -841,7 +848,9 @@ export default function WebLinks({ navigation, route }) {
     return (
       <View
         style={{
-          backgroundColor: colors.white,
+          backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.lightDark
+          : colors.backGroundGrey,
           height: moderateScaleVertical(50),
           justifyContent: 'center',
           borderLeftWidth: 4,
@@ -849,6 +858,9 @@ export default function WebLinks({ navigation, route }) {
         }}>
         <Text
           style={{
+            color: isDarkMode
+            ? MyDarkTheme.colors.text
+            : colors.blackC,
             marginLeft: moderateScale(15),
             fontFamily: fontFamily.bold,
             fontSize: textScale(13),
@@ -863,12 +875,17 @@ export default function WebLinks({ navigation, route }) {
     return (
       <View
         style={{
-          backgroundColor: colors.white,
+          backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.lightDark
+          : colors.backGroundGreyD,
           paddingHorizontal: moderateScale(20),
           paddingBottom: moderateScaleVertical(15),
         }}>
         <Text
           style={{
+            color: isDarkMode
+            ? MyDarkTheme.colors.text
+            : colors.blackC,
             fontFamily: fontFamily.regular,
             fontSize: textScale(11),
           }}>
@@ -904,7 +921,12 @@ export default function WebLinks({ navigation, route }) {
               : { backgroundColor: colors.backGroundGreyD }
           }
         />
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView style={{
+          backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.background
+          : colors.backGroundGreyD,
+        }} showsVerticalScrollIndicator={false}
+        >
           <Accordion
             sections={driverRegDocs?.faq_data}
             activeSections={activeSections}
@@ -939,7 +961,7 @@ export default function WebLinks({ navigation, route }) {
     }
   };
 
-  console.log(htmlContent, "htmlContenthtmlContent");
+  console.log(htmlContent, 'htmlContenthtmlContent');
 
   return (
     <WrapperContainer
@@ -978,17 +1000,19 @@ export default function WebLinks({ navigation, route }) {
             marginHorizontal: moderateScale(20),
           }}>
           {htmlContent && (
-            //    <RenderHtml
-            //    contentWidth={width}
-            //    source={{html: htmlContent}}
-            //  />
-            <HTMLView
-              stylesheet={isDarkMode ? htmlStyle : htmlStyle1}
-              value={`<p>${htmlContent}</p>`}
-
+            <RenderHtml
+              contentWidth={width}
+              source={{ html: htmlContent }}
+              tagsStyles={{
+                p: {
+                  color: isDarkMode ? colors.white : colors.black
+                }
+              }}
             />
-            
-       
+            // <HTMLView
+            //   stylesheet={isDarkMode ? htmlStyle : null}
+            //   value={`<p>${htmlContent}</p>`}
+            // />
           )}
         </View>
 
@@ -1020,7 +1044,6 @@ export default function WebLinks({ navigation, route }) {
               placeholder={`${strings.YOUR_PHONE_NUMBER}*`}
               keyboardType={'phone-pad'}
               containerStyle={styles.containerStyle}
-
             />
 
             <BorderTextInput
@@ -1317,7 +1340,7 @@ export default function WebLinks({ navigation, route }) {
                     fontFamily: fontFamily.regular,
                     color: colors.blueColor,
                   }}>
-                  {strings.TERMS_CONDITIONS}
+                  {/* {strings.TERMS_CONDITIONS} */}
                 </Text>
               </TouchableOpacity>
               <Text style={{ fontFamily: fontFamily.regular, color: isDarkMode ? colors.white : colors.black }}>
@@ -1338,6 +1361,11 @@ export default function WebLinks({ navigation, route }) {
             </View>
 
             <GradientButton
+              textStyle={{
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.borderLight
+              }}
               onPress={_onSubmit}
               marginTop={moderateScaleVertical(5)}
               btnText={strings.SUBMIT}
@@ -1614,6 +1642,9 @@ export default function WebLinks({ navigation, route }) {
                     </View>
                   )}
                   <TextInput
+                    placeholderTextColor={isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.borderLight}
                     placeholder={strings.TAGS}
                     onFocus={() => updateState({ isTagsShow: true })}
                     onBlur={() => updateState({ isTagsShow: false })}
@@ -1621,7 +1652,7 @@ export default function WebLinks({ navigation, route }) {
                     style={{
                       opacity: 0.7,
                       color: isDarkMode
-                        ? MyDarkTheme.white
+                        ? MyDarkTheme.colors.text
                         : colors.textGreyOpcaity7,
                       fontFamily: fontFamily.medium,
                       fontSize: textScale(14),
@@ -1706,7 +1737,6 @@ export default function WebLinks({ navigation, route }) {
               placeholder={strings.EXAMPLE_TEXT}
               onChangeText={_onChangeText('driverTransportDetails')}
               containerStyle={styles.containerStyle}
-
             />
             <Text style={styles.labelTxt}>{strings.UID}</Text>
 
@@ -1732,7 +1762,9 @@ export default function WebLinks({ navigation, route }) {
             {!!driverRegDocs && (
               <Text
                 style={{
-                  color: colors.blackOpacity43,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.borderLight,
                   fontFamily: fontFamily.bold,
                   fontSize: textScale(13),
                   marginVertical: moderateScaleVertical(5),
@@ -1755,6 +1787,11 @@ export default function WebLinks({ navigation, route }) {
             />
 
             <GradientButton
+              textStyle={{
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.borderLight
+              }}
               onPress={_onSubmit}
               marginTop={moderateScaleVertical(10)}
               btnText={strings.SUBMIT}
@@ -1783,15 +1820,12 @@ const htmlStyle = StyleSheet.create({
   p: {
     color: '#e5e5e7', // make links coloured pink
     justifyContent: 'center',
-
   },
 });
-
 
 const htmlStyle1 = StyleSheet.create({
   p: {
     color: colors.black, // make links coloured pink
-   alignItems:'flex-start',
-   
+    alignItems: 'flex-start',
   },
 });

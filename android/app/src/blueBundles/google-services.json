@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "413991880597",
+    "project_id": "bluebundles-order",
+    "storage_bucket": "bluebundles-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413991880597:android:2f947ed811ef880688989c",
+        "android_client_info": {
+          "package_name": "com.bluebundles.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "413991880597-bad9oib9pd30c3qd11gf0ra2iuoohqhs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bluebundles.customer",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "413991880597-c9t1fmthos2f7u17dkclel8tlclt484c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bluebundles.customer",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "413991880597-f44ecbt5eiokksk50um5t6kq2c80kon3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bluebundles.customer",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "413991880597-ksijto1nrtvk9pc30n99lj6bi2tc1tnk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAtt5m8RbV3Cyc8VXq4eweCChPmNwiyGs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "413991880597-ksijto1nrtvk9pc30n99lj6bi2tc1tnk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "413991880597-0f62mr0uno4tarlmavddlokv8uabqi30.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bluebundles.customer"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

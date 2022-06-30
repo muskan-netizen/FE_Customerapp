@@ -777,7 +777,9 @@ const AddressModal3 = ({
                       fontSize: textScale(11),
                       fontFamily: fontFamily.regular,
                       marginLeft: moderateScale(4),
-                      // color: colors.redB
+                      color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.borderLight,
                     }}>
                     {strings.SELECT_VIA_MAP}
                   </Text>
@@ -841,7 +843,7 @@ const AddressModal3 = ({
                     fontSize: textScale(12),
                     fontFamily: fontFamily.regular,
                     marginLeft: moderateScale(8),
-                    color: isDarkMode? MyDarkTheme.colors.text: colors.blackOpacity66,
+                    color: colors.blackOpacity66,
                     marginTop: moderateScaleVertical(4),
                   }}>
                   {constCurrLoc?.address}
@@ -1158,7 +1160,9 @@ const AddressModal3 = ({
                 themeColors.primary_color,
                 themeColors.primary_color,
               ]}
-              textStyle={styles.textStyle}
+              textStyle={{color: isDarkMode
+                ? MyDarkTheme.colors.text
+                : colors.borderLight, }}
               onPress={saveAddress}
               marginTop={moderateScaleVertical(10)}
               // marginBottom={moderateScaleVertical(10)}
