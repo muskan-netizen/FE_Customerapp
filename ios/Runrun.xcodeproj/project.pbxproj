@@ -2357,7 +2357,6 @@
 		8420E03127FFF4D300B2221B /* Meltivers(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8420E03027FFF4D300B2221B /* Meltivers(Development).xcconfig */; };
 		8420E15027FFF76800B2221B /* Meltivers(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8420E14F27FFF76800B2221B /* Meltivers(Production).xcconfig */; };
 		8420E26F27FFF79800B2221B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8420E26E27FFF79700B2221B /* Images.xcassets */; };
-		8420E38E27FFFC2600B2221B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8420E38D27FFFC2400B2221B /* GoogleService-Info.plist */; };
 		8420EBE12800047300B2221B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		8420EBE22800047300B2221B /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8420EBE32800047300B2221B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -9989,6 +9988,7 @@
 		F436EBB92844856900248C96 /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
 		F436EBBB2844856900248C96 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		F436EBBC2844856900248C96 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		F43746162869CC3600BB1A79 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F43746152869CC3400BB1A79 /* GoogleService-Info.plist */; };
 		F437746A285874510048A970 /* Torunz(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F4377469285874500048A970 /* Torunz(Development).xcconfig */; };
 		F437746C285874A60048A970 /* Torunz(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F437746B285874A60048A970 /* Torunz(Production).xcconfig */; };
 		F437746E285874D60048A970 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F437746D285874D30048A970 /* GoogleService-Info.plist */; };
@@ -11375,7 +11375,6 @@
 		8420E03027FFF4D300B2221B /* Meltivers(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Meltivers(Development).xcconfig"; sourceTree = "<group>"; };
 		8420E14F27FFF76800B2221B /* Meltivers(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Meltivers(Production).xcconfig"; sourceTree = "<group>"; };
 		8420E26E27FFF79700B2221B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		8420E38D27FFFC2400B2221B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8420E80327FFFFDB00B2221B /* Meltivers.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Meltivers.entitlements; sourceTree = "<group>"; };
 		8420EC092800047300B2221B /* EnsoDigitalAgency.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnsoDigitalAgency.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8420F1A2280005AB00B2221B /* EnsoDigitalAgency(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "EnsoDigitalAgency(Development).xcconfig"; sourceTree = "<group>"; };
@@ -13385,6 +13384,7 @@
 		F42F170C284DE1F90040F10F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "VendorSpot/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F43085E0285B620F0060A49A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F436EBC42844856900248C96 /* LunchboxSpecials.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LunchboxSpecials.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F43746152869CC3400BB1A79 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4377469285874500048A970 /* Torunz(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Torunz(Development).xcconfig"; sourceTree = "<group>"; };
 		F437746B285874A60048A970 /* Torunz(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Torunz(Production).xcconfig"; sourceTree = "<group>"; };
 		F437746D285874D30048A970 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -18935,7 +18935,7 @@
 		8420DDF527FFF40200B2221B /* Meltivers */ = {
 			isa = PBXGroup;
 			children = (
-				8420E38D27FFFC2400B2221B /* GoogleService-Info.plist */,
+				F43746152869CC3400BB1A79 /* GoogleService-Info.plist */,
 				8420E03027FFF4D300B2221B /* Meltivers(Development).xcconfig */,
 				8420E14F27FFF76800B2221B /* Meltivers(Production).xcconfig */,
 				8420E26E27FFF79700B2221B /* Images.xcassets */,
@@ -30615,8 +30615,8 @@
 						ProvisioningStyle = Automatic;
 					};
 					8420DA7127FFF33100B2221B = {
-						DevelopmentTeam = 6FXUMT5X23;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = B6KTBH57UC;
+						ProvisioningStyle = Manual;
 					};
 					8420EBDD2800047300B2221B = {
 						DevelopmentTeam = 6FXUMT5X23;
@@ -34604,7 +34604,7 @@
 				8420DA8327FFF33100B2221B /* SFProText-SemiBold.ttf in Resources */,
 				8420DA8427FFF33100B2221B /* SFProText-Medium.ttf in Resources */,
 				8420DA8627FFF33100B2221B /* notification.wav in Resources */,
-				8420E38E27FFFC2600B2221B /* GoogleService-Info.plist in Resources */,
+				F43746162869CC3600BB1A79 /* GoogleService-Info.plist in Resources */,
 				8420DA8927FFF33100B2221B /* Plists in Resources */,
 				8420DA8A27FFF33100B2221B /* Futura-Normal.ttf in Resources */,
 				8420DA8B27FFF33100B2221B /* Eina02-Bold.ttf in Resources */,
@@ -75129,7 +75129,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-RoyoOrder/Pods-available_pods-RoyoOrder-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Meltivers/Pods-available_pods-Meltivers-frameworks.sh\"\n";
 		};
 		8420EBDF2800047300B2221B /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -79509,7 +79509,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-RoyoOrder/Pods-available_pods-RoyoOrder-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-MrHealth/Pods-available_pods-MrHealth-frameworks.sh\"\n";
 		};
 		84801A3927C9FAE2004130DD /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -121134,10 +121134,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Meltivers.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = B6KTBH57UC;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
@@ -121154,7 +121154,7 @@
 				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = Meltiverse;
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -121172,7 +121172,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = B6KTBH57UC;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -121188,7 +121188,7 @@
 				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = Meltivers;
+				PROVISIONING_PROFILE_SPECIFIER = Meltiverse;
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

@@ -1095,7 +1095,7 @@ const appIds = {
   }),
   bimol: Platform.select({
     ios: 'com.bimol',
-    android: 'com.bimol',
+    android: 'com.bimol.user',
   }),
   vendorspot: Platform.select({
     ios: 'com.vendorspot',
@@ -1487,8 +1487,8 @@ const appIds = {
     android: 'com.mediPick',
   }),
   meltivers: Platform.select({
-    ios: 'com.meltivers',
-    android: 'com.meltivers',
+    ios: 'com.meltiverse.user',
+    android: 'com.meltiverse.user',
   }),
   ensoDigitalAgency: Platform.select({
     ios: 'com.ensoDigitalAgency',
