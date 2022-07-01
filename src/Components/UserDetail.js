@@ -48,7 +48,7 @@ const UserDetail = ({
 
 
 
-  console.log(data?.vendor?.phone_no, "data?.vendor?.phone_no>")
+  console.log(data, "data?.vendor?.phone_no>")
 
   const dialCall = (number, type = 'phone') => {
     type === 'phone'
