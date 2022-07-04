@@ -27,12 +27,13 @@ import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
 import Share from 'react-native-share';
 import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
+import { showError } from '../../utils/helperFunctions';
 
 export default function Account({navigation}) {
   const [state, setState] = useState({
     isLoading: false,
   });
-  const {shortCodeStatus, themeColors, appStyle, appData} = useSelector(
+  const {shortCodeStatus, themeColors, appStyle, appData, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -102,6 +103,44 @@ export default function Account({navigation}) {
     }
   };
   const _scrollRef = useRef();
+
+  const onDeleteAccount = () => {
+    if (!!userData?.auth_token) {
+      Alert.alert(strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, '', [
+        {
+          text: strings.CANCEL,
+          onPress: () => console.log('Cancel Pressed'),
+          // style: 'destructive',
+        },
+        {
+          text: strings.CONFIRM,
+          onPress: deleleUserAccount,
+        },
+      ]);
+    } else {
+      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+    }
+  }
+  const deleleUserAccount = async() => {
+    try {
+      const res = await actions.deleteAccount(
+      {},
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      console.log("delete user account res",res)
+      actions.userLogout();
+      actions.cartItemQty('');
+      actions.saveAddress('');
+      actions.addSearchResults('clear');
+      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+    } catch (error) {
+      console.log('erro raised',error)
+      showError(error?.message)
+    }
+  }
 
   return (
     <WrapperContainer
@@ -392,6 +431,23 @@ export default function Account({navigation}) {
               }
               iconRight={imagePath.goRight}
               rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
+
+{!!userData?.auth_token && (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={onDeleteAccount}
+              iconLeft={imagePath.user}
+              centerHeading={strings.DELETE_ACCOUNT}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
 

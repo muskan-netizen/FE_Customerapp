@@ -348,6 +348,10 @@ const shortCodes = {
   spa: '9022c6',
   capitalDiagnostic: 'fd6dd6',
   abbeRides: '8501b6',
+  nrsa:'e9f97c',
+  sadia:'312528',
+  elentaMart:'e084cc',
+  exprexPro :'cb98e8',
 
 };
 
@@ -1142,8 +1146,8 @@ const appIds = {
     android: 'com.mozmarcas',
   }),
   myfiji: Platform.select({
-    ios: 'com.myfiji',
-    android: 'com.myfiji',
+    ios: 'com.fijieats.user',
+    android: 'com.fijieats.customer',
   }),
   fastmikes: Platform.select({
     ios: 'com.fastmikes.customer',
@@ -1736,6 +1740,22 @@ const appIds = {
   abbeRides: Platform.select({
     ios: 'com.abbeRides',
     android: 'com.abbeRides',
+  }),
+  nrsa: Platform.select({
+    ios: 'com.nrsa',
+    android: 'com.nrsa',
+  }),
+  sadia: Platform.select({
+    ios: 'com.Sadia',
+    android: 'com.Sadia',
+  }),
+  elentaMart: Platform.select({
+    ios: 'com.ElentaMart',
+    android: 'com.ElentaMart',
+  }),
+  exprexPro: Platform.select({
+    ios: 'com.exprexPro',
+    android: 'com.exprexPro',
   }),
 
 };

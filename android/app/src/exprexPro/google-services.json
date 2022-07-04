@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "84390585648",
+    "project_id": "exprexpro-12dde",
+    "storage_bucket": "exprexpro-12dde.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:84390585648:android:e0c3fe9da3d7d03b0f94f5",
+        "android_client_info": {
+          "package_name": "com.exprexPro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "84390585648-d7v8gqlrda8rp33l6e2vg02sefv2tilf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.exprexPro",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "84390585648-rn70v9m1vd89p8ufeucvkv2k175k0a40.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.exprexPro",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "84390585648-t9uv3qq7oice22d24bdcnk4bjppjkhma.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.exprexPro",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "84390585648-vnas1pdj90cndlqddfue87iu6lg84eo5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUZB7iyT1g12YVWyVX7LPIl_iZQANBD2Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "84390585648-vnas1pdj90cndlqddfue87iu6lg84eo5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "84390585648-vlv7hr5btv38fe965p9pe7ckq6a4as51.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.exprexPro"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -273,7 +273,7 @@ export default function Subscriptions({navigation, route}) {
   };
 
   const _onChangeStripeData = (cardDetails) => {
-    console.log(_onChangeStripeData, '_onChangeStripeData>');
+    console.log(cardDetails, '_onChangeStripeData>');
     if (cardDetails?.complete) {
       updateState({
         cardInfo: cardDetails,
