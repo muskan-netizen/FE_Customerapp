@@ -34,7 +34,7 @@ export default function AllinonePyments({navigation, route}) {
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
     console.log(props, 'returnURL');
-    console.log('query params', queryParams);
+    console.log('query params', URL);
     let transId = '';
     if (url.includes('payment/checkoutSuccess')) {
       //in case of paypal
@@ -80,6 +80,7 @@ export default function AllinonePyments({navigation, route}) {
           }
         }
         if (paramsData.action == 'wallet') {
+         
           moveToNewScreen(paramsData?.screenName)();
         }
       } else if (queryParams?.status == 0) {

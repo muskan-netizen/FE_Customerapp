@@ -140,5 +140,7 @@ export default {
   STRIPEOXXO:'StripeOXXO',
   VIVAWALLET:"Vivawallet",
   MYCASH:"MyCash",
-  STRIPEIDEAL:"StripeIdeal"
+  STRIPEIDEAL:"StripeIdeal",
+  OPENPAY:"openpay",
+  USEREDE:'userede'
 };

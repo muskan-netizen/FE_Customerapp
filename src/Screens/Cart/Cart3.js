@@ -999,7 +999,14 @@ function Cart({navigation, route}) {
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.VIVAWALLET, paymentData);
         break;
-
+      case 41: //OPENPAY Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.OPENPAY,paymentData);
+        break;
+      case 40: //USEREDE Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.USEREDE,paymentData);
+        break;
       default:
         if (
           !!businessType &&
@@ -1187,7 +1194,8 @@ function Cart({navigation, route}) {
           selectedPayment?.id != 21 &&
           selectedPayment?.id != 36 &&
           selectedPayment?.id != 39 &&
-          selectedPayment?.id != 34
+          selectedPayment?.id != 34 &&
+          selectedPayment?.id != 41
         ) {
           setCartItems([]);
           setCartData({});
