@@ -392,7 +392,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
     let paymentData = {
       total_payable_amount: (
-        Number(extraData?.orderDetail?.payable_amount)
+        Number(extraData?.orderDetail?.payable_amount?extraData?.orderDetail?.payable_amount:extraData?.orderDetail?.total_amount)
       ).toFixed(appData?.profile?.preferences?.digit_after_decimal),
       payment_option_id: selectedPayment?.id,
       orderDetail: extraData?.orderDetail,
@@ -415,8 +415,10 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       case 6: //Payfast Payment Getway
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
         break;
+        case 32: //Payfast Payment Getway
+        navigation.navigate(navigationStrings.PAYPHONE, paymentData);
+        break;
       default:
-
         navigation.navigate(
           navigationStrings.PICKUPTAXIORDERDETAILS,
           extraData,

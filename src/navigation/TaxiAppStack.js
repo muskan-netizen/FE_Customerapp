@@ -10,6 +10,7 @@ import {
   OrderDetail,
   Payfast,
   PaymentOptions,
+  PayPhone,
   PickupTaxiOrderDetail,
   PinAddressOnMap,
   RateOrder,
@@ -79,6 +80,11 @@ export default function (Stack) {
         <Stack.Screen
         name={navigationStrings.PAYFAST}
         component={Payfast}
+        options={{ headerShown: false }}
+      />
+        <Stack.Screen
+        name={navigationStrings.PAYPHONE}
+        component={PayPhone}
         options={{ headerShown: false }}
       />
       <Stack.Screen

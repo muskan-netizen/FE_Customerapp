@@ -980,7 +980,7 @@ function Cart({navigation, route}) {
         navigation.navigate(navigationStrings.WINDCAVE, paymentData);
         break;
 
-      case 32: //Easebuzz Payment Getway
+      case 32: //PAYPHONE Payment Getway
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.PAYPHONE, paymentData);
         break;

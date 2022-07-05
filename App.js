@@ -33,6 +33,8 @@ import types from './src/redux/types';
 import PrinterScreen from './src/Screens/PrinterConnection/PrinterScreen';
 import colors from './src/styles/colors';
 import fontFamily from './src/styles/fontFamily';
+import messaging from '@react-native-firebase/messaging';
+
 
 import {
   moderateScale,
@@ -143,6 +145,8 @@ const App = () => {
       }
     });
   }, []);
+
+
 
   const notificationConfig = () => {
     requestUserPermission();
