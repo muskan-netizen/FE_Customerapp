@@ -93,8 +93,8 @@ export default function Signup({navigation}) {
     cca2:  getPhonesCallingCodeAndCountryData && getPhonesCallingCodeAndCountryData.length ? getPhonesCallingCodeAndCountryData[0].isoCode2:appData?.profile?.country?.code
       ? appData?.profile?.country?.code
       : 'IN',
-    name: '',
-    email: '',
+    name:'',
+    email:  '',
     password: '',
     phoneNumber: '',
     deviceToken: '',
@@ -132,7 +132,7 @@ export default function Signup({navigation}) {
 
   const isValidData = () => {
     const error = validations({
-      name: name,
+   
       email: appData?.profile?.preferences?.verify_email
         ? email
         : 'abc@gmail.com',
@@ -194,13 +194,13 @@ export default function Signup({navigation}) {
       showError(strings.ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE);
       return;
     }
-
-    formdata.append('name', name);
+{!!appData?.profile?.preferences?.concise_signup?
+    formdata.append('name', phoneNumber) : formdata.append('name', name);}
     formdata.append('app_hash_key', appHashKey);
     formdata.append('phone_number', phoneNumber);
     formdata.append('dial_code', callingCode.toString());
     formdata.append('country_code', cca2);
-    formdata.append('email', email);
+    {!!appData?.profile?.preferences?.concise_signup?formdata.append('email', `${phoneNumber}${"@gmail.com"}`):formdata.append('email', email);}
     formdata.append('password', password);
     formdata.append('device_type', Platform.OS);
     formdata.append('device_token', DeviceInfo.getUniqueId());
@@ -550,20 +550,21 @@ export default function Signup({navigation}) {
               marginTop: moderateScaleVertical(50),
               marginHorizontal: moderateScale(24),
             }}>
+            { !appData?.profile?.preferences?.concise_signup &&
             <BorderTextInput
               onChangeText={_onChangeText('name')}
               placeholder={strings.YOUR_NAME}
               value={name}
               returnKeyType={'next'}
-            />
-            <BorderTextInput
+            />}
+           {!appData?.profile?.preferences?.concise_signup&& <BorderTextInput
               // autoCapitalize={'none'}
               onChangeText={_onChangeText('email')}
               placeholder={strings.YOUR_EMAIL}
               value={email}
               keyboardType={'email-address'}
               returnKeyType={'next'}
-            />
+            />}
             <PhoneNumberInput
               onCountryChange={_onCountryChange}
               onChangePhone={(phoneNumber) =>
@@ -594,7 +595,7 @@ export default function Signup({navigation}) {
               rightIconStyle={{}}
               returnKeyType={'next'}
             />
-            <BorderTextInput
+            {!appData?.profile?.preferences?.concise_signup&&<BorderTextInput
               onChangeText={_onChangeText('referralCode')}
               placeholder={
                 appData?.profile?.preferences?.referral_code
@@ -603,7 +604,7 @@ export default function Signup({navigation}) {
               }
               value={referralCode}
               returnKeyType={'next'}
-            />
+            />}
 
             {!isEmpty(addtionalTextInputs) &&
               addtionalTextInputs.map((item, index) => {

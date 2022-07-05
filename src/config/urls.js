@@ -1,15 +1,14 @@
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
-
 // export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1'
-export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 //  export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';//harbans sir
 //sujata
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1';
 
 //Vishwas
-// export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1';
+export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
 // export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
 // export const API_BASE_URL = 'https://pideunfleety.com/api/v1';
 // export const API_BASE_URL = 'https://heybuddy.com.mx/api/v1';
@@ -372,4 +371,5 @@ export const ADD_RIDER = getApiUrl('/pickup-delivery/add-rider');
 
 export const VENDOR_OPTIMIZE_V2 = getApiUrl('/v2/vendor-optimize');
 export const GET_MORE_CATEGORIES = getApiUrl('/v2/vendor-optimize-category');
+export const PICK_UP_LOCATION_SEARCH = getApiUrl('/dropoff-location');
 // export const GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE = getApiUrl('/v2/category/filters',);
