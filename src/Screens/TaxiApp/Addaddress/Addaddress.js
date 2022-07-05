@@ -1054,7 +1054,7 @@ export default function Addaddress({ navigation, route }) {
                   return renderSearchItem(item);
                 })}
               </View>
-            ) : (
+            ) : appData?.profile?.preferences?.is_static_dropoff ?null:(
               <View style={{ marginTop: moderateScaleVertical(16) }}>
                 <View style={{ ...styles.savedAddressView }}>
                   <Image

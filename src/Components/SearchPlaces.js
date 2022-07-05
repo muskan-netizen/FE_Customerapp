@@ -182,7 +182,7 @@ const SearchPlaces = ({
             />
           </TouchableOpacity>
         )}
-        {!!showRightImg ? (
+        {!!showRightImg && !appData?.profile?.preferences?.is_static_dropoff ? (
           <TouchableOpacity onPress={_moveToNextScreen}>
             <Image
               style={{
