@@ -43,6 +43,8 @@ import SelectPaymentModalView from './SelectPaymentModalView';
 import SelectTimeModalView from './SelectTimeModalView';
 import SelectVendorModalView from './SelectVendorModalView';
 import stylesFun from './styles';
+import BottomViewModal from '../../../Components/BottomViewModal';
+import DatePicker from 'react-native-date-picker';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -144,17 +146,19 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     isDatePickerModal: false,
     pickedUpTime: paramData?.datetime?.selectedTime
       ? paramData?.datetime?.selectedTime
-      : moment().format('hh:mm A'),
+      : null,
     selectedDate: moment().format('YYY-MM-DD'),
     pickedUpDate: paramData?.datetime?.slectedDate
       ? paramData?.datetime?.slectedDate
-      : moment().format('YYYY-MM-DD'),
+      :null,
     selectedPayment: {},
     taskInstruction: '',
     productFaqQuestionAnswers: [],
     allSubmittedAnswers: null,
     indicatorLoader: false,
-    defaultDeviceCountryCode: null
+    defaultDeviceCountryCode: null,
+    isScheduleModalVisible: false,
+    scheduleDateTime: {}
   });
   const {
     selectedPayment,
@@ -199,7 +203,9 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     productFaqQuestionAnswers,
     allSubmittedAnswers,
     indicatorLoader,
-    defaultDeviceCountryCode
+    defaultDeviceCountryCode,
+    isScheduleModalVisible,
+    scheduleDateTime
   } = state;
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -263,10 +269,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       console.log(error, "erroror");
     })
   }
-
-  console.log(defaultDeviceCountryCode, "defaultDeviceCountryCodedefaultDeviceCountryCode");
-
-
   useEffect(() => {
     updateState({
       updatedAmount: paramData?.promocodeDetail?.couponInfo?.new_amount,
@@ -392,13 +394,13 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
     let paymentData = {
       total_payable_amount: (
-        Number(extraData?.orderDetail?.payable_amount?extraData?.orderDetail?.payable_amount:extraData?.orderDetail?.total_amount)
+        Number(extraData?.orderDetail?.payable_amount ? extraData?.orderDetail?.payable_amount : extraData?.orderDetail?.total_amount)
       ).toFixed(appData?.profile?.preferences?.digit_after_decimal),
       payment_option_id: selectedPayment?.id,
       orderDetail: extraData?.orderDetail,
       redirectFrom: 'pickup_delivery',
       selectedPayment: selectedPayment,
-      extraData:extraData
+      extraData: extraData
     };
 
     console.log(paymentData, "paymentData>paymentData")
@@ -415,7 +417,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       case 6: //Payfast Payment Getway
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
         break;
-        case 32: //Payfast Payment Getway
+      case 32: //Payfast Payment Getway
         navigation.navigate(navigationStrings.PAYPHONE, paymentData);
         break;
       default:
@@ -481,20 +483,13 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
 
   const _confirmAndPay = () => {
-    console.log(selectedCarOption, 'selectedCarOption');
-    console.log(selectedPayment?.id, 'selectedPayment?.id ');
     let data = {};
-
-    data['task_type'] = pickUpTimeType ? pickUpTimeType : '';
+    data['task_type'] = scheduleDateTime?.selectedDateAndTime ? '' : pickUpTimeType ? pickUpTimeType : '';
     data['schedule_time'] =
-      pickUpTimeType == 'now' ? '' : `${slectedDate} ${selectedTime}`;
+      scheduleDateTime?.selectedDateAndTime ? `${scheduleDateTime?.selectedDateAndTime}` : pickUpTimeType == 'now' ? '' : slectedDate && selectedTime && `${slectedDate} ${selectedTime}`;
     data['recipient_phone'] = '';
     data['recipient_email'] = '';
     data['task_description'] = taskInstruction;
-    // data['amount'] =
-    //   couponInfo && updatedAmount
-    //     ? updatedAmount
-    //     : selectedCarOption?.tags_price;
     data['amount'] = selectedCarOption?.tags_price;
     data['payment_option_id'] = selectedPayment ? selectedPayment?.id : 1;
     data['vendor_id'] = selectedCarOption?.vendor_id;
@@ -512,26 +507,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     data['type'] = paramData?.friendBookingDetails?.bookingType;
     data['friendName'] = `${paramData?.friendBookingDetails?.firstName} ${paramData?.friendBookingDetails?.lastName}`,
     data['friendPhoneNumber'] = paramData?.friendBookingDetails?.bookingType ? paramData?.friendBookingDetails?.mobileNumber?.includes('+') ? paramData?.friendBookingDetails?.mobileNumber : ` ${defaultDeviceCountryCode}${paramData?.friendBookingDetails?.mobileNumber}` : '',
-
-     console.log(JSON.stringify(data), "dataaaaa")
-    // if (!!userData) {
-    //   !!userData?.client_preference?.verify_email &&
-    //   !!userData?.client_preference?.verify_phone
-    //     ? (!!userData?.verify_details?.is_email_verified &&
-    //       !!userData?.verify_details?.is_phone_verified)
-    //       ? selectedPayment.id == 10
-    //         ? renderRazorPay(data)
-    //         : _finalPayment(data)
-    //       : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
-    //           formCart: true,
-    //         })()
-    //     : selectedPayment.id == 10
-    //     ? renderRazorPay(data)
-    //     : _finalPayment(data);
-    // }
-
-
-
+      console.log(data, "dataaaaa")
     if (!!userData) {
       console.log(userData, 'userData');
       if (!!userData) {
@@ -635,57 +611,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     }
   };
 
-  const _selectTimeView = () => {
-    return (
-      <SelectTimeModalView
-        date={date}
-        onPressBack={() =>
-          updateState({ showTimeModal: false, showCarModal: true })
-        }
-        _onDateChange={_onNewDateChange}
-        availAbleTimes={availAbleTimes}
-        selectedAvailableTimeOption={selectedAvailableTimeOption}
-        selectAvailAbleTime={(i) =>
-          updateState({ selectedAvailableTimeOption: i })
-        }
-        _selectTime={_selectTime}
-        navigation={navigation}
-        isTimerPickerModal={isTimerPickerModal}
-        formatedTime={formatedTime}
-        isDatePickerModal={isDatePickerModal}
-        pickedUpTime={pickedUpTime}
-        selectedDate={selectedDate}
-        pickedUpDate={pickedUpDate}
-        _pickerOpen={_pickerOpen}
-        _pickerCancel={_pickerCancel}
-        _onDayPress={_onDayPress}
-        _modalOkPress={_modalOkPress}
-        // date={formatedTime}
-        scheduleDate={slectedDate}
-        scheduleTime={selectedTime}
-      />
-    );
-  };
-
-  //Select Car vendor
-  const _selectVendorModalView = () => {
-    return (
-      <SelectVendorModalView
-        onPressAvailableVendor={(item) =>
-          updateState({ selectedVendorOption: item })
-        }
-        selectedVendorOption={selectedVendorOption}
-        _select={() => {
-          selectedVendorOption
-            ? _getAllCarAndPrices()
-            : showError(strings.PLEASE_SELECT_OPTION);
-        }}
-        // isLoading={isLoading}
-        availableVendors={availableVendors}
-        navigation={navigation}
-      />
-    );
-  };
 
   const onPressAvailableVendor = (item) => {
     updateState({
@@ -928,17 +853,121 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     });
   };
 
-  const _selectPaymentView = () => {
-    console.log(
-      'selectedPaymentselectedPaymentselectedPayment',
-      selectedPayment,
+
+
+  const _onDateChange = (date) => {
+    
+
+   
+      // alert(213);
+      console.log(date, 'date');
+      let time = moment(date).format('HH:mm');
+      let dateSelectd = moment(date).format('YYYY-MM-DD');
+
+      console.log(time, 'time');
+      console.log(dateSelectd, 'dateSelectd');
+      updateState({
+        scheduleDateTime: {
+          selectedDateAndTime: `${dateSelectd} ${time}`,
+          slectedDate: dateSelectd,
+          selectedTime: moment(date).format('HH:mm'),
+          date: date,
+          isScheduleModalVisible:false
+        }
+      });
+    
+
+  };
+
+
+
+  const _ModalMainView = () => {
+    return (
+      <View style={styles.modalContainer}>
+        <View>
+          <View
+            style={{
+              alignItems: 'center',
+              height: height / 3.5,
+            }}>
+            <DatePicker
+              date={scheduleDateTime?.date ? scheduleDateTime?.date : new Date()}
+              locale={
+                languages?.primary_language?.sort_code
+                  ? languages?.primary_language?.sort_code
+                  : 'en'
+              }
+              mode="datetime"
+              textColor={isDarkMode ? colors.black : colors.blackB}
+              minimumDate={new Date()}
+              style={{
+                width: width - 20,
+                height: height / 4.4,
+              }}
+              onDateChange={(value) => _onDateChange(value)}
+            />
+
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginHorizontal: 16,
+                marginBottom: 24,
+              }}>
+              <TouchableOpacity
+                style={styles.scheduleModalBtnStyle}
+                onPress={_modalClose}
+              >
+                <Text
+                  style={{ color: colors.white, fontFamily: fontFamily.regular }}>
+                  {strings.CANCEL}
+                </Text>
+              </TouchableOpacity>
+
+              <View style={{ marginHorizontal: 4 }} />
+              <TouchableOpacity
+                style={styles.scheduleModalBtnStyle}
+                onPress={
+                  _modalClose
+                }>
+                <Text
+                  style={{ color: colors.white, fontFamily: fontFamily.regular }}>
+                  {strings.SET}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </View>
     );
+  };
+
+
+
+  const _modalClose = () => {
+    updateState({
+      isScheduleModalVisible: false,
+    });
+  };
+
+
+  const _openDateTimeModal = () => {
+    updateState({
+      isScheduleModalVisible: true
+    })
+  }
+
+
+
+
+
+  const _selectPaymentView = () => {
     return (
       <SelectPaymentModalView
         _confirmAndPay={_confirmAndPay}
-        slectedDate={pickedUpDate}
+        slectedDate={scheduleDateTime?.slectedDate ? scheduleDateTime?.slectedDate : pickedUpDate}
         isModalVisible={isModalVisible}
-        selectedTime={pickedUpTime}
+        selectedTime={scheduleDateTime?.selectedTime ? scheduleDateTime?.selectedTime : pickedUpTime}
         date={date}
         onPressBack={() =>
           redirectFromNow
@@ -962,6 +991,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         productFaqQuestionAnswers={selectedCarOption}
         onQuestionAnswerSubmit={(item) => onQuestionAnswerSubmit(item)}
         indicatorLoader={indicatorLoader}
+        _openDateTimeModal={_openDateTimeModal}
       />
     );
   };
@@ -973,22 +1003,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     });
   };
 
-  const _onDateChange = (date) => {
-    // alert(213);
-    console.log(date, 'date');
-    let time = moment(date).format('HH:mm');
-    let dateSelectd = moment(date).format('YYYY-MM-DD');
 
-    console.log(time, 'time');
-    console.log(dateSelectd, 'dateSelectd');
-    updateState({
-      selectedDateAndTime: `${dateSelectd} ${time}`,
-      slectedDate: dateSelectd,
-      selectedTime: moment(date).format('LT'),
-      date: date,
-      formatedTime: moment(value).format('LT'),
-    });
-  };
 
   const _updateState = () => {
     // navigationStrings.CABDRIVERLOCATIONANDDETAIL
@@ -996,11 +1011,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     navigation.navigate(navigationStrings.CABDRIVERLOCATIONANDDETAIL, {});
   };
 
-  const onMapPress = (e) => {
-    updateState({
-      locations: [...locations, e.nativeEvent.coordinate],
-    });
-  };
 
   const _pickerOpen = (value) => {
     updateState({ [value]: true });
@@ -1025,30 +1035,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     updateState({ formatedTime: moment(value).format('hh:mm A') });
   };
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     coordinatesFit();
-  //   }, 2000);
-  // }, []);
-
-  console.log('paramData', paramData);
-  // useEffect(() => {
-  //   console.log('check state ref array >>>', refArr);
-  //   refArr.forEach((element) => {
-  //     element.current.showCallout();
-  //   });
-  // }, [refArr]);
-
-  // const showRef = (_markerRef, index) => {
-  //   if (_markerRef) {
-  //     const temp = paramData?.tasks;
-  //     let newObj = temp[index];
-  //     newObj = {...newObj, markerRef: _markerRef};
-  //     temp[index] = newObj;
-  //     // state set
-  //     setRefArr(temp);
-  //   }
-  // };
 
   const onCenter = () => {
     if (paramData?.location.length > 0 && !!mapRef?.current?.fitToCoordinates) {
@@ -1076,7 +1062,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
   return (
     <View style={{ ...styles.container }}>
-      {/* <View style={{ height: StatusBarHeight }} /> */}
       <View style={{ flex: 1 }}>
         {!!paramData?.location.length > 0 && (
           <MapView
@@ -1085,13 +1070,9 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             customMapStyle={
               appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
             }
-            // style={styles.map}
             style={{ height: height / 2.3 }}
             region={region}
             initialRegion={region}
-            //   customMapStyle={mapStyle}
-            // ref={mapRef}
-            // liteMode={true}
             tracksViewChanges={false}>
             <CustomCallouts data={paramData?.tasks} />
 
@@ -1178,7 +1159,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
                   : colors.white,
               }}>
               {!!showCarModal && _selectCarModalView()}
-              {/* {!!showTimeModal && _selectTimeView()} */}
               {!!showPaymentModal && _selectPaymentView()}
             </View>
           </BottomSheetScrollView>
@@ -1193,8 +1173,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             }}>
             {availableCarList.length > 0 && (
               <GradientButton
-                // endcolor={{x: 0.0, y: 0.25}}
-                // startcolor={{x: 0.0, y: 0.0}}
                 colorsArray={[
                   themeColors.primary_color,
                   themeColors.primary_color,
@@ -1216,41 +1194,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           </View>
         )}
 
-        {/* {!!showPaymentModal && (
-          <View
-            style={{
-              width: '90%',
-              position: 'absolute',
-              bottom: 20,
-              marginHorizontal: moderateScale(16),
-
-            }}>
-
-            <GradientButton
-              // endcolor={{x: 0.0, y: 0.25}}
-              // startcolor={{x: 0.0, y: 0.0}}
-              indicator={indicatorLoader}
-              indicatorColor={colors.white}
-              colorsArray={[
-                themeColors.primary_color,
-
-                themeColors.primary_color,
-              ]}
-              textStyle={{ textTransform: 'none', fontSize: textScale(14) }}
-              onPress={onBookNow}
-              btnText={
-                paramData?.pickup_taxi
-                  ? strings.BOOK_NOW_RIDE
-                  : pickUpTimeType === 'now'
-                    ? strings.BOOK_NOW
-                    : strings.SCHEDULE_RIDE_FOR +
-                    `${moment(slectedDate).format('DD MMM')} ${selectedTime} `
-              }
-              containerStyle={{ flex: 1 }}
-            />
-
-          </View>
-        )} */}
       </View>
 
       {/* BottomView */}
@@ -1283,6 +1226,15 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         isModalVisible={isModalVisible}
         updateModalState={_updateState}
       />
+
+      {isScheduleModalVisible && (
+        <BottomViewModal
+          isDatetimePicker={true}
+          show={isScheduleModalVisible}
+          mainContainView={_ModalMainView}
+          closeModal={_modalClose}
+        />
+      )}
     </View>
   );
 }
