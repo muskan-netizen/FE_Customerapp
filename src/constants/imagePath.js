@@ -524,4 +524,5 @@ export default {
   icSos: require('../assets/images/RoyoorderNewImages/ic_sos.png'),
   icNoDrivers: require('../assets/images/RoyoorderNewImages/ic_nodrivers.png'),
   icLocationBlue: require('../assets/images/RoyoorderNewImages/ic_location_blue.png'),
+  icBikeMarker: require('../assets/images/TrackOrderImages/ic_bike.png'),
 };

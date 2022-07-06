@@ -2892,7 +2892,7 @@ export default function OrderDetail({navigation, route}) {
                   coordinate={state.animateDriver}
                  >
                   <Image
-                    source={imagePath.icScooter}
+                    source={appIds?.sabroson?imagePath?.icBikeMarker: imagePath.icScooter}
                     style={{
                       transform: [{rotate: `${state.headingAngle + 110}deg`}],
                     }}
