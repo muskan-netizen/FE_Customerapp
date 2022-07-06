@@ -8,7 +8,7 @@
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1';
 
 //Vishwas
-export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
+// export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
 // export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
 // export const API_BASE_URL = 'https://pideunfleety.com/api/v1';
 // export const API_BASE_URL = 'https://heybuddy.com.mx/api/v1';
@@ -60,7 +60,7 @@ export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
-// export const API_BASE_URL = 'https://api.focushires.com/api/v1';
+export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://order.veg-hub.com/api/v1';
 // export const API_BASE_URL = 'https://seratho.com/api/v1';

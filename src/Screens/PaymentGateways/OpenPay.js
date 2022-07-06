@@ -69,41 +69,29 @@ export default function OpenPay({ navigation, route }) {
         navigation.navigate(screenName, { data });
       };
 
-  const onNavigationStateChange = (props) => {
-    const { url } = props;
-    const URL = queryString.parseUrl(url);
-    const queryParams = URL.query;
-    const nonQueryURL = URL.url;
-    console.log(props, 'props===>');
-
-    setTimeout(() => {
-      if (queryParams.status == 200) {
-        if (paramsData?.extraData) {
-          navigation.navigate(
-            navigationStrings.PICKUPTAXIORDERDETAILS,
-            paramsData?.extraData,
-          );
-        } else {
-          moveToNewScreen(navigationStrings.ORDERSUCESS, {
-            orderDetail: {
-              order_number: queryParams.order,
-              id: paramsData?.orderDetail?.id,
-            },
-          })();
-        }
-
-      } else if (queryParams.status == 0) {
-        if (paramsData?.extraData) {
-          navigation.goBack()
-        } else {
-          moveToNewScreen(navigationStrings.CART, {
-            queryURL: url.replace(`${nonQueryURL}?`, ''),
-          })();
-        }
-
-      }
-    }, 500);
-  };
+      const onNavigationStateChange = (props) => {
+        const {url} = props;
+        const URL = queryString.parseUrl(url);
+        const queryParams = URL.query;
+        const nonQueryURL = URL.url;
+        console.log(queryParams, 'propsMobbex');
+    
+        setTimeout(() => {
+          if (queryParams.status == 200) {
+            moveToNewScreen(navigationStrings.ORDERSUCESS, {
+              orderDetail: {
+                order_number: queryParams.order,
+                id: paramsData?.orderDetail?.id,
+              },
+            })();
+          }
+          if (queryParams.status == 0) {
+            moveToNewScreen(navigationStrings.CART, {
+              queryURL: url.replace(`${nonQueryURL}?`, ''),
+            })();
+          }
+        }, 3000);
+      };
 
   console.log(isLoading, 'isLoadingisLoadingisLoading');
 console.log(webData,"webDataaaaaa")

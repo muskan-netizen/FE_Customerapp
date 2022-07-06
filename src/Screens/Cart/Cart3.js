@@ -857,6 +857,7 @@ function Cart({navigation, route}) {
       orderDetail: res.data,
       redirectFrom: 'cart',
       selectedPayment: selectedPayment,
+      
     };
     if (
       !!paymentId &&

@@ -135,7 +135,7 @@ console.log(webData,"webDataaaaaa")
       )}
       <View 
        style={{
-        height:moderateScaleVertical(30)
+        height:moderateScaleVertical(20)
        }}
       />
 
