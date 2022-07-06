@@ -87,7 +87,7 @@ export default {
   OFFERS2: 'OFFERS2',
   PICKUPTAXIORDERDETAILS: 'PickupTaxiOrderDetails',
   PICKUPORDERDETAIL2: 'pickOrderDetail2',
-  PRODUCTWITHCATEGORY:"productWithCategory",
+  PRODUCTWITHCATEGORY: 'productWithCategory',
 
   // royo order
 
@@ -132,13 +132,14 @@ export default {
   CASH_FREE: 'cashFree',
   MYORDERSSTACK: 'myOrdersStack',
   EASEBUZZ: 'easebuzz',
-  TOYYIAPAY:'toyyibPay',
-  MPAISA:"Mpaisa",
-  WINDCAVE:'WindCave',
-  PAYPHONE:'PayPhone',
- ADD_NEW_RIDER:'AddNewRider',
-  STRIPEOXXO:'StripeOXXO',
-  VIVAWALLET:"Vivawallet",
-  MYCASH:"MyCash",
-  STRIPEIDEAL:"StripeIdeal"
+  TOYYIAPAY: 'toyyibPay',
+  MPAISA: 'Mpaisa',
+  WINDCAVE: 'WindCave',
+  PAYPHONE: 'PayPhone',
+  ADD_NEW_RIDER: 'AddNewRider',
+  STRIPEOXXO: 'StripeOXXO',
+  VIVAWALLET: 'Vivawallet',
+  MYCASH: 'MyCash',
+  STRIPEIDEAL: 'StripeIdeal',
+  LAUNDRY_AVAILABLE_VENDORS: 'laundryAvailableVendors',
 };

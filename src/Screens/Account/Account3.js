@@ -54,7 +54,6 @@ export default function Account3({navigation}) {
 
   // const profileInfo = appData?.profile;
   // console.log("account profile info",profileInfo)
-
   const [isVisible, setIsVisible] = useState(false);
 
   const fontFamily = appStyle?.fontSizeData;

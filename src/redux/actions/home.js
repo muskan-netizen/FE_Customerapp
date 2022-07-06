@@ -13,6 +13,8 @@ import {
   VENDOR_ALL,
   GETALLVENDORS,
   ADD_RIDER,
+  GET_PRODUCT_ESTIMATION_WITH_ADDONS,
+  GET_ESTIMATION,
 } from '../../config/urls';
 import {apiPost, setItem, getItem, apiGet} from '../../utils/utils';
 import store from '../store';
@@ -233,10 +235,9 @@ export const saveSchduleTime = (data) => {
   });
 };
 
-
 export const addRider = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
-    apiPost(ADD_RIDER, data,headers)
+    apiPost(ADD_RIDER, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -248,7 +249,7 @@ export const addRider = (data, headers = {}) => {
 
 export const getAllRiderList = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
-    apiGet(ADD_RIDER, data,headers)
+    apiGet(ADD_RIDER, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -258,3 +259,26 @@ export const getAllRiderList = (data, headers = {}) => {
   });
 };
 
+export const getProductEstimationWithAddons = (url, data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiGet(GET_PRODUCT_ESTIMATION_WITH_ADDONS + url, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const productEstimation = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_ESTIMATION, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};

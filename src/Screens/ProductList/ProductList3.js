@@ -243,7 +243,7 @@ export default function Products({ route, navigation }) {
         <View
           key={String(index)}
           style={{
-            height: 185,
+            // height: 185,
             // minHeight: url1
             //   ? moderateScaleVertical(200)
             //   : 0,
@@ -1090,7 +1090,9 @@ export default function Products({ route, navigation }) {
   };
 
   const addSingleItem = useCallback(
+   
     async (item, section = null, inx) => {
+      
       if (
         !!categoryInfo?.is_vendor_closed &&
         !categoryInfo?.show_slot &&
@@ -1105,6 +1107,7 @@ export default function Products({ route, navigation }) {
       updateState({ selectedItemID: item?.id, btnLoader: true });
 
       if (item?.add_on_count !== 0 || item?.variant_set_count !== 0) {
+      
         setSelectedSection(section);
         setSelectedCarItems(item);
         setIsVisibleModal(true);
@@ -1117,6 +1120,7 @@ export default function Products({ route, navigation }) {
         return;
       }
       if (item?.add_on_count === 0 && item?.mode_of_service === 'schedule') {
+       
         setSelectedSection(section);
         setSelectedCarItems(item);
         setIsVisibleModal(true);
@@ -1350,6 +1354,7 @@ export default function Products({ route, navigation }) {
 
   const getAllListItems = (pageNo = 1) => {
     if (data?.vendor) {
+     console.log(data,"getAllListItemsdata")
       {
         !!selectedFilters.current
           ? newVendorFilter(pageNo)
@@ -2161,7 +2166,7 @@ export default function Products({ route, navigation }) {
       });
       setLoading(false);
       // showError(error?.message?.error || error?.error);
-      Alert.alert('', error?.message?.error, [
+      Alert.alert('',strings.YOU_ALREADY_HAVE_ITEMS_FROM_ANOTHER_STORE_DO_YOU_WANT_TO_DISCARD_THEM , [
         {
           text: strings.CANCEL,
           onPress: () => console.log('Cancel Pressed'),
@@ -2224,6 +2229,7 @@ export default function Products({ route, navigation }) {
   };
 
   const onAddNew = () => {
+   
     if (
       !!categoryInfo?.is_vendor_closed &&
       !categoryInfo?.show_slot &&

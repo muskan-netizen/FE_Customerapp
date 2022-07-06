@@ -1738,6 +1738,14 @@ end
 target 'AbbeRides' do
   
 end
+# NRSA Target
+target 'NRSA' do
+  
+end
+# Sadia Target
+target 'Sadia' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

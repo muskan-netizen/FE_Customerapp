@@ -958,4 +958,6 @@ Amount`,
   REQUEST_RIDE:'Request Ride',
   SERVICE_ADDRESS:'Service Address',
   BOOK_HERE:'Book Here',
+  YOU_ALREADY_HAVE_ITEMS_FROM_ANOTHER_STORE_DO_YOU_WANT_TO_DISCARD_THEM:
+  "You already have items from another store. Do you want to discard them?"
 };
