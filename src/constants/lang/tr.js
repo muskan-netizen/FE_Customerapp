@@ -862,4 +862,5 @@ export default {
   SELECT_A_TABLE:'Select a Table',
   SERVICE_ADDRESS:'Service Address',
   BOOK_HERE:'Book Here',
+  CATEGORY_KYC :"Categoory KYC"
 };

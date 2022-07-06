@@ -49,7 +49,9 @@ export default function OtpVerification({navigation, route}) {
   const {timer, phoneOTP, emailOTP, isLoading} = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {currencies, languages} = useSelector((state) => state?.initBoot);
+  const {currencies, languages, redirectedFrom} = useSelector(
+    (state) => state?.initBoot,
+  );
   useEffect(() => {
     let timerId;
     if (timer > 0) {
@@ -167,7 +169,7 @@ export default function OtpVerification({navigation, route}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        checkIsAdmin(navigation_, navigation, res.data);
+        checkIsAdmin(navigation_, navigation, res.data, redirectedFrom);
         // if (userData) {
         //   userData?.client_preference?.verify_email ||
         //   userData?.client_preference?.verify_phone

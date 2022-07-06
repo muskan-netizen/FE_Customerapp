@@ -51,9 +51,16 @@ const UserDetail = ({
   };
 
   const onWhatsapp = async () => {
-    const link = `https://api.whatsapp.com/send?phone=${(
+    let url = `whatsapp://send?phone= ${userData?.dial_code}${
       data?.vendor?.phone_no || data?.order?.phone_number
-    ).replace('+', '')}`;
+    }`;
+    Linking.openURL(url)
+      .then((data) => {
+        console.log('WhatsApp Opened successfully ' + data); //<---Success
+      })
+      .catch(() => {
+        alert('Make sure WhatsApp installed on your device'); //<---Error
+      });
     if (link) {
       Linking.canOpenURL(link)
         .then((supported) => {

@@ -15,6 +15,7 @@ import TaxiAppStack from './TaxiAppStack';
 import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesVendor from './TabRoutesVendor';
 import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';
+import {Cart} from '../Screens';
 const Stack = createStackNavigator();
 
 export function shortCode(Stack) {
@@ -102,6 +103,11 @@ export default function Routes() {
             options={{headerShown: false, gestureEnabled: false}}
           />
           <Stack.Screen
+            name={navigationStrings.CART}
+            component={Cart}
+            options={{headerShown: false, gestureEnabled: false}}
+          />
+          <Stack.Screen
             name={navigationStrings.TABROUTESVENDOR}
             component={TabRoutesVendor}
             options={{headerShown: false, gestureEnabled: false}}
@@ -113,6 +119,6 @@ export default function Routes() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-     </AppearanceProvider>
+    </AppearanceProvider>
   );
 }
