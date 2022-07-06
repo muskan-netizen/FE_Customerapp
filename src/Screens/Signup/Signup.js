@@ -41,19 +41,21 @@ import ActionSheet from 'react-native-actionsheet';
 import {androidCameraPermission} from '../../utils/permissions';
 import DocumentPicker from 'react-native-document-picker';
 import codes from 'country-calling-code';
-import * as RNLocalize from "react-native-localize";
+import * as RNLocalize from 'react-native-localize';
 import RNOtpVerify from 'react-native-otp-verify';
 import DeviceCountry, {
   TYPE_ANY,
   TYPE_TELEPHONY,
   TYPE_CONFIGURATION,
 } from 'react-native-device-country';
-var getPhonesCallingCodeAndCountryData = null
+var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
-    console.log(result, "getCountryCoderesult");
+    console.log(result, 'getCountryCoderesult');
     // {"code": "BY", "type": "telephony"}
-    getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == (result.code).toUpperCase())
+    getPhonesCallingCodeAndCountryData = codes.filter(
+      (x) => x.isoCode2 == result.code.toUpperCase(),
+    );
   })
   .catch((e) => {
     console.log(e);
@@ -76,6 +78,7 @@ export default function Signup({navigation}) {
     languages,
     themeColor,
     themeToggle,
+    redirectedFrom,
   } = useSelector((state) => state?.initBoot);
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -87,12 +90,20 @@ export default function Signup({navigation}) {
   // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
   const [state, setState] = useState({
     isLoading: false,
-    callingCode: getPhonesCallingCodeAndCountryData && getPhonesCallingCodeAndCountryData.length ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]: appData?.profile.country?.phonecode
-      ? appData?.profile?.country?.phonecode
-      : '91',
-    cca2:  getPhonesCallingCodeAndCountryData && getPhonesCallingCodeAndCountryData.length ? getPhonesCallingCodeAndCountryData[0].isoCode2:appData?.profile?.country?.code
-      ? appData?.profile?.country?.code
-      : 'IN',
+    callingCode:
+      getPhonesCallingCodeAndCountryData &&
+      getPhonesCallingCodeAndCountryData.length
+        ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]
+        : appData?.profile.country?.phonecode
+        ? appData?.profile?.country?.phonecode
+        : '91',
+    cca2:
+      getPhonesCallingCodeAndCountryData &&
+      getPhonesCallingCodeAndCountryData.length
+        ? getPhonesCallingCodeAndCountryData[0].isoCode2
+        : appData?.profile?.country?.code
+        ? appData?.profile?.country?.code
+        : 'IN',
     name: '',
     email: '',
     password: '',
@@ -282,7 +293,7 @@ export default function Signup({navigation}) {
               !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
             ) {
-              checkIsAdmin(navigation_, navigation, res.data);
+              checkIsAdmin(navigation_, navigation, res.data, redirectedFrom);
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
@@ -294,12 +305,12 @@ export default function Signup({navigation}) {
               !!res.data?.verify_details?.is_email_verified ||
               !!res.data?.verify_details?.is_phone_verified
             ) {
-              checkIsAdmin(navigation_, navigation, res.data);
+              checkIsAdmin(navigation_, navigation, res.data, redirectedFrom);
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
           } else {
-            checkIsAdmin(navigation_, navigation, res.data);
+            checkIsAdmin(navigation_, navigation, res.data, redirectedFrom);
           }
         }
       })

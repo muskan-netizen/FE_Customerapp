@@ -521,7 +521,7 @@ export default {
     'Din varukorg är tom, lägg till artiklar i butiken',
   SHOP_FROM_WISHLIST: 'Handla från önskelistan',
   ALREADY_EXIST:
-  'You already have items from another store. Do you want to discard them?',
+    'You already have items from another store. Do you want to discard them?',
   LABEL1: 'Etikett 1',
   LABEL2: 'Etikett 2',
   DOYOUHAVECLEANINGMATERIAL: ' Behöver du rengöringsmaterial?',
@@ -913,8 +913,8 @@ export default {
   ORDER_TOTAL: 'Order Total',
   ORDERS: 'Orders',
   ORDER_CANCELLED: 'Order Cancelled',
-  SPECIFIC_INSTRUCTIONS:'Specific Instructions',
-  THANKS_FOR_YOUR_PURCHASE:'Thanks for your purchase.',
+  SPECIFIC_INSTRUCTIONS: 'Specific Instructions',
+  THANKS_FOR_YOUR_PURCHASE: 'Thanks for your purchase.',
   BOOK_FOR_A_FRIEND: 'Book For a friend',
   ENTER_FRIEND_DETAILS: "Enter your Friend's details",
   BOOK_FOR_ME: 'Book For Me',
@@ -926,5 +926,6 @@ export default {
   SERVICE_ADDRESS:'Service Address',
   BOOK_HERE:'Book Here',
   DELETE_ACCOUNT:"Delete Account",
+  CATEGORY_KYC: 'Categoory KYC',
   ARE_YOU_SURE_YOU_WANT_TO_DELETE:'Are you sure, you want to delete your account? Deleting your account is permanent and will remove all content and profile settings.',
 };

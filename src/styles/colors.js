@@ -123,5 +123,9 @@ export default {
   greyD: '#9898A0',
   greyColor4: '#B0B0B0',
   lightGreen: 'rgba(68,215,182,0.17)',
-  lightGray:'#e5e5e5d9'
+  lightGray: '#e5e5e5d9',
+  greenC: '#DBEBCB',
+  greenD: '#719F1C',
+  redF: '#EECFD1',
+  redG: '#E02020',
 };

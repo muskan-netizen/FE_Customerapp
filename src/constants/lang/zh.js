@@ -811,8 +811,8 @@ export default {
   ORDER_TOTAL: 'Order Total',
   ORDERS: 'Orders',
   ORDER_CANCELLED: 'Order Cancelled',
-  SPECIFIC_INSTRUCTIONS:'Specific Instructions',
-  THANKS_FOR_YOUR_PURCHASE:'Thanks for your purchase.',
+  SPECIFIC_INSTRUCTIONS: 'Specific Instructions',
+  THANKS_FOR_YOUR_PURCHASE: 'Thanks for your purchase.',
   BOOK_FOR_A_FRIEND: 'Book For a friend',
   ENTER_FRIEND_DETAILS: "Enter your Friend's details",
   BOOK_FOR_ME: 'Book For Me',
@@ -824,5 +824,6 @@ export default {
   SERVICE_ADDRESS:'Service Address',
   BOOK_HERE:'Book Here',
   DELETE_ACCOUNT:"Delete Account",
+  CATEGORY_KYC: 'Categoory KYC',
   ARE_YOU_SURE_YOU_WANT_TO_DELETE:'Are you sure, you want to delete your account? Deleting your account is permanent and will remove all content and profile settings.',
 };

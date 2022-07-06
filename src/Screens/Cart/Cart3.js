@@ -1,7 +1,7 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep, isEmpty} from 'lodash';
 import moment from 'moment';
-import React, {Fragment, useEffect, useRef, useState} from 'react';
+import React, {Fragment, useCallback, useEffect, useRef, useState} from 'react';
 import {
   Alert,
   Animated,
@@ -19,6 +19,7 @@ import {
   TouchableOpacity,
   View,
   TouchableWithoutFeedback,
+  BackHandler,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Calendar} from 'react-native-calendars';
@@ -97,6 +98,7 @@ import {generateTransactionRef, payWithCard} from '../../utils/paystackMethod';
 import {PayWithFlutterwave} from 'flutterwave-react-native';
 
 import {FlutterwaveInit} from 'flutterwave-react-native';
+import {setRedirection} from '../../redux/actions/auth';
 
 let clickedItem = {};
 let isFAQsSubmitted = true;
@@ -270,6 +272,19 @@ function Cart({navigation, route}) {
   const closeForm = () => {
     updateState({isProductOrderForm: false, isCategoryKyc: false});
     Keyboard.dismiss();
+  };
+  useFocusEffect(
+    useCallback(() => {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        androidBackButtonHandler,
+      );
+      return () => backHandler.remove();
+    }, []),
+  );
+
+  const androidBackButtonHandler = () => {
+    return true;
   };
 
   useFocusEffect(
@@ -1116,14 +1131,15 @@ function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
-  console.log(dineInType,"vendorAddress?");
+  console.log(dineInType, 'vendorAddress?');
 
-  
   const _directOrderPlace = () => {
     let data = {};
     data['vendor_id'] = cartData?.products[0]?.vendor_id;
-    data['address_id'] =dineInType !='delivery' ? '': 
-      paramsData?.selectedAddressData?.id || selectedAddressData?.id;
+    data['address_id'] =
+      dineInType != 'delivery'
+        ? ''
+        : paramsData?.selectedAddressData?.id || selectedAddressData?.id;
     data['payment_option_id'] =
       Number(cartData?.total_payable_amount) +
         (selectedTipAmount != null && selectedTipAmount != ''
@@ -1158,7 +1174,6 @@ function Cart({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-     
         actions.reloadData(!reloadData);
         setSelectedTipvalue(null);
         setPickupDriverComment(null);
@@ -1567,6 +1582,7 @@ function Cart({navigation, route}) {
       }
     } else {
       updateState({placeLoader: false});
+      actions.setRedirection('cart');
       moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     }
   };
@@ -1810,7 +1826,7 @@ function Cart({navigation, route}) {
   //       .catch(errorMethod);
   //   }
   // };
-  console.log(paymentMethodId,"paymentMethodId")
+  console.log(paymentMethodId, 'paymentMethodId');
   const _paymentWithStripe = async (
     cardInfo,
     tokenInfo,
@@ -1818,7 +1834,7 @@ function Cart({navigation, route}) {
     order_number,
   ) => {
     console.log(order_number, 'order_numberrrrr');
-    
+
     actions
       .getStripePaymentIntent(
         // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
@@ -2592,7 +2608,7 @@ function Cart({navigation, route}) {
                                   flex: 1,
                                 }}>
                                 <View>
-                                  {!!(i?.product?.category_name?.name) && (
+                                  {!!i?.product?.category_name?.name && (
                                     <Text
                                       numberOfLines={1}
                                       style={{
@@ -2665,7 +2681,7 @@ function Cart({navigation, route}) {
                                   </View>
                                 </View>
                               </View>
-                              
+
                               <Text
                                 style={{
                                   ...styles.priceItemLabel2,
@@ -2685,8 +2701,8 @@ function Cart({navigation, route}) {
                                         ?.digit_after_decimal,
                                     )
                                   }`}
-                                </Text>{' '}X
-                                {i?.quantity} ={' '}
+                                </Text>{' '}
+                                X{i?.quantity} ={' '}
                                 <Text
                                   style={{
                                     color: isDarkMode
@@ -3634,7 +3650,10 @@ function Cart({navigation, route}) {
     updateState({isGiftBoxSelected: !isGiftBoxSelected});
   };
 
-  // {console.log(preferences,"preferences>>>>")}
+  const setRedirection = () => {
+    actions.setRedirection('cart');
+    navigation.navigate(navigationStrings.OUTER_SCREEN, {});
+  };
 
   //get footer start
   const getFooter = () => {
@@ -3643,7 +3662,7 @@ function Cart({navigation, route}) {
         {!!cartData?.category_kyc_count && (
           <ButtonComponent
             onPress={onCategoryKYC}
-            btnText={'Categoory KYC'}
+            btnText={strings.CATEGORY_KYC}
             borderRadius={moderateScale(13)}
             textStyle={{color: colors.white, textTransform: 'none'}}
             containerStyle={{
@@ -4500,12 +4519,12 @@ function Cart({navigation, route}) {
               : 0) >
             0 && (
             <TouchableOpacity
-              onPress={() =>
-                !!userData?.auth_token
-                  ? updateState({paymentModal: true})
-                  : // ?moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
-                    //  moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
-                    navigation.navigate(navigationStrings.OUTER_SCREEN, {})
+              onPress={
+                () =>
+                  !!userData?.auth_token
+                    ? updateState({paymentModal: true})
+                    : setRedirection() // ?moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
+                //  moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
               }
               style={{
                 ...styles.paymentMainView,
@@ -5180,7 +5199,11 @@ function Cart({navigation, route}) {
         }
         statusBarColor={colors.backgroundGrey}
         source={loaderOne}>
-        <Header centerTitle={strings.CART} leftIcon={imagePath.icBackb} />
+        <Header
+          centerTitle={strings.CART}
+          noLeftIcon
+          leftIcon={imagePath.icBackb}
+        />
         {/* <View
           style={{
             // flex: 1,
@@ -6105,9 +6128,9 @@ function Cart({navigation, route}) {
         leftIcon={imagePath.icBackb}
         isRightText={cartItems && !!cartItems?.length}
         onPressRightTxt={() => openClearCartModal()}
+        noLeftIcon
       />
 
-      {console.log(cartItems, 'cartItems>>>')}
       <FlatList
         data={cartItems}
         extraData={cartItems}
