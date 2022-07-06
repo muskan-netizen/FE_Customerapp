@@ -97,6 +97,10 @@ export const notificationListener = async () => {
     popInitialNotification: true,
   });
 
+  messaging().onNotificationOpenedApp(remoteMessage => {
+    console.log('tap on notification',remoteMessage);
+  });
+
   createDefaultChannels();
 
   function createDefaultChannels() {
@@ -124,13 +128,6 @@ export const notificationListener = async () => {
       (created) =>
         console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
     );
-    messaging().onNotificationOpenedApp(remoteMessage => {
-      console.log(
-        'Notification caused app to open from background state bla bla:',
-        remoteMessage,
-      );
-    });
-
   }
     
  
