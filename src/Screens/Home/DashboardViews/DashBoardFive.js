@@ -181,6 +181,7 @@ export default function DashBoardFive({
     );
   };
 
+  
   const _renderVendors = ({ item, index }) => (
     <View style={{ marginHorizontal: moderateScale(16) }}>
       <MarketCard3

@@ -1,9 +1,9 @@
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1'
-// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 //  export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
 //sujata
 // export const API_BASE_URL = 'http://192.168.99.124:8005/api/v1';
@@ -68,6 +68,11 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://1204-112-196-88-218.ngrok.io/api/v1';
 
 // export const API_BASE_URL ='https://yogo.gd/api/v1';
+
+// export const API_BASE_URL ='https://aaujaau.focushires.com/api/v1';
+
+
+
 
 //Dlvrd
 // export const API_BASE_URL = 'https://dlvrd-order.netsolutionindia.com/api/v1';
