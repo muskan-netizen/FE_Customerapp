@@ -206,6 +206,19 @@ android {
 
     flavorDimensions "appType"
 
+    // productFlavors {
+    //               jiffex{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.jiffex.order'
+    //         resValue "string", "app_name", "Jiffex"
+    //         resValue "string", "host_name", ""
+    //         }
+    // }
+
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -5266,7 +5279,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.jiffex'
+            applicationId 'com.jiffex.order'
             resValue "string", "app_name", "Jiffex"
             resValue "string", "host_name", ""
             }
@@ -5446,7 +5459,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.dingDongDelivers'
+            applicationId 'com.dingdongdelivery.order'
             resValue "string", "app_name", "DingDong Delivers"
             resValue "string", "host_name", ""
             }
@@ -5542,6 +5555,16 @@ android {
             resValue "string", "app_name", "ExprexPro"
             resValue "string", "host_name", ""
             }  
+            fresHest{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.FresHest.royoOrder'
+            resValue "string", "app_name", "FresHest"
+            resValue "string", "host_name", ""
+            }
     }
 }
 

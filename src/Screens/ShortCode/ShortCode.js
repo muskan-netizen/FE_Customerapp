@@ -2233,6 +2233,12 @@ export default function ShortCode({route, navigation}) {
               isShortcodePrefilled: true,
             });
             break;
+            case appIds.fresHest:
+            updateState({
+              shortCode: shortCodes.fresHest,
+              isShortcodePrefilled: true,
+            });
+            break;
       }
     })();
   }, []);
@@ -2283,7 +2289,7 @@ export default function ShortCode({route, navigation}) {
         code: shortCode,
       };
     }
-    console.log(header, 'header');
+    console.log(header, 'header*******');
     actions
       .initApp({}, header, false, null, null, true)
       .then((res) => {

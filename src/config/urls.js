@@ -20,9 +20,10 @@
 //sujata
 // export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1';
 
+// export const API_BASE_URL = 'https://gokab.royoorders.com/api/v1'
 //live 
 // export const API_BASE_URL = 'https://toor.life/api/v1';
-export const API_BASE_URL = 'https://fijieats.com/api/v1'
+// export const API_BASE_URL = 'https://fijieats.com/api/v1'
 // export const API_BASE_URL = 'https://swantaxi.net/api/v1'
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1'
 //classicab
@@ -45,7 +46,9 @@ export const API_BASE_URL = 'https://fijieats.com/api/v1'
 // export const API_BASE_URL = 'https://hometowndelivery21.com/api/v1';
 // export const API_BASE_URL = 'https://click2deliver.co.uk/api/v1';
 //export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
-// export const API_BASE_URL = 'https://tmgshops.com/api/v1';
+// export const API_BASE_URL = 'https://tmgsalesllc.com/api/v1';
+
+// export const API_BASE_URL = 'https://viversbox.com/api/v1'
 
 
 //export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
@@ -102,6 +105,8 @@ export const API_BASE_URL = 'https://fijieats.com/api/v1'
 //Dlvrd
 // export const API_BASE_URL = 'https://dlvrd-order.netsolutionindia.com/api/v1';
 
+// dindDongDelivers
+export const API_BASE_URL = 'https://dingdongdelivers.com/api/v1'
 
 //Dlvrd
 // export const API_BASE_URL = 'https://36kel.com.ph/api/v1';

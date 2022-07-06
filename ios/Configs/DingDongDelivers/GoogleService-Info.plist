@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>68772531236-hcoditadusijouschvadgjbvnmb1737k.apps.googleusercontent.com</string>
+	<string>879685530620-3s03he1c5jr01qfojv90ef7rof0st144.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.68772531236-hcoditadusijouschvadgjbvnmb1737k</string>
+	<string>com.googleusercontent.apps.879685530620-3s03he1c5jr01qfojv90ef7rof0st144</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>68772531236-6aaf0dj77o7n21lsbps0r8tumgsrh1ri.apps.googleusercontent.com</string>
+	<string>879685530620-1el4lfgp2eqfuho3ropc25bmu43v6vvl.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCmQARGtMMrlEacxZz06b9oLSAjmM8WBQc</string>
+	<string>AIzaSyAzMeiasfExNs1J_Mpq6OAmEmYLZpC_hiM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>68772531236</string>
+	<string>879685530620</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.dingDongDelivers</string>
+	<string>com.dingdongdelivery.order</string>
 	<key>PROJECT_ID</key>
-	<string>ding-dong-delivers</string>
+	<string>dingdong-deliveries-order</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ding-dong-delivers.appspot.com</string>
+	<string>dingdong-deliveries-order.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:68772531236:ios:91e7b844b606c008609cb1</string>
+	<string>1:879685530620:ios:d03c226e41e18038a37879</string>
 </dict>
 </plist>

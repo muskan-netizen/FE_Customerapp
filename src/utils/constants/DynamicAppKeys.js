@@ -352,6 +352,7 @@ const shortCodes = {
   sadia:'312528',
   elentaMart:'e084cc',
   exprexPro :'cb98e8',
+  fresHest: '7e43f5'
 
 };
 
@@ -1649,7 +1650,7 @@ const appIds = {
   }),
   jiffex: Platform.select({
     ios: 'com.jiffex',
-    android: 'com.jiffex',
+    android: 'com.jiffex.order',
   }),
   clickService: Platform.select({
     ios: 'com.clickService',
@@ -1720,8 +1721,8 @@ const appIds = {
     android: 'com.meow.order',
   }),
   dingDongDelivers: Platform.select({
-    ios: 'com.dingDongDelivers',
-    android: 'com.dingDongDelivers',
+    ios: 'com.dingdongdelivery.order',
+    android: 'com.dingdongdelivery.order',
   }),
   torunz: Platform.select({
     ios: 'com.torunz',
@@ -1756,6 +1757,10 @@ const appIds = {
   exprexPro: Platform.select({
     ios: 'com.exprexPro',
     android: 'com.exprexPro',
+  }),
+  fresHest: Platform.select({
+    ios: 'com.FresHest.royoOrder',
+    android: 'com.FresHest.royoOrder',
   }),
 
 };
