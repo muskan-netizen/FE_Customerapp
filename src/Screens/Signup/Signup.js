@@ -58,7 +58,7 @@ DeviceCountry.getCountryCode()
   .catch((e) => {
     console.log(e);
   });
-
+  
 let addtionSelectedImageIndex = null;
 
 // alert("SignUp")
@@ -502,9 +502,11 @@ export default function Signup({navigation}) {
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
+        enableOnAndroid={true}
         style={{
           flex: 1,
-        }}>
+        }} 
+        >
         <View style={{flex: 1}}>
           <View style={{marginTop: moderateScaleVertical(50)}}>
             <Text

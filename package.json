@@ -541,7 +541,7 @@
     "mmlRelease": "cd android && ./gradlew assembleMMLRelease",
     "bimolRelease": "cd android && ./gradlew assembleBimolRelease",
     "vendorspotRelease": "cd android && ./gradlew assembleVendorSpotRelease",
-    "sxm2goRelease": "cd android && ./gradlew assembleSXM2GORelease",
+    "sxm2goRelease": "cd android && ./gradlew assemblesxm2goRelease",
     "pinkydeliRelease": "cd android && ./gradlew assemblePinkydeliRelease",
     "gasgiantRelease": "cd android && ./gradlew assembleGasGiantRelease",
     "releezerRelease": "cd android && ./gradlew assembleReleezerRelease",
