@@ -207,16 +207,27 @@ android {
     flavorDimensions "appType"
     
     // productFlavors {
-    // glamsouq{
+    //              lunchboxSpecials{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.lunchboxspecials'
+    //         resValue "string", "app_name", "Meal Time"
+    //         resValue "string", "host_name", ""
+    //         }
+   
+    //                  click2deliver{
     //             dimension "appType"
-    //             versionCode 3
+    //             versionCode 1
     //             versionName "1.0"
     //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.glamsouq.customer'
-    //             resValue "string", "app_name", "Glamsouq"
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.click2deliver'
+    //             resValue "string", "app_name", "Click2Deliver"
     //             resValue "string", "host_name", ""
-    //         } 
+    //         }
     // }
     productFlavors {
             royoorder {
