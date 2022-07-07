@@ -365,7 +365,7 @@ const RoyoOrderDetail = (props) => {
             </View>
           )}
 
-          {!!data?.fixed_fee_amount && Number(data?.fixed_fee_amount) !== 0 && (
+          {!!data?.fixed_fee_amount && !!Number(data?.fixed_fee_amount) !== 0 && (
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.font15Medium}>
