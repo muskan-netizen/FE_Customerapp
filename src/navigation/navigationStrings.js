@@ -144,4 +144,5 @@ export default {
   OPENPAY:"openpay",
   USEREDE:'userede',
   LAUNDRY_AVAILABLE_VENDORS: 'laundryAvailableVendors',
+  DIRECTPAYONLINE:"DirectPayOnline",
 };

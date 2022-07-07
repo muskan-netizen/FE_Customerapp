@@ -163,41 +163,42 @@ const RoyoOrderDetail = (props) => {
 
   const renderUserDetails = (item, index) => {
     return (
-      <View style={{marginTop: moderateScaleVertical(15)}}>
-        <Text style={{fontFamily: fontFamily.bold, fontSize: textScale(13)}}>
-          {'• '}
-          {item?.primary?.name}
-        </Text>
-        <View style={{marginHorizontal: moderateScale(5), marginTop: 5}}>
-          {item?.file_type == 'Text' ? (
-            <Text>{item?.user_document?.file_name}</Text>
-          ) : item?.file_type == 'Image' ? (
-            <FastImage
-              source={{
-                uri: getImageUrl(
-                  item?.user_document?.image_file?.image_fit,
-                  item?.user_document?.image_file?.image_path,
-                  '500/500',
-                ),
-              }}
-              style={{height: 70, width: 70}}
-            />
-          ) : (
-            <TouchableOpacity
-              onPress={() =>
-                Linking.openURL(item?.user_document?.image_file?.storage_url)
-              }>
-              <Text
-                style={{
-                  color: colors.blueColor,
-                  textDecorationLine: 'underline',
-                }}>
-                {strings.VIEW_PDF}
-              </Text>
-            </TouchableOpacity>
-          )}
-        </View>
-      </View>
+      null
+      // <View style={{marginTop: moderateScaleVertical(15)}}>
+      //   <Text style={{fontFamily: fontFamily.bold, fontSize: textScale(13)}}>
+      //     {'• '}
+      //     {item?.primary?.name}
+      //   </Text>
+      //   <View style={{marginHorizontal: moderateScale(5), marginTop: 5}}>
+      //     {item?.file_type == 'Text' ? (
+      //       <Text>{item?.user_document?.file_name}</Text>
+      //     ) : item?.file_type == 'Image' ? (
+      //       <FastImage
+      //         source={{
+      //           uri: getImageUrl(
+      //             item?.user_document?.image_file?.image_fit,
+      //             item?.user_document?.image_file?.image_path,
+      //             '500/500',
+      //           ),
+      //         }}
+      //         style={{height: 70, width: 70}}
+      //       />
+      //     ) : (
+      //       <TouchableOpacity
+      //         onPress={() =>
+      //           Linking.openURL(item?.user_document?.image_file?.storage_url)
+      //         }>
+      //         <Text
+      //           style={{
+      //             color: colors.blueColor,
+      //             textDecorationLine: 'underline',
+      //           }}>
+      //           {strings.VIEW_PDF}
+      //         </Text>
+      //       </TouchableOpacity>
+      //     )}
+      //   </View>
+      // </View>
     );
   };
 

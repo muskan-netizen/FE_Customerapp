@@ -12,9 +12,11 @@ import ru from './ru';
 import pt from './pt';
 import vi from './vi';
 import hi from './hi';
+import ne from './ne';
 import es_elcheragio from './es_elcheragio';
 import es_heybuddy from './es_heybuddy';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
+
 
 //Spanish fils
 
@@ -42,6 +44,7 @@ let strings = new LocalizedStrings({
   pt: pt,
   vi: vi,
   hi: hi,
+  ne:ne,
 });
 export const changeLaguage = (languageKey) => {
   strings.setLanguage(languageKey);

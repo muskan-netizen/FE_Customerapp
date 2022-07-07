@@ -40,7 +40,7 @@ export default function AllinonePyments({navigation, route}) {
       //in case of paypal
       transId = url.substring(url.lastIndexOf('/') + 1);
     } else {
-      transId = queryParams?.transaction_id || queryParams?.subscription_id;
+      transId = queryParams?.transaction_id || queryParams?.subscription_id || queryParams?.TransID ;
     }
     setTimeout(() => {
       if (
@@ -122,6 +122,7 @@ export default function AllinonePyments({navigation, route}) {
   };
 
   const subscriptionApiHit = (id) => {
+console.log(paramsData?.selectedPlanSlug,"paramsData?.selectedPlanSlug")
     actions
       .purchaseSubscriptionPlan(
         `/${paramsData?.selectedPlanSlug}`,

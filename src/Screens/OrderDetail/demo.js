@@ -70,7 +70,7 @@ export default function OrderDetail({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-  // console.log(paramData, 'paramData');
+  console.log(paramData, 'paramData');
   const dineInType = useSelector((state) => state?.home?.dineInType);
   let businessType = appData?.profile?.preferences?.business_type || null;
 
@@ -188,24 +188,32 @@ export default function OrderDetail({navigation, route}) {
   //   }, [currencies, languages, paramData]),
   // );
 
-  useInterval(
-    () => {
-      if (paramData?.fromActive) {
-        getOrders();
-      }
-    },
-    isFocused ? 5000 : null,
-  );
+  // useInterval(
+  //   () => {
+  //     if (paramData?.fromActive) {
+  //       getOrders();
+  //     }
+  //   },
+  //   isFocused ? 5000 : null,
+  // );
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (paramData?.fromActive) {
-        return;
-      } else {
-        getOrders();
-      }
-    }, []),
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     if (paramData?.fromActive) {
+  //       return;
+  //     } else {
+  //       getOrders();
+  //     }
+  //   }, []),
+  // );
+
+  useEffect(()=>{
+    getOrders()
+  },[])
+
+  console.log("api++++++ app data",appData)
+  console.log("api++++++ currencies",currencies)
+  console.log("api++++++ languages",languages)
 
   const getOrders = () => {
     if (!!userData?.auth_token) {
@@ -221,6 +229,7 @@ export default function OrderDetail({navigation, route}) {
 
   /*********Get order detail screen********* */
   const _getOrderDetailScreen = () => {
+   
     let data = {};
     data['order_id'] = paramData?.orderId;
     if (paramData?.selectedVendor) {
@@ -231,17 +240,18 @@ export default function OrderDetail({navigation, route}) {
     }
 
     console.log('sending api data', data);
-  
-    actions
-      .getOrderDetail(data, {
+    
+    actions.getOrderDetail(data, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
-        timezone: RNLocalize.getTimeZone(),
+        // timezone: RNLocalize.getTimeZone(),
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res.data, 'order detail res===>>>>');
+        console.log(res, 'order detail res===>>>>');
+
+        return
 
         if (
           !!res?.data &&
@@ -353,7 +363,7 @@ export default function OrderDetail({navigation, route}) {
           });
         }
       })
-      .catch(errorMethod);
+      .catch((error)=>console.log(error,"error"));
   };
 
 
@@ -981,7 +991,6 @@ export default function OrderDetail({navigation, route}) {
   const _renderItem = ({item, index}) => {
     return (
       <View
-      key={index}
         style={{
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.background
@@ -990,13 +999,7 @@ export default function OrderDetail({navigation, route}) {
         }}>
         {/* show ETA Time */}
         <View style={{paddingHorizontal: moderateScale(10)}}>
-          <UserDetail data={item} type={strings.VENDER}  containerStyle={{ backgroundColor: isDarkMode
-          ? MyDarkTheme.colors.background
-          : colors.white,}}
-          textStyle={{ color: isDarkMode
-            ? MyDarkTheme.colors.text
-            : colors.blackOpacity86,}}
-          />
+          <UserDetail data={item} type={strings.VENDER} />
 
           {item?.products.length
             ? item?.products.map((i, inx) => {
@@ -2843,7 +2846,7 @@ export default function OrderDetail({navigation, route}) {
                 }}
                 apikey={appData.profile?.preferences?.map_key}
                 strokeWidth={3}
-                strokeColor={themeColors?.primary_color}
+                strokeColor={themeColors.primary_color}
                 optimizeWaypoints={true}
                 onStart={(params) => {}}
                 precision={'high'}
@@ -2891,9 +2894,9 @@ export default function OrderDetail({navigation, route}) {
                 <Marker.Animated
                   ref={markerRef}
                   coordinate={state.animateDriver}
-                 >
+                  flat>
                   <Image
-                    source={appIds?.sabroson?imagePath?.icBikeMarker: imagePath.icScooter}
+                    source={imagePath.icScooter}
                     style={{
                       transform: [{rotate: `${state.headingAngle + 110}deg`}],
                     }}
@@ -2946,10 +2949,11 @@ export default function OrderDetail({navigation, route}) {
               style={{
                 height: moderateScaleVertical(100),
                 width: moderateScale(100),
+                
               }}
+              
               colorFilters={[
-                
-                
+      
                 {
                   keypath: 'right sand',
                   color: themeColors.primary_color,
@@ -3008,11 +3012,12 @@ export default function OrderDetail({navigation, route}) {
                   keypath: 'top right sand 1',
                   color: themeColors.primary_color,
                 },
+                
 
                 // top right sand 1
               ]}
             />
-            <Text style={styles.waitToAccept}>{strings.WAITINGTOACCEPT}</Text>
+            <Text style={{...styles.waitToAccept,color:isDarkMode?colors.white:colors.black}}>{strings.WAITINGTOACCEPT}</Text>
           </View>
         )}
         {!!orderStatus &&
@@ -3199,8 +3204,7 @@ export default function OrderDetail({navigation, route}) {
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
       source={loaderOne}
-      isLoadingB={isLoading}>
-        
+      isLoadingB={false}>
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2
@@ -3211,7 +3215,7 @@ export default function OrderDetail({navigation, route}) {
         }
         centerTitle={strings.ORDER + `${'#'}${cartData?.order_number || ''}`}
         customRight={!!cartData?.reports?.report?.original ? customRight : ''}
-      /> 
+      />
       <View
         style={{
           height: 1,
@@ -3233,7 +3237,7 @@ export default function OrderDetail({navigation, route}) {
           ListHeaderComponent={cartItems.length ? getHeader() : null}
           ListFooterComponent={cartItems.length ? getFooter() : null}
           showsVerticalScrollIndicator={false}
-          keyExtractor={(item, index) => {return index.toString()}}
+          keyExtractor={(item, index) => index.toString()}
           renderItem={_renderItem}
           ListEmptyComponent={<ListEmptyCart isLoading={isLoading} />}
           style={{flex: 1}}

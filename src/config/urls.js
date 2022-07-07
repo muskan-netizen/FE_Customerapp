@@ -88,6 +88,11 @@
 
 // export const API_BASE_URL ='https://yogo.gd/api/v1';
 
+// export const API_BASE_URL ='https://aaujaau.focushires.com/api/v1';
+
+
+
+
 //Dlvrd
 // export const API_BASE_URL = 'https://dlvrd-order.netsolutionindia.com/api/v1';
 
@@ -97,7 +102,7 @@
 
 // export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
-// export const API_BASE_URL = 'https://api.focushires.com/api/v1';
+// export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://order.veg-hub.com/api/v1';
 // export const API_BASE_URL = 'https://seratho.com/api/v1';
@@ -122,7 +127,7 @@
 
 // export const API_BASE_URL = 'https://www.ored.co/api/v1'; //ored
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
-// export const API_BASE_URL = 'https://api.focushires.com/api/v1';
+
 
 // export const API_BASE_URL = 'https://961a-112-196-88-218.ngrok.io/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.98.185:8060/api/v1'; // sujata
@@ -413,11 +418,7 @@ export const ADD_RIDER = getApiUrl('/pickup-delivery/add-rider');
 
 export const VENDOR_OPTIMIZE_V2 = getApiUrl('/v2/vendor-optimize');
 export const GET_MORE_CATEGORIES = getApiUrl('/v2/vendor-optimize-category');
-<<<<<<< HEAD
-
-=======
 export const PICK_UP_LOCATION_SEARCH = getApiUrl('/dropoff-location');
->>>>>>> 154fb9c2f0097967fa478865180202376acdaee1
 // export const GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE = getApiUrl('/v2/category/filters',);
 
 //Laundry Service APIs
