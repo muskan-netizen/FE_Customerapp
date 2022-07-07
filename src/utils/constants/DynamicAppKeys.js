@@ -352,7 +352,8 @@ const shortCodes = {
   sadia:'312528',
   elentaMart:'e084cc',
   exprexPro :'cb98e8',
-  fresHest: '7e43f5'
+  fresHest: '7e43f5',
+  servern: '1ba1e9',
 
 };
 
@@ -1761,6 +1762,10 @@ const appIds = {
   fresHest: Platform.select({
     ios: 'com.FresHest.royoOrder',
     android: 'com.FresHest.royoOrder',
+  }),
+  servern: Platform.select({
+    ios: 'com.servern.order',
+    android: 'com.servern.order',
   }),
 
 };
