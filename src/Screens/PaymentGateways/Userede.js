@@ -1,49 +1,47 @@
 import queryString from 'query-string';
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import {WebView} from 'react-native-webview';
-import {useSelector} from 'react-redux';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, ScrollView } from 'react-native';
+import { useDarkMode } from 'react-native-dark-mode';
+import { WebView } from 'react-native-webview';
+import { useSelector } from 'react-redux';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {moderateScaleVertical} from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {showError} from '../../utils/helperFunctions';
+import { height, moderateScaleVertical } from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
 import Header from '../../Components/Header';
 import imagePath from '../../constants/imagePath';
+import { showError } from '../../utils/helperFunctions';
 
-export default function AuthorizeNet({navigation, route}) {
+export default function Userede ({ navigation, route }) {
   let paramsData = route?.params;
   console.log(paramsData, '===>paramsData');
 
-  const {themeToggle, themeColor, appStyle, appData, currencies, languages} =
+  const { themeToggle, themeColor, appStyle, appData, currencies, languages } =
     useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const [state, setState] = useState({
-    webUrl: '',
+    webData: '',
     isLoading: true,
   });
 
   //Update states on screens
-  const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {webUrl, isLoading} = state;
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const { webData, isLoading } = state;
 
   useEffect(() => {
     apiHit();
   }, []);
 
   const apiHit = async () => {
-    let queryData = `/${paramsData?.selectedPayment?.code?.toLowerCase()}?amount=${
-      paramsData?.total_payable_amount
-    }&payment_option_id=${
-      paramsData?.payment_option_id
-    }&action=${paramsData?.redirectFrom}&order_number=${paramsData?.orderDetail?.order_number}`;
-console.log(paramsData?.orderDetail?.order_number,"ordeeeeeeeeee")
+    let queryData = `/${paramsData?.selectedPayment?.code?.toLowerCase()}?amount=${paramsData?.total_payable_amount
+      }&payment_option_id=${paramsData?.payment_option_id
+      }&action=${paramsData?.redirectFrom}&order_number=${paramsData?.orderDetail?.order_number}`;
+
     try {
       const res = await actions.openPaymentWebUrl(
         queryData,
@@ -54,26 +52,28 @@ console.log(paramsData?.orderDetail?.order_number,"ordeeeeeeeeee")
           language: languages?.primary_language?.id,
         },
       );
-      console.log(res, 'responseMobbex');
-      updateState({webUrl: res.data});
+      console.log(res,"apiHit>openPay>res");
+      updateState({ webData: res?.data });
+     
     } catch (error) {
-      updateState({isLoading: false});
-
+        console.log(error,"apiHit>openPay>res")
+      updateState({ isLoading: false });
       showError(error.message || error);
     }
   };
+
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   const onNavigationStateChange = (props) => {
-    const {url} = props;
+    const { url } = props;
     const URL = queryString.parseUrl(url);
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
-    console.log(props, 'propsMobbex');
+    console.log(props, 'props===>');
 
     setTimeout(() => {
       if (queryParams.status == 200) {
@@ -90,8 +90,8 @@ console.log(paramsData?.orderDetail?.order_number,"ordeeeeeeeeee")
             },
           })();
         }
-      }
-      else if (queryParams.status == 0) {
+
+      } else if (queryParams.status == 0) {
         if (paramsData?.extraData) {
           navigation.goBack()
         } else {
@@ -99,10 +99,13 @@ console.log(paramsData?.orderDetail?.order_number,"ordeeeeeeeeee")
             queryURL: url.replace(`${nonQueryURL}?`, ''),
           })();
         }
-       
+
       }
-    }, 3000);
+    }, 500);
   };
+
+  console.log(isLoading, 'isLoadingisLoadingisLoading');
+console.log(webData,"webDataaaaaa")
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.transparent}
@@ -111,26 +114,32 @@ console.log(paramsData?.orderDetail?.order_number,"ordeeeeeeeeee")
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3  || appStyle?.homePageLayout === 5? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? imagePath.icBackb : imagePath.back
         }
         centerTitle={
           paramsData?.selectedPayment?.title || paramsData?.walletTip?.title
         }
-        headerStyle={{backgroundColor: colors.white}}
+        headerStyle={{ backgroundColor: colors.white }}
       />
-      {webUrl !== '' && (
+      
+      {webData !== '' && (
         <WebView
-          onLoad={() => updateState({isLoading: false})}
-          source={{uri: webUrl}}
+          showsVerticalScrollIndicator={false}
+          source={{
+            uri: webData,
+            
+          }}
           onNavigationStateChange={onNavigationStateChange}
+          onLoad={() => updateState({ isLoading: false })}
         />
       )}
-      <View
-        style={{
-          height: moderateScaleVertical(75),
-          backgroundColor: colors.transparent,
-        }}
+      <View 
+       style={{
+        height:moderateScaleVertical(20)
+       }}
       />
+
+     
     </WrapperContainer>
   );
 }

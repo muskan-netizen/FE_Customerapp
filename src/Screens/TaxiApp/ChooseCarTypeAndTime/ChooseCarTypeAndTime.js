@@ -417,8 +417,11 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       case 6: //Payfast Payment Getway
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
         break;
-      case 32: //Payfast Payment Getway
+      case 32: //PAYPHONE Payment Getway
         navigation.navigate(navigationStrings.PAYPHONE, paymentData);
+      case 18://Authorize.net Payment Gatway
+     
+        navigation.navigate(navigationStrings.AuthorizeNet, paymentData);
         break;
       default:
         navigation.navigate(

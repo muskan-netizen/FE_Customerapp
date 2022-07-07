@@ -43,6 +43,8 @@ import {
   StripeOXXO,
   VivaWallet,
   MyCash,
+  OpenPay,
+  Userede,
 } from '../Screens';
 import MyProfile from '../Screens/MyProfile/MyProfile2';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
@@ -270,6 +272,16 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.STRIPEIDEAL}
         component={StripeIdeal}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name={navigationStrings.OPENPAY}
+        component={OpenPay}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name={navigationStrings.USEREDE}
+        component={Userede}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

@@ -207,19 +207,6 @@ android {
     flavorDimensions "appType"
    
 
-// productFlavors{
-//             ubercann{
-//                 dimension "appType"
-//                 versionCode 1
-//                 versionName "1.0"
-//                 minSdkVersion rootProject.ext.minSdkVersion
-//                 targetSdkVersion rootProject.ext.targetSdkVersion         
-//                 applicationId 'com.UCANN'
-//                 resValue "string", "app_name", "UCANN"
-//                 resValue "string", "host_name", ""
-//             }
-// }
-
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -4734,7 +4721,7 @@ android {
             }
             donepacked{
                 dimension "appType"
-                versionCode 7
+                versionCode 11
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         

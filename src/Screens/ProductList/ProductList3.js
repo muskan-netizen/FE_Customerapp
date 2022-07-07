@@ -236,53 +236,45 @@ export default function Products({ route, navigation }) {
 
   //usecallback functions
 
-  const renderSectionItem = useCallback(
-    ({ item, index, section }) => {
-      // const url1 = item?.media[0]?.image?.path.image_fit;
-      return (
-        <View
-          key={String(index)}
-          style={{
-            height: 185,
-            // minHeight: url1
-            //   ? moderateScaleVertical(200)
-            //   : 0,
-            // overflow: 'visible',
-            // backgroundColor: 'red',
-            // marginBottom: moderateScaleVertical(5),
-          }}>
-          <ProductCard3
-            data={item}
-            index={index}
-            onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-            onAddtoWishlist={() => _onAddtoWishlist(item)}
-            addToCart={() => addSingleItem(item, section, index)}
-            onIncrement={() => checkIsCustomize(item, section, index, 1)}
-            onDecrement={() => checkIsCustomize(item, section, index, 2)}
-            selectedItemID={selectedItemID}
-            btnLoader={btnLoader}
-            selectedItemIndx={selectedItemIndx}
-            businessType={businessType}
-            categoryInfo={categoryInfo}
-            animateText={animateText}
-            section={section}
-          />
-        </View>
-      );
-    },
-    [
-      cloneSectionList,
-      btnLoader,
-      productListId,
-      repeatItems,
-      cartId,
-      categoryInfo,
-    ],
-  );
+  const renderSectionItem = useCallback(({ item, index, section }) => {
+    // const url1 = item?.media[0]?.image?.path.image_fit;
+    return (
+      <View
+        key={String(index)}
+        style={{
+          // height: 180,
+          // minHeight: url1
+          //   ? moderateScaleVertical(200)
+          //   : 0,
+          // overflow: 'visible',
+          // backgroundColor: 'red',
+          // marginBottom: moderateScaleVertical(5),
+        }}>
+        <ProductCard3
+          data={item}
+          index={index}
+          onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+          onAddtoWishlist={() => _onAddtoWishlist(item)}
+          addToCart={() => addSingleItem(item, section, index)}
+          onIncrement={() => checkIsCustomize(item, section, index, 1)}
+          onDecrement={() => checkIsCustomize(item, section, index, 2)}
+          selectedItemID={selectedItemID}
+          btnLoader={btnLoader}
+          selectedItemIndx={selectedItemIndx}
+          businessType={businessType}
+          categoryInfo={categoryInfo}
+          animateText={animateText}
+          section={section}
+        />
+      </View>
+    );
+  }, [cloneSectionList, btnLoader, productListId, repeatItems, cartId, categoryInfo])
+
 
   const getItemLayout = useCallback((data, index) => {
-    return { length: 185, offset: 185 * index, index };
-  }, []);
+    return { length: 180, offset: 180 * index, index }
+  }, [])
+
 
   const renderSectionHeader = useCallback(
     (props) => {
@@ -789,7 +781,7 @@ export default function Products({ route, navigation }) {
                       color: colors.redB,
                       // marginTop: moderateScaleVertical(4)
                     }}>
-                    {strings.WE_ARE_NOT_ACCEPTING} {categoryInfo?.delaySlot}
+                    {appIds?.masa===getBundleId()? strings.YOU_CAN_SEHEDULE + ' ' +categoryInfo?.delaySlot: strings.WE_ARE_NOT_ACCEPTING + categoryInfo?.delaySlot}
                   </Text>
                 ) : null}
               </View>
@@ -3317,12 +3309,12 @@ export default function Products({ route, navigation }) {
             extraData={cloneSectionList}
             getItemLayout={getItemLayout}
             // Performance settings
-            removeClippedSubviews={true} // Unmount components when outside of window
-            initialNumToRender={10} // Reduce initial render amount
-            maxToRenderPerBatch={1} // Redu ce number in each render batch
+            removeClippedSubviews={true} // Unmount components when outside of window 
+            // initialNumToRender={2} // Reduce initial render amount
+            // maxToRenderPerBatch={10} // Redu ce number in each render batch
             updateCellsBatchingPeriod={100} // Increase time between renders
-            windowSize={7} // Reduce the window size
-            renderSectionFooter={renderSectionFooter}
+            // windowSize={7} // Reduce the window size
+
           />
         ) : (
           <FlatList

@@ -822,6 +822,7 @@ Amount`,
   PRODUCT: 'Product',
   WE_ARE_NOT_ACCEPTING:
     'We are not accepting orders right now. You can schedule this for',
+    YOU_CAN_SEHEDULE:"You can schedule this for",
   EXTRA_INSTRUCTION: 'Extra Instruction',
   YOURDRIVERHASMODIFIED: 'Your driver has modified your order',
   DIFFERENCEAMOUNT: 'Difference Amount',

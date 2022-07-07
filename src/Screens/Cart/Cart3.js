@@ -24,7 +24,7 @@ import * as Animatable from 'react-native-animatable';
 import {Calendar} from 'react-native-calendars';
 import {useDarkMode} from 'react-native-dark-mode';
 import DatePicker from 'react-native-date-picker';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -857,6 +857,7 @@ function Cart({navigation, route}) {
       orderDetail: res.data,
       redirectFrom: 'cart',
       selectedPayment: selectedPayment,
+      
     };
     if (
       !!paymentId &&
@@ -999,7 +1000,14 @@ function Cart({navigation, route}) {
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.VIVAWALLET, paymentData);
         break;
-
+      case 41: //OPENPAY Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.OPENPAY,paymentData);
+        break;
+      case 40: //USEREDE Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.USEREDE,paymentData);
+        break;
       default:
         if (
           !!businessType &&
@@ -1187,7 +1195,8 @@ function Cart({navigation, route}) {
           selectedPayment?.id != 21 &&
           selectedPayment?.id != 36 &&
           selectedPayment?.id != 39 &&
-          selectedPayment?.id != 34
+          selectedPayment?.id != 34 &&
+          selectedPayment?.id != 41
         ) {
           setCartItems([]);
           setCartData({});
@@ -2507,7 +2516,7 @@ function Cart({navigation, route}) {
                   color: colors.redB,
                   fontSize: textScale(9),
                 }}>
-                {strings.WE_ARE_NOT_ACCEPTING} {item?.delaySlot}
+               {appIds?.masa===getBundleId()? strings.YOU_CAN_SEHEDULE + ' ' +item?.delaySlot: strings.WE_ARE_NOT_ACCEPTING + item?.delaySlot}
               </Text>
             ) : null}
 

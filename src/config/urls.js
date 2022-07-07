@@ -16,7 +16,7 @@
 // export const API_BASE_URL = 'https://palmettoplusdelivered.com/api/v1';
 // export const API_BASE_URL = 'https://dispatcher.releezer.shop';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
-//  export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
+//  export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';//harbans sir
 //sujata
 // export const API_BASE_URL = 'http://192.168.99.124:8005/api/v1';
 // export const API_BASE_URL ='http://192.168.96.84:9090/api/v1'
@@ -26,7 +26,7 @@
 // export const API_BASE_URL = 'https://admin.shoorafresh.com.au/api/v1'
 //
 //Vishwas
-// export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1';
+// export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
 // export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
 // export const API_BASE_URL = 'https://pideunfleety.com/api/v1';
 // export const API_BASE_URL = 'https://heybuddy.com.mx/api/v1';
@@ -413,7 +413,11 @@ export const ADD_RIDER = getApiUrl('/pickup-delivery/add-rider');
 
 export const VENDOR_OPTIMIZE_V2 = getApiUrl('/v2/vendor-optimize');
 export const GET_MORE_CATEGORIES = getApiUrl('/v2/vendor-optimize-category');
+<<<<<<< HEAD
 
+=======
+export const PICK_UP_LOCATION_SEARCH = getApiUrl('/dropoff-location');
+>>>>>>> 154fb9c2f0097967fa478865180202376acdaee1
 // export const GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE = getApiUrl('/v2/category/filters',);
 
 //Laundry Service APIs
