@@ -3,34 +3,34 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1054220130617-f8bgei32dse0pa5uo3rtqam9vbbc2n5a.apps.googleusercontent.com</string>
+	<string>465013572161-lfhr0rue7unopcr2g2na9m107eoggdjs.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1054220130617-f8bgei32dse0pa5uo3rtqam9vbbc2n5a</string>
+	<string>c</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>1054220130617-9qc6rkvu9n0kcj86ki6c13mreqnhrrba.apps.googleusercontent.com</string>
+	<string>465013572161-7jv61lprpep1cnj81l0ae583hhfl3u84.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyApzBmOCbRrKhvcICruqcf8PPqwG4HEZPA</string>
+	<string>AIzaSyD8OyLHfbAkbPMkBbvQFQTkxqDLlVTaVfo</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1054220130617</string>
+	<string>465013572161</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.fairex</string>
+	<string>com.fairex.orders</string>
 	<key>PROJECT_ID</key>
-	<string>fairex-4d851</string>
+	<string>fairex-order</string>
 	<key>STORAGE_BUCKET</key>
-	<string>fairex-4d851.appspot.com</string>
+	<string>fairex-order.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1054220130617:ios:f6857d433b3a538151b0e8</string>
+	<string>1:465013572161:ios:25eb70b017a3c5791ffcc0</string>
 </dict>
 </plist>

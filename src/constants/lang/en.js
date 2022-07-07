@@ -959,5 +959,7 @@ Amount`,
   SERVICE_ADDRESS:'Service Address',
   BOOK_HERE:'Book Here',
   YOU_ALREADY_HAVE_ITEMS_FROM_ANOTHER_STORE_DO_YOU_WANT_TO_DISCARD_THEM:
-  "You already have items from another store. Do you want to discard them?"
+  "You already have items from another store. Do you want to discard them?",
+  DELETE_ACCOUNT:"Delete Account",
+  ARE_YOU_SURE_YOU_WANT_TO_DELETE:'Are you sure, you want to delete your account? Deleting your account is permanent and will remove all content and profile settings.'
 };

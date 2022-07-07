@@ -3,7 +3,8 @@ import {getBundleId} from 'react-native-device-info';
 
 const shortCodes = {
   runrun: 'bf8608',
-  tranzit: '52a1a6',
+ 
+    tranzit: '52a1a6',
   hmoobhub: 'fa11e1',
   capcorp: '149f3e',
   masa: 'c8490a',
@@ -349,7 +350,9 @@ const shortCodes = {
   capitalDiagnostic: 'fd6dd6',
   abbeRides: '8501b6',
   nrsa:'e9f97c',
-  sadia:'312528'
+  sadia:'312528',
+  elentaMart:'e084cc',
+  exprexPro :'cb98e8',
 
 };
 
@@ -1097,7 +1100,7 @@ const appIds = {
   }),
   bimol: Platform.select({
     ios: 'com.bimol',
-    android: 'com.bimol',
+    android: 'com.bimol.user',
   }),
   vendorspot: Platform.select({
     ios: 'com.vendorspot',
@@ -1196,8 +1199,8 @@ const appIds = {
     android: 'com.sijang',
   }),
   fairex: Platform.select({
-    ios: 'com.fairex',
-    android: 'com.fairex',
+    ios: 'com.fairex.orders',
+    android: 'com.fairex.orders',
   }),
   everywhere: Platform.select({
     ios: 'com.app.everywhere',
@@ -1489,8 +1492,8 @@ const appIds = {
     android: 'com.mediPick',
   }),
   meltivers: Platform.select({
-    ios: 'com.meltivers',
-    android: 'com.meltivers',
+    ios: 'com.meltiverse.user',
+    android: 'com.meltiverse.user',
   }),
   ensoDigitalAgency: Platform.select({
     ios: 'com.ensoDigitalAgency',
@@ -1605,8 +1608,8 @@ const appIds = {
     android: 'com.patrolNow',
   }),
   butlerDelivery: Platform.select({
-    ios: 'com.butlerDelivery',
-    android: 'com.butlerDelivery',
+    ios: 'com.order.butlerDelivery',
+    android: 'com.order.butlerDelivery',
   }),
   swatiRX: Platform.select({
     ios: 'com.swatiRX',
@@ -1683,7 +1686,7 @@ const appIds = {
   }),
   blueBundles: Platform.select({
     ios: 'com.bluebundles',
-    android: 'com.bluebundles',
+    android: 'com.bluebundles.customer',
   }),
   busTaMove: Platform.select({
     ios: 'com.bustamove',
@@ -1746,6 +1749,14 @@ const appIds = {
   sadia: Platform.select({
     ios: 'com.Sadia',
     android: 'com.Sadia',
+  }),
+  elentaMart: Platform.select({
+    ios: 'com.ElentaMart',
+    android: 'com.ElentaMart',
+  }),
+  exprexPro: Platform.select({
+    ios: 'com.exprexPro',
+    android: 'com.exprexPro',
   }),
 
 };

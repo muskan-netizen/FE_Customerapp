@@ -2221,6 +2221,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+          case appIds.elentaMart:
+          updateState({
+            shortCode: shortCodes.elentaMart,
+            isShortcodePrefilled: true,
+          });
+          break;
+          case appIds.exprexPro:
+            updateState({
+              shortCode: shortCodes.exprexPro,
+              isShortcodePrefilled: true,
+            });
+            break;
       }
     })();
   }, []);
@@ -2261,13 +2273,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '245bae'
+        // code: '4fc332',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '3cc883',
+        // code: '4fc332',
         code: shortCode,
       };
     }

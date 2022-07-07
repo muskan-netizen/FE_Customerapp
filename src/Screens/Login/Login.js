@@ -513,7 +513,9 @@ export default function Login({ navigation }) {
         style={{
           flex: 1,
           marginHorizontal: moderateScale(24),
-        }}>
+        }}
+        enableOnAndroid={true}
+        >
         <View style={{ height: moderateScaleVertical(28) }} />
         <Text
           style={

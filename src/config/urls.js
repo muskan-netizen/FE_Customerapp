@@ -7,17 +7,18 @@
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
 export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
-// export const API_BASE_URL = 'https://bimol.in/api/v1'
+// export const API_BASE_URL = 'https://dingdongdelivers.com/api/v1'
 // export const API_BASE_URL = 'https://foodnests.com/api/v1'
 // export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1'
 // export const API_BASE_URL = 'https://bluebundles.org/api/v1'
+// export const API_BASE_URL = 'https://bimol.in/api/v1'
 // export const API_BASE_URL = 'https://ineed.do/api/v1'
 // export const API_BASE_URL = 'https://fairexglobal.com/api/v1'
 // export const API_BASE_URL = 'https://drusdeliveries.com/api/v1';
 // export const API_BASE_URL = 'https://palmettoplusdelivered.com/api/v1';
 // export const API_BASE_URL = 'https://dispatcher.releezer.shop';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
-//  export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
+//  export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1';
 //sujata
 // export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1';
 
@@ -26,7 +27,21 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'https://admin.shoorafresh.com.au/api/v1'
 
+//live 
+// export const API_BASE_URL = 'https://toor.life/api/v1';
+// export const API_BASE_URL = 'https://fijieats.com/api/v1'
 // export const API_BASE_URL = 'https://swantaxi.net/api/v1'
+// export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1'
+//classicab
+// export const API_BASE_URL = 'https://classicab.org/api/v1';
+
+// export const API_BASE_URL = 'https://pas41.com/api/v1'
+
+// export const API_BASE_URL = 'https://jiffex.in/api/v1'
+
+// export const API_BASE_URL = 'https://butlerdeliveryusa.com/api/v1'
+
+// export const API_BASE_URL = 'https://admin.shoorafresh.com.au/api/v1'
 //
 //Vishwas
 // export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1';
@@ -64,6 +79,17 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://palmettoplusdelivered.com/api/v1';
 // export const API_BASE_URL = 'https://uvennow.com/api/v1';
 // export const API_BASE_URL = 'https://grn.green/api/v1';
+// export const API_BASE_URL = 'https://cabio.rostaging.com/api/v1'; 
+// export const API_BASE_URL = 'https://glamsouq.com/api/v1';
+// export const API_BASE_URL = 'https://getfix.com.my/api/v1'; 
+// export const API_BASE_URL = 'https://order.swiftandvalu.com/api/v1'; 
+// export const API_BASE_URL = 'https://ubercann.com/api/v1'; 
+// export const API_BASE_URL = 'https://palmettoplusdelivered.com/api/v1'; 
+// export const API_BASE_URL = 'https://uvennow.com/api/v1'; 
+// export const API_BASE_URL = 'https://grn.green/api/v1'; 
+
+// MrHealth
+// export const API_BASE_URL = 'https://mrhealth.in/api/v1'
 
 //Harbans
 // export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
@@ -74,6 +100,9 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1';  //swiffy
 //Gourav.s
 // export const API_BASE_URL = 'http://192.168.99.130:8005/api/v1';
+
+//baytukom
+// export const API_BASE_URL = 'https://baytukom-order.netsolutionindia.com/api/v1';
 
 //owais nor
 // export const API_BASE_URL = 'https://1204-112-196-88-218.ngrok.io/api/v1';
@@ -187,10 +216,14 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
 // export const API_BASE_URL = 'https://trucktirenow.com/api/v1';
 
+//classicab
+// export const API_BASE_URL = 'https://classicab.org/api/v1';
+
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
 export const LOGIN_BY_USERNAME = getApiUrl('/auth/loginViaUsername');
 export const VENDOR_LOGIN_BY_USERNAME = getApiUrl('/auth/login');
+export const DELETE_ACCOUNT = getApiUrl('/auth/deleteUser');
 export const PHONE_LOGIN_OTP = getApiUrl('/auth/verify/phoneLoginOtp');
 export const LOGIN_API = getApiUrl('/auth/login');
 export const SIGN_UP_API = getApiUrl('/auth/register');
@@ -401,6 +434,7 @@ export const ADD_RIDER = getApiUrl('/pickup-delivery/add-rider');
 
 export const VENDOR_OPTIMIZE_V2 = getApiUrl('/v2/vendor-optimize');
 export const GET_MORE_CATEGORIES = getApiUrl('/v2/vendor-optimize-category');
+
 // export const GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE = getApiUrl('/v2/category/filters',);
 
 //Laundry Service APIs

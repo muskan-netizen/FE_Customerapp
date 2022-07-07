@@ -1167,7 +1167,8 @@ export default function Cart2({navigation, route}) {
 
                 <KeyboardAwareScrollView
                   horizontal
-                  showsHorizontalScrollIndicator={false}>
+                  showsHorizontalScrollIndicator={false}
+                  enableOnAndroid={true}>
                   {cartData?.tip.map((j, jnx) => {
                     return (
                       <TouchableOpacity

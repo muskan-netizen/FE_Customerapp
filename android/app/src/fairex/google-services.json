@@ -1,65 +1,58 @@
 {
   "project_info": {
-    "project_number": "1054220130617",
-    "project_id": "fairex-4d851",
-    "storage_bucket": "fairex-4d851.appspot.com"
+    "project_number": "465013572161",
+    "project_id": "fairex-order",
+    "storage_bucket": "fairex-order.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1054220130617:android:98ecc6dfec696f3c51b0e8",
+        "mobilesdk_app_id": "1:465013572161:android:6f259ccb78c73b121ffcc0",
         "android_client_info": {
-          "package_name": "com.fairex"
+          "package_name": "com.fairex.orders"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1054220130617-9qc6rkvu9n0kcj86ki6c13mreqnhrrba.apps.googleusercontent.com",
+          "client_id": "465013572161-7jv61lprpep1cnj81l0ae583hhfl3u84.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.fairex",
+            "package_name": "com.fairex.orders",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "1054220130617-shf1sreaguqnfc7gldp3af175nknlbi8.apps.googleusercontent.com",
+          "client_id": "465013572161-jjfu498nul3tce8ppmgcuib1mklntcln.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.fairex",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "1054220130617-vv41gd7pp43oeclb7nc7t2ht2kioc5ii.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.fairex",
+            "package_name": "com.fairex.orders",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "1054220130617-iblh5nr1cuogm8breqmsjih81luuili7.apps.googleusercontent.com",
+          "client_id": "465013572161-umf7dpp0k2s15q3fb8eof7q42aknge81.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fairex.orders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "465013572161-54vlaepqd9s0c38ioutm8tcpo5bojusj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDUJmgPuyz0gToHluBHw0tidBZtk0j09_k"
+          "current_key": "AIzaSyCs7-Fq1bXfylGxkQcaGkrcMrD9wJLkgwA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1054220130617-iblh5nr1cuogm8breqmsjih81luuili7.apps.googleusercontent.com",
+              "client_id": "465013572161-54vlaepqd9s0c38ioutm8tcpo5bojusj.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "1054220130617-f8bgei32dse0pa5uo3rtqam9vbbc2n5a.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.fairex"
-              }
             }
           ]
         }

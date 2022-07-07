@@ -1746,6 +1746,14 @@ end
 target 'Sadia' do
   
 end
+# ElentaMart Target
+target 'ElentaMart' do
+  
+end
+# ExprexPro Target
+target 'ExprexPro' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
