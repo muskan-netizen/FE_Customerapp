@@ -43,7 +43,7 @@ export default function AuthorizeNet({navigation, route}) {
     }&payment_option_id=${
       paramsData?.payment_option_id
     }&action=${paramsData?.redirectFrom}&order_number=${paramsData?.orderDetail?.order_number}`;
-
+console.log(paramsData?.orderDetail?.order_number,"ordeeeeeeeeee")
     try {
       const res = await actions.openPaymentWebUrl(
         queryData,
@@ -77,17 +77,29 @@ export default function AuthorizeNet({navigation, route}) {
 
     setTimeout(() => {
       if (queryParams.status == 200) {
-        moveToNewScreen(navigationStrings.ORDERSUCESS, {
-          orderDetail: {
-            order_number: queryParams.order,
-            id: paramsData?.orderDetail?.id,
-          },
-        })();
+        if (paramsData?.extraData) {
+          navigation.navigate(
+            navigationStrings.PICKUPTAXIORDERDETAILS,
+            paramsData?.extraData,
+          );
+        } else {
+          moveToNewScreen(navigationStrings.ORDERSUCESS, {
+            orderDetail: {
+              order_number: queryParams.order,
+              id: paramsData?.orderDetail?.id,
+            },
+          })();
+        }
       }
-      if (queryParams.status == 0) {
-        moveToNewScreen(navigationStrings.CART, {
-          queryURL: url.replace(`${nonQueryURL}?`, ''),
-        })();
+      else if (queryParams.status == 0) {
+        if (paramsData?.extraData) {
+          navigation.goBack()
+        } else {
+          moveToNewScreen(navigationStrings.CART, {
+            queryURL: url.replace(`${nonQueryURL}?`, ''),
+          })();
+        }
+       
       }
     }, 3000);
   };

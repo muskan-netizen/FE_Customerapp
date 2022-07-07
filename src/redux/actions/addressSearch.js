@@ -8,5 +8,5 @@ const { dispatch } = store;
       payload: data,
     });
   };
-  
+ 
   

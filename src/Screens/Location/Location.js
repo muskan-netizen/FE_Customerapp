@@ -446,6 +446,7 @@ export default function Location({route, navigation}) {
               mapClose={mapClose}
               addressDone={addressDone}
               isMapSelectLocation={isMapSelectLocation}
+              currentLatLong={curLatLng}
             />
           </View>
         </View>

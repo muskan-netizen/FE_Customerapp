@@ -231,6 +231,7 @@ export default function OrderDetail({navigation, route}) {
     }
 
     console.log('sending api data', data);
+  
     actions
       .getOrderDetail(data, {
         code: appData?.profile?.code,
@@ -2892,7 +2893,7 @@ export default function OrderDetail({navigation, route}) {
                   coordinate={state.animateDriver}
                  >
                   <Image
-                    source={imagePath.icScooter}
+                    source={appIds?.sabroson?imagePath?.icBikeMarker: imagePath.icScooter}
                     style={{
                       transform: [{rotate: `${state.headingAngle + 110}deg`}],
                     }}
@@ -3199,6 +3200,7 @@ export default function OrderDetail({navigation, route}) {
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
+        
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2
@@ -3209,7 +3211,7 @@ export default function OrderDetail({navigation, route}) {
         }
         centerTitle={strings.ORDER + `${'#'}${cartData?.order_number || ''}`}
         customRight={!!cartData?.reports?.report?.original ? customRight : ''}
-      />
+      /> 
       <View
         style={{
           height: 1,

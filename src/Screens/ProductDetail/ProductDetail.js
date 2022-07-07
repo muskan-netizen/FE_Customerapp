@@ -1433,7 +1433,7 @@ export default function ProductDetail({route, navigation}) {
                               textTransform: 'capitalize',
                               color: isDarkMode
                               ? MyDarkTheme.colors.text
-                              : colors.white,
+                              : themeColors.secondary_color,
                             }}
                             onPress={addToCart}
                             btnText={`${strings.ADD}  ${
