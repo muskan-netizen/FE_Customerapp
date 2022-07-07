@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Grayscale } from 'react-native-color-matrix-image-filters';
 import { useDarkMode } from 'react-native-dark-mode';
+import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
@@ -23,6 +24,7 @@ import {
   width,
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
+import { appIds } from '../utils/constants/DynamicAppKeys';
 import {
   checkEvenOdd,
   getColorCodeWithOpactiyNumber,
@@ -172,7 +174,7 @@ const MarketCard3 = ({
       activeOpacity={1}
       onPress={onPress}
       style={
-        !!data?.is_vendor_closed &&  data?.closed_store_order_scheduled == 0
+        !!data?.is_vendor_closed && data?.closed_store_order_scheduled == 0
           ? {
             ...styles.mainTouchContainer,
             ...getScaleTransformationStyle(scaleInAnimated),
@@ -194,14 +196,14 @@ const MarketCard3 = ({
         {!!data?.is_vendor_closed && !!data?.closed_store_order_scheduled ? (
           <View >
 
-            <View style={{ justifyContent: 'center', backgroundColor:'white'}}>
+            <View style={{ justifyContent: 'center', backgroundColor: 'white' }}>
               <FastImage
                 source={{
                   uri: imageUrl,
                   priority: FastImage.priority.high,
                   cache: FastImage.cacheControl.immutable,
                 }}
-                
+
                 style={{
                   ...styles.mainImage,
                   ...fastImageStyle,
@@ -212,7 +214,8 @@ const MarketCard3 = ({
               <View style={styles.vendorScheduledView} >
                 <Text
                   style={styles.vendorScheduledText}>
-                  {strings.WE_ARE_NOT_ACCEPTING} {data?.delaySlot}{' '}
+                  {getBundleId() == appIds.masa ? `${strings.WE_ACCEPT_ONLY_SCHEDULE_ORDER} ${data?.delaySlot} ` : ` ${strings.WE_ARE_NOT_ACCEPTING} ${data?.delaySlot} `}
+
                 </Text>
               </View>
             </View>
@@ -234,7 +237,7 @@ const MarketCard3 = ({
                   opacity: 0.8,
                 }}
                 resizeMode={FastImage.resizeMode.cover}
-                
+
               />
               <Text style={{ ...styles.currentlyUnavailable }}>
                 {strings.CURRENTLYUNAVAILABLE}
@@ -441,25 +444,25 @@ export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme })
       fontFamily: fontFamily?.bold,
     },
     vendorScheduledView: {
-      position: 'absolute', 
-      bottom: moderateScaleVertical(1), 
-      width: moderateScale(width/1.1),
-      justifyContent: 'center', 
-      alignItems: 'center', 
-      alignSelf: 'center', 
-      paddingHorizontal:moderateScale(4), 
+      position: 'absolute',
+      bottom: moderateScaleVertical(1),
+      width: moderateScale(width / 1.2),
+      justifyContent: 'center',
+      alignItems: 'center',
+      alignSelf: 'center',
+      // paddingHorizontal: moderateScale(6),
     },
     vendorScheduledText: {
       color: colors.white,
       fontSize: textScale(14),
       fontFamily: fontFamily.medium,
       textAlign: 'center',
-      paddingHorizontal:moderateScaleVertical(4),
+      paddingHorizontal: moderateScaleVertical(4),
       backgroundColor: getColorCodeWithOpactiyNumber(
-      colors.black.substring(1),
-      60,
-    ),
-}
+        colors.black.substring(1),
+        60,
+      ),
+    }
   });
   return styles;
 }

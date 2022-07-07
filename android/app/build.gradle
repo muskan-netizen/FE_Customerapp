@@ -693,7 +693,7 @@ android {
                 applicationId 'com.jet'
                 resValue "string", "app_name", "Jet"
                 resValue "string", "host_name", ""
-            }
+            }    
             africanize{
                 dimension "appType"
                 versionCode 1

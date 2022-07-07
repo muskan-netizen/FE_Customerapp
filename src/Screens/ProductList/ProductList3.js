@@ -794,7 +794,7 @@ export default function Products({ route, navigation }) {
                       color: colors.redB,
                       // marginTop: moderateScaleVertical(4)
                     }}>
-                    {strings.WE_ARE_NOT_ACCEPTING} {categoryInfo?.delaySlot}
+                    {getBundleId() == appIds.masa ? `${strings.WE_ACCEPT_ONLY_SCHEDULE_ORDER} ${categoryInfo?.delaySlot} `  :  ` ${strings.WE_ARE_NOT_ACCEPTING} ${categoryInfo?.delaySlot} `}
                   </Text>
                 ) : null}
               </View>

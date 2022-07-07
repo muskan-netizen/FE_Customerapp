@@ -913,4 +913,5 @@ export default {
     THANKS_FOR_YOUR_PURCHASE: 'तपाईंको खरिदको लागि धन्यवाद।',
     PLEASE_SELECT_DATETIME_SLOTS: 'कृपया मिति र समय स्लटहरू चयन गर्नुहोस्',
     BOOK_A_TABLE:'टेबल बुक गर्नुहोस्',
+    WE_ACCEPT_ONLY_SCHEDULE_ORDER:'We are accepting only schedule order',
   };

@@ -927,5 +927,6 @@ export default {
     SERVICE_ADDRESS:'Service Address',
     BOOK_HERE:'Book Here',
     WR_ARE_CURRENTLY_NOT_OPERATING:'We are currently not operating in your location',
+    WE_ACCEPT_ONLY_SCHEDULE_ORDER:'We are accepting only schedule order',
   };
   

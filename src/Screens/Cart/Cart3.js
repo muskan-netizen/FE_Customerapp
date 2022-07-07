@@ -2529,7 +2529,8 @@ function Cart({ navigation, route }) {
                   color: colors.redB,
                   fontSize: textScale(9),
                 }}>
-                {strings.WE_ARE_NOT_ACCEPTING} {item?.delaySlot}
+                {/* {strings.WE_ARE_NOT_ACCEPTING} {item?.delaySlot} */}
+                {getBundleId() == appIds.masa ? `${strings.WE_ACCEPT_ONLY_SCHEDULE_ORDER} ${item?.delaySlot} `  :  ` ${strings.WE_ARE_NOT_ACCEPTING} ${item?.delaySlot} `}
               </Text>
             ) : null}
 
