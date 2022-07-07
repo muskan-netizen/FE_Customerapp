@@ -9,6 +9,7 @@ import {
   I18nManager,
   Image,
   ImageBackground,
+  Linking,
   SafeAreaView,
   ScrollView,
   Text,
@@ -242,15 +243,17 @@ export default function Products({route, navigation}) {
       return (
         <View
           key={String(index)}
-          style={{
-            // height: 185,
-            // minHeight: url1
-            //   ? moderateScaleVertical(200)
-            //   : 0,
-            // overflow: 'visible',
-            // backgroundColor: 'red',
-            // marginBottom: moderateScaleVertical(5),
-          }}>
+          style={
+            {
+              // height: 185,
+              // minHeight: url1
+              //   ? moderateScaleVertical(200)
+              //   : 0,
+              // overflow: 'visible',
+              // backgroundColor: 'red',
+              // marginBottom: moderateScaleVertical(5),
+            }
+          }>
           <ProductCard3
             data={item}
             index={index}
@@ -715,7 +718,35 @@ export default function Products({route, navigation}) {
                         </View>
                       ) : null}
                     </View>
-
+                    {!!categoryInfo?.instagram_url && (
+                      <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={() =>
+                          Linking.openURL(
+                            categoryInfo?.instagram_url ||
+                              'https://www.instagram.com',
+                          )
+                        }
+                        style={{
+                          marginTop: moderateScale(5),
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}>
+                        <Image source={imagePath.icInstagram} />
+                        <Text
+                          style={{
+                            fontSize: textScale(11.5),
+                            fontFamily: fontFamily.regular,
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.white,
+                            marginLeft: moderateScale(5),
+                            textDecorationLine: 'underline',
+                          }}>
+                          {strings.VISIT_INSTAGRAM}
+                        </Text>
+                      </TouchableOpacity>
+                    )}
                     {Number(categoryInfo?.order_min_amount) > 0 ? (
                       <View
                         style={{
@@ -1376,7 +1407,7 @@ export default function Products({route, navigation}) {
 
   const getAllListItems = (pageNo = 1) => {
     if (data?.vendor) {
-     console.log(data,"getAllListItemsdata")
+      console.log(data, 'getAllListItemsdata');
       {
         !!selectedFilters.current
           ? newVendorFilter(pageNo)
