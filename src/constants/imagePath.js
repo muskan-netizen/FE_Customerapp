@@ -525,4 +525,6 @@ export default {
   icNoDrivers: require('../assets/images/RoyoorderNewImages/ic_nodrivers.png'),
   icLocationBlue: require('../assets/images/RoyoorderNewImages/ic_location_blue.png'),
   icInstagram: require('../assets/images/RoyoorderNewImages/ic_instagram.png'),
+  icAddPlaceholder: require('../assets/images/RoyoorderNewImages/ic_placeholder.png'),
+  icPrescription: require('../assets/images/RoyoorderNewImages/ic_pres.png'),
 };

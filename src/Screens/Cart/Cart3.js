@@ -99,6 +99,8 @@ import {PayWithFlutterwave} from 'flutterwave-react-native';
 
 import {FlutterwaveInit} from 'flutterwave-react-native';
 import {setRedirection} from '../../redux/actions/auth';
+import ImagePicker from 'react-native-image-crop-picker';
+import BottomModal from '../../Components/BottomModal';
 
 let clickedItem = {};
 let isFAQsSubmitted = true;
@@ -174,6 +176,9 @@ function Cart({navigation, route}) {
     useState('');
   const [minimumSelectedDropOffDate, setMinimumSelectedDropOffDate] =
     useState('');
+  const [selectedItemForPrescription, setItemForPrescription] = useState({});
+  const [isPrescriptionModal, setPrescriptionModal] = useState(false);
+  const [selectedPrescriptionImgs, setPrescriptionImgs] = useState([]);
 
   const [state, setState] = useState({
     showTaxFeeArea: false,
@@ -270,7 +275,11 @@ function Cart({navigation, route}) {
   console.log('cart items', cartItems);
 
   const closeForm = () => {
-    updateState({isProductOrderForm: false, isCategoryKyc: false});
+    setPrescriptionModal(false);
+    updateState({
+      isProductOrderForm: false,
+      isCategoryKyc: false,
+    });
     Keyboard.dismiss();
   };
   useFocusEffect(
@@ -2439,6 +2448,11 @@ function Cart({navigation, route}) {
     }
   };
 
+  const openPickerForPrescription = async (item, index) => {
+    setItemForPrescription(item);
+    setPrescriptionModal(true);
+  };
+
   const _renderItem = ({item, index}) => {
     console.log(item, 'item>>><>>>');
     return (
@@ -2771,21 +2785,36 @@ function Cart({navigation, route}) {
                                 flex: 1,
                                 justifyContent: 'center',
                               }}>
-                              {!!i?.product_addons.length > 0 && (
-                                <View>
-                                  <Text
-                                    style={{
-                                      ...styles.cartItemWeight2,
-                                      color: isDarkMode
-                                        ? MyDarkTheme.colors.text
-                                        : colors.textGreyOpcaity7,
-                                      marginBottom: moderateScale(2),
-                                      marginTop: moderateScaleVertical(6),
-                                    }}>
-                                    {strings.EXTRA}
-                                  </Text>
-                                </View>
-                              )}
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  justifyContent: 'space-between',
+                                }}>
+                                {!!i?.product_addons.length > 0 && (
+                                  <View>
+                                    <Text
+                                      style={{
+                                        ...styles.cartItemWeight2,
+                                        color: isDarkMode
+                                          ? MyDarkTheme.colors.text
+                                          : colors.textGreyOpcaity7,
+                                        marginBottom: moderateScale(2),
+                                        marginTop: moderateScaleVertical(6),
+                                      }}>
+                                      {strings.EXTRA}
+                                    </Text>
+                                  </View>
+                                )}
+                                <TouchableOpacity
+                                  onPress={openPickerForPrescription}
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                  }}>
+                                  {/* <Image source={imagePath.icAddPlaceholder} /> */}
+                                  <Image source={imagePath.icPrescription} />
+                                </TouchableOpacity>
+                              </View>
                               <View>
                                 {i?.product_addons.length > 0
                                   ? i?.product_addons.map((j, jnx) => {
@@ -5816,6 +5845,8 @@ function Cart({navigation, route}) {
     }
   };
 
+  console.log(selectedPrescriptionImgs, 'selectedPrescriptionImgs>>>');
+
   const cameraHandle = async (index) => {
     const permissionStatus = await androidCameraPermission();
     if (permissionStatus) {
@@ -5828,9 +5859,25 @@ function Cart({navigation, route}) {
           mediaType: 'photo',
         })
           .then((res) => {
-            console.log(res, 'res>>><>>>');
-            let data = cloneDeep(kycImages);
+            if (isPrescriptionModal) {
+              let imgData = [...selectedPrescriptionImgs];
+              const isFound = imgData.some(
+                (item) => item?.filename == res?.filename,
+              );
+              if (isFound) {
+                alert('File already uploaded');
+                return;
+              }
+              imgData.push({
+                mime: res?.mime,
+                path: res?.path,
+                filename: res?.filename,
+              });
+              setPrescriptionImgs(imgData);
+              return;
+            }
 
+            let data = cloneDeep(kycImages);
             data[addtionSelectedImageIndex].value = res?.sourceURL || res?.path;
             data[addtionSelectedImageIndex].fileData = res;
             setKycImages(data);
@@ -5993,111 +6040,100 @@ function Cart({navigation, route}) {
 
   const renderCategoryKYC = () => {
     return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <View
-          style={{
-            height: height / 2,
-
-            borderTopLeftRadius: moderateScale(16),
-            borderTopRightRadius: moderateScale(16),
-            backgroundColor: colors.white,
-            padding: moderateScale(12),
-          }}>
-          {isCategoryKycLoader ? (
-            <View>
-              <HeaderLoader
-                viewStyles={{
-                  marginTop: moderateScaleVertical(8),
-                  marginBottom: moderateScaleVertical(16),
-                  marginHorizontal: 0,
-                }}
-                widthLeft={width - moderateScale(25)}
-                rectWidthLeft={width - moderateScale(25)}
-                heightLeft={moderateScaleVertical(120)}
-                rectHeightLeft={moderateScaleVertical(120)}
-                isRight={false}
-                rx={7}
-                ry={7}
-              />
-              <HeaderLoader
-                viewStyles={{
-                  marginTop: moderateScaleVertical(8),
-                  marginBottom: moderateScaleVertical(16),
-                  marginHorizontal: 0,
-                }}
-                widthLeft={width - moderateScale(25)}
-                rectWidthLeft={width - moderateScale(25)}
-                heightLeft={moderateScaleVertical(120)}
-                rectHeightLeft={moderateScaleVertical(120)}
-                isRight={false}
-                rx={7}
-                ry={7}
-              />
-              <HeaderLoader
-                viewStyles={{
-                  marginTop: moderateScaleVertical(8),
-                  marginBottom: moderateScaleVertical(16),
-                  marginHorizontal: 0,
-                }}
-                widthLeft={width - moderateScale(25)}
-                rectWidthLeft={width - moderateScale(25)}
-                heightLeft={moderateScaleVertical(120)}
-                rectHeightLeft={moderateScaleVertical(120)}
-                isRight={false}
-                rx={7}
-                ry={7}
-              />
-            </View>
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                paddingHorizontal: moderateScale(15),
+      <View>
+        {isCategoryKycLoader ? (
+          <View>
+            <HeaderLoader
+              viewStyles={{
+                marginTop: moderateScaleVertical(8),
+                marginBottom: moderateScaleVertical(16),
+                marginHorizontal: 0,
+              }}
+              widthLeft={width - moderateScale(25)}
+              rectWidthLeft={width - moderateScale(25)}
+              heightLeft={moderateScaleVertical(120)}
+              rectHeightLeft={moderateScaleVertical(120)}
+              isRight={false}
+              rx={7}
+              ry={7}
+            />
+            <HeaderLoader
+              viewStyles={{
+                marginTop: moderateScaleVertical(8),
+                marginBottom: moderateScaleVertical(16),
+                marginHorizontal: 0,
+              }}
+              widthLeft={width - moderateScale(25)}
+              rectWidthLeft={width - moderateScale(25)}
+              heightLeft={moderateScaleVertical(120)}
+              rectHeightLeft={moderateScaleVertical(120)}
+              isRight={false}
+              rx={7}
+              ry={7}
+            />
+            <HeaderLoader
+              viewStyles={{
+                marginTop: moderateScaleVertical(8),
+                marginBottom: moderateScaleVertical(16),
+                marginHorizontal: 0,
+              }}
+              widthLeft={width - moderateScale(25)}
+              rectWidthLeft={width - moderateScale(25)}
+              heightLeft={moderateScaleVertical(120)}
+              rectHeightLeft={moderateScaleVertical(120)}
+              isRight={false}
+              rx={7}
+              ry={7}
+            />
+          </View>
+        ) : (
+          <View
+            style={{
+              flex: 1,
+              paddingHorizontal: moderateScale(15),
+            }}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{
+                paddingBottom: moderateScaleVertical(60),
               }}>
-              <ScrollView
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{
-                  paddingBottom: moderateScaleVertical(60),
-                }}>
-                {!isEmpty(kycTxtInpts) &&
-                  kycTxtInpts.map((item, index) => {
-                    return getTextInputField(item, index);
+              {!isEmpty(kycTxtInpts) &&
+                kycTxtInpts.map((item, index) => {
+                  return getTextInputField(item, index);
+                })}
+
+              {!isEmpty(kycImages) && (
+                <View style={styles.viewStyleForUploadImage}>
+                  {kycImages.map((item, index) => {
+                    return getImageFieldView(item, index);
                   })}
+                </View>
+              )}
 
-                {!isEmpty(kycImages) && (
-                  <View style={styles.viewStyleForUploadImage}>
-                    {kycImages.map((item, index) => {
-                      return getImageFieldView(item, index);
-                    })}
-                  </View>
-                )}
-
-                {!isEmpty(kycPdfs) && (
-                  <View style={styles.viewStyleForUploadImage}>
-                    {kycPdfs.map((item, index) => {
-                      return getPdfView(item, index);
-                    })}
-                  </View>
-                )}
-              </ScrollView>
-              <ButtonComponent
-                onPress={onSubmitKycDocs}
-                btnText={'Submit'}
-                borderRadius={moderateScale(13)}
-                textStyle={{color: colors.white}}
-                containerStyle={{
-                  position: 'absolute',
-                  backgroundColor: themeColors.primary_color,
-                  width: width - moderateScale(30),
-                  bottom: 10,
-                }}
-                placeLoader={isSubmitKycLoader}
-              />
-            </View>
-          )}
-        </View>
-      </KeyboardAvoidingView>
+              {!isEmpty(kycPdfs) && (
+                <View style={styles.viewStyleForUploadImage}>
+                  {kycPdfs.map((item, index) => {
+                    return getPdfView(item, index);
+                  })}
+                </View>
+              )}
+            </ScrollView>
+            <ButtonComponent
+              onPress={onSubmitKycDocs}
+              btnText={'Submit'}
+              borderRadius={moderateScale(13)}
+              textStyle={{color: colors.white}}
+              containerStyle={{
+                position: 'absolute',
+                backgroundColor: themeColors.primary_color,
+                width: width - moderateScale(30),
+                bottom: 10,
+              }}
+              placeLoader={isSubmitKycLoader}
+            />
+          </View>
+        )}
+      </View>
     );
   };
 
@@ -6111,6 +6147,95 @@ function Cart({navigation, route}) {
     updateState({
       isVisibleTimeModal: false,
     });
+  };
+  const onAddPrescriptionDocs = () => {
+    showActionSheet();
+  };
+
+  const onSubmitPrescriptionDocs = () => {};
+
+  const onRemovePrescriptionImg = (item) => {
+    const imgData = [...selectedPrescriptionImgs];
+    const indexOfObject = imgData.findIndex((object) => {
+      return object.filename === item?.filename;
+    });
+    imgData.splice(indexOfObject, 1);
+    setPrescriptionImgs(imgData);
+  };
+
+  const renderPrescriptionModalView = () => {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: colors.white,
+        }}>
+        <Text
+          style={{
+            fontFamily: fontFamily.bold,
+            fontSize: textScale(14),
+          }}>
+          Add Prescriptions
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'flex-end',
+            flexWrap: 'wrap',
+            marginTop: moderateScaleVertical(10),
+          }}>
+          {selectedPrescriptionImgs.map((item) => (
+            <View>
+              <Image
+                source={{uri: item.path}}
+                style={{
+                  height: moderateScale(69),
+                  width: moderateScale(69),
+                  marginRight: moderateScale(7),
+                }}
+              />
+              <TouchableOpacity
+                hitSlop={hitSlopProp}
+                onPress={() => onRemovePrescriptionImg(item)}
+                style={{
+                  position: 'absolute',
+                  right: 3,
+                  top: -5,
+                }}>
+                <Image
+                  source={imagePath.crossC}
+                  style={{
+                    height: 12,
+                    width: 12,
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          ))}
+          <TouchableOpacity onPress={onAddPrescriptionDocs}>
+            <Image
+              source={imagePath.icAddPlaceholder}
+              style={{
+                marginTop: moderateScaleVertical(20),
+              }}
+            />
+          </TouchableOpacity>
+        </View>
+        <ButtonComponent
+          onPress={onSubmitPrescriptionDocs}
+          btnText={'Submit'}
+          borderRadius={moderateScale(13)}
+          textStyle={{color: colors.white}}
+          containerStyle={{
+            position: 'absolute',
+            backgroundColor: themeColors.primary_color,
+            width: width - moderateScale(30),
+            bottom: 10,
+          }}
+          // placeLoader={}
+        />
+      </View>
+    );
   };
 
   // Category KYC end
@@ -6524,27 +6649,26 @@ function Cart({navigation, route}) {
           </StripeProvider>
         </View>
       </Modal>
-      <Modal
+
+      <BottomModal
         onBackdropPress={closeForm}
         isVisible={isProductOrderForm}
-        style={{
-          margin: 0,
-          justifyContent: 'flex-end',
-          // marginBottom: keyboardHeight,
-        }}>
-        {renderProductForm()}
-      </Modal>
-      <Modal
+        renderModalContent={renderProductForm}
+      />
+      <BottomModal
         onBackdropPress={closeForm}
         isVisible={isCategoryKyc}
-        // isVisible={true}
-        style={{
-          margin: 0,
-          justifyContent: 'flex-end',
-          // marginBottom: keyboardHeight,
-        }}>
-        {renderCategoryKYC()}
-      </Modal>
+        renderModalContent={renderCategoryKYC}
+      />
+
+      <BottomModal
+        onBackdropPress={closeForm}
+        isVisible={isPrescriptionModal}
+        renderModalContent={renderPrescriptionModalView}
+        mainViewStyle={{
+          height: height / 2.4,
+        }}
+      />
 
       <ActionSheet
         ref={actionSheet}
