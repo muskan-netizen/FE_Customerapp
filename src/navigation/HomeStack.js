@@ -47,6 +47,7 @@ import CartStack from './CartStack';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
+
 export default function () {
   const {appStyle, appData} = useSelector((state) => state?.initBoot);
   const businessType = appStyle?.homePageLayout;

@@ -6266,14 +6266,14 @@ function Cart({ navigation, route }) {
                       <Calendar
                         current={
                           cartData?.same_day_delivery_for_schedule
-                            ? getBuildId == appIds.masa ? dayAfterToday :  new Date() 
+                            ? getBundleId == appIds.masa ? dayAfterToday :  new Date() 
                             : dayAfterToday
                         }
                         minDate={
                           !!minimumDelayVendorDate
                             ? minimumDelayVendorDate
                             : cartData?.same_day_delivery_for_schedule
-                              ?  getBuildId == appIds.masa ? dayAfterToday :  new Date() 
+                              ?  getBundleId == appIds.masa ? dayAfterToday :  new Date() 
                               : dayAfterToday
                         }
                         onDayPress={laundrySlotSelection}
@@ -6389,11 +6389,11 @@ function Cart({ navigation, route }) {
                   <Fragment>
                     <ScrollView>
                       <Calendar
-                        current={getBuildId()==appIds.masa ? dayAfterToday: new Date()}
+                        current={getBundleId() ==appIds.masa ? dayAfterToday: new Date()}
                         minDate={
                           !!minimumDelayVendorDate
                             ? minimumDelayVendorDate
-                            : getBuildId()==appIds.masa ? dayAfterToday: new Date()
+                            : getBundleId()==appIds.masa ? dayAfterToday: new Date()
                         }
                         onDayPress={onSelectDateFromCalendar}
                         markedDates={{

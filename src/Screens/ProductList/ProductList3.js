@@ -31,6 +31,7 @@ import DifferentAddOns from '../../Components/DifferentAddOns ';
 import FilterComp from '../../Components/FilterComp';
 import GradientCartView from '../../Components/GradientCartView';
 import HomeServiceVariantAddons from '../../Components/HomeServiceVariantAddons';
+import Loader from '../../Components/Loader';
 import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import HomeLoader from '../../Components/Loaders/HomeLoader';
@@ -41,6 +42,7 @@ import RepeatModal from '../../Components/RepeatModal';
 import RoundImg from '../../Components/RoundImg';
 import SearchBar from '../../Components/SearchBar';
 import VariantAddons from '../../Components/VariantAddons';
+import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import staticStrings from '../../constants/staticStrings';
@@ -143,7 +145,7 @@ export default function Products({ route, navigation }) {
     //   label: "A to Z",
     //   labelValue: "a_to_z",
     //   parent: "Sort by",},
-    selectedSortFilter:null,
+    selectedSortFilter: null,
     updateQtyLoader: false,
     isSearch: false,
     isLoadingC: false,
@@ -154,6 +156,7 @@ export default function Products({ route, navigation }) {
     updateTagFilter: false,
     differentAddsOnsModal: false,
     isShowFilter: false,
+   showListEndLoader:false
   });
 
   const {
@@ -190,9 +193,11 @@ export default function Products({ route, navigation }) {
     selectedDiffAdsOnId,
     isShowFilter,
     selectedSortFilter,
+    showListEndLoader
   } = state;
   const [showShimmer, setShowShimmer] = useState(true);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
+  const [isLoader, setIsLoader] = useState(false)
   const [productListData, setProductListData] = useState([]);
   const [sectionListData, setSectionListData] = useState([]);
   const [cloneSectionList, setCloneSectionList] = useState([]);
@@ -211,6 +216,7 @@ export default function Products({ route, navigation }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [productListId, setProductListId] = useState(data);
   const [isLoading, setLoading] = useState(true);
+  // const [showListEndLoader, setShowListEndLoader]= useState(fals);
   const [apiHitAgain, setApiHitAgain] = useState(false);
   const [animateText, setAnimateText] = useState(0);
   const [isSingleVendor, setIsSingleVendor] = useState({});
@@ -479,7 +485,7 @@ export default function Products({ route, navigation }) {
                   containerStyle={{
                     marginHorizontal: moderateScale(18),
                     borderRadius: 8,
-                    width: width / 1.15,
+                    // width: width / 1.15,
                     backgroundColor: isDarkMode
                       ? colors.whiteOpacity15
                       : colors.greyColor,
@@ -786,7 +792,7 @@ export default function Products({ route, navigation }) {
                       color: colors.redB,
                       // marginTop: moderateScaleVertical(4)
                     }}>
-                    {getBundleId() == appIds.masa ? `${strings.WE_ACCEPT_ONLY_SCHEDULE_ORDER} ${categoryInfo?.delaySlot} `  :  ` ${strings.WE_ARE_NOT_ACCEPTING} ${categoryInfo?.delaySlot} `}
+                    {getBundleId() == appIds.masa ? `${strings.WE_ACCEPT_ONLY_SCHEDULE_ORDER} ${categoryInfo?.delaySlot} ` : ` ${strings.WE_ARE_NOT_ACCEPTING} ${categoryInfo?.delaySlot} `}
                   </Text>
                 ) : null}
               </View>
@@ -979,6 +985,7 @@ export default function Products({ route, navigation }) {
         <View
           style={{
             flexDirection: 'row',
+            flex: 1,
             alignItems: 'center',
             marginBottom: moderateScaleVertical(8),
             marginHorizontal: moderateScale(12),
@@ -987,7 +994,7 @@ export default function Products({ route, navigation }) {
             <SearchBar
               autoFocus={false}
               containerStyle={{
-                flex: 1,
+                // width: width / 9,
                 // marginHorizontal: moderateScale(18),
                 borderRadius: moderateScale(8),
                 backgroundColor: isDarkMode
@@ -996,7 +1003,8 @@ export default function Products({ route, navigation }) {
                 height: moderateScaleVertical(37),
               }}
               searchValue={searchInput}
-              placeholder={strings.SEARCH_WITHIN_MENU}
+              // placeholder={strings.SEARCH_WITHIN_MENU}
+              placeholder={appIds.muvpod == getBundleId() ? 'Search' : strings.SEARCH_WITHIN_MENU}
               onChangeText={(value) => onSearchWithinMenu(value)}
               showRightIcon={searchInput ? true : false}
               rightIconStyle={{
@@ -1016,22 +1024,42 @@ export default function Products({ route, navigation }) {
             <Image source={imagePath.filter} />
           </TouchableOpacity> */}
           <View >
-            {getBundleId() == appIds.muvpod ? (<View style={{ flexDirection: 'row', justifyContent: 'space-between', width: width / 1.1, alignItems: 'center' }} >
-              <View />
-              <TouchableOpacity onPress={onShowHideFilter} style={{ flexDirection: 'row', alignItems: 'center' }} >
-                <Image source={imagePath.filter} />
-                <Text style={{
-                  color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.black,
-                  fontSize: moderateScale(16),
-                  fontFamily: fontFamily.regular,
-                  // marginRight: moderateScale(),
-                }} > {strings.SORT_BY} { selectedSortFilter==null? "A TO Z" : selectedSortFilter?.label} </Text>
+            {
+              getBundleId() == appIds.muvpod ?
+                (
+                  <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    width: width / 1.1,
+                    alignItems: 'flex-end',
+                    // backgroundColor: 'red',
+                    marginRight: moderateScale(50),
+                    marginLeft:categoryInfo?.is_show_products_with_category?moderateScale(0):40,
+                  }}
+                  >
+                    <View />
+                    <TouchableOpacity onPress={onShowHideFilter}
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                       
+                        marginRight: moderateScale(50)
+                      }} >
+                      <Image source={imagePath.filter} />
+                      <Text style={{
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        fontSize: moderateScale(16),
+                        fontFamily: fontFamily.regular,
+                        // marginRight: moderateScale(),
+                      }} > {strings.SORT_BY} {selectedSortFilter == null ? "A TO Z" : selectedSortFilter?.label} </Text>
 
-              </TouchableOpacity >
+                    </TouchableOpacity >
 
-            </View>) : <Image source={imagePath.filter} />}
+                  </View>)
+                : <Image source={imagePath.filter} />}
           </View>
         </View>
 
@@ -1347,7 +1375,7 @@ export default function Products({ route, navigation }) {
 
   const getAllListItems = (pageNo = 1) => {
     if (data?.vendor) {
-     console.log(data,"getAllListItemsdata")
+      console.log(data, "getAllListItemsdata")
       {
         !!selectedFilters.current
           ? newVendorFilter(pageNo)
@@ -1690,15 +1718,19 @@ export default function Products({ route, navigation }) {
           language: languages?.primary_language?.id,
           systemuser: DeviceInfo.getUniqueId(),
         },
+
       )
       .then((res) => {
-        
+
         if (!!res?.data) {
+          // showListEndLoader:false
           console.log(res.data.category, 'res getProductByCategoryId');
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
           // checkSingleVendor(categoryInfo ? categoryInfo : res.data.category)
           // setCategoryInfo(res.data.category);
           setLoading(false);
+          updateState({ showListEndLoader: false });
+          // showListEndLoader(false);
           if (res.data.listData.data.length == 0) {
             loadMore = false;
           }
@@ -1736,7 +1768,7 @@ export default function Products({ route, navigation }) {
 
   /**********Get all list items category filters */
   const getAllProductsCategoryFilter = (pageNo) => {
-    setLoading(true);
+    // setLoading(true);
     let data = {};
     data['variants'] = selectedFilters?.current?.selectedVariants || [];
     data['options'] = selectedFilters?.current?.selectedOptions || [];
@@ -2619,6 +2651,21 @@ export default function Products({ route, navigation }) {
     setLoading(false);
   };
 
+
+
+
+  const _onEndList = (data)=>{
+     
+     !categoryInfo?.is_show_products_with_category &&
+    onEndReachedDelayed(data)
+
+    updateState({
+      showListEndLoader:true
+    })
+    
+  }
+//showListEndLoader
+
   const RenderMenuView = () => {
     return (
       <View style={{ marginBottom: moderateScaleVertical(16) }}>
@@ -3086,6 +3133,7 @@ export default function Products({ route, navigation }) {
 
   const backgroundComponent = () => {
     return (
+      // <Text>cfbhjbvvxvvbggbbbdszcfdxvxvvc</Text>
       <TouchableOpacity
         onPress={() => setIsVisibleModal(false)}
         style={{ alignSelf: 'center', marginBottom: moderateScaleVertical(16) }}>
@@ -3196,14 +3244,9 @@ export default function Products({ route, navigation }) {
   };
 
   return (
-    <View
-      style={{
-        backgroundColor: isDarkMode
-          ? MyDarkTheme.colors.background
-          : colors.white,
-        flex: 1,
-        // paddingVertical: moderateScale(16),
-      }}>
+    <WrapperContainer
+    isLoading={showListEndLoader}
+      >
       <View style={{ flex: 1 }}>
         {((AnimatedHeaderValue && productListData.length > 6) ||
           (!!sectionListData?.length && AnimatedHeaderValue)) && (
@@ -3367,7 +3410,7 @@ export default function Products({ route, navigation }) {
             // initialNumToRender={2} // Reduce initial render amount
             // maxToRenderPerBatch={10} // Redu ce number in each render batch
             updateCellsBatchingPeriod={100} // Increase time between renders
-            // windowSize={7} // Reduce the window size
+          // windowSize={7} // Reduce the window size
 
           />
         ) : (
@@ -3396,8 +3439,7 @@ export default function Products({ route, navigation }) {
             //   />
             // }
             onEndReached={
-              !categoryInfo?.is_show_products_with_category &&
-              onEndReachedDelayed
+             _onEndList
             }
             onEndReachedThreshold={0.5}
             ListFooterComponent={listFooterComponent}
@@ -3604,13 +3646,15 @@ export default function Products({ route, navigation }) {
           onShowHideFilter={onShowHideFilter}
           allClearFilters={allClearFilters}
           selectedSortFilter={selectedSortFilter}
-          onSelectedSortFilter={(val) => updateState({selectedSortFilter:val})}
+          onSelectedSortFilter={(val) => updateState({ selectedSortFilter: val })}
           maximumPrice={maximumPrice}
           minimumPrice={minimumPrice}
           updateMinMax={updateMinMax}
           filterData={allFilters}
         />
       ) : null}
-    </View>
+      {isLoader? <Loader   />: null}
+      {/* <Loader isLoading={false} /> */}
+    </WrapperContainer>
   );
 }
