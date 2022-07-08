@@ -357,6 +357,7 @@ const shortCodes = {
   fresHest: '7e43f5',
   servern: '1ba1e9',
   smokeRun:'545a71',
+  myEvPlus:'1c7d9e',
 };
 
 
@@ -1772,6 +1773,10 @@ const appIds = {
   smokeRun: Platform.select({
     ios: 'com.smokeRun.order',
     android: 'com.smokeRun.order',
+  }),
+  smokeRun: Platform.select({
+    ios: 'com.myEvPlus.order',
+    android: 'com.myEvPlus.order',
   }),
 
 };

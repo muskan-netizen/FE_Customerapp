@@ -2251,6 +2251,12 @@ export default function ShortCode({ route, navigation }) {
                   isShortcodePrefilled: true,
                 });
                 break;
+                case appIds.myEvPlus:
+                  updateState({
+                    shortCode: shortCodes.myEvPlus,
+                    isShortcodePrefilled: true,
+                  });
+                  break;
       }
     })();
   }, []);

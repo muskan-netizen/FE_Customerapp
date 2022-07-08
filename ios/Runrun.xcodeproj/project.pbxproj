@@ -26775,6 +26775,7 @@
 				FE5FDD2927A2FF8A001FE5CB /* Start Packager */,
 				CCDCD27F8114E5DACAF10C95 /* [CP] Embed Pods Frameworks */,
 				246F9C3970E63C5D9760B3C4 /* [CP] Copy Pods Resources */,
+				E826C2C628783824009C44AE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -108049,6 +108050,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-BoltDelivery/Pods-available_pods-BoltDelivery-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		E826C2C628783824009C44AE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Zest/Pods-available_pods-Zest-resources.sh\"\n";
 		};
 		E833B9FC330B9ABC5EEA5185 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
