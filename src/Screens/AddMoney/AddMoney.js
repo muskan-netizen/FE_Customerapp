@@ -577,7 +577,7 @@ export default function AddMoney({navigation}) {
             paymentUrl: res?.data || res?.payment_link,
             action: 'wallet',
           };
-
+             
           navigation.navigate(navigationStrings.ALL_IN_ONE_PAYMENTS, {
             data: sendingData,
           });

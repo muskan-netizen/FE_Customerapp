@@ -44,6 +44,10 @@
         android:windowSoftInputMode="adjustPan"
         android:screenOrientation="portrait"
         >
+        <intent-filter>
+        <action android:name="https://hokitch.rostaging.com/user/orders" />
+        <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
         <!-- <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
@@ -87,7 +91,8 @@
          <!-- Change the value to true to enable pop-up for in foreground on receiving remote notifications (for prevent duplicating while showing local notifications set this to false) -->
      <!-- Change the value to true to enable pop-up for in foreground on receiving remote notifications (for prevent duplicating while showing local notifications set this to false) -->
         <meta-data  android:name="com.dieam.reactnativepushnotification.notification_foreground"
-                    android:value="true"/>
+                    android:value="false"/>
+    
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActions" />
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver">

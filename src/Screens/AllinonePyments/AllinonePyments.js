@@ -34,13 +34,13 @@ export default function AllinonePyments({navigation, route}) {
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
     console.log(props, 'returnURL');
-    console.log('query params', queryParams);
+    console.log('query params', URL);
     let transId = '';
     if (url.includes('payment/checkoutSuccess')) {
       //in case of paypal
       transId = url.substring(url.lastIndexOf('/') + 1);
     } else {
-      transId = queryParams?.transaction_id || queryParams?.subscription_id;
+      transId = queryParams?.transaction_id || queryParams?.subscription_id || queryParams?.TransID ;
     }
     setTimeout(() => {
       if (
@@ -80,6 +80,7 @@ export default function AllinonePyments({navigation, route}) {
           }
         }
         if (paramsData.action == 'wallet') {
+         
           moveToNewScreen(paramsData?.screenName)();
         }
       } else if (queryParams?.status == 0) {
@@ -121,6 +122,7 @@ export default function AllinonePyments({navigation, route}) {
   };
 
   const subscriptionApiHit = (id) => {
+console.log(paramsData?.selectedPlanSlug,"paramsData?.selectedPlanSlug")
     actions
       .purchaseSubscriptionPlan(
         `/${paramsData?.selectedPlanSlug}`,

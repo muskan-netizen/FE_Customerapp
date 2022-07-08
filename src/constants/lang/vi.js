@@ -935,4 +935,6 @@ export default {
   BOOK_HERE:'Book Here',
   DELETE_ACCOUNT:"Delete Account",
   ARE_YOU_SURE_YOU_WANT_TO_DELETE:'Are you sure, you want to delete your account? Deleting your account is permanent and will remove all content and profile settings.',
+  WR_ARE_CURRENTLY_NOT_OPERATING:'We are currently not operating in your location',
+  WE_ACCEPT_ONLY_SCHEDULE_ORDER:'We are accepting only schedule order',
 };

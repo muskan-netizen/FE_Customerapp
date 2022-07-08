@@ -2,6 +2,7 @@ import {Platform} from 'react-native';
 import {getBundleId} from 'react-native-device-info';
 
 const shortCodes = {
+  royoorder:'245bae',
   runrun: 'bf8608',
  
     tranzit: '52a1a6',
@@ -353,7 +354,9 @@ const shortCodes = {
   sadia:'312528',
   elentaMart:'e084cc',
   exprexPro :'cb98e8',
-
+  fresHest: '7e43f5',
+  servern: '1ba1e9',
+  smokeRun:'545a71',
 };
 
 
@@ -1147,8 +1150,8 @@ const appIds = {
     android: 'com.mozmarcas',
   }),
   myfiji: Platform.select({
-    ios: 'com.myfiji',
-    android: 'com.myfiji',
+    ios: 'com.fijieats.user',
+    android: 'com.fijieats.customer',
   }),
   fastmikes: Platform.select({
     ios: 'com.fastmikes.customer',
@@ -1650,7 +1653,7 @@ const appIds = {
   }),
   jiffex: Platform.select({
     ios: 'com.jiffex',
-    android: 'com.jiffex',
+    android: 'com.jiffex.order',
   }),
   clickService: Platform.select({
     ios: 'com.clickService',
@@ -1721,8 +1724,8 @@ const appIds = {
     android: 'com.meow.order',
   }),
   dingDongDelivers: Platform.select({
-    ios: 'com.dingDongDelivers',
-    android: 'com.dingDongDelivers',
+    ios: 'com.dingdongdelivery.order',
+    android: 'com.dingdongdelivery.order',
   }),
   torunz: Platform.select({
     ios: 'com.torunz',
@@ -1757,6 +1760,18 @@ const appIds = {
   exprexPro: Platform.select({
     ios: 'com.exprexPro',
     android: 'com.exprexPro',
+  }),
+  fresHest: Platform.select({
+    ios: 'com.FresHest.royoOrder',
+    android: 'com.FresHest.royoOrder',
+  }),
+  servern: Platform.select({
+    ios: 'com.servern.order',
+    android: 'com.servern.order',
+  }),
+  smokeRun: Platform.select({
+    ios: 'com.smokeRun.order',
+    android: 'com.smokeRun.order',
   }),
 
 };
