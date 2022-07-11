@@ -20,10 +20,11 @@
 //sujata
 // export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1';
 
+export const API_BASE_URL = 'https://lift.gd/api/v1'
 // export const API_BASE_URL = 'https://gokab.royoorders.com/api/v1'
 //live 
 // export const API_BASE_URL = 'https://toor.life/api/v1';
-export const API_BASE_URL = 'https://fijieats.com/api/v1'
+// export const API_BASE_URL = 'https://fijieats.com/api/v1'
 // export const API_BASE_URL = 'https://swantaxi.net/api/v1'
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1'
 //classicab
@@ -142,10 +143,11 @@ export const API_BASE_URL = 'https://fijieats.com/api/v1'
 // export const API_BASE_URL = 'https://localdropoff.info/api/v1';
 // export const API_BASE_URL = 'https://onscart.com/api/v1';
 // export const API_BASE_URL = 'https://fastmikes.com/api/v1';
-
+//  export const API_BASE_URL = 'https://masaapp.ae/api/v1'
 // export const API_BASE_URL = 'https://www.ored.co/api/v1'; //ored
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
 
+// export const API_BASE_URL = 'https://gdotdelivery.com/api/v1'
 
 // export const API_BASE_URL = 'https://961a-112-196-88-218.ngrok.io/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.98.185:8060/api/v1'; // sujata

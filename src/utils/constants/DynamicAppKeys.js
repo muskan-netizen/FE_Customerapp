@@ -1405,7 +1405,7 @@ const appIds = {
     android: 'com.dlvrd',
   }),
   delivery: Platform.select({
-    ios: 'com.application.delivery',
+    ios: 'com.gdotDelivery.user',
     android: 'com.app.delivery',
   }),
   timHomeServices: Platform.select({

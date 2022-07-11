@@ -12376,7 +12376,7 @@
 		848BE5D6278C4E0400FEC147 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		848BE6A0278C4E7600FEC147 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		848BE9C2278C531000FEC147 /* Mozmarcas.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mozmarcas.entitlements; sourceTree = "<group>"; };
-		848BF2D2278C642100FEC147 /* Myfiji.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Myfiji.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		848BF2D2278C642100FEC147 /* FijiEats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FijiEats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		848BF6C2278C64FE00FEC147 /* Myfiji(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Myfiji(Development).xcconfig"; sourceTree = "<group>"; };
 		848BF73B2767588A00DAA1EB /* GoMeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoMeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		848BF78D278C652000FEC147 /* Myfiji(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Myfiji(Production).xcconfig"; sourceTree = "<group>"; };
@@ -18799,7 +18799,7 @@
 				847EE43127840F410003197D /* PinkyDeli.app */,
 				848BCBED278C42F100FEC147 /* Easyu.app */,
 				848BDF8F278C4AF100FEC147 /* Mozmarcas.app */,
-				848BF2D2278C642100FEC147 /* Myfiji.app */,
+				848BF2D2278C642100FEC147 /* FijiEats.app */,
 				848C91CE278D54A200DD824C /* Fastmikes.app */,
 				848C9F71278D5C9900DD824C /* CitySuds.app */,
 				848CAAC4278D650B00DD824C /* HomeTownDelivery.app */,
@@ -27595,9 +27595,9 @@
 			productReference = 848BDF8F278C4AF100FEC147 /* Mozmarcas.app */;
 			productType = "com.apple.product-type.application";
 		};
-		848BF2A6278C642100FEC147 /* Myfiji */ = {
+		848BF2A6278C642100FEC147 /* FijiEats */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 848BF2CF278C642100FEC147 /* Build configuration list for PBXNativeTarget "Myfiji" */;
+			buildConfigurationList = 848BF2CF278C642100FEC147 /* Build configuration list for PBXNativeTarget "FijiEats" */;
 			buildPhases = (
 				6C78EDA4AD4286B4B7EC7620 /* [CP] Check Pods Manifest.lock */,
 				848BF2A8278C642100FEC147 /* Bundle React Native code and images */,
@@ -27613,9 +27613,9 @@
 			);
 			dependencies = (
 			);
-			name = Myfiji;
+			name = FijiEats;
 			productName = Runrun;
-			productReference = 848BF2D2278C642100FEC147 /* Myfiji.app */;
+			productReference = 848BF2D2278C642100FEC147 /* FijiEats.app */;
 			productType = "com.apple.product-type.application";
 		};
 		848BF6F52767588A00DAA1EB /* GoMeat */ = {
@@ -31816,7 +31816,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					849DE43A27DF6AD20036210F = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = ZKPNJ4KAFT;
 						ProvisioningStyle = Automatic;
 					};
 					849F741E272A7BFB001F2F79 = {
@@ -32446,7 +32446,7 @@
 				844D9BC8278854E00058A99A /* StitchesonSite */,
 				848BCBC6278C42F100FEC147 /* Easyu */,
 				848BDF68278C4AF100FEC147 /* Mozmarcas */,
-				848BF2A6278C642100FEC147 /* Myfiji */,
+				848BF2A6278C642100FEC147 /* FijiEats */,
 				848C91A1278D54A200DD824C /* Fastmikes */,
 				848C9F44278D5C9900DD824C /* CitySuds */,
 				848CAA97278D650B00DD824C /* HomeTownDelivery */,
@@ -134061,7 +134061,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = ZKPNJ4KAFT;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -134095,7 +134095,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = ZKPNJ4KAFT;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -134110,7 +134110,7 @@
 				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = Delivery;
+				PROVISIONING_PROFILE_SPECIFIER = GdotDelivery;
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -142994,7 +142994,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		848BF2CF278C642100FEC147 /* Build configuration list for PBXNativeTarget "Myfiji" */ = {
+		848BF2CF278C642100FEC147 /* Build configuration list for PBXNativeTarget "FijiEats" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				848BF2D0278C642100FEC147 /* Debug */,
