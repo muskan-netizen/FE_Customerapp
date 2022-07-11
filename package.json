@@ -652,7 +652,7 @@
     "rydeRelease": "cd android && ./gradlew assembleRydeRelease",
     "waterTaxiRelease": "cd android && ./gradlew assembleWaterTaxiRelease",
     "muvpodRelease": "cd android && ./gradlew assembleMuvpodRelease",
-    "smileRelease": "cd android && ./gradlew assembleSmileRelease",
+    "smileRelease": "cd android && ./gradlew assemblesmileRelease",
     "caronaTaxiRelease": "cd android && ./gradlew assembleCaronaTaxiRelease",
     "arwinRelease": "cd android && ./gradlew assembleArwinRelease",
     "marjMarketplaceRelease": "cd android && ./gradlew assembleMarjMarketplaceRelease",

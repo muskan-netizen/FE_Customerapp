@@ -1657,8 +1657,8 @@ const appIds = {
     android: 'com.clickService',
   }),
   amazingTaxi: Platform.select({
-    ios: 'com.amazingTaxi',
-    android: 'com.amazingTaxi',
+    ios: 'com.amazingTaxi.orders',
+    android: 'com.amazingTaxi.orders',
   }),
   jazzyBug: Platform.select({
     ios: 'com.jazzyBug',
