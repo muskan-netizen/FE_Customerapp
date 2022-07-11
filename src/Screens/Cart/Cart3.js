@@ -6266,7 +6266,7 @@ function Cart({ navigation, route }) {
                       <Calendar
                         current={
                           cartData?.same_day_delivery_for_schedule
-                            ? getBundleId == appIds.masa ? dayAfterToday :  new Date() 
+                            ? getBundleId== appIds.masa ? dayAfterToday :  new Date() 
                             : dayAfterToday
                         }
                         minDate={
@@ -6389,7 +6389,7 @@ function Cart({ navigation, route }) {
                   <Fragment>
                     <ScrollView>
                       <Calendar
-                        current={getBundleId() ==appIds.masa ? dayAfterToday: new Date()}
+                        current={getBundleId()==appIds.masa ? dayAfterToday: new Date()}
                         minDate={
                           !!minimumDelayVendorDate
                             ? minimumDelayVendorDate
