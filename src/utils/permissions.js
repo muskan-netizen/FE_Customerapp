@@ -138,6 +138,7 @@ export const chekLocationPermission = (showAlert = true) =>
           }
         })
         .catch((error) => {
+          console.log("errorrrrrrrrr",error)
           return reject(error);
         });
     } catch (error) {

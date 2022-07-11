@@ -207,14 +207,14 @@ android {
     flavorDimensions "appType"
 
     // productFlavors {
-    //          smokeRun{
+    //         myEvPlus{
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.smokeRun.order'
-    //         resValue "string", "app_name", "Smoke Run"
+    //         applicationId 'com.myEvPlus.order'
+    //         resValue "string", "app_name", "My EvPlus"
     //         resValue "string", "host_name", ""
     //         }
     // }

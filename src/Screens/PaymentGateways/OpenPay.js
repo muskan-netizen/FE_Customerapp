@@ -74,7 +74,7 @@ export default function OpenPay({ navigation, route }) {
         const URL = queryString.parseUrl(url);
         const queryParams = URL.query;
         const nonQueryURL = URL.url;
-        console.log(queryParams, 'propsMobbex');
+        console.log(url, 'propsMobbex');
     
         setTimeout(() => {
           if (queryParams.status == 200) {

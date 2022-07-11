@@ -6266,7 +6266,7 @@ function Cart({ navigation, route }) {
                       <Calendar
                         current={
                           cartData?.same_day_delivery_for_schedule
-                            ? getBundleId == appIds.masa ? dayAfterToday :  new Date() 
+                            ? getBundleId== appIds.masa ? dayAfterToday :  new Date() 
                             : dayAfterToday
                         }
                         minDate={
