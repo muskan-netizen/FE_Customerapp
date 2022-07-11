@@ -41,6 +41,7 @@ import {
   AllPaymentMethods,
   ScrollableCategory,
   LaundryAvailableVendors,
+  ChatScreen,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
@@ -307,6 +308,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.LAUNDRY_AVAILABLE_VENDORS}
         component={LaundryAvailableVendors}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name={navigationStrings.CHAT_SCREEN}
+        component={ChatScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

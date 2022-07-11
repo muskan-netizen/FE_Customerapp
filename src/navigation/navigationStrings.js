@@ -142,4 +142,5 @@ export default {
   MYCASH: 'MyCash',
   STRIPEIDEAL: 'StripeIdeal',
   LAUNDRY_AVAILABLE_VENDORS: 'laundryAvailableVendors',
+  CHAT_SCREEN:'ChatScreen'
 };
