@@ -358,6 +358,7 @@ const shortCodes = {
   servern: '1ba1e9',
   smokeRun:'545a71',
   myEvPlus:'1c7d9e',
+  qdelo:'0fcc84'
 };
 
 
@@ -1777,6 +1778,10 @@ const appIds = {
   smokeRun: Platform.select({
     ios: 'com.myEvPlus.order',
     android: 'com.myEvPlus.order',
+  }),
+  qdelo: Platform.select({
+    ios: 'com.qdelo.order',
+    android: 'com.qdelo.order',
   }),
 
 };
