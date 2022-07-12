@@ -876,6 +876,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "rn-fetch-blob-v2": "^0.14.1",
+    "socket.io-client": "^4.5.1",
     "toastify-react-native": "^2.0.0",
     "toggle-switch-react-native": "^3.2.0",
     "translate-json-object": "^2.3.7"

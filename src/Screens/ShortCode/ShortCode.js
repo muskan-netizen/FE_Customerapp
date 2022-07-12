@@ -2274,13 +2274,13 @@ export default function ShortCode({route, navigation}) {
     if (!!res?.primary_language?.id) {
       header = {
         // code: '4fc332',
-        code: shortCode,
+        code: '2f3120',
         language: res?.primary_language?.id,
       };
     } else {
       header = {
         // code: '4fc332',
-        code: shortCode,
+        code: '2f3120',
       };
     }
     console.log(header, 'header');

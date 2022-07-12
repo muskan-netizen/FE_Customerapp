@@ -50,6 +50,7 @@ import {getItem, getUserData, setItem} from './src/utils/utils';
 import {MenuProvider} from 'react-native-popup-menu';
 import {getBundleId} from 'react-native-device-info';
 import {appIds} from './src/utils/constants/DynamicAppKeys';
+import socketServices from './src/utils/scoketService';
 
 let CodePushOptions = {checkFrequency: codePush.CheckFrequency.MANUAL};
 

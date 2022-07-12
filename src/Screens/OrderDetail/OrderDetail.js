@@ -3088,6 +3088,16 @@ export default function OrderDetail({navigation, route}) {
             </View>
           )} */}
 
+
+  <TouchableOpacity onPress={()=>navigation.navigate(navigationStrings.CHAT_SCREEN)}>
+          <Text style={{
+            margin: 16,
+            color: colors.redB,
+            fontFamily:fontFamily.bold,
+            fontSize: 16
+          }}>CHAT</Text>
+          </TouchableOpacity>
+
         {!!(updatedcartItems && updatedcartItems.length) && (
           <FlatList
             data={updatedcartItems}
