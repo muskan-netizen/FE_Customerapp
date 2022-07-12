@@ -2274,13 +2274,13 @@ export default function ShortCode({route, navigation}) {
     if (!!res?.primary_language?.id) {
       header = {
         // code: '4fc332',
-        code: '2f3120',
+        code: '245bae',
         language: res?.primary_language?.id,
       };
     } else {
       header = {
         // code: '4fc332',
-        code: '2f3120',
+        code: '245bae',
       };
     }
     console.log(header, 'header');
@@ -2318,7 +2318,7 @@ export default function ShortCode({route, navigation}) {
         homeData(res.data);
       })
       .catch((error) => {
-        console.log(error, 'error>>>error>>error');
+        console.log(error, 'error in header api');
 
         updateState({
           isLoading: false,

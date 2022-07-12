@@ -145,3 +145,4 @@ export {default as StripeOXXO} from './PaymentGateways/StripeOXXO';
 export {default as VivaWallet} from './PaymentGateways/VivaWallet';
 export {default as MyCash} from './PaymentGateways/MyCash';
 export {default as LaundryAvailableVendors} from './LaundryAvailableVendors/LaundryAvailableVendors';
+export {default as ChatRoom} from './ChatRoom/ChatRoom'

@@ -128,12 +128,7 @@ export default function Home({route, navigation}) {
 
   const {profile} = appData;
 
-useEffect(()=>{
 
-  socketServices.initializeSocket(null);
-
-  
-},[])
 
   useFocusEffect(
     useCallback(() => {

@@ -1,18 +1,18 @@
 import io from 'socket.io-client';
 
-
+const SOCKET_URL = 'https://chat.royoorders.com'
 
 
 class WSService {
     initializeSocket = (userToken) => {
-        
-        try {
-        console.log('initializing socket');
 
-        
-            this.socket = io('https://chat.royoorders.com', {
+        try {
+            console.log('initializing socket');
+
+
+            this.socket = io(SOCKET_URL, {
                 transports: ['websocket'],
-                
+
                 // query: {
                 //     accessToken: userToken,
                 // }
@@ -28,17 +28,17 @@ class WSService {
             });
 
             this.socket.on('socketError', (err) => {
-                console.log('socket connection error: ',err);
+                console.log('socket connection error: ', err);
                 // logger.data('socket connection error: ', err);
             });
-            this.socket.on("parameterError",()=>{
+            this.socket.on("parameterError", () => {
                 console.log('socket connection error: ', err);
-              })
+            })
 
             this.socket.on('error', (error) => {
                 // console.log('socket error: ', err);
                 // logger.data('socket error: ', err);
-                console.log(error,'thea data');
+                console.log(error, 'thea data');
             });
 
             // this.socket.on('reconnect_attempt', () => {
@@ -51,7 +51,7 @@ class WSService {
             // });
         } catch (error) {
             // logger.error('initialize token error: ', error);
-            console.log(error,'hter tereo');
+            console.log(error, 'hter tereo');
         }
     };
 

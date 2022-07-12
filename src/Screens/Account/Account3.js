@@ -42,7 +42,7 @@ export default function Account3({ navigation }) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { themeColors, appStyle, appData, shortCodeStatus,currencies,languages } = useSelector(
+  const { themeColors, appStyle, appData, shortCodeStatus, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
   const businessType = appStyle?.homePageLayout;
@@ -71,7 +71,7 @@ export default function Account3({ navigation }) {
 
   const userData = useSelector((state) => state.auth.userData);
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  console.log("user data",userData)
+  console.log("user data", userData)
 
   console.log(
     contact_phone_number,
@@ -145,16 +145,16 @@ export default function Account3({ navigation }) {
       moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     }
   }
-  const deleleUserAccount = async() => {
+  const deleleUserAccount = async () => {
     try {
       const res = await actions.deleteAccount(
-      {},
-      {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-      })
-      console.log("delete user account res++++",res)
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        })
+      console.log("delete user account res++++", res)
       showSuccess(res?.massage)
       actions.userLogout();
       actions.cartItemQty('');
@@ -162,7 +162,7 @@ export default function Account3({ navigation }) {
       actions.addSearchResults('clear');
       moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     } catch (error) {
-      console.log('erro raised',error)
+      console.log('erro raised', error)
       showError(error?.message)
     }
   }
@@ -189,9 +189,15 @@ export default function Account3({ navigation }) {
     });
   };
 
-
-
   const usernameFirstlater = !!userData?.name && userData?.name?.charAt(0);
+
+  const goToChatRoom = (type) => {
+    if (type == 'user_chat') {
+      navigation.navigate(navigationStrings.CHAT_ROOM, { data: 'user_chat' })
+    } else {
+      navigation.navigate(navigationStrings.CHAT_ROOM, { data: 'vendor_chat' })
+    }
+  }
 
   return (
     <View
@@ -733,6 +739,41 @@ export default function Account3({ navigation }) {
             // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
+
+          {!!userData?.auth_token && (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={() => goToChatRoom('user_chat')}
+              iconLeft={imagePath.message}
+              centerHeading={'User Chat'}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
+
+          {!!userData?.auth_token && (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={() => goToChatRoom('vendor_chat')}
+              iconLeft={imagePath.message}
+              centerHeading={'Vendor Chat'}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
+
 
           <View style={styles.loginView}>
             <TouchableOpacity

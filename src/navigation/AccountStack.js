@@ -59,7 +59,7 @@ import {
   AddNewCustomer,
   CustomerEarningHistory,
   Location,
-  ChatScreen
+  ChatRoom
 } from '../Screens';
 import navigationStrings from './navigationStrings';
 
@@ -351,10 +351,11 @@ export default function ({ navigation }) {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name={navigationStrings.CHAT_SCREEN}
-        component={ChatScreen}
+        name={navigationStrings.CHAT_ROOM}
+        component={ChatRoom}
         options={{ headerShown: false }}
       />
+
     </Stack.Navigator>
   );
 }

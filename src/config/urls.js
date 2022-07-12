@@ -1,4 +1,5 @@
-// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+export const API_BASE_URL = 'http://192.168.101.88:8001/api/v1';
+
 //  export const API_BASE_URL = 'https://hellodeliver.in/api/v1'
 // export const API_BASE_URL = 'https://hellodeliver.in/api/v1'
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
@@ -23,7 +24,7 @@
 //live 
 // export const API_BASE_URL = 'https://toor.life/api/v1';
 // export const API_BASE_URL = 'https://fijieats.com/api/v1'
-export const API_BASE_URL = 'https://swantaxi.net/api/v1'
+// export const API_BASE_URL = 'https://swantaxi.net/api/v1'
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1'
 //classicab
 // export const API_BASE_URL = 'https://classicab.org/api/v1';
@@ -440,3 +441,10 @@ export const GET_PRODUCT_ESTIMATION_WITH_ADDONS = getApiUrl(
 );
 
 export const GET_ESTIMATION = getApiUrl('/estimation/get-estimation');
+
+//Chat Apis
+
+export const START_CHAT = getApiUrl('/chat/startChat');
+export const USER_CHAT = getApiUrl('/chat/userVendorChatRoom');
+export const VENDOR_CHAT = getApiUrl('/chat/vendorUserChatRoom');
+
