@@ -985,8 +985,8 @@ export default function Products({ route, navigation }) {
         <View
           style={{
             flexDirection: 'row',
-            flex: 1,
             alignItems: 'center',
+            // backgroundColor:'pink',
             marginBottom: moderateScaleVertical(8),
             marginHorizontal: moderateScale(12),
           }}>
@@ -994,7 +994,8 @@ export default function Products({ route, navigation }) {
             <SearchBar
               autoFocus={false}
               containerStyle={{
-                // width: width / 9,
+                width: width / 3.5,
+                // flex: 0.4,
                 // marginHorizontal: moderateScale(18),
                 borderRadius: moderateScale(8),
                 backgroundColor: isDarkMode
@@ -1030,11 +1031,11 @@ export default function Products({ route, navigation }) {
                   <View style={{
                     flexDirection: 'row',
                     justifyContent: 'flex-end',
-                    width: width / 1.1,
+                    width: width / 1.5,
                     alignItems: 'flex-end',
                     // backgroundColor: 'red',
                     marginRight: moderateScale(50),
-                    marginLeft:categoryInfo?.is_show_products_with_category?moderateScale(0):40,
+                    marginLeft:categoryInfo?.is_show_products_with_category?moderateScale(40):130,
                   }}
                   >
                     <View />

@@ -1028,7 +1028,7 @@ target 'Mozmarcas' do
 end
 
 #Myfiji Target
-target 'Myfiji' do
+target 'FijiEats' do
 
 end
 
