@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "833313152157",
+    "project_id": "pawsee-231ca",
+    "storage_bucket": "pawsee-231ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833313152157:android:caadf9aa35660707414874",
+        "android_client_info": {
+          "package_name": "com.pawsee.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "833313152157-09ibeqg3mj8iui8ntlesodp5mmlbjggg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pawsee.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "833313152157-1dg03pe6hljlifc9olsgobnk40uqctns.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pawsee.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "833313152157-tfigfnr16indjnhrnnm1uugslfd13eda.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pawsee.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "833313152157-4jkm8r9l6bf5g578o4mcknoo9ac3pgm7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKw6pNelZsk-7pIN2HqZgfHszwxGpmLSc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "833313152157-4jkm8r9l6bf5g578o4mcknoo9ac3pgm7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

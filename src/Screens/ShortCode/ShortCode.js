@@ -2263,6 +2263,12 @@ export default function ShortCode({ route, navigation }) {
                     isShortcodePrefilled: true,
                   });
                   break;
+               case appIds.pawsee:
+                    updateState({
+                      shortCode: shortCodes.pawsee,
+                      isShortcodePrefilled: true,
+                    });
+                 break;
       }
     })();
   }, []);
@@ -2612,7 +2618,7 @@ export default function ShortCode({ route, navigation }) {
         return imagePath.sabroson
     }
   }
-  console.log(animationVideo(), "animationVideo");
+
 
   const onVideoDurationEnded = () => {
     updateState({

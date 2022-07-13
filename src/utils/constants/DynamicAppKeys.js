@@ -358,7 +358,8 @@ const shortCodes = {
   servern: '1ba1e9',
   smokeRun:'545a71',
   myEvPlus:'1c7d9e',
-  qdelo:'0fcc84'
+  qdelo:'0fcc84',
+  pawsee:'bd2d83'
 };
 
 
@@ -1782,6 +1783,10 @@ const appIds = {
   qdelo: Platform.select({
     ios: 'com.qdelo.order',
     android: 'com.qdelo.order',
+  }),
+  pawsee: Platform.select({
+    ios: 'com.pawsee.order',
+    android: 'com.pawsee.order',
   }),
 
 };
