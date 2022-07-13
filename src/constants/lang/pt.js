@@ -945,6 +945,7 @@ Amount`,
   SERVICE_ADDRESS:'Service Address',
   BOOK_HERE:'Book Here',
   DELETE_ACCOUNT:"Delete Account",
+  SOS:'SOS',
   CATEGORY_KYC: 'Categoory KYC',
   ARE_YOU_SURE_YOU_WANT_TO_DELETE:'Are you sure, you want to delete your account? Deleting your account is permanent and will remove all content and profile settings.',
 };
