@@ -612,8 +612,8 @@ const appIds = {
     android: 'com.carhop',
   }),
   yogolift: Platform.select({
-    ios: 'com.yogolift',
-    android: 'com.yogolift',
+    ios: 'com.yogolift.orders',
+    android: 'com.yogolift.order',
   }),
   fleety: Platform.select({
     ios: 'com.fleety',
