@@ -37,6 +37,8 @@ import FastImage from 'react-native-fast-image';
 import DashBoardEight from './DashboardViews/DashBoardEight';
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
 import _, {isEmpty} from 'lodash';
+import io from 'socket.io-client';
+import socketServices from '../../utils/scoketService';
 
 // navigator.geolocation = require('react-native-geolocation-service');
 
@@ -125,6 +127,9 @@ export default function Home({route, navigation}) {
   } = state;
 
   const {profile} = appData;
+
+
+
   useFocusEffect(
     useCallback(() => {
       const backHandler = BackHandler.addEventListener(
@@ -934,20 +939,21 @@ export default function Home({route, navigation}) {
       );
       return indx;
     });
-    let allIndx = selectedLaundryCategory?.estimate_product_addons.map(
-      (element) => {
-        let indx = selectedLaundryCategory?.estimate_product_addons.findIndex(
-          (item) => item?.estimate_addon_set?.max_select === 1,
-        );
-        return indx;
-      },
-    );
 
-    console.log(allIndx, '>>>>>allIndx');
+    // let allIndx = selectedLaundryCategory?.estimate_product_addons.map(
+    //   (element) => {
+    //     let indx = selectedLaundryCategory?.estimate_product_addons.findIndex(
+    //       (item) => item?.estimate_addon_set?.max_select === 1,
+    //     );
+    //     return indx;
+    //   },
+    // );
+
+    // console.log(allIndx, '>>>>>allIndx');
 
     setIsOnPressed(true);
     setMinMaxError(containsAll);
-    return;
+
     if (
       containsAll.length ==
       selectedLaundryCategory?.estimate_product_addons.length
@@ -1220,6 +1226,7 @@ export default function Home({route, navigation}) {
         onFindVendors={onFindVendors}
         minMaxError={minMaxError}
         isOnPressed={isOnPressed}
+        selectedHomeCategory={selectedHomeCategory}
       />
     </WrapperContainer>
   );

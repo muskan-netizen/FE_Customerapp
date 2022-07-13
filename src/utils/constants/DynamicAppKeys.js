@@ -3,7 +3,8 @@ import {getBundleId} from 'react-native-device-info';
 
 const shortCodes = {
   runrun: 'bf8608',
-  tranzit: '52a1a6',
+ 
+    tranzit: '52a1a6',
   hmoobhub: 'fa11e1',
   capcorp: '149f3e',
   masa: 'c8490a',
@@ -1198,8 +1199,8 @@ const appIds = {
     android: 'com.sijang',
   }),
   fairex: Platform.select({
-    ios: 'com.fairex',
-    android: 'com.fairex',
+    ios: 'com.fairex.orders',
+    android: 'com.fairex.orders',
   }),
   everywhere: Platform.select({
     ios: 'com.app.everywhere',
@@ -1656,8 +1657,8 @@ const appIds = {
     android: 'com.clickService',
   }),
   amazingTaxi: Platform.select({
-    ios: 'com.amazingTaxi',
-    android: 'com.amazingTaxi',
+    ios: 'com.amazingTaxi.orders',
+    android: 'com.amazingTaxi.orders',
   }),
   jazzyBug: Platform.select({
     ios: 'com.jazzyBug',

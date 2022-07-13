@@ -2221,18 +2221,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.elentaMart:
+        case appIds.elentaMart:
           updateState({
             shortCode: shortCodes.elentaMart,
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.exprexPro:
-            updateState({
-              shortCode: shortCodes.exprexPro,
-              isShortcodePrefilled: true,
-            });
-            break;
+        case appIds.exprexPro:
+          updateState({
+            shortCode: shortCodes.exprexPro,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2318,7 +2318,7 @@ export default function ShortCode({route, navigation}) {
         homeData(res.data);
       })
       .catch((error) => {
-        console.log(error, 'error>>>error>>error');
+        console.log(error, 'error in header api');
 
         updateState({
           isLoading: false,

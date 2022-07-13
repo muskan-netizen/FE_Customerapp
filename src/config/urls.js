@@ -1,10 +1,12 @@
+export const API_BASE_URL = 'http://192.168.101.88:8001/api/v1';
+export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 //  export const API_BASE_URL = 'https://hellodeliver.in/api/v1'
 // export const API_BASE_URL = 'https://hellodeliver.in/api/v1'
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
- export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+//  export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 //  export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1'
 
 // export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1'
@@ -16,7 +18,7 @@
 // export const API_BASE_URL = 'https://palmettoplusdelivered.com/api/v1';
 // export const API_BASE_URL = 'https://dispatcher.releezer.shop';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
-//  export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
+//  export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
 //sujata
 // export const API_BASE_URL = 'http://192.168.99.124:8005/api/v1';
 // export const API_BASE_URL ='http://192.168.96.84:9090/api/v1'
@@ -82,6 +84,12 @@
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1';  //swiffy
 //Gourav.s
 // export const API_BASE_URL = 'http://192.168.99.130:8005/api/v1';
+
+//baytukom
+// export const API_BASE_URL = 'https://baytukom-order.netsolutionindia.com/api/v1';
+
+//amazingTaxi
+// export const API_BASE_URL = 'https://rhondaisamazingtaxi.com/api/v1';
 
 //owais nor
 // export const API_BASE_URL = 'https://1204-112-196-88-218.ngrok.io/api/v1';
@@ -194,11 +202,14 @@
 // export const API_BASE_URL = 'https://groupystore.com/api/v1';
 // export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
 // export const API_BASE_URL = 'https://trucktirenow.com/api/v1';
+// export const API_BASE_URL = 'https://quicklube.us/api/v1';
 
 //classicab
 // export const API_BASE_URL = 'https://classicab.org/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
+export const getSocketUrl = (endpoint) => SOCKET_URL + endpoint;
+
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
 export const LOGIN_BY_USERNAME = getApiUrl('/auth/loginViaUsername');
 export const VENDOR_LOGIN_BY_USERNAME = getApiUrl('/auth/login');
@@ -422,3 +433,11 @@ export const GET_PRODUCT_ESTIMATION_WITH_ADDONS = getApiUrl(
 );
 
 export const GET_ESTIMATION = getApiUrl('/estimation/get-estimation');
+//Chat Apis
+
+export const START_CHAT = getApiUrl('/chat/startChat');
+export const USER_CHAT = getApiUrl('/chat/userVendorChatRoom');
+export const VENDOR_CHAT = getApiUrl('/chat/vendorUserChatRoom');
+export const SEND_MESSAGE = getSocketUrl('/api/chat/sendMessageJoin');
+export const GET_ALL_MESSAGES = getSocketUrl('/api/chat')
+export const ALL_ROOM_USER = getSocketUrl('/api/getRoomUser')

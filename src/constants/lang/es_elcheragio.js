@@ -533,7 +533,7 @@ export default {
     'Tu carrito está vacío. Elige los productos de tu Tienda Aficionado favorita para verlos aquí',
   SHOP_FROM_WISHLIST: 'Compra tus deseos de parrillero',
   ALREADY_EXIST:
-  'You already have items from another store. Do you want to discard them?',
+    'You already have items from another store. Do you want to discard them?',
   LABEL1: 'Etiqueta 1',
   LABEL2: 'Etiqueta 2',
   DOYOUHAVECLEANINGMATERIAL: ' ¿Necesitas materiales de limpieza?',
@@ -953,5 +953,7 @@ export default {
   SERVICE_ADDRESS:'Service Address',
   BOOK_HERE:'Book Here',
   DELETE_ACCOUNT:"Delete Account",
+  CATEGORY_KYC: 'Categoory KYC',
+  SOS:'SOS',
   ARE_YOU_SURE_YOU_WANT_TO_DELETE:'Are you sure, you want to delete your account? Deleting your account is permanent and will remove all content and profile settings.'
 };
