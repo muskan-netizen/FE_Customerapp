@@ -127,7 +127,6 @@ export default function Account3({ navigation }) {
   };
 
 
-
   const onDeleteAccount = () => {
     if (!!userData?.auth_token) {
       Alert.alert(strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, '', [
@@ -234,8 +233,8 @@ export default function Account3({ navigation }) {
                 {strings.EDITCODE}
               </Text>
             )}
-          // rightIcon={imagePath.cartShop}
-          //   centerTitle={strings.MY_ACCOUNT}
+               // rightIcon={imagePath.cartShop}
+              //   centerTitle={strings.MY_ACCOUNT}
           />
         ) : (
           <Header centerTitle={strings.MY_ACCOUNT} noLeftIcon={true} />
@@ -378,7 +377,7 @@ export default function Account3({ navigation }) {
               // iconRight={imagePath.goRight}
               // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
-            ))}
+          ))}
 
           {/* {DeviceInfo.getBundleId() == appIds.bharatMove ? (
             <View>
@@ -451,7 +450,7 @@ export default function Account3({ navigation }) {
               // iconRight={imagePath.goRight}
               // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
-            )}
+          )}
 
           {!!userData?.auth_token && (
             <ListItemHorizontal
@@ -565,9 +564,7 @@ export default function Account3({ navigation }) {
           />
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&
-            getBundleId() == appIds.elcheregio &&
-            !!appMainData?.is_admin &&
-            (businessType == 'taxi' ? null : (
+            !!appMainData?.is_admin  ? (
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}
                 leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -601,7 +598,7 @@ export default function Account3({ navigation }) {
               // iconRight={imagePath.goRight}
               // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
-            ))}
+            ) :null }
 
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&

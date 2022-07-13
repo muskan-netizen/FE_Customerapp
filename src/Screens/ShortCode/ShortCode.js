@@ -2594,7 +2594,7 @@ export default function ShortCode({ route, navigation }) {
         return imagePath.sabroson
     }
   }
-  console.log(animationVideo(), "animationVideo");
+
 
   const onVideoDurationEnded = () => {
     updateState({

@@ -1164,7 +1164,7 @@ const AddressModal3 = ({
               ]}
               textStyle={{color: isDarkMode
                 ? MyDarkTheme.colors.text
-                : colors.borderLight, }}
+                : colors.white, }}
               onPress={saveAddress}
               marginTop={moderateScaleVertical(10)}
               // marginBottom={moderateScaleVertical(10)}
