@@ -24,7 +24,7 @@
 // export const API_BASE_URL = 'https://gokab.royoorders.com/api/v1'
 //live 
 // export const API_BASE_URL = 'https://toor.life/api/v1';
-// export const API_BASE_URL = 'https://fijieats.com/api/v1'
+export const API_BASE_URL = 'https://fijieats.com/api/v1'
 // export const API_BASE_URL = 'https://swantaxi.net/api/v1'
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1'
 //classicab
@@ -143,7 +143,7 @@
 // export const API_BASE_URL = 'https://localdropoff.info/api/v1';
 // export const API_BASE_URL = 'https://onscart.com/api/v1';
 // export const API_BASE_URL = 'https://fastmikes.com/api/v1';
- export const API_BASE_URL = 'https://masaapp.ae/api/v1'
+//  export const API_BASE_URL = 'https://masaapp.ae/api/v1'
 // export const API_BASE_URL = 'https://www.ored.co/api/v1'; //ored
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
 
