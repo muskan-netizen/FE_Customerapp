@@ -279,6 +279,8 @@ export default function Signup({navigation}) {
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
         systemuser: DeviceInfo.getUniqueId(),
+        'Content-Type': 'multipart/form-data'
+
       })
       .then((res) => {
         console.log(res, 'THIS IS RESPONSE');
