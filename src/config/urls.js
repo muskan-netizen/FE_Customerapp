@@ -1,5 +1,5 @@
 export const API_BASE_URL = 'http://192.168.101.88:8001/api/v1';
-export const SOCKET_URL = 'https://chat.royoorders.com'
+export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 //  export const API_BASE_URL = 'https://hellodeliver.in/api/v1'
 // export const API_BASE_URL = 'https://hellodeliver.in/api/v1'

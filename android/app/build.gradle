@@ -207,16 +207,15 @@ android {
     flavorDimensions "appType"
     
   productFlavors {
-                     yogofood{
+                    ambutap{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                // applicationIdSuffix ".hmoobhhub"
-                applicationId 'com.yogofood'
-                resValue "string", "app_name", "Yogo Food"
-                resValue "string", "host_name", "yogofood.royoorders.com"
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.ambutap'
+                resValue "string", "app_name", "AmbuTap"
+                resValue "string", "host_name", ""
             }
   }
     // productFlavors {

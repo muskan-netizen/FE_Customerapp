@@ -966,5 +966,7 @@ Amount`,
   COMPLETE_MATCH: 'Complete Match',
   PARTIAL_MATCH: 'Partial Match',
   AVAILABLE_VENDORS: 'Available Vendors',
-  ARE_YOU_SURE_YOU_WANT_TO_DELETE:'Are you sure, you want to delete your account? Deleting your account is permanent and will remove all content and profile settings.'
+  ARE_YOU_SURE_YOU_WANT_TO_DELETE:'Are you sure, you want to delete your account? Deleting your account is permanent and will remove all content and profile settings.',
+  SOS:'SOS',
+  
 };
