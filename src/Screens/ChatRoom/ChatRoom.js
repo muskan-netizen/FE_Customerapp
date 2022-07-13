@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { useDarkMode } from 'react-native-dark-mode';
 import imagePath from '../../constants/imagePath';
 import Header from '../../Components/Header';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import colors from '../../styles/colors';
 import { MyDarkTheme } from '../../styles/theme';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -16,6 +16,11 @@ import { moderateScale } from '../../styles/responsiveSize';
 import _ from 'lodash';
 import { showError } from '../../utils/helperFunctions';
 import navigationStrings from '../../navigation/navigationStrings';
+import stylesFun from './styles';
+import moment from 'moment';
+import CircularImages from '../../Components/CircularImages';
+import commonStyles from '../../styles/commonStyles';
+
 
 
 export default function ChatRoom({ navigation, route }) {
@@ -28,6 +33,8 @@ export default function ChatRoom({ navigation, route }) {
     const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
     const paramData = route?.params.data;
     console.log(paramData, 'paramData');
+    const fontFamily = appStyle?.fontSizeData;
+    const styles = stylesFun({ fontFamily, isDarkMode });
 
     const [state, setState] = useState({
         roomData: [],
@@ -37,41 +44,88 @@ export default function ChatRoom({ navigation, route }) {
 
     const updateState = (data) => setState((state) => ({ ...state, ...data }))
 
-    useEffect(() => {
-        (async () => {
-            try {
-                let headerData = {
-                    code: appData?.profile?.code,
-                    currency: currencies?.primary_currency?.id,
-                    language: languages?.primary_language?.id,
-                }
-                let apiData ={
-                    sub_domain: '127.0.0.1',
-                }
-                const res = paramData == 'user_chat' ? await actions.fetchUserChat(apiData, headerData) : await actions.fetchVendorChat(apiData, headerData)
-                if (!!res?.chatrooms && !_.isEmpty(res?.chatrooms)) {
-                    updateState({ roomData: res.chatrooms })
-                }
-                console.log("room res", res)
-            } catch (error) {
-                console.log('error raised in start chat api', error)
-                showError(error?.message)
-            }
-        })();
+    const isFocused = useIsFocused()
 
+
+    // useEffect(() => {
+    //     socketServices.initializeSocket();
+    // }, [navigation]);
+
+    // useFocusEffect(
+    //     useCallback(() => {
+    //         socketServices.on("new-message", (data) => {
+    //             console.log(data, "data to be emitted");
+    //             fetchData()
+    //         });
+    //         return () => {
+    //             console.log("listener removed");
+    //             socketServices.removeListener("new-message");
+    //             socketServices.removeListener('save-message');
+    //         };
+    //     }, [])
+    // );
+
+
+
+    useEffect(() => {
+        fetchData()
     }, [])
+
+
+    let fetchData = async () => {
+        try {
+            let headerData = {
+                code: appData?.profile?.code,
+                currency: currencies?.primary_currency?.id,
+                language: languages?.primary_language?.id,
+            }
+            let apiData = {
+                sub_domain: '192.168.101.88',
+            }
+            const res = paramData == 'user_chat' ? await actions.fetchUserChat(apiData, headerData) : await actions.fetchVendorChat(apiData, headerData)
+            if (!!res?.chatrooms && !_.isEmpty(res?.chatrooms)) {
+                updateState({ roomData: res.chatrooms })
+            }
+            console.log("room res++++", res)
+        } catch (error) {
+            console.log('error raised in start chat api', error)
+            showError(error?.message)
+        }
+    }
 
 
     const goToChatRoom = useCallback((item) => {
-        navigation.navigate(navigationStrings.CHAT_SCREEN, {data: {...item, id: item?.order_vendor_id} })
+        navigation.navigate(navigationStrings.CHAT_SCREEN, { data: { ...item, id: item?.order_vendor_id } })
     }, [])
 
     const renderItem = useCallback(({ item, index }) => {
+        let isAnyMessage = _.isEmpty(item?.chat_Data)
         return (
             <TouchableOpacity
                 onPress={() => goToChatRoom(item)}
+                style={{
+                    backgroundColor: colors.white,
+                    borderRadius: 4,
+                    shadowColor: '#000',
+                    shadowOffset: { width: 0, height: 1 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 2,
+                    elevation: 2,
+                    margin: 2,
+                    padding: moderateScale(8)
+                }}
             >
-                <Text>Hi</Text>
+                <View style={styles.flexView}>
+                    <Text style={styles.textStyle}><Text>Order</Text> # {item?.room_id}</Text>
+                    {!isAnyMessage ?
+                        <Text style={styles.timeStyle}>{moment(item?.chat_Data[0]?.created_date).format('LLL')}</Text> : null
+                    }
+                </View>
+
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    {_.isEmpty(item?.user_Data) ? null : <CircularImages isDarkMode={isDarkMode} data={item?.user_Data} />}
+                    {!isAnyMessage ? <Text numberOfLines={2} style={styles.textDesc} >{item?.chat_Data[0]?.message}</Text> : null}
+                </View>
             </TouchableOpacity>
         )
     }, [])
@@ -85,6 +139,12 @@ export default function ChatRoom({ navigation, route }) {
     }, [])
 
     const awesomeChildListKeyExtractor = useCallback((item) => `awesome-child-key-${item?._id}`, [roomData]);
+
+    const itemSeparatorComponent = useCallback(() => {
+        return (
+            <View style={styles.borderStyle} />
+        )
+    }, [])
 
     return (
         <WrapperContainer
@@ -109,18 +169,10 @@ export default function ChatRoom({ navigation, route }) {
                     renderItem={renderItem}
                     ListEmptyComponent={listEmptyComponent}
                     keyExtractor={awesomeChildListKeyExtractor}
+                    ItemSeparatorComponent={itemSeparatorComponent}
                     contentContainerStyle={{ flexGrow: 1 }}
                 />
             </View>
         </WrapperContainer>
     );
 };
-
-// define your styles
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingHorizontal: moderateScale(16)
-    },
-});
-

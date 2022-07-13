@@ -4,7 +4,7 @@ const SOCKET_URL = 'https://chat.royoorders.com'
 
 
 class WSService {
-    initializeSocket = (userToken) => {
+    initializeSocket = () => {
 
         try {
             console.log('initializing socket');
@@ -12,7 +12,6 @@ class WSService {
 
             this.socket = io(SOCKET_URL, {
                 transports: ['websocket'],
-
                 // query: {
                 //     accessToken: userToken,
                 // }

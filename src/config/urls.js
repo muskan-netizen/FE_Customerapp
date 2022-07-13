@@ -1,5 +1,6 @@
 export const API_BASE_URL = 'http://192.168.101.88:8001/api/v1';
-
+export const SOCKET_URL = 'https://chat.royoorders.com'
+// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 //  export const API_BASE_URL = 'https://hellodeliver.in/api/v1'
 // export const API_BASE_URL = 'https://hellodeliver.in/api/v1'
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
@@ -218,6 +219,8 @@ export const API_BASE_URL = 'http://192.168.101.88:8001/api/v1';
 // export const API_BASE_URL = 'https://classicab.org/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
+export const getSocketUrl = (endpoint) => SOCKET_URL + endpoint;
+
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
 export const LOGIN_BY_USERNAME = getApiUrl('/auth/loginViaUsername');
 export const VENDOR_LOGIN_BY_USERNAME = getApiUrl('/auth/login');
@@ -441,10 +444,11 @@ export const GET_PRODUCT_ESTIMATION_WITH_ADDONS = getApiUrl(
 );
 
 export const GET_ESTIMATION = getApiUrl('/estimation/get-estimation');
-
 //Chat Apis
 
 export const START_CHAT = getApiUrl('/chat/startChat');
 export const USER_CHAT = getApiUrl('/chat/userVendorChatRoom');
 export const VENDOR_CHAT = getApiUrl('/chat/vendorUserChatRoom');
-
+export const SEND_MESSAGE = getSocketUrl('/api/chat/sendMessageJoin');
+export const GET_ALL_MESSAGES = getSocketUrl('/api/chat')
+export const ALL_ROOM_USER = getSocketUrl('/api/getRoomUser')
