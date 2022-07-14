@@ -215,7 +215,7 @@ android {
     //             versionName "1.0"
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.yogolift'
+    //             applicationId 'com.yogolift.order'
     //             resValue "string", "app_name", "Yogo Lift"
     //             resValue "string", "host_name", ""
     //         }
@@ -892,7 +892,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.yogolift'
+                applicationId 'com.yogolift.order'
                 resValue "string", "app_name", "Yogo Lift"
                 resValue "string", "host_name", ""
             }
