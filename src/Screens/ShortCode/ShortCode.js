@@ -2476,15 +2476,15 @@ export default function ShortCode({ route, navigation }) {
               initapiresponse: true
             });
             break;
-            case appIds.sabroson:
-            updateState({
-              isLoading: false,
-              LoadingScreen: false,
-              allAppData: res,
-              responseData: homeData.data,
-              initapiresponse: true
-            });
-            break;
+            // case appIds.sabroson:
+            // updateState({
+            //   isLoading: false,
+            //   LoadingScreen: false,
+            //   allAppData: res,
+            //   responseData: homeData.data,
+            //   initapiresponse: true
+            // });
+            // break;
           default:
             updateState({ isLoading: false, LoadingScreen: false });
             navigateToNextScreen(res, homeData.data);
@@ -2549,8 +2549,8 @@ export default function ShortCode({ route, navigation }) {
         return animatedSplash();
       case appIds.muvpod:
         return animatedSplash();
-      case appIds.sabroson:
-        return animatedSplash();
+      // case appIds.sabroson:
+      //   return animatedSplash();
       default:
         return imageSplash();
     }
@@ -2590,8 +2590,8 @@ export default function ShortCode({ route, navigation }) {
         return imagePath.ipd
       case appIds?.muvpod:
         return { uri: imagePath.muvpod }
-      case appIds?.sabroson:
-        return imagePath.sabroson
+      // case appIds?.sabroson:
+      //   return imagePath.sabroson
     }
   }
   console.log(animationVideo(), "animationVideo");

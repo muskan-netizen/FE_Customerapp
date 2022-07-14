@@ -128,7 +128,7 @@ const App = () => {
   const isDarkMode = useDarkMode();
   useEffect(() => {
     //stop splashs screen from loading
-    if(getBundleId()==(appIds.masa || appIds.iPicknDrop || appIds.muvpod || appIds.sabroson )){
+    if(getBundleId()==(appIds.masa || appIds.iPicknDrop || appIds.muvpod)){
       setTimeout(() => {
         SplashScreen.hide();
       },200);

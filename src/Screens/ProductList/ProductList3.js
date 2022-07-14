@@ -941,8 +941,9 @@ export default function Products({ route, navigation }) {
                     size="small"
                     onToggle={() => {
                       // playHapticEffect(hapticEffects.impactLight);
+                      console.log(ProductTags, "ProductTags")
                       const updatedArr = ProductTags.map((el, idx) => {
-                        console.log(el);
+                        console.log(el ,"ellll");
                         if (idx === index) {
                           let newObj = el;
                           newObj.isSelected = !newObj.isSelected;
@@ -1031,7 +1032,9 @@ export default function Products({ route, navigation }) {
 
               </TouchableOpacity >
 
-            </View>) : <Image source={imagePath.filter} />}
+            </View>) : ( <TouchableOpacity onPress={onShowHideFilter} >
+              <Image source={imagePath.filter} />
+            </TouchableOpacity>)}
           </View>
         </View>
 
@@ -1327,6 +1330,7 @@ export default function Products({ route, navigation }) {
         },
       )
       .then((res) => {
+        clg
         const productTagsArr = res?.data?.map((el) => {
           return {
             ...el,
@@ -1349,6 +1353,7 @@ export default function Products({ route, navigation }) {
     if (data?.vendor) {
      console.log(data,"getAllListItemsdata")
       {
+        console.log(selectedFilters.current,"selectedFilters.current") //false 
         !!selectedFilters.current
           ? newVendorFilter(pageNo)
           : getAllProductsByVendor(pageNo);
@@ -1540,7 +1545,8 @@ export default function Products({ route, navigation }) {
 
   /****Get all list items by vendor id */
   const getAllProductsByVendor = (pageNo) => {
-    console.log('api hit getAllProductsByVendor');
+    console.log(data,'api hit getAllProductsByVendor');
+
     let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
     let apiData = `/${vendorId}?page=${pageNo}`;
@@ -1563,7 +1569,7 @@ export default function Products({ route, navigation }) {
         },
       )
       .then(async (res) => {
-        console.log('get all products by vendor res', res.data);
+        console.log('get all products by vendor res',  res?.data);
         // return;
         if (res?.data?.vendor) {
           FastImage.preload([
@@ -1578,7 +1584,6 @@ export default function Products({ route, navigation }) {
             },
           ]); //category banner preload
         }
-
         if (res?.data?.vendor?.is_show_products_with_category) {
           let resData = res?.data?.categories || [];
           await preLoadImages(resData);
@@ -1589,7 +1594,8 @@ export default function Products({ route, navigation }) {
           fetchTags(resData);
           setLoading(false);
         } else {
-          // console.log('get product list by vendor id >>>> ', res);
+          console.log('get product list by vendor id >>>> ',appMainData.brands);
+          
           if (res?.data) {
             if (res.data.products.data.length == 0) {
               loadMore = false;
@@ -1598,15 +1604,15 @@ export default function Products({ route, navigation }) {
             setLoading(false);
             setProductListData(
               pageNo == 1
-                ? res.data.products.data
-                : [...productListData, ...res.data.products.data],
+                ? res?.data?.products.data
+                : [...productListData, ...res?.data?.products.data],
             );
           } else {
             setLoading(false);
           }
         }
         if (res?.data) {
-          updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+          updateBrandAndCategoryFilter(res?.data?.filterData, appMainData.brands);
         }
       })
       .catch(errorMethod);
@@ -3277,7 +3283,6 @@ export default function Products({ route, navigation }) {
                   </View>
                 </View>
               </View>
-
               {isSearch ? (
                 <View>
                   <SearchBar

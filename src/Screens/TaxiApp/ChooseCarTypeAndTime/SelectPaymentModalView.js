@@ -631,22 +631,9 @@ export default function SelectPaymentModalView({
           marginTop: moderateScale(10),
           marginHorizontal: moderateScale(20),
           marginBottom: moderateScale(32),
-          flexDirection: 'row',
-           justifyContent: 'space-between',
+         
         }}>
-        <GradientButton
-          colorsArray={[
-            colors.white,
-            colors.white,
-          ]}
-          textStyle={{ textTransform: 'none', fontSize: textScale(13), color: themeColors?.primary_color }}
-          onPress={_openDateTimeModal }
-          btnText={
-            `${selectedTime || slectedDate ? `${slectedDate} ${selectedTime}` : 'Schedule a ride'}`
-          }   
-          btnStyle={styles.scheduleBtnStyle}
-          
-        />
+       
 
         <GradientButton
           colorsArray={[themeColors.primary_color, themeColors.primary_color]}
@@ -674,7 +661,7 @@ export default function SelectPaymentModalView({
           }
           indicator={indicatorLoader}
           indicatorColor={colors.white}
-          btnStyle={{ width:moderateScale(width/3),borderRadius: moderateScale(4),}}
+          btnStyle={{ width:moderateScale(width-60),borderRadius: moderateScale(4),}}
         />
       </View>
 
