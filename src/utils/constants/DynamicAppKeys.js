@@ -1406,7 +1406,7 @@ const appIds = {
   }),
   delivery: Platform.select({
     ios: 'com.gdotDelivery.user',
-    android: 'com.app.delivery',
+    android: 'com.gdotDelivery.user',
   }),
   timHomeServices: Platform.select({
     ios: 'com.timHomeServices',
@@ -1687,7 +1687,7 @@ const appIds = {
     android: 'com.keystoneDelivery',
   }),
   blueBundles: Platform.select({
-    ios: 'com.bluebundles',
+    ios: 'com.bluebundles.customer',
     android: 'com.bluebundles.customer',
   }),
   busTaMove: Platform.select({

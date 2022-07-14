@@ -9991,7 +9991,6 @@
 		ECA1A1E7283F4AF100081F88 /* BlueBundles(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = ECA1A1E6283F4AF000081F88 /* BlueBundles(Development).xcconfig */; };
 		ECA1A1E9283F4B3500081F88 /* BlueBundles(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = ECA1A1E8283F4B3500081F88 /* BlueBundles(Production).xcconfig */; };
 		ECA1A1EB283F4B8800081F88 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ECA1A1EA283F4B8800081F88 /* Images.xcassets */; };
-		ECA1A1ED283F517900081F88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ECA1A1EC283F517700081F88 /* GoogleService-Info.plist */; };
 		ECB6C9E0BC3FA2A902F19289 /* libPods-available_pods-Medicab.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4F1A91F30D91EEB763114BF /* libPods-available_pods-Medicab.a */; };
 		ECBDD4E1283FAD41000FB8A8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		ECBDD4E2283FAD41000FB8A8 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -10275,6 +10274,7 @@
 		F48F24622859E055008E2072 /* Kurs(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F48F24612859E054008E2072 /* Kurs(Production).xcconfig */; };
 		F48F24642859E097008E2072 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F48F24632859E096008E2072 /* Images.xcassets */; };
 		F48F24662859E119008E2072 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F48F24652859E118008E2072 /* GoogleService-Info.plist */; };
+		F4902BA3287EAEF800B33775 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4902BA2287EAEF700B33775 /* GoogleService-Info.plist */; };
 		F49C6D2B286091BD002E6C82 /* AbbeRides(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F49C6D2A286091BC002E6C82 /* AbbeRides(Development).xcconfig */; };
 		F49C6D2D286091FA002E6C82 /* AbbeRides(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F49C6D2C286091FA002E6C82 /* AbbeRides(Production).xcconfig */; };
 		F49C6D2F2860923D002E6C82 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F49C6D2E2860923D002E6C82 /* Images.xcassets */; };
@@ -13550,7 +13550,6 @@
 		ECA1A1E6283F4AF000081F88 /* BlueBundles(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BlueBundles(Development).xcconfig"; sourceTree = "<group>"; };
 		ECA1A1E8283F4B3500081F88 /* BlueBundles(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BlueBundles(Production).xcconfig"; sourceTree = "<group>"; };
 		ECA1A1EA283F4B8800081F88 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		ECA1A1EC283F517700081F88 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ECA1A1EE283F5C9200081F88 /* BlueBundles.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlueBundles.entitlements; sourceTree = "<group>"; };
 		ECBDD508283FAD41000FB8A8 /* BusTaMove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BusTaMove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECBDD50D283FAF57000FB8A8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -13642,6 +13641,7 @@
 		F48F24612859E054008E2072 /* Kurs(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Kurs(Production).xcconfig"; sourceTree = "<group>"; };
 		F48F24632859E096008E2072 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F48F24652859E118008E2072 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F4902BA2287EAEF700B33775 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F49C6D2A286091BC002E6C82 /* AbbeRides(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "AbbeRides(Development).xcconfig"; sourceTree = "<group>"; };
 		F49C6D2C286091FA002E6C82 /* AbbeRides(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "AbbeRides(Production).xcconfig"; sourceTree = "<group>"; };
 		F49C6D2E2860923D002E6C82 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -22492,7 +22492,7 @@
 		ECA1A1E5283F4A4A00081F88 /* BlueBundles */ = {
 			isa = PBXGroup;
 			children = (
-				ECA1A1EC283F517700081F88 /* GoogleService-Info.plist */,
+				F4902BA2287EAEF700B33775 /* GoogleService-Info.plist */,
 				ECA1A1E6283F4AF000081F88 /* BlueBundles(Development).xcconfig */,
 				ECA1A1E8283F4B3500081F88 /* BlueBundles(Production).xcconfig */,
 				ECA1A1EA283F4B8800081F88 /* Images.xcassets */,
@@ -32165,7 +32165,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					ECA1A1B8283F48E900081F88 = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = Z8RBTT4262;
 						ProvisioningStyle = Automatic;
 					};
 					ECBDD4DD283FAD41000FB8A8 = {
@@ -43622,8 +43622,8 @@
 				ECA1A1CD283F48E900081F88 /* notification.wav in Resources */,
 				ECA1A1E7283F4AF100081F88 /* BlueBundles(Development).xcconfig in Resources */,
 				ECA1A1D0283F48E900081F88 /* Plists in Resources */,
+				F4902BA3287EAEF800B33775 /* GoogleService-Info.plist in Resources */,
 				ECA1A1E9283F4B3500081F88 /* BlueBundles(Production).xcconfig in Resources */,
-				ECA1A1ED283F517900081F88 /* GoogleService-Info.plist in Resources */,
 				ECA1A1D1283F48E900081F88 /* Futura-Normal.ttf in Resources */,
 				ECA1A1D2283F48E900081F88 /* Eina02-Bold.ttf in Resources */,
 				ECA1A1D3283F48E900081F88 /* Futura-Book.ttf in Resources */,
@@ -139820,7 +139820,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = Z8RBTT4262;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
@@ -139855,7 +139855,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = Z8RBTT4262;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
