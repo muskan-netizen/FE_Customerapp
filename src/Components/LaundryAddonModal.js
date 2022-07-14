@@ -36,6 +36,7 @@ const LaundryAddonModal = ({
   minMaxError = [],
   isOnPressed = false,
   selectedHomeCategory = {},
+  unPresentAry = [],
 }) => {
   const {
     themeColor,
@@ -107,18 +108,23 @@ const LaundryAddonModal = ({
           style={{
             ...styles.minMaxTxt,
             color:
-              isOnPressed && !checkValidation(itm?.estimate_addon_set, indx)
+              isOnPressed &&
+              unPresentAry.some(
+                (item) => item?.addon_id == itm?.estimate_addon_id,
+              )
                 ? colors.redB
                 : colors.black,
             opacity:
-              isOnPressed && !checkValidation(itm?.estimate_addon_set, indx)
+              isOnPressed &&
+              unPresentAry.some(
+                (item) => item?.addon_id == itm?.estimate_addon_id,
+              )
                 ? 1
                 : 0.5,
           }}>
           Min {itm?.estimate_addon_set?.min_select} Max{' '}
           {itm?.estimate_addon_set?.max_select} sellections allowed
         </Text>
-        {console.log(itm?.estimate_addon_set?.option, 'sffsdfsdfsdf')}
         {itm?.estimate_addon_set?.option.length <= 4 ? (
           <FlatList
             data={itm?.estimate_addon_set?.option}

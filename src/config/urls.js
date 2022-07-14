@@ -4,7 +4,7 @@
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://dingdongdelivers.com/api/v1'
 // export const API_BASE_URL = 'https://foodnests.com/api/v1'
 // export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1'
@@ -107,7 +107,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 //Dlvrd
 // export const API_BASE_URL = 'https://36kel.com.ph/api/v1';
 
-// export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1';
+export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1';
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1';
@@ -435,3 +435,4 @@ export const GET_PRODUCT_ESTIMATION_WITH_ADDONS = getApiUrl(
 );
 
 export const GET_ESTIMATION = getApiUrl('/estimation/get-estimation');
+export const RESCHDULE_ORDER = getApiUrl('/mystore/vendor/rescheduleOrder');

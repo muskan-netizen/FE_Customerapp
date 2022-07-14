@@ -969,4 +969,8 @@ Amount`,
   VISIT_INSTAGRAM: 'Visit Instagram',
   ARE_YOU_SURE_YOU_WANT_TO_DELETE:
     'Are you sure, you want to delete your account? Deleting your account is permanent and will remove all content and profile settings.',
+  RE_SCEDULE_PICKUP: 'Reschedule Pickup',
+  RE_SCEDULE_DROP: 'Reschedule Dropoff',
+  PICKUP_SCHEDULE_DATE: 'Pickup Schedule Date:',
+  DROP_OFF_SCHEDULE_DATE: 'Drop Off Schedule Date:',
 };

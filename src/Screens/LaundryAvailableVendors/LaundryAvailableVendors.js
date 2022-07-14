@@ -142,23 +142,25 @@ export default function LaundryAvailableVendors({navigation, route}) {
             style={styles.vendorImgStyle}
           />
         </View>
-        <View
-          style={{
-            ...styles.completePartialMatchView,
-            backgroundColor:
-              item?.product[0]?.match == 'C' ? colors.greenC : colors.redF,
-          }}>
-          <Text
+        {!isEmpty(item?.product) && (
+          <View
             style={{
-              ...styles.completePartialMatchTxt,
-              color:
-                item?.product[0]?.match == 'C' ? colors.greenD : colors.redG,
+              ...styles.completePartialMatchView,
+              backgroundColor:
+                item?.product[0]?.match == 'C' ? colors.greenC : colors.redF,
             }}>
-            {item?.product[0]?.match == 'C'
-              ? strings.COMPLETE_MATCH
-              : strings.PARTIAL_MATCH}
-          </Text>
-        </View>
+            <Text
+              style={{
+                ...styles.completePartialMatchTxt,
+                color:
+                  item?.product[0]?.match == 'C' ? colors.greenD : colors.redG,
+              }}>
+              {item?.product[0]?.match == 'C'
+                ? strings.COMPLETE_MATCH
+                : strings.PARTIAL_MATCH}
+            </Text>
+          </View>
+        )}
         <View
           style={{
             paddingHorizontal: moderateScale(20),
@@ -174,9 +176,11 @@ export default function LaundryAvailableVendors({navigation, route}) {
             />
             <Text style={styles.addressTxt}>{item?.address}</Text>
           </View>
-          <Text style={styles.priceText}>
-            {currencies?.primary_currency?.symbol} {item?.product[0]?.price}
-          </Text>
+          {!isEmpty(item?.product) && (
+            <Text style={styles.priceText}>
+              {currencies?.primary_currency?.symbol} {item?.product[0]?.price}
+            </Text>
+          )}
           <ButtonWithLoader
             onPress={() => onSelectVendorAddToCart(item)}
             btnText={strings.SELECT_VENDOR}

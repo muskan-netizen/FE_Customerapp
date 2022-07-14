@@ -2130,6 +2130,8 @@ function Cart({navigation, route}) {
     }
   };
 
+ 
+
   const selectOrderDate = () => {
     if (businessType == 'laundry') {
       if (
@@ -2144,6 +2146,13 @@ function Cart({navigation, route}) {
         (!laundrySelectedDropOffDate || !laundrySelectedDropOffSlot)
       ) {
         alert('Please select drop-off date and time slots');
+        return;
+      }
+      if (
+        !cartData?.same_day_delivery_for_schedule &&
+        laundrySelectedDropOffDate == laundrySelectedPickupDate
+      ) {
+        alert('You can not schedule pickup and drop off on the same day ');
         return;
       } else {
         onClose();
@@ -6367,17 +6376,11 @@ function Cart({navigation, route}) {
                   <ScrollView>
                     {modalType == 'pickup' ? (
                       <Calendar
-                        current={
-                          cartData?.same_day_delivery_for_schedule
-                            ? new Date()
-                            : dayAfterToday
-                        }
+                        current={new Date()}
                         minDate={
                           !!minimumDelayVendorDate
                             ? minimumDelayVendorDate
-                            : cartData?.same_day_delivery_for_schedule
-                            ? new Date()
-                            : dayAfterToday
+                            : new Date()
                         }
                         onDayPress={laundrySlotSelection}
                         markedDates={{
@@ -6397,17 +6400,11 @@ function Cart({navigation, route}) {
                       />
                     ) : (
                       <Calendar
-                        current={
-                          cartData?.same_day_delivery_for_schedule
-                            ? new Date()
-                            : dayAfterToday
-                        }
+                        current={new Date()}
                         minDate={
                           !!minimumDelayVendorDate
                             ? minimumDelayVendorDate
-                            : cartData?.same_day_delivery_for_schedule
-                            ? new Date()
-                            : dayAfterToday
+                            : new Date()
                         }
                         onDayPress={laundrySlotSelection}
                         markedDates={{

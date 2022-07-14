@@ -62,31 +62,34 @@ export default function MyOrders(props) {
 
   let backIconShow = !!route?.params?.data ? route.params.data.isBack : false;
 
-  const businessType = appStyle?.homePageLayout;
   const [state, setState] = useState({
     tabBarData: [
-      businessType == 4
+      appStyle?.homePageLayout == 4
         ? {
             title:
               appIds.mml == getBundleId()
                 ? strings.ACTIVEDELEIVERIES
-                :  appIds.jiffex == getBundleId()? strings.ACTIVE_ORDERS: strings.ACTIVERIDES,
+                : appIds.jiffex == getBundleId()
+                ? strings.ACTIVE_ORDERS
+                : strings.ACTIVERIDES,
             isActive: true,
           }
         : {title: strings.ACTIVE_ORDERS, isActive: true},
-      businessType == 4
+      appStyle?.homePageLayout == 4
         ? {
             title:
               appIds.mml == getBundleId()
                 ? strings.PASTDELEIVERIES
-                :  appIds.jiffex == getBundleId()? strings.PAST_ORDERS:strings.PASTRIDES,
+                : appIds.jiffex == getBundleId()
+                ? strings.PAST_ORDERS
+                : strings.PASTRIDES,
             isActive: false,
           }
         : {title: strings.PAST_ORDERS, isActive: false},
       // {title: strings.SCHEDULED_ORDERS, isActive: false},
     ],
     selectedTab:
-      businessType == 4
+      appStyle?.homePageLayout == 4
         ? appIds.mml == getBundleId()
           ? strings.ACTIVEDELEIVERIES
           : strings.ACTIVERIDES
@@ -332,7 +335,6 @@ export default function MyOrders(props) {
   };
 
   const returnYourOrder = (item) => {
-    console.log(item, 'item>item>');
     updateState({isLoading: true});
     actions
       .getReturnOrderDetailData(
@@ -599,10 +601,12 @@ export default function MyOrders(props) {
             : imagePath.backArrowCourier
         }
         centerTitle={
-          businessType === 4
+          appStyle?.homePageLayout === 4
             ? appIds.mml == getBundleId()
               ? strings.MYDELIERIES
-              : appIds.jiffex == getBundleId()? strings.MY_ORDERS:strings.MYRIDES
+              : appIds.jiffex == getBundleId()
+              ? strings.MY_ORDERS
+              : strings.MYRIDES
             : strings.MY_ORDERS
         }
         headerStyle={
@@ -663,7 +667,7 @@ export default function MyOrders(props) {
               }}>
               <NoDataFound
                 image={
-                  businessType === 4
+                  appStyle?.homePageLayout === 4
                     ? appIds.mml == getBundleId()
                       ? imagePath.notrcukImage
                       : imagePath.noRides
@@ -671,11 +675,11 @@ export default function MyOrders(props) {
                 }
                 isLoading={state.isLoading}
                 text={
-                  businessType === 4
+                  appStyle?.homePageLayout === 4
                     ? appIds.mml == getBundleId()
                       ? strings.NODELIVERIESFOUND
-                      :appIds.jiffex == getBundleId()?
-                        strings.NO_ORDERS_FOUND
+                      : appIds.jiffex == getBundleId()
+                      ? strings.NO_ORDERS_FOUND
                       : strings.NO_RIDE_FOUND
                     : strings.NODATAFOUND
                 }
