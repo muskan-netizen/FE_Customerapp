@@ -867,7 +867,7 @@ function Cart({ navigation, route }) {
       orderDetail: res.data,
       redirectFrom: 'cart',
       selectedPayment: selectedPayment,
-      
+
     };
     if (
       !!paymentId &&
@@ -992,7 +992,7 @@ function Cart({ navigation, route }) {
         break;
 
       case 32: //PAYPHONE Payment Getway
-        updateState({placeLoader: false});
+        updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PAYPHONE, paymentData);
         break;
 
@@ -1011,12 +1011,12 @@ function Cart({ navigation, route }) {
         navigation.navigate(navigationStrings.VIVAWALLET, paymentData);
         break;
       case 41: //OPENPAY Payment Getway
-        updateState({placeLoader: false});
-        navigation.navigate(navigationStrings.OPENPAY,paymentData);
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.OPENPAY, paymentData);
         break;
       case 40: //USEREDE Payment Getway
-        updateState({placeLoader: false});
-        navigation.navigate(navigationStrings.USEREDE,paymentData);
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.USEREDE, paymentData);
         break;
 
       case 42: //Direct Pay Online Payment Getway
@@ -1349,7 +1349,7 @@ function Cart({ navigation, route }) {
     console.log(data, 'fsdjkhfkjshfkjahsdkjfhak');
 
     // updateState({isLoading: false});
- 
+
     actions
       .scheduledOrder(data, {
         code: appData?.profile?.code,
@@ -1373,7 +1373,7 @@ function Cart({ navigation, route }) {
         }
         // getCartDetail();
       })
-      .catch(error=>console.log(error,"errororor"));
+      .catch(error => console.log(error, "errororor"));
   };
 
   const _finalPayment = () => {
@@ -2312,7 +2312,7 @@ function Cart({ navigation, route }) {
               }}
               resizeMode="contain"
             />
-            <Text
+            {appIds.hokitch == getBundleId() ? <Text
               style={{
                 fontSize: textScale(12),
                 color:
@@ -2325,8 +2325,23 @@ function Cart({ navigation, route }) {
                     : fontFamily.regular,
                 textAlign: 'left',
               }}>
-              {val?.courier_name}
-            </Text>
+              {strings.CHARGES}
+            </Text> :
+              <Text
+                style={{
+                  fontSize: textScale(12),
+                  color:
+                    (!!sel_types ? sel_types : item?.sel_types) == val?.code
+                      ? themeColors.primary_color
+                      : colors.black,
+                  fontFamily:
+                    (!!sel_types ? sel_types : item?.sel_types) == val?.code
+                      ? fontFamily.bold
+                      : fontFamily.regular,
+                  textAlign: 'left',
+                }}>
+                {val?.courier_name}
+              </Text>}
           </View>
         </View>
 
@@ -2541,7 +2556,7 @@ function Cart({ navigation, route }) {
                   fontSize: textScale(9),
                 }}>
                 {/* {strings.WE_ARE_NOT_ACCEPTING} {item?.delaySlot} */}
-                {getBundleId() == appIds.masa ? `${strings.WE_ACCEPT_ONLY_SCHEDULE_ORDER} ${item?.delaySlot} `  :  ` ${strings.WE_ARE_NOT_ACCEPTING} ${item?.delaySlot} `}
+                {getBundleId() == appIds.masa ? `${strings.WE_ACCEPT_ONLY_SCHEDULE_ORDER} ${item?.delaySlot} ` : ` ${strings.WE_ARE_NOT_ACCEPTING} ${item?.delaySlot} `}
               </Text>
             ) : null}
 
@@ -2637,8 +2652,8 @@ function Cart({ navigation, route }) {
                                         : colors.textGreyB,
                                       fontSize: textScale(12),
                                       fontFamily: fontFamily.medium,
-                                     width:width/2.1
-                                      
+                                      width: width / 2.1
+
                                     }}>
                                     {i?.product?.category_name.name},
                                   </Text>
@@ -3213,14 +3228,17 @@ function Cart({ navigation, route }) {
                         ...styles.deliveryFeeDropDown,
                         borderColor: themeColors.primary_color,
                       }}>
-                      <Text style={styles.dropDownTextStyle}>
-                        {
-                          item?.delivery_types.filter(
-                            (val2) =>
-                              (sel_types || item?.sel_types) == val2?.code,
-                          )[0]?.courier_name
-                        }
+                      {appIds.hokitch == getBundleId() ? <Text style={styles.dropDownTextStyle}>
+                        {strings.CHARGES}
                       </Text>
+                        : <Text style={styles.dropDownTextStyle}>
+                          {
+                            item?.delivery_types.filter(
+                              (val2) =>
+                                (sel_types || item?.sel_types) == val2?.code,
+                            )[0]?.courier_name
+                          }
+                        </Text>}
                       <Text
                         style={{
                           ...styles.dropDownTextStyle,
@@ -6266,14 +6284,14 @@ function Cart({ navigation, route }) {
                       <Calendar
                         current={
                           cartData?.same_day_delivery_for_schedule
-                            ? getBuildId == appIds.masa ? dayAfterToday :  new Date() 
+                            ? getBundleId == appIds.masa ? dayAfterToday : new Date()
                             : dayAfterToday
                         }
                         minDate={
                           !!minimumDelayVendorDate
                             ? minimumDelayVendorDate
                             : cartData?.same_day_delivery_for_schedule
-                              ?  getBuildId == appIds.masa ? dayAfterToday :  new Date() 
+                              ? getBundleId == appIds.masa ? dayAfterToday : new Date()
                               : dayAfterToday
                         }
                         onDayPress={laundrySlotSelection}
@@ -6389,11 +6407,11 @@ function Cart({ navigation, route }) {
                   <Fragment>
                     <ScrollView>
                       <Calendar
-                        current={getBuildId()==appIds.masa ? dayAfterToday: new Date()}
+                        current={getBundleId() == appIds.masa ? dayAfterToday : new Date()}
                         minDate={
                           !!minimumDelayVendorDate
                             ? minimumDelayVendorDate
-                            : getBuildId()==appIds.masa ? dayAfterToday: new Date()
+                            : getBundleId() == appIds.masa ? dayAfterToday : new Date()
                         }
                         onDayPress={onSelectDateFromCalendar}
                         markedDates={{
@@ -6505,9 +6523,9 @@ function Cart({ navigation, route }) {
                             marginBottom: moderateScaleVertical(8),
                             // height:moderateScale(20)
                           }}>
-                        {strings.TIME_SLOT}
+                          {strings.TIME_SLOT}
                         </Text>
-                        {console.log(availableTimeSlots,"availableTimeSlots")}
+                        {console.log(availableTimeSlots, "availableTimeSlots")}
                         <FlatList
                           horizontal
                           data={availableTimeSlots || []}
@@ -6515,13 +6533,13 @@ function Cart({ navigation, route }) {
                           keyExtractor={(item) => item.value || ''}
                           showsHorizontalScrollIndicator={false}
                           ItemSeparatorComponent={() => (
-                            <View style={{marginRight: moderateScale(12)}} />
+                            <View style={{ marginRight: moderateScale(12) }} />
                           )}
                           ListHeaderComponent={() => (
-                            <View style={{marginLeft: moderateScale(24)}} />
+                            <View style={{ marginLeft: moderateScale(24) }} />
                           )}
                           ListFooterComponent={() => (
-                            <View style={{marginRight: moderateScale(24)}} />
+                            <View style={{ marginRight: moderateScale(24) }} />
                           )}
                           ListEmptyComponent={() => (
                             <View>

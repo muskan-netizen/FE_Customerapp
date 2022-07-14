@@ -45,7 +45,7 @@
         android:screenOrientation="portrait"
         >
         <intent-filter>
-        <action android:name="https://hokitch.rostaging.com/user/orders" />
+        <action android:name="@string/notification_tap" />
         <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
         <!-- <intent-filter>

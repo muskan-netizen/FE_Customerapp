@@ -31937,7 +31937,7 @@
 					};
 					84C428E7275898C80033A1FC = {
 						DevelopmentTeam = 6FXUMT5X23;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					84C432C927589E4F0033A1FC = {
 						DevelopmentTeam = 6FXUMT5X23;
@@ -32024,7 +32024,7 @@
 					};
 					84D486F526C161C800EE9EB5 = {
 						DevelopmentTeam = 6FXUMT5X23;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					84D4C908277061B9005892AA = {
 						DevelopmentTeam = 6FXUMT5X23;
@@ -77285,7 +77285,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-RoyoOrder/Pods-available_pods-RoyoOrder-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-NineOneTwo/Pods-available_pods-NineOneTwo-frameworks.sh\"\n";
 		};
 		8433AD2D2805694100F35EFD /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;

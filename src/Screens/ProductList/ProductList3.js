@@ -112,6 +112,8 @@ export default function Products({ route, navigation }) {
   let selectedFilters = useRef(null);
   // console.log(route.params, 'route.params');
   const { data } = route.params;
+
+
   const routeData = data?.fetchOffers;
   const { blurRef } = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -143,7 +145,7 @@ export default function Products({ route, navigation }) {
     //   label: "A to Z",
     //   labelValue: "a_to_z",
     //   parent: "Sort by",},
-    selectedSortFilter:null,
+    selectedSortFilter: null,
     updateQtyLoader: false,
     isSearch: false,
     isLoadingC: false,
@@ -595,7 +597,7 @@ export default function Products({ route, navigation }) {
                       />
                     </TouchableOpacity>
                   </View>
-
+                
                   <View
                     style={{
                       width: width,
@@ -608,7 +610,7 @@ export default function Products({ route, navigation }) {
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                       }}>
-                      <Text
+                      {/* <Text
                         numberOfLines={2}
                         style={{
                           ...styles.hdrTitleTxt,
@@ -620,7 +622,7 @@ export default function Products({ route, navigation }) {
                             : colors.white,
                         }}>
                         {data?.name || categoryInfo?.name || ''}
-                      </Text>
+                      </Text> */}
 
                       {!!categoryInfo &&
                         !!categoryInfo?.product_avg_average_rating && (
@@ -657,7 +659,21 @@ export default function Products({ route, navigation }) {
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                       }}>
-                      <Text
+                        <View >
+                        <Text
+                        numberOfLines={2}
+                        style={{
+                          ...styles.hdrTitleTxt,
+                          flex: 0,
+                          textAlign: 'left',
+                          fontSize: textScale(15),
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.white,
+                        }}>
+                        {data?.name || categoryInfo?.name || ''}
+                      </Text>
+                      {appIds.hokitch == getBundleId()?null:<Text
                         // numberOfLines={2}
                         style={{
                           ...styles.hdrTitleTxt,
@@ -671,36 +687,40 @@ export default function Products({ route, navigation }) {
                           width: width / 1.5,
                         }}>
                         {categoryInfo?.address || ''}
-                      </Text>
-
+                      </Text>}
+                        </View>
+                     
+                      
                       {!!categoryInfo &&
                         !categoryInfo?.closed_store_order_scheduled ? (
-                        <View
-                          style={[
-                            styles.hdrRatingTxtView,
-                            {
-                              justifyContent: 'center',
-                              height: moderateScale(20),
-                              backgroundColor: categoryInfo?.show_slot
-                                ? colors.green
+                        
+                          <View
+                            style={[
+                              styles.hdrRatingTxtView,
+                              {
+                                justifyContent: 'center',
+                                height: moderateScale(20),
+                                backgroundColor: categoryInfo?.show_slot
+                                  ? colors.green
+                                  : categoryInfo?.is_vendor_closed
+                                    ? colors.redB
+                                    : colors.green,
+                              },
+                            ]}>
+                            <Text
+                              style={{
+                                ...styles.ratingTxt,
+                                color: colors.white,
+                                fontSize: textScale(9.5),
+                              }}>
+                              {categoryInfo?.show_slot
+                                ? strings.OPEN
                                 : categoryInfo?.is_vendor_closed
-                                  ? colors.redB
-                                  : colors.green,
-                            },
-                          ]}>
-                          <Text
-                            style={{
-                              ...styles.ratingTxt,
-                              color: colors.white,
-                              fontSize: textScale(9.5),
-                            }}>
-                            {categoryInfo?.show_slot
-                              ? strings.OPEN
-                              : categoryInfo?.is_vendor_closed
-                                ? strings.CLOSE
-                                : strings.OPEN}
-                          </Text>
-                        </View>
+                                  ? strings.CLOSE
+                                  : strings.OPEN}
+                            </Text>
+                          </View>
+                        
                       ) : null}
                     </View>
 
@@ -786,7 +806,7 @@ export default function Products({ route, navigation }) {
                       color: colors.redB,
                       // marginTop: moderateScaleVertical(4)
                     }}>
-                    {getBundleId() == appIds.masa ? `${strings.WE_ACCEPT_ONLY_SCHEDULE_ORDER} ${categoryInfo?.delaySlot} `  :  ` ${strings.WE_ARE_NOT_ACCEPTING} ${categoryInfo?.delaySlot} `}
+                    {getBundleId() == appIds.masa ? `${strings.WE_ACCEPT_ONLY_SCHEDULE_ORDER} ${categoryInfo?.delaySlot} ` : ` ${strings.WE_ARE_NOT_ACCEPTING} ${categoryInfo?.delaySlot} `}
                   </Text>
                 ) : null}
               </View>
@@ -1027,7 +1047,7 @@ export default function Products({ route, navigation }) {
                   fontSize: moderateScale(16),
                   fontFamily: fontFamily.regular,
                   // marginRight: moderateScale(),
-                }} > {strings.SORT_BY} { selectedSortFilter==null? "A TO Z" : selectedSortFilter?.label} </Text>
+                }} > {strings.SORT_BY} {selectedSortFilter == null ? "A TO Z" : selectedSortFilter?.label} </Text>
 
               </TouchableOpacity >
 
@@ -1138,6 +1158,7 @@ export default function Products({ route, navigation }) {
       actions
         .addProductsToCart(data, {
           code: appData.profile.code,
+          
           currency: currencies.primary_currency.id,
           language: languages.primary_language.id,
           systemuser: DeviceInfo.getUniqueId(),
@@ -1347,7 +1368,7 @@ export default function Products({ route, navigation }) {
 
   const getAllListItems = (pageNo = 1) => {
     if (data?.vendor) {
-     console.log(data,"getAllListItemsdata")
+      console.log(data, "getAllListItemsdata")
       {
         !!selectedFilters.current
           ? newVendorFilter(pageNo)
@@ -1581,6 +1602,7 @@ export default function Products({ route, navigation }) {
 
         if (res?.data?.vendor?.is_show_products_with_category) {
           let resData = res?.data?.categories || [];
+
           await preLoadImages(resData);
           setSectionListData(resData);
           setCloneSectionList(resData);
@@ -1692,7 +1714,7 @@ export default function Products({ route, navigation }) {
         },
       )
       .then((res) => {
-        
+
         if (!!res?.data) {
           console.log(res.data.category, 'res getProductByCategoryId');
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
@@ -3367,7 +3389,7 @@ export default function Products({ route, navigation }) {
             // initialNumToRender={2} // Reduce initial render amount
             // maxToRenderPerBatch={10} // Redu ce number in each render batch
             updateCellsBatchingPeriod={100} // Increase time between renders
-            // windowSize={7} // Reduce the window size
+          // windowSize={7} // Reduce the window size
 
           />
         ) : (
@@ -3604,7 +3626,7 @@ export default function Products({ route, navigation }) {
           onShowHideFilter={onShowHideFilter}
           allClearFilters={allClearFilters}
           selectedSortFilter={selectedSortFilter}
-          onSelectedSortFilter={(val) => updateState({selectedSortFilter:val})}
+          onSelectedSortFilter={(val) => updateState({ selectedSortFilter: val })}
           maximumPrice={maximumPrice}
           minimumPrice={minimumPrice}
           updateMinMax={updateMinMax}

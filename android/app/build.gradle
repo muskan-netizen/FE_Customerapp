@@ -220,17 +220,17 @@ android {
     // }
 
     productFlavors {
-        //     royoorder {
-        //         dimension "appType"
-        //         versionCode 3
-        //         versionName "1.0"
-        //         minSdkVersion rootProject.ext.minSdkVersion
-        //         targetSdkVersion rootProject.ext.targetSdkVersion
-        //         // applicationIdSuffix ".royoorder"
-        //         applicationId 'com.codebrew.royoorder'
-        //         resValue "string", "app_name", "RoyoOrder"
-        //         resValue "string", "host_name", "sales.royoorders.com"
-        //     }
+            royoorder {
+                dimension "appType"
+                versionCode 3
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                // applicationIdSuffix ".royoorder"
+                applicationId 'com.codebrew.royoorder'
+                resValue "string", "app_name", "RoyoOrder"
+                resValue "string", "host_name", "sales.royoorders.com"
+            }
         //     orderchekout{
         //         dimension "appType"
         //         versionCode 5
@@ -4833,16 +4833,16 @@ android {
     //         resValue "string", "app_name", "Airlines Recruiter"
     //         resValue "string", "host_name", ""
     //         }
-    //         nineOneTwo{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.nineOneTwo'
-    //         resValue "string", "app_name", "912"
-    //         resValue "string", "host_name", ""
-    //         }
+            nineOneTwo{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.nineOneTwo'
+            resValue "string", "app_name", "912"
+            resValue "string", "host_name", ""
+            }
     //         trip{
     //         dimension "appType"
     //         versionCode 1
@@ -5083,16 +5083,16 @@ android {
     //         resValue "string", "app_name", "EVSOnTheGo"
     //         resValue "string", "host_name", ""
     //         }
-    //         kazakazi{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.kazakazi'
-    //         resValue "string", "app_name", "Kazakazi"
-    //         resValue "string", "host_name", ""
-    //         }
+            kazakazi{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.kazakazi'
+            resValue "string", "app_name", "Kazakazi"
+            resValue "string", "host_name", ""
+            }
     //         papiruki{
     //         dimension "appType"
     //         versionCode 1
