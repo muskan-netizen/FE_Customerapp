@@ -4,12 +4,14 @@ import {
   Addaddress,
   AddNewRider,
   AllContacts,
+  AuthorizeNet,
   ChooseCarTypeAndTimeTaxi,
   HomeScreenTaxi,
   Offers,
   OrderDetail,
   Payfast,
   PaymentOptions,
+  PayPhone,
   PickupTaxiOrderDetail,
   PinAddressOnMap,
   RateOrder,
@@ -80,6 +82,15 @@ export default function (Stack) {
         name={navigationStrings.PAYFAST}
         component={Payfast}
         options={{ headerShown: false }}
+      />
+        <Stack.Screen
+        name={navigationStrings.PAYPHONE}
+        component={PayPhone}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+      name={navigationStrings.AuthorizeNet}
+      component={AuthorizeNet}
       />
       <Stack.Screen
         name={navigationStrings.RATEORDER}

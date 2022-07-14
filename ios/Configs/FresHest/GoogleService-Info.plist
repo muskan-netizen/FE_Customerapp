@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>167418036095-53i45qpaqjr8ndm4jm5bppvpo7n7ub0g.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.167418036095-53i45qpaqjr8ndm4jm5bppvpo7n7ub0g</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>167418036095-408j34gt38eob5rgalpdtg4ootjlbvbr.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDyAXQChDKCzN4KmrcWaRgf7VnjwX2qLyg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>167418036095</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.FresHest.royoOrder</string>
+	<key>PROJECT_ID</key>
+	<string>freshest-57e08</string>
+	<key>STORAGE_BUCKET</key>
+	<string>freshest-57e08.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:167418036095:ios:1efc3927260f868c0ca44a</string>
+</dict>
+</plist>

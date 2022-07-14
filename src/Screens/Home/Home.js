@@ -1,6 +1,6 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Alert, BackHandler, Linking} from 'react-native';
+import {Alert, BackHandler, Linking, View, Text} from 'react-native';
 import AppLink from 'react-native-app-link';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
@@ -13,6 +13,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {MyDarkTheme} from '../../styles/theme';
+import Modal from 'react-native-modal';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   androidBackButtonHandler,
@@ -47,6 +48,13 @@ let maxMinObj = {
   min_select: 1,
 };
 
+import RepeatModal from '../../Components/RepeatModal';
+import SelectPaymentModal from '../../Components/SelectPaymentModal';
+import OrderSuccessModal from '../../Components/OrderSuccessModal';
+import SubscriptionModal from '../../Components/SubscriptionModal';
+
+// navigator.geolocation = require('react-native-geolocation-service');
+
 export default function Home({route, navigation}) {
   const paramData = route?.params;
 
@@ -63,7 +71,6 @@ export default function Home({route, navigation}) {
   const {location, appMainData, dineInType} = useSelector(
     (state) => state?.home,
   );
-
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const addressSearch = useSelector(
     (state) => state?.addressSearch.addressSearch,
@@ -104,6 +111,7 @@ export default function Home({route, navigation}) {
     isVoiceRecord: false,
     singleVendor: false,
     selectedAddonSet: [],
+    isSubscription: true,
   });
 
   const {
@@ -124,6 +132,7 @@ export default function Home({route, navigation}) {
     isVoiceRecord,
     singleVendor,
     selectedAddonSet,
+    isSubscription,
   } = state;
 
   const {profile} = appData;
@@ -281,6 +290,7 @@ export default function Home({route, navigation}) {
               console.log(err, 'chekLocationPermission error');
             });
         } else {
+          console.log('appDataappDataappData', appData.profile.preferences);
           if (appData?.profile?.preferences?.is_hyperlocal) {
             const data = {
               address: appData?.profile?.preferences?.Default_location_name,
@@ -533,6 +543,9 @@ export default function Home({route, navigation}) {
   };
 
   const onPressVendor = (item) => {
+
+    console.log('item+++', item);
+
     if (item?.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
         if (shortCodes.arenagrub == appData?.profile?.code) {
@@ -970,6 +983,14 @@ export default function Home({route, navigation}) {
     setLaundryAddonModal(false);
   };
 
+  const _closeModal = () => {
+    updateState({
+      isSubscription: false,
+    });
+  };
+  console.log(appStyle?.homePageLayout, 'appStyle?.homePageLayout');
+  console.log(userData, 'location>location');
+
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
       // switch (case_) {
@@ -1205,7 +1226,12 @@ export default function Home({route, navigation}) {
     }
   }, []);
   // console.log(appMainData, 'appMainData');
-
+  const _onPressSubscribe = () => {
+    moveToNewScreen(navigationStrings.SUBSCRIPTION)();
+    updateState({
+      isSubscription: false,
+    });
+  };
   const {blurRef} = useRef();
   return (
     <WrapperContainer
@@ -1228,6 +1254,13 @@ export default function Home({route, navigation}) {
         isOnPressed={isOnPressed}
         selectedHomeCategory={selectedHomeCategory}
       />
+      {!!userData?.auth_token && (!!appData?.profile?.preferences?.show_subscription_plan_popup)  && (
+        <SubscriptionModal
+          isVisible={isSubscription}
+          onClose={_closeModal}
+          onPressSubscribe={_onPressSubscribe}
+        />
+      )}
     </WrapperContainer>
   );
 }

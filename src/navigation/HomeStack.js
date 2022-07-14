@@ -35,14 +35,11 @@ import {
   ViewAllData,
   TaxiHomeScreen,
   CategoryBrands,
-  Cart2,
-  Cart3,
-  Cart,
-  AllPaymentMethods,
   ScrollableCategory,
   LaundryAvailableVendors,
   ChatScreen,
   ChatRoom,
+  Subscriptions2,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
@@ -318,6 +315,11 @@ export default function () {
       />
 
     
+       <Stack.Screen
+        name={navigationStrings.SUBSCRIPTION}
+        component={Subscriptions2}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }

@@ -5,6 +5,8 @@ import messaging from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
 import actions from '../redux/actions';
 import { printReciept, StartPrinting } from '../Screens/PrinterConnection/PrinteFunc';
+import notifee, { EventType } from '@notifee/react-native';
+
 
 // let arr = []
 // let canEnablePrinter = true
@@ -25,6 +27,19 @@ const ForegroundHandler = (props) => {
   //     }, 2000);
   //   })
   // }
+
+  useEffect(() => {
+    return notifee.onForegroundEvent(({ type, detail }) => {
+      switch (type) {
+        case EventType.DISMISSED:
+          console.log('User dismissed notification', detail.notification);
+          break;
+        case EventType.PRESS:
+          console.log('User pressed notification', detail.notification);
+          break;
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {

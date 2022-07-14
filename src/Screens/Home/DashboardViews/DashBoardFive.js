@@ -144,7 +144,7 @@ export default function DashBoardFive({
 
   const {currSelectedFilter} = state;
 
-  // console.log('app main data', appMainData);
+  console.log('businessType', businessType);
 
   const onSelectedFilter = (selectedFilter) => {
     updateState({showMenu: false, currSelectedFilter: selectedFilter});
@@ -861,7 +861,8 @@ export default function DashBoardFive({
                         lineHeight: moderateScale(20),
                         marginTop: moderateScale(5),
                       }}>
-                      {strings.SORRY_MSG}
+                        {businessType == "home_service" ? `${strings.WR_ARE_CURRENTLY_NOT_OPERATING } `: `${strings.SORRY_MSG}`}
+                      
                     </Text>
                   </View>
                 )}

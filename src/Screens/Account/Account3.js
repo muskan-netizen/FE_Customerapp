@@ -420,7 +420,7 @@ export default function Account3({navigation}) {
                 // iconRight={imagePath.goRight}
                 // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
-            ))}
+          ))}
 
           {/* {DeviceInfo.getBundleId() == appIds.bharatMove ? (
             <View>
@@ -493,7 +493,7 @@ export default function Account3({navigation}) {
                 // iconRight={imagePath.goRight}
                 // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
-            )}
+          )}
 
           {!!userData?.auth_token && (
             <ListItemHorizontal
@@ -623,9 +623,7 @@ export default function Account3({navigation}) {
           ) : null}
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&
-            getBundleId() == appIds.elcheregio &&
-            !!appMainData?.is_admin &&
-            (businessType == 'taxi' ? null : (
+            !!appMainData?.is_admin  ? (
               <ListItemHorizontal
                 centerContainerStyle={{flexDirection: 'row'}}
                 leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -659,7 +657,7 @@ export default function Account3({navigation}) {
                 // iconRight={imagePath.goRight}
                 // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
-            ))}
+            ) :null }
 
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&

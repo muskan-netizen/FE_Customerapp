@@ -535,6 +535,7 @@ export default function Addaddress({ navigation, route }) {
   };
 
   const onPressAddress = async (place) => {
+    console.log(place,"placeeee")
     Keyboard.dismiss();
     // return;
     if (!!place.place_id && !!place?.name) {
@@ -940,7 +941,9 @@ export default function Addaddress({ navigation, route }) {
               borderRadius: 0,
             }}>
             {dropLocationData.map((val, i) => {
+              console.log(val.pre_address,"vallllllllll")
               return (
+
                 <View
                   style={{
                     flexDirection: 'row',
@@ -980,6 +983,7 @@ export default function Addaddress({ navigation, route }) {
                       }
                       _moveToNextScreen={() => _moveToNextScreen(i)}
                       onClear={() => onClearAddress('', i)}
+                      index={i}
                     />
                   </View>
                   <View style={{ marginHorizontal: moderateScale(8) }} />
@@ -1046,10 +1050,11 @@ export default function Addaddress({ navigation, route }) {
                   </Text>
                 </View>
                 {searchResult?.data.map((item, i) => {
+                  console.log(item,"itemm")
                   return renderSearchItem(item);
                 })}
               </View>
-            ) : (
+            ) : appData?.profile?.preferences?.is_static_dropoff ?null:(
               <View style={{ marginTop: moderateScaleVertical(16) }}>
                 <View style={{ ...styles.savedAddressView }}>
                   <Image

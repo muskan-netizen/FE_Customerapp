@@ -68,6 +68,7 @@ export const updateInternetConnection = (data) => {
 };
 export const signUpApi = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
+    
     apiPost(SIGN_UP_API, data, headers)
       .then((res) => {
         setUserData(res.data).then((suc) => {
@@ -483,7 +484,9 @@ export function userRegistrationDocument(data = {}, headers = {}) {
 }
 
 export const getUserProfile = (data, headers = {}) => {
+
   return new Promise((resolve, reject) => {
+
     apiGet(GET_USER_PROFILE, data, headers)
       .then((res) => {
         resolve(res);

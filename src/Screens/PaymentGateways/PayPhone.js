@@ -71,7 +71,7 @@ export default function PayPhone({ navigation, route }) {
         const URL = queryString.parseUrl(url);
         const queryParams = URL.query;
         const nonQueryURL = URL.url;
-        console.log(props, 'propsPayPhone');
+
 
         setTimeout(() => {
             if (queryParams.status == 200) {
