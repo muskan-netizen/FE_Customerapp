@@ -2245,6 +2245,30 @@ export default function ShortCode({ route, navigation }) {
                 isShortcodePrefilled: true,
               });
               break;
+              case appIds.smokeRun:
+                updateState({
+                  shortCode: shortCodes.smokeRun,
+                  isShortcodePrefilled: true,
+                });
+                break;
+                case appIds.myEvPlus:
+                  updateState({
+                    shortCode: shortCodes.myEvPlus,
+                    isShortcodePrefilled: true,
+                  });
+                  break;
+                case appIds.qdelo:
+                  updateState({
+                    shortCode: shortCodes.qdelo,
+                    isShortcodePrefilled: true,
+                  });
+                  break;
+               case appIds.pawsee:
+                    updateState({
+                      shortCode: shortCodes.pawsee,
+                      isShortcodePrefilled: true,
+                    });
+                 break;
       }
     })();
   }, []);
@@ -2285,14 +2309,14 @@ export default function ShortCode({ route, navigation }) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '1e3e30',
+        // code: '4fc332',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '1e3e30',
-      code: shortCode,
+        // code: '4fc332',
+        code: shortCode,
       };
     }
     console.log(header, 'header*******');
@@ -2589,7 +2613,7 @@ export default function ShortCode({ route, navigation }) {
       case appIds?.iPicknDrop:
         return imagePath.ipd
       case appIds?.muvpod:
-        return { uri: imagePath.muvpod }
+        return imagePath.ipd
         
       case appIds?.sabroson:
         return imagePath.sabroson

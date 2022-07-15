@@ -281,6 +281,7 @@ export default function MyOrders(props) {
         selectedVendor: {id: item?.vendor_id},
         orderDetail: item,
         showRating: item?.order_status?.current_status?.id != 6 ? false : true,
+        keyValue:1
       });
     } else {
       navigation.navigate(navigationStrings.ORDER_DETAIL, {

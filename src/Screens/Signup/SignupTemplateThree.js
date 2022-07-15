@@ -262,14 +262,14 @@ export default function SignupTemplateThree({navigation}) {
               marginTop: moderateScaleVertical(20),
               paddingHorizontal: moderateScale(24),
             }}>
-            <Text
+            {/* <Text
               style={
                 isDarkMode
                   ? [styles.header2, {color: MyDarkTheme.colors.text}]
                   : styles.header2
               }>
               {strings.CREATE_YOUR_ACCOUNT}
-            </Text>
+            </Text> */}
             <Text
               style={
                 isDarkMode

@@ -800,7 +800,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
           cancelError: null,
         });
         showSuccess(response?.message);
-        navigation.goBack();
+       { paramData?.keyValue ? navigation.goBack():null}
       })
       .catch(errorMethod);
   };

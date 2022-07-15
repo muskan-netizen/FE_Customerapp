@@ -4,7 +4,8 @@ import {getBundleId} from 'react-native-device-info';
 const shortCodes = {
   royoorder:'245bae',
   runrun: 'bf8608',
-  tranzit: '52a1a6',
+ 
+    tranzit: '52a1a6',
   hmoobhub: 'fa11e1',
   capcorp: '149f3e',
   masa: 'c8490a',
@@ -355,7 +356,10 @@ const shortCodes = {
   exprexPro :'cb98e8',
   fresHest: '7e43f5',
   servern: '1ba1e9',
-
+  smokeRun:'545a71',
+  myEvPlus:'1c7d9e',
+  qdelo:'0fcc84',
+  pawsee:'bd2d83'
 };
 
 
@@ -489,7 +493,7 @@ const appIds = {
     android: 'com.codebrew.yoho',
   }),
   glamsouq: Platform.select({
-    ios: 'com.codebrew.glamsouq',
+    ios: 'com.glamsouq.customer',
     android: 'com.glamsouq.customer',
   }),
   doctatransportation: Platform.select({
@@ -609,8 +613,8 @@ const appIds = {
     android: 'com.carhop',
   }),
   yogolift: Platform.select({
-    ios: 'com.yogolift',
-    android: 'com.yogolift',
+    ios: 'com.yogolift.orders',
+    android: 'com.yogolift.order',
   }),
   fleety: Platform.select({
     ios: 'com.fleety',
@@ -1201,8 +1205,8 @@ const appIds = {
     android: 'com.sijang',
   }),
   fairex: Platform.select({
-    ios: 'com.fairex',
-    android: 'com.fairex',
+    ios: 'com.fairex.orders',
+    android: 'com.fairex.orders',
   }),
   everywhere: Platform.select({
     ios: 'com.app.everywhere',
@@ -1381,7 +1385,7 @@ const appIds = {
     android: 'com.app.myRide',
   }),
   getfix: Platform.select({
-    ios: 'com.app.getfix',
+    ios: 'com.getfix.customer',
     android: 'com.getfix.customer',
   }),
   scoopaTechnologies: Platform.select({
@@ -1590,8 +1594,8 @@ const appIds = {
     android: 'com.amstaFood',
   }),
   toor: Platform.select({
-    ios: 'com.app.toor',
-    android: 'com.app.toor',
+    ios: 'com.toor.order',
+    android: 'com.toor.order',
   }),
   peerDeliveries: Platform.select({
     ios: 'com.peerDeliveries',
@@ -1767,6 +1771,22 @@ const appIds = {
   servern: Platform.select({
     ios: 'com.servern.order',
     android: 'com.servern.order',
+  }),
+  smokeRun: Platform.select({
+    ios: 'com.smokeRun.order',
+    android: 'com.smokeRun.order',
+  }),
+  smokeRun: Platform.select({
+    ios: 'com.myEvPlus.order',
+    android: 'com.myEvPlus.order',
+  }),
+  qdelo: Platform.select({
+    ios: 'com.qdelo.order',
+    android: 'com.qdelo.order',
+  }),
+  pawsee: Platform.select({
+    ios: 'com.pawsee.order',
+    android: 'com.pawsee.order',
   }),
 
 };

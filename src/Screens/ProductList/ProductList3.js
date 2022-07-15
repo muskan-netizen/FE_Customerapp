@@ -156,7 +156,7 @@ export default function Products({ route, navigation }) {
     updateTagFilter: false,
     differentAddsOnsModal: false,
     isShowFilter: false,
-   showListEndLoader:false
+    showListEndLoader: false
   });
 
   const {
@@ -216,7 +216,6 @@ export default function Products({ route, navigation }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [productListId, setProductListId] = useState(data);
   const [isLoading, setLoading] = useState(true);
-  // const [showListEndLoader, setShowListEndLoader]= useState(fals);
   const [apiHitAgain, setApiHitAgain] = useState(false);
   const [animateText, setAnimateText] = useState(0);
   const [isSingleVendor, setIsSingleVendor] = useState({});
@@ -1035,7 +1034,7 @@ export default function Products({ route, navigation }) {
                     alignItems: 'flex-end',
                     // backgroundColor: 'red',
                     marginRight: moderateScale(50),
-                    marginLeft:categoryInfo?.is_show_products_with_category?moderateScale(40):130,
+                    marginLeft: categoryInfo?.is_show_products_with_category ? moderateScale(40) : 130,
                   }}
                   >
                     <View />
@@ -1044,7 +1043,7 @@ export default function Products({ route, navigation }) {
                         flexDirection: 'row',
                         alignItems: 'center',
                         textAlign: 'center',
-                       
+
                         marginRight: moderateScale(50)
                       }} >
                       <Image source={imagePath.filter} />
@@ -1116,7 +1115,9 @@ export default function Products({ route, navigation }) {
   };
 
   const addSingleItem = useCallback(
+
     async (item, section = null, inx) => {
+
       if (
         !!categoryInfo?.is_vendor_closed &&
         !categoryInfo?.show_slot &&
@@ -1131,6 +1132,7 @@ export default function Products({ route, navigation }) {
       updateState({ selectedItemID: item?.id, btnLoader: true });
 
       if (item?.add_on_count !== 0 || item?.variant_set_count !== 0) {
+
         setSelectedSection(section);
         setSelectedCarItems(item);
         setIsVisibleModal(true);
@@ -1143,6 +1145,7 @@ export default function Products({ route, navigation }) {
         return;
       }
       if (item?.add_on_count === 0 && item?.mode_of_service === 'schedule') {
+
         setSelectedSection(section);
         setSelectedCarItems(item);
         setIsVisibleModal(true);
@@ -1378,7 +1381,7 @@ export default function Products({ route, navigation }) {
     if (data?.vendor) {
       console.log(data, "getAllListItemsdata")
       {
-        !!selectedFilters.current
+        selectedFilters.current
           ? newVendorFilter(pageNo)
           : getAllProductsByVendor(pageNo);
       }
@@ -1569,6 +1572,7 @@ export default function Products({ route, navigation }) {
 
   /****Get all list items by vendor id */
   const getAllProductsByVendor = (pageNo) => {
+
     console.log('api hit getAllProductsByVendor');
     let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
@@ -1594,6 +1598,9 @@ export default function Products({ route, navigation }) {
       .then(async (res) => {
         console.log('get all products by vendor res', res.data);
         // return;
+        updateState({
+          showListEndLoader:false
+        })
         if (res?.data?.vendor) {
           FastImage.preload([
             {
@@ -1616,9 +1623,10 @@ export default function Products({ route, navigation }) {
           // setFilterData(res?.data?.filterData)
           setCategoryInfo(res?.data?.vendor);
           fetchTags(resData);
+          
           setLoading(false);
         } else {
-          // console.log('get product list by vendor id >>>> ', res);
+          console.log('get product list by vendor id >>>> ', res);
           if (res?.data) {
             if (res.data.products.data.length == 0) {
               loadMore = false;
@@ -1661,7 +1669,8 @@ export default function Products({ route, navigation }) {
         : [];
     console.log(data, '>data>data');
     console.log('sending data', data);
-    setLoading(loading ? false : true);
+
+    // setLoading(loading ? false : true);
     actions
       .newVendorFilters(data, {
         code: appData?.profile?.code,
@@ -1724,7 +1733,6 @@ export default function Products({ route, navigation }) {
       .then((res) => {
 
         if (!!res?.data) {
-          // showListEndLoader:false
           console.log(res.data.category, 'res getProductByCategoryId');
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
           // checkSingleVendor(categoryInfo ? categoryInfo : res.data.category)
@@ -1888,7 +1896,7 @@ export default function Products({ route, navigation }) {
   };
 
   //pagination of data
-  const onEndReached = ({ distanceFromEnd }) => {
+  const onEndReached = () => {
     if (loadMore) {
       updateState({ pageNo: pageNo + 1 });
       getAllListItems(pageNo + 1);
@@ -2241,7 +2249,7 @@ export default function Products({ route, navigation }) {
       });
       setLoading(false);
       // showError(error?.message?.error || error?.error);
-      Alert.alert('', error?.message?.error, [
+      Alert.alert('', strings.YOU_ALREADY_HAVE_ITEMS_FROM_ANOTHER_STORE_DO_YOU_WANT_TO_DISCARD_THEM, [
         {
           text: strings.CANCEL,
           onPress: () => console.log('Cancel Pressed'),
@@ -2304,6 +2312,7 @@ export default function Products({ route, navigation }) {
   };
 
   const onAddNew = () => {
+
     if (
       !!categoryInfo?.is_vendor_closed &&
       !categoryInfo?.show_slot &&
@@ -2566,7 +2575,7 @@ export default function Products({ route, navigation }) {
       setCloneSectionList(sectionListData);
       if (apiHitAgain) {
         setApiHitAgain(false);
-        setLoading(true);
+        // setLoading(true);
         getAllProductsByVendor();
       }
     }
@@ -2655,17 +2664,15 @@ export default function Products({ route, navigation }) {
 
 
 
-  const _onEndList = (data)=>{
-     
-     !categoryInfo?.is_show_products_with_category &&
-    onEndReachedDelayed(data)
+  const _onEndList = (data) => {
 
-    updateState({
-      showListEndLoader:true
-    })
-    
+    !categoryInfo?.is_show_products_with_category &&
+      onEndReachedDelayed(data)
+      updateState({ showListEndLoader: true });
+
+
+
   }
-//showListEndLoader
 
   const RenderMenuView = () => {
     return (
@@ -3246,8 +3253,7 @@ export default function Products({ route, navigation }) {
 
   return (
     <WrapperContainer
-    isLoading={showListEndLoader}
-      >
+      isLoading={showListEndLoader}>
       <View style={{ flex: 1 }}>
         {((AnimatedHeaderValue && productListData.length > 6) ||
           (!!sectionListData?.length && AnimatedHeaderValue)) && (
@@ -3440,7 +3446,7 @@ export default function Products({ route, navigation }) {
             //   />
             // }
             onEndReached={
-             _onEndList
+              _onEndList
             }
             onEndReachedThreshold={0.5}
             ListFooterComponent={listFooterComponent}
@@ -3654,8 +3660,7 @@ export default function Products({ route, navigation }) {
           filterData={allFilters}
         />
       ) : null}
-      {isLoader? <Loader   />: null}
-      {/* <Loader isLoading={false} /> */}
+      {isLoader ? <Loader /> : null}
     </WrapperContainer>
   );
 }
