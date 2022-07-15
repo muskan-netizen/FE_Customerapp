@@ -440,4 +440,4 @@ export const USER_CHAT = getApiUrl('/chat/userVendorChatRoom');
 export const VENDOR_CHAT = getApiUrl('/chat/vendorUserChatRoom');
 export const SEND_MESSAGE = getSocketUrl('/api/chat/sendMessageJoin');
 export const GET_ALL_MESSAGES = getSocketUrl('/api/chat')
-export const ALL_ROOM_USER = getSocketUrl('/api/getRoomUser')
+export const ALL_ROOM_USER = getSocketUrl('/api/chat/getRoomUser')

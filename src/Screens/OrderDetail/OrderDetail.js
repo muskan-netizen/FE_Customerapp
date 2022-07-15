@@ -195,7 +195,7 @@ export default function OrderDetail({ navigation, route }) {
     isFocused ? 5000 : null,
   );
 
-  console.log("cartDatacartData",cartData)
+  console.log("cartDatacartData", cartData)
 
   useFocusEffect(
     React.useCallback(() => {
@@ -214,6 +214,41 @@ export default function OrderDetail({ navigation, route }) {
       showError(strings.UNAUTHORIZED_MESSAGE);
     }
   };
+
+
+  const createRoom = async (item, type) => {
+
+    try {
+      const apiData = {
+        sub_domain: '192.168.101.88',
+        client_id: 1,
+        db_name: appData?.profile?.database_name,
+        user_id: userData?.id,
+        type: type,
+        vendor_order_id: Number(item?.id),
+        vendor_id: Number(item?.vendor_id),
+        order_id: Number(item?.order_id)
+      }
+      updateState({isLoading: true})
+      const res = await actions.onStartChat(apiData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      console.log('start chat res', res)
+      updateState({isLoading: false})
+      if (!!res?.roomData) {
+        onChat(res.roomData)
+
+      }
+    } catch (error) {
+      console.log('error raised in start chat api', error)
+      showError(error?.message)
+      updateState({isLoading: false})
+    }
+  }
+
+
 
   const new_dispatch_traking_url = trackingUrl
     ? trackingUrl.replace('/order/', '/order-details/')
@@ -691,7 +726,7 @@ export default function OrderDetail({ navigation, route }) {
                                           }
                                           numberOfLines={1}>
                                           {` ${currencies?.primary_currency
-                                              ?.symbol
+                                            ?.symbol
                                             } ${currencyNumberFormatter(
                                               Number(
                                                 j?.quantity_price,
@@ -794,7 +829,7 @@ export default function OrderDetail({ navigation, route }) {
                                             }
                                             numberOfLines={1}>
                                             {` ${currencies?.primary_currency
-                                                ?.symbol
+                                              ?.symbol
                                               } ${currencyNumberFormatter(
                                                 Number(j?.quantity_price),
                                                 appData?.profile?.preferences
@@ -821,9 +856,9 @@ export default function OrderDetail({ navigation, route }) {
                         color: colors.redFireBrick,
                         marginBottom: moderateScale(3),
                       }}>{`${i?.product.delay_order_hrs > 0 ||
-                          i?.product.delay_order_min > 0
-                          ? strings.PREPARATION_TIME_IS
-                          : ''
+                        i?.product.delay_order_min > 0
+                        ? strings.PREPARATION_TIME_IS
+                        : ''
                         }${i?.product.delay_order_hrs > 0
                           ? ` ${i?.product.delay_order_hrs} hrs`
                           : ''
@@ -993,14 +1028,14 @@ export default function OrderDetail({ navigation, route }) {
                 : colors.blackOpacity86,
             }}
           />
-      <TouchableOpacity onPress={() => onChat(item)}>
-          <Text style={{
-            margin: 16,
-            color: colors.redB,
-            fontFamily: fontFamily.bold,
-            fontSize: 16
-          }}>CHAT</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => createRoom(item, 'vendor_to_user')}>
+            <Text style={{
+              margin: 16,
+              color: colors.redB,
+              fontFamily: fontFamily.bold,
+              fontSize: 16
+            }}>Start chat with your vendor</Text>
+          </TouchableOpacity>
 
           {item?.products.length
             ? item?.products.map((i, inx) => {
@@ -1099,7 +1134,7 @@ export default function OrderDetail({ navigation, route }) {
                                         style={styles.cartItemWeight2}
                                         numberOfLines={1}>
                                         {` ${currencies?.primary_currency
-                                            ?.symbol
+                                          ?.symbol
                                           } ${currencyNumberFormatter(
                                             Number(j?.price),
                                             appData?.profile?.preferences
@@ -1745,8 +1780,8 @@ export default function OrderDetail({ navigation, route }) {
                   }}>
 
                   {`${cartData?.address?.house_number === null
-                      ? ''
-                      : `${cartData?.address?.house_number}, `
+                    ? ''
+                    : `${cartData?.address?.house_number}, `
                     }`}
                   {cartData?.address?.address} {''}
                   {cartData?.address?.pincode}
@@ -2757,9 +2792,9 @@ export default function OrderDetail({ navigation, route }) {
     );
   };
 
-  const onChat = (item) =>{
-    console.log("item+++",item)
-    navigation.navigate(navigationStrings.CHAT_SCREEN,{data: item})
+  const onChat = (item) => {
+    console.log("item+++", item)
+    navigation.navigate(navigationStrings.CHAT_SCREEN, { data: item })
   }
 
   const _onRateDriver = () => {
@@ -3065,7 +3100,7 @@ export default function OrderDetail({ navigation, route }) {
           )} */}
 
 
-    
+
         {!!(updatedcartItems && updatedcartItems.length) && (
           <FlatList
             data={updatedcartItems}
@@ -3177,7 +3212,7 @@ export default function OrderDetail({ navigation, route }) {
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
-        
+
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2
@@ -3188,7 +3223,7 @@ export default function OrderDetail({ navigation, route }) {
         }
         centerTitle={strings.ORDER + `${'#'}${cartData?.order_number || ''}`}
         customRight={!!cartData?.reports?.report?.original ? customRight : ''}
-      /> 
+      />
       <View
         style={{
           height: 1,

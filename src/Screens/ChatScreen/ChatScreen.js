@@ -1,8 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useState, useCallback, useEffect } from 'react'
-
-import { GiftedChat, Bubble } from 'react-native-gifted-chat';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useState, useCallback, useEffect, useRef } from 'react'
+import { StyleSheet, Text, TouchableOpacity, View, Image, Platform } from 'react-native'
+import { GiftedChat } from 'react-native-gifted-chat';
 import socketServices from '../../utils/scoketService';
 import { useSelector } from 'react-redux';
 import { useDarkMode } from 'react-native-dark-mode';
@@ -14,116 +12,64 @@ import { MyDarkTheme } from '../../styles/theme';
 import WrapperContainer from '../../Components/WrapperContainer';
 import actions from '../../redux/actions';
 import { getImageUrl } from '../../utils/helperFunctions';
-import { moderateScale, moderateScaleVertical, textScale } from '../../styles/responsiveSize';
+import { height, moderateScale, moderateScaleVertical, textScale, width } from '../../styles/responsiveSize';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
+import _ from 'lodash';
+import CircularImages from '../../Components/CircularImages';
+import Modal from 'react-native-modal'
+import { ScrollView } from 'react-native-gesture-handler';
 
-const messageWrapperStyle = {
-  left: {
-    backgroundColor: 'red',
-    borderBottomLeftRadius: 0,
-  },
-  right: {
-    backgroundColor: 'black',
-    borderBottomEndRadius: 0,
-  },
-};
-const messageTextStyle = {
-  left: {
-    // fontFamily: fontFamily.regular,
-  },
-  right: {
-    // fontFamily: fontFamily.regular,
-  },
-};
 
-export default function ChatScreen({ navigation, route }) {
+export default function ChatScreen({
+  route,
+  onClose,
+  isRefresh
+}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const paramData = route?.params.data;
-  console.log(paramData, 'paramData');
-
-  // const { profile } = appData
-
-
-
-  const fontFamily = appStyle?.fontSizeData;
-
-
-
+  const paramData = route.params.data;
   const { appData, themeColors, currencies, languages, appStyle } = useSelector((state) => state.initBoot);
+  const fontFamily = appStyle?.fontSizeData;
   const userData = useSelector((state) => state?.auth?.userData);
+  const isChatRefresh = useSelector((state) => state?.chatRefresh.isChatRefresh);
+  const styles = stylesFun({ fontFamily, isDarkMode });
 
-  console.log("appDataappData", appData)
 
   const [messages, setMessages] = useState([])
   const [state, setState] = useState({
+    showParticipant: false,
     isLoading: false,
-    roomStatus: null
+    roomUsers: []
   })
-  const { isLoading, roomStatus } = state
-
-
-  console.log("userDatauserData", userData)
+  const { isLoading, roomUsers, showParticipant } = state
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }))
 
-  useEffect(() => {
-    socketServices.initializeSocket();
-  }, [navigation]);
-
-
-  useFocusEffect(
-    useCallback(() => {
-      socketServices.on("new-message", (data) => {
-        console.log(data, "data to be emitted in chat screen");
-        fetchAllMessages()
-      });
-      return () => {
-        console.log("listener removed");
-        socketServices.removeListener("new-message");
-        socketServices.removeListener('save-message');
-      };
-    }, [])
-  );
-
-
 
   useEffect(() => {
-    (async () => {
-      try {
-        const apiData = {
-          sub_domain: '192.168.101.88',
-          client_id: 1,
-          db_name: appData?.profile?.database_name,
-          user_id: userData?.id,
-          type: 'vendor_to_user',
-          vendor_order_id: Number(paramData?.id),
-          vendor_id: Number(paramData?.vendor_id),
-          order_id: Number(paramData?.order_id)
-        }
-        const res = await actions.onStartChat(apiData, {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        })
-        console.log('start chat res', res)
-        if (!!res?.roomData) {
-          updateState({ roomStatus: res.roomData })
-        }
-      } catch (error) {
-        console.log('error raised in start chat api', error)
-      }
-    })();
-    // setMessages([])
+    socketServices.on("new-message", (data) => {
+      console.log(data, "data to be emitted in chat screen");
+      fetchAllMessages()
+      // console.log("fetchLAtestMessages", messages)
+      // // let cloneDeep = _.cloneDeep(messages)
+      // cloneDeep.push(data.message.chatData)
+      // // setMessages(cloneDeep)
+    });
+    return () => {
+      socketServices.removeListener("new-message");
+      socketServices.removeListener('save-message');
+    };
   }, [])
 
 
   useEffect(() => {
+    updateState({ isLoading: true })
+    fetchAllRoomUser()
     fetchAllMessages()
-    // fetchAllRoomUser()
+
   }, [])
 
 
@@ -132,36 +78,20 @@ export default function ChatScreen({ navigation, route }) {
       const apiData = `/${paramData?._id}`
       const res = await actions.getAllMessages(apiData, {})
       console.log('fetchAllMessages res', res)
+      updateState({ isLoading: false })
       if (!!res) {
-        // let filterArry = res.map((val, i) => {
-        //   return {
-        //     ...val,
-        //     createdAt: new Date(val?.created_date),
-        //     text: val.message,
-        //     user: {
-        //       _id: val?.from_id == userData?.id ? userData?.id : val?.to_id,
-        //       name: val?.username,
-        //       avatar: val?.from_id == userData?.id ? getImageUrl(
-        //         userData?.source?.proxy_url,
-        //         userData?.source?.image_path,
-        //         '200/200',
-        //       ) : val?.display_image,
-        //     },
-        //     // sent: true,
-        //     // // Mark the message as received, using two tick
-        //     // received: true,
-        //     // // Mark the message as pending with a clock loader
-        //     // pending: true,
-        //   }
-        // })
-        setMessages(res.reverse())
+        let filterArry = res.map((val, i) => {
+          return { ...val, user: {} }
+        })
+        setMessages(filterArry.reverse())
       }
     } catch (error) {
       console.log('error raised in fetchAllMessages api', error)
+      updateState({ isLoading: false })
     }
   }
 
-  console.log("messagesmessagesmessages", messages)
+
 
   const fetchAllRoomUser = async () => {
     try {
@@ -171,9 +101,12 @@ export default function ChatScreen({ navigation, route }) {
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
       })
-      console.log('fetchAllMessages res', res)
+      console.log('fetchAllRoomUser res', res)
+      if (!!res?.userData) {
+        updateState({ roomUsers: res?.userData })
+      }
     } catch (error) {
-      console.log('error raised in fetchAllMessages api', error)
+      console.log('error raised in fetchAllRoomUser api', error)
     }
   }
 
@@ -184,7 +117,7 @@ export default function ChatScreen({ navigation, route }) {
     }
     try {
       const apiData = {
-        room_id: roomStatus?._id || paramData?._id,
+        room_id: paramData?._id,
         message: messages[0].text,
         user_type: 'user',
         to_message: 'to_vendor',
@@ -192,6 +125,7 @@ export default function ChatScreen({ navigation, route }) {
         user_id: userData?.id,
         email: userData.email,
         username: userData?.name,
+        phone_num: `+${userData?.dial_code} ${userData.phone_number}`,
         display_image: getImageUrl(
           userData?.source?.proxy_url,
           userData?.source?.image_path,
@@ -210,7 +144,7 @@ export default function ChatScreen({ navigation, route }) {
       socketServices.emit('save-message', res);
       const message = {
         _id: userData.id,
-        from_id: userData.id,
+        auth_user_id: userData.id,
         message: messages[0].text,
         createdAt: new Date(),
         username: userData?.name,
@@ -226,69 +160,88 @@ export default function ChatScreen({ navigation, route }) {
     }
   }, [])
 
-
-  console.log("roomStatusroomStatus", roomStatus)
-
+  const showRoomUser = useCallback((props) => {
+    if (_.isEmpty(roomUsers)) {
+      return null
+    }
+    return (
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => updateState({ showParticipant: true })}
+      >
+        <CircularImages size={25} isDarkMode={isDarkMode} fontFamily={fontFamily} data={roomUsers} />
+      </TouchableOpacity>
+    )
+  }, [roomUsers])
 
   const renderMessage = useCallback((props) => {
-    console.log("render props message", props)
     const { currentMessage } = props
-    let isRight = currentMessage?.from_id == userData?.id
+    let isRight = currentMessage?.auth_user_id == userData?.id
+
+    if (isRight) {
+      return (
+        <View key={String(currentMessage._id)} style={{
+          ...styles.chatStyle,
+          alignSelf: 'flex-end',
+          backgroundColor: '#0084ff',
+          borderBottomRightRadius: 0,
+        }}>
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ marginHorizontal: 8, flexShrink: 1 }}>
+              <Text style={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+                textTransform: 'capitalize',
+                color: colors.white,
+
+              }}>{currentMessage?.username}</Text>
+
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={{
+                  ...styles.descText,
+                  color: colors.white
+                }}>{currentMessage?.message}</Text>
+           <Text style={{...styles.timeText, color: colors.whiteOpacity77}}>{moment(currentMessage?.created_date).format('LT')}</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      )
+    }
     return (
-      <View style={{
-        alignSelf: isRight ? 'flex-end' : 'flex-start',
-        backgroundColor: isRight ? '#0084ff' : '#f0f0f0',
-        paddingVertical: moderateScaleVertical(4),
-        paddingHorizontal: moderateScale(8),
-        borderRadius: 8,
-        marginBottom: 10,
-        marginHorizontal: 16,
-      }}>
+      <View style={{ flexDirection: "row" }}>
+        <FastImage
+          source={{
+            uri: currentMessage?.display_image,
+            priority: FastImage.priority.high,
+            cache: FastImage.cacheControl.immutable
+          }}
+          style={styles.cahtUserImage}
+        />
+        <View key={String(currentMessage._id)} style={{
+          ...styles.chatStyle,
+          alignSelf: 'flex-start',
+          backgroundColor: '#f0f0f0',
+          borderBottomLeftRadius: moderateScale(0),
+          maxWidth: width / 1.2
+        }}>
 
-        <View style={{ flexDirection: "row" }}>
-          <FastImage
-
-            source={{
-              uri: currentMessage?.display_image,
-              priority: FastImage.priority.high,
-              cache: FastImage.cacheControl.immutable
-            }}
-            style={{
-              ...styles.radiusStyle,
-              width: 20,
-              height: 20,
-              borderRadius: 10,
-              backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.blackOpacity30,
-
-            }}
-          />
-          <View style={{ marginLeft: 8 }}>
+          <View style={{ marginHorizontal: 8, flexShrink: 1 }}>
             <Text style={{
               fontSize: textScale(14),
-              // fontFamily: fontFamily.medium,
+              fontFamily: fontFamily.regular,
               textTransform: 'capitalize',
-              color: isRight ? colors.white : colors.black,
-              // fontWeight: 'bold'
+              color: colors.black,
             }}>{currentMessage?.username}</Text>
-            <Text style={{
-              fontSize: textScale(12),
-              // fontFamily: fontFamily.medium,
-              textTransform: 'capitalize',
-              color: isRight ? colors.white : colors.black
-            }}>{currentMessage?.message}</Text>
-            <Text style={{
-              fontSize: textScale(12),
-              // fontFamily: fontFamily.medium,
-              textTransform: 'lowercase',
-              color: isRight ? colors.white : colors.black,
-              alignSelf: isRight ? 'flex-end' : 'flex-start',
-            }}>{moment(currentMessage?.created_date).format('LT')}</Text>
+
+              <Text style={{
+                ...styles.descText,
+                color: colors.black,
+              }}>{currentMessage?.message}</Text>
+              <Text style={styles.timeText}>{moment(currentMessage?.created_date).format('LT')}</Text>
+  
           </View>
-
-
-
         </View>
-
       </View>
     )
   })
@@ -297,7 +250,7 @@ export default function ChatScreen({ navigation, route }) {
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
-      isLoadingB={isLoading}
+      isLoading={isLoading}
     >
       <Header
         leftIcon={
@@ -307,36 +260,141 @@ export default function ChatScreen({ navigation, route }) {
               ? imagePath.icBackb
               : imagePath.back
         }
-        centerTitle={`# ${roomStatus?.room_id || paramData?.room_id || ''}`}
+        centerTitle={`# ${paramData?.room_id || ''}`}
+        customRight={showRoomUser}
+      // onPressLeft={onBack}
 
       />
-      <GiftedChat
-        messages={messages}
-        onSend={messages => onSend(messages)}
-        user={{
-          _id: userData?.id,
+
+      <View style={{ flex: 1 }}>
+        <GiftedChat
+          messages={messages}
+          onSend={messages => onSend(messages)}
+          user={{ _id: userData?.id }}
+          renderMessage={renderMessage}
+          isKeyboardInternallyHandled={true}
+          inverted={Platform.OS !== 'web'}
+          inputAccessoryViewID="done"
+        />
+      </View>
+
+
+      <Modal
+        isVisible={showParticipant}
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end'
         }}
+        onBackdropPress={() => updateState({ showParticipant: false })}
+      >
+        <View style={{
+          ...styles.modalStyle,
+          backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
 
-        // showUserAvatar
-        renderMessage={renderMessage}
-      />
+        }}>
+      
+            <Text style={{
+              fontFamily: fontFamily?.bold,
+              fontSize: textScale(16),
+              color: isDarkMode ? colors.white : colors.black
+            }}>{roomUsers.length} Participants</Text>
+
+            <TouchableOpacity activeOpacity={0.7} onPress={() => updateState({ showParticipant: false })}>
+              <Image source={imagePath.closeButton} />
+            </TouchableOpacity>
+     
+
+
+          <ScrollView >
+            {roomUsers.map((val, i) => {
+              return (
+                <View style={{
+                  marginVertical: moderateScaleVertical(8),
+                  flexDirection: 'row',
+                  alignItems: 'center'
+                }}>
+                  <FastImage
+                    source={{
+                      uri: val?.display_image,
+                      priority: FastImage.priority.high,
+                      cache: FastImage.cacheControl.immutable
+                    }}
+                    style={{
+                      ...styles.imgStyle,
+                      backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.blackOpacity30,
+                    }}
+                  />
+                  <View style={{ marginLeft: moderateScale(8) }}>
+                    <Text>{val?.auth_user_id == userData?.id ? 'You' : val?.username}</Text>
+                    {!!val?.phone_num ? <Text>{val?.phone_num}</Text> : null}
+                  </View>
+                </View>
+              )
+            })}
+          </ScrollView>
+        </View>
+      </Modal>
     </WrapperContainer>
   )
 }
 
 
-const styles = StyleSheet.create({
 
-  questionToReplyView: {
-    backgroundColor: colors.lightGray,
-    paddingVertical: 5,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-  },
-  questionToReplyText: {
+const stylesFun = ({ fontFamily, isDarkMode }) => {
+  const styles = StyleSheet.create({
+    imgStyle: {
+      width: moderateScale(35),
+      height: moderateScale(35),
+      borderRadius: moderateScale(35 / 2),
+    },
+    modalStyle: {
+      padding: moderateScale(10),
+      borderTopLeftRadius: moderateScale(8),
+      borderTopRightRadius: moderateScale(8),
+      maxHeight: height / 2
+    },
+    userNameStyle: {
+      fontSize: textScale(12),
+      fontFamily: fontFamily.medium,
+      textTransform: 'capitalize',
+    },
+    cahtUserImage: {
+      width: moderateScale(20),
+      height: moderateScale(20),
+      borderRadius: moderateScale(10),
+      backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.blackOpacity30,
+      marginLeft: 8
+    },
+    descText: {
+      fontSize: textScale(12),
+      fontFamily: fontFamily.regular,
+      textTransform: 'capitalize',
+      lineHeight: moderateScale(18),
+      marginTop: moderateScaleVertical(4),
+    },
+    timeText: {
+      fontSize: textScale(10),
+      fontFamily: fontFamily.regular,
+      textTransform: 'uppercase',
+      color: colors.blackOpacity43,
+      marginLeft: moderateScale(12),
+      marginTop: moderateScaleVertical(6),
+      alignSelf:'flex-end'
+    },
+    flexView: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    chatStyle: {
+      paddingVertical: moderateScaleVertical(6),
+      borderRadius: moderateScale(8),
+      marginBottom: moderateScale(10),
+      paddingHorizontal: moderateScale(2),
+      maxWidth: width - 16,
+      marginHorizontal: moderateScale(8),
+    }
+  });
+  return styles
+}
 
-    color: colors.black,
-    padding: 5,
-  },
-
-});

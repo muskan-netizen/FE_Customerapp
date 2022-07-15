@@ -7,7 +7,7 @@ class WSService {
     initializeSocket = () => {
 
         try {
-            console.log('initializing socket');
+
 
 
             this.socket = io(SOCKET_URL, {
@@ -16,14 +16,20 @@ class WSService {
                 //     accessToken: userToken,
                 // }
             });
-
+            console.log('initializing socket', this.socket);
             this.socket.on('connect', (data) => {
                 console.log('===== socket connected =====');
                 console.log(data)
             });
 
+            
+
             this.socket.on('disconnect', () => {
-                console.log('socket disconnected');
+                console.log('socket disconnected', this.socket);
+            });
+
+            this.socket.on('destroy', () => {
+                console.log('socket destroy', this.socket);
             });
 
             this.socket.on('socketError', (err) => {
@@ -128,6 +134,23 @@ class WSService {
     removeListener(listenerName) {
         this.socket.removeListener(listenerName);
     }
+
+    addEventListener(listenerName) {
+        this.socket.addEventListener(listenerName);
+    }
+
+    disconnectSocket() {
+        this.socket.disconnect();
+    }
+
+    destroySocket() {
+        this.socket.destroy();
+    }
+    hasListeners(){
+        return this.socket.hasListeners()
+    }
+
+
 }
 
 const socketServices = new WSService();
