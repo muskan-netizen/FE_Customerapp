@@ -363,6 +363,7 @@ const shortCodes = {
   hairRun:'fabaaf',
   zuriRide:'fa47e7',
   americanLuxury:'0015d5',
+  smartMur:'780ecd',
 };
 
 
@@ -1802,6 +1803,10 @@ const appIds = {
   americanLuxury: Platform.select({
     ios: 'com.americanLuxury.order',
     android: 'com.americanLuxury.order',
+  }),
+  americanLuxury: Platform.select({
+    ios: 'com.smartMur.order',
+    android: 'com.smartMur.order',
   }),
 };
 

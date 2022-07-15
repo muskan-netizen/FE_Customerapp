@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-available_pods-Myfiji/Pods-available_pods-Myfiji.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-FijiEats/Pods-available_pods-FijiEats.release.xcconfig"
 
 PROJECT_APPLE_ID = 1519817598
 PROJECT_BUNDLE_ID = com.fijieats.user

@@ -1027,8 +1027,8 @@ target 'Mozmarcas' do
  
 end
 
-#Myfiji Target
-target 'Myfiji' do
+#FijiEats Target
+target 'FijiEats' do
 
 end
 
@@ -1790,6 +1790,10 @@ target 'ZuriRide' do
 end
 #American Luxury Target
 target 'AmericanLuxury' do
+  
+end
+#SmartMur Target
+target 'SmartMur' do
   
 end
 
