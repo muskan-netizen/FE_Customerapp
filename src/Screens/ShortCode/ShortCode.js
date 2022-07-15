@@ -2613,7 +2613,7 @@ export default function ShortCode({ route, navigation }) {
       case appIds?.iPicknDrop:
         return imagePath.ipd
       case appIds?.muvpod:
-        return imagePath.ipd
+        return { uri: imagePath.muvpod }
         
       case appIds?.sabroson:
         return imagePath.sabroson
