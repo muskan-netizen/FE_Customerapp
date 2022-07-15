@@ -155,10 +155,19 @@ const MarketCard3 = ({
                       resizeMode="contain"
                       source={imagePath.icTime2}
                     />
-                    <Text numberOfLines={1} style={styles.distanceTimeStyle}>
-                      {checkEvenOdd(data?.timeofLineOfSightDistance)}-
-                      {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
-                    </Text>
+                    {data?.timeofLineOfSightDistance / 60 > 1 && appIds.hokitch ==getBundleId() ?
+
+                      <Text numberOfLines={1} style={styles.distanceTimeStyle}>
+                        ≈{checkEvenOdd(data?.timeofLineOfSightDistance)}
+                      </Text> :
+                      <Text numberOfLines={1} style={styles.distanceTimeStyle}>
+                        {checkEvenOdd(data?.timeofLineOfSightDistance)}
+                        -
+                        {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
+
+                      </Text>
+
+                    }
                   </View>
                 )}
               </View>

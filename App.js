@@ -164,12 +164,6 @@ const App = () => {
     (async () => {
       const userData = await getUserData();
       notificationConfig();
-      messaging().onNotificationOpenedApp(remoteMessage => {
-        console.log(
-          'Notification caused app to open from background state:',
-          remoteMessage.notification,
-        )
-      });
       const {dispatch} = store;
       if (userData && !!userData.auth_token) {
         dispatch({

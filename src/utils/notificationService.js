@@ -99,8 +99,8 @@ export const notificationListener = async () => {
   });
 
   messaging().onNotificationOpenedApp(remoteMessage => {
-    console.log('tap on notification', remoteMessage);
-    _onRedirectOrderScreen()
+    console.log('tap on notification', remoteMessage?.data?.order_id);
+    _onRedirectOrderScreen(remoteMessage?.data?.order_id)
 
   });
 
@@ -188,8 +188,10 @@ const _openApp = () => {
 
 
 const _onRedirectOrderScreen = (id) => {
+ if(id){
   navigate(navigationStrings.ORDER_DETAIL, {
-    orderId: 155,
+    orderId: id,
     fromActive: true // this value use for useInterval
   });
+ }
 }

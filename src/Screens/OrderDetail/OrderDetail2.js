@@ -73,6 +73,10 @@ export default function OrderDetail({navigation, route}) {
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
+
+
+  console.log(languages,'i am here>>>>>>');
+
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
 

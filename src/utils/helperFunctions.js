@@ -423,10 +423,13 @@ const timeConvert = (n) => {
   var rhours = Math.floor(hours);
   var minutes = (hours - rhours) * 60;
   var rminutes = Math.round(minutes);
+ 
   if (num >= 60) {
     if (minutes >= 30) {
+      console.log('i am here');
       return Math.ceil(hours) + 'h'; // + '≈'
     } else {
+      console.log('i am here >');
       return rhours + 'h'; //+ '≈'
     }
   } else {

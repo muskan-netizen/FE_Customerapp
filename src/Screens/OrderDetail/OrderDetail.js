@@ -76,6 +76,7 @@ export default function OrderDetail({navigation, route}) {
 
   const [lalaMoveUrl, setLalaMoveUrl] = useState(null);
 
+
   const [state, setState] = useState({
     isLoading: true,
     cartItems: [],
@@ -155,6 +156,10 @@ export default function OrderDetail({navigation, route}) {
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
+
+  console.log(languages,'i am here>>>>>>');
+
+
   const {preferences} = appData?.profile;
   console.log(preferences?.business_type,"preferencespreferencespreferences");
 
