@@ -359,7 +359,10 @@ const shortCodes = {
   smokeRun:'545a71',
   myEvPlus:'1c7d9e',
   qdelo:'0fcc84',
-  pawsee:'bd2d83'
+  pawsee:'bd2d83',
+  hairRun:'fabaaf',
+  zuriRide:'fa47e7',
+  americanLuxury:'0015d5',
 };
 
 
@@ -1788,7 +1791,18 @@ const appIds = {
     ios: 'com.pawsee.order',
     android: 'com.pawsee.order',
   }),
-
+  hairRun: Platform.select({
+    ios: 'com.hairRun.order',
+    android: 'com.hairRun.order',
+  }),
+  zuriRide: Platform.select({
+    ios: 'com.zuriRide.order',
+    android: 'com.zuriRide.order',
+  }),
+  americanLuxury: Platform.select({
+    ios: 'com.americanLuxury.order',
+    android: 'com.americanLuxury.order',
+  }),
 };
 
 const socialKeys = {

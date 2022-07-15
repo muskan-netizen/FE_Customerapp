@@ -1779,6 +1779,20 @@ end
 target 'Pawsee' do
   
 end
+
+#HairRun Target
+target 'HairRun' do
+  
+end
+#ZuriRide Target
+target 'ZuriRide' do
+  
+end
+#American Luxury Target
+target 'AmericanLuxury' do
+  
+end
+
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

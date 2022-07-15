@@ -2269,6 +2269,24 @@ export default function ShortCode({ route, navigation }) {
                       isShortcodePrefilled: true,
                     });
                  break;
+                 case appIds.hairRun:
+                  updateState({
+                    shortCode: shortCodes.hairRun,
+                    isShortcodePrefilled: true,
+                  });
+               break;
+               case appIds.zuriRide:
+                  updateState({
+                    shortCode: shortCodes.zuriRide,
+                    isShortcodePrefilled: true,
+                  });
+               break;
+               case appIds.americanLuxury:
+                  updateState({
+                    shortCode: shortCodes.americanLuxury,
+                    isShortcodePrefilled: true,
+                  });
+               break;
       }
     })();
   }, []);
