@@ -88,34 +88,37 @@ export default function LaundryAvailableVendors({navigation, route}) {
     showError(error?.error || error?.message);
   };
 
-  console.log(pressedItem, 'pressedItem>>>pressedItem');
   const onSelectVendorAddToCart = (item) => {
-    setPressedItem(item);
-    setLoading(true);
-    let data = {};
-    data['sku'] = item?.product[0]?.product_sku;
-    data['quantity'] = 1;
-    data['product_variant_id'] = item?.product[0]?.product_variant_id;
-    data['type'] = dineInType;
-    data['addon_ids'] = item?.product[0]?.addonIds;
-    data['addon_options'] = item?.product[0]?.optionIds;
+    if (!isEmpty(item?.product)) {
+      setPressedItem(item);
+      setLoading(true);
+      let data = {};
+      data['sku'] = item?.product[0]?.product_sku;
+      data['quantity'] = 1;
+      data['product_variant_id'] = item?.product[0]?.product_variant_id;
+      data['type'] = dineInType;
+      data['addon_ids'] = item?.product[0]?.addonIds;
+      data['addon_options'] = item?.product[0]?.optionIds;
 
-    console.log(data, 'item>>>item');
+      console.log(data, 'item>>>item');
 
-    actions
-      .addProductsToCart(data, {
-        code: appData.profile.code,
-        currency: currencies.primary_currency.id,
-        language: languages.primary_language.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      })
-      .then((res) => {
-        setLoading(false);
-        actions.cartItemQty(res);
-        showSuccess(strings.PRODUCT_ADDED_SUCCESS);
-        moveToNewScreen(navigationStrings.CART)();
-      })
-      .catch(errorMethod);
+      actions
+        .addProductsToCart(data, {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        })
+        .then((res) => {
+          setLoading(false);
+          actions.cartItemQty(res);
+          showSuccess(strings.PRODUCT_ADDED_SUCCESS);
+          moveToNewScreen(navigationStrings.CART)();
+        })
+        .catch(errorMethod);
+    } else {
+      showError('No products found at vendor.');
+    }
   };
 
   //Pull to refresh

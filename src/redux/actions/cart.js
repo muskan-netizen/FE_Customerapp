@@ -33,6 +33,7 @@ import {
   SDKPAYMENTWAVEURL,
   SDKPAYMENTCANCELWAVEURL,
   VENDOR_DROPOFF_SLOTS,
+  ADD_PRESCRIPTIONS,
 } from '../../config/urls';
 import {
   apiGet,
@@ -501,6 +502,19 @@ export function cancelSdkUrl(query = '', data = {}, headers = {}) {
 export function getVendorDropoffSlots(url, data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiGet(VENDOR_DROPOFF_SLOTS + url, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+//Add Prescriptions
+export function addPrescriptions(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(ADD_PRESCRIPTIONS, data, headers)
       .then((res) => {
         resolve(res);
       })

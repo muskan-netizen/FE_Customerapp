@@ -3480,7 +3480,7 @@ export default function OrderDetail({navigation, route}) {
       moment(currentDropOffDate, 'DD/MM/YYYY').format('DD/MM/YYYY') <
         moment(laundrySelectedPickupDate).format('DD/MM/YYYY')
     ) {
-      alert(`Pickup and drop off dates can't be same`);
+      alert(`Selected date is invalid.`);
       return;
     }
 
@@ -3489,7 +3489,7 @@ export default function OrderDetail({navigation, route}) {
       moment(currentPickupDate, 'DD/MM/YYYY').format('DD/MM/YYYY') >
         moment(laundrySelectedDropOffDate).format('DD/MM/YYYY')
     ) {
-      alert(`Pickup and drop off dates can't be same`);
+      alert(`Selected date is invalid.`);
       return;
     }
 

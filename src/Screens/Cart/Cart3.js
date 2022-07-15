@@ -2130,8 +2130,6 @@ function Cart({navigation, route}) {
     }
   };
 
- 
-
   const selectOrderDate = () => {
     if (businessType == 'laundry') {
       if (
@@ -2799,7 +2797,7 @@ function Cart({navigation, route}) {
                                   flexDirection: 'row',
                                   justifyContent: 'space-between',
                                 }}>
-                                {!!i?.product_addons.length > 0 && (
+                                {!!i?.product_addons.length > 0 ? (
                                   <View>
                                     <Text
                                       style={{
@@ -2813,16 +2811,21 @@ function Cart({navigation, route}) {
                                       {strings.EXTRA}
                                     </Text>
                                   </View>
+                                ) : (
+                                  <View />
                                 )}
-                                <TouchableOpacity
-                                  onPress={openPickerForPrescription}
-                                  style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                  }}>
-                                  {/* <Image source={imagePath.icAddPlaceholder} /> */}
-                                  <Image source={imagePath.icPrescription} />
-                                </TouchableOpacity>
+
+                                {!!i?.product?.pharmacy_check && (
+                                  <TouchableOpacity
+                                    onPress={() => openPickerForPrescription(i)}
+                                    style={{
+                                      flexDirection: 'row',
+                                      alignItems: 'center',
+                                    }}>
+                                    {/* <Image source={imagePath.icAddPlaceholder} /> */}
+                                    <Image source={imagePath.icPrescription} />
+                                  </TouchableOpacity>
+                                )}
                               </View>
                               <View>
                                 {i?.product_addons.length > 0
@@ -5854,8 +5857,6 @@ function Cart({navigation, route}) {
     }
   };
 
-  console.log(selectedPrescriptionImgs, 'selectedPrescriptionImgs>>>');
-
   const cameraHandle = async (index) => {
     const permissionStatus = await androidCameraPermission();
     if (permissionStatus) {
@@ -6161,7 +6162,35 @@ function Cart({navigation, route}) {
     showActionSheet();
   };
 
-  const onSubmitPrescriptionDocs = () => {};
+  const onSubmitPrescriptionDocs = () => {
+    let formdata = new FormData();
+    formdata.append('vendor_id', selectedItemForPrescription?.vendor_id);
+    formdata.append('product_id', selectedItemForPrescription?.product_id);
+
+    selectedPrescriptionImgs.map((item) => {
+      formdata.append('prescriptions[]', {
+        name: item?.filename,
+        type: item?.mime,
+        uri: item?.path,
+      });
+    });
+
+    actions
+      .addPrescriptions(formdata, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        'Content-Type': 'multipart/form-data',
+      })
+      .then((res) => {
+        showSuccess(res?.message);
+        updateState({
+          isPrescriptionModal: false,
+        });
+        getCartDetail();
+      })
+      .catch(errorMethod);
+  };
 
   const onRemovePrescriptionImg = (item) => {
     const imgData = [...selectedPrescriptionImgs];
