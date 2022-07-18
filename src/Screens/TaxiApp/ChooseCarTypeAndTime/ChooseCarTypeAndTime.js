@@ -419,10 +419,15 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         break;
       case 32: //PAYPHONE Payment Getway
         navigation.navigate(navigationStrings.PAYPHONE, paymentData);
+        break
       case 18://Authorize.net Payment Gatway
      
         navigation.navigate(navigationStrings.AuthorizeNet, paymentData);
         break;
+      case 5: // PayStack Payment Getway
+         
+         navigation.navigate(navigationStrings.PAYSTACK,paymentData)
+         break;
       default:
         navigation.navigate(
           navigationStrings.PICKUPTAXIORDERDETAILS,
@@ -859,10 +864,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
 
   const _onDateChange = (date) => {
-    
-
-   
-      // alert(213);
+  
       console.log(date, 'date');
       let time = moment(date).format('HH:mm');
       let dateSelectd = moment(date).format('YYYY-MM-DD');

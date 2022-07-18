@@ -206,19 +206,6 @@ android {
 
     flavorDimensions "appType"
 
-    productFlavors{
-           muvpod{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.muvpod'
-            resValue "string", "app_name", "Muvpod"
-            resValue "string", "host_name", ""
-            }
-    }
-
 
     productFlavors {
             royoorder {
@@ -5136,11 +5123,11 @@ android {
             }
             swan{
             dimension "appType"
-            versionCode 1
-            versionName "1.0"
+            versionCode 3
+            versionName "1.1"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.swan'
+            applicationId 'com.swan.customer'
             resValue "string", "app_name", "Swan"
             resValue "string", "host_name", ""
             }

@@ -6,7 +6,8 @@
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-//  export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+
 // export const API_BASE_URL = 'https://dingdongdelivers.com/api/v1'
 // export const API_BASE_URL = 'https://foodnests.com/api/v1'
 // export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1'
@@ -29,7 +30,7 @@
 
 // export const API_BASE_URL = 'https://baytukom-order.netsolutionindia.com/api/v1'
 // export const API_BASE_URL = 'https://fijieats.com/api/v1'
- //export const API_BASE_URL = 'https://swantaxi.net/api/v1'
+//  export const API_BASE_URL = 'https://swantaxi.net/api/v1'
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1'
 //classicab
 // export const API_BASE_URL = 'https://classicab.org/api/v1';

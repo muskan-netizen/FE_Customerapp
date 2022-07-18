@@ -12,6 +12,7 @@ import {
   Payfast,
   PaymentOptions,
   PayPhone,
+  Paystack,
   PickupTaxiOrderDetail,
   PinAddressOnMap,
   RateOrder,
@@ -91,6 +92,11 @@ export default function (Stack) {
       <Stack.Screen
       name={navigationStrings.AuthorizeNet}
       component={AuthorizeNet}
+      />
+       <Stack.Screen
+        name={navigationStrings.PAYSTACK}
+        component={Paystack}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.RATEORDER}

@@ -609,10 +609,6 @@
 		1032F3012825211600D48388 /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
 		1032F3032825211600D48388 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		1032F3042825211600D48388 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
-		1032F3102825235D00D48388 /* Swan(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1032F30F2825235C00D48388 /* Swan(Development).xcconfig */; };
-		1032F3122825238000D48388 /* Swan(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1032F3112825237F00D48388 /* Swan(Production).xcconfig */; };
-		1032F314282523A600D48388 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1032F313282523A600D48388 /* Images.xcassets */; };
-		1032F3162825250A00D48388 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1032F3152825250900D48388 /* GoogleService-Info.plist */; };
 		103866F4281FB884007B8D7E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		103866F5281FB884007B8D7E /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		103866F6281FB884007B8D7E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -10372,6 +10368,8 @@
 		F47D354628756140001B6450 /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
 		F47D354828756140001B6450 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		F47D354928756140001B6450 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		F482273D28853875008FE330 /* Swan(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F4A2AA082885328D00C900A7 /* Swan(Development).xcconfig */; };
+		F482273E28853883008FE330 /* Swan(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F4A2AA09288532CC00C900A7 /* Swan(Production).xcconfig */; };
 		F48F24352859DE56008E2072 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		F48F24362859DE56008E2072 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		F48F24372859DE56008E2072 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -10460,6 +10458,8 @@
 		F4A15E52285C5074007D3D78 /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
 		F4A15E54285C5074007D3D78 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		F4A15E55285C5074007D3D78 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		F4A2AA0B2885330500C900A7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4A2AA0A2885330500C900A7 /* Images.xcassets */; };
+		F4A2AA0D288533A100C900A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4A2AA0C2885339F00C900A7 /* GoogleService-Info.plist */; };
 		F4B39039286ED8D400A196C8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4B39038286ED8D100A196C8 /* GoogleService-Info.plist */; };
 		F4B3D75E285868130033A0F9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		F4B3D75F285868130033A0F9 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -10849,10 +10849,6 @@
 		1032F2DC2825093500D48388 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1032F2DE28251F6900D48388 /* PeerDeliveries.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PeerDeliveries.entitlements; sourceTree = "<group>"; };
 		1032F30C2825211600D48388 /* Swan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Swan.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		1032F30F2825235C00D48388 /* Swan(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Swan(Development).xcconfig"; sourceTree = "<group>"; };
-		1032F3112825237F00D48388 /* Swan(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Swan(Production).xcconfig"; sourceTree = "<group>"; };
-		1032F313282523A600D48388 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		1032F3152825250900D48388 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1032F317282526F600D48388 /* Swan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Swan.entitlements; sourceTree = "<group>"; };
 		1038671B281FB884007B8D7E /* AmstaFood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmstaFood.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1038671E281FB96D007B8D7E /* AmstaFood(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "AmstaFood(Development).xcconfig"; sourceTree = "<group>"; };
@@ -13805,6 +13801,10 @@
 		F49D6A692861E65100A82B0E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F49D6A6B2861E78400A82B0E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4A15E5D285C5074007D3D78 /* GasGiant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GasGiant.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4A2AA082885328D00C900A7 /* Swan(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Swan(Development).xcconfig"; sourceTree = "<group>"; };
+		F4A2AA09288532CC00C900A7 /* Swan(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Swan(Production).xcconfig"; sourceTree = "<group>"; };
+		F4A2AA0A2885330500C900A7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F4A2AA0C2885339F00C900A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4AB5A99D3E1F5C5A2E8F3A2 /* libPods-available_pods-HairstonExpress.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-HairstonExpress.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4B39038286ED8D100A196C8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4B3D786285868130033A0F9 /* Torunz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Torunz.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -16986,17 +16986,6 @@
 			path = PeerDeliveries;
 			sourceTree = "<group>";
 		};
-		1032F30E282521B200D48388 /* Swan */ = {
-			isa = PBXGroup;
-			children = (
-				1032F3152825250900D48388 /* GoogleService-Info.plist */,
-				1032F30F2825235C00D48388 /* Swan(Development).xcconfig */,
-				1032F3112825237F00D48388 /* Swan(Production).xcconfig */,
-				1032F313282523A600D48388 /* Images.xcassets */,
-			);
-			path = Swan;
-			sourceTree = "<group>";
-		};
 		1038671D281FB940007B8D7E /* AmstaFood */ = {
 			isa = PBXGroup;
 			children = (
@@ -19879,6 +19868,7 @@
 		844804B42653CF490050AA67 /* Configs */ = {
 			isa = PBXGroup;
 			children = (
+				F4A2AA07288531D300C900A7 /* Swan */,
 				E8851A5C287EAB9F00EC6332 /* Pawsee */,
 				E837D2F9287D4102000FE9F8 /* Qdelo */,
 				E826C2F4287861E5009C44AE /* MyEvPlus */,
@@ -19929,7 +19919,6 @@
 				1075AC8128290D590071D2F4 /* PatrolNow */,
 				1075AC782828FD5E0071D2F4 /* ButlerDelivery */,
 				1075AC0E2828D8C40071D2F4 /* SCOOTUP */,
-				1032F30E282521B200D48388 /* Swan */,
 				1032F2D5282507C800D48388 /* PeerDeliveries */,
 				1032F29B2824F2EB00D48388 /* Toor */,
 				1038671D281FB940007B8D7E /* AmstaFood */,
@@ -22881,6 +22870,17 @@
 			path = Getfix;
 			sourceTree = "<group>";
 		};
+		F4A2AA07288531D300C900A7 /* Swan */ = {
+			isa = PBXGroup;
+			children = (
+				F4A2AA0C2885339F00C900A7 /* GoogleService-Info.plist */,
+				F4A2AA082885328D00C900A7 /* Swan(Development).xcconfig */,
+				F4A2AA09288532CC00C900A7 /* Swan(Production).xcconfig */,
+				F4A2AA0A2885330500C900A7 /* Images.xcassets */,
+			);
+			path = Swan;
+			sourceTree = "<group>";
+		};
 		F4A2EA63284DDD8B00A8DD5E /* VendorSpot */ = {
 			isa = PBXGroup;
 			children = (
@@ -24603,13 +24603,13 @@
 			buildConfigurationList = 841EE437274D06480033B4C5 /* Build configuration list for PBXNativeTarget "ChipeTaxi" */;
 			buildPhases = (
 				33DF5ACBB2FBA885B17CB624 /* [CP] Check Pods Manifest.lock */,
-				8FD24AA003A07B2CA2A80DE1 /* ShellScript */,
 				841EE3FF274D06480033B4C5 /* Sources */,
 				841EE403274D06480033B4C5 /* Frameworks */,
 				841EE418274D06480033B4C5 /* Resources */,
 				49DA414CFCE11CA3CE0D5120 /* ShellScript */,
 				E014A57B32A3816EC1DF2F7C /* [CP] Embed Pods Frameworks */,
 				E72033BD9C12472193751214 /* [CP] Copy Pods Resources */,
+				F482274128856AEC008FE330 /* Start Packager */,
 			);
 			buildRules = (
 			);
@@ -31239,7 +31239,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					1032F2DF2825211600D48388 = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = AW77SG439Q;
 						ProvisioningStyle = Automatic;
 					};
 					103866F0281FB884007B8D7E = {
@@ -33615,7 +33615,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1032F2EB2825211600D48388 /* Eina02-Regular.ttf in Resources */,
-				1032F314282523A600D48388 /* Images.xcassets in Resources */,
+				F4A2AA0B2885330500C900A7 /* Images.xcassets in Resources */,
 				1032F2EC2825211600D48388 /* SFProDisplay-Regular.ttf in Resources */,
 				1032F2ED2825211600D48388 /* Futura-Medium.ttf in Resources */,
 				1032F2EE2825211600D48388 /* LaunchScreen.storyboard in Resources */,
@@ -33623,22 +33623,22 @@
 				1032F2F02825211600D48388 /* Metropolis-Bold.otf in Resources */,
 				1032F2F12825211600D48388 /* Futura Hv BT.ttf in Resources */,
 				1032F2F22825211600D48388 /* SFProText-Regular.ttf in Resources */,
-				1032F3102825235D00D48388 /* Swan(Development).xcconfig in Resources */,
 				1032F2F32825211600D48388 /* SFProText-SemiBold.ttf in Resources */,
 				1032F2F42825211600D48388 /* SFProText-Medium.ttf in Resources */,
 				1032F2F62825211600D48388 /* notification.wav in Resources */,
-				1032F3162825250A00D48388 /* GoogleService-Info.plist in Resources */,
 				1032F2F92825211600D48388 /* Plists in Resources */,
+				F482273E28853883008FE330 /* Swan(Production).xcconfig in Resources */,
 				1032F2FA2825211600D48388 /* Futura-Normal.ttf in Resources */,
 				1032F2FB2825211600D48388 /* Eina02-Bold.ttf in Resources */,
 				1032F2FC2825211600D48388 /* Futura-Book.ttf in Resources */,
 				1032F2FD2825211600D48388 /* CircularStd-Medium.otf in Resources */,
-				1032F3122825238000D48388 /* Swan(Production).xcconfig in Resources */,
+				F4A2AA0D288533A100C900A7 /* GoogleService-Info.plist in Resources */,
 				1032F2FE2825211600D48388 /* Metropolis-SemiBold.otf in Resources */,
 				1032F2FF2825211600D48388 /* FuturaBT-Heavy.ttf in Resources */,
 				1032F3002825211600D48388 /* CircularStd-Bold.ttf in Resources */,
 				1032F3012825211600D48388 /* Metropolis-Regular.otf in Resources */,
 				1032F3032825211600D48388 /* SFProText-Bold.ttf in Resources */,
+				F482273D28853875008FE330 /* Swan(Development).xcconfig in Resources */,
 				1032F3042825211600D48388 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -64309,7 +64309,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChipeTaxi/Pods-ChipeTaxi-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-ChipeTaxi/Pods-available_pods-ChipeTaxi-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		49ECB7E4A0D9C66A01DE172A /* [CP] Embed Pods Frameworks */ = {
@@ -89208,50 +89208,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Rideshare/Pods-available_pods-Rideshare-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8FD24AA003A07B2CA2A80DE1 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Dishefs/Pods-available_pods-Dishefs-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core.common-CoreModulesHeaders/AccessibilityResources.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit/FacebookSDKStrings.bundle",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/RNImageCropPicker/QBImagePicker.bundle",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
-				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe3DS2.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/StripeCore/StripeCore.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/StripeUICore/StripeUICore.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
-				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework/TwitterKitResources.bundle",
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-available_pods-ChipeTaxi-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Dishefs/Pods-available_pods-Dishefs-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		90105CEEA04A077F5C9C3644 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -112732,6 +112688,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-FresHest/Pods-available_pods-FresHest-frameworks.sh\"\n";
 		};
+		F482274128856AEC008FE330 /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n\n";
+		};
 		F48EF949285A14220085BE22 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -120284,7 +120258,7 @@
 		};
 		1032F30A2825211600D48388 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1032F30F2825235C00D48388 /* Swan(Development).xcconfig */;
+			baseConfigurationReference = F4A2AA082885328D00C900A7 /* Swan(Development).xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -120292,7 +120266,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = AW77SG439Q;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
@@ -120319,7 +120293,7 @@
 		};
 		1032F30B2825211600D48388 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1032F3112825237F00D48388 /* Swan(Production).xcconfig */;
+			baseConfigurationReference = F4A2AA09288532CC00C900A7 /* Swan(Production).xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -120327,7 +120301,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = AW77SG439Q;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -120343,7 +120317,7 @@
 				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = Swan;
+				PROVISIONING_PROFILE_SPECIFIER = "SwanTaxi User";
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

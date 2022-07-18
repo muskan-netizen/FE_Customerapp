@@ -269,6 +269,11 @@ export default ({fontFamily, themeColors}) => {
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: moderateScale(10),
+    },
+    DriverUnavailable:{
+      fontSize: textScale(12),
+      fontFamily: fontFamily.medium,
+      
     }
   });
   return styles;

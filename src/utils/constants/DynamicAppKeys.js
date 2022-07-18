@@ -1602,8 +1602,8 @@ const appIds = {
     android: 'com.peerDeliveries',
   }),
   swan: Platform.select({
-    ios: 'com.swan',
-    android: 'com.swan',
+    ios: 'com.Swan-User',
+    android: 'com.swanUser',
   }),
   SCOOTUP: Platform.select({
     ios: 'com.SCOOTUP',

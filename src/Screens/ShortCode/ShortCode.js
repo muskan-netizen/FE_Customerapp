@@ -2355,7 +2355,6 @@ export default function ShortCode({ route, navigation }) {
       })
       .catch((error) => {
         console.log(error, 'error>>>error>>error');
-
         updateState({
           isLoading: false,
           changeInShortCode: false,

@@ -1,11 +1,11 @@
 import LottieView from 'lottie-react-native';
 import React from 'react';
-import {Image, Text, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import { Image, Text, View } from 'react-native';
+import { useDarkMode } from 'react-native-dark-mode';
 // import { getBundleId } from 'react-native-device-info';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
-import {searchingLoader} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import { searchingLoader } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
@@ -22,10 +22,10 @@ import DeviceInfo, { getBundleId } from 'react-native-device-info';
 
 export default function ({
   isWaitingOver = false,
-  cancleOrder = () => {},
+  cancleOrder = () => { },
   isBtnLoader = false,
 }) {
-  const {appData, themeColors, appStyle} = useSelector(
+  const { appData, themeColors, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
 
@@ -36,10 +36,10 @@ export default function ({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const updateState = (data) => setState((state) => ({...state, ...data}));
-  const styles = stylesFun({fontFamily, themeColors});
-  const commonStyles = commonStylesFun({fontFamily});
-  const {profile} = appData;
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const styles = stylesFun({ fontFamily, themeColors });
+  const commonStyles = commonStylesFun({ fontFamily });
+  const { profile } = appData;
 
   //give review and update the rate
 
@@ -52,7 +52,7 @@ export default function ({
           ? MyDarkTheme.colors.background
           : colors.white,
       }}>
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
         <View
           style={{
             height: moderateScaleVertical(100),
@@ -60,61 +60,73 @@ export default function ({
             // marginVertical: moderateScaleVertical(40),
           }}>
           {isWaitingOver ? (
-            <Image
-              source={imagePath.icNoDrivers}
-              style={{
-                height: moderateScale(110),
-                width: moderateScale(110),
-              }}
-              resizeMode="contain"
-            />
+            <View>
+              <Image
+                source={imagePath.icNoDrivers}
+                style={{
+                  height: moderateScale(110),
+                  width: moderateScale(110),
+                }}
+                resizeMode="contain"
+              />
+            </View>
           ) : (
-            <LottieView
-              source={searchingLoader}
-              autoPlay
-              loop
-              style={{
-                height: moderateScaleVertical(100),
-                width: moderateScale(100),
-              }}
-              colorFilters={[
-                {keypath: 'Shape Layer 16', color: themeColors.primary_color},
-                {keypath: 'Shape Layer 15', color: themeColors.primary_color},
-                {keypath: 'Shape Layer 14', color: themeColors.primary_color},
-                {keypath: 'Shape Layer 13', color: themeColors.primary_color},
-                {keypath: 'Shape Layer 12', color: themeColors.primary_color},
-                {keypath: 'Shape Layer 11', color: themeColors.primary_color},
-                {keypath: 'Shape Layer 10', color: themeColors.primary_color},
-                {keypath: 'Shape Layer 9', color: themeColors.primary_color},
-                {keypath: 'Shape Layer 8', color: themeColors.primary_color},
-                {keypath: 'Shape Layer 7', color: themeColors.primary_color},
-                {keypath: 'Shape Layer 6', color: themeColors.primary_color},
-                {keypath: 'Shape Layer 5', color: themeColors.primary_color},
-                {keypath: 'Shape Layer 20', color: themeColors.primary_color},
-                {keypath: 'Shape Layer 19', color: themeColors.primary_color},
-                {keypath: 'Shape Layer 18', color: themeColors.primary_color},
-                {keypath: 'Shape Layer 17', color: themeColors.primary_color},
-              ]}
-            />
+            <View>
+              <LottieView
+                source={searchingLoader}
+                autoPlay
+                loop
+                style={{
+                  height: moderateScaleVertical(100),
+                  width: moderateScale(100),
+                }}
+                colorFilters={[
+                  { keypath: 'Shape Layer 16', color: themeColors.primary_color },
+                  { keypath: 'Shape Layer 15', color: themeColors.primary_color },
+                  { keypath: 'Shape Layer 14', color: themeColors.primary_color },
+                  { keypath: 'Shape Layer 13', color: themeColors.primary_color },
+                  { keypath: 'Shape Layer 12', color: themeColors.primary_color },
+                  { keypath: 'Shape Layer 11', color: themeColors.primary_color },
+                  { keypath: 'Shape Layer 10', color: themeColors.primary_color },
+                  { keypath: 'Shape Layer 9', color: themeColors.primary_color },
+                  { keypath: 'Shape Layer 8', color: themeColors.primary_color },
+                  { keypath: 'Shape Layer 7', color: themeColors.primary_color },
+                  { keypath: 'Shape Layer 6', color: themeColors.primary_color },
+                  { keypath: 'Shape Layer 5', color: themeColors.primary_color },
+                  { keypath: 'Shape Layer 20', color: themeColors.primary_color },
+                  { keypath: 'Shape Layer 19', color: themeColors.primary_color },
+                  { keypath: 'Shape Layer 18', color: themeColors.primary_color },
+                  { keypath: 'Shape Layer 17', color: themeColors.primary_color },
+                ]}
+              />
+            </View>
           )}
         </View>
-        <Text
-          style={{
-            fontSize: textScale(12),
-            fontFamily: fontFamily.medium,
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-          }}>
-          {appIds.jiffex == getBundleId() ?strings.CONNECTING_YOU_TO_NEARBY_DELIVERY_AGENT :strings.CONNECTING_YOU_TO_NEARBY_DERIVER}
-        </Text>
-        <Text
-          style={{
-            fontSize: textScale(12),
-            fontFamily: fontFamily.regular,
-            marginVertical: moderateScaleVertical(20),
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-          }}>
-          {appIds.jiffex == getBundleId()?strings.YOUR_ORDER_WILL_START_SOON:strings.YOUR_RIDE_WILL_START_SOON}
-        </Text>
+        {isWaitingOver ? (
+          <View>
+            <Text style={{...styles.DriverUnavailable, color: isDarkMode ? MyDarkTheme.colors.text : colors.black,}}>No drivers available now!!</Text>
+            <ButtonWithLoader btnText='Cancel order' btnTextStyle={{color:colors.redE}} onPress={cancleOrder} btnStyle={{borderColor:colors.redE, marginBottom: 40}}/>
+          </View>
+        ) : (
+          <View>
+            <Text
+              style={{...styles.DriverUnavailable, color: isDarkMode ? MyDarkTheme.colors.text : colors.black,}}>
+              {appIds.jiffex == getBundleId() ? strings.CONNECTING_YOU_TO_NEARBY_DELIVERY_AGENT : strings.CONNECTING_YOU_TO_NEARBY_DERIVER}
+            </Text>
+            <Text
+              style={{
+                fontSize: textScale(12),
+                fontFamily: fontFamily.regular,
+                marginVertical: moderateScaleVertical(20),
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
+              {appIds.jiffex == getBundleId() ? strings.YOUR_ORDER_WILL_START_SOON : strings.YOUR_RIDE_WILL_START_SOON}
+            </Text>
+          </View>
+        )
+        }
+
+
       </View>
     </View>
   );
