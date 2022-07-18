@@ -364,6 +364,7 @@ const shortCodes = {
   zuriRide:'fa47e7',
   americanLuxury:'0015d5',
   smartMur:'780ecd',
+  ouiSpeed:'089eee',
 };
 
 
@@ -1780,7 +1781,7 @@ const appIds = {
     ios: 'com.smokeRun.order',
     android: 'com.smokeRun.order',
   }),
-  smokeRun: Platform.select({
+  myEvPlus: Platform.select({
     ios: 'com.myEvPlus.order',
     android: 'com.myEvPlus.order',
   }),
@@ -1804,9 +1805,13 @@ const appIds = {
     ios: 'com.americanLuxury.order',
     android: 'com.americanLuxury.order',
   }),
-  americanLuxury: Platform.select({
+  smartMur: Platform.select({
     ios: 'com.smartMur.order',
     android: 'com.smartMur.order',
+  }),
+  ouiSpeed: Platform.select({
+    ios: 'com.ouiSpeed.order',
+    android: 'com.ouiSpeed.order',
   }),
 };
 

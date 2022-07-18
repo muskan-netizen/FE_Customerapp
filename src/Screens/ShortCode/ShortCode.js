@@ -2293,6 +2293,12 @@ export default function ShortCode({ route, navigation }) {
                   isShortcodePrefilled: true,
                 });
              break;
+             case appIds.ouiSpeed:
+                updateState({
+                  shortCode: shortCodes.ouiSpeed,
+                  isShortcodePrefilled: true,
+                });
+             break;
       }
     })();
   }, []);
