@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { useDarkMode } from 'react-native-dark-mode';
 import imagePath from '../../constants/imagePath';
 import Header from '../../Components/Header';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import colors from '../../styles/colors';
 import { MyDarkTheme } from '../../styles/theme';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -21,11 +21,7 @@ import Modal from 'react-native-modal'
 import { ScrollView } from 'react-native-gesture-handler';
 
 
-export default function ChatScreen({
-  route,
-  onClose,
-  isRefresh
-}) {
+export default function ChatScreen({ route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -48,11 +44,13 @@ export default function ChatScreen({
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }))
 
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     socketServices.on("new-message", (data) => {
       console.log(data, "data to be emitted in chat screen");
-      fetchAllMessages()
+      isFocused ? setMessages(previousMessages => GiftedChat.append(previousMessages, data.message.chatData)) : null
+      actions.chatRefresh(!isChatRefresh)
       // console.log("fetchLAtestMessages", messages)
       // // let cloneDeep = _.cloneDeep(messages)
       // cloneDeep.push(data.message.chatData)
@@ -61,15 +59,21 @@ export default function ChatScreen({
     return () => {
       socketServices.removeListener("new-message");
       socketServices.removeListener('save-message');
+      // if (!!paramData?.comeFromOrder) {
+      //   console.log("remove listeneres")
+      //   socketServices.removeListener("new-message");
+      //   socketServices.removeListener('save-message');
+      // }
     };
   }, [])
 
 
   useEffect(() => {
-    updateState({ isLoading: true })
-    fetchAllRoomUser()
-    fetchAllMessages()
-
+    if (isFocused) {
+      updateState({ isLoading: true })
+      fetchAllRoomUser()
+      fetchAllMessages()
+    }
   }, [])
 
 
@@ -79,7 +83,7 @@ export default function ChatScreen({
       const res = await actions.getAllMessages(apiData, {})
       console.log('fetchAllMessages res', res)
       updateState({ isLoading: false })
-      if (!!res) {
+      if (!!res && isFocused) {
         let filterArry = res.map((val, i) => {
           return { ...val, user: {} }
         })
@@ -102,7 +106,7 @@ export default function ChatScreen({
         language: languages?.primary_language?.id,
       })
       console.log('fetchAllRoomUser res', res)
-      if (!!res?.userData) {
+      if (!!res?.userData && isFocused) {
         updateState({ roomUsers: res?.userData })
       }
     } catch (error) {
@@ -154,7 +158,7 @@ export default function ChatScreen({
           '200/200',
         )
       };
-      setMessages(previousMessages => GiftedChat.append(previousMessages, message))
+      // setMessages(previousMessages => GiftedChat.append(previousMessages, message))
     } catch (error) {
       console.log('error raised in fetchAllMessages api', error)
     }
@@ -201,7 +205,7 @@ export default function ChatScreen({
                   ...styles.descText,
                   color: colors.white
                 }}>{currentMessage?.message}</Text>
-           <Text style={{...styles.timeText, color: colors.whiteOpacity77}}>{moment(currentMessage?.created_date).format('LT')}</Text>
+                <Text style={{ ...styles.timeText, color: colors.whiteOpacity77 }}>{moment(currentMessage?.created_date).format('LT')}</Text>
               </View>
             </View>
           </View>
@@ -234,12 +238,12 @@ export default function ChatScreen({
               color: colors.black,
             }}>{currentMessage?.username}</Text>
 
-              <Text style={{
-                ...styles.descText,
-                color: colors.black,
-              }}>{currentMessage?.message}</Text>
-              <Text style={styles.timeText}>{moment(currentMessage?.created_date).format('LT')}</Text>
-  
+            <Text style={{
+              ...styles.descText,
+              color: colors.black,
+            }}>{currentMessage?.message}</Text>
+            <Text style={styles.timeText}>{moment(currentMessage?.created_date).format('LT')}</Text>
+
           </View>
         </View>
       </View>
@@ -292,17 +296,17 @@ export default function ChatScreen({
           backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
 
         }}>
-      
-            <Text style={{
-              fontFamily: fontFamily?.bold,
-              fontSize: textScale(16),
-              color: isDarkMode ? colors.white : colors.black
-            }}>{roomUsers.length} Participants</Text>
 
-            <TouchableOpacity activeOpacity={0.7} onPress={() => updateState({ showParticipant: false })}>
-              <Image source={imagePath.closeButton} />
-            </TouchableOpacity>
-     
+          <Text style={{
+            fontFamily: fontFamily?.bold,
+            fontSize: textScale(16),
+            color: isDarkMode ? colors.white : colors.black
+          }}>{roomUsers.length} Participants</Text>
+
+          <TouchableOpacity activeOpacity={0.7} onPress={() => updateState({ showParticipant: false })}>
+            <Image source={imagePath.closeButton} />
+          </TouchableOpacity>
+
 
 
           <ScrollView >
@@ -379,7 +383,7 @@ const stylesFun = ({ fontFamily, isDarkMode }) => {
       color: colors.blackOpacity43,
       marginLeft: moderateScale(12),
       marginTop: moderateScaleVertical(6),
-      alignSelf:'flex-end'
+      alignSelf: 'flex-end'
     },
     flexView: {
       flexDirection: 'row',

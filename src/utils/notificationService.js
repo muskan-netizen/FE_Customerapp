@@ -128,6 +128,18 @@ export const notificationListener = async () => {
       (created) =>
         console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
     );
+    PushNotification.createChannel(
+      {
+        channelId: 'sound-channel-id', // (required)
+        channelName: `Sound channel 2`, // (required)
+        channelDescription: 'A sound channel 2', // (optional) default: undefined.
+        soundName: 'notification.wav', // (optional) See `soundName` parameter of `localNotification` function
+        importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+        vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+      },
+      (created) =>
+        console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+    );
   }
     
  

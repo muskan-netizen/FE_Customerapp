@@ -2794,7 +2794,7 @@ export default function OrderDetail({ navigation, route }) {
 
   const onChat = (item) => {
     console.log("item+++", item)
-    navigation.navigate(navigationStrings.CHAT_SCREEN, { data: item })
+    navigation.navigate(navigationStrings.CHAT_SCREEN, { data: {...item, comeFromOrder: true} })
   }
 
   const _onRateDriver = () => {

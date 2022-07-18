@@ -17,6 +17,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import stylesFun from './styles';
 import moment from 'moment';
 import CircularImages from '../../Components/CircularImages';
+import useInterval from '../../utils/useInterval';
 
 
 export default function ChatRoom({ navigation, route }) {
@@ -43,53 +44,22 @@ export default function ChatRoom({ navigation, route }) {
 
     const updateState = (data) => setState((state) => ({ ...state, ...data }))
 
-    const isFocused = useIsFocused()
-
+  
     const isRefresh = useRef(false)
     const roomDataRef = useRef([])
 
 
-
-    useEffect(() => {
-        fetchData()
-    }, [])
-
-    useFocusEffect(
-        useCallback(() => {
-            socketServices.on("new-message", (data) => {
-                console.log(data, "data to be emitted in chatroom");
-                isFocused ? fetchData() : null
-            });
-            return () => {
-                socketServices.removeListener("new-message");
-   
-            };
-        }, [])
+    const isFocused = useIsFocused();
+    useInterval(
+      () => {
+        if (!!userData?.auth_token) {
+            fetchData()
+        } 
+      },
+      isFocused ? 4000 : null,
     );
 
-
-
-
-    // useEffect(() => {
-    //     socketServices.on("new-message", (data) => {
-    //         console.log(data, "data to be emitted in chatroom");
-    //         fetchData()
-    //         //     roomDataRef.current.map((val,i)=>{
-    //         //         console.log("roomDataRefroomDataRef",moment(val.updated_date).valueOf())
-    //         //     })
-    //         //    let arry =  roomDataRef.current.sort(function(x, y){
-    //         //         return moment(new Date()).valueOf() - moment(y.updated_date).valueOf();
-    //         //     })
-    //         //     console.log("roomDataRefroomDataRef",arry)
-    //         //     updateState({roomData: arry})
-    //         // isFocused ? fetchData() : null
-    //     });
-    //     return () => {
-    //         socketServices.removeListener("new-message");
-    //     };
-    // }, [])
-
-
+    
 
     let fetchData = async () => {
         if (_.isEmpty(roomData)) {
