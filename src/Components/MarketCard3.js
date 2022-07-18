@@ -455,7 +455,7 @@ export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme })
     vendorScheduledView: {
       position: 'absolute',
       bottom: moderateScaleVertical(1),
-      width: moderateScale(width / 1.2),
+      // width: moderateScale(width / 1.2),
       justifyContent: 'center',
       alignItems: 'center',
       alignSelf: 'center',
