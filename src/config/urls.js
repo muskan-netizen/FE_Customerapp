@@ -437,3 +437,4 @@ export const GET_PRODUCT_ESTIMATION_WITH_ADDONS = getApiUrl(
 export const GET_ESTIMATION = getApiUrl('/estimation/get-estimation');
 export const RESCHDULE_ORDER = getApiUrl('/mystore/vendor/rescheduleOrder');
 export const ADD_PRESCRIPTIONS = getApiUrl('/upload/prescriptions');
+export const DELETE_PRESCRIPTION = getApiUrl('/delete/prescriptions');

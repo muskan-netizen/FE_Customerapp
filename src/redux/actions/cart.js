@@ -34,6 +34,7 @@ import {
   SDKPAYMENTCANCELWAVEURL,
   VENDOR_DROPOFF_SLOTS,
   ADD_PRESCRIPTIONS,
+  DELETE_PRESCRIPTION,
 } from '../../config/urls';
 import {
   apiGet,
@@ -515,6 +516,19 @@ export function getVendorDropoffSlots(url, data = {}, headers = {}) {
 export function addPrescriptions(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiPost(ADD_PRESCRIPTIONS, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+//Delete  Prescriptions
+export function deletePrescriptions(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(DELETE_PRESCRIPTION, data, headers)
       .then((res) => {
         resolve(res);
       })

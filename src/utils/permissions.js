@@ -94,7 +94,6 @@ export const chekLocationPermission = (showAlert = true) =>
           : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
       )
         .then((result) => {
-          console.log(result,"chekLocationPermission>result")
           switch (result) {
             case RESULTS.UNAVAILABLE:
               showError(strings.LOCATION_UNAVAILABLE);

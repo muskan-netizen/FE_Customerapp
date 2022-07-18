@@ -101,6 +101,7 @@ import {FlutterwaveInit} from 'flutterwave-react-native';
 import {setRedirection} from '../../redux/actions/auth';
 import ImagePicker from 'react-native-image-crop-picker';
 import BottomModal from '../../Components/BottomModal';
+import ButtonWithLoader from '../../Components/ButtonWithLoader';
 
 let clickedItem = {};
 let isFAQsSubmitted = true;
@@ -179,6 +180,7 @@ function Cart({navigation, route}) {
   const [selectedItemForPrescription, setItemForPrescription] = useState({});
   const [isPrescriptionModal, setPrescriptionModal] = useState(false);
   const [selectedPrescriptionImgs, setPrescriptionImgs] = useState([]);
+  const [isPrescriptionLoading, setPrescriptionLoading] = useState(false);
 
   const [state, setState] = useState({
     showTaxFeeArea: false,
@@ -715,6 +717,8 @@ function Cart({navigation, route}) {
       isSubmitKycLoader: false,
       isModalVisibleForPayFlutterWave: false,
     });
+    setPrescriptionModal(false);
+    setPrescriptionLoading(false);
     showError(
       error?.error?.description ||
         error?.description ||
@@ -6163,6 +6167,11 @@ function Cart({navigation, route}) {
   };
 
   const onSubmitPrescriptionDocs = () => {
+    if (isEmpty(selectedPrescriptionImgs)) {
+      alert('Please upload atleast one image.');
+      return;
+    }
+    setPrescriptionLoading(true);
     let formdata = new FormData();
     formdata.append('vendor_id', selectedItemForPrescription?.vendor_id);
     formdata.append('product_id', selectedItemForPrescription?.product_id);
@@ -6183,22 +6192,83 @@ function Cart({navigation, route}) {
         'Content-Type': 'multipart/form-data',
       })
       .then((res) => {
+        setPrescriptionImgs([]);
+        setPrescriptionLoading(false);
+        setPrescriptionModal(false);
         showSuccess(res?.message);
-        updateState({
-          isPrescriptionModal: false,
-        });
         getCartDetail();
       })
       .catch(errorMethod);
   };
 
-  const onRemovePrescriptionImg = (item) => {
+  const onRemovePrescriptionImg = (item, type) => {
+    if (type == 'API') {
+      actions
+        .deletePrescriptions(
+          {
+            prescription_id: item?.prescription_id,
+          },
+          {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+          },
+        )
+        .then((res) => {
+          setPrescriptionModal(false);
+          setTimeout(() => {
+            showSuccess(res?.message);
+            getCartDetail();
+          }, 500);
+        })
+        .catch(errorMethod);
+    }
+
     const imgData = [...selectedPrescriptionImgs];
     const indexOfObject = imgData.findIndex((object) => {
       return object.filename === item?.filename;
     });
     imgData.splice(indexOfObject, 1);
     setPrescriptionImgs(imgData);
+  };
+
+  const renderUploadedPrescriptionImgs = ({item, index}) => {
+    return (
+      <View
+        style={{
+          justifyContent: 'center',
+          marginRight: moderateScale(10),
+        }}>
+        <FastImage
+          source={{
+            uri: getImageUrl(item?.proxy_url, item?.image_path, '300/300'),
+            priority: FastImage.priority.high,
+            cache: FastImage.cacheControl.immutable,
+          }}
+          style={{
+            height: width / 4.5,
+            width: width / 4.5,
+            borderRadius: moderateScale(8),
+          }}
+        />
+        <TouchableOpacity
+          hitSlop={hitSlopProp}
+          onPress={() => onRemovePrescriptionImg(item, 'API')}
+          style={{
+            position: 'absolute',
+            right: -2,
+            top: 0,
+          }}>
+          <Image
+            source={imagePath.crossC}
+            style={{
+              height: 12,
+              width: 12,
+            }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
   };
 
   const renderPrescriptionModalView = () => {
@@ -6213,62 +6283,115 @@ function Cart({navigation, route}) {
             fontFamily: fontFamily.bold,
             fontSize: textScale(14),
           }}>
-          Add Prescriptions
+          Prescriptions Details
         </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'flex-end',
-            flexWrap: 'wrap',
-            marginTop: moderateScaleVertical(10),
-          }}>
-          {selectedPrescriptionImgs.map((item) => (
+
+        <ScrollView>
+          {!isEmpty(
+            selectedItemForPrescription?.product?.uploaded_prescriptions,
+          ) && (
             <View>
-              <Image
-                source={{uri: item.path}}
+              <Text
                 style={{
-                  height: moderateScale(69),
-                  width: moderateScale(69),
-                  marginRight: moderateScale(7),
-                }}
-              />
-              <TouchableOpacity
-                hitSlop={hitSlopProp}
-                onPress={() => onRemovePrescriptionImg(item)}
-                style={{
-                  position: 'absolute',
-                  right: 3,
-                  top: -5,
+                  fontFamily: fontFamily.regular,
+                  fontSize: textScale(12),
+                  marginVertical: moderateScaleVertical(10),
+                  color: colors.blackOpacity70,
                 }}>
+                Added Prescriptions (
+                {
+                  selectedItemForPrescription?.product?.uploaded_prescriptions
+                    .length
+                }
+                )
+              </Text>
+              <View>
+                <FlatList
+                  horizontal
+                  data={
+                    selectedItemForPrescription?.product
+                      ?.uploaded_prescriptions || []
+                  }
+                  contentContainerStyle={{
+                    height: width / 4,
+                  }}
+                  renderItem={renderUploadedPrescriptionImgs}
+                  showsHorizontalScrollIndicator={false}
+                />
+              </View>
+            </View>
+          )}
+
+          <Text
+            style={{
+              fontFamily: fontFamily.regular,
+              fontSize: textScale(12),
+              color: colors.blackOpacity70,
+              marginVertical: moderateScaleVertical(10),
+            }}>
+            Add Prescriptions
+          </Text>
+
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                height: width / 4,
+              }}>
+              <TouchableOpacity onPress={onAddPrescriptionDocs}>
                 <Image
-                  source={imagePath.crossC}
+                  source={imagePath.icAddPlaceholder}
                   style={{
-                    height: 12,
-                    width: 12,
+                    height: width / 4.5,
+                    width: width / 4.5,
                   }}
                 />
               </TouchableOpacity>
+              {selectedPrescriptionImgs.map((item) => (
+                <View>
+                  <Image
+                    source={{uri: item.path}}
+                    style={{
+                      height: width / 4.5,
+                      width: width / 4.5,
+                      borderRadius: moderateScale(8),
+                      marginLeft: moderateScale(10),
+                    }}
+                  />
+                  <TouchableOpacity
+                    hitSlop={hitSlopProp}
+                    onPress={() => onRemovePrescriptionImg(item)}
+                    style={{
+                      position: 'absolute',
+                      right: 0,
+                      top: -3,
+                    }}>
+                    <Image
+                      source={imagePath.crossC}
+                      style={{
+                        height: 12,
+                        width: 12,
+                      }}
+                    />
+                  </TouchableOpacity>
+                </View>
+              ))}
             </View>
-          ))}
-          <TouchableOpacity onPress={onAddPrescriptionDocs}>
-            <Image
-              source={imagePath.icAddPlaceholder}
-              style={{
-                marginTop: moderateScaleVertical(20),
-              }}
-            />
-          </TouchableOpacity>
-        </View>
-        <ButtonComponent
+          </ScrollView>
+        </ScrollView>
+        <ButtonWithLoader
+          isLoading={isPrescriptionLoading}
           onPress={onSubmitPrescriptionDocs}
           btnText={'Submit'}
           borderRadius={moderateScale(13)}
           textStyle={{color: colors.white}}
-          containerStyle={{
+          btnStyle={{
             position: 'absolute',
             backgroundColor: themeColors.primary_color,
             width: width - moderateScale(30),
             bottom: 10,
+            borderWidth: 0,
           }}
           // placeLoader={}
         />
@@ -6690,9 +6813,10 @@ function Cart({navigation, route}) {
       <BottomModal
         onBackdropPress={closeForm}
         isVisible={isPrescriptionModal}
+        // isVisible={true}
         renderModalContent={renderPrescriptionModalView}
         mainViewStyle={{
-          height: height / 2.4,
+          minHeight: height / 2.3,
         }}
       />
 
