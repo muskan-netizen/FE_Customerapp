@@ -36,9 +36,7 @@ const shortCodes = {
   yoho: 'fdbcd9',
   glamsouq: '583ade',
   doctatransportation: '8115ce',
-  // washvalley: 'd5403a',
-  washvalley: '245bae',
-
+  washvalley: 'd5403a',
   equamd: '82a1eb',
   hellodeliver: '5ed004',
   hoganchef: '52a0c3',
