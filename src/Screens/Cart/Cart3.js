@@ -172,15 +172,11 @@ function Cart({navigation, route}) {
     useState('');
   const [laundryAvailableDropOffSlot, setLaundryAvailableDropOffSlot] =
     useState([]);
-
-  const [minimumSelectedPickupDate, setMinimumSelectedPickupDate] =
-    useState('');
-  const [minimumSelectedDropOffDate, setMinimumSelectedDropOffDate] =
-    useState('');
   const [selectedItemForPrescription, setItemForPrescription] = useState({});
   const [isPrescriptionModal, setPrescriptionModal] = useState(false);
   const [selectedPrescriptionImgs, setPrescriptionImgs] = useState([]);
   const [isPrescriptionLoading, setPrescriptionLoading] = useState(false);
+  const [isCheckSlotLoading, setCheckSloatLoading] = useState(false);
 
   const [state, setState] = useState({
     showTaxFeeArea: false,
@@ -263,7 +259,7 @@ function Cart({navigation, route}) {
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
-  console.log('closed_store_order_scheduled', cartData);
+  console.log('isCheckSlotLoadingisCheckSlotLoading', isCheckSlotLoading);
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -2136,6 +2132,10 @@ function Cart({navigation, route}) {
 
   const selectOrderDate = () => {
     if (businessType == 'laundry') {
+      if (laundrySelectedPickupDate > laundrySelectedDropOffDate) {
+        alert('Please select valid dates.');
+        return;
+      }
       if (
         modalType == 'pickup' &&
         (!laundrySelectedPickupDate || !laundrySelectedPickupSlot)
@@ -5461,8 +5461,11 @@ function Cart({navigation, route}) {
               timezone: RNLocalize.getTimeZone(),
             },
           );
+          setCheckSloatLoading(false);
           setLaundryAvailableDropOffSlot(res);
         } catch (error) {
+          setCheckSloatLoading(false);
+
           console.log('error riased', error);
         }
         return;
@@ -5491,7 +5494,10 @@ function Cart({navigation, route}) {
       if (res.length == 0) {
         setSelectedTimeSlots('');
       }
+      setCheckSloatLoading(false);
     } catch (error) {
+      setCheckSloatLoading(false);
+
       console.log('error riased', error);
     }
   };
@@ -5620,7 +5626,7 @@ function Cart({navigation, route}) {
   };
 
   const onSelectDateFromCalendar = (day) => {
-    console.log('selected day', day);
+    setCheckSloatLoading(true);
     setSelectedDateFromCalendar(day.dateString);
     setScheduleType('schedule');
     setModalType('schedule');
@@ -5629,6 +5635,8 @@ function Cart({navigation, route}) {
   };
 
   const laundrySlotSelection = (day) => {
+    setCheckSloatLoading(true);
+
     if (modalType == 'pickup') {
       setLaundrySelectedPickupDate(day.dateString);
       setLaundrySelectedPickupSlot('');
@@ -6587,35 +6595,46 @@ function Cart({navigation, route}) {
                           }}>
                           {strings.TIME_SLOT}
                         </Text>
-                        <FlatList
-                          horizontal
-                          showsHorizontalScrollIndicator={false}
-                          data={laundryAvailablePickupSlot || []}
-                          renderItem={renderTimeSlots}
-                          keyExtractor={(item) => item.value || ''}
-                          ItemSeparatorComponent={() => (
-                            <View style={{marginRight: moderateScale(12)}} />
-                          )}
-                          ListHeaderComponent={() => (
-                            <View style={{marginLeft: moderateScale(24)}} />
-                          )}
-                          ListFooterComponent={() => (
-                            <View style={{marginRight: moderateScale(24)}} />
-                          )}
-                          ListEmptyComponent={() => (
-                            <View>
-                              <Text
-                                style={{
-                                  fontFamily: fontFamily.medium,
-                                  color: colors.blackOpacity66,
-                                }}>
-                                {!laundrySelectedPickupDate
-                                  ? ' Please select date.'
-                                  : ' Slots are not found for selected date.'}
-                              </Text>
-                            </View>
-                          )}
-                        />
+                        {isCheckSlotLoading ? (
+                          <Text
+                            style={{
+                              fontFamily: fontFamily.medium,
+                              color: colors.blackOpacity66,
+                              marginLeft: moderateScale(24),
+                            }}>
+                            Loading...
+                          </Text>
+                        ) : (
+                          <FlatList
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            data={laundryAvailablePickupSlot || []}
+                            renderItem={renderTimeSlots}
+                            keyExtractor={(item) => item.value || ''}
+                            ItemSeparatorComponent={() => (
+                              <View style={{marginRight: moderateScale(12)}} />
+                            )}
+                            ListHeaderComponent={() => (
+                              <View style={{marginLeft: moderateScale(24)}} />
+                            )}
+                            ListFooterComponent={() => (
+                              <View style={{marginRight: moderateScale(24)}} />
+                            )}
+                            ListEmptyComponent={() => (
+                              <View>
+                                <Text
+                                  style={{
+                                    fontFamily: fontFamily.medium,
+                                    color: colors.blackOpacity66,
+                                  }}>
+                                  {!laundrySelectedPickupDate
+                                    ? ' Please select date.'
+                                    : ' Slots are not found for selected date.'}
+                                </Text>
+                              </View>
+                            )}
+                          />
+                        )}
                       </View>
                     ) : (
                       <View>
@@ -6628,35 +6647,46 @@ function Cart({navigation, route}) {
                           }}>
                           {strings.TIME_SLOT}
                         </Text>
-                        <FlatList
-                          horizontal
-                          showsHorizontalScrollIndicator={false}
-                          data={laundryAvailableDropOffSlot || []}
-                          renderItem={renderTimeSlots2}
-                          keyExtractor={(item) => item.value || ''}
-                          ItemSeparatorComponent={() => (
-                            <View style={{marginRight: moderateScale(12)}} />
-                          )}
-                          ListHeaderComponent={() => (
-                            <View style={{marginLeft: moderateScale(24)}} />
-                          )}
-                          ListFooterComponent={() => (
-                            <View style={{marginRight: moderateScale(24)}} />
-                          )}
-                          ListEmptyComponent={() => (
-                            <View>
-                              <Text
-                                style={{
-                                  fontFamily: fontFamily.medium,
-                                  color: colors.blackOpacity66,
-                                }}>
-                                {!laundrySelectedDropOffDate
-                                  ? ' Please select date.'
-                                  : ' Slots are not found for selected date.'}
-                              </Text>
-                            </View>
-                          )}
-                        />
+                        {isCheckSlotLoading ? (
+                          <Text
+                            style={{
+                              fontFamily: fontFamily.medium,
+                              color: colors.blackOpacity66,
+                              marginLeft: moderateScale(24),
+                            }}>
+                            Loading...
+                          </Text>
+                        ) : (
+                          <FlatList
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            data={laundryAvailableDropOffSlot || []}
+                            renderItem={renderTimeSlots2}
+                            keyExtractor={(item) => item.value || ''}
+                            ItemSeparatorComponent={() => (
+                              <View style={{marginRight: moderateScale(12)}} />
+                            )}
+                            ListHeaderComponent={() => (
+                              <View style={{marginLeft: moderateScale(24)}} />
+                            )}
+                            ListFooterComponent={() => (
+                              <View style={{marginRight: moderateScale(24)}} />
+                            )}
+                            ListEmptyComponent={() => (
+                              <View>
+                                <Text
+                                  style={{
+                                    fontFamily: fontFamily.medium,
+                                    color: colors.blackOpacity66,
+                                  }}>
+                                  {!laundrySelectedDropOffDate
+                                    ? ' Please select date.'
+                                    : ' Slots are not found for selected date.'}
+                                </Text>
+                              </View>
+                            )}
+                          />
+                        )}
                       </View>
                     )}
                   </ScrollView>
@@ -6708,33 +6738,44 @@ function Cart({navigation, route}) {
                           }}>
                           {strings.TIME_SLOT}
                         </Text>
-                        <FlatList
-                          horizontal
-                          data={availableTimeSlots || []}
-                          renderItem={renderTimeSlots}
-                          keyExtractor={(item) => item.value || ''}
-                          showsHorizontalScrollIndicator={false}
-                          ItemSeparatorComponent={() => (
-                            <View style={{marginRight: moderateScale(12)}} />
-                          )}
-                          ListHeaderComponent={() => (
-                            <View style={{marginLeft: moderateScale(24)}} />
-                          )}
-                          ListFooterComponent={() => (
-                            <View style={{marginRight: moderateScale(24)}} />
-                          )}
-                          ListEmptyComponent={() => (
-                            <View>
-                              <Text
-                                style={{
-                                  fontFamily: fontFamily.medium,
-                                  color: colors.redB,
-                                }}>
-                                {strings.SLOT_NOT_AVAILABAL}
-                              </Text>
-                            </View>
-                          )}
-                        />
+                        {isCheckSlotLoading ? (
+                          <Text
+                            style={{
+                              fontFamily: fontFamily.medium,
+                              color: colors.blackOpacity66,
+                              marginLeft: moderateScale(24),
+                            }}>
+                            Loading...
+                          </Text>
+                        ) : (
+                          <FlatList
+                            horizontal
+                            data={availableTimeSlots || []}
+                            renderItem={renderTimeSlots}
+                            keyExtractor={(item) => item.value || ''}
+                            showsHorizontalScrollIndicator={false}
+                            ItemSeparatorComponent={() => (
+                              <View style={{marginRight: moderateScale(12)}} />
+                            )}
+                            ListHeaderComponent={() => (
+                              <View style={{marginLeft: moderateScale(24)}} />
+                            )}
+                            ListFooterComponent={() => (
+                              <View style={{marginRight: moderateScale(24)}} />
+                            )}
+                            ListEmptyComponent={() => (
+                              <View>
+                                <Text
+                                  style={{
+                                    fontFamily: fontFamily.medium,
+                                    color: colors.redB,
+                                  }}>
+                                  {strings.SLOT_NOT_AVAILABAL}
+                                </Text>
+                              </View>
+                            )}
+                          />
+                        )}
                       </View>
                     </ScrollView>
                   </Fragment>
