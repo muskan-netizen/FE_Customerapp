@@ -19,6 +19,7 @@ import _ from 'lodash';
 import CircularImages from '../../Components/CircularImages';
 import Modal from 'react-native-modal'
 import { ScrollView } from 'react-native-gesture-handler';
+import { getSubDomain } from '../../utils/commonFunction';
 
 
 export default function ChatScreen({ route }) {
@@ -135,7 +136,7 @@ export default function ChatScreen({ route }) {
           userData?.source?.image_path,
           '200/200',
         ),
-        sub_domain: '192.168.101.88',
+        sub_domain: getSubDomain(),
         //'room_name' =>$data->name,
         chat_type: 'vendor_to_user',
       }
@@ -187,25 +188,26 @@ export default function ChatScreen({ route }) {
         <View key={String(currentMessage._id)} style={{
           ...styles.chatStyle,
           alignSelf: 'flex-end',
-          backgroundColor: '#0084ff',
+          backgroundColor: '#e2ffd3',
           borderBottomRightRadius: 0,
         }}>
           <View style={{ flexDirection: "row" }}>
             <View style={{ marginHorizontal: 8, flexShrink: 1 }}>
               <Text style={{
-                fontSize: textScale(14),
+                fontSize: textScale(12),
                 fontFamily: fontFamily.regular,
                 textTransform: 'capitalize',
-                color: colors.white,
+                color: colors.black,
 
               }}>{currentMessage?.username}</Text>
 
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{ alignItems: 'center', flex: 1 }}>
                 <Text style={{
                   ...styles.descText,
-                  color: colors.white
+                  color: colors.black,
+
                 }}>{currentMessage?.message}</Text>
-                <Text style={{ ...styles.timeText, color: colors.whiteOpacity77 }}>{moment(currentMessage?.created_date).format('LT')}</Text>
+                <Text style={{ ...styles.timeText, color: colors.blackOpacity40 }}>{moment(currentMessage?.created_date).format('LT')}</Text>
               </View>
             </View>
           </View>
@@ -225,14 +227,14 @@ export default function ChatScreen({ route }) {
         <View key={String(currentMessage._id)} style={{
           ...styles.chatStyle,
           alignSelf: 'flex-start',
-          backgroundColor: '#f0f0f0',
+          backgroundColor: '#ffffff',
           borderBottomLeftRadius: moderateScale(0),
           maxWidth: width / 1.2
         }}>
 
           <View style={{ marginHorizontal: 8, flexShrink: 1 }}>
             <Text style={{
-              fontSize: textScale(14),
+              fontSize: textScale(12),
               fontFamily: fontFamily.regular,
               textTransform: 'capitalize',
               color: colors.black,
@@ -252,7 +254,7 @@ export default function ChatScreen({ route }) {
 
   return (
     <WrapperContainer
-      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : '#e9e6de'}
       statusBarColor={colors.white}
       isLoading={isLoading}
     >
@@ -266,6 +268,7 @@ export default function ChatScreen({ route }) {
         }
         centerTitle={`# ${paramData?.room_id || ''}`}
         customRight={showRoomUser}
+        headerStyle={{ backgroundColor: 'white' }}
       // onPressLeft={onBack}
 
       />
@@ -277,8 +280,7 @@ export default function ChatScreen({ route }) {
           user={{ _id: userData?.id }}
           renderMessage={renderMessage}
           isKeyboardInternallyHandled={true}
-          inverted={Platform.OS !== 'web'}
-          inputAccessoryViewID="done"
+
         />
       </View>
 
@@ -370,9 +372,9 @@ const stylesFun = ({ fontFamily, isDarkMode }) => {
       marginLeft: 8
     },
     descText: {
-      fontSize: textScale(12),
+      fontSize: textScale(11),
       fontFamily: fontFamily.regular,
-      textTransform: 'capitalize',
+      // textTransform: 'capitalize',
       lineHeight: moderateScale(18),
       marginTop: moderateScaleVertical(4),
     },

@@ -18,6 +18,8 @@ import stylesFun from './styles';
 import moment from 'moment';
 import CircularImages from '../../Components/CircularImages';
 import useInterval from '../../utils/useInterval';
+import { API_BASE_URL } from '../../config/urls';
+import { getSubDomain } from '../../utils/commonFunction';
 
 
 export default function ChatRoom({ navigation, route }) {
@@ -30,7 +32,7 @@ export default function ChatRoom({ navigation, route }) {
     const darkthemeusingDevice = useDarkMode();
     const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
     const paramData = route?.params.data;
-    console.log(paramData, 'paramData');
+    console.log(appData, 'appDataappDataappData');
     const isChatRefresh = useSelector((state) => state?.chatRefresh.isChatRefresh);
 
 
@@ -63,7 +65,7 @@ export default function ChatRoom({ navigation, route }) {
 
     let fetchData = async () => {
         if (_.isEmpty(roomData)) {
-            updateState({ isLoading: true })
+            // updateState({ isLoading: true })
         }
         try {
             let headerData = {
@@ -72,7 +74,7 @@ export default function ChatRoom({ navigation, route }) {
                 language: languages?.primary_language?.id,
             }
             let apiData = {
-                sub_domain: '192.168.101.88',
+                sub_domain: getSubDomain(),
             }
             const res = paramData == 'user_chat' ? await actions.fetchUserChat(apiData, headerData) : await actions.fetchVendorChat(apiData, headerData)
             updateState({ isLoading: false })

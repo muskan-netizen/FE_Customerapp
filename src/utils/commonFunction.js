@@ -1,4 +1,5 @@
 import {Keyboard} from 'react-native';
+import { API_BASE_URL } from '../config/urls';
 import {openCamera, openPicker} from './imagePicker';
 const cameraHandler = async (data, option) => {
   Keyboard.dismiss();
@@ -71,5 +72,9 @@ export const ifDataExist = (data) => {
   }
   return false;
 };
+
+export const getSubDomain = () =>{
+  return API_BASE_URL.split('/')[3]
+}
 
 export {cameraHandler, currencyNumberFormatter};

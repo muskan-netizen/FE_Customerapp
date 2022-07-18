@@ -218,6 +218,8 @@ export default function OrderDetail({ navigation, route }) {
 
   const createRoom = async (item, type) => {
 
+    console.log("userDatauserData",userData)
+
     try {
       const apiData = {
         sub_domain: '192.168.101.88',
