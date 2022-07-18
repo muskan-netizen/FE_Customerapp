@@ -1137,8 +1137,8 @@ const appIds = {
     android: 'com.farmersouq',
   }),
   tmgShops: Platform.select({
-    ios: 'com.tmgShops',
-    android: 'com.tmgShops',
+    ios: 'com.tmgShops.orders',
+    android: 'com.tmgShops.orders',
   }),
   stitchesonsite: Platform.select({
     ios: 'com.stitchesonsite',

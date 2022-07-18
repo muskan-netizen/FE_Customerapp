@@ -228,9 +228,7 @@ export default function Account3({navigation}) {
           `tel:${appData?.profile?.preferences?.sos_ambulance_contact}`,
         );
         break;
-      case 2:
-        actionSheet.current.hide();
-        break;
+     
       default:
         break;
     }
