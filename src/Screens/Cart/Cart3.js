@@ -395,9 +395,14 @@ function Cart({navigation, route}) {
     const local = moment.utc(date).local().format('DD MMM YYYY hhðŸ‡²ðŸ‡²a');
     return local;
   };
-
+  console.log(location, 'nocationnnnnnn');
   //get the entire cart detail
   const getCartDetail = () => {
+    console.log(
+      dineInType,
+      paramsData?.data?.queryURL,
+      'paramsData?.data?.queryURL',
+    );
     // alert("cart detail hit")
     let apiData = `/?type=${dineInType}${
       paramsData?.data?.queryURL ? `&${paramsData?.data?.queryURL}` : ''
@@ -417,6 +422,8 @@ function Cart({navigation, route}) {
           systemuser: DeviceInfo.getUniqueId(),
           timezone: RNLocalize.getTimeZone(),
           device_token: DeviceInfo.getUniqueId(),
+          latitude: location?.latitude,
+          longitude: location?.longitude,
         },
       )
       .then((res) => {
@@ -6711,10 +6718,16 @@ function Cart({navigation, route}) {
                       />
                     ) : (
                       <Calendar
-                        current={new Date()}
+                        current={
+                          getBundleId() == appIds.masa
+                            ? dayAfterToday
+                            : new Date()
+                        }
                         minDate={
                           !!minimumDelayVendorDate
                             ? minimumDelayVendorDate
+                            : getBundleId() == appIds.masa
+                            ? dayAfterToday
                             : new Date()
                         }
                         onDayPress={laundrySlotSelection}

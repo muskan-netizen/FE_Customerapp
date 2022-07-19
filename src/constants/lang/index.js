@@ -16,6 +16,7 @@ import ne from './ne';
 import es_elcheragio from './es_elcheragio';
 import es_heybuddy from './es_heybuddy';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
+import es_sabroson from './es_sabroson';
 
 
 //Spanish fils
@@ -26,6 +27,8 @@ const spanishfile = () => {
       return es_elcheragio;
       case appIds?.heyBuddy:
         return es_heybuddy;
+      case appIds?.sabroson:
+        return es_sabroson;
     default:
       return es;
   }

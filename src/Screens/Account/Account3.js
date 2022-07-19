@@ -829,7 +829,11 @@ export default function Account3({navigation}) {
               // onPress={()=>actions.isVendorNotification(true)}
               onPress={userlogout}
               style={styles.touchAbleLoginVIew}>
-              <Text style={styles.loginLogoutText}>
+              <Text 
+              style={{...styles.loginLogoutText, color: isDarkMode
+                ? MyDarkTheme.colors.text
+                : colors.blackB}}
+              >
                 {!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
               </Text>
               <Image

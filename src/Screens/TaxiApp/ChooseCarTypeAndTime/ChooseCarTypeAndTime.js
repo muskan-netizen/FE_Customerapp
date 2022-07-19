@@ -119,10 +119,10 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     date: new Date(),
     slectedDate: paramData?.datetime?.slectedDate
       ? paramData?.datetime?.slectedDate
-      : moment(date).format('YYYY-MM-DD'),
+      : null,
     selectedTime: paramData?.datetime?.selectedTime
       ? paramData?.datetime?.selectedTime
-      : moment(date).format('LT'),
+      : null,
 
     isModalVisible: false,
 
@@ -251,7 +251,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
   useEffect(() => {
     {
-      !!selectedVendorOption && _getAllCarAndPrices();
+      !!selectedVendorOption && _getAllCarAndPrices(true);
     }
     getDeviceCounrtyCode();
   }, [selectedVendorOption]);
@@ -278,12 +278,22 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   ]);
 
   //Get list of all orders api
-  const _getAllCarAndPrices = () => {
-    updateState({isLoading: true, showVendorModal: false, showCarModal: true});
+  const _getAllCarAndPrices = (showInitalModal = true) => {
+    if (showInitalModal) {
+      updateState({showCarModal: true});
+    }
+    updateState({isLoading: true, showVendorModal: false});
     actions
       .getAllCarAndPrices(
         `/${selectedVendorOption?.id}/${paramData?.id}?page=${pageNo}&limit=${limit}`,
-        {locations: paramData?.location},
+        {
+          locations: paramData?.location,
+          schedule_date_delivery: scheduleDateTime?.selectedDateAndTime
+            ? scheduleDateTime?.selectedDateAndTime
+            : `${pickedUpDate ? pickedUpDate : ''} ${
+                pickedUpTime ? pickedUpTime : ''
+              }`,
+        },
         {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
@@ -302,9 +312,10 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             pageNo == 1
               ? res?.data?.products?.data
               : [...availableCarList, ...res?.data?.products?.data],
-          selectedCarOption: selectedCarOption
-            ? selectedCarOption
-            : res?.data?.products?.data[0],
+          selectedCarOption: res?.data?.products?.data[0],
+          // selectedCarOption
+          //   ? selectedCarOption
+          //   : res?.data?.products?.data[0],
           isLoadingB: false,
           isLoading: false,
           isRefreshing: false,
@@ -317,6 +328,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       })
       .catch(errorMethod);
   };
+
+  console.log(selectedCarOption, 'selectedCarOption');
 
   //error handling of api
   const errorMethod = (error) => {
@@ -803,7 +816,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         selectedVendorOption={selectedVendorOption}
         _select={() => {
           selectedVendorOption
-            ? _getAllCarAndPrices()
+            ? _getAllCarAndPrices(true)
             : showError(strings.PLEASE_SELECT_OPTION);
         }}
         // isLoading={isLoading}
@@ -924,7 +937,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
               <View style={{marginHorizontal: 4}} />
               <TouchableOpacity
                 style={styles.scheduleModalBtnStyle}
-                onPress={_modalClose}>
+                onPress={_modalCloseModal}>
                 <Text
                   style={{color: colors.white, fontFamily: fontFamily.regular}}>
                   {strings.SET}
@@ -941,6 +954,13 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     updateState({
       isScheduleModalVisible: false,
     });
+  };
+
+  const _modalCloseModal = () => {
+    updateState({
+      isScheduleModalVisible: false,
+    });
+    _getAllCarAndPrices(false);
   };
 
   const _openDateTimeModal = () => {
@@ -1052,6 +1072,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       : showError(strings.PLEASE_SELECT_CAR);
   };
 
+  console.log('showCarModalshowCarModal', showCarModal);
+
   return (
     <View style={{...styles.container}}>
       <View style={{flex: 1}}>
@@ -1162,7 +1184,28 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
               position: 'absolute',
               bottom: 20,
               marginHorizontal: moderateScale(16),
+              flexDirection: 'row',
             }}>
+            {availableCarList.length > 0 && (
+              <GradientButton
+                colorsArray={[colors.white, colors.white]}
+                textStyle={{
+                  textTransform: 'none',
+                  fontSize: textScale(13),
+                  color: themeColors?.primary_color,
+                }}
+                onPress={_openDateTimeModal}
+                btnText={`${
+                  scheduleDateTime?.selectedDateAndTime
+                    ? `${scheduleDateTime?.selectedDateAndTime}`
+                    : slectedDate || selectedTime
+                    ? `${slectedDate} ${selectedTime}`
+                    : 'Schedule a ride'
+                }`}
+                btnStyle={styles.scheduleBtnStyle}
+              />
+            )}
+
             {availableCarList.length > 0 && (
               <GradientButton
                 colorsArray={[
@@ -1181,6 +1224,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
                     : strings.NORIDEAVAILABLE
                 }
                 containerStyle={{flex: 1}}
+                btnStyle={{borderRadius: moderateScale(4)}}
               />
             )}
           </View>
