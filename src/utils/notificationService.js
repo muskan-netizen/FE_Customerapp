@@ -1,13 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
-import { Platform } from 'react-native';
-import PushNotification, { Importance } from 'react-native-push-notification';
-import { useSelector } from 'react-redux';
-import { navigate, navigationRef } from '../navigation/NavigationService';
+import {Platform} from 'react-native';
+import PushNotification, {Importance} from 'react-native-push-notification';
+import {useSelector} from 'react-redux';
+import {navigate, navigationRef} from '../navigation/NavigationService';
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
-import { enums } from './enums';
-import { getItem } from './utils';
+import {enums} from './enums';
+import {getItem} from './utils';
 
 export async function requestUserPermission() {
   // if (Platform.OS == 'ios') {
@@ -43,7 +43,7 @@ const getFcmToken = async () => {
 
 const _getOrderDetail = async (id) => {
   const getAppData = await getItem('appData');
-  const { appData } = getAppData;
+  const {appData} = getAppData;
   console.log('manage Redirections', appData);
   let data = {};
   data['order_id'] = id;
@@ -80,12 +80,11 @@ const manageRedirectionsForVendorApp = async (data) => {
   console.log('manage Redirections +++++ Vendor App', data);
   navigation.navigate(navigationStrings.TABROUTESVENDORNEW, {
     screen: navigationStrings.ROYO_VENDOR_ORDER,
-    params: { index: 1 },
+    params: {index: 1},
   });
 };
 
 export const notificationListener = async () => {
-  console.log('shjdjdvsfvhfsfj');
   // _openApp()
 
   PushNotification.configure({
@@ -98,10 +97,9 @@ export const notificationListener = async () => {
     popInitialNotification: true,
   });
 
-  messaging().onNotificationOpenedApp(remoteMessage => {
+  messaging().onNotificationOpenedApp((remoteMessage) => {
     console.log('tap on notification', remoteMessage?.data?.order_id);
-    _onRedirectOrderScreen(remoteMessage?.data?.order_id)
-
+    _onRedirectOrderScreen(remoteMessage?.data?.order_id);
   });
 
   createDefaultChannels();
@@ -133,14 +131,12 @@ export const notificationListener = async () => {
     );
   }
 
-
-
   messaging()
     .getInitialNotification()
     .then((remoteMessage) => {
       if (remoteMessage) {
         console.log('remote message inital notification', remoteMessage);
-        const { data, messageId, notification } = remoteMessage;
+        const {data, messageId, notification} = remoteMessage;
         if (
           Platform.OS == 'android' &&
           notification.android.sound == 'notification'
@@ -156,14 +152,13 @@ export const notificationListener = async () => {
   return null;
 };
 
-
 const _openApp = () => {
-  messaging().onNotificationOpenedApp(remoteMessage => {
+  messaging().onNotificationOpenedApp((remoteMessage) => {
     console.log(
       'Notification caused app to open from background state bla bla:',
       remoteMessage,
     );
-    const { data, messageId, notification } = remoteMessage;
+    const {data, messageId, notification} = remoteMessage;
     if (enums.isVendorStandloneApp) {
       manageRedirectionsForVendorApp(data);
     } else {
@@ -181,17 +176,13 @@ const _openApp = () => {
     }
   });
   console.log('i am here>>>>>');
-}
-
-
-
-
+};
 
 const _onRedirectOrderScreen = (id) => {
- if(id){
-  navigate(navigationStrings.ORDER_DETAIL, {
-    orderId: id,
-    fromActive: true // this value use for useInterval
-  });
- }
-}
+  if (id) {
+    navigate(navigationStrings.ORDER_DETAIL, {
+      orderId: id,
+      fromActive: true, // this value use for useInterval
+    });
+  }
+};

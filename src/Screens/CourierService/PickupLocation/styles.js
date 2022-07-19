@@ -11,7 +11,6 @@ import {
 } from '../../../styles/responsiveSize';
 
 export default ({fontFamily, themeColors, type}) => {
-  console.log(type, 'type>>>type');
   const commonStyles = commonStylesFun({fontFamily});
   const styles = StyleSheet.create({
     titleAbout: {
@@ -90,7 +89,7 @@ export default ({fontFamily, themeColors, type}) => {
       zIndex: 1000, //Forcing it to front
       marginTop: moderateScaleVertical(40),
       marginHorizontal: moderateScale(0),
-      width: width ,
+      width: width,
       alignSelf: 'center',
       // borderWidth:1,
       top: type == 'pickup' ? 140 : 80,

@@ -983,8 +983,6 @@ export default function Home({route, navigation}) {
       isSubscription: false,
     });
   };
-  console.log(appStyle?.homePageLayout, 'appStyle?.homePageLayout');
-  console.log(userData, 'location>location');
 
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
