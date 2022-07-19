@@ -1025,6 +1025,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                         : paramData?.orderDetail?.order_number
                     }`}
                   </Text>
+             
                   {isWaitingOver && orderStatus == 'unassigned' ? (
                     <></>
                   ) : !!(

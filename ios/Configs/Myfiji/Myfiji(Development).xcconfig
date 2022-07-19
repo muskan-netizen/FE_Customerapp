@@ -1,9 +1,9 @@
-#include "Pods/Target Support Files/Pods-available_pods-Myfiji/Pods-available_pods-Myfiji.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-FijiEats/Pods-available_pods-FijiEats.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1519817598
 PROJECT_BUNDLE_ID = com.fijieats.user
 PROJECT_APP_VERSION = 8.1
-PROJECT_BUILD_NUMBER = 1
+PROJECT_BUILD_NUMBER = 2
 PROJECT_APP_NAME = Fiji Eats
 PROJECT_GOOGLE_CLIENT_ID = 797859155680-p6e98sgcnnq3vb1bolbe73iht39s2nk1.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.797859155680-p6e98sgcnnq3vb1bolbe73iht39s2nk1

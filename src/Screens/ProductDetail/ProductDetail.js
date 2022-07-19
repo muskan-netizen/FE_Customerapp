@@ -1018,7 +1018,7 @@ export default function ProductDetail({route, navigation}) {
       // isLoadingB={isLoadingC}
     >
       <Header
-        leftIcon={
+       leftIcon={
           appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icBackb
             : imagePath.back
@@ -1042,7 +1042,7 @@ export default function ProductDetail({route, navigation}) {
         }}
         isShareIcon={imagePath.icShareb}
         onShare={onShare}
-      />
+      /> 
 
       <KeyboardAwareScrollView ref={myRef} showsVerticalScrollIndicator={false}>
         <View style={{marginHorizontal: moderateScale(16)}}>

@@ -74,7 +74,7 @@ const HomeCategoryCard3 = ({
           />
         ) : (
           <View>
-            {/* <FastImage
+            <FastImage
               style={{
                 height: imgHeight,
                 width: imgWidth,
@@ -87,7 +87,7 @@ const HomeCategoryCard3 = ({
               }}
               resizeMode="cover"
               onLoad={onLoad}
-            /> */}
+            />
           </View>
         )}
       </View>

@@ -1,56 +1,216 @@
 {
   "project_info": {
-    "project_number": "704963886440",
-    "project_id": "swan-c1649",
-    "storage_bucket": "swan-c1649.appspot.com"
+    "project_number": "68641026166",
+    "project_id": "swan-taxi-311315",
+    "storage_bucket": "swan-taxi-311315.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:704963886440:android:e5ec4cb4ca8e06f35daadd",
+        "mobilesdk_app_id": "1:68641026166:android:e53d59a845eb7c37a7af57",
         "android_client_info": {
-          "package_name": "com.swan"
+          "package_name": "com.swan.customer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "704963886440-p2dfkdemf99te8cou3rbirmtpdqnib40.apps.googleusercontent.com",
+          "client_id": "68641026166-v8kuo1rof7a6uib8v9scgnj343gq9oka.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.swan",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+            "package_name": "com.swan.customer",
+            "certificate_hash": "78d197912a5a4e96306ad5a318a54339206b636f"
           }
         },
         {
-          "client_id": "704963886440-pkqd321t8homs4jeaf1dhcv3vc6pu6c8.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.swan",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "704963886440-fmu4gmh8ukhjogfeet05h7ojnrlrgf3k.apps.googleusercontent.com",
+          "client_id": "68641026166-to6fenggka84s280mkb6frd8v26ob9g3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCeCWe5x-D0lBaNr7nAElj1Vd387o2HAOA"
+          "current_key": "AIzaSyBuB9Nc7J711e-SUlcr4sqv93-hKaWRyP8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "704963886440-fmu4gmh8ukhjogfeet05h7ojnrlrgf3k.apps.googleusercontent.com",
+              "client_id": "68641026166-to6fenggka84s280mkb6frd8v26ob9g3.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "704963886440-mbklloged6oa4dspg18h3ja44f7pru6f.apps.googleusercontent.com",
+              "client_id": "68641026166-1a99is5sheuorktq95ssemc7gdi8mqu2.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.swan"
+                "bundle_id": "com.Swan-Driver"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:68641026166:android:d2ac65a0c2f3aaeaa7af57",
+        "android_client_info": {
+          "package_name": "com.swan.driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "68641026166-bbp7gdv9kl3i6g8hhl5ok86t63g8n9jo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swan.driver",
+            "certificate_hash": "78d197912a5a4e96306ad5a318a54339206b636f"
+          }
+        },
+        {
+          "client_id": "68641026166-to6fenggka84s280mkb6frd8v26ob9g3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuB9Nc7J711e-SUlcr4sqv93-hKaWRyP8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "68641026166-to6fenggka84s280mkb6frd8v26ob9g3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "68641026166-1a99is5sheuorktq95ssemc7gdi8mqu2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Swan-Driver"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:68641026166:android:5bc4a3a7ed755e19a7af57",
+        "android_client_info": {
+          "package_name": "com.swan.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "68641026166-658rhkgs77chv0l3fhk70943e5fmd4tu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swan.user",
+            "certificate_hash": "78d197912a5a4e96306ad5a318a54339206b636f"
+          }
+        },
+        {
+          "client_id": "68641026166-to6fenggka84s280mkb6frd8v26ob9g3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuB9Nc7J711e-SUlcr4sqv93-hKaWRyP8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "68641026166-to6fenggka84s280mkb6frd8v26ob9g3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "68641026166-1a99is5sheuorktq95ssemc7gdi8mqu2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Swan-Driver"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:68641026166:android:dc57c86ad1c4888aa7af57",
+        "android_client_info": {
+          "package_name": "com.swanDriver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "68641026166-to6fenggka84s280mkb6frd8v26ob9g3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuB9Nc7J711e-SUlcr4sqv93-hKaWRyP8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "68641026166-to6fenggka84s280mkb6frd8v26ob9g3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "68641026166-1a99is5sheuorktq95ssemc7gdi8mqu2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Swan-Driver"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:68641026166:android:61f4eeaaf294c4f8a7af57",
+        "android_client_info": {
+          "package_name": "com.swanUser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "68641026166-fa9jd3h1uvsrb0ck9jjpp2nvbbj2j82c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swanUser",
+            "certificate_hash": "78d197912a5a4e96306ad5a318a54339206b636f"
+          }
+        },
+        {
+          "client_id": "68641026166-to6fenggka84s280mkb6frd8v26ob9g3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuB9Nc7J711e-SUlcr4sqv93-hKaWRyP8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "68641026166-to6fenggka84s280mkb6frd8v26ob9g3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "68641026166-1a99is5sheuorktq95ssemc7gdi8mqu2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Swan-Driver"
               }
             }
           ]

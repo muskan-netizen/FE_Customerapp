@@ -206,20 +206,6 @@ android {
 
     flavorDimensions "appType"
 
-    // productFlavors {
-           
-           
-    //        yogolift{
-    //             dimension "appType"
-    //             versionCode 1
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.yogolift.order'
-    //             resValue "string", "app_name", "Yogo Lift"
-    //             resValue "string", "host_name", ""
-    //         }
-    // }
 
     productFlavors {
             royoorder {
@@ -2215,16 +2201,6 @@ android {
                 resValue "string", "app_name", "Pakela"
                 resValue "string", "host_name", ""
             } 
-            myfiji{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.fijieats.user'
-                resValue "string", "app_name", "Fiji Eats"
-                resValue "string", "host_name", ""
-            } 
             fastmikes{
                 dimension "appType"
                 versionCode 1
@@ -3960,11 +3936,11 @@ android {
             } 
             myfiji{
                 dimension "appType"
-                versionCode 1
+                versionCode 3
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.myfiji'
+                applicationId 'com.fijieats.customer'
                 resValue "string", "app_name", "Fiji Eats"
                 resValue "string", "host_name", ""
             } 
@@ -4658,7 +4634,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.app.delivery'
+            applicationId 'com.gdotDelivery.user'
             resValue "string", "app_name", "G Dot Delivery"
             resValue "string", "host_name", ""
             }
@@ -5131,7 +5107,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.app.toor'
+            applicationId 'com.toor.order'
             resValue "string", "app_name", "Toor"
             resValue "string", "host_name", ""
             }
@@ -5147,11 +5123,11 @@ android {
             }
             swan{
             dimension "appType"
-            versionCode 1
-            versionName "1.0"
+            versionCode 3
+            versionName "1.1"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.swan'
+            applicationId 'com.swan.customer'
             resValue "string", "app_name", "Swan"
             resValue "string", "host_name", ""
             }

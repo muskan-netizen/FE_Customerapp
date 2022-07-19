@@ -1408,8 +1408,8 @@ const appIds = {
     android: 'com.dlvrd',
   }),
   delivery: Platform.select({
-    ios: 'com.application.delivery',
-    android: 'com.app.delivery',
+    ios: 'com.gdotDelivery.user',
+    android: 'com.gdotDelivery.user',
   }),
   timHomeServices: Platform.select({
     ios: 'com.timHomeServices',
@@ -1593,16 +1593,16 @@ const appIds = {
     android: 'com.amstaFood',
   }),
   toor: Platform.select({
-    ios: 'com.app.toor',
-    android: 'com.app.toor',
+    ios: 'com.toor.order',
+    android: 'com.toor.order',
   }),
   peerDeliveries: Platform.select({
     ios: 'com.peerDeliveries',
     android: 'com.peerDeliveries',
   }),
   swan: Platform.select({
-    ios: 'com.swan',
-    android: 'com.swan',
+    ios: 'com.Swan-User',
+    android: 'com.swanUser',
   }),
   SCOOTUP: Platform.select({
     ios: 'com.SCOOTUP',
@@ -1690,7 +1690,7 @@ const appIds = {
     android: 'com.keystoneDelivery',
   }),
   blueBundles: Platform.select({
-    ios: 'com.bluebundles',
+    ios: 'com.bluebundles.customer',
     android: 'com.bluebundles.customer',
   }),
   busTaMove: Platform.select({
