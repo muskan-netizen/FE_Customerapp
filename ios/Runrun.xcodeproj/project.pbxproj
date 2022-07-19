@@ -29483,6 +29483,7 @@
 				662531DBBCCCBB7857DC3117 /* ShellScript */,
 				642B0DAAA6334277075BB795 /* [CP] Embed Pods Frameworks */,
 				C95564C978DC36F59E8930B7 /* [CP] Copy Pods Resources */,
+				1473420128852D84009D7EA8 /* Start Packager */,
 			);
 			buildRules = (
 			);
@@ -31937,7 +31938,7 @@
 					};
 					84C428E7275898C80033A1FC = {
 						DevelopmentTeam = 6FXUMT5X23;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					84C432C927589E4F0033A1FC = {
 						DevelopmentTeam = 6FXUMT5X23;
@@ -32024,7 +32025,7 @@
 					};
 					84D486F526C161C800EE9EB5 = {
 						DevelopmentTeam = 6FXUMT5X23;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					84D4C908277061B9005892AA = {
 						DevelopmentTeam = 6FXUMT5X23;
@@ -51331,6 +51332,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-DimaVega/Pods-available_pods-DimaVega-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		1473420128852D84009D7EA8 /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n\nexport RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\nif nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\nif ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\necho \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\nexit 2\nfi\nelse\nopen \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\nfi\nfi\n";
 		};
 		14AFE1CCD7E32CD5D2941C1F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

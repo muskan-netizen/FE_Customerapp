@@ -425,7 +425,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         navigation.navigate(navigationStrings.AuthorizeNet, paymentData);
         break;
       case 5: // PayStack Payment Getway
-         
          navigation.navigate(navigationStrings.PAYSTACK,paymentData)
          break;
       default:
