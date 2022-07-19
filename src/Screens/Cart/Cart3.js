@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, isEmpty} from 'lodash';
+import {cloneDeep, isEmpty, set} from 'lodash';
 import moment from 'moment';
 import React, {Fragment, useCallback, useEffect, useRef, useState} from 'react';
 import {
@@ -25,7 +25,7 @@ import * as Animatable from 'react-native-animatable';
 import {Calendar} from 'react-native-calendars';
 import {useDarkMode} from 'react-native-dark-mode';
 import DatePicker from 'react-native-date-picker';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -159,6 +159,7 @@ function Cart({navigation, route}) {
   const [kycTxtInpts, setKycTxtInpts] = useState([]);
   const [kycImages, setKycImages] = useState([]);
   const [kycPdfs, setKycPdfs] = useState([]);
+  const [apiScheduledDate, setApiScheduledDate] = useState(null);
   const [laundrySelectedPickupDate, setLaundrySelectedPickupDate] =
     useState(null);
   const [laundrySelectedPickupSlot, setLaundrySelectedPickupSlot] =
@@ -518,6 +519,22 @@ function Cart({navigation, route}) {
             setMinimumDelayVendorDate(timeSlot);
           }
           setCartItems(res.data.products);
+          let currentDate = moment(new Date()).format('YYYY-MM-DD');
+          // console.log(res?.data?.scheduled_date_time.slice(0, -6), "res?.data?.scheduled_date_time")
+          let getApiScheduledDate =
+            currentDate == res?.data?.scheduled_date_time?.slice(0, -6);
+          setApiScheduledDate(getApiScheduledDate);
+
+          // if (getBundleId == appIds.masa) {
+          //   if (currentDate == sheduledorderdate || currentDate == getApiScheduledDate) {
+          //     setAvailableTimeSlots([])
+          //   } else {
+          //     setAvailableTimeSlots(res.data.slots)
+          //   }
+          // } else {
+          //   setAvailableTimeSlots(res.data.slots);
+          // }
+          // getBundleId == appIds.masa ? currentDate == sheduledorderdate ||  currentDate == getApiScheduledDate ? setAvailableTimeSlots([]):  setAvailableTimeSlots(res.data.slots): setAvailableTimeSlots(res.data.slots)
           setAvailableTimeSlots(res.data.slots);
           // setLaundryAvailablePickupSlot(res.data.slots);
           // setLaundryAvailableDropOffSlot(res.data.slots);
@@ -1004,7 +1021,7 @@ function Cart({navigation, route}) {
         navigation.navigate(navigationStrings.WINDCAVE, paymentData);
         break;
 
-      case 32: //Easebuzz Payment Getway
+      case 32: //PAYPHONE Payment Getway
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.PAYPHONE, paymentData);
         break;
@@ -1022,6 +1039,19 @@ function Cart({navigation, route}) {
       case 21: //VIVAWALLET Payment Getway
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.VIVAWALLET, paymentData);
+        break;
+      case 41: //OPENPAY Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.OPENPAY, paymentData);
+        break;
+      case 40: //USEREDE Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.USEREDE, paymentData);
+        break;
+
+      case 42: //Direct Pay Online Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.DIRECTPAYONLINE, paymentData);
         break;
 
       default:
@@ -1115,6 +1145,9 @@ function Cart({navigation, route}) {
       paymentData?.orderDetail?.order_number
     }&token=${!!cardInfo ? cardInfo : null}&action=cart`;
 
+    {
+      alert('heyyyy');
+    }
     actions
       .openPaymentWebUrl(
         queryData,
@@ -1172,6 +1205,15 @@ function Cart({navigation, route}) {
 
   const placeOrderData = (data) => {
     console.log('Sending data', data);
+    let headerData = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      latitude: !isEmpty(location) ? location?.latitude.toString() : '',
+      longitude: !isEmpty(location) ? location?.longitude.toString() : '',
+      // systemuser: DeviceInfo.getUniqueId(),
+    };
+    console.log(headerData, 'headerData');
 
     actions
       .placeOrder(data, {
@@ -1211,7 +1253,8 @@ function Cart({navigation, route}) {
           selectedPayment?.id != 21 &&
           selectedPayment?.id != 36 &&
           selectedPayment?.id != 39 &&
-          selectedPayment?.id != 34
+          selectedPayment?.id != 34 &&
+          selectedPayment?.id != 41
         ) {
           setCartItems([]);
           setCartData({});
@@ -1339,6 +1382,7 @@ function Cart({navigation, route}) {
     console.log(data, 'fsdjkhfkjshfkjahsdkjfhak');
 
     // updateState({isLoading: false});
+
     actions
       .scheduledOrder(data, {
         code: appData?.profile?.code,
@@ -1361,8 +1405,8 @@ function Cart({navigation, route}) {
           });
         }
         // getCartDetail();
-      });
-    //   .catch(errorMethod);
+      })
+      .catch((error) => console.log(error, 'errororor'));
   };
 
   const _finalPayment = () => {
@@ -1990,6 +2034,7 @@ function Cart({navigation, route}) {
       //       language: languages?.primary_language?.id,
       //     },
       //   )
+
       //   .then((res) => {
       //     updateState({isRefreshing: false});
       //     if (res && res?.status == 'Success' && res?.data) {
@@ -2547,7 +2592,10 @@ function Cart({navigation, route}) {
                   color: colors.redB,
                   fontSize: textScale(9),
                 }}>
-                {strings.WE_ARE_NOT_ACCEPTING} {item?.delaySlot}
+                {/* {strings.WE_ARE_NOT_ACCEPTING} {item?.delaySlot} */}
+                {getBundleId() == appIds.masa
+                  ? `${strings.WE_ACCEPT_ONLY_SCHEDULE_ORDER} ${item?.delaySlot} `
+                  : ` ${strings.WE_ARE_NOT_ACCEPTING} ${item?.delaySlot} `}
               </Text>
             ) : null}
 
@@ -2643,7 +2691,7 @@ function Cart({navigation, route}) {
                                           : colors.textGreyB,
                                         fontSize: textScale(12),
                                         fontFamily: fontFamily.medium,
-                                        flex: 0.7,
+                                        width: width / 2.1,
                                       }}>
                                       {i?.product?.category_name.name},
                                     </Text>
@@ -2796,41 +2844,21 @@ function Cart({navigation, route}) {
                                 flex: 1,
                                 justifyContent: 'center',
                               }}>
-                              <View
-                                style={{
-                                  flexDirection: 'row',
-                                  justifyContent: 'space-between',
-                                }}>
-                                {!!i?.product_addons.length > 0 ? (
-                                  <View>
-                                    <Text
-                                      style={{
-                                        ...styles.cartItemWeight2,
-                                        color: isDarkMode
-                                          ? MyDarkTheme.colors.text
-                                          : colors.textGreyOpcaity7,
-                                        marginBottom: moderateScale(2),
-                                        marginTop: moderateScaleVertical(6),
-                                      }}>
-                                      {strings.EXTRA}
-                                    </Text>
-                                  </View>
-                                ) : (
-                                  <View />
-                                )}
-
-                                {!!i?.product?.pharmacy_check && (
-                                  <TouchableOpacity
-                                    onPress={() => openPickerForPrescription(i)}
+                              {!!i?.product_addons.length > 0 && (
+                                <View>
+                                  <Text
                                     style={{
-                                      flexDirection: 'row',
-                                      alignItems: 'center',
+                                      ...styles.cartItemWeight2,
+                                      color: isDarkMode
+                                        ? MyDarkTheme.colors.text
+                                        : colors.textGreyOpcaity7,
+                                      marginBottom: moderateScale(2),
+                                      marginTop: moderateScaleVertical(6),
                                     }}>
-                                    {/* <Image source={imagePath.icAddPlaceholder} /> */}
-                                    <Image source={imagePath.icPrescription} />
-                                  </TouchableOpacity>
-                                )}
-                              </View>
+                                    {strings.EXTRA}
+                                  </Text>
+                                </View>
+                              )}
                               <View>
                                 {i?.product_addons.length > 0
                                   ? i?.product_addons.map((j, jnx) => {
@@ -2876,136 +2904,236 @@ function Cart({navigation, route}) {
                                     })
                                   : null}
                               </View>
-                              {!!(
-                                !!i?.pvariant &&
-                                Number(i?.pvariant?.container_charges)
-                              ) && (
+                            </View>
+
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                              }}>
+                              <View
+                                style={{
+                                  flex: 1,
+                                  justifyContent: 'center',
+                                }}>
                                 <View
                                   style={{
                                     flexDirection: 'row',
-                                    alignItems: 'center',
-                                    marginTop: moderateScale(2),
+                                    justifyContent: 'space-between',
                                   }}>
-                                  <View>
-                                    <Text
-                                      style={{
-                                        ...styles.cartItemWeight2,
-                                        color: isDarkMode
-                                          ? MyDarkTheme.colors.text
-                                          : colors.textGreyB,
-                                        marginBottom: moderateScale(2),
-                                        // marginTop: moderateScaleVertical(6),
-                                      }}>
-                                      {`${strings.CONTAINERCHARGES} : `}
-                                    </Text>
-                                  </View>
-                                  {!!(
-                                    !!i?.pvariant &&
-                                    Number(i?.pvariant?.container_charges)
-                                  ) && (
-                                    <View
-                                      style={{
-                                        marginBottom: moderateScaleVertical(2),
-                                      }}>
-                                      <View
+                                  {!!i?.product_addons.length > 0 ? (
+                                    <View>
+                                      <Text
                                         style={{
-                                          marginRight: moderateScale(10),
+                                          ...styles.cartItemWeight2,
+                                          color: isDarkMode
+                                            ? MyDarkTheme.colors.text
+                                            : colors.textGreyOpcaity7,
+                                          marginBottom: moderateScale(2),
+                                          marginTop: moderateScaleVertical(6),
                                         }}>
-                                        <Text
-                                          style={
-                                            isDarkMode
-                                              ? [
-                                                  styles.cartItemWeight2,
-                                                  {
-                                                    color:
-                                                      MyDarkTheme.colors.text,
-                                                  },
-                                                ]
-                                              : styles.cartItemWeight2
-                                          }
-                                          // numberOfLines={1}
-                                        >
-                                          {`${
-                                            currencies?.primary_currency?.symbol
-                                          }${currencyNumberFormatter(
-                                            Number(
-                                              i?.pvariant?.container_charges,
-                                            ) * Number(i?.quantity),
-                                            appData?.profile?.preferences
-                                              ?.digit_after_decimal,
-                                          )}`}
-                                        </Text>
-                                      </View>
+                                        {strings.EXTRA}
+                                      </Text>
                                     </View>
+                                  ) : (
+                                    <View />
+                                  )}
+
+                                  {!!i?.product?.pharmacy_check && (
+                                    <TouchableOpacity
+                                      onPress={() =>
+                                        openPickerForPrescription(i)
+                                      }
+                                      style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                      }}>
+                                      {/* <Image source={imagePath.icAddPlaceholder} /> */}
+                                      <Image
+                                        source={imagePath.icPrescription}
+                                      />
+                                    </TouchableOpacity>
                                   )}
                                 </View>
+                                <View>
+                                  {i?.product_addons.length > 0
+                                    ? i?.product_addons.map((j, jnx) => {
+                                        return (
+                                          <View
+                                            style={{
+                                              marginBottom:
+                                                moderateScaleVertical(4),
+                                            }}>
+                                            <View
+                                              style={{
+                                                marginRight: moderateScale(10),
+                                              }}>
+                                              <Text
+                                                style={
+                                                  isDarkMode
+                                                    ? [
+                                                        styles.cartItemWeight2,
+                                                        {
+                                                          color:
+                                                            MyDarkTheme.colors
+                                                              .text,
+                                                        },
+                                                      ]
+                                                    : styles.cartItemWeight2
+                                                }
+                                                // numberOfLines={1}
+                                              >
+                                                {j.addon_title}{' '}
+                                                {`(${j.option_title})`} ={' '}
+                                                {`${
+                                                  currencies?.primary_currency
+                                                    ?.symbol
+                                                }${currencyNumberFormatter(
+                                                  Number(j.price),
+                                                  appData?.profile?.preferences
+                                                    ?.digit_after_decimal,
+                                                )}`}
+                                              </Text>
+                                            </View>
+                                          </View>
+                                        );
+                                      })
+                                    : null}
+                                </View>
+                                {!!(
+                                  !!i?.pvariant &&
+                                  Number(i?.pvariant?.container_charges)
+                                ) && (
+                                  <View
+                                    style={{
+                                      flexDirection: 'row',
+                                      alignItems: 'center',
+                                      marginTop: moderateScale(2),
+                                    }}>
+                                    <View>
+                                      <Text
+                                        style={{
+                                          ...styles.cartItemWeight2,
+                                          color: isDarkMode
+                                            ? MyDarkTheme.colors.text
+                                            : colors.textGreyB,
+                                          marginBottom: moderateScale(2),
+                                          // marginTop: moderateScaleVertical(6),
+                                        }}>
+                                        {`${strings.CONTAINERCHARGES} : `}
+                                      </Text>
+                                    </View>
+                                    {!!(
+                                      !!i?.pvariant &&
+                                      Number(i?.pvariant?.container_charges)
+                                    ) && (
+                                      <View
+                                        style={{
+                                          marginBottom:
+                                            moderateScaleVertical(2),
+                                        }}>
+                                        <View
+                                          style={{
+                                            marginRight: moderateScale(10),
+                                          }}>
+                                          <Text
+                                            style={
+                                              isDarkMode
+                                                ? [
+                                                    styles.cartItemWeight2,
+                                                    {
+                                                      color:
+                                                        MyDarkTheme.colors.text,
+                                                    },
+                                                  ]
+                                                : styles.cartItemWeight2
+                                            }
+                                            // numberOfLines={1}
+                                          >
+                                            {`${
+                                              currencies?.primary_currency
+                                                ?.symbol
+                                            }${currencyNumberFormatter(
+                                              Number(
+                                                i?.pvariant?.container_charges,
+                                              ) * Number(i?.quantity),
+                                              appData?.profile?.preferences
+                                                ?.digit_after_decimal,
+                                            )}`}
+                                          </Text>
+                                        </View>
+                                      </View>
+                                    )}
+                                  </View>
+                                )}
+                              </View>
+                            </View>
+
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                alignSelf: 'flex-end',
+                                marginTop: moderateScale(6),
+                              }}>
+                              {!!(
+                                i?.faq_count &&
+                                i?.user_product_order_form == null
+                              ) && (
+                                <>
+                                  <TouchableOpacity
+                                    style={{
+                                      marginRight: moderateScale(14),
+                                    }}
+                                    onPress={() => getProductFAQs(i)}>
+                                    <FastImage
+                                      source={imagePath.edit1Royo}
+                                      resizeMode="contain"
+                                      style={{
+                                        width: moderateScale(16),
+                                        height: moderateScale(16),
+                                      }}
+                                    />
+                                  </TouchableOpacity>
+                                </>
                               )}
+                              <TouchableOpacity
+                                onPress={() => openDeleteView(i)}>
+                                <FastImage
+                                  source={imagePath.deleteRed}
+                                  resizeMode="contain"
+                                  style={{
+                                    width: moderateScale(16),
+                                    height: moderateScale(16),
+                                  }}
+                                />
+                              </TouchableOpacity>
                             </View>
                           </View>
-
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              alignItems: 'center',
-                              alignSelf: 'flex-end',
-                              marginTop: moderateScale(6),
-                            }}>
-                            {!!(
-                              i?.faq_count && i?.user_product_order_form == null
-                            ) && (
-                              <>
-                                <TouchableOpacity
-                                  style={{
-                                    marginRight: moderateScale(14),
-                                  }}
-                                  onPress={() => getProductFAQs(i)}>
-                                  <FastImage
-                                    source={imagePath.edit1Royo}
-                                    resizeMode="contain"
-                                    style={{
-                                      width: moderateScale(16),
-                                      height: moderateScale(16),
-                                    }}
-                                  />
-                                </TouchableOpacity>
-                              </>
-                            )}
-                            <TouchableOpacity onPress={() => openDeleteView(i)}>
-                              <FastImage
-                                source={imagePath.deleteRed}
-                                resizeMode="contain"
-                                style={{
-                                  width: moderateScale(16),
-                                  height: moderateScale(16),
-                                }}
-                              />
-                            </TouchableOpacity>
-                          </View>
                         </View>
+                        {!!cartData?.delay_date && (
+                          <Text
+                            style={{
+                              fontSize: moderateScale(12),
+                              fontFamily: fontFamily.medium,
+                              color: colors.redFireBrick,
+                              marginBottom: moderateScale(3),
+                            }}>{`${
+                            i?.product.delay_order_hrs > 0 ||
+                            i?.product.delay_order_min > 0
+                              ? strings.PREPARATION_TIME_IS
+                              : ''
+                          }${
+                            i?.product.delay_order_hrs > 0
+                              ? ` ${i?.product.delay_order_hrs} hrs`
+                              : ''
+                          }${
+                            i?.product.delay_order_min > 0
+                              ? ` ${i?.product.delay_order_min} mins`
+                              : ''
+                          }`}</Text>
+                        )}
                       </View>
-                      {!!cartData?.delay_date && (
-                        <Text
-                          style={{
-                            fontSize: moderateScale(12),
-                            fontFamily: fontFamily.medium,
-                            color: colors.redFireBrick,
-                            marginBottom: moderateScale(3),
-                          }}>{`${
-                          i?.product.delay_order_hrs > 0 ||
-                          i?.product.delay_order_min > 0
-                            ? strings.PREPARATION_TIME_IS
-                            : ''
-                        }${
-                          i?.product.delay_order_hrs > 0
-                            ? ` ${i?.product.delay_order_hrs} hrs`
-                            : ''
-                        }${
-                          i?.product.delay_order_min > 0
-                            ? ` ${i?.product.delay_order_min} mins`
-                            : ''
-                        }`}</Text>
-                      )}
-
                       {/* <View style={styles.dashedLine} /> */}
                     </Animated.View>
                   </Swipeable>
@@ -4564,12 +4692,12 @@ function Cart({navigation, route}) {
               : 0) >
             0 && (
             <TouchableOpacity
-              onPress={
-                () =>
-                  !!userData?.auth_token
-                    ? updateState({paymentModal: true})
-                    : setRedirection() // ?moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
-                //  moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
+              onPress={() =>
+                !!userData?.auth_token
+                  ? updateState({paymentModal: true})
+                  : // ?moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
+                    //  moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
+                    navigation.navigate(navigationStrings.OUTER_SCREEN, {})
               }
               style={{
                 ...styles.paymentMainView,
@@ -6701,10 +6829,16 @@ function Cart({navigation, route}) {
                   <Fragment>
                     <ScrollView>
                       <Calendar
-                        current={new Date()}
+                        current={
+                          getBundleId() == appIds.masa
+                            ? dayAfterToday
+                            : new Date()
+                        }
                         minDate={
                           !!minimumDelayVendorDate
                             ? minimumDelayVendorDate
+                            : getBundleId() == appIds.masa
+                            ? dayAfterToday
                             : new Date()
                         }
                         onDayPress={onSelectDateFromCalendar}
@@ -6726,6 +6860,87 @@ function Cart({navigation, route}) {
                           // textDayHeaderFontSize: textScale(10),
                         }}
                       />
+                      {/* {
+                        getBundleId == appIds.masa ? currentDate == sheduledorderdate || currentDate == apiScheduledDate ? null : (<View>
+                          <Text
+                            style={{
+                              marginHorizontal: moderateScale(24),
+                              fontFamily: fontFamily.medium,
+                              fontSize: textScale(12),
+                              marginBottom: moderateScaleVertical(8),
+                              // height:moderateScale(20)
+                            }}>
+                            {strings.TIME_SLOT}
+                          </Text>
+                          {console.log(availableTimeSlots, "availableTimeSlots")}
+                          <FlatList
+                            horizontal
+                            data={availableTimeSlots || []}
+                            renderItem={renderTimeSlots}
+                            keyExtractor={(item) => item.value || ''}
+                            showsHorizontalScrollIndicator={false}
+                            ItemSeparatorComponent={() => (
+                              <View style={{ marginRight: moderateScale(12) }} />
+                            )}
+                            ListHeaderComponent={() => (
+                              <View style={{ marginLeft: moderateScale(24) }} />
+                            )}
+                            ListFooterComponent={() => (
+                              <View style={{ marginRight: moderateScale(24) }} />
+                            )}
+                            ListEmptyComponent={() => (
+                              <View>
+                                <Text
+                                  style={{
+                                    fontFamily: fontFamily.medium,
+                                    color: colors.redB,
+                                  }}>
+                                  {strings.SLOT_NOT_AVAILABAL}
+                                </Text>
+                              </View>
+                            )}
+                          />
+                        </View>) : (<View>
+                          <Text
+                            style={{
+                              marginHorizontal: moderateScale(24),
+                              fontFamily: fontFamily.medium,
+                              fontSize: textScale(12),
+                              marginBottom: moderateScaleVertical(8),
+                              // height:moderateScale(20)
+                            }}>
+                            {strings.TIME_SLOT}
+                          </Text>
+                          {console.log(availableTimeSlots, "availableTimeSlots")}
+                          <FlatList
+                            horizontal
+                            data={availableTimeSlots || []}
+                            renderItem={renderTimeSlots}
+                            keyExtractor={(item) => item.value || ''}
+                            showsHorizontalScrollIndicator={false}
+                            ItemSeparatorComponent={() => (
+                              <View style={{ marginRight: moderateScale(12) }} />
+                            )}
+                            ListHeaderComponent={() => (
+                              <View style={{ marginLeft: moderateScale(24) }} />
+                            )}
+                            ListFooterComponent={() => (
+                              <View style={{ marginRight: moderateScale(24) }} />
+                            )}
+                            ListEmptyComponent={() => (
+                              <View>
+                                <Text
+                                  style={{
+                                    fontFamily: fontFamily.medium,
+                                    color: colors.redB,
+                                  }}>
+                                  {strings.SLOT_NOT_AVAILABAL}
+                                </Text>
+                              </View>
+                            )}
+                          />
+                        </View>)
+                      } */}
 
                       <View>
                         <Text

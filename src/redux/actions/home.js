@@ -15,6 +15,7 @@ import {
   ADD_RIDER,
   GET_PRODUCT_ESTIMATION_WITH_ADDONS,
   GET_ESTIMATION,
+  PICK_UP_LOCATION_SEARCH,
 } from '../../config/urls';
 import {apiPost, setItem, getItem, apiGet} from '../../utils/utils';
 import store from '../store';
@@ -48,6 +49,18 @@ export function onGlobalSearch(query = '', data = {}, headers = {}) {
     apiPost(SEARCH + query, data, headers)
       .then((response) => {
         resolve(response);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function pickuplocationSearch(data = {}, headers = {}, isShortCode = false) {
+  return new Promise((resolve, reject) => {
+    apiPost(PICK_UP_LOCATION_SEARCH, data, headers)
+      .then((res) => {
+        resolve(res);
       })
       .catch((error) => {
         reject(error);

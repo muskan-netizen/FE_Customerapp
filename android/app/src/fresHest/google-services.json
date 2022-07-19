@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "167418036095",
+    "project_id": "freshest-57e08",
+    "storage_bucket": "freshest-57e08.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167418036095:android:cc422b1374f8cb540ca44a",
+        "android_client_info": {
+          "package_name": "com.FresHest.royoOrder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "167418036095-408j34gt38eob5rgalpdtg4ootjlbvbr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.FresHest.royoOrder",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "167418036095-4dq0e5qp6ucdo32kkjd4k9pfba3n8d3n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.FresHest.royoOrder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "167418036095-kiq77e44ion8chtns046jdos4efd9rul.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.FresHest.royoOrder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "167418036095-3tua9rmqc9qij2acsdfv9775eragbf37.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7eODXkXVj59pYpmU38-HswKQ5xlvg55M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "167418036095-3tua9rmqc9qij2acsdfv9775eragbf37.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "167418036095-53i45qpaqjr8ndm4jm5bppvpo7n7ub0g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.FresHest.royoOrder"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -211,49 +211,6 @@ export default function AvailableDriver({
         keyExtractor={(item, index) => String(index)}
         renderItem={_renderItem}
         ListEmptyComponent={_listEmptyComponent}
-        // ListFooterComponent={() => <View style={{marginTop: width / 5}} />}
-        // ListFooterComponent={() => {
-        //     if (availableCarList.length > 0)
-        //         return (
-        //             <View
-        //                 style={{
-        //                     flexDirection: 'row',
-        //                     justifyContent: 'space-between',
-        //                     marginHorizontal: 20,
-        //                     marginBottom: moderateScaleVertical(24)
-        //                 }}>
-        //                 <GradientButton
-        //                     // endcolor={{x: 0.0, y: 0.25}}
-        //                     // startcolor={{x: 0.0, y: 0.0}}
-        //                     colorsArray={[
-        //                         themeColors.primary_color,
-        //                         getColorCodeWithOpactiyNumber(
-        //                             themeColors.primary_color.substr(1),
-        //                             70,
-        //                         ),
-        //                         getColorCodeWithOpactiyNumber(
-        //                             themeColors.primary_color.substr(1),
-        //                             70,
-        //                         ),
-        //                         themeColors.primary_color,
-        //                     ]}
-        //                     textStyle={{ textTransform: 'none', fontSize: textScale(14) }}
-        //                     onPress={
-        //                         selectedCarOption?.variant[0]?.price > 0
-        //                             ? onPressPickUpNow
-        //                             : () => { }
-        //                     }
-        //                     btnText={
-        //                         selectedCarOption?.variant[0]?.price > 0
-        //                             ? strings.CONFIRM
-        //                             : strings.NORIDEAVAILABLE
-        //                     }
-        //                     containerStyle={{ flex: 1 }}
-        //                 />
-        //             </View>
-        //         );
-        //     else return <></>;
-        // }}
       />
     </View>
   );

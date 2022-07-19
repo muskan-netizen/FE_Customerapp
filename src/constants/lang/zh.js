@@ -793,6 +793,7 @@ export default {
   SEE_LESS: 'see less',
   MENU: 'Menu',
   A_TO_Z: 'A to Z',
+  SOS: 'SOS',
   Z_TO_A: 'Z to A',
   COST_LOW_TO_HIGH: 'Cost: Low to high',
   COST_HIGH_TO_LOW: 'Cost: High to low',
@@ -825,7 +826,10 @@ export default {
   BOOK_HERE: 'Book Here',
   DELETE_ACCOUNT: 'Delete Account',
   CATEGORY_KYC: 'Categoory KYC',
-  VISIT_INSTAGRAM: 'Visit Instagram',
   ARE_YOU_SURE_YOU_WANT_TO_DELETE:
     'Are you sure, you want to delete your account? Deleting your account is permanent and will remove all content and profile settings.',
+  WR_ARE_CURRENTLY_NOT_OPERATING:
+    'We are currently not operating in your location',
+  WE_ACCEPT_ONLY_SCHEDULE_ORDER: 'We are accepting only schedule order',
+  VISIT_INSTAGRAM: 'Visit Instagram',
 };

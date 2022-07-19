@@ -335,11 +335,11 @@ export default function ProductDetail({route, navigation}) {
   };
 
   const errorMethodSecond = (error, addonSet) => {
-    console.log(error.message.alert, 'Error>>>>>');
-
+   
     if (error?.message?.alert == 1) {
       updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
       // showError(error?.message?.error || error?.error);
+     
       Alert.alert('', error?.message?.error, [
         {
           text: strings.CANCEL,
@@ -870,6 +870,7 @@ export default function ProductDetail({route, navigation}) {
         : _finalAddToCart(addonSet);
     }
     // _finalAddToCart()
+   
   };
 
   const myRef = useRef(null);
@@ -1433,7 +1434,7 @@ export default function ProductDetail({route, navigation}) {
                               textTransform: 'capitalize',
                               color: isDarkMode
                               ? MyDarkTheme.colors.text
-                              : colors.white,
+                              : themeColors.secondary_color,
                             }}
                             onPress={addToCart}
                             btnText={`${strings.ADD}  ${

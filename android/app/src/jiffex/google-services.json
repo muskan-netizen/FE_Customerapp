@@ -1,65 +1,34 @@
 {
   "project_info": {
-    "project_number": "298214533870",
-    "project_id": "jiffex",
-    "storage_bucket": "jiffex.appspot.com"
+    "project_number": "996014014477",
+    "project_id": "jiffex-559ea",
+    "storage_bucket": "jiffex-559ea.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:298214533870:android:90032652cfb8429266a1ff",
+        "mobilesdk_app_id": "1:996014014477:android:d54b56a5ed75cd1e411544",
         "android_client_info": {
-          "package_name": "com.jiffex"
+          "package_name": "com.jiffex.order"
         }
       },
       "oauth_client": [
         {
-          "client_id": "298214533870-4g5nmubnkt6epsncpboclhqtbirjrjju.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.jiffex",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "298214533870-6e2e72kgq7elrktk4l6s2a37i6djgr0g.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.jiffex",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "298214533870-8bf0lju49rboga36tdfb36idbqauaqvt.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.jiffex",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "298214533870-jckvmo0rrabcqcu3h80ph1aonpfgpnn5.apps.googleusercontent.com",
+          "client_id": "996014014477-f6d8to2u39cepighqkhiupqjl99l21np.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDlWwSDpvxxGhGf-IjkZWc5ShlgAW53QH4"
+          "current_key": "AIzaSyAWMqrbXPTLt6KQxS2za_PH7pJzaa3Zfa8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "298214533870-jckvmo0rrabcqcu3h80ph1aonpfgpnn5.apps.googleusercontent.com",
+              "client_id": "996014014477-f6d8to2u39cepighqkhiupqjl99l21np.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "298214533870-42q02begbsbcra6sgk6a03pha9be9paq.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.jiffex"
-              }
             }
           ]
         }

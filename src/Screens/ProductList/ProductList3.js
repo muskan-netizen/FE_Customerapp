@@ -140,6 +140,10 @@ export default function Products({route, navigation}) {
     typeId: null,
     cartId: null,
     selectedItemIndx: null,
+    // selectedSortFilter: {id: 1,
+    //   label: "A to Z",
+    //   labelValue: "a_to_z",
+    //   parent: "Sort by",},
     selectedSortFilter: null,
     updateQtyLoader: false,
     isSearch: false,
@@ -211,6 +215,7 @@ export default function Products({route, navigation}) {
   const [apiHitAgain, setApiHitAgain] = useState(false);
   const [animateText, setAnimateText] = useState(0);
   const [isSingleVendor, setIsSingleVendor] = useState({});
+  const [filteredAtoZData, setFilteredAtoZData] = useState([]);
   const [currentPage, setCurrentPage] = useState({
     current_page: 1,
     id: 0,
@@ -245,7 +250,7 @@ export default function Products({route, navigation}) {
           key={String(index)}
           style={
             {
-              // height: 185,
+              // height: 180,
               // minHeight: url1
               //   ? moderateScaleVertical(200)
               //   : 0,
@@ -284,7 +289,7 @@ export default function Products({route, navigation}) {
   );
 
   const getItemLayout = useCallback((data, index) => {
-    return {length: 185, offset: 185 * index, index};
+    return {length: 180, offset: 180 * index, index};
   }, []);
 
   const renderSectionHeader = useCallback(
@@ -829,7 +834,9 @@ export default function Products({route, navigation}) {
                       color: colors.redB,
                       // marginTop: moderateScaleVertical(4)
                     }}>
-                    {strings.WE_ARE_NOT_ACCEPTING} {categoryInfo?.delaySlot}
+                    {getBundleId() == appIds.masa
+                      ? `${strings.WE_ACCEPT_ONLY_SCHEDULE_ORDER} ${categoryInfo?.delaySlot} `
+                      : ` ${strings.WE_ARE_NOT_ACCEPTING} ${categoryInfo?.delaySlot} `}
                   </Text>
                 ) : null}
               </View>
@@ -1084,13 +1091,15 @@ export default function Products({route, navigation}) {
                     {' '}
                     {strings.SORT_BY}{' '}
                     {selectedSortFilter == null
-                      ? 'Popularity'
+                      ? 'A TO Z'
                       : selectedSortFilter?.label}{' '}
                   </Text>
                 </TouchableOpacity>
               </View>
             ) : (
-              <Image source={imagePath.filter} />
+              <TouchableOpacity onPress={onShowHideFilter}>
+                <Image source={imagePath.filter} />
+              </TouchableOpacity>
             )}
           </View>
         </View>
@@ -1422,6 +1431,50 @@ export default function Products({route, navigation}) {
     }
   };
 
+  //  to load  catagerios by A-z
+  // const onAtoZFilter  =  () => {
+  //   try {
+  //     let allFilterData = cloneDeep(allFilters);
+  //     var newData = [];
+  //     var variants = [];
+  //     var options = [];
+
+  //     var allSelectedVariantOptionsPairs = allFilterData
+  //         .filter((i) => i?.id != -1 && i?.id != -2)
+  //         .map((itm, inx) => {
+  //             return itm?.value;
+  //         })
+  //         .map((j, jnx) => {
+  //             if (j.length) return j.filter((x) => x?.value?.selected);
+  //         })
+  //         .filter((final) => final?.length)
+  //         .map((finalArray, finalIndex) => {
+  //             finalArray?.map((z, znx) => {
+  //                 newData?.push(z);
+  //             });
+  //             return finalArray;
+  //         });
+
+  //     if (newData.length) {
+  //         newData.map((i) => {
+  //             variants.push(i?.variant_type_id);
+  //             options.push(i?.id);
+  //         });
+  //         allSelectedVariantOptionsPairs = newData;
+  //     }
+
+  //     let filterData = {
+  //         selectedSorting: 'a_to_z',
+  //         selectedVariants: variants,
+  //         selectedOptions: options,
+  //         sleectdBrands: []
+  //     }
+  //     onFilterApply(filterData)
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
   useEffect(() => {
     getAllVendorFilters();
   }, []);
@@ -1536,7 +1589,9 @@ export default function Products({route, navigation}) {
   };
 
   const onFilterApply = (filterData = {}) => {
+    console.log(filterData, 'filterDatafilterData');
     selectedFilters.current = filterData;
+    // setFilteredAtoZData(filterData)
     updateState({pageNo: 1});
     getAllListItems(1);
   };
@@ -1707,7 +1762,7 @@ export default function Products({route, navigation}) {
       )
       .then((res) => {
         if (!!res?.data) {
-          console.log(res.data, 'res getProductByCategoryId');
+          console.log(res.data.category, 'res getProductByCategoryId');
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
           // checkSingleVendor(categoryInfo ? categoryInfo : res.data.category)
           // setCategoryInfo(res.data.category);
@@ -1715,6 +1770,7 @@ export default function Products({route, navigation}) {
           if (res.data.listData.data.length == 0) {
             loadMore = false;
           }
+          // onAtoZFilter()
           setProductListData(
             pageNo == 1
               ? res.data.listData.data
@@ -2221,17 +2277,21 @@ export default function Products({route, navigation}) {
       });
       setLoading(false);
       // showError(error?.message?.error || error?.error);
-      Alert.alert('', error?.message?.error, [
-        {
-          text: strings.CANCEL,
-          onPress: () => console.log('Cancel Pressed'),
-          // style: 'destructive',
-        },
-        {
-          text: strings.CLEARCART,
-          onPress: () => clearCart(addonSet, item, section, inx),
-        },
-      ]);
+      Alert.alert(
+        '',
+        strings.YOU_ALREADY_HAVE_ITEMS_FROM_ANOTHER_STORE_DO_YOU_WANT_TO_DISCARD_THEM,
+        [
+          {
+            text: strings.CANCEL,
+            onPress: () => console.log('Cancel Pressed'),
+            // style: 'destructive',
+          },
+          {
+            text: strings.CLEARCART,
+            onPress: () => clearCart(addonSet, item, section, inx),
+          },
+        ],
+      );
     } else {
       setLoading(false);
       updateState({
@@ -3376,11 +3436,10 @@ export default function Products({route, navigation}) {
             getItemLayout={getItemLayout}
             // Performance settings
             removeClippedSubviews={true} // Unmount components when outside of window
-            initialNumToRender={10} // Reduce initial render amount
-            maxToRenderPerBatch={1} // Redu ce number in each render batch
+            // initialNumToRender={2} // Reduce initial render amount
+            // maxToRenderPerBatch={10} // Redu ce number in each render batch
             updateCellsBatchingPeriod={100} // Increase time between renders
-            windowSize={7} // Reduce the window size
-            renderSectionFooter={renderSectionFooter}
+            // windowSize={7} // Reduce the window size
           />
         ) : (
           <FlatList

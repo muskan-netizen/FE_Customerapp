@@ -28,6 +28,7 @@ export default function SelctFromMap({
   addressDone = () => { },
   mapClose = () => { },
   constCurrLoc,
+  location
 }) {
   const navigation = useNavigation();
   const mapRef = React.createRef();
@@ -40,14 +41,14 @@ export default function SelctFromMap({
 
   const [state, setState] = useState({
     region: {
-      latitude: constCurrLoc?.latitude || 30.7333,
-      longitude: constCurrLoc?.longitude || 76.7794,
+      latitude: location?.latitude || 30.7333,
+      longitude: location?.longitude || 76.7794,
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
     coordinate: {
-      latitude: constCurrLoc?.latitude || 30.7333,
-      longitude: constCurrLoc?.longitude || 76.7794,
+      latitude: location?.latitude || 30.7333,
+      longitude: location?.longitude || 76.7794,
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },

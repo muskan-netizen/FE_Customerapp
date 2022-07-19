@@ -2,6 +2,7 @@ import {Platform} from 'react-native';
 import {getBundleId} from 'react-native-device-info';
 
 const shortCodes = {
+  royoorder: '245bae',
   runrun: 'bf8608',
 
   tranzit: '52a1a6',
@@ -353,6 +354,12 @@ const shortCodes = {
   sadia: '312528',
   elentaMart: 'e084cc',
   exprexPro: 'cb98e8',
+  fresHest: '7e43f5',
+  servern: '1ba1e9',
+  smokeRun: '545a71',
+  myEvPlus: '1c7d9e',
+  qdelo: '0fcc84',
+  pawsee: 'bd2d83',
 };
 
 const appIds = {
@@ -485,7 +492,7 @@ const appIds = {
     android: 'com.codebrew.yoho',
   }),
   glamsouq: Platform.select({
-    ios: 'com.codebrew.glamsouq',
+    ios: 'com.glamsouq.customer',
     android: 'com.glamsouq.customer',
   }),
   doctatransportation: Platform.select({
@@ -605,8 +612,8 @@ const appIds = {
     android: 'com.carhop',
   }),
   yogolift: Platform.select({
-    ios: 'com.yogolift',
-    android: 'com.yogolift',
+    ios: 'com.yogolift.orders',
+    android: 'com.yogolift.order',
   }),
   fleety: Platform.select({
     ios: 'com.fleety',
@@ -1129,8 +1136,8 @@ const appIds = {
     android: 'com.farmersouq',
   }),
   tmgShops: Platform.select({
-    ios: 'com.tmgShops',
-    android: 'com.tmgShops',
+    ios: 'com.tmgShops.orders',
+    android: 'com.tmgShops.orders',
   }),
   stitchesonsite: Platform.select({
     ios: 'com.stitchesonsite',
@@ -1145,8 +1152,8 @@ const appIds = {
     android: 'com.mozmarcas',
   }),
   myfiji: Platform.select({
-    ios: 'com.myfiji',
-    android: 'com.myfiji',
+    ios: 'com.fijieats.user',
+    android: 'com.fijieats.customer',
   }),
   fastmikes: Platform.select({
     ios: 'com.fastmikes.customer',
@@ -1377,7 +1384,7 @@ const appIds = {
     android: 'com.app.myRide',
   }),
   getfix: Platform.select({
-    ios: 'com.app.getfix',
+    ios: 'com.getfix.customer',
     android: 'com.getfix.customer',
   }),
   scoopaTechnologies: Platform.select({
@@ -1648,15 +1655,15 @@ const appIds = {
   }),
   jiffex: Platform.select({
     ios: 'com.jiffex',
-    android: 'com.jiffex',
+    android: 'com.jiffex.order',
   }),
   clickService: Platform.select({
     ios: 'com.clickService',
     android: 'com.clickService',
   }),
   amazingTaxi: Platform.select({
-    ios: 'com.amazingTaxi',
-    android: 'com.amazingTaxi',
+    ios: 'com.amazingTaxi.orders',
+    android: 'com.amazingTaxi.orders',
   }),
   jazzyBug: Platform.select({
     ios: 'com.jazzyBug',
@@ -1719,8 +1726,8 @@ const appIds = {
     android: 'com.meow.order',
   }),
   dingDongDelivers: Platform.select({
-    ios: 'com.dingDongDelivers',
-    android: 'com.dingDongDelivers',
+    ios: 'com.dingdongdelivery.order',
+    android: 'com.dingdongdelivery.order',
   }),
   torunz: Platform.select({
     ios: 'com.torunz',
@@ -1755,6 +1762,30 @@ const appIds = {
   exprexPro: Platform.select({
     ios: 'com.exprexPro',
     android: 'com.exprexPro',
+  }),
+  fresHest: Platform.select({
+    ios: 'com.FresHest.royoOrder',
+    android: 'com.FresHest.royoOrder',
+  }),
+  servern: Platform.select({
+    ios: 'com.servern.order',
+    android: 'com.servern.order',
+  }),
+  smokeRun: Platform.select({
+    ios: 'com.smokeRun.order',
+    android: 'com.smokeRun.order',
+  }),
+  smokeRun: Platform.select({
+    ios: 'com.myEvPlus.order',
+    android: 'com.myEvPlus.order',
+  }),
+  qdelo: Platform.select({
+    ios: 'com.qdelo.order',
+    android: 'com.qdelo.order',
+  }),
+  pawsee: Platform.select({
+    ios: 'com.pawsee.order',
+    android: 'com.pawsee.order',
   }),
 };
 

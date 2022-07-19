@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "604946805168",
+    "project_id": "qdelo-c084f",
+    "storage_bucket": "qdelo-c084f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604946805168:android:dfafa6b4d767534f90e675",
+        "android_client_info": {
+          "package_name": "com.qdelo.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604946805168-4oiqhgqrv461iuk7ljej57qvk9nhdesm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qdelo.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "604946805168-ci2128vkgs12bq70v7t1lnvoctk04s3r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qdelo.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "604946805168-saqc1k29auv59b16hb9t9quse2s95fr2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qdelo.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "604946805168-qv241aovsh9l15nmol765jc645q5jek0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3umgTCfkVNL3WJl4fo2yVh1M4iNSPwWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604946805168-qv241aovsh9l15nmol765jc645q5jek0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

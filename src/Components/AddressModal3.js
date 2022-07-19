@@ -69,7 +69,7 @@ const AddressModal3 = ({
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const appData = useSelector((state) => state?.initBoot?.appData);
   const currentTheme = useSelector((state) => state.initBoot);
-  const {constCurrLoc} = useSelector((state) => state?.home);
+  const {constCurrLoc,location} = useSelector((state) => state?.home);
   const {themeColors, themeLayouts, appStyle} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
   const {profile} = appData;
@@ -117,7 +117,7 @@ const AddressModal3 = ({
     isPincode: false,
     isAddress: false,
   });
-
+   console.log(location,"locationnn")
   const styles = stylesData({fontFamily, themeColors});
 
   //To update the states
@@ -661,6 +661,8 @@ const AddressModal3 = ({
               addressDone={addressDone}
               mapClose={() => openCloseMapAddress(2)} //address map close
               constCurrLoc={constCurrLoc}
+              location={location}
+
             />
           </View>
         ) : (
@@ -1162,7 +1164,7 @@ const AddressModal3 = ({
               ]}
               textStyle={{color: isDarkMode
                 ? MyDarkTheme.colors.text
-                : colors.borderLight, }}
+                : colors.white, }}
               onPress={saveAddress}
               marginTop={moderateScaleVertical(10)}
               // marginBottom={moderateScaleVertical(10)}

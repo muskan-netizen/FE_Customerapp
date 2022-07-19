@@ -315,7 +315,7 @@ const RoyoProducts = (props) => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={styles.font16Semibold}>{strings.IN_STOCK}</Text>
               <TouchableOpacity
-                onPress={() => updateIsLiveStatus(item.id, item.is_live)}>
+                onPress={() => updateIsLiveStatus(item?.id, item?.is_live)}>
                 <Image
                   source={
                     item.is_live
@@ -542,7 +542,7 @@ const RoyoProducts = (props) => {
     return (
       <View
         style={{
-          minHeight: moderateScale(100),
+          minHeight: moderateScale(120),
           borderTopWidth: 0.7,
           borderTopColor: colors.blackOpacity43,
           paddingHorizontal: moderateScale(15),
@@ -567,12 +567,14 @@ const RoyoProducts = (props) => {
                 productSlug: text.replace(/ /g, ''),
               });
             }}
-            mainStyle={{ flex: 0.4 }}
+            mainStyle={{ flex: 1 }}
             placeholderTextColor={colors.textGreyB}
             txtInputStyle={styles.textInputStyle}
             autoFocus
           />
-          <View style={{ flex: 0.56 }}>
+         
+        </View>
+        <View style={{ marginBottom:moderateScale(12) }}>
             <Text style={styles.labelStyle}>{strings.CATEGORY}</Text>
             <TouchableOpacity
               activeOpacity={0.7}
@@ -605,8 +607,8 @@ const RoyoProducts = (props) => {
                           }
                           style={styles.categoryItm}
                           key={String(indx)}>
-                          <Text style={{ flex: 0.95 }} numberOfLines={1}>
-                            {itm?.name}
+                          <Text style={{ flex: 0.95 }} >
+                            {itm?.hierarchy}
                           </Text>
                           {selectedVendorCategory.id == itm.id && (
                             <Image
@@ -636,7 +638,7 @@ const RoyoProducts = (props) => {
               </View>
             )}
           </View>
-        </View>
+
         <TextInputWithUnderlineAndLabel
           label={strings.SKU}
           labelStyle={styles.labelStyle}
@@ -852,6 +854,7 @@ const RoyoProducts = (props) => {
                 alignSelf: categories.length > 2 ? 'center' : 'flex-start',
                 marginLeft: categories.length > 2 ? 0 : moderateScale(20),
               }}
+            
             />
           </View>
         ) : null}

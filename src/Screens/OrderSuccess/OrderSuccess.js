@@ -38,6 +38,7 @@ export default function OrderSuccess({ navigation, route }) {
   // const {themeColors, themeLayouts} = currentTheme;
 
   const viewOrderDetail = () => {
+    
     navigation.navigate(navigationStrings.ORDER_DETAIL, {
       orderId: paramData?.orderDetail?.id,
       fromActive: true // this value use for useInterval

@@ -43,4 +43,5 @@ export default {
   SAVE_SCHEDULE_TIME: 'saveScheduleTime',
   RELOAD_DATA: 'RELOAD_DATA',
   REDIRECTED_FROM: 'REDIRECTED_FROM',
+  START_CHAT: "START_CHAT"
 };

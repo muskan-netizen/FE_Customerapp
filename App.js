@@ -33,6 +33,7 @@ import types from './src/redux/types';
 import PrinterScreen from './src/Screens/PrinterConnection/PrinterScreen';
 import colors from './src/styles/colors';
 import fontFamily from './src/styles/fontFamily';
+import messaging from '@react-native-firebase/messaging';
 
 import {
   moderateScale,
@@ -125,10 +126,13 @@ const App = () => {
   const isDarkMode = useDarkMode();
   useEffect(() => {
     //stop splashs screen from loading
-    if (getBundleId() == (appIds.masa || appIds.iPicknDrop || appIds.muvpod)) {
+    if (
+      getBundleId() ==
+      (appIds.masa || appIds.iPicknDrop || appIds.muvpod || appIds.sabroson)
+    ) {
       setTimeout(() => {
         SplashScreen.hide();
-      }, 100);
+      }, 200);
     } else {
       setTimeout(() => {
         SplashScreen.hide();
@@ -145,6 +149,7 @@ const App = () => {
   const notificationConfig = () => {
     requestUserPermission();
     notificationListener();
+
     if (Platform.OS == 'android') {
       checkExistChannel();
     }
@@ -157,6 +162,12 @@ const App = () => {
     (async () => {
       const userData = await getUserData();
       notificationConfig();
+      messaging().onNotificationOpenedApp((remoteMessage) => {
+        console.log(
+          'Notification caused app to open from background state:',
+          remoteMessage.notification,
+        );
+      });
       const {dispatch} = store;
       if (userData && !!userData.auth_token) {
         dispatch({

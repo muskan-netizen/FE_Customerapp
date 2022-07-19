@@ -78,7 +78,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    enableHermes: true,  // clean and rebuild if changing
+    enableHermes: false,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -97,7 +97,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -119,7 +119,7 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  * on project.ext.react, JavaScript will not be compiled to Hermes Bytecode
  * and the benefits of using Hermes will therefore be sharply reduced.
  */
-def enableHermes = project.ext.react.get("enableHermes", false);
+def enableHermes = project.ext.react.get("enableHermes", true);
 
 android {
      packagingOptions {
@@ -205,19 +205,22 @@ android {
     }
 
     flavorDimensions "appType"
-    
-//   productFlavors {
-//                      baytukom{
-//                 dimension "appType"
-//                 versionCode 1
-//                 versionName "1.0"
-//                 minSdkVersion rootProject.ext.minSdkVersion
-//                 targetSdkVersion rootProject.ext.targetSdkVersion
-//                 applicationId 'com.baytukom'
-//                 resValue "string", "app_name", "Baytukom"
-//                 resValue "string", "host_name", ""
-//             }
-//   }
+
+    // productFlavors {
+           
+           
+    //        yogolift{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.yogolift.order'
+    //             resValue "string", "app_name", "Yogo Lift"
+    //             resValue "string", "host_name", ""
+    //         }
+    // }
+
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -889,7 +892,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.yogolift'
+                applicationId 'com.yogolift.order'
                 resValue "string", "app_name", "Yogo Lift"
                 resValue "string", "host_name", ""
             }
@@ -2178,7 +2181,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.tmgShops'
+                applicationId 'com.tmgShops.orders'
                 resValue "string", "app_name", "TMG Shops"
                 resValue "string", "host_name", ""
             }
@@ -2218,8 +2221,8 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.myfiji'
-                resValue "string", "app_name", "FijiEats"
+                applicationId 'com.fijieats.user'
+                resValue "string", "app_name", "Fiji Eats"
                 resValue "string", "host_name", ""
             } 
             fastmikes{
@@ -5278,7 +5281,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.jiffex'
+            applicationId 'com.jiffex.order'
             resValue "string", "app_name", "Jiffex"
             resValue "string", "host_name", ""
             }
@@ -5458,7 +5461,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.dingDongDelivers'
+            applicationId 'com.dingdongdelivery.order'
             resValue "string", "app_name", "DingDong Delivers"
             resValue "string", "host_name", ""
             }
@@ -5554,10 +5557,69 @@ android {
             resValue "string", "app_name", "ExprexPro"
             resValue "string", "host_name", ""
             }  
+            fresHest{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.FresHest.royoOrder'
+            resValue "string", "app_name", "FresHest"
+            resValue "string", "host_name", ""
+            }
+              servern{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.servern.order'
+            resValue "string", "app_name", "Servern"
+            resValue "string", "host_name", ""
+            }
+             smokeRun{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.smokeRun.order'
+            resValue "string", "app_name", "Smoke Run"
+            resValue "string", "host_name", ""
+            }
+             myEvPlus{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.myEvPlus.order'
+            resValue "string", "app_name", "My EvPlus"
+            resValue "string", "host_name", ""
+            }
+             qdelo{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.qdelo.order'
+            resValue "string", "app_name", "Qdelo"
+            resValue "string", "host_name", ""
+            }
+             pawsee{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.pawsee.order'
+            resValue "string", "app_name", "Pawsee"
+            resValue "string", "host_name", ""
+            }
     }
 }
 
-         
 dependencies {
    implementation 'androidx.work:work-runtime-ktx:2.6.0' // added line here
     implementation 'androidx.multidex:multidex:2.0.1'
@@ -5573,6 +5635,9 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    api(platform("com.squareup.okhttp3:okhttp-bom:4.7.2"))
+api("com.squareup.okhttp3:okhttp")
+api("com.squareup.okhttp3:logging-interceptor")
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
@@ -5580,7 +5645,7 @@ dependencies {
 
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'
-        exclude group:'com.squareup.okhttp3', module:'okhttp'
+        // exclude group:'com.squareup.okhttp3', module:'okhttp'
     }
 
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {

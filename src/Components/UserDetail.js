@@ -157,56 +157,56 @@ const UserDetail = ({
           )}
         </View>
 
-        {getBundleId() == appIds.masa
-          ? null
-          : (data?.vendor?.phone_no || data?.order?.phone_number) && (
-              <View style={{flexDirection: 'row'}}>
-                <TouchableOpacity onPress={onWhatsapp}>
-                  <Image
-                    style={{
-                      height: moderateScale(20),
-                      width: moderateScale(20),
-                      marginRight: moderateScale(20),
-                    }}
-                    source={imagePath.whatsAppRoyo}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() =>
-                    dialCall(
-                      data?.order?.phone_number || data?.vendor?.phone_no,
-                      (type = 'phone'),
-                    )
-                  }>
-                  <Image
-                    source={imagePath.call2}
-                    style={{
-                      height: moderateScale(20),
-                      width: moderateScale(20),
-                      tintColor: themeColors.primary_color,
-                      marginRight: moderateScale(20),
-                    }}
-                  />
-                </TouchableOpacity>
+        {getBundleId() == appIds.masa || appIds.hokitch? null :
 
-                <TouchableOpacity
-                  onPress={() =>
-                    dialCall(
-                      data?.order?.phone_number || data?.vendor?.phone_no,
-                      'text',
-                    )
-                  }>
-                  <Image
-                    source={imagePath.msg}
-                    style={{
-                      height: moderateScale(20),
-                      width: moderateScale(20),
-                      tintColor: themeColors.primary_color,
-                    }}
-                  />
-                </TouchableOpacity>
-              </View>
-            )}
+          (data?.vendor?.phone_no || data?.order?.phone_number) && (
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity onPress={onWhatsapp} >
+                <Image
+                  style={{
+                    height: moderateScale(20),
+                    width: moderateScale(20),
+                    marginRight: moderateScale(20)
+                  }}
+                  source={imagePath.whatsAppRoyo}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  dialCall(
+                    data?.order?.phone_number || data?.vendor?.phone_no,
+                    (type = 'phone'),
+                  )
+                }>
+                <Image
+                  source={imagePath.call2}
+                  style={{
+                    height: moderateScale(20),
+                    width: moderateScale(20),
+                    tintColor: themeColors.primary_color,
+                    marginRight: moderateScale(20),
+                  }}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() =>
+                  dialCall(
+                    data?.order?.phone_number || data?.vendor?.phone_no,
+                    'text',
+                  )
+                }>
+                <Image
+                  source={imagePath.msg}
+                  style={{
+                    height: moderateScale(20),
+                    width: moderateScale(20),
+                    tintColor: themeColors.primary_color,
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
       </View>
     </View>
   );
