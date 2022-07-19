@@ -1680,6 +1680,9 @@ export default function Products({ route, navigation }) {
       })
       .then(async (res) => {
         console.log('filter vendor res', res);
+        updateState({
+          showListEndLoader:false
+        })
         if (res?.data?.vendor?.is_show_products_with_category) {
           let resData = res?.data?.categories || [];
           // await preLoadImages(resData);
@@ -1689,6 +1692,7 @@ export default function Products({ route, navigation }) {
           setCategoryInfo(res?.data?.vendor);
           // fetchTags(resData);
           setLoading(false);
+          
         } else {
           // console.log('get product list by vendor id >>>> ', res);
           if (res?.data) {
@@ -1739,7 +1743,6 @@ export default function Products({ route, navigation }) {
           // setCategoryInfo(res.data.category);
           setLoading(false);
           updateState({ showListEndLoader: false });
-          // showListEndLoader(false);
           if (res.data.listData.data.length == 0) {
             loadMore = false;
           }
@@ -1801,6 +1804,7 @@ export default function Products({ route, navigation }) {
       .then((res) => {
         console.log(res, 'getAllProductsCategoryFilter  res ++++++');
         setLoading(false);
+        updateState({ showListEndLoader: false });
         setProductListData(
           pageNo == 1 ? res.data.data : [...productListData, ...res.data.data],
         );

@@ -10399,6 +10399,7 @@
 		F48F24622859E055008E2072 /* Kurs(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F48F24612859E054008E2072 /* Kurs(Production).xcconfig */; };
 		F48F24642859E097008E2072 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F48F24632859E096008E2072 /* Images.xcassets */; };
 		F48F24662859E119008E2072 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F48F24652859E118008E2072 /* GoogleService-Info.plist */; };
+		F491E5582886C47F0034C0A1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F491E5572886C47E0034C0A1 /* GoogleService-Info.plist */; };
 		F49261C920D74835C4AA58F3 /* libPods-available_pods-DropItOffUsa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DFF151B99ECFB0054A3C881 /* libPods-available_pods-DropItOffUsa.a */; };
 		F49C6D2B286091BD002E6C82 /* AbbeRides(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F49C6D2A286091BC002E6C82 /* AbbeRides(Development).xcconfig */; };
 		F49C6D2D286091FA002E6C82 /* AbbeRides(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F49C6D2C286091FA002E6C82 /* AbbeRides(Production).xcconfig */; };
@@ -10459,7 +10460,6 @@
 		F4A15E54285C5074007D3D78 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		F4A15E55285C5074007D3D78 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
 		F4A2AA0B2885330500C900A7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4A2AA0A2885330500C900A7 /* Images.xcassets */; };
-		F4A2AA0D288533A100C900A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4A2AA0C2885339F00C900A7 /* GoogleService-Info.plist */; };
 		F4B39039286ED8D400A196C8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4B39038286ED8D100A196C8 /* GoogleService-Info.plist */; };
 		F4B3D75E285868130033A0F9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		F4B3D75F285868130033A0F9 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -13791,6 +13791,7 @@
 		F48F24612859E054008E2072 /* Kurs(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Kurs(Production).xcconfig"; sourceTree = "<group>"; };
 		F48F24632859E096008E2072 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F48F24652859E118008E2072 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F491E5572886C47E0034C0A1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F49C6D2A286091BC002E6C82 /* AbbeRides(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "AbbeRides(Development).xcconfig"; sourceTree = "<group>"; };
 		F49C6D2C286091FA002E6C82 /* AbbeRides(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "AbbeRides(Production).xcconfig"; sourceTree = "<group>"; };
 		F49C6D2E2860923D002E6C82 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -13804,7 +13805,6 @@
 		F4A2AA082885328D00C900A7 /* Swan(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Swan(Development).xcconfig"; sourceTree = "<group>"; };
 		F4A2AA09288532CC00C900A7 /* Swan(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Swan(Production).xcconfig"; sourceTree = "<group>"; };
 		F4A2AA0A2885330500C900A7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		F4A2AA0C2885339F00C900A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4AB5A99D3E1F5C5A2E8F3A2 /* libPods-available_pods-HairstonExpress.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-HairstonExpress.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4B39038286ED8D100A196C8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4B3D786285868130033A0F9 /* Torunz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Torunz.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -22873,7 +22873,7 @@
 		F4A2AA07288531D300C900A7 /* Swan */ = {
 			isa = PBXGroup;
 			children = (
-				F4A2AA0C2885339F00C900A7 /* GoogleService-Info.plist */,
+				F491E5572886C47E0034C0A1 /* GoogleService-Info.plist */,
 				F4A2AA082885328D00C900A7 /* Swan(Development).xcconfig */,
 				F4A2AA09288532CC00C900A7 /* Swan(Production).xcconfig */,
 				F4A2AA0A2885330500C900A7 /* Images.xcassets */,
@@ -33627,12 +33627,12 @@
 				1032F2F42825211600D48388 /* SFProText-Medium.ttf in Resources */,
 				1032F2F62825211600D48388 /* notification.wav in Resources */,
 				1032F2F92825211600D48388 /* Plists in Resources */,
+				F491E5582886C47F0034C0A1 /* GoogleService-Info.plist in Resources */,
 				F482273E28853883008FE330 /* Swan(Production).xcconfig in Resources */,
 				1032F2FA2825211600D48388 /* Futura-Normal.ttf in Resources */,
 				1032F2FB2825211600D48388 /* Eina02-Bold.ttf in Resources */,
 				1032F2FC2825211600D48388 /* Futura-Book.ttf in Resources */,
 				1032F2FD2825211600D48388 /* CircularStd-Medium.otf in Resources */,
-				F4A2AA0D288533A100C900A7 /* GoogleService-Info.plist in Resources */,
 				1032F2FE2825211600D48388 /* Metropolis-SemiBold.otf in Resources */,
 				1032F2FF2825211600D48388 /* FuturaBT-Heavy.ttf in Resources */,
 				1032F3002825211600D48388 /* CircularStd-Bold.ttf in Resources */,

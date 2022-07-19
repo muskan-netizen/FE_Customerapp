@@ -1603,7 +1603,7 @@ const appIds = {
   }),
   swan: Platform.select({
     ios: 'com.Swan-User',
-    android: 'com.swanUser',
+    android: 'com.swan.userApp',
   }),
   SCOOTUP: Platform.select({
     ios: 'com.SCOOTUP',
