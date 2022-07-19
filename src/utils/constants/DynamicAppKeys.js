@@ -356,10 +356,17 @@ const shortCodes = {
   exprexPro: 'cb98e8',
   fresHest: '7e43f5',
   servern: '1ba1e9',
-  smokeRun: '545a71',
-  myEvPlus: '1c7d9e',
-  qdelo: '0fcc84',
-  pawsee: 'bd2d83',
+  smokeRun:'545a71',
+  myEvPlus:'1c7d9e',
+  qdelo:'0fcc84',
+  pawsee:'bd2d83',
+  hairRun:'fabaaf',
+  zuriRide:'fa47e7',
+  americanLuxury:'0015d5',
+  smartMur:'780ecd',
+  ouiSpeed:'089eee',
+  getItSent:'9af7a9',
+  easyDrink:'96eb54',
 };
 
 const appIds = {
@@ -1775,7 +1782,7 @@ const appIds = {
     ios: 'com.smokeRun.order',
     android: 'com.smokeRun.order',
   }),
-  smokeRun: Platform.select({
+  myEvPlus: Platform.select({
     ios: 'com.myEvPlus.order',
     android: 'com.myEvPlus.order',
   }),
@@ -1786,6 +1793,34 @@ const appIds = {
   pawsee: Platform.select({
     ios: 'com.pawsee.order',
     android: 'com.pawsee.order',
+  }),
+  hairRun: Platform.select({
+    ios: 'com.hairRun.order',
+    android: 'com.hairRun.order',
+  }),
+  zuriRide: Platform.select({
+    ios: 'com.zuriRide.order',
+    android: 'com.zuriRide.order',
+  }),
+  americanLuxury: Platform.select({
+    ios: 'com.americanLuxury.order',
+    android: 'com.americanLuxury.order',
+  }),
+  smartMur: Platform.select({
+    ios: 'com.smartMur.order',
+    android: 'com.smartMur.order',
+  }),
+  ouiSpeed: Platform.select({
+    ios: 'com.ouiSpeed.order',
+    android: 'com.ouiSpeed.order',
+  }),
+  getItSent: Platform.select({
+    ios: 'com.getItSent.order',
+    android: 'com.getItSent.order',
+  }),
+  easyDrink: Platform.select({
+    ios: 'com.easyDrink.order',
+    android: 'com.easyDrink.order',
   }),
 };
 

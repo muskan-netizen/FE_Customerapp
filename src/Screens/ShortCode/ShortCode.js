@@ -2269,6 +2269,48 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.hairRun:
+          updateState({
+            shortCode: shortCodes.hairRun,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.zuriRide:
+          updateState({
+            shortCode: shortCodes.zuriRide,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.americanLuxury:
+          updateState({
+            shortCode: shortCodes.americanLuxury,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.smartMur:
+          updateState({
+            shortCode: shortCodes.smartMur,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ouiSpeed:
+          updateState({
+            shortCode: shortCodes.ouiSpeed,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.getItSent:
+          updateState({
+            shortCode: shortCodes.getItSent,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.easyDrink:
+          updateState({
+            shortCode: shortCodes.easyDrink,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

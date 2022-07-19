@@ -206,6 +206,19 @@ android {
 
     flavorDimensions "appType"
 
+    // productFlavors {
+       
+    //         easyDrink{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.easyDrink.order'
+    //         resValue "string", "app_name", "Easy Drink"
+    //         resValue "string", "host_name", ""
+    //         }
+    // }
 
     productFlavors {
             royoorder {
@@ -5593,6 +5606,77 @@ android {
             resValue "string", "app_name", "Pawsee"
             resValue "string", "host_name", ""
             }
+             hairRun{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.hairRun.order'
+            resValue "string", "app_name", "Hair Run"
+            resValue "string", "host_name", ""
+            }
+         zuriRide{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.zuriRide.order'
+            resValue "string", "app_name", "Zuri Ride"
+            resValue "string", "host_name", ""
+            }
+          americanLuxury{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.americanLuxury.order'
+            resValue "string", "app_name", "American Luxury Services"
+            resValue "string", "host_name", ""
+            }
+            smartMur{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.smartMur.order'
+            resValue "string", "app_name", "Smart Mur"
+            resValue "string", "host_name", ""
+            }
+             ouiSpeed{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.ouiSpeed.order'
+            resValue "string", "app_name", "Oui Speed"
+            resValue "string", "host_name", ""
+            }
+             getItSent{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.getItSent.order'
+            resValue "string", "app_name", "Get It Sent"
+            resValue "string", "host_name", ""
+            }
+            easyDrink{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.easyDrink.order'
+            resValue "string", "app_name", "Easy Drink"
+            resValue "string", "host_name", ""
+            }
+             
     }
 }
 
