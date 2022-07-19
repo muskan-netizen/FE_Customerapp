@@ -92,6 +92,7 @@ export default function OrderDetail({ navigation, route }) {
   );
   const [minimumDelayVendorDate, setMinimumDelayVendorDate] = useState(null);
 
+
   const [state, setState] = useState({
     isLoading: true,
     cartItems: [],
@@ -176,6 +177,10 @@ export default function OrderDetail({ navigation, route }) {
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
+
+  console.log(languages,'i am here>>>>>>');
+
+
   const {preferences} = appData?.profile;
   let businessType = preferences?.business_type;
 
@@ -2507,7 +2512,7 @@ export default function OrderDetail({ navigation, route }) {
           // updateState({isLoading: false});
           _getOrderDetailScreen();
         })
-        .catch(errorMethod);
+        .catch((error)=>console.log(error,"errorororor"));
     }
   };
 

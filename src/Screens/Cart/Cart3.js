@@ -1040,15 +1040,14 @@ function Cart({navigation, route}) {
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.VIVAWALLET, paymentData);
         break;
-      case 41: //OPENPAY Payment Getway
-        updateState({placeLoader: false});
-        navigation.navigate(navigationStrings.OPENPAY, paymentData);
-        break;
       case 40: //USEREDE Payment Getway
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.USEREDE, paymentData);
         break;
-
+      case 41: //OPENPAY Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.OPENPAY, paymentData);
+        break;
       case 42: //Direct Pay Online Payment Getway
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.DIRECTPAYONLINE, paymentData);
@@ -2359,21 +2358,39 @@ function Cart({navigation, route}) {
               }}
               resizeMode="contain"
             />
-            <Text
-              style={{
-                fontSize: textScale(12),
-                color:
-                  (!!sel_types ? sel_types : item?.sel_types) == val?.code
-                    ? themeColors.primary_color
-                    : colors.black,
-                fontFamily:
-                  (!!sel_types ? sel_types : item?.sel_types) == val?.code
-                    ? fontFamily.bold
-                    : fontFamily.regular,
-                textAlign: 'left',
-              }}>
-              {val?.courier_name}
-            </Text>
+            {appIds.hokitch == getBundleId() ? (
+              <Text
+                style={{
+                  fontSize: textScale(12),
+                  color:
+                    (!!sel_types ? sel_types : item?.sel_types) == val?.code
+                      ? themeColors.primary_color
+                      : colors.black,
+                  fontFamily:
+                    (!!sel_types ? sel_types : item?.sel_types) == val?.code
+                      ? fontFamily.bold
+                      : fontFamily.regular,
+                  textAlign: 'left',
+                }}>
+                {strings.CHARGES}
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  fontSize: textScale(12),
+                  color:
+                    (!!sel_types ? sel_types : item?.sel_types) == val?.code
+                      ? themeColors.primary_color
+                      : colors.black,
+                  fontFamily:
+                    (!!sel_types ? sel_types : item?.sel_types) == val?.code
+                      ? fontFamily.bold
+                      : fontFamily.regular,
+                  textAlign: 'left',
+                }}>
+                {val?.courier_name}
+              </Text>
+            )}
           </View>
         </View>
 
@@ -2705,7 +2722,7 @@ function Cart({navigation, route}) {
                                         : colors.blackOpacity86,
                                       fontSize: textScale(12),
                                       fontFamily: fontFamily.medium,
-                                      flex: 0.7,
+                                      width: width / 2.1,
                                     }}>
                                     {i?.product?.translation[0]?.title},
                                   </Text>
@@ -3374,14 +3391,20 @@ function Cart({navigation, route}) {
                         ...styles.deliveryFeeDropDown,
                         borderColor: themeColors.primary_color,
                       }}>
-                      <Text style={styles.dropDownTextStyle}>
-                        {
-                          item?.delivery_types.filter(
-                            (val2) =>
-                              (sel_types || item?.sel_types) == val2?.code,
-                          )[0]?.courier_name
-                        }
-                      </Text>
+                      {appIds.hokitch == getBundleId() ? (
+                        <Text style={styles.dropDownTextStyle}>
+                          {strings.CHARGES}
+                        </Text>
+                      ) : (
+                        <Text style={styles.dropDownTextStyle}>
+                          {
+                            item?.delivery_types.filter(
+                              (val2) =>
+                                (sel_types || item?.sel_types) == val2?.code,
+                            )[0]?.courier_name
+                          }
+                        </Text>
+                      )}
                       <Text
                         style={{
                           ...styles.dropDownTextStyle,

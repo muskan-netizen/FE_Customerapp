@@ -849,6 +849,14 @@ export default function Account3({navigation}) {
           onPress={(index) => onSosButton(index)}
         />
       </SafeAreaView>
+      <ActionSheet
+        ref={actionSheet}
+        // title={'Choose one option'}
+        options={[strings.POLICE, strings.AMBULANCE, strings.CANCEL]}
+        cancelButtonIndex={2}
+        destructiveButtonIndex={2}
+        onPress={(index) => onSosButton(index)}
+      />
     </View>
   );
 }

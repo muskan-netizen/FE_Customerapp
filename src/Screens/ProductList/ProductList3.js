@@ -632,7 +632,7 @@ export default function Products({route, navigation}) {
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                       }}>
-                      <Text
+                      {/* <Text
                         numberOfLines={2}
                         style={{
                           ...styles.hdrTitleTxt,
@@ -644,7 +644,7 @@ export default function Products({route, navigation}) {
                             : colors.white,
                         }}>
                         {data?.name || categoryInfo?.name || ''}
-                      </Text>
+                      </Text> */}
 
                       {!!categoryInfo &&
                         !!categoryInfo?.product_avg_average_rating && (
@@ -681,21 +681,38 @@ export default function Products({route, navigation}) {
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                       }}>
-                      <Text
-                        // numberOfLines={2}
-                        style={{
-                          ...styles.hdrTitleTxt,
-                          flex: 0,
-                          fontSize: textScale(12.5),
-                          fontFamily: fontFamily.regular,
-                          textAlign: 'left',
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.white,
-                          width: width / 1.5,
-                        }}>
-                        {categoryInfo?.address || ''}
-                      </Text>
+                      <View>
+                        <Text
+                          numberOfLines={2}
+                          style={{
+                            ...styles.hdrTitleTxt,
+                            flex: 0,
+                            textAlign: 'left',
+                            fontSize: textScale(15),
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.white,
+                          }}>
+                          {data?.name || categoryInfo?.name || ''}
+                        </Text>
+                        {appIds.hokitch == getBundleId() ? null : (
+                          <Text
+                            // numberOfLines={2}
+                            style={{
+                              ...styles.hdrTitleTxt,
+                              flex: 0,
+                              fontSize: textScale(12.5),
+                              fontFamily: fontFamily.regular,
+                              textAlign: 'left',
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.white,
+                              width: width / 1.5,
+                            }}>
+                            {categoryInfo?.address || ''}
+                          </Text>
+                        )}
+                      </View>
 
                       {!!categoryInfo &&
                       !categoryInfo?.closed_store_order_scheduled ? (
@@ -1227,6 +1244,7 @@ export default function Products({route, navigation}) {
       actions
         .addProductsToCart(data, {
           code: appData.profile.code,
+
           currency: currencies.primary_currency.id,
           language: languages.primary_language.id,
           systemuser: DeviceInfo.getUniqueId(),
@@ -1671,6 +1689,7 @@ export default function Products({route, navigation}) {
 
         if (res?.data?.vendor?.is_show_products_with_category) {
           let resData = res?.data?.categories || [];
+
           await preLoadImages(resData);
           setSectionListData(resData);
           setCloneSectionList(resData);
@@ -3096,7 +3115,6 @@ export default function Products({route, navigation}) {
   };
 
   const onShare = () => {
-    console.log('onShare', appData);
     if (!!categoryInfo.share_link) {
       let hyperLink = categoryInfo.share_link;
       let options = {url: hyperLink};

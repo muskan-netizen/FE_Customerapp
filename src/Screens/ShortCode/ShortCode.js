@@ -2656,7 +2656,6 @@ export default function ShortCode({route, navigation}) {
         return imagePath.ipd;
       case appIds?.muvpod:
         return {uri: imagePath.muvpod};
-
       case appIds?.sabroson:
         return imagePath.sabroson;
     }

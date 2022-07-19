@@ -177,7 +177,7 @@ export default {
   POPULARITY: 'Popularidad',
   MOST_PURCHASED: 'Más comprado',
   NEWLY_ADDED: 'Recién agregado',
-  HOME: 'Casa',
+  HOME: 'Inicio',
   HOME_1: 'Dirección',
   HOLD_ON: 'Esperar',
   EXIT_WARNING: '¿Estás seguro de que quieres salir?',
@@ -961,12 +961,12 @@ export default {
   SERVICE_ADDRESS: 'Service Address',
   BOOK_HERE: 'Book Here',
   DELETE_ACCOUNT: 'Delete Account',
-  SOS: 'SOS',
-  CATEGORY_KYC: 'Categoory KYC',
   ARE_YOU_SURE_YOU_WANT_TO_DELETE:
     'Are you sure, you want to delete your account? Deleting your account is permanent and will remove all content and profile settings.',
   WR_ARE_CURRENTLY_NOT_OPERATING:
     'We are currently not operating in your location',
   WE_ACCEPT_ONLY_SCHEDULE_ORDER: 'We are accepting only schedule order',
+  SOS: 'SOS',
   VISIT_INSTAGRAM: 'Visit Instagram',
+  CATEGORY_KYC: 'Categoory KYC',
 };
