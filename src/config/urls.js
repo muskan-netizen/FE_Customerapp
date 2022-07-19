@@ -58,7 +58,7 @@
 // export const API_BASE_URL = 'https://meltivers.com/api/v1';
 // export const API_BASE_URL = 'https://fairexglobal.com/api/v1';
 // export const API_BASE_URL = 'https://beachhopdelivery.com/api/v1';
-// export const API_BASE_URL = 'https://grub.royoorders.com/api/v1';
+export const API_BASE_URL = 'https://grub.royoorders.com/api/v1';
 
 // export const API_BASE_URL = 'https://gusto.royoorders.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
@@ -165,6 +165,10 @@
 //BEZALIO LIVE
 // export const API_BASE_URL = 'https://bezaliohub.com/api/v1';
 
+// export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'; // preet sir
+
+
+
 // export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.100.198:8020/api/v1';
@@ -193,7 +197,7 @@
 // export const API_BASE_URL = 'https://tranzit.app/api/v1';
 // export const API_BASE_URL = 'https://orders.halalhmc.org/api/v1';
 // export const API_BASE_URL = 'https://tranzonline.com/api/v1';
-export const API_BASE_URL = 'https://hellodeliver.in/api/v1';
+// export const API_BASE_URL = 'https://hellodeliver.in/api/v1';
 // export const API_BASE_URL = 'https://yohopartner.com/api/v1'
 // export const API_BASE_URL = 'https://order.swiftandvalu.com/api/v1';
 // export const API_BASE_URL = 'https://baytukom.royoorders.com/api/v1';

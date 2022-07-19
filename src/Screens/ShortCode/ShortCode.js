@@ -2285,13 +2285,15 @@ export default function ShortCode({ route, navigation }) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '1e3e30',
+        // code: 'cb17f2',
+        // code: '245bae',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '1e3e30',
+        // code: 'cb17f2',
+        // code: '245bae',
       code: shortCode,
       };
     }

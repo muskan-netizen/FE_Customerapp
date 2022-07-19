@@ -219,6 +219,8 @@ export default function Products({ route, navigation }) {
     current_page: 1,
     id: 0,
   });
+  const [tagFilteredData, setTagFilteredData] = useState([])
+  const [isFilteredData, setIsFilteredData] = useState(false)
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
   const styles = stylesFunc({ themeColors, fontFamily, isDarkMode, MyDarkTheme });
@@ -240,6 +242,7 @@ export default function Products({ route, navigation }) {
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //usecallback functions
+  
 
   const renderSectionItem = useCallback(({ item, index, section }) => {
     // const url1 = item?.media[0]?.image?.path.image_fit;
@@ -922,6 +925,7 @@ export default function Products({ route, navigation }) {
             marginBottom: moderateScale(15),
           }}
           contentContainerStyle={{ alignItems: 'center' }}>
+            {console.log(ProductTags,"ProductTags")}
           {ProductTags &&
             ProductTags.map((el, index) => {
               return (
@@ -1330,7 +1334,6 @@ export default function Products({ route, navigation }) {
         },
       )
       .then((res) => {
-        clg
         const productTagsArr = res?.data?.map((el) => {
           return {
             ...el,
@@ -2512,32 +2515,36 @@ export default function Products({ route, navigation }) {
       setApiHitAgain(true);
       // appendData(null,1)
       newVendorFilter(1, true)
-      // const newArr = sectionListData
-      //   .map((el) => {
-      //     const records =
-      //       el.data &&
-      //       el.data.filter((item) => {
-      //         if (
-      //           item.tags.length > 0 &&
-      //           checkIfItemExist(item.tags[0], EnabledTags)
-      //         )
-      //           return item;
-      //       });
-      //     const newObj = {
-      //       ...el,
-      //     };
-      //     if (records && records.length) {
-      //       newObj.data = records;
-      //       return newObj;
-      //     } else {
-      //       return null;
-      //     }
-      //   })
-      //   .filter((x) => x != null);
-      // setCloneSectionList(newArr);
+      const newArr = sectionListData
+        .map((el) => {
+          const records =
+            el.data &&
+            el.data.filter((item) => {
+              if (
+                item.tags.length > 0 &&
+                checkIfItemExist(item.tags[0], EnabledTags)
+              )
+                return item;
+            });
+          const newObj = {
+            ...el,
+          };
+          if (records && records.length) {
+            newObj.data = records;
+            return newObj;
+          } else {
+            return null;
+          }
+        })
+        .filter((x) => x != null);
+      setCloneSectionList(newArr);
+      setTagFilteredData(newArr)
+      setIsFilteredData(true)
+      console.log(newArr, "newArrnewArr")
     } else {
       setCloneSectionList(sectionListData);
       if (apiHitAgain) {
+        setIsFilteredData(false)
         setApiHitAgain(false);
         setLoading(true);
         getAllProductsByVendor();
@@ -2556,7 +2563,9 @@ export default function Products({ route, navigation }) {
     });
     // navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
   };
+  console.log(cloneSectionList, "cloneSectionListcloneSectionListcloneSectionList")
 
+  // Search with more
   const onSearchWithinMenu = (text) => {
     updateState({ searchInput: text });
     if (text) {
@@ -3170,8 +3179,11 @@ export default function Products({ route, navigation }) {
 
   const renderSectionFooter = (props) => {
     const { section } = props;
+
+    console.log("section?.data ",section?.data)
+    console.log("section?.data_count ",section?.data_count )
     return (
-      section?.data.length !== section?.data_count ? <View>
+      section?.data.length !== section?.data_count &&  section?.data.length !== 0 ? <View>
         <TouchableOpacity
           onPress={() => appendData(section)}
           style={{
@@ -3347,11 +3359,14 @@ export default function Products({ route, navigation }) {
           )}
         {/* <View style={{height: moderateScale(10)}} /> */}
         {!!categoryInfo?.is_show_products_with_category ? (
+
+          
+
           <SectionList
             onScroll={onScroll}
             ref={sectionListRef}
             showsVerticalScrollIndicator={false}
-            sections={cloneSectionList}
+            sections={isFilteredData? tagFilteredData : cloneSectionList}
             ListHeaderComponent={listHeaderComponent2()}
             stickySectionHeadersEnabled={false}
             keyExtractor={awesomeChildListKeyExtractor}
@@ -3373,6 +3388,7 @@ export default function Products({ route, navigation }) {
             // maxToRenderPerBatch={10} // Redu ce number in each render batch
             updateCellsBatchingPeriod={100} // Increase time between renders
             // windowSize={7} // Reduce the window size
+            renderSectionFooter={renderSectionFooter}
 
           />
         ) : (
