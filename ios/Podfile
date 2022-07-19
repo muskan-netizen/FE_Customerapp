@@ -1800,6 +1800,14 @@ end
 target 'OuiSpeed' do
   
 end
+#GetItSent Target
+target 'GetItSent' do
+  
+end
+#EasyDrink Target
+target 'EasyDrink' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

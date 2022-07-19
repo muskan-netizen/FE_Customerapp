@@ -2299,6 +2299,18 @@ export default function ShortCode({ route, navigation }) {
                   isShortcodePrefilled: true,
                 });
              break;
+             case appIds.getItSent:
+              updateState({
+                shortCode: shortCodes.getItSent,
+                isShortcodePrefilled: true,
+              });
+           break;
+           case appIds.easyDrink:
+              updateState({
+                shortCode: shortCodes.easyDrink,
+                isShortcodePrefilled: true,
+              });
+           break;
       }
     })();
   }, []);

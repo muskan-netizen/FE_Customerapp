@@ -208,14 +208,14 @@ android {
 
     productFlavors {
        
-            ouiSpeed{
+            easyDrink{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.ouiSpeed.order'
-            resValue "string", "app_name", "Oui Speed"
+            applicationId 'com.easyDrink.order'
+            resValue "string", "app_name", "Easy Drink"
             resValue "string", "host_name", ""
             }
     }
@@ -5664,6 +5664,26 @@ android {
     //         targetSdkVersion rootProject.ext.targetSdkVersion
     //         applicationId 'com.ouiSpeed.order'
     //         resValue "string", "app_name", "Oui Speed"
+    //         resValue "string", "host_name", ""
+    //         }
+    //          getItSent{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.getItSent.order'
+    //         resValue "string", "app_name", "Get It Sent"
+    //         resValue "string", "host_name", ""
+    //         }
+    //         easyDrink{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.easyDrink.order'
+    //         resValue "string", "app_name", "Easy Drink"
     //         resValue "string", "host_name", ""
     //         }
              

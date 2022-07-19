@@ -365,6 +365,8 @@ const shortCodes = {
   americanLuxury:'0015d5',
   smartMur:'780ecd',
   ouiSpeed:'089eee',
+  getItSent:'9af7a9',
+  easyDrink:'96eb54',
 };
 
 
@@ -1812,6 +1814,14 @@ const appIds = {
   ouiSpeed: Platform.select({
     ios: 'com.ouiSpeed.order',
     android: 'com.ouiSpeed.order',
+  }),
+  getItSent: Platform.select({
+    ios: 'com.getItSent.order',
+    android: 'com.getItSent.order',
+  }),
+  easyDrink: Platform.select({
+    ios: 'com.easyDrink.order',
+    android: 'com.easyDrink.order',
   }),
 };
 
