@@ -32963,7 +32963,7 @@
 					};
 					84D486F526C161C800EE9EB5 = {
 						DevelopmentTeam = 6FXUMT5X23;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					84D4C908277061B9005892AA = {
 						DevelopmentTeam = 6FXUMT5X23;

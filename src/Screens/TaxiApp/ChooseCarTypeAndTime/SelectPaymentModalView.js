@@ -39,6 +39,7 @@ import stylesFun from './styles';
 import Modal from 'react-native-modal';
 import { isEmpty } from 'lodash';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { getBundleId } from 'react-native-device-info';
 
 export default function SelectPaymentModalView({
   isLoading = false,
@@ -297,7 +298,7 @@ export default function SelectPaymentModalView({
               styles.distanceDurationDeliveryLable,
               { color: isDarkMode ? MyDarkTheme.colors.text : colors.black },
             ]}>
-            {`${totalDistance} ${appIds?.weTogether ? 'Miles' : 'kms'} `}
+            {`${totalDistance} ${getBundleId()===appIds?.weTogether ? 'Miles' : 'km'}`}
           </Text>
         </View>
         <View style={{ flex: 0.33 }}>

@@ -137,7 +137,6 @@ export default function Home({route, navigation}) {
   } = state;
 
   const {profile} = appData;
-
   useFocusEffect(
     useCallback(() => {
       const backHandler = BackHandler.addEventListener(
