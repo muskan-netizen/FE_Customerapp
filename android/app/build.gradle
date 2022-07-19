@@ -4336,16 +4336,16 @@ android {
     //             resValue "string", "app_name", "AmbuTap"
     //             resValue "string", "host_name", ""
     //         }
-    //         sabroson{
-    //             dimension "appType"
-    //             versionCode 1
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion         
-    //             applicationId 'com.sabroson'
-    //             resValue "string", "app_name", "Sabroson"
-    //             resValue "string", "host_name", ""
-    //         }
+            sabroson{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.sabroson'
+                resValue "string", "app_name", "Sabroson"
+                resValue "string", "host_name", ""
+            }
     //         swiffyllc{
     //             dimension "appType"
     //             versionCode 1

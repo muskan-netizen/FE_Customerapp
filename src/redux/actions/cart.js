@@ -226,7 +226,7 @@ export function getListOfPaymentMethod(query = '', data = {}, headers = {}) {
 
 //Get List of payment method
 export function openPaymentWebUrl(query = '', data = {}, headers = {}) {
-  console.log('payment++ query', query);
+  console.log('payment++ query', GETWEBURL+query);
   console.log('payment++ data', data);
   return new Promise((resolve, reject) => {
     apiGet(GETWEBURL + query, data, headers)

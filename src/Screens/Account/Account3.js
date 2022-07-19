@@ -1,5 +1,5 @@
 import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   I18nManager,
@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import ActionSheet from 'react-native-actionsheet';
 import { useDarkMode } from 'react-native-dark-mode';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
@@ -42,7 +43,7 @@ export default function Account3({ navigation }) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { themeColors, appStyle, appData, shortCodeStatus,currencies,languages } = useSelector(
+  const { themeColors, appStyle, appData, shortCodeStatus, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
   const businessType = appStyle?.homePageLayout;
@@ -50,7 +51,7 @@ export default function Account3({ navigation }) {
     isLoading: false,
   });
 
-
+  let actionSheet = useRef();
 
   const { preferences, phone_number, contact_phone_number } = appData?.profile;
 
@@ -71,7 +72,7 @@ export default function Account3({ navigation }) {
 
   const userData = useSelector((state) => state.auth.userData);
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  console.log("user data",userData)
+  console.log("user data", userData)
 
   console.log(
     contact_phone_number,
@@ -145,16 +146,16 @@ export default function Account3({ navigation }) {
       moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     }
   }
-  const deleleUserAccount = async() => {
+  const deleleUserAccount = async () => {
     try {
       const res = await actions.deleteAccount(
-      {},
-      {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-      })
-      console.log("delete user account res++++",res)
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        })
+      console.log("delete user account res++++", res)
       showSuccess(res?.massage)
       actions.userLogout();
       actions.cartItemQty('');
@@ -162,7 +163,7 @@ export default function Account3({ navigation }) {
       actions.addSearchResults('clear');
       moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     } catch (error) {
-      console.log('erro raised',error)
+      console.log('erro raised', error)
       showError(error?.message)
     }
   }
@@ -189,6 +190,30 @@ export default function Account3({ navigation }) {
     });
   };
 
+
+  const onSosButton = (index) => {
+    console.log(index, 'index');
+    switch (index) {
+      case 0:
+        Linking.openURL(
+          `tel:${appData?.profile?.preferences?.sos_police_contact}`,
+        );
+
+        break;
+      case 1:
+        Linking.openURL(
+          `tel:${appData?.profile?.preferences?.sos_ambulance_contact}`,
+        );
+        break;
+     
+      default:
+        break;
+    }
+  };
+
+  const showActionSheet = () => {
+    actionSheet.current.show();
+  };
 
 
   const usernameFirstlater = !!userData?.name && userData?.name?.charAt(0);
@@ -697,6 +722,22 @@ export default function Account3({ navigation }) {
             />
           )}
 
+          {appData.profile.preferences.sos == 1 ? (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={showActionSheet}
+              iconLeft={imagePath.icSos}
+              centerHeading={strings.SOS}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          ) : null}
 
           {!!userData?.auth_token &&
             !!appMainData?.is_admin &&
@@ -751,6 +792,14 @@ export default function Account3({ navigation }) {
           <View style={{ height: 100 }} />
         </ScrollView>
       </SafeAreaView>
+      <ActionSheet
+        ref={actionSheet}
+        // title={'Choose one option'}
+        options={[strings.POLICE, strings.AMBULANCE, strings.CANCEL]}
+        cancelButtonIndex={2}
+        destructiveButtonIndex={2}
+        onPress={(index) => onSosButton(index)}
+      />
     </View>
   );
 }

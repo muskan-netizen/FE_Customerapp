@@ -77,12 +77,19 @@ export default function DirectPayOnline({ navigation, route }) {
 
         setTimeout(() => {
             if (queryParams.status == 200) {
-                moveToNewScreen(navigationStrings.ORDERSUCESS, {
-                    orderDetail: {
-                        order_number: queryParams.order,
-                        id: paramsData?.orderDetail?.id,
-                    },
-                })();
+               if (paramsData?.extraData) {
+              navigation.navigate(
+            navigationStrings.PICKUPTAXIORDERDETAILS,
+            paramsData?.extraData,
+          );
+        } else {
+          moveToNewScreen(navigationStrings.ORDERSUCESS, {
+            orderDetail: {
+              order_number: queryParams.order,
+              id: paramsData?.orderDetail?.id,
+            },
+          })();
+        }
             }
             if (queryParams.status == 0) {
                 moveToNewScreen(navigationStrings.CART, {

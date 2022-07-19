@@ -2285,13 +2285,13 @@ export default function ShortCode({ route, navigation }) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        //  code: '245bae',
-       code: shortCode,
+        // code: '245bae',
+        code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        //  code: '245bae',
+        // code: '245bae',
       code: shortCode,
       };
     }
@@ -2476,15 +2476,7 @@ export default function ShortCode({ route, navigation }) {
               initapiresponse: true
             });
             break;
-            case appIds.sabroson:
-            updateState({
-              isLoading: false,
-              LoadingScreen: false,
-              allAppData: res,
-              responseData: homeData.data,
-              initapiresponse: true
-            });
-            break;
+          
           default:
             updateState({ isLoading: false, LoadingScreen: false });
             navigateToNextScreen(res, homeData.data);
@@ -2590,8 +2582,7 @@ export default function ShortCode({ route, navigation }) {
         return imagePath.ipd
       case appIds?.muvpod:
         return { uri: imagePath.muvpod }
-      case appIds?.sabroson:
-        return imagePath.sabroson
+     
     }
   }
   console.log(animationVideo(), "animationVideo");

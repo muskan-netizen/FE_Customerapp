@@ -2421,7 +2421,7 @@ export default function OrderDetail({navigation, route}) {
           // updateState({isLoading: false});
           _getOrderDetailScreen();
         })
-        .catch(errorMethod);
+        .catch((error)=>console.log(error,"errorororor"));
     }
   };
 

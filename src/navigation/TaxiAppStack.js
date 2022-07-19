@@ -17,6 +17,7 @@ import {
   RateOrder,
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
+import DirectPayOnline from '../Screens/PaymentGateways/DirectPayOnline';
 
 import VerifyAccountSecond from '../Screens/VerifyAccountSecond/VerifyAccount';
 import navigationStrings from './navigationStrings';
@@ -91,6 +92,10 @@ export default function (Stack) {
       <Stack.Screen
       name={navigationStrings.AuthorizeNet}
       component={AuthorizeNet}
+      />
+       <Stack.Screen
+      name={navigationStrings.DIRECTPAYONLINE}
+      component={DirectPayOnline}
       />
       <Stack.Screen
         name={navigationStrings.RATEORDER}
