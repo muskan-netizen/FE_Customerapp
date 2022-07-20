@@ -424,6 +424,7 @@ function Cart({navigation, route}) {
           device_token: DeviceInfo.getUniqueId(),
           latitude: location?.latitude,
           longitude: location?.longitude,
+
         },
       )
       .then((res) => {
@@ -1231,6 +1232,7 @@ function Cart({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        console.log(res, "placeOrder")
         actions.reloadData(!reloadData);
         setSelectedTipvalue(null);
         setPickupDriverComment(null);
@@ -1275,6 +1277,8 @@ function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
+
+  
   const _getOrderDetail = ({order_id, vendor_id}) => {
     // return;
     let data = {};
@@ -1555,9 +1559,9 @@ function Cart({navigation, route}) {
       // }
 
       console.log('shceduleORderdata', sheduledorderdate);
-      if (!selectedAddressData) {
-        // showError(strings.PLEASE_SELECT_ADDRESS);
-        setModalVisible(true);
+      if (!selectedAddressData && dineInType !== 'takeaway' ) {
+         // showError(strings.PLEASE_SELECT_ADDRESS);
+         setModalVisible(true);
       } else if (!selectedPayment) {
         errorMethod(strings.PLEASE_SELECT_PAYMENT_METHOD);
       } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {

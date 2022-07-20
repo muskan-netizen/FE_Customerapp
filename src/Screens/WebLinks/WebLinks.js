@@ -998,23 +998,32 @@ export default function WebLinks({ navigation, route }) {
           style={{
             marginTop: moderateScaleVertical(20),
             marginHorizontal: moderateScale(20),
+
+            justifyContent:  I18nManager.isRTL ?  'flex-end': 'flex-start',
+            flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
           }}>
           {htmlContent && (
-            <RenderHtml
+          //  <View style={{flexDirection: I18nManager.isRTL ? 'row-reverse': 'row' }} >
+             <RenderHtml
               contentWidth={width}
               source={{ html: htmlContent }}
               tagsStyles={{
                 p: {
-                  color: isDarkMode ? colors.white : colors.black
+                  color: isDarkMode ? colors.white : colors.black,
+                  // alignSelf: I18nManager.isRTL ? 'left' : 'right',
+                  // textAlign: I18nManager.isRTL ? 'left' : 'right',
+                  textAlign:'right',
+
                 }
               }}
             />
+          //  </View>
             // <HTMLView
             //   stylesheet={isDarkMode ? htmlStyle : null}
             //   value={`<p>${htmlContent}</p>`}
             // />
           )}
-        </View>
+        </View> 
 
         {driverRegDocs?.page_detail?.primary?.type_of_form == 1 && (
           <View style={styles.mainView}>
