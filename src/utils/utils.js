@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {resetStackAndNavigate} from '../navigation/NavigationService';
 import navigationStrings from '../navigation/navigationStrings';
+import actions from '../redux/actions';
 import {enums} from './enums';
 import {sessionHandler} from './helperFunctions';
 
@@ -109,8 +110,7 @@ export async function apiReq(
       // cancelToken:source.token
     };
 
-
-    console.log(headers,"headersheadersheaders");
+    console.log(headers, 'headersheadersheaders');
     if (method === 'get' || method === 'delete') {
       data = {
         ...requestOptions,
@@ -201,11 +201,18 @@ export const verticalAnimation = {
   },
 };
 
-export const checkIsAdmin = (navigation_, navigation, userData) => {
-  // navigation.push(navigationStrings.TABROUTESVENDOR);
-  if (userData?.is_admin && enums?.isVendorStandloneApp) {
-    // resetStackAndNavigate(navigation_, navigationStrings.TABROUTESVENDORNEW);
-    navigation.push(navigationStrings.TAB_ROUTES);
+export const checkIsAdmin = (
+  navigation_,
+  navigation,
+  userData,
+  redirectedFrom,
+) => {
+  if (redirectedFrom == 'cart') {
+    actions.setRedirection('');
+    navigation.push(navigationStrings.TAB_ROUTES, {
+      screen: navigationStrings.CART,
+      params: {screen: navigationStrings.CART},
+    });
   } else {
     navigation.push(navigationStrings.TAB_ROUTES);
   }

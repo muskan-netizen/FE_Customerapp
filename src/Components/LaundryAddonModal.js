@@ -20,6 +20,9 @@ import {
 import {MyDarkTheme} from '../styles/theme';
 import {getImageUrl} from '../utils/helperFunctions';
 import ButtonWithLoader from './ButtonWithLoader';
+import ModalDropDownComp from '../Components/ModalDropDown';
+import {isEmpty} from 'lodash';
+import {TouchableHighlight} from 'react-native-gesture-handler';
 
 const LaundryAddonModal = ({
   isVisible = false,
@@ -32,6 +35,8 @@ const LaundryAddonModal = ({
   onFindVendors = () => {},
   minMaxError = [],
   isOnPressed = false,
+  selectedHomeCategory = {},
+  unPresentAry = [],
 }) => {
   const {
     themeColor,
@@ -103,24 +108,72 @@ const LaundryAddonModal = ({
           style={{
             ...styles.minMaxTxt,
             color:
-              isOnPressed && !checkValidation(itm?.estimate_addon_set, indx)
+              isOnPressed &&
+              unPresentAry.some(
+                (item) => item?.addon_id == itm?.estimate_addon_id,
+              )
                 ? colors.redB
                 : colors.black,
             opacity:
-              isOnPressed && !checkValidation(itm?.estimate_addon_set, indx)
+              isOnPressed &&
+              unPresentAry.some(
+                (item) => item?.addon_id == itm?.estimate_addon_id,
+              )
                 ? 1
                 : 0.5,
           }}>
           Min {itm?.estimate_addon_set?.min_select} Max{' '}
           {itm?.estimate_addon_set?.max_select} sellections allowed
         </Text>
-        <FlatList
-          data={itm?.estimate_addon_set?.option}
-          renderItem={({item, index}) => renderAddonOptions(item, itm)}
-          ItemSeparatorComponent={() => (
-            <View style={{height: moderateScaleVertical(8)}} />
-          )}
-        />
+        {itm?.estimate_addon_set?.option.length <= 4 ? (
+          <FlatList
+            data={itm?.estimate_addon_set?.option}
+            renderItem={({item, index}) => renderAddonOptions(item, itm)}
+            ItemSeparatorComponent={() => (
+              <View style={{height: moderateScaleVertical(8)}} />
+            )}
+          />
+        ) : (
+          <ModalDropDownComp
+            options={itm?.estimate_addon_set?.option}
+            defaultValue={'Select addon'}
+            _onSelect={(idx, value) => onLaundryAddonSelect(value, itm)}
+            _renderButtonText={(rowData) => <Text> {rowData?.title}</Text>}
+            _renderRow={(rowData) => {
+              return (
+                <TouchableHighlight
+                  activeOpacity={0.6}
+                  underlayColor="cornflowerblue"
+                  style={{backgroundColor: colors.white}}>
+                  <Text
+                    style={{
+                      paddingVertical: 10,
+                      marginHorizontal: 10,
+                    }}>
+                    {rowData?.title}
+                  </Text>
+                </TouchableHighlight>
+              );
+            }}
+            _renderRightComponent={() => (
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'flex-end',
+                }}>
+                <Image source={imagePath.icDropdown} />
+              </View>
+            )}
+            modalMainStyle={{
+              width: '100%',
+              height: 40,
+              justifyContent: 'center',
+              borderWidth: 1,
+              borderColor: colors.borderColorB,
+              paddingHorizontal: moderateScale(20),
+            }}
+          />
+        )}
       </View>
     );
   };
@@ -160,8 +213,9 @@ const LaundryAddonModal = ({
           style={{
             ...styles.titleText,
             paddingHorizontal: moderateScale(12),
+            textTransform: 'uppercase',
           }}>
-          {'LAUNDRY SERVICES'}{' '}
+          {selectedHomeCategory?.name}
         </Text>
         <View
           style={{

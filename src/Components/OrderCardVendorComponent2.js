@@ -62,7 +62,7 @@ const OrderCardVendorComponent2 = ({
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
-  const businessType = appStyle?.homePageLayout;
+  const businessType = appData?.profile?.preferences?.business_type || null;
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const imageUrl =
@@ -279,7 +279,7 @@ const OrderCardVendorComponent2 = ({
             justifyContent: 'space-between',
             marginVertical: moderateScaleVertical(10),
           }}>
-          {businessType !== 4 ? (
+          {appStyle?.homePageLayout !== 4 ? (
             <Text
               style={{
                 fontFamily: fontFamily.semiBold,
@@ -398,6 +398,7 @@ const OrderCardVendorComponent2 = ({
         </View>
 
         <View style={[styles.borderStyle, {marginHorizontal: -15}]}></View>
+
         {businessType == 'laundry' && (
           <>
             <View
@@ -413,7 +414,7 @@ const OrderCardVendorComponent2 = ({
                   fontFamily: fontFamily.bold,
                   color: colors.black,
                 }}>
-                Pickup Schedule Date:
+                {strings.PICKUP_SCHEDULE_DATE}
               </Text>
               <Text
                 style={{
@@ -436,7 +437,7 @@ const OrderCardVendorComponent2 = ({
                   fontFamily: fontFamily.bold,
                   color: colors.black,
                 }}>
-                Drop Off Schedule Date:
+                {strings.DROP_OFF_SCHEDULE_DATE}
               </Text>
               <Text
                 style={{
@@ -480,7 +481,7 @@ const OrderCardVendorComponent2 = ({
                 onPress={onPressReturnOrder}
                 // style={{flex:0.6}}
                 style={styles.bottomSecondHalf}>
-                {businessType === 4 ? null : (
+                {appStyle?.homePageLayout === 4 ? null : (
                   <View style={styles.orderAcceptAndReadyStyleSecond}>
                     <Text style={styles.orderStatusStyleSecond}>
                       {strings.RETURNORDER}

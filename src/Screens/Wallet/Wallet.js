@@ -12,8 +12,9 @@ import {
   Image,
   TextInput,
   I18nManager,
+  Platform,
+  TouchableOpacity,
 } from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import HTMLView from 'react-native-htmlview';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
@@ -496,7 +497,10 @@ export default function Wallet({navigation}) {
         style={{
           margin: 0,
           justifyContent: 'flex-end',
-          marginBottom: moderateScale(keyboardHeight),
+          marginBottom:
+            Platform.OS == 'ios'
+              ? moderateScale(keyboardHeight)
+              : moderateScale(0),
         }}
         onBackdropPress={modalClose}>
         <View

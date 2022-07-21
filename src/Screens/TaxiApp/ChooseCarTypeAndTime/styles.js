@@ -261,7 +261,7 @@ export default ({fontFamily, themeColors}) => {
       marginRight: moderateScale(4),
       justifyContent: 'space-evenly',
       alignItems: 'center',
-      width:moderateScale(width/2.0)
+      width:moderateScale(width/2.5)
     },scheduleModalBtnStyle  :{
       flex: 1,
       height: 40,
@@ -269,6 +269,11 @@ export default ({fontFamily, themeColors}) => {
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: moderateScale(10),
+    },
+    DriverUnavailable:{
+      fontSize: textScale(12),
+      fontFamily: fontFamily.medium,
+      
     }
   });
   return styles;

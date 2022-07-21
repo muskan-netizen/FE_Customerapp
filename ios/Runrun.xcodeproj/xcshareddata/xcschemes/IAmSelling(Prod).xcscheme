@@ -14,16 +14,16 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E810C17028858C5200CEA1E3"
-               BuildableName = "EasyDrink.app"
-               BlueprintName = "EasyDrink"
+               BlueprintIdentifier = "E8239CD828896EA3009D6939"
+               BuildableName = "IAmSelling.app"
+               BlueprintName = "IAmSelling"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
@@ -31,7 +31,7 @@
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -44,9 +44,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E810C17028858C5200CEA1E3"
-            BuildableName = "EasyDrink.app"
-            BlueprintName = "EasyDrink"
+            BlueprintIdentifier = "E8239CD828896EA3009D6939"
+            BuildableName = "IAmSelling.app"
+            BlueprintName = "IAmSelling"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -61,15 +61,15 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E810C17028858C5200CEA1E3"
-            BuildableName = "EasyDrink.app"
-            BlueprintName = "EasyDrink"
+            BlueprintIdentifier = "E8239CD828896EA3009D6939"
+            BuildableName = "IAmSelling.app"
+            BlueprintName = "IAmSelling"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
-      buildConfiguration = "Debug">
+      buildConfiguration = "Release">
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"

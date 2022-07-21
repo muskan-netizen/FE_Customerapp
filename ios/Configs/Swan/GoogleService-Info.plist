@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>704963886440-mbklloged6oa4dspg18h3ja44f7pru6f.apps.googleusercontent.com</string>
+	<string>68641026166-uc02irckovljl1enq30f52jtne3ud36a.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.704963886440-mbklloged6oa4dspg18h3ja44f7pru6f</string>
+	<string>com.googleusercontent.apps.68641026166-uc02irckovljl1enq30f52jtne3ud36a</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>704963886440-p2dfkdemf99te8cou3rbirmtpdqnib40.apps.googleusercontent.com</string>
+	<string>68641026166-658rhkgs77chv0l3fhk70943e5fmd4tu.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBM3Svx8ZN7buzCnm3MBm0_amooxeUo1DM</string>
+	<string>AIzaSyAMvv50ffmVTeubab_fcUy1NAwBih0IiiQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>704963886440</string>
+	<string>68641026166</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.swan</string>
+	<string>com.Swan-User</string>
 	<key>PROJECT_ID</key>
-	<string>swan-c1649</string>
+	<string>swan-taxi-311315</string>
 	<key>STORAGE_BUCKET</key>
-	<string>swan-c1649.appspot.com</string>
+	<string>swan-taxi-311315.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:704963886440:ios:7933cf595afcb1af5daadd</string>
+	<string>1:68641026166:ios:59a0b0eee8805873a7af57</string>
 </dict>
 </plist>

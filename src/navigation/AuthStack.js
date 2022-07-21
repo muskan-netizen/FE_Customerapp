@@ -25,7 +25,7 @@ import navigationStrings from './navigationStrings';
 
 export default function (Stack) {
   const {appData, appStyle} = useSelector((state) => state?.initBoot);
-
+console.log(appStyle,"appstyle");
   const checkScreen = (id) => {
     let ScreenName = OuterScreen;
     switch (id) {

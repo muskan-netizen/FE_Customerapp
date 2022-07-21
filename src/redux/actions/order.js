@@ -22,7 +22,8 @@ import {
   RATE_TO_DRIVER,
   SOTRE_VENDORS,
   STORE_VENDOR_COUNT,
-  ALL_VENDOR_ORDERS
+  ALL_VENDOR_ORDERS,
+  RESCHDULE_ORDER,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -44,6 +45,7 @@ export function getOrderDetailForBilling(data = {}, headers = {}) {
 
 //Get Cart Detail
 export function getOrderDetail(data = {}, headers = {}) {
+  console.log(data,headers,"headersheadersheaders>>>>>>>>>");
   return new Promise((resolve, reject) => {
     apiPost(GET_ORDER_DETAIL, data, headers)
       .then((res) => {
@@ -310,13 +312,17 @@ export function ratingToDriver(data = {}, headers = {}) {
 }
 
 export function storeVendors(query, headers = {}) {
-  return apiGet(SOTRE_VENDORS + query, {}, headers)
+  return apiGet(SOTRE_VENDORS + query, {}, headers);
 }
 
 export function vendorOrderCount(query, headers = {}) {
-  return apiGet(STORE_VENDOR_COUNT + query, {}, headers)
+  return apiGet(STORE_VENDOR_COUNT + query, {}, headers);
 }
 
 export function allVendorOrders(query, headers = {}) {
-  return apiGet(ALL_VENDOR_ORDERS + query, {}, headers)
+  return apiGet(ALL_VENDOR_ORDERS + query, {}, headers);
+}
+
+export function rescheduleOrder(data = {}, headers = {}) {
+  return apiPost(RESCHDULE_ORDER, data, headers);
 }

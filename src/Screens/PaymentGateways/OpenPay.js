@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet, View, ScrollView, Alert } from 'react-native';
 import { useDarkMode } from 'react-native-dark-mode';
 import { WebView } from 'react-native-webview';
 import { useSelector } from 'react-redux';
@@ -36,31 +36,50 @@ export default function OpenPay({ navigation, route }) {
   useEffect(() => {
     apiHit();
   }, []);
-
+  
+  
+//Error handling in screen
+const errorMethod = (error) => {
+  console.log(error, 'erro>>>>>>errorerrorr');
+  // setLoadingAddons(false);
+  updateState({
+    isLoading: false,
+   
+  });
+  showError(error?.message || error?.error);
+};
+const error=(error)=>{
+  updateState({
+    isLoading:false
+  })
+  setTimeout(()=>{
+    Alert.alert('', error?.message, [
+   
+      {text: 'OK', onPress: () => navigation.navigate(navigationStrings.CART)},
+    ]);
+  },1000)
+}
   const apiHit = async () => {
     let queryData = `/${paramsData?.selectedPayment?.code?.toLowerCase()}?amount=${paramsData?.total_payable_amount
       }&payment_option_id=${paramsData?.payment_option_id
       }&action=${paramsData?.redirectFrom}&order_number=${paramsData?.orderDetail?.order_number}`;
-
-    try {
-      const res = await actions.openPaymentWebUrl(
-        queryData,
+       actions.openPaymentWebUrl(queryData,
         {},
         {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
-        },
-      );
-      console.log(res,"apiHit>openPay>res");
-
-      updateState({ webData: res?.data });
-     
-    } catch (error) {
-        console.log(error,"apiHit>openPay>res")
-      updateState({ isLoading: false });
-      showError(error.message || error);
-    }
+        }).then(
+          (res)=>{
+            console.log(res,"apiHit>openPay>res");
+            if(res.status==="error"){
+              error(res)
+            }
+          updateState({ webData: res?.data });
+          }
+          
+        ).catch(errorMethod) 
+      
   };
 
   const moveToNewScreen =

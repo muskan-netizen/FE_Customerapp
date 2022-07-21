@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>704878548584-mmv5lclroihahuu0ed5sjg10014btbb9.apps.googleusercontent.com</string>
+	<string>2097873346-4amhm0l9a4grldv8ethdp878obkmmsgq.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.704878548584-mmv5lclroihahuu0ed5sjg10014btbb9</string>
+	<string>com.googleusercontent.apps.2097873346-4amhm0l9a4grldv8ethdp878obkmmsgq</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>704878548584-7avohrkdh2km72g7umm4r85sii3k61sp.apps.googleusercontent.com</string>
+	<string>2097873346-2u6e23502rhhaafvh59uhrfbqttjiufm.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCyMOviHHT_atUoEKoPm9IZ00so4PDWMoM</string>
+	<string>AIzaSyBEcxvZ76mVXn80NUC4rvy1Y3__YaaC9GE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>704878548584</string>
+	<string>2097873346</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.app.toor</string>
+	<string>com.toor.order</string>
 	<key>PROJECT_ID</key>
-	<string>toor-97946</string>
+	<string>toor-order</string>
 	<key>STORAGE_BUCKET</key>
-	<string>toor-97946.appspot.com</string>
+	<string>toor-order.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:704878548584:ios:457048bf13493ea5968ddd</string>
+	<string>1:2097873346:ios:ed4c4876fd4b69bbaa165b</string>
 </dict>
 </plist>

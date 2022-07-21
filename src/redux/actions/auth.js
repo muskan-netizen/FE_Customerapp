@@ -39,6 +39,13 @@ import store from '../store';
 import types from '../types';
 const {dispatch} = store;
 
+export const setRedirection = (data) => {
+  dispatch({
+    type: types.REDIRECTED_FROM,
+    payload: data,
+  });
+};
+
 export const saveUserData = (data) => {
   dispatch({
     type: types.LOGIN,

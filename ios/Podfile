@@ -1808,6 +1808,10 @@ end
 target 'EasyDrink' do
   
 end
+#IAmSelling Target
+target 'IAmSelling' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

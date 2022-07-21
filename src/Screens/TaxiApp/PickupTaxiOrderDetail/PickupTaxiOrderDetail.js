@@ -187,6 +187,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   //       '/order-details/',
   //     )
   //   : null;
+  
 
   const urlValue = `/pickup-delivery/order-tracking-details`;
 
@@ -1025,6 +1026,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                         : paramData?.orderDetail?.order_number
                     }`}
                   </Text>
+             
                   {isWaitingOver && orderStatus == 'unassigned' ? (
                     <></>
                   ) : !!(
