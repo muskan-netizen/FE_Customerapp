@@ -49,7 +49,6 @@ import DeviceCountry, {
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
-    console.log(result, 'getCountryCoderesult');
     // {"code": "BY", "type": "telephony"}
     getPhonesCallingCodeAndCountryData = codes.filter(
       (x) => x.isoCode2 == result.code.toUpperCase(),

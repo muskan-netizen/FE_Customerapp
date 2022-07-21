@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "159203446386",
+    "project_id": "oui-speed-5f78f",
+    "storage_bucket": "oui-speed-5f78f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159203446386:android:aede257b944c798b6e7ceb",
+        "android_client_info": {
+          "package_name": "com.ouiSpeed.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "159203446386-2c5nqg8k29nafqonfmubh0dghhf52iol.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ouiSpeed.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "159203446386-cm3cna9f645on6t9405f6dmljna730jo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ouiSpeed.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "159203446386-su029vvd649mou1jnbnie14l84qq7fos.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ouiSpeed.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "159203446386-ikqkr7ob8pffnrf3pne0k0vvslt0is0r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-_FkMsvE4PXrT4cfpWDGgMPlgIP3KLbw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "159203446386-ikqkr7ob8pffnrf3pne0k0vvslt0is0r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -33,6 +33,8 @@ import {
   SDKPAYMENTWAVEURL,
   SDKPAYMENTCANCELWAVEURL,
   VENDOR_DROPOFF_SLOTS,
+  ADD_PRESCRIPTIONS,
+  DELETE_PRESCRIPTION,
 } from '../../config/urls';
 import {
   apiGet,
@@ -57,6 +59,7 @@ export const saveAddress = (data) => {
 
 //Get Cart Detail
 export function getCartDetail(url, data = {}, headers = {}) {
+  console.log(GET_CART_DETAIL+url,data,headers,"headers");
   return new Promise((resolve, reject) => {
     apiGet(GET_CART_DETAIL + url, data, headers)
       .then((res) => {
@@ -226,7 +229,7 @@ export function getListOfPaymentMethod(query = '', data = {}, headers = {}) {
 
 //Get List of payment method
 export function openPaymentWebUrl(query = '', data = {}, headers = {}) {
-  console.log('payment++ query', query);
+  console.log('payment++ query', GETWEBURL+query);
   console.log('payment++ data', data);
   return new Promise((resolve, reject) => {
     apiGet(GETWEBURL + query, data, headers)
@@ -501,6 +504,32 @@ export function cancelSdkUrl(query = '', data = {}, headers = {}) {
 export function getVendorDropoffSlots(url, data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiGet(VENDOR_DROPOFF_SLOTS + url, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+//Add Prescriptions
+export function addPrescriptions(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(ADD_PRESCRIPTIONS, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+//Delete  Prescriptions
+export function deletePrescriptions(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(DELETE_PRESCRIPTION, data, headers)
       .then((res) => {
         resolve(res);
       })

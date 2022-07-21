@@ -155,10 +155,19 @@ const MarketCard3 = ({
                       resizeMode="contain"
                       source={imagePath.icTime2}
                     />
-                    <Text numberOfLines={1} style={styles.distanceTimeStyle}>
-                      {checkEvenOdd(data?.timeofLineOfSightDistance)}-
-                      {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
-                    </Text>
+                    {data?.timeofLineOfSightDistance / 60 > 1 && appIds.hokitch ==getBundleId() ?
+
+                      <Text numberOfLines={1} style={styles.distanceTimeStyle}>
+                        ≈{checkEvenOdd(data?.timeofLineOfSightDistance)}
+                      </Text> :
+                      <Text numberOfLines={1} style={styles.distanceTimeStyle}>
+                        {checkEvenOdd(data?.timeofLineOfSightDistance)}
+                        -
+                        {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
+
+                      </Text>
+
+                    }
                   </View>
                 )}
               </View>
@@ -196,7 +205,7 @@ const MarketCard3 = ({
         {!!data?.is_vendor_closed && !!data?.closed_store_order_scheduled ? (
           <View >
 
-            <View style={{ justifyContent: 'center', backgroundColor: 'white' }}>
+            <View style={{ justifyContent: 'center',  }}>
               <FastImage
                 source={{
                   uri: imageUrl,
@@ -360,18 +369,7 @@ const MarketCard3 = ({
             </View>
           </View>
         ) : null}
-        {/* {!!data?.closed_store_order_scheduled ? (
-          <Text
-            style={{
-              ...commonStyles.mediumFont14Normal,
-              fontSize: textScale(10),
-              textAlign: 'left',
-              color: colors.redB,
-              marginTop: moderateScaleVertical(4),
-            }}>
-            {strings.WE_ARE_NOT_ACCEPTING} {data?.delaySlot}{' '}
-          </Text>
-        ) : null} */}
+        
       </View>
     </TouchableOpacity>
   );
@@ -446,7 +444,7 @@ export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme })
     vendorScheduledView: {
       position: 'absolute',
       bottom: moderateScaleVertical(1),
-      width: moderateScale(width / 1.2),
+      // width: moderateScale(width / 1.2),
       justifyContent: 'center',
       alignItems: 'center',
       alignSelf: 'center',

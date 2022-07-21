@@ -35,7 +35,6 @@ import colors from './src/styles/colors';
 import fontFamily from './src/styles/fontFamily';
 import messaging from '@react-native-firebase/messaging';
 
-
 import {
   moderateScale,
   moderateScaleVertical,
@@ -52,7 +51,6 @@ import {getItem, getUserData, setItem} from './src/utils/utils';
 import {MenuProvider} from 'react-native-popup-menu';
 import {getBundleId} from 'react-native-device-info';
 import {appIds} from './src/utils/constants/DynamicAppKeys';
-
 
 let CodePushOptions = {checkFrequency: codePush.CheckFrequency.MANUAL};
 
@@ -128,12 +126,11 @@ const App = () => {
   const isDarkMode = useDarkMode();
   useEffect(() => {
     //stop splashs screen from loading
-    if(getBundleId()==(appIds.masa || appIds.iPicknDrop || appIds.muvpod || appIds.sabroson )){
+    if (getBundleId() == (appIds.masa || appIds.iPicknDrop || appIds.muvpod)) {
       setTimeout(() => {
         SplashScreen.hide();
-      },200);
-    }
-    else{
+      }, 200);
+    } else {
       setTimeout(() => {
         SplashScreen.hide();
       }, 3000);
@@ -146,12 +143,10 @@ const App = () => {
     });
   }, []);
 
-
-
   const notificationConfig = () => {
     requestUserPermission();
     notificationListener();
-    
+
     if (Platform.OS == 'android') {
       checkExistChannel();
     }
@@ -164,12 +159,6 @@ const App = () => {
     (async () => {
       const userData = await getUserData();
       notificationConfig();
-      messaging().onNotificationOpenedApp(remoteMessage => {
-        console.log(
-          'Notification caused app to open from background state:',
-          remoteMessage.notification,
-        )
-      });
       const {dispatch} = store;
       if (userData && !!userData.auth_token) {
         dispatch({

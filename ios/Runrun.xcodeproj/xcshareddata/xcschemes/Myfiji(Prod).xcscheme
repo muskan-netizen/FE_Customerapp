@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "848BF2A6278C642100FEC147"
-               BuildableName = "Myfiji.app"
-               BlueprintName = "Myfiji"
+               BuildableName = "FijiEats.app"
+               BlueprintName = "FijiEats"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "848BF2A6278C642100FEC147"
-            BuildableName = "Myfiji.app"
-            BlueprintName = "Myfiji"
+            BuildableName = "FijiEats.app"
+            BlueprintName = "FijiEats"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "848BF2A6278C642100FEC147"
-            BuildableName = "Myfiji.app"
-            BlueprintName = "Myfiji"
+            BuildableName = "FijiEats.app"
+            BlueprintName = "FijiEats"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

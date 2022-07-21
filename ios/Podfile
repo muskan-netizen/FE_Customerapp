@@ -1027,8 +1027,8 @@ target 'Mozmarcas' do
  
 end
 
-#Myfiji Target
-target 'Myfiji' do
+#FijiEats Target
+target 'FijiEats' do
 
 end
 
@@ -1779,6 +1779,36 @@ end
 target 'Pawsee' do
   
 end
+
+#HairRun Target
+target 'HairRun' do
+  
+end
+#ZuriRide Target
+target 'ZuriRide' do
+  
+end
+#American Luxury Target
+target 'AmericanLuxury' do
+  
+end
+#SmartMur Target
+target 'SmartMur' do
+  
+end
+#OuiSpeed Target
+target 'OuiSpeed' do
+  
+end
+#GetItSent Target
+target 'GetItSent' do
+  
+end
+#EasyDrink Target
+target 'EasyDrink' do
+  
+end
+
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

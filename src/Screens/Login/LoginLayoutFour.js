@@ -23,7 +23,7 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import CountryPicker from 'react-native-country-picker-modal';
-import PhoneInput from "react-native-phone-number-input";
+import PhoneInput from 'react-native-phone-number-input';
 
 import {
   moderateScale,
@@ -55,12 +55,13 @@ import DeviceCountry, {
   TYPE_TELEPHONY,
   TYPE_CONFIGURATION,
 } from 'react-native-device-country';
-var getPhonesCallingCodeAndCountryData = null
+var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
-    console.log(result, "getCountryCoderesult");
     // {"code": "BY", "type": "telephony"}
-    getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == (result.code).toUpperCase())
+    getPhonesCallingCodeAndCountryData = codes.filter(
+      (x) => x.isoCode2 == result.code.toUpperCase(),
+    );
   })
   .catch((e) => {
     console.log(e);
@@ -79,7 +80,10 @@ export default function LoginLayoutFour({navigation}) {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   var clonedState = {};
   // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
-  console.log(getPhonesCallingCodeAndCountryData, "getPhonesCallingCodeAndCountryData");
+  console.log(
+    getPhonesCallingCodeAndCountryData,
+    'getPhonesCallingCodeAndCountryData',
+  );
   const [state, setState] = useState({
     // email: '',
     // password: '',

@@ -228,7 +228,7 @@ export default function Account3({navigation}) {
           `tel:${appData?.profile?.preferences?.sos_ambulance_contact}`,
         );
         break;
-     
+
       default:
         break;
     }
@@ -418,7 +418,7 @@ export default function Account3({navigation}) {
                 // iconRight={imagePath.goRight}
                 // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
-          ))}
+            ))}
 
           {/* {DeviceInfo.getBundleId() == appIds.bharatMove ? (
             <View>
@@ -491,7 +491,7 @@ export default function Account3({navigation}) {
                 // iconRight={imagePath.goRight}
                 // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
-          )}
+            )}
 
           {!!userData?.auth_token && (
             <ListItemHorizontal
@@ -620,42 +620,40 @@ export default function Account3({navigation}) {
             />
           ) : null}
           {!!userData?.auth_token &&
-            Platform.OS === 'android' &&
-            !!appMainData?.is_admin  ? (
-              <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-                onPress={() => {
-                  BluetoothManager.checkBluetoothEnabled().then(
-                    (enabled) => {
-                      if (Boolean(enabled)) {
-                        navigation.navigate(navigationStrings.ATTACH_PRINTER);
-                      } else {
-                        BluetoothManager.enableBluetooth()
-                          .then(() => {
-                            navigation.navigate(
-                              navigationStrings.ATTACH_PRINTER,
-                            );
-                          })
-                          .catch((err) => {});
-                      }
-                    },
-                    (err) => {
-                      err;
-                    },
-                  );
-                }}
-                iconLeft={imagePath.printer}
-                centerHeading={strings.ATTACH_PRINTER}
-                containerStyle={styles.containerStyle2}
-                centerHeadingStyle={{
-                  fontSize: textScale(14),
-                  fontFamily: fontFamily.regular,
-                }}
-                // iconRight={imagePath.goRight}
-                // rightIconStyle={{tintColor: colors.textGreyLight}}
-              />
-            ) :null }
+          Platform.OS === 'android' &&
+          !!appMainData?.is_admin ? (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={() => {
+                BluetoothManager.checkBluetoothEnabled().then(
+                  (enabled) => {
+                    if (Boolean(enabled)) {
+                      navigation.navigate(navigationStrings.ATTACH_PRINTER);
+                    } else {
+                      BluetoothManager.enableBluetooth()
+                        .then(() => {
+                          navigation.navigate(navigationStrings.ATTACH_PRINTER);
+                        })
+                        .catch((err) => {});
+                    }
+                  },
+                  (err) => {
+                    err;
+                  },
+                );
+              }}
+              iconLeft={imagePath.printer}
+              centerHeading={strings.ATTACH_PRINTER}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          ) : null}
 
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&
@@ -831,7 +829,11 @@ export default function Account3({navigation}) {
               // onPress={()=>actions.isVendorNotification(true)}
               onPress={userlogout}
               style={styles.touchAbleLoginVIew}>
-              <Text style={styles.loginLogoutText}>
+              <Text 
+              style={{...styles.loginLogoutText, color: isDarkMode
+                ? MyDarkTheme.colors.text
+                : colors.blackB}}
+              >
                 {!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
               </Text>
               <Image
@@ -851,6 +853,14 @@ export default function Account3({navigation}) {
           onPress={(index) => onSosButton(index)}
         />
       </SafeAreaView>
+      <ActionSheet
+        ref={actionSheet}
+        // title={'Choose one option'}
+        options={[strings.POLICE, strings.AMBULANCE, strings.CANCEL]}
+        cancelButtonIndex={2}
+        destructiveButtonIndex={2}
+        onPress={(index) => onSosButton(index)}
+      />
     </View>
   );
 }

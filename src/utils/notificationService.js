@@ -3,6 +3,7 @@ import messaging from '@react-native-firebase/messaging';
 import {Platform} from 'react-native';
 import PushNotification, {Importance} from 'react-native-push-notification';
 import {useSelector} from 'react-redux';
+import {navigate, navigationRef} from '../navigation/NavigationService';
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import {enums} from './enums';
@@ -84,9 +85,8 @@ const manageRedirectionsForVendorApp = async (data) => {
 };
 
 export const notificationListener = async () => {
-  console.log('shjdjdvsfvhfsfj');
   // _openApp()
- 
+
   PushNotification.configure({
     permissions: {
       alert: true,
@@ -97,8 +97,9 @@ export const notificationListener = async () => {
     popInitialNotification: true,
   });
 
-  messaging().onNotificationOpenedApp(remoteMessage => {
-    console.log('tap on notification',remoteMessage);
+  messaging().onNotificationOpenedApp((remoteMessage) => {
+    console.log('tap on notification', remoteMessage?.data?.order_id);
+    _onRedirectOrderScreen(remoteMessage?.data?.order_id);
   });
 
   createDefaultChannels();
@@ -129,8 +130,6 @@ export const notificationListener = async () => {
         console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
     );
   }
-    
- 
 
   messaging()
     .getInitialNotification()
@@ -153,9 +152,8 @@ export const notificationListener = async () => {
   return null;
 };
 
-
-const _openApp= ()=>{
-  messaging().onNotificationOpenedApp(remoteMessage => {
+const _openApp = () => {
+  messaging().onNotificationOpenedApp((remoteMessage) => {
     console.log(
       'Notification caused app to open from background state bla bla:',
       remoteMessage,
@@ -178,4 +176,13 @@ const _openApp= ()=>{
     }
   });
   console.log('i am here>>>>>');
-}
+};
+
+const _onRedirectOrderScreen = (id) => {
+  if (id) {
+    navigate(navigationStrings.ORDER_DETAIL, {
+      orderId: id,
+      fromActive: true, // this value use for useInterval
+    });
+  }
+};

@@ -32,6 +32,10 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
+              "client_id": "797859155680-06nfd5dce4136up6atf6b2p8kf2hj7kn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
               "client_id": "797859155680-p3ns6a06qgerh30tq9b2uradbuoit3fl.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
@@ -84,41 +88,9 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "797859155680-p3ns6a06qgerh30tq9b2uradbuoit3fl.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.fijieats.agent"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:797859155680:android:68fddf8de2b47e3e5a8a85",
-        "android_client_info": {
-          "package_name": "com.fijieats.user"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "797859155680-emqvcftcurhbt6purtsdkn1asvcie6u8.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.fijieats.user",
-            "certificate_hash": "15ddf39e08ac61ec4c50b4ec0b7899da4881ec99"
-          }
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAsuiaaaqxnCAvQ3lYRBjsJ_f4SV8HBK2w"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
+              "client_id": "797859155680-06nfd5dce4136up6atf6b2p8kf2hj7kn.apps.googleusercontent.com",
+              "client_type": 3
+            },
             {
               "client_id": "797859155680-p3ns6a06qgerh30tq9b2uradbuoit3fl.apps.googleusercontent.com",
               "client_type": 2,

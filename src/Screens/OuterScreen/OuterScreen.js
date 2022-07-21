@@ -433,7 +433,7 @@ export default function OuterScreen({navigation}) {
         <Text
           style={
             isDarkMode
-              ? [styles.header, {color: MyDarkTheme.colors.text}]
+              ? [styles.header, {color: MyDarkTheme.colors.text, backgroundColor: MyDarkTheme.colors.background}]
               : styles.header
           }>
           {strings.CREATE_YOUR_ACCOUNT}
@@ -441,7 +441,12 @@ export default function OuterScreen({navigation}) {
         <View style={{marginHorizontal: moderateScale(24)}}>
           {appData?.profile?.preferences?.home_tag_line ? (
             <View style={{marginHorizontal: moderateScaleVertical(30)}}>
-              <Text numberOfLines={2} style={styles.txtSmall}>
+              <Text numberOfLines={2} 
+               style={
+                isDarkMode
+                  ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+                  : styles.txtSmall
+              }>
                 {appData?.profile?.preferences?.home_tag_line
                   ? appData?.profile?.preferences?.home_tag_line
                   : ''}
@@ -453,12 +458,14 @@ export default function OuterScreen({navigation}) {
             containerStyle={{marginTop: moderateScaleVertical(50)}}
             btnText={strings.CREATE_AN_ACCOUNT}
             onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
+            
           />
           <ButtonWithLoader
             btnStyle={styles.guestBtn}
-            btnTextStyle={{color: themeColors.primary_color}}
+            btnTextStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : themeColors.primary_color}}
             onPress={() => onGuestLogin()}
-            btnText={strings.GUEST_LOGIN}
+            btnText={strings.GUEST_LOGIN} 
+            
           />
           <View style={{marginTop: moderateScaleVertical(50)}}>
             {!!google_login ||

@@ -2,7 +2,7 @@ import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { cloneDeep } from 'lodash';
 import LottieView from 'lottie-react-native';
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import React, {Fragment, useEffect, useRef, useState} from 'react';
 import * as Animatable from 'react-native-animatable';
 import {
   Dimensions,
@@ -17,7 +17,6 @@ import {
   View,
   Animated,
   Linking,
-
 } from 'react-native';
 import Communications from 'react-native-communications';
 import { useDarkMode } from 'react-native-dark-mode';
@@ -61,6 +60,9 @@ import useInterval from '../../utils/useInterval';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
 import stylesFun from './stylesCart';
+import {Calendar} from 'react-native-calendars';
+import Modal from 'react-native-modal';
+import GradientButton from '../../Components/GradientButton';
 
 const { height, width } = Dimensions.get('window');
 
@@ -72,9 +74,24 @@ export default function OrderDetail({ navigation, route }) {
   const paramData = route?.params;
   // console.log(paramData, 'paramData');
   const dineInType = useSelector((state) => state?.home?.dineInType);
-  let businessType = appData?.profile?.preferences?.business_type || null;
 
   const [lalaMoveUrl, setLalaMoveUrl] = useState(null);
+  const [modalType, setModalType] = useState('');
+  const [laundrySelectedPickupDate, setLaundrySelectedPickupDate] =
+    useState(null);
+  const [laundrySelectedPickupSlot, setLaundrySelectedPickupSlot] =
+    useState('');
+  const [laundrySelectedDropOffDate, setLaundrySelectedDropOffDate] =
+    useState(null);
+  const [laundrySelectedDropOffSlot, setLaundrySelectedDropOffSlot] =
+    useState('');
+  const [laundryAvailableDropOffSlot, setLaundryAvailableDropOffSlot] =
+    useState([]);
+  const [laundryAvailablePickupSlot, setLaundryAvailablePickupSlot] = useState(
+    [],
+  );
+  const [minimumDelayVendorDate, setMinimumDelayVendorDate] = useState(null);
+
 
   const [state, setState] = useState({
     isLoading: true,
@@ -126,6 +143,9 @@ export default function OrderDetail({ navigation, route }) {
     trackingUrl: paramData?.orderDetail?.dispatch_traking_url || null,
     ratingData: null,
     isDriverRateModal: false,
+    isVisibleTimeModal: false,
+    currentPickupDate: paramData?.orderDetail?.schedule_pickup,
+    currentDropOffDate: paramData?.orderDetail?.schedule_dropoff,
   });
   const {
     showTaxFeeArea,
@@ -147,14 +167,22 @@ export default function OrderDetail({ navigation, route }) {
     trackingUrl,
     ratingData,
     isDriverRateModal,
+    isVisibleTimeModal,
+    currentPickupDate,
+    currentDropOffDate,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
-  const businessTypes = appStyle?.homePageLayout;
-  const { appData, themeColors, currencies, languages, appStyle } = useSelector((state) => state.initBoot,);
-  const { preferences } = appData?.profile;
-  console.log(preferences?.business_type, "preferencespreferencespreferences");
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
+    (state) => state.initBoot,
+  );
+
+  console.log(languages,'i am here>>>>>>');
+
+
+  const {preferences} = appData?.profile;
+  let businessType = preferences?.business_type;
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily });
@@ -261,7 +289,9 @@ export default function OrderDetail({ navigation, route }) {
         ) {
           updateState({ ratingData: res?.data?.vendors[0].products[0] });
         }
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
+        setMinimumDelayVendorDate(res?.data?.vendors[0]?.delaySlot);
+
         if (res?.data) {
           if (res?.data?.vendors[0]?.tempCart) {
             updateState({
@@ -356,9 +386,6 @@ export default function OrderDetail({ navigation, route }) {
       .catch(errorMethod);
   };
 
-
-
-
   const errorMethod = (error) => {
     console.log(error, 'Error>>>>>>');
     updateState({ isLoading: false, isLoading: false, isLoadingC: false });
@@ -369,13 +396,6 @@ export default function OrderDetail({ navigation, route }) {
     // updateState({isLoading: true});
     _giveRatingToProduct(i, rating);
   };
-
-  {
-    console.log(
-      appData?.profile?.preferences?.digit_after_decimal,
-      'decimalDigitis',
-    );
-  }
 
   const _giveRatingToProduct = (productDetail, rating) => {
     let data = {};
@@ -970,8 +990,22 @@ export default function OrderDetail({ navigation, route }) {
     );
   };
 
-  console.log(cartData, "cartData?.address?.addresscartData?.address?.address");
-  const _renderItem = ({ item, index }) => {
+  //Select Time Laundry
+  const _selectTimeLaundry = (item) => {
+    if (item == 'dropoff') {
+      setModalType('dropoff');
+      updateState({
+        isVisibleTimeModal: true,
+      });
+    } else {
+      setModalType('pickup');
+      updateState({
+        isVisibleTimeModal: true,
+      });
+    }
+  };
+
+  const _renderItem = ({item, index}) => {
     return (
       <View
         key={index}
@@ -982,12 +1016,15 @@ export default function OrderDetail({ navigation, route }) {
           // marginVertical: moderateScale(10),
         }}>
         {/* show ETA Time */}
-        <View style={{ paddingHorizontal: moderateScale(10) }}>
-          <UserDetail data={item} type={strings.VENDER} containerStyle={{
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.background
-              : colors.white,
-          }}
+        <View style={{paddingHorizontal: moderateScale(10)}}>
+          <UserDetail
+            data={item}
+            type={strings.VENDER}
+            containerStyle={{
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.background
+                : colors.white,
+            }}
             textStyle={{
               color: isDarkMode
                 ? MyDarkTheme.colors.text
@@ -1265,6 +1302,82 @@ export default function OrderDetail({ navigation, route }) {
               }
             })
             : null}
+
+          {businessType == 'laundry' && (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginVertical: moderateScale(20),
+                paddingHorizontal: moderateScale(5),
+              }}>
+              <TouchableOpacity
+                style={{flexDirection: 'row'}}
+                onPress={() => _selectTimeLaundry('pickup')}>
+                <Image source={imagePath.pickUpSchedule} />
+                <View>
+                  <Text
+                    style={{
+                      ...styles.laundryApppriceItemLabel2,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : themeColors?.primary_color,
+                    }}>
+                    {' '}
+                    {strings.RE_SCEDULE_PICKUP}
+                  </Text>
+                  {laundrySelectedPickupDate && (
+                    <Text
+                      numberOfLines={2}
+                      style={{
+                        ...styles.laundryApppriceItemLabel2,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        marginLeft: 0,
+                      }}>
+                      {laundrySelectedPickupDate}
+                      {', '}
+                      {laundrySelectedPickupSlot}
+                    </Text>
+                  )}
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{flexDirection: 'row'}}
+                onPress={() => _selectTimeLaundry('dropoff')}>
+                <Image source={imagePath.dropOffSchedule} />
+                <View>
+                  <Text
+                    style={{
+                      ...styles.laundryApppriceItemLabel2,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : themeColors?.primary_color,
+                    }}>
+                    {' '}
+                    {strings.RE_SCEDULE_DROP}
+                  </Text>
+                  {laundrySelectedDropOffDate && (
+                    <Text
+                      numberOfLines={2}
+                      style={{
+                        ...styles.laundryApppriceItemLabel2,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        marginLeft: 0,
+                      }}>
+                      {laundrySelectedDropOffDate}
+                      {', '}
+                      {laundrySelectedDropOffSlot}
+                    </Text>
+                  )}
+                </View>
+              </TouchableOpacity>
+            </View>
+          )}
 
           {!!Number(item?.discount_amount) && (
             <View style={styles.itemPriceDiscountTaxView}>
@@ -1670,7 +1783,10 @@ export default function OrderDetail({ navigation, route }) {
             }}>
             {/* {console.log(preferences?.business_type, "preferences?.business_type")}
             { (preferences?.business_type == 'home_service') ? strings.DELIEVERY_ADDRESS: 'Service Address' } */}
-            {getBundleId() == appIds.quickLube && preferences?.business_type == 'home_service' ? strings.SERVICE_ADDRESS : strings.DELIEVERY_ADDRESS}
+            {getBundleId() == appIds.quickLube &&
+            preferences?.business_type == 'home_service'
+              ? strings.SERVICE_ADDRESS
+              : strings.DELIEVERY_ADDRESS}
           </Text>
 
           <View
@@ -1719,10 +1835,9 @@ export default function OrderDetail({ navigation, route }) {
               <Image source={imagePath.mapIcon} />
             )}
             {/* Service Address */}
-            {console.log(businessTypes, 'businessTypes iported>>>>>')}
-            {console.log(businessType, 'businessType>>>')}
-            <View style={{ marginLeft: moderateScale(12), flex: 1 }}>
-              {cartData?.luxury_option_id == 3 ?
+
+            <View style={{marginLeft: moderateScale(12), flex: 1}}>
+              {cartData?.luxury_option_id == 3 ? (
                 <Text
                   style={{
                     ...styles.summaryText,
@@ -1732,9 +1847,10 @@ export default function OrderDetail({ navigation, route }) {
                       : colors.blackOpacity43,
                     flex: 1,
                   }}>
+                    
                   {cartData?.vendors[0]?.vendor?.address}
-
-                </Text> :
+                </Text>
+              ) : (
                 <Text
                   style={{
                     ...styles.summaryText,
@@ -1744,16 +1860,15 @@ export default function OrderDetail({ navigation, route }) {
                       : colors.blackOpacity43,
                     flex: 1,
                   }}>
-
-                  {`${cartData?.address?.house_number === null
+                  {`${
+                    cartData?.address?.house_number === null
                       ? ''
                       : `${cartData?.address?.house_number}, `
-                    }`}
+                  }`}
                   {cartData?.address?.address} {''}
                   {cartData?.address?.pincode}
                 </Text>
-              }
-
+              )}
             </View>
           </View>
 
@@ -2067,7 +2182,7 @@ export default function OrderDetail({ navigation, route }) {
                 MyDarkTheme={MyDarkTheme}
               />
             )}
-          {console.log(cartData?.tip_amount, 'cartData?.tip_amount>')}
+
           {!!cartData?.tip_amount && cartData?.tip_amount > 0 && (
             <LeftRightText
               leftText={strings.TIP_AMOUNT}
@@ -2367,7 +2482,6 @@ export default function OrderDetail({ navigation, route }) {
   };
 
   const acceptRejectDriverUpdation = (status) => {
-    console.log(cartData, 'cartData');
     if (
       status == 1 &&
       updatedcartData &&
@@ -2398,7 +2512,7 @@ export default function OrderDetail({ navigation, route }) {
           // updateState({isLoading: false});
           _getOrderDetailScreen();
         })
-        .catch(errorMethod);
+        .catch((error)=>console.log(error,"errorororor"));
     }
   };
 
@@ -2866,8 +2980,7 @@ export default function OrderDetail({ navigation, route }) {
                 orderStatus?.current_status?.title != 'Delivered' ? (
                 <Marker.Animated
                   ref={markerRef}
-                  coordinate={state.animateDriver}
-                >
+                  coordinate={state.animateDriver}>
                   <Image
                     source={appIds?.sabroson?imagePath?.icBikeMarker: imagePath.icScooter}
                     style={{
@@ -2924,8 +3037,6 @@ export default function OrderDetail({ navigation, route }) {
                 width: moderateScale(100),
               }}
               colorFilters={[
-
-
                 {
                   keypath: 'right sand',
                   color: themeColors.primary_color,
@@ -3172,6 +3283,239 @@ export default function OrderDetail({ navigation, route }) {
     );
   };
 
+  const onSelectTime = (item) => {
+    if (modalType == 'pickup') {
+      setLaundrySelectedPickupSlot(item?.value);
+    } else {
+      setLaundrySelectedDropOffSlot(item?.value);
+    }
+  };
+
+  const isSlotSelected1 = (item) => {
+    if (laundrySelectedPickupSlot == item.value) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const isSlotSelected2 = (item) => {
+    if (laundrySelectedDropOffSlot == item.value) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const renderTimeSlots = ({item, index}) => {
+    return (
+      <TouchableOpacity
+        key={String(index)}
+        activeOpacity={0.8}
+        onPress={() => onSelectTime(item)}
+        style={{
+          backgroundColor: isSlotSelected1(item)
+            ? themeColors?.primary_color
+            : colors.white,
+
+          padding: 8,
+          borderRadius: 8,
+          borderWidth: isSlotSelected1(item) ? 0 : 1,
+          borderColor: colors.borderColorGrey,
+        }}>
+        <Text
+          style={{
+            color: isSlotSelected1(item) ? colors.white : colors.black,
+            fontFamily: fontFamily.regular,
+            fontSize: textScale(11),
+          }}>
+          {item?.value}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderTimeSlots2 = ({item, index}) => {
+    return (
+      <TouchableOpacity
+        key={String(index)}
+        activeOpacity={0.8}
+        onPress={() => onSelectTime(item)}
+        style={{
+          backgroundColor: isSlotSelected2(item)
+            ? themeColors.primary_color
+            : colors.white,
+          padding: 8,
+          borderRadius: 8,
+          borderWidth: isSlotSelected2(item) ? 0 : 1,
+          borderColor: colors.borderColorGrey,
+        }}>
+        <Text
+          style={{
+            color: isSlotSelected2(item) ? colors.white : colors.black,
+            fontFamily: fontFamily.regular,
+            fontSize: textScale(11),
+          }}>
+          {item?.value}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const onCloseModal = () => {
+    setLaundrySelectedPickupDate(null);
+    setLaundrySelectedDropOffDate(null);
+    setLaundrySelectedPickupSlot('');
+    setLaundrySelectedDropOffSlot('');
+    updateState({
+      isVisibleTimeModal: false,
+    });
+  };
+
+  const laundrySlotSelection = (day) => {
+    if (modalType == 'pickup') {
+      setLaundrySelectedPickupDate(day.dateString);
+      setLaundrySelectedPickupSlot('');
+    } else {
+      setLaundrySelectedDropOffDate(day.dateString);
+      setLaundrySelectedDropOffSlot('');
+    }
+
+    checkVendorSlots(day.dateString);
+  };
+
+  const checkVendorSlots = async (date) => {
+    if (modalType !== 'pickup') {
+      try {
+        let vendorId = cartItems[0].vendor.id;
+        const res = await actions.getVendorDropoffSlots(
+          `?vendor_id=${vendorId}&date=${date}&delivery=${dineInType}`,
+          {},
+          {
+            code: appData?.profile?.code,
+            timezone: RNLocalize.getTimeZone(),
+          },
+        );
+        setLaundryAvailableDropOffSlot(res);
+      } catch (error) {
+        console.log('error riased', error);
+      }
+    } else {
+      try {
+        let vendorId = cartItems[0].vendor.id;
+        const res = await actions.checkVendorSlots(
+          `?vendor_id=${vendorId}&date=${date}&delivery=${dineInType}`,
+          {
+            code: appData?.profile?.code,
+            timezone: RNLocalize.getTimeZone(),
+          },
+        );
+
+        setLaundryAvailablePickupSlot(res);
+      } catch (error) {
+        console.log('error riased', error);
+      }
+    }
+  };
+
+  const selectOrderDate = () => {
+    if (
+      modalType == 'pickup' &&
+      (!laundrySelectedPickupDate || !laundrySelectedPickupSlot)
+    ) {
+      alert('Please select pickup date and time slots');
+      return;
+    }
+    if (
+      modalType !== 'pickup' &&
+      (!laundrySelectedDropOffDate || !laundrySelectedDropOffSlot)
+    ) {
+      alert('Please select drop-off date and time slots');
+      return;
+    } else {
+      setDateAndTimeSchedule();
+      return;
+    }
+  };
+
+  const setDateAndTimeSchedule = () => {
+    if (
+      modalType == 'pickup' &&
+      !cartItems[0]?.same_day_orders_for_rescheduling &&
+      moment(currentDropOffDate, 'DD/MM/YYYY').format('DD/MM/YYYY') ==
+        moment(laundrySelectedPickupDate).format('DD/MM/YYYY')
+    ) {
+      alert('You can not reschedule pickup & drop off on the same day');
+      return;
+    }
+    if (
+      modalType !== 'pickup' &&
+      !cartItems[0]?.same_day_orders_for_rescheduling &&
+      moment(currentPickupDate, 'DD/MM/YYYY').format('DD/MM/YYYY') ==
+        moment(laundrySelectedDropOffDate).format('DD/MM/YYYY')
+    ) {
+      alert('You can not reschedule pickup & drop off on the same day');
+      return;
+    }
+
+    if (
+      modalType == 'pickup' &&
+      moment(currentDropOffDate, 'DD/MM/YYYY').format('DD/MM/YYYY') <
+        moment(laundrySelectedPickupDate).format('DD/MM/YYYY')
+    ) {
+      alert(`Selected date is invalid.`);
+      return;
+    }
+
+    if (
+      modalType !== 'pickup' &&
+      moment(currentPickupDate, 'DD/MM/YYYY').format('DD/MM/YYYY') >
+        moment(laundrySelectedDropOffDate).format('DD/MM/YYYY')
+    ) {
+      alert(`Selected date is invalid.`);
+      return;
+    }
+
+    updateState({
+      isVisibleTimeModal: false,
+    });
+
+    actions
+      .rescheduleOrder(
+        {
+          order_id: cartData?.id,
+          vendor_id: cartItems[0]?.vendor_id,
+          pickup_reschdule_slot: laundrySelectedPickupSlot || '',
+          pickup_reschdule_date: laundrySelectedPickupDate || '',
+          drop_reschdule_slot: laundrySelectedDropOffSlot || '',
+          drop_reschdule_date: laundrySelectedDropOffDate || '',
+          reschdule_type: modalType == 'pickup' ? 'P' : 'D',
+        },
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'res>>>>res');
+        if (res?.status == 'Success') {
+          updateState({
+            currentPickupDate: moment(laundrySelectedPickupDate).format(
+              'DD/MM/YYYY',
+            ),
+            currentDropOffDate: moment(laundrySelectedDropOffDate).format(
+              'DD/MM/YYYY',
+            ),
+          });
+          showSuccess(res?.message);
+        }
+      })
+      .catch((err) => {
+        showError(err?.error || err?.message || '');
+      });
+  };
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -3211,7 +3555,9 @@ export default function OrderDetail({ navigation, route }) {
           ListHeaderComponent={cartItems.length ? getHeader() : null}
           ListFooterComponent={cartItems.length ? getFooter() : null}
           showsVerticalScrollIndicator={false}
-          keyExtractor={(item, index) => { return index.toString() }}
+          keyExtractor={(item, index) => {
+            return index.toString();
+          }}
           renderItem={_renderItem}
           ListEmptyComponent={<ListEmptyCart isLoading={isLoading} />}
           style={{ flex: 1 }}
@@ -3232,6 +3578,210 @@ export default function OrderDetail({ navigation, route }) {
           />
         ) : null}
       </View>
+
+      <Modal
+        transparent={true}
+        isVisible={isVisibleTimeModal}
+        animationType={'none'}
+        onBackdropPress={onCloseModal}
+        style={{margin: 0, justifyContent: 'flex-end'}}>
+        <TouchableOpacity style={styles.closeButton} onPress={onCloseModal}>
+          <Image
+            style={isDarkMode && {tintColor: MyDarkTheme.colors.white}}
+            source={imagePath.crossB}
+          />
+        </TouchableOpacity>
+        <View
+          style={{
+            ...styles.modalMainViewContainer,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : colors.white,
+          }}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            bounces={false}
+            style={{
+              ...styles.modalMainViewContainer,
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.white,
+            }}>
+            <View
+              style={{
+                // flex: 0.6,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 10,
+              }}>
+              <Text
+                style={{
+                  ...styles.carType,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.blackC,
+                }}>
+                {strings.SELECTDATEANDTIME}
+              </Text>
+            </View>
+            {businessType == 'laundry' && (
+              <View>
+                <Fragment>
+                  <ScrollView>
+                    {modalType == 'pickup' ? (
+                      <Calendar
+                        current={new Date()}
+                        minDate={
+                          !!minimumDelayVendorDate
+                            ? minimumDelayVendorDate
+                            : new Date()
+                        }
+                        onDayPress={laundrySlotSelection}
+                        markedDates={{
+                          [laundrySelectedPickupDate]: {
+                            selected: true,
+                            disableTouchEvent: true,
+                            selectedColor: themeColors.primary_color,
+                            selectedTextColor: colors.white,
+                          },
+                        }}
+                        theme={{
+                          arrowColor: themeColors.primary_color,
+                          textDayFontFamily: fontFamily.medium,
+                          textMonthFontFamily: fontFamily.medium,
+                          textDayHeaderFontFamily: fontFamily.bold,
+                        }}
+                      />
+                    ) : (
+                      <Calendar
+                        current={new Date()}
+                        minDate={
+                          !!minimumDelayVendorDate
+                            ? minimumDelayVendorDate
+                            : new Date()
+                        }
+                        onDayPress={laundrySlotSelection}
+                        markedDates={{
+                          [laundrySelectedDropOffDate]: {
+                            selected: true,
+                            disableTouchEvent: true,
+                            selectedColor: themeColors.primary_color,
+                            selectedTextColor: colors.white,
+                          },
+                        }}
+                        theme={{
+                          arrowColor: themeColors.primary_color,
+                          textDayFontFamily: fontFamily.medium,
+                          textMonthFontFamily: fontFamily.medium,
+                          textDayHeaderFontFamily: fontFamily.bold,
+                        }}
+                      />
+                    )}
+
+                    {modalType == 'pickup' ? (
+                      <View>
+                        <Text
+                          style={{
+                            marginHorizontal: moderateScale(24),
+                            fontFamily: fontFamily.medium,
+                            fontSize: textScale(12),
+                            marginBottom: moderateScaleVertical(8),
+                          }}>
+                          {strings.TIME_SLOT}
+                        </Text>
+                        <FlatList
+                          horizontal
+                          showsHorizontalScrollIndicator={false}
+                          data={laundryAvailablePickupSlot || []}
+                          renderItem={renderTimeSlots}
+                          keyExtractor={(item) => item.value || ''}
+                          ItemSeparatorComponent={() => (
+                            <View style={{marginRight: moderateScale(12)}} />
+                          )}
+                          ListHeaderComponent={() => (
+                            <View style={{marginLeft: moderateScale(24)}} />
+                          )}
+                          ListFooterComponent={() => (
+                            <View style={{marginRight: moderateScale(24)}} />
+                          )}
+                          ListEmptyComponent={() => (
+                            <View>
+                              <Text
+                                style={{
+                                  fontFamily: fontFamily.medium,
+                                  color: colors.blackOpacity66,
+                                }}>
+                                {!laundrySelectedPickupDate
+                                  ? ' Please select date.'
+                                  : ' Slots are not found for selected date.'}
+                              </Text>
+                            </View>
+                          )}
+                        />
+                      </View>
+                    ) : (
+                      <View>
+                        <Text
+                          style={{
+                            marginHorizontal: moderateScale(24),
+                            fontFamily: fontFamily.medium,
+                            fontSize: textScale(12),
+                            marginBottom: moderateScaleVertical(8),
+                          }}>
+                          {strings.TIME_SLOT}
+                        </Text>
+                        <FlatList
+                          horizontal
+                          showsHorizontalScrollIndicator={false}
+                          data={laundryAvailableDropOffSlot || []}
+                          renderItem={renderTimeSlots2}
+                          keyExtractor={(item) => item.value || ''}
+                          ItemSeparatorComponent={() => (
+                            <View style={{marginRight: moderateScale(12)}} />
+                          )}
+                          ListHeaderComponent={() => (
+                            <View style={{marginLeft: moderateScale(24)}} />
+                          )}
+                          ListFooterComponent={() => (
+                            <View style={{marginRight: moderateScale(24)}} />
+                          )}
+                          ListEmptyComponent={() => (
+                            <View>
+                              <Text
+                                style={{
+                                  fontFamily: fontFamily.medium,
+                                  color: colors.blackOpacity66,
+                                }}>
+                                {!laundrySelectedDropOffDate
+                                  ? ' Please select date.'
+                                  : ' Slots are not found for selected date.'}
+                              </Text>
+                            </View>
+                          )}
+                        />
+                      </View>
+                    )}
+                  </ScrollView>
+                </Fragment>
+              </View>
+            )}
+            <View
+              style={{
+                marginHorizontal: moderateScale(24),
+              }}>
+              <GradientButton
+                colorsArray={[
+                  themeColors.primary_color,
+                  themeColors.primary_color,
+                ]}
+                // textStyle={styles.textStyle}
+                onPress={selectOrderDate}
+                marginTop={moderateScaleVertical(10)}
+                marginBottom={moderateScaleVertical(30)}
+                btnText={strings.SELECT}
+              />
+            </View>
+          </ScrollView>
+        </View>
+      </Modal>
     </WrapperContainer>
   );
 }

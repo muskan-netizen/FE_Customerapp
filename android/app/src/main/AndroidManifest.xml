@@ -45,7 +45,7 @@
         android:screenOrientation="portrait"
         >
         <intent-filter>
-        <action android:name="https://hokitch.rostaging.com/user/orders" />
+        <action android:name="http://192.168.97.160:9091/client/order" />
         <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
         <!-- <intent-filter>
@@ -91,7 +91,7 @@
          <!-- Change the value to true to enable pop-up for in foreground on receiving remote notifications (for prevent duplicating while showing local notifications set this to false) -->
      <!-- Change the value to true to enable pop-up for in foreground on receiving remote notifications (for prevent duplicating while showing local notifications set this to false) -->
         <meta-data  android:name="com.dieam.reactnativepushnotification.notification_foreground"
-                    android:value="false"/>
+                    android:value="true"/>
     
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActions" />
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />
