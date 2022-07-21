@@ -43,17 +43,6 @@ import LanguageModal from '../../Components/LanguageModal';
 import {setItem} from '../../utils/utils';
 
 export default function OuterScreen({navigation}) {
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const [state, setState] = useState({
-    getLanguage: '',
-    isLoading: false,
-    isSelectLanguageModal: false,
-    isLangSelected: false,
-    allLangs: [],
-  });
   const {
     appData,
     currencies,
@@ -61,7 +50,20 @@ export default function OuterScreen({navigation}) {
     languages,
     shortCodeStatus,
     appStyle,
+    themeToggle,
+    themeColor,
+    redirectedFrom,
   } = useSelector((state) => state?.initBoot);
+
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const [state, setState] = useState({
+    getLanguage: '',
+    isLoading: false,
+    isSelectLanguageModal: false,
+    isLangSelected: false,
+    allLangs: [],
+  });
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors});
@@ -131,7 +133,7 @@ export default function OuterScreen({navigation}) {
               !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
             ) {
-              navigation.push(navigationStrings.TAB_ROUTES);
+              successLogin();
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
@@ -143,18 +145,30 @@ export default function OuterScreen({navigation}) {
               !!res.data?.verify_details?.is_email_verified ||
               !!res.data?.verify_details?.is_phone_verified
             ) {
-              navigation.push(navigationStrings.TAB_ROUTES);
+              successLogin();
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
           } else {
-            navigation.push(navigationStrings.TAB_ROUTES);
+            successLogin();
           }
         }
         updateState({isLoading: false});
         getCartDetail();
       })
       .catch(errorMethod);
+  };
+
+  const successLogin = () => {
+    if (redirectedFrom == 'cart') {
+      actions.setRedirection('');
+      navigation.push(navigationStrings.TAB_ROUTES, {
+        screen: navigationStrings.CART,
+        params: {screen: navigationStrings.CART},
+      });
+      return;
+    }
+    navigation.push(navigationStrings.TAB_ROUTES);
   };
 
   //error handling
@@ -262,7 +276,7 @@ export default function OuterScreen({navigation}) {
 
   useEffect(() => {
     const all_languages = [...languages.all_languages];
-    
+
     all_languages.forEach((itm, indx) => {
       if (languages?.primary_language?.id === itm?.id) {
         all_languages[indx].isActive = true;
@@ -419,7 +433,7 @@ export default function OuterScreen({navigation}) {
         <Text
           style={
             isDarkMode
-              ? [styles.header, {color: MyDarkTheme.colors.text}]
+              ? [styles.header, {color: MyDarkTheme.colors.text, backgroundColor: MyDarkTheme.colors.background}]
               : styles.header
           }>
           {strings.CREATE_YOUR_ACCOUNT}
@@ -427,7 +441,12 @@ export default function OuterScreen({navigation}) {
         <View style={{marginHorizontal: moderateScale(24)}}>
           {appData?.profile?.preferences?.home_tag_line ? (
             <View style={{marginHorizontal: moderateScaleVertical(30)}}>
-              <Text numberOfLines={2} style={styles.txtSmall}>
+              <Text numberOfLines={2} 
+               style={
+                isDarkMode
+                  ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+                  : styles.txtSmall
+              }>
                 {appData?.profile?.preferences?.home_tag_line
                   ? appData?.profile?.preferences?.home_tag_line
                   : ''}
@@ -439,12 +458,14 @@ export default function OuterScreen({navigation}) {
             containerStyle={{marginTop: moderateScaleVertical(50)}}
             btnText={strings.CREATE_AN_ACCOUNT}
             onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
+            
           />
           <ButtonWithLoader
             btnStyle={styles.guestBtn}
-            btnTextStyle={{color: themeColors.primary_color}}
+            btnTextStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : themeColors.primary_color}}
             onPress={() => onGuestLogin()}
-            btnText={strings.GUEST_LOGIN}
+            btnText={strings.GUEST_LOGIN} 
+            
           />
           <View style={{marginTop: moderateScaleVertical(50)}}>
             {!!google_login ||

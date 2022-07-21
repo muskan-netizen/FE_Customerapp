@@ -520,8 +520,11 @@ export default {
     'https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/app_splashscreen/73jvbtlLAQCkDgO58NZ8Zx9tdoOnoxlgNICcS7Gp.mp4',
   sabroson: require('../assets/sabroson.mp4'),
   icSos: require('../assets/images/RoyoorderNewImages/ic_sos.png'),
-  subscribe:require('../assets/images/subscribe.png'),
+  subscribe: require('../assets/images/subscribe.png'),
   icNoDrivers: require('../assets/images/RoyoorderNewImages/ic_nodrivers.png'),
   icLocationBlue: require('../assets/images/RoyoorderNewImages/ic_location_blue.png'),
+  icInstagram: require('../assets/images/RoyoorderNewImages/ic_instagram.png'),
+  icAddPlaceholder: require('../assets/images/RoyoorderNewImages/ic_placeholder.png'),
+  icPrescription: require('../assets/images/RoyoorderNewImages/ic_pres.png'),
   icBikeMarker: require('../assets/images/TrackOrderImages/ic_bike.png'),
 };

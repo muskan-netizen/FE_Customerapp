@@ -187,6 +187,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   //       '/order-details/',
   //     )
   //   : null;
+  
 
   const urlValue = `/pickup-delivery/order-tracking-details`;
 

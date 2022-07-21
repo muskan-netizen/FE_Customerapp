@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>969049768568-gq7empbi28icaamt6m8f979lrltvp6os.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.969049768568-gq7empbi28icaamt6m8f979lrltvp6os</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>969049768568-24mneitb34gl3rl5cc5cnnvuaemiml9i.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA3CM7NkuPLKBX0fq4lnkhQ-BTkWlCudZc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>969049768568</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.easyDrink.order</string>
+	<key>PROJECT_ID</key>
+	<string>easy-drink-9a092</string>
+	<key>STORAGE_BUCKET</key>
+	<string>easy-drink-9a092.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:969049768568:ios:11c78fba0cc4d54149e38d</string>
+</dict>
+</plist>

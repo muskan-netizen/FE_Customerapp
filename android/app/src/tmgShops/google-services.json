@@ -1,65 +1,58 @@
 {
   "project_info": {
-    "project_number": "528960069350",
-    "project_id": "tmg-shops",
-    "storage_bucket": "tmg-shops.appspot.com"
+    "project_number": "751395574162",
+    "project_id": "tmg-shops-f523f",
+    "storage_bucket": "tmg-shops-f523f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:528960069350:android:1885ed62fe9960aa54a527",
+        "mobilesdk_app_id": "1:751395574162:android:7e884cf2406372fb8ef14b",
         "android_client_info": {
-          "package_name": "com.tmgShops"
+          "package_name": "com.tmgShops.orders"
         }
       },
       "oauth_client": [
         {
-          "client_id": "528960069350-2q6b4chmefdpge1u7lr8sagcp42llaa5.apps.googleusercontent.com",
+          "client_id": "751395574162-2e1k3sj6h7nljt8isef2cjpptm4a0tvm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.tmgShops",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "528960069350-4nbugtvsabvf5eh7fsifjtbmus660eth.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tmgShops",
+            "package_name": "com.tmgShops.orders",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "528960069350-vqofa2kd3rk23247d2osoq9cip2kop0l.apps.googleusercontent.com",
+          "client_id": "751395574162-antb873cogks3q3m1m1q3l7cov9ggvfk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.tmgShops",
+            "package_name": "com.tmgShops.orders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "751395574162-va97cplfof1qf2lhqteeh4d4t7vf2s0p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tmgShops.orders",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "528960069350-0ljrghd8qbc5r361cv612cbaobujpacq.apps.googleusercontent.com",
+          "client_id": "751395574162-69927opdf0637a3a7kimn8lh3oqmhihu.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBZxvlwrskZdGNBuec0zsUHq0nm6ojuyjU"
+          "current_key": "AIzaSyAITf2gUoDXoNTzAqfwPQtmG_4XJMJXEuw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "528960069350-0ljrghd8qbc5r361cv612cbaobujpacq.apps.googleusercontent.com",
+              "client_id": "751395574162-69927opdf0637a3a7kimn8lh3oqmhihu.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "528960069350-853ntpjnfaortjit4a64m5il4p9v29rg.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.tmgShops"
-              }
             }
           ]
         }

@@ -39,19 +39,20 @@ import {MyDarkTheme} from '../../styles/theme';
 import {useNavigation} from '@react-navigation/native';
 import {checkIsAdmin} from '../../utils/utils';
 import codes from 'country-calling-code';
-import * as RNLocalize from "react-native-localize";
+import * as RNLocalize from 'react-native-localize';
 import RNOtpVerify from 'react-native-otp-verify';
 import DeviceCountry, {
   TYPE_ANY,
   TYPE_TELEPHONY,
   TYPE_CONFIGURATION,
 } from 'react-native-device-country';
-var getPhonesCallingCodeAndCountryData = null
+var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
-    console.log(result, "getCountryCoderesult");
     // {"code": "BY", "type": "telephony"}
-    getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == (result.code).toUpperCase())
+    getPhonesCallingCodeAndCountryData = codes.filter(
+      (x) => x.isoCode2 == result.code.toUpperCase(),
+    );
   })
   .catch((e) => {
     console.log(e);
@@ -96,7 +97,9 @@ export default function VerifyAccount({navigation, route}) {
     countryPickerModalVisible: false,
   });
 
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const {appStyle, themeColors, redirectedFrom} = useSelector(
+    (state) => state?.initBoot,
+  );
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({userData, fontFamily, themeColors});
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -187,7 +190,6 @@ export default function VerifyAccount({navigation, route}) {
   };
 
   const otpHandler = (message) => {
-    
     console.log(message, 'complete msg>>>');
     if (!!message) {
       var OTP = message.replace(/[^0-9]/g, '');
@@ -201,7 +203,6 @@ export default function VerifyAccount({navigation, route}) {
     Keyboard.dismiss();
   };
 
-
   useEffect(() => {
     if (!!email) {
       updateState({editableEmail: false});
@@ -211,9 +212,7 @@ export default function VerifyAccount({navigation, route}) {
       updateState({editablePhone: false});
       sendOTP('phone');
     }
-  },[])
-  
-  
+  }, []);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -251,8 +250,6 @@ export default function VerifyAccount({navigation, route}) {
       if (timerId2) clearTimeout(timerId2);
     };
   }, [timer2]);
-
-
 
   const isValidData = (otp) => {
     const error = validations({
@@ -300,7 +297,15 @@ export default function VerifyAccount({navigation, route}) {
               ) {
                 navigation.goBack();
               } else {
-                navigation.push(navigationStrings.TAB_ROUTES);
+                if (redirectedFrom == 'cart') {
+                  actions.setRedirection('');
+                  navigation.push(navigationStrings.TAB_ROUTES, {
+                    screen: navigationStrings.CART,
+                    params: {screen: navigationStrings.CART},
+                  });
+                } else {
+                  navigation.push(navigationStrings.TAB_ROUTES);
+                }
               }
             }
           } else if (res?.data?.client_preference?.verify_email) {
@@ -312,7 +317,15 @@ export default function VerifyAccount({navigation, route}) {
               ) {
                 navigation.goBack();
               } else {
-                navigation.push(navigationStrings.TAB_ROUTES);
+                if (redirectedFrom == 'cart') {
+                  actions.setRedirection('');
+                  navigation.push(navigationStrings.TAB_ROUTES, {
+                    screen: navigationStrings.CART,
+                    params: {screen: navigationStrings.CART},
+                  });
+                } else {
+                  navigation.push(navigationStrings.TAB_ROUTES);
+                }
               }
             }
           } else if (res?.data?.client_preference?.verify_phone) {
@@ -324,7 +337,15 @@ export default function VerifyAccount({navigation, route}) {
               ) {
                 navigation.goBack();
               } else {
-                navigation.push(navigationStrings.TAB_ROUTES);
+                if (redirectedFrom == 'cart') {
+                  actions.setRedirection('');
+                  navigation.push(navigationStrings.TAB_ROUTES, {
+                    screen: navigationStrings.CART,
+                    params: {screen: navigationStrings.CART},
+                  });
+                } else {
+                  navigation.push(navigationStrings.TAB_ROUTES);
+                }
               }
             }
           }
@@ -464,7 +485,12 @@ export default function VerifyAccount({navigation, route}) {
             // onPress={() => navigation.push(navigationStrings.TAB_ROUTES)}>
             onPress={() => {
               // console.log(route.params.data.data);
-              checkIsAdmin(navigation_, navigation, route?.params?.data?.data);
+              checkIsAdmin(
+                navigation_,
+                navigation,
+                route?.params?.data?.data,
+                redirectedFrom,
+              );
               // navigation.push(navigationStrings.TAB_ROUTES)
             }}>
             <Text style={styles.skipText}>{strings.SKIP}</Text>

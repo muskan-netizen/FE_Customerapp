@@ -37,6 +37,8 @@ import {
   CategoryBrands,
   ScrollableCategory,
   LaundryAvailableVendors,
+  ChatScreen,
+  ChatRoom,
   Subscriptions2,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
@@ -291,11 +293,11 @@ export default function () {
         component={CategoryBrands}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.CART_SCREEN}
-        component={CartStack}
+        component={ChatScreen}
         options={{headerShown: false, gestureEnabled: true}}
-      /> */}
+      />
 
       <Stack.Screen
         name={navigationStrings.SCROLLABLE_CATEGORY}
@@ -307,6 +309,13 @@ export default function () {
         component={LaundryAvailableVendors}
         options={{headerShown: false}}
       />
+         <Stack.Screen
+        name={navigationStrings.CHAT_ROOM}
+        component={ChatRoom}
+        options={{ headerShown: false }}
+      />
+
+    
        <Stack.Screen
         name={navigationStrings.SUBSCRIPTION}
         component={Subscriptions2}

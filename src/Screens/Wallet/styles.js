@@ -43,10 +43,11 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       backgroundColor: themeColors?.primary_color,
       padding: moderateScaleVertical(8),
       marginHorizontal: moderateScaleVertical(8),
-      borderRadius: moderateScale(20),
+      borderRadius: moderateScale(5),
       marginTop: moderateScale(18),
       justifyContent: 'center',
       flexDirection: 'row',
+      alignItems: 'center',
     },
     addMoneyText: {
       fontSize: moderateScale(11),

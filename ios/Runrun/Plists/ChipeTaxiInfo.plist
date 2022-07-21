@@ -126,6 +126,10 @@
 	<string>$(PRODUCT_NAME) would like access to your photo gallery to upload photos and set profile picture</string>
 	<key>PROJECT_GOOGLE_PLACE_KEY</key>
 	<string>$(PROJECT_GOOGLE_PLACE_KEY)</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>$(PRODUCT_NAME) would like access to your microphone to voice search</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>$(PRODUCT_NAME) would like access to your microphone to voice search</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SFProDisplay-Regular.ttf</string>

@@ -38,6 +38,8 @@ import FastImage from 'react-native-fast-image';
 import DashBoardEight from './DashboardViews/DashBoardEight';
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
 import _, {isEmpty} from 'lodash';
+import io from 'socket.io-client';
+import socketServices from '../../utils/scoketService';
 
 // navigator.geolocation = require('react-native-geolocation-service');
 
@@ -80,7 +82,6 @@ export default function Home({route, navigation}) {
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  const businessTypes = appStyle?.homePageLayout;
 
   const [isLaundryAddonModal, setLaundryAddonModal] = useState(false);
   const [isLoadingAddons, setLoadingAddons] = useState(true);
@@ -109,6 +110,7 @@ export default function Home({route, navigation}) {
     isVoiceRecord: false,
     singleVendor: false,
     selectedAddonSet: [],
+    unPresentAry: [],
     isSubscription: true,
   });
 
@@ -130,6 +132,7 @@ export default function Home({route, navigation}) {
     isVoiceRecord,
     singleVendor,
     selectedAddonSet,
+    unPresentAry,
     isSubscription,
   } = state;
 
@@ -538,7 +541,6 @@ export default function Home({route, navigation}) {
   };
 
   const onPressVendor = (item) => {
-
     console.log('item+++', item);
 
     if (item?.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
@@ -570,7 +572,6 @@ export default function Home({route, navigation}) {
   };
   //onPress Category
   const onPressCategory = (item) => {
-    console.log(item,"item>item")
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -938,33 +939,33 @@ export default function Home({route, navigation}) {
     }
   };
 
-  console.log(selectedLaundryCategory, 'selectedLaundryCategory>>>');
-
   const onFindVendors = () => {
-    let containsAll = selectedAddonSet.map((element) => {
-      let indx = selectedLaundryCategory?.estimate_product_addons.findIndex(
-        (item) => item?.estimate_addon_id === element?.estimate_addon_id,
-      );
-      return indx;
+    let newAry = [];
+    selectedLaundryCategory?.estimate_product_addons.map((item, index) => {
+      let newObj = {
+        addon_id: item?.estimate_addon_id,
+        min_select_count: item?.estimate_addon_set?.min_select,
+        max_select_count: item?.estimate_addon_set?.max_select,
+      };
+      newAry[index] = newObj;
     });
-    let allIndx = selectedLaundryCategory?.estimate_product_addons.map(
-      (element) => {
-        let indx = selectedLaundryCategory?.estimate_product_addons.findIndex(
-          (item) => item?.estimate_addon_set?.max_select === 1,
-        );
-        return indx;
-      },
-    );
-
-    console.log(allIndx, '>>>>>allIndx');
-
+    let unPresentItems = [];
+    newAry.map((itm) => {
+      if (
+        !selectedAddonSet.some(
+          (item) => item?.estimate_addon_id == itm?.addon_id,
+        )
+      ) {
+        if (itm?.min_select_count !== 0) {
+          unPresentItems.push(itm);
+        }
+      }
+    });
+    updateState({
+      unPresentAry: unPresentItems,
+    });
     setIsOnPressed(true);
-    setMinMaxError(containsAll);
-    return;
-    if (
-      containsAll.length ==
-      selectedLaundryCategory?.estimate_product_addons.length
-    ) {
+    if (unPresentItems.length == 0) {
       onHideModal();
       moveToNewScreen(navigationStrings.LAUNDRY_AVAILABLE_VENDORS, {
         selectedAddonSet: selectedAddonSet,
@@ -982,8 +983,6 @@ export default function Home({route, navigation}) {
       isSubscription: false,
     });
   };
-  console.log(appStyle?.homePageLayout, 'appStyle?.homePageLayout');
-  console.log(userData, 'location>location');
 
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
@@ -1246,14 +1245,17 @@ export default function Home({route, navigation}) {
         onFindVendors={onFindVendors}
         minMaxError={minMaxError}
         isOnPressed={isOnPressed}
+        selectedHomeCategory={selectedHomeCategory}
+        unPresentAry={unPresentAry}
       />
-      {!!userData?.auth_token && (!!appData?.profile?.preferences?.show_subscription_plan_popup)  && (
-        <SubscriptionModal
-          isVisible={isSubscription}
-          onClose={_closeModal}
-          onPressSubscribe={_onPressSubscribe}
-        />
-      )}
+      {!!userData?.auth_token &&
+        !!appData?.profile?.preferences?.show_subscription_plan_popup && (
+          <SubscriptionModal
+            isVisible={isSubscription}
+            onClose={_closeModal}
+            onPressSubscribe={_onPressSubscribe}
+          />
+        )}
     </WrapperContainer>
   );
 }

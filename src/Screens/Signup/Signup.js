@@ -41,7 +41,7 @@ import ActionSheet from 'react-native-actionsheet';
 import {androidCameraPermission} from '../../utils/permissions';
 import DocumentPicker from 'react-native-document-picker';
 import codes from 'country-calling-code';
-import * as RNLocalize from "react-native-localize";
+import * as RNLocalize from 'react-native-localize';
 import RNOtpVerify from 'react-native-otp-verify';
 import DeviceCountry, {
   TYPE_ANY,
@@ -49,17 +49,18 @@ import DeviceCountry, {
   TYPE_CONFIGURATION,
 } from 'react-native-device-country';
 import SubscriptionModal from '../../Components/SubscriptionModal';
-var getPhonesCallingCodeAndCountryData = null
+var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
-    console.log(result, "getCountryCoderesult");
     // {"code": "BY", "type": "telephony"}
-    getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == (result.code).toUpperCase())
+    getPhonesCallingCodeAndCountryData = codes.filter(
+      (x) => x.isoCode2 == result.code.toUpperCase(),
+    );
   })
   .catch((e) => {
     console.log(e);
   });
-  
+
 let addtionSelectedImageIndex = null;
 
 // alert("SignUp")
@@ -77,6 +78,7 @@ export default function Signup({navigation}) {
     languages,
     themeColor,
     themeToggle,
+    redirectedFrom,
   } = useSelector((state) => state?.initBoot);
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -86,16 +88,28 @@ export default function Signup({navigation}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
+  console.log(
+    appData?.profile.country?.phonecode,
+    ' getPhonesCallingCodeAndCountryData[0].countryCodes[0]',
+  );
   const [state, setState] = useState({
     isLoading: false,
-    callingCode: getPhonesCallingCodeAndCountryData && getPhonesCallingCodeAndCountryData.length ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]: appData?.profile.country?.phonecode
-      ? appData?.profile?.country?.phonecode
-      : '91',
-    cca2:  getPhonesCallingCodeAndCountryData && getPhonesCallingCodeAndCountryData.length ? getPhonesCallingCodeAndCountryData[0].isoCode2:appData?.profile?.country?.code
-      ? appData?.profile?.country?.code
-      : 'IN',
-    name:'',
-    email:  '',
+    callingCode:
+      getPhonesCallingCodeAndCountryData &&
+      getPhonesCallingCodeAndCountryData.length
+        ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]
+        : appData?.profile.country?.phonecode
+        ? appData?.profile?.country?.phonecode
+        : '91',
+    cca2:
+      getPhonesCallingCodeAndCountryData &&
+      getPhonesCallingCodeAndCountryData.length
+        ? getPhonesCallingCodeAndCountryData[0].isoCode2
+        : appData?.profile?.country?.code
+        ? appData?.profile?.country?.code
+        : 'IN',
+    name: '',
+    email: '',
     password: '',
     phoneNumber: '',
     deviceToken: '',
@@ -105,7 +119,7 @@ export default function Signup({navigation}) {
     addtionalImages: [],
     addtionalPdfs: [],
     appHashKey: 'WpV3+5pgxIH',
-    subscriptionPopup:false
+    subscriptionPopup: false,
   });
   const {
     phoneNumber,
@@ -121,7 +135,7 @@ export default function Signup({navigation}) {
     addtionalImages,
     addtionalPdfs,
     appHashKey,
-    subscriptionPopup
+    subscriptionPopup,
   } = state;
   const _onCountryChange = (data) => {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
@@ -133,7 +147,6 @@ export default function Signup({navigation}) {
 
   const isValidData = () => {
     const error = validations({
-   
       email: appData?.profile?.preferences?.verify_email
         ? email
         : 'abc@gmail.com',
@@ -170,7 +183,7 @@ export default function Signup({navigation}) {
         },
       )
       .then((res) => {
-        console.log(res,"userRegistrationDocumentres");
+        console.log(res, 'userRegistrationDocumentres');
         updateState({
           addtionalTextInputs: res?.data.filter((x) => x?.file_type == 'Text'),
           addtionalImages: res?.data.filter((x) => x?.file_type == 'Image'),
@@ -196,13 +209,20 @@ export default function Signup({navigation}) {
       showError(strings.ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE);
       return;
     }
-{!!appData?.profile?.preferences?.concise_signup?
-    formdata.append('name', phoneNumber) : formdata.append('name', name);}
+    {
+      !!appData?.profile?.preferences?.concise_signup
+        ? formdata.append('name', phoneNumber)
+        : formdata.append('name', name);
+    }
     formdata.append('app_hash_key', appHashKey);
     formdata.append('phone_number', phoneNumber);
     formdata.append('dial_code', callingCode.toString());
     formdata.append('country_code', cca2);
-    {!!appData?.profile?.preferences?.concise_signup?formdata.append('email', `${phoneNumber}${"@gmail.com"}`):formdata.append('email', email);}
+    {
+      !!appData?.profile?.preferences?.concise_signup
+        ? formdata.append('email', `${phoneNumber}${'@gmail.com'}`)
+        : formdata.append('email', email);
+    }
     formdata.append('password', password);
     formdata.append('device_type', Platform.OS);
     formdata.append('device_token', DeviceInfo.getUniqueId());
@@ -271,7 +291,7 @@ export default function Signup({navigation}) {
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
         systemuser: DeviceInfo.getUniqueId(),
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
       })
       .then((res) => {
         console.log(res, 'THIS IS RESPONSE');
@@ -288,8 +308,10 @@ export default function Signup({navigation}) {
             ) {
               checkIsAdmin(navigation_, navigation, res.data);
               updateState({
-                subscriptionPopup:res?.data?.client_preference?.show_subscription_plan_popup_signup
-              })
+                subscriptionPopup:
+                  res?.data?.client_preference
+                    ?.show_subscription_plan_popup_signup,
+              });
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
@@ -303,16 +325,20 @@ export default function Signup({navigation}) {
             ) {
               checkIsAdmin(navigation_, navigation, res.data);
               updateState({
-                subscriptionPopup:res?.data?.client_preference?.show_subscription_plan_popup_signup
-              })
+                subscriptionPopup:
+                  res?.data?.client_preference
+                    ?.show_subscription_plan_popup_signup,
+              });
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
           } else {
             checkIsAdmin(navigation_, navigation, res.data);
             updateState({
-              subscriptionPopup:res?.data?.client_preference?.show_subscription_plan_popup_signup
-            })
+              subscriptionPopup:
+                res?.data?.client_preference
+                  ?.show_subscription_plan_popup_signup,
+            });
           }
         }
       })
@@ -480,11 +506,11 @@ export default function Signup({navigation}) {
       }
     }
   };
-  const _closeModal=()=>{
+  const _closeModal = () => {
     updateState({
-      subscriptionPopup:false
-    })
-  }
+      subscriptionPopup: false,
+    });
+  };
   const _onPressSubscribe = () => {
     moveToNewScreen(navigationStrings.SUBSCRIPTION)();
     updateState({
@@ -528,8 +554,7 @@ export default function Signup({navigation}) {
         enableOnAndroid={true}
         style={{
           flex: 1,
-        }} 
-        >
+        }}>
         <View style={{flex: 1}}>
           <View style={{marginTop: moderateScaleVertical(50)}}>
             <Text
@@ -555,21 +580,24 @@ export default function Signup({navigation}) {
               marginTop: moderateScaleVertical(50),
               marginHorizontal: moderateScale(24),
             }}>
-            { !appData?.profile?.preferences?.concise_signup &&
-            <BorderTextInput
-              onChangeText={_onChangeText('name')}
-              placeholder={strings.YOUR_NAME}
-              value={name}
-              returnKeyType={'next'}
-            />}
-           {!appData?.profile?.preferences?.concise_signup&& <BorderTextInput
-              // autoCapitalize={'none'}
-              onChangeText={_onChangeText('email')}
-              placeholder={strings.YOUR_EMAIL}
-              value={email}
-              keyboardType={'email-address'}
-              returnKeyType={'next'}
-            />}
+            {!appData?.profile?.preferences?.concise_signup && (
+              <BorderTextInput
+                onChangeText={_onChangeText('name')}
+                placeholder={strings.YOUR_NAME}
+                value={name}
+                returnKeyType={'next'}
+              />
+            )}
+            {!appData?.profile?.preferences?.concise_signup && (
+              <BorderTextInput
+                // autoCapitalize={'none'}
+                onChangeText={_onChangeText('email')}
+                placeholder={strings.YOUR_EMAIL}
+                value={email}
+                keyboardType={'email-address'}
+                returnKeyType={'next'}
+              />
+            )}
             <PhoneNumberInput
               onCountryChange={_onCountryChange}
               onChangePhone={(phoneNumber) =>
@@ -600,16 +628,18 @@ export default function Signup({navigation}) {
               rightIconStyle={{}}
               returnKeyType={'next'}
             />
-            {!appData?.profile?.preferences?.concise_signup&&<BorderTextInput
-              onChangeText={_onChangeText('referralCode')}
-              placeholder={
-                appData?.profile?.preferences?.referral_code
-                  ? appData?.profile?.preferences?.referral_code
-                  : strings.ENTERREFERALCODE
-              }
-              value={referralCode}
-              returnKeyType={'next'}
-            />}
+            {!appData?.profile?.preferences?.concise_signup && (
+              <BorderTextInput
+                onChangeText={_onChangeText('referralCode')}
+                placeholder={
+                  appData?.profile?.preferences?.referral_code
+                    ? appData?.profile?.preferences?.referral_code
+                    : strings.ENTERREFERALCODE
+                }
+                value={referralCode}
+                returnKeyType={'next'}
+              />
+            )}
 
             {!isEmpty(addtionalTextInputs) &&
               addtionalTextInputs.map((item, index) => {
@@ -666,7 +696,7 @@ export default function Signup({navigation}) {
         destructiveButtonIndex={2}
         onPress={(index) => cameraHandle(index)}
       />
-      { (!!subscriptionPopup)  && (
+      {!!subscriptionPopup && (
         <SubscriptionModal
           isVisible={subscriptionPopup}
           onClose={_closeModal}

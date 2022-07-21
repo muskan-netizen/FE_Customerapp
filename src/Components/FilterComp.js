@@ -117,6 +117,8 @@ const FilterComp = ({
             selectedOptions: options,
             sleectdBrands: []
         }
+
+        console.log(filterData ,"filterDataaa")
         onFilterApply(filterData)
         onShowHideFilter()
     }

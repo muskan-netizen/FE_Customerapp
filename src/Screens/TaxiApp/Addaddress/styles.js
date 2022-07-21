@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import store from '../../../redux/store';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
@@ -9,9 +9,9 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../../styles/theme';
-import { useSelector } from 'react-redux';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
+import {useSelector} from 'react-redux';
 
 export default ({
   fontFamily,
@@ -21,12 +21,11 @@ export default ({
   savedAddressViewHeight,
   avalibleValueInTextInput,
 }) => {
-  console.log(type, 'type>>>type');
   //   const theme = useSelector((state) => state?.initBoot?.themeColor);
   //   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   //   const darkthemeusingDevice = useDarkMode();
   //   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const commonStyles = commonStylesFun({ fontFamily });
+  const commonStyles = commonStylesFun({fontFamily});
   const styles = StyleSheet.create({
     titleAbout: {
       ...commonStyles.futuraBtHeavyFont14,
@@ -115,8 +114,8 @@ export default ({
         type == 'pickup'
           ? moderateScaleVertical(40) * 2
           : type == 'dropOffLocation'
-            ? moderateScaleVertical(28)
-            : -100,
+          ? moderateScaleVertical(28)
+          : -100,
       // height: height / 3,
     },
 
@@ -156,7 +155,7 @@ export default ({
       flexDirection: 'row',
       // width: width - 30,
       marginBottom: moderateScaleVertical(8),
-      alignItems: 'center'
+      alignItems: 'center',
       // shadowColor: '#000',
       // shadowOffset: {
       //   width: 0,
@@ -171,95 +170,118 @@ export default ({
       paddingHorizontal: moderateScale(10),
       borderBottomWidth: 0.5,
       marginBottom: moderateScaleVertical(4),
-    }, modalHeaderMainContainer: {
-      paddingHorizontal: moderateScale(20)
-    }, bookFriendText: {
+    },
+    modalHeaderMainContainer: {
+      paddingHorizontal: moderateScale(20),
+    },
+    bookFriendText: {
       fontSize: textScale(18.8),
       marginTop: moderateScaleVertical(-10),
-      fontFamily: fontFamily?.bold
-    }, modalMainContainer: {
+      fontFamily: fontFamily?.bold,
+    },
+    modalMainContainer: {
       paddingVertical: moderateScaleVertical(20),
       marginVertical: moderateScaleVertical(20),
-      paddingHorizontal: moderateScale(20)
-    }, textInputContainer: {
+      paddingHorizontal: moderateScale(20),
+    },
+    textInputContainer: {
       marginVertical: moderateScaleVertical(10),
       borderColor: colors.textGreyB,
       borderWidth: 1,
-    }, textInputStyle: {
+    },
+    textInputStyle: {
       height: moderateScaleVertical(30),
-      paddingTop: moderateScaleVertical(10)
-    }, phoneNumberTextInputLabel: {
-      color: colors.textGreyLight
-    }, phoneNumberInnerContainer: {
+      paddingTop: moderateScaleVertical(10),
+    },
+    phoneNumberTextInputLabel: {
+      color: colors.textGreyLight,
+    },
+    phoneNumberInnerContainer: {
       flexDirection: 'row',
-      alignItems: 'center'
-    }, countryPickerContainer: {
+      alignItems: 'center',
+    },
+    countryPickerContainer: {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
       width: moderateScale(88),
-    }, countryPickerInnerContainer: {
+    },
+    countryPickerInnerContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-    }, callingCodeText: {
+    },
+    callingCodeText: {
       fontFamily: fontFamily.medium,
       color: colors.textGreyOpcaity7,
-    }, phoneNumberInnput: {
+    },
+    phoneNumberInnput: {
       borderColor: colors.textGreyB,
       borderWidth: 1,
-      width: moderateScale(width / 1.6)
-    }, textInputStyle: { height: moderateScaleVertical(30), paddingTop: moderateScaleVertical(10) },
+      width: moderateScale(width / 1.6),
+    },
+    textInputStyle: {
+      height: moderateScaleVertical(30),
+      paddingTop: moderateScaleVertical(10),
+    },
     friendListModalInnerContainer: {
       flexDirection: 'row',
       alignItems: 'center',
       // height: moderateScale(40),
       marginHorizontal: moderateScale(16),
-      marginTop:moderateScaleVertical(-10)
-    }, hitSlop: {
+      marginTop: moderateScaleVertical(-10),
+    },
+    hitSlop: {
       top: 30,
       right: 30,
       left: 30,
       bottom: 30,
-    }, switchRiderText: {
+    },
+    switchRiderText: {
       fontSize: textScale(12),
       fontFamily: fontFamily.medium,
 
-      marginHorizontal: moderateScale(10)
-    }, showFriendListModalHeaderContainer: {
+      marginHorizontal: moderateScale(10),
+    },
+    showFriendListModalHeaderContainer: {
       marginHorizontal: moderateScale(7),
       flexDirection: 'row',
-      alignItems: 'center'
-    }
+      alignItems: 'center',
+    },
 
-    , forMeText: {
+    forMeText: {
       color: colors.black,
       marginHorizontal: moderateScale(10),
-      fontSize: textScale(14)
-    }, lineViewStyle: {
+      fontSize: textScale(14),
+    },
+    lineViewStyle: {
       borderWidth: 0.5,
       height: 1,
       borderColor: colors.blackOpacity10,
       marginBottom: moderateScaleVertical(20),
-      marginVertical: moderateScaleVertical(14)
-    }, friendListStyle: {
+      marginVertical: moderateScaleVertical(14),
+    },
+    friendListStyle: {
       marginHorizontal: moderateScale(10),
       marginVertical: moderateScaleVertical(10),
-      marginTop: moderateScaleVertical(18)
-    }, friendListFooter: {
+      marginTop: moderateScaleVertical(18),
+    },
+    friendListFooter: {
       marginHorizontal: moderateScale(7),
       marginBottom: moderateScaleVertical(13),
       flexDirection: 'row',
       alignItems: 'center',
-      marginVertical:moderateScaleVertical(5)
-    }, addFriendText: {
+      marginVertical: moderateScaleVertical(5),
+    },
+    addFriendText: {
       color: themeColors?.primary_color,
       marginHorizontal: moderateScale(10),
-      fontSize: textScale(14)
-    },addAddressScreenTitle:{
+      fontSize: textScale(14),
+    },
+    addAddressScreenTitle: {
       fontSize: textScale(12),
       fontFamily: fontFamily.medium,
-      marginHorizontal: moderateScale(10)
-    }
+      marginHorizontal: moderateScale(10),
+    },
   });
   return styles;
 };

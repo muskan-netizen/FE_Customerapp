@@ -144,7 +144,6 @@ const VariantAddons = ({
     let data = {};
     data['variants'] = variantSetData.map((i) => i.variant_id);
     data['options'] = variantSetData.map((i) => i.optionId);
-    console.log(data,"datatataaa")
     actions
       .getProductDetailByVariants(`/${productDetailData.sku}`, data, {
         code: appData.profile.code,
@@ -167,7 +166,7 @@ const VariantAddons = ({
           selectedVariant: null,
         });
       })
-      .catch(error=>console.log(error,"errrorrrr"));
+      .catch((error) => console.log(error, 'errrorrrr'));
   };
 
   const errorMethod = (error) => {
@@ -724,7 +723,6 @@ const VariantAddons = ({
                     }}>
                     {i?.title}
                   </Text>
-                  
                 </TouchableOpacity>
               );
             })}
@@ -1209,17 +1207,14 @@ const VariantAddons = ({
     // );
     let addOnsAdditionalPrice = 0;
     if (addonSet && addonSet[0]) {
-      console.log(addonSet,"addonSetttt")
-      for(let i=0;i<addonSet?.length;i++){ 
-         addonSet[i].setoptions.forEach((el) => {
-        if (el.value) {
-          addOnsAdditionalPrice = addOnsAdditionalPrice + Number(el.price);
-        }
-      });
+      for (let i = 0; i < addonSet?.length; i++) {
+        addonSet[i].setoptions.forEach((el) => {
+          if (el.value) {
+            addOnsAdditionalPrice = addOnsAdditionalPrice + Number(el.price);
+          }
+        });
       }
-     
     }
- 
 
     addOnsAdditionalPrice = currencyNumberFormatter(
       Number(productPriceData?.multiplier) *
@@ -1415,13 +1410,18 @@ const VariantAddons = ({
                   {/* <HtmlViewComp
                     plainHtml={productdetail?.translation[0]?.body_html}
                   /> */}
-                  <Text style={{
-                     fontSize: textScale(10),
-                     fontFamily: fontFamily.regular,
-                     lineHeight: moderateScale(14),
-                     color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyE,
-                     textAlign: 'left',
-                  }}>{productdetail?.translation_description}</Text>
+                  <Text
+                    style={{
+                      fontSize: textScale(10),
+                      fontFamily: fontFamily.regular,
+                      lineHeight: moderateScale(14),
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyE,
+                      textAlign: 'left',
+                    }}>
+                    {productdetail?.translation_description}
+                  </Text>
                   <View style={{marginBottom: 10}} />
                 </View>
               )}
