@@ -48,7 +48,7 @@ import { androidCameraPermission } from '../../utils/permissions';
 import validator from '../../utils/validations';
 import stylesFun from './styles';
 import Accordion from 'react-native-collapsible/Accordion';
-import {WebView} from 'react-native-webview';
+import { WebView } from 'react-native-webview';
 
 let clickedIndx = null;
 let clickedItem = null;
@@ -849,8 +849,8 @@ export default function WebLinks({ navigation, route }) {
       <View
         style={{
           backgroundColor: isDarkMode
-          ? MyDarkTheme.colors.lightDark
-          : colors.backGroundGrey,
+            ? MyDarkTheme.colors.lightDark
+            : colors.backGroundGrey,
           height: moderateScaleVertical(50),
           justifyContent: 'center',
           borderLeftWidth: 4,
@@ -859,8 +859,8 @@ export default function WebLinks({ navigation, route }) {
         <Text
           style={{
             color: isDarkMode
-            ? MyDarkTheme.colors.text
-            : colors.blackC,
+              ? MyDarkTheme.colors.text
+              : colors.blackC,
             marginLeft: moderateScale(15),
             fontFamily: fontFamily.bold,
             fontSize: textScale(13),
@@ -876,16 +876,16 @@ export default function WebLinks({ navigation, route }) {
       <View
         style={{
           backgroundColor: isDarkMode
-          ? MyDarkTheme.colors.lightDark
-          : colors.backGroundGreyD,
+            ? MyDarkTheme.colors.lightDark
+            : colors.backGroundGreyD,
           paddingHorizontal: moderateScale(20),
           paddingBottom: moderateScaleVertical(15),
         }}>
         <Text
           style={{
             color: isDarkMode
-            ? MyDarkTheme.colors.text
-            : colors.blackC,
+              ? MyDarkTheme.colors.text
+              : colors.blackC,
             fontFamily: fontFamily.regular,
             fontSize: textScale(11),
           }}>
@@ -923,8 +923,8 @@ export default function WebLinks({ navigation, route }) {
         />
         <ScrollView style={{
           backgroundColor: isDarkMode
-          ? MyDarkTheme.colors.background
-          : colors.backGroundGreyD,
+            ? MyDarkTheme.colors.background
+            : colors.backGroundGreyD,
         }} showsVerticalScrollIndicator={false}
         >
           <Accordion
@@ -987,7 +987,7 @@ export default function WebLinks({ navigation, route }) {
         }
       />
       <View style={{ ...commonStyles.headerTopLine }} />
-
+      {console.log(I18nManager.isRTL, "I18nManager.isRTL")}
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
@@ -999,12 +999,12 @@ export default function WebLinks({ navigation, route }) {
             marginTop: moderateScaleVertical(20),
             marginHorizontal: moderateScale(20),
 
-            justifyContent:  I18nManager.isRTL ?  'flex-end': 'flex-start',
+            justifyContent: I18nManager.isRTL ? 'flex-end' : 'flex-start',
             flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
           }}>
           {htmlContent && (
-          //  <View style={{flexDirection: I18nManager.isRTL ? 'row-reverse': 'row' }} >
-             <RenderHtml
+            //  <View style={{flexDirection: I18nManager.isRTL ? 'row-reverse': 'row' }} >
+            <RenderHtml
               contentWidth={width}
               source={{ html: htmlContent }}
               tagsStyles={{
@@ -1012,22 +1012,26 @@ export default function WebLinks({ navigation, route }) {
                   color: isDarkMode ? colors.white : colors.black,
                   // alignSelf: I18nManager.isRTL ? 'left' : 'right',
                   // textAlign: I18nManager.isRTL ? 'left' : 'right',
-                  textAlign:'right',
+                  // textAlign:'right',
 
                 }
               }}
             />
-          //  </View>
+            //  </View>
             // <HTMLView
             //   stylesheet={isDarkMode ? htmlStyle : null}
             //   value={`<p>${htmlContent}</p>`}
             // />
           )}
-        </View> 
+        </View>
 
         {driverRegDocs?.page_detail?.primary?.type_of_form == 1 && (
           <View style={styles.mainView}>
-            <View style={{ marginBottom: moderateScaleVertical(12) }}>
+            <View style={{
+              marginBottom: moderateScaleVertical(12),
+              flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+              alignSelf: 'flex-start',
+            }}>
               <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
             </View>
             <BorderTextInput
@@ -1075,7 +1079,10 @@ export default function WebLinks({ navigation, route }) {
               containerStyle={styles.containerStyle}
             />
             <View style={{ marginVertical: moderateScaleVertical(10) }}>
-              <Text style={styles.detailStyle}>{strings.STORE_DETAILS}</Text>
+              <View style={{ flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+              alignSelf: 'flex-start',}} >
+                 <Text style={styles.detailStyle }>{strings.STORE_DETAILS}</Text>
+              </View>
               <View style={{ marginVertical: moderateScaleVertical(20) }}>
                 <View style={{ flexDirection: 'row' }}>
                   <View
@@ -1390,7 +1397,8 @@ export default function WebLinks({ navigation, route }) {
 
         {driverRegDocs?.page_detail?.primary?.type_of_form == 2 && (
           <View style={styles.mainView}>
-            <View style={{ marginBottom: moderateScaleVertical(12) }}>
+            <View style={{ marginBottom: moderateScaleVertical(12), flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+              alignSelf: 'flex-start', }}>
               <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
             </View>
 

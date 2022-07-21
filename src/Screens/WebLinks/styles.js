@@ -38,8 +38,8 @@ export default ({fontFamily}) => {
       fontSize: textScale(18),
       fontFamily: fontFamily.medium,
       // alignSelf:  I18nManager.isRTL ?  'flex-end': 'flex-start',
-      textAlign: I18nManager.isRTL ? 'left' : 'right',
-      flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+      // textAlign: I18nManager.isRTL ? 'left' : 'right',
+     
     },
     uploadText: {
       justifyContent: 'center',

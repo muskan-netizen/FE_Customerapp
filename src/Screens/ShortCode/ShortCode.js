@@ -2359,7 +2359,7 @@ export default function ShortCode({route, navigation}) {
     } else {
       header = {
         // code: '245bae',
-        // code: '56086e',
+        // code: 'ccc32e',
         code: shortCode,
       };
     }
