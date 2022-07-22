@@ -1031,14 +1031,14 @@ export default function OrderDetail({ navigation, route }) {
                 : colors.blackOpacity86,
             }}
           />
-      <TouchableOpacity onPress={() => onChat(item)}>
+      {/* <TouchableOpacity onPress={() => onChat(item)}>
           <Text style={{
             margin: 16,
             color: colors.redB,
             fontFamily: fontFamily.bold,
             fontSize: 16
           }}>CHAT</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
           {item?.products.length
             ? item?.products.map((i, inx) => {
