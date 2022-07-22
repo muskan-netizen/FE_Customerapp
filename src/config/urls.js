@@ -11,7 +11,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'https://dingdongdelivers.com/api/v1'
 // export const API_BASE_URL = 'https://foodnests.com/api/v1'
@@ -59,7 +59,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 //export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
 // export const API_BASE_URL = 'https://tmgsalesllc.com/api/v1';
 
-// export const API_BASE_URL = 'https://viversbox.com/api/v1'
+export const API_BASE_URL = 'https://viversbox.com/api/v1'
 
 //export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
 //  export const API_BASE_URL = 'https://fairexglobal.com/api/v1';
@@ -109,6 +109,10 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 //owais nor
 // export const API_BASE_URL = 'https://1204-112-196-88-218.ngrok.io/api/v1';
+
+// // sabroson
+// export const API_BASE_URL = 'https://sabroson.com.mx/api/v1';
+
 
 // export const API_BASE_URL ='https://yogo.gd/api/v1';
 
