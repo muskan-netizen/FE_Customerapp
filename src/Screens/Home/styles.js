@@ -425,6 +425,55 @@ export default ({themeColors, fontFamily}) => {
       marginLeft: 2,
       color: themeColors.primary_color,
     },
+    modal: {
+      margin: 0,
+      alignItems: 'center',
+    },
+    modalContainer: {
+      backgroundColor: '#fff',
+      paddingHorizontal: 16,
+      paddingTop: 20,
+      paddingBottom: 40,
+      alignItems: 'center',
+      width: width - 50,
+      borderRadius: 12,
+    },
+    horizontalLine:{ 
+      marginVertical:moderateScaleVertical(10), 
+      borderBottomColor: colors.black, 
+      borderBottomWidth: moderateScale(0.3), 
+      height: moderateScale(10), 
+      width: '70%',
+      //  borderBottomStyle: 'dashed' 
+      },
+      ageModalText:{ 
+        fontFamily: fontFamily.bold, 
+        fontSize: textScale(15) 
+      },
+      ageConfirmationText : {
+      marginBottom:moderateScale(10), 
+      fontFamily: fontFamily.regular, 
+      fontSize: textScale(14), 
+      textAlign: 'center', 
+    },
+    takeMeOutStyle:{textAlign:'center',  color: themeColors.primary_color,fontFamily:fontFamily.regular, fontSize:textScale(12)},
+    innerAgeModaleView :{
+      paddingVertical: moderateScaleVertical(15),
+      backgroundColor: "white",
+      borderRadius: 15,
+      width: width / 1.2,
+      minHeight: moderateScaleVertical(150),
+      // padding: 35,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5
+    }
   });
 
   return styles;

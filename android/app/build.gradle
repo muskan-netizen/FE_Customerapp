@@ -208,15 +208,15 @@ android {
 
     productFlavors {
        
-           iPicknDrop{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.iPicknDrop'
-                resValue "string", "app_name", "iPicknDrop"
-                resValue "string", "host_name", ""
+             easyDrink{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.easyDrink.order'
+            resValue "string", "app_name", "Easy Drink"
+            resValue "string", "host_name", ""
             }
     }
 

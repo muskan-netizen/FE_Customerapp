@@ -824,6 +824,7 @@
     "react-native-easy-content-loader": "^0.3.2",
     "react-native-elements": "^3.4.2",
     "react-native-elevation": "^1.0.0",
+    "react-native-exit-app": "^1.1.0",
     "react-native-fast-image": "^8.3.6",
     "react-native-fbsdk-next": "^7.0.1",
     "react-native-flash-message": "^0.1.22",
