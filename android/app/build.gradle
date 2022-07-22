@@ -207,16 +207,16 @@ android {
     flavorDimensions "appType"
   
   productFlavors{
-      ullaz{
+                baytukom{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.ullaz'
-                resValue "string", "app_name", "Ullaz"
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.baytukom'
+                resValue "string", "app_name", "Baytukom"
                 resValue "string", "host_name", ""
-            } 
+            }
   }
   
 

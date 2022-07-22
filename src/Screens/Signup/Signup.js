@@ -89,7 +89,7 @@ export default function Signup({navigation}) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
   console.log(
-    appData?.profile.country?.phonecode,
+    getPhonesCallingCodeAndCountryData,
     ' getPhonesCallingCodeAndCountryData[0].countryCodes[0]',
   );
   const [state, setState] = useState({

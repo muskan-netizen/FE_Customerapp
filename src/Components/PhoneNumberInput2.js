@@ -20,7 +20,7 @@ const PhoneNumberInput2 = ({
   phoneNumber,
   placeholder,
   textInputStyle = {},
-  textInputStyle1={}
+  textInputStyle1 = {},
 }) => {
   const {themeColors, appStyle} = useSelector((state) => state?.initBoot);
   const [state, setState] = useState({
@@ -34,7 +34,9 @@ const PhoneNumberInput2 = ({
     onCountryChange(data);
   };
   const _openCountryPicker = () => {
-    setState({countryPickerModalVisible: true});
+    if (getBundleId() !== appIds.baytukom) {
+      setState({countryPickerModalVisible: true});
+    }
   };
   const _onCountryPickerModalClose = () => {
     setState({countryPickerModalVisible: false});
@@ -96,7 +98,6 @@ const PhoneNumberInput2 = ({
           backgroundColor: colors.textGreyK,
           ...textInputStyle1,
           ...textInputStyle,
-         
         }}
       />
 
