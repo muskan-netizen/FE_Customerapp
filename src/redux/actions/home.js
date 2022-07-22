@@ -16,6 +16,7 @@ import {
   GET_PRODUCT_ESTIMATION_WITH_ADDONS,
   GET_ESTIMATION,
   PICK_UP_LOCATION_SEARCH,
+  GET_SUBCATEGORY_VENDORS,
 } from '../../config/urls';
 import {apiPost, setItem, getItem, apiGet} from '../../utils/utils';
 import store from '../store';
@@ -56,7 +57,11 @@ export function onGlobalSearch(query = '', data = {}, headers = {}) {
   });
 }
 
-export function pickuplocationSearch(data = {}, headers = {}, isShortCode = false) {
+export function pickuplocationSearch(
+  data = {},
+  headers = {},
+  isShortCode = false,
+) {
   return new Promise((resolve, reject) => {
     apiPost(PICK_UP_LOCATION_SEARCH, data, headers)
       .then((res) => {
@@ -287,6 +292,18 @@ export const getProductEstimationWithAddons = (url, data, headers = {}) => {
 export const productEstimation = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(GET_ESTIMATION, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const getSubCategoryVendors = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_SUBCATEGORY_VENDORS, data, headers)
       .then((res) => {
         resolve(res);
       })
