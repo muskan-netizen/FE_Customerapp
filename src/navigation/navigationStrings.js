@@ -146,6 +146,6 @@ export default {
   LAUNDRY_AVAILABLE_VENDORS: 'laundryAvailableVendors',
   CHAT_SCREEN:'ChatScreen',
   CHAT_ROOM:"chatRoom",
- 
   DIRECTPAYONLINE:"DirectPayOnline",
+  KHALTI:'Khalti'
 };

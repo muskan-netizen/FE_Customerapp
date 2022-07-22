@@ -328,7 +328,7 @@ export default function OrderDetail({ navigation, route }) {
               animate(lat, lng);
             }
           }
-
+            console.log(driverStatus?.agent_location?.lat,driverStatus?.agent_location?.long,"driverStatus?.agent_location?.lat");
           if (!trackingUrl) {
             updateState({
               trackingUrl: res.data.vendors[0].dispatch_traking_url,
@@ -2459,6 +2459,8 @@ export default function OrderDetail({ navigation, route }) {
   };
 
   const onCenter = () => {
+console.log("driverStatusdriverStatus",driverStatus)
+    // return
     mapRef.current.fitToCoordinates(
       [
         {
@@ -2468,6 +2470,10 @@ export default function OrderDetail({ navigation, route }) {
         {
           latitude: Number(driverStatus.tasks[1]?.latitude),
           longitude: Number(driverStatus.tasks[1]?.longitude),
+        },
+        {
+          latitude: Number(driverStatus?.agent_location?.lat),
+          longitude: Number(driverStatus?.agent_location?.long),
         },
       ],
       {
