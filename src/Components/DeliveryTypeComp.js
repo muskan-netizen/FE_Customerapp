@@ -100,7 +100,6 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
     }
     updateState({
       tabs: localTabsArray,
-      checked: localTabsArray[0],
     });
   };
 
@@ -288,8 +287,6 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
         newTabs[index].isActive = true;
         updateState({
           tabs: [...newTabs],
-          checked: item.value,
-          isModalVisible: false,
         });
       } else {
         newTabs[index].isActive = false;
@@ -325,13 +322,11 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
         showSuccess(res?.message);
         actions.cartItemQty(res);
         _onTableItm(item, indx);
-        updateState({isModalVisible: false});
       })
       .catch(errorMethod);
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
 
