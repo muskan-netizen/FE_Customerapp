@@ -369,6 +369,8 @@ const shortCodes = {
   easyDrink:'96eb54',
   iAmSelling:'7fd0dd',
   fifteenP:'016908',
+  euodooTechnologies:'c9d1ee',
+  rota:'e4b727',
 };
 
 const appIds = {
@@ -1831,6 +1833,14 @@ const appIds = {
   fifteenP: Platform.select({
     ios: 'com.fifteenP.order',
     android: 'com.fifteenP.order',
+  }),
+  euodooTechnologies: Platform.select({
+    ios: 'com.euodooTechnologies.order',
+    android: 'com.euodooTechnologies.order',
+  }),
+  rota: Platform.select({
+    ios: 'com.rota.order',
+    android: 'com.rota.order',
   }),
 };
 

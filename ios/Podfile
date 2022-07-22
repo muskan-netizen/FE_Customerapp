@@ -1812,6 +1812,18 @@ end
 target 'IAmSelling' do
   
 end
+#FifteenP Target
+target 'FifteenP' do
+  
+end
+#EuodooTEchnologies Target
+target 'EuodooTechnologies' do
+  
+end
+#Rota Target
+target 'Rota' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

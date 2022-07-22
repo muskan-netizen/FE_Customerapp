@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "710587744412",
+    "project_id": "rota-4c2c9",
+    "storage_bucket": "rota-4c2c9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710587744412:android:dd7570509d4b57e282ad59",
+        "android_client_info": {
+          "package_name": "com.rota.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710587744412-gfkrj74n8h3qst7v3opa0c4dc1l8uqiq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rota.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "710587744412-u5gpksn67klrq1ja2dhng51egmdtegle.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rota.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "710587744412-u5v2cor4j354quo91nmvbdm7qni739fs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rota.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "710587744412-uer9msdg8fsken14503ns70mch2d1p71.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8v19fxfZjK90dT5TZIaEW-3DIO9tdv84"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710587744412-uer9msdg8fsken14503ns70mch2d1p71.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "710587744412-k4sic6pgu6cii9to4gn5dq4qbdf15b9o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rota.order"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
