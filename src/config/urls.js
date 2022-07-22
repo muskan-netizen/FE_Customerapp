@@ -27,7 +27,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 //  export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
 //sujata
 // export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1';
-// export const API_BASE_URL = 'https://masaapp.ae/api/v1'
+export const API_BASE_URL = 'https://masaapp.ae/api/v1'
 
 // export const API_BASE_URL = 'https://gokab.royoorders.com/api/v1'
 //live
@@ -59,7 +59,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 //export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
 // export const API_BASE_URL = 'https://tmgsalesllc.com/api/v1';
 
-export const API_BASE_URL = 'https://viversbox.com/api/v1'
+// export const API_BASE_URL = 'https://viversbox.com/api/v1'
 
 //export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
 //  export const API_BASE_URL = 'https://fairexglobal.com/api/v1';
