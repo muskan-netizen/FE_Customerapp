@@ -178,7 +178,7 @@ export default function OrderDetail({ navigation, route }) {
     (state) => state.initBoot,
   );
 
-  console.log(languages,'i am here>>>>>>');
+  console.log(driverStatus,'driverStatusdriverStatusdriverStatus');
 
 
   const {preferences} = appData?.profile;
@@ -2923,14 +2923,24 @@ console.log("driverStatusdriverStatus",driverStatus)
               rotateEnabled={true}>
               <MapViewDirections
                 resetOnChange={false}
-                origin={{
-                  latitude: Number(driverStatus.tasks[0]?.latitude),
-                  longitude: Number(driverStatus.tasks[0]?.longitude),
-                  // latitude: Number(driverStatus?.agent_location?.lat),
-                  // longitude: Number(driverStatus?.agent_location?.long),
-                  latitudeDelta: 0.0222,
-                  longitudeDelta: 0.032,
-                }}
+                origin={
+                  orderStatus !== 'completed' && orderStatus !== 'unassigned'
+                    ? {
+                        latitude: Number(driverStatus?.agent_location?.lat),
+                        longitude: Number(
+                          driverStatus?.agent_location?.long || driverStatus?.agent_location?.lng,
+                        ),
+                      }
+                    : driverStatus.tasks[0]
+                }
+                // origin={{
+                //   latitude: Number(driverStatus.tasks[0]?.latitude),
+                //   longitude: Number(driverStatus.tasks[0]?.longitude),
+                //   // latitude: Number(driverStatus?.agent_location?.lat),
+                //   // longitude: Number(driverStatus?.agent_location?.long),
+                //   latitudeDelta: 0.0222,
+                //   longitudeDelta: 0.032,
+                // }}
                 destination={{
                   latitude: Number(driverStatus.tasks[1]?.latitude),
                   longitude: Number(driverStatus.tasks[1]?.longitude),
@@ -2990,7 +3000,7 @@ console.log("driverStatusdriverStatus",driverStatus)
                   <Image
                     source={appIds?.sabroson?imagePath?.icBikeMarker: imagePath.icScooter}
                     style={{
-                      transform: [{ rotate: `${state.headingAngle + 110}deg` }],
+                      transform: [{ rotate: `${Number(driverStatus.agent_location?.heading_angle) + 180}deg` }],
                     }}
                   />
                 </Marker.Animated>
