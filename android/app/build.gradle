@@ -206,6 +206,17 @@ android {
 
     flavorDimensions "appType"
 
+// productFlavors {
+//                 knockknock{
+//             dimension "appType"
+//             versionCode 1
+//             versionName "1.0"
+//             minSdkVersion rootProject.ext.minSdkVersion
+//             targetSdkVersion rootProject.ext.targetSdkVersion
+//             applicationId 'com.knockknock'
+//             resValue "string", "app_name", "Knockknock"
+//             re
+// }
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -4664,7 +4675,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.viversbox'
+            applicationId 'com.viversbox.user'
             resValue "string", "app_name", "Viversbox"
             resValue "string", "host_name", ""
             }

@@ -37,6 +37,7 @@ export function homeData(data = {}, headers = {}, isShortCode = false) {
           });
         }
         resolve(res);
+        console.log(res, "homepage")
       })
       .catch((error) => {
         reject(error);
