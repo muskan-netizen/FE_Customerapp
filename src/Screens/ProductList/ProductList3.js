@@ -1372,7 +1372,7 @@ export default function Products({route, navigation}) {
         };
         console.log('api data checkLastAdded', apiData);
         try {
-          setRepeatItems(true);
+          // setRepeatItems(true);
           const res = await actions.checkLastAdded(apiData, header);
           console.log('check last addedres++++++', res);
           if (!!res.data) {

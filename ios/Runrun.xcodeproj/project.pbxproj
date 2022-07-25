@@ -1396,6 +1396,7 @@
 		1329ED3EF22C001D32F193C0 /* libPods-available_pods-NaDelivery.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 281AF048EDA51BE86C8D28DE /* libPods-available_pods-NaDelivery.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		14B364FD288E9A2900504A34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1595C6366DF664A6557E235D /* libPods-available_pods-HomeTownDelivery.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9D2F3E5F5FAB354DB3559F9 /* libPods-available_pods-HomeTownDelivery.a */; };
 		17ADC705F4619422E9F9AF80 /* libPods-available_pods-BLIP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12402CFA55850585B1DD3906 /* libPods-available_pods-BLIP.a */; };
 		180D08E1D1F6402279B75B25 /* libPods-available_pods-Uven.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF12F6235F812330CEF781F1 /* libPods-available_pods-Uven.a */; };
@@ -2205,7 +2206,6 @@
 		841EF524274E1AA00033B4C5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 841EF523274E1A9D0033B4C5 /* GoogleService-Info.plist */; };
 		841EF71C274E1C2A0033B4C5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		841EF71D274E1C2A0033B4C5 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
-		841EF71E274E1C2A0033B4C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		841EF736274E1C2A0033B4C5 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
 		841EF737274E1C2A0033B4C5 /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78C2681E47000CC5BA2 /* SFProDisplay-Regular.ttf */; };
 		841EF738274E1C2A0033B4C5 /* Futura-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7902681E47100CC5BA2 /* Futura-Medium.ttf */; };
@@ -119686,8 +119686,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				841EF71C274E1C2A0033B4C5 /* AppDelegate.m in Sources */,
+				14B364FD288E9A2900504A34 /* main.m in Sources */,
 				841EF71D274E1C2A0033B4C5 /* Royo.swift in Sources */,
-				841EF71E274E1C2A0033B4C5 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
