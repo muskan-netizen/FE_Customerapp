@@ -27,7 +27,7 @@ import {
 import HomeCategoryCard2 from '../../Components/HomeCategoryCard2';
 import * as Animatable from 'react-native-animatable';
 import FastImage from 'react-native-fast-image';
-import {getImageUrl} from '../../utils/helperFunctions';
+import {getImageUrl, showError} from '../../utils/helperFunctions';
 import strings from '../../constants/lang';
 import {getBundleId} from 'react-native-device-info';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
