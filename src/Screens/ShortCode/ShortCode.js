@@ -2351,13 +2351,15 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '245bae',
+        // code: '245bae', //sales
+        // code: '56086e',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
         // code: '245bae',
+        // code: 'ccc32e',
         code: shortCode,
       };
     }
@@ -2651,7 +2653,7 @@ export default function ShortCode({route, navigation}) {
   const animationVideo = () => {
     switch (getBundleId()) {
       case appIds?.masa:
-        return imagePath.masa;
+        return imagePath.ipd;
       case appIds?.iPicknDrop:
         return imagePath.ipd;
       case appIds?.muvpod:

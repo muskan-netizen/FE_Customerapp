@@ -1,58 +1,65 @@
 {
   "project_info": {
-    "project_number": "1064634340878",
-    "project_id": "royodispatcher9",
-    "storage_bucket": "royodispatcher9.appspot.com"
+    "project_number": "819293644050",
+    "project_id": "viversbox-user",
+    "storage_bucket": "viversbox-user.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1064634340878:android:700694c6828db946670e5f",
+        "mobilesdk_app_id": "1:819293644050:android:713c16dd48c8e41a1e3fcb",
         "android_client_info": {
-          "package_name": "com.viversbox"
+          "package_name": "com.viversbox.user"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1064634340878-k3o5gm50ib0eqglm98iphf3ookkaum9i.apps.googleusercontent.com",
+          "client_id": "819293644050-g9j4em11vp4238od4jq8vkr4rmpo4mdg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.viversbox",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "1064634340878-kbvqotc7hju5gvm9p23hss5k51sqnabd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.viversbox",
+            "package_name": "com.viversbox.user",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "1064634340878-v7jfrog2k3b67svmsnspr21cqeuq674k.apps.googleusercontent.com",
+          "client_id": "819293644050-idc29sc4ca6baaos7go8kor63iraabqo.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.viversbox",
+            "package_name": "com.viversbox.user",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "819293644050-phpo07d4p8r4bkhbgj212moe1elmaubj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.viversbox.user",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "1064634340878-fm1ebe6v4iagbb5sbg1mhmp3ek2gli5a.apps.googleusercontent.com",
+          "client_id": "819293644050-vj0pjmm1a7vfcqgeg1gt25o5mlkios08.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBqAZR3brgbp8OTGPNvE_MjgPjLbTzs660"
+          "current_key": "AIzaSyCjTNGo0BciioYBhIEHurMAjXHhGtz_4e8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1064634340878-fm1ebe6v4iagbb5sbg1mhmp3ek2gli5a.apps.googleusercontent.com",
+              "client_id": "819293644050-vj0pjmm1a7vfcqgeg1gt25o5mlkios08.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "819293644050-8io3r4ivnjju0f5qorojhjc4i8fnuiql.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.viversbox.user"
+              }
             }
           ]
         }
