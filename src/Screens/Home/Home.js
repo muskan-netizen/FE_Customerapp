@@ -147,6 +147,7 @@ export default function Home({ route, navigation }) {
     updateState({ updatedData: appMainData?.categories });
   }, [appMainData]);
 
+  
   useEffect(() => {
     _getLocationFromParams();
     // if (addressSearch) {

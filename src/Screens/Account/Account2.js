@@ -479,19 +479,20 @@ export default function Account2({ navigation }) {
           />
         )}
 
-        <View style={styles.loginView}>
+        {!!userData?.auth_token ? null : <View style={styles.loginView}>
           <TouchableOpacity
-            onPress={userlogout}
+            // onPress={()=>actions.isVendorNotification(true)}
+            onPress={() => moveToNewScreen(navigationStrings.OUTER_SCREEN, {})()}
             style={styles.touchAbleLoginVIew}>
             <Text style={styles.loginLogoutText}>
-              {!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
+              {strings.LOGIN}
             </Text>
             <Image
               source={imagePath.rightBlue}
               style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
             />
           </TouchableOpacity>
-        </View>
+        </View>}
         <View style={{ height: 100 }} />
       </ScrollView>
     </WrapperContainer>

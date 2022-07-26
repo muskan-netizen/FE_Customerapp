@@ -398,18 +398,20 @@ function Cart({navigation, route}) {
       apiData = apiData + `&code=${sel_types}`;
     }
     console.log('Sending api data', apiData);
+    let apiHeader = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      systemuser: DeviceInfo.getUniqueId(),
+      timezone: RNLocalize.getTimeZone(),
+      device_token: DeviceInfo.getUniqueId(),
+    }
+    console.log('Sending api header', apiHeader);
     actions
       .getCartDetail(
         apiData,
         {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-          timezone: RNLocalize.getTimeZone(),
-          device_token: DeviceInfo.getUniqueId(),
-        },
+        apiHeader,
       )
       .then((res) => {
         console.log('cart details>>>', res);

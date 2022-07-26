@@ -1,4 +1,4 @@
-import { ALL_ROOM_USER, GET_ALL_MESSAGES, SEND_MESSAGE, START_CHAT, USER_CHAT, VENDOR_CHAT } from "../../config/urls";
+import { AGENT_CHAT, ALL_ROOM_USER, GET_ALL_MESSAGES, SEND_MESSAGE, START_CHAT, USER_CHAT, VENDOR_CHAT } from "../../config/urls";
 import { apiGet, apiPost } from "../../utils/utils";
 
 export function onStartChat(data = {}, headers = {}) {
@@ -12,6 +12,8 @@ export function onStartChat(data = {}, headers = {}) {
       });
   });
 }
+
+
 
 export function fetchUserChat(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
@@ -37,6 +39,17 @@ export function fetchVendorChat(data = {}, headers = {}) {
   });
 }
 
+export function fetchAgentChat(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(AGENT_CHAT, data, headers)
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
 
 export function sendMessage(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {

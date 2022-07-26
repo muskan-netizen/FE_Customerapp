@@ -218,7 +218,9 @@ export default function OrderDetail({ navigation, route }) {
 
   const createRoom = async (item, type) => {
 
-    console.log("userDatauserData",userData)
+    console.log("itemitem",item)
+
+    // return;
 
     try {
       const apiData = {
@@ -268,8 +270,7 @@ export default function OrderDetail({ navigation, route }) {
     }
 
     console.log('sending api data', data);
-    actions
-      .getOrderDetail(data, {
+    actions.getOrderDetail(data, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
@@ -424,8 +425,7 @@ export default function OrderDetail({ navigation, route }) {
       : '';
     // data['vendor_id'] = productDetail.vendor_id;
 
-    actions
-      .giveRating(data, {
+    actions.giveRating(data, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
@@ -2421,8 +2421,7 @@ export default function OrderDetail({ navigation, route }) {
       data['total_payable_amount'] = updatedcartData?.difference_to_be_paid;
 
       updateState({ isLoading: true });
-      actions
-        .acceptRejectDriveUpdate(data, {
+      actions.acceptRejectDriveUpdate(data, {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,

@@ -202,11 +202,7 @@ export default function Account3({ navigation }) {
   const usernameFirstlater = !!userData?.name && userData?.name?.charAt(0);
 
   const goToChatRoom = (type) => {
-    if (type == 'user_chat') {
-      navigation.navigate(navigationStrings.CHAT_ROOM, { data: 'user_chat' });
-    } else {
-      navigation.navigate(navigationStrings.CHAT_ROOM, { data: 'vendor_chat' });
-    }
+    navigation.navigate(navigationStrings.CHAT_ROOM, { data: type });
   };
   //----------------------------------ActionSheet------------------------------//
   let actionSheet = useRef();
@@ -778,26 +774,26 @@ export default function Account3({ navigation }) {
               />
             )}
 
-          {!!userData?.auth_token && (
-            <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-              onPress={onDeleteAccount}
-              iconLeft={imagePath.user}
-              centerHeading={strings.DELETE_ACCOUNT}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
-            />
-          )}
+          {!!userData?.auth_token &&(
+              <ListItemHorizontal
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+                onPress={() => goToChatRoom('agent_chat')}
+                iconLeft={imagePath.icUserChat}
+                centerHeading={'Agent Chat'}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+              />
+            )}
 
           {!!userData?.auth_token &&
             !!appMainData?.is_admin &&
-            businessType != 4 && (
+            (
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}
                 leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -831,20 +827,38 @@ export default function Account3({ navigation }) {
             />
           )}
 
-          <View style={styles.loginView}>
+          {!!userData?.auth_token ? null : <View style={styles.loginView}>
             <TouchableOpacity
               // onPress={()=>actions.isVendorNotification(true)}
-              onPress={userlogout}
+              onPress={() => moveToNewScreen(navigationStrings.OUTER_SCREEN, {})()}
               style={styles.touchAbleLoginVIew}>
               <Text style={styles.loginLogoutText}>
-                {!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
+                {strings.LOGIN}
               </Text>
               <Image
                 source={imagePath.rightBlue}
                 style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
               />
             </TouchableOpacity>
-          </View>
+          </View>}
+
+          {!!userData?.auth_token && (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={onDeleteAccount}
+              iconLeft={imagePath.user}
+              centerHeading={strings.DELETE_ACCOUNT}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
+
           <View style={{ height: 100 }} />
         </ScrollView>
         <ActionSheet

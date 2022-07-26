@@ -2273,14 +2273,14 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '245bae',
-       code: shortCode,
+        code: '245bae',
+      //  code: 'ccc32e',
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-       //code: '245bae',
-        code: shortCode,
+       code: '245bae',
+        // code: 'ccc32e',
       };
     }
     console.log(header, 'header');

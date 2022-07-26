@@ -77,4 +77,14 @@ export const getSubDomain = () =>{
   return API_BASE_URL.split('/')[3]
 }
 
+export function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+
 export {cameraHandler, currencyNumberFormatter};

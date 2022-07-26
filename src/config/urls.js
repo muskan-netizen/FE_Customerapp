@@ -437,6 +437,7 @@ export const GET_ESTIMATION = getApiUrl('/estimation/get-estimation');
 
 export const START_CHAT = getApiUrl('/chat/startChat');
 export const USER_CHAT = getApiUrl('/chat/userVendorChatRoom');
+export const AGENT_CHAT = getApiUrl('/chat/userAgentChatRoom');
 export const VENDOR_CHAT = getApiUrl('/chat/vendorUserChatRoom');
 export const SEND_MESSAGE = getSocketUrl('/api/chat/sendMessageJoin');
 export const GET_ALL_MESSAGES = getSocketUrl('/api/chat')

@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, Image, Platform } from 'react-native'
-import { GiftedChat } from 'react-native-gifted-chat';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Platform, SafeAreaView, ImageBackground } from 'react-native'
+import { GiftedChat, Send, InputToolbar } from 'react-native-gifted-chat';
 import socketServices from '../../utils/scoketService';
 import { useSelector } from 'react-redux';
 import { useDarkMode } from 'react-native-dark-mode';
@@ -22,7 +22,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { getSubDomain } from '../../utils/commonFunction';
 
 
-export default function ChatScreen({ route }) {
+
+export default function ChatScreen({ route,navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -47,28 +48,20 @@ export default function ChatScreen({ route }) {
 
   const isFocused = useIsFocused();
 
-  useEffect(() => {
-    socketServices.on("new-message", (data) => {
-      console.log(data, "data to be emitted in chat screen");
-      isFocused ? setMessages(previousMessages => GiftedChat.append(previousMessages, data.message.chatData)) : null
-      actions.chatRefresh(!isChatRefresh)
-      // console.log("fetchLAtestMessages", messages)
-      // // let cloneDeep = _.cloneDeep(messages)
-      // cloneDeep.push(data.message.chatData)
-      // // setMessages(cloneDeep)
-    });
-    return () => {
-      socketServices.removeListener("new-message");
-      socketServices.removeListener('save-message');
-      // if (!!paramData?.comeFromOrder) {
-      //   console.log("remove listeneres")
-      //   socketServices.removeListener("new-message");
-      //   socketServices.removeListener('save-message');
-      // }
-    };
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+        socketServices.on("new-message", (data) => {
+          console.log("listen in chat screen")
+          isFocused ? setMessages(previousMessages => GiftedChat.append(previousMessages, data.message.chatData)) : null
+        });
+        return () => {
+            socketServices.removeListener("new-message");
+            socketServices.removeListener('save-message');
+        };
+    }, [navigation])
+);
 
-
+ 
   useEffect(() => {
     if (isFocused) {
       updateState({ isLoading: true })
@@ -77,8 +70,7 @@ export default function ChatScreen({ route }) {
     }
   }, [])
 
-
-  const fetchAllMessages = async () => {
+  const fetchAllMessages = useCallback(async() => {
     try {
       const apiData = `/${paramData?._id}`
       const res = await actions.getAllMessages(apiData, {})
@@ -94,11 +86,12 @@ export default function ChatScreen({ route }) {
       console.log('error raised in fetchAllMessages api', error)
       updateState({ isLoading: false })
     }
-  }
+  }, [])
 
 
 
-  const fetchAllRoomUser = async () => {
+
+  const fetchAllRoomUser = useCallback(async()=>{
     try {
       const apiData = `/${paramData?._id}`
       const res = await actions.getAllRoomUser(apiData, {}, {
@@ -113,8 +106,7 @@ export default function ChatScreen({ route }) {
     } catch (error) {
       console.log('error raised in fetchAllRoomUser api', error)
     }
-  }
-
+  },[])
 
   const onSend = useCallback(async (messages = []) => {
     if (String(messages[0].text).trim().length < 1) {
@@ -188,26 +180,26 @@ export default function ChatScreen({ route }) {
         <View key={String(currentMessage._id)} style={{
           ...styles.chatStyle,
           alignSelf: 'flex-end',
-          backgroundColor: '#e2ffd3',
+          backgroundColor: isDarkMode ? '#005246' : '#e2ffd3',
           borderBottomRightRadius: 0,
         }}>
           <View style={{ flexDirection: "row" }}>
             <View style={{ marginHorizontal: 8, flexShrink: 1 }}>
-              <Text style={{
+              {/* <Text style={{
                 fontSize: textScale(12),
                 fontFamily: fontFamily.regular,
                 textTransform: 'capitalize',
                 color: colors.black,
 
-              }}>{currentMessage?.username}</Text>
+              }}>{currentMessage?.username}</Text> */}
 
               <View style={{ alignItems: 'center', flex: 1 }}>
                 <Text style={{
                   ...styles.descText,
-                  color: colors.black,
-
+                  color: isDarkMode ? colors.white : colors.black,
+                  marginTop: 0
                 }}>{currentMessage?.message}</Text>
-                <Text style={{ ...styles.timeText, color: colors.blackOpacity40 }}>{moment(currentMessage?.created_date).format('LT')}</Text>
+                <Text style={{ ...styles.timeText, color: isDarkMode ? '#84acaa' : colors.blackOpacity40 }}>{moment(currentMessage?.created_date).format('LT')}</Text>
               </View>
             </View>
           </View>
@@ -227,37 +219,51 @@ export default function ChatScreen({ route }) {
         <View key={String(currentMessage._id)} style={{
           ...styles.chatStyle,
           alignSelf: 'flex-start',
-          backgroundColor: '#ffffff',
+          backgroundColor: isDarkMode ? '#363638' : '#ffffff',
           borderBottomLeftRadius: moderateScale(0),
           maxWidth: width / 1.2
         }}>
 
           <View style={{ marginHorizontal: 8, flexShrink: 1 }}>
-            <Text style={{
+            {currentMessage?.username || currentMessage?.phone_num ? <Text style={{
               fontSize: textScale(12),
-              fontFamily: fontFamily.regular,
+              fontFamily: fontFamily.medium,
               textTransform: 'capitalize',
-              color: colors.black,
-            }}>{currentMessage?.username}</Text>
+              color: isDarkMode ? colors.white : colors.black,
+            }}>{currentMessage?.username || currentMessage?.phone_num}</Text> : null}
 
             <Text style={{
               ...styles.descText,
-              color: colors.black,
+              color: isDarkMode ? colors.white : colors.black,
             }}>{currentMessage?.message}</Text>
-            <Text style={styles.timeText}>{moment(currentMessage?.created_date).format('LT')}</Text>
+            <Text style={{ ...styles.timeText, color: isDarkMode ? '#a4a3aa' : colors.blackOpacity43 }}>{moment(currentMessage?.created_date).format('LT')}</Text>
 
           </View>
         </View>
       </View>
     )
-  })
+  }, [])
+
+  const SendButton = useCallback(() => {
+    return (
+      <View
+        style={{
+          marginHorizontal: 10,
+          alignSelf: 'center',
+          height: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <Image source={imagePath.send} />
+      </View>
+    )
+  }, [])
 
   return (
     <WrapperContainer
-      bgColor={isDarkMode ? MyDarkTheme.colors.background : '#e9e6de'}
-      statusBarColor={colors.white}
-      isLoading={isLoading}
+      statusBarColor={isDarkMode ? "#171717" : "#f6f6f6"}
     >
+
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2
@@ -268,48 +274,101 @@ export default function ChatScreen({ route }) {
         }
         centerTitle={`# ${paramData?.room_id || ''}`}
         customRight={showRoomUser}
-        headerStyle={{ backgroundColor: 'white' }}
+        headerStyle={{ backgroundColor: isDarkMode ? "#171717" : '#f6f6f6' }}
       // onPressLeft={onBack}
 
       />
 
-      <View style={{ flex: 1 }}>
+
+      <ImageBackground
+        source={isDarkMode ? imagePath.icBgDark : imagePath.icBgLight}
+        style={{ flex: 1 }}
+      >
+
         <GiftedChat
+          // messagesContainerStyle={{ backgroundColor: isDarkMode?"#171717": "#f6f6f6"}}
           messages={messages}
           onSend={messages => onSend(messages)}
           user={{ _id: userData?.id }}
           renderMessage={renderMessage}
           isKeyboardInternallyHandled={true}
+          // isTyping={true}
+          // renderActions={props => {
+          //   return (
+          //     <TouchableOpacity
 
+          //       style={{
+          //         marginHorizontal: 10,
+          //         // alignSelf: 'center',
+          //         // height: '100%',
+          //         alignItems: 'center',
+          //         justifyContent: 'center',
+          //         marginBottom: 10
+          //       }}>
+          //       <Text>Bye</Text>
+          //     </TouchableOpacity>
+          //   );
+          // }}
+          renderInputToolbar={props => {
+            return (
+              <InputToolbar
+                containerStyle={{ backgroundColor: isDarkMode ? '#171717' : '#f6f6f6', paddingTop: 0 }}
+                {...props}
+              />
+            )
+          }}
+
+          textInputStyle={{
+            backgroundColor: isDarkMode ? '#2c2c2e' : '#ffffff',
+            paddingTop: Platform.OS == 'ios' ? 10 : undefined,
+            borderRadius: 20,
+            paddingHorizontal: 20,
+            // marginVertical: 30,
+            textAlignVertical: 'center',
+            fontFamily: fontFamily.regular,
+            alignSelf: 'center',
+            color: isDarkMode ? colors.white : colors.black
+
+          }}
+          renderSend={props => {
+            return (
+              <Send
+                alwaysShowSend
+                containerStyle={{ backgroundColor: 'red' }}
+                children={<SendButton />}
+                {...props}
+              />
+            );
+          }}
         />
-      </View>
+      </ImageBackground>
 
 
       <Modal
         isVisible={showParticipant}
         style={{
           margin: 0,
-          justifyContent: 'flex-end'
+          justifyContent: 'flex-end',
         }}
         onBackdropPress={() => updateState({ showParticipant: false })}
       >
         <View style={{
           ...styles.modalStyle,
-          backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
+          backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white,
 
         }}>
 
-          <Text style={{
-            fontFamily: fontFamily?.bold,
-            fontSize: textScale(16),
-            color: isDarkMode ? colors.white : colors.black
-          }}>{roomUsers.length} Participants</Text>
+          <View style={styles.flexView}>
+            <Text style={{
+              fontFamily: fontFamily?.bold,
+              fontSize: textScale(16),
+              color: isDarkMode ? colors.white : colors.black
+            }}>{roomUsers.length} Participants</Text>
 
-          <TouchableOpacity activeOpacity={0.7} onPress={() => updateState({ showParticipant: false })}>
-            <Image source={imagePath.closeButton} />
-          </TouchableOpacity>
-
-
+            <TouchableOpacity activeOpacity={0.7} onPress={() => updateState({ showParticipant: false })}>
+              <Image style={{ tintColor: isDarkMode ? colors.white : colors.black }} source={imagePath.closeButton} />
+            </TouchableOpacity>
+          </View>
 
           <ScrollView >
             {roomUsers.map((val, i) => {
@@ -331,8 +390,18 @@ export default function ChatScreen({ route }) {
                     }}
                   />
                   <View style={{ marginLeft: moderateScale(8) }}>
-                    <Text>{val?.auth_user_id == userData?.id ? 'You' : val?.username}</Text>
-                    {!!val?.phone_num ? <Text>{val?.phone_num}</Text> : null}
+                    <Text style={{
+                      fontSize: textScale(12),
+                      fontFamily: fontFamily.medium,
+                      textTransform: 'capitalize',
+                      color: isDarkMode ? colors.white : colors.black,
+                    }}>{val?.auth_user_id == userData?.id ? 'You' : val?.username}</Text>
+                    {!!val?.phone_num ? <Text style={{
+                      fontSize: textScale(12),
+                      fontFamily: fontFamily.medium,
+                      textTransform: 'capitalize',
+                      color: isDarkMode ? colors.white : colors.black,
+                    }}>{val?.phone_num}</Text> : null}
                   </View>
                 </View>
               )

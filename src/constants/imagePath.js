@@ -526,4 +526,7 @@ export default {
   icLocationBlue: require('../assets/images/RoyoorderNewImages/ic_location_blue.png'),
   icUserChat: require('../assets/images/ic_userchat.png'),
   icVendorChat: require('../assets/images/ic_vendorchat.png'),
+  send: require('../assets/images/ic_send.png'),
+  icBgLight: require('../assets/images/ic_lightbg.png'),
+  icBgDark: require('../assets/images/ic_darkbg.png'),
 };
