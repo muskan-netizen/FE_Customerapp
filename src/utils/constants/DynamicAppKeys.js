@@ -371,6 +371,7 @@ const shortCodes = {
   fifteenP:'016908',
   euodooTechnologies:'c9d1ee',
   rota:'e4b727',
+  farmMeat:'371731',
 };
 
 const appIds = {
@@ -1841,6 +1842,10 @@ const appIds = {
   rota: Platform.select({
     ios: 'com.rota.order',
     android: 'com.rota.order',
+  }),
+  farmMeat: Platform.select({
+    ios: 'com.farmMeat.order',
+    android: 'com.farmMeat.order',
   }),
 };
 

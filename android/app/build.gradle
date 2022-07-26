@@ -5725,7 +5725,16 @@ android {
             resValue "string", "app_name", "Rota" 
             resValue "string", "host_name", ""
             }
-             
+              farmMeat{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.farmMeat.order'
+            resValue "string", "app_name", "Farm Meat" 
+            resValue "string", "host_name", ""
+            }
     }
 }
 

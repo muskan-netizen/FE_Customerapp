@@ -2323,18 +2323,24 @@ export default function ShortCode({route, navigation}) {
                 isShortcodePrefilled: true,
               });
               break;
-              case appIds.euodooTechnologies:
+            case appIds.euodooTechnologies:
                 updateState({
                   shortCode: shortCodes.euodooTechnologies,
                   isShortcodePrefilled: true,
                 });
                 break;
-                case appIds.rota:
+             case appIds.rota:
                   updateState({
                     shortCode: shortCodes.rota,
                     isShortcodePrefilled: true,
                   });
                   break;
+             case appIds.farmMeat:
+                    updateState({
+                      shortCode: shortCodes.farmMeat,
+                      isShortcodePrefilled: true,
+                    });
+                    break;
       }
     })();
   }, []);
