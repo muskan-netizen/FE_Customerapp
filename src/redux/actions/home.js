@@ -26,6 +26,7 @@ const {dispatch} = store;
 
 //Get Homme banners and Category data
 export function homeData(data = {}, headers = {}, isShortCode = false) {
+  console.log(data,headers,"apiData");
   return new Promise((resolve, reject) => {
     apiPost(HOMEPAGE_DATA_URL, data, headers)
       .then((res) => {
@@ -37,6 +38,7 @@ export function homeData(data = {}, headers = {}, isShortCode = false) {
           });
         }
         resolve(res);
+        console.log(res, "homepage")
       })
       .catch((error) => {
         reject(error);

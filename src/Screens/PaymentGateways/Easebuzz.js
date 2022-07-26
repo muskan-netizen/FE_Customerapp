@@ -58,7 +58,7 @@ export default function Easebuzz({navigation, route}) {
       updateState({webUrl: res.data});
     } catch (error) {
       updateState({isLoading: false});
-
+      console.log(error,"propsEaseBuzz?>>>")
       showError(error.message || error);
     }
   };

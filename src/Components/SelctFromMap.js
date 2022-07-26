@@ -215,7 +215,7 @@ export default function SelctFromMap({
           height: height,
         }}
         // region={region}
-        initialRegion={region}
+        initialRegion={constCurrLoc}
         // pointerEvents={'none'}
         // minZoomLevel={20}
         onRegionChangeComplete={_onRegionChange}

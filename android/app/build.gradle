@@ -207,14 +207,14 @@ android {
     flavorDimensions "appType"
 
     // productFlavors {
-    //        abbeRides{
+    //            rota{
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.abbeRides'
-    //         resValue "string", "app_name", "Abbe Rides"
+    //         applicationId 'com.rota.order'
+    //         resValue "string", "app_name", "Rota" 
     //         resValue "string", "host_name", ""
     //         }
     // }
@@ -5685,7 +5685,56 @@ android {
             resValue "string", "app_name", "Easy Drink"
             resValue "string", "host_name", ""
             }
-             
+            iAmSelling{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.iAmSelling.order'
+            resValue "string", "app_name", "I Am Selling"
+            resValue "string", "host_name", ""
+            }
+            fifteenP{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.fifteenP.order'
+            resValue "string", "app_name", "15P "
+            resValue "string", "host_name", ""
+            }
+             euodooTechnologies{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.euodooTechnologies.order'
+            resValue "string", "app_name", "Euodoo Technologies "
+            resValue "string", "host_name", ""
+            }
+              rota{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.rota.order'
+            resValue "string", "app_name", "Rota" 
+            resValue "string", "host_name", ""
+            }
+              farmMeat{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.farmMeat.order'
+            resValue "string", "app_name", "Farm Meat" 
+            resValue "string", "host_name", ""
+            }
     }
 }
 

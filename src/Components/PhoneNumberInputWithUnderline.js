@@ -48,7 +48,9 @@ const PhoneNumberInputWithUnderline = ({
     onCountryChange(data);
   };
   const _openCountryPicker = () => {
-    setState({countryPickerModalVisible: true});
+    if (getBundleId() !== appIds.baytukom) {
+      setState({countryPickerModalVisible: true});
+    }
   };
   const _onCountryPickerModalClose = () => {
     setState({countryPickerModalVisible: false});
