@@ -2632,7 +2632,7 @@ function Cart({ navigation, route }) {
               </Text>
             ) : null}
           </View>
-{console.log( item?.vendor_products," item?.vendor_products item?.vendor_products")}
+
           {/************ start  render cart items *************/}
           {item?.vendor_products.length > 0
             ? item?.vendor_products.map((i, inx) => {
