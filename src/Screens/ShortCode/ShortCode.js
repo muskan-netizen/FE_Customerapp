@@ -2653,11 +2653,11 @@ export default function ShortCode({route, navigation}) {
   const animationVideo = () => {
     switch (getBundleId()) {
       case appIds?.masa:
-        return imagePath.ipd;
+        return imagePath.masa;
       case appIds?.iPicknDrop:
         return imagePath.ipd;
       case appIds?.muvpod:
-        return {uri: imagePath.muvpod};
+        return imagePath.ipd;
       // case appIds?.sabroson:
       //   return imagePath.sabroson
     }

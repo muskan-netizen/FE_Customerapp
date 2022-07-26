@@ -11,7 +11,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = ' https://36kel.com.ph/api/v1'
 
@@ -29,7 +29,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 //  export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
 //sujata
 // export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1';
-// export const API_BASE_URL = 'https://masaapp.ae/api/v1'
+export const API_BASE_URL = 'https://masaapp.ae/api/v1'
 
 // export const API_BASE_URL = 'https://gokab.royoorders.com/api/v1'
 //live
@@ -154,7 +154,6 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://localdropoff.info/api/v1';
 // export const API_BASE_URL = 'https://onscart.com/api/v1';
 // export const API_BASE_URL = 'https://fastmikes.com/api/v1';
-//  export const API_BASE_URL = 'https://masaapp.ae/api/v1'
 // export const API_BASE_URL='https://hivefair.com/api/v1';
 // export const API_BASE_URL = 'https://www.ored.co/api/v1'; //ored
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
