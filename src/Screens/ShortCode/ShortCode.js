@@ -2311,6 +2311,36 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+          case appIds.iAmSelling:
+            updateState({
+              shortCode: shortCodes.iAmSelling,
+              isShortcodePrefilled: true,
+            });
+            break;
+            case appIds.fifteenP:
+              updateState({
+                shortCode: shortCodes.fifteenP,
+                isShortcodePrefilled: true,
+              });
+              break;
+            case appIds.euodooTechnologies:
+                updateState({
+                  shortCode: shortCodes.euodooTechnologies,
+                  isShortcodePrefilled: true,
+                });
+                break;
+             case appIds.rota:
+                  updateState({
+                    shortCode: shortCodes.rota,
+                    isShortcodePrefilled: true,
+                  });
+                  break;
+             case appIds.farmMeat:
+                    updateState({
+                      shortCode: shortCodes.farmMeat,
+                      isShortcodePrefilled: true,
+                    });
+                    break;
       }
     })();
   }, []);
@@ -2351,15 +2381,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '245bae', //sales
-        // code: '56086e',
+        // code: '245bae',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '245bae',
-        // code: 'ccc32e',
+        //code: '245bae',
         code: shortCode,
       };
     }

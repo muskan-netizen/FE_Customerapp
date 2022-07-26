@@ -101,7 +101,6 @@ export {default as ViewAllData} from './ViewAllData/ViewAllData';
 export {default as ProductWithCategory} from './ProductWithCategory/ProductWithCategory';
 export {default as ChatScreen} from './ChatScreen/ChatScreen';
 
-
 // vendor App screens
 export {default as RoyoHome} from './RoyoVendorApp/RoyoHome/RoyoHome';
 export {default as RoyoOrder} from './RoyoVendorApp/RoyoOrder/RoyoOrder';
@@ -145,9 +144,7 @@ export {default as StripeOXXO} from './PaymentGateways/StripeOXXO';
 export {default as VivaWallet} from './PaymentGateways/VivaWallet';
 export {default as MyCash} from './PaymentGateways/MyCash';
 export {default as LaundryAvailableVendors} from './LaundryAvailableVendors/LaundryAvailableVendors';
-export {default as ChatRoom} from './ChatRoom/ChatRoom'
-export {default as OpenPay} from './PaymentGateways/OpenPay'
-export {default as Userede} from './PaymentGateways/Userede'
-
-
-
+export {default as ChatRoom} from './ChatRoom/ChatRoom';
+export {default as OpenPay} from './PaymentGateways/OpenPay';
+export {default as Userede} from './PaymentGateways/Userede';
+export {default as SubcategoryVendor} from './SubcategoryVendor/SubcategoryVendor';

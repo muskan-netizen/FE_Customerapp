@@ -25,6 +25,8 @@ target 'RoyoOrder' do
 #Runrun Target
 target 'Runrun' do
   
+  pod 'RNExitApp', :path => '../node_modules/react-native-exit-app'
+
 end
 
 # ##Tranzit Target
@@ -1807,6 +1809,26 @@ target 'GetItSent' do
 end
 #EasyDrink Target
 target 'EasyDrink' do
+  
+end
+#IAmSelling Target
+target 'IAmSelling' do
+  
+end
+#FifteenP Target
+target 'FifteenP' do
+  
+end
+#EuodooTEchnologies Target
+target 'EuodooTechnologies' do
+  
+end
+#Rota Target
+target 'Rota' do
+  
+end
+#FarmMeat Target
+target 'FarmMeat' do
   
 end
 

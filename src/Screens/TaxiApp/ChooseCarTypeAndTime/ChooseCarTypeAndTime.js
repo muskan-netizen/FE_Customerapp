@@ -58,6 +58,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const paramData = route?.params;
   console.log('my route', paramData);
   const bottomSheetRef = useRef(null);
+  console.log(paramData?.cabVendors,"paramData?.cabVendors[0]");
 
   const {appData, currencies, languages, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
@@ -251,7 +252,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
   useEffect(() => {
     {
-      !!selectedVendorOption && _getAllCarAndPrices(true);
+      !!selectedVendorOption &&  
+       _getAllCarAndPrices(true);
     }
     getDeviceCounrtyCode();
   }, [selectedVendorOption]);
@@ -282,6 +284,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     if (showInitalModal) {
       updateState({showCarModal: true});
     }
+    console.log('i am hiting >>>>>>');
     updateState({isLoading: true, showVendorModal: false});
     actions
       .getAllCarAndPrices(
@@ -329,7 +332,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       .catch(errorMethod);
   };
 
-  console.log(selectedCarOption, 'selectedCarOption');
+  console.log(availableCarList, 'selectedCarOption');
 
   //error handling of api
   const errorMethod = (error) => {
