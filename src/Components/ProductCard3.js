@@ -481,7 +481,7 @@ const ProductCard3 = ({
                   data?.translation[0]?.translation_description ||
                   data?.translation_description
                 )
-                  ? moderateScale(65)
+                  ? moderateScale(30)
                   : moderateScale(20),
             }}>
             {data?.has_inventory == 0 ||

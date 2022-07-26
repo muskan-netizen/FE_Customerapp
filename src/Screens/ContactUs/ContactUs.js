@@ -59,14 +59,14 @@ export default function ContactUs({navigation}) {
   const [state, setState] = useState({
     callingCode:
       getPhonesCallingCodeAndCountryData &&
-      getPhonesCallingCodeAndCountryData.length
+      !!getPhonesCallingCodeAndCountryData?.length
         ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]
         : appData?.profile.country?.phonecode
         ? appData?.profile?.country?.phonecode
         : '91',
     cca2:
       getPhonesCallingCodeAndCountryData &&
-      getPhonesCallingCodeAndCountryData.length
+      !!getPhonesCallingCodeAndCountryData?.length
         ? getPhonesCallingCodeAndCountryData[0].isoCode2
         : appData?.profile?.country?.code
         ? appData?.profile?.country?.code
@@ -89,12 +89,20 @@ export default function ContactUs({navigation}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
   useEffect(() => {
     updateState({
-      cca2: appData?.profile?.country?.code
+      cca2:
+      getPhonesCallingCodeAndCountryData &&
+      !!getPhonesCallingCodeAndCountryData?.length
+        ? getPhonesCallingCodeAndCountryData[0].isoCode2
+        : appData?.profile?.country?.code
         ? appData?.profile?.country?.code
         : 'IN',
-      callingCode: appData?.profile?.country?.phonecode
-        ? appData?.profile?.country?.phonecode
-        : '91',
+      callingCode:
+        getPhonesCallingCodeAndCountryData &&
+        !!getPhonesCallingCodeAndCountryData?.length
+          ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]
+          : appData?.profile.country?.phonecode
+          ? appData?.profile?.country?.phonecode
+          : '91',
     });
   }, [appData]);
   //select the country

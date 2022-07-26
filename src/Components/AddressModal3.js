@@ -660,8 +660,8 @@ const AddressModal3 = ({
             <SelctFromMap
               addressDone={addressDone}
               mapClose={() => openCloseMapAddress(2)} //address map close
-              constCurrLoc={constCurrLoc}
-              location={location}
+              constCurrLoc={location}
+             
 
             />
           </View>

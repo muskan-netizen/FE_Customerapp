@@ -46,7 +46,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 //export const API_BASE_URL='https://rhondaisamazingtaxi.com/api/v1'
 // export const API_BASE_URL = 'https://jiffex.in/api/v1'
 
-export const API_BASE_URL = 'https://butlerdeliveryusa.com/api/v1'
+// export const API_BASE_URL = 'https://butlerdeliveryusa.com/api/v1'
 
 // export const API_BASE_URL = 'https://admin.shoorafresh.com.au/api/v1'
 //
@@ -109,7 +109,7 @@ export const API_BASE_URL = 'https://butlerdeliveryusa.com/api/v1'
 // export const API_BASE_URL = 'https://swantaxi.net/api/v1';
 
 //baytukom
-// export const API_BASE_URL = 'https://baytukom-order.netsolutionindia.com/api/v1';
+export const API_BASE_URL = 'https://baytukom-order.netsolutionindia.com/api/v1';
 
 //amazingTaxi
 // export const API_BASE_URL = 'https://rhondaisamazingtaxi.com/api/v1';
