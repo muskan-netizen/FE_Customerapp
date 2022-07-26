@@ -178,7 +178,7 @@ export default function OrderDetail({ navigation, route }) {
     (state) => state.initBoot,
   );
 
-  console.log(languages,'i am here>>>>>>');
+  console.log(driverStatus,'driverStatusdriverStatusdriverStatus');
 
 
   const {preferences} = appData?.profile;
@@ -328,7 +328,7 @@ export default function OrderDetail({ navigation, route }) {
               animate(lat, lng);
             }
           }
-
+            console.log(driverStatus?.agent_location?.lat,driverStatus?.agent_location?.long,"driverStatus?.agent_location?.lat");
           if (!trackingUrl) {
             updateState({
               trackingUrl: res.data.vendors[0].dispatch_traking_url,
@@ -1031,14 +1031,14 @@ export default function OrderDetail({ navigation, route }) {
                 : colors.blackOpacity86,
             }}
           />
-      <TouchableOpacity onPress={() => onChat(item)}>
+      {/* <TouchableOpacity onPress={() => onChat(item)}>
           <Text style={{
             margin: 16,
             color: colors.redB,
             fontFamily: fontFamily.bold,
             fontSize: 16
           }}>CHAT</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
           {item?.products.length
             ? item?.products.map((i, inx) => {
@@ -2459,6 +2459,8 @@ export default function OrderDetail({ navigation, route }) {
   };
 
   const onCenter = () => {
+console.log("driverStatusdriverStatus",driverStatus)
+    // return
     mapRef.current.fitToCoordinates(
       [
         {
@@ -2468,6 +2470,10 @@ export default function OrderDetail({ navigation, route }) {
         {
           latitude: Number(driverStatus.tasks[1]?.latitude),
           longitude: Number(driverStatus.tasks[1]?.longitude),
+        },
+        {
+          latitude: Number(driverStatus?.agent_location?.lat),
+          longitude: Number(driverStatus?.agent_location?.long),
         },
       ],
       {
@@ -2917,14 +2923,24 @@ export default function OrderDetail({ navigation, route }) {
               rotateEnabled={true}>
               <MapViewDirections
                 resetOnChange={false}
-                origin={{
-                  latitude: Number(driverStatus.tasks[0]?.latitude),
-                  longitude: Number(driverStatus.tasks[0]?.longitude),
-                  // latitude: Number(driverStatus?.agent_location?.lat),
-                  // longitude: Number(driverStatus?.agent_location?.long),
-                  latitudeDelta: 0.0222,
-                  longitudeDelta: 0.032,
-                }}
+                origin={
+                  orderStatus !== 'completed' && orderStatus !== 'unassigned'
+                    ? {
+                        latitude: Number(driverStatus?.agent_location?.lat),
+                        longitude: Number(
+                          driverStatus?.agent_location?.long || driverStatus?.agent_location?.lng,
+                        ),
+                      }
+                    : driverStatus.tasks[0]
+                }
+                // origin={{
+                //   latitude: Number(driverStatus.tasks[0]?.latitude),
+                //   longitude: Number(driverStatus.tasks[0]?.longitude),
+                //   // latitude: Number(driverStatus?.agent_location?.lat),
+                //   // longitude: Number(driverStatus?.agent_location?.long),
+                //   latitudeDelta: 0.0222,
+                //   longitudeDelta: 0.032,
+                // }}
                 destination={{
                   latitude: Number(driverStatus.tasks[1]?.latitude),
                   longitude: Number(driverStatus.tasks[1]?.longitude),
@@ -2984,7 +3000,7 @@ export default function OrderDetail({ navigation, route }) {
                   <Image
                     source={appIds?.sabroson?imagePath?.icBikeMarker: imagePath.icScooter}
                     style={{
-                      transform: [{ rotate: `${state.headingAngle + 110}deg` }],
+                      transform: [{ rotate: `${Number(driverStatus.agent_location?.heading_angle) + 180}deg` }],
                     }}
                   />
                 </Marker.Animated>

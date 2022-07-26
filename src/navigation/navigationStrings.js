@@ -147,5 +147,6 @@ export default {
   CHAT_SCREEN: 'ChatScreen',
   CHAT_ROOM: 'chatRoom',
   DIRECTPAYONLINE: 'DirectPayOnline',
+  KHALTI: 'Khalti',
   SUBCATEGORY_VENDORS: 'subcategoryVendors',
 };
