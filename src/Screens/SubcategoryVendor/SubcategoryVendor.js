@@ -399,16 +399,20 @@ export default function SubcategoryVendor({navigation, route}) {
     [dineInType],
   );
 
-  if (isLoading) {
-    return (
-      <WrapperContainer>
-        <Header3
-          leftIcon={imagePath.icBackb}
-          rightIcon={imagePath.search}
-          location={location}
-        />
-        <DeliveryTypeComp selectedToggle={selectedToggle} />
-
+  return (
+    <WrapperContainer
+      statusBarColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.statusbarColor
+      }
+      isLoading={isApiLoading}>
+      <Header3
+        leftIcon={imagePath.icBackb}
+        rightIcon={imagePath.search}
+        location={location}
+      />
+      <DeliveryTypeComp selectedToggle={selectedToggle} />
+      {isLoading ? (
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
@@ -520,112 +524,97 @@ export default function SubcategoryVendor({navigation, route}) {
             viewStyles={{marginTop: moderateScale(12)}}
           />
         </ScrollView>
-      </WrapperContainer>
-    );
-  }
+      ) : (
+        <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
+          <Animatable.View animation={'fadeInUp'} delay={200}>
+            {!isEmpty(subcategoryVendorData?.categories) && (
+              <View
+                style={{
+                  height: moderateScaleVertical(80),
+                  marginVertical: moderateScaleVertical(16),
+                }}>
+                <FlatList
+                  key={1}
+                  horizontal
+                  data={subcategoryVendorData?.categories}
+                  keyExtractor={(item) => item.id.toString()}
+                  showsHorizontalScrollIndicator={false}
+                  renderItem={_renderItem}
+                  ItemSeparatorComponent={() => (
+                    <View style={{marginTop: moderateScale(24)}} />
+                  )}
+                  ListHeaderComponent={() => (
+                    <View style={{marginLeft: moderateScale(12)}} />
+                  )}
+                  ListFooterComponent={() => (
+                    <View style={{marginRight: moderateScale(12)}} />
+                  )}
+                />
+              </View>
+            )}
 
-  return (
-    <WrapperContainer
-      statusBarColor={colors.backgroundGrey}
-      bgColor={
-        isDarkMode ? MyDarkTheme.colors.background : colors.statusbarColor
-      }
-      isLoading={isApiLoading}>
-      <Header3
-        leftIcon={imagePath.icBackb}
-        rightIcon={imagePath.search}
-        location={location}
-      />
-      <DeliveryTypeComp selectedToggle={selectedToggle} />
-      <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
-        <Animatable.View animation={'fadeInUp'} delay={200}>
-          {!isEmpty(subcategoryVendorData?.categories) && (
             <View
               style={{
-                height: moderateScaleVertical(80),
-                marginVertical: moderateScaleVertical(16),
+                marginTop: moderateScaleVertical(4),
               }}>
               <FlatList
-                key={1}
                 horizontal
-                data={subcategoryVendorData?.categories}
-                keyExtractor={(item) => item.id.toString()}
+                data={subcategoryVendorData?.mobile_banners}
+                keyExtractor={(item, index) => index.toString()}
                 showsHorizontalScrollIndicator={false}
-                renderItem={_renderItem}
+                renderItem={renderBanners}
                 ItemSeparatorComponent={() => (
-                  <View style={{marginTop: moderateScale(24)}} />
+                  <View style={{marginRight: moderateScale(12)}} />
                 )}
                 ListHeaderComponent={() => (
-                  <View style={{marginLeft: moderateScale(12)}} />
+                  <View style={{marginLeft: moderateScale(16)}} />
                 )}
                 ListFooterComponent={() => (
-                  <View style={{marginRight: moderateScale(12)}} />
+                  <View style={{marginRight: moderateScale(16)}} />
                 )}
               />
             </View>
-          )}
-
-          <View
-            style={{
-              marginTop: moderateScaleVertical(4),
-            }}>
             <FlatList
-              horizontal
-              data={subcategoryVendorData?.mobile_banners}
-              keyExtractor={(item, index) => index.toString()}
+              scrollEnabled={false}
+              ListHeaderComponent={vendorHeader()}
+              showsVerticalScrollIndicator={false}
+              alwaysBounceVertical={true}
+              data={subcategoryVendorData?.vendors}
+              keyExtractor={(item) => item.id.toString()}
               showsHorizontalScrollIndicator={false}
-              renderItem={renderBanners}
+              renderItem={_renderVendors}
+              ListEmptyComponent={() => (
+                <View>
+                  <FastImage
+                    source={imagePath.noDataFound}
+                    resizeMode="contain"
+                    style={{
+                      width: moderateScale(140),
+                      height: moderateScale(140),
+                      alignSelf: 'center',
+                      marginTop: moderateScaleVertical(30),
+                    }}
+                  />
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      fontSize: textScale(11),
+                      fontFamily: fontFamily.regular,
+                      marginHorizontal: moderateScale(10),
+                      lineHeight: moderateScale(20),
+                      marginTop: moderateScale(5),
+                    }}>
+                    {`${strings.SORRY_MSG}`}
+                  </Text>
+                </View>
+              )}
               ItemSeparatorComponent={() => (
-                <View style={{marginRight: moderateScale(12)}} />
-              )}
-              ListHeaderComponent={() => (
-                <View style={{marginLeft: moderateScale(16)}} />
-              )}
-              ListFooterComponent={() => (
-                <View style={{marginRight: moderateScale(16)}} />
+                <View style={{height: moderateScale(10)}} />
               )}
             />
-          </View>
-          <FlatList
-            scrollEnabled={false}
-            ListHeaderComponent={vendorHeader()}
-            showsVerticalScrollIndicator={false}
-            alwaysBounceVertical={true}
-            data={subcategoryVendorData?.vendors}
-            keyExtractor={(item) => item.id.toString()}
-            showsHorizontalScrollIndicator={false}
-            renderItem={_renderVendors}
-            ListEmptyComponent={() => (
-              <View>
-                <FastImage
-                  source={imagePath.noDataFound}
-                  resizeMode="contain"
-                  style={{
-                    width: moderateScale(140),
-                    height: moderateScale(140),
-                    alignSelf: 'center',
-                    marginTop: moderateScaleVertical(30),
-                  }}
-                />
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    fontSize: textScale(11),
-                    fontFamily: fontFamily.regular,
-                    marginHorizontal: moderateScale(10),
-                    lineHeight: moderateScale(20),
-                    marginTop: moderateScale(5),
-                  }}>
-                  {`${strings.SORRY_MSG}`}
-                </Text>
-              </View>
-            )}
-            ItemSeparatorComponent={() => (
-              <View style={{height: moderateScale(10)}} />
-            )}
-          />
-        </Animatable.View>
-      </ScrollView>
+          </Animatable.View>
+        </ScrollView>
+      )}
     </WrapperContainer>
   );
 }
