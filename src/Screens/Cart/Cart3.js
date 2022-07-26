@@ -2639,7 +2639,7 @@ function Cart({navigation, route}) {
               </Text>
             ) : null}
           </View>
-
+{console.log( item?.vendor_products," item?.vendor_products item?.vendor_products")}
           {/************ start  render cart items *************/}
           {item?.vendor_products.length > 0
             ? item?.vendor_products.map((i, inx) => {
@@ -2867,88 +2867,15 @@ function Cart({navigation, route}) {
                               flexDirection: 'row',
                               justifyContent: 'space-between',
                             }}>
-                            <View
-                              style={{
-                                flex: 1,
-                                justifyContent: 'center',
-                              }}>
-                              {!!i?.product_addons.length > 0 && (
-                                <View>
-                                  <Text
-                                    style={{
-                                      ...styles.cartItemWeight2,
-                                      color: isDarkMode
-                                        ? MyDarkTheme.colors.text
-                                        : colors.textGreyOpcaity7,
-                                      marginBottom: moderateScale(2),
-                                      marginTop: moderateScaleVertical(6),
-                                    }}>
-                                    {strings.EXTRA}
-                                  </Text>
-                                </View>
-                              )}
-                              <View>
-                                {i?.product_addons.length > 0
-                                  ? i?.product_addons.map((j, jnx) => {
-                                      return (
-                                        <View
-                                          style={{
-                                            marginBottom:
-                                              moderateScaleVertical(4),
-                                          }}>
-                                          <View
-                                            style={{
-                                              marginRight: moderateScale(10),
-                                            }}>
-                                            <Text
-                                              style={
-                                                isDarkMode
-                                                  ? [
-                                                      styles.cartItemWeight2,
-                                                      {
-                                                        color:
-                                                          MyDarkTheme.colors
-                                                            .text,
-                                                      },
-                                                    ]
-                                                  : styles.cartItemWeight2
-                                              }
-                                              // numberOfLines={1}
-                                            >
-                                              {j.addon_title}{' '}
-                                              {`(${j.option_title})`} ={' '}
-                                              {`${
-                                                currencies?.primary_currency
-                                                  ?.symbol
-                                              }${currencyNumberFormatter(
-                                                Number(j.price),
-                                                appData?.profile?.preferences
-                                                  ?.digit_after_decimal,
-                                              )}`}
-                                            </Text>
-                                          </View>
-                                        </View>
-                                      );
-                                    })
-                                  : null}
-                              </View>
-                            </View>
+                           
 
-                            <View
-                              style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                              }}>
                               <View
                                 style={{
                                   flex: 1,
                                   justifyContent: 'center',
+                                  
                                 }}>
-                                <View
-                                  style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                  }}>
+                               
                                   {!!i?.product_addons.length > 0 ? (
                                     <View>
                                       <Text
@@ -2967,22 +2894,8 @@ function Cart({navigation, route}) {
                                     <View />
                                   )}
 
-                                  {!!i?.product?.pharmacy_check && (
-                                    <TouchableOpacity
-                                      onPress={() =>
-                                        openPickerForPrescription(i)
-                                      }
-                                      style={{
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                      }}>
-                                      {/* <Image source={imagePath.icAddPlaceholder} /> */}
-                                      <Image
-                                        source={imagePath.icPrescription}
-                                      />
-                                    </TouchableOpacity>
-                                  )}
-                                </View>
+                                
+                                
                                 <View>
                                   {i?.product_addons.length > 0
                                     ? i?.product_addons.map((j, jnx) => {
@@ -3095,7 +3008,7 @@ function Cart({navigation, route}) {
                                   </View>
                                 )}
                               </View>
-                            </View>
+                 
 
                             <View
                               style={{
@@ -3125,6 +3038,26 @@ function Cart({navigation, route}) {
                                   </TouchableOpacity>
                                 </>
                               )} */}
+                              
+                              <View>
+
+                              {!!i?.product?.pharmacy_check && (
+                                    <TouchableOpacity
+                                      onPress={() =>
+                                        openPickerForPrescription(i)
+                                      }
+                                      style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        marginBottom:moderateScaleVertical(24)
+                                      }}>
+                                      {/* <Image source={imagePath.icAddPlaceholder} /> */}
+                                      <Image
+                                        source={imagePath.icPrescription}
+                                      />
+                                    </TouchableOpacity>
+                                )}
+                             
                               <TouchableOpacity
                                 onPress={() => openDeleteView(i)}>
                                 <FastImage
@@ -3136,6 +3069,7 @@ function Cart({navigation, route}) {
                                   }}
                                 />
                               </TouchableOpacity>
+                              </View>
                             </View>
                           </View>
                         </View>

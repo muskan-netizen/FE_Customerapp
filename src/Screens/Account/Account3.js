@@ -790,7 +790,7 @@ export default function Account3({navigation}) {
             />
           )}
 
-          {!!userData?.auth_token && (
+          {/* {!!userData?.auth_token && (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -805,9 +805,9 @@ export default function Account3({navigation}) {
               // iconRight={imagePath.goRight}
               // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
-          )}
+          )} */}
 
-          {!!userData?.auth_token && (
+          {/* {!!userData?.auth_token && (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -822,7 +822,7 @@ export default function Account3({navigation}) {
               // iconRight={imagePath.goRight}
               // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
-          )}
+          )} */}
 
           <View style={styles.loginView}>
             <TouchableOpacity

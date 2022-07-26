@@ -1283,8 +1283,8 @@ const appIds = {
     android: 'com.ambutap',
   }),
   sabroson: Platform.select({
-    ios: 'com.sabroson',
-    android: 'com.sabroson',
+    ios: 'com.sabroson.orders',
+    android: 'com.sabroson.orders',
   }),
   swiffyllc: Platform.select({
     ios: 'com.swiffyllc.customer',

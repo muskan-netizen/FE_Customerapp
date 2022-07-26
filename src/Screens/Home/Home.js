@@ -402,6 +402,7 @@ export default function Home({route, navigation}) {
                 language: languages?.primary_language?.id,
                 // ...latlongObj,
               },
+
             )
             .then(async (res) => {
               console.log('Home data++++++', res);
