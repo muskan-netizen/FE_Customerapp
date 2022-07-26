@@ -72,6 +72,7 @@ import { colorsDark } from 'react-native-elements/dist/config';
 import { DarkTheme } from 'react-native-paper';
 import actions from '../../../redux/actions';
 import { getItem, setItem } from '../../../utils/utils';
+import RNExitApp from 'react-native-exit-app';
 
 export default function DashBoardFive({
   handleRefresh = () => { },
@@ -191,7 +192,7 @@ export default function DashBoardFive({
   // );
 
   const  OnTakeMeOut =  () => {
-    BackHandler.exitApp()
+    RNExitApp.exitApp();
   }
 
   const checkAgeModalPermission = async () => { 
@@ -1088,18 +1089,25 @@ export default function DashBoardFive({
               flex: 1,
               justifyContent: "center",
               alignItems: "center",
-              // marginTop: 22,
-              // backgroundColor:getColorCodeWithOpactiyNumber(colors.black, 50)
               backgroundColor:'rgba(0,0,0,0.5)'
             }}>
               <View style={styles.innerAgeModaleView}>
-                <TouchableOpacity style={{marginBottom:moderateScale(10)}} ><Image source={imagePath.cross} /></TouchableOpacity>
-                <Text style={[styles.ageModalText, {  color:  isDarkMode  ? colors.white : colors.black,}]}>{`Age Verification `}</Text>
-                <View style={styles.horizontalLine} />
+                <TouchableOpacity style={{alignSelf:'center', marginBottom:moderateScale(10)}} ><Image style={{height:moderateScaleVertical(25),width:moderateScale(25),}} source={imagePath.icCross18} /></TouchableOpacity>
+                <Text style={[styles.ageModalText, {  color:  isDarkMode  ? colors.white : colors.black,}]}>{strings.AGE_VERIFICATION}</Text>
+                {/* <View style={styles.horizontalLine} /> */} 
+                <View style={styles.horizontalLine} >
+                <DashedLine
+                  dashLength={5}
+                  dashThickness={1}
+                  dashGap={2}
+                  dashColor={colors.black}
+                  style={{ marginTop: moderateScale(7) }}
+                />
+                </View>
                 <Text style={styles.ageConfirmationText} >
-                  {`You must be 18 years or above to access this app`}
+                  {strings.YOU_MUST_BE_18}
                 </Text>
-                <View style={{marginBottom:moderateScale(10), width: '70%'}}>
+                <View style={{marginVertical:moderateScaleVertical(10), width: '70%'}}>
                 <GradientButton
                   colorsArray={[themeColors.primary_color, themeColors.primary_color]}
                   textStyle={{
@@ -1108,18 +1116,14 @@ export default function DashBoardFive({
                   }}
                   onPress={() => {onConfirmAge(false)}}
                   borderRadius={moderateScale(5)}
-                  btnText={`yes, I am Over 18`}
+                  btnText={strings.YES_I_AM_ABOVE_18}
                   containerStyle={{
                     width: '100%'
-                    // marginTop: moderateScaleVertical(20),
-                    // marginBottom: moderateScaleVertical(10),
                   }}
                 />
                 </View>
-               
-
-                <TouchableOpacity onPress={ OnTakeMeOut }>
-                  <Text style={styles.takeMeOutStyle} >{`Take me out`}</Text></TouchableOpacity>
+                  
+                <Text onPress={OnTakeMeOut} style={styles.takeMeOutStyle} >{strings.TAKE_ME_OUT}</Text> 
               </View>
             </View>
           </Modal>

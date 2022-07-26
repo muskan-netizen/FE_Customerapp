@@ -206,16 +206,15 @@ android {
 
     flavorDimensions "appType"
 
-    productFlavors {
-       
-             easyDrink{
+    productFlavors {    
+            kazakazi{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.easyDrink.order'
-            resValue "string", "app_name", "Easy Drink"
+            applicationId 'com.kazakazi'
+            resValue "string", "app_name", "Kazakazi"
             resValue "string", "host_name", ""
             }
     }

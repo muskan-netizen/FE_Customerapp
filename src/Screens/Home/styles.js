@@ -439,12 +439,8 @@ export default ({themeColors, fontFamily}) => {
       borderRadius: 12,
     },
     horizontalLine:{ 
-      marginVertical:moderateScaleVertical(10), 
-      borderBottomColor: colors.black, 
-      borderBottomWidth: moderateScale(0.3), 
-      height: moderateScale(10), 
+      marginVertical:moderateScaleVertical(15), 
       width: '70%',
-      //  borderBottomStyle: 'dashed' 
       },
       ageModalText:{ 
         fontFamily: fontFamily.bold, 
@@ -456,14 +452,19 @@ export default ({themeColors, fontFamily}) => {
       fontSize: textScale(14), 
       textAlign: 'center', 
     },
-    takeMeOutStyle:{textAlign:'center',  color: themeColors.primary_color,fontFamily:fontFamily.regular, fontSize:textScale(12)},
+    takeMeOutStyle: {
+      textAlign:'center',  
+      color: themeColors.primary_color,fontFamily:fontFamily.regular, 
+      fontSize:textScale(12),
+      marginTop:moderateScaleVertical(10),
+    },
     innerAgeModaleView :{
       paddingVertical: moderateScaleVertical(15),
+      paddingHorizontal:moderateScale(10),
       backgroundColor: "white",
       borderRadius: 15,
       width: width / 1.2,
       minHeight: moderateScaleVertical(150),
-      // padding: 35,
       alignItems: "center",
       shadowColor: "#000",
       shadowOffset: {
