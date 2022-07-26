@@ -1020,7 +1020,7 @@ const appIds = {
   }),
   ineed: Platform.select({
     ios: 'com.customer.ineed',
-    android: 'com.customer.ineed',
+    android: 'com.ineed.userApplication',
   }),
   nadelivery: Platform.select({
     ios: 'com.app.nadelivery',

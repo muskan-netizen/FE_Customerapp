@@ -1864,7 +1864,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.customer.ineed'
+                applicationId 'com.ineed.user'
                 resValue "string", "app_name", "INeed"
                 resValue "string", "host_name", ""
             }
