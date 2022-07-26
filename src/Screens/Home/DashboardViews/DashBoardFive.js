@@ -8,6 +8,8 @@ import {
   View,
   Animated,
   Image,
+  Modal,
+  BackHandler,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import AppLink from 'react-native-app-link';
@@ -61,6 +63,16 @@ import LaundryCategoryCard from '../../../Components/LaundryCategoryCard';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import DifferentAddOns from '../../../Components/DifferentAddOns ';
 import LaundryAddonModal from '../../../Components/LaundryAddonModal';
+import {rgba} from 'react-native-color-matrix-image-filters';
+import DashedLine from 'react-native-dashed-line';
+import ButtonComponent from '../../../Components/ButtonComponent';
+import {color} from 'react-native-reanimated';
+import GradientButton from '../../../Components/GradientButton';
+import {colorsDark} from 'react-native-elements/dist/config';
+import {DarkTheme} from 'react-native-paper';
+import actions from '../../../redux/actions';
+import {getItem, setItem} from '../../../utils/utils';
+import RNExitApp from 'react-native-exit-app';
 
 export default function DashBoardFive({
   handleRefresh = () => {},
@@ -80,6 +92,7 @@ export default function DashBoardFive({
   const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
   );
+  const userData = useSelector((state) => state?.auth?.userData);
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -92,6 +105,7 @@ export default function DashBoardFive({
 
   const isGetEstimation = appData?.profile?.preferences?.get_estimations;
 
+  const [isConfirmAgeModal, setIsConfirmAgeModal] = useState(true);
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
@@ -167,6 +181,65 @@ export default function DashBoardFive({
     return homeFilter;
   };
 
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     const backHandler = BackHandler.addEventListener(
+  //       'hardwareBackPress',
+  //       androidBackButtonHandler,
+  //     );
+  //     return () => backHandler.remove();
+  //   }, []),
+  // );
+
+  const OnTakeMeOut = () => {
+    RNExitApp.exitApp();
+  };
+
+  const checkAgeModalPermission = async () => {
+    try {
+      const getIsUserCofirmedAgeModal = await getItem(
+        'isUserConfirmedAgeModal',
+      );
+      console.log(getIsUserCofirmedAgeModal, 'isUserConfirmedAgeModal');
+      if (
+        getIsUserCofirmedAgeModal !== null &&
+        !!(userData && userData?.auth_token)
+      ) {
+        setIsConfirmAgeModal(getIsUserCofirmedAgeModal);
+      } else {
+        setIsConfirmAgeModal(true);
+      }
+    } catch (error) {
+      console.log(error, 'error');
+    }
+  };
+
+  useEffect(() => {
+    checkAgeModalPermission();
+  }, []);
+
+  console.log(userData, 'userData>>');
+  const onConfirmAge = async (userPermission) => {
+    try {
+      const getIsUserCofirmedAgeModal = await getItem(
+        'isUserConfirmedAgeModal',
+      );
+      console.log(getIsUserCofirmedAgeModal, 'checkkk');
+      if (
+        getIsUserCofirmedAgeModal !== null &&
+        !!(userData && userData?.auth_token)
+      ) {
+        setIsConfirmAgeModal(getIsUserCofirmedAgeModal);
+      } else {
+        setIsConfirmAgeModal(false);
+        if (!!(userData && userData?.auth_token)) {
+          await setItem('isUserConfirmedAgeModal', userPermission);
+        }
+      }
+    } catch (error) {
+      console.log(error, 'error');
+    }
+  };
   const _renderItem = ({item, index}) => {
     return (
       <View
@@ -1013,6 +1086,96 @@ export default function DashBoardFive({
           }}
         />
       </ScrollView>
+
+      {getBundleId() == appIds.easyDrink && isConfirmAgeModal && (
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={isConfirmAgeModal}
+            // onRequestClose={() => {
+            //   Alert.alert("Modal has been closed.");
+            //   setModalVisible(!modalVisible);
+            // }}
+          >
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(0,0,0,0.5)',
+              }}>
+              <View style={styles.innerAgeModaleView}>
+                <TouchableOpacity
+                  style={{
+                    alignSelf: 'center',
+                    marginBottom: moderateScale(10),
+                  }}>
+                  <Image
+                    style={{
+                      height: moderateScaleVertical(25),
+                      width: moderateScale(25),
+                    }}
+                    source={imagePath.icCross18}
+                  />
+                </TouchableOpacity>
+                <Text
+                  style={[
+                    styles.ageModalText,
+                    {color: isDarkMode ? colors.white : colors.black},
+                  ]}>
+                  {strings.AGE_VERIFICATION}
+                </Text>
+                {/* <View style={styles.horizontalLine} /> */}
+                <View style={styles.horizontalLine}>
+                  <DashedLine
+                    dashLength={5}
+                    dashThickness={1}
+                    dashGap={2}
+                    dashColor={colors.black}
+                    style={{marginTop: moderateScale(7)}}
+                  />
+                </View>
+                <Text style={styles.ageConfirmationText}>
+                  {strings.YOU_MUST_BE_18}
+                </Text>
+                <View
+                  style={{
+                    marginVertical: moderateScaleVertical(10),
+                    width: '70%',
+                  }}>
+                  <GradientButton
+                    colorsArray={[
+                      themeColors.primary_color,
+                      themeColors.primary_color,
+                    ]}
+                    textStyle={{
+                      fontFamily: fontFamily.medium,
+                      color: colors.white,
+                    }}
+                    onPress={() => {
+                      onConfirmAge(false);
+                    }}
+                    borderRadius={moderateScale(5)}
+                    btnText={strings.YES_I_AM_ABOVE_18}
+                    containerStyle={{
+                      width: '100%',
+                    }}
+                  />
+                </View>
+
+                <Text onPress={OnTakeMeOut} style={styles.takeMeOutStyle}>
+                  {strings.TAKE_ME_OUT}
+                </Text>
+              </View>
+            </View>
+          </Modal>
+        </View>
+      )}
     </View>
   );
 }

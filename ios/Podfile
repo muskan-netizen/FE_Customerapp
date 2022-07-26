@@ -25,6 +25,8 @@ target 'RoyoOrder' do
 #Runrun Target
 target 'Runrun' do
   
+  pod 'RNExitApp', :path => '../node_modules/react-native-exit-app'
+
 end
 
 # ##Tranzit Target

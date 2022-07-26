@@ -980,4 +980,8 @@ Amount`,
     'We are currently not operating in your location',
   WE_ACCEPT_ONLY_SCHEDULE_ORDER: 'We are accepting only schedule order',
   CHARGES: 'Charges',
+  YOU_MUST_BE_18:'You must be 18 years or above to access this app',
+  YES_I_AM_ABOVE_18:'yes, I am above 18',
+  AGE_VERIFICATION:'Age Verification',
+  TAKE_ME_OUT:'Take me out',
 };
