@@ -780,7 +780,7 @@ const styles = StyleSheet.create({
   },
   container: {
     // paddingHorizontal: moderateScale(16),
-    marginHorizontal:moderateScale(16),
+    marginHorizontal: moderateScale(16),
     paddingBottom: moderateScaleVertical(24),
     marginBottom: customMarginBottom(18, 86),
     backgroundColor: 'transparent',
