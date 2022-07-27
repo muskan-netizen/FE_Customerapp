@@ -16,6 +16,7 @@ import {showError, showSuccess} from '../utils/helperFunctions';
 import {MyDarkTheme} from '../styles/theme';
 import colors from '../styles/colors';
 import imagePath from '../constants/imagePath';
+import { useDarkMode } from 'react-native-dark-mode';
 
 function DeliveryTypeComp({selectedToggle = () => {}}) {
   const {cartItemCount} = useSelector((state) => state?.cart);
@@ -29,7 +30,7 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
     themeColor,
   } = useSelector((state) => state?.initBoot);
   const {dineInType} = useSelector((state) => state?.home);
-
+  const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
 

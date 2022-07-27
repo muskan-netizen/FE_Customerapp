@@ -905,6 +905,7 @@ export default function Subscriptions2({ navigation, route }) {
               flexDirection: 'row',
               justifyContent: 'space-between',
               marginBottom: moderateScale(10),
+              
             }}>
             <GradientButton
               colorsArray={[
@@ -916,7 +917,7 @@ export default function Subscriptions2({ navigation, route }) {
               borderRadius={moderateScale(5)}
               containerStyle={{
                 marginHorizontal: moderateScale(10),
-                width: paymentOptions.length ? width / 3 : width - 60,
+                width: paymentOptions.length ? width / 3 : width-moderateScale(100),
               }}
               btnText={strings.CANCEL}
             />

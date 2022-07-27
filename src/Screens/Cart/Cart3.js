@@ -2636,6 +2636,7 @@ function Cart({ navigation, route }) {
           {/************ start  render cart items *************/}
           {item?.vendor_products.length > 0
             ? item?.vendor_products.map((i, inx) => {
+              console.log(i,"itemmmmmm")
                 return (
                   <Swipeable
                     ref={swipeRef}
@@ -2786,17 +2787,8 @@ function Cart({ navigation, route }) {
                                   marginTop: moderateScaleVertical(4),
                                   fontFamily: fontFamily.regular,
                                 }}>
-                                <Text style={{}}>
-                                  {`${currencies?.primary_currency?.symbol}${
-                                    // Number(i?.pvariant?.multiplier) *
-                                    currencyNumberFormatter(
-                                      Number(i?.variants?.price),
-                                      appData?.profile?.preferences
-                                        ?.digit_after_decimal,
-                                    )
-                                  }`}
-                                </Text>{' '}
-                                X{i?.quantity} ={' '}
+                             
+                                {i?.quantity} X
                                 <Text
                                   style={{
                                     color: isDarkMode
@@ -2807,6 +2799,22 @@ function Cart({ navigation, route }) {
                                     // Number(i?.pvariant?.multiplier) *
                                     currencyNumberFormatter(
                                       Number(i?.variants?.quantity_price),
+                                      appData?.profile?.preferences
+                                        ?.digit_after_decimal,
+                                    )
+                                  }`}
+                                </Text>
+                                ={' '}
+                                <Text
+                                  style={{
+                                    color: isDarkMode
+                                      ? MyDarkTheme.colors.text
+                                      : colors.black,
+                                  }}>
+                                  {`${currencies?.primary_currency?.symbol}${
+                                    // Number(i?.pvariant?.multiplier) *
+                                    currencyNumberFormatter(
+                                      Number(i?.variants?.price),
                                       appData?.profile?.preferences
                                         ?.digit_after_decimal,
                                     )

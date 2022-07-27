@@ -147,14 +147,10 @@ export default function Signup({navigation}) {
 
   const isValidData = () => {
     const error = validations({
-      email: appData?.profile?.preferences?.verify_email
-        ? email
-        : 'abc@gmail.com',
+      email: email,
       password: password,
       callingCode: callingCode,
-      phoneNumber: appData?.profile?.preferences?.verify_phone
-        ? phoneNumber
-        : '78787878787',
+      phoneNumber: phoneNumber,
     });
     if (error) {
       showError(error);
