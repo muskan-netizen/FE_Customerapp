@@ -18,6 +18,7 @@ import CalanderStrip from 'react-native-calendar-strip';
 import DeviceInfo from 'react-native-device-info';
 import * as RNLocalize from 'react-native-localize';
 import Modal from 'react-native-modal';
+import RenderHTML from 'react-native-render-html';
 import Toast from 'react-native-simple-toast';
 import {Pagination} from 'react-native-snap-carousel';
 import StarRating from 'react-native-star-rating';
@@ -42,6 +43,7 @@ import Banner from './Banner';
 import GradientButton from './GradientButton';
 import HtmlViewComp from './HtmlViewComp';
 import CardLoader from './Loaders/CardLoader';
+
 
 const HomeServiceVariantAddons = ({
   productdetail = {},
@@ -1388,9 +1390,16 @@ const HomeServiceVariantAddons = ({
 
               {productdetail?.translation[0]?.body_html != null && (
                 <View>
-                  <HtmlViewComp
-                    plainHtml={productdetail?.translation[0]?.body_html}
-                  />
+                  <RenderHTML
+                        contentWidth={width}
+                        source={{html: productdetail?.translation[0]?.body_html}}
+                        tagsStyles={{
+                          p: {
+                            color: isDarkMode ? colors.white : colors.textGreyB,
+                          },
+                        }}
+                      />
+                  
                   <View style={{marginBottom: 10}} />
                 </View>
               )}

@@ -14,6 +14,7 @@ abstract_target 'available_pods' do
    pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
    pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
    pod 'react-native-contacts', :path => '../node_modules/react-native-contacts'
+ 
 
 ##RoyoOrder Target
 target 'RoyoOrder' do
@@ -24,6 +25,8 @@ target 'RoyoOrder' do
 #Runrun Target
 target 'Runrun' do
   
+  pod 'RNExitApp', :path => '../node_modules/react-native-exit-app'
+
 end
 
 # ##Tranzit Target
@@ -1830,6 +1833,14 @@ target 'FarmMeat' do
 end
 #DanielleBejjani Target
 target 'DanielleBejjani' do
+  
+end
+#YallaEat Target
+target 'YallaEat' do
+  
+end
+#Choizez Target
+target 'Choizez' do
   
 end
 

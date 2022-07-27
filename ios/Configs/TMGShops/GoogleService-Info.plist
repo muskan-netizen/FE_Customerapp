@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>528960069350-853ntpjnfaortjit4a64m5il4p9v29rg.apps.googleusercontent.com</string>
+	<string>751395574162-klu2h8p77qg4uqp5mku34jofobehr8gn.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.528960069350-853ntpjnfaortjit4a64m5il4p9v29rg</string>
+	<string>com.googleusercontent.apps.751395574162-klu2h8p77qg4uqp5mku34jofobehr8gn</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>528960069350-2q6b4chmefdpge1u7lr8sagcp42llaa5.apps.googleusercontent.com</string>
+	<string>751395574162-2e1k3sj6h7nljt8isef2cjpptm4a0tvm.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBaMt49OtXEeTU0Cn1-i9jKLfNCOLhRCMA</string>
+	<string>AIzaSyDn1RgBR8eM-DL_lhPB5SlV_fKeMAf5jyo</string>
 	<key>GCM_SENDER_ID</key>
-	<string>528960069350</string>
+	<string>751395574162</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.tmgShops</string>
+	<string>com.tmgShops.orders</string>
 	<key>PROJECT_ID</key>
-	<string>tmg-shops</string>
+	<string>tmg-shops-f523f</string>
 	<key>STORAGE_BUCKET</key>
-	<string>tmg-shops.appspot.com</string>
+	<string>tmg-shops-f523f.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:528960069350:ios:c1bccf0c25749cab54a527</string>
+	<string>1:751395574162:ios:69a5404a5532c67e8ef14b</string>
 </dict>
 </plist>

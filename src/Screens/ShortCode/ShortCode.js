@@ -2347,6 +2347,24 @@ export default function ShortCode({route, navigation}) {
                       isShortcodePrefilled: true,
                     });
               break;
+              case appIds.yallaEat:
+                updateState({
+                  shortCode: shortCodes.yallaEat,
+                  isShortcodePrefilled: true,
+                });
+          break;
+          case appIds.choizez:
+                updateState({
+                  shortCode: shortCodes.choizez,
+                  isShortcodePrefilled: true,
+                });
+          break;
+          case appIds.otto:
+                updateState({
+                  shortCode: shortCodes.otto,
+                  isShortcodePrefilled: true,
+                });
+          break;
       }
     })();
   }, []);
@@ -2393,7 +2411,7 @@ export default function ShortCode({route, navigation}) {
       };
     } else {
       header = {
-        // code: '245bae',
+        //code: '245bae',
         code: shortCode,
       };
     }
@@ -2691,7 +2709,7 @@ export default function ShortCode({route, navigation}) {
       case appIds?.iPicknDrop:
         return imagePath.ipd;
       case appIds?.muvpod:
-        return {uri: imagePath.muvpod};
+        return imagePath.ipd;
       // case appIds?.sabroson:
       //   return imagePath.sabroson
     }

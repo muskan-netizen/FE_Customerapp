@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "463888251709",
+    "project_id": "yallaeat-d4a20",
+    "storage_bucket": "yallaeat-d4a20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463888251709:android:86f33012ed60aaad1aa354",
+        "android_client_info": {
+          "package_name": "com.yallaEat.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463888251709-4toop66danf562e97s7jues273ias4qi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yallaEat.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "463888251709-5oh7ne15pk2jnhq99f8uk24q174ljt4e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yallaEat.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "463888251709-qvmop8lm5gtar6s46knnofm3go5i4p2r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yallaEat.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "463888251709-68nnrjqi27us15vvlede4cjvl34s323s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkx0mlXI3WCTAlcSQqaiYTULWXV2NZC7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463888251709-68nnrjqi27us15vvlede4cjvl34s323s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

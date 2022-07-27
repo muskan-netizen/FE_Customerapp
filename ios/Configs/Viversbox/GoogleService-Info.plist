@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1064634340878-agdmpf3v4iv4dc8jod60n0bq1at5q2kg.apps.googleusercontent.com</string>
+	<string>819293644050-8io3r4ivnjju0f5qorojhjc4i8fnuiql.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1064634340878-agdmpf3v4iv4dc8jod60n0bq1at5q2kg</string>
+	<string>com.googleusercontent.apps.819293644050-8io3r4ivnjju0f5qorojhjc4i8fnuiql</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>1064634340878-4r528208phtr0mkuin0le0vp1iqh8nkj.apps.googleusercontent.com</string>
+	<string>819293644050-g9j4em11vp4238od4jq8vkr4rmpo4mdg.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBb7DmHSNOBCm15dPCfPFQrFj_QjVxEFf0</string>
+	<string>AIzaSyAc7T8i1r3edVuMWJiT48NkWYAd1ERd7Vg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1064634340878</string>
+	<string>819293644050</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.viversbox</string>
+	<string>com.viversbox.user</string>
 	<key>PROJECT_ID</key>
-	<string>royodispatcher9</string>
+	<string>viversbox-user</string>
 	<key>STORAGE_BUCKET</key>
-	<string>royodispatcher9.appspot.com</string>
+	<string>viversbox-user.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1064634340878:ios:d7e678d4a115fa2a670e5f</string>
+	<string>1:819293644050:ios:92b63bb5d59a2e1d1e3fcb</string>
 </dict>
 </plist>

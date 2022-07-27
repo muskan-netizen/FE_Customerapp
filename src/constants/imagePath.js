@@ -527,4 +527,5 @@ export default {
   icAddPlaceholder: require('../assets/images/RoyoorderNewImages/ic_placeholder.png'),
   icPrescription: require('../assets/images/RoyoorderNewImages/ic_pres.png'),
   icBikeMarker: require('../assets/images/TrackOrderImages/ic_bike.png'),
+  icCross18: require('../assets/images/ic_18.png'),
 };

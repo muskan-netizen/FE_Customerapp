@@ -373,6 +373,9 @@ const shortCodes = {
   rota:'e4b727',
   farmMeat:'371731',
   danielleBejjani:'b47da2',
+  yallaEat:'94679a',
+  choizez:'05c28e',
+  otto:'d0121e',
 };
 
 const appIds = {
@@ -1026,7 +1029,7 @@ const appIds = {
   }),
   ineed: Platform.select({
     ios: 'com.customer.ineed',
-    android: 'com.customer.ineed',
+    android: 'com.ineed.userApplication',
   }),
   nadelivery: Platform.select({
     ios: 'com.app.nadelivery',
@@ -1289,8 +1292,8 @@ const appIds = {
     android: 'com.ambutap',
   }),
   sabroson: Platform.select({
-    ios: 'com.sabroson',
-    android: 'com.sabroson',
+    ios: 'com.sabroson.orders',
+    android: 'com.sabroson.orders',
   }),
   swiffyllc: Platform.select({
     ios: 'com.swiffyllc.customer',
@@ -1438,8 +1441,8 @@ const appIds = {
   }),
 
   viversbox: Platform.select({
-    ios: 'com.viversbox',
-    android: 'com.viversbox',
+    ios: 'com.viversbox.user',
+    android: 'com.viversbox.user',
   }),
   scootz: Platform.select({
     ios: 'com.scootz',
@@ -1614,8 +1617,8 @@ const appIds = {
     android: 'com.peerDeliveries',
   }),
   swan: Platform.select({
-    ios: 'com.Swan-User',
-    android: 'com.swanUser',
+    ios: 'com.swan.userApp',
+    android: 'com.swan.userApp',
   }),
   SCOOTUP: Platform.select({
     ios: 'com.SCOOTUP',
@@ -1851,6 +1854,18 @@ const appIds = {
   danielleBejjani: Platform.select({
     ios: 'com.danielleBejjani.order',
     android: 'com.danielleBejjani.order',
+  }),
+  yallaEat: Platform.select({
+    ios: 'com.yallaEat.order',
+    android: 'com.yallaEat.order',
+  }),
+  choizez: Platform.select({
+    ios: 'com.choizez.order',
+    android: 'com.choizez.order',
+  }),
+  otto: Platform.select({
+    ios: 'com.otto.order',
+    android: 'com.otto.order',
   }),
 };
 

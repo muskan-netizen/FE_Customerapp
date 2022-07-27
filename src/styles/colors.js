@@ -128,4 +128,5 @@ export default {
   greenD: '#719F1C',
   redF: '#EECFD1',
   redG: '#E02020',
+  statusbarColor: '#F4F8FB',
 };
