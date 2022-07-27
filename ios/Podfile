@@ -1828,6 +1828,10 @@ end
 target 'FarmMeat' do
   
 end
+#DanielleBejjani Target
+target 'DanielleBejjani' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

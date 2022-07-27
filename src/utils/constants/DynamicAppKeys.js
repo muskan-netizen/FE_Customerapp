@@ -372,6 +372,7 @@ const shortCodes = {
   euodooTechnologies:'c9d1ee',
   rota:'e4b727',
   farmMeat:'371731',
+  danielleBejjani:'b47da2',
 };
 
 const appIds = {
@@ -1846,6 +1847,10 @@ const appIds = {
   farmMeat: Platform.select({
     ios: 'com.farmMeat.order',
     android: 'com.farmMeat.order',
+  }),
+  danielleBejjani: Platform.select({
+    ios: 'com.danielleBejjani.order',
+    android: 'com.danielleBejjani.order',
   }),
 };
 

@@ -2340,7 +2340,13 @@ export default function ShortCode({route, navigation}) {
                       shortCode: shortCodes.farmMeat,
                       isShortcodePrefilled: true,
                     });
-                    break;
+               break;
+            case appIds.danielleBejjani:
+                    updateState({
+                      shortCode: shortCodes.danielleBejjani,
+                      isShortcodePrefilled: true,
+                    });
+              break;
       }
     })();
   }, []);
