@@ -5653,7 +5653,7 @@
 		847F6E2427203FDA00C7A32F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847F6E2327203FDA00C7A32F /* Images.xcassets */; };
 		847F6F1A2720428800C7A32F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847F6F192720428700C7A32F /* GoogleService-Info.plist */; };
 		8480076A26CE20340014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		8480076B26CE20340014F500 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		8480076B26CE20340014F500 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8480076C26CE20340014F500 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8480076D26CE20340014F500 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848007AD26CE260D0014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -6474,7 +6474,7 @@
 		848CB12D278D662700DD824C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848CB12C278D662700DD824C /* Images.xcassets */; };
 		848CB1FB278D66F400DD824C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848CB1FA278D66F300DD824C /* GoogleService-Info.plist */; };
 		848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		848CEF8126CE229D0077C918 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		848CEF8126CE229D0077C918 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		848CEF8226CE229D0077C918 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848CEF8326CE229D0077C918 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848D76B92748F70100FE87AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -10056,6 +10056,7 @@
 		E810C19F28858E8500CEA1E3 /* EasyDrink(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E810C19E28858E8400CEA1E3 /* EasyDrink(Development).xcconfig */; };
 		E810C1A128858EEA00CEA1E3 /* EasyDrink(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E810C1A028858EE800CEA1E3 /* EasyDrink(Production).xcconfig */; };
 		E810C1A328858F3600CEA1E3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E810C1A228858F3400CEA1E3 /* Images.xcassets */; };
+		E81C5602289109AA00F99FCE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E81C5601289109A700F99FCE /* GoogleService-Info.plist */; };
 		E8239CDD28896EA3009D6939 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		E8239CDE28896EA3009D6939 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		E8239CDF28896EA3009D6939 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -10373,7 +10374,6 @@
 		E8DEA2A4289009160035608D /* DanielleBejjani(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E8DEA2A3289009160035608D /* DanielleBejjani(Development).xcconfig */; };
 		E8DEA2A6289009520035608D /* DanielleBejjani(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E8DEA2A5289009510035608D /* DanielleBejjani(Production).xcconfig */; };
 		E8DEA2A828900A790035608D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8DEA2A728900A780035608D /* Images.xcassets */; };
-		E8DEA2AA28900C000035608D /* GoogleService-Info .plist in Resources */ = {isa = PBXBuildFile; fileRef = E8DEA2A928900BF80035608D /* GoogleService-Info .plist */; };
 		E8FBBFF8288675DB005CCA26 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E8FBBFF7288675D1005CCA26 /* GoogleService-Info.plist */; };
 		E9C0AC0FCAB5EEE8067B928F /* libPods-available_pods-CaribeClean.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EDD3DA09F24B1205EB4DBC8E /* libPods-available_pods-CaribeClean.a */; };
 		E9F2EAA22CAE02414D6354E3 /* libPods-available_pods-Stonses.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E1E0EE1424550EA72FB95D9 /* libPods-available_pods-Stonses.a */; };
@@ -14084,6 +14084,7 @@
 		E810C19E28858E8400CEA1E3 /* EasyDrink(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "EasyDrink(Development).xcconfig"; sourceTree = "<group>"; };
 		E810C1A028858EE800CEA1E3 /* EasyDrink(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "EasyDrink(Production).xcconfig"; sourceTree = "<group>"; };
 		E810C1A228858F3400CEA1E3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		E81C5601289109A700F99FCE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E8239D0428896EA3009D6939 /* IAmSelling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IAmSelling.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8239D072889704A009D6939 /* IAmSelling(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "IAmSelling(Development).xcconfig"; sourceTree = "<group>"; };
 		E8239D0928897072009D6939 /* IAmSelling(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "IAmSelling(Production).xcconfig"; sourceTree = "<group>"; };
@@ -14138,7 +14139,6 @@
 		E8DEA2A3289009160035608D /* DanielleBejjani(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "DanielleBejjani(Development).xcconfig"; sourceTree = "<group>"; };
 		E8DEA2A5289009510035608D /* DanielleBejjani(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "DanielleBejjani(Production).xcconfig"; sourceTree = "<group>"; };
 		E8DEA2A728900A780035608D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		E8DEA2A928900BF80035608D /* GoogleService-Info .plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info .plist"; sourceTree = "<group>"; };
 		E8FBBFF7288675D1005CCA26 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E90B96659919E3DDD375D170 /* Pods-available_pods-Autotek.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Autotek.release.xcconfig"; path = "Target Support Files/Pods-available_pods-Autotek/Pods-available_pods-Autotek.release.xcconfig"; sourceTree = "<group>"; };
 		E918F017FA20BE22C1EDEB70 /* Pods-available_pods-ChipeTaxi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-ChipeTaxi.release.xcconfig"; path = "Target Support Files/Pods-available_pods-ChipeTaxi/Pods-available_pods-ChipeTaxi.release.xcconfig"; sourceTree = "<group>"; };
@@ -23503,7 +23503,7 @@
 		E8DEA2A2289007ED0035608D /* DanielleBejjani */ = {
 			isa = PBXGroup;
 			children = (
-				E8DEA2A928900BF80035608D /* GoogleService-Info .plist */,
+				E81C5601289109A700F99FCE /* GoogleService-Info.plist */,
 				E8DEA2A3289009160035608D /* DanielleBejjani(Development).xcconfig */,
 				E8DEA2A5289009510035608D /* DanielleBejjani(Production).xcconfig */,
 				E8DEA2A728900A780035608D /* Images.xcassets */,
@@ -45617,8 +45617,8 @@
 				E8DEA2862890054A0035608D /* SFProText-SemiBold.ttf in Resources */,
 				E8DEA2872890054A0035608D /* SFProText-Medium.ttf in Resources */,
 				E8DEA2892890054A0035608D /* notification.wav in Resources */,
+				E81C5602289109AA00F99FCE /* GoogleService-Info.plist in Resources */,
 				E8DEA28C2890054A0035608D /* Plists in Resources */,
-				E8DEA2AA28900C000035608D /* GoogleService-Info .plist in Resources */,
 				E8DEA28D2890054A0035608D /* Futura-Normal.ttf in Resources */,
 				E8DEA28E2890054A0035608D /* Eina02-Bold.ttf in Resources */,
 				E8DEA28F2890054A0035608D /* Futura-Book.ttf in Resources */,
@@ -124007,7 +124007,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */,
-				848CEF8126CE229D0077C918 /* BuildFile in Sources */,
+				848CEF8126CE229D0077C918 /* (null) in Sources */,
 				848CEF8226CE229D0077C918 /* Royo.swift in Sources */,
 				848CEF8326CE229D0077C918 /* main.m in Sources */,
 			);
@@ -124101,7 +124101,7 @@
 				84FFFF2026D672E600F2B059 /* Royo.swift in Sources */,
 				84FFFF2126D672E600F2B059 /* main.m in Sources */,
 				8480076A26CE20340014F500 /* AppDelegate.m in Sources */,
-				8480076B26CE20340014F500 /* BuildFile in Sources */,
+				8480076B26CE20340014F500 /* (null) in Sources */,
 				8480076C26CE20340014F500 /* Royo.swift in Sources */,
 				8480076D26CE20340014F500 /* main.m in Sources */,
 			);
@@ -147667,7 +147667,7 @@
 				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = RoyoOrder;
+				PROVISIONING_PROFILE_SPECIFIER = "Danielle Bejjani";
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
