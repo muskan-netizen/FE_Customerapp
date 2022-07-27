@@ -387,7 +387,7 @@ export default function Home({route, navigation}) {
     }
 
     {
-   
+      console.log(latlongObj,vendorFilterData,"data>>>>>>>");
       selectedTabType
         ? actions
             .homeData(
@@ -574,6 +574,11 @@ export default function Home({route, navigation}) {
   };
   //onPress Category
   const onPressCategory = (item) => {
+    console.log(item, 'item>>>>item');
+    if (item?.redirect_to == staticStrings.FOOD_TEMPLATE) {
+      moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
+      return;
+    }
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -1220,7 +1225,7 @@ export default function Home({route, navigation}) {
       })();
     }
   }, []);
-  // console.log(appMainData, 'appMainData');
+
   const _onPressSubscribe = () => {
     moveToNewScreen(navigationStrings.SUBSCRIPTION)();
     updateState({
@@ -1231,7 +1236,9 @@ export default function Home({route, navigation}) {
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
-      bgColor={isDarkMode ? MyDarkTheme.colors.background : '#F4F8FB'}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.statusbarColor
+      }
       isLoading={searchDataLoader}>
       {/* <View style={{flex: 1}}>{}</View> */}
       <>{renderHomeScreen()}</>

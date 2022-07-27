@@ -73,6 +73,7 @@ const PhoneNumberInputWithUnderline = ({
         <Text
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
+            textAlign:'left',
             ...labelStyle,
           }}>
           {placeholder}

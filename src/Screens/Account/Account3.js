@@ -789,8 +789,8 @@ export default function Account3({navigation}) {
               // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
-
-          {/* {!!userData?.auth_token && (
+{/* 
+          {!!userData?.auth_token && (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}

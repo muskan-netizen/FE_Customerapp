@@ -40,6 +40,7 @@ import {
   ChatScreen,
   ChatRoom,
   Subscriptions2,
+  SubcategoryVendor,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
@@ -309,17 +310,21 @@ export default function () {
         component={LaundryAvailableVendors}
         options={{headerShown: false}}
       />
-         <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.CHAT_ROOM}
         component={ChatRoom}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
 
-    
-       <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.SUBSCRIPTION}
         component={Subscriptions2}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.SUBCATEGORY_VENDORS}
+        component={SubcategoryVendor}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

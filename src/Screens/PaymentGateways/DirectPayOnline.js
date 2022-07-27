@@ -73,7 +73,7 @@ export default function DirectPayOnline({ navigation, route }) {
         const URL = queryString.parseUrl(url);
         const queryParams = URL.query;
         const nonQueryURL = URL.url;
-        console.log(queryParams.status, 'propsDirectPayOnline');
+        console.log(queryParams, 'propsDirectPayOnline');
 
         setTimeout(() => {
             if (queryParams.status == 200) {
