@@ -406,7 +406,7 @@ export default function OrderDetail({ navigation, route }) {
     data['review'] = productDetail?.product_rating?.review
       ? productDetail?.product_rating?.review
       : '';
-    // data['vendor_id'] = productDetail.vendor_id;
+    // data['vendor_id'] = productDetail.vendor_id; =
 
     actions
       .giveRating(data, {
@@ -2143,7 +2143,7 @@ export default function OrderDetail({ navigation, route }) {
             />
           )}
           {(cartData?.total_service_fee > 0 ||
-            cartData?.taxable_amount > 0) && (
+            Number(cartData?.taxable_amount) >0) && (
               <LeftRightText
                 leftText={strings.TAXES_FEES}
                 rightText={`${currencies?.primary_currency?.symbol
