@@ -19,6 +19,7 @@ import {
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
 import DirectPayOnline from '../Screens/PaymentGateways/DirectPayOnline';
+import Khalti from '../Screens/PaymentGateways/Khalti';
 
 import VerifyAccountSecond from '../Screens/VerifyAccountSecond/VerifyAccount';
 import navigationStrings from './navigationStrings';
@@ -103,6 +104,11 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.DIRECTPAYONLINE}
         component={DirectPayOnline}
+        options={{headerShown: false}}
+      />
+        <Stack.Screen
+        name={navigationStrings.KHALTI}
+        component={Khalti}
         options={{headerShown: false}}
       />
       <Stack.Screen

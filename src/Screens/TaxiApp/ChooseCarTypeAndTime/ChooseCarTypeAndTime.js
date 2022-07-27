@@ -443,6 +443,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       case 42: //DIRECTPAYONLINE Payment Gatway
         navigation.navigate(navigationStrings.DIRECTPAYONLINE, paymentData);
         break;
+        case 47: //Khalti Payment Gatway
+        navigation.navigate(navigationStrings.KHALTI, paymentData);
+        break;
       default:
         navigation.navigate(
           navigationStrings.PICKUPTAXIORDERDETAILS,

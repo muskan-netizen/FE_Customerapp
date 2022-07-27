@@ -1055,7 +1055,7 @@ function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.DIRECTPAYONLINE, paymentData);
         break;
-      case 46: //Direct Pay Online Payment Getway
+      case 47: //Khalti Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.KHALTI, paymentData);
         break;
@@ -1418,7 +1418,6 @@ function Cart({ navigation, route }) {
     // if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
     //   _offineLinePayment();
     //   return;
-    // }
     console.log('payment option', selectedPayment);
 
     if (
@@ -1702,8 +1701,6 @@ function Cart({ navigation, route }) {
         appData?.profile?.preferences?.digit_after_decimal,
       )}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&address_id=${selectedAddressData?.id
       }&payment_option_id=${selectedPayment?.id}&action=cart`;
-
-    console.log(queryData, 'queryData');
     actions
       .openPaymentWebUrl(
         queryData,

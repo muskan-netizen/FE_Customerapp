@@ -71,16 +71,18 @@ export default function Khalti({ navigation, route }) {
         const URL = queryString.parseUrl(url);
         const queryParams = URL.query;
         const nonQueryURL = URL.url;
-        console.log(props, 'props===>');
+        console.log(props,queryParams,paramsData,  'props===>');
 
         setTimeout(() => {
             if (queryParams.status == 200) {
                 if (paramsData?.extraData) {
+                    console.log('extraData')
                     navigation.navigate(
                         navigationStrings.PICKUPTAXIORDERDETAILS,
                         paramsData?.extraData,
                     );
                 } else {
+                    console.log('elseee')
                     moveToNewScreen(navigationStrings.ORDERSUCESS, {
                         orderDetail: {
                             order_number: queryParams.order,
