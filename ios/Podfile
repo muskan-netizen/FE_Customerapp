@@ -1843,6 +1843,10 @@ end
 target 'Choizez' do
   
 end
+#Otto Target
+target 'Otto' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
