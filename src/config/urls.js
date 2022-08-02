@@ -11,7 +11,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+//export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://dingdongdelivers.com/api/v1'
 // export const API_BASE_URL = 'https://foodnests.com/api/v1'
 // export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1'
@@ -165,7 +165,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.98.185:8060/api/v1'; // sujata
 // export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1'; //dinesh sir
 // export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1'; //inderjeet sir
-// export const API_BASE_URL = 'http://192.168.98.87:8007/api/v1';
+export const API_BASE_URL = 'http://192.168.98.87:8007/api/v1';
 // export const API_BASE_URL = 'https://876c-114-134-24-242.ngrok.io/api/v1'; // gourav sir
 // export const API_BASE_URL = 'http://192.168.96.127:8005/api/v1'; // Gourav sir
 // export const API_BASE_URL = 'https://f6da-114-134-24-242.ngrok.io/api/v1';
@@ -476,3 +476,10 @@ export const VENDOR_CHAT = getApiUrl('/chat/vendorUserChatRoom');
 export const SEND_MESSAGE = getSocketUrl('/api/chat/sendMessageJoin');
 export const GET_ALL_MESSAGES = getSocketUrl('/api/chat');
 export const ALL_ROOM_USER = getSocketUrl('/api/getRoomUser');
+
+
+
+
+//getAllNearByDriversFromDispatcherApplication
+export const ALL_NEARBY_DRIVERS = getApiUrl('/get/agents');
+
