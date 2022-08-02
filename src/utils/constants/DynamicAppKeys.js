@@ -376,6 +376,8 @@ const shortCodes = {
   yallaEat:'94679a',
   choizez:'05c28e',
   otto:'d0121e',
+  rescueRoadsideAssistance:'6355c5',
+  tax_E:'a7952f',
 };
 
 const appIds = {
@@ -1866,6 +1868,14 @@ const appIds = {
   otto: Platform.select({
     ios: 'com.otto.order',
     android: 'com.otto.order',
+  }),
+  rescueRoadsideAssistance: Platform.select({
+    ios: 'com.rescueRoadsideAssistance.order',
+    android: 'com.rescueRoadsideAssistance.order',
+  }),
+  tax_E: Platform.select({
+    ios: 'com.taxE.order',
+    android: 'com.taxE.order',
   }),
 };
 

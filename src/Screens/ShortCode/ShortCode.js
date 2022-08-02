@@ -2365,6 +2365,18 @@ export default function ShortCode({route, navigation}) {
                   isShortcodePrefilled: true,
                 });
           break;
+          case appIds.rescueRoadsideAssistance:
+                updateState({
+                  shortCode: shortCodes.rescueRoadsideAssistance,
+                  isShortcodePrefilled: true,
+                });
+          break;
+          case appIds.tax_E:
+                updateState({
+                  shortCode: shortCodes.tax_E,
+                  isShortcodePrefilled: true,
+                });
+          break;
       }
     })();
   }, []);
@@ -2405,13 +2417,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '245bae',
+        // code: '4f3624',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        //code: '245bae',
+        // code: '4f3624',
         code: shortCode,
       };
     }
