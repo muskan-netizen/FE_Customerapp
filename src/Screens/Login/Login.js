@@ -627,7 +627,7 @@ export default function Login({navigation}) {
             onPress={moveToNewScreen(navigationStrings.FORGOT_PASSWORD)}
             style={{
               fontFamily: fontFamily.bold,
-              color: themeColors.primary_color,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black
             }}>
             {' '}
             {strings.FORGOT}
@@ -788,7 +788,7 @@ export default function Login({navigation}) {
                 onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
                 style={{
                   fontFamily: fontFamily.bold,
-                  color: themeColors.primary_color,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black
                 }}>
                 {' '}
                 {strings.SIGN_UP}

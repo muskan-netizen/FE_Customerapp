@@ -32,6 +32,7 @@ const PhoneNumberInput = ({
   TxtInputStyle,
   flagSize,
   downArrowStyle,
+  require= false,
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -102,7 +103,7 @@ const PhoneNumberInput = ({
       </TouchableOpacity>
       <TextInput
         selectionColor={colors.black}
-        placeholder={placeholder}
+        placeholder={placeholder.concat(!!require?'*':'')}
         keyboardType="numeric"
         value={phoneNumber}
         placeholderTextColor={
@@ -129,11 +130,12 @@ const PhoneNumberInput = ({
       />
       {countryPickerModalVisible && (
         <CountryPicker
-          withCallingCode={callingCode}
+          withCallingCode={true}
           // cca2={cca2}
           visible={countryPickerModalVisible}
           withFlagButton={false}
           withFilter
+          countryCode={callingCode}
           onClose={_onCountryPickerModalClose}
           onSelect={_onCountryChange}
           closeButtonImage={imagePath.closeButton}

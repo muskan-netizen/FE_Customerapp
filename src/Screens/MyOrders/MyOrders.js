@@ -622,6 +622,8 @@ export default function MyOrders(props) {
       <CustomTopTabBar
         scrollEnabled={true}
         tabBarItems={tabBarData}
+        activeStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}
+        // textStyle={{ color: isDarkMode ? MyDarkTheme.colors. : colors.black }}
         customContainerStyle={
           isDarkMode
             ? {backgroundColor: MyDarkTheme.colors.background}

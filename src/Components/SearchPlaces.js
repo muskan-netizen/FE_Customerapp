@@ -9,8 +9,8 @@ import {
   I18nManager,
   Text,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import {useSelector} from 'react-redux';
+import { useDarkMode } from 'react-native-dark-mode';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import fontFamily from '../styles/fontFamily';
@@ -19,7 +19,7 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {googlePlacesApi} from '../utils/googlePlaceApi';
+import { googlePlacesApi } from '../utils/googlePlaceApi';
 import SelctFromMap from './SelctFromMap';
 import ModalView from '../Components/Modal';
 import strings from '../constants/lang';
@@ -31,109 +31,87 @@ const SearchPlaces = ({
   containerStyle = {},
   inputStyle = {},
   mapKey = '',
-  fetchArrayResult = () => {},
+  fetchArrayResult = () => { },
   value = '',
-  setValue = () => {},
+  setValue = () => { },
   placeHolder,
-  onFocus = () => {},
+  onFocus = () => { },
   autoFocus = false,
-  _moveToNextScreen = () => {},
+  _moveToNextScreen = () => { },
   curLatLng = {},
   placeHolderColor = colors.black,
-  onClear = () => {},
+  onClear = () => { },
   showRightImg = true,
   textStyle = {},
-  mapClose = () => {},
-  addressDone = () => {},
+  mapClose = () => { },
+  addressDone = () => { },
   isMapSelectLocation = false,
-  currentLatLong={},
-  index
+  currentLatLong = {},
+  index,
+  isTaxiFlow = false
 }) => {
   console.log(mapKey, 'in MapPlaceComp map key');
 
   console.log(RNLocalize.getCountry(), 'timezone');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  
+
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appData,appStyle, themeColors,currencies,languages} = useSelector((state) => state?.initBoot);
-  const {constCurrLoc} = useSelector((state) => state?.home);
+  const { appData, appStyle, themeColors, currencies, languages } = useSelector((state) => state?.initBoot);
+  const { constCurrLoc } = useSelector((state) => state?.home);
 
-  console.log("cur lag lng",currentLatLong)
+  console.log("cur lag lng", currentLatLong)
 
   const textChangeHandler = async (data) => {
-    
-    console.log(data,"dataaaa")
-    setValue(data);
-    if (index==0){
 
-      var res = await googlePlacesApi(data, mapKey, curLatLng, RNLocalize.getCountry());
-      console.log("kdjfkdkjfdf",res)
-      if (res && !!res.predictions) {
-          let arry = res.predictions.map((val,i)=>{
-            return {
-              ...val,
-              formatted_address: val?.description,
-              name: val?.structured_formatting.main_text
-             }
-          })
-        fetchArrayResult(arry);
-      }
-    }
-   else {
-    let query={}
-    query['search']=data
-    if(!!appData?.profile?.preferences?.is_static_dropoff){
-        actions.pickuplocationSearch(query,
-          {
+    console.log(appData?.profile?.preferences?.is_static_dropoff, "searching texts")
+    setValue(data);
+    if (!!appData?.profile?.preferences?.is_static_dropoff) {
+      let query = {}
+      query['search'] = data
+      actions.pickuplocationSearch(query,
+        {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
         }).then(
-          (res)=>{
-            console.log(res,"ressssssss")
+          (res) => {
+            console.log(res, "ressssssss")
             if (res && !!res.data) {
-              let arry = res.data.map((val,i)=>{
+              let arry = res.data.map((val, i) => {
                 return {
                   ...val,
                   formatted_address: val?.address,
                   name: val?.title
-                 }
+                }
               })
-            fetchArrayResult(arry);
-          }
+              fetchArrayResult(arry);
+            }
           }
         ).catch(
-         error=> console.error(error,"errrorrrr")
+          error => console.error(error, "errrorrrr")
         )
     }
-    else{
+    else {
       var res = await googlePlacesApi(data, mapKey, curLatLng, RNLocalize.getCountry());
-      console.log("kdjfkdkjfdf",res)
+      console.log("kdjfkdkjfdf", res)
       if (res && !!res.predictions) {
-          let arry = res.predictions.map((val,i)=>{
-            return {
-              ...val,
-              formatted_address: val?.description,
-              name: val?.structured_formatting.main_text
-             }
-          })
+        let arry = res.predictions.map((val, i) => {
+          return {
+            ...val,
+            formatted_address: val?.description,
+            name: val?.structured_formatting.main_text
+          }
+        })
         fetchArrayResult(arry);
       }
     }
-   }
-   
-   
-
-    // if (res && !!res.results) {
-    //   fetchArrayResult(res.results);
-    // }
   };
 
   const modalMainContent = () => {
     return (
-      <View style={{flex: 1, backgroundColor: 'green'}}>
+      <View style={{ flex: 1, backgroundColor: 'green' }}>
         <SelctFromMap
           addressDone={addressDone}
           mapClose={mapClose} //address map close
@@ -234,7 +212,7 @@ const SearchPlaces = ({
         isVisible={isMapSelectLocation}
         onClose={mapClose}
         modalMainContent={modalMainContent}
-        mainViewStyle={{flex: 1}}
+        mainViewStyle={{ flex: 1 }}
         modalStyle={{
           flex: 1,
           marginVertical: 0,

@@ -127,10 +127,11 @@ const PhoneNumberInput2 = ({
       {countryPickerModalVisible && (
         <CountryPicker
           cca2={cca2}
-          withCallingCode={callingCode}
+          withCallingCode={true}
           visible={countryPickerModalVisible}
           withFlagButton={false}
           withFilter
+          countryCode={callingCode}
           onClose={_onCountryPickerModalClose}
           onSelect={_onCountryChange}
         />

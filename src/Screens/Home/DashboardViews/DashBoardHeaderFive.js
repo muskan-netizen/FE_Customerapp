@@ -171,7 +171,7 @@ export default function DashBoardHeaderFive({
                 navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
               }>
               <Image
-                style={{tintColor: themeColors.primary_color}}
+                style={{tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black}}
                 source={imagePath.search1}
               />
             </TouchableOpacity>
@@ -207,7 +207,7 @@ export default function DashBoardHeaderFive({
                     height: moderateScale(20),
                     width: moderateScale(20),
                     borderRadius: moderateScale(10),
-                    tintColor: themeColors.primary_color,
+                    tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black
                   }}
                   resizeMode="contain"
                 />

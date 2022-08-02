@@ -205,20 +205,88 @@ android {
     }
 
     flavorDimensions "appType"
+
     productFlavors{
-        elcheregio{
+                   yoho{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.codebrew.yoho'
+                resValue "string", "app_name", "Yoho"
+                resValue "string", "host_name", ""
+            }
+    }
+
+    productFlavors {
+                royoorder {
+                dimension "appType"
+                versionCode 3
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                // applicationIdSuffix ".royoorder"
+                applicationId 'com.codebrew.royoorder'
+                resValue "string", "app_name", "RoyoOrder"
+                resValue "string", "host_name", "sales.royoorders.com"
+            }
+                orderchekout{
                 dimension "appType"
                 versionCode 5
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.elcheregio'
-                resValue "string", "app_name", "El Che Regio"
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.orderchekout'
+                resValue "string", "app_name", "Order Chekout"
+                resValue "string", "host_name", ""
+                }
+
+                runrun {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                // applicationIdSuffix ".runrun"
+                applicationId 'com.codebrew.runrun'
+                resValue "string", "app_name", "Runrun"
+                resValue "string", "host_name", ""
+                }
+                tranzit {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                // applicationIdSuffix ".tranzit"
+                applicationId 'com.app.tranzit'
+                resValue "string", "app_name", "Tranzit"
+                resValue "string", "host_name", ""
+                }
+                hmoobhub {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                // applicationIdSuffix ".hmoobhhub"
+                applicationId 'com.codebrew.hmoobhub'
+                resValue "string", "app_name", "Hmoob Hub"
+                resValue "string", "host_name", ""
+                }
+                capcorp {
+                dimension "appType"
+                versionCode 2
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                // applicationIdSuffix ".hmoobhhub"
+                applicationId 'com.capcorpapp'
+                resValue "string", "app_name", "Capcorp"
                 resValue "string", "host_name", ""
             }
-    }
-    productFlavors {
-            masa{
+                masa{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"

@@ -1082,7 +1082,7 @@ export default function OrderDetail({ navigation, route }) {
                             style={{
                               justifyContent: 'center',
                             }}>
-                            <Text>{i?.product_name}</Text>
+                            <Text style={{color: isDarkMode ? MyDarkTheme.colors.text : colors.black,}}>{i?.product_name}</Text>
                             {i?.quantity && (
                               <View
                                 style={{
@@ -2226,6 +2226,7 @@ export default function OrderDetail({ navigation, route }) {
             MyDarkTheme={MyDarkTheme}
             leftTextStyle={{
               fontSize: textScale(16),
+              marginBottom: moderateScaleVertical(12),
               color: isDarkMode
                 ? MyDarkTheme.colors.text
                 : colors.blackOpacity86,
@@ -3115,7 +3116,7 @@ console.log("driverStatusdriverStatus",driverStatus)
                 // top right sand 1
               ]}
             />
-            <Text style={styles.waitToAccept}>{strings.WAITINGTOACCEPT}</Text>
+            <Text style={{...styles.waitToAccept, color: isDarkMode ? MyDarkTheme.colors.text : colors.black}}>{strings.WAITINGTOACCEPT}</Text>
           </View>
         )}
         {!!orderStatus &&

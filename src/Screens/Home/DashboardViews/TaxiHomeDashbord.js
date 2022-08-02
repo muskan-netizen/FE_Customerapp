@@ -90,6 +90,7 @@ export default function TaxiHomeDashbord({
   const userData = useSelector((state) => state?.auth?.userData);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
@@ -133,6 +134,7 @@ export default function TaxiHomeDashbord({
     newAddressAdded: null,
     isLoadingModal: false,
     fullMapShow: false,
+    isVisibleAddressModal: false,
     pickupAddress: {},
   });
   console.log(location, 'loaction');
@@ -171,7 +173,7 @@ export default function TaxiHomeDashbord({
     del,
     isLoadingModal,
     fullMapShow,
-    pickupAddress,
+    selectViaMap
   } = state;
   const styles = stylesFunc({themeColors, fontFamily});
  
@@ -270,6 +272,7 @@ export default function TaxiHomeDashbord({
         console.log(res, 'res>res>res');
         updateState({del: del ? false : true});
         showSuccess(res.message);
+       setModalVisible(false)
       })
       .catch((error) => {
         updateState({isLoading: false});
@@ -277,7 +280,14 @@ export default function TaxiHomeDashbord({
       });
   };
 
+
+  const openCloseMapAddress = (type) => {
+    updateState({ selectViaMap: type == 1 ? true : false });
+  };
+
+
   const setModalVisible = (visible, type, id, data) => {
+    updateState({ selectViaMap: false });
     if (!!userData?.auth_token) {
       updateState({
         updateData: data,
@@ -823,10 +833,12 @@ export default function TaxiHomeDashbord({
         updateData={updateData}
         isVisible={isVisible1}
         indicator={indicator}
-        onClose={() => setModalVisible(false)}
+        onClose={() => setModalVisible(!isVisible1)}
         type={type}
         passLocation={(data) => addUpdateLocation(data)}
-        // onPress={currentLocation}
+        selectViaMap={selectViaMap}
+        openCloseMapAddress={openCloseMapAddress}
+        constCurrLoc={location}
       />
 
       <Modal

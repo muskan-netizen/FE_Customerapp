@@ -119,7 +119,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     textInputStyle: {
       flex: 1,
       opacity: 0.7,
-      color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7,
+      color: isDarkMode ? MyDarkTheme.colors.text : colors.redB,
       fontFamily: fontFamily.medium,
       fontSize: textScale(14),
       paddingHorizontal: 10,

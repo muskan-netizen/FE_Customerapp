@@ -873,7 +873,7 @@ export default function AddMoney({navigation}) {
               renderItem={_renderItemPayments}
               ListFooterComponent={listFooterComp}
               ListEmptyComponent={() => (
-                <Text style={{textAlign: 'center'}}>
+                <Text style={{textAlign: 'center',color: isDarkMode ? MyDarkTheme.colors.text : colors.black,}}>
                   {strings.NO_PAYMENT_METHOD}
                 </Text>
               )}

@@ -1,34 +1,66 @@
 {
   "project_info": {
-    "project_number": "607720829521",
-    "project_id": "onscart-6668b",
-    "storage_bucket": "onscart-6668b.appspot.com"
+    "project_number": "933865514251",
+    "project_id": "onscart-fast-order-delivery",
+    "storage_bucket": "onscart-fast-order-delivery.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:607720829521:android:d2581f0d6f853763e4be70",
+        "mobilesdk_app_id": "1:933865514251:android:26034c8d8ffaf58601ae0e",
         "android_client_info": {
           "package_name": "com.onscart"
         }
       },
       "oauth_client": [
         {
-          "client_id": "607720829521-q9a4om9kf7kh5pbfvtkeftuvppurpl1l.apps.googleusercontent.com",
+          "client_id": "933865514251-6ih94a2f1l1kgghjph1mkt2n10s67u80.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.onscart",
+            "certificate_hash": "7796246de8223008ac74006d7848a4f37a25b863"
+          }
+        },
+        {
+          "client_id": "933865514251-bvbinjfr1oji7or8o6rr4611777f5g11.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.onscart",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "933865514251-rilrji2kii4ajai3p9828qd2l3hovtfc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.onscart",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "933865514251-bie7shbfc95rc7830nu6eiu7jmqmm09j.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDQqef5FQtkiNcZqCpA7zph3i-tgITLq-A"
+          "current_key": "AIzaSyAvqpIaGVjvJ9hM41qanTtafhaSl4nPoxw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "607720829521-q9a4om9kf7kh5pbfvtkeftuvppurpl1l.apps.googleusercontent.com",
+              "client_id": "933865514251-bie7shbfc95rc7830nu6eiu7jmqmm09j.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "933865514251-5ri6075qecj6cjf0rrgt7853hd9cnqu1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "ONSCART",
+                "app_store_id": "1610509148"
+              }
             }
           ]
         }
