@@ -527,7 +527,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       data['coupon_id'] = couponInfo?.id;
     }
     data['order_time_zone'] = RNLocalize.getTimeZone();
-    data['type'] = paramData?.friendBookingDetails?.bookingType;
+    data['bookingType'] = paramData?.friendBookingDetails?.bookingType;
     (data[
       'friendName'
     ] = `${paramData?.friendBookingDetails?.firstName} ${paramData?.friendBookingDetails?.lastName}`),

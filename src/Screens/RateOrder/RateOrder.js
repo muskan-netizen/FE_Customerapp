@@ -180,9 +180,10 @@ export default function RateOrder({navigation, route}) {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
-        // 'Content-Type': 'multipart/form-data',
+        'Content-Type': 'multipart/form-data',
       })
       .then((res) => {
+        console.log(res,"resssss")
         updateState({isLoading: false});
         // navigation.navigate(navigationStrings.TAXIHOMESCREEN);
         navigation.goBack();
@@ -245,6 +246,7 @@ export default function RateOrder({navigation, route}) {
   }, []);
 
   const errorMethod = (error) => {
+    console.log(error,"errorrr")
     updateState({isLoading: false});
     showError(error?.message || error?.error);
   };
@@ -289,6 +291,7 @@ export default function RateOrder({navigation, route}) {
             marginTop: moderateScaleVertical(50),
             marginBottom: moderateScaleVertical(20),
           }}>
+            
           {/* star View */}
           <View style={styles.starViewStyle}>
             <StarRating

@@ -59,9 +59,10 @@ export default function AddMoney({navigation}) {
   const [state, setState] = useState({
     amount: '',
     data: [
-      {id: 0, amount: 300},
-      {id: 1, amount: 5000},
-      {id: 2, amount: 4500},
+      {id: 0, amount: 10},
+      {id: 1, amount: 20},
+      {id: 2, amount: 50},
+      {id: 3, amount: 100},
     ],
     allAvailAblePaymentMethods: [],
     selectedPaymentMethod: null,

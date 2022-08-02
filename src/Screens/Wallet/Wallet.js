@@ -42,6 +42,7 @@ import {getImageUrl, showError} from '../../utils/helperFunctions';
 import {showMessage} from 'react-native-flash-message';
 import ContentLoader, {Rect, Circle} from 'react-content-loader/native';
 import {BarIndicator, UIActivityIndicator} from 'react-native-indicators';
+import BorderTextInput from '../../Components/BorderTextInput';
 
 export default function Wallet({navigation}) {
   const [state, setState] = useState({
@@ -559,19 +560,17 @@ export default function Wallet({navigation}) {
           </View>
 
           <Text style={styles.headingStyle}>{strings.AMOUNT_TO_TRANSFER}</Text>
-          <View style={styles.textInputView}>
-            <TextInput
-              placeholder={strings.ENTER_AMOUNT}
-              onChangeText={(text) => updateState({transferAmount: text})}
-              textInputStyle={styles.textInputStyle}
-              keyboardType="number-pad"
-              autoFocus
-            />
-          </View>
+          <BorderTextInput
+             placeholder={strings.ENTER_AMOUNT}
+             onChangeText={(text) => updateState({transferAmount: text})}
+             textInputStyle={styles.textInputStyle}
+             keyboardType="number-pad"
+             autoFocus
+          />
           <Text
             style={{
               ...styles.headingStyle,
-              marginTop: moderateScaleVertical(12),
+           
             }}>
             {strings.TRANSFER_TO}
           </Text>

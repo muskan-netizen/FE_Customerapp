@@ -72,7 +72,7 @@ export default function OrderDetail({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-  // console.log(paramData, 'paramData');
+  console.log(paramData, 'paramData');
   const dineInType = useSelector((state) => state?.home?.dineInType);
 
   const [lalaMoveUrl, setLalaMoveUrl] = useState(null);
@@ -415,6 +415,7 @@ export default function OrderDetail({ navigation, route }) {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
+        console.log(res,"ressssssssr")
         let cloned_cartItems = cloneDeep(cartItems);
         updateState({
           isLoading: false,
@@ -3549,6 +3550,8 @@ console.log("driverStatusdriverStatus",driverStatus)
         }
         centerTitle={strings.ORDER + `${'#'}${cartData?.order_number || ''}`}
         customRight={!!cartData?.reports?.report?.original ? customRight : ''}
+        onPressLeft={paramData?.from ?moveToNewScreen(navigationStrings.HOME):() => navigation.goBack()}
+        
       /> 
       <View
         style={{
