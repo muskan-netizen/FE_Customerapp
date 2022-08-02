@@ -37,7 +37,6 @@ import FastImage from 'react-native-fast-image';
 import DashBoardEight from './DashboardViews/DashBoardEight';
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
 import _, { isEmpty } from 'lodash';
-import io from 'socket.io-client';
 import socketServices from '../../utils/scoketService';
 
 // navigator.geolocation = require('react-native-geolocation-service');
@@ -128,10 +127,13 @@ export default function Home({ route, navigation }) {
 
   const { profile } = appData;
 
+  console.log("appDataappData home++", appData)
 
   useEffect(() => {
-    socketServices.initializeSocket()
-}, [])
+    if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
+      socketServices.initializeSocket(appData?.profile?.socket_url)
+    }
+  }, [appData])
 
   useFocusEffect(
     useCallback(() => {
@@ -147,7 +149,7 @@ export default function Home({ route, navigation }) {
     updateState({ updatedData: appMainData?.categories });
   }, [appMainData]);
 
-  
+
   useEffect(() => {
     _getLocationFromParams();
     // if (addressSearch) {

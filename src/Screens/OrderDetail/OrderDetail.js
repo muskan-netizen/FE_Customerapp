@@ -218,29 +218,31 @@ export default function OrderDetail({ navigation, route }) {
 
   const createRoom = async (item, type) => {
 
-    console.log("itemitem",item)
+    console.log("itemitem", item)
 
-    // return;
+
 
     try {
       const apiData = {
-        sub_domain: '192.168.101.88',
-        client_id: 1,
+        sub_domain: '192.168.101.88', //this is static value 
+        client_id: String(appData?.profile.id),
         db_name: appData?.profile?.database_name,
-        user_id: userData?.id,
+        user_id: String(userData?.id),
         type: type,
-        vendor_order_id: Number(item?.id),
-        vendor_id: Number(item?.vendor_id),
-        order_id: Number(item?.order_id)
+        order_vendor_id: String(item?.id),
+        vendor_id: String(item?.vendor_id),
+        order_id: String(item?.order_id)
       }
-      updateState({isLoading: true})
+      updateState({ isLoading: true })
+
+      console.log("sending api data", apiData)
       const res = await actions.onStartChat(apiData, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
       })
       console.log('start chat res', res)
-      updateState({isLoading: false})
+      updateState({ isLoading: false })
       if (!!res?.roomData) {
         onChat(res.roomData)
 
@@ -248,7 +250,7 @@ export default function OrderDetail({ navigation, route }) {
     } catch (error) {
       console.log('error raised in start chat api', error)
       showError(error?.message)
-      updateState({isLoading: false})
+      updateState({ isLoading: false })
     }
   }
 
@@ -271,12 +273,12 @@ export default function OrderDetail({ navigation, route }) {
 
     console.log('sending api data', data);
     actions.getOrderDetail(data, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        timezone: RNLocalize.getTimeZone(),
-        // systemuser: DeviceInfo.getUniqueId(),
-      })
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      timezone: RNLocalize.getTimeZone(),
+      // systemuser: DeviceInfo.getUniqueId(),
+    })
       .then((res) => {
         console.log(res.data, 'order detail res===>>>>');
 
@@ -426,10 +428,10 @@ export default function OrderDetail({ navigation, route }) {
     // data['vendor_id'] = productDetail.vendor_id;
 
     actions.giveRating(data, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-      })
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    })
       .then((res) => {
         let cloned_cartItems = cloneDeep(cartItems);
         updateState({
@@ -1019,25 +1021,43 @@ export default function OrderDetail({ navigation, route }) {
         }}>
         {/* show ETA Time */}
         <View style={{ paddingHorizontal: moderateScale(10) }}>
-          <UserDetail data={item} type={strings.VENDER} containerStyle={{
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.background
-              : colors.white,
-          }}
-            textStyle={{
-              color: isDarkMode
-                ? MyDarkTheme.colors.text
-                : colors.blackOpacity86,
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+
+
+            <UserDetail data={item} type={strings.VENDER} containerStyle={{
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.background
+                : colors.white,
+              flex: 1
             }}
-          />
-          <TouchableOpacity onPress={() => createRoom(item, 'vendor_to_user')}>
-            <Text style={{
-              margin: 16,
-              color: colors.redB,
-              fontFamily: fontFamily.bold,
-              fontSize: 16
-            }}>Start chat with your vendor</Text>
-          </TouchableOpacity>
+              textStyle={{
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity86,
+              }}
+            />
+            <View>
+              {!!appData?.profile?.socket_url ?
+                <TouchableOpacity
+                  onPress={() => createRoom(item, 'vendor_to_user')}
+                  style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
+                >
+                  <Text style={styles.startChatText}>Vendor</Text>
+                  <Image resizeMode='contain' style={styles.agentUserIcon} source={imagePath.icVendorChat} />
+                </TouchableOpacity> : null}
+
+              {!!appData?.profile?.socket_url && !!(driverStatus?.order && driverStatus?.agent_location?.lat) ?
+                <TouchableOpacity
+                  onPress={() => createRoom(item, 'agent_to_user')}
+                  style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
+                  activeOpacity={0.7}
+                >
+                  <Text style={styles.startChatText}>Agent</Text>
+                  <Image resizeMode='contain' style={styles.agentUserIcon} source={imagePath.icUserChat} />
+                </TouchableOpacity> : null}
+            </View>
+          </View>
 
           {item?.products.length
             ? item?.products.map((i, inx) => {
@@ -2402,6 +2422,8 @@ export default function OrderDetail({ navigation, route }) {
     );
   };
 
+  console.log("driverStatusdriverStatus", driverStatus)
+
   const acceptRejectDriverUpdation = (status) => {
     console.log(cartData, 'cartData');
     if (
@@ -2422,12 +2444,12 @@ export default function OrderDetail({ navigation, route }) {
 
       updateState({ isLoading: true });
       actions.acceptRejectDriveUpdate(data, {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          timezone: RNLocalize.getTimeZone(),
-          // systemuser: DeviceInfo.getUniqueId(),
-        })
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        timezone: RNLocalize.getTimeZone(),
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
         .then((res) => {
           showSuccess(res?.message);
           // updateState({isLoading: false});
@@ -2795,7 +2817,7 @@ export default function OrderDetail({ navigation, route }) {
 
   const onChat = (item) => {
     console.log("item+++", item)
-    navigation.navigate(navigationStrings.CHAT_SCREEN, { data: {...item, comeFromOrder: true} })
+    navigation.navigate(navigationStrings.CHAT_SCREEN, { data: { ...item, comeFromOrder: true } })
   }
 
   const _onRateDriver = () => {
@@ -2819,6 +2841,7 @@ export default function OrderDetail({ navigation, route }) {
             containerStyle={{ paddingHorizontal: moderateScale(8) }}
             isDriver={cartData?.driver_rating == null}
             _onRateDriver={_onRateDriver}
+            startChatWithAgent={() => createRoom(cartItems[0], 'agent_to_user')}
           />
         ) : null}
 

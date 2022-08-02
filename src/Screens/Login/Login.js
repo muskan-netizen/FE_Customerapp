@@ -239,7 +239,7 @@ export default function Login({navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        consoles.log('vendor login user name');
+        consoles.log('login res',res);
         if (!!res.data) {
           // checkIsAdmin(navigation_, navigation, res.data);
           resetStackAndNavigate(

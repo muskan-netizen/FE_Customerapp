@@ -1,6 +1,7 @@
 import {Keyboard} from 'react-native';
 import { API_BASE_URL } from '../config/urls';
 import {openCamera, openPicker} from './imagePicker';
+
 const cameraHandler = async (data, option) => {
   Keyboard.dismiss();
   //this condition use for open camera

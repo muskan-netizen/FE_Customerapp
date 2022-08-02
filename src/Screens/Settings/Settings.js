@@ -43,6 +43,7 @@ import {
   hapticEffects,
   playHapticEffect,
   playVibration,
+  showError,
 } from '../../utils/helperFunctions';
 import navigationStrings from '../../navigation/navigationStrings';
 
@@ -95,7 +96,7 @@ export default function Settings({ route, navigation }) {
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ fontFamily,themeColors });
+  const styles = stylesFunc({ fontFamily, themeColors });
   const commonStyles = commonStylesFunc({ fontFamily });
 
   useFocusEffect(
@@ -315,6 +316,45 @@ export default function Settings({ route, navigation }) {
         />
       </TouchableOpacity>
     )
+  }
+
+  const onDeleteAccount = () => {
+    if (!!userData?.auth_token) {
+      Alert.alert(strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, '', [
+        {
+          text: strings.CANCEL,
+          onPress: () => console.log('Cancel Pressed'),
+          // style: 'destructive',
+        },
+        {
+          text: strings.CONFIRM,
+          onPress: deleleUserAccount,
+        },
+      ]);
+    } else {
+      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+    }
+  }
+
+  const deleleUserAccount = async () => {
+    try {
+      const res = await actions.deleteAccount(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        })
+      console.log("delete user account res", res)
+      actions.userLogout();
+      actions.cartItemQty('');
+      actions.saveAddress('');
+      actions.addSearchResults('clear');
+      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+    } catch (error) {
+      console.log('erro raised', error)
+      showError(error?.message)
+    }
   }
 
   return (
@@ -721,29 +761,27 @@ export default function Settings({ route, navigation }) {
         <View
           style={{
             zIndex: -1,
-            flexDirection: 'row',
             alignSelf: 'center',
             marginBottom: moderateScaleVertical(90),
             marginTop: moderateScaleVertical(24),
+            alignItems: 'center'
           }}>
           <Text
             style={{
               ...commonStyles.regularFont11,
               color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
             }}>
-            App Version{' '}
+            App Version {`${DeviceInfo.getVersion()}`} {`(${DeviceInfo.getBuildNumber()})`} {API_BASE_URL == 'https://api.rostaging.com/api/v1' ? 'S' : ''}
           </Text>
+
           <Text
-            numberOfLines={2}
+            onPress={onDeleteAccount}
             style={{
               ...commonStyles.regularFont11,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+              color: colors.redB,
+              marginTop: moderateScaleVertical(4)
             }}>
-            {`${DeviceInfo.getVersion()}`}
-            <Text>{`(${DeviceInfo.getBuildNumber()})`}</Text>
-            <Text>
-              {API_BASE_URL == 'https://api.rostaging.com/api/v1' ? 'S' : ''}
-            </Text>
+            {strings.DELETE_ACCOUNT}
           </Text>
         </View>
       </ScrollView>

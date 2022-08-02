@@ -7,6 +7,7 @@ import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import {enums} from './enums';
 import {getItem} from './utils';
+import {navigate} from '../navigation/NavigationService'
 
 export async function requestUserPermission() {
   // if (Platform.OS == 'ios') {
@@ -76,11 +77,11 @@ const manageRedirections = async (data) => {
 };
 
 const manageRedirectionsForVendorApp = async (data) => {
-  console.log('manage Redirections +++++ Vendor App', data);
-  navigation.navigate(navigationStrings.TABROUTESVENDORNEW, {
-    screen: navigationStrings.ROYO_VENDOR_ORDER,
-    params: {index: 1},
-  });
+  // console.log('manage Redirections +++++ Vendor App', data);
+  // navigation.navigate(navigationStrings.TABROUTESVENDORNEW, {
+  //   screen: navigationStrings.ROYO_VENDOR_ORDER,
+  //   params: {index: 1},
+  // });
 };
 
 export const notificationListener = async () => {
@@ -93,12 +94,14 @@ export const notificationListener = async () => {
       badge: true,
       sound: true,
     },
-    requestPermissions: true,
+    requestPermissions: true,      
     popInitialNotification: true,
   });
 
   messaging().onNotificationOpenedApp(remoteMessage => {
     console.log('tap on notification',remoteMessage);
+    const {data} = remoteMessage
+    navigate(navigationStrings.CHAT_SCREEN, { data: { _id: data?.room_id, room_id: data?.room_id_text } })
   });
 
   createDefaultChannels();

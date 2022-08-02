@@ -59,6 +59,9 @@ export default function Account3({ navigation }) {
   } = useSelector((state) => state?.initBoot);
   console.log('dataaa><<<<', appData);
   const businessType = appStyle?.homePageLayout;
+
+  const [allVendors, setAllVendors] = useState([])
+
   const [state, setState] = useState({
     isLoading: false,
   });
@@ -92,6 +95,33 @@ export default function Account3({ navigation }) {
   // );
 
   //Share your app
+
+  useEffect(() => {
+    if (!!appMainData?.is_admin) {
+      fetchAllVendors()
+    }
+  }, [appMainData?.is_admin])
+
+  const fetchAllVendors = async (value = null) => {
+    let query = `?limit=${100000}&page=${1}`;
+    let headers = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    };
+    try {
+      const res = await actions.storeVendors(query, headers);
+      if (res?.data?.data) {
+        setAllVendors(res.data.data)
+        return;
+      }
+      console.log('available vendors res', res);
+    } catch (error) {
+      console.log('error riased', error);
+      showError(error?.message);
+    }
+  };
+
   const onShare = () => {
     console.log('onShare', appData);
     if (!!appData?.domain_link) {
@@ -202,7 +232,11 @@ export default function Account3({ navigation }) {
   const usernameFirstlater = !!userData?.name && userData?.name?.charAt(0);
 
   const goToChatRoom = (type) => {
-    navigation.navigate(navigationStrings.CHAT_ROOM, { data: type });
+    if (!!appMainData?.is_admin && type == 'vendor_chat') {
+      navigation.navigate(navigationStrings.CHAT_ROOM, { type: type, allVendors: allVendors });
+    } else {
+      navigation.navigate(navigationStrings.CHAT_ROOM, { type: type });
+    }
   };
   //----------------------------------ActionSheet------------------------------//
   let actionSheet = useRef();
@@ -774,25 +808,24 @@ export default function Account3({ navigation }) {
               />
             )}
 
-          {!!userData?.auth_token &&(
-              <ListItemHorizontal
-                centerContainerStyle={{ flexDirection: 'row' }}
-                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-                onPress={() => goToChatRoom('agent_chat')}
-                iconLeft={imagePath.icUserChat}
-                centerHeading={'Agent Chat'}
-                containerStyle={styles.containerStyle2}
-                centerHeadingStyle={{
-                  fontSize: textScale(14),
-                  fontFamily: fontFamily.regular,
-                }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
-              />
-            )}
+
+          {!!userData?.auth_token && !!appData?.profile?.socket_url && (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={() => goToChatRoom('agent_chat')}
+              iconLeft={imagePath.icUserChat}
+              centerHeading={'Driver Chat'}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            />
+          )}
 
           {!!userData?.auth_token &&
-            !!appMainData?.is_admin &&
+            !!appMainData?.is_admin && !!appData?.profile?.socket_url &&
             (
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}
@@ -805,12 +838,10 @@ export default function Account3({ navigation }) {
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
                 }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             )}
 
-          {!!userData?.auth_token && (
+          {!!userData?.auth_token && !!appData?.profile?.socket_url && (
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}
               leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -822,8 +853,6 @@ export default function Account3({ navigation }) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
 
@@ -842,22 +871,7 @@ export default function Account3({ navigation }) {
             </TouchableOpacity>
           </View>}
 
-          {!!userData?.auth_token && (
-            <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-              onPress={onDeleteAccount}
-              iconLeft={imagePath.user}
-              centerHeading={strings.DELETE_ACCOUNT}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
-            />
-          )}
+
 
           <View style={{ height: 100 }} />
         </ScrollView>

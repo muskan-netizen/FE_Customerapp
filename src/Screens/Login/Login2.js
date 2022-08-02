@@ -118,6 +118,7 @@ export default function Login2({navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        consoles.log('login res',res);
         if (!!res.data) {
           if (
             !!res.data?.client_preference?.verify_email &&

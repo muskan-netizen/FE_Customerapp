@@ -19,11 +19,14 @@ import _ from 'lodash';
 import CircularImages from '../../Components/CircularImages';
 import Modal from 'react-native-modal'
 import { ScrollView } from 'react-native-gesture-handler';
-import { getSubDomain } from '../../utils/commonFunction';
+import { cameraHandler, getSubDomain } from '../../utils/commonFunction';
+import LottieView from 'lottie-react-native';
+import { voiceListen } from '../../Components/Loaders/AnimatedLoaderFiles';
+import Voice from '@react-native-voice/voice';
+import { androidCameraPermission } from '../../utils/permissions';
 
 
-
-export default function ChatScreen({ route,navigation }) {
+export default function ChatScreen({ route, navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -36,13 +39,15 @@ export default function ChatScreen({ route,navigation }) {
   const styles = stylesFun({ fontFamily, isDarkMode });
 
 
+
   const [messages, setMessages] = useState([])
   const [state, setState] = useState({
     showParticipant: false,
     isLoading: false,
-    roomUsers: []
+    roomUsers: [],
+    isVoiceRecord: false,
   })
-  const { isLoading, roomUsers, showParticipant } = state
+  const { isLoading, roomUsers, isVoiceRecord, showParticipant } = state
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }))
 
@@ -50,18 +55,32 @@ export default function ChatScreen({ route,navigation }) {
 
   useFocusEffect(
     useCallback(() => {
-        socketServices.on("new-message", (data) => {
-          console.log("listen in chat screen")
-          isFocused ? setMessages(previousMessages => GiftedChat.append(previousMessages, data.message.chatData)) : null
-        });
-        return () => {
-            socketServices.removeListener("new-message");
-            socketServices.removeListener('save-message');
-        };
-    }, [navigation])
-);
-
+      socketServices.on("new-message", (data) => {
  
+        if (paramData?.room_id == data?.message?.roomData?.room_id) {
+          isFocused ? setMessages(previousMessages => GiftedChat.append(previousMessages, data.message.chatData)) : null
+          isFocused ? fetchAllRoomUser() : null
+        }
+      });
+      return () => {
+        socketServices.removeListener("new-message");
+        socketServices.removeListener('save-message');
+      };
+    }, [navigation])
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      Voice.onSpeechStart = onSpeechStartHandler;
+      Voice.onSpeechEnd = onSpeechEndHandler;
+      Voice.onSpeechResults = onSpeechResultsHandler;
+      return () => {
+        Voice.destroy().then(Voice.removeAllListeners);
+      };
+    }, []),
+  );
+
+
   useEffect(() => {
     if (isFocused) {
       updateState({ isLoading: true })
@@ -70,7 +89,7 @@ export default function ChatScreen({ route,navigation }) {
     }
   }, [])
 
-  const fetchAllMessages = useCallback(async() => {
+  const fetchAllMessages = useCallback(async () => {
     try {
       const apiData = `/${paramData?._id}`
       const res = await actions.getAllMessages(apiData, {})
@@ -91,7 +110,7 @@ export default function ChatScreen({ route,navigation }) {
 
 
 
-  const fetchAllRoomUser = useCallback(async()=>{
+  const fetchAllRoomUser = useCallback(async () => {
     try {
       const apiData = `/${paramData?._id}`
       const res = await actions.getAllRoomUser(apiData, {}, {
@@ -106,7 +125,9 @@ export default function ChatScreen({ route,navigation }) {
     } catch (error) {
       console.log('error raised in fetchAllRoomUser api', error)
     }
-  },[])
+  }, [])
+
+  console.log("paramDataparamDataparamData",paramData)
 
   const onSend = useCallback(async (messages = []) => {
     if (String(messages[0].text).trim().length < 1) {
@@ -128,7 +149,7 @@ export default function ChatScreen({ route,navigation }) {
           userData?.source?.image_path,
           '200/200',
         ),
-        sub_domain: getSubDomain(),
+        sub_domain: '192.168.101.88', //this is static value 
         //'room_name' =>$data->name,
         chat_type: 'vendor_to_user',
       }
@@ -151,12 +172,34 @@ export default function ChatScreen({ route,navigation }) {
           '200/200',
         )
       };
+      await sendToUserNotification(paramData?._id, messages[0].text)
       // setMessages(previousMessages => GiftedChat.append(previousMessages, message))
     } catch (error) {
       console.log('error raised in fetchAllMessages api', error)
     }
   }, [])
 
+  const sendToUserNotification = async (id, text) => {
+    let apiData = {
+      user_ids: roomUsers,
+      roomId: id, 
+      roomIdText: paramData?.room_id,
+      text_message: text,
+      chat_type: 'vendor_to_user',
+   
+    }
+    console.log("sending api data",apiData)
+    try {
+      const res = await actions.sendNotification(apiData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      console.log("res sendNotification", res)
+    } catch (error) {
+      console.log('error raised in sendToUserNotification api', error)
+    }
+  }
   const showRoomUser = useCallback((props) => {
     if (_.isEmpty(roomUsers)) {
       return null
@@ -259,6 +302,161 @@ export default function ChatScreen({ route,navigation }) {
     )
   }, [])
 
+
+
+  const onSpeechStartHandler = (e) => { };
+  const onSpeechEndHandler = (e) => {
+    updateState({
+      isVoiceRecord: false,
+    });
+  };
+
+  const onSpeechResultsHandler = (e) => {
+    let text = e.value[0];
+    console.log("this is the text")
+    onSend([{ text: text }])
+    _onVoiceStop();
+  };
+
+  const _onVoiceListen = async () => {
+    const langType = languages?.primary_language?.sort_code;
+    updateState({ isVoiceRecord: true });
+    try {
+      await Voice.start(langType);
+    } catch (error) { }
+  };
+
+  const _onVoiceStop = async () => {
+    updateState({
+      isVoiceRecord: false,
+    });
+    try {
+      await Voice.stop();
+    } catch (error) {
+      console.log('error raised', error);
+    }
+  };
+
+
+  // this funtion use for camera handle
+  const cameraHandle = async (index = 0) => {
+    const permissionStatus = await androidCameraPermission();
+
+    console.log("permision status")
+    if (permissionStatus) {
+      if (index == 1) {
+        cameraHandler(index, {
+          width: 300,
+          height: 400,
+          cropping: true,
+          cropperCircleOverlay: true,
+          mediaType: 'photo',
+        })
+          .then((res) => {
+            if (res?.data) {
+              updateState({ isLoading: true });
+            }
+            let data = {
+              type: 'jpg',
+              avatar: res?.data,
+            };
+            actions.uploadProfileImage(data, {
+              code: appData?.profile?.code,
+            })
+              .then((res) => {
+                const source = {
+                  uri: getImageUrl(
+                    res.data.proxy_url,
+                    res.data.image_path,
+                    '200/200',
+                  ),
+                };
+                const image = {
+                  source,
+                };
+
+                updateState({ isLoading: false });
+
+              })
+              .catch((err) => { });
+          })
+          .catch((err) => { });
+      }
+    }
+  };
+
+  const renderSend = (props) => {
+    return (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+
+        {/* <TouchableOpacity 
+        style={{ marginLeft: 8 }}
+        activeOpacity={0.7}
+        onPress={cameraHandle}
+        >
+          <Image
+            source={imagePath.ic_cameraColored}
+            resizeMode="contain"
+            style={{
+              height: moderateScale(20),
+              width: moderateScale(20),
+              tintColor: colors.black,
+            }}
+          />
+        </TouchableOpacity>
+
+        {isVoiceRecord ? (
+          <TouchableOpacity
+            onPress={_onVoiceStop}
+          >
+            <LottieView
+              style={{
+                height: moderateScale(43),
+                width: moderateScale(30),
+                marginLeft: moderateScale(-2),
+              }}
+              source={voiceListen}
+              autoPlay
+              loop
+              colorFilters={[
+                { keypath: 'layers', color: themeColors.primary_color },
+                { keypath: 'transparent2', color: themeColors.primary_color },
+                { keypath: 'transparent1', color: themeColors.primary_color },
+                { keypath: '01', color: themeColors.primary_color },
+                { keypath: '02', color: themeColors.primary_color },
+                { keypath: '03', color: themeColors.primary_color },
+                { keypath: '04', color: themeColors.primary_color },
+              ]}
+            />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={{ marginLeft: moderateScale(8) }}
+            onPress={_onVoiceListen}
+          >
+            <Image
+              source={imagePath.icVoice}
+              style={{
+                height: moderateScale(20),
+                width: moderateScale(20),
+                borderRadius: moderateScale(10),
+                tintColor: themeColors.primary_color,
+              }}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        )} */}
+
+        <Send
+          alwaysShowSend
+          containerStyle={{ backgroundColor: 'red' }}
+          children={<SendButton />}
+          {...props}
+        />
+      </View>
+    )
+  }
+
   return (
     <WrapperContainer
       statusBarColor={isDarkMode ? "#171717" : "#f6f6f6"}
@@ -327,19 +525,11 @@ export default function ChatScreen({ route,navigation }) {
             textAlignVertical: 'center',
             fontFamily: fontFamily.regular,
             alignSelf: 'center',
-            color: isDarkMode ? colors.white : colors.black
+            color: isDarkMode ? colors.white : colors.black,
+            marginTop: moderateScaleVertical(6)
 
           }}
-          renderSend={props => {
-            return (
-              <Send
-                alwaysShowSend
-                containerStyle={{ backgroundColor: 'red' }}
-                children={<SendButton />}
-                {...props}
-              />
-            );
-          }}
+          renderSend={renderSend}
         />
       </ImageBackground>
 

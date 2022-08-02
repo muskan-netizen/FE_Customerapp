@@ -10,7 +10,7 @@ import colors from '../../styles/colors';
 import { MyDarkTheme } from '../../styles/theme';
 import WrapperContainer from '../../Components/WrapperContainer';
 import actions from '../../redux/actions';
-import { moderateScale } from '../../styles/responsiveSize';
+import { moderateScale, textScale } from '../../styles/responsiveSize';
 import _ from 'lodash';
 import { showError } from '../../utils/helperFunctions';
 import navigationStrings from '../../navigation/navigationStrings';
@@ -31,8 +31,8 @@ export default function ChatRoom({ navigation, route }) {
 
     const darkthemeusingDevice = useDarkMode();
     const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-    const paramData = route?.params.data;
-    console.log(appData, 'appDataappDataappData');
+    const paramData = route?.params;
+    console.log(userData, 'userDatauserDatauserData');
     const isChatRefresh = useSelector((state) => state?.chatRefresh.isChatRefresh);
 
 
@@ -41,9 +41,10 @@ export default function ChatRoom({ navigation, route }) {
     const [state, setState] = useState({
         roomData: [],
         isLoading: true,
-        num: 1
+        num: 1,
+        subDomain: getSubDomain(),
     })
-    const { roomData, isLoading, num } = state
+    const { roomData, isLoading, num, subDomain } = state
 
     const updateState = (data) => setState((state) => ({ ...state, ...data }))
 
@@ -54,35 +55,25 @@ export default function ChatRoom({ navigation, route }) {
 
     const isFocused = useIsFocused();
 
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         socketServices.on("new-message", (data) => {
-    //             console.log("listen in roomChat screen")
-    //             fetchData()
-    //         });
-    //         return () => {
-    //             socketServices.removeListener("new-message");
-    //             socketServices.removeListener('save-message');
-    //         };
-    //     }, [navigation])
-    // );
-
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         fetchData()
-    //     }, [navigation])
-    // );
-
-    useInterval(
-        () => {
-            if (!!userData?.auth_token) {
-                fetchData()
-            }
-        },
-        isFocused ? 4000 : null,
+    useFocusEffect(
+        useCallback(() => {
+            fetchData()
+        }, [navigation])
     );
 
+    useFocusEffect(
+        useCallback(() => {
+            socketServices.on("new-app-message", (data) => {
+                console.log("listen in roomChat screen")
+                fetchData()
+            });
+            return () => {
+                socketServices.removeListener("new-app-message");
+            };
+        }, [navigation])
+    );
 
+    console.log("paramDataparamData", appData)
 
     let fetchData = async () => {
         if (_.isEmpty(roomData)) {
@@ -95,13 +86,22 @@ export default function ChatRoom({ navigation, route }) {
                 language: languages?.primary_language?.id,
             }
             let apiData = {
-                sub_domain: getSubDomain(),
+                sub_domain: '192.168.101.88', //this is static value 
+                type: paramData?.type == 'agent_chat' ? 'agent_to_user' : 'vendor_to_user',
+                db_name: appData?.profile?.database_name,
+                client_id:String(appData?.profile.id)
             }
-            const res = paramData == 'user_chat' ? await actions.fetchUserChat(apiData, headerData) : paramData == 'vendor_chat'? await actions.fetchVendorChat(apiData, headerData) : await actions.fetchAgentChat(apiData, headerData)
+            if (paramData?.allVendors) {
+                apiData['vendor_id'] = paramData?.allVendors.map(val => val.id)
+            } else {
+                apiData['order_user_id'] = String(userData?.id)
+            }
+            console.log('api data+++', apiData)
+            const res = paramData?.type == 'user_chat' ? await actions.fetchUserChat(apiData, headerData) : paramData?.type == 'vendor_chat' ? await actions.fetchVendorChat(apiData, headerData) : await actions.fetchAgentChat(apiData, headerData)
             updateState({ isLoading: false })
-            if (!!res?.chatrooms && !_.isEmpty(res?.chatrooms) && isFocused) {
-                roomDataRef.current = res.chatrooms
-                updateState({ roomData: res.chatrooms })
+            if (!!res?.roomData && !_.isEmpty(res?.roomData) && isFocused) {
+                roomDataRef.current = res.roomData
+                updateState({ roomData: res.roomData })
 
             }
             console.log("room res++++", res)
@@ -153,23 +153,19 @@ export default function ChatRoom({ navigation, route }) {
 
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text>Chat Room Empty</Text>
+                <Text style={{
+                    fontSize: textScale(16),
+                    fontFamily: fontFamily.bold,
+                    color: isDarkMode ? colors.white : colors.black
+                }}>Chat Room Empty</Text>
             </View>
         )
     }, [])
 
     const awesomeChildListKeyExtractor = useCallback((item) => `awesome-child-key-${item?._id}`, [roomData]);
 
-    const itemSeparatorComponent = useCallback(() => {
-        return (
-            <View style={styles.borderStyle} />
-        )
-    }, [])
+    const itemSeparatorComponent = useCallback(() => { return (<View style={styles.borderStyle} />) }, [])
 
-    const onIncrease = useCallback(() => {
-        alert("hey")
-        updateState({ num: num + 1 })
-    }, [])
 
 
     return (
@@ -188,7 +184,7 @@ export default function ChatRoom({ navigation, route }) {
                 }
                 centerTitle={'Chat Room'}
 
-                // customRight={() => <Text>{num}</Text>}
+            // customRight={() => <Text>{num}</Text>}
 
             />
             <View style={styles.container}>
