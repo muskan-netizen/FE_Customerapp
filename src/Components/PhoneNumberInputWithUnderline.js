@@ -7,6 +7,8 @@ import {
   View,
   Text,
 } from 'react-native';
+import { appIds } from '../utils/constants/DynamicAppKeys';
+import { getBundleId } from 'react-native-device-info';
 import CountryPicker, {Flag} from 'react-native-country-picker-modal';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
