@@ -57,7 +57,6 @@ export default function Account3({ navigation }) {
     currencies,
     languages,
   } = useSelector((state) => state?.initBoot);
-  console.log('dataaa><<<<', appData);
   const businessType = appStyle?.homePageLayout;
 
   const [allVendors, setAllVendors] = useState([])
@@ -139,70 +138,9 @@ export default function Account3({ navigation }) {
     alert('link not found');
   };
 
-  //Logout function
-  const userlogout = () => {
-    if (!!userData?.auth_token) {
-      Alert.alert('', strings.LOGOUT_SURE_MSG, [
-        {
-          text: strings.CANCEL,
-          onPress: () => console.log('Cancel Pressed'),
-          // style: 'destructive',
-        },
-        {
-          text: strings.CONFIRM,
-          onPress: () => {
-            actions.userLogout();
-            actions.cartItemQty('');
-            actions.saveAddress('');
-            actions.addSearchResults('clear');
-            moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
-          },
-        },
-      ]);
-    } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
-    }
-  };
 
-  const onDeleteAccount = () => {
-    if (!!userData?.auth_token) {
-      Alert.alert(strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, '', [
-        {
-          text: strings.CANCEL,
-          onPress: () => console.log('Cancel Pressed'),
-          // style: 'destructive',
-        },
-        {
-          text: strings.CONFIRM,
-          onPress: deleleUserAccount,
-        },
-      ]);
-    } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
-    }
-  };
-  const deleleUserAccount = async () => {
-    try {
-      const res = await actions.deleteAccount(
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      );
-      console.log('delete user account res++++', res);
-      showSuccess(res?.massage);
-      actions.userLogout();
-      actions.cartItemQty('');
-      actions.saveAddress('');
-      actions.addSearchResults('clear');
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
-    } catch (error) {
-      console.log('erro raised', error);
-      showError(error?.message);
-    }
-  };
+
+ 
 
   // initalize Zendesk
   useEffect(() => {
@@ -263,6 +201,7 @@ export default function Account3({ navigation }) {
         break;
     }
   };
+
   return (
     <View
       style={{
@@ -292,11 +231,7 @@ export default function Account3({ navigation }) {
             noLeftIcon={false}
             customLeft={() => (
               <Text
-                onPress={() =>
-                  navigation.push(navigationStrings.SHORT_CODE, {
-                    shortCodeParam: true,
-                  })
-                }
+                onPress={() => actions.setAppSessionData('show_shortcode')}
                 style={{
                   color: themeColors.primary_color,
                   fontFamily: fontFamily.bold,
@@ -853,7 +788,7 @@ export default function Account3({ navigation }) {
           {!!userData?.auth_token ? null : <View style={styles.loginView}>
             <TouchableOpacity
               // onPress={()=>actions.isVendorNotification(true)}
-              onPress={() => moveToNewScreen(navigationStrings.OUTER_SCREEN, {})()}
+              onPress={() => actions.setAppSessionData('on_login')}
               style={styles.touchAbleLoginVIew}>
               <Text style={styles.loginLogoutText}>
                 {strings.LOGIN}

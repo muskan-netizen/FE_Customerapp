@@ -2345,12 +2345,12 @@ android {
             }
             fairex{
                 dimension "appType"
-                versionCode 2
+                versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
                 applicationId 'com.fairex.orders'
-                resValue "string", "app_name", "Fairex Global"
+                resValue "string", "app_name", "Fairex"
                 resValue "string", "host_name", ""
             }
             everywhere{
@@ -4342,7 +4342,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.sabroson.orders'
+                applicationId 'com.sabroson'
                 resValue "string", "app_name", "Sabroson"
                 resValue "string", "host_name", ""
             }

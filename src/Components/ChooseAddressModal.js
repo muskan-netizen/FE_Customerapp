@@ -87,8 +87,8 @@ const ChooseAddressModal = ({
   const addressView = () => {
     return (
       <ScrollView
-        style={{
-          marginTop: moderateScaleVertical(20),
+        contentContainerStyle={{
+          marginTop: moderateScaleVertical(10),
         }}>
         {allAddress ? (
           <>
@@ -163,6 +163,11 @@ const ChooseAddressModal = ({
             })}
           </>
         ) : null}
+        <View
+          style={{
+            height: moderateScale(80),
+          }}
+        />
       </ScrollView>
     );
   };

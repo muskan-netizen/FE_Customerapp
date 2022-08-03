@@ -553,13 +553,49 @@ console.log("hfbgdh", item);
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1 }}>
-        <CategoryLoader2 viewStyles={{ marginVertical: moderateScale(16) }} />
+        contentContainerStyle={{flexGrow: 1}}>
+        {!!isGetEstimation ? (
+          <BannerLoader />
+        ) : (
+          <CategoryLoader2 viewStyles={{marginVertical: moderateScale(16)}} />
+        )}
 
-        {appStyle?.homePageLayout === 5 ? (
-          <CategoryLoader2 viewStyles={{ marginBottom: moderateScale(16) }} />
+        {!!isGetEstimation && (
+          <View>
+            <HeaderLoader
+              widthLeft={moderateScale(180)}
+              rectWidthLeft={moderateScale(180)}
+              rectHeightLeft={moderateScaleVertical(60)}
+              isRight={false}
+              rx={4}
+              ry={4}
+              viewStyles={{
+                marginVertical: moderateScale(20),
+              }}
+            />
+            <BannerLoader homeLoaderHeight={moderateScaleVertical(80)} />
+            <BannerLoader
+              viewStyles={{marginTop: moderateScale(8)}}
+              homeLoaderHeight={moderateScaleVertical(80)}
+            />
+            <BannerLoader
+              viewStyles={{marginTop: moderateScale(8)}}
+              homeLoaderHeight={moderateScaleVertical(80)}
+            />
+            <BannerLoader
+              viewStyles={{
+                marginTop: moderateScale(8),
+                marginBottom: moderateScale(20),
+              }}
+              homeLoaderHeight={moderateScaleVertical(80)}
+            />
+          </View>
+        )}
+
+        {!isGetEstimation && appStyle?.homePageLayout === 5 ? (
+          <CategoryLoader2 viewStyles={{marginBottom: moderateScale(16)}} />
         ) : null}
-        {appStyle?.homePageLayout === 5 ? (
+        {!isGetEstimation && appStyle?.homePageLayout === 5 ? (
           <View
             style={{
               flexDirection: 'row',
@@ -585,47 +621,49 @@ console.log("hfbgdh", item);
             />
           </View>
         ) : (
-          <View style={{ flexDirection: 'row' }}>
-            <HeaderLoader
-              viewStyles={{
-                marginTop: moderateScaleVertical(8),
-                marginBottom: moderateScaleVertical(16),
-              }}
-              widthLeft={moderateScale(150)}
-              rectWidthLeft={moderateScale(150)}
-              heightLeft={moderateScaleVertical(240)}
-              rectHeightLeft={moderateScaleVertical(240)}
-              isRight={false}
-              rx={15}
-              ry={15}
-            />
-            <HeaderLoader
-              viewStyles={{
-                marginTop: moderateScaleVertical(8),
-                marginBottom: moderateScaleVertical(16),
-              }}
-              widthLeft={moderateScale(150)}
-              rectWidthLeft={moderateScale(150)}
-              heightLeft={moderateScaleVertical(240)}
-              rectHeightLeft={moderateScaleVertical(240)}
-              isRight={false}
-              rx={15}
-              ry={15}
-            />
-            <HeaderLoader
-              viewStyles={{
-                marginTop: moderateScaleVertical(8),
-                marginBottom: moderateScaleVertical(16),
-              }}
-              widthLeft={moderateScale(150)}
-              rectWidthLeft={moderateScale(150)}
-              heightLeft={moderateScaleVertical(240)}
-              rectHeightLeft={moderateScaleVertical(240)}
-              isRight={false}
-              rx={15}
-              ry={15}
-            />
-          </View>
+          !isGetEstimation && (
+            <View style={{flexDirection: 'row'}}>
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                }}
+                widthLeft={moderateScale(150)}
+                rectWidthLeft={moderateScale(150)}
+                heightLeft={moderateScaleVertical(240)}
+                rectHeightLeft={moderateScaleVertical(240)}
+                isRight={false}
+                rx={15}
+                ry={15}
+              />
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                }}
+                widthLeft={moderateScale(150)}
+                rectWidthLeft={moderateScale(150)}
+                heightLeft={moderateScaleVertical(240)}
+                rectHeightLeft={moderateScaleVertical(240)}
+                isRight={false}
+                rx={15}
+                ry={15}
+              />
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                }}
+                widthLeft={moderateScale(150)}
+                rectWidthLeft={moderateScale(150)}
+                heightLeft={moderateScaleVertical(240)}
+                rectHeightLeft={moderateScaleVertical(240)}
+                isRight={false}
+                rx={15}
+                ry={15}
+              />
+            </View>
+          )
         )}
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

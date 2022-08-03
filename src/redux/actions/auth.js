@@ -39,6 +39,13 @@ import store from '../store';
 import types from '../types';
 const {dispatch} = store;
 
+export const setAppSessionData = (data) => {
+  dispatch({
+    type: types.APP_SESSION_INFO,
+    payload: data,
+  });
+};
+
 export const setRedirection = (data) => {
   dispatch({
     type: types.REDIRECTED_FROM,
@@ -68,13 +75,9 @@ export const updateInternetConnection = (data) => {
 };
 export const signUpApi = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
-    
     apiPost(SIGN_UP_API, data, headers)
       .then((res) => {
-        setUserData(res.data).then((suc) => {
-          saveUserData(res.data);
-          resolve(res);
-        });
+        resolve(res);
       })
       .catch((error) => {
         reject(error);
@@ -125,25 +128,7 @@ export const socailLogin = (query = '', data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(SOCAIL_LOGIN_API + query, data, headers)
       .then((res) => {
-        setUserData(res.data).then((suc) => {
-          saveUserData(res.data);
-          resolve(res);
-        });
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-};
-
-export const VendorLoginUsername = (data, headers = {}) => {
-  return new Promise((resolve, reject) => {
-    apiPost(VENDOR_LOGIN_BY_USERNAME, data, headers)
-      .then((res) => {
-        setUserData(res.data).then((suc) => {
-          saveUserData(res.data);
-          resolve(res);
-        });
+        resolve(res);
       })
       .catch((error) => {
         reject(error);
@@ -169,10 +154,7 @@ export const loginUsername = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(LOGIN_BY_USERNAME, data, headers)
       .then((res) => {
-        setUserData(res.data).then((suc) => {
-          saveUserData(res.data);
-          resolve(res);
-        });
+        resolve(res);
       })
       .catch((error) => {
         reject(error);
@@ -484,9 +466,7 @@ export function userRegistrationDocument(data = {}, headers = {}) {
 }
 
 export const getUserProfile = (data, headers = {}) => {
-
   return new Promise((resolve, reject) => {
-
     apiGet(GET_USER_PROFILE, data, headers)
       .then((res) => {
         resolve(res);

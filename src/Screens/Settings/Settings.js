@@ -292,12 +292,12 @@ export default function Settings({ route, navigation }) {
             actions.cartItemQty('');
             actions.saveAddress('');
             actions.addSearchResults('clear');
-            moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+            actions.setAppSessionData('on_login')
           },
         },
       ]);
     } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login')
     }
   };
 
@@ -332,7 +332,7 @@ export default function Settings({ route, navigation }) {
         },
       ]);
     } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login')
     }
   }
 
@@ -350,7 +350,7 @@ export default function Settings({ route, navigation }) {
       actions.cartItemQty('');
       actions.saveAddress('');
       actions.addSearchResults('clear');
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login')
     } catch (error) {
       console.log('erro raised', error)
       showError(error?.message)
@@ -774,7 +774,7 @@ export default function Settings({ route, navigation }) {
             App Version {`${DeviceInfo.getVersion()}`} {`(${DeviceInfo.getBuildNumber()})`} {API_BASE_URL == 'https://api.rostaging.com/api/v1' ? 'S' : ''}
           </Text>
 
-          <Text
+      {!!userData?.auth_token ?    <Text
             onPress={onDeleteAccount}
             style={{
               ...commonStyles.regularFont11,
@@ -782,7 +782,7 @@ export default function Settings({ route, navigation }) {
               marginTop: moderateScaleVertical(4)
             }}>
             {strings.DELETE_ACCOUNT}
-          </Text>
+          </Text> : null}
         </View>
       </ScrollView>
     </WrapperContainer>

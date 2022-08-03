@@ -48,7 +48,6 @@ let maxMinObj = {
 
 export default function Home({ route, navigation }) {
   const paramData = route?.params;
-
   const {
     appData,
     currencies,
@@ -554,7 +553,7 @@ export default function Home({ route, navigation }) {
           moveToNewScreen(navigationStrings.ADDADDRESS, item)();
         }
       } else {
-        moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+        actions.setAppSessionData('on_login');
       }
     } else if (!!item?.is_show_category) {
       moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
@@ -625,8 +624,7 @@ export default function Home({ route, navigation }) {
           moveToNewScreen(navigationStrings.ADDADDRESS, item)();
         }
       } else {
-        // showError(strings.UNAUTHORIZED_MESSAGE);
-        moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+        actions.setAppSessionData('on_login');
       }
     } else if (item.redirect_to == staticStrings.DISPATCHER) {
       // moveToNewScreen(navigationStrings.DELIVERY, item)();
@@ -655,6 +653,8 @@ export default function Home({ route, navigation }) {
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
+
+  console.log(appData, 'appData>>>>appData');
   useEffect(() => {
     homeData();
   }, [location, bestSeller, openVendor, closeVendor]);

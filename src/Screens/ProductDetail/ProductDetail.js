@@ -5,24 +5,26 @@ import {
   Alert,
   FlatList,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
-  ScrollView,
-  TextInput,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
-import HTMLView from 'react-native-htmlview';
+import FastImage from 'react-native-fast-image';
+import ImageViewer from 'react-native-image-zoom-viewer';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import Modal from 'react-native-modal';
+import RenderHtml from 'react-native-render-html';
+import Share from 'react-native-share';
 import {Pagination} from 'react-native-snap-carousel';
 import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
 import Banner2 from '../../Components/Banner2';
-import BottomSlideModal from '../../Components/BottomSlideModal';
 import GradientButton from '../../Components/GradientButton';
-import GradientCartView from '../../Components/GradientCartView';
 import Header from '../../Components/Header';
 import HorizontalLine from '../../Components/HorizontalLine';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
@@ -34,7 +36,6 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc, {hitSlopProp} from '../../styles/commonStyles';
-import RenderHtml, {HTML} from 'react-native-render-html';
 import {
   height,
   moderateScale,
@@ -47,19 +48,12 @@ import {currencyNumberFormatter} from '../../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
-  hapticEffects,
-  playHapticEffect,
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
 import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
-import Modal from 'react-native-modal';
-import ImageViewer from 'react-native-image-zoom-viewer';
-import Share from 'react-native-share';
-import FastImage from 'react-native-fast-image';
-import {enums} from '../../utils/enums';
 
 export default function ProductDetail({route, navigation}) {
   console.log('my route', route.params.data);
@@ -335,7 +329,6 @@ export default function ProductDetail({route, navigation}) {
   };
 
   const errorMethodSecond = (error, addonSet) => {
-   
     if (error?.message?.alert == 1) {
       updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
       // showError(error?.message?.error || error?.error);
@@ -870,7 +863,6 @@ export default function ProductDetail({route, navigation}) {
         : _finalAddToCart(addonSet);
     }
     // _finalAddToCart()
-   
   };
 
   const myRef = useRef(null);
@@ -1018,7 +1010,7 @@ export default function ProductDetail({route, navigation}) {
       // isLoadingB={isLoadingC}
     >
       <Header
-       leftIcon={
+        leftIcon={
           appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? imagePath.icBackb
             : imagePath.back
@@ -1042,7 +1034,7 @@ export default function ProductDetail({route, navigation}) {
         }}
         isShareIcon={imagePath.icShareb}
         onShare={onShare}
-      /> 
+      />
 
       <KeyboardAwareScrollView ref={myRef} showsVerticalScrollIndicator={false}>
         <View style={{marginHorizontal: moderateScale(16)}}>
@@ -1086,8 +1078,7 @@ export default function ProductDetail({route, navigation}) {
                             bottom: 40,
                           }}
                           onPress={() => _onAddtoWishlist(productDetailData)}>
-                          {!enums.isVendorStandloneApp &&
-                          productDetailData?.is_wishlist ? (
+                          {productDetailData?.is_wishlist ? (
                             <View
                               style={{
                                 position: 'absolute',
@@ -1433,8 +1424,8 @@ export default function ProductDetail({route, navigation}) {
                               fontFamily: fontFamily.medium,
                               textTransform: 'capitalize',
                               color: isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : themeColors.secondary_color,
+                                ? MyDarkTheme.colors.text
+                                : themeColors.secondary_color,
                             }}
                             onPress={addToCart}
                             btnText={`${strings.ADD}  ${

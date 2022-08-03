@@ -2,11 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
 import {Platform} from 'react-native';
 import PushNotification, {Importance} from 'react-native-push-notification';
-import {useSelector} from 'react-redux';
-import {navigate, navigationRef} from '../navigation/NavigationService';
+import {navigate} from '../navigation/NavigationService';
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
-import {enums} from './enums';
 import {getItem} from './utils';
 
 export async function requestUserPermission() {
@@ -76,13 +74,7 @@ const manageRedirections = async (data) => {
   }
 };
 
-const manageRedirectionsForVendorApp = async (data) => {
-  // console.log('manage Redirections +++++ Vendor App', data);
-  // navigation.navigate(navigationStrings.TABROUTESVENDORNEW, {
-  //   screen: navigationStrings.ROYO_VENDOR_ORDER,
-  //   params: {index: 1},
-  // });
-};
+
 
 export const notificationListener = async () => {
   // _openApp()
@@ -174,11 +166,8 @@ const _openApp = () => {
       remoteMessage,
     );
     const {data, messageId, notification} = remoteMessage;
-    if (enums.isVendorStandloneApp) {
-      manageRedirectionsForVendorApp(data);
-    } else {
-      manageRedirections(data);
-    }
+
+    manageRedirections(data);
 
     if (
       Platform.OS == 'android' &&

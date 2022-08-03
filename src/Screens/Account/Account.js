@@ -33,9 +33,14 @@ export default function Account({ navigation }) {
   const [state, setState] = useState({
     isLoading: false,
   });
-  const { shortCodeStatus, themeColors, appStyle, appData, currencies, languages } = useSelector(
-    (state) => state?.initBoot,
-  );
+  const {
+    shortCodeStatus,
+    themeColors,
+    appStyle,
+    appData,
+    currencies,
+    languages,
+  } = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -96,19 +101,17 @@ export default function Account({ navigation }) {
           onPress: () => {
             actions.userLogout();
             actions.cartItemQty('');
-            moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
           },
         },
       ]);
-    } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     }
+    actions.setAppSessionData('on_login');
   };
   const _scrollRef = useRef();
 
   const onDeleteAccount = () => {
     if (!!userData?.auth_token) {
-      Alert.alert(strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, '', [
+      Alert.alert('', strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, [
         {
           text: strings.CANCEL,
           onPress: () => console.log('Cancel Pressed'),
@@ -120,7 +123,7 @@ export default function Account({ navigation }) {
         },
       ]);
     } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login');
     }
   }
   const deleleUserAccount = async () => {
@@ -137,12 +140,11 @@ export default function Account({ navigation }) {
       actions.cartItemQty('');
       actions.saveAddress('');
       actions.addSearchResults('clear');
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     } catch (error) {
       console.log('erro raised', error)
       showError(error?.message)
     }
-  }
+  };
 
   const goToChatRoom = (type) => {
     if (!!appMainData?.is_admin && type == 'vendor_chat') {
@@ -190,11 +192,7 @@ export default function Account({ navigation }) {
           noLeftIcon={false}
           customLeft={() => (
             <Text
-              onPress={() =>
-                navigation.push(navigationStrings.SHORT_CODE, {
-                  shortCodeParam: true,
-                })
-              }
+              onPress={() => actions.setAppSessionData('show_shortcode')}
               style={{
                 color: themeColors.primary_color,
                 fontFamily: fontFamily.bold,
@@ -524,7 +522,7 @@ export default function Account({ navigation }) {
         {!!userData?.auth_token ? null : <View style={styles.loginView}>
           <TouchableOpacity
             // onPress={()=>actions.isVendorNotification(true)}
-            onPress={() => moveToNewScreen(navigationStrings.OUTER_SCREEN, {})()}
+            onPress={() => actions.setAppSessionData('on_login')}
             style={styles.touchAbleLoginVIew}>
             <Text style={styles.loginLogoutText}>
               {strings.LOGIN}

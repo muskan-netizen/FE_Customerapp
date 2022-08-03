@@ -1,5 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import codes from 'country-calling-code';
 import {cloneDeep} from 'lodash';
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   I18nManager,
   Image,
@@ -7,31 +9,37 @@ import {
   Text,
   TouchableOpacity,
   View,
-  TextInput,
-  Alert,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import DeviceCountry from 'react-native-device-country';
 import DeviceInfo from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
+import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import GradientButton from '../../Components/GradientButton';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import PhoneNumberInput from '../../Components/PhoneNumberInput';
-import CountryPicker from 'react-native-country-picker-modal';
-import {enums} from '../../utils/enums';
-import * as RNLocalize from 'react-native-localize';
-import codes from 'country-calling-code';
-import DeviceCountry, {
-  TYPE_ANY,
-  TYPE_TELEPHONY,
-  TYPE_CONFIGURATION,
-} from 'react-native-device-country';
+import {
+  moderateScale,
+  moderateScaleVertical,
+} from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
+import {showError} from '../../utils/helperFunctions';
+import {
+  fbLogin,
+  googleLogin,
+  handleAppleLogin,
+  _twitterSignIn,
+} from '../../utils/socialLogin';
+import validator from '../../utils/validations';
+import stylesFunc from './styles';
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
@@ -43,39 +51,16 @@ DeviceCountry.getCountryCode()
   .catch((e) => {
     console.log(e);
   });
-import {
-  moderateScale,
-  moderateScaleVertical,
-} from '../../styles/responsiveSize';
-import {showError} from '../../utils/helperFunctions';
-import {
-  fbLogin,
-  googleLogin,
-  handleAppleLogin,
-  _twitterSignIn,
-} from '../../utils/socialLogin';
-import validator from '../../utils/validations';
-import stylesFunc from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
-import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 // import {mobile} from 'is_js';
 import {useNavigation} from '@react-navigation/native';
-import {checkIsAdmin} from '../../utils/utils';
-import {resetStackAndNavigate} from '../../navigation/NavigationService';
 import RNOtpVerify from 'react-native-otp-verify';
+import {setUserData} from '../../utils/utils';
 
 export default function Login({navigation}) {
   const navigation_ = useNavigation();
-  const {
-    appData,
-    themeColors,
-    currencies,
-    languages,
-    appStyle,
-    redirectedFrom,
-  } = useSelector((state) => state?.initBoot);
+  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
+    (state) => state?.initBoot,
+  );
   const {apple_login, fb_login, twitter_login, google_login} = useSelector(
     (state) => state?.initBoot?.appData?.profile?.preferences,
   );
@@ -85,11 +70,6 @@ export default function Login({navigation}) {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   var clonedState = {};
 
-  // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
-  console.log(
-    getPhonesCallingCodeAndCountryData,
-    'getPhonesCallingCodeAndCountryData',
-  );
   const [state, setState] = useState({
     // email: '',
     password: '',
@@ -157,8 +137,6 @@ export default function Login({navigation}) {
     appHashKey,
   } = state;
 
-  console.log(appHashKey, 'appHashKey????appHashKey?appHashKey');
-
   //Naviagtion to specific screen
   const moveToNewScreen = (screenName, data) => () => {
     navigation.navigate(screenName, {data});
@@ -185,71 +163,13 @@ export default function Login({navigation}) {
 
   const checkIfEmailVerification = (_data) => {
     if (
-      !!_data?.client_preference?.verify_email ||
-      !!_data?.client_preference?.verify_phone
+      !!_data?.client_preference?.verify_email &&
+      !_data?.verify_details?.is_email_verified
     ) {
-      if (
-        !_data?.verify_details?.is_email_verified &&
-        !!_data?.client_preference?.verify_email
-      ) {
-        moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
-          data: _data,
-        })();
-      } else if (
-        !_data?.verify_details?.is_phone_verified &&
-        !!_data?.client_preference?.verify_phone
-      ) {
-        moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
-          data: _data,
-        })();
-      } else {
-        checkIsAdmin(navigation_, navigation, _data, redirectedFrom);
-      }
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, _data)();
     } else {
-      checkIsAdmin(navigation_, navigation, _data, redirectedFrom);
+      successLogin(_data);
     }
-  };
-
-  const _onLoginVendor = async () => {
-    let fcmToken = await AsyncStorage.getItem('fcmToken');
-
-    const checkValid = isValidData();
-    if (!checkValid) {
-      return;
-    }
-
-    let data = {
-      email: email.focus ? email.value : mobilNo.phoneNo,
-      password: password,
-      device_type: Platform.OS,
-      device_token: DeviceInfo.getUniqueId(),
-      fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
-      dialCode: mobilNo.focus ? mobilNo.callingCode : '',
-      countryData: mobilNo.focus ? mobilNo.cca2 : '',
-      app_hash_key: appHashKey,
-    };
-    updateState({isLoading: true});
-    console.log('chck login data >>>', data);
-    actions
-      .VendorLoginUsername(data, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      })
-      .then((res) => {
-        consoles.log('login res',res);
-        if (!!res.data) {
-          // checkIsAdmin(navigation_, navigation, res.data);
-          resetStackAndNavigate(
-            navigation_,
-            navigationStrings.TABROUTESVENDORNEW,
-          );
-        }
-        updateState({isLoading: false});
-        getCartDetail();
-      })
-      .catch(errorMethod);
   };
 
   //Login api fucntion
@@ -283,14 +203,16 @@ export default function Login({navigation}) {
       .then((res) => {
         console.log('login via user name', res);
         if (!!res.data) {
-          res.data.is_phone
-            ? navigation.navigate(navigationStrings.OTP_VERIFICATION, {
-                username: mobilNo?.phoneNo,
-                dialCode: mobilNo?.callingCode,
-                countryData: mobilNo?.cca2,
-                data: res.data,
-              })
-            : checkIfEmailVerification(res.data);
+          if (res?.data?.is_phone) {
+            navigation.navigate(navigationStrings.OTP_VERIFICATION, {
+              username: mobilNo?.phoneNo,
+              dialCode: mobilNo?.callingCode,
+              countryData: mobilNo?.cca2,
+              data: res.data,
+            });
+          } else {
+            checkIfEmailVerification(res.data);
+          }
         }
         updateState({isLoading: false});
         getCartDetail();
@@ -302,6 +224,7 @@ export default function Login({navigation}) {
   const getCartDetail = () => {
     actions
       .getCartDetail(
+        '',
         {},
         {
           code: appData?.profile?.code,
@@ -360,19 +283,39 @@ export default function Login({navigation}) {
       })
       .then((res) => {
         console.log(res, 'res>>>SOCIAL');
-        if (!!res.data) {
-          !!res.data?.client_preference?.verify_email ||
-          !!res.data?.client_preference?.verify_phone
-            ? !!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified
-              ? checkIsAdmin(navigation_, navigation, res.data, redirectedFrom)
-              : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : checkIsAdmin(navigation_, navigation, res.data, redirectedFrom);
-        }
         updateState({isLoading: false});
-        getCartDetail();
+
+        if (!!res.data) {
+          checkEmailPhoneVerified(res?.data);
+          getCartDetail();
+        }
       })
       .catch(errorMethod);
+  };
+
+  const checkEmailPhoneVerified = (data) => {
+    if (
+      !!(
+        !!data?.client_preference?.verify_email &&
+        !data?.verify_details?.is_email_verified
+      ) ||
+      !!(
+        !!data?.client_preference?.verify_phone &&
+        !data?.verify_details?.is_phone_verified
+      )
+    ) {
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, data)();
+    } else {
+      successLogin(data);
+    }
+  };
+
+  const successLogin = (data) => {
+    if (!!data) {
+      setUserData(data).then((suc) => {
+        actions.saveUserData(data);
+      });
+    }
   };
 
   //Apple Login Support
@@ -502,27 +445,25 @@ export default function Login({navigation}) {
       source={loaderOne}
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
       <View style={styles.headerContainer}>
-        {!enums.isVendorStandloneApp && (
-          <TouchableOpacity
-            onPress={() => navigation.goBack(null)}
-            style={{alignSelf: 'flex-start'}}>
-            <Image
-              source={
-                appStyle?.homePageLayout === 3
-                  ? imagePath.icBackb
-                  : imagePath.back
-              }
-              style={
-                isDarkMode
-                  ? {
-                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                      tintColor: MyDarkTheme.colors.text,
-                    }
-                  : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
-              }
-            />
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          onPress={() => navigation.goBack(null)}
+          style={{alignSelf: 'flex-start'}}>
+          <Image
+            source={
+              appStyle?.homePageLayout === 3
+                ? imagePath.icBackb
+                : imagePath.back
+            }
+            style={
+              isDarkMode
+                ? {
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    tintColor: MyDarkTheme.colors.text,
+                  }
+                : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+            }
+          />
+        </TouchableOpacity>
       </View>
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
@@ -636,12 +577,14 @@ export default function Login({navigation}) {
 
         <GradientButton
           containerStyle={{marginTop: moderateScaleVertical(10)}}
-          onPress={enums.isVendorStandloneApp ? _onLoginVendor : _onLogin}
+          onPress={_onLogin}
           btnText={strings.LOGIN_ACCOUNT}
         />
         <View style={{marginTop: moderateScaleVertical(30)}}>
-          {(!!google_login || !!fb_login || !!twitter_login || !!apple_login) &&
-          !enums.isVendorStandloneApp ? (
+          {(!!google_login ||
+            !!fb_login ||
+            !!twitter_login ||
+            !!apple_login) && (
             <View style={styles.socialRow}>
               <View style={styles.hyphen} />
               <Text
@@ -654,7 +597,7 @@ export default function Login({navigation}) {
               </Text>
               <View style={styles.hyphen} />
             </View>
-          ) : null}
+          )}
           {/* <View style={styles.socialRowBtn}>
             {!!google_login && (
               <TouchableOpacity
@@ -690,7 +633,7 @@ export default function Login({navigation}) {
             style={{
               flexDirection: 'column',
             }}>
-            {!!google_login && !enums.isVendorStandloneApp && (
+            {!!google_login && (
               <View style={{marginTop: moderateScaleVertical(15)}}>
                 <TransparentButtonWithTxtAndIcon
                   icon={imagePath.ic_google2}
@@ -706,11 +649,11 @@ export default function Login({navigation}) {
                     color: isDarkMode ? colors.white : colors.textGreyB,
                     marginHorizontal: moderateScale(15),
                   }}
-                  onPress={() => openGmailLogin()}
+                  onPress={openGmailLogin}
                 />
               </View>
             )}
-            {!!fb_login && !enums.isVendorStandloneApp && (
+            {!!fb_login && (
               <View style={{marginTop: moderateScaleVertical(15)}}>
                 <TransparentButtonWithTxtAndIcon
                   icon={imagePath.ic_fb2}
@@ -730,7 +673,7 @@ export default function Login({navigation}) {
                 />
               </View>
             )}
-            {!!twitter_login && !enums.isVendorStandloneApp && (
+            {!!twitter_login && (
               <View style={{marginTop: moderateScaleVertical(15)}}>
                 <TransparentButtonWithTxtAndIcon
                   icon={imagePath.ic_twitter2}
@@ -751,51 +694,48 @@ export default function Login({navigation}) {
               </View>
             )}
 
-            {!!apple_login &&
-              !enums.isVendorStandloneApp &&
-              Platform.OS == 'ios' && (
-                <View style={{marginVertical: moderateScaleVertical(15)}}>
-                  <TransparentButtonWithTxtAndIcon
-                    icon={isDarkMode ? imagePath.ic_apple : imagePath.ic_apple2}
-                    btnText={strings.CONTINUE_APPLE}
-                    containerStyle={{
-                      backgroundColor: isDarkMode
-                        ? MyDarkTheme.colors.lightDark
-                        : colors.white,
-                      borderColor: colors.borderColorD,
-                      borderWidth: 1,
-                    }}
-                    textStyle={{
-                      color: isDarkMode ? colors.white : colors.textGreyB,
-                      marginHorizontal: moderateScale(17),
-                    }}
-                    onPress={() => openAppleLogin()}
-                  />
-                </View>
-              )}
+            {!!apple_login && Platform.OS == 'ios' && (
+              <View style={{marginVertical: moderateScaleVertical(15)}}>
+                <TransparentButtonWithTxtAndIcon
+                  icon={isDarkMode ? imagePath.ic_apple : imagePath.ic_apple2}
+                  btnText={strings.CONTINUE_APPLE}
+                  containerStyle={{
+                    backgroundColor: isDarkMode
+                      ? MyDarkTheme.colors.lightDark
+                      : colors.white,
+                    borderColor: colors.borderColorD,
+                    borderWidth: 1,
+                  }}
+                  textStyle={{
+                    color: isDarkMode ? colors.white : colors.textGreyB,
+                    marginHorizontal: moderateScale(17),
+                  }}
+                  onPress={() => openAppleLogin()}
+                />
+              </View>
+            )}
           </View>
         </View>
-        {!enums.isVendorStandloneApp && (
-          <View style={styles.bottomContainer}>
+
+        <View style={styles.bottomContainer}>
+          <Text
+            style={
+              isDarkMode
+                ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
+                : {...styles.txtSmall, color: colors.textGreyLight}
+            }>
+            {strings.DONT_HAVE_ACCOUNT}
             <Text
-              style={
-                isDarkMode
-                  ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
-                  : {...styles.txtSmall, color: colors.textGreyLight}
-              }>
-              {strings.DONT_HAVE_ACCOUNT}
-              <Text
-                onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
-                style={{
-                  fontFamily: fontFamily.bold,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black
-                }}>
-                {' '}
-                {strings.SIGN_UP}
-              </Text>
+              onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
+              style={{
+                fontFamily: fontFamily.bold,
+                color: themeColors.primary_color,
+              }}>
+              {' '}
+              {strings.SIGN_UP}
             </Text>
-          </View>
-        )}
+          </Text>
+        </View>
       </KeyboardAwareScrollView>
     </WrapperContainer>
   );

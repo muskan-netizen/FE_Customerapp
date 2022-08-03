@@ -40,7 +40,8 @@ import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LanguageModal from '../../Components/LanguageModal';
-import {setItem} from '../../utils/utils';
+import {setItem, setUserData} from '../../utils/utils';
+import {isEmpty} from 'lodash';
 
 export default function OuterScreen({navigation}) {
   const {
@@ -123,52 +124,39 @@ export default function OuterScreen({navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'res>>>SOCIAL');
-        if (!!res.data) {
-          if (
-            !!res.data?.client_preference?.verify_email &&
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              successLogin();
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else if (
-            !!res.data?.client_preference?.verify_email ||
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified ||
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              successLogin();
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else {
-            successLogin();
-          }
-        }
         updateState({isLoading: false});
-        getCartDetail();
+        if (!!res.data) {
+          checkEmailPhoneVerified(res?.data);
+          getCartDetail();
+        }
       })
       .catch(errorMethod);
   };
 
-  const successLogin = () => {
-    if (redirectedFrom == 'cart') {
-      actions.setRedirection('');
-      navigation.push(navigationStrings.TAB_ROUTES, {
-        screen: navigationStrings.CART,
-        params: {screen: navigationStrings.CART},
-      });
-      return;
+  const checkEmailPhoneVerified = (data) => {
+    if (
+      !!(
+        !!data?.client_preference?.verify_email &&
+        !data?.verify_details?.is_email_verified
+      ) ||
+      !!(
+        !!data?.client_preference?.verify_phone &&
+        !data?.verify_details?.is_phone_verified
+      )
+    ) {
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, data)();
+    } else {
+      successLogin(data);
     }
-    navigation.push(navigationStrings.TAB_ROUTES);
+  };
+
+  const successLogin = (data) => {
+    console.log('callllled');
+    if (!!data) {
+      setUserData(data).then((suc) => {
+        actions.saveUserData(data);
+      });
+    }
   };
 
   //error handling
@@ -180,6 +168,7 @@ export default function OuterScreen({navigation}) {
   const getCartDetail = () => {
     actions
       .getCartDetail(
+        '',
         {},
         {
           code: appData?.profile?.code,
@@ -263,7 +252,7 @@ export default function OuterScreen({navigation}) {
   const onGuestLogin = () => {
     actions.userLogout();
     getCartDetail();
-    navigation.push(navigationStrings.TAB_ROUTES);
+    actions.setAppSessionData('guest_login');
   };
 
   const _selectLang = () => {
@@ -275,21 +264,23 @@ export default function OuterScreen({navigation}) {
   };
 
   useEffect(() => {
-    const all_languages = [...languages.all_languages];
+    if (!isEmpty(languages)) {
+      const all_languages = [...languages?.all_languages];
 
-    all_languages.forEach((itm, indx) => {
-      if (languages?.primary_language?.id === itm?.id) {
-        all_languages[indx].isActive = true;
-        updateState({
-          allLangs: [...all_languages],
-        });
-      } else {
-        all_languages[indx].isActive = false;
-        updateState({
-          allLangs: [...all_languages],
-        });
-      }
-    });
+      all_languages?.forEach((itm, indx) => {
+        if (languages?.primary_language?.id === itm?.id) {
+          all_languages[indx].isActive = true;
+          updateState({
+            allLangs: [...all_languages],
+          });
+        } else {
+          all_languages[indx].isActive = false;
+          updateState({
+            allLangs: [...all_languages],
+          });
+        }
+      });
+    }
   }, []);
 
   const _onLangSelect = (item, indx) => {
@@ -313,9 +304,9 @@ export default function OuterScreen({navigation}) {
 
   //Update language
   const updateLanguage = (item) => {
-    const data = languages.all_languages.filter((x) => x.id == item.id)[0];
+    const data = languages?.all_languages?.filter((x) => x.id == item.id)[0];
 
-    if (data.sort_code !== languages.primary_language.sort_code) {
+    if (data.sort_code !== languages?.primary_language.sort_code) {
       let languagesData = {
         ...languages,
         primary_language: data,
@@ -360,6 +351,7 @@ export default function OuterScreen({navigation}) {
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       isLoadingB={isLoading}
       source={loaderOne}>
+      {console.log(shortCodeStatus, 'shortCodeStatus>>')}
       {shortCodeStatus ? (
         <Header
           leftIcon={
@@ -369,12 +361,7 @@ export default function OuterScreen({navigation}) {
               ? imagePath.icBackb
               : imagePath.back
           }
-          onPressLeft={() =>
-            // navigation.push(navigationStrings.SHORT_CODE, {
-            //   shortCodeParam: true,
-            // })
-            navigation.goBack()
-          }
+          onPressLeft={() => actions.setAppSessionData('guest_login')}
           isRightText
           rightTxt={
             !!selectedLangTitle
@@ -433,7 +420,13 @@ export default function OuterScreen({navigation}) {
         <Text
           style={
             isDarkMode
-              ? [styles.header, {color: MyDarkTheme.colors.text, backgroundColor: MyDarkTheme.colors.background}]
+              ? [
+                  styles.header,
+                  {
+                    color: MyDarkTheme.colors.text,
+                    backgroundColor: MyDarkTheme.colors.background,
+                  },
+                ]
               : styles.header
           }>
           {strings.CREATE_YOUR_ACCOUNT}
@@ -441,12 +434,13 @@ export default function OuterScreen({navigation}) {
         <View style={{marginHorizontal: moderateScale(24)}}>
           {appData?.profile?.preferences?.home_tag_line ? (
             <View style={{marginHorizontal: moderateScaleVertical(30)}}>
-              <Text numberOfLines={2} 
-               style={
-                isDarkMode
-                  ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
-                  : styles.txtSmall
-              }>
+              <Text
+                numberOfLines={2}
+                style={
+                  isDarkMode
+                    ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+                    : styles.txtSmall
+                }>
                 {appData?.profile?.preferences?.home_tag_line
                   ? appData?.profile?.preferences?.home_tag_line
                   : ''}
@@ -458,14 +452,16 @@ export default function OuterScreen({navigation}) {
             containerStyle={{marginTop: moderateScaleVertical(50)}}
             btnText={strings.CREATE_AN_ACCOUNT}
             onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
-            
           />
           <ButtonWithLoader
             btnStyle={styles.guestBtn}
-            btnTextStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : themeColors.primary_color}}
+            btnTextStyle={{
+              color: isDarkMode
+                ? MyDarkTheme.colors.text
+                : themeColors.primary_color,
+            }}
             onPress={() => onGuestLogin()}
-            btnText={strings.GUEST_LOGIN} 
-            
+            btnText={strings.GUEST_LOGIN}
           />
           <View style={{marginTop: moderateScaleVertical(50)}}>
             {!!google_login ||

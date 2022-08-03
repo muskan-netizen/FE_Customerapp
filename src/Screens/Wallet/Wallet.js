@@ -465,8 +465,8 @@ export default function Wallet({navigation}) {
           flex: 1,
           paddingBottom:
             appStyle?.tabBarLayout == 3
-              ? moderateScaleVertical(80)
-              : moderateScaleVertical(5),
+              ? moderateScaleVertical(85)
+              : moderateScaleVertical(32),
         }}>
         <FlatList
           data={walletHistory}
@@ -561,13 +561,20 @@ export default function Wallet({navigation}) {
           </View>
 
           <Text style={styles.headingStyle}>{strings.AMOUNT_TO_TRANSFER}</Text>
-          <BorderTextInput
-             placeholder={strings.ENTER_AMOUNT}
-             onChangeText={(text) => updateState({transferAmount: text})}
-             textInputStyle={styles.textInputStyle}
-             keyboardType="number-pad"
-             autoFocus
-          />
+          <View style={styles.textInputView}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+              }}>
+              <TextInput
+                placeholder={strings.ENTER_AMOUNT}
+                onChangeText={(text) => updateState({transferAmount: text})}
+                textInputStyle={styles.textInputStyle}
+                keyboardType="number-pad"
+              />
+            </View>
+          </View>
           <Text
             style={{
               ...styles.headingStyle,

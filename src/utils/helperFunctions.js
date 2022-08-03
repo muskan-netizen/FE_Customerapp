@@ -279,16 +279,7 @@ export function getAddressComponent(details, update) {
 
 export const sessionHandler = (error) => {
   actions.userLogout();
-  NavigationService.navigate(navigationStrings.OUTER_SCREEN, {}),
-    Alert.alert(error, '', [
-      {
-        text: strings.OK,
-        // cancelable: false,
-        onPress: () => console.log('okay Pressed'),
-        //   onPress: () =>
-        //     NavigationService.navigate(navigationStrings.OUTER_SCREEN, {}),
-      },
-    ]);
+  actions.setAppSessionData('guest_login');
 };
 
 export const getScaleTransformationStyle = (

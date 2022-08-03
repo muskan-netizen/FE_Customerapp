@@ -2506,7 +2506,7 @@ export default function OrderDetail({ navigation, route }) {
     if (!selectedTipAmount) {
       showError(strings.PLEASE_SELECT_VALID_OPTION);
     } else if (!userData?.auth_token) {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login')    
     } else {
       moveToNewScreen(navigationStrings.TIP_PAYMENT_OPTIONS, {
         selectedTipAmount: selectedTipAmount,
