@@ -918,7 +918,7 @@ export default {
   SELECT_A_TABLE: 'Select a Table',
   SERVICE_ADDRESS: 'Service Address',
   BOOK_HERE: 'Book Here',
-  DELETE_ACCOUNT: 'Delete Account',
+  DELETE_ACCOUNT: 'حذف الحساب',
   ARE_YOU_SURE_YOU_WANT_TO_DELETE:
     'Are you sure, you want to delete your account? Deleting your account is permanent and will remove all content and profile settings.',
   WR_ARE_CURRENTLY_NOT_OPERATING:

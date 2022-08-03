@@ -366,6 +366,11 @@ const shortCodes = {
   ouiSpeed: '089eee',
   getItSent: '9af7a9',
   easyDrink: '96eb54',
+  iAmSelling: '7fd0dd',
+  fifteenP: '016908',
+  euodooTechnologies: 'c9d1ee',
+  rota: 'e4b727',
+  farmMeat: '371731',
 };
 
 const appIds = {
@@ -1019,7 +1024,7 @@ const appIds = {
   }),
   ineed: Platform.select({
     ios: 'com.customer.ineed',
-    android: 'com.customer.ineed',
+    android: 'com.ineed.userApplication',
   }),
   nadelivery: Platform.select({
     ios: 'com.app.nadelivery',
@@ -1282,8 +1287,8 @@ const appIds = {
     android: 'com.ambutap',
   }),
   sabroson: Platform.select({
-    ios: 'com.sabroson',
-    android: 'com.sabroson',
+    ios: 'com.sabroson.orders',
+    android: 'com.sabroson.orders',
   }),
   swiffyllc: Platform.select({
     ios: 'com.swiffyllc.customer',
@@ -1431,8 +1436,8 @@ const appIds = {
   }),
 
   viversbox: Platform.select({
-    ios: 'com.viversbox',
-    android: 'com.viversbox',
+    ios: 'com.viversbox.user',
+    android: 'com.viversbox.user',
   }),
   scootz: Platform.select({
     ios: 'com.scootz',
@@ -1607,8 +1612,8 @@ const appIds = {
     android: 'com.peerDeliveries',
   }),
   swan: Platform.select({
-    ios: 'com.Swan-User',
-    android: 'com.swanUser',
+    ios: 'com.swan.userApp',
+    android: 'com.swan.userApp',
   }),
   SCOOTUP: Platform.select({
     ios: 'com.SCOOTUP',
@@ -1820,6 +1825,26 @@ const appIds = {
   easyDrink: Platform.select({
     ios: 'com.easyDrink.order',
     android: 'com.easyDrink.order',
+  }),
+  iAmSelling: Platform.select({
+    ios: 'com.iAmSelling.order',
+    android: 'com.iAmSelling.order',
+  }),
+  fifteenP: Platform.select({
+    ios: 'com.fifteenP.order',
+    android: 'com.fifteenP.order',
+  }),
+  euodooTechnologies: Platform.select({
+    ios: 'com.euodooTechnologies.order',
+    android: 'com.euodooTechnologies.order',
+  }),
+  rota: Platform.select({
+    ios: 'com.rota.order',
+    android: 'com.rota.order',
+  }),
+  farmMeat: Platform.select({
+    ios: 'com.farmMeat.order',
+    android: 'com.farmMeat.order',
   }),
 };
 

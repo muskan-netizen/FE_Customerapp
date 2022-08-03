@@ -80,7 +80,7 @@ export default function Signup({navigation}) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
   console.log(
-    appData?.profile.country?.phonecode,
+    getPhonesCallingCodeAndCountryData,
     ' getPhonesCallingCodeAndCountryData[0].countryCodes[0]',
   );
   const [state, setState] = useState({
@@ -138,14 +138,10 @@ export default function Signup({navigation}) {
 
   const isValidData = () => {
     const error = validations({
-      email: appData?.profile?.preferences?.verify_email
-        ? email
-        : 'abc@gmail.com',
+      email: email,
       password: password,
       callingCode: callingCode,
-      phoneNumber: appData?.profile?.preferences?.verify_phone
-        ? phoneNumber
-        : '78787878787',
+      phoneNumber: phoneNumber,
     });
     if (error) {
       showError(error);

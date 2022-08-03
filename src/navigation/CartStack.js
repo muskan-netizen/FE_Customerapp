@@ -49,6 +49,7 @@ import {
 import MyProfile from '../Screens/MyProfile/MyProfile2';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
 import DirectPayOnline from '../Screens/PaymentGateways/DirectPayOnline';
+import Khalti from '../Screens/PaymentGateways/Khalti';
 import KongaPay from '../Screens/PaymentGateways/KongaPay';
 import Pagarme from '../Screens/PaymentGateways/Pagarme';
 import StripeIdeal from '../Screens/PaymentGateways/StripeIdeal';
@@ -275,6 +276,12 @@ export default function () {
         component={DirectPayOnline}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name={navigationStrings.KHALTI}
+        component={Khalti}
+        options={{headerShown: false}}
+      />
+
       <Stack.Screen
         name={navigationStrings.OPENPAY}
         component={OpenPay}

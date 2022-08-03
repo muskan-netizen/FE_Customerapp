@@ -94,6 +94,7 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.AuthorizeNet}
         component={AuthorizeNet}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.PAYSTACK}

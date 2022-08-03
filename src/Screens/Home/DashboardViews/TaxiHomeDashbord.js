@@ -143,7 +143,7 @@ export default function TaxiHomeDashbord({
     (x) => x?.redirect_to == staticStrings.PICKUPANDDELIEVRY,
   );
 
-  console.log(findCabCategory, 'findCabCategory');
+  console.log(appMainData?.categories, 'findCabCategory');
   const {appData, themeColors, appStyle, languages} = useSelector(
     (state) => state?.initBoot,
   );

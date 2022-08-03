@@ -27,9 +27,7 @@ import {
   SearchProductVendorItem2,
   SendProduct,
   ShippingDetails,
-  Subscriptions2,
   SuperMarket,
-  TaxiHomeScreen,
   TrackDetail,
   Tracking,
   VendorDetail,
@@ -38,6 +36,9 @@ import {
   Vendors2,
   Vendors3,
   ViewAllData,
+  TaxiHomeScreen,
+  Subscriptions2,
+  SubcategoryVendor,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 
@@ -308,6 +309,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.SUBSCRIPTION}
         component={Subscriptions2}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.SUBCATEGORY_VENDORS}
+        component={SubcategoryVendor}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
