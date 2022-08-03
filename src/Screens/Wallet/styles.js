@@ -128,6 +128,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       textAlign: I18nManager.isRTL ? 'right' : 'left',
     },
     textInputView: {
+     
       flexDirection: 'row',
       height: moderateScaleVertical(49),
       color: colors.white,

@@ -829,6 +829,7 @@ function Cart({ navigation, route }) {
                     paymentDataFlutterWave?.orderDetail?.order_number,
                   id: paymentDataFlutterWave?.orderDetail?.id,
                 },
+               
               })();
             } else {
               redirectTimeout = setTimeout(() => {

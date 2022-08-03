@@ -47,10 +47,10 @@ const SearchPlaces = ({
   addressDone = () => { },
   isMapSelectLocation = false,
   currentLatLong = {},
-  index,
+  index=0,
   isTaxiFlow = false
 }) => {
-  console.log(mapKey, 'in MapPlaceComp map key');
+  console.log(index, 'in MapPlaceComp map key');
 
   console.log(RNLocalize.getCountry(), 'timezone');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -67,7 +67,7 @@ const SearchPlaces = ({
 
     console.log(appData?.profile?.preferences?.is_static_dropoff, "searching texts")
     setValue(data);
-    if (!!appData?.profile?.preferences?.is_static_dropoff) {
+    if (!!appData?.profile?.preferences?.is_static_dropoff && index!==0) {
       let query = {}
       query['search'] = data
       actions.pickuplocationSearch(query,

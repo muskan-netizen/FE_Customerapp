@@ -223,7 +223,8 @@ const RoyoHome = (props) => {
     try {
       const res = await actions.allVendorOrders(query, headers);
       console.log('all vendor orders count', res);
-      setAllNewOrder(res.data.data);
+      console.log(res?.data?.data,"res?.data?.data")
+      setAllNewOrder(res?.data?.data);
     } catch (error) {
       console.log('error riased', error);
       showError(error?.error);
@@ -487,6 +488,7 @@ const RoyoHome = (props) => {
   };
 
   const renderNewOrder = ({item, index}) => {
+    console.log(item,"itemmmmmmm")
     return (
       <View
         style={{

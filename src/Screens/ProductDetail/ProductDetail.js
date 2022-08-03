@@ -340,7 +340,7 @@ export default function ProductDetail({route, navigation}) {
       updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
       // showError(error?.message?.error || error?.error);
      
-      Alert.alert('', error?.message?.error, [
+      Alert.alert('', strings.ALREADY_EXIST, [
         {
           text: strings.CANCEL,
           onPress: () => console.log('Cancel Pressed'),

@@ -72,7 +72,7 @@ export default function OrderDetail({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-  // console.log(paramData, 'paramData');
+  console.log(paramData, 'paramData');
   const dineInType = useSelector((state) => state?.home?.dineInType);
 
   const [lalaMoveUrl, setLalaMoveUrl] = useState(null);
@@ -406,7 +406,7 @@ export default function OrderDetail({ navigation, route }) {
     data['review'] = productDetail?.product_rating?.review
       ? productDetail?.product_rating?.review
       : '';
-    // data['vendor_id'] = productDetail.vendor_id;
+    // data['vendor_id'] = productDetail.vendor_id; =
 
     actions
       .giveRating(data, {
@@ -415,6 +415,7 @@ export default function OrderDetail({ navigation, route }) {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
+        console.log(res,"ressssssssr")
         let cloned_cartItems = cloneDeep(cartItems);
         updateState({
           isLoading: false,
@@ -2143,7 +2144,7 @@ export default function OrderDetail({ navigation, route }) {
             />
           )}
           {(cartData?.total_service_fee > 0 ||
-            cartData?.taxable_amount > 0) && (
+            Number(cartData?.taxable_amount) >0) && (
               <LeftRightText
                 leftText={strings.TAXES_FEES}
                 rightText={`${currencies?.primary_currency?.symbol
@@ -3550,6 +3551,8 @@ console.log("driverStatusdriverStatus",driverStatus)
         }
         centerTitle={strings.ORDER + `${'#'}${cartData?.order_number || ''}`}
         customRight={!!cartData?.reports?.report?.original ? customRight : ''}
+        onPressLeft={paramData?.from ?moveToNewScreen(navigationStrings.HOME):() => navigation.goBack()}
+        
       /> 
       <View
         style={{

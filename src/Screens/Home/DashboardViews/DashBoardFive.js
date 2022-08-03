@@ -93,7 +93,7 @@ export default function DashBoardFive({
     (state) => state?.initBoot,
   );
   const userData = useSelector((state) => state?.auth?.userData);
-
+console.log(appData?.mobile_banners, 'appDtaa');
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const appMainData = useSelector((state) => state?.home?.appMainData);
@@ -285,7 +285,7 @@ export default function DashBoardFive({
           ? '800/600'
           : '400/600',
     );
-
+console.log("hfbgdh", item);
     return (
       <TouchableOpacity activeOpacity={0.8} onPress={() => bannerPress(item)}>
         <FastImage

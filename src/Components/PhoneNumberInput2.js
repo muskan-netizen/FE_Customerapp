@@ -11,6 +11,8 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {TextInput} from 'react-native-paper';
+import { getBundleId } from 'react-native-device-info';
+import { appIds } from '../utils/constants/DynamicAppKeys';
 
 const PhoneNumberInput2 = ({
   cca2 = '',

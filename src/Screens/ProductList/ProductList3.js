@@ -1150,7 +1150,9 @@ export default function Products({route, navigation}) {
   };
 
   const addSingleItem = useCallback(
+   
     async (item, section = null, inx) => {
+      
       if (
         !!categoryInfo?.is_vendor_closed &&
         !categoryInfo?.show_slot &&
@@ -1365,6 +1367,7 @@ export default function Products({route, navigation}) {
   //useCallback end
 
   useEffect(() => {
+   
     // setLoading(true)
     updateState({pageNo: 1});
     loadMore = true;
@@ -1373,6 +1376,7 @@ export default function Products({route, navigation}) {
       fetchOffers();
     }
     if (isLoadingC) {
+    
       getAllProductsByCategoryId(true);
     }
   }, [navigation, languages, currencies, reloadData]);
@@ -1613,6 +1617,7 @@ export default function Products({route, navigation}) {
 
       apiData = apiData + `&category_id=${data?.categoryExist}`;
     }
+    console.log(apiData,"apiData")
     actions
       .getProductByVendorIdOptamizeV2(
         apiData,
@@ -1952,7 +1957,7 @@ export default function Products({route, navigation}) {
           systemuser: DeviceInfo.getUniqueId(),
         })
         .then((res) => {
-          // console.log('res check singel vendro==>>>>>>', res);
+          console.log('res check singel vendro==>>>>>>', res);
           setIsSingleVendor(res);
           resolve(res);
         })
@@ -2282,7 +2287,7 @@ export default function Products({route, navigation}) {
       });
       setLoading(false);
       // showError(error?.message?.error || error?.error);
-      Alert.alert('', error?.message?.error, [
+      Alert.alert('', strings.ALREADY_EXIST, [
         {
           text: strings.CANCEL,
           onPress: () => console.log('Cancel Pressed'),

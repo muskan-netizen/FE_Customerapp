@@ -207,14 +207,14 @@ android {
     flavorDimensions "appType"
 
     productFlavors{
-                   yoho{
+                shoorafresh{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.yoho'
-                resValue "string", "app_name", "Yoho"
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.shoorafresh'
+                resValue "string", "app_name", "Shoora Fresh"
                 resValue "string", "host_name", ""
             }
     }
