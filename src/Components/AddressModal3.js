@@ -118,7 +118,7 @@ const AddressModal3 = ({
     isPincode: false,
     isAddress: false,
   });
-  console.log(location, 'locationnn');
+
   const styles = stylesData({fontFamily, themeColors});
 
   //To update the states

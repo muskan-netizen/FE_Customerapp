@@ -93,12 +93,13 @@ export default function DashBoardFive({
     (state) => state?.initBoot,
   );
   const userData = useSelector((state) => state?.auth?.userData);
-console.log(appData?.mobile_banners, 'appDtaa');
+
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const appMainData = useSelector((state) => state?.home?.appMainData);
   let businessType = appData?.profile?.preferences?.business_type || null;
   const allCategory = appMainData?.categories;
+  console.log(appMainData, 'appDtaa');
   const checkForBrand =
     allCategory &&
     allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
@@ -431,7 +432,7 @@ console.log("hfbgdh", item);
             <View style={{ marginTop: moderateScaleVertical(4) }}>
               <FlatList
                 horizontal
-                data={appData?.mobile_banners}
+                data={appMainData?.mobile_banners || appData?.mobile_banners}
                 keyExtractor={(item) => item.id.toString()}
                 showsHorizontalScrollIndicator={false}
                 renderItem={renderBanners}
