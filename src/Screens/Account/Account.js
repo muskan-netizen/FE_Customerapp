@@ -26,16 +26,21 @@ import {MyDarkTheme} from '../../styles/theme';
 import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
 import Share from 'react-native-share';
 import DeviceInfo, {getBundleId} from 'react-native-device-info';
-import { appIds } from '../../utils/constants/DynamicAppKeys';
-import { showError } from '../../utils/helperFunctions';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {showError} from '../../utils/helperFunctions';
 
 export default function Account({navigation}) {
   const [state, setState] = useState({
     isLoading: false,
   });
-  const {shortCodeStatus, themeColors, appStyle, appData, currencies, languages} = useSelector(
-    (state) => state?.initBoot,
-  );
+  const {
+    shortCodeStatus,
+    themeColors,
+    appStyle,
+    appData,
+    currencies,
+    languages,
+  } = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -94,19 +99,17 @@ export default function Account({navigation}) {
           onPress: () => {
             actions.userLogout();
             actions.cartItemQty('');
-            moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
           },
         },
       ]);
-    } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     }
+    actions.setAppSessionData('on_login');
   };
   const _scrollRef = useRef();
 
   const onDeleteAccount = () => {
     if (!!userData?.auth_token) {
-      Alert.alert(strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, '', [
+      Alert.alert('', strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, [
         {
           text: strings.CANCEL,
           onPress: () => console.log('Cancel Pressed'),
@@ -118,29 +121,29 @@ export default function Account({navigation}) {
         },
       ]);
     } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login');
     }
-  }
-  const deleleUserAccount = async() => {
+  };
+  const deleleUserAccount = async () => {
     try {
       const res = await actions.deleteAccount(
-      {},
-      {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-      })
-      console.log("delete user account res",res)
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      );
+      console.log('delete user account res', res);
       actions.userLogout();
       actions.cartItemQty('');
       actions.saveAddress('');
       actions.addSearchResults('clear');
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     } catch (error) {
-      console.log('erro raised',error)
-      showError(error?.message)
+      console.log('erro raised', error);
+      showError(error?.message);
     }
-  }
+  };
 
   return (
     <WrapperContainer
@@ -153,11 +156,7 @@ export default function Account({navigation}) {
           noLeftIcon={false}
           customLeft={() => (
             <Text
-              onPress={() =>
-                navigation.push(navigationStrings.SHORT_CODE, {
-                  shortCodeParam: true,
-                })
-              }
+              onPress={() => actions.setAppSessionData('show_shortcode')}
               style={{
                 color: themeColors.primary_color,
                 fontFamily: fontFamily.bold,
@@ -192,9 +191,9 @@ export default function Account({navigation}) {
             }
           />
         )}
-          {DeviceInfo.getBundleId() != appIds.dlvrd &&
-            !!userData?.auth_token &&
-            (businessType == 4 ? null : (
+        {DeviceInfo.getBundleId() != appIds.dlvrd &&
+          !!userData?.auth_token &&
+          (businessType == 4 ? null : (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -434,22 +433,22 @@ export default function Account({navigation}) {
             />
           )}
 
-{!!userData?.auth_token && (
-            <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-              onPress={onDeleteAccount}
-              iconLeft={imagePath.user}
-              centerHeading={strings.DELETE_ACCOUNT}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
+        {!!userData?.auth_token && (
+          <ListItemHorizontal
+            centerContainerStyle={{flexDirection: 'row'}}
+            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+            onPress={onDeleteAccount}
+            iconLeft={imagePath.user}
+            centerHeading={strings.DELETE_ACCOUNT}
+            containerStyle={styles.containerStyle2}
+            centerHeadingStyle={{
+              fontSize: textScale(14),
+              fontFamily: fontFamily.regular,
+            }}
             // iconRight={imagePath.goRight}
             // rightIconStyle={{tintColor: colors.textGreyLight}}
-            />
-          )}
+          />
+        )}
 
         <View style={styles.loginView}>
           <TouchableOpacity

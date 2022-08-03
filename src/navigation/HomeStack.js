@@ -3,13 +3,17 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import {
   BrandProducts,
+  BrandProducts2,
   BuyProduct,
+  CategoryBrands,
+  ChatRoom,
+  ChatScreen,
   ConfirmDetailsBuy,
   Delivery,
   Filter,
   Home,
+  LaundryAvailableVendors,
   Location,
-  OrderDetail,
   Payment,
   PaymentSuccess,
   ProductDetail,
@@ -18,34 +22,26 @@ import {
   ProductList2,
   ProductList3,
   ProductWithCategory,
+  ScrollableCategory,
   SearchProductVendorItem,
+  SearchProductVendorItem2,
   SendProduct,
   ShippingDetails,
+  Subscriptions2,
   SuperMarket,
+  TaxiHomeScreen,
   TrackDetail,
   Tracking,
   VendorDetail,
   VendorDetail2,
   VendorDetail3,
-  Vendors,
   Vendors2,
   Vendors3,
-  SearchProductVendorItem2,
-  BrandProducts2,
   ViewAllData,
-  TaxiHomeScreen,
-  CategoryBrands,
-  ScrollableCategory,
-  LaundryAvailableVendors,
-  ChatScreen,
-  ChatRoom,
-  Subscriptions2,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
-import {shortCodes} from '../utils/constants/DynamicAppKeys';
 
 import {verticalAnimation} from '../utils/utils';
-import CartStack from './CartStack';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
@@ -278,12 +274,6 @@ export default function () {
       />
 
       <Stack.Screen
-        name={navigationStrings.ORDER_DETAIL}
-        component={OrderDetail}
-        options={{headerShown: false}}
-      />
-
-      <Stack.Screen
         name={navigationStrings.VIEW_ALL_DATA}
         component={ViewAllData}
         options={{headerShown: false}}
@@ -309,17 +299,16 @@ export default function () {
         component={LaundryAvailableVendors}
         options={{headerShown: false}}
       />
-         <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.CHAT_ROOM}
         component={ChatRoom}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
 
-    
-       <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.SUBSCRIPTION}
         component={Subscriptions2}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

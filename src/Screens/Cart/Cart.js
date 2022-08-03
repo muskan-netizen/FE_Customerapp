@@ -562,24 +562,26 @@ export default function Cart({navigation, route}) {
       } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
         showError(strings.INVALID_SCHEDULED_DATE);
       } else {
-        if (!!userData) {
-          !!userData?.client_preference?.verify_email ||
-          !!userData?.client_preference?.verify_phone
-            ? !!userData?.verify_details?.is_email_verified &&
-              !!userData?.verify_details?.is_phone_verified
-              ? _finalPayment()
-              : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
-                  formCart: true,
-                })()
-            : _finalPayment();
+        if (
+          !!(
+            !!userData?.client_preference?.verify_email &&
+            !userData?.verify_details?.is_email_verified
+          ) ||
+          !!(
+            !!userData?.client_preference?.verify_phone &&
+            !userData?.verify_details?.is_phone_verified
+          )
+        ) {
+          moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+            ...userData,
+            fromCart: true,
+          })();
         } else {
           _finalPayment();
         }
-        // _finalPayment()
       }
     } else {
-      // showError(strings.UNAUTHORIZED_MESSAGE);
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login');
     }
   };
 
@@ -1117,8 +1119,7 @@ export default function Cart({navigation, route}) {
         selectedId: id,
       });
     } else {
-      // showError(strings.UNAUTHORIZED_MESSAGE);
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login');
     }
   };
   const setModalVisibleForAddessModal = (visible, type, id, data) => {
@@ -1133,8 +1134,7 @@ export default function Cart({navigation, route}) {
         });
       }, 1000);
     } else {
-      // showError(strings.UNAUTHORIZED_MESSAGE);
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login');
     }
   };
 

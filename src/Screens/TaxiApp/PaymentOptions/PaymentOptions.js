@@ -207,7 +207,6 @@ const PaymentOptions = ({navigation, route}) => {
           <View
             style={{
               flexDirection: 'row',
-              marginBottom: moderateScale(20),
             }}>
             <Image source={imagePath.radioInActive} style={styles.imageStyle} />
             <Text
@@ -292,7 +291,8 @@ const PaymentOptions = ({navigation, route}) => {
               fontFamily: fontFamily.bold,
               fontSize: textScale(14),
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              marginVertical: moderateScaleVertical(20),
+              marginTop: moderateScaleVertical(20),
+              marginBottom: moderateScaleVertical(10),
             }}>
             {strings.PAYMENT_METHOD}
           </Text>

@@ -371,8 +371,7 @@ export default function TaxiHomeScreen({route, navigation}) {
           ...item,
         })();
       } else {
-        // showError(strings.UNAUTHORIZED_MESSAGE);
-        moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+        actions.setAppSessionData('on_login');
       }
     } else if (item.redirect_to == staticStrings.DISPATCHER) {
       // moveToNewScreen(navigationStrings.DELIVERY, item)();
@@ -524,8 +523,7 @@ export default function TaxiHomeScreen({route, navigation}) {
           }
         }
       } else {
-        // showError(strings.UNAUTHORIZED_MESSAGE);
-        moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+        actions.setAppSessionData('on_login');
       }
     } else if (data.redirect_to == staticStrings.DISPATCHER) {
       // moveToNewScreen(navigationStrings.DELIVERY, data)();

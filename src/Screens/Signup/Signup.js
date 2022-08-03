@@ -1,3 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import codes from 'country-calling-code';
+import {cloneDeep, isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   I18nManager,
@@ -7,48 +10,37 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import ActionSheet from 'react-native-actionsheet';
+import {useDarkMode} from 'react-native-dark-mode';
+import DeviceCountry from 'react-native-device-country';
 import DeviceInfo from 'react-native-device-info';
+import DocumentPicker from 'react-native-document-picker';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import RNOtpVerify from 'react-native-otp-verify';
 import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
+import SubscriptionModal from '../../Components/SubscriptionModal';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import fontFamily from '../../styles/fontFamily';
+import commonStylesFun from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
+import {cameraHandler} from '../../utils/commonFunction';
 import {showError} from '../../utils/helperFunctions';
+import {androidCameraPermission} from '../../utils/permissions';
+import {setUserData} from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
-import commonStylesFun from '../../styles/commonStyles';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {checkIsAdmin} from '../../utils/utils';
-import {useNavigation} from '@react-navigation/native';
-import {cloneDeep, isEmpty} from 'lodash';
-import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
-import {cameraHandler} from '../../utils/commonFunction';
-import ActionSheet from 'react-native-actionsheet';
-import {androidCameraPermission} from '../../utils/permissions';
-import DocumentPicker from 'react-native-document-picker';
-import codes from 'country-calling-code';
-import * as RNLocalize from 'react-native-localize';
-import RNOtpVerify from 'react-native-otp-verify';
-import DeviceCountry, {
-  TYPE_ANY,
-  TYPE_TELEPHONY,
-  TYPE_CONFIGURATION,
-} from 'react-native-device-country';
-import SubscriptionModal from '../../Components/SubscriptionModal';
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
@@ -67,7 +59,6 @@ let addtionSelectedImageIndex = null;
 let addtionSelectedImage = null;
 
 export default function Signup({navigation}) {
-  const navigation_ = useNavigation();
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const userData = useSelector((state) => state.auth.userData);
   const {
@@ -295,54 +286,40 @@ export default function Signup({navigation}) {
       })
       .then((res) => {
         console.log(res, 'THIS IS RESPONSE');
-        console.log(userData, 'USERDATA AFTER THEN');
         updateState({isLoading: false});
+
         if (!!res.data) {
-          if (
-            !!res.data?.client_preference?.verify_email &&
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              checkIsAdmin(navigation_, navigation, res.data);
-              updateState({
-                subscriptionPopup:
-                  res?.data?.client_preference
-                    ?.show_subscription_plan_popup_signup,
-              });
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else if (
-            !!res.data?.client_preference?.verify_email ||
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified ||
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              checkIsAdmin(navigation_, navigation, res.data);
-              updateState({
-                subscriptionPopup:
-                  res?.data?.client_preference
-                    ?.show_subscription_plan_popup_signup,
-              });
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else {
-            checkIsAdmin(navigation_, navigation, res.data);
-            updateState({
-              subscriptionPopup:
-                res?.data?.client_preference
-                  ?.show_subscription_plan_popup_signup,
-            });
-          }
+          checkEmailPhoneVerified(res.data);
         }
       })
       .catch(errorMethod);
+  };
+
+  const checkEmailPhoneVerified = (data) => {
+    if (
+      !!(
+        !!data?.client_preference?.verify_email &&
+        !data?.verify_details?.is_email_verified
+      ) ||
+      !!(
+        !!data?.client_preference?.verify_phone &&
+        !data?.verify_details?.is_phone_verified
+      )
+    ) {
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, data)();
+    } else {
+      successSignUp(data);
+    }
+  };
+
+  const successSignUp = (data) => {
+    setUserData(data).then((suc) => {
+      actions.saveUserData(data);
+    });
+    updateState({
+      subscriptionPopup:
+        data?.client_preference?.show_subscription_plan_popup_signup,
+    });
   };
   const errorMethod = (error) => {
     updateState({isLoading: false});

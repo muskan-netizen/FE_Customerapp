@@ -741,7 +741,7 @@
   },
   "dependencies": {
     "@brooons/react-native-bluetooth-escpos-printer": "^1.1.5",
-    "@gorhom/bottom-sheet": "^2.3.0",
+    "@gorhom/bottom-sheet": "^2.4.1",
     "@invertase/react-native-apple-authentication": "^2.1.2",
     "@notifee/react-native": "^5.4.0",
     "@paytabs/react-native-paytabs": "^2.3.11",

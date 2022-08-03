@@ -1473,6 +1473,7 @@ function Cart({navigation, route}) {
   const formatDateSlot = (date, time) => {
     return moment(`${date} ${time}`, 'YYYY-MM-DD HH:mm:ss').format();
   };
+  console.log(userData, 'userData?>>>userData?');
 
   //Clear cart
   const placeOrder = () => {
@@ -1547,14 +1548,7 @@ function Cart({navigation, route}) {
       updateState({placeLoader: true});
       var d1 = new Date();
       var d2 = new Date(localeSheduledOrderDate);
-      console.log(d2, 'sheduledorderdate');
-      // if (!!selectedTimeSlots) {
-      //   d2 = new Date(localeSheduledOrderDate)
-      // } else {
-      //   d2 = new Date(sheduledorderdate);
-      // }
 
-      console.log('shceduleORderdata', sheduledorderdate);
       if (!selectedAddressData) {
         // showError(strings.PLEASE_SELECT_ADDRESS);
         setModalVisible(true);
@@ -1563,78 +1557,24 @@ function Cart({navigation, route}) {
       } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
         errorMethod(strings.INVALID_SCHEDULED_DATE);
       } else {
-        if (!!userData) {
-          console.log(userData, 'userData');
-          if (!!userData) {
-            if (
-              !!userData?.client_preference?.verify_email &&
-              !!userData?.client_preference?.verify_phone
-            ) {
-              updateState({placeLoader: false});
-
-              if (
-                !!userData?.verify_details?.is_email_verified &&
-                !!userData?.verify_details?.is_phone_verified
-              ) {
-                // setDateAndTimeSchedule(true);
-                setTimeout(() => {
-                  _finalPayment();
-                }, 500);
-              } else {
-                moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
-                  formCart: true,
-                })();
-              }
-            } else if (
-              !!userData?.client_preference?.verify_email ||
-              !!userData?.client_preference?.verify_phone
-            ) {
-              if (
-                !!userData?.client_preference?.verify_email &&
-                !userData?.verify_details?.is_email_verified
-              ) {
-                updateState({placeLoader: false});
-
-                moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
-                  formCart: true,
-                })();
-              } else if (
-                !!userData?.client_preference?.verify_phone &&
-                !userData?.verify_details?.is_phone_verified
-              ) {
-                updateState({placeLoader: false});
-
-                moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
-                  formCart: true,
-                })();
-              } else {
-                setTimeout(() => {
-                  _finalPayment();
-                }, 500);
-              }
-
-              // if (
-              //   !!userData?.verify_details?.is_email_verified ||
-              //   !!userData?.verify_details?.is_phone_verified
-              // ) {
-              //   // setDateAndTimeSchedule(true);
-              //   setTimeout(() => {
-              //     _finalPayment();
-              //   }, 500);
-              // } else {
-              //   updateState({placeLoader: false});
-
-              //   moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
-              //     formCart: true,
-              //   })();
-              // }
-            } else {
-              // setDateAndTimeSchedule(true);
-              setTimeout(() => {
-                _finalPayment();
-              }, 500);
-            }
-          }
+        if (
+          !!(
+            !!userData?.client_preference?.verify_email &&
+            !userData?.verify_details?.is_email_verified
+          ) ||
+          !!(
+            !!userData?.client_preference?.verify_phone &&
+            !userData?.verify_details?.is_phone_verified
+          )
+        ) {
+          updateState({
+            isLoadingB: false,
+            placeLoader: false,
+          });
+          moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+            ...userData,
+            fromCart: true,
+          })();
         } else {
           _finalPayment();
         }
@@ -1642,7 +1582,7 @@ function Cart({navigation, route}) {
     } else {
       updateState({placeLoader: false});
       actions.setRedirection('cart');
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login');
     }
   };
 
@@ -3811,8 +3751,7 @@ function Cart({navigation, route}) {
         selectedId: id,
       });
     } else {
-      // showError(strings.UNAUTHORIZED_MESSAGE);
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login');
     }
   };
   const setModalVisibleForAddessModal = (visible, type, id, data) => {
@@ -3828,8 +3767,7 @@ function Cart({navigation, route}) {
         });
       }, 1000);
     } else {
-      // showError(strings.UNAUTHORIZED_MESSAGE);
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login');
     }
   };
 
@@ -3851,11 +3789,6 @@ function Cart({navigation, route}) {
 
   const _onGiftBoxSelection = () => {
     updateState({isGiftBoxSelected: !isGiftBoxSelected});
-  };
-
-  const setRedirection = () => {
-    actions.setRedirection('cart');
-    navigation.navigate(navigationStrings.OUTER_SCREEN, {});
   };
 
   //get footer start
@@ -3893,48 +3826,6 @@ function Cart({navigation, route}) {
           placeholder={strings.SPECIAL_INSTRUCTION}
           returnKeyType={'next'}
         />
-        {/* <View style={{ height: moderateScaleVertical(20) }} /> */}
-
-        {/* select payment method */}
-        {/* <TouchableOpacity
-          onPress={() =>
-            !!userData?.auth_token
-              ? moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
-              : navigation.navigate(navigationStrings.OUTER_SCREEN, {})
-          }
-          style={styles.paymentMainView}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Image
-              style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
-              source={imagePath.paymentMethod}
-            />
-            <Text
-              style={{
-                ...styles.priceItemLabel2,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                marginLeft: moderateScale(4),
-              }}>
-              {selectedPayment.title_lng
-                ? selectedPayment.title_lng
-                : selectedPayment.title
-                ? selectedPayment.title
-                : strings.SELECT_PAYMENT_METHOD}
-            </Text>
-          </View>
-          <View>
-            <Image
-              source={imagePath.goRight}
-              style={
-                isDarkMode
-                  ? {
-                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                      tintColor: MyDarkTheme.colors.text,
-                    }
-                  : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
-              }
-            />
-          </View>
-        </TouchableOpacity> */}
 
         {/* Laundry Section only */}
         {!!(businessType == 'laundry') && (
@@ -4725,9 +4616,7 @@ function Cart({navigation, route}) {
               onPress={() =>
                 !!userData?.auth_token
                   ? updateState({paymentModal: true})
-                  : // ?moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
-                    //  moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
-                    navigation.navigate(navigationStrings.OUTER_SCREEN, {})
+                  : actions.setAppSessionData('on_login')
               }
               style={{
                 ...styles.paymentMainView,
@@ -6580,7 +6469,7 @@ function Cart({navigation, route}) {
         leftIcon={imagePath.icBackb}
         isRightText={cartItems && !!cartItems?.length}
         onPressRightTxt={() => openClearCartModal()}
-        noLeftIcon
+        onPressLeft={() => navigation.navigate(navigationStrings.HOMESTACK)}
       />
 
       <FlatList

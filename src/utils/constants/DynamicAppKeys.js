@@ -4,7 +4,6 @@ import {getBundleId} from 'react-native-device-info';
 const shortCodes = {
   royoorder: '245bae',
   runrun: 'bf8608',
-
   tranzit: '52a1a6',
   hmoobhub: 'fa11e1',
   capcorp: '149f3e',
@@ -356,17 +355,17 @@ const shortCodes = {
   exprexPro: 'cb98e8',
   fresHest: '7e43f5',
   servern: '1ba1e9',
-  smokeRun:'545a71',
-  myEvPlus:'1c7d9e',
-  qdelo:'0fcc84',
-  pawsee:'bd2d83',
-  hairRun:'fabaaf',
-  zuriRide:'fa47e7',
-  americanLuxury:'0015d5',
-  smartMur:'780ecd',
-  ouiSpeed:'089eee',
-  getItSent:'9af7a9',
-  easyDrink:'96eb54',
+  smokeRun: '545a71',
+  myEvPlus: '1c7d9e',
+  qdelo: '0fcc84',
+  pawsee: 'bd2d83',
+  hairRun: 'fabaaf',
+  zuriRide: 'fa47e7',
+  americanLuxury: '0015d5',
+  smartMur: '780ecd',
+  ouiSpeed: '089eee',
+  getItSent: '9af7a9',
+  easyDrink: '96eb54',
 };
 
 const appIds = {

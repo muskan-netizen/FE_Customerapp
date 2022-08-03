@@ -206,7 +206,11 @@ export default function DashBoardFive({
     const imageUrl = getImageUrl(
       item.image.image_fit,
       item.image.image_path,
-      appStyle?.homePageLayout === 5 ? '800/600' : DeviceInfo.getBundleId() == appIds.masa ? '800/600' : '400/600',
+      appStyle?.homePageLayout === 5
+        ? '800/600'
+        : DeviceInfo.getBundleId() == appIds.masa
+        ? '800/600'
+        : '400/600',
     );
 
     return (
@@ -219,9 +223,17 @@ export default function DashBoardFive({
           }}
           style={{
             height:
-              appStyle?.homePageLayout == 5 ? moderateScale(140) : DeviceInfo.getBundleId() == appIds.masa ? moderateScale(260) : height / 3.8,
+              appStyle?.homePageLayout == 5
+                ? moderateScale(140)
+                : DeviceInfo.getBundleId() == appIds.masa
+                ? moderateScale(260)
+                : height / 3.8,
             width:
-              appStyle?.homePageLayout == 5 ? width / 1.2 : DeviceInfo.getBundleId() == appIds.masa ? width / 1.1 : moderateScale(160),
+              appStyle?.homePageLayout == 5
+                ? width / 1.2
+                : DeviceInfo.getBundleId() == appIds.masa
+                ? width / 1.1
+                : moderateScale(160),
             borderRadius: moderateScale(16),
             backgroundColor: isDarkMode
               ? colors.whiteOpacity15
@@ -468,12 +480,48 @@ export default function DashBoardFive({
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{flexGrow: 1}}>
-        <CategoryLoader2 viewStyles={{marginVertical: moderateScale(16)}} />
+        {!!isGetEstimation ? (
+          <BannerLoader />
+        ) : (
+          <CategoryLoader2 viewStyles={{marginVertical: moderateScale(16)}} />
+        )}
 
-        {appStyle?.homePageLayout === 5 ? (
+        {!!isGetEstimation && (
+          <View>
+            <HeaderLoader
+              widthLeft={moderateScale(180)}
+              rectWidthLeft={moderateScale(180)}
+              rectHeightLeft={moderateScaleVertical(60)}
+              isRight={false}
+              rx={4}
+              ry={4}
+              viewStyles={{
+                marginVertical: moderateScale(20),
+              }}
+            />
+            <BannerLoader homeLoaderHeight={moderateScaleVertical(80)} />
+            <BannerLoader
+              viewStyles={{marginTop: moderateScale(8)}}
+              homeLoaderHeight={moderateScaleVertical(80)}
+            />
+            <BannerLoader
+              viewStyles={{marginTop: moderateScale(8)}}
+              homeLoaderHeight={moderateScaleVertical(80)}
+            />
+            <BannerLoader
+              viewStyles={{
+                marginTop: moderateScale(8),
+                marginBottom: moderateScale(20),
+              }}
+              homeLoaderHeight={moderateScaleVertical(80)}
+            />
+          </View>
+        )}
+
+        {!isGetEstimation && appStyle?.homePageLayout === 5 ? (
           <CategoryLoader2 viewStyles={{marginBottom: moderateScale(16)}} />
         ) : null}
-        {appStyle?.homePageLayout === 5 ? (
+        {!isGetEstimation && appStyle?.homePageLayout === 5 ? (
           <View
             style={{
               flexDirection: 'row',
@@ -499,47 +547,49 @@ export default function DashBoardFive({
             />
           </View>
         ) : (
-          <View style={{flexDirection: 'row'}}>
-            <HeaderLoader
-              viewStyles={{
-                marginTop: moderateScaleVertical(8),
-                marginBottom: moderateScaleVertical(16),
-              }}
-              widthLeft={moderateScale(150)}
-              rectWidthLeft={moderateScale(150)}
-              heightLeft={moderateScaleVertical(240)}
-              rectHeightLeft={moderateScaleVertical(240)}
-              isRight={false}
-              rx={15}
-              ry={15}
-            />
-            <HeaderLoader
-              viewStyles={{
-                marginTop: moderateScaleVertical(8),
-                marginBottom: moderateScaleVertical(16),
-              }}
-              widthLeft={moderateScale(150)}
-              rectWidthLeft={moderateScale(150)}
-              heightLeft={moderateScaleVertical(240)}
-              rectHeightLeft={moderateScaleVertical(240)}
-              isRight={false}
-              rx={15}
-              ry={15}
-            />
-            <HeaderLoader
-              viewStyles={{
-                marginTop: moderateScaleVertical(8),
-                marginBottom: moderateScaleVertical(16),
-              }}
-              widthLeft={moderateScale(150)}
-              rectWidthLeft={moderateScale(150)}
-              heightLeft={moderateScaleVertical(240)}
-              rectHeightLeft={moderateScaleVertical(240)}
-              isRight={false}
-              rx={15}
-              ry={15}
-            />
-          </View>
+          !isGetEstimation && (
+            <View style={{flexDirection: 'row'}}>
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                }}
+                widthLeft={moderateScale(150)}
+                rectWidthLeft={moderateScale(150)}
+                heightLeft={moderateScaleVertical(240)}
+                rectHeightLeft={moderateScaleVertical(240)}
+                isRight={false}
+                rx={15}
+                ry={15}
+              />
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                }}
+                widthLeft={moderateScale(150)}
+                rectWidthLeft={moderateScale(150)}
+                heightLeft={moderateScaleVertical(240)}
+                rectHeightLeft={moderateScaleVertical(240)}
+                isRight={false}
+                rx={15}
+                ry={15}
+              />
+              <HeaderLoader
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginBottom: moderateScaleVertical(16),
+                }}
+                widthLeft={moderateScale(150)}
+                rectWidthLeft={moderateScale(150)}
+                heightLeft={moderateScaleVertical(240)}
+                rectHeightLeft={moderateScaleVertical(240)}
+                isRight={false}
+                rx={15}
+                ry={15}
+              />
+            </View>
+          )
         )}
 
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -861,8 +911,9 @@ export default function DashBoardFive({
                         lineHeight: moderateScale(20),
                         marginTop: moderateScale(5),
                       }}>
-                        {businessType == "home_service" ? `${strings.WR_ARE_CURRENTLY_NOT_OPERATING } `: `${strings.SORRY_MSG}`}
-                      
+                      {businessType == 'home_service'
+                        ? `${strings.WR_ARE_CURRENTLY_NOT_OPERATING} `
+                        : `${strings.SORRY_MSG}`}
                     </Text>
                   </View>
                 )}

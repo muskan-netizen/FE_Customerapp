@@ -28,7 +28,7 @@ import CountryPicker, {Flag} from 'react-native-country-picker-modal';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import validations from '../../utils/validations';
 import {useNavigation} from '@react-navigation/native';
-import {checkIsAdmin} from '../../utils/utils';
+import {setUserData} from '../../utils/utils';
 import codes from 'country-calling-code';
 import * as RNLocalize from 'react-native-localize';
 import DeviceCountry, {
@@ -49,11 +49,8 @@ DeviceCountry.getCountryCode()
   });
 export default function VerifyAccountSecond({navigation, route}) {
   const navigation_ = useNavigation();
-  let paramsData = route?.params;
-  console.log(paramsData, 'paramsDataparamsData');
-  const userData = useSelector((state) => state?.auth?.userData);
-  console.log(userData, 'userDatauserData');
-  const {appData, redirectedFrom} = useSelector((state) => state?.initBoot);
+  let paramsData = route?.params?.data;
+  const {appData} = useSelector((state) => state?.initBoot);
   // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
 
   const [state, setState] = useState({
@@ -75,9 +72,9 @@ export default function VerifyAccountSecond({navigation, route}) {
         ? appData?.profile?.country?.code
         : 'IN',
     name: '',
-    email: userData?.email || '',
+    email: paramsData?.email || '',
     password: '',
-    phoneNumber: userData?.phone_number || '',
+    phoneNumber: paramsData?.phone_number || '',
     deviceToken: '',
     referralCode: '',
     editableEmail: false,
@@ -90,7 +87,7 @@ export default function VerifyAccountSecond({navigation, route}) {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
 
-  const styles = stylesFunc({userData, fontFamily, themeColors});
+  const styles = stylesFunc({paramsData, fontFamily, themeColors});
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {
     timer2,
@@ -234,47 +231,13 @@ export default function VerifyAccountSecond({navigation, route}) {
         console.log(res, 'res data to show');
         showSuccess(res.message);
         if (res && res?.status == 'Success') {
-          if (
-            res?.data?.client_preference?.verify_email &&
-            res?.data?.client_preference?.verify_phone
-          ) {
-            if (
-              res?.data?.verify_details?.is_email_verified &&
-              res?.data?.verify_details?.is_phone_verified
-            ) {
-              if (
-                paramsData &&
-                paramsData?.data &&
-                paramsData?.data?.formCart
-              ) {
-                navigation.goBack();
-              } else {
-                navigation.push(navigationStrings.TAB_ROUTES);
-              }
-            }
-          } else if (res?.data?.client_preference?.verify_email) {
-            if (res?.data?.verify_details?.is_email_verified) {
-              if (
-                paramsData &&
-                paramsData?.data &&
-                paramsData?.data?.formCart
-              ) {
-                navigation.goBack();
-              } else {
-                navigation.push(navigationStrings.TAB_ROUTES);
-              }
-            }
-          } else if (res?.data?.client_preference?.verify_phone) {
-            if (res?.data?.verify_details?.is_phone_verified) {
-              if (
-                paramsData &&
-                paramsData?.data &&
-                paramsData?.data?.formCart
-              ) {
-                navigation.goBack();
-              } else {
-                navigation.push(navigationStrings.TAB_ROUTES);
-              }
+          console.log(res, 'res data to show');
+          showSuccess(res.message);
+          updateState({isLoading: false});
+
+          if (res && res?.status == 'Success') {
+            if (paramsData && paramsData?.formCart) {
+              navigation.goBack();
             }
           }
         }
@@ -389,22 +352,12 @@ export default function VerifyAccountSecond({navigation, route}) {
             style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
           />
         </TouchableOpacity>
-        {!!(
-          paramsData &&
-          paramsData?.data &&
-          paramsData?.data?.formCart
-        ) ? null : (
+        {!!(paramsData && paramsData?.formCart) ? null : (
           <TouchableOpacity
-            // onPress={() => navigation.push(navigationStrings.TAB_ROUTES)}>
             onPress={() => {
-              // console.log(route.params.data.data);
-              checkIsAdmin(
-                navigation_,
-                navigation,
-                route?.params?.data?.data,
-                redirectedFrom,
-              );
-              // navigation.push(navigationStrings.TAB_ROUTES)
+              setUserData(paramsData).then((suc) => {
+                actions.saveUserData(paramsData);
+              });
             }}>
             <Text style={styles.skipText}>{strings.SKIP}</Text>
           </TouchableOpacity>
@@ -429,17 +382,19 @@ export default function VerifyAccountSecond({navigation, route}) {
           flex: 1,
         }}>
         <View style={{flex: 1}}>
-          {!!userData?.client_preference?.verify_email ? (
-            !userData?.verify_details?.is_email_verified && (
+          {!!paramsData?.client_preference?.verify_email ? (
+            !paramsData?.verify_details?.is_email_verified && (
               <>
                 <View
                   style={{
                     marginVertical: moderateScaleVertical(20),
                     marginHorizontal: moderateScale(20),
                   }}>
-                  <Text style={styles.header}>{'Verify Email Address'}</Text>
+                  <Text style={styles.header}>
+                    {strings.VERIFY_EMAIL_ADDRESS}
+                  </Text>
                   <Text style={styles.txtSmall}>
-                    {'Enter the code we just sent you on your email address'}
+                    {strings.ENTER_CODE_SENT_TO_EMAIL}
                   </Text>
                 </View>
                 <View
@@ -526,7 +481,7 @@ export default function VerifyAccountSecond({navigation, route}) {
                         style={[
                           styles.btnPhoneSecond,
                           {
-                            backgroundColor: !userData?.verify_details
+                            backgroundColor: !paramsData?.verify_details
                               ?.is_email_verified
                               ? themeColors.primary_color
                               : colors.white,
@@ -539,13 +494,13 @@ export default function VerifyAccountSecond({navigation, route}) {
                           style={[
                             styles.phonebtnText,
                             {
-                              color: !userData?.verify_details
+                              color: !paramsData?.verify_details
                                 ?.is_email_verified
                                 ? colors.white
                                 : colors.green,
                             },
                           ]}>
-                          {!userData?.verify_details?.is_email_verified
+                          {!paramsData?.verify_details?.is_email_verified
                             ? 'VERIFY'
                             : strings.VERIFIED}
                         </Text>
@@ -559,8 +514,8 @@ export default function VerifyAccountSecond({navigation, route}) {
             <View />
           )}
 
-          {!!userData?.client_preference?.verify_phone ? (
-            !userData?.verify_details?.is_phone_verified && (
+          {!!paramsData?.client_preference?.verify_phone ? (
+            !paramsData?.verify_details?.is_phone_verified && (
               <>
                 <View
                   style={{
@@ -677,7 +632,7 @@ export default function VerifyAccountSecond({navigation, route}) {
                         style={[
                           styles.btnPhoneSecond,
                           {
-                            backgroundColor: !userData?.verify_details
+                            backgroundColor: !paramsData?.verify_details
                               ?.is_phone_verified
                               ? themeColors.primary_color
                               : colors.white,
@@ -690,13 +645,13 @@ export default function VerifyAccountSecond({navigation, route}) {
                           style={[
                             styles.phonebtnText,
                             {
-                              color: !userData?.verify_details
+                              color: !paramsData?.verify_details
                                 ?.is_phone_verified
                                 ? colors.white
                                 : colors.green,
                             },
                           ]}>
-                          {!userData?.verify_details?.is_phone_verified
+                          {!paramsData?.verify_details?.is_phone_verified
                             ? 'VERIFY'
                             : strings.VERIFIED}
                         </Text>

@@ -174,8 +174,7 @@ export default function TaxiHomeDashbord({
     pickupAddress,
   } = state;
   const styles = stylesFunc({themeColors, fontFamily});
- 
- 
+
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -409,7 +408,7 @@ export default function TaxiHomeDashbord({
         prefillAdress: !!prefillAdress ? prefillAdress : null,
       });
     } else {
-      navigation.navigate(navigationStrings.LOGIN);
+      actions.setAppSessionData('on_login');
     }
   };
 
@@ -510,7 +509,7 @@ export default function TaxiHomeDashbord({
               ? navigation.navigate(navigationStrings.ADDADDRESS, {
                   data: appMainData?.categories[0],
                 })
-              : navigation.navigate(navigationStrings.LOGIN);
+              : actions.setAppSessionData('on_login');
           }}>
           <View
             style={{
@@ -572,7 +571,6 @@ export default function TaxiHomeDashbord({
             refreshing={isRefreshing}
             onRefresh={handleRefresh}
             tintColor={themeColors.primary_color}
-            
           />
         }
         alwaysBounceVertical={true}
@@ -638,7 +636,7 @@ export default function TaxiHomeDashbord({
                         cat: appMainData?.categories[0],
                         datetime: {slectedDate, selectedTime},
                       })
-                    : navigation.navigate(navigationStrings.LOGIN);
+                    : actions.setAppSessionData('on_login');
                 }}>
                 <Text
                   style={{
@@ -655,7 +653,7 @@ export default function TaxiHomeDashbord({
                     ? updateState({
                         isVisible: true,
                       })
-                    : navigation.navigate(navigationStrings.LOGIN);
+                    : actions.setAppSessionData('on_login');
                 }}>
                 <View
                   style={{
@@ -697,7 +695,7 @@ export default function TaxiHomeDashbord({
                 onPress={() => {
                   userData?.auth_token
                     ? setModalVisible(true, 'addAddress')
-                    : navigation.navigate(navigationStrings.LOGIN);
+                    : actions.setAppSessionData('on_login');
                 }}>
                 <View
                   style={{
@@ -752,8 +750,15 @@ export default function TaxiHomeDashbord({
 
               <TouchableOpacity
                 activeOpacity={0.8}
+                style={{
+                  height: height / 4,
+                  width: width - 45,
+                  borderRadius: 12,
+                  marginTop: moderateScaleVertical(20),
+                  alignItems: 'center',
+                }}
                 onPress={() => updateState({fullMapShow: true})}>
-                <View
+                {/* <View
                   pointerEvents="none"
                   style={{
                     height: height / 4,
@@ -761,47 +766,47 @@ export default function TaxiHomeDashbord({
                     borderRadius: 12,
                     marginTop: moderateScaleVertical(20),
                     alignItems: 'center',
-                  }}>
-                  {!!location && (
-                    <MapView
-                      ref={mapRef}
-                      provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                      // customMapStyle={mapStyleGrey}
-                      style={{
-                        ...StyleSheet.absoluteFillObject,
-                        borderRadius: 12,
-                      }}
-                      // provider={MapView.PROVIDER_GOOGLE}
-                      region={{
+                  }}> */}
+                {!!location && (
+                  <MapView
+                    ref={mapRef}
+                    provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                    // customMapStyle={mapStyleGrey}
+                    style={{
+                      ...StyleSheet.absoluteFillObject,
+                      borderRadius: 12,
+                    }}
+                    // provider={MapView.PROVIDER_GOOGLE}
+                    region={{
+                      latitude: !!location?.latitude
+                        ? parseFloat(location?.latitude)
+                        : 30.7333,
+                      longitude: !!location?.longitude
+                        ? parseFloat(location?.longitude)
+                        : 76.7794,
+                      latitudeDelta: 0.015,
+                      longitudeDelta: 0.0121,
+                    }}
+                    // initialRegion={region}
+                    showsUserLocation={true}
+                    //showsMyLocationButton={true}
+                    // pointerEvents={'none'}
+                  >
+                    <Marker
+                      coordinate={{
                         latitude: !!location?.latitude
                           ? parseFloat(location?.latitude)
                           : 30.7333,
-                        longitude: !!location?.longitude
+                        longitude: !!location?.latitude
                           ? parseFloat(location?.longitude)
                           : 76.7794,
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
                       }}
-                      // initialRegion={region}
-                      showsUserLocation={true}
-                      //showsMyLocationButton={true}
-                      // pointerEvents={'none'}
-                    >
-                      <Marker
-                        coordinate={{
-                          latitude: !!location?.latitude
-                            ? parseFloat(location?.latitude)
-                            : 30.7333,
-                          longitude: !!location?.latitude
-                            ? parseFloat(location?.longitude)
-                            : 76.7794,
-                          latitudeDelta: 0.015,
-                          longitudeDelta: 0.0121,
-                        }}
-                      />
-                    </MapView>
-                  )}
-                </View>
+                    />
+                  </MapView>
+                )}
+                {/* </View> */}
               </TouchableOpacity>
             </View>
           </>
@@ -816,7 +821,7 @@ export default function TaxiHomeDashbord({
           />
         )}
 
-        <View style={{height: moderateScaleVertical(65)}} />
+        <View style={{height: moderateScaleVertical(95)}} />
       </ScrollView>
       <AddressModal3
         navigation={navigation}

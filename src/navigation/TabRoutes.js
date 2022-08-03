@@ -32,7 +32,9 @@ export default function TabRoutes(props) {
   const [showBottomBar, setShowBottomBar] = useState(true);
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  const {appStyle, appData} = useSelector((state) => state?.initBoot);
+  const {appStyle, appData, redirectedFrom} = useSelector(
+    (state) => state?.initBoot,
+  );
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesData();
 
@@ -132,7 +134,7 @@ export default function TabRoutes(props) {
 
   return (
     <Tab.Navigator
-      backBehavior={'initialRoute'}
+      backBehavior={navigationStrings.HOMESTACK}
       tabBar={(props) => {
         if (showBottomBar_) {
           switch (appStyle?.tabBarLayout) {
@@ -149,6 +151,11 @@ export default function TabRoutes(props) {
           }
         }
       }}
+      initialRouteName={
+        redirectedFrom == 'cart'
+          ? navigationStrings.CART
+          : navigationStrings.HOMESTACK
+      }
       tabBarOptions={{
         labelStyle: {
           textTransform: 'capitalize',
@@ -166,7 +173,9 @@ export default function TabRoutes(props) {
           tabBarVisible: getTabBarVisibility(route, navigation, [
             navigationStrings.PRODUCT_LIST,
             navigationStrings.PRODUCTDETAIL,
-            navigationStrings.PRODUCTWITHCATEGORY
+            navigationStrings.PRODUCTWITHCATEGORY,
+            navigationStrings.ADDADDRESS,
+            navigationStrings.CHOOSECARTYPEANDTIMETAXI,
           ]),
           tabBarLabel: strings.HOME,
           tabBarIcon: ({focused, tintColor}) => (
@@ -201,7 +210,7 @@ export default function TabRoutes(props) {
           tabBarVisible: getTabBarVisibility(route, navigation, [
             navigationStrings.PRODUCT_LIST,
             navigationStrings.PRODUCTDETAIL,
-            navigationStrings.PRODUCTWITHCATEGORY
+            navigationStrings.PRODUCTWITHCATEGORY,
           ]),
           tabBarLabel: strings.CART,
           tabBarIcon: ({focused, tintColor}) => (

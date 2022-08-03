@@ -17,11 +17,10 @@ import {
   View,
   Animated,
   Linking,
-  
 } from 'react-native';
 import Communications from 'react-native-communications';
 import {useDarkMode} from 'react-native-dark-mode';
-import { getBundleId } from 'react-native-device-info';
+import {getBundleId} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 // import { showMessage } from 'react-native-flash-message';
 import * as RNLocalize from 'react-native-localize';
@@ -55,7 +54,7 @@ import {
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {currencyNumberFormatter} from '../../utils/commonFunction';
-import { appIds } from '../../utils/constants/DynamicAppKeys';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {getImageUrl, showSuccess, showError} from '../../utils/helperFunctions';
 import useInterval from '../../utils/useInterval';
 import ListEmptyCart from './ListEmptyCart';
@@ -156,7 +155,7 @@ export default function OrderDetail({navigation, route}) {
     (state) => state.initBoot,
   );
   const {preferences} = appData?.profile;
-  console.log(preferences?.business_type,"preferencespreferencespreferences");
+  console.log(preferences?.business_type, 'preferencespreferencespreferences');
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
@@ -207,13 +206,13 @@ export default function OrderDetail({navigation, route}) {
   //   }, []),
   // );
 
-  useEffect(()=>{
-    getOrders()
-  },[])
+  useEffect(() => {
+    getOrders();
+  }, []);
 
-  console.log("api++++++ app data",appData)
-  console.log("api++++++ currencies",currencies)
-  console.log("api++++++ languages",languages)
+  console.log('api++++++ app data', appData);
+  console.log('api++++++ currencies', currencies);
+  console.log('api++++++ languages', languages);
 
   const getOrders = () => {
     if (!!userData?.auth_token) {
@@ -229,7 +228,6 @@ export default function OrderDetail({navigation, route}) {
 
   /*********Get order detail screen********* */
   const _getOrderDetailScreen = () => {
-   
     let data = {};
     data['order_id'] = paramData?.orderId;
     if (paramData?.selectedVendor) {
@@ -240,8 +238,9 @@ export default function OrderDetail({navigation, route}) {
     }
 
     console.log('sending api data', data);
-    
-    actions.getOrderDetail(data, {
+
+    actions
+      .getOrderDetail(data, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
@@ -251,7 +250,7 @@ export default function OrderDetail({navigation, route}) {
       .then((res) => {
         console.log(res, 'order detail res===>>>>');
 
-        return
+        return;
 
         if (
           !!res?.data &&
@@ -363,11 +362,8 @@ export default function OrderDetail({navigation, route}) {
           });
         }
       })
-      .catch((error)=>console.log(error,"error"));
+      .catch((error) => console.log(error, 'error'));
   };
-
-
-
 
   const errorMethod = (error) => {
     console.log(error, 'Error>>>>>>');
@@ -987,7 +983,7 @@ export default function OrderDetail({navigation, route}) {
     );
   };
 
-  console.log(cartData,"cartData?.address?.addresscartData?.address?.address");
+  console.log(cartData, 'cartData?.address?.addresscartData?.address?.address');
   const _renderItem = ({item, index}) => {
     return (
       <View
@@ -1677,9 +1673,12 @@ export default function OrderDetail({navigation, route}) {
                 ? MyDarkTheme.colors.text
                 : colors.blackOpacity43,
             }}>
-              {/* {console.log(preferences?.business_type, "preferences?.business_type")}
+            {/* {console.log(preferences?.business_type, "preferences?.business_type")}
             { (preferences?.business_type == 'home_service') ? strings.DELIEVERY_ADDRESS: 'Service Address' } */}
-            { getBundleId() == appIds.quickLube  &&  preferences?.business_type == 'home_service' ? strings.SERVICE_ADDRESS :  strings.DELIEVERY_ADDRESS }
+            {getBundleId() == appIds.quickLube &&
+            preferences?.business_type == 'home_service'
+              ? strings.SERVICE_ADDRESS
+              : strings.DELIEVERY_ADDRESS}
           </Text>
 
           <View
@@ -1728,42 +1727,40 @@ export default function OrderDetail({navigation, route}) {
               <Image source={imagePath.mapIcon} />
             )}
             {/* Service Address */}
-            {console.log( businessTypes, 'businessTypes iported>>>>>')}
-            {console.log( businessType, 'businessType>>>')}
+            {console.log(businessTypes, 'businessTypes iported>>>>>')}
+            {console.log(businessType, 'businessType>>>')}
             <View style={{marginLeft: moderateScale(12), flex: 1}}>
-              {cartData?.luxury_option_id ==3 ?
-               <Text
-               style={{
-                 ...styles.summaryText,
-                 fontSize: textScale(12),
-                 color: isDarkMode
-                   ? MyDarkTheme.colors.text
-                   : colors.blackOpacity43,
-                 flex: 1,
-               }}>
-                 { cartData?.vendors[0]?.vendor?.address }
-              
-             </Text>:
-              <Text
-              style={{
-                ...styles.summaryText,
-                fontSize: textScale(12),
-                color: isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.blackOpacity43,
-                flex: 1,
-              }}>
-              
-              {`${
-                cartData?.address?.house_number === null
-                  ? ''
-                  : `${cartData?.address?.house_number}, `
-              }`}
-              {cartData?.address?.address} {''}
-              {cartData?.address?.pincode}
-            </Text>
-              }
-             
+              {cartData?.luxury_option_id == 3 ? (
+                <Text
+                  style={{
+                    ...styles.summaryText,
+                    fontSize: textScale(12),
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity43,
+                    flex: 1,
+                  }}>
+                  {cartData?.vendors[0]?.vendor?.address}
+                </Text>
+              ) : (
+                <Text
+                  style={{
+                    ...styles.summaryText,
+                    fontSize: textScale(12),
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity43,
+                    flex: 1,
+                  }}>
+                  {`${
+                    cartData?.address?.house_number === null
+                      ? ''
+                      : `${cartData?.address?.house_number}, `
+                  }`}
+                  {cartData?.address?.address} {''}
+                  {cartData?.address?.pincode}
+                </Text>
+              )}
             </View>
           </View>
 
@@ -2355,7 +2352,7 @@ export default function OrderDetail({navigation, route}) {
     if (!selectedTipAmount) {
       showError(strings.PLEASE_SELECT_VALID_OPTION);
     } else if (!userData?.auth_token) {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login');
     } else {
       moveToNewScreen(navigationStrings.TIP_PAYMENT_OPTIONS, {
         selectedTipAmount: selectedTipAmount,
@@ -2949,11 +2946,8 @@ export default function OrderDetail({navigation, route}) {
               style={{
                 height: moderateScaleVertical(100),
                 width: moderateScale(100),
-                
               }}
-              
               colorFilters={[
-      
                 {
                   keypath: 'right sand',
                   color: themeColors.primary_color,
@@ -3012,12 +3006,17 @@ export default function OrderDetail({navigation, route}) {
                   keypath: 'top right sand 1',
                   color: themeColors.primary_color,
                 },
-                
 
                 // top right sand 1
               ]}
             />
-            <Text style={{...styles.waitToAccept,color:isDarkMode?colors.white:colors.black}}>{strings.WAITINGTOACCEPT}</Text>
+            <Text
+              style={{
+                ...styles.waitToAccept,
+                color: isDarkMode ? colors.white : colors.black,
+              }}>
+              {strings.WAITINGTOACCEPT}
+            </Text>
           </View>
         )}
         {!!orderStatus &&

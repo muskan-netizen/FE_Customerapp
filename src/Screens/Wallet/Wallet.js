@@ -560,13 +560,17 @@ export default function Wallet({navigation}) {
 
           <Text style={styles.headingStyle}>{strings.AMOUNT_TO_TRANSFER}</Text>
           <View style={styles.textInputView}>
-            <TextInput
-              placeholder={strings.ENTER_AMOUNT}
-              onChangeText={(text) => updateState({transferAmount: text})}
-              textInputStyle={styles.textInputStyle}
-              keyboardType="number-pad"
-              autoFocus
-            />
+            <View
+              style={{
+                flex: 1,
+              }}>
+              <TextInput
+                placeholder={strings.ENTER_AMOUNT}
+                onChangeText={(text) => updateState({transferAmount: text})}
+                textInputStyle={styles.textInputStyle}
+                keyboardType="number-pad"
+              />
+            </View>
           </View>
           <Text
             style={{

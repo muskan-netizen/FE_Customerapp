@@ -57,7 +57,6 @@ export default function Account3({navigation}) {
     currencies,
     languages,
   } = useSelector((state) => state?.initBoot);
-  console.log('dataaa><<<<', appData);
   const businessType = appStyle?.homePageLayout;
   const [state, setState] = useState({
     isLoading: false,
@@ -125,18 +124,16 @@ export default function Account3({navigation}) {
             actions.cartItemQty('');
             actions.saveAddress('');
             actions.addSearchResults('clear');
-            moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
           },
         },
       ]);
-    } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     }
+    actions.setAppSessionData('on_login');
   };
 
   const onDeleteAccount = () => {
     if (!!userData?.auth_token) {
-      Alert.alert(strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, '', [
+      Alert.alert('', strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, [
         {
           text: strings.CANCEL,
           onPress: () => console.log('Cancel Pressed'),
@@ -147,9 +144,8 @@ export default function Account3({navigation}) {
           onPress: deleleUserAccount,
         },
       ]);
-    } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     }
+    actions.setAppSessionData('on_login');
   };
   const deleleUserAccount = async () => {
     try {
@@ -167,7 +163,6 @@ export default function Account3({navigation}) {
       actions.cartItemQty('');
       actions.saveAddress('');
       actions.addSearchResults('clear');
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     } catch (error) {
       console.log('erro raised', error);
       showError(error?.message);
@@ -233,6 +228,7 @@ export default function Account3({navigation}) {
         break;
     }
   };
+
   return (
     <View
       style={{
@@ -262,11 +258,7 @@ export default function Account3({navigation}) {
             noLeftIcon={false}
             customLeft={() => (
               <Text
-                onPress={() =>
-                  navigation.push(navigationStrings.SHORT_CODE, {
-                    shortCodeParam: true,
-                  })
-                }
+                onPress={() => actions.setAppSessionData('show_shortcode')}
                 style={{
                   color: themeColors.primary_color,
                   fontFamily: fontFamily.bold,
@@ -790,7 +782,7 @@ export default function Account3({navigation}) {
             />
           )}
 
-          {!!userData?.auth_token && (
+          {/* {!!userData?.auth_token && (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -823,17 +815,17 @@ export default function Account3({navigation}) {
               // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
-
+ */}
           <View style={styles.loginView}>
             <TouchableOpacity
               // onPress={()=>actions.isVendorNotification(true)}
               onPress={userlogout}
               style={styles.touchAbleLoginVIew}>
-              <Text 
-              style={{...styles.loginLogoutText, color: isDarkMode
-                ? MyDarkTheme.colors.text
-                : colors.blackB}}
-              >
+              <Text
+                style={{
+                  ...styles.loginLogoutText,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.blackB,
+                }}>
                 {!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
               </Text>
               <Image
