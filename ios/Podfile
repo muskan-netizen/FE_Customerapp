@@ -1831,6 +1831,34 @@ end
 target 'FarmMeat' do
   
 end
+#DanielleBejjani Target
+target 'DanielleBejjani' do
+  
+end
+#YallaEat Target
+target 'YallaEat' do
+  
+end
+#Choizez Target
+target 'Choizez' do
+  
+end
+#Otto Target
+target 'Otto' do
+  
+end
+#RescueRoadsideAssistance Target
+target 'RescueRoadsideAssistance' do
+  
+end
+#TaxE Target
+target 'TaxE' do
+  
+end
+#BaggageTaxi Target
+target 'BaggageTaxi' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

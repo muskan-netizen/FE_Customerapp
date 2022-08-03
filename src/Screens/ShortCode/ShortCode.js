@@ -2340,7 +2340,49 @@ export default function ShortCode({route, navigation}) {
                       shortCode: shortCodes.farmMeat,
                       isShortcodePrefilled: true,
                     });
-                    break;
+               break;
+            case appIds.danielleBejjani:
+                    updateState({
+                      shortCode: shortCodes.danielleBejjani,
+                      isShortcodePrefilled: true,
+                    });
+              break;
+              case appIds.yallaEat:
+                updateState({
+                  shortCode: shortCodes.yallaEat,
+                  isShortcodePrefilled: true,
+                });
+          break;
+          case appIds.choizez:
+                updateState({
+                  shortCode: shortCodes.choizez,
+                  isShortcodePrefilled: true,
+                });
+          break;
+          case appIds.otto:
+                updateState({
+                  shortCode: shortCodes.otto,
+                  isShortcodePrefilled: true,
+                });
+          break;
+          case appIds.rescueRoadsideAssistance:
+                updateState({
+                  shortCode: shortCodes.rescueRoadsideAssistance,
+                  isShortcodePrefilled: true,
+                });
+          break;
+          case appIds.tax_E:
+                updateState({
+                  shortCode: shortCodes.tax_E,
+                  isShortcodePrefilled: true,
+                });
+          break;
+          case appIds.baggageTaxi:
+                updateState({
+                  shortCode: shortCodes.baggageTaxi,
+                  isShortcodePrefilled: true,
+                });
+          break;
       }
     })();
   }, []);
@@ -2381,13 +2423,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '245bae',
+        // code: '4f3624',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '245bae',
+        // code: '4f3624',
         code: shortCode,
       };
     }
