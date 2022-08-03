@@ -378,6 +378,7 @@ const shortCodes = {
   otto:'d0121e',
   rescueRoadsideAssistance:'6355c5',
   tax_E:'a7952f',
+  baggageTaxi:'52bb0a',
 };
 
 const appIds = {
@@ -1876,6 +1877,10 @@ const appIds = {
   tax_E: Platform.select({
     ios: 'com.taxE.order',
     android: 'com.taxE.order',
+  }),
+  baggageTaxi: Platform.select({
+    ios: 'com.baggageTaxi.order',
+    android: 'com.baggageTaxi.order',
   }),
 };
 

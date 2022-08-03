@@ -207,15 +207,25 @@ android {
     flavorDimensions "appType"
 
     // productFlavors {
-    //        helpnowrightnow{
+    //                  yogolift{
     //             dimension "appType"
-    //             versionCode 6
+    //             versionCode 1
     //             versionName "1.0"
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.helpnowrightnow'
-    //             resValue "string", "app_name", "HelpNow!RN"
+    //             applicationId 'com.yogolift.order'
+    //             resValue "string", "app_name", "Yogo Lift"
     //             resValue "string", "host_name", ""
+    //         }
+    //          baggageTaxi{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.baggageTaxi.order'
+    //         resValue "string", "app_name", "Baggage Taxi" 
+    //         resValue "string", "host_name", ""
     //         }
     // }
 
@@ -5793,6 +5803,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.taxE.order'
             resValue "string", "app_name", "Tax-E" 
+            resValue "string", "host_name", ""
+            }
+            baggageTaxi{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.baggageTaxi.order'
+            resValue "string", "app_name", "Baggage Taxi" 
             resValue "string", "host_name", ""
             }
     }

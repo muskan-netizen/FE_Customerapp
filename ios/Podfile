@@ -1855,6 +1855,10 @@ end
 target 'TaxE' do
   
 end
+#BaggageTaxi Target
+target 'BaggageTaxi' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

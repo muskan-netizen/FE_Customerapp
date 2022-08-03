@@ -427,7 +427,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       isModalVisible: false,
       isLoading: false,
       isRefreshing: false,
-      indicatorLoader: false,
+      // indicatorLoader: false,
     });
     switch (paymentId) {
       case 4: //Stripe Payment Getway
