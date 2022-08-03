@@ -1,5 +1,5 @@
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
@@ -47,6 +47,7 @@ import stylesFun from './styles';
 import BottomViewModal from '../../../Components/BottomViewModal';
 import DatePicker from 'react-native-date-picker';
 import { chekLocationPermission } from '../../../utils/permissions';
+import useInterval from '../../../utils/useInterval';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -676,20 +677,40 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       .catch((error) => console.log('error while accessing location', error));
   }, []);
 
-  useEffect(() => {
-    if (myCurrentLocationDetails?.latitude && myCurrentLocationDetails?.longitude) {
-      getAllDrivers()
-    }
+  const isFocused = useIsFocused();
+  
+  // useInterval(
+  //   () => {
+  //     if (myCurrentLocationDetails?.latitude && myCurrentLocationDetails?.longitude) {
+  //       getAllDrivers()
+  //     }
+  //   },
+  //   isFocused ? 5000 : null,
+  // );
 
-  }, [myCurrentLocationDetails])
+
+  const _selectedProductForDrivers = (item) => {
+    updateState({
+      selectedCarOption: item,
+    })
+    
+  }
+
+ useEffect(()=>{
+  if(myCurrentLocationDetails?.latitude && myCurrentLocationDetails?.longitude){
+    getAllDrivers()
+  }
+  
+ },[selectedCarOption?.tags])
+
+
 
   const getAllDrivers = () => {
     actions.getAllNearByDrivers(
       {
         latitude: myCurrentLocationDetails?.latitude,
         longitude: myCurrentLocationDetails?.longitude,
-        // latitude:30.74061880306988,
-        // longitude":76.77995459651751
+        tag: selectedCarOption?.tags
       },
       {
         code: appData?.profile?.code,
@@ -697,16 +718,10 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         language: languages?.primary_language?.id,
       }
     ).then((res) => {
-      console.log(res, "response>>>>>>>>>>>>>>drivers ");
-
       updateState({
         allListedDrivers: res?.data
       })
-
-
-    }).catch((error) => {
-      console.log(error, "error>>>>>>>>>>>>>.drivers");
-    })
+    }).catch(errorMethod)
   }
 
 
@@ -808,6 +823,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           borderBottomRightRadius: 0,
           marginTop: moderateScaleVertical(18),
         }}>
+
         <View
           style={{
             // padding: moderateScale(16),
@@ -843,6 +859,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           </Text>
         </View>
         <View style={{ marginVertical: moderateScale(8) }}>
+
           <FlatList
             horizontal
             data={availableVendors}
@@ -866,8 +883,9 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   const _selectCarModalView = () => {
     return (
       <AvailableDriver
-        onPressAvailableCar={(item) => updateState({ selectedCarOption: item })}
+        onPressAvailableCar={_selectedProductForDrivers}
         selectedCarOption={selectedCarOption}
+        allListedDrivers={allListedDrivers}
         onPressPickUpNow={() => {
           selectedCarOption
             ? updateState({
@@ -1169,8 +1187,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
 
             {allListedDrivers?.map((coordinate, index) => {
-             console.log(coordinate,"coordinatecoordinatecoordinate");
-
               return (
                 <Marker.Animated
                   // tracksViewChanges={agent_location == null}
@@ -1266,6 +1282,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           animateOnMount={true}
           handleComponent={carModalHeader}
           onChange={() => playHapticEffect(hapticEffects.impactMedium)}>
+
           <BottomSheetScrollView
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
@@ -1294,6 +1311,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
               bottom: 20,
               marginHorizontal: moderateScale(16),
               flexDirection: 'row',
+           
             }}>
             {availableCarList.length > 0 && (
               <GradientButton
@@ -1305,10 +1323,10 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
                 }}
                 onPress={_openDateTimeModal}
                 btnText={`${scheduleDateTime?.selectedDateAndTime
-                    ? `${scheduleDateTime?.selectedDateAndTime}`
-                    : slectedDate || selectedTime
-                      ? `${slectedDate} ${selectedTime}`
-                      : 'Schedule a ride'
+                  ? `${scheduleDateTime?.selectedDateAndTime}`
+                  : slectedDate || selectedTime
+                    ? `${slectedDate} ${selectedTime}`
+                    : 'Schedule a ride'
                   }`}
                 btnStyle={styles.scheduleBtnStyle}
               />
@@ -1320,7 +1338,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
                   themeColors.primary_color,
                   themeColors.primary_color,
                 ]}
-                textStyle={{ textTransform: 'none', fontSize: textScale(14) }}
+                textStyle={{ textTransform: 'none', fontSize: textScale(14),marginHorizontal:moderateScale(5) }}
                 onPress={
                   selectedCarOption?.variant[0]?.price > 0
                     ? onPressPickUpNow
@@ -1328,7 +1346,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
                 }
                 btnText={
                   selectedCarOption?.variant[0]?.price > 0
-                    ? `${strings.CONFIRM} ${selectedCarOption?.translation[0]?.title} `
+                    ? `${strings.CONFIRM} ${selectedCarOption?.translation[0]?.title}`
                     : strings.NORIDEAVAILABLE
                 }
                 containerStyle={{ flex: 1 }}

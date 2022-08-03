@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import {
   FlatList,
   Image,
@@ -70,6 +70,7 @@ import {
   getAddressFromLatLong,
   getCurrentLocationFromApi,
 } from '../../../utils/googlePlaceApi';
+import useInterval from '../../../utils/useInterval';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => { },
@@ -83,7 +84,7 @@ export default function TaxiHomeDashbord({
   isDineInSelected = false,
   location = {},
 }) {
-  const mapRef = React.createRef();
+ 
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -196,20 +197,61 @@ export default function TaxiHomeDashbord({
       });
       if (!!userData?.auth_token) {
         getAllAddress();
-         
-        
-
       }
     }, []),
   );
 
 
+  //show apdding from all the sides for drivers on map
+
+
+//Finding All NearBy Drivers 
+
+const isFocused = useIsFocused();
+  useInterval(
+    () => {
+      if(location?.latitude &&location?.longitude && userData?.auth_token ){
+        getAllDrivers()
+       
+      }
+    },
+    isFocused ? 5000 : null,
+  );
+
+
+
+
+
+
 useEffect(()=>{
-  if(location?.latitude &&location?.longitude ){
-    getAllDrivers()
+  if (allListedDrivers && allListedDrivers?.length) {
+    let arr= []
+    allListedDrivers?.map((i, inx) => {
+      if (i && i?.agentlog?.lat && i?.agentlog?.lat != NaN && i?.agentlog?.long != NaN) {
+        arr=[...arr,{
+          latitude: Number(i?.agentlog?.lat),
+          longitude: Number(i?.agentlog?.long),
+        }]
+     
+      }
+    });
+    console.log('i am calling');
+    // animate(region);
+    fitPadding(arr);
   }
-  
-},[location])
+},[])
+
+
+const mapRef = useRef();
+
+const fitPadding = newArray => {
+  if (mapRef.current) {
+    mapRef.current.fitToCoordinates([...newArray], {
+      edgePadding: { top: 100, right: 80, bottom: 80, left: 80 },
+      animated: true,
+    });
+  }
+};
 
 
 
@@ -218,8 +260,6 @@ useEffect(()=>{
       {
         latitude: location?.latitude,
         longitude: location?.longitude,
-        // latitude:30.74061880306988,
-        // longitude":76.77995459651751
       },
       {
         code: appData?.profile?.code,
@@ -305,7 +345,6 @@ useEffect(()=>{
 
   const addUpdateLocation = (childData) => {
     //setModalVisible(false);
-    console.log(childData, 'childData>childData');
     updateState({ isLoading: true });
 
     actions
@@ -434,7 +473,7 @@ useEffect(()=>{
     );
   };
 
-  console.log('location location', location);
+
   const moveToScreen = (details) => {
     updateState({ fullMapShow: false });
     if (!!userData?.auth_token) {
@@ -600,7 +639,7 @@ useEffect(()=>{
     );
   };
 
-  console.log(slectedDate, 'selectedTimeselectedTime');
+
 
   return (
     <View
