@@ -1,29 +1,23 @@
 import io from 'socket.io-client';
 
-const SOCKET_URL = 'https://chat.royoorders.com'
-
-
 class WSService {
-    initializeSocket = () => {
-
+    initializeSocket = (socketUrl) => {
         try {
-            console.log('initializing socket');
-
-
-            this.socket = io(SOCKET_URL, {
+            this.socket = io(socketUrl, {
                 transports: ['websocket'],
-                // query: {
-                //     accessToken: userToken,
-                // }
             });
-
+            console.log('initializing socket', this.socket);
             this.socket.on('connect', (data) => {
                 console.log('===== socket connected =====');
                 console.log(data)
             });
-
+    
             this.socket.on('disconnect', () => {
-                console.log('socket disconnected');
+                console.log('socket disconnected', this.socket);
+            });
+
+            this.socket.on('destroy', () => {
+                console.log('socket destroy', this.socket);
             });
 
             this.socket.on('socketError', (err) => {
@@ -33,21 +27,10 @@ class WSService {
             this.socket.on("parameterError", () => {
                 console.log('socket connection error: ', err);
             })
-
             this.socket.on('error', (error) => {
-                // console.log('socket error: ', err);
-                // logger.data('socket error: ', err);
                 console.log(error, 'thea data');
             });
 
-            // this.socket.on('reconnect_attempt', () => {
-            //     console.log('reconnecting');
-            //     socket.io.opts.transports = ['polling', 'websocket'];
-            // });
-
-            // this.socket.on('connection-Response', (data) => {
-            //     console.log('data received from server is: ', data);
-            // });
         } catch (error) {
             // logger.error('initialize token error: ', error);
             console.log(error, 'hter tereo');
@@ -55,8 +38,6 @@ class WSService {
     };
 
     emit(event, data = {}) {
-        // logger.log('event to be emitted is: ', event);
-        // logger.data('data to be emitted is: ', data);
         this.socket.emit(event, data);
     }
 
@@ -64,70 +45,26 @@ class WSService {
         this.socket.on(event, cb);
     }
 
-    sendChatMessage(
-        event,
-        chatId,
-        text,
-        userId,
-        receiverId,
-        type,
-        mediaName,
-        tempId
-    ) {
-        console.log('emitting message: ',
-            event,
-            chatId,
-            text,
-            userId,
-            receiverId,
-            type,
-            mediaName,
-            tempId
-        );
-        this.socket.emit(
-            event,
-            chatId,
-            text,
-            userId,
-            receiverId,
-            type,
-            mediaName,
-            tempId
-        );
-    }
-
-    isUserTyping(
-        event,
-        userID,
-        chatID
-    ) {
-        this.socket.emit(
-            event,
-            userID,
-            chatID
-        );
-    }
-
-    viewChat(
-        event,
-        userID,
-        chatID
-    ) {
-        console.log('view chat data is: ',
-            event,
-            userID,
-            chatID
-        );
-        this.socket.emit(
-            event,
-            userID,
-            chatID
-        );
-    }
 
     removeListener(listenerName) {
         this.socket.removeListener(listenerName);
     }
+
+    addEventListener(listenerName) {
+        this.socket.addEventListener(listenerName);
+    }
+
+    disconnectSocket() {
+        this.socket.disconnect();
+    }
+
+    destroySocket() {
+        this.socket.destroy();
+    }
+    hasListeners(){
+        return this.socket.hasListeners()
+    }
+    
 }
 
 const socketServices = new WSService();

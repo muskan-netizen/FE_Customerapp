@@ -361,6 +361,19 @@ export default ({fontFamily}) => {
       fontSize: textScale(12),
       opacity: 0.6,
     },
+    startChatText: {
+      // margin: moderateScale(15),
+      color: colors.redB,
+      fontFamily: fontFamily.medium,
+      fontSize: textScale(12),
+      marginRight:moderateScale(6)
+    },
+    agentUserIcon: {
+      tintColor: colors?.redB,
+      width: moderateScale(15),
+      height:moderateScale(15)
+
+    }
   });
   return styles;
 };

@@ -140,11 +140,11 @@ export function otpTimerCounter(seconds) {
   return `${m}:${s}`;
 }
 
-export function getRandomColor() {
+export function getRandomColor(opacity = 0.3) {
   const w = Math.floor(Math.random() * 256);
   const x = Math.floor(Math.random() * 256);
   const y = Math.floor(Math.random() * 256);
-  const z = 0.3;
+  const z = opacity;
   const rgbaColor = 'rgba(' + w + ',' + x + ',' + y + ',' + z + ')';
   return rgbaColor;
 }

@@ -1,5 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   I18nManager,
@@ -49,6 +49,8 @@ export default function Account2({ navigation }) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
   const commonStyles = commonStylesFun({ fontFamily });
+
+  const [allVendors, setAllVendors] = useState([])
 
   //Navigation to specific screen
   const moveToNewScreen =
@@ -144,6 +146,41 @@ export default function Account2({ navigation }) {
       showError(error?.message)
     }
   }
+
+  const goToChatRoom = (type) => {
+    if (!!appMainData?.is_admin && type == 'vendor_chat') {
+      navigation.navigate(navigationStrings.CHAT_ROOM, { type: type, allVendors: allVendors });
+    } else {
+      navigation.navigate(navigationStrings.CHAT_ROOM, { type: type });
+    }
+  };
+
+
+  useEffect(() => {
+    if (!!appMainData?.is_admin) {
+      fetchAllVendors()
+    }
+  }, [appMainData?.is_admin])
+
+  const fetchAllVendors = async (value = null) => {
+    let query = `?limit=${100000}&page=${1}`;
+    let headers = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    };
+    try {
+      const res = await actions.storeVendors(query, headers);
+      if (res?.data?.data) {
+        setAllVendors(res.data.data)
+        return;
+      }
+      console.log('available vendors res', res);
+    } catch (error) {
+      console.log('error riased', error);
+      showError(error?.message);
+    }
+  };
 
   return (
     <WrapperContainer
@@ -462,36 +499,69 @@ export default function Account2({ navigation }) {
             />
           )}
 
-        {!!userData?.auth_token && (
+
+{!!userData?.auth_token && !!appData?.profile?.socket_url && (
           <ListItemHorizontal
             centerContainerStyle={{ flexDirection: 'row' }}
             leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-            onPress={onDeleteAccount}
-            iconLeft={imagePath.user}
-            centerHeading={strings.DELETE_ACCOUNT}
+            onPress={() => goToChatRoom('agent_chat')}
+            iconLeft={imagePath.icUserChat}
+            centerHeading={'Driver Chat'}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
               fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )}
 
-        <View style={styles.loginView}>
+        {!!userData?.auth_token &&
+          !!appMainData?.is_admin && !!appData?.profile?.socket_url &&
+          (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={() => goToChatRoom('vendor_chat')}
+              iconLeft={imagePath.icUserChat}
+              centerHeading={'User Chat'}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            />
+          )}
+
+        {!!userData?.auth_token && !!appData?.profile?.socket_url && (
+          <ListItemHorizontal
+            centerContainerStyle={{ flexDirection: 'row' }}
+            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+            onPress={() => goToChatRoom('user_chat')}
+            iconLeft={imagePath.icVendorChat}
+            centerHeading={'Vendor Chat'}
+            containerStyle={styles.containerStyle2}
+            centerHeadingStyle={{
+              fontSize: textScale(14),
+              fontFamily: fontFamily.regular,
+            }}
+          />
+        )}
+     
+
+        {!!userData?.auth_token ? null : <View style={styles.loginView}>
           <TouchableOpacity
-            onPress={userlogout}
+            // onPress={()=>actions.isVendorNotification(true)}
+            onPress={() => moveToNewScreen(navigationStrings.OUTER_SCREEN, {})()}
             style={styles.touchAbleLoginVIew}>
             <Text style={styles.loginLogoutText}>
-              {!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
+              {strings.LOGIN}
             </Text>
             <Image
               source={imagePath.rightBlue}
               style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
             />
           </TouchableOpacity>
-        </View>
+        </View>}
         <View style={{ height: 100 }} />
       </ScrollView>
     </WrapperContainer>

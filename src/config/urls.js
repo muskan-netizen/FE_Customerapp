@@ -251,7 +251,6 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://classicab.org/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
-export const getSocketUrl = (endpoint) => SOCKET_URL + endpoint;
 
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
 export const LOGIN_BY_USERNAME = getApiUrl('/auth/loginViaUsername');
@@ -483,8 +482,11 @@ export const GET_SUBCATEGORY_VENDORS = getApiUrl('/get/subcategory/vendor');
 
 //Chat Apis
 export const START_CHAT = getApiUrl('/chat/startChat');
-export const USER_CHAT = getApiUrl('/chat/userVendorChatRoom');
-export const VENDOR_CHAT = getApiUrl('/chat/vendorUserChatRoom');
-export const SEND_MESSAGE = getSocketUrl('/api/chat/sendMessageJoin');
-export const GET_ALL_MESSAGES = getSocketUrl('/api/chat');
-export const ALL_ROOM_USER = getSocketUrl('/api/getRoomUser');
+export const SEND_NOTIFCATION = getApiUrl('/chat/sendNotificationToUser');
+
+export const USER_CHAT =  '/api/room/fetchRoomByUserId';
+export const AGENT_CHAT =   '/api/room/fetchRoomByUserId';
+export const VENDOR_CHAT =  '/api/room/fetchRoomByVendor';
+export const SEND_MESSAGE = '/api/chat/sendMessageJoin';
+export const GET_ALL_MESSAGES = '/api/chat';
+export const ALL_ROOM_USER = '/api/chat/getRoomUser';
