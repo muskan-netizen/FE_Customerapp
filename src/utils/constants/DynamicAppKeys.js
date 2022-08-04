@@ -379,6 +379,7 @@ const shortCodes = {
   rescueRoadsideAssistance:'6355c5',
   tax_E:'a7952f',
   baggageTaxi:'52bb0a',
+  mersi:'1b308e',
 };
 
 const appIds = {
@@ -1881,6 +1882,10 @@ const appIds = {
   baggageTaxi: Platform.select({
     ios: 'com.baggageTaxi.order',
     android: 'com.baggageTaxi.order',
+  }),
+  mersi: Platform.select({
+    ios: 'com.mersi.order',
+    android: 'com.mersi.order',
   }),
 };
 

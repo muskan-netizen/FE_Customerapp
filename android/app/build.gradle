@@ -207,7 +207,7 @@ android {
     flavorDimensions "appType"
 
     // productFlavors {
-    //                  yogolift{
+    //     yogolift{
     //             dimension "appType"
     //             versionCode 1
     //             versionName "1.0"
@@ -216,16 +216,6 @@ android {
     //             applicationId 'com.yogolift.order'
     //             resValue "string", "app_name", "Yogo Lift"
     //             resValue "string", "host_name", ""
-    //         }
-    //          baggageTaxi{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.baggageTaxi.order'
-    //         resValue "string", "app_name", "Baggage Taxi" 
-    //         resValue "string", "host_name", ""
     //         }
     // }
 
@@ -5813,6 +5803,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.baggageTaxi.order'
             resValue "string", "app_name", "Baggage Taxi" 
+            resValue "string", "host_name", ""
+            }
+          mersi{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.mersi.order'
+            resValue "string", "app_name", "Mersi" 
             resValue "string", "host_name", ""
             }
     }
