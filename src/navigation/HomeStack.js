@@ -39,6 +39,7 @@ import {
   TaxiHomeScreen,
   Subscriptions2,
   SubcategoryVendor,
+  Addaddress,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 
@@ -158,7 +159,12 @@ export default function () {
         component={businessType === 4 ? TaxiHomeScreen : Home}
         options={{headerShown: false}}
       />
-
+ <Stack.Screen
+        name={navigationStrings.ADDADDRESS}
+        component={Addaddress}
+        options={{headerShown: false}}
+      />
+      
       <Stack.Screen
         name={navigationStrings.DELIVERY}
         component={Delivery}
