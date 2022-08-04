@@ -528,4 +528,8 @@ export default {
   icPrescription: require('../assets/images/RoyoorderNewImages/ic_pres.png'),
   icBikeMarker: require('../assets/images/TrackOrderImages/ic_bike.png'),
   icCross18: require('../assets/images/ic_18.png'),
+  icbikeMarker: require('../assets/images/mapMarkers/ic_bike.png'),
+  iccycleMarker: require('../assets/images/mapMarkers/ic_cycle.png'),
+  icmanMarker: require('../assets/images/mapMarkers/ic_man.png'),
+  ictruckMarker: require('../assets/images/mapMarkers/ic_truck.png'),
 };

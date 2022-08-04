@@ -223,6 +223,11 @@ const isFocused = useIsFocused();
 
 
 
+
+
+const mapRef = useRef();
+
+
 useEffect(()=>{
   if (allListedDrivers && allListedDrivers?.length) {
     let arr= []
@@ -241,8 +246,6 @@ useEffect(()=>{
   }
 },[])
 
-
-const mapRef = useRef();
 
 const fitPadding = newArray => {
   if (mapRef.current) {
@@ -277,6 +280,30 @@ const fitPadding = newArray => {
     }).catch((error) => {
       console.log(error, "error>>>>>>>>>>>>>.drivers");
     })
+  }
+
+
+//render marker on map with driver type
+
+  const renderDriverTypeMarkes = (type) => {
+    switch (type?.vehicle_type_id) {
+      case 1:
+        return imagePath.icmanMarker
+        break;
+      case 2:
+        return imagePath.iccycleMarker
+        break;
+      case 3:
+        return imagePath.icbikeMarker
+        break;
+      case 4:
+        return imagePath.icCar
+        break;
+      case 5:
+        return imagePath.ictruckMarker
+        break;
+
+    }
   }
 
 
@@ -374,6 +401,13 @@ const fitPadding = newArray => {
       showError(strings.UNAUTHORIZED_MESSAGE);
     }
   };
+
+
+
+
+
+
+
 
   const _renderItem = ({ item }) => {
     return (
@@ -839,7 +873,7 @@ const fitPadding = newArray => {
                 activeOpacity={0.8}
                 onPress={() => updateState({ fullMapShow: true })}>
                 <View
-                  pointerEvents="none"
+                   pointerEvents="none"
                   style={{
                     height: height / 4,
                     width: width - 45,
@@ -896,6 +930,7 @@ const fitPadding = newArray => {
                             ),
                           }}>
                           <Image
+                          
                             style={{
                               zIndex: 99,
                               // height:46,
@@ -908,7 +943,7 @@ const fitPadding = newArray => {
                                 },
                               ],
                             }}
-                            source={imagePath.icCar}
+                            source={renderDriverTypeMarkes(coordinate)}
                           />
                         </Marker.Animated>
                         )
@@ -974,7 +1009,37 @@ const fitPadding = newArray => {
             // onRegionChangeComplete={_onRegionChange}
             // showsMyLocationButton={true}
             // pointerEvents={'none'}
-            />
+            >
+                {allListedDrivers?.map((coordinate, index) => {
+                       return (
+                          <Marker.Animated
+                          // tracksViewChanges={agent_location == null}
+                          coordinate={{
+                            latitude: Number(coordinate?.agentlog?.lat),
+                            longitude: Number(
+                              coordinate?.agentlog?.long,
+                            ),
+                          }}>
+                          <Image
+                          
+                            style={{
+                              zIndex: 99,
+                              // height:46,
+                              // width: 32,
+                              transform: [
+                                {
+                                  rotate: `${Number(
+                                    coordinate?.agentlog?.heading_angle ? coordinate?.agentlog?.heading_angle : 0
+                                  )}deg`,
+                                },
+                              ],
+                            }}
+                            source={renderDriverTypeMarkes(coordinate)}
+                          />
+                        </Marker.Animated>
+                        )
+                      })}
+              </MapView>
             <SafeAreaView>
               <TouchableOpacity
                 onPress={() => updateState({ fullMapShow: false })}

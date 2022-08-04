@@ -678,7 +678,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   }, []);
 
   const isFocused = useIsFocused();
-  
+
   // useInterval(
   //   () => {
   //     if (myCurrentLocationDetails?.latitude && myCurrentLocationDetails?.longitude) {
@@ -693,15 +693,15 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     updateState({
       selectedCarOption: item,
     })
-    
+
   }
 
- useEffect(()=>{
-  if(myCurrentLocationDetails?.latitude && myCurrentLocationDetails?.longitude){
-    getAllDrivers()
-  }
-  
- },[selectedCarOption?.tags])
+  useEffect(() => {
+    if (myCurrentLocationDetails?.latitude && myCurrentLocationDetails?.longitude) {
+      getAllDrivers()
+    }
+
+  }, [selectedCarOption?.tags])
 
 
 
@@ -1169,6 +1169,32 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   };
 
 
+
+  const renderDriverTypeMarkes = (type) => {
+
+    console.log(type?.vehicle_type_id, "typesesesesesese");
+    switch (type?.vehicle_type_id) {
+      case 1:
+        return imagePath.icmanMarker
+        break;
+      case 2:
+        return imagePath.iccycleMarker
+        break;
+      case 3:
+        return imagePath.icbikeMarker
+        break;
+      case 4:
+        return imagePath.icCar
+        break;
+      case 5:
+        return imagePath.ictruckMarker
+        break;
+
+    }
+  }
+
+
+
   return (
     <View style={{ ...styles.container }}>
       <View style={{ flex: 1 }}>
@@ -1209,7 +1235,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
                         },
                       ],
                     }}
-                    source={imagePath.icCar}
+                    source={renderDriverTypeMarkes(coordinate)}
                   />
                 </Marker.Animated>
               )
@@ -1311,7 +1337,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
               bottom: 20,
               marginHorizontal: moderateScale(16),
               flexDirection: 'row',
-           
+
             }}>
             {availableCarList.length > 0 && (
               <GradientButton
@@ -1338,7 +1364,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
                   themeColors.primary_color,
                   themeColors.primary_color,
                 ]}
-                textStyle={{ textTransform: 'none', fontSize: textScale(14),marginHorizontal:moderateScale(5) }}
+                textStyle={{ textTransform: 'none', fontSize: textScale(14), marginHorizontal: moderateScale(5) }}
                 onPress={
                   selectedCarOption?.variant[0]?.price > 0
                     ? onPressPickUpNow
