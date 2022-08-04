@@ -1,6 +1,5 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 
-// export const API_BASE_URL = 'http://192.168.98.87:8007/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
@@ -12,7 +11,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = ' https://36kel.com.ph/api/v1'
 
@@ -113,7 +112,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 //baytukom
 // export const API_BASE_URL = 'https://baytukom-order.netsolutionindia.com/api/v1';
 
-// knock knock 
+// knock knock
 // export const API_BASE_URL = 'https://knockknock.online/api/v1'
 
 // export const API_BASE_URL = 'https://papiruki.com/api/v1'
@@ -178,7 +177,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.98.185:8060/api/v1'; // sujata
 // export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1'; //dinesh sir
 // export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1'; //inderjeet sir
-// export const API_BASE_URL = 'http://192.168.98.87:8007/api/v1';
+export const API_BASE_URL = 'http://192.168.98.87:8007/api/v1';
 // export const API_BASE_URL = 'https://876c-114-134-24-242.ngrok.io/api/v1'; // gourav sir
 // export const API_BASE_URL = 'http://192.168.96.127:8005/api/v1'; // Gourav sir
 // export const API_BASE_URL = 'https://f6da-114-134-24-242.ngrok.io/api/v1';
@@ -208,7 +207,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://destinationops.com/api/v1';
 // export const API_BASE_URL = 'https://bustanfakieh.com/api/v1';
 // export const API_BASE_URL = 'https://cabdeliv.com/api/v1';
- //export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
+//export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
 //export const API_BASE_URL = 'https://orderchekout.com/api/v1';
 // export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
@@ -484,9 +483,9 @@ export const GET_SUBCATEGORY_VENDORS = getApiUrl('/get/subcategory/vendor');
 export const START_CHAT = getApiUrl('/chat/startChat');
 export const SEND_NOTIFCATION = getApiUrl('/chat/sendNotificationToUser');
 
-export const USER_CHAT =  '/api/room/fetchRoomByUserId';
-export const AGENT_CHAT =   '/api/room/fetchRoomByUserId';
-export const VENDOR_CHAT =  '/api/room/fetchRoomByVendor';
+export const USER_CHAT = '/api/room/fetchRoomByUserId';
+export const AGENT_CHAT = '/api/room/fetchRoomByUserId';
+export const VENDOR_CHAT = '/api/room/fetchRoomByVendor';
 export const SEND_MESSAGE = '/api/chat/sendMessageJoin';
 export const GET_ALL_MESSAGES = '/api/chat';
 export const ALL_ROOM_USER = '/api/chat/getRoomUser';
