@@ -12,6 +12,7 @@ import order from './order';
 import pendingNotifications from './pendingNotifications';
 import addressSearch from './addressSearch';
 import reloadData from './reloadData';
+import chatRefresh from './chatRefresh';
 
 const appReducer = combineReducers({
   auth,
@@ -25,7 +26,8 @@ const appReducer = combineReducers({
   order,
   pendingNotifications,
   addressSearch,
-  reloadData
+  reloadData,
+  chatRefresh
 });
 
 const rootReducer = (state, action) => {

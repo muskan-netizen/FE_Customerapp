@@ -1,7 +1,5 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native'
-import { GiftedChat } from 'react-native-gifted-chat';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useState, useCallback, useEffect, useRef } from 'react'
+import { Text, View, FlatList, TouchableOpacity } from 'react-native'
 import socketServices from '../../utils/scoketService';
 import { useSelector } from 'react-redux';
 import { useDarkMode } from 'react-native-dark-mode';
@@ -12,67 +10,75 @@ import colors from '../../styles/colors';
 import { MyDarkTheme } from '../../styles/theme';
 import WrapperContainer from '../../Components/WrapperContainer';
 import actions from '../../redux/actions';
-import { moderateScale } from '../../styles/responsiveSize';
+import { moderateScale, textScale } from '../../styles/responsiveSize';
 import _ from 'lodash';
 import { showError } from '../../utils/helperFunctions';
 import navigationStrings from '../../navigation/navigationStrings';
 import stylesFun from './styles';
 import moment from 'moment';
 import CircularImages from '../../Components/CircularImages';
-import commonStyles from '../../styles/commonStyles';
-
+import useInterval from '../../utils/useInterval';
+import { API_BASE_URL } from '../../config/urls';
+import { getSubDomain } from '../../utils/commonFunction';
 
 
 export default function ChatRoom({ navigation, route }) {
     const theme = useSelector((state) => state?.initBoot?.themeColor);
     const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
     const { appData, themeColors, currencies, languages, appStyle } = useSelector((state) => state.initBoot);
+    const fontFamily = appStyle?.fontSizeData;
     const userData = useSelector((state) => state?.auth?.userData);
 
     const darkthemeusingDevice = useDarkMode();
     const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-    const paramData = route?.params.data;
-    console.log(paramData, 'paramData');
-    const fontFamily = appStyle?.fontSizeData;
+    const paramData = route?.params;
+    console.log(userData, 'userDatauserDatauserData');
+    const isChatRefresh = useSelector((state) => state?.chatRefresh.isChatRefresh);
+
+
     const styles = stylesFun({ fontFamily, isDarkMode });
 
     const [state, setState] = useState({
         roomData: [],
-        isLoading: false,
+        isLoading: true,
+        num: 1,
+        subDomain: getSubDomain(),
     })
-    const { roomData, isLoading } = state
+    const { roomData, isLoading, num, subDomain } = state
 
     const updateState = (data) => setState((state) => ({ ...state, ...data }))
 
-    const isFocused = useIsFocused()
+
+    const isRefresh = useRef(false)
+    const roomDataRef = useRef([])
 
 
-    // useEffect(() => {
-    //     socketServices.initializeSocket();
-    // }, [navigation]);
+    const isFocused = useIsFocused();
 
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         socketServices.on("new-message", (data) => {
-    //             console.log(data, "data to be emitted");
-    //             fetchData()
-    //         });
-    //         return () => {
-    //             console.log("listener removed");
-    //             socketServices.removeListener("new-message");
-    //             socketServices.removeListener('save-message');
-    //         };
-    //     }, [])
-    // );
+    useFocusEffect(
+        useCallback(() => {
+            fetchData()
+        }, [navigation])
+    );
 
+    useFocusEffect(
+        useCallback(() => {
+            socketServices.on("new-app-message", (data) => {
+                console.log("listen in roomChat screen")
+                fetchData()
+            });
+            return () => {
+                socketServices.removeListener("new-app-message");
+            };
+        }, [navigation])
+    );
 
-
-    useEffect(() => {
-        fetchData()
-    }, [])
-
+    console.log("paramDataparamData", appData)
 
     let fetchData = async () => {
+        if (_.isEmpty(roomData)) {
+            // updateState({ isLoading: true })
+        }
         try {
             let headerData = {
                 code: appData?.profile?.code,
@@ -80,16 +86,29 @@ export default function ChatRoom({ navigation, route }) {
                 language: languages?.primary_language?.id,
             }
             let apiData = {
-                sub_domain: '192.168.101.88',
+                sub_domain: '192.168.101.88', //this is static value 
+                type: paramData?.type == 'agent_chat' ? 'agent_to_user' : 'vendor_to_user',
+                db_name: appData?.profile?.database_name,
+                client_id:String(appData?.profile.id)
             }
-            const res = paramData == 'user_chat' ? await actions.fetchUserChat(apiData, headerData) : await actions.fetchVendorChat(apiData, headerData)
-            if (!!res?.chatrooms && !_.isEmpty(res?.chatrooms)) {
-                updateState({ roomData: res.chatrooms })
+            if (paramData?.allVendors) {
+                apiData['vendor_id'] = paramData?.allVendors.map(val => val.id)
+            } else {
+                apiData['order_user_id'] = String(userData?.id)
+            }
+            console.log('api data+++', apiData)
+            const res = paramData?.type == 'user_chat' ? await actions.fetchUserChat(apiData, headerData) : paramData?.type == 'vendor_chat' ? await actions.fetchVendorChat(apiData, headerData) : await actions.fetchAgentChat(apiData, headerData)
+            updateState({ isLoading: false })
+            if (!!res?.roomData && !_.isEmpty(res?.roomData) && isFocused) {
+                roomDataRef.current = res.roomData
+                updateState({ roomData: res.roomData })
+
             }
             console.log("room res++++", res)
         } catch (error) {
             console.log('error raised in start chat api', error)
             showError(error?.message)
+            updateState({ isLoading: false })
         }
     }
 
@@ -104,7 +123,7 @@ export default function ChatRoom({ navigation, route }) {
             <TouchableOpacity
                 onPress={() => goToChatRoom(item)}
                 style={{
-                    backgroundColor: colors.white,
+                    backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
                     borderRadius: 4,
                     shadowColor: '#000',
                     shadowOffset: { width: 0, height: 1 },
@@ -123,7 +142,7 @@ export default function ChatRoom({ navigation, route }) {
                 </View>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    {_.isEmpty(item?.user_Data) ? null : <CircularImages isDarkMode={isDarkMode} data={item?.user_Data} />}
+                    {_.isEmpty(item?.user_Data) ? null : <CircularImages fontFamily={fontFamily} isDarkMode={isDarkMode} data={item?.user_Data} />}
                     {!isAnyMessage ? <Text numberOfLines={2} style={styles.textDesc} >{item?.chat_Data[0]?.message}</Text> : null}
                 </View>
             </TouchableOpacity>
@@ -131,26 +150,29 @@ export default function ChatRoom({ navigation, route }) {
     }, [])
 
     const listEmptyComponent = useCallback(() => {
+
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text>Chat Room Empty</Text>
+                <Text style={{
+                    fontSize: textScale(16),
+                    fontFamily: fontFamily.bold,
+                    color: isDarkMode ? colors.white : colors.black
+                }}>Chat Room Empty</Text>
             </View>
         )
     }, [])
 
     const awesomeChildListKeyExtractor = useCallback((item) => `awesome-child-key-${item?._id}`, [roomData]);
 
-    const itemSeparatorComponent = useCallback(() => {
-        return (
-            <View style={styles.borderStyle} />
-        )
-    }, [])
+    const itemSeparatorComponent = useCallback(() => { return (<View style={styles.borderStyle} />) }, [])
+
+
 
     return (
         <WrapperContainer
             bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
             statusBarColor={colors.white}
-            isLoadingB={isLoading}
+            isLoading={isLoading}
         >
             <Header
                 leftIcon={
@@ -162,17 +184,21 @@ export default function ChatRoom({ navigation, route }) {
                 }
                 centerTitle={'Chat Room'}
 
+            // customRight={() => <Text>{num}</Text>}
+
             />
             <View style={styles.container}>
+
                 <FlatList
                     data={roomData}
                     renderItem={renderItem}
-                    ListEmptyComponent={listEmptyComponent}
+                    ListEmptyComponent={!isLoading && listEmptyComponent}
                     keyExtractor={awesomeChildListKeyExtractor}
                     ItemSeparatorComponent={itemSeparatorComponent}
                     contentContainerStyle={{ flexGrow: 1 }}
                 />
             </View>
+
         </WrapperContainer>
     );
 };

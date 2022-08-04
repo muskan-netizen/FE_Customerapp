@@ -37,7 +37,7 @@ export default function SelctFromMap({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-console.log(constCurrLoc,"constCurrLocconstCurrLoc")
+console.log(location,"constCurrLocconstCurrLoc")
 
   const [state, setState] = useState({
     region: {

@@ -148,7 +148,7 @@ export default function MyOrders(props) {
       if (!!userData?.auth_token) {
         _getListOfOrders();
       } else {
-        navigation.navigate(navigationStrings.OUTER_SCREEN);
+        actions.setAppSessionData('on_login');
       }
     },
     isFocused ? 3000 : null,
@@ -266,7 +266,7 @@ export default function MyOrders(props) {
       });
       // _scrollRef.current.scrollToOffset({animated: true, offset: 0});
     } else {
-      navigation.navigate(navigationStrings.LOGIN);
+      actions.setAppSessionData('on_login');
     }
   };
 
@@ -284,7 +284,7 @@ export default function MyOrders(props) {
         selectedVendor: {id: item?.vendor_id},
         orderDetail: item,
         showRating: item?.order_status?.current_status?.id != 6 ? false : true,
-        keyValue:1
+        keyValue: 1,
       });
     } else {
       navigation.navigate(navigationStrings.ORDER_DETAIL, {
@@ -440,7 +440,7 @@ export default function MyOrders(props) {
       updateState({
         isLoading: false,
       });
-      navigation.navigate(navigationStrings.OUTER_SCREEN);
+      actions.setAppSessionData('on_login');
     }
   }, [selectedTab]);
 
@@ -451,7 +451,7 @@ export default function MyOrders(props) {
       updateState({
         isLoading: false,
       });
-      navigation.navigate(navigationStrings.OUTER_SCREEN);
+      actions.setAppSessionData('on_login');
     }
   }, [pageActive, pagePastOrder, pageScheduleOrder, isRefreshing]);
 
@@ -622,6 +622,8 @@ export default function MyOrders(props) {
       <CustomTopTabBar
         scrollEnabled={true}
         tabBarItems={tabBarData}
+        activeStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}
+        // textStyle={{ color: isDarkMode ? MyDarkTheme.colors. : colors.black }}
         customContainerStyle={
           isDarkMode
             ? {backgroundColor: MyDarkTheme.colors.background}

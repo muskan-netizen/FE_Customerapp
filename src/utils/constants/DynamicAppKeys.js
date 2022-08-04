@@ -4,7 +4,6 @@ import {getBundleId} from 'react-native-device-info';
 const shortCodes = {
   royoorder: '245bae',
   runrun: 'bf8608',
-
   tranzit: '52a1a6',
   hmoobhub: 'fa11e1',
   capcorp: '149f3e',

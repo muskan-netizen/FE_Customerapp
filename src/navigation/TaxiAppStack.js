@@ -16,6 +16,7 @@ import {
   PickupTaxiOrderDetail,
   PinAddressOnMap,
   RateOrder,
+  VerifyAccount,
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
 import DirectPayOnline from '../Screens/PaymentGateways/DirectPayOnline';
@@ -112,6 +113,11 @@ export default function (Stack) {
           headerShown: false,
           unmountOnBlur: true,
         }}
+      />
+      <Stack.Screen
+        name={navigationStrings.VERIFY_ACCOUNT}
+        component={VerifyAccount}
+        options={{headerShown: false}}
       />
     </>
   );

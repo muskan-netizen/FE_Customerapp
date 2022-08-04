@@ -528,4 +528,9 @@ export default {
   icPrescription: require('../assets/images/RoyoorderNewImages/ic_pres.png'),
   icBikeMarker: require('../assets/images/TrackOrderImages/ic_bike.png'),
   icCross18: require('../assets/images/ic_18.png'),
+  icUserChat: require('../assets/images/ic_userchat.png'),
+  icVendorChat: require('../assets/images/ic_vendorchat.png'),
+  send: require('../assets/images/ic_send.png'),
+  icBgLight: require('../assets/images/ic_lightbg.png'),
+  icBgDark: require('../assets/images/ic_darkbg.png'),
 };

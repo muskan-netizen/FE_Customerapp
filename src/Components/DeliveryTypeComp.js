@@ -30,7 +30,7 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
     themeColor,
   } = useSelector((state) => state?.initBoot);
   const {dineInType} = useSelector((state) => state?.home);
-  const darkthemeusingDevice = useDarkMode();
+const darkthemeusingDevice=useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
 

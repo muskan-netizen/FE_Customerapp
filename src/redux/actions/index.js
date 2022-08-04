@@ -14,7 +14,7 @@ import * as addressSearch from './addressSearch';
 import * as walletUserVerify from './walletUserVerify';
 import * as reloadData from './reloadData';
 import * as chat from './chat';
-
+import * as chatRefresh from './chatRefresh';
 export default {
   ...init,
   ...auth,
@@ -30,5 +30,6 @@ export default {
   ...addressSearch,
   ...walletUserVerify,
   ...reloadData,
-  ...chat
+  ...chat,
+  ...chatRefresh
 };

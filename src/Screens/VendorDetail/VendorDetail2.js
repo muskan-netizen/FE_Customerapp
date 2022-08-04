@@ -138,14 +138,14 @@ export default function VendorDetail2({navigation, route}) {
           item.name === 'Pick & Drop'
             ? userData?.auth_token
               ? moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)
-              : moveToNewScreen(navigationStrings.OUTER_SCREEN, {})
+              : actions.setAppSessionData('on_login')
             : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
                 id: item.id,
                 rootProducts: vendorParams?.rootProducts,
                 // vendor: true,
                 // rootProducts:
                 name: item.name,
-                categoryExist: item?.id || null
+                categoryExist: item?.id || null,
               })
         }
         data={item}

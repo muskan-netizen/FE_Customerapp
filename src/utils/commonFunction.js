@@ -1,5 +1,7 @@
 import {Keyboard} from 'react-native';
+import { API_BASE_URL } from '../config/urls';
 import {openCamera, openPicker} from './imagePicker';
+
 const cameraHandler = async (data, option) => {
   Keyboard.dismiss();
   //this condition use for open camera
@@ -71,5 +73,19 @@ export const ifDataExist = (data) => {
   }
   return false;
 };
+
+export const getSubDomain = () =>{
+  return API_BASE_URL.split('/')[3]
+}
+
+export function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 
 export {cameraHandler, currencyNumberFormatter};

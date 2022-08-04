@@ -1,6 +1,6 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Alert, BackHandler, Linking, View, Text} from 'react-native';
+import {Alert, BackHandler, Linking} from 'react-native';
 import AppLink from 'react-native-app-link';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
@@ -13,7 +13,6 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {MyDarkTheme} from '../../styles/theme';
-import Modal from 'react-native-modal';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   androidBackButtonHandler,
@@ -38,8 +37,8 @@ import FastImage from 'react-native-fast-image';
 import DashBoardEight from './DashboardViews/DashBoardEight';
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
 import _, {isEmpty} from 'lodash';
-import io from 'socket.io-client';
 import socketServices from '../../utils/scoketService';
+import SubscriptionModal from '../../Components/SubscriptionModal';
 
 // navigator.geolocation = require('react-native-geolocation-service');
 
@@ -48,16 +47,8 @@ let maxMinObj = {
   min_select: 1,
 };
 
-import RepeatModal from '../../Components/RepeatModal';
-import SelectPaymentModal from '../../Components/SelectPaymentModal';
-import OrderSuccessModal from '../../Components/OrderSuccessModal';
-import SubscriptionModal from '../../Components/SubscriptionModal';
-
-// navigator.geolocation = require('react-native-geolocation-service');
-
 export default function Home({route, navigation}) {
   const paramData = route?.params;
-
   const {
     appData,
     currencies,
@@ -137,6 +128,15 @@ export default function Home({route, navigation}) {
   } = state;
 
   const {profile} = appData;
+
+  console.log('appDataappData home++', appData);
+
+  useEffect(() => {
+    if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
+      socketServices.initializeSocket(appData?.profile?.socket_url);
+    }
+  }, [appData]);
+
   useFocusEffect(
     useCallback(() => {
       const backHandler = BackHandler.addEventListener(
@@ -387,7 +387,7 @@ export default function Home({route, navigation}) {
     }
 
     {
-      console.log(latlongObj,vendorFilterData,"data>>>>>>>");
+      console.log(latlongObj, vendorFilterData, 'data>>>>>>>');
       selectedTabType
         ? actions
             .homeData(
@@ -402,7 +402,6 @@ export default function Home({route, navigation}) {
                 language: languages?.primary_language?.id,
                 // ...latlongObj,
               },
-
             )
             .then(async (res) => {
               console.log('Home data++++++', res);
@@ -554,7 +553,7 @@ export default function Home({route, navigation}) {
           moveToNewScreen(navigationStrings.ADDADDRESS, item)();
         }
       } else {
-        moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+        actions.setAppSessionData('on_login');
       }
     } else if (!!item?.is_show_category) {
       moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
@@ -625,8 +624,7 @@ export default function Home({route, navigation}) {
           moveToNewScreen(navigationStrings.ADDADDRESS, item)();
         }
       } else {
-        // showError(strings.UNAUTHORIZED_MESSAGE);
-        moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+        actions.setAppSessionData('on_login');
       }
     } else if (item.redirect_to == staticStrings.DISPATCHER) {
       // moveToNewScreen(navigationStrings.DELIVERY, item)();
@@ -655,6 +653,8 @@ export default function Home({route, navigation}) {
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
+
+  console.log(appData, 'appData>>>>appData');
   useEffect(() => {
     homeData();
   }, [location, bestSeller, openVendor, closeVendor]);
@@ -1232,7 +1232,9 @@ export default function Home({route, navigation}) {
       isSubscription: false,
     });
   };
+
   const {blurRef} = useRef();
+
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
