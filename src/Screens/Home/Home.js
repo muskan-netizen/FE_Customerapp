@@ -39,6 +39,7 @@ import LaundryAddonModal from '../../Components/LaundryAddonModal';
 import _, {isEmpty} from 'lodash';
 import socketServices from '../../utils/scoketService';
 import SubscriptionModal from '../../Components/SubscriptionModal';
+import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
 
 // navigator.geolocation = require('react-native-geolocation-service');
 
@@ -103,6 +104,7 @@ export default function Home({route, navigation}) {
     selectedAddonSet: [],
     unPresentAry: [],
     isSubscription: true,
+    stopOrderModalVisible:true
   });
 
   const {
@@ -125,6 +127,7 @@ export default function Home({route, navigation}) {
     selectedAddonSet,
     unPresentAry,
     isSubscription,
+    stopOrderModalVisible
   } = state;
 
   const {profile} = appData;
@@ -990,7 +993,11 @@ export default function Home({route, navigation}) {
       isSubscription: false,
     });
   };
-
+  const _stopOrderModalClose =()=>{
+    updateState({
+      stopOrderModalVisible:false
+    })
+  }
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
       // switch (case_) {
@@ -1232,7 +1239,7 @@ export default function Home({route, navigation}) {
       isSubscription: false,
     });
   };
-
+ 
   const {blurRef} = useRef();
 
   return (
@@ -1265,6 +1272,14 @@ export default function Home({route, navigation}) {
             isVisible={isSubscription}
             onClose={_closeModal}
             onPressSubscribe={_onPressSubscribe}
+          />
+        )}
+       {
+        !!appData?.stop_order_acceptance_for_users && (
+          <StopAcceptingOrderModal
+            isVisible={stopOrderModalVisible}
+            onClose={_stopOrderModalClose}
+            
           />
         )}
     </WrapperContainer>

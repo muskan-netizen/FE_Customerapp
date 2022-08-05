@@ -12,7 +12,7 @@ import colors from '../styles/colors';
 const SubscriptionModal = ({
   isVisible = true,
   onClose = () => {},
-  onPressSubscribe = () => {},
+ 
 }) => {
   const {themeColors, appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
