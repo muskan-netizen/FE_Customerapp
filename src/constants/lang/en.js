@@ -260,7 +260,7 @@ export default {
   OUT_OF_STOCK: 'Out of stock',
   ORDER_DET: 'Order Detail',
   CELEBRITY: 'Celebrity',
-  ACCOUNTS: 'Accounts',
+  ACCOUNTS: 'Account',
   ADD_ON: 'Add On',
   YOUMAYALSO: 'You may also like this',
   USECURRENTLOACTION: ' Use Current Location',
