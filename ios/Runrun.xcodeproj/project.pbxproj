@@ -850,7 +850,6 @@
 		1066AE202817F61C00846A58 /* Papiruki(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1066AE1F2817F61B00846A58 /* Papiruki(Development).xcconfig */; };
 		1066AE222817F63A00846A58 /* Papiruki(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1066AE212817F63900846A58 /* Papiruki(Production).xcconfig */; };
 		1066AE242817F65300846A58 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1066AE232817F65200846A58 /* Images.xcassets */; };
-		1066AE262817F69B00846A58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1066AE252817F69A00846A58 /* GoogleService-Info.plist */; };
 		1075ABE32828D82E0071D2F4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		1075ABE42828D82E0071D2F4 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		1075ABE52828D82E0071D2F4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -11023,6 +11022,7 @@
 		F4A15E52285C5074007D3D78 /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
 		F4A15E54285C5074007D3D78 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		F4A15E55285C5074007D3D78 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		F4AD6BFA289BAB9600684ACE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4AD6BF9289BAB9000684ACE /* GoogleService-Info.plist */; };
 		F4B39039286ED8D400A196C8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4B39038286ED8D100A196C8 /* GoogleService-Info.plist */; };
 		F4B3D75E285868130033A0F9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		F4B3D75F285868130033A0F9 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -11469,7 +11469,6 @@
 		1066AE1F2817F61B00846A58 /* Papiruki(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Papiruki(Development).xcconfig"; sourceTree = "<group>"; };
 		1066AE212817F63900846A58 /* Papiruki(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Papiruki(Production).xcconfig"; sourceTree = "<group>"; };
 		1066AE232817F65200846A58 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		1066AE252817F69A00846A58 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1066AE272817F93D00846A58 /* Papiruki.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Papiruki.entitlements; sourceTree = "<group>"; };
 		1075AC0C2828D82E0071D2F4 /* SCOOTUP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SCOOTUP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1075AC0F2828D8E90071D2F4 /* SCOOTUP(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "SCOOTUP(Development).xcconfig"; sourceTree = "<group>"; };
@@ -14536,6 +14535,7 @@
 		F49D6A692861E65100A82B0E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F49D6A6B2861E78400A82B0E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4A15E5D285C5074007D3D78 /* GasGiant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GasGiant.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4AD6BF9289BAB9000684ACE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4B39038286ED8D100A196C8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4B3D786285868130033A0F9 /* Torunz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Torunz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4D3AFEC285CA1B900810A19 /* Spa(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Spa(Development).xcconfig"; sourceTree = "<group>"; };
@@ -17958,7 +17958,7 @@
 		1066AE1E2817F5F900846A58 /* Papiruki */ = {
 			isa = PBXGroup;
 			children = (
-				1066AE252817F69A00846A58 /* GoogleService-Info.plist */,
+				F4AD6BF9289BAB9000684ACE /* GoogleService-Info.plist */,
 				1066AE1F2817F61B00846A58 /* Papiruki(Development).xcconfig */,
 				1066AE212817F63900846A58 /* Papiruki(Production).xcconfig */,
 				1066AE232817F65200846A58 /* Images.xcassets */,
@@ -32945,7 +32945,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					1066ADED2817F5A800846A58 = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = BZ3MB4677X;
 						ProvisioningStyle = Automatic;
 					};
 					1075ABDF2828D82E0071D2F4 = {
@@ -35660,7 +35660,7 @@
 				1066AE032817F5A800846A58 /* SFProText-SemiBold.ttf in Resources */,
 				1066AE042817F5A800846A58 /* SFProText-Medium.ttf in Resources */,
 				1066AE062817F5A800846A58 /* notification.wav in Resources */,
-				1066AE262817F69B00846A58 /* GoogleService-Info.plist in Resources */,
+				F4AD6BFA289BAB9600684ACE /* GoogleService-Info.plist in Resources */,
 				1066AE092817F5A800846A58 /* Plists in Resources */,
 				1066AE0A2817F5A800846A58 /* Futura-Normal.ttf in Resources */,
 				1066AE0B2817F5A800846A58 /* Eina02-Bold.ttf in Resources */,
@@ -129982,7 +129982,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = BZ3MB4677X;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
@@ -130017,7 +130017,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = 2Y6VL4FP32;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -130033,7 +130033,7 @@
 				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = Papiruki;
+				PROVISIONING_PROFILE_SPECIFIER = PapiRUkiUser;
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

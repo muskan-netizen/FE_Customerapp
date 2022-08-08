@@ -207,15 +207,15 @@ android {
     flavorDimensions "appType"
 
     // productFlavors {
-    //                  yogolift{
-    //             dimension "appType"
-    //             versionCode 1
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.yogolift.order'
-    //             resValue "string", "app_name", "Yogo Lift"
-    //             resValue "string", "host_name", ""
+    //         papiruki{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.papiruki.userApp'
+    //         resValue "string", "app_name", "Papiruki"
+    //         resValue "string", "host_name", ""
     //         }
     // }
 
@@ -5099,7 +5099,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.papiruki'
+            applicationId 'com.papiruki.userApp'
             resValue "string", "app_name", "Papiruki"
             resValue "string", "host_name", ""
             }

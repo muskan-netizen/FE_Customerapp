@@ -1599,8 +1599,8 @@ const appIds = {
     android: 'com.kazakazi',
   }),
   papiruki: Platform.select({
-    ios: 'com.papiruki',
-    android: 'com.papiruki',
+    ios: 'com.papiruki.userApp',
+    android: 'com.papiruki.userApp',
   }),
   markSoublet: Platform.select({
     ios: 'com.markSoublet',
