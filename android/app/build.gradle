@@ -207,14 +207,14 @@ android {
     flavorDimensions "appType"
 
     // productFlavors {
-    //     yogolift{
+    //             gokab{
     //             dimension "appType"
     //             versionCode 1
     //             versionName "1.0"
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.yogolift.order'
-    //             resValue "string", "app_name", "Yogo Lift"
+    //             applicationId 'com.gokab'
+    //             resValue "string", "app_name", "GoKab"
     //             resValue "string", "host_name", ""
     //         }
     // }
@@ -5813,6 +5813,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.mersi.order'
             resValue "string", "app_name", "Mersi" 
+            resValue "string", "host_name", ""
+            }
+           foodSpot{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.foodSpot.order'
+            resValue "string", "app_name", "FoodSpot" 
             resValue "string", "host_name", ""
             }
     }
