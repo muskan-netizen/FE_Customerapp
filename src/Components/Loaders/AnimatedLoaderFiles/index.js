@@ -9,6 +9,8 @@ import searchLoader from './Files/searchloader.json';
 import noDataFound from './Files/nodatafound.json';
 import searchingLoader from './Files/8428-loader.json';
 import voiceListen from './Files/2887-listen-state.json';
+import noOrderAccept from './Files/78016-no-order-found.json'
+import speed from './Files/41032-speed.json'
 
 export {
   defaultLoader,
@@ -22,4 +24,6 @@ export {
   noDataFound,
   searchingLoader,
   voiceListen,
+  noOrderAccept,
+  speed
 };

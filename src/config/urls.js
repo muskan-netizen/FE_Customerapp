@@ -32,7 +32,7 @@ export const API_BASE_URL = 'http://192.168.99.124:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1';
 // export const API_BASE_URL = 'https://masaapp.ae/api/v1'
 
-// export const API_BASE_URL = 'https://gokab.royoorders.com/api/v1'
+//export const API_BASE_URL = 'https://gokab.royoorders.com/api/v1'
 //live
 // export const API_BASE_URL = 'https://toor.life/api/v1';
 // export const API_BASE_URL = 'https://tmgsalesllc.com/api/v1';
@@ -209,7 +209,7 @@ export const API_BASE_URL = 'http://192.168.99.124:8005/api/v1';
 // export const API_BASE_URL = 'https://destinationops.com/api/v1';
 // export const API_BASE_URL = 'https://bustanfakieh.com/api/v1';
 // export const API_BASE_URL = 'https://cabdeliv.com/api/v1';
- //export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
+  // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
 //export const API_BASE_URL = 'https://orderchekout.com/api/v1';
 // export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';

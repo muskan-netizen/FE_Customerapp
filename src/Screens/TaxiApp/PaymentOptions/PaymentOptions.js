@@ -134,6 +134,7 @@ const PaymentOptions = ({navigation, route}) => {
   };
 
   const _onPressPaymentOption = (item) => {
+   
     updateState({
       selectedPaymentMethod: item,
     });

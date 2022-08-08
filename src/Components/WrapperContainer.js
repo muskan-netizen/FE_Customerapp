@@ -3,7 +3,7 @@ import {StatusBar, View} from 'react-native';
 import colors from '../styles/colors';
 import CustomAnimatedLoader from './CustomAnimatedLoader';
 import Loader from './Loader';
-import {defaultLoader} from '../Components/Loaders/AnimatedLoaderFiles';
+import {defaultLoader, loaderOne, searchingLoader} from '../Components/Loaders/AnimatedLoaderFiles';
 import {useSelector} from 'react-redux';
 import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
 import {useDarkMode} from 'react-native-dark-mode';
