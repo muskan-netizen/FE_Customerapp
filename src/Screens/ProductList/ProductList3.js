@@ -27,6 +27,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import LinearGradient from 'react-native-linear-gradient';
 import Share from 'react-native-share';
 import Toast from 'react-native-simple-toast';
+import { SvgUri } from 'react-native-svg';
 import SectionList from 'react-native-tabs-section-list';
 import {useSelector} from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';

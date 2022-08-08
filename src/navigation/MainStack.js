@@ -36,6 +36,7 @@ import {
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 import TabRoutes from './TabRoutes';
+import TaxiAppStack from './TaxiAppStack';
 import TaxiTabRoutes from './TaxiTabRoutes';
 
 export default function (Stack) {
@@ -198,6 +199,7 @@ export default function (Stack) {
         component={ChatRoom}
         options={{headerShown: false}}
       />
+          {TaxiAppStack(Stack)}
     </>
   );
 }
