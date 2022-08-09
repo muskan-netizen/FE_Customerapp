@@ -141,5 +141,12 @@ export default {
   VIVAWALLET: 'Vivawallet',
   MYCASH: 'MyCash',
   STRIPEIDEAL: 'StripeIdeal',
+  OPENPAY: 'openpay',
+  USEREDE: 'userede',
   LAUNDRY_AVAILABLE_VENDORS: 'laundryAvailableVendors',
+  CHAT_SCREEN: 'ChatScreen',
+  CHAT_ROOM: 'chatRoom',
+  DIRECTPAYONLINE: 'DirectPayOnline',
+  KHALTI: 'Khalti',
+  SUBCATEGORY_VENDORS: 'subcategoryVendors',
 };

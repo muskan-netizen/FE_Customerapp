@@ -49,18 +49,19 @@ import {androidCameraPermission} from '../../utils/permissions';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
 import codes from 'country-calling-code';
-import * as RNLocalize from "react-native-localize";
+import * as RNLocalize from 'react-native-localize';
 import DeviceCountry, {
   TYPE_ANY,
   TYPE_TELEPHONY,
   TYPE_CONFIGURATION,
 } from 'react-native-device-country';
-var getPhonesCallingCodeAndCountryData = null
+var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
-    console.log(result, "getCountryCoderesult");
     // {"code": "BY", "type": "telephony"}
-    getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == (result.code).toUpperCase())
+    getPhonesCallingCodeAndCountryData = codes.filter(
+      (x) => x.isoCode2 == result.code.toUpperCase(),
+    );
   })
   .catch((e) => {
     console.log(e);
@@ -780,7 +781,7 @@ export default function MyProfile3({route, navigation}) {
                   style={[
                     styles.referralCode,
                     {
-                      color: themeColors.primary_color,
+                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                       fontFamily: fontFamily.bold,
                     },
                   ]}>
@@ -981,7 +982,7 @@ export default function MyProfile3({route, navigation}) {
               style={{
                 fontSize: textScale(12),
                 fontFamily: fontFamily.medium,
-                color: themeColors.primary_color,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
               {strings.ADD_NEW_ADDRESS}
             </Text>
@@ -1089,14 +1090,14 @@ export default function MyProfile3({route, navigation}) {
                         justifyContent: 'center',
                       }}>
                       <Image
-                        style={{tintColor: themeColors.primary_color}}
+                        style={{tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black}}
                         source={imagePath.editBlue}
                       />
                       <Text
                         style={{
                           textAlign: 'center',
                           fontFamily: fontFamily.bold,
-                          color: themeColors.primary_color,
+                          color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                           fontSize: textScale(12),
                           paddingLeft: moderateScale(5),
                         }}>
@@ -1265,6 +1266,8 @@ export default function MyProfile3({route, navigation}) {
           {/* scrolllablr tob bar */}
           <CustomTopTabBar
             scrollEnabled={true}
+            activeStyle={{color: isDarkMode ? MyDarkTheme.colors.text : colors.black}}
+            
             tabBarItems={tabBarData}
             onPress={(tabData) => changeTab(tabData)}
             numberOfLines={1}
@@ -1272,13 +1275,14 @@ export default function MyProfile3({route, navigation}) {
             textTabWidth={width / 2.8}
             customTextContainerStyle={{
               width: width / 2.8,
-
+              
               // flexWrap: 'wrap',
               // alignSelf:'center'
               // justifyContent: 'center',
             }}
             textStyle={{
               fontSize: textScale(13),
+              
             }}
           />
 

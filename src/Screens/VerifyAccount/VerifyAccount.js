@@ -1,92 +1,84 @@
-import React, {useState, useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import codes from 'country-calling-code';
+import React, {useEffect, useState} from 'react';
 import {
+  I18nManager,
   Image,
+  Keyboard,
   Text,
   TouchableOpacity,
   View,
-  I18nManager,
-  Keyboard,
 } from 'react-native';
+import CountryPicker, {Flag} from 'react-native-country-picker-modal';
+import {useDarkMode} from 'react-native-dark-mode';
+import DeviceCountry from 'react-native-device-country';
+import {TextInput} from 'react-native-gesture-handler';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import RNOtpVerify from 'react-native-otp-verify';
+import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 import {useSelector} from 'react-redux';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
+import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {
-  showSuccess,
-  showError,
-  otpTimerCounter,
-} from '../../utils/helperFunctions';
-import stylesFunc from './styles';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import BorderTextInput from '../../Components/BorderTextInput';
-import PhoneNumberInput from '../../Components/PhoneNumberInput';
-import colors from '../../styles/colors';
-import {TextInput} from 'react-native-gesture-handler';
-import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
-import CountryPicker, {Flag} from 'react-native-country-picker-modal';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import validations from '../../utils/validations';
-import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
-import {useNavigation} from '@react-navigation/native';
-import {checkIsAdmin} from '../../utils/utils';
-import codes from 'country-calling-code';
-import * as RNLocalize from "react-native-localize";
-import RNOtpVerify from 'react-native-otp-verify';
-import DeviceCountry, {
-  TYPE_ANY,
-  TYPE_TELEPHONY,
-  TYPE_CONFIGURATION,
-} from 'react-native-device-country';
-var getPhonesCallingCodeAndCountryData = null
+import {
+  otpTimerCounter,
+  showError,
+  showSuccess,
+} from '../../utils/helperFunctions';
+import {setUserData} from '../../utils/utils';
+import validations from '../../utils/validations';
+import stylesFunc from './styles';
+var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
-    console.log(result, "getCountryCoderesult");
     // {"code": "BY", "type": "telephony"}
-    getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == (result.code).toUpperCase())
+    getPhonesCallingCodeAndCountryData = codes.filter(
+      (x) => x.isoCode2 == result.code.toUpperCase(),
+    );
   })
   .catch((e) => {
     console.log(e);
   });
 export default function VerifyAccount({navigation, route}) {
-  console.log('verify account route', route);
-  const navigation_ = useNavigation();
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const appData = useSelector((state) => state?.initBoot?.appData);
-  let paramsData = route?.params;
-  const userData = useSelector((state) => state?.auth?.userData);
-  // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
+  const {themeColor, themeToggle, appData, appStyle, themeColors} = useSelector(
+    (state) => state?.initBoot,
+  );
+  const fontFamily = appStyle?.fontSizeData;
 
-  console.log('user data', userData);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+
+  let paramsData = route?.params?.data;
+
   const [state, setState] = useState({
     timer2: 0,
     timer: 0,
     isLoading: false,
-    callingCode: userData?.dial_code
-      ? userData?.dial_code
+    callingCode: paramsData?.dial_code
+      ? paramsData?.dial_code
       : appData?.profile?.country?.phonecode
       ? appData?.profile?.country?.phonecode
       : '91',
-    cca2: userData?.cca2
-      ? userData?.cca2
+    cca2: paramsData?.cca2
+      ? paramsData?.cca2
       : appData?.profile?.country?.code
       ? appData?.profile?.country?.code
       : 'IN',
     name: '',
-    email: userData?.email || '',
+    email: paramsData?.email || '',
     password: '',
-    phoneNumber: userData?.phone_number || '',
+    phoneNumber: paramsData?.phone_number || '',
     deviceToken: '',
     referralCode: '',
     editableEmail: false,
@@ -95,10 +87,7 @@ export default function VerifyAccount({navigation, route}) {
     phoneOtp: '',
     countryPickerModalVisible: false,
   });
-
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
-  const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({userData, fontFamily, themeColors});
+  const styles = stylesFunc({paramsData, fontFamily, themeColors});
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {
     timer2,
@@ -118,9 +107,6 @@ export default function VerifyAccount({navigation, route}) {
     countryPickerModalVisible,
   } = state;
 
-  const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {});
-  };
   const sendOTP = (type, resendType) => {
     let data = {};
     if (type == 'phone') {
@@ -132,9 +118,11 @@ export default function VerifyAccount({navigation, route}) {
       data['type'] = type;
     }
     updateState({isLoading: true});
+    console.log(data, 'data>>>Sending');
     actions
       .resendOTP(data, {
         code: appData?.profile?.code,
+        authorization: paramsData?.auth_token,
       })
       .then((res) => {
         console.log(res, 'resresres');
@@ -170,6 +158,7 @@ export default function VerifyAccount({navigation, route}) {
     actions
       .resendOTP(data, {
         code: appData?.profile?.code,
+        authorization: paramsData?.auth_token,
       })
       .then((res) => {
         console.log(res, 'res>>>');
@@ -187,7 +176,6 @@ export default function VerifyAccount({navigation, route}) {
   };
 
   const otpHandler = (message) => {
-    
     console.log(message, 'complete msg>>>');
     if (!!message) {
       var OTP = message.replace(/[^0-9]/g, '');
@@ -201,19 +189,24 @@ export default function VerifyAccount({navigation, route}) {
     Keyboard.dismiss();
   };
 
-
   useEffect(() => {
-    if (!!email) {
+    if (
+      !!email &&
+      !!paramsData?.client_preference?.verify_email &&
+      !paramsData?.verify_details?.is_email_verified
+    ) {
       updateState({editableEmail: false});
       sendOTP('email');
     }
-    if (!!phoneNumber) {
+    if (
+      !!phoneNumber &&
+      !!paramsData?.client_preference?.verify_phone &&
+      !paramsData?.verify_details?.is_phone_verified
+    ) {
       updateState({editablePhone: false});
       sendOTP('phone');
     }
-  },[])
-  
-  
+  }, []);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -252,8 +245,6 @@ export default function VerifyAccount({navigation, route}) {
     };
   }, [timer2]);
 
-
-
   const isValidData = (otp) => {
     const error = validations({
       otp,
@@ -280,56 +271,17 @@ export default function VerifyAccount({navigation, route}) {
     actions
       .verifyAccount(data, {
         code: appData?.profile?.code,
+        authorization: paramsData?.auth_token,
       })
       .then((res) => {
         console.log(res, 'res data to show');
         showSuccess(res.message);
+        updateState({isLoading: false});
         if (res && res?.status == 'Success') {
-          if (
-            res?.data?.client_preference?.verify_email &&
-            res?.data?.client_preference?.verify_phone
-          ) {
-            if (
-              res?.data?.verify_details?.is_email_verified &&
-              res?.data?.verify_details?.is_phone_verified
-            ) {
-              if (
-                paramsData &&
-                paramsData?.data &&
-                paramsData?.data?.formCart
-              ) {
-                navigation.goBack();
-              } else {
-                navigation.push(navigationStrings.TAB_ROUTES);
-              }
-            }
-          } else if (res?.data?.client_preference?.verify_email) {
-            if (res?.data?.verify_details?.is_email_verified) {
-              if (
-                paramsData &&
-                paramsData?.data &&
-                paramsData?.data?.formCart
-              ) {
-                navigation.goBack();
-              } else {
-                navigation.push(navigationStrings.TAB_ROUTES);
-              }
-            }
-          } else if (res?.data?.client_preference?.verify_phone) {
-            if (res?.data?.verify_details?.is_phone_verified) {
-              if (
-                paramsData &&
-                paramsData?.data &&
-                paramsData?.data?.formCart
-              ) {
-                navigation.goBack();
-              } else {
-                navigation.push(navigationStrings.TAB_ROUTES);
-              }
-            }
+          if (paramsData && paramsData?.fromCart) {
+            navigation.goBack();
           }
         }
-        updateState({isLoading: false});
       })
       .catch(errorMethod);
   };
@@ -437,7 +389,7 @@ export default function VerifyAccount({navigation, route}) {
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
       <View style={styles.headerContainer}>
         <TouchableOpacity
-          onPress={() => navigation.goBack(null)}
+          onPress={() => navigation.goBack()}
           style={{alignSelf: 'flex-start'}}>
           <Image
             source={
@@ -455,17 +407,13 @@ export default function VerifyAccount({navigation, route}) {
             }
           />
         </TouchableOpacity>
-        {!!(
-          paramsData &&
-          paramsData?.data &&
-          paramsData?.data?.formCart
-        ) ? null : (
+        {!!(paramsData && paramsData?.fromCart) ? null : (
           <TouchableOpacity
-            // onPress={() => navigation.push(navigationStrings.TAB_ROUTES)}>
             onPress={() => {
-              // console.log(route.params.data.data);
-              checkIsAdmin(navigation_, navigation, route?.params?.data?.data);
-              // navigation.push(navigationStrings.TAB_ROUTES)
+              console.log(paramsData, 'paramsData>>');
+              setUserData(paramsData).then((suc) => {
+                actions.saveUserData(paramsData);
+              });
             }}>
             <Text style={styles.skipText}>{strings.SKIP}</Text>
           </TouchableOpacity>
@@ -490,8 +438,8 @@ export default function VerifyAccount({navigation, route}) {
           flex: 1,
         }}>
         <View style={{flex: 1}}>
-          {!!userData?.client_preference?.verify_email ? (
-            !userData?.verify_details?.is_email_verified && (
+          {!!paramsData?.client_preference?.verify_email ? (
+            !paramsData?.verify_details?.is_email_verified && (
               <>
                 <View
                   style={{
@@ -618,7 +566,7 @@ export default function VerifyAccount({navigation, route}) {
                         style={[
                           styles.btnPhoneSecond,
                           {
-                            backgroundColor: !userData?.verify_details
+                            backgroundColor: !paramsData?.verify_details
                               ?.is_email_verified
                               ? themeColors.primary_color
                               : colors.white,
@@ -631,13 +579,13 @@ export default function VerifyAccount({navigation, route}) {
                           style={[
                             styles.phonebtnText,
                             {
-                              color: !userData?.verify_details
+                              color: !paramsData?.verify_details
                                 ?.is_email_verified
                                 ? colors.white
                                 : colors.green,
                             },
                           ]}>
-                          {!userData?.verify_details?.is_email_verified
+                          {!paramsData?.verify_details?.is_email_verified
                             ? strings.VERIFY_CAPITAL
                             : strings.VERIFIED}
                         </Text>
@@ -651,8 +599,8 @@ export default function VerifyAccount({navigation, route}) {
             <View />
           )}
 
-          {!!userData?.client_preference?.verify_phone ? (
-            !userData?.verify_details?.is_phone_verified && (
+          {!!paramsData?.client_preference?.verify_phone ? (
+            !paramsData?.verify_details?.is_phone_verified && (
               <>
                 <View
                   style={{
@@ -788,7 +736,7 @@ export default function VerifyAccount({navigation, route}) {
                         style={[
                           styles.btnPhoneSecond,
                           {
-                            backgroundColor: !userData?.verify_details
+                            backgroundColor: !paramsData?.verify_details
                               ?.is_phone_verified
                               ? themeColors.primary_color
                               : colors.white,
@@ -801,13 +749,13 @@ export default function VerifyAccount({navigation, route}) {
                           style={[
                             styles.phonebtnText,
                             {
-                              color: !userData?.verify_details
+                              color: !paramsData?.verify_details
                                 ?.is_phone_verified
                                 ? colors.white
                                 : colors.green,
                             },
                           ]}>
-                          {!userData?.verify_details?.is_phone_verified
+                          {!paramsData?.verify_details?.is_phone_verified
                             ? strings.VERIFY_CAPITAL
                             : strings.VERIFIED}
                         </Text>

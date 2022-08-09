@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1070357712567-n9odq8k2mjd1to5u7i4390gfqru7d9m1.apps.googleusercontent.com</string>
+	<string>1055795788305-1patnmladkuulo9f82i0btosafeuuabl.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1070357712567-n9odq8k2mjd1to5u7i4390gfqru7d9m1</string>
+	<string>com.googleusercontent.apps.1055795788305-1patnmladkuulo9f82i0btosafeuuabl</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>1070357712567-1kqim5harvd650to4ci2fg5dp95v88nt.apps.googleusercontent.com</string>
+	<string>1055795788305-a36fg0b9rrn4vitjscearfh5n41d9jko.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCQYk6y7Abe2a9BVx4-Hxgcx7AOdH6yelU</string>
+	<string>AIzaSyDI2vUOLwbd3eEO63un3JN7w7FreO0E3MM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1070357712567</string>
+	<string>1055795788305</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.app.getfix</string>
+	<string>com.getfix.customer</string>
 	<key>PROJECT_ID</key>
-	<string>getfix-2a249</string>
+	<string>getfix-9ba0d</string>
 	<key>STORAGE_BUCKET</key>
-	<string>getfix-2a249.appspot.com</string>
+	<string>getfix-9ba0d.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1070357712567:ios:de3ad3aa29cca8885dc732</string>
+	<string>1:1055795788305:ios:d3698d9c4247dcb89d8fb0</string>
 </dict>
 </plist>

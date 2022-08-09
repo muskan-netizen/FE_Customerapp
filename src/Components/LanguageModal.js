@@ -17,6 +17,7 @@ import strings from '../constants/lang';
 import imagePath from '../constants/imagePath';
 import ButtonComponent from './ButtonComponent';
 import {ScrollView} from 'react-native';
+import {isEmpty} from 'lodash';
 
 const LanguageModal = ({
   isSelectLanguageModal = false,
@@ -42,12 +43,6 @@ const LanguageModal = ({
       }}
       onBackdropPress={onBackdropPress}>
       <View>
-        {/* <TouchableOpacity
-        style={styles.closeButton}
-        onPress={() => updateState({isModalVisible: false})}>
-        <Image source={imagePath.crossC} resizeMode="contain" />
-      </TouchableOpacity> */}
-
         <View
           style={{
             ...styles.mainContainer,
@@ -56,100 +51,123 @@ const LanguageModal = ({
               ? MyDarkTheme.colors.lightDark
               : colors.white,
           }}>
-          <View
-            style={{
-              paddingHorizontal: moderateScale(10),
-              paddingVertical: moderateScaleVertical(25),
-              flex: 1,
-            }}>
-            <Text
+          {isEmpty(allLangs) ? (
+            <View
               style={{
-                ...styles.changeLangTxt,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                paddingHorizontal: moderateScale(10),
+                paddingVertical: moderateScaleVertical(25),
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
               }}>
-              {strings.CHANGE_LANG}
-            </Text>
-            <Text
+              <Text
+                style={{
+                  ...styles.changeLangTxt,
+                  fontSize: textScale(13),
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
+                {' '}
+                No data found{' '}
+              </Text>
+            </View>
+          ) : (
+            <View
               style={{
-                ...styles.preferLangTxt,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                paddingHorizontal: moderateScale(10),
+                paddingVertical: moderateScaleVertical(25),
+                flex: 1,
               }}>
-              {strings.WHICH_LANG_YOU_PREFER}
-            </Text>
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={{flexGrow: 1}}>
-              {allLangs.map((item, indx) => {
-                return (
-                  <View style={{marginHorizontal: moderateScale(10)}}>
-                    <TouchableOpacity
-                      key={indx}
-                      style={{
-                        borderBottomWidth: 0.7,
-                        flexDirection: 'row',
-                        paddingVertical: moderateScaleVertical(13),
-                        borderBottomColor: isDarkMode
-                          ? MyDarkTheme.colors.white
-                          : colors.black,
-                      }}
-                      onPress={(itm) => _onLangSelect(item, indx)}>
-                      <View
+              <Text
+                style={{
+                  ...styles.changeLangTxt,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
+                {strings.CHANGE_LANG}
+              </Text>
+              <Text
+                style={{
+                  ...styles.preferLangTxt,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
+                {strings.WHICH_LANG_YOU_PREFER}
+              </Text>
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{flexGrow: 1}}>
+                {allLangs.map((item, indx) => {
+                  return (
+                    <View style={{marginHorizontal: moderateScale(10)}}>
+                      <TouchableOpacity
+                        key={indx}
                         style={{
+                          borderBottomWidth: 0.7,
                           flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          flex: 1,
-                        }}>
-                        <Text
+                          paddingVertical: moderateScaleVertical(13),
+                          borderBottomColor: isDarkMode
+                            ? MyDarkTheme.colors.white
+                            : colors.black,
+                        }}
+                        onPress={(itm) => _onLangSelect(item, indx)}>
+                        <View
                           style={{
-                            fontFamily: fontFamily.medium,
-                            color: isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.blackOpacity86,
-                            fontSize: textScale(12),
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            flex: 1,
                           }}>
-                          {item.label}
-                        </Text>
-                        <Image
-                          source={
-                            item?.isActive
-                              ? imagePath.radioNewActive
-                              : imagePath.radioNewInActive
-                          }
-                          style={{
-                            height: moderateScale(20),
-                            width: moderateScale(20),
-                            tintColor: item?.isActive
-                              ? themeColors.primary_color
-                              : isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.blackOpacity43,
-                          }}
-                        />
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                );
-              })}
-              <View style={{height: moderateScale(15)}} />
-            </ScrollView>
-          </View>
+                          <Text
+                            style={{
+                              fontFamily: fontFamily.medium,
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.blackOpacity86,
+                              fontSize: textScale(12),
+                            }}>
+                            {item.label}
+                          </Text>
+                          <Image
+                            source={
+                              item?.isActive
+                                ? imagePath.radioNewActive
+                                : imagePath.radioNewInActive
+                            }
+                            style={{
+                              height: moderateScale(20),
+                              width: moderateScale(20),
+                              tintColor: item?.isActive
+                                ? themeColors.primary_color
+                                : isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.blackOpacity43,
+                            }}
+                          />
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  );
+                })}
+                <View style={{height: moderateScale(15)}} />
+              </ScrollView>
+            </View>
+          )}
 
-          <ButtonComponent
-            onPress={() => _updateLang(selectedLangTitle)}
-            btnText={`${strings.CONTINUE_IN} ${
-              !!selectedLangTitle
-                ? selectedLangTitle.label
-                : languages.primary_language.label
-            }`}
-            borderRadius={moderateScale(13)}
-            textStyle={{
-              color: colors.white,
-              textTransform: 'none',
-              fontSize: textScale(14),
-            }}
-            containerStyle={styles.placeOrderButtonStyle}
-          />
+          {!isEmpty(allLangs) && (
+            <ButtonComponent
+              onPress={() => _updateLang(selectedLangTitle)}
+              btnText={`${strings.CONTINUE_IN} ${
+                !!selectedLangTitle
+                  ? selectedLangTitle.label
+                  : languages.primary_language.label
+              }`}
+              borderRadius={moderateScale(13)}
+              textStyle={{
+                color: colors.white,
+                textTransform: 'none',
+                fontSize: textScale(14),
+              }}
+              containerStyle={styles.placeOrderButtonStyle}
+            />
+          )}
         </View>
       </View>
     </Modal>

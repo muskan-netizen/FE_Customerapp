@@ -62,31 +62,34 @@ export default function MyOrders(props) {
 
   let backIconShow = !!route?.params?.data ? route.params.data.isBack : false;
 
-  const businessType = appStyle?.homePageLayout;
   const [state, setState] = useState({
     tabBarData: [
-      businessType == 4
+      appStyle?.homePageLayout == 4
         ? {
             title:
               appIds.mml == getBundleId()
                 ? strings.ACTIVEDELEIVERIES
-                :  appIds.jiffex == getBundleId()? strings.ACTIVE_ORDERS: strings.ACTIVERIDES,
+                : appIds.jiffex == getBundleId()
+                ? strings.ACTIVE_ORDERS
+                : strings.ACTIVERIDES,
             isActive: true,
           }
         : {title: strings.ACTIVE_ORDERS, isActive: true},
-      businessType == 4
+      appStyle?.homePageLayout == 4
         ? {
             title:
               appIds.mml == getBundleId()
                 ? strings.PASTDELEIVERIES
-                :  appIds.jiffex == getBundleId()? strings.PAST_ORDERS:strings.PASTRIDES,
+                : appIds.jiffex == getBundleId()
+                ? strings.PAST_ORDERS
+                : strings.PASTRIDES,
             isActive: false,
           }
         : {title: strings.PAST_ORDERS, isActive: false},
       // {title: strings.SCHEDULED_ORDERS, isActive: false},
     ],
     selectedTab:
-      businessType == 4
+      appStyle?.homePageLayout == 4
         ? appIds.mml == getBundleId()
           ? strings.ACTIVEDELEIVERIES
           : strings.ACTIVERIDES
@@ -145,7 +148,7 @@ export default function MyOrders(props) {
       if (!!userData?.auth_token) {
         _getListOfOrders();
       } else {
-        navigation.navigate(navigationStrings.OUTER_SCREEN);
+        actions.setAppSessionData('on_login');
       }
     },
     isFocused ? 3000 : null,
@@ -263,7 +266,7 @@ export default function MyOrders(props) {
       });
       // _scrollRef.current.scrollToOffset({animated: true, offset: 0});
     } else {
-      navigation.navigate(navigationStrings.LOGIN);
+      actions.setAppSessionData('on_login');
     }
   };
 
@@ -281,6 +284,7 @@ export default function MyOrders(props) {
         selectedVendor: {id: item?.vendor_id},
         orderDetail: item,
         showRating: item?.order_status?.current_status?.id != 6 ? false : true,
+        keyValue: 1,
       });
     } else {
       navigation.navigate(navigationStrings.ORDER_DETAIL, {
@@ -332,7 +336,6 @@ export default function MyOrders(props) {
   };
 
   const returnYourOrder = (item) => {
-    console.log(item, 'item>item>');
     updateState({isLoading: true});
     actions
       .getReturnOrderDetailData(
@@ -437,7 +440,7 @@ export default function MyOrders(props) {
       updateState({
         isLoading: false,
       });
-      navigation.navigate(navigationStrings.OUTER_SCREEN);
+      actions.setAppSessionData('on_login');
     }
   }, [selectedTab]);
 
@@ -448,7 +451,7 @@ export default function MyOrders(props) {
       updateState({
         isLoading: false,
       });
-      navigation.navigate(navigationStrings.OUTER_SCREEN);
+      actions.setAppSessionData('on_login');
     }
   }, [pageActive, pagePastOrder, pageScheduleOrder, isRefreshing]);
 
@@ -599,10 +602,12 @@ export default function MyOrders(props) {
             : imagePath.backArrowCourier
         }
         centerTitle={
-          businessType === 4
+          appStyle?.homePageLayout === 4
             ? appIds.mml == getBundleId()
               ? strings.MYDELIERIES
-              : appIds.jiffex == getBundleId()? strings.MY_ORDERS:strings.MYRIDES
+              : appIds.jiffex == getBundleId()
+              ? strings.MY_ORDERS
+              : strings.MYRIDES
             : strings.MY_ORDERS
         }
         headerStyle={
@@ -617,6 +622,8 @@ export default function MyOrders(props) {
       <CustomTopTabBar
         scrollEnabled={true}
         tabBarItems={tabBarData}
+        activeStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}
+        // textStyle={{ color: isDarkMode ? MyDarkTheme.colors. : colors.black }}
         customContainerStyle={
           isDarkMode
             ? {backgroundColor: MyDarkTheme.colors.background}
@@ -663,7 +670,7 @@ export default function MyOrders(props) {
               }}>
               <NoDataFound
                 image={
-                  businessType === 4
+                  appStyle?.homePageLayout === 4
                     ? appIds.mml == getBundleId()
                       ? imagePath.notrcukImage
                       : imagePath.noRides
@@ -671,11 +678,11 @@ export default function MyOrders(props) {
                 }
                 isLoading={state.isLoading}
                 text={
-                  businessType === 4
+                  appStyle?.homePageLayout === 4
                     ? appIds.mml == getBundleId()
                       ? strings.NODELIVERIESFOUND
-                      :appIds.jiffex == getBundleId()?
-                        strings.NO_ORDERS_FOUND
+                      : appIds.jiffex == getBundleId()
+                      ? strings.NO_ORDERS_FOUND
                       : strings.NO_RIDE_FOUND
                     : strings.NODATAFOUND
                 }

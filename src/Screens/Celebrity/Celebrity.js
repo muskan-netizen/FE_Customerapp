@@ -132,9 +132,7 @@ export default function Celebrity({navigation}) {
         showsVerticalScrollIndicator={false}
         numColumns={3}
         style={{flex: 1}}
-        contentContainerStyle={{flexGrow: 1}}
         ListHeaderComponent={<View style={{height: 10}} />}
-        ListEmptyComponent={<ListEmptyCleb isLoading={isLoading} />}
         contentContainerStyle={{paddingHorizontal: moderateScale(16)}}
         ItemSeparatorComponent={() => <View style={{height: 10}} />}
         renderItem={_renderItem}
@@ -171,6 +169,7 @@ export default function Celebrity({navigation}) {
         onPressRight={() =>
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }
+        onPressLeft={() => navigation.navigate(navigationStrings.HOMESTACK)}
       />
 
       <View style={{height: 50}}>

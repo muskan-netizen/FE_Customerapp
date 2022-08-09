@@ -9,17 +9,17 @@ import {
   width,
 } from '../../styles/responsiveSize';
 
-export default ({userData, fontFamily, themeColors}) => {
+export default ({paramsData, fontFamily, themeColors}) => {
   const commonStyles = commonStylesFun({fontFamily});
   const styles = StyleSheet.create({
-    inputContainer:{
+    inputContainer: {
       flexDirection: 'row',
       borderWidth: 1,
       borderColor: colors.borderLight,
       height: moderateScale(49),
       borderRadius: 49 / 2,
     },
-    textInputContainer:{
+    textInputContainer: {
       flex: 0.75,
       flexDirection: 'row',
       paddingHorizontal: 15,
@@ -28,7 +28,7 @@ export default ({userData, fontFamily, themeColors}) => {
       borderBottomLeftRadius: 47 / 2,
       alignItems: 'center',
     },
-    textInputField:{
+    textInputField: {
       flex: 1,
       opacity: 0.7,
       color: colors.textGreyOpcaity7,
@@ -39,28 +39,27 @@ export default ({userData, fontFamily, themeColors}) => {
       paddingBottom: 0,
       textAlign: I18nManager.isRTL ? 'right' : 'left',
     },
-    editAndSendView:{
-   
+    editAndSendView: {
       justifyContent: 'center',
       alignItems: 'center',
       borderLeftWidth: 1,
       borderColor: colors.borderLight,
     },
-    didintRecieveCode:{
+    didintRecieveCode: {
       textAlign: 'center',
       fontFamily: fontFamily.regular,
       fontSize: textScale(12),
       color: colors.textGrey,
       opacity: 0.7,
     },
-    resend:{
+    resend: {
       textAlign: 'center',
       fontFamily: fontFamily.bold,
       fontSize: textScale(12),
       color: themeColors.primary_color,
       // opacity: 0.7,
     },
-    verifyView:{
+    verifyView: {
       justifyContent: 'center',
       alignItems: 'center',
       marginTop: moderateScaleVertical(15),
@@ -142,7 +141,7 @@ export default ({userData, fontFamily, themeColors}) => {
     },
     btnEmail: {
       alignSelf: 'flex-end',
-      backgroundColor: !userData?.verify_details?.is_email_verified
+      backgroundColor: !paramsData?.verify_details?.is_email_verified
         ? themeColors.primary_color
         : themeColors.secondary_color,
       // backgroundColor:'red',
@@ -152,7 +151,7 @@ export default ({userData, fontFamily, themeColors}) => {
     },
     btnPhone: {
       alignSelf: 'flex-end',
-      backgroundColor: !userData?.verify_details?.is_phone_verified
+      backgroundColor: !paramsData?.verify_details?.is_phone_verified
         ? themeColors.primary_color
         : themeColors.secondary_color,
       paddingVertical: moderateScaleVertical(5),
@@ -162,23 +161,22 @@ export default ({userData, fontFamily, themeColors}) => {
     btnPhoneSecond: {
       // alignSelf: 'center',
       width: width / 4,
-     
+
       paddingVertical: moderateScaleVertical(6),
       paddingHorizontal: moderateScale(8),
       borderRadius: 10,
     },
     emailbtnText: {
-      color: !userData?.verify_details?.is_email_verified
+      color: !paramsData?.verify_details?.is_email_verified
         ? themeColors.secondary_color
         : colors.green,
       fontFamily: fontFamily.bold,
       fontSize: textScale(12),
     },
     phonebtnText: {
-     
       fontFamily: fontFamily.bold,
       fontSize: textScale(14),
-      textAlign:'center'
+      textAlign: 'center',
     },
   });
   return styles;

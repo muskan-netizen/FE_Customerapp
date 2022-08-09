@@ -34,6 +34,8 @@ export default ({fontFamily}) => {
       fontFamily: fontFamily.bold,
       marginVertical: moderateScaleVertical(10),
       fontSize: textScale(22),
+      alignSelf:'center',
+      textAlign:'center'
     },
     thanksForyourPurchase:{
       fontFamily: fontFamily.bold,

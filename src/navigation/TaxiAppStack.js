@@ -4,17 +4,22 @@ import {
   Addaddress,
   AddNewRider,
   AllContacts,
+  AuthorizeNet,
   ChooseCarTypeAndTimeTaxi,
   HomeScreenTaxi,
   Offers,
   OrderDetail,
   Payfast,
   PaymentOptions,
+  PayPhone,
+  Paystack,
   PickupTaxiOrderDetail,
   PinAddressOnMap,
   RateOrder,
+  VerifyAccount,
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
+import DirectPayOnline from '../Screens/PaymentGateways/DirectPayOnline';
 
 import VerifyAccountSecond from '../Screens/VerifyAccountSecond/VerifyAccount';
 import navigationStrings from './navigationStrings';
@@ -33,12 +38,12 @@ export default function (Stack) {
         component={Addaddress}
         options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.ADD_NEW_RIDER}
         component={AddNewRider}
         options={{headerShown: false}}
       />
-  
+
       <Stack.Screen
         name={navigationStrings.PINADDRESSONMAP}
         component={PinAddressOnMap}
@@ -66,20 +71,40 @@ export default function (Stack) {
         component={PickupTaxiOrderDetail}
         options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.ORDER_DETAIL}
         component={OrderDetail}
         options={{headerShown: false}}
-        />
-       <Stack.Screen
+      />
+      <Stack.Screen
         name={navigationStrings.ORDERSUCESS}
         component={OrderSuccess}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
-        <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.PAYFAST}
         component={Payfast}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.PAYPHONE}
+        component={PayPhone}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.AuthorizeNet}
+        component={AuthorizeNet}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.PAYSTACK}
+        component={Paystack}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.DIRECTPAYONLINE}
+        component={DirectPayOnline}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.RATEORDER}
@@ -89,6 +114,11 @@ export default function (Stack) {
           unmountOnBlur: true,
         }}
       />
+      {/* <Stack.Screen
+        name={navigationStrings.VERIFY_ACCOUNT}
+        component={VerifyAccount}
+        options={{headerShown: false}}
+      /> */}
     </>
   );
 }

@@ -1,4 +1,11 @@
-import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  RefreshControl,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import actions from '../../redux/actions';
 import {useSelector} from 'react-redux';
@@ -33,9 +40,10 @@ export default function LaundryAvailableVendors({navigation, route}) {
   const {dineInType} = useSelector((state) => state?.home);
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors});
-
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
   const [allVendors, setAllVendors] = useState([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [pressedItem, setPressedItem] = useState({});
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -44,9 +52,20 @@ export default function LaundryAvailableVendors({navigation, route}) {
       navigation.navigate(screenName, {data});
     };
   useEffect(() => {
+    getEstimatedProducts();
+  }, []);
+
+  const getEstimatedProducts = () => {
+    let newSelectedAddonSet = [
+      {
+        estimate_product_id:
+          paramData?.selectedAddonSet[0]?.estimate_product_id,
+        estimate_products: paramData?.selectedAddonSet,
+      },
+    ];
     actions
       .productEstimation(
-        {product: paramData?.selectedAddonSet},
+        {product: newSelectedAddonSet},
         {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
@@ -56,49 +75,57 @@ export default function LaundryAvailableVendors({navigation, route}) {
       .then((res) => {
         console.log(res, 'res>>>>>>res');
         setLoading(false);
+        setIsRefreshing(false);
         setAllVendors(res?.data);
       })
       .catch(errorMethod);
-  }, []);
+  };
 
   const errorMethod = (error) => {
     console.log(error, 'errorinErrorMethod....');
-    showError(error?.message || error?.error);
+    setIsRefreshing(false);
+    setLoading(false);
+    showError(error?.error || error?.message);
   };
 
   const onSelectVendorAddToCart = (item) => {
-    console.log(item, 'item>>>>>item');
-    let addonIds = [];
-    let addonOptionIds = [];
-    item?.products_live[0]?.sets?.map((item, index) => {
-      addonIds[index] = item?.addon_id;
-      // addonOptionIds[index] = item?.id;
-    });
-    let data = {};
-    data['sku'] = item?.products_live[0]?.sku;
-    data['quantity'] = 1;
-    data['product_variant_id'] = item?.products_live[0]?.variant_id;
+    if (!isEmpty(item?.product)) {
+      setPressedItem(item);
+      setLoading(true);
+      let data = {};
+      data['sku'] = item?.product[0]?.product_sku;
+      data['quantity'] = 1;
+      data['product_variant_id'] = item?.product[0]?.product_variant_id;
+      data['type'] = dineInType;
+      data['addon_ids'] = item?.product[0]?.addonIds;
+      data['addon_options'] = item?.product[0]?.optionIds;
 
-    data['type'] = dineInType;
-    if (!isEmpty(addonIds)) {
-      data['addon_ids'] = addonIds;
-      // data['addon_options'] = addonOptionIds;
+      console.log(data, 'item>>>item');
+
+      actions
+        .addProductsToCart(data, {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        })
+        .then((res) => {
+          setLoading(false);
+          actions.cartItemQty(res);
+          showSuccess(strings.PRODUCT_ADDED_SUCCESS);
+          moveToNewScreen(navigationStrings.CART)();
+        })
+        .catch(errorMethod);
+    } else {
+      showError('No products found at vendor.');
     }
-    console.log(data, 'data sendin in API');
+  };
 
-    actions
-      .addProductsToCart(data, {
-        code: appData.profile.code,
-        currency: currencies.primary_currency.id,
-        language: languages.primary_language.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      })
-      .then((res) => {
-        actions.cartItemQty(res);
-        showSuccess(strings.PRODUCT_ADDED_SUCCESS);
-        moveToNewScreen(navigationStrings.CART)();
-      })
-      .catch(errorMethod);
+  //Pull to refresh
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+
+    getEstimatedProducts();
   };
 
   const renderItem = ({item, index}) => {
@@ -108,8 +135,8 @@ export default function LaundryAvailableVendors({navigation, route}) {
           <FastImage
             source={{
               uri: getImageUrl(
-                item?.banner?.image_fit,
-                item?.banner?.image_path,
+                item?.logo?.image_fit,
+                item?.logo?.image_path,
                 '600/6000',
               ),
               priority: FastImage.priority.high,
@@ -118,9 +145,25 @@ export default function LaundryAvailableVendors({navigation, route}) {
             style={styles.vendorImgStyle}
           />
         </View>
-        <View style={styles.completePartialMatchView}>
-          <Text style={styles.completePartialMatchTxt}>COMPLETE MATCH</Text>
-        </View>
+        {!isEmpty(item?.product) && (
+          <View
+            style={{
+              ...styles.completePartialMatchView,
+              backgroundColor:
+                item?.product[0]?.match == 'C' ? colors.greenC : colors.redF,
+            }}>
+            <Text
+              style={{
+                ...styles.completePartialMatchTxt,
+                color:
+                  item?.product[0]?.match == 'C' ? colors.greenD : colors.redG,
+              }}>
+              {item?.product[0]?.match == 'C'
+                ? strings.COMPLETE_MATCH
+                : strings.PARTIAL_MATCH}
+            </Text>
+          </View>
+        )}
         <View
           style={{
             paddingHorizontal: moderateScale(20),
@@ -136,14 +179,18 @@ export default function LaundryAvailableVendors({navigation, route}) {
             />
             <Text style={styles.addressTxt}>{item?.address}</Text>
           </View>
-          <Text style={styles.priceText}>
-            {currencies?.primary_currency?.symbol} {item?.product_price}
-          </Text>
+          {!isEmpty(item?.product) && (
+            <Text style={styles.priceText}>
+              {currencies?.primary_currency?.symbol} {item?.product[0]?.price}
+            </Text>
+          )}
           <ButtonWithLoader
             onPress={() => onSelectVendorAddToCart(item)}
-            btnText="Select Vendor"
+            btnText={strings.SELECT_VENDOR}
             btnTextStyle={styles.selectVendorBtnTxt}
             btnStyle={styles.selectVendorBtnStyle}
+            color={themeColors.primary_color}
+            isLoading={pressedItem?.id == item?.id ? isLoading : false}
           />
         </View>
       </View>
@@ -152,7 +199,10 @@ export default function LaundryAvailableVendors({navigation, route}) {
 
   return (
     <WrapperContainer>
-      <Header centerTitle={'Available Vendors'} leftIcon={imagePath.icBackb} />
+      <Header
+        centerTitle={strings.AVAILABLE_VENDORS}
+        leftIcon={imagePath.icBackb}
+      />
 
       <FlatList
         data={allVendors}
@@ -161,6 +211,14 @@ export default function LaundryAvailableVendors({navigation, route}) {
           paddingHorizontal: moderateScaleVertical(16),
           marginTop: moderateScaleVertical(15),
         }}
+        refreshing={isRefreshing}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
+            tintColor={themeColors.primary_color}
+          />
+        }
         ItemSeparatorComponent={() => (
           <View style={{height: moderateScaleVertical(16)}} />
         )}
@@ -172,7 +230,7 @@ export default function LaundryAvailableVendors({navigation, route}) {
 export function stylesFunc({fontFamily, themeColors, isDarkMode}) {
   const styles = StyleSheet.create({
     mainRowStyle: {
-      backgroundColor: '#F2F7FA',
+      backgroundColor: colors.seaGreen1,
       flexDirection: 'row',
       paddingLeft: moderateScale(15),
       paddingVertical: moderateScaleVertical(10),
@@ -184,7 +242,7 @@ export function stylesFunc({fontFamily, themeColors, isDarkMode}) {
       borderRadius: moderateScale(35),
     },
     completePartialMatchView: {
-      backgroundColor: '#DBEBCB',
+      backgroundColor: colors.greenC,
       alignItems: 'center',
       justifyContent: 'center',
       paddingHorizontal: moderateScale(4),
@@ -197,7 +255,8 @@ export function stylesFunc({fontFamily, themeColors, isDarkMode}) {
     completePartialMatchTxt: {
       fontFamily: fontFamily.medium,
       fontSize: textScale(8),
-      color: '#719F1C',
+      color: colors.greenD,
+      textTransform: 'uppercase',
     },
     vendorTitle: {
       fontFamily: fontFamily?.bold,

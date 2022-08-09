@@ -43,9 +43,13 @@ import {
   StripeOXXO,
   VivaWallet,
   MyCash,
+  OpenPay,
+  Userede,
 } from '../Screens';
 import MyProfile from '../Screens/MyProfile/MyProfile2';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
+import DirectPayOnline from '../Screens/PaymentGateways/DirectPayOnline';
+import Khalti from '../Screens/PaymentGateways/Khalti';
 import KongaPay from '../Screens/PaymentGateways/KongaPay';
 import Pagarme from '../Screens/PaymentGateways/Pagarme';
 import StripeIdeal from '../Screens/PaymentGateways/StripeIdeal';
@@ -61,24 +65,24 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.CART}
         component={Cart3}
-        options={{headerShown: false}}
+        options={{headerShown: false, animationEnabled: false}}
       />
 
       <Stack.Screen
         name={navigationStrings.OFFERS}
         component={Offers}
-        options={{headerShown: false}}
+        options={{headerShown: false, animationEnabled: false}}
       />
 
       <Stack.Screen
         name={navigationStrings.ALL_PAYMENT_METHODS}
         component={AllPaymentMethods}
-        options={{headerShown: false}}
+        options={{headerShown: false, animationEnabled: false}}
       />
       <Stack.Screen
         name={navigationStrings.ORDERSUCESS}
         component={OrderSuccess}
-        options={{headerShown: false}}
+        options={{headerShown: false, animationEnabled: false}}
       />
       <Stack.Screen
         name={navigationStrings.ORDER_DETAIL}
@@ -88,11 +92,6 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.WEBPAYMENTS}
         component={WebPayment}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name={navigationStrings.VERIFY_ACCOUNT}
-        component={VerifyAccount}
         options={{headerShown: false}}
       />
 
@@ -123,10 +122,10 @@ export default function () {
           appStyle?.homePageLayout === 2
             ? ProductList2
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-              ? ProductWithCategory
-              : ProductList
+            ? ProductWithCategory
+            : ProductList
         }
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
 
       <Stack.Screen
@@ -270,6 +269,33 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.STRIPEIDEAL}
         component={StripeIdeal}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.DIRECTPAYONLINE}
+        component={DirectPayOnline}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.KHALTI}
+        component={Khalti}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.OPENPAY}
+        component={OpenPay}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.USEREDE}
+        component={Userede}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.VERIFY_ACCOUNT}
+        component={VerifyAccount}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

@@ -59,9 +59,10 @@ export default function AddMoney({navigation}) {
   const [state, setState] = useState({
     amount: '',
     data: [
-      {id: 0, amount: 300},
-      {id: 1, amount: 5000},
-      {id: 2, amount: 4500},
+      {id: 0, amount: 10},
+      {id: 1, amount: 20},
+      {id: 2, amount: 50},
+      {id: 3, amount: 100},
     ],
     allAvailAblePaymentMethods: [],
     selectedPaymentMethod: null,
@@ -577,7 +578,7 @@ export default function AddMoney({navigation}) {
             paymentUrl: res?.data || res?.payment_link,
             action: 'wallet',
           };
-
+             
           navigation.navigate(navigationStrings.ALL_IN_ONE_PAYMENTS, {
             data: sendingData,
           });
@@ -873,7 +874,7 @@ export default function AddMoney({navigation}) {
               renderItem={_renderItemPayments}
               ListFooterComponent={listFooterComp}
               ListEmptyComponent={() => (
-                <Text style={{textAlign: 'center'}}>
+                <Text style={{textAlign: 'center',color: isDarkMode ? MyDarkTheme.colors.text : colors.black,}}>
                   {strings.NO_PAYMENT_METHOD}
                 </Text>
               )}

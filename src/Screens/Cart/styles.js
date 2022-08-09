@@ -485,7 +485,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     },
     dropDownTextStyle: {
       fontSize: textScale(10),
-      color: themeColors.primary_color,
+      // color: themeColors.primary_color,
       fontFamily: fontFamily.bold,
       textAlign: 'left',
     },
@@ -523,13 +523,13 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       color: colors.blue,
       fontFamily: fontFamily.medium,
     },
-    bookAtable : {
+    bookAtable: {
       fontFamily: fontFamily.regular,
       fontSize: textScale(14),
       color: colors.black,
-      marginLeft:moderateScale(20), 
+      marginLeft: moderateScale(20),
       marginBottom: moderateScale(-6),
-    }
+    },
   });
   return styles;
 };

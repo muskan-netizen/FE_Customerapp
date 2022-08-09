@@ -6,7 +6,7 @@ import {
   textScale,
 } from '../../styles/responsiveSize';
 
-export default ({fontFamily}) => {
+export default ({fontFamily,themeColors}) => {
   const styles = StyleSheet.create({
     currency: {
       color: colors.blackB,
@@ -30,6 +30,19 @@ export default ({fontFamily}) => {
       borderWidth: 0.5,
 
       borderRadius: moderateScale(5),
+    },
+
+    touchAbleLoginVIew: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    loginLogoutText: {
+      fontSize: textScale(14),
+      color: themeColors?.primary_color,
+      fontFamily: fontFamily?.medium,
+      textAlign: 'left',
+      marginRight: moderateScale(8)
     },
   });
   return styles;

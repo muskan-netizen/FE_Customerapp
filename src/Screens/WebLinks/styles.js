@@ -37,6 +37,9 @@ export default ({fontFamily}) => {
       color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
       fontSize: textScale(18),
       fontFamily: fontFamily.medium,
+      // alignSelf:  I18nManager.isRTL ?  'flex-end': 'flex-start',
+      // textAlign: I18nManager.isRTL ? 'left' : 'right',
+     
     },
     uploadText: {
       justifyContent: 'center',

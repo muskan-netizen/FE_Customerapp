@@ -1,21 +1,21 @@
 import * as React from 'react';
-import { Vibration } from 'react-native';
-import { showMessage } from 'react-native-flash-message';
+import {Vibration} from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 import Geocoder from 'react-native-geocoder';
 import Geolocation from 'react-native-geolocation-service';
-import { BackHandler, Alert, Animated, Text } from 'react-native';
+import {BackHandler, Alert, Animated, Text} from 'react-native';
 import strings from './../constants/lang/index';
-import { callingCountries } from 'country-data';
+import {callingCountries} from 'country-data';
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import * as NavigationService from '../navigation/NavigationService';
 import Toast from 'react-native-simple-toast';
-import { StatusBarHeight } from '../styles/responsiveSize';
-import { getDistance } from 'geolib';
-import { min } from 'moment';
+import {StatusBarHeight} from '../styles/responsiveSize';
+import {getDistance} from 'geolib';
+import {min} from 'moment';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/core';
-import { selectContactPhone } from 'react-native-select-contact';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/core';
+import {selectContactPhone} from 'react-native-select-contact';
 import codes from 'country-calling-code';
 import DeviceCountry, {
   TYPE_ANY,
@@ -58,20 +58,20 @@ const getCurrentLocation = (type) =>
         // alert(error.message)
         reject(error.message);
       },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );
   });
 
 const getLocation = async (lat, lng, type) => {
   if (type == 'home') {
     try {
-      let res = await Geocoder.geocodePosition({ lat, lng });
+      let res = await Geocoder.geocodePosition({lat, lng});
       let addr = res[0].formattedAddress;
       return addr;
-    } catch (err) { }
+    } catch (err) {}
   } else if (type == 'address') {
     try {
-      let res = await Geocoder.geocodePosition({ lat, lng });
+      let res = await Geocoder.geocodePosition({lat, lng});
 
       let addr = res[0].formattedAddress;
 
@@ -97,9 +97,9 @@ const getLocation = async (lat, lng, type) => {
       };
 
       return data;
-    } catch (err) { }
+    } catch (err) {}
   } else {
-    return await Geocoder.geocodePosition({ lat, lng });
+    return await Geocoder.geocodePosition({lat, lng});
   }
 };
 
@@ -140,11 +140,11 @@ export function otpTimerCounter(seconds) {
   return `${m}:${s}`;
 }
 
-export function getRandomColor() {
+export function getRandomColor(opacity = 0.3) {
   const w = Math.floor(Math.random() * 256);
   const x = Math.floor(Math.random() * 256);
   const y = Math.floor(Math.random() * 256);
-  const z = 0.3;
+  const z = opacity;
   const rgbaColor = 'rgba(' + w + ',' + x + ',' + y + ',' + z + ')';
   return rgbaColor;
 }
@@ -191,7 +191,7 @@ const androidBackButtonHandler = () => {
       onPress: () => null,
       style: 'cancel',
     },
-    { text: strings.YES, onPress: () => BackHandler.exitApp() },
+    {text: strings.YES, onPress: () => BackHandler.exitApp()},
   ]);
   return true;
 };
@@ -279,16 +279,7 @@ export function getAddressComponent(details, update) {
 
 export const sessionHandler = (error) => {
   actions.userLogout();
-  NavigationService.navigate(navigationStrings.OUTER_SCREEN, {}),
-    Alert.alert(error, '', [
-      {
-        text: strings.OK,
-        // cancelable: false,
-        onPress: () => console.log('okay Pressed'),
-        //   onPress: () =>
-        //     NavigationService.navigate(navigationStrings.OUTER_SCREEN, {}),
-      },
-    ]);
+  actions.setAppSessionData('guest_login');
 };
 
 export const getScaleTransformationStyle = (
@@ -305,7 +296,7 @@ export const getScaleTransformationStyle = (
     outputRange: [startSize, endSize],
   });
   return {
-    transform: [{ scale: interpolation }],
+    transform: [{scale: interpolation}],
   };
 };
 
@@ -367,14 +358,14 @@ const timeInLocalLangauge = (value, selectedLanguage) => {
   })}`;
 };
 
-const getNearestLocation = (currentLocation, savedLocations) => {
+const getNearestLocation = async(currentLocation, savedLocations = []) => {
   const points = savedLocations.map((item, indx) => {
     const distance = getDistance(
       {
         latitude: currentLocation?.latitude,
         longitude: currentLocation?.longitude,
       },
-      { latitude: item?.latitude, longitude: item?.longitude },
+      {latitude: item?.latitude, longitude: item?.longitude},
     );
     var newAddressArray = Object.assign({}, indx);
     newAddressArray.distance = distance;
@@ -423,6 +414,7 @@ const timeConvert = (n) => {
   var rhours = Math.floor(hours);
   var minutes = (hours - rhours) * 60;
   var rminutes = Math.round(minutes);
+
   if (num >= 60) {
     if (minutes >= 30) {
       return Math.ceil(hours) + 'h'; // + '≈'
@@ -515,36 +507,29 @@ const getTabBarVisibility = (route, navigation, screen) => {
   }
 };
 
-
-
 export function getPhoneNumberFromPhoneBook() {
   return new Promise((resolve, reject) => {
     selectContactPhone()
-      .then(selection => {
+      .then((selection) => {
         resolve(selection);
-      }).catch(error => {
-        reject(error);
       })
+      .catch((error) => {
+        reject(error);
+      });
   });
-
 }
-
 
 export function deviceCountryCode() {
   return new Promise((resolve, reject) => {
     DeviceCountry.getCountryCode()
-      .then(result => {
-        resolve(codes.filter(x => x.isoCode2 == (result.code).toUpperCase()));
-      }).catch(error => {
-        reject(error);
+      .then((result) => {
+        resolve(codes.filter((x) => x.isoCode2 == result.code.toUpperCase()));
       })
+      .catch((error) => {
+        reject(error);
+      });
   });
-
-
-
 }
-
-
 
 export {
   showError,
@@ -562,5 +547,4 @@ export {
   playHapticEffect,
   hapticEffects,
   getTabBarVisibility,
-
 };

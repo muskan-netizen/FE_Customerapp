@@ -436,8 +436,7 @@ export default function Cart2({navigation, route}) {
         }
       }
     } else {
-      // showError(strings.UNAUTHORIZED_MESSAGE);
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login');
     }
   };
 
@@ -1167,7 +1166,8 @@ export default function Cart2({navigation, route}) {
 
                 <KeyboardAwareScrollView
                   horizontal
-                  showsHorizontalScrollIndicator={false}>
+                  showsHorizontalScrollIndicator={false}
+                  enableOnAndroid={true}>
                   {cartData?.tip.map((j, jnx) => {
                     return (
                       <TouchableOpacity

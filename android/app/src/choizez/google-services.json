@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "883328462820",
+    "project_id": "choizez-d6a72",
+    "storage_bucket": "choizez-d6a72.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883328462820:android:239359b14f24579541a1f1",
+        "android_client_info": {
+          "package_name": "com.choizez.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883328462820-1os89rlsgevr4gmn1h5ahnhfq0vfehv3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.choizez.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "883328462820-3ap8m2cfkng98naubrjl3tvr1g2j70b3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.choizez.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "883328462820-i6dnd6h658amcj1ha7181jci1oprbuuh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.choizez.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "883328462820-91idrmhdu8cqffnim0tkoegdk27t37mc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDayXXtn_vSVuq8a5hwDP-X00dxs4VvxI4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883328462820-91idrmhdu8cqffnim0tkoegdk27t37mc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

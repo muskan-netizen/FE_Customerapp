@@ -53,6 +53,13 @@
             {
               "client_id": "333968937334-ua85j8qke5egib88inrdnh3fhs2khctl.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "333968937334-k5ufem0ci60cn6qas8jduocfi977evge.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.glamsouq.customer"
+              }
             }
           ]
         }

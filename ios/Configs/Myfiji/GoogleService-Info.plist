@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>645906300913-u9cdt6ep8rje1dlpkbsiqjgml8dvt9p3.apps.googleusercontent.com</string>
+	<string>797859155680-p6e98sgcnnq3vb1bolbe73iht39s2nk1.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.645906300913-u9cdt6ep8rje1dlpkbsiqjgml8dvt9p3</string>
+	<string>com.googleusercontent.apps.797859155680-p6e98sgcnnq3vb1bolbe73iht39s2nk1</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>645906300913-5qkq3rsfe8v9q4268sp9dm3cejvcp9t9.apps.googleusercontent.com</string>
+	<string>797859155680-emqvcftcurhbt6purtsdkn1asvcie6u8.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCssK-Xu5Z6v-3Mle4i4U3bMP2Op2mgWdQ</string>
+	<string>AIzaSyAGf-FJRbgmf6LBOd9XtsH7TRjLRPtu578</string>
 	<key>GCM_SENDER_ID</key>
-	<string>645906300913</string>
+	<string>797859155680</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.myfiji</string>
+	<string>com.fijieats.user</string>
 	<key>PROJECT_ID</key>
-	<string>my-fiji-dfd34</string>
+	<string>fiji-eats</string>
 	<key>STORAGE_BUCKET</key>
-	<string>my-fiji-dfd34.appspot.com</string>
+	<string>fiji-eats.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:645906300913:ios:bdf00a2e02199736a18e50</string>
+	<string>1:797859155680:ios:9bf693ad40d806e75a8a85</string>
+	<key>DATABASE_URL</key>
+	<string>https://fiji-eats.firebaseio.com</string>
 </dict>
 </plist>

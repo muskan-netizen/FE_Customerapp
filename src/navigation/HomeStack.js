@@ -3,13 +3,17 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import {
   BrandProducts,
+  BrandProducts2,
   BuyProduct,
+  CategoryBrands,
+  ChatRoom,
+  ChatScreen,
   ConfirmDetailsBuy,
   Delivery,
   Filter,
   Home,
+  LaundryAvailableVendors,
   Location,
-  OrderDetail,
   Payment,
   PaymentSuccess,
   ProductDetail,
@@ -18,7 +22,9 @@ import {
   ProductList2,
   ProductList3,
   ProductWithCategory,
+  ScrollableCategory,
   SearchProductVendorItem,
+  SearchProductVendorItem2,
   SendProduct,
   ShippingDetails,
   SuperMarket,
@@ -27,29 +33,21 @@ import {
   VendorDetail,
   VendorDetail2,
   VendorDetail3,
-  Vendors,
   Vendors2,
   Vendors3,
-  SearchProductVendorItem2,
-  BrandProducts2,
   ViewAllData,
   TaxiHomeScreen,
-  CategoryBrands,
-  Cart2,
-  Cart3,
-  Cart,
-  AllPaymentMethods,
-  ScrollableCategory,
-  LaundryAvailableVendors,
+  Subscriptions2,
+  SubcategoryVendor,
+  Addaddress,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
-import {shortCodes} from '../utils/constants/DynamicAppKeys';
 
 import {verticalAnimation} from '../utils/utils';
-import CartStack from './CartStack';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
+
 export default function () {
   const {appStyle, appData} = useSelector((state) => state?.initBoot);
   const businessType = appStyle?.homePageLayout;
@@ -161,7 +159,12 @@ export default function () {
         component={businessType === 4 ? TaxiHomeScreen : Home}
         options={{headerShown: false}}
       />
-
+ <Stack.Screen
+        name={navigationStrings.ADDADDRESS}
+        component={Addaddress}
+        options={{headerShown: false}}
+      />
+      
       <Stack.Screen
         name={navigationStrings.DELIVERY}
         component={Delivery}
@@ -278,12 +281,6 @@ export default function () {
       />
 
       <Stack.Screen
-        name={navigationStrings.ORDER_DETAIL}
-        component={OrderDetail}
-        options={{headerShown: false}}
-      />
-
-      <Stack.Screen
         name={navigationStrings.VIEW_ALL_DATA}
         component={ViewAllData}
         options={{headerShown: false}}
@@ -293,11 +290,11 @@ export default function () {
         component={CategoryBrands}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.CART_SCREEN}
-        component={CartStack}
+        component={ChatScreen}
         options={{headerShown: false, gestureEnabled: true}}
-      /> */}
+      />
 
       <Stack.Screen
         name={navigationStrings.SCROLLABLE_CATEGORY}
@@ -307,6 +304,22 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.LAUNDRY_AVAILABLE_VENDORS}
         component={LaundryAvailableVendors}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.CHAT_ROOM}
+        component={ChatRoom}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.SUBSCRIPTION}
+        component={Subscriptions2}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.SUBCATEGORY_VENDORS}
+        component={SubcategoryVendor}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

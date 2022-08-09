@@ -32,6 +32,7 @@ const initial_state = {
   themeColor: false,
   themeToggle: false,
   searchText: [],
+  redirectedFrom: '',
   //internetConnection: false,
 };
 
@@ -41,14 +42,14 @@ export default function (state = initial_state, action) {
       const data = action.payload;
       return {
         ...state,
-        appData: data.appData,
+        appData: data?.appData,
         themeColors: {
           ...state.themeColors,
           ...data.themeColors,
         },
         appStyle: {
           ...state.appStyle,
-          ...data.appStyle,
+          ...data?.appStyle,
         },
         // currencies: {
         //   ...state.currencies,
@@ -173,6 +174,10 @@ export default function (state = initial_state, action) {
     }
     case types.DIRECT_SET_SEARCH_TEXT: {
       return {searchText: action.payload};
+    }
+
+    case types.REDIRECTED_FROM: {
+      return {...state, redirectedFrom: action.payload};
     }
 
     default: {

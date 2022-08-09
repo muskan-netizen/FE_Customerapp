@@ -30,10 +30,13 @@ import {
   Tracking,
   Vendors,
   Vendors2,
+  ChatScreen,
+  ChatRoom,
 } from '../Screens';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 import TabRoutes from './TabRoutes';
+import TaxiAppStack from './TaxiAppStack';
 import TaxiTabRoutes from './TaxiTabRoutes';
 
 export default function (Stack) {
@@ -41,11 +44,6 @@ export default function (Stack) {
 
   return (
     <>
-      {/* <Stack.Screen
-        name={navigationStrings.TAB_ROUTES}
-        component={TabRoutes}
-        options={{headerShown: false}}
-      /> */}
       <Stack.Screen
         name={navigationStrings.TAXITABROUTES}
         component={TaxiTabRoutes}
@@ -191,6 +189,17 @@ export default function (Stack) {
         component={Cart}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name={navigationStrings.CHAT_SCREEN}
+        component={ChatScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.CHAT_ROOM}
+        component={ChatRoom}
+        options={{headerShown: false}}
+      />
+          {TaxiAppStack(Stack)}
     </>
   );
 }

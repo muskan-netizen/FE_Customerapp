@@ -1,4 +1,5 @@
 import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
+import ActionSheet from 'react-native-actionsheet';
 import React, { useEffect, useState } from 'react';
 import {
   Alert,
@@ -35,22 +36,34 @@ import {
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
-import { getImageUrl, getRandomColor, showError, showSuccess } from '../../utils/helperFunctions';
+import {
+  getImageUrl,
+  getRandomColor,
+  showError,
+  showSuccess,
+} from '../../utils/helperFunctions';
 import stylesFun from './styles';
+import { useRef } from 'react';
 export default function Account3({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { themeColors, appStyle, appData, shortCodeStatus,currencies,languages } = useSelector(
-    (state) => state?.initBoot,
-  );
+  const {
+    themeColors,
+    appStyle,
+    appData,
+    shortCodeStatus,
+    currencies,
+    languages,
+  } = useSelector((state) => state?.initBoot);
   const businessType = appStyle?.homePageLayout;
+
+  const [allVendors, setAllVendors] = useState([])
+
   const [state, setState] = useState({
     isLoading: false,
   });
-
-
 
   const { preferences, phone_number, contact_phone_number } = appData?.profile;
 
@@ -71,12 +84,9 @@ export default function Account3({ navigation }) {
 
   const userData = useSelector((state) => state.auth.userData);
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  console.log("user data",userData)
+  console.log('user data', userData);
 
-  console.log(
-    contact_phone_number,
-    'userDAta',
-  );
+  console.log(contact_phone_number, 'userDAta');
   // useFocusEffect(
   //   React.useCallback(() => {
   //     _scrollRef.current.scrollTo(0);
@@ -84,6 +94,33 @@ export default function Account3({ navigation }) {
   // );
 
   //Share your app
+
+  useEffect(() => {
+    if (!!appMainData?.is_admin) {
+      fetchAllVendors()
+    }
+  }, [appMainData?.is_admin])
+
+  const fetchAllVendors = async (value = null) => {
+    let query = `?limit=${100000}&page=${1}`;
+    let headers = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    };
+    try {
+      const res = await actions.storeVendors(query, headers);
+      if (res?.data?.data) {
+        setAllVendors(res.data.data)
+        return;
+      }
+      console.log('available vendors res', res);
+    } catch (error) {
+      console.log('error riased', error);
+      showError(error?.message);
+    }
+  };
+
   const onShare = () => {
     console.log('onShare', appData);
     if (!!appData?.domain_link) {
@@ -101,71 +138,9 @@ export default function Account3({ navigation }) {
     alert('link not found');
   };
 
-  //Logout function
-  const userlogout = () => {
-    if (!!userData?.auth_token) {
-      Alert.alert('', strings.LOGOUT_SURE_MSG, [
-        {
-          text: strings.CANCEL,
-          onPress: () => console.log('Cancel Pressed'),
-          // style: 'destructive',
-        },
-        {
-          text: strings.CONFIRM,
-          onPress: () => {
-            actions.userLogout();
-            actions.cartItemQty('');
-            actions.saveAddress('');
-            actions.addSearchResults('clear');
-            moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
-          },
-        },
-      ]);
-    } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
-    }
-  };
 
 
-
-  const onDeleteAccount = () => {
-    if (!!userData?.auth_token) {
-      Alert.alert(strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, '', [
-        {
-          text: strings.CANCEL,
-          onPress: () => console.log('Cancel Pressed'),
-          // style: 'destructive',
-        },
-        {
-          text: strings.CONFIRM,
-          onPress: deleleUserAccount,
-        },
-      ]);
-    } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
-    }
-  }
-  const deleleUserAccount = async() => {
-    try {
-      const res = await actions.deleteAccount(
-      {},
-      {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-      })
-      console.log("delete user account res++++",res)
-      showSuccess(res?.massage)
-      actions.userLogout();
-      actions.cartItemQty('');
-      actions.saveAddress('');
-      actions.addSearchResults('clear');
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
-    } catch (error) {
-      console.log('erro raised',error)
-      showError(error?.message)
-    }
-  }
+ 
 
   // initalize Zendesk
   useEffect(() => {
@@ -173,7 +148,10 @@ export default function Account3({ navigation }) {
       `${preferences?.customer_support_key}`,
       `${preferences?.customer_support_application_id}`,
     );
-  }, [preferences?.customer_support_application_id, preferences?.customer_support_key]);
+  }, [
+    preferences?.customer_support_application_id,
+    preferences?.customer_support_key,
+  ]);
 
   const onStartSupportChat = () => {
     ZendeskChat.setVisitorInfo({
@@ -189,9 +167,40 @@ export default function Account3({ navigation }) {
     });
   };
 
-
-
   const usernameFirstlater = !!userData?.name && userData?.name?.charAt(0);
+
+  const goToChatRoom = (type) => {
+    if (!!appMainData?.is_admin && type == 'vendor_chat') {
+      navigation.navigate(navigationStrings.CHAT_ROOM, { type: type, allVendors: allVendors });
+    } else {
+      navigation.navigate(navigationStrings.CHAT_ROOM, { type: type });
+    }
+  };
+  //----------------------------------ActionSheet------------------------------//
+  let actionSheet = useRef();
+  const showActionSheet = () => {
+    actionSheet.current.show();
+  };
+
+  const onSosButton = (index) => {
+    console.log(index, 'index');
+    switch (index) {
+      case 0:
+        Linking.openURL(
+          `tel:${appData?.profile?.preferences?.sos_police_contact}`,
+        );
+
+        break;
+      case 1:
+        Linking.openURL(
+          `tel:${appData?.profile?.preferences?.sos_ambulance_contact}`,
+        );
+        break;
+
+      default:
+        break;
+    }
+  };
 
   return (
     <View
@@ -222,11 +231,7 @@ export default function Account3({ navigation }) {
             noLeftIcon={false}
             customLeft={() => (
               <Text
-                onPress={() =>
-                  navigation.push(navigationStrings.SHORT_CODE, {
-                    shortCodeParam: true,
-                  })
-                }
+                onPress={() => actions.setAppSessionData('show_shortcode')}
                 style={{
                   color: themeColors.primary_color,
                   fontFamily: fontFamily.bold,
@@ -563,45 +568,57 @@ export default function Account3({ navigation }) {
           // iconRight={imagePath.goRight}
           // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
+          {appData.profile.preferences.sos == 1 ? (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={showActionSheet}
+              iconLeft={imagePath.icSos}
+              centerHeading={strings.SOS}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          ) : null}
           {!!userData?.auth_token &&
-            Platform.OS === 'android' &&
-            getBundleId() == appIds.elcheregio &&
-            !!appMainData?.is_admin &&
-            (businessType == 'taxi' ? null : (
-              <ListItemHorizontal
-                centerContainerStyle={{ flexDirection: 'row' }}
-                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-                onPress={() => {
-                  BluetoothManager.checkBluetoothEnabled().then(
-                    (enabled) => {
-                      if (Boolean(enabled)) {
-                        navigation.navigate(navigationStrings.ATTACH_PRINTER);
-                      } else {
-                        BluetoothManager.enableBluetooth()
-                          .then(() => {
-                            navigation.navigate(
-                              navigationStrings.ATTACH_PRINTER,
-                            );
-                          })
-                          .catch((err) => { });
-                      }
-                    },
-                    (err) => {
-                      err;
-                    },
-                  );
-                }}
-                iconLeft={imagePath.printer}
-                centerHeading={strings.ATTACH_PRINTER}
-                containerStyle={styles.containerStyle2}
-                centerHeadingStyle={{
-                  fontSize: textScale(14),
-                  fontFamily: fontFamily.regular,
-                }}
+          Platform.OS === 'android' &&
+          !!appMainData?.is_admin ? (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={() => {
+                BluetoothManager.checkBluetoothEnabled().then(
+                  (enabled) => {
+                    if (Boolean(enabled)) {
+                      navigation.navigate(navigationStrings.ATTACH_PRINTER);
+                    } else {
+                      BluetoothManager.enableBluetooth()
+                        .then(() => {
+                          navigation.navigate(navigationStrings.ATTACH_PRINTER);
+                        })
+                        .catch((err) => {});
+                    }
+                  },
+                  (err) => {
+                    err;
+                  },
+                );
+              }}
+              iconLeft={imagePath.printer}
+              centerHeading={strings.ATTACH_PRINTER}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
               // iconRight={imagePath.goRight}
               // rightIconStyle={{tintColor: colors.textGreyLight}}
-              />
-            ))}
+            />
+          ) : null}
 
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&
@@ -657,28 +674,32 @@ export default function Account3({ navigation }) {
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )} */}
-          {!!userData?.auth_token && <ListItemHorizontal
-            centerContainerStyle={{ flexDirection: 'row' }}
-            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-            onPress={
-              appIds.hokitch == getBundleId()
-                ? () =>
-                  Linking.openURL(
-                    `https://api.whatsapp.com/send?phone=${contact_phone_number ? contact_phone_number : phone_number}`,
-                  )
-                : moveToNewScreen(navigationStrings.CONTACT_US)
-            }
-
-            iconLeft={imagePath.contactUs}
-            centerHeading={strings.CONTACT_US}
-            containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{
-              fontSize: textScale(14),
-              fontFamily: fontFamily.regular,
-            }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
-          />}
+          {!!userData?.auth_token && (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={
+                appIds.hokitch == getBundleId()
+                  ? () =>
+                    Linking.openURL(
+                      `https://api.whatsapp.com/send?phone=${contact_phone_number
+                        ? contact_phone_number
+                        : phone_number
+                      }`,
+                    )
+                  : moveToNewScreen(navigationStrings.CONTACT_US)
+              }
+              iconLeft={imagePath.contactUs}
+              centerHeading={strings.CONTACT_US}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
 
           {!!userData?.auth_token && (
             <ListItemHorizontal
@@ -696,7 +717,6 @@ export default function Account3({ navigation }) {
             // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
-
 
           {!!userData?.auth_token &&
             !!appMainData?.is_admin &&
@@ -717,40 +737,90 @@ export default function Account3({ navigation }) {
               />
             )}
 
-          {!!userData?.auth_token && (
+
+          {!!userData?.auth_token && !!appData?.profile?.socket_url && (
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}
               leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-              onPress={onDeleteAccount}
-              iconLeft={imagePath.user}
-              centerHeading={strings.DELETE_ACCOUNT}
+              onPress={() => goToChatRoom('agent_chat')}
+              iconLeft={imagePath.icUserChat}
+              centerHeading={'Driver Chat'}
               containerStyle={styles.containerStyle2}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
-          )}
+          )} 
 
-          <View style={styles.loginView}>
+          {!!userData?.auth_token &&
+            !!appMainData?.is_admin && !!appData?.profile?.socket_url &&
+            (
+              <ListItemHorizontal
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+                onPress={() => goToChatRoom('vendor_chat')}
+                iconLeft={imagePath.icUserChat}
+                centerHeading={'User Chat'}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+              />
+            )}
+
+          {!!userData?.auth_token && !!appData?.profile?.socket_url && (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={() => goToChatRoom('user_chat')}
+              iconLeft={imagePath.icVendorChat}
+              centerHeading={'Vendor Chat'}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            />
+          )} 
+
+          {!!userData?.auth_token ? null : <View style={styles.loginView}>
             <TouchableOpacity
               // onPress={()=>actions.isVendorNotification(true)}
-              onPress={userlogout}
+              onPress={() => actions.setAppSessionData('on_login')}
               style={styles.touchAbleLoginVIew}>
               <Text style={styles.loginLogoutText}>
-                {!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
+                {strings.LOGIN}
               </Text>
               <Image
                 source={imagePath.rightBlue}
                 style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
               />
             </TouchableOpacity>
-          </View>
+          </View>}
+
+
+
           <View style={{ height: 100 }} />
         </ScrollView>
+        <ActionSheet
+          ref={actionSheet}
+          // title={'Choose one option'}
+          options={[strings.POLICE, strings.AMBULANCE, strings.CANCEL]}
+          cancelButtonIndex={2}
+          destructiveButtonIndex={2}
+          onPress={(index) => onSosButton(index)}
+        />
       </SafeAreaView>
+      <ActionSheet
+        ref={actionSheet}
+        // title={'Choose one option'}
+        options={[strings.POLICE, strings.AMBULANCE, strings.CANCEL]}
+        cancelButtonIndex={2}
+        destructiveButtonIndex={2}
+        onPress={(index) => onSosButton(index)}
+      />
     </View>
   );
 }

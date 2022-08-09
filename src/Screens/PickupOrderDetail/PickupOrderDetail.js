@@ -33,6 +33,7 @@ export default function PickupOrderDetail({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
+  console.log(paramData,"paramDataparamData")
   const [state, setState] = useState({
     isLoading: true,
     region: {
@@ -83,7 +84,6 @@ export default function PickupOrderDetail({navigation, route}) {
   //     )
   //   : null;
   const urlValue = `/pickup-delivery/order-tracking-details`;
-  
 
   useFocusEffect(
     React.useCallback(() => {

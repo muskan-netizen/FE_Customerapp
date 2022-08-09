@@ -11,6 +11,8 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {TextInput} from 'react-native-paper';
+import { getBundleId } from 'react-native-device-info';
+import { appIds } from '../utils/constants/DynamicAppKeys';
 
 const PhoneNumberInput2 = ({
   cca2 = '',
@@ -20,7 +22,7 @@ const PhoneNumberInput2 = ({
   phoneNumber,
   placeholder,
   textInputStyle = {},
-  textInputStyle1={}
+  textInputStyle1 = {},
 }) => {
   const {themeColors, appStyle} = useSelector((state) => state?.initBoot);
   const [state, setState] = useState({
@@ -34,7 +36,9 @@ const PhoneNumberInput2 = ({
     onCountryChange(data);
   };
   const _openCountryPicker = () => {
-    setState({countryPickerModalVisible: true});
+    if (getBundleId() !== appIds.baytukom) {
+      setState({countryPickerModalVisible: true});
+    }
   };
   const _onCountryPickerModalClose = () => {
     setState({countryPickerModalVisible: false});
@@ -96,7 +100,6 @@ const PhoneNumberInput2 = ({
           backgroundColor: colors.textGreyK,
           ...textInputStyle1,
           ...textInputStyle,
-         
         }}
       />
 
@@ -126,10 +129,11 @@ const PhoneNumberInput2 = ({
       {countryPickerModalVisible && (
         <CountryPicker
           cca2={cca2}
-          withCallingCode={callingCode}
+          withCallingCode={true}
           visible={countryPickerModalVisible}
           withFlagButton={false}
           withFilter
+          countryCode={callingCode}
           onClose={_onCountryPickerModalClose}
           onSelect={_onCountryChange}
         />

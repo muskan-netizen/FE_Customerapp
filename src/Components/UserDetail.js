@@ -11,7 +11,7 @@ import {
   Alert,
 } from 'react-native';
 import Communications from 'react-native-communications';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import imagePath from '../constants/imagePath';
 import {
@@ -19,11 +19,11 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {useDarkMode} from 'react-native-dark-mode';
-import {getImageUrl} from '../utils/helperFunctions';
-import {appIds} from '../utils/constants/DynamicAppKeys';
-import {getBundleId} from 'react-native-device-info';
+import { MyDarkTheme } from '../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { getImageUrl } from '../utils/helperFunctions';
+import { appIds } from '../utils/constants/DynamicAppKeys';
+import { getBundleId } from 'react-native-device-info';
 import Share from 'react-native-share';
 
 // create a component
@@ -34,9 +34,10 @@ const UserDetail = ({
   imgStyle,
   isDriver = false,
   textStyle,
-  _onRateDriver = () => {},
+  _onRateDriver = () => { },
+  startChatWithAgent = () => { }
 }) => {
-  const {toggleTheme, themeColors, theme, appStyle} = useSelector(
+  const { toggleTheme, themeColors, theme, appStyle, appData } = useSelector(
     (state) => state.initBoot,
   );
   const darkthemeusingDevice = useDarkMode();
@@ -52,9 +53,15 @@ const UserDetail = ({
   };
 
   const onWhatsapp = async () => {
-    const link = `https://api.whatsapp.com/send?phone=${(
-      data?.vendor?.phone_no || data?.order?.phone_number
-    ).replace('+', '')}`;
+    let url = `whatsapp://send?phone= ${userData?.dial_code}${data?.vendor?.phone_no || data?.order?.phone_number
+      }`;
+    Linking.openURL(url)
+      .then((data) => {
+        console.log('WhatsApp Opened successfully ' + data); //<---Success
+      })
+      .catch(() => {
+        alert('Make sure WhatsApp installed on your device'); //<---Error
+      });
     if (link) {
       Linking.canOpenURL(link)
         .then((supported) => {
@@ -87,10 +94,10 @@ const UserDetail = ({
           uri: !!data?.agent_image
             ? data?.agent_image
             : getImageUrl(
-                data?.vendor?.banner?.image_fit,
-                data?.vendor?.banner?.image_path,
-                '600/600',
-              ),
+              data?.vendor?.banner?.image_fit,
+              data?.vendor?.banner?.image_path,
+              '600/600',
+            ),
         }}
         style={{
           height: moderateScale(40),
@@ -99,7 +106,7 @@ const UserDetail = ({
           backgroundColor: colors.blackOpacity10,
           ...imgStyle,
         }}
-        // resizeMode="cover"
+      // resizeMode="cover"
       />
 
       <View
@@ -134,23 +141,26 @@ const UserDetail = ({
             {type}
           </Text>
           {isDriver && (
-            <TouchableOpacity
-              onPress={_onRateDriver}
-              style={{
-                justifyContent: 'center',
-                backgroundColor: themeColors.primary_color,
-                alignItems: 'center',
-                borderRadius: moderateScale(3),
-                paddingVertical: moderateScaleVertical(2),
-                marginTop: moderateScaleVertical(10),
-                paddingHorizontal: 2,
-              }}>
-              <Text style={{color: colors.white}}>Rate Driver</Text>
-            </TouchableOpacity>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: moderateScaleVertical(10), }}>
+              <TouchableOpacity
+                onPress={_onRateDriver}
+                style={{
+                  justifyContent: 'center',
+                  backgroundColor: themeColors.primary_color,
+                  alignItems: 'center',
+                  borderRadius: moderateScale(3),
+                  paddingVertical: moderateScaleVertical(2),
+
+                  paddingHorizontal: 2,
+                }}>
+                <Text style={{ color: colors.white }}>Rate Driver</Text>
+              </TouchableOpacity>
+           
+            </View>
           )}
         </View>
 
-        {getBundleId() == appIds.masa || appIds.hokitch? null :
+        {getBundleId() == appIds.masa || appIds.hokitch ? null :
 
           (data?.vendor?.phone_no || data?.order?.phone_number) && (
             <View style={{ flexDirection: 'row' }}>

@@ -73,23 +73,35 @@ export default function Paystack({navigation, route}) {
     const URL = queryString.parseUrl(url);
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
-    console.log(props, 'propsPaystack');
+    console.log(paramsData, 'propsPaystack');
 
     setTimeout(() => {
       if (queryParams.status == 200) {
-        moveToNewScreen(navigationStrings.ORDERSUCESS, {
-          orderDetail: {
-            order_number: queryParams.order,
-            id: paramsData?.orderDetail?.id,
-          },
-        })();
+       
+        if (paramsData?.extraData) {
+          navigation.navigate(
+            navigationStrings.PICKUPTAXIORDERDETAILS,
+            paramsData?.extraData,
+          );
+        } else {
+          moveToNewScreen(navigationStrings.ORDERSUCESS, {
+            orderDetail: {
+              order_number: queryParams.order,
+              id: paramsData?.orderDetail?.id,
+            },
+          })();
+        }
       }
-      if (queryParams.status == 0) {
-        moveToNewScreen(navigationStrings.CART, {
-          queryURL: url.replace(`${nonQueryURL}?`, ''),
-        })();
+      else if (queryParams.status == 0) {
+        if (paramsData?.extraData) {
+          navigation.goBack()
+        } else {
+          moveToNewScreen(navigationStrings.CART, {
+            queryURL: url.replace(`${nonQueryURL}?`, ''),
+          })();
+        }
       }
-    }, 3000);
+    }, 500);
   };
   return (
     <WrapperContainer

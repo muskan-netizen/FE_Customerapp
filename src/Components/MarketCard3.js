@@ -7,20 +7,24 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Grayscale} from 'react-native-color-matrix-image-filters';
-import {useDarkMode} from 'react-native-dark-mode';
+import { Grayscale } from 'react-native-color-matrix-image-filters';
+import { useDarkMode } from 'react-native-dark-mode';
+import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import commonStyles from '../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
+import { MyDarkTheme } from '../styles/theme';
+import { appIds } from '../utils/constants/DynamicAppKeys';
 import {
   checkEvenOdd,
   getColorCodeWithOpactiyNumber,
@@ -35,7 +39,7 @@ const greyColor = ['rgba(0,0,0,0.52)', 'rgba(0,0,0,0.52)'];
 
 const MarketCard3 = ({
   data = {},
-  onPress = () => {},
+  onPress = () => { },
   extraStyles = {},
   fastImageStyle = {},
   imageResizeMode = 'cover',
@@ -45,12 +49,12 @@ const MarketCard3 = ({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appStyle, themeColors, appData} = useSelector(
+  const { appStyle, themeColors, appData } = useSelector(
     (state) => state?.initBoot,
   );
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, extraStyles, MyDarkTheme, isDarkMode});
+  const styles = stylesFunc({ fontFamily, extraStyles, MyDarkTheme, isDarkMode });
   const scaleInAnimated = new Animated.Value(0);
 
   let imageUrl = getImageUrl(
@@ -61,7 +65,7 @@ const MarketCard3 = ({
 
   const distanceView = () => {
     return (
-      <View style={{flex: 1, justifyContent: 'space-between'}}>
+      <View style={{ flex: 1, justifyContent: 'space-between' }}>
         {!!appData?.profile?.preferences?.is_hyperlocal ? (
           <View
             style={{
@@ -75,14 +79,14 @@ const MarketCard3 = ({
                 color: data?.show_slot
                   ? colors.green
                   : data?.is_vendor_closed
-                  ? colors.redB
-                  : colors.green,
+                    ? colors.redB
+                    : colors.green,
               }}>
               {data?.show_slot
                 ? strings.OPEN
                 : data?.is_vendor_closed
-                ? strings.CLOSE
-                : strings.OPEN}
+                  ? strings.CLOSE
+                  : strings.OPEN}
             </Text>
           </View>
         ) : (
@@ -103,7 +107,7 @@ const MarketCard3 = ({
                   flexDirection: 'row',
                   alignItems: 'center',
                 }}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Image
                     style={{
                       tintColor: data?.is_vendor_closed
@@ -151,10 +155,19 @@ const MarketCard3 = ({
                       resizeMode="contain"
                       source={imagePath.icTime2}
                     />
-                    <Text numberOfLines={1} style={styles.distanceTimeStyle}>
-                      {checkEvenOdd(data?.timeofLineOfSightDistance)}-
-                      {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
-                    </Text>
+                    {data?.timeofLineOfSightDistance / 60 > 1 && appIds.hokitch ==getBundleId() ?
+
+                      <Text numberOfLines={1} style={styles.distanceTimeStyle}>
+                        ≈{checkEvenOdd(data?.timeofLineOfSightDistance)}
+                      </Text> :
+                      <Text numberOfLines={1} style={styles.distanceTimeStyle}>
+                        {checkEvenOdd(data?.timeofLineOfSightDistance)}
+                        -
+                        {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
+
+                      </Text>
+
+                    }
                   </View>
                 )}
               </View>
@@ -170,54 +183,57 @@ const MarketCard3 = ({
       activeOpacity={1}
       onPress={onPress}
       style={
-        !!data?.is_vendor_closed
+        !!data?.is_vendor_closed && data?.closed_store_order_scheduled == 0
           ? {
-              ...styles.mainTouchContainer,
-              ...getScaleTransformationStyle(scaleInAnimated),
-              backgroundColor: isDarkMode
-                ? colors.whiteOpacity15
-                : getColorCodeWithOpactiyNumber(
-                    colors.textGreyLight.substring(1),
-                    20,
-                  ),
-            }
+            ...styles.mainTouchContainer,
+            ...getScaleTransformationStyle(scaleInAnimated),
+            backgroundColor: isDarkMode
+              ? colors.whiteOpacity15
+              : getColorCodeWithOpactiyNumber(
+                colors.textGreyLight.substring(1),
+                20,
+              ),
+          }
           : {
-              ...styles.mainTouchContainer,
-              ...getScaleTransformationStyle(scaleInAnimated),
-            }
+            ...styles.mainTouchContainer,
+            ...getScaleTransformationStyle(scaleInAnimated),
+          }
       }
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       <View>
         {!!data?.is_vendor_closed && !!data?.closed_store_order_scheduled ? (
-          <Grayscale>
-            <View style={{justifyContent: 'center'}}>
+          <View >
+
+            <View style={{ justifyContent: 'center',  }}>
               <FastImage
                 source={{
                   uri: imageUrl,
                   priority: FastImage.priority.high,
                   cache: FastImage.cacheControl.immutable,
                 }}
+
                 style={{
                   ...styles.mainImage,
                   ...fastImageStyle,
-                  opacity: 0.8,
+                  // opacity: 0.8,
                 }}
                 resizeMode={FastImage.resizeMode.cover}
               />
-              <Text
-                style={{
-                  ...styles.currentlyUnavailable,
-                  fontSize: textScale(12),
-                }}>
-                {strings.WE_ARE_NOT_ACCEPTING} {data?.delaySlot}{' '}
-              </Text>
+              <View style={styles.vendorScheduledView} >
+                <Text
+                  style={styles.vendorScheduledText}>
+                  {getBundleId() == appIds.masa ? `${strings.WE_ACCEPT_ONLY_SCHEDULE_ORDER} ${data?.delaySlot} ` : ` ${strings.WE_ARE_NOT_ACCEPTING} ${data?.delaySlot} `}
+
+                </Text>
+              </View>
             </View>
-          </Grayscale>
+          </View>
+
         ) : !!data?.is_vendor_closed &&
           data?.closed_store_order_scheduled == 0 ? (
           <Grayscale>
-            <View style={{justifyContent: 'center'}}>
+            <View style={{ justifyContent: 'center' }}>
               <FastImage
                 source={{
                   uri: imageUrl,
@@ -230,8 +246,9 @@ const MarketCard3 = ({
                   opacity: 0.8,
                 }}
                 resizeMode={FastImage.resizeMode.cover}
+
               />
-              <Text style={{...styles.currentlyUnavailable}}>
+              <Text style={{ ...styles.currentlyUnavailable }}>
                 {strings.CURRENTLYUNAVAILABLE}
               </Text>
             </View>
@@ -254,13 +271,13 @@ const MarketCard3 = ({
           </View>
         )}
       </View>
-      <View style={{padding: moderateScale(8)}}>
+      <View style={{ padding: moderateScale(8) }}>
         <View style={styles.descView}>
           <Text
             numberOfLines={1}
             style={
               isDarkMode
-                ? [styles.categoryText, {color: MyDarkTheme.colors.text}]
+                ? [styles.categoryText, { color: MyDarkTheme.colors.text }]
                 : styles.categoryText
             }>
             {data.name}
@@ -313,8 +330,8 @@ const MarketCard3 = ({
         ) : null}
 
         {!!appData?.profile?.preferences?.max_safety_mod &&
-        isMaxSaftey &&
-        appStyle?.homePageLayout === 5 ? (
+          isMaxSaftey &&
+          appStyle?.homePageLayout === 5 ? (
           <View>
             <View
               style={{
@@ -352,29 +369,18 @@ const MarketCard3 = ({
             </View>
           </View>
         ) : null}
-        {/* {!!data?.closed_store_order_scheduled ? (
-          <Text
-            style={{
-              ...commonStyles.mediumFont14Normal,
-              fontSize: textScale(10),
-              textAlign: 'left',
-              color: colors.redB,
-              marginTop: moderateScaleVertical(4),
-            }}>
-            {strings.WE_ARE_NOT_ACCEPTING} {data?.delaySlot}{' '}
-          </Text>
-        ) : null} */}
+        
       </View>
     </TouchableOpacity>
   );
 };
 
-export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
+export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme }) {
   const styles = StyleSheet.create({
     mainTouchContainer: {
       borderRadius: moderateScale(10),
       shadowColor: '#000',
-      shadowOffset: {width: 0, height: 0},
+      shadowOffset: { width: 0, height: 0 },
       shadowOpacity: 0.15,
       shadowRadius: 1.84,
       elevation: 2,
@@ -435,6 +441,26 @@ export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
       color: colors.white,
       fontFamily: fontFamily?.bold,
     },
+    vendorScheduledView: {
+      position: 'absolute',
+      bottom: moderateScaleVertical(1),
+      // width: moderateScale(width / 1.2),
+      justifyContent: 'center',
+      alignItems: 'center',
+      alignSelf: 'center',
+      // paddingHorizontal: moderateScale(6),
+    },
+    vendorScheduledText: {
+      color: colors.white,
+      fontSize: textScale(14),
+      fontFamily: fontFamily.medium,
+      textAlign: 'center',
+      paddingHorizontal: moderateScaleVertical(4),
+      backgroundColor: getColorCodeWithOpactiyNumber(
+        colors.black.substring(1),
+        60,
+      ),
+    }
   });
   return styles;
 }

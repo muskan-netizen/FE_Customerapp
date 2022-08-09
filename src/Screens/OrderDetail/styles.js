@@ -340,6 +340,40 @@ export default ({fontFamily}) => {
       fontSize: textScale(14),
       fontFamily: fontFamily.regular,
     },
+    closeButton: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginVertical: moderateScaleVertical(10),
+    },
+    modalMainViewContainer: {
+      backgroundColor: colors.white,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+    },
+    carType: {
+      fontSize: textScale(14),
+      color: colors.blackC,
+      fontFamily: fontFamily.bold,
+    },
+    laundryApppriceItemLabel2: {
+      marginLeft: moderateScale(5),
+      fontFamily: fontFamily.medium,
+      fontSize: textScale(12),
+      opacity: 0.6,
+    },
+    startChatText: {
+      // margin: moderateScale(15),
+      color: colors.redB,
+      fontFamily: fontFamily.medium,
+      fontSize: textScale(12),
+      marginRight:moderateScale(6)
+    },
+    agentUserIcon: {
+      tintColor: colors?.redB,
+      width: moderateScale(15),
+      height:moderateScale(15)
+
+    }
   });
   return styles;
 };

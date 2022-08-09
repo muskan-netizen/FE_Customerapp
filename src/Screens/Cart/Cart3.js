@@ -1,7 +1,7 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, isEmpty} from 'lodash';
+import {cloneDeep, isEmpty, set} from 'lodash';
 import moment from 'moment';
-import React, {Fragment, useEffect, useRef, useState} from 'react';
+import React, {Fragment, useCallback, useEffect, useRef, useState} from 'react';
 import {
   Alert,
   Animated,
@@ -19,12 +19,13 @@ import {
   TouchableOpacity,
   View,
   TouchableWithoutFeedback,
+  BackHandler,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Calendar} from 'react-native-calendars';
 import {useDarkMode} from 'react-native-dark-mode';
 import DatePicker from 'react-native-date-picker';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -97,6 +98,10 @@ import {generateTransactionRef, payWithCard} from '../../utils/paystackMethod';
 import {PayWithFlutterwave} from 'flutterwave-react-native';
 
 import {FlutterwaveInit} from 'flutterwave-react-native';
+import {setRedirection} from '../../redux/actions/auth';
+import ImagePicker from 'react-native-image-crop-picker';
+import BottomModal from '../../Components/BottomModal';
+import ButtonWithLoader from '../../Components/ButtonWithLoader';
 
 let clickedItem = {};
 let isFAQsSubmitted = true;
@@ -154,6 +159,7 @@ function Cart({navigation, route}) {
   const [kycTxtInpts, setKycTxtInpts] = useState([]);
   const [kycImages, setKycImages] = useState([]);
   const [kycPdfs, setKycPdfs] = useState([]);
+  const [apiScheduledDate, setApiScheduledDate] = useState(null);
   const [laundrySelectedPickupDate, setLaundrySelectedPickupDate] =
     useState(null);
   const [laundrySelectedPickupSlot, setLaundrySelectedPickupSlot] =
@@ -167,11 +173,11 @@ function Cart({navigation, route}) {
     useState('');
   const [laundryAvailableDropOffSlot, setLaundryAvailableDropOffSlot] =
     useState([]);
-
-  const [minimumSelectedPickupDate, setMinimumSelectedPickupDate] =
-    useState('');
-  const [minimumSelectedDropOffDate, setMinimumSelectedDropOffDate] =
-    useState('');
+  const [selectedItemForPrescription, setItemForPrescription] = useState({});
+  const [isPrescriptionModal, setPrescriptionModal] = useState(false);
+  const [selectedPrescriptionImgs, setPrescriptionImgs] = useState([]);
+  const [isPrescriptionLoading, setPrescriptionLoading] = useState(false);
+  const [isCheckSlotLoading, setCheckSloatLoading] = useState(false);
 
   const [state, setState] = useState({
     showTaxFeeArea: false,
@@ -241,6 +247,8 @@ function Cart({navigation, route}) {
   const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
+  console.log(selectedPayment, 'selectedPayment');
+
   const {preferences} = appData?.profile;
 
   const selectedAddressData = useSelector(
@@ -254,7 +262,7 @@ function Cart({navigation, route}) {
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
-  console.log('closed_store_order_scheduled', cartData);
+  console.log('isCheckSlotLoadingisCheckSlotLoading', isCheckSlotLoading);
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -265,11 +273,28 @@ function Cart({navigation, route}) {
 
   let businessType = appData?.profile?.preferences?.business_type || null;
 
-  console.log('cart items', cartItems);
+  console.log('cartitems', cartItems);
 
   const closeForm = () => {
-    updateState({isProductOrderForm: false, isCategoryKyc: false});
+    setPrescriptionModal(false);
+    updateState({
+      isProductOrderForm: false,
+      isCategoryKyc: false,
+    });
     Keyboard.dismiss();
+  };
+  useFocusEffect(
+    useCallback(() => {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        androidBackButtonHandler,
+      );
+      return () => backHandler.remove();
+    }, []),
+  );
+
+  const androidBackButtonHandler = () => {
+    return true;
   };
 
   useFocusEffect(
@@ -372,9 +397,14 @@ function Cart({navigation, route}) {
     const local = moment.utc(date).local().format('DD MMM YYYY hhðŸ‡²ðŸ‡²a');
     return local;
   };
-
+  console.log(location, 'nocationnnnnnn');
   //get the entire cart detail
   const getCartDetail = () => {
+    console.log(
+      dineInType,
+      paramsData?.data?.queryURL,
+      'paramsData?.data?.queryURL',
+    );
     // alert("cart detail hit")
     let apiData = `/?type=${dineInType}${
       paramsData?.data?.queryURL ? `&${paramsData?.data?.queryURL}` : ''
@@ -383,19 +413,17 @@ function Cart({navigation, route}) {
       apiData = apiData + `&code=${sel_types}`;
     }
     console.log('Sending api data', apiData);
+    let apiHeader = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      systemuser: DeviceInfo.getUniqueId(),
+      timezone: RNLocalize.getTimeZone(),
+      device_token: DeviceInfo.getUniqueId(),
+    };
+    console.log('Sending api header', apiHeader);
     actions
-      .getCartDetail(
-        apiData,
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-          timezone: RNLocalize.getTimeZone(),
-          device_token: DeviceInfo.getUniqueId(),
-        },
-      )
+      .getCartDetail(apiData, {}, apiHeader)
       .then((res) => {
         console.log('cart details>>>', res);
         closeForm();
@@ -496,6 +524,22 @@ function Cart({navigation, route}) {
             setMinimumDelayVendorDate(timeSlot);
           }
           setCartItems(res.data.products);
+          let currentDate = moment(new Date()).format('YYYY-MM-DD');
+          // console.log(res?.data?.scheduled_date_time.slice(0, -6), "res?.data?.scheduled_date_time")
+          let getApiScheduledDate =
+            currentDate == res?.data?.scheduled_date_time?.slice(0, -6);
+          setApiScheduledDate(getApiScheduledDate);
+
+          // if (getBundleId == appIds.masa) {
+          //   if (currentDate == sheduledorderdate || currentDate == getApiScheduledDate) {
+          //     setAvailableTimeSlots([])
+          //   } else {
+          //     setAvailableTimeSlots(res.data.slots)
+          //   }
+          // } else {
+          //   setAvailableTimeSlots(res.data.slots);
+          // }
+          // getBundleId == appIds.masa ? currentDate == sheduledorderdate ||  currentDate == getApiScheduledDate ? setAvailableTimeSlots([]):  setAvailableTimeSlots(res.data.slots): setAvailableTimeSlots(res.data.slots)
           setAvailableTimeSlots(res.data.slots);
           // setLaundryAvailablePickupSlot(res.data.slots);
           // setLaundryAvailableDropOffSlot(res.data.slots);
@@ -691,6 +735,8 @@ function Cart({navigation, route}) {
       isSubmitKycLoader: false,
       isModalVisibleForPayFlutterWave: false,
     });
+    setPrescriptionModal(false);
+    setPrescriptionLoading(false);
     showError(
       error?.error?.description ||
         error?.description ||
@@ -980,7 +1026,7 @@ function Cart({navigation, route}) {
         navigation.navigate(navigationStrings.WINDCAVE, paymentData);
         break;
 
-      case 32: //Easebuzz Payment Getway
+      case 32: //PAYPHONE Payment Getway
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.PAYPHONE, paymentData);
         break;
@@ -998,6 +1044,22 @@ function Cart({navigation, route}) {
       case 21: //VIVAWALLET Payment Getway
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.VIVAWALLET, paymentData);
+        break;
+      case 40: //USEREDE Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.USEREDE, paymentData);
+        break;
+      case 41: //OPENPAY Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.OPENPAY, paymentData);
+        break;
+      case 42: //Direct Pay Online Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.DIRECTPAYONLINE, paymentData);
+        break;
+      case 46: //Direct Pay Online Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.KHALTI, paymentData);
         break;
 
       default:
@@ -1091,6 +1153,9 @@ function Cart({navigation, route}) {
       paymentData?.orderDetail?.order_number
     }&token=${!!cardInfo ? cardInfo : null}&action=cart`;
 
+    {
+      alert('heyyyy');
+    }
     actions
       .openPaymentWebUrl(
         queryData,
@@ -1116,14 +1181,15 @@ function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
-  console.log(dineInType,"vendorAddress?");
+  console.log(dineInType, 'vendorAddress?');
 
-  
   const _directOrderPlace = () => {
     let data = {};
     data['vendor_id'] = cartData?.products[0]?.vendor_id;
-    data['address_id'] =dineInType !='delivery' ? '': 
-      paramsData?.selectedAddressData?.id || selectedAddressData?.id;
+    data['address_id'] =
+      dineInType != 'delivery'
+        ? ''
+        : paramsData?.selectedAddressData?.id || selectedAddressData?.id;
     data['payment_option_id'] =
       Number(cartData?.total_payable_amount) +
         (selectedTipAmount != null && selectedTipAmount != ''
@@ -1147,6 +1213,15 @@ function Cart({navigation, route}) {
 
   const placeOrderData = (data) => {
     console.log('Sending data', data);
+    let headerData = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      latitude: !isEmpty(location) ? location?.latitude.toString() : '',
+      longitude: !isEmpty(location) ? location?.longitude.toString() : '',
+      // systemuser: DeviceInfo.getUniqueId(),
+    };
+    console.log(headerData, 'headerData');
 
     actions
       .placeOrder(data, {
@@ -1158,7 +1233,7 @@ function Cart({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-     
+        console.log(res, 'placeOrder');
         actions.reloadData(!reloadData);
         setSelectedTipvalue(null);
         setPickupDriverComment(null);
@@ -1187,7 +1262,8 @@ function Cart({navigation, route}) {
           selectedPayment?.id != 21 &&
           selectedPayment?.id != 36 &&
           selectedPayment?.id != 39 &&
-          selectedPayment?.id != 34
+          selectedPayment?.id != 34 &&
+          selectedPayment?.id != 41
         ) {
           setCartItems([]);
           setCartData({});
@@ -1315,7 +1391,7 @@ function Cart({navigation, route}) {
     console.log(data, 'fsdjkhfkjshfkjahsdkjfhak');
 
     // updateState({isLoading: false});
- 
+
     actions
       .scheduledOrder(data, {
         code: appData?.profile?.code,
@@ -1339,7 +1415,7 @@ function Cart({navigation, route}) {
         }
         // getCartDetail();
       })
-      .catch(error=>console.log(error,"errororor"));
+      .catch((error) => console.log(error, 'errororor'));
   };
 
   const _finalPayment = () => {
@@ -1400,6 +1476,7 @@ function Cart({navigation, route}) {
   const formatDateSlot = (date, time) => {
     return moment(`${date} ${time}`, 'YYYY-MM-DD HH:mm:ss').format();
   };
+  console.log(userData, 'userData?>>>userData?');
 
   //Clear cart
   const placeOrder = () => {
@@ -1474,15 +1551,9 @@ function Cart({navigation, route}) {
       updateState({placeLoader: true});
       var d1 = new Date();
       var d2 = new Date(localeSheduledOrderDate);
-      console.log(d2, 'sheduledorderdate');
-      // if (!!selectedTimeSlots) {
-      //   d2 = new Date(localeSheduledOrderDate)
-      // } else {
-      //   d2 = new Date(sheduledorderdate);
-      // }
 
       console.log('shceduleORderdata', sheduledorderdate);
-      if (!selectedAddressData) {
+      if (!selectedAddressData && dineInType !== 'takeaway') {
         // showError(strings.PLEASE_SELECT_ADDRESS);
         setModalVisible(true);
       } else if (!selectedPayment) {
@@ -1490,86 +1561,37 @@ function Cart({navigation, route}) {
       } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
         errorMethod(strings.INVALID_SCHEDULED_DATE);
       } else {
-        if (!!userData) {
-          console.log(userData, 'userData');
-          if (!!userData) {
-            if (
-              !!userData?.client_preference?.verify_email &&
-              !!userData?.client_preference?.verify_phone
-            ) {
-              updateState({placeLoader: false});
-
-              if (
-                !!userData?.verify_details?.is_email_verified &&
-                !!userData?.verify_details?.is_phone_verified
-              ) {
-                // setDateAndTimeSchedule(true);
-                setTimeout(() => {
-                  _finalPayment();
-                }, 500);
-              } else {
-                moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
-                  formCart: true,
-                })();
-              }
-            } else if (
-              !!userData?.client_preference?.verify_email ||
-              !!userData?.client_preference?.verify_phone
-            ) {
-              if (
-                !!userData?.client_preference?.verify_email &&
-                !userData?.verify_details?.is_email_verified
-              ) {
-                updateState({placeLoader: false});
-
-                moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
-                  formCart: true,
-                })();
-              } else if (
-                !!userData?.client_preference?.verify_phone &&
-                !userData?.verify_details?.is_phone_verified
-              ) {
-                updateState({placeLoader: false});
-
-                moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
-                  formCart: true,
-                })();
-              } else {
-                setTimeout(() => {
-                  _finalPayment();
-                }, 500);
-              }
-
-              // if (
-              //   !!userData?.verify_details?.is_email_verified ||
-              //   !!userData?.verify_details?.is_phone_verified
-              // ) {
-              //   // setDateAndTimeSchedule(true);
-              //   setTimeout(() => {
-              //     _finalPayment();
-              //   }, 500);
-              // } else {
-              //   updateState({placeLoader: false});
-
-              //   moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
-              //     formCart: true,
-              //   })();
-              // }
-            } else {
-              // setDateAndTimeSchedule(true);
-              setTimeout(() => {
-                _finalPayment();
-              }, 500);
-            }
-          }
+        if (
+          !!(
+            !!userData?.client_preference?.verify_email &&
+            !userData?.verify_details?.is_email_verified
+          ) ||
+          !!(
+            !!userData?.client_preference?.verify_phone &&
+            !userData?.verify_details?.is_phone_verified
+          )
+        ) {
+          updateState({
+            isLoadingB: false,
+            placeLoader: false,
+          });
+          moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+            ...userData,
+            fromCart: true,
+          })();
         } else {
           _finalPayment();
         }
       }
     } else {
       updateState({placeLoader: false});
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      setAppSessionRedirection();
     }
+  };
+
+  const setAppSessionRedirection = () => {
+    actions.setRedirection('cart');
+    actions.setAppSessionData('on_login');
   };
 
   useEffect(() => {
@@ -1811,7 +1833,7 @@ function Cart({navigation, route}) {
   //       .catch(errorMethod);
   //   }
   // };
-  console.log(paymentMethodId,"paymentMethodId")
+  console.log(paymentMethodId, 'paymentMethodId');
   const _paymentWithStripe = async (
     cardInfo,
     tokenInfo,
@@ -1819,7 +1841,7 @@ function Cart({navigation, route}) {
     order_number,
   ) => {
     console.log(order_number, 'order_numberrrrr');
-    
+
     actions
       .getStripePaymentIntent(
         // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
@@ -1966,6 +1988,7 @@ function Cart({navigation, route}) {
       //       language: languages?.primary_language?.id,
       //     },
       //   )
+
       //   .then((res) => {
       //     updateState({isRefreshing: false});
       //     if (res && res?.status == 'Success' && res?.data) {
@@ -2108,6 +2131,10 @@ function Cart({navigation, route}) {
 
   const selectOrderDate = () => {
     if (businessType == 'laundry') {
+      if (laundrySelectedPickupDate > laundrySelectedDropOffDate) {
+        alert('Please select valid dates.');
+        return;
+      }
       if (
         modalType == 'pickup' &&
         (!laundrySelectedPickupDate || !laundrySelectedPickupSlot)
@@ -2120,6 +2147,13 @@ function Cart({navigation, route}) {
         (!laundrySelectedDropOffDate || !laundrySelectedDropOffSlot)
       ) {
         alert('Please select drop-off date and time slots');
+        return;
+      }
+      if (
+        !cartData?.same_day_delivery_for_schedule &&
+        laundrySelectedDropOffDate == laundrySelectedPickupDate
+      ) {
+        alert('You can not schedule pickup and drop off on the same day ');
         return;
       } else {
         onClose();
@@ -2279,21 +2313,39 @@ function Cart({navigation, route}) {
               }}
               resizeMode="contain"
             />
-            <Text
-              style={{
-                fontSize: textScale(12),
-                color:
-                  (!!sel_types ? sel_types : item?.sel_types) == val?.code
-                    ? themeColors.primary_color
-                    : colors.black,
-                fontFamily:
-                  (!!sel_types ? sel_types : item?.sel_types) == val?.code
-                    ? fontFamily.bold
-                    : fontFamily.regular,
-                textAlign: 'left',
-              }}>
-              {val?.courier_name}
-            </Text>
+            {appIds.hokitch == getBundleId() ? (
+              <Text
+                style={{
+                  fontSize: textScale(12),
+                  color:
+                    (!!sel_types ? sel_types : item?.sel_types) == val?.code
+                      ? themeColors.primary_color
+                      : colors.black,
+                  fontFamily:
+                    (!!sel_types ? sel_types : item?.sel_types) == val?.code
+                      ? fontFamily.bold
+                      : fontFamily.regular,
+                  textAlign: 'left',
+                }}>
+                {strings.CHARGES}
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  fontSize: textScale(12),
+                  color:
+                    (!!sel_types ? sel_types : item?.sel_types) == val?.code
+                      ? themeColors.primary_color
+                      : colors.black,
+                  fontFamily:
+                    (!!sel_types ? sel_types : item?.sel_types) == val?.code
+                      ? fontFamily.bold
+                      : fontFamily.regular,
+                  textAlign: 'left',
+                }}>
+                {val?.courier_name}
+              </Text>
+            )}
           </View>
         </View>
 
@@ -2424,6 +2476,11 @@ function Cart({navigation, route}) {
     }
   };
 
+  const openPickerForPrescription = async (item, index) => {
+    setItemForPrescription(item);
+    setPrescriptionModal(true);
+  };
+
   const _renderItem = ({item, index}) => {
     console.log(item, 'item>>><>>>');
     return (
@@ -2507,7 +2564,10 @@ function Cart({navigation, route}) {
                   color: colors.redB,
                   fontSize: textScale(9),
                 }}>
-                {strings.WE_ARE_NOT_ACCEPTING} {item?.delaySlot}
+                {/* {strings.WE_ARE_NOT_ACCEPTING} {item?.delaySlot} */}
+                {getBundleId() == appIds.masa
+                  ? `${strings.WE_ACCEPT_ONLY_SCHEDULE_ORDER} ${item?.delaySlot} `
+                  : ` ${strings.WE_ARE_NOT_ACCEPTING} ${item?.delaySlot} `}
               </Text>
             ) : null}
 
@@ -2527,6 +2587,7 @@ function Cart({navigation, route}) {
           {/************ start  render cart items *************/}
           {item?.vendor_products.length > 0
             ? item?.vendor_products.map((i, inx) => {
+                console.log(i, 'itemmmmmm');
                 return (
                   <Swipeable
                     ref={swipeRef}
@@ -2593,7 +2654,7 @@ function Cart({navigation, route}) {
                                   flex: 1,
                                 }}>
                                 <View>
-                                  {!!(i?.product?.category_name?.name) && (
+                                  {!!i?.product?.category_name?.name && (
                                     <Text
                                       numberOfLines={1}
                                       style={{
@@ -2603,7 +2664,7 @@ function Cart({navigation, route}) {
                                           : colors.textGreyB,
                                         fontSize: textScale(12),
                                         fontFamily: fontFamily.medium,
-                                        flex: 0.7,
+                                        width: width / 2.1,
                                       }}>
                                       {i?.product?.category_name.name},
                                     </Text>
@@ -2617,8 +2678,7 @@ function Cart({navigation, route}) {
                                         : colors.blackOpacity86,
                                       fontSize: textScale(12),
                                       fontFamily: fontFamily.medium,
-                                     width:width/2.1
-                                      
+                                      width: width / 2.1,
                                     }}>
                                     {i?.product?.translation[0]?.title},
                                   </Text>
@@ -2667,7 +2727,7 @@ function Cart({navigation, route}) {
                                   </View>
                                 </View>
                               </View>
-                              
+
                               <Text
                                 style={{
                                   ...styles.priceItemLabel2,
@@ -2678,17 +2738,7 @@ function Cart({navigation, route}) {
                                   marginTop: moderateScaleVertical(4),
                                   fontFamily: fontFamily.regular,
                                 }}>
-                                <Text style={{}}>
-                                  {`${currencies?.primary_currency?.symbol}${
-                                    // Number(i?.pvariant?.multiplier) *
-                                    currencyNumberFormatter(
-                                      Number(i?.variants?.price),
-                                      appData?.profile?.preferences
-                                        ?.digit_after_decimal,
-                                    )
-                                  }`}
-                                </Text>{' '}X
-                                {i?.quantity} ={' '}
+                                {i?.quantity} X
                                 <Text
                                   style={{
                                     color: isDarkMode
@@ -2699,6 +2749,22 @@ function Cart({navigation, route}) {
                                     // Number(i?.pvariant?.multiplier) *
                                     currencyNumberFormatter(
                                       Number(i?.variants?.quantity_price),
+                                      appData?.profile?.preferences
+                                        ?.digit_after_decimal,
+                                    )
+                                  }`}
+                                </Text>
+                                ={' '}
+                                <Text
+                                  style={{
+                                    color: isDarkMode
+                                      ? MyDarkTheme.colors.text
+                                      : colors.black,
+                                  }}>
+                                  {`${currencies?.primary_currency?.symbol}${
+                                    // Number(i?.pvariant?.multiplier) *
+                                    currencyNumberFormatter(
+                                      Number(i?.variants?.price),
                                       appData?.profile?.preferences
                                         ?.digit_after_decimal,
                                     )
@@ -2757,7 +2823,7 @@ function Cart({navigation, route}) {
                                 flex: 1,
                                 justifyContent: 'center',
                               }}>
-                              {!!i?.product_addons.length > 0 && (
+                              {!!i?.product_addons.length > 0 ? (
                                 <View>
                                   <Text
                                     style={{
@@ -2771,7 +2837,10 @@ function Cart({navigation, route}) {
                                     {strings.EXTRA}
                                   </Text>
                                 </View>
+                              ) : (
+                                <View />
                               )}
+
                               <View>
                                 {i?.product_addons.length > 0
                                   ? i?.product_addons.map((j, jnx) => {
@@ -2882,26 +2951,53 @@ function Cart({navigation, route}) {
                                 </View>
                               )}
                             </View>
-                          </View>
 
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              alignItems: 'center',
-                              alignSelf: 'flex-end',
-                              marginTop: moderateScale(6),
-                            }}>
-                            {!!(
-                              i?.faq_count && i?.user_product_order_form == null
-                            ) && (
-                              <>
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                alignSelf: 'flex-end',
+                                marginTop: moderateScale(6),
+                              }}>
+                              {!!(
+                                i?.faq_count &&
+                                i?.user_product_order_form == null
+                              ) && (
+                                <>
+                                  <TouchableOpacity
+                                    style={{
+                                      marginRight: moderateScale(14),
+                                    }}
+                                    onPress={() => getProductFAQs(i)}>
+                                    <FastImage
+                                      source={imagePath.edit1Royo}
+                                      resizeMode="contain"
+                                      style={{
+                                        width: moderateScale(16),
+                                        height: moderateScale(16),
+                                      }}
+                                    />
+                                  </TouchableOpacity>
+                                </>
+                              )}
+                              <View>
+                                {!!i?.product?.pharmacy_check && (
+                                  <TouchableOpacity
+                                    onPress={() => openPickerForPrescription(i)}
+                                    style={{
+                                      flexDirection: 'row',
+                                      alignItems: 'center',
+                                      marginBottom: moderateScaleVertical(24),
+                                    }}>
+                                    {/* <Image source={imagePath.icAddPlaceholder} /> */}
+                                    <Image source={imagePath.icPrescription} />
+                                  </TouchableOpacity>
+                                )}
+
                                 <TouchableOpacity
-                                  style={{
-                                    marginRight: moderateScale(14),
-                                  }}
-                                  onPress={() => getProductFAQs(i)}>
+                                  onPress={() => openDeleteView(i)}>
                                   <FastImage
-                                    source={imagePath.edit1Royo}
+                                    source={imagePath.deleteRed}
                                     resizeMode="contain"
                                     style={{
                                       width: moderateScale(16),
@@ -2909,44 +3005,33 @@ function Cart({navigation, route}) {
                                     }}
                                   />
                                 </TouchableOpacity>
-                              </>
-                            )}
-                            <TouchableOpacity onPress={() => openDeleteView(i)}>
-                              <FastImage
-                                source={imagePath.deleteRed}
-                                resizeMode="contain"
-                                style={{
-                                  width: moderateScale(16),
-                                  height: moderateScale(16),
-                                }}
-                              />
-                            </TouchableOpacity>
+                              </View>
+                            </View>
                           </View>
                         </View>
+                        {!!cartData?.delay_date && (
+                          <Text
+                            style={{
+                              fontSize: moderateScale(12),
+                              fontFamily: fontFamily.medium,
+                              color: colors.redFireBrick,
+                              marginBottom: moderateScale(3),
+                            }}>{`${
+                            i?.product.delay_order_hrs > 0 ||
+                            i?.product.delay_order_min > 0
+                              ? strings.PREPARATION_TIME_IS
+                              : ''
+                          }${
+                            i?.product.delay_order_hrs > 0
+                              ? ` ${i?.product.delay_order_hrs} hrs`
+                              : ''
+                          }${
+                            i?.product.delay_order_min > 0
+                              ? ` ${i?.product.delay_order_min} mins`
+                              : ''
+                          }`}</Text>
+                        )}
                       </View>
-                      {!!cartData?.delay_date && (
-                        <Text
-                          style={{
-                            fontSize: moderateScale(12),
-                            fontFamily: fontFamily.medium,
-                            color: colors.redFireBrick,
-                            marginBottom: moderateScale(3),
-                          }}>{`${
-                          i?.product.delay_order_hrs > 0 ||
-                          i?.product.delay_order_min > 0
-                            ? strings.PREPARATION_TIME_IS
-                            : ''
-                        }${
-                          i?.product.delay_order_hrs > 0
-                            ? ` ${i?.product.delay_order_hrs} hrs`
-                            : ''
-                        }${
-                          i?.product.delay_order_min > 0
-                            ? ` ${i?.product.delay_order_min} mins`
-                            : ''
-                        }`}</Text>
-                      )}
-
                       {/* <View style={styles.dashedLine} /> */}
                     </Animated.View>
                   </Swipeable>
@@ -3187,14 +3272,20 @@ function Cart({navigation, route}) {
                         ...styles.deliveryFeeDropDown,
                         borderColor: themeColors.primary_color,
                       }}>
-                      <Text style={styles.dropDownTextStyle}>
-                        {
-                          item?.delivery_types.filter(
-                            (val2) =>
-                              (sel_types || item?.sel_types) == val2?.code,
-                          )[0]?.courier_name
-                        }
-                      </Text>
+                      {appIds.hokitch == getBundleId() ? (
+                        <Text style={styles.dropDownTextStyle}>
+                          {strings.CHARGES}
+                        </Text>
+                      ) : (
+                        <Text style={styles.dropDownTextStyle}>
+                          {
+                            item?.delivery_types.filter(
+                              (val2) =>
+                                (sel_types || item?.sel_types) == val2?.code,
+                            )[0]?.courier_name
+                          }
+                        </Text>
+                      )}
                       <Text
                         style={{
                           ...styles.dropDownTextStyle,
@@ -3594,8 +3685,7 @@ function Cart({navigation, route}) {
         selectedId: id,
       });
     } else {
-      // showError(strings.UNAUTHORIZED_MESSAGE);
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      setAppSessionRedirection();
     }
   };
   const setModalVisibleForAddessModal = (visible, type, id, data) => {
@@ -3611,8 +3701,7 @@ function Cart({navigation, route}) {
         });
       }, 1000);
     } else {
-      // showError(strings.UNAUTHORIZED_MESSAGE);
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      setAppSessionRedirection();
     }
   };
 
@@ -3636,8 +3725,6 @@ function Cart({navigation, route}) {
     updateState({isGiftBoxSelected: !isGiftBoxSelected});
   };
 
-  // {console.log(preferences,"preferences>>>>")}
-
   //get footer start
   const getFooter = () => {
     return (
@@ -3645,7 +3732,7 @@ function Cart({navigation, route}) {
         {!!cartData?.category_kyc_count && (
           <ButtonComponent
             onPress={onCategoryKYC}
-            btnText={'Categoory KYC'}
+            btnText={strings.CATEGORY_KYC}
             borderRadius={moderateScale(13)}
             textStyle={{color: colors.white, textTransform: 'none'}}
             containerStyle={{
@@ -3673,48 +3760,6 @@ function Cart({navigation, route}) {
           placeholder={strings.SPECIAL_INSTRUCTION}
           returnKeyType={'next'}
         />
-        {/* <View style={{ height: moderateScaleVertical(20) }} /> */}
-
-        {/* select payment method */}
-        {/* <TouchableOpacity
-          onPress={() =>
-            !!userData?.auth_token
-              ? moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
-              : navigation.navigate(navigationStrings.OUTER_SCREEN, {})
-          }
-          style={styles.paymentMainView}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Image
-              style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
-              source={imagePath.paymentMethod}
-            />
-            <Text
-              style={{
-                ...styles.priceItemLabel2,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                marginLeft: moderateScale(4),
-              }}>
-              {selectedPayment.title_lng
-                ? selectedPayment.title_lng
-                : selectedPayment.title
-                ? selectedPayment.title
-                : strings.SELECT_PAYMENT_METHOD}
-            </Text>
-          </View>
-          <View>
-            <Image
-              source={imagePath.goRight}
-              style={
-                isDarkMode
-                  ? {
-                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                      tintColor: MyDarkTheme.colors.text,
-                    }
-                  : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
-              }
-            />
-          </View>
-        </TouchableOpacity> */}
 
         {/* Laundry Section only */}
         {!!(businessType == 'laundry') && (
@@ -4505,9 +4550,7 @@ function Cart({navigation, route}) {
               onPress={() =>
                 !!userData?.auth_token
                   ? updateState({paymentModal: true})
-                  : // ?moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
-                    //  moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
-                    navigation.navigate(navigationStrings.OUTER_SCREEN, {})
+                  :setAppSessionRedirection()
               }
               style={{
                 ...styles.paymentMainView,
@@ -5182,7 +5225,11 @@ function Cart({navigation, route}) {
         }
         statusBarColor={colors.backgroundGrey}
         source={loaderOne}>
-        <Header centerTitle={strings.CART} leftIcon={imagePath.icBackb} />
+        <Header
+          centerTitle={strings.CART}
+          noLeftIcon
+          leftIcon={imagePath.icBackb}
+        />
         {/* <View
           style={{
             // flex: 1,
@@ -5395,8 +5442,11 @@ function Cart({navigation, route}) {
               timezone: RNLocalize.getTimeZone(),
             },
           );
+          setCheckSloatLoading(false);
           setLaundryAvailableDropOffSlot(res);
         } catch (error) {
+          setCheckSloatLoading(false);
+
           console.log('error riased', error);
         }
         return;
@@ -5425,7 +5475,10 @@ function Cart({navigation, route}) {
       if (res.length == 0) {
         setSelectedTimeSlots('');
       }
+      setCheckSloatLoading(false);
     } catch (error) {
+      setCheckSloatLoading(false);
+
       console.log('error riased', error);
     }
   };
@@ -5554,7 +5607,7 @@ function Cart({navigation, route}) {
   };
 
   const onSelectDateFromCalendar = (day) => {
-    console.log('selected day', day);
+    setCheckSloatLoading(true);
     setSelectedDateFromCalendar(day.dateString);
     setScheduleType('schedule');
     setModalType('schedule');
@@ -5563,6 +5616,8 @@ function Cart({navigation, route}) {
   };
 
   const laundrySlotSelection = (day) => {
+    setCheckSloatLoading(true);
+
     if (modalType == 'pickup') {
       setLaundrySelectedPickupDate(day.dateString);
       setLaundrySelectedPickupSlot('');
@@ -5807,9 +5862,25 @@ function Cart({navigation, route}) {
           mediaType: 'photo',
         })
           .then((res) => {
-            console.log(res, 'res>>><>>>');
-            let data = cloneDeep(kycImages);
+            if (isPrescriptionModal) {
+              let imgData = [...selectedPrescriptionImgs];
+              const isFound = imgData.some(
+                (item) => item?.filename == res?.filename,
+              );
+              if (isFound) {
+                alert('File already uploaded');
+                return;
+              }
+              imgData.push({
+                mime: res?.mime,
+                path: res?.path,
+                filename: res?.filename,
+              });
+              setPrescriptionImgs(imgData);
+              return;
+            }
 
+            let data = cloneDeep(kycImages);
             data[addtionSelectedImageIndex].value = res?.sourceURL || res?.path;
             data[addtionSelectedImageIndex].fileData = res;
             setKycImages(data);
@@ -5972,111 +6043,100 @@ function Cart({navigation, route}) {
 
   const renderCategoryKYC = () => {
     return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <View
-          style={{
-            height: height / 2,
-
-            borderTopLeftRadius: moderateScale(16),
-            borderTopRightRadius: moderateScale(16),
-            backgroundColor: colors.white,
-            padding: moderateScale(12),
-          }}>
-          {isCategoryKycLoader ? (
-            <View>
-              <HeaderLoader
-                viewStyles={{
-                  marginTop: moderateScaleVertical(8),
-                  marginBottom: moderateScaleVertical(16),
-                  marginHorizontal: 0,
-                }}
-                widthLeft={width - moderateScale(25)}
-                rectWidthLeft={width - moderateScale(25)}
-                heightLeft={moderateScaleVertical(120)}
-                rectHeightLeft={moderateScaleVertical(120)}
-                isRight={false}
-                rx={7}
-                ry={7}
-              />
-              <HeaderLoader
-                viewStyles={{
-                  marginTop: moderateScaleVertical(8),
-                  marginBottom: moderateScaleVertical(16),
-                  marginHorizontal: 0,
-                }}
-                widthLeft={width - moderateScale(25)}
-                rectWidthLeft={width - moderateScale(25)}
-                heightLeft={moderateScaleVertical(120)}
-                rectHeightLeft={moderateScaleVertical(120)}
-                isRight={false}
-                rx={7}
-                ry={7}
-              />
-              <HeaderLoader
-                viewStyles={{
-                  marginTop: moderateScaleVertical(8),
-                  marginBottom: moderateScaleVertical(16),
-                  marginHorizontal: 0,
-                }}
-                widthLeft={width - moderateScale(25)}
-                rectWidthLeft={width - moderateScale(25)}
-                heightLeft={moderateScaleVertical(120)}
-                rectHeightLeft={moderateScaleVertical(120)}
-                isRight={false}
-                rx={7}
-                ry={7}
-              />
-            </View>
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                paddingHorizontal: moderateScale(15),
+      <View>
+        {isCategoryKycLoader ? (
+          <View>
+            <HeaderLoader
+              viewStyles={{
+                marginTop: moderateScaleVertical(8),
+                marginBottom: moderateScaleVertical(16),
+                marginHorizontal: 0,
+              }}
+              widthLeft={width - moderateScale(25)}
+              rectWidthLeft={width - moderateScale(25)}
+              heightLeft={moderateScaleVertical(120)}
+              rectHeightLeft={moderateScaleVertical(120)}
+              isRight={false}
+              rx={7}
+              ry={7}
+            />
+            <HeaderLoader
+              viewStyles={{
+                marginTop: moderateScaleVertical(8),
+                marginBottom: moderateScaleVertical(16),
+                marginHorizontal: 0,
+              }}
+              widthLeft={width - moderateScale(25)}
+              rectWidthLeft={width - moderateScale(25)}
+              heightLeft={moderateScaleVertical(120)}
+              rectHeightLeft={moderateScaleVertical(120)}
+              isRight={false}
+              rx={7}
+              ry={7}
+            />
+            <HeaderLoader
+              viewStyles={{
+                marginTop: moderateScaleVertical(8),
+                marginBottom: moderateScaleVertical(16),
+                marginHorizontal: 0,
+              }}
+              widthLeft={width - moderateScale(25)}
+              rectWidthLeft={width - moderateScale(25)}
+              heightLeft={moderateScaleVertical(120)}
+              rectHeightLeft={moderateScaleVertical(120)}
+              isRight={false}
+              rx={7}
+              ry={7}
+            />
+          </View>
+        ) : (
+          <View
+            style={{
+              flex: 1,
+              paddingHorizontal: moderateScale(15),
+            }}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{
+                paddingBottom: moderateScaleVertical(60),
               }}>
-              <ScrollView
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{
-                  paddingBottom: moderateScaleVertical(60),
-                }}>
-                {!isEmpty(kycTxtInpts) &&
-                  kycTxtInpts.map((item, index) => {
-                    return getTextInputField(item, index);
+              {!isEmpty(kycTxtInpts) &&
+                kycTxtInpts.map((item, index) => {
+                  return getTextInputField(item, index);
+                })}
+
+              {!isEmpty(kycImages) && (
+                <View style={styles.viewStyleForUploadImage}>
+                  {kycImages.map((item, index) => {
+                    return getImageFieldView(item, index);
                   })}
+                </View>
+              )}
 
-                {!isEmpty(kycImages) && (
-                  <View style={styles.viewStyleForUploadImage}>
-                    {kycImages.map((item, index) => {
-                      return getImageFieldView(item, index);
-                    })}
-                  </View>
-                )}
-
-                {!isEmpty(kycPdfs) && (
-                  <View style={styles.viewStyleForUploadImage}>
-                    {kycPdfs.map((item, index) => {
-                      return getPdfView(item, index);
-                    })}
-                  </View>
-                )}
-              </ScrollView>
-              <ButtonComponent
-                onPress={onSubmitKycDocs}
-                btnText={'Submit'}
-                borderRadius={moderateScale(13)}
-                textStyle={{color: colors.white}}
-                containerStyle={{
-                  position: 'absolute',
-                  backgroundColor: themeColors.primary_color,
-                  width: width - moderateScale(30),
-                  bottom: 10,
-                }}
-                placeLoader={isSubmitKycLoader}
-              />
-            </View>
-          )}
-        </View>
-      </KeyboardAvoidingView>
+              {!isEmpty(kycPdfs) && (
+                <View style={styles.viewStyleForUploadImage}>
+                  {kycPdfs.map((item, index) => {
+                    return getPdfView(item, index);
+                  })}
+                </View>
+              )}
+            </ScrollView>
+            <ButtonComponent
+              onPress={onSubmitKycDocs}
+              btnText={'Submit'}
+              borderRadius={moderateScale(13)}
+              textStyle={{color: colors.white}}
+              containerStyle={{
+                position: 'absolute',
+                backgroundColor: themeColors.primary_color,
+                width: width - moderateScale(30),
+                bottom: 10,
+              }}
+              placeLoader={isSubmitKycLoader}
+            />
+          </View>
+        )}
+      </View>
     );
   };
 
@@ -6090,6 +6150,242 @@ function Cart({navigation, route}) {
     updateState({
       isVisibleTimeModal: false,
     });
+  };
+  const onAddPrescriptionDocs = () => {
+    showActionSheet();
+  };
+
+  const onSubmitPrescriptionDocs = () => {
+    if (isEmpty(selectedPrescriptionImgs)) {
+      alert('Please upload atleast one image.');
+      return;
+    }
+    setPrescriptionLoading(true);
+    let formdata = new FormData();
+    formdata.append('vendor_id', selectedItemForPrescription?.vendor_id);
+    formdata.append('product_id', selectedItemForPrescription?.product_id);
+
+    selectedPrescriptionImgs.map((item) => {
+      formdata.append('prescriptions[]', {
+        name: item?.filename,
+        type: item?.mime,
+        uri: item?.path,
+      });
+    });
+
+    actions
+      .addPrescriptions(formdata, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        'Content-Type': 'multipart/form-data',
+      })
+      .then((res) => {
+        setPrescriptionImgs([]);
+        setPrescriptionLoading(false);
+        setPrescriptionModal(false);
+        showSuccess(res?.message);
+        getCartDetail();
+      })
+      .catch(errorMethod);
+  };
+
+  const onRemovePrescriptionImg = (item, type) => {
+    if (type == 'API') {
+      actions
+        .deletePrescriptions(
+          {
+            prescription_id: item?.prescription_id,
+          },
+          {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+          },
+        )
+        .then((res) => {
+          setPrescriptionModal(false);
+          setTimeout(() => {
+            showSuccess(res?.message);
+            getCartDetail();
+          }, 500);
+        })
+        .catch(errorMethod);
+    }
+
+    const imgData = [...selectedPrescriptionImgs];
+    const indexOfObject = imgData.findIndex((object) => {
+      return object.filename === item?.filename;
+    });
+    imgData.splice(indexOfObject, 1);
+    setPrescriptionImgs(imgData);
+  };
+
+  const renderUploadedPrescriptionImgs = ({item, index}) => {
+    return (
+      <View
+        style={{
+          justifyContent: 'center',
+          marginRight: moderateScale(10),
+        }}>
+        <FastImage
+          source={{
+            uri: getImageUrl(item?.proxy_url, item?.image_path, '300/300'),
+            priority: FastImage.priority.high,
+            cache: FastImage.cacheControl.immutable,
+          }}
+          style={{
+            height: width / 4.5,
+            width: width / 4.5,
+            borderRadius: moderateScale(8),
+          }}
+        />
+        <TouchableOpacity
+          hitSlop={hitSlopProp}
+          onPress={() => onRemovePrescriptionImg(item, 'API')}
+          style={{
+            position: 'absolute',
+            right: -2,
+            top: 0,
+          }}>
+          <Image
+            source={imagePath.crossC}
+            style={{
+              height: 12,
+              width: 12,
+            }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const renderPrescriptionModalView = () => {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: colors.white,
+        }}>
+        <Text
+          style={{
+            fontFamily: fontFamily.bold,
+            fontSize: textScale(14),
+          }}>
+          Prescriptions Details
+        </Text>
+
+        <ScrollView>
+          {!isEmpty(
+            selectedItemForPrescription?.product?.uploaded_prescriptions,
+          ) && (
+            <View>
+              <Text
+                style={{
+                  fontFamily: fontFamily.regular,
+                  fontSize: textScale(12),
+                  marginVertical: moderateScaleVertical(10),
+                  color: colors.blackOpacity70,
+                }}>
+                Added Prescriptions (
+                {
+                  selectedItemForPrescription?.product?.uploaded_prescriptions
+                    .length
+                }
+                )
+              </Text>
+              <View>
+                <FlatList
+                  horizontal
+                  data={
+                    selectedItemForPrescription?.product
+                      ?.uploaded_prescriptions || []
+                  }
+                  contentContainerStyle={{
+                    height: width / 4,
+                  }}
+                  renderItem={renderUploadedPrescriptionImgs}
+                  showsHorizontalScrollIndicator={false}
+                />
+              </View>
+            </View>
+          )}
+
+          <Text
+            style={{
+              fontFamily: fontFamily.regular,
+              fontSize: textScale(12),
+              color: colors.blackOpacity70,
+              marginVertical: moderateScaleVertical(10),
+            }}>
+            Add Prescriptions
+          </Text>
+
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                height: width / 4,
+              }}>
+              <TouchableOpacity onPress={onAddPrescriptionDocs}>
+                <Image
+                  source={imagePath.icAddPlaceholder}
+                  style={{
+                    height: width / 4.5,
+                    width: width / 4.5,
+                  }}
+                />
+              </TouchableOpacity>
+              {selectedPrescriptionImgs.map((item) => (
+                <View>
+                  <Image
+                    source={{uri: item.path}}
+                    style={{
+                      height: width / 4.5,
+                      width: width / 4.5,
+                      borderRadius: moderateScale(8),
+                      marginLeft: moderateScale(10),
+                    }}
+                  />
+                  <TouchableOpacity
+                    hitSlop={hitSlopProp}
+                    onPress={() => onRemovePrescriptionImg(item)}
+                    style={{
+                      position: 'absolute',
+                      right: 0,
+                      top: -3,
+                    }}>
+                    <Image
+                      source={imagePath.crossC}
+                      style={{
+                        height: 12,
+                        width: 12,
+                      }}
+                    />
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          </ScrollView>
+        </ScrollView>
+        <ButtonWithLoader
+          isLoading={isPrescriptionLoading}
+          onPress={onSubmitPrescriptionDocs}
+          btnText={'Submit'}
+          borderRadius={moderateScale(13)}
+          textStyle={{color: colors.white}}
+          btnStyle={{
+            position: 'absolute',
+            backgroundColor: themeColors.primary_color,
+            width: width - moderateScale(30),
+            bottom: 10,
+            borderWidth: 0,
+          }}
+          // placeLoader={}
+        />
+      </View>
+    );
   };
 
   // Category KYC end
@@ -6107,9 +6403,9 @@ function Cart({navigation, route}) {
         leftIcon={imagePath.icBackb}
         isRightText={cartItems && !!cartItems?.length}
         onPressRightTxt={() => openClearCartModal()}
+        onPressLeft={() => navigation.navigate(navigationStrings.HOMESTACK)}
       />
 
-      {console.log(cartItems, 'cartItems>>>')}
       <FlatList
         data={cartItems}
         extraData={cartItems}
@@ -6164,6 +6460,7 @@ function Cart({navigation, route}) {
         navigation={navigation}
         selectViaMap={selectViaMap}
         openCloseMapAddress={openCloseMapAddress}
+        constCurrLoc={location}
       />
 
       {/* Date time modal */}
@@ -6221,17 +6518,11 @@ function Cart({navigation, route}) {
                   <ScrollView>
                     {modalType == 'pickup' ? (
                       <Calendar
-                        current={
-                          cartData?.same_day_delivery_for_schedule
-                            ? new Date()
-                            : dayAfterToday
-                        }
+                        current={new Date()}
                         minDate={
                           !!minimumDelayVendorDate
                             ? minimumDelayVendorDate
-                            : cartData?.same_day_delivery_for_schedule
-                            ? new Date()
-                            : dayAfterToday
+                            : new Date()
                         }
                         onDayPress={laundrySlotSelection}
                         markedDates={{
@@ -6252,16 +6543,16 @@ function Cart({navigation, route}) {
                     ) : (
                       <Calendar
                         current={
-                          cartData?.same_day_delivery_for_schedule
-                            ? new Date()
-                            : dayAfterToday
+                          getBundleId() == appIds.masa
+                            ? dayAfterToday
+                            : new Date()
                         }
                         minDate={
                           !!minimumDelayVendorDate
                             ? minimumDelayVendorDate
-                            : cartData?.same_day_delivery_for_schedule
-                            ? new Date()
-                            : dayAfterToday
+                            : getBundleId() == appIds.masa
+                            ? dayAfterToday
+                            : new Date()
                         }
                         onDayPress={laundrySlotSelection}
                         markedDates={{
@@ -6292,35 +6583,46 @@ function Cart({navigation, route}) {
                           }}>
                           {strings.TIME_SLOT}
                         </Text>
-                        <FlatList
-                          horizontal
-                          showsHorizontalScrollIndicator={false}
-                          data={laundryAvailablePickupSlot || []}
-                          renderItem={renderTimeSlots}
-                          keyExtractor={(item) => item.value || ''}
-                          ItemSeparatorComponent={() => (
-                            <View style={{marginRight: moderateScale(12)}} />
-                          )}
-                          ListHeaderComponent={() => (
-                            <View style={{marginLeft: moderateScale(24)}} />
-                          )}
-                          ListFooterComponent={() => (
-                            <View style={{marginRight: moderateScale(24)}} />
-                          )}
-                          ListEmptyComponent={() => (
-                            <View>
-                              <Text
-                                style={{
-                                  fontFamily: fontFamily.medium,
-                                  color: colors.blackOpacity66,
-                                }}>
-                                {!laundrySelectedPickupDate
-                                  ? ' Please select date.'
-                                  : ' Slots are not found for selected date.'}
-                              </Text>
-                            </View>
-                          )}
-                        />
+                        {isCheckSlotLoading ? (
+                          <Text
+                            style={{
+                              fontFamily: fontFamily.medium,
+                              color: colors.blackOpacity66,
+                              marginLeft: moderateScale(24),
+                            }}>
+                            Loading...
+                          </Text>
+                        ) : (
+                          <FlatList
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            data={laundryAvailablePickupSlot || []}
+                            renderItem={renderTimeSlots}
+                            keyExtractor={(item) => item.value || ''}
+                            ItemSeparatorComponent={() => (
+                              <View style={{marginRight: moderateScale(12)}} />
+                            )}
+                            ListHeaderComponent={() => (
+                              <View style={{marginLeft: moderateScale(24)}} />
+                            )}
+                            ListFooterComponent={() => (
+                              <View style={{marginRight: moderateScale(24)}} />
+                            )}
+                            ListEmptyComponent={() => (
+                              <View>
+                                <Text
+                                  style={{
+                                    fontFamily: fontFamily.medium,
+                                    color: colors.blackOpacity66,
+                                  }}>
+                                  {!laundrySelectedPickupDate
+                                    ? ' Please select date.'
+                                    : ' Slots are not found for selected date.'}
+                                </Text>
+                              </View>
+                            )}
+                          />
+                        )}
                       </View>
                     ) : (
                       <View>
@@ -6333,35 +6635,46 @@ function Cart({navigation, route}) {
                           }}>
                           {strings.TIME_SLOT}
                         </Text>
-                        <FlatList
-                          horizontal
-                          showsHorizontalScrollIndicator={false}
-                          data={laundryAvailableDropOffSlot || []}
-                          renderItem={renderTimeSlots2}
-                          keyExtractor={(item) => item.value || ''}
-                          ItemSeparatorComponent={() => (
-                            <View style={{marginRight: moderateScale(12)}} />
-                          )}
-                          ListHeaderComponent={() => (
-                            <View style={{marginLeft: moderateScale(24)}} />
-                          )}
-                          ListFooterComponent={() => (
-                            <View style={{marginRight: moderateScale(24)}} />
-                          )}
-                          ListEmptyComponent={() => (
-                            <View>
-                              <Text
-                                style={{
-                                  fontFamily: fontFamily.medium,
-                                  color: colors.blackOpacity66,
-                                }}>
-                                {!laundrySelectedDropOffDate
-                                  ? ' Please select date.'
-                                  : ' Slots are not found for selected date.'}
-                              </Text>
-                            </View>
-                          )}
-                        />
+                        {isCheckSlotLoading ? (
+                          <Text
+                            style={{
+                              fontFamily: fontFamily.medium,
+                              color: colors.blackOpacity66,
+                              marginLeft: moderateScale(24),
+                            }}>
+                            Loading...
+                          </Text>
+                        ) : (
+                          <FlatList
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            data={laundryAvailableDropOffSlot || []}
+                            renderItem={renderTimeSlots2}
+                            keyExtractor={(item) => item.value || ''}
+                            ItemSeparatorComponent={() => (
+                              <View style={{marginRight: moderateScale(12)}} />
+                            )}
+                            ListHeaderComponent={() => (
+                              <View style={{marginLeft: moderateScale(24)}} />
+                            )}
+                            ListFooterComponent={() => (
+                              <View style={{marginRight: moderateScale(24)}} />
+                            )}
+                            ListEmptyComponent={() => (
+                              <View>
+                                <Text
+                                  style={{
+                                    fontFamily: fontFamily.medium,
+                                    color: colors.blackOpacity66,
+                                  }}>
+                                  {!laundrySelectedDropOffDate
+                                    ? ' Please select date.'
+                                    : ' Slots are not found for selected date.'}
+                                </Text>
+                              </View>
+                            )}
+                          />
+                        )}
                       </View>
                     )}
                   </ScrollView>
@@ -6376,10 +6689,16 @@ function Cart({navigation, route}) {
                   <Fragment>
                     <ScrollView>
                       <Calendar
-                        current={new Date()}
+                        current={
+                          getBundleId() == appIds.masa
+                            ? dayAfterToday
+                            : new Date()
+                        }
                         minDate={
                           !!minimumDelayVendorDate
                             ? minimumDelayVendorDate
+                            : getBundleId() == appIds.masa
+                            ? dayAfterToday
                             : new Date()
                         }
                         onDayPress={onSelectDateFromCalendar}
@@ -6401,6 +6720,87 @@ function Cart({navigation, route}) {
                           // textDayHeaderFontSize: textScale(10),
                         }}
                       />
+                      {/* {
+                        getBundleId == appIds.masa ? currentDate == sheduledorderdate || currentDate == apiScheduledDate ? null : (<View>
+                          <Text
+                            style={{
+                              marginHorizontal: moderateScale(24),
+                              fontFamily: fontFamily.medium,
+                              fontSize: textScale(12),
+                              marginBottom: moderateScaleVertical(8),
+                              // height:moderateScale(20)
+                            }}>
+                            {strings.TIME_SLOT}
+                          </Text>
+                          {console.log(availableTimeSlots, "availableTimeSlots")}
+                          <FlatList
+                            horizontal
+                            data={availableTimeSlots || []}
+                            renderItem={renderTimeSlots}
+                            keyExtractor={(item) => item.value || ''}
+                            showsHorizontalScrollIndicator={false}
+                            ItemSeparatorComponent={() => (
+                              <View style={{ marginRight: moderateScale(12) }} />
+                            )}
+                            ListHeaderComponent={() => (
+                              <View style={{ marginLeft: moderateScale(24) }} />
+                            )}
+                            ListFooterComponent={() => (
+                              <View style={{ marginRight: moderateScale(24) }} />
+                            )}
+                            ListEmptyComponent={() => (
+                              <View>
+                                <Text
+                                  style={{
+                                    fontFamily: fontFamily.medium,
+                                    color: colors.redB,
+                                  }}>
+                                  {strings.SLOT_NOT_AVAILABAL}
+                                </Text>
+                              </View>
+                            )}
+                          />
+                        </View>) : (<View>
+                          <Text
+                            style={{
+                              marginHorizontal: moderateScale(24),
+                              fontFamily: fontFamily.medium,
+                              fontSize: textScale(12),
+                              marginBottom: moderateScaleVertical(8),
+                              // height:moderateScale(20)
+                            }}>
+                            {strings.TIME_SLOT}
+                          </Text>
+                          {console.log(availableTimeSlots, "availableTimeSlots")}
+                          <FlatList
+                            horizontal
+                            data={availableTimeSlots || []}
+                            renderItem={renderTimeSlots}
+                            keyExtractor={(item) => item.value || ''}
+                            showsHorizontalScrollIndicator={false}
+                            ItemSeparatorComponent={() => (
+                              <View style={{ marginRight: moderateScale(12) }} />
+                            )}
+                            ListHeaderComponent={() => (
+                              <View style={{ marginLeft: moderateScale(24) }} />
+                            )}
+                            ListFooterComponent={() => (
+                              <View style={{ marginRight: moderateScale(24) }} />
+                            )}
+                            ListEmptyComponent={() => (
+                              <View>
+                                <Text
+                                  style={{
+                                    fontFamily: fontFamily.medium,
+                                    color: colors.redB,
+                                  }}>
+                                  {strings.SLOT_NOT_AVAILABAL}
+                                </Text>
+                              </View>
+                            )}
+                          />
+                        </View>)
+                      } */}
 
                       <View>
                         <Text
@@ -6413,33 +6813,44 @@ function Cart({navigation, route}) {
                           }}>
                           {strings.TIME_SLOT}
                         </Text>
-                        <FlatList
-                          horizontal
-                          data={availableTimeSlots || []}
-                          renderItem={renderTimeSlots}
-                          keyExtractor={(item) => item.value || ''}
-                          showsHorizontalScrollIndicator={false}
-                          ItemSeparatorComponent={() => (
-                            <View style={{marginRight: moderateScale(12)}} />
-                          )}
-                          ListHeaderComponent={() => (
-                            <View style={{marginLeft: moderateScale(24)}} />
-                          )}
-                          ListFooterComponent={() => (
-                            <View style={{marginRight: moderateScale(24)}} />
-                          )}
-                          ListEmptyComponent={() => (
-                            <View>
-                              <Text
-                                style={{
-                                  fontFamily: fontFamily.medium,
-                                  color: colors.redB,
-                                }}>
-                                {strings.SLOT_NOT_AVAILABAL}
-                              </Text>
-                            </View>
-                          )}
-                        />
+                        {isCheckSlotLoading ? (
+                          <Text
+                            style={{
+                              fontFamily: fontFamily.medium,
+                              color: colors.blackOpacity66,
+                              marginLeft: moderateScale(24),
+                            }}>
+                            Loading...
+                          </Text>
+                        ) : (
+                          <FlatList
+                            horizontal
+                            data={availableTimeSlots || []}
+                            renderItem={renderTimeSlots}
+                            keyExtractor={(item) => item.value || ''}
+                            showsHorizontalScrollIndicator={false}
+                            ItemSeparatorComponent={() => (
+                              <View style={{marginRight: moderateScale(12)}} />
+                            )}
+                            ListHeaderComponent={() => (
+                              <View style={{marginLeft: moderateScale(24)}} />
+                            )}
+                            ListFooterComponent={() => (
+                              <View style={{marginRight: moderateScale(24)}} />
+                            )}
+                            ListEmptyComponent={() => (
+                              <View>
+                                <Text
+                                  style={{
+                                    fontFamily: fontFamily.medium,
+                                    color: colors.redB,
+                                  }}>
+                                  {strings.SLOT_NOT_AVAILABAL}
+                                </Text>
+                              </View>
+                            )}
+                          />
+                        )}
                       </View>
                     </ScrollView>
                   </Fragment>
@@ -6503,27 +6914,27 @@ function Cart({navigation, route}) {
           </StripeProvider>
         </View>
       </Modal>
-      <Modal
+
+      <BottomModal
         onBackdropPress={closeForm}
         isVisible={isProductOrderForm}
-        style={{
-          margin: 0,
-          justifyContent: 'flex-end',
-          // marginBottom: keyboardHeight,
-        }}>
-        {renderProductForm()}
-      </Modal>
-      <Modal
+        renderModalContent={renderProductForm}
+      />
+      <BottomModal
         onBackdropPress={closeForm}
         isVisible={isCategoryKyc}
+        renderModalContent={renderCategoryKYC}
+      />
+
+      <BottomModal
+        onBackdropPress={closeForm}
+        isVisible={isPrescriptionModal}
         // isVisible={true}
-        style={{
-          margin: 0,
-          justifyContent: 'flex-end',
-          // marginBottom: keyboardHeight,
-        }}>
-        {renderCategoryKYC()}
-      </Modal>
+        renderModalContent={renderPrescriptionModalView}
+        mainViewStyle={{
+          minHeight: height / 2.3,
+        }}
+      />
 
       <ActionSheet
         ref={actionSheet}

@@ -516,12 +516,22 @@ export default {
   masa: require('../assets/masa.mp4'),
   ipd: require('../assets/ipd.mp4'),
   icCar: require('../assets/images/ic_topviewcar.png'),
-  muvpodmp4: require('../assets/muvpod.mp4'),
-  // muvpodmp4: require('../assets/muvpod.mp4'),
-  muvpod:
-    'https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/app_splashscreen/73jvbtlLAQCkDgO58NZ8Zx9tdoOnoxlgNICcS7Gp.mp4',
-
+  muvpod: require('../assets/muvpod.mp4'),
+  // muvpod:
+  //   'https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/app_splashscreen/73jvbtlLAQCkDgO58NZ8Zx9tdoOnoxlgNICcS7Gp.mp4',
+  sabroson: require('../assets/sabroson.mp4'),
   icSos: require('../assets/images/RoyoorderNewImages/ic_sos.png'),
+  subscribe: require('../assets/images/subscribe.png'),
   icNoDrivers: require('../assets/images/RoyoorderNewImages/ic_nodrivers.png'),
   icLocationBlue: require('../assets/images/RoyoorderNewImages/ic_location_blue.png'),
+  icInstagram: require('../assets/images/RoyoorderNewImages/ic_instagram.png'),
+  icAddPlaceholder: require('../assets/images/RoyoorderNewImages/ic_placeholder.png'),
+  icPrescription: require('../assets/images/RoyoorderNewImages/ic_pres.png'),
+  icBikeMarker: require('../assets/images/TrackOrderImages/ic_bike.png'),
+  icCross18: require('../assets/images/ic_18.png'),
+  icUserChat: require('../assets/images/ic_userchat.png'),
+  icVendorChat: require('../assets/images/ic_vendorchat.png'),
+  send: require('../assets/images/ic_send.png'),
+  icBgLight: require('../assets/images/ic_lightbg.png'),
+  icBgDark: require('../assets/images/ic_darkbg.png'),
 };

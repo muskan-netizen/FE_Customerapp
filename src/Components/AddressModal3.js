@@ -60,6 +60,7 @@ const AddressModal3 = ({
   navigation,
   selectViaMap = false,
   openCloseMapAddress = () => {},
+  constCurrLoc
 }) => {
   const mapRef = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -69,7 +70,7 @@ const AddressModal3 = ({
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const appData = useSelector((state) => state?.initBoot?.appData);
   const currentTheme = useSelector((state) => state.initBoot);
-  const {constCurrLoc} = useSelector((state) => state?.home);
+
   const {themeColors, themeLayouts, appStyle} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
   const {profile} = appData;
@@ -661,6 +662,8 @@ const AddressModal3 = ({
               addressDone={addressDone}
               mapClose={() => openCloseMapAddress(2)} //address map close
               constCurrLoc={constCurrLoc}
+             
+
             />
           </View>
         ) : (
@@ -778,8 +781,8 @@ const AddressModal3 = ({
                       fontFamily: fontFamily.regular,
                       marginLeft: moderateScale(4),
                       color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.borderLight,
+                        ? MyDarkTheme.colors.text
+                        : colors.borderLight,
                     }}>
                     {strings.SELECT_VIA_MAP}
                   </Text>
@@ -904,8 +907,7 @@ const AddressModal3 = ({
                 containerStyle={{borderBottomWidth: 1}}
                 mainStyle={{marginTop: 10}}
                 labelStyle={styles.labelStyle}
-                returnKeyType={"next"}
-                
+                returnKeyType={'next'}
               />
 
               <BorderTextInputWithLable
@@ -916,7 +918,7 @@ const AddressModal3 = ({
                 borderWidth={0}
                 marginBottomTxt={0}
                 containerStyle={{borderBottomWidth: 1}}
-                returnKeyType={"next"}
+                returnKeyType={'next'}
               />
               {isStreet && (
                 <Text
@@ -941,7 +943,7 @@ const AddressModal3 = ({
                 borderWidth={0}
                 marginBottomTxt={0}
                 containerStyle={{borderBottomWidth: 1}}
-                returnKeyType={"next"}
+                returnKeyType={'next'}
               />
               {isCity && (
                 <Text
@@ -966,7 +968,7 @@ const AddressModal3 = ({
                 borderWidth={0}
                 marginBottomTxt={0}
                 containerStyle={{borderBottomWidth: 1}}
-                returnKeyType={"next"}
+                returnKeyType={'next'}
               />
               {isState && (
                 <Text
@@ -1015,7 +1017,7 @@ const AddressModal3 = ({
                           : colors.textGreyOpcaity7
                       }
                       onChangeText={_onChangeText('country')}
-                      returnKeyType={"next"}
+                      returnKeyType={'next'}
                       placeholder={strings.COUNTRY}
                       // textInputStyle={[getTextInputStyle(country)]}
                       value={country}
@@ -1064,7 +1066,7 @@ const AddressModal3 = ({
                     keyboardType={'numeric'}
                     borderWidth={0}
                     borderRadius={0}
-                    returnKeyType={"next"}
+                    returnKeyType={'next'}
                   />
                   {isPincode && (
                     <Text
@@ -1091,7 +1093,7 @@ const AddressModal3 = ({
                 borderWidth={0}
                 marginBottomTxt={0}
                 containerStyle={{borderBottomWidth: 1}}
-                returnKeyType={"next"}
+                returnKeyType={'next'}
               />
 
               <Text
@@ -1146,7 +1148,7 @@ const AddressModal3 = ({
                   textInputStyle={getTextInputStyle(city)}
                   borderWidth={0}
                   marginBottomTxt={0}
-                  returnKeyType={"next"}
+                  returnKeyType={'next'}
                   containerStyle={{
                     borderBottomWidth: 1,
                     marginTop: moderateScale(5),
@@ -1160,9 +1162,9 @@ const AddressModal3 = ({
                 themeColors.primary_color,
                 themeColors.primary_color,
               ]}
-              textStyle={{color: isDarkMode
-                ? MyDarkTheme.colors.text
-                : colors.borderLight, }}
+              textStyle={{
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.white,
+              }}
               onPress={saveAddress}
               marginTop={moderateScaleVertical(10)}
               // marginBottom={moderateScaleVertical(10)}

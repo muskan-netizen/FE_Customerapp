@@ -32,7 +32,7 @@ import {
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import {checkIsAdmin} from '../../utils/utils';
+
 import {useNavigation} from '@react-navigation/native';
 import RNOtpVerify from 'react-native-otp-verify';
 
@@ -148,7 +148,6 @@ export default function OtpVerification({navigation, route}) {
     if (!checkValid) {
       return;
     }
-
     let data = {
       username: paramData?.username,
       dialCode: paramData?.dialCode,
@@ -167,16 +166,6 @@ export default function OtpVerification({navigation, route}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        checkIsAdmin(navigation_, navigation, res.data);
-        // if (userData) {
-        //   userData?.client_preference?.verify_email ||
-        //   userData?.client_preference?.verify_phone
-        //     ? userData?.verify_details?.is_email_verified ||
-        //       userData?.verify_details?.is_phone_verified
-        //       ? navigation.push(navigationStrings.TAB_ROUTES)
-        //       : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-        //     : navigation.push(navigationStrings.TAB_ROUTES);
-        // }
         updateState({isLoading: false});
       })
       .catch(errorMethod);
@@ -210,10 +199,6 @@ export default function OtpVerification({navigation, route}) {
             style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
           />
         </TouchableOpacity>
-        {/* <TouchableOpacity
-          onPress={() => navigation.push(navigationStrings.TAB_ROUTES)}>
-          <Text style={styles.skipText}>{strings.SKIP}</Text>
-        </TouchableOpacity> */}
       </View>
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
@@ -274,61 +259,6 @@ export default function OtpVerification({navigation, route}) {
             </TouchableOpacity>
           </View>
 
-          {/* ) : (
-            <View></View> */}
-          {/* )} */}
-          {/* {!!userData?.client_preference?.verify_email ? (
-            !userData?.verify_details?.is_email_verified && (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  marginVertical: moderateScaleVertical(20),
-                }}>
-                <BorderTextInput
-                  placeholder={strings.ENTER_OTP}
-                  containerStyle={{flex: 0.7}}
-                  marginBottom={0}
-                  onChangeText={_onChangeText('emailOTP')}
-                  value={emailOTP}
-                />
-                <TouchableOpacity
-                  onPress={() => onVerify('email', emailOTP)}
-                  style={{
-                    flex: 0.27,
-                    backgroundColor: !userData?.verify_details
-                      ?.is_email_verified
-                      ? themeColors.primary_color
-                      : colors.white,
-                    paddingVertical: moderateScaleVertical(8),
-                    paddingHorizontal: moderateScale(8),
-                    borderRadius: 10,
-                  }}>
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      color: !userData?.verify_details?.is_email_verified
-                        ? colors.white
-                        : colors.green,
-                      fontFamily: fontFamily.bold,
-                      fontSize: textScale(12),
-                    }}>
-                    {!userData?.verify_details?.is_email_verified
-                      ? strings.VERIFY_EMAIL
-                      : strings.VERIFIED}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            )
-          ) : (
-            <View></View>
-          )} */}
-          {/* <GradientButton
-            onPress={() => navigation.navigate(navigationStrings.TAB_ROUTES)}
-            containerStyle={{marginTop: moderateScaleVertical(10)}}
-            btnText={strings.VERIFY_ACCOUNT}
-          /> */}
           {timer > 0 ? (
             <View style={styles.bottomContainer}>
               <Text style={{...styles.txtSmall, color: colors.textGreyLight}}>

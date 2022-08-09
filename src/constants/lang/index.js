@@ -12,9 +12,12 @@ import ru from './ru';
 import pt from './pt';
 import vi from './vi';
 import hi from './hi';
+import ne from './ne';
 import es_elcheragio from './es_elcheragio';
 import es_heybuddy from './es_heybuddy';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
+import es_sabroson from './es_sabroson';
+
 
 //Spanish fils
 
@@ -24,6 +27,8 @@ const spanishfile = () => {
       return es_elcheragio;
       case appIds?.heyBuddy:
         return es_heybuddy;
+      case appIds?.sabroson:
+        return es_sabroson;
     default:
       return es;
   }
@@ -42,6 +47,7 @@ let strings = new LocalizedStrings({
   pt: pt,
   vi: vi,
   hi: hi,
+  ne:ne,
 });
 export const changeLaguage = (languageKey) => {
   strings.setLanguage(languageKey);

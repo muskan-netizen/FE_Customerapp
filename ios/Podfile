@@ -14,6 +14,7 @@ abstract_target 'available_pods' do
    pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
    pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
    pod 'react-native-contacts', :path => '../node_modules/react-native-contacts'
+ 
 
 ##RoyoOrder Target
 target 'RoyoOrder' do
@@ -24,6 +25,8 @@ target 'RoyoOrder' do
 #Runrun Target
 target 'Runrun' do
   
+  pod 'RNExitApp', :path => '../node_modules/react-native-exit-app'
+
 end
 
 # ##Tranzit Target
@@ -1027,8 +1030,8 @@ target 'Mozmarcas' do
  
 end
 
-#Myfiji Target
-target 'Myfiji' do
+#FijiEats Target
+target 'FijiEats' do
 
 end
 
@@ -1752,6 +1755,116 @@ target 'ElentaMart' do
 end
 # ExprexPro Target
 target 'ExprexPro' do
+  
+end
+# FresHest Target
+target 'FresHest' do
+  
+end
+
+# Servern Target
+target 'Servern' do
+  
+end
+# SmokeRun Target
+target 'SmokeRun' do
+  
+end
+# MyEvPlus Target
+target 'MyEvPlus' do
+  
+end
+# Qdelo Target
+target 'Qdelo' do
+  
+end
+#Pawsee Target
+target 'Pawsee' do
+  
+end
+
+#HairRun Target
+target 'HairRun' do
+  
+end
+#ZuriRide Target
+target 'ZuriRide' do
+  
+end
+#American Luxury Target
+target 'AmericanLuxury' do
+  
+end
+#SmartMur Target
+target 'SmartMur' do
+  
+end
+#OuiSpeed Target
+target 'OuiSpeed' do
+  
+end
+#GetItSent Target
+target 'GetItSent' do
+  
+end
+#EasyDrink Target
+target 'EasyDrink' do
+  
+end
+#IAmSelling Target
+target 'IAmSelling' do
+  
+end
+#FifteenP Target
+target 'FifteenP' do
+  
+end
+#EuodooTEchnologies Target
+target 'EuodooTechnologies' do
+  
+end
+#Rota Target
+target 'Rota' do
+  
+end
+#FarmMeat Target
+target 'FarmMeat' do
+  
+end
+#DanielleBejjani Target
+target 'DanielleBejjani' do
+  
+end
+#YallaEat Target
+target 'YallaEat' do
+  
+end
+#Choizez Target
+target 'Choizez' do
+  
+end
+#Otto Target
+target 'Otto' do
+  
+end
+#RescueRoadsideAssistance Target
+target 'RescueRoadsideAssistance' do
+  
+end
+#TaxE Target
+target 'TaxE' do
+  
+end
+#BaggageTaxi Target
+target 'BaggageTaxi' do
+  
+end
+#Mersi Target
+target 'Mersi' do
+  
+end
+#FoodSpot Target
+target 'FoodSpot' do
   
 end
 

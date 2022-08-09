@@ -15,6 +15,8 @@ import colors from '../styles/colors';
 import {moderateScale, textScale, width} from '../styles/responsiveSize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import {getBundleId} from 'react-native-device-info';
+import {appIds} from '../utils/constants/DynamicAppKeys';
 
 const PhoneNumberInput = ({
   cca2 = '',
@@ -30,6 +32,7 @@ const PhoneNumberInput = ({
   TxtInputStyle,
   flagSize,
   downArrowStyle,
+  require= false,
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -48,7 +51,9 @@ const PhoneNumberInput = ({
     onCountryChange(data);
   };
   const _openCountryPicker = () => {
-    setState({countryPickerModalVisible: true});
+    if (getBundleId() !== appIds.baytukom) {
+      setState({countryPickerModalVisible: true});
+    }
   };
   const _onCountryPickerModalClose = () => {
     setState({countryPickerModalVisible: false});
@@ -98,7 +103,7 @@ const PhoneNumberInput = ({
       </TouchableOpacity>
       <TextInput
         selectionColor={colors.black}
-        placeholder={placeholder}
+        placeholder={placeholder.concat(!!require?'*':'')}
         keyboardType="numeric"
         value={phoneNumber}
         placeholderTextColor={
@@ -125,11 +130,12 @@ const PhoneNumberInput = ({
       />
       {countryPickerModalVisible && (
         <CountryPicker
-          withCallingCode={callingCode}
+          withCallingCode={true}
           // cca2={cca2}
           visible={countryPickerModalVisible}
           withFlagButton={false}
           withFilter
+          countryCode={callingCode}
           onClose={_onCountryPickerModalClose}
           onSelect={_onCountryChange}
           closeButtonImage={imagePath.closeButton}

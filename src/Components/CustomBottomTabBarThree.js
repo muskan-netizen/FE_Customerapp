@@ -100,8 +100,7 @@ const CustomBottomTabBarThree = ({
           moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
         }
       } else {
-        // showError(strings.UNAUTHORIZED_MESSAGE);
-        moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+        actions.setAppSessionData('on_login');
       }
     } else if (item.redirect_to == staticStrings.DISPATCHER) {
       // moveToNewScreen(navigationStrings.DELIVERY, item)();

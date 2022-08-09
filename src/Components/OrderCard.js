@@ -111,32 +111,12 @@ const OrderCard = (props) => {
                 />
               ))}
             </View>
-            <View style={{flex: 1}}>
-              {!!(
-                item.product_details && item.product_details[0]?.category_name!="" && item.product_details[0]?.category_name!=null
-              ) && (
-                <Text
-                  style={[
-                    styles.font16Regular,
-                    {
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.textGreyB,
-                    },
-                  ]}>
-                  {item.product_details &&
-                  item.product_details[0]?.category_name
-                    ? item.product_details[0].category_name
-                    : ''}{' '}
-                </Text>
-              )}
-              <Text style={[styles.font16Regular]}>
-                {item.product_details && item.product_details[0]
-                  ? item.product_details[0].title
-                  : ''}{' '}
-                {count == 0 ? '' : 'x' + ' ' + count + ' more'}
-              </Text>
-            </View>
+            <Text style={[styles.font16Regular, {flex: 1}]}>
+              {item?.product_details && item?.product_details[0]
+                ? item?.product_details[0].title
+                : ''}{' '}
+              {count == 0 ? '' : 'x' + ' ' + count + ' more'}
+            </Text>
           </View>
           <Text
             style={{

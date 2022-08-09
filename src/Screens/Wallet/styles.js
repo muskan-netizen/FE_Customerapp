@@ -43,10 +43,11 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       backgroundColor: themeColors?.primary_color,
       padding: moderateScaleVertical(8),
       marginHorizontal: moderateScaleVertical(8),
-      borderRadius: moderateScale(20),
+      borderRadius: moderateScale(5),
       marginTop: moderateScale(18),
       justifyContent: 'center',
       flexDirection: 'row',
+      alignItems: 'center',
     },
     addMoneyText: {
       fontSize: moderateScale(11),
@@ -118,7 +119,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     textInputStyle: {
       flex: 1,
       opacity: 0.7,
-      color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7,
+      color: isDarkMode ? MyDarkTheme.colors.text : colors.redB,
       fontFamily: fontFamily.medium,
       fontSize: textScale(14),
       paddingHorizontal: 10,
@@ -127,6 +128,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       textAlign: I18nManager.isRTL ? 'right' : 'left',
     },
     textInputView: {
+     
       flexDirection: 'row',
       height: moderateScaleVertical(49),
       color: colors.white,

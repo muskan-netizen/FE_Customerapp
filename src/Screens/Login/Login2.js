@@ -38,7 +38,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {checkIsAdmin} from '../../utils/utils';
+import {setUserData} from '../../utils/utils';
 import {useNavigation} from '@react-navigation/native';
 
 export default function Login2({navigation}) {
@@ -118,45 +118,37 @@ export default function Login2({navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        if (!!res.data) {
-          if (
-            !!res.data?.client_preference?.verify_email &&
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              checkIsAdmin(navigation_, navigation, res.data);
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else if (
-            !!res.data?.client_preference?.verify_email ||
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified ||
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              checkIsAdmin(navigation_, navigation, res.data);
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else {
-            checkIsAdmin(navigation_, navigation, res.data);
-          }
-        }
         updateState({isLoading: false});
-        getCartDetail();
+        if (!!res.data) {
+          checkEmailPhoneVerified(!!res.data);
+          getCartDetail();
+        }
       })
       .catch(errorMethod);
+  };
+
+  const checkEmailPhoneVerified = (data) => {
+    if (
+      !!(
+        !!data?.client_preference?.verify_email &&
+        !data?.verify_details?.is_email_verified
+      ) ||
+      !!(
+        !!data?.client_preference?.verify_phone &&
+        !data?.verify_details?.is_phone_verified
+      )
+    ) {
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, data)();
+    } else {
+      successLogin(data);
+    }
   };
 
   //Get your cart detail
   const getCartDetail = () => {
     actions
       .getCartDetail(
+        '',
         {},
         {
           code: appData?.profile?.code,
@@ -200,21 +192,23 @@ export default function Login2({navigation}) {
       })
       .then((res) => {
         console.log(res, 'res>>>SOCIAL');
-        if (!!res.data) {
-          !!res.data?.client_preference?.verify_email ||
-          !!res.data?.client_preference?.verify_phone
-            ? !!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified
-              ? checkIsAdmin(navigation_, navigation, res.data)
-              : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : checkIsAdmin(navigation_, navigation, res.data);
-        }
         updateState({isLoading: false});
-        getCartDetail();
+
+        if (!!res.data) {
+          checkEmailPhoneVerified(res?.data);
+          getCartDetail();
+        }
       })
       .catch(errorMethod);
   };
 
+  const successLogin = (data) => {
+    if (!!data) {
+      setUserData(data).then((suc) => {
+        actions.saveUserData(data);
+      });
+    }
+  };
   //Apple Login Support
   const openAppleLogin = () => {
     updateState({isLoading: false});
@@ -325,7 +319,8 @@ export default function Login2({navigation}) {
         style={{
           flex: 1,
           marginHorizontal: moderateScale(24),
-        }}>
+        }}
+        enableOnAndroid={true}>
         <View style={{height: moderateScaleVertical(10)}} />
         <Text
           style={

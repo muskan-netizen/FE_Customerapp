@@ -602,18 +602,22 @@ export default function ShippingDetails({navigation, route}) {
     data['order_time_zone'] = RNLocalize.getTimeZone();
     console.log(data, 'data>>>');
 
-    if (!!userData) {
-      !!userData?.client_preference?.verify_email ||
-      !!userData?.client_preference?.verify_phone
-        ? !!userData?.verify_details?.is_email_verified &&
-          !!userData?.verify_details?.is_phone_verified
-          ? _finalPayment(data)
-          : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
-              formCart: true,
-            })()
-        : _finalPayment(data);
+    if (
+      !!(
+        !!data?.client_preference?.verify_email &&
+        !data?.verify_details?.is_email_verified
+      ) ||
+      !!(
+        !!data?.client_preference?.verify_phone &&
+        !data?.verify_details?.is_phone_verified
+      )
+    ) {
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
+        ...userData,
+        formCart: true,
+      })();
     } else {
-      _finalPayment();
+      _finalPayment(data);
     }
   };
 

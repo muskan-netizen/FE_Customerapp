@@ -3,27 +3,23 @@ import types from '../types';
 const initial_state = {
   userData: {},
   profileAddress: {},
+  isSkip: false,
+  isVideoSplash: false,
+  appSessionInfo: 'shortcode',
 };
 
 export default function (state = initial_state, action) {
   switch (action.type) {
+    case types.APP_SESSION_INFO: {
+      return {...state, appSessionInfo: action.payload};
+    }
     case types.LOGIN: {
-      const data = action.payload;
-      console.log(data, 'this login data');
-      return {userData: data};
+      return {...state, userData: action.payload};
     }
     case types.USER_LOGOUT: {
-      const data = action.payload;
-      return {userData: undefined};
+      return {...state, userData: undefined};
     }
-    // case types.PROFILE_ADDRESS: {
-    //   const data = action.payload;
-    //   console.log(data,'yaha')
-    //   return {
-    //     ...state,
-    //     profileAddress: data
-    //   };
-    // }
+
     default: {
       return {...state};
     }
