@@ -490,6 +490,7 @@ export default function ChatScreen({ route, navigation }) {
           user={{ _id: userData?.id }}
           renderMessage={renderMessage}
           isKeyboardInternallyHandled={true}
+          extraData={messages}
           // isTyping={true}
           // renderActions={props => {
           //   return (
@@ -515,7 +516,7 @@ export default function ChatScreen({ route, navigation }) {
               />
             )
           }}
-
+          
           textInputStyle={{
             backgroundColor: isDarkMode ? '#2c2c2e' : '#ffffff',
             paddingTop: Platform.OS == 'ios' ? 10 : undefined,
@@ -563,7 +564,7 @@ export default function ChatScreen({ route, navigation }) {
           <ScrollView >
             {roomUsers.map((val, i) => {
               return (
-                <View style={{
+                <View key={String(i)} style={{
                   marginVertical: moderateScaleVertical(8),
                   flexDirection: 'row',
                   alignItems: 'center'

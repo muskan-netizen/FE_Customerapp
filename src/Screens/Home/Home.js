@@ -211,15 +211,11 @@ export default function Home({ route, navigation }) {
               }).catch(error => {
                 homeData(locData);
                 return;
-                console.log("error fetching getAllAddress", error)
               })
-            }
-            else { //NO
-              if (!!locData.latitude) {
-                actions.locationData(locData);
-                homeData(locData);
-                return;
-              }
+            } else { //NO
+              console.log("api hit without lat lng")
+              homeData();
+              return;
             }
           } else { //In case of guest user
             if (!!appData?.profile?.preferences?.is_hyperlocal) { //YES
