@@ -814,11 +814,13 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         });
         showSuccess(response?.message);
         {
-          paramData?.keyValue ? navigation.goBack() : null;
+          paramData?.keyValue ? navigation.goBack() : navigation.navigate(navigationStrings.HOMESTACK);
         }
       })
       .catch(errorMethod);
   };
+
+  console.log(paramData,"paramData>>")
 
   let subscription_percent =
     (orderFullDetail?.order_details?.order_detail?.subscription_discount /

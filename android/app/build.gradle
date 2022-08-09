@@ -206,18 +206,18 @@ android {
 
     flavorDimensions "appType"
 
-    // productFlavors {
-    //         papiruki{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.papiruki.userApp'
-    //         resValue "string", "app_name", "Papiruki"
-    //         resValue "string", "host_name", ""
-    //         }
-    // }
+    productFlavors {
+            muvpod{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.muvpod'
+            resValue "string", "app_name", "Muvpod"
+            resValue "string", "host_name", ""
+            }
+    }
 
     productFlavors {
             royoorder {
@@ -4626,7 +4626,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.knockknock'
+            applicationId 'com.knockKnock.userApp'
             resValue "string", "app_name", "Knockknock"
             resValue "string", "host_name", ""
             }
@@ -4677,7 +4677,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.viversbox'
+            applicationId 'com.viversbox.user'
             resValue "string", "app_name", "Viversbox"
             resValue "string", "host_name", ""
             }
@@ -5803,6 +5803,26 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.baggageTaxi.order'
             resValue "string", "app_name", "Baggage Taxi" 
+            resValue "string", "host_name", ""
+            }
+          mersi{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.mersi.order'
+            resValue "string", "app_name", "Mersi" 
+            resValue "string", "host_name", ""
+            }
+           foodSpot{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.foodSpot.order'
+            resValue "string", "app_name", "FoodSpot" 
             resValue "string", "host_name", ""
             }
     }

@@ -64,6 +64,9 @@ const AddressModal3 = ({
 }) => {
   const mapRef = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
+ 
+ const {location}= useSelector((state) => state?.home);
+console.log(location,"locationlocationlocation")
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   // const theme = useSelector((state) => state?.initBoot?.themeColor);
   const darkthemeusingDevice = useDarkMode();
@@ -661,8 +664,8 @@ const AddressModal3 = ({
             <SelctFromMap
               addressDone={addressDone}
               mapClose={() => openCloseMapAddress(2)} //address map close
-              constCurrLoc={constCurrLoc}
-             
+              constCurrLoc={location}
+              
 
             />
           </View>

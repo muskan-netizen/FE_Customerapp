@@ -140,7 +140,7 @@ export default function TaxiHomeDashbord({
   console.log(location, 'loaction');
   console.log(region, 'region');
   const appMainData = useSelector((state) => state?.home?.appMainData);
-
+  
   let findCabCategory = appMainData?.categories?.find(
     (x) => x?.redirect_to == staticStrings.PICKUPANDDELIEVRY,
   );

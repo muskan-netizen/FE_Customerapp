@@ -378,6 +378,8 @@ const shortCodes = {
   rescueRoadsideAssistance:'6355c5',
   tax_E:'a7952f',
   baggageTaxi:'52bb0a',
+  mersi:'1b308e',
+  foodSpot:"1c67f3"
 };
 
 const appIds = {
@@ -1414,8 +1416,8 @@ const appIds = {
     android: 'com.dbairro',
   }),
   knockknock: Platform.select({
-    ios: 'com.application.knockknock',
-    android: 'com.knockknock',
+    ios: 'com.knockKnock.userApp',
+    android: 'com.knockKnock.userApp',
   }),
   qrider: Platform.select({
     ios: 'com.qrider',
@@ -1751,6 +1753,10 @@ const appIds = {
     ios: 'com.torunz',
     android: 'com.torunz',
   }),
+  kurs: Platform.select({
+    ios: 'com.app.kurs',
+    android: 'com.app.kurs',
+  }),
   spa: Platform.select({
     ios: 'com.customerApp.spa',
     android: 'com.customerApp.spa',
@@ -1880,6 +1886,14 @@ const appIds = {
   baggageTaxi: Platform.select({
     ios: 'com.baggageTaxi.order',
     android: 'com.baggageTaxi.order',
+  }),
+  mersi: Platform.select({
+    ios: 'com.mersi.order',
+    android: 'com.mersi.order',
+  }),
+  foodSpot: Platform.select({
+    ios: 'com.foodSpot.order',
+    android: 'com.foodSpot.order',
   }),
 };
 
