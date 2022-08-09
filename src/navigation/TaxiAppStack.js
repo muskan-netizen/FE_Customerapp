@@ -114,11 +114,11 @@ export default function (Stack) {
           unmountOnBlur: true,
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.VERIFY_ACCOUNT}
         component={VerifyAccount}
         options={{headerShown: false}}
-      />
+      /> */}
     </>
   );
 }

@@ -74,6 +74,7 @@ const AddressModal3 = ({
   const {themeColors, themeLayouts, appStyle} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
   const {profile} = appData;
+  
   const [state, setState] = useState({
     dropDownData: [],
     address: updateData?.address ? updateData?.address : '',

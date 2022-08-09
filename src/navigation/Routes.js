@@ -25,6 +25,7 @@ export default function Routes() {
   const {appStyle} = useSelector((state) => state?.initBoot);
   const businessType = appStyle?.homePageLayout;
   console.log(appSessionInfo, 'appSessionInfo..appSessionInfo');
+  console.log(!!(businessType == 4),"businessType????businessType")
   return (
     <AppearanceProvider>
       <NavigationContainer ref={navigationRef}>
@@ -52,7 +53,8 @@ export default function Routes() {
             AuthStack(Stack, appStyle)
           )}
           {CourierStack(Stack)}
-          {/* {TaxiAppStack(Stack)} */}
+ 
+          { businessType == 4  ? ( TaxiAppStack(Stack)): null}
 
           <Stack.Screen
             name={navigationStrings.TABROUTESVENDOR}
