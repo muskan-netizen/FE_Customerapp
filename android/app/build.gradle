@@ -207,15 +207,15 @@ android {
     flavorDimensions "appType"
 
     // productFlavors {
-    //             gokab{
-    //             dimension "appType"
-    //             versionCode 1
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.gokab'
-    //             resValue "string", "app_name", "GoKab"
-    //             resValue "string", "host_name", ""
+    //            apptFindr{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.apptFindr.order'
+    //         resValue "string", "app_name", "Appt Findr" 
+    //         resValue "string", "host_name", ""
     //         }
     // }
 
@@ -5823,6 +5823,46 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.foodSpot.order'
             resValue "string", "app_name", "FoodSpot" 
+            resValue "string", "host_name", ""
+            }
+            karibaMart{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.karibaMart.order'
+            resValue "string", "app_name", "Kariba Mart" 
+            resValue "string", "host_name", ""
+            }
+             sourceWith{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.sourceWith.order'
+            resValue "string", "app_name", "Source With" 
+            resValue "string", "host_name", ""
+            }
+           apptFindr{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.apptFindr.order'
+            resValue "string", "app_name", "Appt Findr" 
+            resValue "string", "host_name", ""
+            }
+          vdu{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.vdu.order'
+            resValue "string", "app_name", "VDU" 
             resValue "string", "host_name", ""
             }
     }

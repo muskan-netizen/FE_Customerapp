@@ -379,7 +379,11 @@ const shortCodes = {
   tax_E:'a7952f',
   baggageTaxi:'52bb0a',
   mersi:'1b308e',
-  foodSpot:"1c67f3"
+  foodSpot:"1c67f3",
+  karibaMart:'c1ca39',
+  sourceWith:'503079',
+  apptFindr:'ee3958',
+  vdu:'181d99',
 };
 
 const appIds = {
@@ -1890,6 +1894,22 @@ const appIds = {
   foodSpot: Platform.select({
     ios: 'com.foodSpot.order',
     android: 'com.foodSpot.order',
+  }),
+  karibaMart: Platform.select({
+    ios: 'com.karibaMart.order',
+    android: 'com.karibaMart.order',
+  }),
+  sourceWith: Platform.select({
+    ios: 'com.sourceWith.order',
+    android: 'com.sourceWith.order',
+  }),
+  apptFindr: Platform.select({
+    ios: 'com.apptFindr.order',
+    android: 'com.apptFindr.order',
+  }),
+  vdu: Platform.select({
+    ios: 'com.vdu.order',
+    android: 'com.vdu.order',
   }),
 };
 

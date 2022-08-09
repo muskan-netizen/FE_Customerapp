@@ -2377,6 +2377,30 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.karibaMart:
+          updateState({
+            shortCode: shortCodes.karibaMart,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sourceWith:
+          updateState({
+            shortCode: shortCodes.sourceWith,
+            isShortcodePrefilled: true,
+          });
+          break;
+          case appIds.apptFindr:
+            updateState({
+              shortCode: shortCodes.apptFindr,
+              isShortcodePrefilled: true,
+            });
+            break;
+            case appIds.vdu:
+            updateState({
+              shortCode: shortCodes.vdu,
+              isShortcodePrefilled: true,
+            });
+            break;
       }
     })();
   }, []);
@@ -2418,13 +2442,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '4f3624',
+        // code: '245bae',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '4f3624',
+        // code: '245bae',
         code: shortCode,
       };
     }
@@ -2651,7 +2675,6 @@ export default function ShortCode({route, navigation}) {
         }}>
         <Video
           source={animationVideo()} // Can be a URL or a local file.
-        
           style={{
             height: width,
             width: width,
