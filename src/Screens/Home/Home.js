@@ -198,9 +198,15 @@ export default function Home({ route, navigation }) {
               getAllAddress().then((savedAddress) => {
                 console.log("res++++ getAllAddress", savedAddress)
                 if (savedAddress.length > 0) {
-                  getNearestLocation(curLoc, savedAddress).then((nearestLoc) => {
+                  let filterAddress = savedAddress.filter(val=> !!val?.latitude)
+                  console.log("res++++ getAllAddress", filterAddress)
+                  getNearestLocation(curLoc, filterAddress).then((nearestLoc) => {
                     actions.locationData(nearestLoc);
                     homeData(nearestLoc);
+                  }).catch(error => {
+                    actions.locationData(locData);
+                    homeData(locData);
+                    console.log("error raised in get nearestlocation", error)
                   })
                   return;
                 } else {
