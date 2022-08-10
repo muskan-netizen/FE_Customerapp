@@ -653,9 +653,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
 
   //getAllNearByDrivers 
-
-
-
   useEffect(() => {
     chekLocationPermission(false)
       .then((result) => {
@@ -718,6 +715,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         language: languages?.primary_language?.id,
       }
     ).then((res) => {
+      console.log(res,'all listed drivers');
       updateState({
         allListedDrivers: res?.data
       })
