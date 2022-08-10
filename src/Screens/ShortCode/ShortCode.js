@@ -2406,13 +2406,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '4f3624',
+        // code: 'd5403a',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '4f3624',
+        // code: 'd5403a',
         code: shortCode,
       };
     }
@@ -2532,7 +2532,7 @@ export default function ShortCode({route, navigation}) {
             handleDynamicLink(link);
           })
           .catch((err) => {
-            console.log('checking deep link >>> 3232sdsd', err);
+            console.log('checking deep link> >> 3232sdsd', err);
           });
       }
     });
@@ -2615,7 +2615,7 @@ export default function ShortCode({route, navigation}) {
       case appIds?.iPicknDrop:
         return imagePath.ipd;
       case appIds?.muvpod:
-        return imagePath.ipd;
+        return {uri : imagePath.muvpod};
       // case appIds?.sabroson:
       //   return imagePath.sabroson
     }

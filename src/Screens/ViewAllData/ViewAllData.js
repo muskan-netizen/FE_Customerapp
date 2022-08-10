@@ -266,7 +266,7 @@ export default function ViewAllData({route, navigation}) {
   };
 
   const listFooterComponent = () => {
-    return <View style={{height: moderateScale(40)}}></View>;
+    return <View style={{height: moderateScale(100)}}></View>;
   };
 
   console.log(location, 'location>>>>location');

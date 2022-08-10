@@ -1275,10 +1275,10 @@ export default function ProductDetail({route, navigation}) {
                         tagsStyles={{
                           p: {
                             color: isDarkMode ? colors.white : colors.black,
+                            textAlign:'left'
                           },
                         }}
                       />
-
                       {/* <HTMLView
                         value={plainHtml}
                         stylesheet={{div: styles.descriptionStyle}}
