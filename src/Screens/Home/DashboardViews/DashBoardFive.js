@@ -1,32 +1,42 @@
-import React, { useEffect, useRef, useState } from 'react';
+import {useScrollToTop} from '@react-navigation/native';
+import {isEmpty} from 'lodash';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
+  Image,
+  Modal,
   Platform,
   RefreshControl,
   ScrollView,
   Text,
   View,
-  Animated,
-  Image,
-  Modal,
-  BackHandler,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import AppLink from 'react-native-app-link';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dark-mode';
+import DashedLine from 'react-native-dashed-line';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import RNExitApp from 'react-native-exit-app';
 import FastImage from 'react-native-fast-image';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
-import BlurImages from '../../../Components/BlurImages';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+import {SvgUri} from 'react-native-svg';
+import {useSelector} from 'react-redux';
+import GradientButton from '../../../Components/GradientButton';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
+import LaundryCategoryCard from '../../../Components/LaundryCategoryCard';
 import BannerLoader from '../../../Components/Loaders/BannerLoader';
 import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
-import SearchLoader from '../../../Components/Loaders/SearchLoader';
 import MarketCard3 from '../../../Components/MarketCard3';
 import ProductsComp from '../../../Components/ProductsComp';
-import SearchBar2 from '../../../Components/SearchBar2';
+import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
+import staticStrings from '../../../constants/staticStrings';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
 import {
@@ -36,60 +46,31 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import { MyDarkTheme } from '../../../styles/theme';
-import stylesFunc from '../styles';
-import { SvgUri } from 'react-native-svg';
+import {MyDarkTheme} from '../../../styles/theme';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
-  getScaleTransformationStyle,
-  pressInAnimation,
-  pressOutAnimation,
 } from '../../../utils/helperFunctions';
-import { useScrollToTop } from '@react-navigation/native';
-import staticStrings from '../../../constants/staticStrings';
-import imagePath from '../../../constants/imagePath';
-import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu';
-import { string } from 'is_js';
-import { isEmpty } from 'lodash';
-import LaundryCategoryCard from '../../../Components/LaundryCategoryCard';
-import ButtonWithLoader from '../../../Components/ButtonWithLoader';
-import DifferentAddOns from '../../../Components/DifferentAddOns ';
-import LaundryAddonModal from '../../../Components/LaundryAddonModal';
-import { rgba } from 'react-native-color-matrix-image-filters';
-import DashedLine from 'react-native-dashed-line';
-import ButtonComponent from '../../../Components/ButtonComponent';
-import { color } from 'react-native-reanimated';
-import GradientButton from '../../../Components/GradientButton';
-import { colorsDark } from 'react-native-elements/dist/config';
-import { DarkTheme } from 'react-native-paper';
-import actions from '../../../redux/actions';
-import { getItem, setItem } from '../../../utils/utils';
-import RNExitApp from 'react-native-exit-app';
+import {getItem, setItem} from '../../../utils/utils';
+import stylesFunc from '../styles';
 
 export default function DashBoardFive({
-  handleRefresh = () => { },
-  bannerPress = () => { },
+  handleRefresh = () => {},
+  bannerPress = () => {},
   isLoading = true,
   isRefreshing = false,
-  onPressCategory = () => { },
+  onPressCategory = () => {},
   navigation = {},
   toggleData = {},
-  onVendorFilterSeletion = () => { },
+  onVendorFilterSeletion = () => {},
   tempCartData = null,
-  onPressVendor = () => { },
-  onPressAddLaundryItem = () => { },
+  onPressVendor = () => {},
+  onPressAddLaundryItem = () => {},
   isLoadingAddons = false,
   selectedHomeCategory = {},
 }) {
-  const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
+  const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
   );
   const userData = useSelector((state) => state?.auth?.userData);
@@ -117,13 +98,13 @@ export default function DashBoardFive({
     categoriesData: [],
     seeMore: false,
   });
-  const { slider1ActiveSlide, vendorsData, showMenu, categoriesData, seeMore } =
+  const {slider1ActiveSlide, vendorsData, showMenu, categoriesData, seeMore} =
     state;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ themeColors, fontFamily });
+  const styles = stylesFunc({themeColors, fontFamily});
 
   //update state
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   useEffect(() => {
     if (appMainData?.vendors && appMainData?.vendors.length) {
@@ -157,20 +138,20 @@ export default function DashBoardFive({
     });
   }, [appMainData?.categories]);
 
-  const { currSelectedFilter } = state;
+  const {currSelectedFilter} = state;
 
   console.log('businessType', businessType);
 
   const onSelectedFilter = (selectedFilter) => {
-    updateState({ showMenu: false, currSelectedFilter: selectedFilter });
+    updateState({showMenu: false, currSelectedFilter: selectedFilter});
     onVendorFilterSeletion(selectedFilter);
   };
 
   const homeAllFilters = () => {
     let homeFilter = [
-      { id: 1, type: strings.OPEN },
-      { id: 2, type: strings.CLOSE },
-      { id: 3, type: strings.BESTSELLER },
+      {id: 1, type: strings.OPEN},
+      {id: 2, type: strings.CLOSE},
+      {id: 3, type: strings.BESTSELLER},
     ];
     // if (appData?.profile?.preferences?.is_hyperlocal) {
     //   homeFilter.push({ id: 4, type: strings.NEAR_BY });
@@ -241,7 +222,7 @@ export default function DashBoardFive({
       console.log(error, 'error');
     }
   };
-  const _renderItem = ({ item, index }) => {
+  const _renderItem = ({item, index}) => {
     return (
       <View
         style={{
@@ -257,12 +238,12 @@ export default function DashBoardFive({
     );
   };
 
-  const _renderVendors = ({ item, index }) => (
-    <View style={{ marginHorizontal: moderateScale(16) }}>
+  const _renderVendors = ({item, index}) => (
+    <View style={{marginHorizontal: moderateScale(16)}}>
       <MarketCard3
         data={item}
         onPress={() => onPressVendor(item)}
-        extraStyles={{ margin: 2 }}
+        extraStyles={{margin: 2}}
       />
     </View>
   );
@@ -276,17 +257,17 @@ export default function DashBoardFive({
     });
   };
 
-  const renderBanners = ({ item }) => {
+  const renderBanners = ({item}) => {
     const imageUrl = getImageUrl(
       item.image.image_fit,
       item.image.image_path,
       appStyle?.homePageLayout === 5
         ? '800/600'
         : DeviceInfo.getBundleId() == appIds.masa
-          ? '800/600'
-          : '400/600',
+        ? '800/600'
+        : '400/600',
     );
-console.log("hfbgdh", item);
+    console.log('hfbgdh', item);
     return (
       <TouchableOpacity activeOpacity={0.8} onPress={() => bannerPress(item)}>
         <FastImage
@@ -300,14 +281,14 @@ console.log("hfbgdh", item);
               appStyle?.homePageLayout == 5
                 ? moderateScale(140)
                 : DeviceInfo.getBundleId() == appIds.masa
-                  ? moderateScale(260)
-                  : height / 3.8,
+                ? moderateScale(260)
+                : height / 3.8,
             width:
               appStyle?.homePageLayout == 5
                 ? width / 1.2
                 : DeviceInfo.getBundleId() == appIds.masa
-                  ? width / 1.1
-                  : moderateScale(160),
+                ? width / 1.1
+                : moderateScale(160),
             borderRadius: moderateScale(16),
             backgroundColor: isDarkMode
               ? colors.whiteOpacity15
@@ -319,7 +300,7 @@ console.log("hfbgdh", item);
     );
   };
 
-  const renderLaundryBanners = ({ item }) => {
+  const renderLaundryBanners = ({item}) => {
     const imageUrl = getImageUrl(
       item.image.image_fit,
       item.image.image_path,
@@ -365,7 +346,7 @@ console.log("hfbgdh", item);
                   showsHorizontalScrollIndicator={false}
                   renderItem={_renderItem}
                   ItemSeparatorComponent={() => (
-                    <View style={{ marginTop: moderateScale(24) }} />
+                    <View style={{marginTop: moderateScale(24)}} />
                   )}
                 />
               ) : (
@@ -377,13 +358,13 @@ console.log("hfbgdh", item);
                   showsHorizontalScrollIndicator={false}
                   renderItem={_renderItem}
                   ItemSeparatorComponent={() => (
-                    <View style={{ marginTop: moderateScale(24) }} />
+                    <View style={{marginTop: moderateScale(24)}} />
                   )}
                   ListHeaderComponent={() => (
-                    <View style={{ marginLeft: moderateScale(12) }} />
+                    <View style={{marginLeft: moderateScale(12)}} />
                   )}
                   ListFooterComponent={() => (
-                    <View style={{ marginRight: moderateScale(12) }} />
+                    <View style={{marginRight: moderateScale(12)}} />
                   )}
                 />
               )}
@@ -404,7 +385,7 @@ console.log("hfbgdh", item);
                         borderColor: colors.borderColorB,
                       }}>
                       <View
-                        style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Text
                           style={{
                             fontSize: textScale(10),
@@ -417,7 +398,7 @@ console.log("hfbgdh", item);
                           source={imagePath.icDropdown4}
                           style={{
                             tintColor: isDarkMode ? colors.white : colors.black,
-                            transform: [{ rotate: seeMore ? '180deg' : '0deg' }],
+                            transform: [{rotate: seeMore ? '180deg' : '0deg'}],
                             marginLeft: moderateScale(4),
                           }}
                         />
@@ -429,7 +410,7 @@ console.log("hfbgdh", item);
           )}
         <View style={{}}>
           {!!appData?.mobile_banners?.length && (
-            <View style={{ marginTop: moderateScaleVertical(4) }}>
+            <View style={{marginTop: moderateScaleVertical(4)}}>
               <FlatList
                 horizontal
                 data={appMainData?.mobile_banners || appData?.mobile_banners}
@@ -437,13 +418,13 @@ console.log("hfbgdh", item);
                 showsHorizontalScrollIndicator={false}
                 renderItem={renderBanners}
                 ItemSeparatorComponent={() => (
-                  <View style={{ marginRight: moderateScale(12) }} />
+                  <View style={{marginRight: moderateScale(12)}} />
                 )}
                 ListHeaderComponent={() => (
-                  <View style={{ marginLeft: moderateScale(16) }} />
+                  <View style={{marginLeft: moderateScale(16)}} />
                 )}
                 ListFooterComponent={() => (
-                  <View style={{ marginRight: moderateScale(16) }} />
+                  <View style={{marginRight: moderateScale(16)}} />
                 )}
               />
             </View>
@@ -455,10 +436,10 @@ console.log("hfbgdh", item);
 
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
-  const renderBrands = ({ item }) => {
+    () => {
+      navigation.navigate(screenName, {data});
+    };
+  const renderBrands = ({item}) => {
     // const imageUrl = getImageUrl(item.image.proxy_url, item.image.image_path, '800/600');
     const imageURI = getImageUrl(
       item.image.proxy_url,
@@ -478,7 +459,7 @@ console.log("hfbgdh", item);
           />
         ) : (
           <FastImage
-            source={{ uri: imageURI, priority: FastImage.priority.high }}
+            source={{uri: imageURI, priority: FastImage.priority.high}}
             style={{
               height: moderateScale(96),
               width: moderateScale(96),
@@ -522,25 +503,25 @@ console.log("hfbgdh", item);
     );
   };
 
-  const renderFeaturedProducts = ({ item }) => {
+  const renderFeaturedProducts = ({item}) => {
     return (
       <ProductsComp
         item={item}
         onPress={() =>
-          navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+          navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
         }
       />
     );
   };
 
-  const renderSale = ({ item }) => {
+  const renderSale = ({item}) => {
     return (
       <ProductsComp
         // isDiscount
         item={item}
-        imageStyle={{ height: moderateScale(186) }}
+        imageStyle={{height: moderateScale(186)}}
         onPress={() =>
-          navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+          navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
         }
       />
     );
@@ -666,7 +647,7 @@ console.log("hfbgdh", item);
           )
         )}
 
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <HeaderLoader
             widthLeft={moderateScale(180)}
             rectWidthLeft={moderateScale(180)}
@@ -687,15 +668,15 @@ console.log("hfbgdh", item);
 
         <BannerLoader
           // isVendorLoader
-          viewStyles={{ marginTop: moderateScale(12) }}
+          viewStyles={{marginTop: moderateScale(12)}}
         />
         <BannerLoader
           // isVendorLoader
-          viewStyles={{ marginTop: moderateScale(12) }}
+          viewStyles={{marginTop: moderateScale(12)}}
         />
         <BannerLoader
           // isVendorLoader
-          viewStyles={{ marginTop: moderateScale(12) }}
+          viewStyles={{marginTop: moderateScale(12)}}
         />
       </ScrollView>
     );
@@ -714,7 +695,7 @@ console.log("hfbgdh", item);
     }
     return (
       <View key={Math.random()}>
-        <View style={{ ...styles.viewAllVeiw }}>
+        <View style={{...styles.viewAllVeiw}}>
           <Text
             numberOfLines={1}
             style={{
@@ -734,21 +715,27 @@ console.log("hfbgdh", item);
 
           {!!vendorsData && vendorsData.length > 1 && (
             <TouchableOpacity
-              style={{ marginHorizontal: moderateScale(4) }}
+              style={{marginHorizontal: moderateScale(4)}}
               onPress={() => onViewAll('vendor', appMainData.vendors)}>
-              <Text style={{ ...styles.viewAllText, color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }}>
+              <Text
+                style={{
+                  ...styles.viewAllText,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
                 {strings.VIEW_ALL}
               </Text>
             </TouchableOpacity>
           )}
-          <Menu style={{ alignSelf: 'flex-end' }}>
+          <Menu style={{alignSelf: 'flex-end'}}>
             <MenuTrigger>
               <View style={styles.menuView}>
                 <Image
                   style={{
                     height: moderateScaleVertical(16),
                     width: moderateScale(16),
-                    tintColor:isDarkMode ? MyDarkTheme.colors.text : colors.black
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
                   }}
                   resizeMode="contain"
                   source={imagePath.sort}
@@ -807,7 +794,7 @@ console.log("hfbgdh", item);
       orderDetail: {
         dispatch_traking_url: item?.vendors[0].dispatch_traking_url,
       },
-      selectedVendor: { id: item?.vendors[0].vendor_id },
+      selectedVendor: {id: item?.vendors[0].vendor_id},
     });
   };
 
@@ -816,57 +803,57 @@ console.log("hfbgdh", item);
       <View>
         {tempCartData && tempCartData.length
           ? tempCartData.map((item, index) => {
-            return (
-              <TouchableOpacity
-                onPress={() => onPressViewEditAndReplace(item)}
-                style={{
-                  padding: moderateScale(8),
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  // alignItems: 'center',
-                  backgroundColor: getColorCodeWithOpactiyNumber(
-                    themeColors?.primary_color.substr(1),
-                    20,
-                  ),
-                  marginHorizontal: moderateScale(15),
-                  marginTop: moderateScale(15),
-                  borderRadius: moderateScale(5),
-                  borderWidth: moderateScale(0.5),
-                  borderColor: themeColors?.primary_color,
-                }}>
-                <View style={{ flex: 0.7 }}>
-                  <Text
-                    style={{
-                      fontSize: textScale(12),
-                      fontFamily: fontFamily.medium,
-                    }}>
-                    {strings.YOURDRIVERHASMODIFIED}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: textScale(12),
-                      paddingTop: moderateScale(5),
-                      fontFamily: fontFamily.bold,
-                    }}>
-                    {strings.VIEW_DETAIL}
-                  </Text>
-                </View>
-                <View style={{ flex: 0.3, alignItems: 'flex-end' }}>
-                  <Text
-                    style={{
-                      fontSize: textScale(14),
-                      fontFamily: fontFamily.medium,
-                    }}>{`#${item?.order_number}`}</Text>
-                </View>
-              </TouchableOpacity>
-            );
-          })
+              return (
+                <TouchableOpacity
+                  onPress={() => onPressViewEditAndReplace(item)}
+                  style={{
+                    padding: moderateScale(8),
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    // alignItems: 'center',
+                    backgroundColor: getColorCodeWithOpactiyNumber(
+                      themeColors?.primary_color.substr(1),
+                      20,
+                    ),
+                    marginHorizontal: moderateScale(15),
+                    marginTop: moderateScale(15),
+                    borderRadius: moderateScale(5),
+                    borderWidth: moderateScale(0.5),
+                    borderColor: themeColors?.primary_color,
+                  }}>
+                  <View style={{flex: 0.7}}>
+                    <Text
+                      style={{
+                        fontSize: textScale(12),
+                        fontFamily: fontFamily.medium,
+                      }}>
+                      {strings.YOURDRIVERHASMODIFIED}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: textScale(12),
+                        paddingTop: moderateScale(5),
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {strings.VIEW_DETAIL}
+                    </Text>
+                  </View>
+                  <View style={{flex: 0.3, alignItems: 'flex-end'}}>
+                    <Text
+                      style={{
+                        fontSize: textScale(14),
+                        fontFamily: fontFamily.medium,
+                      }}>{`#${item?.order_number}`}</Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            })
           : null}
       </View>
     );
   };
 
-  const _renderLaundryItem = ({ item, index }) => {
+  const _renderLaundryItem = ({item, index}) => {
     return (
       <LaundryCategoryCard
         data={item}
@@ -893,20 +880,20 @@ console.log("hfbgdh", item);
               showsHorizontalScrollIndicator={false}
               renderItem={renderLaundryBanners}
               ItemSeparatorComponent={() => (
-                <View style={{ marginRight: moderateScale(12) }} />
+                <View style={{marginRight: moderateScale(12)}} />
               )}
               ListHeaderComponent={() => (
-                <View style={{ marginLeft: moderateScale(16) }} />
+                <View style={{marginLeft: moderateScale(16)}} />
               )}
               ListFooterComponent={() => (
-                <View style={{ marginRight: moderateScale(16) }} />
+                <View style={{marginRight: moderateScale(16)}} />
               )}
             />
           </View>
         )}
 
         {!isEmpty(appMainData?.categories) && (
-          <View style={{ marginBottom: moderateScaleVertical(16) }}>
+          <View style={{marginBottom: moderateScaleVertical(16)}}>
             <Text
               style={{
                 ...styles.exploreStoresTxt,
@@ -926,10 +913,10 @@ console.log("hfbgdh", item);
                 paddingHorizontal: moderateScale(15),
               }}
               ItemSeparatorComponent={() => (
-                <View style={{ marginTop: moderateScale(10) }} />
+                <View style={{marginTop: moderateScale(10)}} />
               )}
               ListHeaderComponent={() => (
-                <View style={{ marginLeft: moderateScale(12) }} />
+                <View style={{marginLeft: moderateScale(12)}} />
               )}
             />
           </View>
@@ -939,11 +926,11 @@ console.log("hfbgdh", item);
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <ScrollView
         ref={scrollRef}
         showsVerticalScrollIndicator={false}
-        style={{ flex: 1 }}
+        style={{flex: 1}}
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}
@@ -994,7 +981,7 @@ console.log("hfbgdh", item);
                   </View>
                 )}
                 ItemSeparatorComponent={() => (
-                  <View style={{ height: moderateScale(10) }} />
+                  <View style={{height: moderateScale(10)}} />
                 )}
               />
 
@@ -1012,13 +999,13 @@ console.log("hfbgdh", item);
                           renderItem={renderBrands}
                           keyExtractor={(item) => item.id.toString()}
                           ItemSeparatorComponent={() => (
-                            <View style={{ marginRight: moderateScale(12) }} />
+                            <View style={{marginRight: moderateScale(12)}} />
                           )}
                           ListHeaderComponent={() => (
-                            <View style={{ marginLeft: moderateScale(16) }} />
+                            <View style={{marginLeft: moderateScale(16)}} />
                           )}
                           ListFooterComponent={() => (
-                            <View style={{ marginRight: moderateScale(16) }} />
+                            <View style={{marginRight: moderateScale(16)}} />
                           )}
                         />
                       </>
@@ -1047,13 +1034,13 @@ console.log("hfbgdh", item);
                       renderItem={renderFeaturedProducts}
                       keyExtractor={(item) => item.id.toString()}
                       ItemSeparatorComponent={() => (
-                        <View style={{ marginRight: moderateScale(16) }} />
+                        <View style={{marginRight: moderateScale(16)}} />
                       )}
                       ListHeaderComponent={() => (
-                        <View style={{ marginLeft: moderateScale(16) }} />
+                        <View style={{marginLeft: moderateScale(16)}} />
                       )}
                       ListFooterComponent={() => (
-                        <View style={{ marginRight: moderateScale(16) }} />
+                        <View style={{marginRight: moderateScale(16)}} />
                       )}
                     />
                   </>
@@ -1076,13 +1063,13 @@ console.log("hfbgdh", item);
                         renderItem={renderFeaturedProducts}
                         keyExtractor={(item) => item.id.toString()}
                         ItemSeparatorComponent={() => (
-                          <View style={{ marginRight: moderateScale(16) }} />
+                          <View style={{marginRight: moderateScale(16)}} />
                         )}
                         ListHeaderComponent={() => (
-                          <View style={{ marginLeft: moderateScale(16) }} />
+                          <View style={{marginLeft: moderateScale(16)}} />
                         )}
                         ListFooterComponent={() => (
-                          <View style={{ marginRight: moderateScale(16) }} />
+                          <View style={{marginRight: moderateScale(16)}} />
                         )}
                       />
                     </>
@@ -1138,10 +1125,10 @@ console.log("hfbgdh", item);
             animationType="slide"
             transparent={true}
             visible={isConfirmAgeModal}
-          // onRequestClose={() => {
-          //   Alert.alert("Modal has been closed.");
-          //   setModalVisible(!modalVisible);
-          // }}
+            // onRequestClose={() => {
+            //   Alert.alert("Modal has been closed.");
+            //   setModalVisible(!modalVisible);
+            // }}
           >
             <View
               style={{
@@ -1167,7 +1154,7 @@ console.log("hfbgdh", item);
                 <Text
                   style={[
                     styles.ageModalText,
-                    { color: isDarkMode ? colors.white : colors.black },
+                    {color: isDarkMode ? colors.white : colors.black},
                   ]}>
                   {strings.AGE_VERIFICATION}
                 </Text>
@@ -1178,7 +1165,7 @@ console.log("hfbgdh", item);
                     dashThickness={1}
                     dashGap={2}
                     dashColor={colors.black}
-                    style={{ marginTop: moderateScale(7) }}
+                    style={{marginTop: moderateScale(7)}}
                   />
                 </View>
                 <Text style={styles.ageConfirmationText}>

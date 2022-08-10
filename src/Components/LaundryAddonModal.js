@@ -57,14 +57,6 @@ const LaundryAddonModal = ({
     );
   };
 
-  const checkValidation = (addonset, indx, min_limit = 3) => {
-    // if (addonset?.min_select == 0) {
-    //   return true;
-    // }
-
-    return minMaxError.some((item) => item == indx);
-  };
-
   const renderLaundryCategoryItem = ({item, index}) => {
     return (
       <TouchableOpacity

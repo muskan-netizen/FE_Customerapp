@@ -52,7 +52,7 @@ export default function Routes() {
             AuthStack(Stack, appStyle)
           )}
           {CourierStack(Stack)}
-          {/* {TaxiAppStack(Stack)} */}
+          {TaxiAppStack(Stack)}
 
           <Stack.Screen
             name={navigationStrings.TABROUTESVENDOR}

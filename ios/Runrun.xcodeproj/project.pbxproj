@@ -29984,13 +29984,11 @@
 			buildConfigurationList = 84A8021B26C3982E00F35132 /* Build configuration list for PBXNativeTarget "WashValley" */;
 			buildPhases = (
 				FCA97C78B81E1665BA1F3C3E /* [CP] Check Pods Manifest.lock */,
-				0F0AB44BAEF270134E5220F6 /* ShellScript */,
 				84A801F826C3982E00F35132 /* Start Packager */,
 				84A801F926C3982E00F35132 /* Sources */,
 				84A801FD26C3982E00F35132 /* Frameworks */,
 				84A8020526C3982E00F35132 /* Resources */,
 				84A8021726C3982E00F35132 /* Bundle React Native code and images */,
-				A5A8FCCA1FC17938E2935601 /* ShellScript */,
 				27A5D42D6BD1F08579515ABB /* ShellScript */,
 				5755D720C191141B84DF6704 /* [CP] Embed Pods Frameworks */,
 				E9B2C6E1628231BF43D1501F /* [CP] Copy Pods Resources */,
@@ -51485,33 +51483,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-AirlinesRecruiter/Pods-available_pods-AirlinesRecruiter-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		0F0AB44BAEF270134E5220F6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Spidbi/Pods-available_pods-Spidbi-frameworks.sh",
-				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
-				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework",
-				"${PODS_ROOT}/razorpay-pod/Pod/Razorpay.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatProvidersSDK/ChatProvidersSDK.framework/ChatProvidersSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatSDK/ChatSDK.framework/ChatSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCommonUISDK/CommonUISDK.framework/CommonUISDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingAPISDK/MessagingAPI.framework/MessagingAPI",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingSDK/MessagingSDK.framework/MessagingSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework/SDKConfigurations",
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-available_pods-WashValley-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Spidbi/Pods-available_pods-Spidbi-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		0F2E3EE408583EE23BF4F9A2 /* [CP] Copy Pods Resources */ = {
@@ -100107,19 +100078,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A5A8FCCA1FC17938E2935601 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Yahu-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Menus/Pods-available_pods-Menus-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		A5AB9E52AF065627DAE40F97 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -144759,7 +144717,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = WashValleyApp;
+				PROVISIONING_PROFILE_SPECIFIER = "WashValley [AppStore";
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
