@@ -1879,6 +1879,18 @@ end
 target 'ApptFindr' do
   
 end
+#VDU Target
+target 'VDU' do
+  
+end
+#LaundroZone Target
+target 'LaundroZone' do
+  
+end
+#Taxiolgy Target
+target 'Taxiolgy' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

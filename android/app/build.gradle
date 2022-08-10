@@ -207,14 +207,14 @@ android {
     flavorDimensions "appType"
 
     // productFlavors {
-    //            apptFindr{
+    //                 laundroZone{
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.apptFindr.order'
-    //         resValue "string", "app_name", "Appt Findr" 
+    //         applicationId 'com.laundroZone.order'
+    //         resValue "string", "app_name", "Laundro Zone" 
     //         resValue "string", "host_name", ""
     //         }
     // }
@@ -5863,6 +5863,26 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.vdu.order'
             resValue "string", "app_name", "VDU" 
+            resValue "string", "host_name", ""
+            }
+          laundroZone{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.laundroZone.order'
+            resValue "string", "app_name", "Laundro Zone" 
+            resValue "string", "host_name", ""
+            }
+         taxiolgy{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.taxiolgy.order'
+            resValue "string", "app_name", "Taxiolgy" 
             resValue "string", "host_name", ""
             }
     }

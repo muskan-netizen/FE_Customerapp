@@ -384,6 +384,8 @@ const shortCodes = {
   sourceWith:'503079',
   apptFindr:'ee3958',
   vdu:'181d99',
+  laundroZone:'35a0ed',
+  taxiolgy:'43d7df',
 };
 
 const appIds = {
@@ -1910,6 +1912,14 @@ const appIds = {
   vdu: Platform.select({
     ios: 'com.vdu.order',
     android: 'com.vdu.order',
+  }),
+  laundroZone: Platform.select({
+    ios: 'com.laundroZone.order',
+    android: 'com.laundroZone.order',
+  }),
+  taxiolgy: Platform.select({
+    ios: 'com.taxiolgy.order',
+    android: 'com.taxiolgy.order',
   }),
 };
 

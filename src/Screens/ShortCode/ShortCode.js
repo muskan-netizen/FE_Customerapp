@@ -2401,6 +2401,18 @@ export default function ShortCode({route, navigation}) {
               isShortcodePrefilled: true,
             });
             break;
+            case appIds.laundroZone:
+              updateState({
+                shortCode: shortCodes.laundroZone,
+                isShortcodePrefilled: true,
+              });
+              break;
+              case appIds.taxiolgy:
+              updateState({
+                shortCode: shortCodes.taxiolgy,
+                isShortcodePrefilled: true,
+              });
+              break;
       }
     })();
   }, []);
