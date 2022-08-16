@@ -198,9 +198,15 @@ export default function Home({ route, navigation }) {
               getAllAddress().then((savedAddress) => {
                 console.log("res++++ getAllAddress", savedAddress)
                 if (savedAddress.length > 0) {
-                  getNearestLocation(curLoc, savedAddress).then((nearestLoc) => {
+                  let filterAddress = savedAddress.filter(val => !!val?.latitude)
+                  console.log("res++++ getAllAddress", filterAddress)
+                  getNearestLocation(curLoc, filterAddress).then((nearestLoc) => {
                     actions.locationData(nearestLoc);
                     homeData(nearestLoc);
+                  }).catch(error => {
+                    actions.locationData(locData);
+                    homeData(locData);
+                    console.log("error raised in get nearestlocation", error)
                   })
                   return;
                 } else {
@@ -401,23 +407,24 @@ export default function Home({ route, navigation }) {
     {
       console.log(latlongObj, vendorFilterData, 'data>>>>>>>');
 
-      var checkType = null
+      var selectedVendorType = null
+      var defaultVendorType = null
 
-      console.log("dineInTypedineInType", dineInType)
+      console.log("dineInTypedineInType", appData?.profile?.preferences?.vendorMode)
 
       if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
+        defaultVendorType = appData?.profile?.preferences?.vendorMode[0]?.type //
         appData?.profile?.preferences?.vendorMode.forEach((val, i) => {
           if (val?.type == dineInType) {
-            checkType = val.type
+            selectedVendorType = val.type
           }
         })
       }
-      if (!checkType) {
-        actions.dineInData('delivery');
+      if (!selectedVendorType) {
+        actions.dineInData(defaultVendorType);
       }
       let apiData = {
-        type: !!checkType ? checkType : 'delivery',
-        // type: 'on_demand',
+        type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
         ...latlongObj,
         ...vendorFilterData,
       }
@@ -426,7 +433,7 @@ export default function Home({ route, navigation }) {
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
       }
-      console.log('sending api data', apiData)
+      console.log('sending api data header', apiData)
       console.log("homeData===== calling from main function")
 
       actions.homeData(apiData, apiHeader).then(async (res) => {

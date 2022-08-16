@@ -53,6 +53,8 @@ export default function ChatScreen({ route, navigation }) {
 
   const isFocused = useIsFocused();
 
+  console.log("userDatauserData",userData)
+
   useFocusEffect(
     useCallback(() => {
       socketServices.on("new-message", (data) => {
@@ -133,17 +135,18 @@ export default function ChatScreen({ route, navigation }) {
     if (String(messages[0].text).trim().length < 1) {
       return;
     }
+    let phoneNumber = !!userData.phone_number ? `+${userData?.dial_code} ${userData.phone_number}`: null
     try {
       const apiData = {
         room_id: paramData?._id,
         message: messages[0].text,
-        user_type: 'user',
-        to_message: 'to_vendor',
-        from_message: 'from_user',
+        user_type: !!userData?.is_superadmin ? 'admin':  'user',
+        to_message: !!userData?.is_superadmin ? 'to_user_vendor': 'to_vendor',
+        from_message: !!userData?.is_superadmin? 'from_admin': 'from_user',
         user_id: userData?.id,
         email: userData.email,
         username: userData?.name,
-        phone_num: `+${userData?.dial_code} ${userData.phone_number}`,
+        phone_num: phoneNumber,
         display_image: getImageUrl(
           userData?.source?.proxy_url,
           userData?.source?.image_path,
@@ -153,6 +156,7 @@ export default function ChatScreen({ route, navigation }) {
         //'room_name' =>$data->name,
         chat_type: 'vendor_to_user',
       }
+      console.log("apiDataapiData",apiData)
       const res = await actions.sendMessage(apiData, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
@@ -160,18 +164,18 @@ export default function ChatScreen({ route, navigation }) {
       })
       console.log('on send message res', res)
       socketServices.emit('save-message', res);
-      const message = {
-        _id: userData.id,
-        auth_user_id: userData.id,
-        message: messages[0].text,
-        createdAt: new Date(),
-        username: userData?.name,
-        display_image: getImageUrl(
-          userData?.source?.proxy_url,
-          userData?.source?.image_path,
-          '200/200',
-        )
-      };
+      // const message = {
+      //   _id: userData.id,
+      //   auth_user_id: userData.id,
+      //   message: messages[0].text,
+      //   createdAt: new Date(),
+      //   username: userData?.name,
+      //   display_image: getImageUrl(
+      //     userData?.source?.proxy_url,
+      //     userData?.source?.image_path,
+      //     '200/200',
+      //   )
+      // };
       await sendToUserNotification(paramData?._id, messages[0].text)
       // setMessages(previousMessages => GiftedChat.append(previousMessages, message))
     } catch (error) {
@@ -209,7 +213,7 @@ export default function ChatScreen({ route, navigation }) {
         activeOpacity={0.7}
         onPress={() => updateState({ showParticipant: true })}
       >
-        <CircularImages size={25} isDarkMode={isDarkMode} fontFamily={fontFamily} data={roomUsers} />
+        <CircularImages size={28} isDarkMode={isDarkMode} fontFamily={fontFamily} data={roomUsers} />
       </TouchableOpacity>
     )
   }, [roomUsers])

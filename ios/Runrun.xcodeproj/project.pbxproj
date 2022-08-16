@@ -29068,7 +29068,6 @@
 				1066F52A2823F16C002BC9E6 /* Start Packager */,
 				1066F52B2823F1C5002BC9E6 /* Bundle React Native code and images */,
 				1066F52C2823F29B002BC9E6 /* ShellScript */,
-				22D7B39C2E719D5B8589FC46 /* ShellScript */,
 				CFB8E4758FF5BA3B891E3A34 /* [CP] Embed Pods Frameworks */,
 				18F90F4B40C1EF4945FEF686 /* [CP] Copy Pods Resources */,
 			);
@@ -59317,33 +59316,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-MartiniOnWheels/Pods-available_pods-MartiniOnWheels-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		22D7B39C2E719D5B8589FC46 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Fleety/Pods-available_pods-Fleety-frameworks.sh",
-				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
-				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework",
-				"${PODS_ROOT}/razorpay-pod/Pod/Razorpay.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatProvidersSDK/ChatProvidersSDK.framework/ChatProvidersSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatSDK/ChatSDK.framework/ChatSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCommonUISDK/CommonUISDK.framework/CommonUISDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingAPISDK/MessagingAPI.framework/MessagingAPI",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingSDK/MessagingSDK.framework/MessagingSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework/SDKConfigurations",
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-available_pods-QuickQuick-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Fleety/Pods-available_pods-Fleety-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		22F3CB8CD139EECBEF293E1D /* [CP] Embed Pods Frameworks */ = {
