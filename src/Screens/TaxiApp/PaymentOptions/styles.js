@@ -14,10 +14,11 @@ export default ({fontFamily}) => {
       flex: 1,
     },
     renderItemStyle: {
-      borderBottomWidth: 0.2,
-      borderColor: colors.lightGreyBgColor,
-      opacity: 1,
+      borderBottomWidth: 1,
+      borderColor: colors.borderColorB,
+
       marginHorizontal: moderateScale(3),
+      paddingVertical: moderateScaleVertical(10),
     },
     textStyle: {
       alignSelf: 'center',

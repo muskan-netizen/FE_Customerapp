@@ -91,6 +91,7 @@ const TextInputWithUnderlineAndLabel = ({
             color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
             // backgroundColor: 'red',
             flex: 1,
+            textAlign:'left',
             ...labelStyle,
           }}>
           {label}
@@ -229,6 +230,7 @@ export function stylesData({fontFamily}) {
       color: colors.textGrey,
       fontFamily: fontFamily.bold,
       fontSize: textScale(14),
+      textAlign:'left'
     },
     sublabelStyle: {
       color: colors.textGreyB,

@@ -4,7 +4,6 @@ import {getBundleId} from 'react-native-device-info';
 const shortCodes = {
   royoorder: '245bae',
   runrun: 'bf8608',
-
   tranzit: '52a1a6',
   hmoobhub: 'fa11e1',
   capcorp: '149f3e',
@@ -372,6 +371,13 @@ const shortCodes = {
   euodooTechnologies:'c9d1ee',
   rota:'e4b727',
   farmMeat:'371731',
+  danielleBejjani:'b47da2',
+  yallaEat:'94679a',
+  choizez:'05c28e',
+  otto:'d0121e',
+  rescueRoadsideAssistance:'6355c5',
+  tax_E:'a7952f',
+  baggageTaxi:'52bb0a',
 };
 
 const appIds = {
@@ -1846,6 +1852,34 @@ const appIds = {
   farmMeat: Platform.select({
     ios: 'com.farmMeat.order',
     android: 'com.farmMeat.order',
+  }),
+  danielleBejjani: Platform.select({
+    ios: 'com.danielleBejjani.order',
+    android: 'com.danielleBejjani.order',
+  }),
+  yallaEat: Platform.select({
+    ios: 'com.yallaEat.order',
+    android: 'com.yallaEat.order',
+  }),
+  choizez: Platform.select({
+    ios: 'com.choizez.order',
+    android: 'com.choizez.order',
+  }),
+  otto: Platform.select({
+    ios: 'com.otto.order',
+    android: 'com.otto.order',
+  }),
+  rescueRoadsideAssistance: Platform.select({
+    ios: 'com.rescueRoadsideAssistance.order',
+    android: 'com.rescueRoadsideAssistance.order',
+  }),
+  tax_E: Platform.select({
+    ios: 'com.taxE.order',
+    android: 'com.taxE.order',
+  }),
+  baggageTaxi: Platform.select({
+    ios: 'com.baggageTaxi.order',
+    android: 'com.baggageTaxi.order',
   }),
 };
 

@@ -77,8 +77,6 @@ export default function Addaddress({navigation, route}) {
   const {book_for_friend} = appData?.profile?.preferences;
   const {pickUpTimeType} = useSelector((state) => state?.home);
 
-  console.log(appData, 'appDataappDataappData');
-
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
     pageNo: 1,
@@ -869,6 +867,7 @@ export default function Addaddress({navigation, route}) {
   const _selectRiderContactFromPhoneBook = () => {
     checkContactPermission()
       .then((res) => {
+        console.log(res, 'res>>>>res');
         if (res == 'granted') {
           getPhoneNumberFromPhoneBook()
             .then((res) => {
@@ -882,9 +881,13 @@ export default function Addaddress({navigation, route}) {
             .catch((error) => {
               alert(error);
             });
+        } else {
+          alert('Contact permission blocked or not granted.');
         }
       })
-      .catch(errorMethod);
+      .catch((error) => {
+        alert('Contact permission blocked or not granted.');
+      });
   };
 
   const usernameFirstlater = !!userData?.name && userData?.name?.charAt(0);
@@ -919,7 +922,10 @@ export default function Addaddress({navigation, route}) {
         <View>
           {book_for_friend ? (
             <TouchableOpacity
-              style={{flexDirection: 'row', alignItems: 'center'}}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
               onPress={onShowHideFriendListModal}>
               {selectedFriendForRide?.first_name ? (
                 <View

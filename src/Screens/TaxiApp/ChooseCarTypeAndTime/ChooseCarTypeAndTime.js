@@ -366,11 +366,16 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   };
 
   const sendStripeToken = (extraData, data) => {
+    console.log(' i amhere>>>>>>>');
     data['order_number'] = extraData?.orderDetail?.order_number;
     data['action'] = 'pickup_delivery';
     data['stripe_token'] = paramData?.tokenInfo;
-    console.log(data, 'data>>><');
-    console.log(extraData, 'extraData....');
+    data['card_last_four_digit']=paramData?.cardInfo?.last4
+    data['card_expiry_month']=paramData?.cardInfo?.expiryMonth
+    data['card_expiry_year']=paramData?.cardInfo?.expiryYear
+   
+    console.log(data, 'extraData....');
+    
     actions
       .openPaymentWebUrlPost(`/${selectedPayment?.code}`, data, {
         code: appData?.profile?.code,
@@ -378,7 +383,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res, 'res>>>>>');
+        console.log(res, 'res>>>>>++++++++');
         updateState({
           isModalVisible: false,
           isLoading: false,
@@ -422,11 +427,12 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       isModalVisible: false,
       isLoading: false,
       isRefreshing: false,
-      indicatorLoader: false,
+      // indicatorLoader: false,
     });
     switch (paymentId) {
       case 4: //Stripe Payment Getway
-        sendStripeToken(extraData, data);
+       console.log(' i amerereerererere');
+        sendStripeToken(extraData, res);
         break;
       case 6: //Payfast Payment Getway
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
@@ -447,6 +453,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         navigation.navigate(navigationStrings.KHALTI, paymentData);
         break;
       default:
+        console.log('i mah shfjgdghdjgs');
         navigation.navigate(
           navigationStrings.PICKUPTAXIORDERDETAILS,
           extraData,
@@ -486,6 +493,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             totalDuration: totalDuration,
             selectedCarOption: selectedCarOption?.sku,
           };
+          console.log(extraData, data,"extraData, data");
           checkPaymentOptions(extraData, data);
         } else {
           console.log(res, 'res>>>>>');
@@ -500,8 +508,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       })
       .catch(errorMethod);
   };
-
+console.log(scheduleDateTime,"scheduleDateTime")
   const _confirmAndPay = () => {
+    console.log(selectedPayment.id,"selectedPayment.id");
     let data = {};
     data['task_type'] = scheduleDateTime?.selectedDateAndTime
       ? ''
@@ -530,7 +539,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       data['coupon_id'] = couponInfo?.id;
     }
     data['order_time_zone'] = RNLocalize.getTimeZone();
-    data['type'] = paramData?.friendBookingDetails?.bookingType;
+    data['bookingType'] = paramData?.friendBookingDetails?.bookingType;
     (data[
       'friendName'
     ] = `${paramData?.friendBookingDetails?.firstName} ${paramData?.friendBookingDetails?.lastName}`),
@@ -540,54 +549,23 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           : ` ${defaultDeviceCountryCode}${paramData?.friendBookingDetails?.mobileNumber}`
         : ''),
       console.log(data, 'dataaaaa');
-    if (!!userData) {
-      console.log(userData, 'userData');
-      if (!!userData) {
-        if (
-          !!userData?.client_preference?.verify_email &&
-          !!userData?.client_preference?.verify_phone
-        ) {
-          if (
-            !!userData?.verify_details?.is_email_verified &&
-            !!userData?.verify_details?.is_phone_verified
-          ) {
-            // setDateAndTimeSchedule(true);
 
-            selectedPayment.id == 10
-              ? renderRazorPay(data)
-              : _finalPayment(data);
-          } else {
-            moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
-              formCart: true,
-            })();
-          }
-        } else if (
-          !!userData?.client_preference?.verify_email ||
-          !!userData?.client_preference?.verify_phone
-        ) {
-          if (
-            !!userData?.client_preference?.verify_email &&
-            !userData?.verify_details?.is_email_verified
-          ) {
-            moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
-              formCart: true,
-            })();
-          } else if (
-            !!userData?.client_preference?.verify_phone &&
-            !userData?.verify_details?.is_phone_verified
-          ) {
-            moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
-              formCart: true,
-            })();
-          } else {
-            selectedPayment.id == 10
-              ? renderRazorPay(data)
-              : _finalPayment(data);
-          }
-        } else {
-          selectedPayment.id == 10 ? renderRazorPay(data) : _finalPayment(data);
-        }
-      }
+    if (
+      !!(
+        !!userData?.client_preference?.verify_email &&
+        !userData?.verify_details?.is_email_verified
+      ) ||
+      !!(
+        !!userData?.client_preference?.verify_phone &&
+        !userData?.verify_details?.is_phone_verified
+      )
+    ) {
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+        ...userData,
+        fromCart: true,
+      })();
+    } else {
+      selectedPayment.id == 10 ? renderRazorPay(data) : _finalPayment(data);
     }
   };
 
@@ -880,7 +858,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
   const _onDateChange = (date) => {
     console.log(date, 'date');
-    let time = moment(date).format('HH:mm');
+    let time = moment(date).format('HH:mm ');
     let dateSelectd = moment(date).format('YYYY-MM-DD');
 
     console.log(time, 'time');
@@ -922,6 +900,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
                 height: height / 4.4,
               }}
               onDateChange={(value) => _onDateChange(value)}
+              
+              
             />
 
             <View

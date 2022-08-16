@@ -37,12 +37,12 @@ export default function SelctFromMap({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-
+console.log(location,"constCurrLocconstCurrLoc")
 
   const [state, setState] = useState({
     region: {
-      latitude: location?.latitude || 30.7333,
-      longitude: location?.longitude || 76.7794,
+      latitude: constCurrLoc?.latitude || 30.7333,
+      longitude: constCurrLoc?.longitude || 76.7794,
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
@@ -215,7 +215,7 @@ export default function SelctFromMap({
           height: height,
         }}
         // region={region}
-        initialRegion={constCurrLoc}
+        initialRegion={region}
         // pointerEvents={'none'}
         // minZoomLevel={20}
         onRegionChangeComplete={_onRegionChange}

@@ -41,6 +41,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {setUserData} from '../../utils/utils';
 export default function OuterScreen2({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -97,39 +98,40 @@ export default function OuterScreen2({navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        if (!!res.data) {
-          if (
-            !!res.data?.client_preference?.verify_email &&
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              navigation.push(navigationStrings.TAB_ROUTES);
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else if (
-            !!res.data?.client_preference?.verify_email ||
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified ||
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              navigation.push(navigationStrings.TAB_ROUTES);
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else {
-            navigation.push(navigationStrings.TAB_ROUTES);
-          }
-        }
+        console.log(res, 'res>>>SOCIAL');
         updateState({isLoading: false});
-        getCartDetail();
+
+        if (!!res.data) {
+          checkEmailPhoneVerified(res?.data);
+          getCartDetail();
+        }
       })
       .catch(errorMethod);
+  };
+
+  const checkEmailPhoneVerified = (data) => {
+    if (
+      !!(
+        !!data?.client_preference?.verify_email &&
+        !data?.verify_details?.is_email_verified
+      ) ||
+      !!(
+        !!data?.client_preference?.verify_phone &&
+        !data?.verify_details?.is_phone_verified
+      )
+    ) {
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, data)();
+    } else {
+      successLogin(data);
+    }
+  };
+
+  const successLogin = (data) => {
+    if (!!data) {
+      setUserData(data).then((suc) => {
+        actions.saveUserData(data);
+      });
+    }
   };
 
   //error handling
@@ -141,6 +143,8 @@ export default function OuterScreen2({navigation}) {
   const getCartDetail = () => {
     actions
       .getCartDetail(
+        '',
+
         {},
         {
           code: appData?.profile?.code,
@@ -220,7 +224,7 @@ export default function OuterScreen2({navigation}) {
   const onGuestLogin = () => {
     actions.userLogout();
     getCartDetail();
-    navigation.push(navigationStrings.TAB_ROUTES);
+    actions.setAppSessionData('guest_login');
   };
   return (
     <WrapperContainer

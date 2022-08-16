@@ -207,15 +207,15 @@ android {
     flavorDimensions "appType"
 
     // productFlavors {
-    //          meow{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.meow.order'
-    //         resValue "string", "app_name", "Meow"
-    //         resValue "string", "host_name", ""
+    //                  yogolift{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.yogolift.order'
+    //             resValue "string", "app_name", "Yogo Lift"
+    //             resValue "string", "host_name", ""
     //         }
     // }
 
@@ -381,9 +381,9 @@ android {
                 resValue "string", "app_name", "BLIP"
                 resValue "string", "host_name", ""
             }
-            helpnowrightnow{
+           helpnowrightnow{
                 dimension "appType"
-                versionCode 4
+                versionCode 6
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
@@ -1877,7 +1877,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.ineed.user'
+                applicationId 'com.customer.ineed'
                 resValue "string", "app_name", "INeed"
                 resValue "string", "host_name", ""
             }
@@ -5733,6 +5733,76 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.farmMeat.order'
             resValue "string", "app_name", "Farm Meat" 
+            resValue "string", "host_name", ""
+            }
+          danielleBejjani{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.danielleBejjani.order'
+            resValue "string", "app_name", "Danielle Bejjani" 
+            resValue "string", "host_name", ""
+            }
+              yallaEat{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.yallaEat.order'
+            resValue "string", "app_name", "Yalla Eat" 
+            resValue "string", "host_name", ""
+            }
+       choizez{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.choizez.order'
+            resValue "string", "app_name", "Choizez" 
+            resValue "string", "host_name", ""
+            }
+              otto{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.otto.order'
+            resValue "string", "app_name", "otto" 
+            resValue "string", "host_name", ""
+            }
+          rescueRoadsideAssistance{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.rescueRoadsideAssistance.order'
+            resValue "string", "app_name", "Rescue Roadside Assistance" 
+            resValue "string", "host_name", ""
+            }
+          tax_E{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.taxE.order'
+            resValue "string", "app_name", "Tax-E" 
+            resValue "string", "host_name", ""
+            }
+            baggageTaxi{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.baggageTaxi.order'
+            resValue "string", "app_name", "Baggage Taxi" 
             resValue "string", "host_name", ""
             }
     }

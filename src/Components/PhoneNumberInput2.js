@@ -11,6 +11,8 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {TextInput} from 'react-native-paper';
+import { getBundleId } from 'react-native-device-info';
+import { appIds } from '../utils/constants/DynamicAppKeys';
 
 const PhoneNumberInput2 = ({
   cca2 = '',
@@ -127,10 +129,11 @@ const PhoneNumberInput2 = ({
       {countryPickerModalVisible && (
         <CountryPicker
           cca2={cca2}
-          withCallingCode={callingCode}
+          withCallingCode={true}
           visible={countryPickerModalVisible}
           withFlagButton={false}
           withFilter
+          countryCode={callingCode}
           onClose={_onCountryPickerModalClose}
           onSelect={_onCountryChange}
         />

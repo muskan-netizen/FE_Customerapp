@@ -72,7 +72,7 @@ export default function OrderDetail({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-  // console.log(paramData, 'paramData');
+  console.log(paramData, 'paramData');
   const dineInType = useSelector((state) => state?.home?.dineInType);
 
   const [lalaMoveUrl, setLalaMoveUrl] = useState(null);
@@ -223,7 +223,7 @@ export default function OrderDetail({ navigation, route }) {
     isFocused ? 5000 : null,
   );
 
-  console.log("cartDatacartData",cartData)
+  console.log("cartDatacartData", cartData)
 
   useFocusEffect(
     React.useCallback(() => {
@@ -242,6 +242,47 @@ export default function OrderDetail({ navigation, route }) {
       showError(strings.UNAUTHORIZED_MESSAGE);
     }
   };
+
+
+  const createRoom = async (item, type) => {
+
+    console.log("itemitem", item)
+
+
+
+    try {
+      const apiData = {
+        sub_domain: '192.168.101.88', //this is static value 
+        client_id: String(appData?.profile.id),
+        db_name: appData?.profile?.database_name,
+        user_id: String(userData?.id),
+        type: type,
+        order_vendor_id: String(item?.id),
+        vendor_id: String(item?.vendor_id),
+        order_id: String(item?.order_id)
+      }
+      updateState({ isLoading: true })
+
+      console.log("sending api data", apiData)
+      const res = await actions.onStartChat(apiData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      console.log('start chat res', res)
+      updateState({ isLoading: false })
+      if (!!res?.roomData) {
+        onChat(res.roomData)
+
+      }
+    } catch (error) {
+      console.log('error raised in start chat api', error)
+      showError(error?.message)
+      updateState({ isLoading: false })
+    }
+  }
+
+
 
   const new_dispatch_traking_url = trackingUrl
     ? trackingUrl.replace('/order/', '/order-details/')
@@ -406,15 +447,15 @@ export default function OrderDetail({ navigation, route }) {
     data['review'] = productDetail?.product_rating?.review
       ? productDetail?.product_rating?.review
       : '';
-    // data['vendor_id'] = productDetail.vendor_id;
+    // data['vendor_id'] = productDetail.vendor_id; =
 
-    actions
-      .giveRating(data, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-      })
+    actions.giveRating(data, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    })
       .then((res) => {
+        console.log(res,"ressssssssr")
         let cloned_cartItems = cloneDeep(cartItems);
         updateState({
           isLoading: false,
@@ -712,7 +753,7 @@ export default function OrderDetail({ navigation, route }) {
                                           }
                                           numberOfLines={1}>
                                           {` ${currencies?.primary_currency
-                                              ?.symbol
+                                            ?.symbol
                                             } ${currencyNumberFormatter(
                                               Number(
                                                 j?.quantity_price,
@@ -815,7 +856,7 @@ export default function OrderDetail({ navigation, route }) {
                                             }
                                             numberOfLines={1}>
                                             {` ${currencies?.primary_currency
-                                                ?.symbol
+                                              ?.symbol
                                               } ${currencyNumberFormatter(
                                                 Number(j?.quantity_price),
                                                 appData?.profile?.preferences
@@ -842,9 +883,9 @@ export default function OrderDetail({ navigation, route }) {
                         color: colors.redFireBrick,
                         marginBottom: moderateScale(3),
                       }}>{`${i?.product.delay_order_hrs > 0 ||
-                          i?.product.delay_order_min > 0
-                          ? strings.PREPARATION_TIME_IS
-                          : ''
+                        i?.product.delay_order_min > 0
+                        ? strings.PREPARATION_TIME_IS
+                        : ''
                         }${i?.product.delay_order_hrs > 0
                           ? ` ${i?.product.delay_order_hrs} hrs`
                           : ''
@@ -1016,29 +1057,44 @@ export default function OrderDetail({ navigation, route }) {
           // marginVertical: moderateScale(10),
         }}>
         {/* show ETA Time */}
-        <View style={{paddingHorizontal: moderateScale(10)}}>
-          <UserDetail
-            data={item}
-            type={strings.VENDER}
-            containerStyle={{
+        <View style={{ paddingHorizontal: moderateScale(10) }}>
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+
+
+            <UserDetail data={item} type={strings.VENDER} containerStyle={{
               backgroundColor: isDarkMode
                 ? MyDarkTheme.colors.background
                 : colors.white,
+              flex: 1
             }}
-            textStyle={{
-              color: isDarkMode
-                ? MyDarkTheme.colors.text
-                : colors.blackOpacity86,
-            }}
-          />
-      {/* <TouchableOpacity onPress={() => onChat(item)}>
-          <Text style={{
-            margin: 16,
-            color: colors.redB,
-            fontFamily: fontFamily.bold,
-            fontSize: 16
-          }}>CHAT</Text>
-        </TouchableOpacity> */}
+              textStyle={{
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity86,
+              }}
+            />
+            <View>
+              {!!appData?.profile?.socket_url ?
+                <TouchableOpacity
+                  onPress={() => createRoom(item, 'vendor_to_user')}
+                  style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
+                >
+                  <Text style={styles.startChatText}>Vendor</Text>
+                  <Image resizeMode='contain' style={styles.agentUserIcon} source={imagePath.icVendorChat} />
+                </TouchableOpacity> : null}
+
+              {!!appData?.profile?.socket_url && !!(driverStatus?.order && driverStatus?.agent_location?.lat) ?
+                <TouchableOpacity
+                  onPress={() => createRoom(item, 'agent_to_user')}
+                  style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
+                  activeOpacity={0.7}
+                >
+                  <Text style={styles.startChatText}>Agent</Text>
+                  <Image resizeMode='contain' style={styles.agentUserIcon} source={imagePath.icUserChat} />
+                </TouchableOpacity> : null}
+            </View>
+          </View>
 
           {item?.products.length
             ? item?.products.map((i, inx) => {
@@ -1082,7 +1138,7 @@ export default function OrderDetail({ navigation, route }) {
                             style={{
                               justifyContent: 'center',
                             }}>
-                            <Text>{i?.product_name}</Text>
+                            <Text style={{color: isDarkMode ? MyDarkTheme.colors.text : colors.black,}}>{i?.product_name}</Text>
                             {i?.quantity && (
                               <View
                                 style={{
@@ -1137,7 +1193,7 @@ export default function OrderDetail({ navigation, route }) {
                                         style={styles.cartItemWeight2}
                                         numberOfLines={1}>
                                         {` ${currencies?.primary_currency
-                                            ?.symbol
+                                          ?.symbol
                                           } ${currencyNumberFormatter(
                                             Number(j?.price),
                                             appData?.profile?.preferences
@@ -1860,11 +1916,11 @@ export default function OrderDetail({ navigation, route }) {
                       : colors.blackOpacity43,
                     flex: 1,
                   }}>
-                  {`${
-                    cartData?.address?.house_number === null
-                      ? ''
-                      : `${cartData?.address?.house_number}, `
-                  }`}
+
+                  {`${cartData?.address?.house_number === null
+                    ? ''
+                    : `${cartData?.address?.house_number}, `
+                    }`}
                   {cartData?.address?.address} {''}
                   {cartData?.address?.pincode}
                 </Text>
@@ -2143,7 +2199,7 @@ export default function OrderDetail({ navigation, route }) {
             />
           )}
           {(cartData?.total_service_fee > 0 ||
-            cartData?.taxable_amount > 0) && (
+            Number(cartData?.taxable_amount) >0) && (
               <LeftRightText
                 leftText={strings.TAXES_FEES}
                 rightText={`${currencies?.primary_currency?.symbol
@@ -2226,6 +2282,7 @@ export default function OrderDetail({ navigation, route }) {
             MyDarkTheme={MyDarkTheme}
             leftTextStyle={{
               fontSize: textScale(16),
+              marginBottom: moderateScaleVertical(12),
               color: isDarkMode
                 ? MyDarkTheme.colors.text
                 : colors.blackOpacity86,
@@ -2449,7 +2506,7 @@ export default function OrderDetail({ navigation, route }) {
     if (!selectedTipAmount) {
       showError(strings.PLEASE_SELECT_VALID_OPTION);
     } else if (!userData?.auth_token) {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login')    
     } else {
       moveToNewScreen(navigationStrings.TIP_PAYMENT_OPTIONS, {
         selectedTipAmount: selectedTipAmount,
@@ -2487,6 +2544,8 @@ console.log("driverStatusdriverStatus",driverStatus)
     );
   };
 
+  console.log("driverStatusdriverStatus", driverStatus)
+
   const acceptRejectDriverUpdation = (status) => {
     if (
       status == 1 &&
@@ -2505,14 +2564,13 @@ console.log("driverStatusdriverStatus",driverStatus)
       data['total_payable_amount'] = updatedcartData?.difference_to_be_paid;
 
       updateState({ isLoading: true });
-      actions
-        .acceptRejectDriveUpdate(data, {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          timezone: RNLocalize.getTimeZone(),
-          // systemuser: DeviceInfo.getUniqueId(),
-        })
+      actions.acceptRejectDriveUpdate(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        timezone: RNLocalize.getTimeZone(),
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
         .then((res) => {
           showSuccess(res?.message);
           // updateState({isLoading: false});
@@ -2878,9 +2936,9 @@ console.log("driverStatusdriverStatus",driverStatus)
     );
   };
 
-  const onChat = (item) =>{
-    console.log("item+++",item)
-    navigation.navigate(navigationStrings.CHAT_SCREEN,{data: item})
+  const onChat = (item) => {
+    console.log("item+++", item)
+    navigation.navigate(navigationStrings.CHAT_SCREEN, { data: { ...item, comeFromOrder: true } })
   }
 
   const _onRateDriver = () => {
@@ -2904,6 +2962,7 @@ console.log("driverStatusdriverStatus",driverStatus)
             containerStyle={{ paddingHorizontal: moderateScale(8) }}
             isDriver={cartData?.driver_rating == null}
             _onRateDriver={_onRateDriver}
+            startChatWithAgent={() => createRoom(cartItems[0], 'agent_to_user')}
           />
         ) : null}
 
@@ -3115,7 +3174,7 @@ console.log("driverStatusdriverStatus",driverStatus)
                 // top right sand 1
               ]}
             />
-            <Text style={styles.waitToAccept}>{strings.WAITINGTOACCEPT}</Text>
+            <Text style={{...styles.waitToAccept, color: isDarkMode ? MyDarkTheme.colors.text : colors.black}}>{strings.WAITINGTOACCEPT}</Text>
           </View>
         )}
         {!!orderStatus &&
@@ -3193,7 +3252,7 @@ console.log("driverStatusdriverStatus",driverStatus)
           )} */}
 
 
-    
+
         {!!(updatedcartItems && updatedcartItems.length) && (
           <FlatList
             data={updatedcartItems}
@@ -3538,7 +3597,7 @@ console.log("driverStatusdriverStatus",driverStatus)
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
-        
+
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2
@@ -3549,6 +3608,8 @@ console.log("driverStatusdriverStatus",driverStatus)
         }
         centerTitle={strings.ORDER + `${'#'}${cartData?.order_number || ''}`}
         customRight={!!cartData?.reports?.report?.original ? customRight : ''}
+        onPressLeft={paramData?.from ?moveToNewScreen(navigationStrings.HOME):() => navigation.goBack()}
+        
       /> 
       <View
         style={{

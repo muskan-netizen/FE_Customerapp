@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>828286957080-1rvpp76qncp2ameko0hbn9m8q2qdu73a.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.828286957080-1rvpp76qncp2ameko0hbn9m8q2qdu73a</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>828286957080-bljgq7hbn42cvi2jk53l19lr7stbuc31.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDKeTuZbwLh9fqB49b5whTZz-JyLPhhGkU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>828286957080</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.danielleBejjani.order</string>
+	<key>PROJECT_ID</key>
+	<string>danielle-bejjani</string>
+	<key>STORAGE_BUCKET</key>
+	<string>danielle-bejjani.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:828286957080:ios:5802ac161a867dd28bf56d</string>
+</dict>
+</plist>

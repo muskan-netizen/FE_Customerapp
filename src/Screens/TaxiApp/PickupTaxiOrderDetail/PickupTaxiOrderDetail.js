@@ -13,16 +13,20 @@ import {
   Keyboard,
   Linking,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import {
+  defaultLoader,
+  loaderOne,
+} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {
   getImageUrl,
@@ -80,8 +84,11 @@ const CANCLE_TASK_TIME = 45000;
 // import 'moment/locale/tr';
 // import 'moment/locale/vi';
 // import 'moment/locale/ar';
-import "moment/min/locales"; // Import all moment-locales -- it's just 400kb
-import "moment-timezone";
+import 'moment/min/locales'; // Import all moment-locales -- it's just 400kb
+import 'moment-timezone';
+import Loader from '../../../Components/Loader';
+import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
+import LottieView from 'lottie-react-native';
 
 export default function PickupTaxiOrderDetail({navigation, route}) {
   const {themeColor, themeToggle} = useSelector(
@@ -187,7 +194,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   //       '/order-details/',
   //     )
   //   : null;
-  
 
   const urlValue = `/pickup-delivery/order-tracking-details`;
 
@@ -279,7 +285,10 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     }
   }, [driverStatus]);
 
-console.log(paramData?.orderDetail,"paramData?.orderDetail?.dispatch_traking_url");
+  console.log(
+    paramData?.orderDetail,
+    'paramData?.orderDetail?.dispatch_traking_url',
+  );
 
   const new_dispatch_traking_url = !!paramData?.orderDetail
     ?.dispatch_traking_url
@@ -306,6 +315,7 @@ console.log(paramData?.orderDetail,"paramData?.orderDetail?.dispatch_traking_url
           language: languages?.primary_language?.id,
         });
         console.log(res, 'res---agent>>>>');
+
         if (!!res?.data) {
           updateState({
             agent_location: res?.data?.agent_location,
@@ -803,7 +813,9 @@ console.log(paramData?.orderDetail,"paramData?.orderDetail?.dispatch_traking_url
           cancelError: null,
         });
         showSuccess(response?.message);
-       { paramData?.keyValue ? navigation.goBack():null}
+        {
+          paramData?.keyValue ? navigation.goBack() : null;
+        }
       })
       .catch(errorMethod);
   };
@@ -832,7 +844,9 @@ console.log(paramData?.orderDetail,"paramData?.orderDetail?.dispatch_traking_url
       console.log('sendWhatsAppMessage -----> ', 'message link is undefined');
     }
   };
-
+  {
+    console.log(isLoading, 'isLoadingisLoadingisLoading');
+  }
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -873,11 +887,15 @@ console.log(paramData?.orderDetail,"paramData?.orderDetail?.dispatch_traking_url
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}>
             {orderStatus == 'unassigned'
-              ? appIds.jiffex == getBundleId()?strings.YOUR_ORDER_WILL_START_SOON:strings.YOUR_RIDE_WILL_START_SOON
+              ? appIds.jiffex == getBundleId()
+                ? strings.YOUR_ORDER_WILL_START_SOON
+                : strings.YOUR_RIDE_WILL_START_SOON
               : strings.INVOICE}
           </Text>
         </View>
+
         <View style={{flex: 1}}>
+          
           {!isLoading && !!tasks?.length > 0 && (
             <MapView
               provider={PROVIDER_GOOGLE} // remove if not using Google Maps
@@ -1028,7 +1046,7 @@ console.log(paramData?.orderDetail,"paramData?.orderDetail?.dispatch_traking_url
                         : paramData?.orderDetail?.order_number
                     }`}
                   </Text>
-             
+
                   {isWaitingOver && orderStatus == 'unassigned' ? (
                     <></>
                   ) : !!(

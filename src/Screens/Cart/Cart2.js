@@ -436,8 +436,7 @@ export default function Cart2({navigation, route}) {
         }
       }
     } else {
-      // showError(strings.UNAUTHORIZED_MESSAGE);
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login');
     }
   };
 

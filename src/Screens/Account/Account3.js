@@ -57,16 +57,16 @@ export default function Account3({navigation}) {
     currencies,
     languages,
   } = useSelector((state) => state?.initBoot);
-  console.log('dataaa><<<<', appData);
   const businessType = appStyle?.homePageLayout;
+
+  const [allVendors, setAllVendors] = useState([]);
+
   const [state, setState] = useState({
     isLoading: false,
   });
 
   const {preferences, phone_number, contact_phone_number} = appData?.profile;
 
-  // const profileInfo = appData?.profile;
-  // console.log("account profile info",profileInfo)
   const [isVisible, setIsVisible] = useState(false);
 
   const fontFamily = appStyle?.fontSizeData;
@@ -92,6 +92,33 @@ export default function Account3({navigation}) {
   // );
 
   //Share your app
+
+  useEffect(() => {
+    if (!!appMainData?.is_admin) {
+      fetchAllVendors();
+    }
+  }, [appMainData?.is_admin]);
+
+  const fetchAllVendors = async (value = null) => {
+    let query = `?limit=${100000}&page=${1}`;
+    let headers = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    };
+    try {
+      const res = await actions.storeVendors(query, headers);
+      if (res?.data?.data) {
+        setAllVendors(res.data.data);
+        return;
+      }
+      console.log('available vendors res', res);
+    } catch (error) {
+      console.log('error riased', error);
+      showError(error?.message);
+    }
+  };
+
   const onShare = () => {
     console.log('onShare', appData);
     if (!!appData?.domain_link) {
@@ -107,71 +134,6 @@ export default function Account3({navigation}) {
       return;
     }
     alert('link not found');
-  };
-
-  //Logout function
-  const userlogout = () => {
-    if (!!userData?.auth_token) {
-      Alert.alert('', strings.LOGOUT_SURE_MSG, [
-        {
-          text: strings.CANCEL,
-          onPress: () => console.log('Cancel Pressed'),
-          // style: 'destructive',
-        },
-        {
-          text: strings.CONFIRM,
-          onPress: () => {
-            actions.userLogout();
-            actions.cartItemQty('');
-            actions.saveAddress('');
-            actions.addSearchResults('clear');
-            moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
-          },
-        },
-      ]);
-    } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
-    }
-  };
-
-  const onDeleteAccount = () => {
-    if (!!userData?.auth_token) {
-      Alert.alert(strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, '', [
-        {
-          text: strings.CANCEL,
-          onPress: () => console.log('Cancel Pressed'),
-          // style: 'destructive',
-        },
-        {
-          text: strings.CONFIRM,
-          onPress: deleleUserAccount,
-        },
-      ]);
-    } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
-    }
-  };
-  const deleleUserAccount = async () => {
-    try {
-      const res = await actions.deleteAccount(
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      );
-      console.log('delete user account res++++', res);
-      showSuccess(res?.massage);
-      actions.userLogout();
-      actions.cartItemQty('');
-      actions.saveAddress('');
-      actions.addSearchResults('clear');
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
-    } catch (error) {
-      console.log('erro raised', error);
-      showError(error?.message);
-    }
   };
 
   // initalize Zendesk
@@ -202,10 +164,13 @@ export default function Account3({navigation}) {
   const usernameFirstlater = !!userData?.name && userData?.name?.charAt(0);
 
   const goToChatRoom = (type) => {
-    if (type == 'user_chat') {
-      navigation.navigate(navigationStrings.CHAT_ROOM, {data: 'user_chat'});
+    if (!!appMainData?.is_admin && type == 'vendor_chat') {
+      navigation.navigate(navigationStrings.CHAT_ROOM, {
+        type: type,
+        allVendors: allVendors,
+      });
     } else {
-      navigation.navigate(navigationStrings.CHAT_ROOM, {data: 'vendor_chat'});
+      navigation.navigate(navigationStrings.CHAT_ROOM, {type: type});
     }
   };
   //----------------------------------ActionSheet------------------------------//
@@ -233,6 +198,7 @@ export default function Account3({navigation}) {
         break;
     }
   };
+
   return (
     <View
       style={{
@@ -262,11 +228,7 @@ export default function Account3({navigation}) {
             noLeftIcon={false}
             customLeft={() => (
               <Text
-                onPress={() =>
-                  navigation.push(navigationStrings.SHORT_CODE, {
-                    shortCodeParam: true,
-                  })
-                }
+                onPress={() => actions.setAppSessionData('show_shortcode')}
                 style={{
                   color: themeColors.primary_color,
                   fontFamily: fontFamily.bold,
@@ -773,75 +735,68 @@ export default function Account3({navigation}) {
               />
             )}
 
-          {!!userData?.auth_token && (
+          {!!userData?.auth_token && !!appData?.profile?.socket_url && (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-              onPress={onDeleteAccount}
-              iconLeft={imagePath.user}
-              centerHeading={strings.DELETE_ACCOUNT}
+              onPress={() => goToChatRoom('agent_chat')}
+              iconLeft={imagePath.icUserChat}
+              centerHeading={'Driver Chat'}
               containerStyle={styles.containerStyle2}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
-{/* 
-          {!!userData?.auth_token && (
+
+          {!!userData?.auth_token &&
+            !!appMainData?.is_admin &&
+            !!appData?.profile?.socket_url && (
+              <ListItemHorizontal
+                centerContainerStyle={{flexDirection: 'row'}}
+                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                onPress={() => goToChatRoom('vendor_chat')}
+                iconLeft={imagePath.icUserChat}
+                centerHeading={'User Chat'}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+              />
+            )}
+
+          {!!userData?.auth_token && !!appData?.profile?.socket_url && (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}
               onPress={() => goToChatRoom('user_chat')}
-              iconLeft={imagePath.message}
-              centerHeading={'User Chat'}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
-            />
-          )} */}
-
-          {/* {!!userData?.auth_token && (
-            <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-              onPress={() => goToChatRoom('vendor_chat')}
-              iconLeft={imagePath.message}
+              iconLeft={imagePath.icVendorChat}
               centerHeading={'Vendor Chat'}
               containerStyle={styles.containerStyle2}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
-          )} */}
+          )}
 
-          <View style={styles.loginView}>
-            <TouchableOpacity
-              // onPress={()=>actions.isVendorNotification(true)}
-              onPress={userlogout}
-              style={styles.touchAbleLoginVIew}>
-              <Text 
-              style={{...styles.loginLogoutText, color: isDarkMode
-                ? MyDarkTheme.colors.text
-                : colors.blackB}}
-              >
-                {!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
-              </Text>
-              <Image
-                source={imagePath.rightBlue}
-                style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
-              />
-            </TouchableOpacity>
-          </View>
+          {!!userData?.auth_token ? null : (
+            <View style={styles.loginView}>
+              <TouchableOpacity
+                // onPress={()=>actions.isVendorNotification(true)}
+                onPress={() => actions.setAppSessionData('on_login')}
+                style={styles.touchAbleLoginVIew}>
+                <Text style={styles.loginLogoutText}>{strings.LOGIN}</Text>
+                <Image
+                  source={imagePath.rightBlue}
+                  style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
+
           <View style={{height: 100}} />
         </ScrollView>
         <ActionSheet

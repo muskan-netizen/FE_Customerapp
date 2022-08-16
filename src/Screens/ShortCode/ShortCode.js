@@ -1,24 +1,30 @@
+import {isEmpty} from 'lodash';
 import React, {useEffect, useState} from 'react';
-import {Image, Linking, Text, View, Platform} from 'react-native';
+import {Image, Linking, Text, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import {getBundleId} from 'react-native-device-info';
+import FastImage from 'react-native-fast-image';
+import {MaterialIndicator} from 'react-native-indicators';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
+import Video from 'react-native-video';
 import {useSelector} from 'react-redux';
+import RNFetchBlob from 'rn-fetch-blob-v2';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
+import * as NavigationService from '../../navigation/NavigationService';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
 import colors from '../../styles/colors';
-import Video from 'react-native-video';
 import {
   moderateScale,
   moderateScaleVertical,
   width,
-  height,
 } from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
 import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   getImageUrl,
@@ -27,19 +33,14 @@ import {
 } from '../../utils/helperFunctions';
 import {getItem, setItem} from '../../utils/utils';
 import styles from './styles';
-import RNFetchBlob from 'rn-fetch-blob-v2';
-import {MaterialIndicator} from 'react-native-indicators';
-import * as NavigationService from '../../navigation/NavigationService';
-import {enums} from '../../utils/enums';
-import {MyDarkTheme} from '../../styles/theme';
-import {useDarkMode} from 'react-native-dark-mode';
-import FastImage from 'react-native-fast-image';
 
 const fs = RNFetchBlob.fs;
 
 export default function ShortCode({route, navigation}) {
   const shortCodeParam = route?.params?.shortCodeParam;
-  // alert(shortCodeParam)
+
+  console.log(shortCodeParam, 'shortCodeParam>>>');
+
   const [state, setState] = useState({
     email: '',
     password: '',
@@ -51,7 +52,6 @@ export default function ShortCode({route, navigation}) {
     LoadingScreen: true,
     videoDurationEnded: false,
     allAppData: null,
-    responseData: null,
     initapiresponse: false,
   });
   const {dispatch} = store;
@@ -65,14 +65,14 @@ export default function ShortCode({route, navigation}) {
     LoadingScreen,
     videoDurationEnded,
     allAppData,
-    responseData,
+
     initapiresponse,
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {appData, appStyle, currencies, languages} = useSelector(
+  const {appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
-  const userData = useSelector((state) => state.auth.userData);
+  const {userData, appSessionInfo} = useSelector((state) => state.auth);
   const {themeColors} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -86,25 +86,13 @@ export default function ShortCode({route, navigation}) {
       const saveShortCode = await getItem('saveShortCode');
       switch (getBundleId()) {
         case appIds.royoorder:
-          // if (shortCodeParam) {
-          //   updateState({shortCode: '', isShortcodePrefilled: false});
-          // } else {
-          //   updateState({shortCode: '245bae', isShortcodePrefilled: true});
-          // }
-
-          if (saveShortCode && !shortCodeParam) {
+          if (appSessionInfo == 'show_shortcode') {
+            updateState({shortCode: '', isShortcodePrefilled: false});
+          } else {
             updateState({
-              shortCode: saveShortCode,
+              shortCode: saveShortCode || shortCodes.royoorder,
               isShortcodePrefilled: true,
             });
-          } else {
-            state;
-            //updateState({shortCode: 'd0a898', isShortcodePrefilled: true});
-            if (shortCodeParam) {
-              updateState({shortCode: '', isShortcodePrefilled: false});
-            } else {
-              updateState({shortCode: '245bae', isShortcodePrefilled: true});
-            }
           }
           break;
         case appIds.tranzit:
@@ -159,18 +147,12 @@ export default function ShortCode({route, navigation}) {
           });
           break;
         case appIds.bottomsup:
-          // if (!firebase.apps.length) {
-          //   firebase.initializeApp(bottomsUpConfig);
-          // }
           updateState({
             shortCode: shortCodes.bottomsup,
             isShortcodePrefilled: true,
           });
           break;
         case appIds.helpnowrightnow:
-          // if (!firebase.apps.length) {
-          //   firebase.initializeApp(iosConfig);
-          // }
           updateState({
             shortCode: shortCodes.helpnowrightnow,
             isShortcodePrefilled: true,
@@ -2340,12 +2322,55 @@ export default function ShortCode({route, navigation}) {
                       shortCode: shortCodes.farmMeat,
                       isShortcodePrefilled: true,
                     });
-                    break;
+               break;
+            case appIds.danielleBejjani:
+                    updateState({
+                      shortCode: shortCodes.danielleBejjani,
+                      isShortcodePrefilled: true,
+                    });
+              break;
+              case appIds.yallaEat:
+                updateState({
+                  shortCode: shortCodes.yallaEat,
+                  isShortcodePrefilled: true,
+                });
+          break;
+          case appIds.choizez:
+                updateState({
+                  shortCode: shortCodes.choizez,
+                  isShortcodePrefilled: true,
+                });
+          break;
+          case appIds.otto:
+                updateState({
+                  shortCode: shortCodes.otto,
+                  isShortcodePrefilled: true,
+                });
+          break;
+          case appIds.rescueRoadsideAssistance:
+                updateState({
+                  shortCode: shortCodes.rescueRoadsideAssistance,
+                  isShortcodePrefilled: true,
+                });
+          break;
+          case appIds.tax_E:
+                updateState({
+                  shortCode: shortCodes.tax_E,
+                  isShortcodePrefilled: true,
+                });
+          break;
+          case appIds.baggageTaxi:
+                updateState({
+                  shortCode: shortCodes.baggageTaxi,
+                  isShortcodePrefilled: true,
+                });
+          break;
       }
     })();
   }, []);
 
   useEffect(() => {
+    console.log(shortCode, isShortcodePrefilled, 'fldkfslskdfk');
     if (shortCode && isShortcodePrefilled) {
       checkScreen();
     }
@@ -2353,7 +2378,7 @@ export default function ShortCode({route, navigation}) {
 
   useEffect(() => {
     if (videoDurationEnded && initapiresponse) {
-      navigateToNextScreen(allAppData, responseData);
+      navigateToNextScreen(allAppData);
     }
   }, [videoDurationEnded, initapiresponse]);
 
@@ -2381,13 +2406,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '245bae',
+        // code: '4f3624',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '245bae',
+        // code: '4f3624',
         code: shortCode,
       };
     }
@@ -2414,7 +2439,6 @@ export default function ShortCode({route, navigation}) {
               uri: `${el.file_name.image_fit}800/1600${el.file_name.image_path}`,
             };
           });
-          console.log('preload tutorial', preLoadTutorial[0]);
           FastImage.preload(preLoadTutorial); //preload tutorial images
         }
 
@@ -2423,11 +2447,22 @@ export default function ShortCode({route, navigation}) {
           actions.saveShortCode(shortCode);
         }
 
-        homeData(res.data);
+        if (
+          getBundleId() == (appIds.masa || appIds.iPicknDrop || appIds.muvpod)
+        ) {
+          updateState({
+            isLoading: false,
+            LoadingScreen: false,
+            allAppData: res,
+            initapiresponse: true,
+          });
+        } else {
+          updateState({isLoading: false, LoadingScreen: false});
+          navigateToNextScreen(res);
+        }
       })
       .catch((error) => {
-        console.log(error, 'error in header api');
-
+        console.log(error, 'error>>>>>error');
         updateState({
           isLoading: false,
           changeInShortCode: false,
@@ -2438,13 +2473,7 @@ export default function ShortCode({route, navigation}) {
         }, 500);
       });
   };
-
-  //get home data
-
-  //Home data
-
   async function handleDynamicLink(deepLinkUrl) {
-    console.log('checking deep link >>> ', decodeURI(deepLinkUrl));
     if (deepLinkUrl != null) {
       setItem('deepLinkUrl', deepLinkUrl);
       let routeName = getUrlRoutes(deepLinkUrl, 1);
@@ -2476,7 +2505,7 @@ export default function ShortCode({route, navigation}) {
         });
       }, 1800);
     } else {
-      navigation.push(navigationStrings.TAB_ROUTES);
+      actions.setAppSessionData('guest_login');
     }
   }
 
@@ -2491,106 +2520,22 @@ export default function ShortCode({route, navigation}) {
     }
   };
 
-  const navigateToNextScreen = (res, homeData) => {
+  const navigateToNextScreen = (res) => {
     // return;
-    if (enums.isVendorStandloneApp) {
-      if (!!userData?.auth_token) {
+
+    getItem('firstTime').then((el) => {
+      if (!el && !isEmpty(res?.data?.dynamic_tutorial)) {
+        actions.setAppSessionData('app_intro');
+      } else {
         Linking.getInitialURL()
           .then((link) => {
-            handleNotiRedirectionForVendorApp(link);
+            handleDynamicLink(link);
           })
           .catch((err) => {
             console.log('checking deep link >>> 3232sdsd', err);
           });
-      } else {
-        // navigation.navigate(navigationStrings.LOGIN);
-        NavigationService.resetStackAndNavigate(
-          navigation,
-          navigationStrings.LOGIN,
-        );
       }
-    } else {
-      getItem('firstTime').then((el) => {
-        if (!el && res.dynamic_tutorial && res.dynamic_tutorial.length > 0) {
-          navigation.push(navigationStrings.APP_INTRO, {
-            images: res.dynamic_tutorial,
-          });
-        } else {
-          // navigation.push(navigationStrings.TAB_ROUTES);
-          Linking.getInitialURL()
-            .then((link) => {
-              handleDynamicLink(link);
-            })
-            .catch((err) => {
-              console.log('checking deep link >>> 3232sdsd', err);
-            });
-        }
-      });
-    }
-  };
-
-  const homeData = (res) => {
-    actions
-      .homeData(
-        {},
-        {
-          code: res?.profile?.code,
-          currency: res?.currencies?.find((x) => x.is_primary).currency_id,
-          language: res?.languages?.find((x) => x.is_primary).language_id,
-        },
-        true,
-      )
-      .then((homeData) => {
-        console.log(res, 'ressssss');
-        switch (getBundleId()) {
-          case appIds.masa:
-            updateState({
-              isLoading: false,
-              LoadingScreen: false,
-              allAppData: res,
-              responseData: homeData.data,
-              initapiresponse: true,
-            });
-
-            break;
-          case appIds.iPicknDrop:
-            updateState({
-              isLoading: false,
-              LoadingScreen: false,
-              allAppData: res,
-              responseData: homeData.data,
-              initapiresponse: true,
-            });
-
-            break;
-          case appIds.muvpod:
-            updateState({
-              isLoading: false,
-              LoadingScreen: false,
-              allAppData: res,
-              responseData: homeData.data,
-              initapiresponse: true,
-            });
-            break;
-          // case appIds.sabroson:
-          // updateState({
-          //   isLoading: false,
-          //   LoadingScreen: false,
-          //   allAppData: res,
-          //   responseData: homeData.data,
-          //   initapiresponse: true
-          // });
-          // break;
-          default:
-            updateState({isLoading: false, LoadingScreen: false});
-            navigateToNextScreen(res, homeData.data);
-            break;
-        }
-      })
-      .catch((error) => {
-        updateState({isLoading: false});
-        navigateToNextScreen(res, homeData.data);
-      });
+    });
   };
 
   const onOtpInput = (code) => {
@@ -2600,7 +2545,6 @@ export default function ShortCode({route, navigation}) {
         shortCode: code,
         changeInShortCode: true,
       });
-      //
     })();
   };
 
@@ -2627,16 +2571,6 @@ export default function ShortCode({route, navigation}) {
     }
   }, [shortCode, isLoading]);
 
-  // let image = ''
-  // if (Platform.OS === 'android') {
-  //   image = require('../../../android/app/src/CareWorks/res/drawable-xxxhdpi/splash.png')
-  // } else {
-  //   image = require('../../../ios/Configs/CareWorks/Images.xcassets/Splash.imageset/ic_splash.png')
-  //   // image = {uri: "file://" + fs.dirs.DocumentDir + '/Splash.png'}
-  //   // image = {uri: "file:///Users/admin/Library/Developer/CoreSimulator/Devices/84EAA354-7A24-49DC-8CDC-8C02976A69B9/data/Containers/Data/Application/FE01C2A0-4CEA-44D5-B2D3-A052319D316E/Documents/Splash.png", scale: 1}
-  //   image = { uri: 'Splash' }
-  //   console.log('checking image >>>>>', image, themeColors)
-  // }
   const _renderSplash = () => {
     switch (getBundleId()) {
       case appIds.masa:
@@ -2645,13 +2579,9 @@ export default function ShortCode({route, navigation}) {
         return animatedSplash();
       case appIds.muvpod:
         return animatedSplash();
-      // case appIds.sabroson:
-      //   return animatedSplash();
       default:
         return imageSplash();
     }
-
-    // return imageSplash();
   };
   const imageSplash = () => {
     return (
@@ -2681,11 +2611,11 @@ export default function ShortCode({route, navigation}) {
   const animationVideo = () => {
     switch (getBundleId()) {
       case appIds?.masa:
-        return imagePath.ipd;
+        return imagePath.masa;
       case appIds?.iPicknDrop:
         return imagePath.ipd;
       case appIds?.muvpod:
-        return {uri: imagePath.muvpod};
+        return imagePath.ipd;
       // case appIds?.sabroson:
       //   return imagePath.sabroson
     }
@@ -2695,7 +2625,6 @@ export default function ShortCode({route, navigation}) {
     updateState({
       videoDurationEnded: true,
     });
-    // navigateToNextScreen(allAppData, responseData);
   };
 
   const animatedSplash = () => {
@@ -2706,14 +2635,7 @@ export default function ShortCode({route, navigation}) {
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: colors.white,
-          // backgroundColor: getBundleId()== appIds.muvpod ? '#EFEDEF' : colors.white,
         }}>
-        {/* <View style={{ position: 'absolute', bottom: moderateScale(100) }}>
-            {LoadingScreen && (
-              <MaterialIndicator size={50} color={colors.greyMedium} />
-            )}
-          </View> */}
-
         <Video
           source={animationVideo()} // Can be a URL or a local file.
           style={{
@@ -2789,7 +2711,6 @@ export default function ShortCode({route, navigation}) {
               textStyleFocused={{
                 color: colors.textBlue,
               }}
-              // autoCapitalize={'none'}
               inputProps={{
                 autoCapitalize: 'none',
               }}
@@ -2804,7 +2725,6 @@ export default function ShortCode({route, navigation}) {
 
             <View style={{flex: 1, justifyContent: 'flex-end'}}>
               <ButtonWithLoader
-                // isLoading={isLoading}
                 color={colors.black}
                 disabled={isBtnDisabled}
                 btnStyle={{
@@ -2826,10 +2746,7 @@ export default function ShortCode({route, navigation}) {
             <View style={{height: 20}} />
           </View>
         </WrapperContainer>
-        // </KeyboardAwareScrollView>
       )}
-
-      {/* </ScrollView> */}
     </View>
   );
 }
