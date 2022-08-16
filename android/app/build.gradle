@@ -207,14 +207,14 @@ android {
     flavorDimensions "appType"
 
     // productFlavors {
-    //            rota{
+    //          meow{
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.rota.order'
-    //         resValue "string", "app_name", "Rota" 
+    //         applicationId 'com.meow.order'
+    //         resValue "string", "app_name", "Meow"
     //         resValue "string", "host_name", ""
     //         }
     // }
