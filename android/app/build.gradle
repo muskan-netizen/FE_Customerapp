@@ -207,14 +207,14 @@ android {
     flavorDimensions "appType"
 
     // productFlavors {
-    //                 laundroZone{
+    //                  apptFindr{
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.laundroZone.order'
-    //         resValue "string", "app_name", "Laundro Zone" 
+    //         applicationId 'com.apptFindr.order'
+    //         resValue "string", "app_name", "Appt Findr" 
     //         resValue "string", "host_name", ""
     //         }
     // }

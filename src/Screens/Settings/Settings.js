@@ -784,6 +784,7 @@ export default function Settings({ route, navigation }) {
             {strings.DELETE_ACCOUNT}
           </Text> : null}
         </View>
+       
       </ScrollView>
     </WrapperContainer>
   );

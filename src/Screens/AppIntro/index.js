@@ -138,8 +138,7 @@ const AppIntro = ({route, navigation}) => {
         longitude: location?.longitude,
       };
     }
-    actions
-      .homeData(
+    actions.homeData(
         {
           type: 'delivery',
           ...latlongObj,

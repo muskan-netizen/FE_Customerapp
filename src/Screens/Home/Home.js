@@ -1,19 +1,21 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Alert, BackHandler, Linking} from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Alert, BackHandler, Linking, DeviceEventEmitter } from 'react-native';
+
 import AppLink from 'react-native-app-link';
-import {useDarkMode} from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
 import strings from '../../constants/lang';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {MyDarkTheme} from '../../styles/theme';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../styles/theme';
+import { shortCodes } from '../../utils/constants/DynamicAppKeys';
+
 import {
   androidBackButtonHandler,
   getCurrentLocation,
@@ -22,7 +24,7 @@ import {
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
-import {chekLocationPermission} from '../../utils/permissions';
+import { chekLocationPermission } from '../../utils/permissions';
 import {
   DashBoardFive,
   DashBoardFour,
@@ -31,15 +33,17 @@ import {
   DashBoardHeaderOne,
   DashBoardOne,
   DashBoardSix,
+  TaxiHomeDashbord,
 } from './DashboardViews/Index';
 import Voice from '@react-native-voice/voice';
 import FastImage from 'react-native-fast-image';
 import DashBoardEight from './DashboardViews/DashBoardEight';
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
-import _, {isEmpty} from 'lodash';
+import _, { isEmpty } from 'lodash';
 import socketServices from '../../utils/scoketService';
-import SubscriptionModal from '../../Components/SubscriptionModal';
-import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
+import SubscriptionModal from '../../Components/SubscriptionModal'; import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
+
+
 
 // navigator.geolocation = require('react-native-geolocation-service');
 
@@ -48,7 +52,7 @@ let maxMinObj = {
   min_select: 1,
 };
 
-export default function Home({route, navigation}) {
+export default function Home({ route, navigation }) {
   const paramData = route?.params;
   const {
     appData,
@@ -60,9 +64,12 @@ export default function Home({route, navigation}) {
     themeToggle,
     allAddresss,
   } = useSelector((state) => state?.initBoot);
-  const {location, appMainData, dineInType} = useSelector(
+  const { location, appMainData, dineInType } = useSelector(
     (state) => state?.home,
   );
+
+  console.log("appDataappDataappData", appData)
+
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const addressSearch = useSelector(
     (state) => state?.addressSearch.addressSearch,
@@ -91,7 +98,7 @@ export default function Home({route, navigation}) {
     isDineInSelected: false,
     pageActive: 1,
     currentLocation: '',
-    saveAllUserAddress,
+    saveAllUserAddress: null,
     isLoadingB: false,
     searchDataLoader: false,
     openVendor: 0,
@@ -104,7 +111,7 @@ export default function Home({route, navigation}) {
     selectedAddonSet: [],
     unPresentAry: [],
     isSubscription: true,
-    stopOrderModalVisible:true
+    stopOrderModalVisible: true
   });
 
   const {
@@ -130,7 +137,7 @@ export default function Home({route, navigation}) {
     stopOrderModalVisible
   } = state;
 
-  const {profile} = appData;
+  const { profile } = appData;
 
   console.log('appDataappData home++', appData);
 
@@ -151,14 +158,11 @@ export default function Home({route, navigation}) {
   );
 
   useEffect(() => {
-    updateState({updatedData: appMainData?.categories});
+    updateState({ updatedData: appMainData?.categories });
   }, [appMainData]);
 
   useEffect(() => {
     _getLocationFromParams();
-    // if (addressSearch) {
-    //   _getLocationFromParams();
-    // }
   }, [paramData?.details]);
 
   useFocusEffect(
@@ -172,11 +176,108 @@ export default function Home({route, navigation}) {
     }, []),
   );
 
+
+  useFocusEffect(
+    useCallback(() => {
+      if (!!userData?.auth_token) {
+        getAllTempOrders();
+      }
+    }, []),
+  );
+
+
+  useEffect(() => {
+    chekLocationPermission(true).then((result) => {
+      if (result !== 'goback' && result == 'granted') {
+        console.log(result, 'chekLocationPermission');
+        getCurrentLocation('home').then((curLoc) => {
+          let locData = location?.latitude ? location : curLoc
+          console.log("res++++ chekLocationPermission", curLoc)
+          if (!!userData?.auth_token) {//IS LOGIN USER YES
+            if (!!appData?.profile?.preferences?.is_hyperlocal) { //YES
+              getAllAddress().then((savedAddress) => {
+                console.log("res++++ getAllAddress", savedAddress)
+                if (savedAddress.length > 0) {
+                  getNearestLocation(curLoc, savedAddress).then((nearestLoc) => {
+                    actions.locationData(nearestLoc);
+                    homeData(nearestLoc);
+                  })
+                  return;
+                } else {
+                  actions.locationData(locData);
+                  homeData(locData);
+                  return;
+                }
+              }).catch(error => {
+                homeData(locData);
+                return;
+              })
+            } else { //NO
+              console.log("api hit without lat lng")
+              homeData();
+              return;
+            }
+          } else { //In case of guest user
+            if (!!appData?.profile?.preferences?.is_hyperlocal) { //YES
+              console.log("api hit with current lat lng")
+              actions.locationData(locData);
+              homeData(locData)
+              return;
+            } else { //NO
+              console.log("api hit without lat lng")
+              homeData()
+              return;
+            }
+          }
+          return;
+        })
+          .catch((err) => {
+            console.log(err, 'chekLocationPermission error');
+            console.log("api hit without lat lng")
+            homeData()
+            return;
+          });
+      } else {
+        if (appData?.profile?.preferences?.is_hyperlocal) {
+          const data = {
+            address: appData?.profile?.preferences?.Default_location_name,
+            latitude: appData?.profile?.preferences?.Default_latitude,
+            longitude: appData?.profile?.preferences?.Default_longitude,
+          };
+          if (!!data?.latitude) {
+            console.log("api hit with current lat lng")
+            actions.locationData(data);
+            homeData(data);
+            return;
+          } else {
+            console.log("api hit without lat lng")
+            homeData()
+            return;
+          }
+        }
+      }
+    }).catch((error) => {
+      console.log('error while accessing location', error)
+      console.log("api hit without lat lng")
+      homeData()
+      return;
+    });
+  }, [selectedTabType, appData, bestSeller, openVendor, closeVendor]);
+
+
+  // useEffect(() => {
+  //   homeData();
+  // }, [selectedTabType, appData, location, bestSeller, openVendor, closeVendor]);
+
+
+
+  useEffect(() => {
+    Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
+  }, []);
+
   const _getLocationFromParams = () => {
-    if (
-      paramData?.details &&
-      paramData?.details?.formatted_address != location?.address
-    ) {
+
+    if (paramData?.details && paramData?.details?.formatted_address != location?.address) {
       const address = paramData?.details?.formatted_address;
       const res = {
         address: address,
@@ -198,7 +299,7 @@ export default function Home({route, navigation}) {
     }
   };
 
-  // {alert(appData?.profile?.preferences?.is_hyperlocal)}
+
   const checkCartWithLatLang = (res) => {
     Alert.alert('', strings.THIS_WILL_REMOVE_CART, [
       {
@@ -206,7 +307,7 @@ export default function Home({route, navigation}) {
         onPress: () => console.log('Cancel Pressed'),
         // style: 'destructive',
       },
-      {text: strings.CLEAR_CART2, onPress: () => clearCart(res)},
+      { text: strings.CLEAR_CART2, onPress: () => clearCart(res) },
     ]);
   };
 
@@ -224,120 +325,32 @@ export default function Home({route, navigation}) {
       )
       .then((res) => {
         actions.cartItemQty(res);
+        console.log("homeData===== calling from clearCart")
         homeData(location);
       })
       .catch(errorMethod);
   };
 
   const updateLatLang = (res) => {
-    updateState({updateTime: Math.random()});
     actions.locationData(res);
+    homeData(res);
   };
-  useEffect(() => {
-    if (updateTime) {
-      homeData();
-    }
-  }, [updateTime]);
-  useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
-  }, []);
 
-  useEffect(() => {
-    chekLocationPermission(true)
-      .then((result) => {
-        if (result !== 'goback' && result == 'granted') {
-          console.log(result, 'chekLocationPermission');
-          getCurrentLocation('home')
-            .then((res) => {
-              if (
-                appMainData &&
-                typeof appMainData?.reqData == 'object' &&
-                appMainData?.reqData?.latitude &&
-                (location?.latitude == '' || location?.longitude == '')
-              ) {
-                const data = {
-                  address: appMainData?.reqData?.address,
-                  latitude: appMainData?.reqData?.latitude,
-                  longitude: appMainData?.reqData?.longitude,
-                };
-                actions.locationData(res);
-              } else {
-                if (!!appData?.profile?.preferences?.is_hyperlocal) {
-                  if (!!userData?.auth_token && !paramData?.details) {
-                    const nearestAddress = getNearestLocation(
-                      res,
-                      saveAllUserAddress,
-                    );
-
-                    if (!!nearestAddress) {
-                      actions.locationData(nearestAddress);
-                      // homeData(nearestAddress);
-                      return;
-                    } else {
-                      actions.locationData(res);
-                      return;
-                    }
-                  }
-                  if (paramData?.details) {
-                    // _getLocationFromParams();
-                  } else {
-                    actions.locationData(res);
-                  }
-                }
-                return;
-              }
-            })
-            .catch((err) => {
-              console.log(err, 'chekLocationPermission error');
-            });
-        } else {
-          console.log('appDataappDataappData', appData.profile.preferences);
-          if (appData?.profile?.preferences?.is_hyperlocal) {
-            const data = {
-              address: appData?.profile?.preferences?.Default_location_name,
-              latitude: appData?.profile?.preferences?.Default_latitude,
-              longitude: appData?.profile?.preferences?.Default_longitude,
-            };
-
-            actions.locationData(data);
-          }
-        }
-      })
-      .catch((error) => console.log('error while accessing location', error));
-  }, [isRefreshing, userData?.auth_token, saveAllUserAddress]);
-
-  useFocusEffect(
-    useCallback(() => {
-      // homeData();
-      if (!!userData?.auth_token) {
-        getAllAddress();
-        getAllTempOrders();
-      }
-    }, []),
-  );
-
-  // useEffect(() => {
-  //   homeData();
-  // }, [appMainData]);
 
   //get All address
   const getAllAddress = () => {
-    if (!!userData?.auth_token) {
-      actions
-        .getAddress(
-          {},
-          {
-            code: appData?.profile?.code,
-          },
-        )
-        .then((res) => {
-          if (res.data) {
-            actions.saveAllUserAddress(res.data);
-            updateState({saveAllUserAddress: res?.data});
-          }
-        })
-        .catch(errorMethod);
-    }
+    return new Promise(async (resolve, reject) => {
+      try {
+        let res = await actions.getAddress({}, { code: appData?.profile?.code })
+        if (!!res?.data) {
+          resolve(res.data);
+        } else {
+          resolve(res);
+        }
+      } catch (error) {
+        reject(error)
+      }
+    });
   };
 
   const getAllTempOrders = () => {
@@ -359,24 +372,20 @@ export default function Home({route, navigation}) {
   };
 
   //Home data
-  const homeData = (slectedLocatonFromPreviousScreen) => {
+  const homeData = (locationData = null) => {
     if (!!paramData) {
-      updateState({searchDataLoader: true});
+      updateState({ searchDataLoader: true });
     }
     let latlongObj = {};
-    if (appData?.profile?.preferences?.is_hyperlocal) {
+
+    if (!!locationData) {
       latlongObj = {
-        address: slectedLocatonFromPreviousScreen
-          ? slectedLocatonFromPreviousScreen?.address
-          : location?.address,
-        latitude: slectedLocatonFromPreviousScreen
-          ? slectedLocatonFromPreviousScreen?.latitude
-          : location?.latitude,
-        longitude: slectedLocatonFromPreviousScreen
-          ? slectedLocatonFromPreviousScreen?.longitude
-          : location?.longitude,
-      };
+        address: locationData?.address || '',
+        latitude: locationData?.latitude || '',
+        longitude: locationData?.longitude || '',
+      }
     }
+
     let vendorFilterData = {
       close_vendor: closeVendor,
       open_vendor: openVendor,
@@ -384,75 +393,74 @@ export default function Home({route, navigation}) {
       // near_me: nearMe,
     };
     if (closeVendor == 0 && openVendor == 0 && bestSeller == 0) {
-      updateState({singleVendor: true});
+      updateState({ singleVendor: true });
     } else {
-      updateState({singleVendor: false});
+      updateState({ singleVendor: false });
     }
 
     {
       console.log(latlongObj, vendorFilterData, 'data>>>>>>>');
-      selectedTabType
-        ? actions
-            .homeData(
-              {
-                type: dineInType,
-                ...latlongObj,
-                ...vendorFilterData,
-              },
-              {
-                code: appData?.profile?.code,
-                currency: currencies?.primary_currency?.id,
-                language: languages?.primary_language?.id,
-                // ...latlongObj,
-              },
-            )
-            .then(async (res) => {
-              console.log('Home data++++++', res);
-              // await preLoadImages(res.data);
-              updateState({searchDataLoader: false});
-              if (
-                appData?.profile?.preferences?.is_hyperlocal &&
-                location?.latitude == '' &&
-                location?.longitude == ''
-              ) {
-                if (
-                  typeof res?.data?.reqData == 'object' &&
-                  res?.data?.reqData?.latitude &&
-                  res?.data?.reqData?.longitude
-                ) {
-                  const data = {
-                    address: res?.data?.reqData?.address,
-                    latitude: res?.data?.reqData?.latitude,
-                    longitude: res?.data?.reqData?.longitude,
-                  };
 
-                  actions.locationData(data);
-                }
-              } else {
-                if (
-                  appData?.profile?.preferences?.is_hyperlocal &&
-                  location?.latitude != '' &&
-                  location?.longitude != ''
-                ) {
-                } else {
-                  const data = {
-                    address: '',
-                    latitude: '',
-                    longitude: '',
-                  };
-                  // actions.locationData(data);
-                }
-              }
-              setTimeout(() => {
-                updateState({
-                  isLoading: false,
-                  isLoadingB: false,
-                  searchDataLoader: false,
-                });
-              }, 1500);
-            })
-            .catch(errorMethod)
-        : null;
+      var checkType = null
+
+      console.log("dineInTypedineInType", dineInType)
+
+      if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
+        appData?.profile?.preferences?.vendorMode.forEach((val, i) => {
+          if (val?.type == dineInType) {
+            checkType = val.type
+          }
+        })
+      }
+      if (!checkType) {
+        actions.dineInData('delivery');
+      }
+      let apiData = {
+        type: !!checkType ? checkType : 'delivery',
+        // type: 'on_demand',
+        ...latlongObj,
+        ...vendorFilterData,
+      }
+      let apiHeader = {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      }
+      console.log('sending api data', apiData)
+      console.log("homeData===== calling from main function")
+
+      actions.homeData(apiData, apiHeader).then(async (res) => {
+        console.log('Home data++++++', res);
+        // await preLoadImages(res.data);
+        updateState({ searchDataLoader: false });
+        if (
+          appData?.profile?.preferences?.is_hyperlocal &&
+          location?.latitude == '' &&
+          location?.longitude == ''
+        ) {
+          if (
+            typeof res?.data?.reqData == 'object' &&
+            res?.data?.reqData?.latitude &&
+            res?.data?.reqData?.longitude
+          ) {
+            const data = {
+              address: res?.data?.reqData?.address,
+              latitude: res?.data?.reqData?.latitude,
+              longitude: res?.data?.reqData?.longitude,
+            };
+            actions.locationData(data);
+          }
+        }
+        setTimeout(() => {
+          updateState({
+            isLoading: false,
+            isLoadingB: false,
+            searchDataLoader: false,
+          });
+        }, 1500);
+      })
+        .catch(errorMethod)
+
     }
   };
 
@@ -473,57 +481,57 @@ export default function Home({route, navigation}) {
   };
 
   //update state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
-  const {viewRef2, viewRef3, bannerRef} = useRef();
+  const { viewRef2, viewRef3, bannerRef } = useRef();
 
-  const preLoadImages = async (data) => {
-    if (data.categories.length > 0) {
-      let preLoadCategories = data.categories.map((item, inx) => {
-        return {
-          uri: getImageUrl(
-            item?.icon?.image_fit,
-            item?.icon?.image_path,
-            '140/140',
-          ),
-        };
-      });
-      FastImage.preload(preLoadCategories); //preload categories
-    }
+  // const preLoadImages = async (data) => {
+  //   if (data.categories.length > 0) {
+  //     let preLoadCategories = data.categories.map((item, inx) => {
+  //       return {
+  //         uri: getImageUrl(
+  //           item?.icon?.image_fit,
+  //           item?.icon?.image_path,
+  //           '140/140',
+  //         ),
+  //       };
+  //     });
+  //     FastImage.preload(preLoadCategories); //preload categories
+  //   }
 
-    if (!!appData?.mobile_banners && appData?.mobile_banners?.length > 0) {
-      let preLoadBanner = appData?.mobile_banners.map((item) => {
-        return {
-          uri: getImageUrl(
-            item.image.image_fit,
-            item.image.image_path,
-            appStyle?.homePageLayout === 5 ? '600/400' : '200/400',
-          ),
-        };
-      });
-      FastImage.preload(preLoadBanner); //preload banners
-    }
+  //   if (!!appData?.mobile_banners && appData?.mobile_banners?.length > 0) {
+  //     let preLoadBanner = appData?.mobile_banners.map((item) => {
+  //       return {
+  //         uri: getImageUrl(
+  //           item.image.image_fit,
+  //           item.image.image_path,
+  //           appStyle?.homePageLayout === 5 ? '600/400' : '200/400',
+  //         ),
+  //       };
+  //     });
+  //     FastImage.preload(preLoadBanner); //preload banners
+  //   }
 
-    if (data.vendors.length > 0) {
-      let preLoadVendors = data.vendors.map((item, inx) => {
-        return {
-          uri: getImageUrl(
-            item.banner.proxy_url || item.image.proxy_url,
-            item.banner.image_path || item.image.image_path,
-            '700/300',
-          ),
-        };
-      });
-      FastImage.preload(preLoadVendors); //preload vendors
-    }
-  };
+  //   if (data.vendors.length > 0) {
+  //     let preLoadVendors = data.vendors.map((item, inx) => {
+  //       return {
+  //         uri: getImageUrl(
+  //           item.banner.proxy_url || item.image.proxy_url,
+  //           item.banner.image_path || item.image.image_path,
+  //           '700/300',
+  //         ),
+  //       };
+  //     });
+  //     FastImage.preload(preLoadVendors); //preload vendors
+  //   }
+  // };
 
   const openUber = () => {
     let appName = 'Uber - Easy affordable trips';
@@ -536,7 +544,7 @@ export default function Home({route, navigation}) {
       appStoreLocale: appStoreLocale,
       playStoreId: playStoreId,
     })
-      .then((res) => {})
+      .then((res) => { })
       .catch((err) => {
         Linking.openURL('https://www.uber.com/in/en/');
         console.log('errro raised', err);
@@ -596,8 +604,8 @@ export default function Home({route, navigation}) {
           item.redirect_to == staticStrings.ONDEMANDSERVICE
             ? false
             : item.redirect_to == staticStrings.PRODUCT
-            ? false
-            : true,
+              ? false
+              : true,
         name: item.name,
         isVendorList: false,
       })();
@@ -637,30 +645,28 @@ export default function Home({route, navigation}) {
       moveToNewScreen(navigationStrings.CATEGORY_BRANDS, item)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { item })();
     } else if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: item?.id,
-            vendor: true,
-            name: item?.name,
-            isVendorList: true,
-            fetchOffers: true,
-          })();
+          id: item?.id,
+          vendor: true,
+          name: item?.name,
+          isVendorList: true,
+          fetchOffers: true,
+        })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
 
   console.log(appData, 'appData>>>>appData');
-  useEffect(() => {
-    homeData();
-  }, [location, bestSeller, openVendor, closeVendor]);
+
 
   //On Press banner
   const bannerPress = (data) => {
@@ -691,16 +697,16 @@ export default function Home({route, navigation}) {
       if (data.redirect_to == staticStrings.VENDOR) {
         data?.is_show_category
           ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-              item,
-              rootProducts: true,
-              // categoryData: data,
-            })()
+            item,
+            rootProducts: true,
+            // categoryData: data,
+          })()
           : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-              id: data.redirect_id,
-              vendor: true,
-              name: data.redirect_name,
-              fetchOffers: true,
-            })();
+            id: data.redirect_id,
+            vendor: true,
+            name: data.redirect_name,
+            fetchOffers: true,
+          })();
       } else if (data.redirect_to == staticStrings.CATEGORY) {
         if (data?.category?.type?.title == staticStrings.VENDOR) {
           let dat2 = data;
@@ -756,31 +762,30 @@ export default function Home({route, navigation}) {
       language: languages?.primary_language?.id,
     };
 
-    actions
-      .initApp(
-        {},
-        header,
-        true,
-        currencies?.primary_currency,
-        languages?.primary_language,
-      )
+    actions.initApp(
+      {},
+      header,
+      true,
+      currencies?.primary_currency,
+      languages?.primary_language,
+    )
       .then((res) => {
         console.log(res, 'initApp');
-        updateState({isRefreshing: false});
+        updateState({ isRefreshing: false });
       })
       .catch((error) => {
-        updateState({isRefreshing: false});
+        updateState({ isRefreshing: false });
       });
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({isRefreshing: true});
+    updateState({ isRefreshing: true });
     initApiHit();
-    // homeData();
   };
 
   const selcetedToggle = (type) => {
+
     actions.dineInData(type);
     if (dineInType != type) {
       {
@@ -796,10 +801,7 @@ export default function Home({route, navigation}) {
     }
   };
 
-  useEffect(() => {
-    homeData();
-  }, [selectedTabType, appData, dineInType]);
-
+  console.log("dineInTypedineInTypedineInType", dineInType)
   const onVendorFilterSeletion = (selectedFilter) => {
     switch (selectedFilter?.id) {
       case 1:
@@ -843,7 +845,7 @@ export default function Home({route, navigation}) {
     }
   };
 
-  const onSpeechStartHandler = (e) => {};
+  const onSpeechStartHandler = (e) => { };
   const onSpeechEndHandler = (e) => {
     updateState({
       isVoiceRecord: false,
@@ -865,7 +867,7 @@ export default function Home({route, navigation}) {
     });
     try {
       await Voice.start(langType);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const _onVoiceStop = async () => {
@@ -949,6 +951,8 @@ export default function Home({route, navigation}) {
     }
   };
 
+  console.log("appMainDataappMainData", appMainData)
+
   const onFindVendors = () => {
     let newAry = [];
     selectedLaundryCategory?.estimate_product_addons.map((item, index) => {
@@ -993,11 +997,13 @@ export default function Home({route, navigation}) {
       isSubscription: false,
     });
   };
-  const _stopOrderModalClose =()=>{
+
+  const _stopOrderModalClose = () => {
     updateState({
-      stopOrderModalVisible:false
+      stopOrderModalVisible: false
     })
   }
+
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
       // switch (case_) {
@@ -1005,21 +1011,35 @@ export default function Home({route, navigation}) {
         return (
           <>
             <DashBoardHeaderOne navigation={navigation} location={location} />
-            <DashBoardOne
-              handleRefresh={() => handleRefresh()}
-              bannerPress={(item) => bannerPress(item)}
-              isLoading={isLoading}
-              isRefreshing={isRefreshing}
-              appMainData={appMainData}
-              tempCartData={tempCartData}
-              onPressCategory={(item) => onPressCategory(item)}
-              onPressVendor={(item) => {
-                onPressVendor(item);
-              }}
-              selcetedToggle={selcetedToggle}
-              toggleData={appData}
-              navigation={navigation}
-            />
+            {dineInType == 'pick_drop' ?
+              <TaxiHomeDashbord
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => onPressCategory(item)}
+                toggleData={appData}
+              />
+              :
+              <DashBoardOne
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                tempCartData={tempCartData}
+                onPressCategory={(item) => onPressCategory(item)}
+                onPressVendor={(item) => {
+                  onPressVendor(item);
+                }}
+                selcetedToggle={selcetedToggle}
+                toggleData={appData}
+                navigation={navigation}
+              />
+
+            }
+
           </>
         );
 
@@ -1027,23 +1047,35 @@ export default function Home({route, navigation}) {
         return (
           <>
             <DashBoardHeaderOne navigation={navigation} location={location} />
-            <DashBoardFour
-              handleRefresh={() => handleRefresh()}
-              bannerPress={(item) => bannerPress(item)}
-              isLoading={isLoading}
-              isRefreshing={isRefreshing}
-              appMainData={appMainData}
-              onPressCategory={(item) => {
-                onPressCategory(item);
-              }}
-              onPressVendor={(item) => {
-                onPressVendor(item);
-              }}
-              tempCartData={tempCartData}
-              selcetedToggle={selcetedToggle}
-              toggleData={appData}
-              navigation={navigation}
-            />
+            {dineInType == 'pick_drop' ?
+              <TaxiHomeDashbord
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => onPressCategory(item)}
+                toggleData={appData}
+              />
+              :
+              <DashBoardFour
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => {
+                  onPressCategory(item);
+                }}
+                onPressVendor={(item) => {
+                  onPressVendor(item);
+                }}
+                tempCartData={tempCartData}
+                selcetedToggle={selcetedToggle}
+                toggleData={appData}
+                navigation={navigation}
+              />
+            }
           </>
         );
       case 3:
@@ -1063,29 +1095,41 @@ export default function Home({route, navigation}) {
               _onVoiceStop={_onVoiceStop}
             />
 
-            <DashBoardFive
-              handleRefresh={() => handleRefresh()}
-              bannerPress={(item) => bannerPress(item)}
-              isLoading={isLoading}
-              isRefreshing={isRefreshing}
-              appMainData={appMainData}
-              onPressCategory={(item) => {
-                onPressCategory(item);
-              }}
-              onPressVendor={(item) => {
-                onPressVendor(item);
-              }}
-              isDineInSelected={isDineInSelected}
-              selcetedToggle={selcetedToggle}
-              tempCartData={tempCartData}
-              toggleData={appData}
-              navigation={navigation}
-              onVendorFilterSeletion={onVendorFilterSeletion}
-              singleVendor={singleVendor}
-              onPressAddLaundryItem={onPressAddLaundryItem}
-              isLoadingAddons={isLoadingAddons}
-              selectedHomeCategory={selectedHomeCategory}
-            />
+            {dineInType == 'pick_drop' ?
+              <TaxiHomeDashbord
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => onPressCategory(item)}
+                toggleData={appData}
+              />
+              :
+              <DashBoardFive
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => {
+                  onPressCategory(item);
+                }}
+                onPressVendor={(item) => {
+                  onPressVendor(item);
+                }}
+                isDineInSelected={isDineInSelected}
+                selcetedToggle={selcetedToggle}
+                tempCartData={tempCartData}
+                toggleData={appData}
+                navigation={navigation}
+                onVendorFilterSeletion={onVendorFilterSeletion}
+                singleVendor={singleVendor}
+                onPressAddLaundryItem={onPressAddLaundryItem}
+                isLoadingAddons={isLoadingAddons}
+                selectedHomeCategory={selectedHomeCategory}
+              />
+            }
           </>
         );
 
@@ -1100,25 +1144,37 @@ export default function Home({route, navigation}) {
               toggleData={appData}
               isLoading={isLoading}
             />
+            {dineInType == 'pick_drop' ?
+              <TaxiHomeDashbord
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => onPressCategory(item)}
+                toggleData={appData}
+              />
+              :
+              <DashBoardSix
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => {
+                  onPressCategory(item);
+                }}
+                onPressVendor={(item) => {
+                  onPressVendor(item);
+                }}
+                tempCartData={tempCartData}
+                isDineInSelected={isDineInSelected}
+                selcetedToggle={selcetedToggle}
+                toggleData={appData}
+                navigation={navigation}
+              />
+            }
 
-            <DashBoardSix
-              handleRefresh={() => handleRefresh()}
-              bannerPress={(item) => bannerPress(item)}
-              isLoading={isLoading}
-              isRefreshing={isRefreshing}
-              appMainData={appMainData}
-              onPressCategory={(item) => {
-                onPressCategory(item);
-              }}
-              onPressVendor={(item) => {
-                onPressVendor(item);
-              }}
-              tempCartData={tempCartData}
-              isDineInSelected={isDineInSelected}
-              selcetedToggle={selcetedToggle}
-              toggleData={appData}
-              navigation={navigation}
-            />
           </>
         );
 
@@ -1138,30 +1194,41 @@ export default function Home({route, navigation}) {
               isVoiceRecord={isVoiceRecord}
               _onVoiceStop={_onVoiceStop}
             />
-
-            <DashBoardFive
-              handleRefresh={() => handleRefresh()}
-              bannerPress={(item) => bannerPress(item)}
-              isLoading={isLoading}
-              isRefreshing={isRefreshing}
-              appMainData={appMainData}
-              onPressCategory={(item) => {
-                onPressCategory(item);
-              }}
-              onPressVendor={(item) => {
-                onPressVendor(item);
-              }}
-              isDineInSelected={isDineInSelected}
-              selcetedToggle={selcetedToggle}
-              tempCartData={tempCartData}
-              toggleData={appData}
-              navigation={navigation}
-              onVendorFilterSeletion={onVendorFilterSeletion}
-              singleVendor={singleVendor}
-              onPressAddLaundryItem={onPressAddLaundryItem}
-              isLoadingAddons={isLoadingAddons}
-              selectedHomeCategory={selectedHomeCategory}
-            />
+            {dineInType == 'pick_drop' ?
+              <TaxiHomeDashbord
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => onPressCategory(item)}
+                toggleData={appData}
+              />
+              :
+              <DashBoardFive
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => {
+                  onPressCategory(item);
+                }}
+                onPressVendor={(item) => {
+                  onPressVendor(item);
+                }}
+                isDineInSelected={isDineInSelected}
+                selcetedToggle={selcetedToggle}
+                tempCartData={tempCartData}
+                toggleData={appData}
+                navigation={navigation}
+                onVendorFilterSeletion={onVendorFilterSeletion}
+                singleVendor={singleVendor}
+                onPressAddLaundryItem={onPressAddLaundryItem}
+                isLoadingAddons={isLoadingAddons}
+                selectedHomeCategory={selectedHomeCategory}
+              />
+            }
           </>
         );
       case 6:
@@ -1180,27 +1247,38 @@ export default function Home({route, navigation}) {
               isVoiceRecord={isVoiceRecord}
               _onVoiceStop={_onVoiceStop}
             />
+            {dineInType == 'pick_drop' ?
+              <TaxiHomeDashbord
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => onPressCategory(item)}
+                toggleData={appData}
 
-            <DashBoardEight
-              handleRefresh={() => handleRefresh()}
-              bannerPress={(item) => bannerPress(item)}
-              isLoading={isLoading}
-              isRefreshing={isRefreshing}
-              appMainData={appMainData}
-              onPressCategory={(item) => {
-                onPressCategory(item);
-              }}
-              onPressVendor={(item) => {
-                onPressVendor(item);
-              }}
-              isDineInSelected={isDineInSelected}
-              selcetedToggle={selcetedToggle}
-              tempCartData={tempCartData}
-              toggleData={appData}
-              navigation={navigation}
-              onVendorFilterSeletion={onVendorFilterSeletion}
-              singleVendor={singleVendor}
-            />
+              />
+              : <DashBoardEight
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => {
+                  onPressCategory(item);
+                }}
+                onPressVendor={(item) => {
+                  onPressVendor(item);
+                }}
+                isDineInSelected={isDineInSelected}
+                selcetedToggle={selcetedToggle}
+                tempCartData={tempCartData}
+                toggleData={appData}
+                navigation={navigation}
+                onVendorFilterSeletion={onVendorFilterSeletion}
+                singleVendor={singleVendor}
+              />
+            }
           </>
         );
     }
@@ -1239,8 +1317,8 @@ export default function Home({route, navigation}) {
       isSubscription: false,
     });
   };
- 
-  const {blurRef} = useRef();
+
+  const { blurRef } = useRef();
 
   return (
     <WrapperContainer
@@ -1274,12 +1352,12 @@ export default function Home({route, navigation}) {
             onPressSubscribe={_onPressSubscribe}
           />
         )}
-       {
+      {
         !!appData?.stop_order_acceptance_for_users && (
           <StopAcceptingOrderModal
             isVisible={stopOrderModalVisible}
             onClose={_stopOrderModalClose}
-            
+
           />
         )}
     </WrapperContainer>

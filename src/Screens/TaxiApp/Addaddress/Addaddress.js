@@ -991,8 +991,8 @@ export default function Addaddress({navigation, route}) {
         </View>
       </View>
 
-      <View style={{flex: 1}}>
-        <View style={{flex: 1}}>
+        <View style={{flex:.9}}>
+        
           <View
             style={{
               ...commonStyles.shadowStyle,
@@ -1138,10 +1138,11 @@ export default function Addaddress({navigation, route}) {
                 })}
               </View>
             )}
+
           </ScrollView>
+          {renderbtn()}
         </View>
-      </View>
-      {renderbtn()}
+  
 
       <Modal
         onClose={onClose}

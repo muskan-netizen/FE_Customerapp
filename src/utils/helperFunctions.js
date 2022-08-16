@@ -358,7 +358,7 @@ const timeInLocalLangauge = (value, selectedLanguage) => {
   })}`;
 };
 
-const getNearestLocation = (currentLocation, savedLocations) => {
+const getNearestLocation = async(currentLocation, savedLocations = []) => {
   const points = savedLocations.map((item, indx) => {
     const distance = getDistance(
       {
