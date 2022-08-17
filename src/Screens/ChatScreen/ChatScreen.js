@@ -38,6 +38,8 @@ export default function ChatScreen({ route, navigation }) {
   const isChatRefresh = useSelector((state) => state?.chatRefresh.isChatRefresh);
   const styles = stylesFun({ fontFamily, isDarkMode });
 
+  let defaultImage = 'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png'
+
 
 
   const [messages, setMessages] = useState([])
@@ -53,12 +55,12 @@ export default function ChatScreen({ route, navigation }) {
 
   const isFocused = useIsFocused();
 
-  console.log("userDatauserData",userData)
+  console.log("userDatauserData", userData)
 
   useFocusEffect(
     useCallback(() => {
       socketServices.on("new-message", (data) => {
- 
+
         if (paramData?.room_id == data?.message?.roomData?.room_id) {
           isFocused ? setMessages(previousMessages => GiftedChat.append(previousMessages, data.message.chatData)) : null
           isFocused ? fetchAllRoomUser() : null
@@ -129,34 +131,37 @@ export default function ChatScreen({ route, navigation }) {
     }
   }, [])
 
-  console.log("paramDataparamDataparamData",paramData)
+  console.log("paramDataparamDataparamData", paramData)
 
   const onSend = useCallback(async (messages = []) => {
     if (String(messages[0].text).trim().length < 1) {
       return;
     }
-    let phoneNumber = !!userData.phone_number ? `+${userData?.dial_code} ${userData.phone_number}`: null
+    let phoneNumber = !!userData.phone_number ? `+${userData?.dial_code} ${userData.phone_number}` : null
+    console.log("phoneNumberphoneNumber", userData)
+    let userImage = !!userData?.source ? getImageUrl(
+      userData?.source?.proxy_url,
+      userData?.source?.image_path,
+      '200/200',
+    ) : null
+
     try {
       const apiData = {
         room_id: paramData?._id,
         message: messages[0].text,
-        user_type: !!userData?.is_superadmin ? 'admin':  'user',
-        to_message: !!userData?.is_superadmin ? 'to_user_vendor': 'to_vendor',
-        from_message: !!userData?.is_superadmin? 'from_admin': 'from_user',
+        user_type: !!userData?.is_superadmin ? 'admin' : 'user',
+        to_message: !!userData?.is_superadmin ? 'to_user_vendor' : 'to_vendor',
+        from_message: !!userData?.is_superadmin ? 'from_admin' : 'from_user',
         user_id: userData?.id,
         email: userData.email,
         username: userData?.name,
         phone_num: phoneNumber,
-        display_image: getImageUrl(
-          userData?.source?.proxy_url,
-          userData?.source?.image_path,
-          '200/200',
-        ),
+        display_image: userImage,
         sub_domain: '192.168.101.88', //this is static value 
         //'room_name' =>$data->name,
         chat_type: 'vendor_to_user',
       }
-      console.log("apiDataapiData",apiData)
+      console.log("apiDataapiData", apiData)
       const res = await actions.sendMessage(apiData, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
@@ -186,13 +191,13 @@ export default function ChatScreen({ route, navigation }) {
   const sendToUserNotification = async (id, text) => {
     let apiData = {
       user_ids: roomUsers,
-      roomId: id, 
+      roomId: id,
       roomIdText: paramData?.room_id,
       text_message: text,
       chat_type: 'vendor_to_user',
-   
+
     }
-    console.log("sending api data",apiData)
+    console.log("sending api data", apiData)
     try {
       const res = await actions.sendNotification(apiData, {
         code: appData?.profile?.code,
@@ -520,7 +525,7 @@ export default function ChatScreen({ route, navigation }) {
               />
             )
           }}
-          
+
           textInputStyle={{
             backgroundColor: isDarkMode ? '#2c2c2e' : '#ffffff',
             paddingTop: Platform.OS == 'ios' ? 10 : undefined,
@@ -575,7 +580,7 @@ export default function ChatScreen({ route, navigation }) {
                 }}>
                   <FastImage
                     source={{
-                      uri: val?.display_image,
+                      uri: !!val?.display_image ? val?.display_image : defaultImage,
                       priority: FastImage.priority.high,
                       cache: FastImage.cacheControl.immutable
                     }}
@@ -596,7 +601,7 @@ export default function ChatScreen({ route, navigation }) {
                       fontFamily: fontFamily.medium,
                       textTransform: 'capitalize',
                       color: isDarkMode ? colors.white : colors.black,
-                    }}>{val?.phone_num}</Text> : null}
+                    }}>{val?.phone_num || val?.email}</Text> : null}
                   </View>
                 </View>
               )
