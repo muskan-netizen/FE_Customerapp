@@ -24308,6 +24308,7 @@
 				102F152D28253A0200215A71 /* Bundle React Native code and images */,
 				69A39077DE63CE3F1D287DC6 /* [CP] Embed Pods Frameworks */,
 				DA8DA14D5A0EFAA1B83D079A /* [CP] Copy Pods Resources */,
+				9877985728ACC43C00B9E1BD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -97125,6 +97126,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-HomeTownDelivery/Pods-available_pods-HomeTownDelivery-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		9877985728ACC43C00B9E1BD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-SwiffyLLC/Pods-available_pods-SwiffyLLC-resources.sh\"\n\n";
 		};
 		9884A71A286B1240001B7390 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
