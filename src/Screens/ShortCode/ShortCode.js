@@ -2382,7 +2382,7 @@ export default function ShortCode({route, navigation}) {
     if (!!res?.primary_language?.id) {
       header = {
         // code: 'fa47e7',
-        //code: shortCode,
+        code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
