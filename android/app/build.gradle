@@ -78,7 +78,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    enableHermes: false,  // clean and rebuild if changing
+    enableHermes: true,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -207,15 +207,15 @@ android {
     flavorDimensions "appType"
 
     // productFlavors {
-    //                  tmgShops{
-    //             dimension "appType"
-    //             versionCode 1
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion         
-    //             applicationId 'com.tmgShops.orders'
-    //             resValue "string", "app_name", "TMG Shops"
-    //             resValue "string", "host_name", ""
+    //              aauJau{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.aauJau'
+    //         resValue "string", "app_name", "Aau Jau"
+    //         resValue "string", "host_name", ""
     //         }
     // }
 
@@ -1947,7 +1947,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.hokitch'
+                applicationId 'com.hokitch.orders'
                 resValue "string", "app_name", "Hokitch"
                 resValue "string", "host_name", ""
             }

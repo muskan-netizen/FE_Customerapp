@@ -262,7 +262,7 @@ function Cart({navigation, route}) {
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
-  console.log('isCheckSlotLoadingisCheckSlotLoading', isCheckSlotLoading);
+  console.log('isCheckSlotLoadingisCheckSlotLoading', location);
 
   //Naviagtion to specific screen
   const moveToNewScreen =

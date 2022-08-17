@@ -2418,13 +2418,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '4f3624',
+        // code: 'f9cf93',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '4f3624',
+        // code: 'f9cf93',
         code: shortCode,
       };
     }
@@ -2460,8 +2460,9 @@ export default function ShortCode({route, navigation}) {
         }
 
         if (
-          getBundleId() == (appIds.masa || appIds.iPicknDrop || appIds.muvpod)
+         ( getBundleId() == appIds.masa) ||  ( getBundleId() == appIds.iPicknDrop)  || ( getBundleId() == appIds.muvpod)
         ) {
+         
           updateState({
             isLoading: false,
             LoadingScreen: false,
@@ -2634,10 +2635,10 @@ export default function ShortCode({route, navigation}) {
   };
 
   const onVideoDurationEnded = () => {
-    navigateToNextScreen(allAppData);
-    // updateState({
-    //   videoDurationEnded: true,
-    // });
+    // navigateToNextScreen(allAppData);
+    updateState({
+      videoDurationEnded: true,
+    });
   };
 
   const animatedSplash = () => {

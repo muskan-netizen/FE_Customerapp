@@ -307,6 +307,7 @@ export default function Products({route, navigation}) {
           key={String(index)}
           style={
             {
+              minHeight: 180,
               // height: 180,
               // minHeight: url1
               //   ? moderateScaleVertical(200)
@@ -3658,7 +3659,7 @@ export default function Products({route, navigation}) {
                 removeClippedSubviews={true} // Unmount components when outside of window
                 // initialNumToRender={2} // Reduce initial render amount
                 // maxToRenderPerBatch={10} // Redu ce number in each render batch
-                updateCellsBatchingPeriod={100} // Increase time between renders
+                updateCellsBatchingPeriod={20} // Increase time between renders
                 // windowSize={7} // Reduce the window size
                 renderSectionFooter={renderSectionFooter}
               />

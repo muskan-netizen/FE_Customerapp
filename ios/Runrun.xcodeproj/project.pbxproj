@@ -844,7 +844,6 @@
 		1066AE202817F61C00846A58 /* Papiruki(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1066AE1F2817F61B00846A58 /* Papiruki(Development).xcconfig */; };
 		1066AE222817F63A00846A58 /* Papiruki(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1066AE212817F63900846A58 /* Papiruki(Production).xcconfig */; };
 		1066AE242817F65300846A58 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1066AE232817F65200846A58 /* Images.xcassets */; };
-		1066AE262817F69B00846A58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1066AE252817F69A00846A58 /* GoogleService-Info.plist */; };
 		1075ABE32828D82E0071D2F4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		1075ABE42828D82E0071D2F4 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		1075ABE52828D82E0071D2F4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -11092,6 +11091,7 @@
 		F4A15E52285C5074007D3D78 /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
 		F4A15E54285C5074007D3D78 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		F4A15E55285C5074007D3D78 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		F4AD6BFA289BAB9600684ACE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4AD6BF9289BAB9000684ACE /* GoogleService-Info.plist */; };
 		F4B39039286ED8D400A196C8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4B39038286ED8D100A196C8 /* GoogleService-Info.plist */; };
 		F4B3D75E285868130033A0F9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		F4B3D75F285868130033A0F9 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -11531,7 +11531,6 @@
 		1066AE1F2817F61B00846A58 /* Papiruki(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Papiruki(Development).xcconfig"; sourceTree = "<group>"; };
 		1066AE212817F63900846A58 /* Papiruki(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Papiruki(Production).xcconfig"; sourceTree = "<group>"; };
 		1066AE232817F65200846A58 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		1066AE252817F69A00846A58 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1066AE272817F93D00846A58 /* Papiruki.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Papiruki.entitlements; sourceTree = "<group>"; };
 		1075AC0C2828D82E0071D2F4 /* SCOOTUP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SCOOTUP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1075AC0F2828D8E90071D2F4 /* SCOOTUP(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "SCOOTUP(Development).xcconfig"; sourceTree = "<group>"; };
@@ -14604,6 +14603,7 @@
 		F49D6A692861E65100A82B0E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F49D6A6B2861E78400A82B0E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4A15E5D285C5074007D3D78 /* GasGiant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GasGiant.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4AD6BF9289BAB9000684ACE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4B39038286ED8D100A196C8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4B3D786285868130033A0F9 /* Torunz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Torunz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4BACAAA25AE2670F964CD48 /* Pods-available_pods-SMCompany.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-SMCompany.release.xcconfig"; path = "Target Support Files/Pods-available_pods-SMCompany/Pods-available_pods-SMCompany.release.xcconfig"; sourceTree = "<group>"; };
@@ -18052,7 +18052,7 @@
 		1066AE1E2817F5F900846A58 /* Papiruki */ = {
 			isa = PBXGroup;
 			children = (
-				1066AE252817F69A00846A58 /* GoogleService-Info.plist */,
+				F4AD6BF9289BAB9000684ACE /* GoogleService-Info.plist */,
 				1066AE1F2817F61B00846A58 /* Papiruki(Development).xcconfig */,
 				1066AE212817F63900846A58 /* Papiruki(Production).xcconfig */,
 				1066AE232817F65200846A58 /* Images.xcassets */,
@@ -28672,7 +28672,6 @@
 				1066F52A2823F16C002BC9E6 /* Start Packager */,
 				1066F52B2823F1C5002BC9E6 /* Bundle React Native code and images */,
 				1066F52C2823F29B002BC9E6 /* ShellScript */,
-				22D7B39C2E719D5B8589FC46 /* ShellScript */,
 				CFB8E4758FF5BA3B891E3A34 /* [CP] Embed Pods Frameworks */,
 				18F90F4B40C1EF4945FEF686 /* [CP] Copy Pods Resources */,
 			);
@@ -32803,14 +32802,13 @@
 			buildConfigurationList = F48F24592859DE56008E2072 /* Build configuration list for PBXNativeTarget "Kurs" */;
 			buildPhases = (
 				9B83388B618627A5AF469F46 /* [CP] Check Pods Manifest.lock */,
-				ABBED2E5E6C84888AD0263AF /* ShellScript */,
 				F48F24342859DE56008E2072 /* Sources */,
 				F48F24382859DE56008E2072 /* Frameworks */,
 				F48F243A2859DE56008E2072 /* Resources */,
-				9E191852EC4D026866465791 /* ShellScript */,
 				EF651A430DF34A979C302DD5 /* Bundle React Native code and images */,
 				FBA72EF939E1F99CD48D6D87 /* [CP] Embed Pods Frameworks */,
 				09C62A435F3AA9B54E3FB168 /* [CP] Copy Pods Resources */,
+				F4CDB62E28A0F9CA009A9B88 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -33115,7 +33113,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					1066ADED2817F5A800846A58 = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = BZ3MB4677X;
 						ProvisioningStyle = Automatic;
 					};
 					1075ABDF2828D82E0071D2F4 = {
@@ -35840,7 +35838,7 @@
 				1066AE032817F5A800846A58 /* SFProText-SemiBold.ttf in Resources */,
 				1066AE042817F5A800846A58 /* SFProText-Medium.ttf in Resources */,
 				1066AE062817F5A800846A58 /* notification.wav in Resources */,
-				1066AE262817F69B00846A58 /* GoogleService-Info.plist in Resources */,
+				F4AD6BFA289BAB9600684ACE /* GoogleService-Info.plist in Resources */,
 				1066AE092817F5A800846A58 /* Plists in Resources */,
 				1066AE0A2817F5A800846A58 /* Futura-Normal.ttf in Resources */,
 				1066AE0B2817F5A800846A58 /* Eina02-Bold.ttf in Resources */,
@@ -58528,33 +58526,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-MartiniOnWheels/Pods-available_pods-MartiniOnWheels-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		22D7B39C2E719D5B8589FC46 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Fleety/Pods-available_pods-Fleety-frameworks.sh",
-				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
-				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework",
-				"${PODS_ROOT}/razorpay-pod/Pod/Razorpay.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatProvidersSDK/ChatProvidersSDK.framework/ChatProvidersSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatSDK/ChatSDK.framework/ChatSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCommonUISDK/CommonUISDK.framework/CommonUISDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingAPISDK/MessagingAPI.framework/MessagingAPI",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingSDK/MessagingSDK.framework/MessagingSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework/SDKConfigurations",
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-available_pods-QuickQuick-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Fleety/Pods-available_pods-Fleety-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		22F3CB8CD139EECBEF293E1D /* [CP] Embed Pods Frameworks */ = {
@@ -84621,7 +84592,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-RoyoOrder/Pods-available_pods-RoyoOrder-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-AauJau/Pods-available_pods-AauJau-frameworks.sh\"\n";
 		};
 		8445B4BF27E33CAF00A633DA /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -98636,39 +98607,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-LoopWhole/Pods-available_pods-LoopWhole-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9E191852EC4D026866465791 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Kurs/Pods-available_pods-Kurs-frameworks.sh",
-				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
-				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/FBAEMKit/FBAEMKit.framework/FBAEMKit",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework/FBSDKCoreKit",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKCoreKit_Basics/FBSDKCoreKit_Basics.framework/FBSDKCoreKit_Basics",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework/FBSDKLoginKit",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKShareKit/FBSDKShareKit.framework/FBSDKShareKit",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/PayTabsSDK/PaymentSDK.framework/PaymentSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatProvidersSDK/ChatProvidersSDK.framework/ChatProvidersSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatSDK/ChatSDK.framework/ChatSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCommonUISDK/CommonUISDK.framework/CommonUISDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingAPISDK/MessagingAPI.framework/MessagingAPI",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingSDK/MessagingSDK.framework/MessagingSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework/SDKConfigurations",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/razorpay-pod/Razorpay.framework/Razorpay",
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-available_pods-AmstaFood-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Kurs/Pods-available_pods-Kurs-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		9E639B73A10AC5B79F16CAEB /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -101306,50 +101244,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-QuickQuick/Pods-available_pods-QuickQuick-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		ABBED2E5E6C84888AD0263AF /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-available_pods-InstaMobile/Pods-available_pods-InstaMobile-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core.common-CoreModulesHeaders/AccessibilityResources.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit/FacebookSDKStrings.bundle",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/RNImageCropPicker/QBImagePicker.bundle",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
-				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe3DS2.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/StripeCore/StripeCore.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/StripeUICore/StripeUICore.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
-				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework/TwitterKitResources.bundle",
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-available_pods-Kurs-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-InstaMobile/Pods-available_pods-InstaMobile-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AC1B5FD5A5685F2060B29F1B /* ShellScript */ = {
@@ -121520,6 +121414,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F4CDB62E28A0F9CA009A9B88 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Kurs/Pods-available_pods-Kurs-frameworks.sh\"\n\n";
+		};
 		F4D68F05285C9DDE00213EEC /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -130466,7 +130377,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = BZ3MB4677X;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
@@ -130501,7 +130412,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = 2Y6VL4FP32;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -130517,7 +130428,7 @@
 				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = Papiruki;
+				PROVISIONING_PROFILE_SPECIFIER = PapiRUkiUser;
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -136232,7 +136143,7 @@
 				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = "Aau Jau";
+				PROVISIONING_PROFILE_SPECIFIER = AauJau;
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

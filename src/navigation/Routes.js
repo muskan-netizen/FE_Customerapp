@@ -54,7 +54,7 @@ export default function Routes() {
           )}
           {CourierStack(Stack)}
  
-          { businessType == 4  ? ( TaxiAppStack(Stack)): null}
+          {TaxiAppStack(Stack)}
 
           <Stack.Screen
             name={navigationStrings.TABROUTESVENDOR}
