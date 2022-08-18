@@ -141,7 +141,7 @@ export default function Signup({navigation}) {
 
   const isValidData = () => {
     const error = validations({
-      email: email,
+      // email: email,
       password: password,
       callingCode: callingCode,
       phoneNumber: phoneNumber,

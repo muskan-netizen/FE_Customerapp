@@ -331,6 +331,7 @@ const ProductCard3 = ({
                   fontSize: textScale(9),
                   color: colors.grayOpacity51,
                   marginVertical: moderateScaleVertical(4),
+                  textAlign:'left'
                 }}>
                 {data?.vendor?.name}
               </Text>

@@ -744,7 +744,7 @@
     "ouiSpeedRelease": "cd android && ./gradlew assembleouiSpeedRelease",
     "getItSentRelease": "cd android && ./gradlew assemblegetItSentRelease",
     "easyDrinkRelease": "cd android && ./gradlew assembleeasyDrinkRelease",
-    "iAmSellingRelease": "cd android && ./gradlew assembleiAmSellingRelease", 
+    "iAmSellingRelease": "cd android && ./gradlew assembleiAmSellingRelease",
     "fifteenPRelease": "cd android && ./gradlew assemblefifteenPRelease",
     "euodooTechnologiesRelease": "cd android && ./gradlew assembleeuodooTechnologiesRelease",
     "rotaRelease": "cd android && ./gradlew assemblerotaRelease",

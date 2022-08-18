@@ -2418,13 +2418,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: 'f9cf93',
+        // code: '245bae',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: 'f9cf93',
+        // code: '245bae',
         code: shortCode,
       };
     }
@@ -2460,9 +2460,10 @@ export default function ShortCode({route, navigation}) {
         }
 
         if (
-         ( getBundleId() == appIds.masa) ||  ( getBundleId() == appIds.iPicknDrop)  || ( getBundleId() == appIds.muvpod)
+          getBundleId() == appIds.masa ||
+          getBundleId() == appIds.iPicknDrop ||
+          getBundleId() == appIds.muvpod
         ) {
-         
           updateState({
             isLoading: false,
             LoadingScreen: false,
@@ -2545,7 +2546,7 @@ export default function ShortCode({route, navigation}) {
             handleDynamicLink(link);
           })
           .catch((err) => {
-            console.log('checking deep link >>> 3232sdsd', err);
+            console.log('checking deep link> >> 3232sdsd', err);
           });
       }
     });
@@ -2628,7 +2629,7 @@ export default function ShortCode({route, navigation}) {
       case appIds?.iPicknDrop:
         return imagePath.ipd;
       case appIds?.muvpod:
-        return imagePath.muvpod;
+        return imagePath.ipd;
       // case appIds?.sabroson:
       //   return imagePath.sabroson
     }
@@ -2652,7 +2653,6 @@ export default function ShortCode({route, navigation}) {
         }}>
         <Video
           source={animationVideo()} // Can be a URL or a local file.
-        
           style={{
             height: width,
             width: width,

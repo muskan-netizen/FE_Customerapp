@@ -386,7 +386,7 @@ export default function Subscriptions2({navigation, route}) {
               <CardField
                 postalCodeEnabled={false}
                 placeholder={{
-                  number: '4242 4242 4242 4242',
+                  number: '4242 4242 ',
                 }}
                 cardStyle={{
                   backgroundColor: '#FFFFFF',
