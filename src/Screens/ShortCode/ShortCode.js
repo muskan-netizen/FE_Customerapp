@@ -2413,6 +2413,24 @@ export default function ShortCode({route, navigation}) {
                 isShortcodePrefilled: true,
               });
               break;
+              case appIds.swipe:
+              updateState({
+                shortCode: shortCodes.swipe,
+                isShortcodePrefilled: true,
+              });
+              break;
+              case appIds.sheRyders:
+              updateState({
+                shortCode: shortCodes.sheRyders,
+                isShortcodePrefilled: true,
+              });
+              break;
+               case appIds.kurrix:
+              updateState({
+                shortCode: shortCodes.kurrix,
+                isShortcodePrefilled: true,
+              });
+              break;
       }
     })();
   }, []);
@@ -2580,7 +2598,7 @@ export default function ShortCode({route, navigation}) {
             handleDynamicLink(link);
           })
           .catch((err) => {
-            console.log('checking deep link >>> 3232sdsd', err);
+            console.log('checking deep link> >> 3232sdsd', err);
           });
       }
     });

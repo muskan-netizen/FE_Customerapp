@@ -41,7 +41,8 @@ import DashBoardEight from './DashboardViews/DashBoardEight';
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
 import _, { isEmpty } from 'lodash';
 import socketServices from '../../utils/scoketService';
-import SubscriptionModal from '../../Components/SubscriptionModal'; import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
+import SubscriptionModal from '../../Components/SubscriptionModal'; 
+import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
 
 
 

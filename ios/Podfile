@@ -1891,6 +1891,14 @@ end
 target 'Taxiolgy' do
   
 end
+#Swipe Target
+target 'Swipe' do
+  
+end
+#SheRyders Target
+target 'SheRyders' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

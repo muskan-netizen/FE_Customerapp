@@ -386,6 +386,9 @@ const shortCodes = {
   vdu:'181d99',
   laundroZone:'35a0ed',
   taxiolgy:'43d7df',
+  swipe:'48c861',
+  sheRyders:'058f37',
+  kurrix:'a11a9d',
 };
 
 const appIds = {
@@ -1920,6 +1923,18 @@ const appIds = {
   taxiolgy: Platform.select({
     ios: 'com.taxiolgy.order',
     android: 'com.taxiolgy.order',
+  }),
+  swipe: Platform.select({
+    ios: 'com.swipe.order',
+    android: 'com.swipe.order',
+  }),
+  sheRyders: Platform.select({
+    ios: 'com.sheRyders.order',
+    android: 'com.sheRyders.order',
+  }),
+  kurrix: Platform.select({
+    ios: 'com.kurrix.order',
+    android: 'com.kurrix.order',
   }),
 };
 

@@ -207,14 +207,25 @@ android {
     flavorDimensions "appType"
 
     // productFlavors {
-    //                  apptFindr{
+    //                 laundroZone{
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.apptFindr.order'
-    //         resValue "string", "app_name", "Appt Findr" 
+    //         applicationId 'com.laundroZone.order'
+    //         resValue "string", "app_name", "Laundro Zone" 
+    //         resValue "string", "host_name", ""
+    //         }
+            
+    //          kurrix{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.kurrix.order'
+    //         resValue "string", "app_name", "Kurrix" 
     //         resValue "string", "host_name", ""
     //         }
     // }
@@ -5883,6 +5894,36 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.taxiolgy.order'
             resValue "string", "app_name", "Taxiolgy" 
+            resValue "string", "host_name", ""
+            }
+          swipe{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.swipe.order'
+            resValue "string", "app_name", "Swipe" 
+            resValue "string", "host_name", ""
+            }
+            sheRyders{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.sheRyders.order'
+            resValue "string", "app_name", "She Ryders" 
+            resValue "string", "host_name", ""
+            }
+            kurrix{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.kurrix.order'
+            resValue "string", "app_name", "Kurrix" 
             resValue "string", "host_name", ""
             }
     }

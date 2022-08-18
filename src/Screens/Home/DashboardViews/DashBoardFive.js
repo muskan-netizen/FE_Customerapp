@@ -73,6 +73,7 @@ import { DarkTheme } from 'react-native-paper';
 import actions from '../../../redux/actions';
 import { getItem, setItem } from '../../../utils/utils';
 import RNExitApp from 'react-native-exit-app';
+import SubscriptionModal from '../../../Components/SubscriptionModal';
 
 export default function DashBoardFive({
   handleRefresh = () => { },
@@ -136,7 +137,7 @@ export default function DashBoardFive({
       vendorsData: [],
     });
   }, [appMainData?.vendors]);
-
+  console.log(vendorsData,"vendorsDatavendorsData")
   useEffect(() => {
     if (!!appMainData?.categories && appMainData?.categories.length) {
       if (appStyle?.homePageLayout == 5) {
@@ -697,6 +698,7 @@ console.log("hfbgdh", item);
           // isVendorLoader
           viewStyles={{ marginTop: moderateScale(12) }}
         />
+        
       </ScrollView>
     );
   }
