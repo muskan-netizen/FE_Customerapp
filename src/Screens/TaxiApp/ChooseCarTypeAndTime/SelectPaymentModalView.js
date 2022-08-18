@@ -646,7 +646,16 @@ export default function SelectPaymentModalView({
             }
 
             if (isRequired) {
-              alert(strings.PLEASEFILDALLREQUIREDFIELDS);
+              // alert(strings.PLEASEFILDALLREQUIREDFIELDS);
+              Alert.alert('', strings.PLEASEFILDALLREQUIREDFIELDS, [
+                {
+                  text: strings.CANCEL,
+                  onPress: () => console.log('Cancel Pressed'),
+                },
+                {text: strings.OK,
+                onPress: () => setShowModal(true)
+              }
+              ]);
             } else {
               _confirmAndPay();
             }

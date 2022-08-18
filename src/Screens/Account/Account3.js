@@ -790,7 +790,7 @@ export default function Account3({ navigation }) {
               // onPress={()=>actions.isVendorNotification(true)}
               onPress={() => actions.setAppSessionData('on_login')}
               style={styles.touchAbleLoginVIew}>
-              <Text style={styles.loginLogoutText}>
+              <Text style={{...styles.loginLogoutText,  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,}}>
                 {strings.LOGIN}
               </Text>
               <Image

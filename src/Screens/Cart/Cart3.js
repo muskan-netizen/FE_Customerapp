@@ -3270,14 +3270,14 @@ function Cart({navigation, route}) {
                     <View
                       style={{
                         ...styles.deliveryFeeDropDown,
-                        borderColor: themeColors.primary_color,
+                        borderColor: isDarkMode ? MyDarkTheme.colors.text : colors.black
                       }}>
                       {appIds.hokitch == getBundleId() ? (
                         <Text style={styles.dropDownTextStyle}>
                           {strings.CHARGES}
                         </Text>
                       ) : (
-                        <Text style={styles.dropDownTextStyle}>
+                        <Text style={{...styles.dropDownTextStyle, color:isDarkMode ? MyDarkTheme.colors.text : colors.black}}>
                           {
                             item?.delivery_types.filter(
                               (val2) =>
@@ -3290,6 +3290,7 @@ function Cart({navigation, route}) {
                         style={{
                           ...styles.dropDownTextStyle,
                           marginHorizontal: moderateScale(8),
+                          color:isDarkMode ? MyDarkTheme.colors.text : colors.black
                         }}>
                         {
                           item?.delivery_types.filter(
@@ -3302,8 +3303,10 @@ function Cart({navigation, route}) {
                         style={{
                           width: moderateScale(10),
                           height: moderateScale(10),
+                          
                         }}
                         source={imagePath.icDropdown4}
+                        tintColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
                         resizeMode="contain"
                       />
                     </View>
@@ -4644,11 +4647,11 @@ function Cart({navigation, route}) {
                     : strings.SCHEDULE_ORDER
                 }
                 borderRadius={moderateScale(13)}
-                textStyle={{color: themeColors.primary_color}}
+                textStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black,}}
                 containerStyle={{
                   ...styles.placeOrderButtonStyle,
                   backgroundColor: colors.transparent,
-                  borderColor: themeColors.primary_color,
+                  borderColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   borderWidth: 0.8,
                 }}
               />

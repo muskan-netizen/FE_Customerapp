@@ -1060,8 +1060,8 @@ const appIds = {
     android: 'com.enext',
   }),
   hokitch: Platform.select({
-    ios: 'com.hokitch',
-    android: 'com.hokitch',
+    ios: 'com.hokitch.orders',
+    android: 'com.hokitch.orders',
   }),
   foodnests: Platform.select({
     ios: 'com.foodnests',

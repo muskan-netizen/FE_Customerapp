@@ -606,7 +606,7 @@ console.log(scheduleDateTime,"scheduleDateTime")
         }
       });
     if (isRequired) {
-      alert('Please fill all required fields in detail form');
+      // alert('Please fill all required fields in detail form');
     } else {
       _confirmAndPay();
     }
