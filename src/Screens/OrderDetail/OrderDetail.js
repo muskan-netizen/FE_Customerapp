@@ -1077,7 +1077,7 @@ export default function OrderDetail({ navigation, route }) {
                   onPress={() => createRoom(item, 'vendor_to_user')}
                   style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
                 >
-                  <Text style={styles.startChatText}>Vendor</Text>
+                  <Text style={styles.startChatText}>{strings.VENDOR}</Text>
                   <Image resizeMode='contain' style={styles.agentUserIcon} source={imagePath.icVendorChat} />
                 </TouchableOpacity> : null}
 
@@ -1087,7 +1087,7 @@ export default function OrderDetail({ navigation, route }) {
                   style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
                   activeOpacity={0.7}
                 >
-                  <Text style={styles.startChatText}>Agent</Text>
+                  <Text style={styles.startChatText}>{strings.DRIVER}</Text>
                   <Image resizeMode='contain' style={styles.agentUserIcon} source={imagePath.icUserChat} />
                 </TouchableOpacity> : null}
             </View> : null}
@@ -2935,7 +2935,7 @@ export default function OrderDetail({ navigation, route }) {
 
   const onChat = (item) => {
     console.log("item+++", item)
-    navigation.navigate(navigationStrings.CHAT_SCREEN, { data: { ...item, comeFromOrder: true } })
+    navigation.navigate(navigationStrings.CHAT_SCREEN, { data: { ...item} })
   }
 
   const _onRateDriver = () => {
@@ -2959,7 +2959,7 @@ export default function OrderDetail({ navigation, route }) {
             containerStyle={{ paddingHorizontal: moderateScale(8) }}
             isDriver={cartData?.driver_rating == null}
             _onRateDriver={_onRateDriver}
-            startChatWithAgent={() => createRoom(cartItems[0], 'agent_to_user')}
+     
           />
         ) : null}
 

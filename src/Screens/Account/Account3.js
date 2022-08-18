@@ -1,6 +1,6 @@
 import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
 import ActionSheet from 'react-native-actionsheet';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Alert,
   I18nManager,
@@ -68,7 +68,7 @@ export default function Account3({ navigation }) {
   const { preferences, phone_number, contact_phone_number } = appData?.profile;
 
   // const profileInfo = appData?.profile;
-  console.log("appDataappDataappDataappDataappData",appData)
+  console.log("appDataappDataappDataappDataappData", appData)
   const [isVisible, setIsVisible] = useState(false);
 
   const fontFamily = appStyle?.fontSizeData;
@@ -140,7 +140,7 @@ export default function Account3({ navigation }) {
 
 
 
- 
+
 
   // initalize Zendesk
   useEffect(() => {
@@ -176,6 +176,11 @@ export default function Account3({ navigation }) {
       navigation.navigate(navigationStrings.CHAT_ROOM, { type: type });
     }
   };
+
+  const goToChatRoomForVendor = useCallback(()=>{
+    navigation.navigate(navigationStrings.CHAT_ROOM_FOR_VENDOR, { type: 'vendor_chat'});
+  },[])
+
   //----------------------------------ActionSheet------------------------------//
   let actionSheet = useRef();
   const showActionSheet = () => {
@@ -585,11 +590,11 @@ export default function Account3({ navigation }) {
             />
           ) : null}
           {!!userData?.auth_token &&
-          Platform.OS === 'android' &&
-          !!appMainData?.is_admin ? (
+            Platform.OS === 'android' &&
+            !!appMainData?.is_admin ? (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={() => {
                 BluetoothManager.checkBluetoothEnabled().then(
                   (enabled) => {
@@ -600,7 +605,7 @@ export default function Account3({ navigation }) {
                         .then(() => {
                           navigation.navigate(navigationStrings.ATTACH_PRINTER);
                         })
-                        .catch((err) => {});
+                        .catch((err) => { });
                     }
                   },
                   (err) => {
@@ -615,8 +620,8 @@ export default function Account3({ navigation }) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ) : null}
 
@@ -737,21 +742,40 @@ export default function Account3({ navigation }) {
               />
             )}
 
+          {!!userData?.auth_token &&
+            !!appMainData?.is_admin &&
+            businessType != 4 && !!appData?.profile?.socket_url && (
+              <ListItemHorizontal
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+                onPress={goToChatRoomForVendor}
+                iconLeft={imagePath.icStoreChat}
+                centerHeading={strings.STORES_CAHT}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+              />
+            )}
+
 
           {!!userData?.auth_token && !!appData?.profile?.socket_url && (
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}
               leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={() => goToChatRoom('agent_chat')}
-              iconLeft={imagePath.icUserChat}
-              centerHeading={'Driver Chat'}
+              iconLeft={imagePath.icDriverChat}
+              centerHeading={strings.DRIVER_CHAT}
               containerStyle={styles.containerStyle2}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
             />
-          )} 
+          )}
 
           {!!userData?.auth_token &&
             !!appMainData?.is_admin && !!appData?.profile?.socket_url &&
@@ -761,7 +785,7 @@ export default function Account3({ navigation }) {
                 leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                 onPress={() => goToChatRoom('vendor_chat')}
                 iconLeft={imagePath.icUserChat}
-                centerHeading={'User Chat'}
+                centerHeading={strings.USER_CHAT}
                 containerStyle={styles.containerStyle2}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
@@ -776,14 +800,14 @@ export default function Account3({ navigation }) {
               leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={() => goToChatRoom('user_chat')}
               iconLeft={imagePath.icVendorChat}
-              centerHeading={'Vendor Chat'}
+              centerHeading={strings.VENDOR_CHAT}
               containerStyle={styles.containerStyle2}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
             />
-          )} 
+          )}
 
           {!!userData?.auth_token ? null : <View style={styles.loginView}>
             <TouchableOpacity
