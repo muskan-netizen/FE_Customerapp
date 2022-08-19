@@ -113,7 +113,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 //baytukom
 // export const API_BASE_URL = 'https://baytukom-order.netsolutionindia.com/api/v1';
 
-// knock knock 
+// knock knock
 // export const API_BASE_URL = 'https://knockknock.online/api/v1'
 
 // export const API_BASE_URL = 'https://papiruki.com/api/v1'
@@ -208,7 +208,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://destinationops.com/api/v1';
 // export const API_BASE_URL = 'https://bustanfakieh.com/api/v1';
 // export const API_BASE_URL = 'https://cabdeliv.com/api/v1';
- //export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
+//export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
 //export const API_BASE_URL = 'https://orderchekout.com/api/v1';
 // export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
@@ -484,9 +484,9 @@ export const GET_SUBCATEGORY_VENDORS = getApiUrl('/get/subcategory/vendor');
 export const START_CHAT = getApiUrl('/chat/startChat');
 export const SEND_NOTIFCATION = getApiUrl('/chat/sendNotificationToUser');
 
-export const USER_CHAT =  '/api/room/fetchRoomByUserId';
-export const AGENT_CHAT =   '/api/room/fetchRoomByUserId';
-export const VENDOR_CHAT =  '/api/room/fetchRoomByVendor';
+export const USER_CHAT = '/api/room/fetchRoomByUserId';
+export const AGENT_CHAT = '/api/room/fetchRoomByUserId';
+export const VENDOR_CHAT = '/api/room/fetchRoomByVendor';
 export const SEND_MESSAGE = '/api/chat/sendMessageJoin';
 export const GET_ALL_MESSAGES = '/api/chat';
 export const ALL_ROOM_USER = '/api/chat/getRoomUser';

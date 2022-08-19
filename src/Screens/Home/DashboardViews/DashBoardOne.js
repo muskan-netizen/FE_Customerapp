@@ -81,9 +81,15 @@ export default function DashBoardOne({
   };
 
   const renderView = (prop) => {
+    console.log(prop,"prop")
     return (
+      // <TouchableOpacity
+      // onPress={() => onPressCategory(prop)}
+      // >
+      //   <Text>jhfjdhjjd</Text>
+      // </TouchableOpacity>
       <ImgCardForBrickList
-        onPress={() => onPressCategory(prop)}
+        onPress={() =>onPressCategory(prop)}
         text={prop.name}
         data={prop}
       />
