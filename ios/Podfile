@@ -1899,6 +1899,10 @@ end
 target 'SheRyders' do
   
 end
+#Kurrix Target
+target 'Kurrix' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
