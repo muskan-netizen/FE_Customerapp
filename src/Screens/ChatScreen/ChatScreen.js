@@ -253,7 +253,7 @@ export default function ChatScreen({ route, navigation }) {
               fontFamily: fontFamily.medium,
               textTransform: 'capitalize',
               color: isDarkMode ? colors.white : colors.black,
-            }}>{currentMessage?.username || currentMessage?.phone_num} {`(${currentMessage.user_type})`}</Text> : null}
+            }}>{currentMessage?.username || currentMessage?.phone_num} {`(${currentMessage?.user_type})`}</Text> : null}
 
               <View style={{ alignItems: 'center', flex: 1 }}>
                 <Text style={{
@@ -292,7 +292,7 @@ export default function ChatScreen({ route, navigation }) {
               fontFamily: fontFamily.medium,
               textTransform: 'capitalize',
               color: isDarkMode ? colors.white : colors.black,
-            }}>{currentMessage?.username || currentMessage?.phone_num}</Text> : null}
+            }}>{currentMessage?.username || currentMessage?.phone_num} {`(${currentMessage?.user_type})`}</Text> : null}
 
             <Text style={{
               ...styles.descText,
