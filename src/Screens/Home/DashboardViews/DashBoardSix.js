@@ -30,6 +30,7 @@ import { useDarkMode } from 'react-native-dark-mode';
 import { MyDarkTheme } from '../../../styles/theme';
 import SearchBar from '../../../Components/SearchBar3';
 import CategoryCard from '../../../Components/CategoryCard';
+import SubscriptionModal from '../../../Components/SubscriptionModal';
 
 export default function DashBoardFour({
   handleRefresh = () => { },
@@ -41,6 +42,9 @@ export default function DashBoardFour({
   selcetedToggle,
   toggleData,
   onPressVendor = () => { },
+  onClose,
+  onPressSubscribe,
+  isSubscription
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -242,6 +246,17 @@ export default function DashBoardFour({
         </ScrollView>
         <View style={{ height: moderateScaleVertical(65) }} />
       </View>
+      {!!userData?.auth_token &&
+           !!appData?.profile?.preferences?.show_subscription_plan_popup && (
+          
+            <SubscriptionModal
+       
+            isVisible={isSubscription}
+            onClose={onClose}
+            onPressSubscribe={onPressSubscribe}
+          />
+          
+        )}
     </ScrollView>
   );
 }

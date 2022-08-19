@@ -5,6 +5,7 @@ import BannerHome from '../../../Components/BannerHome';
 import BrickList from '../../../Components/BrickList';
 import ImgCardForBrickList from '../../../Components/ImgCardForBrickList';
 import CardLoader from '../../../Components/Loaders/CardLoader';
+import SubscriptionModal from '../../../Components/SubscriptionModal';
 import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
 import {
@@ -29,7 +30,10 @@ export default function DashBoardOne({
   toggleData,
   isDineInSelected = false,
   tempCartData=null,
-  navigation={}
+  navigation={},
+  onClose,
+  onPressSubscribe,
+  isSubscription
 }) {
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -37,6 +41,7 @@ export default function DashBoardOne({
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const homeData = useSelector((state) => state?.home);
+  const userData = useSelector((state) => state?.auth?.userData);
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
@@ -83,11 +88,7 @@ export default function DashBoardOne({
   const renderView = (prop) => {
     console.log(prop,"prop")
     return (
-      // <TouchableOpacity
-      // onPress={() => onPressCategory(prop)}
-      // >
-      //   <Text>jhfjdhjjd</Text>
-      // </TouchableOpacity>
+   
       <ImgCardForBrickList
         onPress={() =>onPressCategory(prop)}
         text={prop.name}
@@ -209,6 +210,17 @@ export default function DashBoardOne({
         />
       ) : null}
       <View style={{height: moderateScaleVertical(65)}} />
+      {!!userData?.auth_token &&
+           !!appData?.profile?.preferences?.show_subscription_plan_popup && (
+          
+            <SubscriptionModal
+       
+            isVisible={isSubscription}
+            onClose={onClose}
+            onPressSubscribe={onPressSubscribe}
+          />
+          
+        )}
     </ScrollView>
   );
 }

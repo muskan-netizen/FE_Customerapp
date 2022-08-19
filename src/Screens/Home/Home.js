@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Alert, BackHandler, Linking} from 'react-native';
 import AppLink from 'react-native-app-link';
 import {useDarkMode} from 'react-native-dark-mode';
@@ -1019,6 +1019,10 @@ export default function Home({route, navigation}) {
               selcetedToggle={selcetedToggle}
               toggleData={appData}
               navigation={navigation}
+              onClose={_closeModal}
+              onPressSubscribe={_onPressSubscribe}
+              isSubscription={isSubscription}
+
             />
           </>
         );
@@ -1043,6 +1047,10 @@ export default function Home({route, navigation}) {
               selcetedToggle={selcetedToggle}
               toggleData={appData}
               navigation={navigation}
+              onClose={_closeModal}
+              onPressSubscribe={_onPressSubscribe}
+              isSubscription={isSubscription}
+
             />
           </>
         );
@@ -1085,7 +1093,12 @@ export default function Home({route, navigation}) {
               onPressAddLaundryItem={onPressAddLaundryItem}
               isLoadingAddons={isLoadingAddons}
               selectedHomeCategory={selectedHomeCategory}
+              onClose={_closeModal}
+              onPressSubscribe={_onPressSubscribe}
+              isSubscription={isSubscription}
+
             />
+           
           </>
         );
 
@@ -1118,6 +1131,10 @@ export default function Home({route, navigation}) {
               selcetedToggle={selcetedToggle}
               toggleData={appData}
               navigation={navigation}
+              onClose={_closeModal}
+              onPressSubscribe={_onPressSubscribe}
+              isSubscription={isSubscription}
+
             />
           </>
         );
@@ -1161,6 +1178,10 @@ export default function Home({route, navigation}) {
               onPressAddLaundryItem={onPressAddLaundryItem}
               isLoadingAddons={isLoadingAddons}
               selectedHomeCategory={selectedHomeCategory}
+              onClose={_closeModal}
+              onPressSubscribe={_onPressSubscribe}
+              isSubscription={isSubscription}
+
             />
           </>
         );
@@ -1200,6 +1221,10 @@ export default function Home({route, navigation}) {
               navigation={navigation}
               onVendorFilterSeletion={onVendorFilterSeletion}
               singleVendor={singleVendor}
+              onClose={_closeModal}
+              onPressSubscribe={_onPressSubscribe}
+              isSubscription={isSubscription}
+
             />
           </>
         );
@@ -1241,7 +1266,7 @@ export default function Home({route, navigation}) {
   };
  
   const {blurRef} = useRef();
-
+  
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
@@ -1266,14 +1291,7 @@ export default function Home({route, navigation}) {
         selectedHomeCategory={selectedHomeCategory}
         unPresentAry={unPresentAry}
       />
-      {!!userData?.auth_token &&
-        !!appData?.profile?.preferences?.show_subscription_plan_popup && (
-          <SubscriptionModal
-            isVisible={isSubscription}
-            onClose={_closeModal}
-            onPressSubscribe={_onPressSubscribe}
-          />
-        )}
+      
        {
         !!appData?.stop_order_acceptance_for_users && (
           <StopAcceptingOrderModal

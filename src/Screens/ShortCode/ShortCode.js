@@ -11,6 +11,7 @@ import {useSelector} from 'react-redux';
 import RNFetchBlob from 'rn-fetch-blob-v2';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import SubscriptionModal from '../../Components/SubscriptionModal';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -53,6 +54,7 @@ export default function ShortCode({route, navigation}) {
     videoDurationEnded: false,
     allAppData: null,
     initapiresponse: false,
+
   });
   const {dispatch} = store;
 
@@ -67,6 +69,7 @@ export default function ShortCode({route, navigation}) {
     allAppData,
 
     initapiresponse,
+   
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {appStyle, currencies, languages} = useSelector(
@@ -2441,7 +2444,7 @@ export default function ShortCode({route, navigation}) {
           });
           FastImage.preload(preLoadTutorial); //preload tutorial images
         }
-
+        
         updateState({changeInShortCode: false});
         if (getBundleId() == appIds.royoorder) {
           actions.saveShortCode(shortCode);
@@ -2604,6 +2607,7 @@ export default function ShortCode({route, navigation}) {
           </View>
         </View>
         <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
+        
       </View>
     );
   };
@@ -2657,7 +2661,8 @@ export default function ShortCode({route, navigation}) {
           : colors.white,
       }}>
       {isShortcodePrefilled ? (
-        _renderSplash()
+         _renderSplash()
+         
       ) : (
         <WrapperContainer
           statusBarColor={colors.white}
@@ -2745,6 +2750,7 @@ export default function ShortCode({route, navigation}) {
 
             <View style={{height: 20}} />
           </View>
+         
         </WrapperContainer>
       )}
     </View>
