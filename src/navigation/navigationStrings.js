@@ -149,4 +149,5 @@ export default {
   DIRECTPAYONLINE: 'DirectPayOnline',
   KHALTI: 'Khalti',
   SUBCATEGORY_VENDORS: 'subcategoryVendors',
+  SEARCH:'Search',
 };

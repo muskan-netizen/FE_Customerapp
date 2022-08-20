@@ -207,14 +207,14 @@ android {
     flavorDimensions "appType"
 
     productFlavors {
-          halaTalabat{
+             hellodeliver{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.halaTalabat'
-                resValue "string", "app_name", "Hala Talabat"
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.codebrew.hellodeliver'
+                resValue "string", "app_name", "Hello Deliver"
                 resValue "string", "host_name", ""
             }
     }

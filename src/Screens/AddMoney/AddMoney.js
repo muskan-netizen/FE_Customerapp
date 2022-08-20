@@ -452,7 +452,6 @@ export default function AddMoney({navigation}) {
       _webPayment();
       return;
     }
-    alert('heyyy')
     _offineLinePayment();
   };
 

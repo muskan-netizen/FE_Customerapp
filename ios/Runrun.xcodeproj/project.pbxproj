@@ -28759,7 +28759,6 @@
 				8480D6DC27A7CB3500671D85 /* Resources */,
 				8480D6F727A7CB3500671D85 /* Bundle React Native code and images */,
 				8480D6F827A7CB3500671D85 /* ShellScript */,
-				C165B932C1B5EBE6D73E01FE /* ShellScript */,
 				6CE958C8D6B01CDEC10FA169 /* [CP] Embed Pods Frameworks */,
 				069F7F07A083290D8CB916C1 /* [CP] Copy Pods Resources */,
 			);
@@ -32590,7 +32589,6 @@
 			buildConfigurationList = F46FF6ED2846063300EFF1C2 /* Build configuration list for PBXNativeTarget "SorDelivery" */;
 			buildPhases = (
 				594476D717448A1A3CF521BA /* [CP] Check Pods Manifest.lock */,
-				F62E2831849201E8A23D6C73 /* ShellScript */,
 				F46FF6C82846063300EFF1C2 /* Sources */,
 				F46FF6CC2846063300EFF1C2 /* Frameworks */,
 				F46FF6CE2846063300EFF1C2 /* Resources */,
@@ -32598,6 +32596,7 @@
 				F46FF6EA2846063300EFF1C2 /* ShellScript */,
 				81209071792DEC050E3F08C0 /* [CP] Embed Pods Frameworks */,
 				3DEFA9405E3E14138936C459 /* [CP] Copy Pods Resources */,
+				10920E3428AF782B00D6150C /* Start Packager */,
 			);
 			buildRules = (
 			);
@@ -52534,6 +52533,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-RoyoOrder/Pods-available_pods-RoyoOrder-frameworks.sh\"\n";
+		};
+		10920E3428AF782B00D6150C /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
 		};
 		1094817F28111D4F005F832F /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -108646,31 +108663,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Share/Pods-available_pods-Share-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C165B932C1B5EBE6D73E01FE /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-available_pods-HalaTalabat/Pods-available_pods-HalaTalabat-frameworks.sh",
-				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
-				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework",
-				"${PODS_ROOT}/razorpay-pod/Pod/Razorpay.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatProvidersSDK/ChatProvidersSDK.framework/ChatProvidersSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatSDK/ChatSDK.framework/ChatSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCommonUISDK/CommonUISDK.framework/CommonUISDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingAPISDK/MessagingAPI.framework/MessagingAPI",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingSDK/MessagingSDK.framework/MessagingSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework/SDKConfigurations",
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-available_pods-Kartandkarry-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-HalaTalabat/Pods-available_pods-HalaTalabat-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C16FBC8B02113918083E1D51 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -121859,26 +121851,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-BlacNetwork/Pods-available_pods-BlacNetwork-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		F62E2831849201E8A23D6C73 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-available_pods-SorDelivery-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-DingDongDelivers/Pods-available_pods-DingDongDelivers-frameworks.sh\"\n";
 		};
 		F66148CB48FF7D409864D918 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
