@@ -207,14 +207,14 @@ android {
     flavorDimensions "appType"
 
     // productFlavors {
-    //                clickService{
+    //                arwin{
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.clickService'
-    //         resValue "string", "app_name", "Click Service"
+    //         applicationId 'com.arwin'
+    //         resValue "string", "app_name", "Smarter Shoper"
     //         resValue "string", "host_name", ""
     //         }
     // }
@@ -5913,6 +5913,36 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.kurrix.order'
             resValue "string", "app_name", "Kurrix" 
+            resValue "string", "host_name", ""
+            }
+            mrVeloz{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.mrVeloz.order'
+            resValue "string", "app_name", "Mr Veloz" 
+            resValue "string", "host_name", ""
+            }
+         greenCab{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.greenCab.order'
+            resValue "string", "app_name", "Green Cab" 
+            resValue "string", "host_name", ""
+            }
+         axxi{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.axxi.order'
+            resValue "string", "app_name", "Axxi" 
             resValue "string", "host_name", ""
             }
     }

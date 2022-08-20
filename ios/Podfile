@@ -1903,6 +1903,18 @@ end
 target 'Kurrix' do
   
 end
+#MrVeloz Target
+target 'MrVeloz' do
+  
+end
+#GreenCab Target
+target 'GreenCab' do
+  
+end
+#Axxi Target
+target 'Axxi' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

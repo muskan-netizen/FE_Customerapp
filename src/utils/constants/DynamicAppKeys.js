@@ -389,6 +389,9 @@ const shortCodes = {
   swipe:'48c861',
   sheRyders:'058f37',
   kurrix:'a11a9d',
+  mrVeloz:'326609',
+  greenCab:'20d107',
+  axxi:'bc1119',
 };
 
 const appIds = {
@@ -1935,6 +1938,18 @@ const appIds = {
   kurrix: Platform.select({
     ios: 'com.kurrix.order',
     android: 'com.kurrix.order',
+  }),
+  mrVeloz: Platform.select({
+    ios: 'com.mrVeloz.order',
+    android: 'com.mrVeloz.order',
+  }),
+  greenCab: Platform.select({
+    ios: 'com.greenCab.order',
+    android: 'com.greenCab.order',
+  }),
+  axxi: Platform.select({
+    ios: 'com.axxi.order',
+    android: 'com.axxi.order',
   }),
 };
 
