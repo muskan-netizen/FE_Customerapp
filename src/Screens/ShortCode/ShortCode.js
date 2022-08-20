@@ -1,5 +1,5 @@
 import {isEmpty} from 'lodash';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Image, Linking, Text, View} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import {getBundleId} from 'react-native-device-info';
@@ -78,6 +78,7 @@ export default function ShortCode({route, navigation}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const videoRef = useRef();
 
   const customColor = themeColors.primary_color;
 
@@ -2293,77 +2294,77 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.iAmSelling:
-            updateState({
-              shortCode: shortCodes.iAmSelling,
-              isShortcodePrefilled: true,
-            });
-            break;
-            case appIds.fifteenP:
-              updateState({
-                shortCode: shortCodes.fifteenP,
-                isShortcodePrefilled: true,
-              });
-              break;
-            case appIds.euodooTechnologies:
-                updateState({
-                  shortCode: shortCodes.euodooTechnologies,
-                  isShortcodePrefilled: true,
-                });
-                break;
-             case appIds.rota:
-                  updateState({
-                    shortCode: shortCodes.rota,
-                    isShortcodePrefilled: true,
-                  });
-                  break;
-             case appIds.farmMeat:
-                    updateState({
-                      shortCode: shortCodes.farmMeat,
-                      isShortcodePrefilled: true,
-                    });
-               break;
-            case appIds.danielleBejjani:
-                    updateState({
-                      shortCode: shortCodes.danielleBejjani,
-                      isShortcodePrefilled: true,
-                    });
-              break;
-              case appIds.yallaEat:
-                updateState({
-                  shortCode: shortCodes.yallaEat,
-                  isShortcodePrefilled: true,
-                });
+        case appIds.iAmSelling:
+          updateState({
+            shortCode: shortCodes.iAmSelling,
+            isShortcodePrefilled: true,
+          });
           break;
-          case appIds.choizez:
-                updateState({
-                  shortCode: shortCodes.choizez,
-                  isShortcodePrefilled: true,
-                });
+        case appIds.fifteenP:
+          updateState({
+            shortCode: shortCodes.fifteenP,
+            isShortcodePrefilled: true,
+          });
           break;
-          case appIds.otto:
-                updateState({
-                  shortCode: shortCodes.otto,
-                  isShortcodePrefilled: true,
-                });
+        case appIds.euodooTechnologies:
+          updateState({
+            shortCode: shortCodes.euodooTechnologies,
+            isShortcodePrefilled: true,
+          });
           break;
-          case appIds.rescueRoadsideAssistance:
-                updateState({
-                  shortCode: shortCodes.rescueRoadsideAssistance,
-                  isShortcodePrefilled: true,
-                });
+        case appIds.rota:
+          updateState({
+            shortCode: shortCodes.rota,
+            isShortcodePrefilled: true,
+          });
           break;
-          case appIds.tax_E:
-                updateState({
-                  shortCode: shortCodes.tax_E,
-                  isShortcodePrefilled: true,
-                });
+        case appIds.farmMeat:
+          updateState({
+            shortCode: shortCodes.farmMeat,
+            isShortcodePrefilled: true,
+          });
           break;
-          case appIds.baggageTaxi:
-                updateState({
-                  shortCode: shortCodes.baggageTaxi,
-                  isShortcodePrefilled: true,
-                });
+        case appIds.danielleBejjani:
+          updateState({
+            shortCode: shortCodes.danielleBejjani,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.yallaEat:
+          updateState({
+            shortCode: shortCodes.yallaEat,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.choizez:
+          updateState({
+            shortCode: shortCodes.choizez,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.otto:
+          updateState({
+            shortCode: shortCodes.otto,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.rescueRoadsideAssistance:
+          updateState({
+            shortCode: shortCodes.rescueRoadsideAssistance,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.tax_E:
+          updateState({
+            shortCode: shortCodes.tax_E,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.baggageTaxi:
+          updateState({
+            shortCode: shortCodes.baggageTaxi,
+            isShortcodePrefilled: true,
+          });
           break;
       }
     })();
@@ -2394,9 +2395,7 @@ export default function ShortCode({route, navigation}) {
   //i did added in this fun signup page replace with tabroutes
   const _onSubmitShortCode = () => {
     updateState({isLoading: true});
-    setTimeout(() => {
-      initApiHit();
-    }, 1000);
+    setTimeout(() => {}, 1000);
   };
 
   const initApiHit = async () => {
@@ -2448,7 +2447,9 @@ export default function ShortCode({route, navigation}) {
         }
 
         if (
-          getBundleId() == (appIds.masa || appIds.iPicknDrop || appIds.muvpod)
+          getBundleId() == appIds.masa ||
+          getBundleId() == appIds.iPicknDrop ||
+          getBundleId() == appIds.muvpod
         ) {
           updateState({
             isLoading: false,
@@ -2521,8 +2522,6 @@ export default function ShortCode({route, navigation}) {
   };
 
   const navigateToNextScreen = (res) => {
-    // return;
-
     getItem('firstTime').then((el) => {
       if (!el && !isEmpty(res?.data?.dynamic_tutorial)) {
         actions.setAppSessionData('app_intro');
@@ -2615,7 +2614,7 @@ export default function ShortCode({route, navigation}) {
       case appIds?.iPicknDrop:
         return imagePath.ipd;
       case appIds?.muvpod:
-        return imagePath.ipd;
+        return imagePath.muvpod;
       // case appIds?.sabroson:
       //   return imagePath.sabroson
     }
@@ -2637,6 +2636,7 @@ export default function ShortCode({route, navigation}) {
           backgroundColor: colors.white,
         }}>
         <Video
+          ref={videoRef}
           source={animationVideo()} // Can be a URL or a local file.
           style={{
             height: width,

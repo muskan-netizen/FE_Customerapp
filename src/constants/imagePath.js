@@ -516,8 +516,8 @@ export default {
   masa: require('../assets/masa.mp4'),
   ipd: require('../assets/ipd.mp4'),
   icCar: require('../assets/images/ic_topviewcar.png'),
-  muvpod:
-    'https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/app_splashscreen/73jvbtlLAQCkDgO58NZ8Zx9tdoOnoxlgNICcS7Gp.mp4',
+  muvpod: require('../assets/muvpod.mp4'),
+  // 'https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/app_splashscreen/73jvbtlLAQCkDgO58NZ8Zx9tdoOnoxlgNICcS7Gp.mp4',
   sabroson: require('../assets/sabroson.mp4'),
   icSos: require('../assets/images/RoyoorderNewImages/ic_sos.png'),
   subscribe: require('../assets/images/subscribe.png'),

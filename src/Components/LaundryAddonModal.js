@@ -67,8 +67,8 @@ const LaundryAddonModal = ({
         <Image
           source={{
             uri: getImageUrl(
-              item?.category?.image?.image_fit,
-              item?.category?.image?.image_path,
+              item?.icon?.image_fit,
+              item?.icon?.image_path,
               '600/6000',
             ),
           }}

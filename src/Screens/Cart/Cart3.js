@@ -887,11 +887,12 @@ function Cart({navigation, route}) {
 
   const checkPaymentOptions = (res) => {
     updateState({placeLoader: true});
+
     let paymentId = res?.data?.payment_option_id;
     let order_number = res?.data?.order_number;
-    setSelectedPayment(selectedPayment);
+    // setSelectedPayment(selectedPayment);
     console.log('api res success', res);
-
+ 
     let paymentData = {
       total_payable_amount: (
         Number(cartData?.total_payable_amount) +
@@ -1056,6 +1057,10 @@ function Cart({navigation, route}) {
       case 42: //Direct Pay Online Payment Getway
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.DIRECTPAYONLINE, paymentData);
+        break;
+      case 44: //Conekta Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.CONEKTA, paymentData);
         break;
       case 46: //Direct Pay Online Payment Getway
         updateState({placeLoader: false});
@@ -1263,7 +1268,8 @@ function Cart({navigation, route}) {
           selectedPayment?.id != 36 &&
           selectedPayment?.id != 39 &&
           selectedPayment?.id != 34 &&
-          selectedPayment?.id != 41
+          selectedPayment?.id != 41 &&
+          selectedPayment?.id != 44
         ) {
           setCartItems([]);
           setCartData({});
@@ -4550,7 +4556,7 @@ function Cart({navigation, route}) {
               onPress={() =>
                 !!userData?.auth_token
                   ? updateState({paymentModal: true})
-                  :setAppSessionRedirection()
+                  : setAppSessionRedirection()
               }
               style={{
                 ...styles.paymentMainView,

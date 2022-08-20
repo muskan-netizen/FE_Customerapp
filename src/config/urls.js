@@ -133,7 +133,7 @@ export const API_BASE_URL =
 
 // export const API_BASE_URL ='https://yogo.gd/api/v1';
 
-//  export const API_BASE_URL ='https://sales.focushires.com/api/v1';
+// export const API_BASE_URL = 'https://7e79-180-188-237-23.ngrok.io/api/v1';
 
 //Dlvrd
 // export const API_BASE_URL = 'https://dlvrd-order.netsolutionindia.com/api/v1';
