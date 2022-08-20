@@ -3591,13 +3591,13 @@ console.log("driverStatusdriverStatus",driverStatus)
       });
   };
 
+  {console.log(paramData?.from), "param data"}
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
-
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2
@@ -3608,7 +3608,7 @@ console.log("driverStatusdriverStatus",driverStatus)
         }
         centerTitle={strings.ORDER + `${'#'}${cartData?.order_number || ''}`}
         customRight={!!cartData?.reports?.report?.original ? customRight : ''}
-        onPressLeft={paramData?.from ?moveToNewScreen(navigationStrings.HOME):() => navigation.goBack()}
+        onPressLeft={!!paramData?.from ? moveToNewScreen(navigationStrings.HOME): () => navigation.goBack()}
         
       /> 
       <View

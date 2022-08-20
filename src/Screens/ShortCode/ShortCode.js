@@ -2406,13 +2406,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '4f3624',
+        // code: '245bae', // sales
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '4f3624',
+        // code: '245bae', // sales
         code: shortCode,
       };
     }
