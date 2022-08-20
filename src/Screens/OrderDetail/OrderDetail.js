@@ -244,7 +244,7 @@ export default function OrderDetail({ navigation, route }) {
   };
 
 
-  const createRoom = async (item, type) => {
+  const createRoom = async (item) => {
 
     try {
       const apiData = {
@@ -252,11 +252,48 @@ export default function OrderDetail({ navigation, route }) {
         client_id: String(appData?.profile.id),
         db_name: appData?.profile?.database_name,
         user_id: String(userData?.id),
-        type: type,
+        type: 'vendor_to_user',
         order_vendor_id: String(item?.id),
         vendor_id: String(item?.vendor_id),
         order_id: String(item?.order_id),
 
+      }
+      updateState({ isLoading: true })
+
+      console.log("sending api data", apiData)
+      const res = await actions.onStartChat(apiData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      console.log('start chat res', res)
+      updateState({ isLoading: false })
+      if (!!res?.roomData) {
+        onChat(res.roomData)
+
+      }
+    } catch (error) {
+      console.log('error raised in start chat api', error)
+      showError(error?.message)
+      updateState({ isLoading: false })
+    }
+  }
+
+  const createRoomWithAgent = async (item) => {
+      console.log("driverStatus?.order",driverStatus)
+
+    try {
+      const apiData = {
+        sub_domain: '192.168.101.88', //this is static value 
+        client_id: String(appData?.profile.id),
+        db_name: appData?.profile?.database_name,
+        user_id: String(userData?.id),
+        type: 'agent_to_user',
+        order_vendor_id: String(item?.id),
+        vendor_id: String(item?.vendor_id),
+        order_id: String(item?.order_id),
+        agent_id: driverStatus?.agent_location?.agent_id,
+        agent_db: driverStatus?.agent_dbname
       }
       updateState({ isLoading: true })
 
@@ -1074,7 +1111,7 @@ export default function OrderDetail({ navigation, route }) {
             {!userData?.is_superadmin ? <View>
               {!!appData?.profile?.socket_url ?
                 <TouchableOpacity
-                  onPress={() => createRoom(item, 'vendor_to_user')}
+                  onPress={() => createRoom(item)}
                   style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
                 >
                   <Text style={styles.startChatText}>{strings.VENDOR}</Text>
@@ -1083,7 +1120,7 @@ export default function OrderDetail({ navigation, route }) {
 
               {!!appData?.profile?.socket_url && !!(driverStatus?.order && driverStatus?.agent_location?.lat) ?
                 <TouchableOpacity
-                  onPress={() => createRoom(item, 'agent_to_user')}
+                  onPress={() => createRoomWithAgent(item)}
                   style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
                   activeOpacity={0.7}
                 >
@@ -2935,7 +2972,7 @@ export default function OrderDetail({ navigation, route }) {
 
   const onChat = (item) => {
     console.log("item+++", item)
-    navigation.navigate(navigationStrings.CHAT_SCREEN, { data: { ...item} })
+    navigation.navigate(navigationStrings.CHAT_SCREEN, { data: { ...item } })
   }
 
   const _onRateDriver = () => {
@@ -2959,7 +2996,7 @@ export default function OrderDetail({ navigation, route }) {
             containerStyle={{ paddingHorizontal: moderateScale(8) }}
             isDriver={cartData?.driver_rating == null}
             _onRateDriver={_onRateDriver}
-     
+
           />
         ) : null}
 
