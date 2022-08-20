@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react'
+import React, { useState, useCallback, useRef } from 'react'
 import { Text, View, FlatList, TouchableOpacity } from 'react-native'
 import socketServices from '../../utils/scoketService';
 import { useSelector } from 'react-redux';
@@ -19,7 +19,7 @@ import moment from 'moment';
 import CircularImages from '../../Components/CircularImages';
 import strings from '../../constants/lang';
 
-export default function ChatRoom({ navigation, route }) {
+export default function ChatRoomForVendor({ navigation, route }) {
     const theme = useSelector((state) => state?.initBoot?.themeColor);
     const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
     const { appData, currencies, languages, appStyle } = useSelector((state) => state.initBoot);
@@ -28,7 +28,7 @@ export default function ChatRoom({ navigation, route }) {
     const darkthemeusingDevice = useDarkMode();
     const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
     const paramData = route?.params;
-    console.log(userData, 'userDatauserDatauserData');
+    console.log(paramData, 'userDatauserDatauserData');
     const styles = stylesFun({ fontFamily, isDarkMode });
     const [state, setState] = useState({ roomData: [], isLoading: true })
     const { roomData, isLoading } = state
@@ -62,17 +62,13 @@ export default function ChatRoom({ navigation, route }) {
             }
             let apiData = {
                 sub_domain: '192.168.101.88', //this is static value 
-                type: paramData?.type == 'agent_chat' ? 'agent_to_user' : 'vendor_to_user',
+                type: 'vendor_to_user',
                 db_name: appData?.profile?.database_name,
-                client_id: String(appData?.profile.id)
-            }
-            if (paramData?.allVendors) {
-                apiData['vendor_id'] = paramData?.allVendors.map(val => val.id)
-            } else {
-                apiData['order_user_id'] = String(userData?.id)
+                client_id: String(appData?.profile.id),
+                order_user_id: String(userData?.id)
             }
             console.log('api data+++', apiData)
-            const res = paramData?.type == 'user_chat' ? await actions.fetchUserChat(apiData, headerData) : paramData?.type == 'vendor_chat' ? await actions.fetchVendorChat(apiData, headerData) : await actions.fetchAgentChat(apiData, headerData)
+            const res = await actions.fetchUserChat(apiData, headerData)
             updateState({ isLoading: false })
             if (!!res?.roomData && !_.isEmpty(res?.roomData) && isFocused) {
                 roomDataRef.current = res.roomData
@@ -86,7 +82,7 @@ export default function ChatRoom({ navigation, route }) {
         }
     }
     const goToChatRoom = useCallback((item) => {
-        navigation.navigate(navigationStrings.CHAT_SCREEN, { data: { ...item, id: item?.order_vendor_id } })
+        navigation.navigate(navigationStrings.CHAT_SCREEN_FOR_VENDOR, { data: { ...item, id: item?.order_vendor_id } })
     }, [])
     const renderItem = useCallback(({ item, index }) => {
         let isAnyMessage = _.isEmpty(item?.chat_Data)

@@ -516,7 +516,7 @@ export default {
   masa: require('../assets/masa.mp4'),
   ipd: require('../assets/ipd.mp4'),
   icCar: require('../assets/images/ic_topviewcar.png'),
-  muvpod: require('../assets/Muvpod.mp4'),
+  // muvpod: require('../assets/muvpod.mp4'),
   // muvpod:
   //   'https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/app_splashscreen/73jvbtlLAQCkDgO58NZ8Zx9tdoOnoxlgNICcS7Gp.mp4',
   sabroson: require('../assets/sabroson.mp4'),
@@ -529,9 +529,11 @@ export default {
   icPrescription: require('../assets/images/RoyoorderNewImages/ic_pres.png'),
   icBikeMarker: require('../assets/images/TrackOrderImages/ic_bike.png'),
   icCross18: require('../assets/images/ic_18.png'),
-  icUserChat: require('../assets/images/ic_userchat.png'),
-  icVendorChat: require('../assets/images/ic_vendorchat.png'),
   send: require('../assets/images/ic_send.png'),
   icBgLight: require('../assets/images/ic_lightbg.png'),
   icBgDark: require('../assets/images/ic_darkbg.png'),
+  icUserChat: require('../assets/images/ic_userchat.png'),
+  icVendorChat: require('../assets/images/ic_vendorchat.png'),
+  icDriverChat: require('../assets/images/ic_driver.png'),
+  icStoreChat: require('../assets/images/ic_store.png'),
 };

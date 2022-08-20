@@ -1477,7 +1477,7 @@ function Cart({navigation, route}) {
   const formatDateSlot = (date, time) => {
     return moment(`${date} ${time}`, 'YYYY-MM-DD HH:mm:ss').format();
   };
-  console.log(userData, 'userData?>>>userData?');
+  console.log(appData, 'appDataappDataappData');
 
   //Clear cart
   const placeOrder = () => {

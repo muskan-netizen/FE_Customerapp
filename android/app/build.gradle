@@ -207,15 +207,15 @@ android {
     flavorDimensions "appType"
 
     // productFlavors {
-    //        sxm2go{
-    //             dimension "appType"
-    //             versionCode 1
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion         
-    //             applicationId 'com.sxm2go'
-    //             resValue "string", "app_name", "SXM2GO"
-    //             resValue "string", "host_name", ""
+    //            myfarma{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.myfarma'
+    //         resValue "string", "app_name", "Livian"
+    //         resValue "string", "host_name", ""
     //         }
     // }
 
@@ -5320,7 +5320,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.myfarma'
-            resValue "string", "app_name", "MyFarma"
+            resValue "string", "app_name", "Livian"
             resValue "string", "host_name", ""
             }
             valley{
