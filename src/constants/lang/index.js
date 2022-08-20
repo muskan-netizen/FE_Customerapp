@@ -13,6 +13,10 @@ import pt from './pt';
 import vi from './vi';
 import hi from './hi';
 import ne from './ne';
+import it from './it';
+import fa from './fa';
+
+
 import es_elcheragio from './es_elcheragio';
 import es_heybuddy from './es_heybuddy';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
@@ -48,6 +52,9 @@ let strings = new LocalizedStrings({
   vi: vi,
   hi: hi,
   ne:ne,
+  it:it,
+  fa:fa,
+
 });
 export const changeLaguage = (languageKey) => {
   strings.setLanguage(languageKey);
