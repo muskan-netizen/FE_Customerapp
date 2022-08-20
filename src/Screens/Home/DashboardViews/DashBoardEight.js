@@ -60,6 +60,7 @@ import {
 import {string} from 'is_js';
 import BannerHome2 from '../../../Components/BannerHome2';
 import HomeCategoryCard3 from '../../../Components/HomeCategoryCard3';
+import SubscriptionModal from '../../../Components/SubscriptionModal';
 
 export default function DashBoardEight({
   handleRefresh = () => {},
@@ -71,6 +72,9 @@ export default function DashBoardEight({
   toggleData = {},
   onVendorFilterSeletion = () => {},
   tempCartData = null,
+  onClose,
+  onPressSubscribe,
+  isSubscription
 }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -832,6 +836,17 @@ export default function DashBoardEight({
           }}
         />
       </ScrollView>
+      {!!userData?.auth_token &&
+           !!appData?.profile?.preferences?.show_subscription_plan_popup && (
+          
+            <SubscriptionModal
+       
+            isVisible={isSubscription}
+            onClose={onClose}
+            onPressSubscribe={onPressSubscribe}
+          />
+          
+        )}
     </View>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity,} from 'react-native';
 import {useSelector} from 'react-redux';
 import Modal from 'react-native-modal';
 import imagePath from '../constants/imagePath';
@@ -10,9 +10,10 @@ import GradientButton from './GradientButton';
 import colors from '../styles/colors';
 
 const SubscriptionModal = ({
-  isVisible = true,
+  isVisible = false,
   onClose = () => {},
-  onPressSubscribe
+  onPressSubscribe=()=>{},
+ 
  
 }) => {
   const {themeColors, appStyle} = useSelector((state) => state?.initBoot);
@@ -20,10 +21,12 @@ const SubscriptionModal = ({
 
   return (
     <Modal
+      onBackdropPress={onClose}
       isVisible={isVisible}
       style={{
-        flex: 1,
-      }}>
+        flex:1
+      }}
+     >
       <View
         style={{
           height: '30%',
@@ -31,6 +34,7 @@ const SubscriptionModal = ({
           backgroundColor: colors.white,
           width: '80%',
           alignSelf: 'center',
+         
         }}>
         <Image
           source={imagePath.subscribe}
@@ -87,6 +91,6 @@ const SubscriptionModal = ({
   );
 };
 
-export default SubscriptionModal;
+export default React.memo(SubscriptionModal);
 
 const styles = StyleSheet.create({});
