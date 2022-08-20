@@ -637,7 +637,7 @@ const appIds = {
   }),
   fleety: Platform.select({
     ios: 'com.fleety',
-    android: 'com.fleety',
+    android: 'com.feelty.userApp',
   }),
   flyinghorse: Platform.select({
     ios: 'com.flyinghorse',

@@ -698,7 +698,7 @@ export default function SelectPaymentModalView({
             backgroundColor: isDarkMode ? colors.black : colors.white,
             padding: moderateScale(12),
             borderRadius: moderateScale(8),
-            paddingBottom: moderateScale(keyboardHeight),
+            // paddingBottom: moderateScale(keyboardHeight),
           }}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <>
