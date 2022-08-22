@@ -5,21 +5,22 @@ import {
   Text,
   TouchableOpacity,
   View,
+  FlatList
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {moderateScale, textScale} from '../styles/responsiveSize';
-import {useSelector} from 'react-redux';
+import React, { useCallback, useEffect, useState } from 'react';
+import { moderateScale, textScale } from '../styles/responsiveSize';
+import { useSelector } from 'react-redux';
 import strings from '../constants/lang';
 import actions from '../redux/actions';
 import deviceInfoModule from 'react-native-device-info';
-import {showError, showSuccess} from '../utils/helperFunctions';
-import {MyDarkTheme} from '../styles/theme';
+import { showError, showSuccess } from '../utils/helperFunctions';
+import { MyDarkTheme } from '../styles/theme';
 import colors from '../styles/colors';
 import imagePath from '../constants/imagePath';
 import { useDarkMode } from 'react-native-dark-mode';
 
-function DeliveryTypeComp({selectedToggle = () => {}}) {
-  const {cartItemCount} = useSelector((state) => state?.cart);
+function DeliveryTypeComp({ selectedToggle = () => { } }) {
+  const { cartItemCount } = useSelector((state) => state?.cart);
   const {
     appData,
     themeColors,
@@ -29,262 +30,37 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
-  const {dineInType} = useSelector((state) => state?.home);
-const darkthemeusingDevice=useDarkMode();
+  const { dineInType } = useSelector((state) => state?.home);
+  const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
 
-  const styles = stylesFunc({fontFamily, themeColors, isDarkMode});
+  const styles = stylesFunc({ fontFamily, themeColors, isDarkMode });
 
   const [state, setState] = useState({
     tabs: [],
   });
 
-  const {tabs} = state;
+  const { tabs } = state;
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+
   useEffect(() => {
     addAllTabs();
-    userSelectedtab();
-  }, [appData, dineInType]);
+  }, []);
 
   const addAllTabs = () => {
-    const localTabsArray = [];
-
-    if (appData?.profile?.preferences?.delivery_check == 1) {
-      localTabsArray.push({
-        value:
-          appData?.profile?.preferences?.delivery_nomenclature ||
-          strings.DELIVERY,
-        label: 'delivery',
-        icon: imagePath.delivery,
-        iconInActive: imagePath.deliveryInActive,
-        isActive: dineInType === 'delivery' ? true : false,
-      });
-      if (
-        appData?.profile?.preferences?.dinein_check == 0 &&
-        appData?.profile?.preferences?.takeaway_check == 0
-      ) {
-        selectedToggle('delivery');
-      }
+    if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
+      updateState({ tabs: appData?.profile?.preferences?.vendorMode });
     }
-    if (appData?.profile?.preferences?.dinein_check == 1) {
-      localTabsArray.push({
-        value:
-          appData?.profile?.preferences?.dinein_nomenclature || strings.DINE_IN,
-        label: 'dine_in',
-        icon: imagePath.dineIn,
-        isActive: dineInType === 'dine_in' ? true : false,
-      });
-      if (
-        appData?.profile?.preferences?.delivery_check == 0 &&
-        appData?.profile?.preferences?.takeaway_check == 0
-      ) {
-        selectedToggle('dine_in');
-      }
-    }
-    if (appData?.profile?.preferences?.takeaway_check == 1) {
-      localTabsArray.push({
-        value:
-          appData?.profile?.preferences?.takeaway_nomenclature ||
-          strings.TAKEAWAY,
-        label: 'takeaway',
-        icon: imagePath.takeaway,
-        isActive: dineInType === 'takeaway' ? true : false,
-      });
-      if (
-        appData?.profile?.preferences?.delivery_check == 0 &&
-        appData?.profile?.preferences?.dinein_check == 0
-      ) {
-        selectedToggle('takeaway');
-      }
-    }
-    updateState({
-      tabs: localTabsArray,
-    });
+    return;
   };
 
-  const setUserSelectedTab = (label, value) => {
-    selectedToggle(value);
-  };
-
-  const userSelectedtab = () => {
-    if (dineInType === 'delivery') {
-      if (
-        appData?.profile?.preferences?.delivery_check == 0 &&
-        appData?.profile?.preferences?.dinein_check == 1 &&
-        appData?.profile?.preferences?.takeaway_check == 1
-      ) {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.dinein_nomenclature || strings.DINE_IN,
-          'dine_in',
-        );
-      } else if (
-        appData?.profile?.preferences?.delivery_check == 0 &&
-        appData?.profile?.preferences?.dinein_check == 0 &&
-        appData?.profile?.preferences?.takeaway_check == 1
-      ) {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.takeaway_nomenclature ||
-            strings.TAKEAWAY,
-          'takeaway',
-        );
-      } else if (
-        appData?.profile?.preferences?.delivery_check == 0 &&
-        appData?.profile?.preferences?.dinein_check == 1 &&
-        appData?.profile?.preferences?.takeaway_check == 0
-      ) {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.dinein_nomenclature || strings.DINE_IN,
-          'dine_in',
-        );
-      } else {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.delivery_nomenclature ||
-            strings.DELIVERY,
-          'delivery',
-        );
-      }
-    } else if (dineInType === 'dine_in') {
-      if (
-        appData?.profile?.preferences?.delivery_check == 0 &&
-        appData?.profile?.preferences?.dinein_check == 1 &&
-        appData?.profile?.preferences?.takeaway_check == 1
-      ) {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.dinein_nomenclature || strings.DINE_IN,
-          'dine_in',
-        );
-      } else if (
-        appData?.profile?.preferences?.delivery_check == 0 &&
-        appData?.profile?.preferences?.dinein_check == 0 &&
-        appData?.profile?.preferences?.takeaway_check == 1
-      ) {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.takeaway_nomenclature ||
-            strings.TAKEAWAY,
-          'takeaway',
-        );
-      } else if (
-        appData?.profile?.preferences?.delivery_check == 0 &&
-        appData?.profile?.preferences?.dinein_check == 1 &&
-        appData?.profile?.preferences?.takeaway_check == 0
-      ) {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.dinein_nomenclature || strings.DINE_IN,
-          'dine_in',
-        );
-      } else if (
-        appData?.profile?.preferences?.delivery_check == 1 &&
-        appData?.profile?.preferences?.dinein_check == 0 &&
-        appData?.profile?.preferences?.takeaway_check == 1
-      ) {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.delivery_nomenclature ||
-            strings.DELIVERY,
-          'delivery',
-        );
-      } else if (
-        appData?.profile?.preferences?.delivery_check == 1 &&
-        appData?.profile?.preferences?.dinein_check == 0 &&
-        appData?.profile?.preferences?.takeaway_check == 0
-      ) {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.delivery_nomenclature ||
-            strings.DELIVERY,
-          'delivery',
-        );
-      } else if (
-        appData?.profile?.preferences?.delivery_check == 1 &&
-        appData?.profile?.preferences?.dinein_check == 1 &&
-        appData?.profile?.preferences?.takeaway_check == 0
-      ) {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.delivery_nomenclature ||
-            strings.DELIVERY,
-          'delivery',
-        );
-      } else {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.dinein_nomenclature || strings.DINE_IN,
-          'dine_in',
-        );
-      }
-    } else {
-      if (
-        appData?.profile?.preferences?.delivery_check == 0 &&
-        appData?.profile?.preferences?.dinein_check == 1 &&
-        appData?.profile?.preferences?.takeaway_check == 1
-      ) {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.takeaway_nomenclature ||
-            strings.TAKEAWAY,
-          'takeaway',
-        );
-      } else if (
-        appData?.profile?.preferences?.delivery_check == 0 &&
-        appData?.profile?.preferences?.dinein_check == 0 &&
-        appData?.profile?.preferences?.takeaway_check == 1
-      ) {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.takeaway_nomenclature ||
-            strings.TAKEAWAY,
-          'takeaway',
-        );
-      } else if (
-        appData?.profile?.preferences?.delivery_check == 1 &&
-        appData?.profile?.preferences?.dinein_check == 0 &&
-        appData?.profile?.preferences?.takeaway_check == 1
-      ) {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.takeaway_nomenclature ||
-            strings.TAKEAWAY,
-          'takeaway',
-        );
-      } else if (
-        appData?.profile?.preferences?.delivery_check == 0 &&
-        appData?.profile?.preferences?.dinein_check == 1 &&
-        appData?.profile?.preferences?.takeaway_check == 0
-      ) {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.dinein_nomenclature || strings.DINE_IN,
-          'dine_in',
-        );
-      } else if (
-        appData?.profile?.preferences?.delivery_check == 1 &&
-        appData?.profile?.preferences?.dinein_check == 1 &&
-        appData?.profile?.preferences?.takeaway_check == 0
-      ) {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.delivery_nomenclature ||
-            strings.DELIVERY,
-          'delivery',
-        );
-      } else if (
-        appData?.profile?.preferences?.delivery_check == 1 &&
-        appData?.profile?.preferences?.dinein_check == 0 &&
-        appData?.profile?.preferences?.takeaway_check == 0
-      ) {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.delivery_nomenclature ||
-            strings.DELIVERY,
-          'delivery',
-        );
-      } else {
-        setUserSelectedTab(
-          appData?.profile?.preferences?.takeaway_nomenclature ||
-            strings.TAKEAWAY,
-          'takeaway',
-        );
-      }
-    }
-  };
-
-  const _onTableItm = (item, indx) => {
+  const _onTableItm = (value, indx) => {
     const newTabs = [...tabs];
     newTabs.forEach((item, index) => {
       if (index === indx) {
-        selectedToggle(item.label);
+        selectedToggle(item?.type);
         newTabs[index].isActive = true;
         updateState({
           tabs: [...newTabs],
@@ -304,7 +80,7 @@ const darkthemeusingDevice=useDarkMode();
         text: strings.CANCEL,
         onPress: () => console.log('Cancel Pressed'),
       },
-      {text: strings.CLEAR_CART2, onPress: () => clearCart(item, indx)},
+      { text: strings.CLEAR_CART2, onPress: () => clearCart(item, indx) },
     ]);
   };
 
@@ -331,6 +107,64 @@ const darkthemeusingDevice=useDarkMode();
     showError(error?.message || error?.error);
   };
 
+  const renderItem = useCallback(({ item, index }) => {
+
+    return (
+      <TouchableOpacity
+        activeOpacity={1}
+        disabled={item?.isActive}
+        onPress={() =>
+          !(
+            cartItemCount?.message == null &&
+            cartItemCount?.data?.item_count > 0
+          )
+            ? _onTableItm(item, index)
+            : dineInFunction(item, index)
+        }
+        key={index}
+        style={{
+          ...styles.tabItemView,
+          marginRight: 8,
+          borderBottomColor:
+            dineInType == item?.type && isDarkMode
+              ? MyDarkTheme.colors.white
+              : dineInType == item?.type && !isDarkMode
+                ? themeColors.primary_color
+                : isDarkMode
+                  ? colors.blackOpacity0
+                  : colors.greyColor1,
+        }}>
+        {/* <Image
+          source={item.icon}
+          style={{
+            ...styles.tabItemImg,
+            tintColor:
+              item.isActive && isDarkMode
+                ? MyDarkTheme.colors.white
+                : item.isActive && !isDarkMode
+                  ? themeColors.primary_color
+                  : colors.greyLight,
+          }}
+          resizeMode="contain"
+        /> */}
+        <Text
+          style={{
+            ...styles.tabItemTxt,
+            color:
+              item.isActive && isDarkMode
+                ? MyDarkTheme.colors.white
+                : item.isActive && !isDarkMode
+                  ? themeColors.primary_color
+                  : colors.greyLight,
+          }}>
+          {item?.name}
+        </Text>
+      </TouchableOpacity>
+    )
+  }, [tabs, appData])
+
+  const awesomeChildListKeyExtractor = useCallback((item) => `awesome-child-key-${item?.type}`, [tabs]);
+
   return (
     <View
       style={{
@@ -339,66 +173,21 @@ const darkthemeusingDevice=useDarkMode();
           ? colors.whiteOpacity22
           : colors.borderColorD,
       }}>
-      {tabs.length > 1 &&
-        tabs.map((item, indx) => {
-          return (
-            <TouchableOpacity
-              activeOpacity={1}
-              disabled={item.isActive}
-              onPress={() =>
-                !(
-                  cartItemCount?.message == null &&
-                  cartItemCount?.data?.item_count > 0
-                )
-                  ? _onTableItm(item, indx)
-                  : dineInFunction(item, indx)
-              }
-              key={indx}
-              style={{
-                ...styles.tabItemView,
-                width: tabs.length == 2 ? '50%' : '33.6%',
-                borderBottomColor:
-                  item.isActive && isDarkMode
-                    ? MyDarkTheme.colors.white
-                    : item.isActive && !isDarkMode
-                    ? themeColors.primary_color
-                    : isDarkMode
-                    ? colors.blackOpacity0
-                    : colors.greyColor1,
-              }}>
-              <Image
-                source={item.icon}
-                style={{
-                  ...styles.tabItemImg,
-                  tintColor:
-                    item.isActive && isDarkMode
-                      ? MyDarkTheme.colors.white
-                      : item.isActive && !isDarkMode
-                      ? themeColors.primary_color
-                      : colors.greyLight,
-                }}
-                resizeMode="contain"
-              />
-              <Text
-                style={{
-                  ...styles.tabItemTxt,
-                  color:
-                    item.isActive && isDarkMode
-                      ? MyDarkTheme.colors.white
-                      : item.isActive && !isDarkMode
-                      ? themeColors.primary_color
-                      : colors.greyLight,
-                }}>
-                {item.value}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
+      <FlatList
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        data={tabs}
+        renderItem={renderItem}
+        keyExtractor={awesomeChildListKeyExtractor}
+        ListFooterComponent={() => <View style={{ marginLeft: moderateScale(16) }} />}
+        ListHeaderComponent={() => <View style={{ marginRight: moderateScale(16) }} />}
+      />
+
     </View>
   );
 }
 
-export function stylesFunc({fontFamily, themeColors, isDarkMode}) {
+export function stylesFunc({ fontFamily, themeColors, isDarkMode }) {
   const styles = StyleSheet.create({
     tabMainStyle: {
       borderRadius: moderateScale(10),

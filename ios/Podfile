@@ -1859,6 +1859,14 @@ end
 target 'BaggageTaxi' do
   
 end
+#Mersi Target
+target 'Mersi' do
+  
+end
+#FoodSpot Target
+target 'FoodSpot' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

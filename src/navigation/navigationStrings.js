@@ -150,4 +150,6 @@ export default {
   KHALTI: 'Khalti',
   SUBCATEGORY_VENDORS: 'subcategoryVendors',
   SEARCH:'Search',
+  CHAT_SCREEN_FOR_VENDOR:"chatScreenForVendor",
+  CHAT_ROOM_FOR_VENDOR:"chatRoomForVendor",
 };

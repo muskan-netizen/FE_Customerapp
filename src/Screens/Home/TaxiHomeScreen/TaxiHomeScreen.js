@@ -187,7 +187,7 @@ export default function TaxiHomeScreen({route, navigation}) {
                   latitude: appMainData?.reqData?.latitude,
                   longitude: appMainData?.reqData?.longitude,
                 };
-                actions.locationData(data);
+                actions.locationData(res);
                 updateState({locationObj: res});
               } else {
                 updateState({locationObj: res});

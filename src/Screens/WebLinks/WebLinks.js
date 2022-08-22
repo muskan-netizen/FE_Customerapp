@@ -418,7 +418,7 @@ console.log(driverRegDocs, "driverRegDocsdriverRegDocs")
         filename: vendorBanner.filename,
         type: vendorBanner.mime,
       });
-
+      
       // console.log(vendorRegisterationDocs, 'vendorRegDocs');
       // vendorRegDocs?.map((itm) => {
       //   if (itm?.is_required) {

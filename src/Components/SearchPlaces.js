@@ -68,6 +68,7 @@ const SearchPlaces = ({
     console.log(appData?.profile?.preferences?.is_static_dropoff, "searching texts")
     setValue(data);
     if (!!appData?.profile?.preferences?.is_static_dropoff && index!==0) {
+
       let query = {}
       query['search'] = data
       actions.pickuplocationSearch(query,

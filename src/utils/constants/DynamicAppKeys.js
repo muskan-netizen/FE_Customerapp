@@ -378,6 +378,8 @@ const shortCodes = {
   rescueRoadsideAssistance:'6355c5',
   tax_E:'a7952f',
   baggageTaxi:'52bb0a',
+  mersi:'1b308e',
+  foodSpot:"1c67f3"
 };
 
 const appIds = {
@@ -635,7 +637,7 @@ const appIds = {
   }),
   fleety: Platform.select({
     ios: 'com.fleety',
-    android: 'com.fleety',
+    android: 'com.feelty.userApp',
   }),
   flyinghorse: Platform.select({
     ios: 'com.flyinghorse',
@@ -1058,8 +1060,8 @@ const appIds = {
     android: 'com.enext',
   }),
   hokitch: Platform.select({
-    ios: 'com.hokitch',
-    android: 'com.hokitch',
+    ios: 'com.hokitch.orders',
+    android: 'com.hokitch.orders',
   }),
   foodnests: Platform.select({
     ios: 'com.foodnests',
@@ -1414,8 +1416,8 @@ const appIds = {
     android: 'com.dbairro',
   }),
   knockknock: Platform.select({
-    ios: 'com.application.knockknock',
-    android: 'com.knockknock',
+    ios: 'com.knockKnock.userApp',
+    android: 'com.knockKnock.userApp',
   }),
   qrider: Platform.select({
     ios: 'com.qrider',
@@ -1448,7 +1450,7 @@ const appIds = {
   }),
   scootz: Platform.select({
     ios: 'com.scootz',
-    android: 'com.app.scootz',
+    android: 'com.scootz.userapp',
   }),
   ola: Platform.select({
     ios: 'com.application.ola',
@@ -1599,8 +1601,8 @@ const appIds = {
     android: 'com.kazakazi',
   }),
   papiruki: Platform.select({
-    ios: 'com.papiruki',
-    android: 'com.papiruki',
+    ios: 'com.papiruki.userApp',
+    android: 'com.papiruki.userApp',
   }),
   markSoublet: Platform.select({
     ios: 'com.markSoublet',
@@ -1751,6 +1753,10 @@ const appIds = {
     ios: 'com.torunz',
     android: 'com.torunz',
   }),
+  kurs: Platform.select({
+    ios: 'com.app.kurs',
+    android: 'com.app.kurs',
+  }),
   spa: Platform.select({
     ios: 'com.customerApp.spa',
     android: 'com.customerApp.spa',
@@ -1880,6 +1886,14 @@ const appIds = {
   baggageTaxi: Platform.select({
     ios: 'com.baggageTaxi.order',
     android: 'com.baggageTaxi.order',
+  }),
+  mersi: Platform.select({
+    ios: 'com.mersi.order',
+    android: 'com.mersi.order',
+  }),
+  foodSpot: Platform.select({
+    ios: 'com.foodSpot.order',
+    android: 'com.foodSpot.order',
   }),
 };
 

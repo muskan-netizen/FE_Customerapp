@@ -87,12 +87,11 @@ export default function VendorDetail3({navigation, route}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
   //Naviagtion to specific screen
   const moveToNewScreen = (item) => {
-    console.log('item++++ upper', item);
 
-    if (!!item?.type && item?.type?.id == 7) {
+    if (item?.redirect_to == "Pickup/Delivery") {
       if (!!userData?.auth_token) {
         item['pickup_taxi'] = true;
-        item['redirect_to'] = item.type.redirect_to;
+        item['redirect_to'] = item.redirect_to;
         navigation.navigate(navigationStrings.ADDADDRESS, {data: item});
         return;
       }
