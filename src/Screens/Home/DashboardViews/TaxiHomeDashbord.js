@@ -140,7 +140,7 @@ export default function TaxiHomeDashbord({
   console.log(location, 'loaction');
   console.log(region, 'region');
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  
+
   let findCabCategory = appMainData?.categories?.find(
     (x) => x?.redirect_to == staticStrings.PICKUPANDDELIEVRY,
   );
@@ -173,7 +173,7 @@ export default function TaxiHomeDashbord({
     del,
     isLoadingModal,
     fullMapShow,
-    selectViaMap
+    selectViaMap,
   } = state;
   const styles = stylesFunc({themeColors, fontFamily});
 
@@ -271,7 +271,7 @@ export default function TaxiHomeDashbord({
         console.log(res, 'res>res>res');
         updateState({del: del ? false : true});
         showSuccess(res.message);
-       setModalVisible(false)
+        setModalVisible(false);
       })
       .catch((error) => {
         updateState({isLoading: false});
@@ -279,14 +279,12 @@ export default function TaxiHomeDashbord({
       });
   };
 
-
   const openCloseMapAddress = (type) => {
-    updateState({ selectViaMap: type == 1 ? true : false });
+    updateState({selectViaMap: type == 1 ? true : false});
   };
 
-
   const setModalVisible = (visible, type, id, data) => {
-    updateState({ selectViaMap: false });
+    updateState({selectViaMap: false});
     if (!!userData?.auth_token) {
       updateState({
         updateData: data,
@@ -588,6 +586,7 @@ export default function TaxiHomeDashbord({
         style={{flex: 1, zIndex: 1000}}>
         <>
           <TaxiBannerHome
+            appStyle={appStyle}
             bannerRef={bannerRef}
             slider1ActiveSlide={slider1ActiveSlide}
             bannerData={[...appData?.mobile_banners]}
