@@ -207,7 +207,7 @@ android {
     flavorDimensions "appType"
 
     productFlavors {
-         oxo{
+                  oxo{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
