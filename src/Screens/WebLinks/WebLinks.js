@@ -257,7 +257,7 @@ export default function WebLinks({ navigation, route }) {
     updateState({ cca2: data.cca2, callingCode: data.callingCode[0] });
     return;
   };
-
+console.log(driverRegDocs, "driverRegDocsdriverRegDocs")
   const isValidData = () => {
     if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
       const error = validator({
@@ -573,7 +573,8 @@ export default function WebLinks({ navigation, route }) {
           .then((res) => {
             if (res && res.data) {
               if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
-                if (!!clickedIndx) {
+                console.log(clickedIndx,"clickedIndxclickedIndx")
+                if (clickedIndx != null) {
                   {
                     const driverRegistrationDocsAry = [
                       ...driverRegistrationDocs,
