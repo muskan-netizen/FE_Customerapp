@@ -1,5 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Alert,
   I18nManager,
@@ -153,6 +153,10 @@ export default function Account({ navigation }) {
       navigation.navigate(navigationStrings.CHAT_ROOM, { type: type });
     }
   };
+
+  const goToChatRoomForVendor = useCallback(() => {
+    navigation.navigate(navigationStrings.CHAT_ROOM_FOR_VENDOR, { type: 'vendor_chat' });
+  }, [])
 
 
   useEffect(() => {
@@ -470,13 +474,33 @@ export default function Account({ navigation }) {
           )}
 
 
+        {!!userData?.auth_token &&
+          !!appMainData?.is_admin &&
+          businessType != 4 && !!appData?.profile?.socket_url && (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={goToChatRoomForVendor}
+              iconLeft={imagePath.icStoreChat}
+              centerHeading={strings.STORES_CAHT}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
+
+
         {!!userData?.auth_token && !!appData?.profile?.socket_url && (
           <ListItemHorizontal
             centerContainerStyle={{ flexDirection: 'row' }}
             leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
             onPress={() => goToChatRoom('agent_chat')}
-            iconLeft={imagePath.icUserChat}
-            centerHeading={'Driver Chat'}
+            iconLeft={imagePath.icDriverChat}
+            centerHeading={strings.DRIVER_CHAT}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
               fontSize: textScale(14),
@@ -493,7 +517,7 @@ export default function Account({ navigation }) {
               leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={() => goToChatRoom('vendor_chat')}
               iconLeft={imagePath.icUserChat}
-              centerHeading={'User Chat'}
+              centerHeading={strings.USER_CHAT}
               containerStyle={styles.containerStyle2}
               centerHeadingStyle={{
                 fontSize: textScale(14),
@@ -508,7 +532,7 @@ export default function Account({ navigation }) {
             leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
             onPress={() => goToChatRoom('user_chat')}
             iconLeft={imagePath.icVendorChat}
-            centerHeading={'Vendor Chat'}
+            centerHeading={strings.VENDOR_CHAT}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
               fontSize: textScale(14),
@@ -518,7 +542,7 @@ export default function Account({ navigation }) {
         )}
 
 
-    
+
         {!!userData?.auth_token ? null : <View style={styles.loginView}>
           <TouchableOpacity
             // onPress={()=>actions.isVendorNotification(true)}

@@ -429,6 +429,7 @@ const App = () => {
       </View>
     );
   };
+  
   return (
     <SafeAreaProvider>
       <MenuProvider>

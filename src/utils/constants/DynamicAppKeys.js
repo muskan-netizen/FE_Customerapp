@@ -1450,7 +1450,7 @@ const appIds = {
   }),
   scootz: Platform.select({
     ios: 'com.scootz',
-    android: 'com.app.scootz',
+    android: 'com.scootz.userapp',
   }),
   ola: Platform.select({
     ios: 'com.application.ola',

@@ -969,4 +969,13 @@ export default {
   SOS: 'SOS',
   VISIT_INSTAGRAM: 'Visit Instagram',
   CATEGORY_KYC: 'Categoory KYC',
+  STORES_CAHT:"Stores Chat",
+  DRIVER_CHAT:"Driver Chat",
+  USER_CHAT:"User Chat",
+  VENDOR_CHAT:"Vendor Chat",
+  CHAT_EMPTY_ROOM:"Chat Room Empty",
+  CHAT_ROOM:"Chat Room",
+  PARTICIPANTS:"Participants",
+  VENDOR:"Vendor",
+  START_CHAT:"Start Chat",
 };
