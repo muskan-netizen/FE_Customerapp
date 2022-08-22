@@ -73,6 +73,7 @@ import { DarkTheme } from 'react-native-paper';
 import actions from '../../../redux/actions';
 import { getItem, setItem } from '../../../utils/utils';
 import RNExitApp from 'react-native-exit-app';
+import SubscriptionModal from '../../../Components/SubscriptionModal';
 
 export default function DashBoardFive({
   handleRefresh = () => { },
@@ -88,6 +89,9 @@ export default function DashBoardFive({
   onPressAddLaundryItem = () => { },
   isLoadingAddons = false,
   selectedHomeCategory = {},
+  onClose,
+  onPressSubscribe,
+  isSubscription
 }) {
   const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
     (state) => state?.initBoot,
@@ -1217,6 +1221,17 @@ console.log("hfbgdh", item);
           </Modal>
         </View>
       )}
+      {!!userData?.auth_token &&
+           !!appData?.profile?.preferences?.show_subscription_plan_popup && (
+          
+            <SubscriptionModal
+       
+            isVisible={isSubscription}
+            onClose={onClose}
+            onPressSubscribe={onPressSubscribe}
+          />
+          
+        )}
     </View>
   );
 }
