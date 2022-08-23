@@ -996,27 +996,33 @@ export default function WebLinks({ navigation, route }) {
         }}>
         <View
           style={{
-            marginTop: moderateScaleVertical(20),
-            marginHorizontal: moderateScale(20),
+            // marginTop: moderateScaleVertical(20),
+            // marginHorizontal: moderateScale(20),
 
             justifyContent: I18nManager.isRTL ? 'flex-end' : 'flex-start',
             flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
           }}>
           {htmlContent && (
             //  <View style={{flexDirection: I18nManager.isRTL ? 'row-reverse': 'row' }} >
-            <RenderHtml
-              contentWidth={width}
-              source={{ html: htmlContent }}
-              tagsStyles={{
-                p: {
-                  color: isDarkMode ? colors.white : colors.black,
-                  // alignSelf: I18nManager.isRTL ? 'left' : 'right',
-                  // textAlign: I18nManager.isRTL ? 'left' : 'right',
-                  // textAlign:'right',
+            // <RenderHtml
+            //   contentWidth={width}
+            //   source={{ html: htmlContent }}
+            //   tagsStyles={{
+            //     p: {
+            //       color: isDarkMode ? colors.white : colors.black,
+            //       // alignSelf: I18nManager.isRTL ? 'left' : 'right',
+            //       // textAlign: I18nManager.isRTL ? 'left' : 'right',
+            //       // textAlign:'right',
 
-                }
-              }}
-            />
+            //     }
+            //   }}
+            // />
+
+            <WebView style={{ height: height, width, resizeMode: 'contain', flex: 1 }}
+              injectedJavaScript={`const meta = document.createElement('meta'); meta.setAttribute('content', 'width=width, initial-scale=0.5, maximum-scale=0.5, user-scalable=2.0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `}
+              scalesPageToFit={true} automaticallyAdjustContentInsets={true} source={{ html: htmlContent }}>
+
+            </WebView>
             //  </View>
             // <HTMLView
             //   stylesheet={isDarkMode ? htmlStyle : null}
@@ -1079,9 +1085,11 @@ export default function WebLinks({ navigation, route }) {
               containerStyle={styles.containerStyle}
             />
             <View style={{ marginVertical: moderateScaleVertical(10) }}>
-              <View style={{ flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-              alignSelf: 'flex-start',}} >
-                 <Text style={styles.detailStyle }>{strings.STORE_DETAILS}</Text>
+              <View style={{
+                flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                alignSelf: 'flex-start',
+              }} >
+                <Text style={styles.detailStyle}>{strings.STORE_DETAILS}</Text>
               </View>
               <View style={{ marginVertical: moderateScaleVertical(20) }}>
                 <View style={{ flexDirection: 'row' }}>
@@ -1397,8 +1405,10 @@ export default function WebLinks({ navigation, route }) {
 
         {driverRegDocs?.page_detail?.primary?.type_of_form == 2 && (
           <View style={styles.mainView}>
-            <View style={{ marginBottom: moderateScaleVertical(12), flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-              alignSelf: 'flex-start', }}>
+            <View style={{
+              marginBottom: moderateScaleVertical(12), flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+              alignSelf: 'flex-start',
+            }}>
               <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
             </View>
 

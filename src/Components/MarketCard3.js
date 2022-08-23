@@ -100,12 +100,14 @@ const MarketCard3 = ({
               flexDirection: 'row',
               alignItems: 'center',
               backgroundColor: 'white',
+            
             }}>
             {!!data?.lineOfSightDistance && (
               <View
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
+                  
                 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Image
@@ -134,6 +136,8 @@ const MarketCard3 = ({
                     style={{
                       flexDirection: 'row',
                       alignItems: 'center',
+                     
+
                     }}>
                     <View
                       style={{
@@ -141,6 +145,7 @@ const MarketCard3 = ({
                         borderRightWidth: 0.8,
                         marginHorizontal: moderateScale(8),
                         borderRightColor: colors.black,
+                       
                       }}
                     />
                     <Image
@@ -156,15 +161,13 @@ const MarketCard3 = ({
                       source={imagePath.icTime2}
                     />
                     {data?.timeofLineOfSightDistance / 60 > 1 && appIds.hokitch ==getBundleId() ?
-
-                      <Text numberOfLines={1} style={styles.distanceTimeStyle}>
-                        ≈{checkEvenOdd(data?.timeofLineOfSightDistance)}
+                      <Text numberOfLines={1} style={{marginLeft:moderateScale(10)}}>
+                         ≈{checkEvenOdd(data?.timeofLineOfSightDistance)}
                       </Text> :
                       <Text numberOfLines={1} style={styles.distanceTimeStyle}>
                         {checkEvenOdd(data?.timeofLineOfSightDistance)}
                         -
                         {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
-
                       </Text>
 
                     }
@@ -224,7 +227,6 @@ const MarketCard3 = ({
                 <Text
                   style={styles.vendorScheduledText}>
                   {getBundleId() == appIds.masa ? `${strings.WE_ACCEPT_ONLY_SCHEDULE_ORDER} ${data?.delaySlot} ` : ` ${strings.WE_ARE_NOT_ACCEPTING} ${data?.delaySlot} `}
-
                 </Text>
               </View>
             </View>

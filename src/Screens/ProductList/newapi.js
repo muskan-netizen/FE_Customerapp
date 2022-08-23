@@ -1,0 +1,3512 @@
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {BlurView} from '@react-native-community/blur';
+import Clipboard from '@react-native-community/clipboard';
+import _, {cloneDeep, debounce} from 'lodash';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  Alert,
+  FlatList,
+  I18nManager,
+  Image,
+  ImageBackground,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import {useDarkMode} from 'react-native-dark-mode';
+import DeviceInfo from 'react-native-device-info';
+import FastImage from 'react-native-fast-image';
+import LinearGradient from 'react-native-linear-gradient';
+import Share from 'react-native-share';
+import Toast from 'react-native-simple-toast';
+import {SvgUri} from 'react-native-svg';
+import SectionList from 'react-native-tabs-section-list';
+import {useSelector} from 'react-redux';
+import ToggleSwitch from 'toggle-switch-react-native';
+import BottomSlideModal from '../../Components/BottomSlideModal';
+import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
+import DifferentAddOns from '../../Components/DifferentAddOns ';
+import FilterComp from '../../Components/FilterComp';
+import GradientCartView from '../../Components/GradientCartView';
+import HomeServiceVariantAddons from '../../Components/HomeServiceVariantAddons';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import HeaderLoader from '../../Components/Loaders/HeaderLoader';
+import HomeLoader from '../../Components/Loaders/HomeLoader';
+import ProductListLoader3 from '../../Components/Loaders/ProductListLoader3';
+import NoDataFound from '../../Components/NoDataFound';
+import ProductCard3 from '../../Components/ProductCard3';
+import RepeatModal from '../../Components/RepeatModal';
+import RoundImg from '../../Components/RoundImg';
+import SearchBar from '../../Components/SearchBar';
+import VariantAddons from '../../Components/VariantAddons';
+import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
+import staticStrings from '../../constants/staticStrings';
+import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
+import colors from '../../styles/colors';
+import commonStylesFunc, {hitSlopProp} from '../../styles/commonStyles';
+import {
+  height,
+  moderateScale,
+  moderateScaleVertical,
+  textScale,
+  width,
+} from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
+import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {
+  checkEvenOdd,
+  getImageUrl,
+  hapticEffects,
+  playHapticEffect,
+  showError,
+  showSuccess,
+} from '../../utils/helperFunctions';
+import {removeItem} from '../../utils/utils';
+import stylesFunc from './styles';
+
+let timeOut = undefined;
+
+var tempQty = 0;
+
+let activeIdx = 0;
+
+const filtersData = [
+  {
+    id: -2,
+    label: strings.SORT_BY,
+    value: [
+      {
+        id: 1,
+        label: strings.LOW_TO_HIGH,
+        labelValue: 'low_to_high',
+        parent: strings.SORT_BY,
+      },
+      {
+        id: 2,
+        label: strings.HIGH_TO_LOW,
+        labelValue: 'high_to_low',
+        parent: strings.SORT_BY,
+      },
+      {
+        id: 3,
+        label: strings.POPULARITY,
+        labelValue: 'popularity',
+        parent: strings.SORT_BY,
+      },
+      {
+        id: 4,
+        label: strings.MOST_PURCHASED,
+        labelValue: 'most_purcahsed',
+        parent: strings.SORT_BY,
+      },
+    ],
+  },
+];
+
+export default function Products({route, navigation}) {
+  const bottomSheetRef = useRef(null);
+  let selectedFilters = useRef(null);
+  // console.log(route.params, 'route.params');
+  const {data} = route.params;
+  // console.log(data, 'datadatadata');
+  const routeData = data?.fetchOffers;
+  const {blurRef} = useRef();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
+  const dineInType = useSelector((state) => state?.home?.dineInType);
+  const CartItems = useSelector((state) => state?.cart?.cartItemCount);
+
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+
+  let sectionListRef = useRef(null);
+  const [state, setState] = useState({
+    sortFilters: filtersData,
+    searchInput: '',
+    pageNo: 1,
+    limit: 10,
+    selectedItemID: -1,
+    selectedDiffAdsOnId: 0,
+    minimumPrice: 0,
+    maximumPrice: 50000,
+    typeId: null,
+    cartId: null,
+    selectedItemIndx: null,
+    selectedSortFilter: null,
+    updateQtyLoader: false,
+    isSearch: false,
+    isLoadingC: false,
+    AnimatedHeaderValue: false,
+    btnLoader: false,
+    offersModalVisible: false,
+    MenuModalVisible: false,
+    updateTagFilter: false,
+    differentAddsOnsModal: false,
+    isShowFilter: false,
+  });
+
+  const {
+    appData,
+    themeColors,
+    themeLayouts,
+    currencies,
+    languages,
+    internetConnection,
+    appStyle,
+  } = useSelector((state) => state?.initBoot);
+
+  let businessType = appData?.profile?.preferences?.business_type || null;
+
+  const {
+    isLoadingC,
+    pageNo,
+    limit,
+    minimumPrice,
+    maximumPrice,
+    AnimatedHeaderValue,
+    updateQtyLoader,
+    cartId,
+    isSearch,
+    searchInput,
+    btnLoader,
+    selectedItemID,
+    selectedItemIndx,
+    typeId,
+    offersModalVisible,
+    MenuModalVisible,
+    updateTagFilter,
+    differentAddsOnsModal,
+    selectedDiffAdsOnId,
+    isShowFilter,
+    selectedSortFilter,
+  } = state;
+  const [showShimmer, setShowShimmer] = useState(true);
+  const [isVisibleModal, setIsVisibleModal] = useState(false);
+  const [productListData, setProductListData] = useState([]);
+  const [sectionListData, setSectionListData] = useState([]);
+  const [cloneSectionList, setCloneSectionList] = useState([]);
+  const [selectedSection, setSelectedSection] = useState(null);
+  const [repeatItems, setRepeatItems] = useState(null);
+  const [selectedCartItem, setSelectedCarItems] = useState(null);
+  const [differentAddsOns, setDifferentAddsOns] = useState([]);
+  const [selectedDiffAdsOnItem, setSelectedDiffAdsOnItem] = useState(null);
+  const [selectedDiffAdsOnSection, setSelectedDiffAdsOnSection] =
+    useState(null);
+  const [diffAddOnCartIdProductId, setDiffAddOnCartIdProductId] =
+    useState(null);
+  const [filterData, setFilterData] = useState([]);
+  const [allFilters, setAllFilter] = useState([]);
+  const [ProductTags, setProductTags] = useState([]);
+  const [offerList, setOfferList] = useState([]);
+  const [categoryInfo, setCategoryInfo] = useState(null);
+  const [storeLocalQty, setStoreLocalQty] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [productListId, setProductListId] = useState(data);
+  const [isLoading, setLoading] = useState(true);
+  const [apiHitAgain, setApiHitAgain] = useState(false);
+
+  const fontFamily = appStyle?.fontSizeData;
+  const commonStyles = commonStylesFunc({fontFamily});
+  const styles = stylesFunc({themeColors, fontFamily, isDarkMode, MyDarkTheme});
+
+  //Saving the initial state
+  const initialState = cloneDeep(state);
+  //Logged in user data
+  const userData = useSelector((state) => state?.auth?.userData);
+  //app Main Data
+  const appMainData = useSelector((state) => state?.home?.appMainData);
+
+  //Naviagtion to specific screen
+  const moveToNewScreen =
+    (screenName, data = {}) =>
+    () => {
+      navigation.navigate(screenName, {data});
+    };
+
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      updateState({pageNo: 1});
+      getAllListItems(1);
+      if (productListId?.vendor && routeData) {
+        fetchOffers();
+      }
+      if (isLoadingC) {
+        getAllProductsByCategoryId(true);
+      }
+    });
+    return unsubscribe;
+  }, [navigation, languages, currencies]);
+
+  // useEffect(() => {
+  //   updateState({ pageNo: 1 });
+  //   getAllListItems();
+  // }, [languages, currencies]);
+
+  // useEffect(() => {
+  //   getAllListItems();
+  // }, [pageNo]);
+
+  const getAllProductTags = () => {
+    actions
+      .getAllProductTags(
+        '',
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+
+          // code: '245bae',
+          // currency: 1,
+          // language: 1,
+          // systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        console.log('product tags res', res);
+        const productTagsArr = res?.data?.map((el) => {
+          return {
+            ...el,
+            isSelected: false,
+          };
+        });
+        setProductTags(productTagsArr);
+
+        // if (res && res.data) {
+        //   updateState({allAvailableCoupons: res.data});
+        // }
+      })
+      // .catch(errorMethod);
+      .catch((error) => {
+        console.log('tags api error >>>>>', error);
+      });
+  };
+
+  const getAllListItems = (pageNo = 1) => {
+    if (data?.vendor) {
+      {
+        !!selectedFilters.current
+          ? newVendorFilter(pageNo)
+          : data?.vendorData
+          ? getAllProductsByVendorCategory(pageNo)
+          : getAllProductsByVendor(pageNo);
+      }
+    } else {
+      {
+        !!selectedFilters.current
+          ? getAllProductsCategoryFilter(pageNo)
+          : getAllProductsByCategoryId(pageNo);
+      }
+    }
+  };
+
+  /****Get all list items by vendor id */
+  const getAllProductsByVendorCategory = () => {
+    console.log('api hit getAllProductsByVendorCategory', data);
+    actions
+      .getProductByVendorCategoryId(
+        `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
+        {},
+        {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        console.log(res, 'getProductByVendorCategoryId');
+        // setFilterData(res?.data?.filterData)
+        setCategoryInfo(res?.data?.vendor);
+        setLoading(false);
+        setProductListData(
+          pageNo == 1
+            ? res.data.products.data
+            : [...productListData, ...res?.data?.products?.data],
+        );
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+      })
+      .catch(errorMethod);
+  };
+
+  const updateBrandAndCategoryFilter = (filterData, allBrands) => {
+    var brandDatas = [];
+    var filterDataNew = [];
+    // if (allBrands.length) {
+    //   brandDatas = [
+    //     {
+    //       id: -1,
+    //       label: strings.BRANDS,
+    //       value: allBrands.map((i, inx) => {
+    //         return {
+    //           id: i?.translation[0]?.brand_id,
+    //           label: i?.translation[0]?.title,
+    //           parent: strings.BRANDS,
+    //         };
+    //       }),
+    //     },
+    //   ];
+
+    //   updateState({allFilters: [...allFilters,...brandDatas]});
+    // }
+  };
+
+  const onFilterApply = (filterData = {}) => {
+    selectedFilters.current = filterData;
+    updateState({pageNo: 1});
+    getAllListItems(1);
+  };
+  const allClearFilters = () => {
+    selectedFilters.current = null;
+    updateState({
+      pageNo: 1,
+      selectedSortFilter: null,
+      minimumPrice: 0,
+      maximumPrice: 50000,
+    });
+    getAllListItems(1);
+  };
+
+  /****Get all list items by vendor id */
+  const getAllProductsByVendor = (pageNo = 1) => {
+    console.log('api hit getAllProductsByVendor');
+    actions
+      .getProductByVendorId(
+        `/${productListId?.id}?limit=${limit}&page=${pageNo}`,
+        {},
+        {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+          latitude: appMainData?.reqData?.latitude,
+          longitude: appMainData?.reqData?.longitude,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        console.log('get all products by vendor res', res);
+
+        if (res?.data?.vendor) {
+          console.log(
+            'res?.data?.vendor',
+            res?.data?.vendor?.banner || res?.data?.vendor?.image,
+          );
+          FastImage.preload([
+            {
+              uri: getImageUrl(
+                res?.data?.vendor?.banner?.image_fit ||
+                  res?.data?.vendor?.image?.image_fit,
+                res?.data?.vendor?.banner?.image_path ||
+                  res?.data?.vendor?.image?.image_path,
+                '400/400',
+              ),
+            },
+          ]); //category banner preload
+        }
+
+        if (res?.data?.vendor?.is_show_products_with_category) {
+          let filterArray = res.data.categories.map((item) => {
+            item?.category?.products.map((val) => {
+              if (val?.media?.length > 0) {
+                const url1 = val?.media[0]?.image?.path?.image_fit;
+                const url2 = val?.media[0]?.image?.path?.image_path;
+                FastImage.preload([{uri: getImageUrl(url1, url2, '200/200')}]);
+              }
+            });
+            let newKey = {
+              ...item,
+              ['data']: item?.category?.products && item?.category?.products,
+              title: item?.category && item.category?.translation[0]?.name,
+            };
+            delete newKey['products'];
+            return newKey;
+          });
+
+          setSectionListData(filterArray);
+          setCloneSectionList(filterArray);
+          setCategoryInfo(res?.data?.vendor);
+          fetchTags(filterArray);
+          setLoading(false);
+        } else {
+          if (res?.data) {
+            setCategoryInfo(res?.data?.vendor);
+            setLoading(false);
+            setProductListData(
+              res?.data?.vendor?.is_show_products_with_category
+                ? res?.data?.categories[0]?.products
+                : pageNo == 1
+                ? res.data.products.data
+                : [...productListData, ...res.data.products.data],
+            );
+          } else {
+            setLoading(false);
+          }
+        }
+        if (res?.data) {
+          updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        }
+      })
+      .catch(errorMethod);
+  };
+
+  //***************get products by vendor filter**************
+  const newVendorFilter = (pageNo) => {
+    console.log('api hit new vendorFilter', selectedFilters);
+    let data = {};
+    data['variants'] = selectedFilters?.current?.selectedVariants || [];
+    data['options'] = selectedFilters?.current?.selectedOptions || [];
+    data['brands'] = selectedFilters?.current?.sleectdBrands || [];
+    data['order_type'] = selectedFilters?.current?.selectedSorting || 0;
+    data['range'] = `${minimumPrice};${maximumPrice}`;
+    data['vendor_id'] = productListId.id;
+    data['limit'] = limit;
+    data['page'] = pageNo;
+    console.log('sending data', data);
+    actions
+      .vendorFilterOptimize(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log('filter vendor res', res);
+
+        if (res?.data?.vendor?.is_show_products_with_category) {
+          let filterArray = res?.data?.categories?.map((val) => {
+            if (!!val?.category) {
+              let newKey = {
+                ...val,
+                ['data']: val?.category?.products && val?.category?.products,
+                title: val?.category && val.category?.translation[0]?.name,
+              };
+              delete newKey['products'];
+              return newKey;
+            } else {
+              let newKey = {
+                ...val,
+                ['data']: [],
+                title: 'NA',
+              };
+              delete newKey['products'];
+              return newKey;
+            }
+          });
+          setSectionListData(filterArray);
+          setCloneSectionList(filterArray);
+          setCategoryInfo(res?.data?.vendor);
+          fetchTags(filterArray);
+          setLoading(false);
+        } else {
+          if (res?.data) {
+            setCategoryInfo(res?.data?.vendor);
+            setLoading(false);
+            setProductListData(
+              res?.data?.vendor?.is_show_products_with_category
+                ? res?.data?.categories[0]?.products
+                : pageNo == 1
+                ? res.data.products.data
+                : [...productListData, ...res.data.products.data],
+            );
+          } else {
+            setLoading(false);
+          }
+        }
+        if (res?.data) {
+          updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        }
+      })
+      .catch(errorMethod);
+    // }
+  };
+
+  /**********Get all list items by category id */
+  const getAllProductsByCategoryId = (pageNo) => {
+    console.log('api hit getProductByCategoryId', data);
+    actions
+      .getProductByCategoryId(
+        `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${
+          data?.rootProducts ? true : false
+        }`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        console.log(res, 'getProductByCategoryId');
+        // setFilterData(res?.data?.filterData)
+        console.log('categoryInfocategoryInfo', categoryInfo);
+        setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
+        setLoading(false);
+        setProductListData(
+          pageNo == 1
+            ? res.data.listData.data
+            : [...productListData, ...res.data.listData.data],
+        );
+        updateState({isLoadingC: false});
+
+        // if (pageNo == 1 &&
+        //   res?.data?.listData?.data.length == 0 &&
+        //   res?.data?.category &&
+        //   res?.data?.category?.childs.length) {
+        //   setSelectedCategory(res.data.category.childs[0])
+        //   setProductListId(res.data.category.childs[0])
+        //   updateState({
+        //     pageNo: 1,
+        //     limit: 10,
+        //     isLoadingC: true,
+        //   })
+        // }
+        // updateState({ isLoading: false });
+        // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+      })
+      .catch(errorMethod);
+    // }
+  };
+
+  /**********Get all list items category filters */
+  const getAllProductsCategoryFilter = (pageNo) => {
+    let data = {};
+    data['variants'] = selectedFilters?.current?.selectedVariants || [];
+    data['options'] = selectedFilters?.current?.selectedOptions || [];
+    data['brands'] = selectedFilters?.current?.sleectdBrands || [];
+    data['order_type'] = selectedFilters?.current?.selectedSorting || 0;
+    data['range'] = `${minimumPrice};${maximumPrice}`;
+    console.log('api hit getAllProductsCategoryFilter', data);
+    actions
+      .getProductByCategoryFilters(
+        `/${productListId.id}?limit=${limit}&page=${pageNo}`,
+        data,
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'getAllProductsCategoryFilter  res ++++++');
+        setProductListData(
+          pageNo == 1 ? res.data.data : [...productListData, ...res.data.data],
+        );
+        setLoading(false);
+      })
+      .catch(errorMethod);
+    // }
+  };
+
+  useEffect(() => {
+    getAllVendorFilters();
+  }, []);
+
+  const getAllVendorFilters = () => {
+    actions
+      .getVendorFilters(
+        `/${productListId?.id}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        console.log(res, 'getVendorFilter');
+
+        if (!!res.data.filterData?.length) {
+          let filterDataNew = res.data.filterData.map((i, inx) => {
+            return {
+              id: i.variant_type_id,
+              label: i.title,
+              value: i.options.map((j, jnx) => {
+                return {
+                  id: j.id,
+                  parent: i.title,
+                  label: j.title,
+                  variant_type_id: i.variant_type_id,
+                };
+              }),
+            };
+          });
+          setAllFilter(filterDataNew);
+          console.log('filterDataNewfilterDataNew', filterDataNew);
+        }
+      })
+      .catch(errorMethod);
+    // }
+  };
+
+  const fetchTags = (filterArray) => {
+    if (filterArray && filterArray.length > 0) {
+      let tagsArr = [];
+      filterArray.forEach((el) => {
+        // console.log('checking data for tags >>>', el);
+        el.data.forEach((data_) => {
+          if (data_ && data_.tags) {
+            tagsArr.push(...data_.tags);
+          }
+        });
+      });
+      tagsArr = _.uniqBy(tagsArr, 'tag_id');
+      let productTagsArr = tagsArr.map((el) => {
+        return {
+          ...el.tag,
+          isSelected: false,
+        };
+      });
+      setProductTags(productTagsArr);
+    }
+  };
+
+  /*********Add product to wish list******* */
+  const _onAddtoWishlist = (item) => {
+    playHapticEffect(hapticEffects.impactLight);
+    if (!!userData?.auth_token) {
+      actions
+        .updateProductWishListData(
+          `/${item.id}`,
+          {},
+          {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+          },
+        )
+        .then((res) => {
+          console.log(res, 'updateProductWishListData');
+          showSuccess(res.message);
+          updateProductList(item);
+        })
+        .catch(errorMethod);
+    } else {
+      showError(strings.UNAUTHORIZED_MESSAGE);
+    }
+  };
+
+  /*******Upadte products in wishlist>*********/
+  const updateProductList = (item) => {
+    let newArray = cloneDeep(productListData);
+    newArray = newArray.map((i, inx) => {
+      if (i.id == item.id) {
+        if (item.inwishlist) {
+          i.inwishlist = null;
+          return {...i, inwishlist: null};
+        } else {
+          return {...i, inwishlist: {product_id: i.id}};
+        }
+      } else {
+        return i;
+      }
+    });
+    setProductListData(newArray);
+    updateState({
+      updateQtyLoader: false,
+      selectedItemID: -1,
+    });
+  };
+
+  const errorMethod = (error) => {
+    console.log('checking error', error);
+    updateState({
+      updateQtyLoader: false,
+      selectedItemID: -1,
+      btnLoader: false,
+    });
+    setLoading(false);
+    showError(error?.message || error?.error);
+  };
+
+  console.log('pageNopageNo', pageNo);
+  //Pull to refresh
+  const handleRefresh = () => {
+    updateState({pageNo: 1});
+  };
+
+  //pagination of data
+  const onEndReached = ({distanceFromEnd}) => {
+    updateState({pageNo: pageNo + 1});
+    getAllListItems(pageNo + 1);
+  };
+
+  const onEndReachedDelayed = debounce(onEndReached, 1000, {
+    leading: true,
+    trailing: false,
+  });
+
+  const checkSingleVendor = async (id) => {
+    let vendorData = {vendor_id: categoryInfo?.id};
+    updateState({selectedItemID: id});
+    return new Promise((resolve, reject) => {
+      actions
+        .checkSingleVendor(vendorData, {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        })
+        .then((res) => {
+          console.log('res check singel vendro==>>>>>>', res);
+          resolve(res);
+        })
+        .catch((error) => {
+          reject(error);
+          updateState({selectedItemID: -1});
+        });
+    });
+  };
+
+  const clearCartAndAddProduct = async (item, section = null) => {
+    updateState({updateQtyLoader: true});
+    actions
+      .clearCart(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        actions.cartItemQty(res);
+        console.log('clear cart res', res);
+        // alert("add single item")
+        addSingleItem(item, section);
+        // showSuccess(res?.message);
+      })
+      .catch(errorMethod);
+  };
+
+  const hideDifferentAddOns = () => {
+    updateState({differentAddsOnsModal: false});
+    setDifferentAddsOns([]);
+  };
+
+  const addSingleItem = async (item, section = null) => {
+    console.log('checking item info >>>', item);
+    if (
+      !!categoryInfo?.is_vendor_closed &&
+      !categoryInfo?.show_slot &&
+      !categoryInfo?.closed_store_order_scheduled
+    ) {
+      alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
+      return;
+    }
+    // playHapticEffect(hapticEffects.impactLight);
+    let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
+    updateState({selectedItemID: item?.id, btnLoader: true});
+    let isSingleVendor = await checkSingleVendor(item.id);
+    console.log('is singel vendor', isSingleVendor);
+
+    if (
+      isSingleVendor.isSingleVendorEnabled == 1 &&
+      isSingleVendor.otherVendorExists == 1
+    ) {
+      updateState({
+        updateQtyLoader: false,
+        selectedItemID: -1,
+        btnLoader: false,
+      });
+      Alert.alert('', strings.ALREADY_EXIST, [
+        {
+          text: strings.CANCEL,
+          onPress: () => {},
+          // style: 'destructive',
+        },
+        {
+          text: strings.CONFIRM,
+          onPress: () => clearCartAndAddProduct(item, section),
+        },
+      ]);
+      return;
+    }
+
+    if (item?.add_on_count !== 0 || item?.variant_set_count !== 0) {
+      setSelectedSection(section);
+      setSelectedCarItems(item);
+      setIsVisibleModal(true);
+      updateState({
+        updateQtyLoader: false,
+        typeId: getTypeId,
+        selectedItemID: -1,
+        btnLoader: false,
+      });
+      return;
+    }
+    if (
+      item?.add_on_count?.length === 0 &&
+      item?.mode_of_service === 'schedule'
+    ) {
+      setSelectedSection(section);
+      setSelectedCarItems(item);
+      setIsVisibleModal(true);
+      updateState({
+        updateQtyLoader: false,
+        typeId: getTypeId,
+        selectedItemID: -1,
+        btnLoader: false,
+      });
+      return;
+    }
+
+    let data = {};
+    data['sku'] = item.sku;
+    data['quantity'] = !!item?.minimum_order_count
+      ? Number(item?.minimum_order_count)
+      : 1;
+    data['product_variant_id'] = item?.variant[0]?.id;
+    data['type'] = dine_In_Type;
+    actions
+      .addProductsToCart(data, {
+        code: appData.profile.code,
+        currency: currencies.primary_currency.id,
+        language: languages.primary_language.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res.data, 'add single item addProductsToCart');
+        actions.cartItemQty(res);
+        updateState({cartId: res.data.id});
+        // showSuccess('Product successfully added');
+        if (!!section) {
+          let updatedSection = section.data.map((x, xnx) => {
+            if (x?.id == item?.id) {
+              x['qty'] = !!item?.minimum_order_count
+                ? Number(item?.minimum_order_count)
+                : 1;
+              x['cart_product_id'] = res.data.cart_product_id;
+              return x;
+            }
+            return x;
+          });
+          section['data'] = updatedSection;
+          const filteredArr = sectionListData.map((f, fnx) => {
+            if (f?.id == section?.id) {
+              return section;
+            }
+            return f;
+          });
+          setSectionListData(filteredArr);
+          setCloneSectionList(filteredArr);
+          // fetchTags(filteredArr)
+        } else {
+          let updateArray = productListData.map((val, i) => {
+            if (val.id == item.id) {
+              return {
+                ...val,
+                qty: !!item?.minimum_order_count
+                  ? Number(item?.minimum_order_count)
+                  : 1,
+                cart_product_id: res.data.cart_product_id,
+                isRemove: false,
+              };
+            }
+            return val;
+          });
+          setProductListData(updateArray);
+        }
+        setSelectedSection(section);
+        setSelectedCarItems(item);
+        updateState({
+          updateQtyLoader: false,
+          selectedItemID: -1,
+          btnLoader: false,
+        });
+      })
+      .catch((error) => errorMethodSecond(error, [], item, section));
+  };
+
+  const onCloseModal = () => {
+    setIsVisibleModal(false);
+    setShowShimmer(true);
+  };
+
+  const addDeleteCartItems = async (
+    item,
+    isExistqty,
+    isExistproductId,
+    isExistCartId,
+    section = null,
+    index,
+    type,
+    updateLocalQty = null,
+    differentAddsOnsQty = null,
+  ) => {
+    console.log('categoryInfocategoryInfo', categoryInfo);
+    if (
+      !!categoryInfo?.is_vendor_closed &&
+      !categoryInfo?.show_slot &&
+      !categoryInfo?.closed_store_order_scheduled
+    ) {
+      if (type == 1) {
+        //user can remove item if vendor closed
+        alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
+        return;
+      }
+    }
+    let quantityToIncreaseDecrease = !!item?.batch_count
+      ? Number(item?.batch_count)
+      : 1;
+    playHapticEffect(hapticEffects.impactLight);
+
+    let quanitity = null;
+    let itemToUpdate = cloneDeep(item);
+
+    console.log('exist qty', isExistqty);
+    /** This will restring unneccessary api call , only hit api once user wait for 1.5 seconds ***/
+
+    if (timeOut) {
+      clearTimeout(timeOut);
+    }
+
+    tempQty = tempQty + 1;
+
+    if (type == 1) {
+      quanitity = Number(isExistqty) + quantityToIncreaseDecrease;
+    } else {
+      console.log(isExistqty, item?.minimum_order_count, 'kdhgkjdfkjgh');
+      if (
+        Number(isExistqty - item?.batch_count) <
+        Number(item?.minimum_order_count)
+      ) {
+        quanitity = 0;
+      } else {
+        quanitity = Number(isExistqty) - quantityToIncreaseDecrease;
+      }
+    }
+
+    updateLocally(
+      section,
+      quanitity,
+      item,
+      isExistproductId,
+      differentAddsOnsQty,
+    );
+
+    timeOut = setTimeout(
+      () => {
+        if (quanitity) {
+          updateState({
+            selectedItemID: itemToUpdate.id,
+            btnLoader: true,
+            selectedItemIndx: index,
+          });
+          let data = {};
+          data['cart_id'] = isExistCartId;
+          data['quantity'] = !!updateLocalQty
+            ? type == 1
+              ? updateLocalQty + quantityToIncreaseDecrease
+              : updateLocalQty - quantityToIncreaseDecrease
+            : quanitity;
+          data['cart_product_id'] = isExistproductId;
+          data['type'] = dineInType;
+          console.log('sending api data', data);
+
+          actions
+            .increaseDecreaseItemQty(data, {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+              systemuser: DeviceInfo.getUniqueId(),
+            })
+            .then((res) => {
+              console.log('update qty res', res);
+              tempQty = 0;
+              actions.cartItemQty(res);
+              updateState({
+                cartItems: res.data.products,
+                cartData: res.data,
+                updateQtyLoader: false,
+                selectedItemID: -1,
+                btnLoader: false,
+              });
+            })
+            .catch(async () => {
+              errorMethod();
+              if (type == 1) {
+                quanitity = quanitity - tempQty;
+              } else {
+                quanitity = quanitity + tempQty;
+              }
+              await updateLocally(section, quanitity, item, isExistproductId);
+              tempQty = 0;
+            });
+        } else {
+          updateState({
+            selectedItemID: itemToUpdate?.id,
+            btnLoader: false,
+          });
+          removeItem('selectedTable');
+          removeProductFromCart(itemToUpdate, section, isExistproductId);
+        }
+      },
+      quanitity === 1 ? 0 : 700,
+    );
+  };
+
+  const updateLocally = (
+    section,
+    quanitity,
+    item,
+    isExistproductId,
+    differentAddsOnsQty,
+  ) => {
+    console.log('quanitity', quanitity);
+    console.log('quanitity localy', differentAddsOnsQty);
+
+    // return;
+    if (!!section) {
+      let updatedSection = section.data.map((x, xnx) => {
+        if (x?.id == item?.id) {
+          return {
+            ...x,
+            qty: !!differentAddsOnsQty ? differentAddsOnsQty : quanitity,
+            cart_product_id: isExistproductId,
+            isRemove: false,
+          };
+        }
+        return x;
+      });
+      section['data'] = updatedSection;
+      const filteredArr = sectionListData.map((f, fnx) => {
+        if (f?.id == section?.id) {
+          return section;
+        }
+        return f;
+      });
+      setSectionListData(filteredArr);
+      setCloneSectionList(filteredArr);
+      setStoreLocalQty(differentAddsOnsQty);
+      updateState({selectedItemID: -1});
+      // fetchTags(filteredArr)
+    } else {
+      let updateArray = productListData.map((val, i) => {
+        if (val.id == item.id) {
+          return {
+            ...val,
+            qty: !!differentAddsOnsQty ? differentAddsOnsQty : quanitity,
+            cart_product_id: isExistproductId,
+            isRemove: false,
+          };
+        }
+        return val;
+      });
+      setStoreLocalQty(differentAddsOnsQty);
+      setProductListData(updateArray);
+      updateState({selectedItemID: -1});
+    }
+  };
+
+  //decrementing/removeing products from cart
+  const removeProductFromCart = (
+    itemToUpdate,
+    section = null,
+    diffAdOnId = 0,
+  ) => {
+    // console.log("item to update remove item", itemToUpdate)
+
+    let updateLocallyAddOns = [];
+    if (differentAddsOnsModal) {
+      let cloneArr = differentAddsOns;
+      updateLocallyAddOns = cloneArr.filter((val) => {
+        if (diffAdOnId !== val.id) {
+          return val;
+        }
+      });
+      setDifferentAddsOns(updateLocallyAddOns);
+    }
+
+    let data = {};
+    let isExistproductId = diffAdOnId;
+    let isExistCartId =
+      !!itemToUpdate?.check_if_in_cart_app &&
+      !!itemToUpdate?.check_if_in_cart_app.length > 0
+        ? itemToUpdate?.check_if_in_cart_app[0]?.cart_id
+        : cartId;
+    console.log('item', itemToUpdate);
+
+    data['cart_id'] = isExistCartId;
+    data['cart_product_id'] = isExistproductId;
+    data['type'] = dineInType;
+    updateState({btnLoader: true});
+    actions
+      .removeProductFromCart(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        actions.cartItemQty(res);
+        if (!!section) {
+          let updatedSection = section.data.map((x, xnx) => {
+            if (x?.id == itemToUpdate?.id) {
+              return {
+                ...x,
+                qty: null,
+                cart_product_id: res.data.cart_product_id,
+                check_if_in_cart_app: differentAddsOnsModal
+                  ? updateLocallyAddOns
+                  : [],
+                // variant: itemToUpdate?.variant.map((val, i) => {
+                //   return { ...val, check_if_in_cart_app: differentAddsOnsModal ? updateLocallyAddOns : [] };
+                // }),
+              };
+            }
+            return x;
+          });
+          section['data'] = updatedSection;
+
+          const filterArr = sectionListData.map((f, fnx) => {
+            if (f?.id == section?.id) {
+              return section;
+            }
+            return f;
+          });
+          const filterArryClone = cloneSectionList.map((f, fnx) => {
+            if (f?.id == section?.id) {
+              return section;
+            }
+            return f;
+          });
+          setSectionListData(filterArr);
+          setCloneSectionList(filterArryClone);
+
+          updateState({
+            updateQtyLoader: false,
+            selectedItemID: -1,
+            btnLoader: false,
+          });
+        } else {
+          let updateArray = productListData.map((val, i) => {
+            if (val.id == itemToUpdate.id) {
+              return {
+                ...val,
+                qty: null,
+                cart_product_id: res.data.cart_product_id,
+                check_if_in_cart_app: differentAddsOnsModal
+                  ? updateLocallyAddOns
+                  : [],
+                // variant: itemToUpdate?.variant.map((val, i) => {
+                //   return { ...val, check_if_in_cart_app: differentAddsOnsModal ? updateLocallyAddOns : [] };
+                // }),
+              };
+            }
+            return val;
+          });
+          setProductListData(updateArray);
+          updateState({
+            updateQtyLoader: false,
+            selectedItemID: -1,
+            btnLoader: false,
+          });
+        }
+      })
+      .catch(errorMethod);
+  };
+
+  const errorMethodSecond = (error, addonSet = [], item, section) => {
+    console.log(error, 'Error>>>>>');
+    updateState({updateQtyLoader: false});
+    if (error?.message?.alert == 1) {
+      updateState({
+        isLoadingC: false,
+        selectedItemID: -1,
+        btnLoader: false,
+      });
+      setLoading(false);
+      // showError(error?.message?.error || error?.error);
+      Alert.alert('', error?.message?.error, [
+        {
+          text: strings.CANCEL,
+          onPress: () => console.log('Cancel Pressed'),
+          // style: 'destructive',
+        },
+        {
+          text: strings.CLEARCART,
+          onPress: () => clearCart(addonSet, item, section),
+        },
+      ]);
+    } else {
+      setLoading(false);
+      updateState({
+        isLoadingC: false,
+        selectedItemID: -1,
+        btnLoader: false,
+      });
+      showError(error?.message || error?.error);
+    }
+  };
+
+  const clearCart = async (addonSet = [], item, section) => {
+    actions
+      .clearCart(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        actions.cartItemQty(res);
+        addSingleItem(item, section);
+        if (addonSet) {
+        } else {
+          // addToCart();
+        }
+        // showSuccess(res?.message);
+      })
+      .catch(errorMethod);
+  };
+
+  const onRepeat = async () => {
+    // console.log("repeate items", repeatItems)
+    const {item, isExistqty, productId, parentCartId, updateLocalQty} =
+      repeatItems;
+    await addDeleteCartItems(
+      item,
+      isExistqty,
+      productId,
+      parentCartId,
+      repeatItems?.section,
+      repeatItems?.index,
+      1,
+      updateLocalQty,
+    );
+    setRepeatItems(null);
+  };
+
+  const onAddNew = () => {
+    if (
+      !!categoryInfo?.is_vendor_closed &&
+      !categoryInfo?.show_slot &&
+      !categoryInfo?.closed_store_order_scheduled
+    ) {
+      alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
+      return;
+    }
+    let getTypeId =
+      !!repeatItems?.item?.category &&
+      repeatItems?.item?.category.category_detail?.type_id;
+    setRepeatItems(null);
+    setSelectedCarItems(repeatItems?.item);
+    setIsVisibleModal(true);
+    updateState({
+      updateQtyLoader: false,
+      typeId: getTypeId,
+      selectedItemID: -1,
+      btnLoader: false,
+    });
+  };
+
+  const addProductsWithoutCustomize = (item, section, index, type) => {
+    console.log('very nice', item);
+    // return;
+    let itemToUpdate = cloneDeep(item);
+    let quanitity = !!itemToUpdate?.qty
+      ? itemToUpdate?.qty
+      : itemToUpdate?.check_if_in_cart_app[0].quantity;
+    let productId = !!itemToUpdate?.cart_product_id
+      ? itemToUpdate?.cart_product_id
+      : itemToUpdate?.check_if_in_cart_app[0].id;
+    let parentCartId = !!cartId
+      ? cartId
+      : itemToUpdate?.check_if_in_cart_app[0].cart_id;
+
+    if (type == 1) {
+      addDeleteCartItems(
+        item,
+        quanitity,
+        productId,
+        parentCartId,
+        section,
+        index,
+        1,
+      );
+    } else {
+      addDeleteCartItems(
+        item,
+        quanitity,
+        productId,
+        parentCartId,
+        section,
+        index,
+        2,
+      );
+    }
+  };
+
+  const checkIsCustomize = async (item, section = null, index, type) => {
+    let itemToUpdate = cloneDeep(item);
+    console.log('check item to update', itemToUpdate);
+    // return;
+    if (item?.add_on_count.length == 0 && item?.variant_set_count.length == 0) {
+      // hit in case of simple products withou any customization
+      addProductsWithoutCustomize(item, section, index, type);
+      return;
+    }
+
+    let productId = !!itemToUpdate?.cart_product_id
+      ? itemToUpdate?.cart_product_id
+      : itemToUpdate?.check_if_in_cart_app[0]?.id;
+    let parentCartId = !!cartId
+      ? cartId
+      : itemToUpdate.check_if_in_cart_app[0]?.cart_id;
+
+    var totalProductQty = 0;
+    if (itemToUpdate?.variant && itemToUpdate?.check_if_in_cart_app) {
+      itemToUpdate?.check_if_in_cart_app.map((val) => {
+        totalProductQty = totalProductQty + val?.quantity;
+      });
+    }
+    console.log('totalProductQty', totalProductQty);
+
+    // return;
+
+    var isExistqty = itemToUpdate?.qty ? itemToUpdate?.qty : totalProductQty; //this variable contain only local product quantity
+    var tempQty = 0; //this variable contain latest updated quantity of products
+
+    if (
+      (type == 2 && item?.add_on_count?.length > 0) ||
+      item?.variant_set_count?.length > 0
+    ) {
+      //hit in case of subtruction
+      let apiData = {cart_id: parentCartId, product_id: item.id};
+      let checkIsAvailable = await getDiffAddsOn(apiData, section, item); //check products with different addOns is exist or not.
+      // console.log("check available", checkIsAvailable)
+
+      !!checkIsAvailable?.data &&
+        checkIsAvailable?.data.map((val) => {
+          console.log('check available', val);
+          tempQty = tempQty + val?.quantity; //store updated total quantity of products
+        });
+
+      if (!!checkIsAvailable?.goNext) {
+        //if different adOns is exist then open DifferentAddOns Modal.
+        return;
+      }
+    }
+
+    if (type == 2) {
+      // direct subtract customize items if products added with same addons
+      addDeleteCartItems(
+        item,
+        tempQty == 0 ? isExistqty : tempQty,
+        productId,
+        parentCartId,
+        section,
+        index,
+        2,
+      );
+      return;
+    }
+
+    if (type == 1) {
+      //hit in case of add new products
+      let apiData = {cart_id: parentCartId, product_id: item.id};
+      let header = {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      };
+      console.log('api data checkLastAdded', apiData);
+      try {
+        const res = await actions.checkLastAdded(apiData, header);
+        console.log('res++++++', res);
+        if (!!res.data) {
+          //open RepeatModal
+          const addData = {
+            item: item,
+            index: index,
+            type: type,
+            section: section,
+            isExistqty: tempQty == 0 ? isExistqty : tempQty,
+            updateLocalQty: res.data?.quantity,
+            productId: res?.data?.id,
+            parentCartId: res.data.cart_id,
+          };
+          setSelectedSection(section);
+          setRepeatItems(addData);
+        }
+      } catch (error) {
+        console.log('error riased++++', error);
+        showError(error?.message || error?.error);
+      }
+      return;
+    }
+  };
+
+  const getDiffAddsOn = async (apiData, section, item) => {
+    console.log('get diffadds on data', apiData);
+    let header = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      systemuser: DeviceInfo.getUniqueId(),
+    };
+    try {
+      const res = await actions.differentAddOns(apiData, header);
+      console.log('res+++++++', res);
+      if (res?.data.length > 1) {
+        setDifferentAddsOns(res?.data || []);
+        setSelectedDiffAdsOnItem(item);
+        setSelectedDiffAdsOnSection(section);
+        setDiffAddOnCartIdProductId({
+          cart_id: apiData?.cart_id,
+          product_id: apiData?.product_id,
+        });
+        updateState({differentAddsOnsModal: true});
+        return {data: res?.data, goNext: true};
+      }
+      return {data: res?.data, goNext: false};
+    } catch (error) {
+      console.log('error raised,error');
+      return {data: null, goNext: false};
+    }
+  };
+
+  const difAddOnsAdded = async (
+    item,
+    qty,
+    productId,
+    cartId,
+    section,
+    index,
+    type,
+  ) => {
+    let batchCount = !!item?.batch_count ? item?.batch_count : 1;
+    let differentAddsOnsQty = 0;
+    let cloneArr = differentAddsOns;
+    let updateLocallyAddOns = cloneArr.map((val) => {
+      differentAddsOnsQty = differentAddsOnsQty + val.quantity;
+      if (cartId == val.id) {
+        return {
+          ...val,
+          quantity: type == 1 ? qty + batchCount : qty - batchCount,
+        };
+      }
+      return val;
+    });
+    await addDeleteCartItems(
+      item,
+      qty,
+      cartId,
+      productId,
+      section,
+      index,
+      type,
+      null,
+      type == 1
+        ? differentAddsOnsQty + batchCount
+        : differentAddsOnsQty - batchCount, //send updated total quantity
+    );
+    setDifferentAddsOns(updateLocallyAddOns);
+  };
+
+  const renderProduct = ({item, index}) => {
+    return (
+      <Animatable.View
+      // animation={'slideInUp'} delay={index * 5}
+      >
+        <ProductCard3
+          data={item}
+          index={index}
+          onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+          onAddtoWishlist={() => _onAddtoWishlist(item)}
+          addToCart={() => addSingleItem(item, null, index)}
+          onIncrement={() => checkIsCustomize(item, null, index, 1)}
+          onDecrement={() => checkIsCustomize(item, null, index, 2)}
+          selectedItemID={selectedItemID}
+          btnLoader={false}
+          selectedItemIndx={selectedItemIndx}
+          differentAddsOns={differentAddsOns}
+          businessType={businessType}
+          categoryInfo={categoryInfo}
+        />
+        <View style={styles.horizontalLine} />
+      </Animatable.View>
+    );
+  };
+
+  const updateCartItems = (item, quanitity, productId, cartID) => {
+    playHapticEffect(hapticEffects.impactLight);
+    console.log('selcted section', selectedSection);
+
+    if (!!selectedSection) {
+      let updatedSection = selectedSection.data.map((x, xnx) => {
+        if (x?.id == item?.id) {
+          return {
+            ...x,
+            qty: quanitity,
+            cart_product_id: productId,
+            isRemove: false,
+          };
+        }
+        return x;
+      });
+      selectedSection['data'] = updatedSection;
+      const filterArr = sectionListData.map((f, fnx) => {
+        if (f?.id == selectedSection?.id) {
+          return selectedSection;
+        }
+        return f;
+      });
+      const filterArryClone = cloneSectionList.map((f, fnx) => {
+        if (f?.id == selectedSection?.id) {
+          return selectedSection;
+        }
+        return f;
+      });
+      setSectionListData(filterArr);
+      setCloneSectionList(filterArryClone);
+      setStoreLocalQty(quanitity);
+      setIsVisibleModal(false);
+      updateState({
+        cartId: cartID,
+      });
+    } else {
+      let updateArray = productListData.map((val, i) => {
+        if (val.id == item.id) {
+          return {
+            ...val,
+            qty: quanitity,
+            cart_product_id: productId,
+            isRemove: false,
+          };
+        }
+        setStoreLocalQty(quanitity);
+        return val;
+      });
+      setProductListData(updateArray);
+      setIsVisibleModal(false);
+      updateState({
+        cartId: cartID,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (isLoadingC) {
+      getAllProductsByCategoryId(true);
+      if (productListId?.vendor && routeData) {
+        fetchOffers();
+      }
+      getAllProductTags();
+    }
+  }, [isLoadingC]);
+
+  const checkIfItemExist = (item, tags) => {
+    let result = false;
+    tags.forEach((el) => {
+      if (el.id === item.tag_id) {
+        result = true;
+      }
+    });
+    return result;
+  };
+
+  useEffect(() => {
+    let EnabledTags = ProductTags.filter((el) => el.isSelected);
+    if (EnabledTags.length > 0) {
+      const newArr = sectionListData.map((el) => {
+        const records =
+          el.data &&
+          el.data.filter((item) => {
+            if (
+              item.tags.length > 0 &&
+              checkIfItemExist(item.tags[0], EnabledTags)
+            )
+              return item;
+          });
+        const newObj = {
+          ...el,
+        };
+        newObj.data = records;
+        return newObj;
+      });
+      setCloneSectionList(newArr);
+    } else {
+      // getAllProductsByVendor();
+    }
+  }, [ProductTags]);
+
+  useEffect(() => {
+    let EnabledTags = ProductTags.filter((el) => el.isSelected);
+    if (EnabledTags.length > 0) {
+      setApiHitAgain(true);
+      const newArr = sectionListData.map((el) => {
+        const records =
+          el.data &&
+          el.data.filter((item) => {
+            if (
+              item.tags.length > 0 &&
+              checkIfItemExist(item.tags[0], EnabledTags)
+            )
+              return item;
+          });
+        const newObj = {
+          ...el,
+        };
+        newObj.data = records;
+        return newObj;
+      });
+      updateState({cloneSectionList: newArr});
+    } else {
+      updateState({cloneSectionList: sectionListData});
+      if (apiHitAgain) {
+        setApiHitAgain(false);
+        getAllProductsByVendor();
+      }
+    }
+  }, [updateTagFilter]);
+
+  const onPressChildCards = (item) => {
+    console.log(item, 'item upload');
+    setSelectedCategory(item);
+    setProductListId(item);
+    updateState({
+      pageNo: 1,
+      limit: 10,
+      isLoadingC: true,
+    });
+    // navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
+  };
+
+  const onSearchWithinMenu = (text) => {
+    updateState({searchInput: text});
+    if (text) {
+      const newArr = sectionListData.map((el) => {
+        const records =
+          el.data &&
+          el.data.filter((item) => {
+            return item?.translation[0]?.title
+              .toLowerCase()
+              .includes(text.toLowerCase());
+          });
+        const newObj = {
+          ...el,
+        };
+
+        newObj.data = records;
+        return newObj;
+        // console.log('checking products >>>>>', records)
+        // Arr.push(...records)
+      });
+      setCloneSectionList(newArr);
+    } else {
+      getAllProductsByVendor();
+    }
+  };
+
+  const fetchOffers = () => {
+    let data = {};
+    // data['vendor_id'] = 2;
+    data['vendor_id'] = productListId?.id;
+    // data['cart_id'] = vendorInfo.cartId;
+    // console.log(data, 'vendor_id');
+    actions
+      .getAllPromoCodesForProductList(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        // console.log('res >>>>>>> offers >>>', res);
+        if (res && res.data) {
+          setOfferList(res.data);
+        }
+      });
+    // .catch(errorMethod);
+  };
+
+  const onPressMenuOption = (index) => {
+    activeIdx = index;
+    let cells = [];
+    cloneSectionList.forEach((el, ind) => {
+      if (index > ind) {
+        cells.push(...el.data);
+      }
+    });
+    let hight = Number(cells.length) * moderateScaleVertical(200);
+    playHapticEffect(hapticEffects.rigid);
+    updateState({MenuModalVisible: !MenuModalVisible});
+    sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
+      {
+        x: hight + 200,
+        y: hight + 200,
+        animated: true,
+      },
+    );
+  };
+
+  const rightIconPress = () => {
+    updateState({
+      searchInput: '',
+      isSearch: false,
+    });
+    setLoading(false);
+  };
+
+  const RenderMenuView = () => {
+    return (
+      <View style={{marginBottom: moderateScaleVertical(16)}}>
+        <ScrollView style={{width: '100%'}}>
+          <Text
+            style={{
+              paddingHorizontal: moderateScale(16),
+              fontSize: textScale(14),
+              fontFamily: fontFamily.medium,
+            }}>
+            Menu
+          </Text>
+          <View
+            style={{
+              width: '100%',
+              height: 1,
+              marginVertical: moderateScaleVertical(10),
+            }}
+          />
+          {cloneSectionList.map((el, index) => {
+            console.log('checking dtaa on tap >>>', activeIdx);
+            const idx = index + 1;
+            const temp = el.data.length + idx * 2;
+            return (
+              <TouchableOpacity
+                key={index}
+                onPress={() => onPressMenuOption(index)}
+                style={{
+                  borderBottomWidth: 0,
+                  paddingHorizontal: moderateScale(15),
+                  width: '100%',
+                  borderBottomColor: colors.greyMedium,
+                  marginBottom: moderateScale(10),
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <Text
+                  style={{
+                    fontSize:
+                      activeIdx === index ? textScale(13.5) : textScale(13),
+                    marginBottom: moderateScale(5),
+                    fontFamily:
+                      activeIdx === index
+                        ? fontFamily.medium
+                        : fontFamily.regular,
+                  }}>
+                  {el.title}
+                </Text>
+                <Text
+                  style={{
+                    fontSize:
+                      activeIdx === index ? textScale(13.5) : textScale(13),
+                    marginBottom: moderateScale(5),
+                    fontFamily:
+                      activeIdx === index
+                        ? fontFamily.medium
+                        : fontFamily.regular,
+                  }}>
+                  {el.data.length}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      </View>
+    );
+  };
+
+  const RenderOfferView = () => {
+    return (
+      <View>
+        <Text
+          style={{
+            fontSize: textScale(14),
+            paddingHorizontal: moderateScale(15),
+            fontFamily: fontFamily.regular,
+          }}>
+          {strings.AVAILABLE_OFFERS}
+        </Text>
+        <View
+          style={{
+            width: '100%',
+            height: 1,
+            backgroundColor: colors.greyMedium,
+            marginVertical: moderateScaleVertical(10),
+          }}
+        />
+        <ScrollView style={{width: '100%'}}>
+          {offerList?.length > 0 &&
+            offerList.map((el, indx) => {
+              // console.log(el);
+              return (
+                <View
+                  key={indx}
+                  style={{
+                    borderBottomWidth: 1,
+                    paddingHorizontal: moderateScale(15),
+                    width: '100%',
+                    borderBottomColor: colors.greyMedium,
+                    marginBottom: moderateScale(10),
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: textScale(13),
+                      marginBottom: moderateScale(5),
+                      fontFamily: fontFamily.regular,
+                    }}>
+                    {el.title ? el.title : ''}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: textScale(11),
+                      marginBottom: moderateScale(5),
+                      color: colors.textGreyOpcaity7,
+                      fontFamily: fontFamily.regular,
+                    }}>
+                    {el.title ? el.title : ''}
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      width: '100%',
+                      borderTopWidth: 1,
+                      borderTopColor: colors.greyMedium,
+                      alignItems: 'center',
+                      paddingTop: moderateScaleVertical(15),
+                      marginTop: moderateScale(8),
+                      paddingBottom: moderateScale(15),
+                    }}>
+                    <View
+                      style={{
+                        borderWidth: 1,
+                        borderColor: themeColors.primary_color,
+                        borderRadius: moderateScale(3),
+                        paddingHorizontal: moderateScale(7),
+                        paddingVertical: moderateScale(4),
+                        borderStyle: 'dashed',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: textScale(11),
+                          fontFamily: fontFamily.regular,
+                          textTransform: 'uppercase',
+                        }}>
+                        {el.name ? el.name : ''}
+                      </Text>
+                    </View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Clipboard.setString(`${el.name ? el.name : ''}`);
+                        Toast.show(strings.COPIED);
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: textScale(11),
+                          color: themeColors.primary_color,
+                          fontFamily: fontFamily.regular,
+                        }}>
+                        {strings.TAP_TO_COPY}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              );
+            })}
+        </ScrollView>
+      </View>
+    );
+  };
+
+  const listHeaderComponent2 = () => {
+    return (
+      <Animatable.View
+      // animation={'fadeInUp'}
+      >
+        {true ? (
+          <View style={{marginBottom: moderateScaleVertical(16)}}>
+            <ImageBackground
+              source={{
+                uri: getImageUrl(
+                  // data?.item?.banner.image_fit ||
+                  categoryInfo?.banner?.image_fit ||
+                    categoryInfo?.image?.image_fit,
+                  // data?.item?.banner.image_path ||
+                  categoryInfo?.banner?.image_path ||
+                    categoryInfo?.image?.image_path,
+                  '400/400',
+                ),
+              }}
+              style={{
+                // ...styles.imageBackgroundHdr,
+                backgroundColor: isDarkMode
+                  ? colors.whiteOpacity15
+                  : colors.greyColor,
+              }}
+              resizeMode="cover">
+              <LinearGradient
+                style={{}}
+                colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0.7)']}>
+                <SafeAreaView>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      marginHorizontal: moderateScale(16),
+                      marginTop: moderateScaleVertical(16),
+                      marginBottom: moderateScaleVertical(8),
+                    }}>
+                    <TouchableOpacity
+                      hitSlop={styles.hitSlopProp}
+                      activeOpacity={0.7}
+                      style={{}}
+                      onPress={() => navigation.goBack()}>
+                      <Image
+                        source={imagePath.icBackb}
+                        style={{
+                          tintColor: colors.white,
+                          transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                        }}
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      hitSlop={styles.hitSlopProp}
+                      activeOpacity={0.7}
+                      style={{}}
+                      onPress={onShare}>
+                      <Image
+                        source={imagePath.icShareb}
+                        style={{
+                          tintColor: colors.white,
+                          transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View>
+
+                  <View
+                    style={{
+                      width: width,
+                      paddingLeft: moderateScale(13),
+                      marginBottom: moderateScaleVertical(8),
+                    }}>
+                    <View
+                      style={{
+                        marginTop: moderateScale(10),
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}>
+                      <Text
+                        numberOfLines={2}
+                        style={{
+                          ...styles.hdrTitleTxt,
+                          flex: 0,
+                          textAlign: 'left',
+                          fontSize: textScale(15),
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.white,
+                        }}>
+                        {data?.name || categoryInfo?.name || ''}
+                      </Text>
+
+                      {!!categoryInfo &&
+                        !!categoryInfo?.product_avg_average_rating && (
+                          <View
+                            style={[
+                              styles.hdrRatingTxtView,
+                              {
+                                backgroundColor: colors.yellowC,
+                                width: moderateScale(50),
+                                justifyContent: 'center',
+                                height: moderateScale(20),
+                              },
+                            ]}>
+                            <Text
+                              style={[
+                                styles.ratingTxt,
+                                {fontSize: textScale(9.5)},
+                              ]}>
+                              {Number(
+                                categoryInfo?.product_avg_average_rating,
+                              ).toFixed(1)}
+                            </Text>
+                            <Image
+                              style={styles.starImg}
+                              source={imagePath.star}
+                              resizeMode="contain"
+                            />
+                          </View>
+                        )}
+                    </View>
+                    <View
+                      style={{
+                        marginTop: moderateScale(5),
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}>
+                      <Text
+                        // numberOfLines={2}
+                        style={{
+                          ...styles.hdrTitleTxt,
+                          flex: 0,
+                          fontSize: textScale(12.5),
+                          fontFamily: fontFamily.regular,
+                          textAlign: 'left',
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.white,
+                          width: width / 1.5,
+                        }}>
+                        {categoryInfo?.address || ''}
+                      </Text>
+
+                      {!!categoryInfo &&
+                      !categoryInfo?.closed_store_order_scheduled ? (
+                        <View
+                          style={[
+                            styles.hdrRatingTxtView,
+                            {
+                              justifyContent: 'center',
+                              height: moderateScale(20),
+                              backgroundColor: categoryInfo?.show_slot
+                                ? colors.green
+                                : categoryInfo?.is_vendor_closed
+                                ? colors.redB
+                                : colors.green,
+                            },
+                          ]}>
+                          <Text
+                            style={{
+                              ...styles.ratingTxt,
+                              color: colors.white,
+                              fontSize: textScale(9.5),
+                            }}>
+                            {categoryInfo?.show_slot
+                              ? strings.OPEN
+                              : categoryInfo?.is_vendor_closed
+                              ? strings.CLOSE
+                              : strings.OPEN}
+                          </Text>
+                        </View>
+                      ) : null}
+                    </View>
+
+                    {Number(categoryInfo?.order_min_amount) > 0 ? (
+                      <View
+                        style={{
+                          backgroundColor: colors.redB,
+                          width: moderateScale(230),
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          height: moderateScaleVertical(30),
+                          // paddingHorizontal: moderateScale(10),
+                          // paddingVertical: moderateScaleVertical(10),
+                          borderRadius: moderateScale(6),
+                          marginTop: moderateScale(10),
+                        }}>
+                        <Text
+                          style={{
+                            fontSize: textScale(12),
+                            fontFamily: fontFamily.medium,
+                            color: colors.white,
+                          }}>
+                          Minimum order value{' '}
+                          {currencies?.primary_currency?.symbol}
+                          {categoryInfo?.order_min_amount}
+                        </Text>
+                      </View>
+                    ) : null}
+                  </View>
+                </SafeAreaView>
+              </LinearGradient>
+
+              {/* ****************************************/}
+              <View
+                style={{
+                  // backgroundColor: 'pink'
+                  ...styles.hdrAbsoluteView,
+                  backgroundColor: isDarkMode
+                    ? MyDarkTheme.colors.lightDark
+                    : colors.white,
+                  // // minHeight: moderateScale(80),
+                }}>
+                {!!categoryInfo && !!categoryInfo?.categoriesList ? (
+                  <View>
+                    <Text
+                      numberOfLines={1}
+                      style={{
+                        ...styles.milesTxt,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        marginRight: moderateScale(40),
+                        marginVertical: moderateScale(1),
+                        marginLeft: 0,
+                        fontSize: textScale(13),
+                        opacity: 0.8,
+                        fontFamily: fontFamily.medium,
+                      }}>
+                      {categoryInfo?.categoriesList || ''}
+                    </Text>
+                    {!!desc && (
+                      <Text
+                        numberOfLines={2}
+                        style={{
+                          ...styles.milesTxt,
+                          marginLeft: 0,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                          marginVertical: moderateScaleVertical(4),
+                          fontSize: textScale(10.5),
+                          opacity: 0.6,
+                        }}>
+                        {desc}
+                      </Text>
+                    )}
+                  </View>
+                ) : null}
+                {!!categoryInfo?.closed_store_order_scheduled ? (
+                  <Text
+                    style={{
+                      ...commonStyles.mediumFont14Normal,
+                      fontSize: textScale(10),
+                      textAlign: 'left',
+                      color: colors.redB,
+                      // marginTop: moderateScaleVertical(4)
+                    }}>
+                    {strings.WE_ARE_NOT_ACCEPTING} {categoryInfo?.delaySlot}
+                  </Text>
+                ) : null}
+              </View>
+            </ImageBackground>
+          </View>
+        ) : (
+          <Animatable.View
+            // key={AnimatedHeaderValue}
+            // duration={10}
+            animation={'fadeIn'}
+            style={{
+              ...styles.headerStyle,
+              marginBottom: moderateScale(12),
+              // height: 52
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.goBack()}
+                hitSlop={styles.hitSlopProp}>
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                  }}
+                  source={imagePath.icBackb}
+                />
+              </TouchableOpacity>
+
+              <View style={{marginLeft: moderateScale(8), flex: 0.7}}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  {isSVG ? (
+                    <SvgUri
+                      height={moderateScale(40)}
+                      width={moderateScale(40)}
+                      uri={imageURI}
+                    />
+                  ) : (
+                    <RoundImg
+                      img={imageURI}
+                      size={30}
+                      isDarkMode={isDarkMode}
+                      MyDarkTheme={MyDarkTheme}
+                    />
+                  )}
+                  <View style={{marginLeft: moderateScale(8)}}>
+                    <Text
+                      numberOfLines={1}
+                      style={{
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        fontSize: moderateScale(14),
+                        fontFamily: fontFamily.medium,
+                      }}>
+                      {name}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+
+            {isSearch ? (
+              <Animatable.View
+              // animation="fadeIn"
+              >
+                <SearchBar
+                  containerStyle={{
+                    marginHorizontal: moderateScale(18),
+                    borderRadius: 8,
+                    width: width / 1.15,
+                    backgroundColor: isDarkMode
+                      ? colors.whiteOpacity15
+                      : colors.greyColor,
+                    height: moderateScaleVertical(37),
+                  }}
+                  searchValue={searchInput}
+                  placeholder={strings.SEARCH_ITEM}
+                  // onChangeText={(value) => onChangeText(value)}
+                  showRightIcon
+                  rightIconPress={rightIconPress}
+                />
+              </Animatable.View>
+            ) : (
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  // onPress={() => updateState({isSearch: true})}
+                  onPress={moveToNewScreen(
+                    navigationStrings.SEARCHPRODUCTOVENDOR,
+                    {
+                      type: data?.vendor
+                        ? staticStrings.VENDOR
+                        : staticStrings.CATEGORY,
+                      id: data?.vendor ? data?.id : productListId?.id,
+                    },
+                  )}>
+                  <Image
+                    style={{
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    }}
+                    source={!!data?.showAddToCart ? false : imagePath.icSearchb}
+                  />
+                </TouchableOpacity>
+                <View style={{marginHorizontal: moderateScale(8)}} />
+                <TouchableOpacity
+                  onPress={onShare}
+                  hitSlop={hitSlopProp}
+                  activeOpacity={0.8}>
+                  <Image
+                    style={{
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    }}
+                    source={imagePath.icShareb}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+          </Animatable.View>
+        )}
+
+        {!(
+          categoryInfo &&
+          categoryInfo?.lineOfSightDistance == undefined &&
+          categoryInfo.lineOfSightDistance == null &&
+          categoryInfo?.timeofLineOfSightDistance == undefined &&
+          categoryInfo.timeofLineOfSightDistance == null &&
+          offerList?.length === 0
+        ) && (
+          <View
+            style={{
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+              width: '100%',
+              alignSelf: 'center',
+              borderBottomWidth: 1,
+              borderBottomColor: colors.greyMedium,
+              marginBottom: moderateScale(16),
+              paddingBottom: moderateScaleVertical(10),
+              paddingHorizontal: moderateScale(12),
+            }}>
+            {categoryInfo?.lineOfSightDistance != undefined &&
+            categoryInfo.lineOfSightDistance != null ? (
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View
+                  style={{
+                    backgroundColor: colors.greyColor,
+                    width: moderateScale(30),
+                    height: moderateScale(30),
+                    borderRadius: moderateScale(30),
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Image source={imagePath.ic_pinIcon} />
+                </View>
+
+                <Text
+                  style={{
+                    ...styles.milesTxt,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    opacity: 1,
+                    fontSize: textScale(10),
+                  }}>
+                  {categoryInfo.lineOfSightDistance}
+                </Text>
+              </View>
+            ) : null}
+
+            {categoryInfo?.timeofLineOfSightDistance != undefined &&
+              categoryInfo.timeofLineOfSightDistance != null && (
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <View
+                    style={{
+                      backgroundColor: colors.greyColor,
+                      width: moderateScale(30),
+                      height: moderateScale(30),
+                      borderRadius: moderateScale(30),
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Image source={imagePath.ic_timeIcon} />
+                  </View>
+                  {categoryInfo?.timeofLineOfSightDistance != undefined &&
+                  categoryInfo.timeofLineOfSightDistance != null ? (
+                    <Text
+                      style={{
+                        ...styles.milesTxt,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        opacity: 1,
+                        fontSize: textScale(10),
+                      }}>
+                      {checkEvenOdd(categoryInfo.timeofLineOfSightDistance)}-
+                      {checkEvenOdd(categoryInfo.timeofLineOfSightDistance + 5)}
+                    </Text>
+                  ) : null}
+                </View>
+              )}
+
+            {offerList?.length > 0 && (
+              <TouchableOpacity
+                onPress={() =>
+                  updateState({offersModalVisible: !offersModalVisible})
+                }
+                activeOpacity={0.7}
+                style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View
+                  style={{
+                    backgroundColor: colors.greyColor,
+                    width: moderateScale(30),
+                    height: moderateScale(30),
+                    borderRadius: moderateScale(30),
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Image source={imagePath.ic_offersIcon} />
+                </View>
+                <Text
+                  style={{
+                    ...styles.milesTxt,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    opacity: 1,
+                    fontSize: textScale(10),
+                  }}>
+                  {strings.OFFERS}
+                </Text>
+                <Image
+                  source={imagePath.icBackb}
+                  style={{
+                    transform: [{rotate: '-90deg'}],
+                    width: moderateScale(11),
+                    height: moderateScale(11),
+                    resizeMode: 'contain',
+                    marginLeft: moderateScale(6),
+                  }}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{
+            paddingHorizontal: moderateScale(12),
+            marginBottom: moderateScale(15),
+          }}
+          contentContainerStyle={{alignItems: 'center'}}>
+          {ProductTags &&
+            ProductTags.map((el, index) => {
+              console.log('elelelelel', el);
+              return (
+                <View
+                  key={index}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    // marginTop: moderateScale(20)
+                  }}>
+                  <ToggleSwitch
+                    isOn={el.isSelected}
+                    onColor={colors.green}
+                    offColor={
+                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                    }
+                    size="small"
+                    onToggle={() => {
+                      playHapticEffect(hapticEffects.impactLight);
+                      const updatedArr = ProductTags.map((el, idx) => {
+                        console.log(el);
+                        if (idx === index) {
+                          let newObj = el;
+                          newObj.isSelected = !newObj.isSelected;
+                          return newObj;
+                        } else {
+                          return el;
+                        }
+                      });
+                      setProductTags(updatedArr);
+                      updateState({
+                        updateTagFilter: !updateTagFilter,
+                      });
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: textScale(11),
+                      fontFamily: fontFamily.regular,
+                      marginLeft: moderateScale(7),
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGrey,
+                    }}>
+                    {!!el?.translations?.length > 0
+                      ? el.translations[0].name
+                      : ''}
+                  </Text>
+                  <View style={{width: moderateScale(20)}} />
+                </View>
+              );
+            })}
+        </ScrollView>
+        {!!categoryInfo?.is_show_products_with_category ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginBottom: moderateScaleVertical(8),
+              marginHorizontal: moderateScale(12),
+            }}>
+            <SearchBar
+              autoFocus={false}
+              containerStyle={{
+                flex: 1,
+                // marginHorizontal: moderateScale(18),
+                borderRadius: moderateScale(8),
+                backgroundColor: isDarkMode
+                  ? colors.whiteOpacity15
+                  : colors.greyColor,
+                height: moderateScaleVertical(37),
+              }}
+              searchValue={searchInput}
+              placeholder={strings.SEARCH_WITHIN_MENU}
+              onChangeText={(value) => onSearchWithinMenu(value)}
+              showRightIcon={searchInput ? true : false}
+              rightIconStyle={{
+                tintColor: isDarkMode ? colors.white : colors.black,
+              }}
+              rightIconPress={() => onSearchWithinMenu('')}
+              showVoiceRecord={false}
+            />
+
+            {appIds.codiner == DeviceInfo.getBundleId() ? null : (
+              <View style={{flex: 0.14}}>
+                <TouchableOpacity
+                  hitSlop={hitSlopProp}
+                  onPress={onShowHideFilter}
+                  style={{
+                    alignSelf: 'flex-end',
+                  }}>
+                  <Image
+                    style={{
+                      tintColor: isDarkMode ? colors.white : colors.black,
+                    }}
+                    source={imagePath.filter}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+        ) : null}
+        {!!categoryInfo && categoryInfo?.childs?.length > 0 && (
+          <View style={{marginHorizontal: moderateScale(20)}}>
+            <ScrollView
+              showsHorizontalScrollIndicator={false}
+              horizontal
+              style={{
+                // marginHorizontal: moderateScale(0),
+                marginTop: moderateScaleVertical(5),
+              }}>
+              {/* <View><Image source={imagePath.}/></View> */}
+              {categoryInfo.childs.map((item, inx) => {
+                return (
+                  <View key={inx}>
+                    <TouchableOpacity
+                      style={{
+                        padding: moderateScale(10),
+                        // backgroundColor: colors.lightGreyBg,
+                        marginRight: moderateScale(10),
+                        borderRadius: moderateScale(12),
+                        backgroundColor:
+                          selectedCategory && selectedCategory?.id == item?.id
+                            ? themeColors.primary_color
+                            : colors.lightGreyBg,
+                      }}
+                      onPress={() => onPressChildCards(item)}>
+                      <Text
+                        style={{
+                          color:
+                            selectedCategory && selectedCategory?.id == item?.id
+                              ? colors.white
+                              : colors.black,
+                          opacity:
+                            selectedCategory && selectedCategory?.id == item?.id
+                              ? 1
+                              : 0.61,
+                          fontSize: textScale(12),
+                          fontFamily: fontFamily.medium,
+                        }}>
+                        {item?.translation[0]?.name}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                );
+              })}
+            </ScrollView>
+          </View>
+        )}
+      </Animatable.View>
+    );
+  };
+
+  if (isLoading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.white,
+        }}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {true ? (
+            <View>
+              <HeaderLoader
+                viewStyles={{
+                  // marginHorizontal: moderateScale(20),
+                  // marginBottom: moderateScale(10),
+                  marginHorizontal: 0,
+                }}
+                widthLeft={width}
+                rectWidthLeft={width}
+                heightLeft={moderateScaleVertical(152)}
+                rectHeightLeft={moderateScaleVertical(152)}
+                isRight={false}
+                rx={4}
+                ry={4}
+              />
+              <HomeLoader
+                width={width / 1.1}
+                height={18}
+                rectHeight={18}
+                rectWidth={width / 1.1}
+                viewStyles={{
+                  marginTop: moderateScaleVertical(8),
+                  marginHorizontal: moderateScale(16),
+                }}
+              />
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginHorizontal: moderateScale(16),
+                  marginTop: moderateScaleVertical(16),
+                }}>
+                <HomeLoader
+                  height={40}
+                  rectHeight={40}
+                  rectWidth={60}
+                  width={60}
+                />
+                <HomeLoader
+                  height={40}
+                  rectHeight={40}
+                  rectWidth={60}
+                  width={60}
+                />
+              </View>
+              <View
+                style={{
+                  ...styles.horizontalLine,
+                  marginVertical: 16,
+                }}
+              />
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginHorizontal: moderateScale(16),
+                  marginBottom: moderateScaleVertical(16),
+                }}>
+                <HomeLoader
+                  height={20}
+                  rectHeight={20}
+                  rectWidth={60}
+                  width={60}
+                />
+                <View style={{marginRight: moderateScale(16)}} />
+                <HomeLoader
+                  height={20}
+                  rectHeight={20}
+                  rectWidth={60}
+                  width={60}
+                />
+              </View>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <HomeLoader
+                  width={width / 1.2}
+                  height={34}
+                  rectHeight={34}
+                  rectWidth={width / 1.2}
+                  viewStyles={{
+                    marginHorizontal: 16,
+                  }}
+                />
+                {/* <View style={{ marginHorizontal: moderateScale(16) }} /> */}
+                <HomeLoader
+                  height={25}
+                  width={25}
+                  rectHeight={25}
+                  rectWidth={25}
+                />
+              </View>
+            </View>
+          ) : (
+            <View style={{marginBottom: moderateScaleVertical(16)}} />
+          )}
+          <View
+            style={{
+              marginHorizontal: moderateScale(16),
+              marginTop: moderateScaleVertical(16),
+            }}>
+            <ProductListLoader3 />
+            <View style={{marginBottom: moderateScaleVertical(12)}} />
+            <ProductListLoader3 />
+            <View style={{marginBottom: moderateScaleVertical(12)}} />
+            <ProductListLoader3 />
+            <View style={{marginBottom: moderateScaleVertical(12)}} />
+            <ProductListLoader3 />
+            <View style={{marginBottom: moderateScaleVertical(12)}} />
+            <ProductListLoader3 />
+            <View style={{marginBottom: moderateScaleVertical(12)}} />
+          </View>
+          {!data?.isVerndorList && (
+            <View style={{marginHorizontal: moderateScale(16)}}>
+              <ProductListLoader3 />
+              <View style={{marginBottom: moderateScaleVertical(12)}} />
+              <ProductListLoader3 />
+              <View style={{marginBottom: moderateScaleVertical(12)}} />
+            </View>
+          )}
+        </ScrollView>
+      </View>
+    );
+  }
+
+  const updateMinMax = (min, max) => {
+    updateState({minimumPrice: min, maximumPrice: max});
+  };
+
+  const onShowHideFilter = () => {
+    updateState({isShowFilter: !isShowFilter});
+  };
+
+  const bottomSheetHeader = () => {
+    return (
+      <View
+        style={{
+          height: 0,
+          backgroundColor: 'transparent',
+        }}
+      />
+    );
+  };
+
+  const onShare = () => {
+    console.log('onShare', appData);
+    if (!!categoryInfo.share_link) {
+      let hyperLink = categoryInfo.share_link;
+      let options = {url: hyperLink};
+      Share.open(options)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          err && console.log(err);
+        });
+      return;
+    }
+    alert('link not found');
+  };
+
+  // const onShare = async () => {
+  //   let convertJson = JSON.stringify(data);
+  //   let shareLink = `${categoryInfo.share_link + `?data=${convertJson}`}`;
+  //   try {
+  //     const result = await Share.share({
+  //       url: shareLink,
+  //     });
+
+  //     if (result.action === Share.sharedAction) {
+  //       if (result.activityType) {
+  //       } else {
+  //       }
+  //     } else if (result.action === Share.dismissedAction) {
+  //     }
+  //   } catch (error) {
+  //     alert(error.message);
+  //   }
+  // };
+
+  const renderSectionTab = (props) => {
+    const {title, isActive} = props;
+
+    if (isActive) {
+      // activeIdx = props.index;
+    }
+    if (!AnimatedHeaderValue) {
+      return <View style={{width: 40}} />;
+    }
+    return (
+      <Animatable.View
+        animation={'fadeInUp'}
+        style={{
+          marginTop: moderateScaleVertical(4),
+          marginLeft: moderateScale(12),
+          marginBottom: moderateScaleVertical(16),
+          padding: 4,
+          borderBottomWidth: 3,
+          borderColor:
+            activeIdx == props.index
+              ? themeColors.primary_color
+              : colors.transparent,
+        }}>
+        <TouchableOpacity
+          onPress={() => {
+            const newArr = cloneSectionList.map((el, indx) => {
+              if (indx == props.index) {
+                let temp = el;
+                temp.isActive = true;
+                activeIdx = indx;
+                return temp;
+              } else {
+                return el;
+              }
+            });
+            setSectionListData(newArr);
+            setCloneSectionList(newArr);
+            console.log(props);
+            // activeIdx = props.index;
+            let cells = [];
+            cloneSectionList.forEach((el, ind) => {
+              if (props.index > ind) {
+                cells.push(...el.data);
+              }
+            });
+            let hight = Number(cells.length) * 160;
+            playHapticEffect(hapticEffects.rigid);
+            // updateState({MenuModalVisible: !MenuModalVisible});
+            sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
+              {
+                x: hight + 200,
+                y: hight + 200,
+                animated: true,
+              },
+            );
+          }}>
+          <Text
+            style={{
+              fontFamily: fontFamily.medium,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}>
+            {title}
+          </Text>
+        </TouchableOpacity>
+      </Animatable.View>
+    );
+  };
+
+  const renderSectionHeader = (props) => {
+    const {section} = props;
+    return (
+      <View
+        style={{
+          marginHorizontal: moderateScale(16),
+          marginVertical: moderateScaleVertical(8),
+        }}>
+        <Text
+          style={{
+            ...styles.hdrTitleTxt,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          }}>
+          {section?.title}
+        </Text>
+      </View>
+    );
+  };
+  const renderSectionItem = ({item, index, section}) => {
+    return (
+      <Animatable.View
+        // animation={'slideInUp'}
+        // delay={index * 5}
+        /*
+         * Height should be fixed as 180 to measure exact scroll position for browse menu
+         */
+        style={{
+          minHeight: moderateScaleVertical(200),
+          overflow: 'visible',
+          // backgroundColor: 'red',
+          // marginBottom: moderateScaleVertical(5),
+        }}>
+        <ProductCard3
+          data={item}
+          index={index}
+          onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+          onAddtoWishlist={() => _onAddtoWishlist(item)}
+          addToCart={() => addSingleItem(item, section, index)}
+          onIncrement={() => checkIsCustomize(item, section, index, 1)}
+          onDecrement={() => checkIsCustomize(item, section, index, 2)}
+          selectedItemID={selectedItemID}
+          btnLoader={btnLoader}
+          selectedItemIndx={selectedItemIndx}
+          businessType={businessType}
+          categoryInfo={categoryInfo}
+        />
+        <View
+          style={{
+            ...styles.horizontalLine,
+            marginBottom: moderateScaleVertical(16),
+          }}
+        />
+      </Animatable.View>
+    );
+  };
+
+  const onScroll = (props) => {
+    const {nativeEvent} = props;
+    if (
+      productListData &&
+      productListData.length &&
+      productListData.length < 6
+    ) {
+      return;
+    }
+
+    let offset = nativeEvent.contentOffset.y;
+    let index = parseInt(offset / 8); // your cell height
+    /** cell heihgt 167 */
+    // let num = [];
+    // const hej = cloneSectionList.map((el, index) => {
+    //   if (offset > Number(num.length) * 167) {
+    //     num.push(...el.data);
+    //     activeIdx = index;
+    //   }
+    // });
+    if (index > moderateScale(36)) {
+      if (!AnimatedHeaderValue) {
+        updateState({AnimatedHeaderValue: true});
+      }
+      return;
+    }
+    if (index < moderateScale(36)) {
+      if (AnimatedHeaderValue) {
+        updateState({AnimatedHeaderValue: false});
+        return;
+      }
+      return;
+    }
+  };
+
+  let uri1 = categoryInfo?.banner?.image_fit || categoryInfo?.icon?.image_fit;
+  let uri2 = categoryInfo?.banner?.image_path || categoryInfo?.icon?.image_path;
+  let imageURI = getImageUrl(uri1, uri2, '200/200');
+  const isSVG = imageURI ? imageURI.includes('.svg') : null;
+  console.log(imageURI, 'is svg', isSVG);
+
+  let name =
+    data?.name ||
+    data?.categoryInfo?.name ||
+    (!!categoryInfo?.translation && categoryInfo?.translation[0]?.name);
+  let desc =
+    categoryInfo?.desc ||
+    (!!categoryInfo?.translation &&
+      categoryInfo?.translation[0]?.meta_description);
+
+  var itemHeights = [];
+  const getItemLayout = (data, index) => {
+    const length = itemHeights[index];
+    const offset = itemHeights.slice(0, index).reduce((a, c) => a + c, 0);
+    console.log('l++++lenght', length);
+    console.log('l++++index', index);
+    console.log('l++++offset', offset);
+    return {length, offset, index};
+  };
+
+  const backgroundComponent = () => {
+    return (
+      <TouchableOpacity
+        onPress={() => setIsVisibleModal(false)}
+        style={{alignSelf: 'center', marginBottom: moderateScaleVertical(16)}}>
+        <Image source={imagePath.icClose4} />
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    <View
+      style={{
+        backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.background
+          : colors.white,
+        flex: 1,
+        // paddingVertical: moderateScale(16),
+      }}>
+      <View style={{flex: 1}}>
+        {/* {!data.isVendorList && (
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              paddingHorizontal: moderateScale(15),
+              marginTop: Platform.OS === 'ios' ? StatusBarHeight : 15,
+            }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.goBack()}
+                hitSlop={styles.hitSlopProp}>
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                  }}
+                  source={imagePath.icBackb}
+                />
+              </TouchableOpacity>
+              <Text
+                numberOfLines={1}
+                style={{
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity86,
+                  fontSize: moderateScale(14),
+                  fontFamily: fontFamily.bold,
+                  marginLeft: moderateScale(15),
+                }}>
+                {name}
+              </Text>
+            </View>
+
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                // onPress={() => updateState({ isSearch: true })}
+                onPress={moveToNewScreen(
+                  navigationStrings.SEARCHPRODUCTOVENDOR,
+                  {
+                    type: data?.vendor
+                      ? staticStrings.VENDOR
+                      : staticStrings.CATEGORY,
+                    id: data?.vendor ? data?.id : productListId?.id,
+                  },
+                )}>
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    marginRight: moderateScale(15),
+                  }}
+                  source={imagePath.icSearchb}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={onShare}
+                hitSlop={hitSlopProp}
+                activeOpacity={0.8}>
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                  }}
+                  source={imagePath.icShareb}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        )} */}
+
+        {((AnimatedHeaderValue && productListData.length > 6) ||
+          (!!sectionListData?.length && AnimatedHeaderValue)) && (
+          <Animatable.View
+            // key={AnimatedHeaderValue}
+            // duration={10}
+            animation={'fadeIn'}
+            style={{
+              ...styles.headerStyle,
+              marginBottom: moderateScale(12),
+              // height: 52
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.goBack()}
+                hitSlop={styles.hitSlopProp}>
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                  }}
+                  source={imagePath.icBackb}
+                />
+              </TouchableOpacity>
+
+              <View style={{marginLeft: moderateScale(8), flex: 0.7}}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  {isSVG ? (
+                    <SvgUri
+                      height={moderateScale(40)}
+                      width={moderateScale(40)}
+                      uri={imageURI}
+                    />
+                  ) : (
+                    <RoundImg
+                      img={imageURI}
+                      size={30}
+                      isDarkMode={isDarkMode}
+                      MyDarkTheme={MyDarkTheme}
+                    />
+                  )}
+                  <View style={{marginLeft: moderateScale(8)}}>
+                    <Text
+                      numberOfLines={1}
+                      style={{
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        fontSize: moderateScale(14),
+                        fontFamily: fontFamily.medium,
+                      }}>
+                      {name}
+                    </Text>
+                    <Text
+                      numberOfLines={1}
+                      style={{
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.blackOpacity43,
+                        fontSize: moderateScale(12),
+                        fontFamily: fontFamily.regular,
+                        marginTop: moderateScaleVertical(2),
+                      }}>
+                      {categoryInfo?.categoriesList || ''}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+
+            {isSearch ? (
+              <Animatable.View
+              // animation="fadeIn"
+              >
+                <SearchBar
+                  containerStyle={{
+                    marginHorizontal: moderateScale(18),
+                    borderRadius: 8,
+                    width: width / 1.15,
+                    backgroundColor: isDarkMode
+                      ? colors.whiteOpacity15
+                      : colors.greyColor,
+                    height: moderateScaleVertical(37),
+                  }}
+                  searchValue={searchInput}
+                  placeholder={strings.SEARCH_ITEM}
+                  // onChangeText={(value) => onChangeText(value)}
+                  showRightIcon
+                  rightIconPress={rightIconPress}
+                />
+              </Animatable.View>
+            ) : (
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  // onPress={() => updateState({isSearch: true})}
+                  onPress={moveToNewScreen(
+                    navigationStrings.SEARCHPRODUCTOVENDOR,
+                    {
+                      type: data?.vendor
+                        ? staticStrings.VENDOR
+                        : staticStrings.CATEGORY,
+                      id: data?.vendor ? data?.id : productListId?.id,
+                    },
+                  )}>
+                  <Image
+                    style={{
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    }}
+                    source={!!data?.showAddToCart ? false : imagePath.icSearchb}
+                  />
+                </TouchableOpacity>
+                <View style={{marginHorizontal: moderateScale(8)}} />
+                <TouchableOpacity
+                  onPress={onShare}
+                  hitSlop={hitSlopProp}
+                  activeOpacity={0.8}>
+                  <Image
+                    style={{
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    }}
+                    source={imagePath.icShareb}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+          </Animatable.View>
+        )}
+        {/* <View style={{height: moderateScale(10)}} /> */}
+        {!!categoryInfo?.is_show_products_with_category ? (
+          <Animatable.View style={{flex: 1}}>
+            <SectionList
+              onScroll={onScroll}
+              ref={sectionListRef}
+              showsVerticalScrollIndicator={false}
+              // onScroll={onScroll}
+              sections={cloneSectionList}
+              ListHeaderComponent={listHeaderComponent2()}
+              stickySectionHeadersEnabled={false}
+              keyExtractor={(item, index) => index}
+              // tabBarStyle={styles.tabBar}
+              // ItemSeparatorComponent={() => <View style={styles.separator} />}
+
+              renderTab={renderSectionTab}
+              renderItem={renderSectionItem}
+              ListFooterComponent={() => (
+                <View style={{height: moderateScale(80)}} />
+              )}
+              renderSectionHeader={renderSectionHeader}
+              ListEmptyComponent={
+                <NoDataFound isLoading={isLoading} containerStyle={{}} />
+              }
+            />
+          </Animatable.View>
+        ) : (
+          <FlatList
+            onScroll={onScroll}
+            disableScrollViewPanResponder
+            data={productListData}
+            renderItem={renderProduct}
+            ListHeaderComponent={listHeaderComponent2()}
+            keyExtractor={(item, index) => String(index)}
+            keyboardShouldPersistTaps="always"
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{
+              flexGrow: 1,
+            }}
+            extraData={productListData}
+            ItemSeparatorComponent={() => <View style={{height: 10}} />}
+            // refreshing={isRefreshing}
+            // initialNumToRender={12}
+            // maxToRenderPerBatch={10}
+            // windowSize={10}
+            // refreshControl={
+            //   <RefreshControl
+            //     refreshing={isRefreshing}
+            //     onRefresh={handleRefresh}
+            //     tintColor={themeColors.primary_color}
+            //   />
+            // }
+            onEndReached={
+              !categoryInfo?.is_show_products_with_category &&
+              onEndReachedDelayed
+            }
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={() => (
+              <View style={{height: moderateScale(60)}} />
+            )}
+            ListEmptyComponent={
+              <NoDataFound isLoading={isLoading} containerStyle={{}} />
+            }
+          />
+        )}
+
+        {isVisibleModal ? (
+          <TouchableWithoutFeedback onPress={() => setIsVisibleModal(false)}>
+            <BlurView
+              style={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+              }}
+              viewRef={blurRef}
+              blurType="dark"
+              blurAmount={10}
+              blurRadius={10}
+            />
+          </TouchableWithoutFeedback>
+        ) : null}
+      </View>
+
+      {!!typeId && typeId == 8 ? (
+        <View>
+          {isVisibleModal && (
+            <HomeServiceVariantAddons
+              isVisible={isVisibleModal}
+              productdetail={selectedCartItem}
+              onClose={onCloseModal}
+              showShimmer={showShimmer}
+              shimmerClose={(val) => setShowShimmer(val)}
+              updateCartItems={updateCartItems}
+              // modeOfService={selectedCartItem?.mode_of_service}
+            />
+          )}
+        </View>
+      ) : (
+        isVisibleModal && (
+          <BottomSheet
+            ref={bottomSheetRef}
+            index={1}
+            snapPoints={[0, height / 1.5, height / 1.25]}
+            activeOffsetY={[-1, 1]}
+            failOffsetX={[-5, 5]}
+            animateOnMount={true}
+            handleComponent={bottomSheetHeader}
+            onChange={(index) => {
+              if (index === 0) {
+                onCloseModal();
+              }
+              playHapticEffect(hapticEffects.impactMedium);
+            }}
+            backdropComponent={() => (
+              <View style={{height: 0}}>
+                <Text>dfdf</Text>
+              </View>
+            )}
+            backgroundComponent={backgroundComponent}>
+            <BottomSheetScrollView
+              keyboardShouldPersistTaps="handled"
+              showsVerticalScrollIndicator={false}
+              style={{
+                flex: 1,
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.lightDark
+                  : colors.white,
+              }}>
+              <VariantAddons
+                isVisible={isVisibleModal}
+                productdetail={selectedCartItem}
+                onClose={onCloseModal}
+                typeId={typeId}
+                showShimmer={showShimmer}
+                shimmerClose={(val) => setShowShimmer(val)}
+                updateCartItems={updateCartItems}
+              />
+            </BottomSheetScrollView>
+          </BottomSheet>
+        )
+      )}
+
+      <CustomAnimatedLoader
+        source={loaderOne}
+        loaderTitle="Loading"
+        containerColor={colors.white}
+        loadercolor={themeColors.primary_color}
+        animationStyle={[
+          {
+            height: moderateScaleVertical(40),
+            width: moderateScale(40),
+          },
+        ]}
+        visible={updateQtyLoader}
+      />
+
+      {!searchInput && !isVisibleModal && (
+        <GradientCartView
+          onPress={() => {
+            playHapticEffect(hapticEffects.notificationSuccess);
+            navigation.navigate(navigationStrings.CART);
+          }}
+          btnText={
+            CartItems && CartItems.data && CartItems.data.item_count
+              ? `${CartItems.data.item_count} ${
+                  CartItems.data.item_count == 1 ? strings.ITEM : strings.ITEMS
+                } | ${
+                  currencies.primary_currency.symbol
+                } ${currencyNumberFormatter(
+                  Number(CartItems.data.total_payable_amount),
+                  appData?.profile?.preferences?.digit_after_decimal,
+                )}`
+              : ''
+          }
+          ifCartShow={
+            CartItems && CartItems.data && CartItems.data.item_count > 0
+              ? true
+              : false
+          }
+          isMenuBtnShow={categoryInfo?.is_show_products_with_category}
+          onMenuTap={() => {
+            playHapticEffect(hapticEffects.impactLight);
+            updateState({MenuModalVisible: !MenuModalVisible});
+          }}
+          isLoading={btnLoader}
+          sectionListData={sectionListData}
+          // btnStyle={
+          //   appStyle?.tabBarLayout == 4 && {marginBottom: moderateScale(160)}
+          // }
+        />
+      )}
+
+      <BottomSlideModal
+        mainContainView={RenderOfferView}
+        isModalVisible={offersModalVisible}
+        mainContainerStyle={{
+          width: '100%',
+          paddingHorizontal: 0,
+          marginHorizontal: 0,
+          maxHeight: moderateScale(450),
+        }}
+        innerViewContainerStyle={{
+          width: '100%',
+          paddingHorizontal: 0,
+          marginHorizontal: 0,
+        }}
+        onBackdropPress={() =>
+          updateState({offersModalVisible: !offersModalVisible})
+        }
+      />
+
+      <BottomSlideModal
+        mainContainView={RenderMenuView}
+        isModalVisible={MenuModalVisible}
+        mainContainerStyle={{
+          width: '100%',
+          paddingHorizontal: moderateScale(15),
+          marginHorizontal: 0,
+          height: moderateScale(250),
+          backgroundColor: 'transparent',
+          marginBottom: moderateScaleVertical(16),
+        }}
+        innerViewContainerStyle={{
+          width: '100%',
+          paddingHorizontal: 0,
+          marginHorizontal: 0,
+          backgroundColor: 'white',
+          borderRadius: moderateScale(10),
+          marginBottom: moderateScaleVertical(16),
+        }}
+        onBackdropPress={() => {
+          updateState({MenuModalVisible: !MenuModalVisible});
+        }}
+      />
+
+      {/* Add new addons and repeat item view */}
+      {!!repeatItems ? (
+        <RepeatModal
+          data={repeatItems?.item}
+          modalHide={() => setRepeatItems(null)}
+          onRepeat={onRepeat}
+          onAddNew={onAddNew}
+        />
+      ) : null}
+
+      {!!differentAddsOns && differentAddsOns.length > 1 ? (
+        <DifferentAddOns
+          differentAddsOnsModal={differentAddsOnsModal}
+          data={differentAddsOns}
+          selectedDiffAdsOnItem={selectedDiffAdsOnItem}
+          hideDifferentAddOns={hideDifferentAddOns}
+          difAddOnsAdded={difAddOnsAdded}
+          selectedDiffAdsOnSection={selectedDiffAdsOnSection}
+          storeLocalQty={storeLocalQty}
+          btnLoader={btnLoader}
+          selectedDiffAdsOnId={selectedDiffAdsOnId}
+        />
+      ) : null}
+
+      {isShowFilter ? (
+        <FilterComp
+          themeColors={themeColors}
+          isDarkMode={isDarkMode}
+          onFilterApply={onFilterApply}
+          onShowHideFilter={onShowHideFilter}
+          allClearFilters={allClearFilters}
+          selectedSortFilter={selectedSortFilter}
+          onSelectedSortFilter={(val) => updateState({selectedSortFilter: val})}
+          maximumPrice={maximumPrice}
+          minimumPrice={minimumPrice}
+          updateMinMax={updateMinMax}
+          filterData={allFilters}
+          fitlerId={productListId?.id}
+        />
+      ) : null}
+    </View>
+  );
+}

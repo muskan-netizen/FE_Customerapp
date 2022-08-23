@@ -484,6 +484,8 @@ export default function Products({ route, navigation }) {
     });
   };
 
+
+
   const listHeaderComponent2 = () => {
     return (
       <View>
@@ -739,25 +741,33 @@ export default function Products({ route, navigation }) {
                     </View>
                     <View
                       style={{
-                        marginTop: moderateScale(5),
+                        marginTop: !DeviceInfo.getBundleId() === appIds.hokitch ? moderateScaleVertical(5) : moderateScale(-20),
                         flexDirection: 'row',
                         justifyContent: 'space-between',
-                      }}>
-                      <Text
-                        // numberOfLines={2}
-                        style={{
-                          ...styles.hdrTitleTxt,
-                          flex: 0,
-                          fontSize: textScale(12.5),
-                          fontFamily: fontFamily.regular,
-                          textAlign: 'left',
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.white,
-                          width: width / 1.5,
-                        }}>
-                        {categoryInfo?.address || ''}
-                      </Text>
+                        alignSelf: !DeviceInfo.getBundleId() === appIds.hokitch ? 'auto' : 'flex-end'
+                      }}
+                    >
+
+                      {!DeviceInfo.getBundleId() === appIds.hokitch ?
+                        <Text
+                          // numberOfLines={2}
+                          style={{
+                            ...styles.hdrTitleTxt,
+                            flex: 0,
+                            fontSize: textScale(12.5),
+                            fontFamily: fontFamily.regular,
+                            textAlign: 'left',
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.white,
+                            width: width / 1.5,
+                          }}>
+                          {categoryInfo?.address || ''}
+                        </Text>
+                        : null
+                      }
+
+
 
                       {!!categoryInfo &&
                         !categoryInfo?.closed_store_order_scheduled ? (
@@ -779,6 +789,7 @@ export default function Products({ route, navigation }) {
                               ...styles.ratingTxt,
                               color: colors.white,
                               fontSize: textScale(9.5),
+
                             }}>
                             {categoryInfo?.show_slot
                               ? strings.OPEN

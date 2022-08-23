@@ -470,6 +470,8 @@ export const GET_MORE_CATEGORIES = getApiUrl('/v2/vendor-optimize-category');
 export const PICK_UP_LOCATION_SEARCH = getApiUrl('/dropoff-location');
 // export const GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE = getApiUrl('/v2/category/filters',);
 
+export const ALL_NEARBY_DRIVERS =getApiUrl('/get/agents')
+
 //Laundry Service APIs
 export const GET_PRODUCT_ESTIMATION_WITH_ADDONS = getApiUrl(
   '/estimation/get-product-estimation-with-addons',
