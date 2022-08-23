@@ -536,7 +536,7 @@ export default {
   icBgDark: require('../assets/images/ic_darkbg.png'),
 
   //
-  icBikeMarker:require('../assets/images/mapMarkers/ic_bike.png'),
+  icBikeMarker1:require('../assets/images/mapMarkers/ic_bike.png'),
   iccycleMarker:require('../assets/images/mapMarkers/ic_cycle.png'),
   icmanMarker:require('../assets/images/mapMarkers/ic_man.png'),
   ictruckMarker:require('../assets/images/mapMarkers/ic_truck.png'),

@@ -1157,7 +1157,7 @@ console.log(scheduleDateTime,"scheduleDateTime")
         return imagePath.iccycleMarker
         break;
       case 3:
-        return imagePath.icBikeMarker
+        return imagePath.icBikeMarker1
         break;
       case 4:
         return imagePath.icCar
