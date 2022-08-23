@@ -206,19 +206,7 @@ android {
 
     flavorDimensions "appType"
 
-    // productFlavors {
-    //                arwin{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.arwin'
-    //         resValue "string", "app_name", "Smarter Shoper"
-    //         resValue "string", "host_name", ""
-    //         }
-    // }
-
+  
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -5943,6 +5931,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.axxi.order'
             resValue "string", "app_name", "Axxi" 
+            resValue "string", "host_name", ""
+            }
+          pets{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.pets.order'
+            resValue "string", "app_name", "Pets" 
             resValue "string", "host_name", ""
             }
     }

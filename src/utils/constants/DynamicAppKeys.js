@@ -392,6 +392,7 @@ const shortCodes = {
   mrVeloz:'326609',
   greenCab:'20d107',
   axxi:'bc1119',
+  pets:'8e0436',
 };
 
 const appIds = {
@@ -1950,6 +1951,10 @@ const appIds = {
   axxi: Platform.select({
     ios: 'com.axxi.order',
     android: 'com.axxi.order',
+  }),
+  pets: Platform.select({
+    ios: 'com.pets.order',
+    android: 'com.pets.order',
   }),
 };
 
