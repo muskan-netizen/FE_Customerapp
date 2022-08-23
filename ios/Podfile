@@ -1915,6 +1915,10 @@ end
 target 'Axxi' do
   
 end
+#Pets Target
+target 'Pets' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
