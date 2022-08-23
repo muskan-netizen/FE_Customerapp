@@ -147,7 +147,7 @@ export default function SubcategoryVendor({navigation, route}) {
           moveToNewScreen(navigationStrings.ADDADDRESS, item)();
         }
       } else {
-        moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+        actions.setAppSessionData('on_login')
       }
     } else if (!!item?.is_show_category) {
       moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
@@ -195,7 +195,7 @@ export default function SubcategoryVendor({navigation, route}) {
           moveToNewScreen(navigationStrings.ADDADDRESS, item)();
         }
       } else {
-        moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+        actions.setAppSessionData('on_login')
       }
     } else if (item.redirect_to == staticStrings.DISPATCHER) {
     } else if (item.redirect_to == staticStrings.CELEBRITY) {

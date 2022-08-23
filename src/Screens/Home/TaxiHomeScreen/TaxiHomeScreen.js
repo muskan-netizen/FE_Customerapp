@@ -341,6 +341,7 @@ export default function TaxiHomeScreen({route, navigation}) {
 
   //onPress Category
   const onPressCategory = (item) => {
+    console.log(item,"item>>>>>item")
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -349,7 +350,7 @@ export default function TaxiHomeScreen({route, navigation}) {
       item.redirect_to == staticStrings.ONDEMANDSERVICE
     ) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
-      moveToNewScreen(navigationStrings.ADD_VEHICLE_DETAILS, item)();
+      moveToNewScreen(navigationStrings.ADDADDRESS, item)();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
         // if (item?.warning_page_id) {
@@ -371,8 +372,7 @@ export default function TaxiHomeScreen({route, navigation}) {
           ...item,
         })();
       } else {
-        // showError(strings.UNAUTHORIZED_MESSAGE);
-        moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+        actions.setAppSessionData('on_login');
       }
     } else if (item.redirect_to == staticStrings.DISPATCHER) {
       // moveToNewScreen(navigationStrings.DELIVERY, item)();
@@ -524,8 +524,7 @@ export default function TaxiHomeScreen({route, navigation}) {
           }
         }
       } else {
-        // showError(strings.UNAUTHORIZED_MESSAGE);
-        moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+        actions.setAppSessionData('on_login');
       }
     } else if (data.redirect_to == staticStrings.DISPATCHER) {
       // moveToNewScreen(navigationStrings.DELIVERY, data)();

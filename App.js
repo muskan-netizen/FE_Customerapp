@@ -51,10 +51,14 @@ import {getItem, getUserData, setItem} from './src/utils/utils';
 import {MenuProvider} from 'react-native-popup-menu';
 import {getBundleId} from 'react-native-device-info';
 import {appIds} from './src/utils/constants/DynamicAppKeys';
+import socketServices from './src/utils/scoketService';
 
 let CodePushOptions = {checkFrequency: codePush.CheckFrequency.MANUAL};
 
 const App = () => {
+
+
+
   const [progress, setProgress] = useState(false);
   const [primaryColor, setPrimaryColor] = useState('black');
   const ConnectBTFunction = async () => {
@@ -425,6 +429,7 @@ const App = () => {
       </View>
     );
   };
+  
   return (
     <SafeAreaProvider>
       <MenuProvider>

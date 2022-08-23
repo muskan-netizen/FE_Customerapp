@@ -42,14 +42,14 @@ export default function (state = initial_state, action) {
       const data = action.payload;
       return {
         ...state,
-        appData: data.appData,
+        appData: data?.appData,
         themeColors: {
           ...state.themeColors,
           ...data.themeColors,
         },
         appStyle: {
           ...state.appStyle,
-          ...data.appStyle,
+          ...data?.appStyle,
         },
         // currencies: {
         //   ...state.currencies,

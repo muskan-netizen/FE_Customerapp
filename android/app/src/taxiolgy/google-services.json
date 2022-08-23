@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "823886195331",
+    "project_id": "taxiolgy-1d544",
+    "storage_bucket": "taxiolgy-1d544.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823886195331:android:f03ca691b200db23efc9b6",
+        "android_client_info": {
+          "package_name": "com.taxiolgy.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "823886195331-cv8a3l2sq4o22c0p6ph2le1pcmuk2h6s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.taxiolgy.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "823886195331-d7kjvdhnspfr49iup90n33ivqqkibfvn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.taxiolgy.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "823886195331-jt5vd5ta8n51l9538mu2geo8c0jquu1u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.taxiolgy.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "823886195331-qrc436msvbkbge4ciep49f4d7248j65g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJFVBPbEye6dfNkQ_Oe1Xgt1nOa6S3kNY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "823886195331-qrc436msvbkbge4ciep49f4d7248j65g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "823886195331-frqmnj6mg2q7ag54u825ugde02kci8rl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.taxiolgy.order"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

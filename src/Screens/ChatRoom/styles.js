@@ -13,8 +13,8 @@ export default ({ fontFamily, isDarkMode }) => {
       paddingHorizontal: moderateScale(16)
     },
     borderStyle: {
-      borderBottomWidth: 0.4,
-      borderBottomColor: isDarkMode ? colors.whiteOpacity22 : colors.blackOpacity20,
+      // borderBottomWidth: 0.4,
+      // borderBottomColor: isDarkMode ? colors.whiteOpacity22 : colors.blackOpacity20,
       marginVertical: moderateScaleVertical(8)
     },
     textDesc: {

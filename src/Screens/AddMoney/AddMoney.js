@@ -59,9 +59,10 @@ export default function AddMoney({navigation}) {
   const [state, setState] = useState({
     amount: '',
     data: [
-      {id: 0, amount: 300},
-      {id: 1, amount: 5000},
-      {id: 2, amount: 4500},
+      {id: 0, amount: 10},
+      {id: 1, amount: 20},
+      {id: 2, amount: 50},
+      {id: 3, amount: 100},
     ],
     allAvailAblePaymentMethods: [],
     selectedPaymentMethod: null,
@@ -94,10 +95,12 @@ export default function AddMoney({navigation}) {
     paymentDataFlutterWave,
   } = state;
   useEffect(() => {
+    
     getListOfPaymentMethod();
   }, []);
-
+  
   useEffect(() => {
+   
     if (
       preferences &&
       preferences?.stripe_publishable_key != '' &&
@@ -112,8 +115,7 @@ export default function AddMoney({navigation}) {
 
   //Get list of all payment method
   const getListOfPaymentMethod = () => {
-    actions
-      .getListOfPaymentMethod(
+    actions.getListOfPaymentMethod(
         '/wallet',
         {},
         {
@@ -586,7 +588,7 @@ export default function AddMoney({navigation}) {
       .catch(errorMethod);
   };
   const _createPaymentMethod = async (cardInfo, res2) => {
-    // console.log(cardInfo, 'cardInfo');
+ 
     if (res2) {
       await createPaymentMethod({
         type: 'Card',
@@ -599,7 +601,7 @@ export default function AddMoney({navigation}) {
           if (res && res?.error && res?.error?.message) {
             showError(res?.error?.message);
           } else {
-            console.log(res, 'success_createPaymentMethod ');
+            console.log(res, 'success_createPaymentMethod');
             actions
               .getStripePaymentIntent(
                 // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
@@ -873,7 +875,7 @@ export default function AddMoney({navigation}) {
               renderItem={_renderItemPayments}
               ListFooterComponent={listFooterComp}
               ListEmptyComponent={() => (
-                <Text style={{textAlign: 'center'}}>
+                <Text style={{textAlign: 'center',color: isDarkMode ? MyDarkTheme.colors.text : colors.black,}}>
                   {strings.NO_PAYMENT_METHOD}
                 </Text>
               )}

@@ -140,11 +140,11 @@ export function otpTimerCounter(seconds) {
   return `${m}:${s}`;
 }
 
-export function getRandomColor() {
+export function getRandomColor(opacity = 0.3) {
   const w = Math.floor(Math.random() * 256);
   const x = Math.floor(Math.random() * 256);
   const y = Math.floor(Math.random() * 256);
-  const z = 0.3;
+  const z = opacity;
   const rgbaColor = 'rgba(' + w + ',' + x + ',' + y + ',' + z + ')';
   return rgbaColor;
 }
@@ -279,16 +279,7 @@ export function getAddressComponent(details, update) {
 
 export const sessionHandler = (error) => {
   actions.userLogout();
-  NavigationService.navigate(navigationStrings.OUTER_SCREEN, {}),
-    Alert.alert(error, '', [
-      {
-        text: strings.OK,
-        // cancelable: false,
-        onPress: () => console.log('okay Pressed'),
-        //   onPress: () =>
-        //     NavigationService.navigate(navigationStrings.OUTER_SCREEN, {}),
-      },
-    ]);
+  actions.setAppSessionData('guest_login');
 };
 
 export const getScaleTransformationStyle = (
@@ -367,7 +358,7 @@ const timeInLocalLangauge = (value, selectedLanguage) => {
   })}`;
 };
 
-const getNearestLocation = (currentLocation, savedLocations) => {
+const getNearestLocation = async(currentLocation, savedLocations = []) => {
   const points = savedLocations.map((item, indx) => {
     const distance = getDistance(
       {

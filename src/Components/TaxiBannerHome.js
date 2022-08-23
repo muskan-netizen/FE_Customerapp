@@ -102,6 +102,7 @@ const TaxiBannerHome = ({
   return (
     <CardView style={[styles.cardViewStyle, cardViewStyle]}>
       <Carousel
+      layout={'default'}
         ref={bannerRef}
         data={bannerData}
         renderItem={bannerDataImages}

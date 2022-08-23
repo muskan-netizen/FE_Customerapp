@@ -1,9 +1,9 @@
 #include "Pods/Target Support Files/Pods-available_pods-TruckTireNow/Pods-available_pods-TruckTireNow.release.xcconfig"
 
 PROJECT_APPLE_ID =1626839584
-PROJECT_BUNDLE_ID =com.trucktirenow.customer
+PROJECT_BUNDLE_ID =com.trucktirenow
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 1
+PROJECT_BUILD_NUMBER = 7
 PROJECT_APP_NAME =TruckTireNow
 PROJECT_GOOGLE_CLIENT_ID =350033689545-hqkkcsqbctpmbv5tnt12q65q4u3094iv.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.350033689545-hqkkcsqbctpmbv5tnt12q65q4u3094iv

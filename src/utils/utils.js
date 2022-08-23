@@ -1,9 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {resetStackAndNavigate} from '../navigation/NavigationService';
-import navigationStrings from '../navigation/navigationStrings';
-import actions from '../redux/actions';
-import {enums} from './enums';
 import {sessionHandler} from './helperFunctions';
 
 export async function getHeaders() {
@@ -199,21 +195,4 @@ export const verticalAnimation = {
       },
     };
   },
-};
-
-export const checkIsAdmin = (
-  navigation_,
-  navigation,
-  userData,
-  redirectedFrom,
-) => {
-  if (redirectedFrom == 'cart') {
-    actions.setRedirection('');
-    navigation.push(navigationStrings.TAB_ROUTES, {
-      screen: navigationStrings.CART,
-      params: {screen: navigationStrings.CART},
-    });
-  } else {
-    navigation.push(navigationStrings.TAB_ROUTES);
-  }
 };

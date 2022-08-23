@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {FlatList, View} from 'react-native';
+import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import VendorDetailLoader from '../../Components/Loaders/VendorDetailLoader';
 import ThreeColumnCard from '../../Components/ThreeColumnCard';
@@ -16,13 +16,13 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import { showError } from '../../utils/helperFunctions';
+import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from '../Vendors/ListEmptyVendors';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 import strings from '../../constants/lang';
 
-export default function VendorDetail({ navigation, route }) {
+export default function VendorDetail({navigation, route}) {
   let vendorParams = route?.params?.data;
   console.log(vendorParams, 'vendorParams>>>>>>>');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -39,7 +39,7 @@ export default function VendorDetail({ navigation, route }) {
     limit: 12,
     pageNo: 1,
   });
-  const { vendorId, vendorData, isLoading, limit, pageNo, vendordName } = state;
+  const {vendorId, vendorData, isLoading, limit, pageNo, vendordName} = state;
   useEffect(() => {
     if (
       vendorParams &&
@@ -70,20 +70,20 @@ export default function VendorDetail({ navigation, route }) {
     convertLocalDateToUTCDate('2021-09-28T00:00', true);
   }, []);
 
-  const { appData, appStyle, currencies, languages } = useSelector(
+  const {appData, appStyle, currencies, languages} = useSelector(
     (state) => state.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({ fontFamily });
+  const commonStyles = commonStylesFun({fontFamily});
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   /***********GET SUBCATEGORY  DETAIL DATA******** */
 
@@ -101,9 +101,9 @@ export default function VendorDetail({ navigation, route }) {
       )
       .then((res) => {
         console.log(res, 'res>>>category data');
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
         if (res && res.data) {
-          updateState({ vendorData: res.data.listData });
+          updateState({vendorData: res.data.listData});
         }
       })
       .catch(errorMethod);
@@ -122,7 +122,7 @@ export default function VendorDetail({ navigation, route }) {
         language: languages.primary_language.id,
       })
       .then((res) => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
         if (res && res.data) {
           console.log(res, 'res>>res');
           let newArray = res.data;
@@ -133,7 +133,7 @@ export default function VendorDetail({ navigation, route }) {
           //   // );
           //   newArray= newArray.filter((x) => x?.id != vendorParams?.categoryData?.id)
           // }
-          updateState({ vendorData: newArray });
+          updateState({vendorData: newArray});
         }
       })
       .catch(errorMethod);
@@ -142,23 +142,22 @@ export default function VendorDetail({ navigation, route }) {
   /********* */
 
   const errorMethod = (error) => {
-    updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
+    updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
     showError(error?.message || error?.error);
   };
 
-
-  const onPressItem = (item) =>{
-    console.log("item+++",item)
+  const onPressItem = (item) => {
+    console.log('item+++', item);
 
     if (!!item?.type && item?.type?.id == 7) {
       if (!!userData?.auth_token) {
-        item['pickup_taxi'] = true
-        item['redirect_to'] = item.type.redirect_to
-        navigation.navigate(navigationStrings.ADDADDRESS, { data: item })
+        item['pickup_taxi'] = true;
+        item['redirect_to'] = item.type.redirect_to;
+        navigation.navigate(navigationStrings.ADDADDRESS, {data: item});
         return;
       }
-      navigation.navigate(navigationStrings.OUTER_SCREEN, {})
-      return
+      actions.setAppSessionData('on_login');
+      return;
     }
     if (!!item?.redirect_to && item?.redirect_to == staticStrings.PRODUCT) {
       navigation.navigate(navigationStrings.PRODUCT_LIST, {
@@ -171,10 +170,10 @@ export default function VendorDetail({ navigation, route }) {
           name: item.name,
           isVendorList: false,
           category_slug: item?.slug,
-          categoryExist: item?.id || null
+          categoryExist: item?.id || null,
         },
       });
-      return
+      return;
     }
     if (!!item?.type && item?.type.redirect_to == staticStrings.PRODUCT) {
       navigation.navigate(navigationStrings.PRODUCT_LIST, {
@@ -187,18 +186,18 @@ export default function VendorDetail({ navigation, route }) {
           name: item.name,
           isVendorList: false,
           category_slug: item?.slug,
-          categoryExist: item?.id || null
+          categoryExist: item?.id || null,
         },
       });
-      return
+      return;
     }
     if (item?.redirect_to == staticStrings.VENDOR) {
-      navigation.navigate(navigationStrings.VENDOR, { data: item });
+      navigation.navigate(navigationStrings.VENDOR, {data: item});
       return;
     }
 
     if (item?.redirect_to == staticStrings.SUBCATEGORY) {
-      navigation.push(navigationStrings.VENDOR_DETAIL, { data: {item: item} });
+      navigation.push(navigationStrings.VENDOR_DETAIL, {data: {item: item}});
       return;
     }
 
@@ -223,13 +222,13 @@ export default function VendorDetail({ navigation, route }) {
       vendorData: vendorParams?.item,
       categoryInfo: item,
       name: item.name,
-      categoryExist: item?.id || null
-    })
-  }
-  const _renderItem = ({ item, index }) => {
+      categoryExist: item?.id || null,
+    });
+  };
+  const _renderItem = ({item, index}) => {
     return (
       <ThreeColumnCard
-        onPress={()=>onPressItem(item)}
+        onPress={() => onPressItem(item)}
         // onPress={() => navigation.navigate(navigationStrings.PRODUCT_LIST)}
         data={item}
         withTextBG
@@ -248,7 +247,9 @@ export default function VendorDetail({ navigation, route }) {
 
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={vendorParams?.item?.name || vendordName}
         rightIcon={
@@ -261,20 +262,20 @@ export default function VendorDetail({ navigation, route }) {
         }
       />
 
-      <View style={{ ...commonStyles.headerTopLine }} />
+      <View style={{...commonStyles.headerTopLine}} />
       {isLoading ? (
         <View>
-          <View style={{ height: 10 }} />
+          <View style={{height: 10}} />
           <VendorDetailLoader listSize={5} isRow />
         </View>
       ) : (
         <FlatList
           data={vendorData}
           numColumns={3}
-          ListHeaderComponent={<View style={{ height: 10 }} />}
+          ListHeaderComponent={<View style={{height: 10}} />}
           // columnWrapperStyle={{justifyContent: 'space-between'}}
-          contentContainerStyle={{ marginHorizontal: moderateScale(16) }}
-          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+          contentContainerStyle={{marginHorizontal: moderateScale(16)}}
+          ItemSeparatorComponent={() => <View style={{height: 10}} />}
           renderItem={_renderItem}
           ListEmptyComponent={
             !isLoading && (

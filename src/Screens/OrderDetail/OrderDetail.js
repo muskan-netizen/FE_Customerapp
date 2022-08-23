@@ -2,7 +2,7 @@ import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { cloneDeep } from 'lodash';
 import LottieView from 'lottie-react-native';
 import moment from 'moment';
-import React, {Fragment, useEffect, useRef, useState} from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import * as Animatable from 'react-native-animatable';
 import {
   Dimensions,
@@ -60,7 +60,7 @@ import useInterval from '../../utils/useInterval';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
 import stylesFun from './stylesCart';
-import {Calendar} from 'react-native-calendars';
+import { Calendar } from 'react-native-calendars';
 import Modal from 'react-native-modal';
 import GradientButton from '../../Components/GradientButton';
 
@@ -72,7 +72,7 @@ export default function OrderDetail({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-  // console.log(paramData, 'paramData');
+  console.log(paramData, 'paramData');
   const dineInType = useSelector((state) => state?.home?.dineInType);
 
   const [lalaMoveUrl, setLalaMoveUrl] = useState(null);
@@ -173,15 +173,15 @@ export default function OrderDetail({ navigation, route }) {
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const { appData, themeColors, currencies, languages, appStyle } = useSelector(
     (state) => state.initBoot,
   );
 
-  console.log(driverStatus,'driverStatusdriverStatusdriverStatus');
+  console.log(driverStatus, 'driverStatusdriverStatusdriverStatus');
 
 
-  const {preferences} = appData?.profile;
+  const { preferences } = appData?.profile;
   let businessType = preferences?.business_type;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -223,7 +223,7 @@ export default function OrderDetail({ navigation, route }) {
     isFocused ? 5000 : null,
   );
 
-  console.log("cartDatacartData",cartData)
+  console.log("cartDatacartData", cartData)
 
   useFocusEffect(
     React.useCallback(() => {
@@ -243,6 +243,44 @@ export default function OrderDetail({ navigation, route }) {
     }
   };
 
+
+  const createRoom = async (item, type) => {
+
+    try {
+      const apiData = {
+        sub_domain: '192.168.101.88', //this is static value 
+        client_id: String(appData?.profile.id),
+        db_name: appData?.profile?.database_name,
+        user_id: String(userData?.id),
+        type: type,
+        order_vendor_id: String(item?.id),
+        vendor_id: String(item?.vendor_id),
+        order_id: String(item?.order_id),
+
+      }
+      updateState({ isLoading: true })
+
+      console.log("sending api data", apiData)
+      const res = await actions.onStartChat(apiData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      console.log('start chat res', res)
+      updateState({ isLoading: false })
+      if (!!res?.roomData) {
+        onChat(res.roomData)
+
+      }
+    } catch (error) {
+      console.log('error raised in start chat api', error)
+      showError(error?.message)
+      updateState({ isLoading: false })
+    }
+  }
+
+
+
   const new_dispatch_traking_url = trackingUrl
     ? trackingUrl.replace('/order/', '/order-details/')
     : null;
@@ -259,7 +297,7 @@ export default function OrderDetail({ navigation, route }) {
     }
 
     console.log('sending api data', data);
-  
+
     actions
       .getOrderDetail(data, {
         code: appData?.profile?.code,
@@ -289,7 +327,7 @@ export default function OrderDetail({ navigation, route }) {
         ) {
           updateState({ ratingData: res?.data?.vendors[0].products[0] });
         }
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         setMinimumDelayVendorDate(res?.data?.vendors[0]?.delaySlot);
 
         if (res?.data) {
@@ -328,7 +366,7 @@ export default function OrderDetail({ navigation, route }) {
               animate(lat, lng);
             }
           }
-            console.log(driverStatus?.agent_location?.lat,driverStatus?.agent_location?.long,"driverStatus?.agent_location?.lat");
+          console.log(driverStatus?.agent_location?.lat, driverStatus?.agent_location?.long, "driverStatus?.agent_location?.lat");
           if (!trackingUrl) {
             updateState({
               trackingUrl: res.data.vendors[0].dispatch_traking_url,
@@ -406,15 +444,15 @@ export default function OrderDetail({ navigation, route }) {
     data['review'] = productDetail?.product_rating?.review
       ? productDetail?.product_rating?.review
       : '';
-    // data['vendor_id'] = productDetail.vendor_id;
+    // data['vendor_id'] = productDetail.vendor_id; =
 
-    actions
-      .giveRating(data, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-      })
+    actions.giveRating(data, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    })
       .then((res) => {
+        console.log(res, "ressssssssr")
         let cloned_cartItems = cloneDeep(cartItems);
         updateState({
           isLoading: false,
@@ -712,7 +750,7 @@ export default function OrderDetail({ navigation, route }) {
                                           }
                                           numberOfLines={1}>
                                           {` ${currencies?.primary_currency
-                                              ?.symbol
+                                            ?.symbol
                                             } ${currencyNumberFormatter(
                                               Number(
                                                 j?.quantity_price,
@@ -815,7 +853,7 @@ export default function OrderDetail({ navigation, route }) {
                                             }
                                             numberOfLines={1}>
                                             {` ${currencies?.primary_currency
-                                                ?.symbol
+                                              ?.symbol
                                               } ${currencyNumberFormatter(
                                                 Number(j?.quantity_price),
                                                 appData?.profile?.preferences
@@ -842,9 +880,9 @@ export default function OrderDetail({ navigation, route }) {
                         color: colors.redFireBrick,
                         marginBottom: moderateScale(3),
                       }}>{`${i?.product.delay_order_hrs > 0 ||
-                          i?.product.delay_order_min > 0
-                          ? strings.PREPARATION_TIME_IS
-                          : ''
+                        i?.product.delay_order_min > 0
+                        ? strings.PREPARATION_TIME_IS
+                        : ''
                         }${i?.product.delay_order_hrs > 0
                           ? ` ${i?.product.delay_order_hrs} hrs`
                           : ''
@@ -1005,7 +1043,7 @@ export default function OrderDetail({ navigation, route }) {
     }
   };
 
-  const _renderItem = ({item, index}) => {
+  const _renderItem = ({ item, index }) => {
     return (
       <View
         key={index}
@@ -1016,29 +1054,44 @@ export default function OrderDetail({ navigation, route }) {
           // marginVertical: moderateScale(10),
         }}>
         {/* show ETA Time */}
-        <View style={{paddingHorizontal: moderateScale(10)}}>
-          <UserDetail
-            data={item}
-            type={strings.VENDER}
-            containerStyle={{
+        <View style={{ paddingHorizontal: moderateScale(10) }}>
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+
+
+            <UserDetail data={item} type={strings.VENDER} containerStyle={{
               backgroundColor: isDarkMode
                 ? MyDarkTheme.colors.background
                 : colors.white,
+              flex: 1
             }}
-            textStyle={{
-              color: isDarkMode
-                ? MyDarkTheme.colors.text
-                : colors.blackOpacity86,
-            }}
-          />
-      {/* <TouchableOpacity onPress={() => onChat(item)}>
-          <Text style={{
-            margin: 16,
-            color: colors.redB,
-            fontFamily: fontFamily.bold,
-            fontSize: 16
-          }}>CHAT</Text>
-        </TouchableOpacity> */}
+              textStyle={{
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity86,
+              }}
+            />
+            {!userData?.is_superadmin ? <View>
+              {!!appData?.profile?.socket_url ?
+                <TouchableOpacity
+                  onPress={() => createRoom(item, 'vendor_to_user')}
+                  style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
+                >
+                  <Text style={styles.startChatText}>Vendor</Text>
+                  <Image resizeMode='contain' style={styles.agentUserIcon} source={imagePath.icVendorChat} />
+                </TouchableOpacity> : null}
+
+              {!!appData?.profile?.socket_url && !!(driverStatus?.order && driverStatus?.agent_location?.lat) ?
+                <TouchableOpacity
+                  onPress={() => createRoom(item, 'agent_to_user')}
+                  style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
+                  activeOpacity={0.7}
+                >
+                  <Text style={styles.startChatText}>Agent</Text>
+                  <Image resizeMode='contain' style={styles.agentUserIcon} source={imagePath.icUserChat} />
+                </TouchableOpacity> : null}
+            </View> : null}
+          </View>
 
           {item?.products.length
             ? item?.products.map((i, inx) => {
@@ -1082,7 +1135,7 @@ export default function OrderDetail({ navigation, route }) {
                             style={{
                               justifyContent: 'center',
                             }}>
-                            <Text>{i?.product_name}</Text>
+                            <Text style={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }}>{i?.product_name}</Text>
                             {i?.quantity && (
                               <View
                                 style={{
@@ -1137,7 +1190,7 @@ export default function OrderDetail({ navigation, route }) {
                                         style={styles.cartItemWeight2}
                                         numberOfLines={1}>
                                         {` ${currencies?.primary_currency
-                                            ?.symbol
+                                          ?.symbol
                                           } ${currencyNumberFormatter(
                                             Number(j?.price),
                                             appData?.profile?.preferences
@@ -1312,7 +1365,7 @@ export default function OrderDetail({ navigation, route }) {
                 paddingHorizontal: moderateScale(5),
               }}>
               <TouchableOpacity
-                style={{flexDirection: 'row'}}
+                style={{ flexDirection: 'row' }}
                 onPress={() => _selectTimeLaundry('pickup')}>
                 <Image source={imagePath.pickUpSchedule} />
                 <View>
@@ -1345,7 +1398,7 @@ export default function OrderDetail({ navigation, route }) {
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={{flexDirection: 'row'}}
+                style={{ flexDirection: 'row' }}
                 onPress={() => _selectTimeLaundry('dropoff')}>
                 <Image source={imagePath.dropOffSchedule} />
                 <View>
@@ -1784,7 +1837,7 @@ export default function OrderDetail({ navigation, route }) {
             {/* {console.log(preferences?.business_type, "preferences?.business_type")}
             { (preferences?.business_type == 'home_service') ? strings.DELIEVERY_ADDRESS: 'Service Address' } */}
             {getBundleId() == appIds.quickLube &&
-            preferences?.business_type == 'home_service'
+              preferences?.business_type == 'home_service'
               ? strings.SERVICE_ADDRESS
               : strings.DELIEVERY_ADDRESS}
           </Text>
@@ -1836,7 +1889,7 @@ export default function OrderDetail({ navigation, route }) {
             )}
             {/* Service Address */}
 
-            <View style={{marginLeft: moderateScale(12), flex: 1}}>
+            <View style={{ marginLeft: moderateScale(12), flex: 1 }}>
               {cartData?.luxury_option_id == 3 ? (
                 <Text
                   style={{
@@ -1847,7 +1900,7 @@ export default function OrderDetail({ navigation, route }) {
                       : colors.blackOpacity43,
                     flex: 1,
                   }}>
-                    
+
                   {cartData?.vendors[0]?.vendor?.address}
                 </Text>
               ) : (
@@ -1860,11 +1913,11 @@ export default function OrderDetail({ navigation, route }) {
                       : colors.blackOpacity43,
                     flex: 1,
                   }}>
-                  {`${
-                    cartData?.address?.house_number === null
-                      ? ''
-                      : `${cartData?.address?.house_number}, `
-                  }`}
+
+                  {`${cartData?.address?.house_number === null
+                    ? ''
+                    : `${cartData?.address?.house_number}, `
+                    }`}
                   {cartData?.address?.address} {''}
                   {cartData?.address?.pincode}
                 </Text>
@@ -2143,7 +2196,7 @@ export default function OrderDetail({ navigation, route }) {
             />
           )}
           {(cartData?.total_service_fee > 0 ||
-            cartData?.taxable_amount > 0) && (
+            Number(cartData?.taxable_amount) > 0) && (
               <LeftRightText
                 leftText={strings.TAXES_FEES}
                 rightText={`${currencies?.primary_currency?.symbol
@@ -2226,6 +2279,7 @@ export default function OrderDetail({ navigation, route }) {
             MyDarkTheme={MyDarkTheme}
             leftTextStyle={{
               fontSize: textScale(16),
+              marginBottom: moderateScaleVertical(12),
               color: isDarkMode
                 ? MyDarkTheme.colors.text
                 : colors.blackOpacity86,
@@ -2449,7 +2503,7 @@ export default function OrderDetail({ navigation, route }) {
     if (!selectedTipAmount) {
       showError(strings.PLEASE_SELECT_VALID_OPTION);
     } else if (!userData?.auth_token) {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login')
     } else {
       moveToNewScreen(navigationStrings.TIP_PAYMENT_OPTIONS, {
         selectedTipAmount: selectedTipAmount,
@@ -2459,7 +2513,7 @@ export default function OrderDetail({ navigation, route }) {
   };
 
   const onCenter = () => {
-console.log("driverStatusdriverStatus",driverStatus)
+    console.log("driverStatusdriverStatus", driverStatus)
     // return
     mapRef.current.fitToCoordinates(
       [
@@ -2487,6 +2541,8 @@ console.log("driverStatusdriverStatus",driverStatus)
     );
   };
 
+  console.log("driverStatusdriverStatus", driverStatus)
+
   const acceptRejectDriverUpdation = (status) => {
     if (
       status == 1 &&
@@ -2505,20 +2561,19 @@ console.log("driverStatusdriverStatus",driverStatus)
       data['total_payable_amount'] = updatedcartData?.difference_to_be_paid;
 
       updateState({ isLoading: true });
-      actions
-        .acceptRejectDriveUpdate(data, {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          timezone: RNLocalize.getTimeZone(),
-          // systemuser: DeviceInfo.getUniqueId(),
-        })
+      actions.acceptRejectDriveUpdate(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        timezone: RNLocalize.getTimeZone(),
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
         .then((res) => {
           showSuccess(res?.message);
           // updateState({isLoading: false});
           _getOrderDetailScreen();
         })
-        .catch((error)=>console.log(error,"errorororor"));
+        .catch((error) => console.log(error, "errorororor"));
     }
   };
 
@@ -2878,9 +2933,9 @@ console.log("driverStatusdriverStatus",driverStatus)
     );
   };
 
-  const onChat = (item) =>{
-    console.log("item+++",item)
-    navigation.navigate(navigationStrings.CHAT_SCREEN,{data: item})
+  const onChat = (item) => {
+    console.log("item+++", item)
+    navigation.navigate(navigationStrings.CHAT_SCREEN, { data: { ...item, comeFromOrder: true } })
   }
 
   const _onRateDriver = () => {
@@ -2904,6 +2959,7 @@ console.log("driverStatusdriverStatus",driverStatus)
             containerStyle={{ paddingHorizontal: moderateScale(8) }}
             isDriver={cartData?.driver_rating == null}
             _onRateDriver={_onRateDriver}
+            startChatWithAgent={() => createRoom(cartItems[0], 'agent_to_user')}
           />
         ) : null}
 
@@ -2926,11 +2982,11 @@ console.log("driverStatusdriverStatus",driverStatus)
                 origin={
                   orderStatus !== 'completed' && orderStatus !== 'unassigned'
                     ? {
-                        latitude: Number(driverStatus?.agent_location?.lat),
-                        longitude: Number(
-                          driverStatus?.agent_location?.long || driverStatus?.agent_location?.lng,
-                        ),
-                      }
+                      latitude: Number(driverStatus?.agent_location?.lat),
+                      longitude: Number(
+                        driverStatus?.agent_location?.long || driverStatus?.agent_location?.lng,
+                      ),
+                    }
                     : driverStatus.tasks[0]
                 }
                 // origin={{
@@ -2998,7 +3054,7 @@ console.log("driverStatusdriverStatus",driverStatus)
                   ref={markerRef}
                   coordinate={state.animateDriver}>
                   <Image
-                    source={appIds?.sabroson?imagePath?.icBikeMarker: imagePath.icScooter}
+                    source={appIds?.sabroson ? imagePath?.icBikeMarker : imagePath.icScooter}
                     style={{
                       transform: [{ rotate: `${Number(driverStatus.agent_location?.heading_angle) + 180}deg` }],
                     }}
@@ -3115,7 +3171,7 @@ console.log("driverStatusdriverStatus",driverStatus)
                 // top right sand 1
               ]}
             />
-            <Text style={styles.waitToAccept}>{strings.WAITINGTOACCEPT}</Text>
+            <Text style={{ ...styles.waitToAccept, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>{strings.WAITINGTOACCEPT}</Text>
           </View>
         )}
         {!!orderStatus &&
@@ -3193,7 +3249,7 @@ console.log("driverStatusdriverStatus",driverStatus)
           )} */}
 
 
-    
+
         {!!(updatedcartItems && updatedcartItems.length) && (
           <FlatList
             data={updatedcartItems}
@@ -3323,7 +3379,7 @@ console.log("driverStatusdriverStatus",driverStatus)
     }
   };
 
-  const renderTimeSlots = ({item, index}) => {
+  const renderTimeSlots = ({ item, index }) => {
     return (
       <TouchableOpacity
         key={String(index)}
@@ -3351,7 +3407,7 @@ console.log("driverStatusdriverStatus",driverStatus)
     );
   };
 
-  const renderTimeSlots2 = ({item, index}) => {
+  const renderTimeSlots2 = ({ item, index }) => {
     return (
       <TouchableOpacity
         key={String(index)}
@@ -3459,7 +3515,7 @@ console.log("driverStatusdriverStatus",driverStatus)
       modalType == 'pickup' &&
       !cartItems[0]?.same_day_orders_for_rescheduling &&
       moment(currentDropOffDate, 'DD/MM/YYYY').format('DD/MM/YYYY') ==
-        moment(laundrySelectedPickupDate).format('DD/MM/YYYY')
+      moment(laundrySelectedPickupDate).format('DD/MM/YYYY')
     ) {
       alert('You can not reschedule pickup & drop off on the same day');
       return;
@@ -3468,7 +3524,7 @@ console.log("driverStatusdriverStatus",driverStatus)
       modalType !== 'pickup' &&
       !cartItems[0]?.same_day_orders_for_rescheduling &&
       moment(currentPickupDate, 'DD/MM/YYYY').format('DD/MM/YYYY') ==
-        moment(laundrySelectedDropOffDate).format('DD/MM/YYYY')
+      moment(laundrySelectedDropOffDate).format('DD/MM/YYYY')
     ) {
       alert('You can not reschedule pickup & drop off on the same day');
       return;
@@ -3477,7 +3533,7 @@ console.log("driverStatusdriverStatus",driverStatus)
     if (
       modalType == 'pickup' &&
       moment(currentDropOffDate, 'DD/MM/YYYY').format('DD/MM/YYYY') <
-        moment(laundrySelectedPickupDate).format('DD/MM/YYYY')
+      moment(laundrySelectedPickupDate).format('DD/MM/YYYY')
     ) {
       alert(`Selected date is invalid.`);
       return;
@@ -3486,7 +3542,7 @@ console.log("driverStatusdriverStatus",driverStatus)
     if (
       modalType !== 'pickup' &&
       moment(currentPickupDate, 'DD/MM/YYYY').format('DD/MM/YYYY') >
-        moment(laundrySelectedDropOffDate).format('DD/MM/YYYY')
+      moment(laundrySelectedDropOffDate).format('DD/MM/YYYY')
     ) {
       alert(`Selected date is invalid.`);
       return;
@@ -3538,7 +3594,7 @@ console.log("driverStatusdriverStatus",driverStatus)
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
-        
+
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2
@@ -3549,7 +3605,9 @@ console.log("driverStatusdriverStatus",driverStatus)
         }
         centerTitle={strings.ORDER + `${'#'}${cartData?.order_number || ''}`}
         customRight={!!cartData?.reports?.report?.original ? customRight : ''}
-      /> 
+        onPressLeft={paramData?.from ? moveToNewScreen(navigationStrings.HOME) : () => navigation.goBack()}
+
+      />
       <View
         style={{
           height: 1,
@@ -3600,10 +3658,10 @@ console.log("driverStatusdriverStatus",driverStatus)
         isVisible={isVisibleTimeModal}
         animationType={'none'}
         onBackdropPress={onCloseModal}
-        style={{margin: 0, justifyContent: 'flex-end'}}>
+        style={{ margin: 0, justifyContent: 'flex-end' }}>
         <TouchableOpacity style={styles.closeButton} onPress={onCloseModal}>
           <Image
-            style={isDarkMode && {tintColor: MyDarkTheme.colors.white}}
+            style={isDarkMode && { tintColor: MyDarkTheme.colors.white }}
             source={imagePath.crossB}
           />
         </TouchableOpacity>
@@ -3710,13 +3768,13 @@ console.log("driverStatusdriverStatus",driverStatus)
                           renderItem={renderTimeSlots}
                           keyExtractor={(item) => item.value || ''}
                           ItemSeparatorComponent={() => (
-                            <View style={{marginRight: moderateScale(12)}} />
+                            <View style={{ marginRight: moderateScale(12) }} />
                           )}
                           ListHeaderComponent={() => (
-                            <View style={{marginLeft: moderateScale(24)}} />
+                            <View style={{ marginLeft: moderateScale(24) }} />
                           )}
                           ListFooterComponent={() => (
-                            <View style={{marginRight: moderateScale(24)}} />
+                            <View style={{ marginRight: moderateScale(24) }} />
                           )}
                           ListEmptyComponent={() => (
                             <View>
@@ -3751,13 +3809,13 @@ console.log("driverStatusdriverStatus",driverStatus)
                           renderItem={renderTimeSlots2}
                           keyExtractor={(item) => item.value || ''}
                           ItemSeparatorComponent={() => (
-                            <View style={{marginRight: moderateScale(12)}} />
+                            <View style={{ marginRight: moderateScale(12) }} />
                           )}
                           ListHeaderComponent={() => (
-                            <View style={{marginLeft: moderateScale(24)}} />
+                            <View style={{ marginLeft: moderateScale(24) }} />
                           )}
                           ListFooterComponent={() => (
-                            <View style={{marginRight: moderateScale(24)}} />
+                            <View style={{ marginRight: moderateScale(24) }} />
                           )}
                           ListEmptyComponent={() => (
                             <View>

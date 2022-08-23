@@ -4,7 +4,6 @@ import {getBundleId} from 'react-native-device-info';
 const shortCodes = {
   royoorder: '245bae',
   runrun: 'bf8608',
-
   tranzit: '52a1a6',
   hmoobhub: 'fa11e1',
   capcorp: '149f3e',
@@ -372,6 +371,27 @@ const shortCodes = {
   euodooTechnologies:'c9d1ee',
   rota:'e4b727',
   farmMeat:'371731',
+  danielleBejjani:'b47da2',
+  yallaEat:'94679a',
+  choizez:'05c28e',
+  otto:'d0121e',
+  rescueRoadsideAssistance:'6355c5',
+  tax_E:'a7952f',
+  baggageTaxi:'52bb0a',
+  mersi:'1b308e',
+  foodSpot:"1c67f3",
+  karibaMart:'c1ca39',
+  sourceWith:'503079',
+  apptFindr:'ee3958',
+  vdu:'181d99',
+  laundroZone:'35a0ed',
+  taxiolgy:'43d7df',
+  swipe:'48c861',
+  sheRyders:'058f37',
+  kurrix:'a11a9d',
+  mrVeloz:'326609',
+  greenCab:'20d107',
+  axxi:'bc1119',
 };
 
 const appIds = {
@@ -1846,6 +1866,90 @@ const appIds = {
   farmMeat: Platform.select({
     ios: 'com.farmMeat.order',
     android: 'com.farmMeat.order',
+  }),
+  danielleBejjani: Platform.select({
+    ios: 'com.danielleBejjani.order',
+    android: 'com.danielleBejjani.order',
+  }),
+  yallaEat: Platform.select({
+    ios: 'com.yallaEat.order',
+    android: 'com.yallaEat.order',
+  }),
+  choizez: Platform.select({
+    ios: 'com.choizez.order',
+    android: 'com.choizez.order',
+  }),
+  otto: Platform.select({
+    ios: 'com.otto.order',
+    android: 'com.otto.order',
+  }),
+  rescueRoadsideAssistance: Platform.select({
+    ios: 'com.rescueRoadsideAssistance.order',
+    android: 'com.rescueRoadsideAssistance.order',
+  }),
+  tax_E: Platform.select({
+    ios: 'com.taxE.order',
+    android: 'com.taxE.order',
+  }),
+  baggageTaxi: Platform.select({
+    ios: 'com.baggageTaxi.order',
+    android: 'com.baggageTaxi.order',
+  }),
+  mersi: Platform.select({
+    ios: 'com.mersi.order',
+    android: 'com.mersi.order',
+  }),
+  foodSpot: Platform.select({
+    ios: 'com.foodSpot.order',
+    android: 'com.foodSpot.order',
+  }),
+  karibaMart: Platform.select({
+    ios: 'com.karibaMart.order',
+    android: 'com.karibaMart.order',
+  }),
+  sourceWith: Platform.select({
+    ios: 'com.sourceWith.order',
+    android: 'com.sourceWith.order',
+  }),
+  apptFindr: Platform.select({
+    ios: 'com.apptFindr.order',
+    android: 'com.apptFindr.order',
+  }),
+  vdu: Platform.select({
+    ios: 'com.vdu.order',
+    android: 'com.vdu.order',
+  }),
+  laundroZone: Platform.select({
+    ios: 'com.laundroZone.order',
+    android: 'com.laundroZone.order',
+  }),
+  taxiolgy: Platform.select({
+    ios: 'com.taxiolgy.order',
+    android: 'com.taxiolgy.order',
+  }),
+  swipe: Platform.select({
+    ios: 'com.swipe.order',
+    android: 'com.swipe.order',
+  }),
+  sheRyders: Platform.select({
+    ios: 'com.sheRyders.order',
+    android: 'com.sheRyders.order',
+  }),
+  kurrix: Platform.select({
+    ios: 'com.kurrix.order',
+    android: 'com.kurrix.order',
+  }),
+  mrVeloz: Platform.select({
+    ios: 'com.mrVeloz.order',
+    android: 'com.mrVeloz.order',
+  }),
+  greenCab: Platform.select({
+    ios: 'com.greenCab.order',
+    android: 'com.greenCab.order',
+  }),
+  axxi: Platform.select({
+    ios: 'com.axxi.order',
+    android: 'com.axxi.order',
   }),
 };
 

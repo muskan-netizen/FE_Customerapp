@@ -1,54 +1,48 @@
-import React, {useEffect, useRef, useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import codes from 'country-calling-code';
+import { cloneDeep, isEmpty } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   I18nManager,
   Image,
   Platform,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
+import ActionSheet from 'react-native-actionsheet';
+import { useDarkMode } from 'react-native-dark-mode';
+import DeviceCountry from 'react-native-device-country';
 import DeviceInfo from 'react-native-device-info';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import DocumentPicker from 'react-native-document-picker';
+import FastImage from 'react-native-fast-image';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import RNOtpVerify from 'react-native-otp-verify';
+import { useSelector } from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
+import SubscriptionModal from '../../Components/SubscriptionModal';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import fontFamily from '../../styles/fontFamily';
+import commonStylesFun from '../../styles/commonStyles';
 import {
   moderateScale,
-  moderateScaleVertical,
+  moderateScaleVertical
 } from '../../styles/responsiveSize';
-import {showError} from '../../utils/helperFunctions';
+import { MyDarkTheme } from '../../styles/theme';
+import { cameraHandler } from '../../utils/commonFunction';
+import { showError } from '../../utils/helperFunctions';
+import { androidCameraPermission } from '../../utils/permissions';
+import { setUserData } from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
-import commonStylesFun from '../../styles/commonStyles';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {checkIsAdmin} from '../../utils/utils';
-import {useNavigation} from '@react-navigation/native';
-import {cloneDeep, isEmpty} from 'lodash';
-import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
-import {cameraHandler} from '../../utils/commonFunction';
-import ActionSheet from 'react-native-actionsheet';
-import {androidCameraPermission} from '../../utils/permissions';
-import DocumentPicker from 'react-native-document-picker';
-import codes from 'country-calling-code';
-import * as RNLocalize from 'react-native-localize';
-import RNOtpVerify from 'react-native-otp-verify';
-import DeviceCountry, {
-  TYPE_ANY,
-  TYPE_TELEPHONY,
-  TYPE_CONFIGURATION,
-} from 'react-native-device-country';
-import SubscriptionModal from '../../Components/SubscriptionModal';
+
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
@@ -67,9 +61,9 @@ let addtionSelectedImageIndex = null;
 let addtionSelectedImage = null;
 
 export default function Signup({navigation}) {
-  const navigation_ = useNavigation();
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const userData = useSelector((state) => state.auth.userData);
+  const [accept, isAccept] = useState(false)
   const {
     appData,
     themeColors,
@@ -80,10 +74,10 @@ export default function Signup({navigation}) {
     themeToggle,
     redirectedFrom,
   } = useSelector((state) => state?.initBoot);
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const { appStyle } = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({fontFamily});
-  const styles = stylesFun({fontFamily});
+  const commonStyles = commonStylesFun({ fontFamily });
+  const styles = stylesFun({ fontFamily });
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -96,18 +90,18 @@ export default function Signup({navigation}) {
     isLoading: false,
     callingCode:
       getPhonesCallingCodeAndCountryData &&
-      getPhonesCallingCodeAndCountryData.length
+        getPhonesCallingCodeAndCountryData.length
         ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]
         : appData?.profile.country?.phonecode
-        ? appData?.profile?.country?.phonecode
-        : '91',
+          ? appData?.profile?.country?.phonecode
+          : '91',
     cca2:
       getPhonesCallingCodeAndCountryData &&
-      getPhonesCallingCodeAndCountryData.length
+        getPhonesCallingCodeAndCountryData.length
         ? getPhonesCallingCodeAndCountryData[0].isoCode2
         : appData?.profile?.country?.code
-        ? appData?.profile?.country?.code
-        : 'IN',
+          ? appData?.profile?.country?.code
+          : 'IN',
     name: '',
     email: '',
     password: '',
@@ -138,23 +132,19 @@ export default function Signup({navigation}) {
     subscriptionPopup,
   } = state;
   const _onCountryChange = (data) => {
-    updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
+    updateState({ cca2: data.cca2, callingCode: data.callingCode[0] });
     return;
   };
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {data});
+    navigation.navigate(screenName, { data });
   };
 
   const isValidData = () => {
     const error = validations({
-      email: appData?.profile?.preferences?.verify_email
-        ? email
-        : 'abc@gmail.com',
+      // email: email,
       password: password,
       callingCode: callingCode,
-      phoneNumber: appData?.profile?.preferences?.verify_phone
-        ? phoneNumber
-        : '78787878787',
+      phoneNumber: phoneNumber,
     });
     if (error) {
       showError(error);
@@ -240,8 +230,7 @@ export default function Signup({navigation}) {
         } else if (i?.is_required) {
           if (isRequired) {
             showError(
-              `${
-                strings.PLEASE_ENTER
+              `${strings.PLEASE_ENTER
               } ${i?.translations[0].name.toLowerCase()}`,
             );
             isRequired = false;
@@ -259,18 +248,17 @@ export default function Signup({navigation}) {
             i?.translations[0].slug,
             i?.file_type == 'Image'
               ? {
-                  uri: i.fileData.path,
-                  name: i.fileData.filename,
-                  filename: i.fileData.filename,
-                  type: i.fileData.mime,
-                }
+                uri: i.fileData.path,
+                name: i.fileData.filename,
+                filename: i.fileData.filename,
+                type: i.fileData.mime,
+              }
               : i?.fileData,
           );
         } else if (i?.is_required) {
           if (isRequired) {
             showError(
-              `${
-                strings.PLEASE_UPLOAD
+              `${strings.PLEASE_UPLOAD
               } ${i?.translations[0].name.toLowerCase()}`,
             );
             isRequired = false;
@@ -284,7 +272,9 @@ export default function Signup({navigation}) {
       return;
     }
     console.log(formdata, 'formdata>><');
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
+
+    if(accept){
     actions
       .signUpApi(formdata, {
         code: appData?.profile?.code,
@@ -295,67 +285,58 @@ export default function Signup({navigation}) {
       })
       .then((res) => {
         console.log(res, 'THIS IS RESPONSE');
-        console.log(userData, 'USERDATA AFTER THEN');
         updateState({isLoading: false});
+
         if (!!res.data) {
-          if (
-            !!res.data?.client_preference?.verify_email &&
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              checkIsAdmin(navigation_, navigation, res.data);
-              updateState({
-                subscriptionPopup:
-                  res?.data?.client_preference
-                    ?.show_subscription_plan_popup_signup,
-              });
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else if (
-            !!res.data?.client_preference?.verify_email ||
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified ||
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              checkIsAdmin(navigation_, navigation, res.data);
-              updateState({
-                subscriptionPopup:
-                  res?.data?.client_preference
-                    ?.show_subscription_plan_popup_signup,
-              });
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else {
-            checkIsAdmin(navigation_, navigation, res.data);
-            updateState({
-              subscriptionPopup:
-                res?.data?.client_preference
-                  ?.show_subscription_plan_popup_signup,
-            });
-          }
+          checkEmailPhoneVerified(res.data);
         }
       })
       .catch(errorMethod);
+    }
+    else{
+      showError('The term and condition must be accepted.')
+      updateState({ isLoading: false });
+    }
+  };
+
+  const checkEmailPhoneVerified = (data) => {
+    if (
+      !!(
+        !!data?.client_preference?.verify_email &&
+        !data?.verify_details?.is_email_verified
+      ) ||
+      !!(
+        !!data?.client_preference?.verify_phone &&
+        !data?.verify_details?.is_phone_verified
+      )
+    ) {
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, data)();
+    } else {
+      successSignUp(data);
+    }
+  };
+
+  const successSignUp = (data) => {
+    setUserData(data).then((suc) => {
+      actions.saveUserData(data);
+    });
+    updateState({
+      subscriptionPopup:
+        data?.client_preference?.show_subscription_plan_popup_signup,
+    });
   };
   const errorMethod = (error) => {
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     showError(error?.message || error?.error);
     console.log(error);
   };
 
   const _onChangeText = (key) => (val) => {
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   const showHidePassword = () => {
-    updateState({isShowPassword: !isShowPassword});
+    updateState({ isShowPassword: !isShowPassword });
   };
 
   let actionSheet = useRef();
@@ -369,7 +350,7 @@ export default function Signup({navigation}) {
     data[index].id = type?.id;
     data[index].file_type = type?.file_type;
     data[index].label_name = type?.translations[0]?.name;
-    updateState({addtionalTextInputs: data});
+    updateState({ addtionalTextInputs: data });
   };
 
   //Get TextInput
@@ -402,10 +383,10 @@ export default function Signup({navigation}) {
           onPress={() => updateImages(type, index)}
           style={styles.imageUpload}>
           {addtionalImages[index].value != undefined &&
-          addtionalImages[index].value != null &&
-          addtionalImages[index].value != '' ? (
+            addtionalImages[index].value != null &&
+            addtionalImages[index].value != '' ? (
             <Image
-              source={{uri: addtionalImages[index].value}}
+              source={{ uri: addtionalImages[index].value }}
               style={styles.imageStyle2}
             />
           ) : (
@@ -414,7 +395,7 @@ export default function Signup({navigation}) {
         </TouchableOpacity>
         <Text
           numberOfLines={2}
-          style={{...styles.label3, minHeight: moderateScale(25)}}>
+          style={{ ...styles.label3, minHeight: moderateScale(25) }}>
           {type?.translations[0]?.name}
           {type.is_required ? '*' : ''}
         </Text>
@@ -432,7 +413,7 @@ export default function Signup({navigation}) {
         data[index].value = res[0].uri;
         data[index].filename = res[0].name;
         data[index].fileData = res[0];
-        updateState({addtionalPdfs: data});
+        updateState({ addtionalPdfs: data });
       }
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
@@ -446,7 +427,7 @@ export default function Signup({navigation}) {
   const getPdfView = (type, index) => {
     return (
       <View
-        style={{marginRight: moderateScale(20), marginTop: moderateScale(20)}}>
+        style={{ marginRight: moderateScale(20), marginTop: moderateScale(20) }}>
         <TouchableOpacity
           onPress={() => getDoc(type, index)}
           style={{
@@ -459,8 +440,8 @@ export default function Signup({navigation}) {
           }}>
           <Text style={styles.uploadStyle}>
             {addtionalPdfs[index].value != undefined &&
-            addtionalPdfs[index].value != null &&
-            addtionalPdfs[index].value != ''
+              addtionalPdfs[index].value != null &&
+              addtionalPdfs[index].value != ''
               ? `${addtionalPdfs[index].filename}`
               : `+ ${strings.UPLOAD}`}
           </Text>
@@ -498,7 +479,7 @@ export default function Signup({navigation}) {
             // data[addtionSelectedImageIndex].id = addtionSelectedImage?.id;
             // data[addtionSelectedImageIndex].mime = res?.mime;
 
-            updateState({addtionalImages: data});
+            updateState({ addtionalImages: data });
           })
           .catch((err) => {
             console.log(err, 'err>>>>');
@@ -517,6 +498,11 @@ export default function Signup({navigation}) {
       subscriptionPopup: false,
     });
   };
+
+  const _isCheck = () =>{
+    console.log(accept,"accept<<<<<");
+    isAccept(!accept)
+  }
   return (
     <WrapperContainer
       isLoadingB={isLoading}
@@ -530,7 +516,7 @@ export default function Signup({navigation}) {
         }}>
         <TouchableOpacity
           onPress={() => navigation.goBack(null)}
-          style={{alignSelf: 'flex-start'}}>
+          style={{ alignSelf: 'flex-start' }}>
           <Image
             source={
               appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
@@ -540,10 +526,10 @@ export default function Signup({navigation}) {
             style={
               isDarkMode
                 ? {
-                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                    tintColor: MyDarkTheme.colors.text,
-                  }
-                : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+                  transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                  tintColor: MyDarkTheme.colors.text,
+                }
+                : { transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }
             }
           />
         </TouchableOpacity>
@@ -555,12 +541,12 @@ export default function Signup({navigation}) {
         style={{
           flex: 1,
         }}>
-        <View style={{flex: 1}}>
-          <View style={{marginTop: moderateScaleVertical(50)}}>
+        <View style={{ flex: 1 }}>
+          <View style={{ marginTop: moderateScaleVertical(50) }}>
             <Text
               style={
                 isDarkMode
-                  ? [styles.header, {color: MyDarkTheme.colors.text}]
+                  ? [styles.header, { color: MyDarkTheme.colors.text }]
                   : styles.header
               }>
               {strings.CREATE_YOUR_ACCOUNT}
@@ -568,7 +554,7 @@ export default function Signup({navigation}) {
             <Text
               style={
                 isDarkMode
-                  ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+                  ? [styles.txtSmall, { color: MyDarkTheme.colors.text }]
                   : styles.txtSmall
               }>
               {strings.ENTER_DETAILS_BELOW}
@@ -594,23 +580,26 @@ export default function Signup({navigation}) {
                 onChangeText={_onChangeText('email')}
                 placeholder={strings.YOUR_EMAIL}
                 value={email}
+                require={true}
                 keyboardType={'email-address'}
                 returnKeyType={'next'}
+                
               />
             )}
             <PhoneNumberInput
               onCountryChange={_onCountryChange}
               onChangePhone={(phoneNumber) =>
-                updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
+                updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })
               }
               cca2={cca2}
               phoneNumber={phoneNumber}
               callingCode={state.callingCode}
               placeholder={strings.YOUR_PHONE_NUMBER}
+              require={true}
               keyboardType={'phone-pad'}
               color={isDarkMode ? MyDarkTheme.colors.text : null}
             />
-            <View style={{height: moderateScaleVertical(20)}} />
+            <View style={{ height: moderateScaleVertical(20) }} />
             <BorderTextInput
               secureTextEntry={isShowPassword ? false : true}
               onChangeText={_onChangeText('password')}
@@ -626,6 +615,7 @@ export default function Signup({navigation}) {
               onPressRight={showHidePassword}
               isShowPassword={isShowPassword}
               rightIconStyle={{}}
+              require
               returnKeyType={'next'}
             />
             {!appData?.profile?.preferences?.concise_signup && (
@@ -638,6 +628,7 @@ export default function Signup({navigation}) {
                 }
                 value={referralCode}
                 returnKeyType={'next'}
+                
               />
             )}
 
@@ -661,6 +652,31 @@ export default function Signup({navigation}) {
                 })}
               </View>
             )}
+            <View style={{ flexDirection: 'row',}}>
+              <TouchableOpacity onPress={_isCheck} style={{ alignItems:'center', justifyContent:'center', marginRight:10}}>
+                <FastImage
+                  style={{
+                    width: moderateScale(15),
+                    height: moderateScale(15),
+
+                  }}
+                  tintColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
+                  source={accept ? imagePath.checkBox2Active:imagePath.checkBox2InActive}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+              <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+              <Text style={{  color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }}>I accept the</Text>
+              <Text onPress={() =>
+                  navigation.navigate(navigationStrings.WEBLINKS, {id: 2})
+                } 
+                style={{ color: colors.themeColor,}}> {`${strings.TERMS_CONDITIONS} `}</Text>
+              <Text style={{  color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }}>and have read the</Text>
+                <Text  onPress={() =>
+                  navigation.navigate(navigationStrings.WEBLINKS, {id: 1})} style={{color: colors.themeColor,}}>{`${strings.PRICACY_POLICY}`}.
+                  </Text>
+              </View>
+            </View>
 
             <GradientButton
               onPress={onSignup}
@@ -672,14 +688,14 @@ export default function Signup({navigation}) {
             <Text
               style={
                 isDarkMode
-                  ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
-                  : {...styles.txtSmall, color: colors.textGreyLight}
+                  ? { ...styles.txtSmall, color: MyDarkTheme.colors.text }
+                  : { ...styles.txtSmall, color: colors.textGreyLight }
               }>
               {strings.ALREADY_HAVE_AN_ACCOUNT}
               <Text
                 onPress={moveToNewScreen(navigationStrings.LOGIN)}
                 style={{
-                  color: themeColors.primary_color,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black, 
                   fontFamily: fontFamily.futuraBtHeavy,
                 }}>
                 {strings.LOGIN}

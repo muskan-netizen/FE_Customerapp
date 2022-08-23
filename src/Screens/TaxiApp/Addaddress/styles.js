@@ -278,7 +278,7 @@ export default ({
       fontSize: textScale(14),
     },
     addAddressScreenTitle: {
-      fontSize: textScale(12),
+      fontSize: textScale(15),
       fontFamily: fontFamily.medium,
       marginHorizontal: moderateScale(10),
     },

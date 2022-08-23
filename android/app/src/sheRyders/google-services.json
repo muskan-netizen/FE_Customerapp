@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "242937110599",
+    "project_id": "she-ryders",
+    "storage_bucket": "she-ryders.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242937110599:android:73dfa694aa705b95131162",
+        "android_client_info": {
+          "package_name": "com.sheRyders.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "242937110599-bjok9abm6gejpeqmlli25i2tu3nn9dfk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sheRyders.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "242937110599-c5h6t2i54opcn3gf9lbiogtk7qp2nugb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sheRyders.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "242937110599-i69r5718m2gdtrtkaj7ihleiovjpoq8v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sheRyders.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "242937110599-42dq1bd5vbtksjfhie75d5ngl71him26.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpRWXPCcc1uBbgSTcmRswMmoD8Rsse1XE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "242937110599-42dq1bd5vbtksjfhie75d5ngl71him26.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "242937110599-fteth6ubotm834dau0no1j2d310788js.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sheRyders.order"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -42,6 +42,8 @@ import {getImageUrl, showError} from '../../utils/helperFunctions';
 import {showMessage} from 'react-native-flash-message';
 import ContentLoader, {Rect, Circle} from 'react-content-loader/native';
 import {BarIndicator, UIActivityIndicator} from 'react-native-indicators';
+import { color } from 'react-native-reanimated';
+import BorderTextInput from '../../Components/BorderTextInput';
 
 export default function Wallet({navigation}) {
   const [state, setState] = useState({
@@ -463,8 +465,8 @@ export default function Wallet({navigation}) {
           flex: 1,
           paddingBottom:
             appStyle?.tabBarLayout == 3
-              ? moderateScaleVertical(80)
-              : moderateScaleVertical(5),
+              ? moderateScaleVertical(85)
+              : moderateScaleVertical(32),
         }}>
         <FlatList
           data={walletHistory}
@@ -560,18 +562,23 @@ export default function Wallet({navigation}) {
 
           <Text style={styles.headingStyle}>{strings.AMOUNT_TO_TRANSFER}</Text>
           <View style={styles.textInputView}>
-            <TextInput
-              placeholder={strings.ENTER_AMOUNT}
-              onChangeText={(text) => updateState({transferAmount: text})}
-              textInputStyle={styles.textInputStyle}
-              keyboardType="number-pad"
-              autoFocus
-            />
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+              }}>
+              <TextInput
+                placeholder={strings.ENTER_AMOUNT}
+                onChangeText={(text) => updateState({transferAmount: text})}
+                textInputStyle={styles.textInputStyle}
+                keyboardType="number-pad"
+              />
+            </View>
           </View>
           <Text
             style={{
               ...styles.headingStyle,
-              marginTop: moderateScaleVertical(12),
+           
             }}>
             {strings.TRANSFER_TO}
           </Text>
@@ -581,6 +588,7 @@ export default function Wallet({navigation}) {
                 placeholder={
                   strings.ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE
                 }
+                placeholderTextColor= {isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51}
                 onChangeText={(text) => updateState({transferEmail: text})}
                 textInputStyle={styles.textInputStyle}
               />

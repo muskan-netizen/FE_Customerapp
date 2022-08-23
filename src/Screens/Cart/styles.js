@@ -485,7 +485,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     },
     dropDownTextStyle: {
       fontSize: textScale(10),
-      color: themeColors.primary_color,
+      // color: themeColors.primary_color,
       fontFamily: fontFamily.bold,
       textAlign: 'left',
     },

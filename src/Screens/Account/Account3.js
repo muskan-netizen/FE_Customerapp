@@ -1,6 +1,6 @@
-import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
+import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
 import ActionSheet from 'react-native-actionsheet';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   I18nManager,
@@ -12,14 +12,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dark-mode';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Share from 'react-native-share';
 import SunmiV2Printer from 'react-native-sunmi-v2-printer';
 import ZendeskChat from 'react-native-zendesk-chat';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
 import ListItemHorizontal from '../../Components/ListItemHorizontalWithImage';
 import imagePath from '../../constants/imagePath';
@@ -34,8 +34,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../styles/theme';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   getImageUrl,
   getRandomColor,
@@ -43,8 +43,8 @@ import {
   showSuccess,
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
-import {useRef} from 'react';
-export default function Account3({navigation}) {
+import { useRef } from 'react';
+export default function Account3({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -57,28 +57,30 @@ export default function Account3({navigation}) {
     currencies,
     languages,
   } = useSelector((state) => state?.initBoot);
-  console.log('dataaa><<<<', appData);
   const businessType = appStyle?.homePageLayout;
+
+  const [allVendors, setAllVendors] = useState([])
+
   const [state, setState] = useState({
     isLoading: false,
   });
 
-  const {preferences, phone_number, contact_phone_number} = appData?.profile;
+  const { preferences, phone_number, contact_phone_number } = appData?.profile;
 
   // const profileInfo = appData?.profile;
-  // console.log("account profile info",profileInfo)
+  console.log("appDataappDataappDataappDataappData",appData)
   const [isVisible, setIsVisible] = useState(false);
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily, themeColors});
-  const commonStyles = commonStylesFun({fontFamily});
+  const styles = stylesFun({ fontFamily, themeColors });
+  const commonStyles = commonStylesFun({ fontFamily });
 
   //Navigation to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   const userData = useSelector((state) => state.auth.userData);
   const appMainData = useSelector((state) => state?.home?.appMainData);
@@ -92,11 +94,38 @@ export default function Account3({navigation}) {
   // );
 
   //Share your app
+
+  useEffect(() => {
+    if (!!appMainData?.is_admin) {
+      fetchAllVendors()
+    }
+  }, [appMainData?.is_admin])
+
+  const fetchAllVendors = async (value = null) => {
+    let query = `?limit=${100000}&page=${1}`;
+    let headers = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    };
+    try {
+      const res = await actions.storeVendors(query, headers);
+      if (res?.data?.data) {
+        setAllVendors(res.data.data)
+        return;
+      }
+      console.log('available vendors res', res);
+    } catch (error) {
+      console.log('error riased', error);
+      showError(error?.message);
+    }
+  };
+
   const onShare = () => {
     console.log('onShare', appData);
     if (!!appData?.domain_link) {
       let hyperLink = appData?.domain_link + '/share';
-      let options = {url: hyperLink};
+      let options = { url: hyperLink };
       Share.open(options)
         .then((res) => {
           console.log(res);
@@ -109,70 +138,9 @@ export default function Account3({navigation}) {
     alert('link not found');
   };
 
-  //Logout function
-  const userlogout = () => {
-    if (!!userData?.auth_token) {
-      Alert.alert('', strings.LOGOUT_SURE_MSG, [
-        {
-          text: strings.CANCEL,
-          onPress: () => console.log('Cancel Pressed'),
-          // style: 'destructive',
-        },
-        {
-          text: strings.CONFIRM,
-          onPress: () => {
-            actions.userLogout();
-            actions.cartItemQty('');
-            actions.saveAddress('');
-            actions.addSearchResults('clear');
-            moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
-          },
-        },
-      ]);
-    } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
-    }
-  };
 
-  const onDeleteAccount = () => {
-    if (!!userData?.auth_token) {
-      Alert.alert(strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, '', [
-        {
-          text: strings.CANCEL,
-          onPress: () => console.log('Cancel Pressed'),
-          // style: 'destructive',
-        },
-        {
-          text: strings.CONFIRM,
-          onPress: deleleUserAccount,
-        },
-      ]);
-    } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
-    }
-  };
-  const deleleUserAccount = async () => {
-    try {
-      const res = await actions.deleteAccount(
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      );
-      console.log('delete user account res++++', res);
-      showSuccess(res?.massage);
-      actions.userLogout();
-      actions.cartItemQty('');
-      actions.saveAddress('');
-      actions.addSearchResults('clear');
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
-    } catch (error) {
-      console.log('erro raised', error);
-      showError(error?.message);
-    }
-  };
+
+ 
 
   // initalize Zendesk
   useEffect(() => {
@@ -202,10 +170,10 @@ export default function Account3({navigation}) {
   const usernameFirstlater = !!userData?.name && userData?.name?.charAt(0);
 
   const goToChatRoom = (type) => {
-    if (type == 'user_chat') {
-      navigation.navigate(navigationStrings.CHAT_ROOM, {data: 'user_chat'});
+    if (!!appMainData?.is_admin && type == 'vendor_chat') {
+      navigation.navigate(navigationStrings.CHAT_ROOM, { type: type, allVendors: allVendors });
     } else {
-      navigation.navigate(navigationStrings.CHAT_ROOM, {data: 'vendor_chat'});
+      navigation.navigate(navigationStrings.CHAT_ROOM, { type: type });
     }
   };
   //----------------------------------ActionSheet------------------------------//
@@ -233,6 +201,7 @@ export default function Account3({navigation}) {
         break;
     }
   };
+
   return (
     <View
       style={{
@@ -262,11 +231,7 @@ export default function Account3({navigation}) {
             noLeftIcon={false}
             customLeft={() => (
               <Text
-                onPress={() =>
-                  navigation.push(navigationStrings.SHORT_CODE, {
-                    shortCodeParam: true,
-                  })
-                }
+                onPress={() => actions.setAppSessionData('show_shortcode')}
                 style={{
                   color: themeColors.primary_color,
                   fontFamily: fontFamily.bold,
@@ -274,8 +239,8 @@ export default function Account3({navigation}) {
                 {strings.EDITCODE}
               </Text>
             )}
-            // rightIcon={imagePath.cartShop}
-            //   centerTitle={strings.MY_ACCOUNT}
+          // rightIcon={imagePath.cartShop}
+          //   centerTitle={strings.MY_ACCOUNT}
           />
         ) : (
           <Header centerTitle={strings.MY_ACCOUNT} noLeftIcon={true} />
@@ -283,7 +248,7 @@ export default function Account3({navigation}) {
 
         {/* <View style={{...commonStyles.headerTopLine}} /> */}
 
-        <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+        <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
           {!!userData?.auth_token && (
             <>
               <TouchableOpacity
@@ -306,12 +271,12 @@ export default function Account3({navigation}) {
                     source={
                       userData?.source?.image_path
                         ? {
-                            uri: getImageUrl(
-                              userData?.source?.proxy_url,
-                              userData?.source?.image_path,
-                              '200/200',
-                            ),
-                          }
+                          uri: getImageUrl(
+                            userData?.source?.proxy_url,
+                            userData?.source?.image_path,
+                            '200/200',
+                          ),
+                        }
                         : userData?.source
                     }
                     style={{
@@ -403,8 +368,8 @@ export default function Account3({navigation}) {
           {!!userData?.auth_token &&
             (businessType == 4 ? null : (
               <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                 onPress={moveToNewScreen(navigationStrings.MY_ORDERS, {
                   isBack: true,
                 })}
@@ -415,8 +380,8 @@ export default function Account3({navigation}) {
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
                 }}
-                // iconRight={imagePath.goRight}
-                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             ))}
 
@@ -478,8 +443,8 @@ export default function Account3({navigation}) {
             !!appData?.profile &&
             appData?.profile?.preferences?.subscription_mode == 1 && (
               <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                 onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
                 iconLeft={imagePath.subscription}
                 centerHeading={strings.SUBSCRIPTION}
@@ -488,15 +453,15 @@ export default function Account3({navigation}) {
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
                 }}
-                // iconRight={imagePath.goRight}
-                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             )}
 
           {!!userData?.auth_token && (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={moveToNewScreen(navigationStrings.LOYALTY)}
               iconLeft={imagePath.loyalty}
               centerHeading={strings.LOYALTYPOINTS}
@@ -505,8 +470,8 @@ export default function Account3({navigation}) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
 
@@ -525,8 +490,8 @@ export default function Account3({navigation}) {
         )} */}
           {!!userData?.auth_token && (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={moveToNewScreen(navigationStrings.WALLET)}
               iconLeft={imagePath.wallet3}
               centerHeading={strings.WALLET}
@@ -535,15 +500,15 @@ export default function Account3({navigation}) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
           {!!userData?.auth_token &&
             (businessType == 4 ? null : (
               <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                 onPress={moveToNewScreen(navigationStrings.WISHLIST)}
                 iconLeft={imagePath.wishlist}
                 centerHeading={strings.FAVOURITE}
@@ -552,14 +517,14 @@ export default function Account3({navigation}) {
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
                 }}
-                // iconRight={imagePath.goRight}
-                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             ))}
 
           <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+            centerContainerStyle={{ flexDirection: 'row' }}
+            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
             onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
             iconLeft={imagePath.links}
             centerHeading={strings.LINKS}
@@ -568,14 +533,14 @@ export default function Account3({navigation}) {
               fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+          // iconRight={imagePath.goRight}
+          // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
 
           {!!userData?.auth_token && (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={onShare}
               iconLeft={imagePath.share1}
               centerHeading={strings.SHARE_APP}
@@ -584,14 +549,14 @@ export default function Account3({navigation}) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
 
           <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+            centerContainerStyle={{ flexDirection: 'row' }}
+            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
             onPress={moveToNewScreen(navigationStrings.SETTIGS)}
             iconLeft={imagePath.settings1}
             centerHeading={strings.SETTINGS}
@@ -600,13 +565,13 @@ export default function Account3({navigation}) {
               fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+          // iconRight={imagePath.goRight}
+          // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
           {appData.profile.preferences.sos == 1 ? (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={showActionSheet}
               iconLeft={imagePath.icSos}
               centerHeading={strings.SOS}
@@ -615,8 +580,8 @@ export default function Account3({navigation}) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ) : null}
           {!!userData?.auth_token &&
@@ -661,8 +626,8 @@ export default function Account3({navigation}) {
             __DEV__ &&
             (businessType == 'taxi' ? null : (
               <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                 onPress={() => {
                   BluetoothManager.checkBluetoothEnabled().then(
                     (enabled) => {
@@ -677,7 +642,7 @@ export default function Account3({navigation}) {
                               navigationStrings.ATTACH_PRINTER + 'sunmi',
                             );
                           })
-                          .catch((err) => {});
+                          .catch((err) => { });
                       }
                     },
                     (err) => {
@@ -692,8 +657,8 @@ export default function Account3({navigation}) {
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
                 }}
-                // iconRight={imagePath.goRight}
-                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             ))}
 
@@ -711,18 +676,17 @@ export default function Account3({navigation}) {
         )} */}
           {!!userData?.auth_token && (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={
                 appIds.hokitch == getBundleId()
                   ? () =>
-                      Linking.openURL(
-                        `https://api.whatsapp.com/send?phone=${
-                          contact_phone_number
-                            ? contact_phone_number
-                            : phone_number
-                        }`,
-                      )
+                    Linking.openURL(
+                      `https://api.whatsapp.com/send?phone=${contact_phone_number
+                        ? contact_phone_number
+                        : phone_number
+                      }`,
+                    )
                   : moveToNewScreen(navigationStrings.CONTACT_US)
               }
               iconLeft={imagePath.contactUs}
@@ -732,15 +696,15 @@ export default function Account3({navigation}) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
 
           {!!userData?.auth_token && (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={() => onStartSupportChat()}
               iconLeft={imagePath.support}
               centerHeading={strings.SUPPORT}
@@ -749,8 +713,8 @@ export default function Account3({navigation}) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
 
@@ -758,8 +722,8 @@ export default function Account3({navigation}) {
             !!appMainData?.is_admin &&
             businessType != 4 && (
               <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                 onPress={moveToNewScreen(navigationStrings.TABROUTESVENDORNEW)}
                 iconLeft={imagePath.mystores2}
                 centerHeading={strings.MYSTORES}
@@ -768,81 +732,77 @@ export default function Account3({navigation}) {
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
                 }}
-                // iconRight={imagePath.goRight}
-                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             )}
 
-          {!!userData?.auth_token && (
-            <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-              onPress={onDeleteAccount}
-              iconLeft={imagePath.user}
-              centerHeading={strings.DELETE_ACCOUNT}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
-            />
-          )}
-{/* 
-          {!!userData?.auth_token && (
-            <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-              onPress={() => goToChatRoom('user_chat')}
-              iconLeft={imagePath.message}
-              centerHeading={'User Chat'}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
-            />
-          )} */}
 
-          {/* {!!userData?.auth_token && (
+          {!!userData?.auth_token && !!appData?.profile?.socket_url && (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-              onPress={() => goToChatRoom('vendor_chat')}
-              iconLeft={imagePath.message}
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={() => goToChatRoom('agent_chat')}
+              iconLeft={imagePath.icUserChat}
+              centerHeading={'Driver Chat'}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            />
+          )} 
+
+          {!!userData?.auth_token &&
+            !!appMainData?.is_admin && !!appData?.profile?.socket_url &&
+            (
+              <ListItemHorizontal
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+                onPress={() => goToChatRoom('vendor_chat')}
+                iconLeft={imagePath.icUserChat}
+                centerHeading={'User Chat'}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+              />
+            )}
+
+          {!!userData?.auth_token && !!appData?.profile?.socket_url && (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={() => goToChatRoom('user_chat')}
+              iconLeft={imagePath.icVendorChat}
               centerHeading={'Vendor Chat'}
               containerStyle={styles.containerStyle2}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
-          )} */}
+          )} 
 
-          <View style={styles.loginView}>
+          {!!userData?.auth_token ? null : <View style={styles.loginView}>
             <TouchableOpacity
               // onPress={()=>actions.isVendorNotification(true)}
-              onPress={userlogout}
+              onPress={() => actions.setAppSessionData('on_login')}
               style={styles.touchAbleLoginVIew}>
-              <Text 
-              style={{...styles.loginLogoutText, color: isDarkMode
-                ? MyDarkTheme.colors.text
-                : colors.blackB}}
-              >
-                {!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
+              <Text style={styles.loginLogoutText}>
+                {strings.LOGIN}
               </Text>
               <Image
                 source={imagePath.rightBlue}
-                style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+                style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
               />
             </TouchableOpacity>
-          </View>
-          <View style={{height: 100}} />
+          </View>}
+
+
+
+          <View style={{ height: 100 }} />
         </ScrollView>
         <ActionSheet
           ref={actionSheet}

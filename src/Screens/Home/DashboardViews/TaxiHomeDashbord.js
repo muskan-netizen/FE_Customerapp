@@ -91,6 +91,7 @@ export default function TaxiHomeDashbord({
   const userData = useSelector((state) => state?.auth?.userData);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
@@ -134,13 +135,14 @@ export default function TaxiHomeDashbord({
     newAddressAdded: null,
     isLoadingModal: false,
     fullMapShow: false,
+    isVisibleAddressModal: false,
     pickupAddress: {},
     allListedDrivers: []
   });
   console.log(location, 'loaction');
   console.log(region, 'region');
   const appMainData = useSelector((state) => state?.home?.appMainData);
-
+  
   let findCabCategory = appMainData?.categories?.find(
     (x) => x?.redirect_to == staticStrings.PICKUPANDDELIEVRY,
   );
@@ -173,11 +175,10 @@ export default function TaxiHomeDashbord({
     del,
     isLoadingModal,
     fullMapShow,
-    pickupAddress,
+    selectViaMap,
     allListedDrivers
   } = state;
-  const styles = stylesFunc({ themeColors, fontFamily });
-
+  const styles = stylesFunc({themeColors, fontFamily});
 
   //update state
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -382,6 +383,7 @@ const fitPadding = newArray => {
         console.log(res, 'res>res>res');
         updateState({ del: del ? false : true });
         showSuccess(res.message);
+       setModalVisible(false)
       })
       .catch((error) => {
         updateState({ isLoading: false });
@@ -389,7 +391,14 @@ const fitPadding = newArray => {
       });
   };
 
+
+  const openCloseMapAddress = (type) => {
+    updateState({ selectViaMap: type == 1 ? true : false });
+  };
+
+
   const setModalVisible = (visible, type, id, data) => {
+    updateState({ selectViaMap: false });
     if (!!userData?.auth_token) {
       updateState({
         updateData: data,
@@ -528,7 +537,7 @@ const fitPadding = newArray => {
         prefillAdress: !!prefillAdress ? prefillAdress : null,
       });
     } else {
-      navigation.navigate(navigationStrings.LOGIN);
+      actions.setAppSessionData('on_login');
     }
   };
 
@@ -627,9 +636,9 @@ const fitPadding = newArray => {
             actions.saveSchduleTime('now');
             userData?.auth_token
               ? navigation.navigate(navigationStrings.ADDADDRESS, {
-                data: appMainData?.categories[0],
-              })
-              : navigation.navigate(navigationStrings.LOGIN);
+                  data: appMainData?.categories[0],
+                })
+              : actions.setAppSessionData('on_login');
           }}>
           <View
             style={{
@@ -691,7 +700,6 @@ const fitPadding = newArray => {
             refreshing={isRefreshing}
             onRefresh={handleRefresh}
             tintColor={themeColors.primary_color}
-
           />
         }
         alwaysBounceVertical={true}
@@ -754,10 +762,10 @@ const fitPadding = newArray => {
                   actions.saveSchduleTime('now');
                   userData?.auth_token
                     ? navigation.navigate(navigationStrings.ADDADDRESS, {
-                      cat: appMainData?.categories[0],
-                      datetime: { slectedDate, selectedTime },
-                    })
-                    : navigation.navigate(navigationStrings.LOGIN);
+                        cat: appMainData?.categories[0],
+                        datetime: {slectedDate, selectedTime},
+                      })
+                    : actions.setAppSessionData('on_login');
                 }}>
                 <Text
                   style={{
@@ -772,9 +780,9 @@ const fitPadding = newArray => {
                 onPress={() => {
                   userData?.auth_token
                     ? updateState({
-                      isVisible: true,
-                    })
-                    : navigation.navigate(navigationStrings.LOGIN);
+                        isVisible: true,
+                      })
+                    : actions.setAppSessionData('on_login');
                 }}>
                 <View
                   style={{
@@ -816,7 +824,7 @@ const fitPadding = newArray => {
                 onPress={() => {
                   userData?.auth_token
                     ? setModalVisible(true, 'addAddress')
-                    : navigation.navigate(navigationStrings.LOGIN);
+                    : actions.setAppSessionData('on_login');
                 }}>
                 <View
                   style={{
@@ -871,86 +879,63 @@ const fitPadding = newArray => {
 
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => updateState({ fullMapShow: true })}>
-                <View
-                   pointerEvents="none"
+                style={{
+                  height: height / 4,
+                  width: width - 45,
+                  borderRadius: 12,
+                  marginTop: moderateScaleVertical(20),
+                  alignItems: 'center',
+                }}
+                onPress={() => updateState({fullMapShow: true})}>
+                {/* <View
+                  pointerEvents="none"
                   style={{
                     height: height / 4,
                     width: width - 45,
                     borderRadius: 12,
                     marginTop: moderateScaleVertical(20),
                     alignItems: 'center',
-                  }}>
-                  {!!location && (
-                    <MapView
-                      ref={mapRef}
-                      provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                      // customMapStyle={mapStyleGrey}
-                      style={{
-                        ...StyleSheet.absoluteFillObject,
-                        borderRadius: 12,
-                      }}
-                      // provider={MapView.PROVIDER_GOOGLE}
-                      region={{
+                  }}> */}
+                {!!location && (
+                  <MapView
+                    ref={mapRef}
+                    provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                    // customMapStyle={mapStyleGrey}
+                    style={{
+                      ...StyleSheet.absoluteFillObject,
+                      borderRadius: 12,
+                    }}
+                    // provider={MapView.PROVIDER_GOOGLE}
+                    region={{
+                      latitude: !!location?.latitude
+                        ? parseFloat(location?.latitude)
+                        : 30.7333,
+                      longitude: !!location?.longitude
+                        ? parseFloat(location?.longitude)
+                        : 76.7794,
+                      latitudeDelta: 0.015,
+                      longitudeDelta: 0.0121,
+                    }}
+                    // initialRegion={region}
+                    showsUserLocation={true}
+                    //showsMyLocationButton={true}
+                    // pointerEvents={'none'}
+                  >
+                    <Marker
+                      coordinate={{
                         latitude: !!location?.latitude
                           ? parseFloat(location?.latitude)
                           : 30.7333,
-                        longitude: !!location?.longitude
+                        longitude: !!location?.latitude
                           ? parseFloat(location?.longitude)
                           : 76.7794,
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
                       }}
-                      // initialRegion={region}
-                      showsUserLocation={true}
-                    //showsMyLocationButton={true}
-                    // pointerEvents={'none'}
-                    >
-                      <Marker
-                        coordinate={{
-                          latitude: !!location?.latitude
-                            ? parseFloat(location?.latitude)
-                            : 30.7333,
-                          longitude: !!location?.latitude
-                            ? parseFloat(location?.longitude)
-                            : 76.7794,
-                          latitudeDelta: 0.015,
-                          longitudeDelta: 0.0121,
-                        }}
-                      />
-
-                      {allListedDrivers?.map((coordinate, index) => {
-                       return (
-                          <Marker.Animated
-                          // tracksViewChanges={agent_location == null}
-                          coordinate={{
-                            latitude: Number(coordinate?.agentlog?.lat),
-                            longitude: Number(
-                              coordinate?.agentlog?.long,
-                            ),
-                          }}>
-                          <Image
-                          
-                            style={{
-                              zIndex: 99,
-                              // height:46,
-                              // width: 32,
-                              transform: [
-                                {
-                                  rotate: `${Number(
-                                    coordinate?.agentlog?.heading_angle ? coordinate?.agentlog?.heading_angle : 0
-                                  )}deg`,
-                                },
-                              ],
-                            }}
-                            source={renderDriverTypeMarkes(coordinate)}
-                          />
-                        </Marker.Animated>
-                        )
-                      })}
-                    </MapView>
-                  )}
-                </View>
+                    />
+                  </MapView>
+                )}
+                {/* </View> */}
               </TouchableOpacity>
             </View>
           </>
@@ -965,17 +950,19 @@ const fitPadding = newArray => {
           />
         )}
 
-        <View style={{ height: moderateScaleVertical(65) }} />
+        <View style={{height: moderateScaleVertical(95)}} />
       </ScrollView>
       <AddressModal3
         navigation={navigation}
         updateData={updateData}
         isVisible={isVisible1}
         indicator={indicator}
-        onClose={() => setModalVisible(false)}
+        onClose={() => setModalVisible(!isVisible1)}
         type={type}
         passLocation={(data) => addUpdateLocation(data)}
-      // onPress={currentLocation}
+        selectViaMap={selectViaMap}
+        openCloseMapAddress={openCloseMapAddress}
+        constCurrLoc={location}
       />
 
       <Modal
