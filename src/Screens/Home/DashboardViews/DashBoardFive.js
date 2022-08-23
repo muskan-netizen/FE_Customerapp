@@ -74,6 +74,7 @@ import actions from '../../../redux/actions';
 import { getItem, setItem } from '../../../utils/utils';
 import RNExitApp from 'react-native-exit-app';
 import SubscriptionModal from '../../../Components/SubscriptionModal';
+import Carousel from 'react-native-snap-carousel';
 
 export default function DashBoardFive({
   handleRefresh = () => { },
@@ -290,7 +291,7 @@ export default function DashBoardFive({
           ? '800/600'
           : '400/600',
     );
-console.log("hfbgdh", item);
+            console.log("hfbgdh", item);
     return (
       <TouchableOpacity activeOpacity={0.8} onPress={() => bannerPress(item)}>
         <FastImage
@@ -433,24 +434,33 @@ console.log("hfbgdh", item);
           )}
         <View style={{}}>
           {!!appData?.mobile_banners?.length && (
-            <View style={{ marginTop: moderateScaleVertical(4) }}>
-              <FlatList
-                horizontal
-                data={appMainData?.mobile_banners || appData?.mobile_banners}
-                keyExtractor={(item) => item.id.toString()}
-                showsHorizontalScrollIndicator={false}
-                renderItem={renderBanners}
-                ItemSeparatorComponent={() => (
-                  <View style={{ marginRight: moderateScale(12) }} />
-                )}
-                ListHeaderComponent={() => (
-                  <View style={{ marginLeft: moderateScale(16) }} />
-                )}
-                ListFooterComponent={() => (
-                  <View style={{ marginRight: moderateScale(16) }} />
-                )}
-              />
-            </View>
+             <Carousel
+             autoplay={true}
+             loop={true}
+             autoplayInterval={2000}
+             data={appMainData?.mobile_banners || appData?.mobile_banners}
+             renderItem={renderBanners}
+             sliderWidth={width}
+             itemWidth={moderateScale(180)}
+           />
+            // <View style={{ marginTop: moderateScaleVertical(4) }}>
+            //   <FlatList
+            //     horizontal
+            //     data={appMainData?.mobile_banners || appData?.mobile_banners}
+            //     keyExtractor={(item) => item.id.toString()}
+            //     showsHorizontalScrollIndicator={false}
+            //     renderItem={renderBanners}
+            //     ItemSeparatorComponent={() => (
+            //       <View style={{ marginRight: moderateScale(12) }} />
+            //     )}
+            //     ListHeaderComponent={() => (
+            //       <View style={{ marginLeft: moderateScale(16) }} />
+            //     )}
+            //     ListFooterComponent={() => (
+            //       <View style={{ marginRight: moderateScale(16) }} />
+            //     )}
+            //   />
+            // </View>
           )}
         </View>
       </View>
