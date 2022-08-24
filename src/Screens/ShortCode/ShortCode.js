@@ -2416,13 +2416,13 @@ export default function ShortCode({ route, navigation }) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: 'f9cf93',
+        // code: '245bae', // sales
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: 'f9cf93',
+        // code: '245bae', // sales
         code: shortCode,
       };
     }

@@ -44,9 +44,13 @@ export default function DashBoardHeaderOne({navigation = {}, location = []}) {
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const imageURI = getImageUrl(
-    profileInfo?.logo?.image_fit,
-    profileInfo?.logo?.image_path,
-    '800/400',
+    isDarkMode
+      ? profileInfo?.dark_logo?.image_fit
+      : profileInfo?.logo?.image_fit,
+    isDarkMode
+      ? profileInfo?.dark_logo?.image_path
+      : profileInfo?.logo?.image_path,
+    '1000/1000',
   );
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
@@ -63,21 +67,12 @@ export default function DashBoardHeaderOne({navigation = {}, location = []}) {
           {flex: 1, flexDirection: 'row', alignItems: 'center'},
         ]}>
         <View>
-
           {!!(profileInfo && profileInfo?.logo) ? (
             <ScaledImage
               width={width / 6}
-              source={
-                profileInfo && profileInfo?.logo
-                  ? {
-                      uri: getImageUrl(
-                        profileInfo.logo.image_fit,
-                        profileInfo.logo.image_path,
-                        '1000/1000',
-                      ),
-                    }
-                  : imagePath.logo
-              }
+              source={{
+                uri: imageURI,
+              }}
             />
           ) : null}
         </View>

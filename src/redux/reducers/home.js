@@ -59,7 +59,7 @@ export default function (state = initial_state, action) {
       const data = action.payload;
       return {
         ...state,
-        dineInType: data,
+        dineInType: !!data ? data : 'delivery' ,
       };
     }
 

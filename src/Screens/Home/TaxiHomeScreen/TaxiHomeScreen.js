@@ -69,11 +69,9 @@ export default function TaxiHomeScreen({route, navigation}) {
     isDineInSelected,
   } = useSelector((state) => state?.initBoot);
 
-  const initData = useSelector((state) => state?.initBoot);
-  const userData = useSelector((state) => state?.auth?.userData);
+  const {userData} = useSelector((state) => state?.auth);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
 
-  const profileInfo = appData?.profile;
   const {profile} = appData;
   const {
     updateTime,

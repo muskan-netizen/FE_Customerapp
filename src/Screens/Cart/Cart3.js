@@ -1422,7 +1422,6 @@ function Cart({navigation, route}) {
     // if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
     //   _offineLinePayment();
     //   return;
-    // }
     console.log('payment option', selectedPayment);
 
     if (
