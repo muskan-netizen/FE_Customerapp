@@ -136,6 +136,7 @@ export default function DashBoardFive({
       vendorsData: [],
     });
   }, [appMainData?.vendors]);
+ 
 
   useEffect(() => {
     if (!!appMainData?.categories && appMainData?.categories.length) {
