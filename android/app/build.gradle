@@ -207,15 +207,15 @@ android {
     flavorDimensions "appType"
 
 //   productFlavors{
-//        oxo{
-//                 dimension "appType"
-//                 versionCode 1
-//                 versionName "1.0"
-//                 minSdkVersion rootProject.ext.minSdkVersion
-//                 targetSdkVersion rootProject.ext.targetSdkVersion         
-//                 applicationId 'com.oxo'
-//                 resValue "string", "app_name", "OXO"
-//                 resValue "string", "host_name", ""
+//      marjMarketplace{
+//             dimension "appType"
+//             versionCode 1
+//             versionName "1.0"
+//             minSdkVersion rootProject.ext.minSdkVersion
+//             targetSdkVersion rootProject.ext.targetSdkVersion
+//             applicationId 'com.marjMarketplace'
+//             resValue "string", "app_name", "Marj Marketplace"
+//             resValue "string", "host_name", ""
 //             }
 //   }
     productFlavors {

@@ -53652,7 +53652,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-RoyoOrder/Pods-available_pods-RoyoOrder-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-WeTogether/Pods-available_pods-WeTogether-frameworks.sh\"\n";
 		};
 		1024EF1928364108003B7F0B /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
