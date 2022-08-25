@@ -914,4 +914,13 @@ export default {
     PLEASE_SELECT_DATETIME_SLOTS: 'कृपया मिति र समय स्लटहरू चयन गर्नुहोस्',
     BOOK_A_TABLE:'टेबल बुक गर्नुहोस्',
     WE_ACCEPT_ONLY_SCHEDULE_ORDER:'We are accepting only schedule order',
+    STORES_CAHT:"Stores Chat",
+    DRIVER_CHAT:"Driver Chat",
+    USER_CHAT:"User Chat",
+    VENDOR_CHAT:"Vendor Chat",
+    CHAT_EMPTY_ROOM:"Chat Room Empty",
+    CHAT_ROOM:"Chat Room",
+    PARTICIPANTS:"Participants",
+    VENDOR:"Vendor",
+    START_CHAT:"Start Chat",
   };

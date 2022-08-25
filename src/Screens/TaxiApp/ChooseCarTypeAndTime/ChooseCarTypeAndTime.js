@@ -449,6 +449,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       case 42: //DIRECTPAYONLINE Payment Gatway
         navigation.navigate(navigationStrings.DIRECTPAYONLINE, paymentData);
         break;
+        case 47: //Khalti Payment Gatway
+        navigation.navigate(navigationStrings.KHALTI, paymentData);
+        break;
       default:
         console.log('i mah shfjgdghdjgs');
         navigation.navigate(
@@ -606,7 +609,7 @@ console.log(scheduleDateTime,"scheduleDateTime")
         }
       });
     if (isRequired) {
-      alert('Please fill all required fields in detail form');
+      // alert('Please fill all required fields in detail form');
     } else {
       _confirmAndPay();
     }

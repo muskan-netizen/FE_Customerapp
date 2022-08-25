@@ -23,6 +23,8 @@ import HomeStack from './HomeStack';
 import navigationStrings from './navigationStrings';
 import DeviceInfo from 'react-native-device-info';
 import MyOrdersStack from './MyOrdersStack';
+import { SearchProductVendorItem2 } from '../Screens';
+import SearchProductVendorStack from './SearchProductVendorStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -288,6 +290,38 @@ export default function TabRoutes(props) {
                     : focused
                     ? imagePath.tabEActive
                     : imagePath.tabEInActive
+                }
+              />
+            ),
+            //  unmountOnBlur: true,
+          })}
+        />
+      )}
+      {DeviceInfo.getBundleId() == appIds.sorDelivery && (
+        <Tab.Screen
+          component={SearchProductVendorStack}
+          name={navigationStrings.SEARCH}
+          options={({route}) => ({
+            tabBarLabel: strings.SEARCH,
+            tabBarIcon: ({focused, tintColor}) => (
+              <Image
+                resizeMode="contain"
+                style={[
+                  (appStyle?.tabBarLayout === 2 || appStyle?.tabBarLayout === 1) ? {tintColor : 'white'} : {tintColor: tintColor},
+                  appStyle?.tabBarLayout === 2 && {height: 23, width: 23},
+                ]}
+                source={
+                  appStyle?.tabBarLayout === 5
+                    ? focused
+                      ? imagePath.search
+                      : imagePath.search1
+                    : appStyle?.tabBarLayout === 4
+                    ? focused
+                      ? imagePath.search
+                      : imagePath.search1
+                    : focused
+                    ? imagePath.search
+                    : imagePath.search1
                 }
               />
             ),

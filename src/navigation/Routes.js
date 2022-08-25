@@ -3,7 +3,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 import * as React from 'react';
 import {AppearanceProvider} from 'react-native-appearance';
 import {useSelector} from 'react-redux';
-import {Cart, ChatScreen} from '../Screens';
+import {
+  Cart,
+  ChatRoom,
+  ChatRoomForVendor,
+  ChatScreen,
+  ChatScreenForVendor,
+} from '../Screens';
 import AppIntro from '../Screens/AppIntro';
 import ShortCode from '../Screens/ShortCode/ShortCode';
 import AuthStack from './AuthStack';
@@ -25,6 +31,7 @@ export default function Routes() {
   const {appStyle} = useSelector((state) => state?.initBoot);
   const businessType = appStyle?.homePageLayout;
   console.log(appSessionInfo, 'appSessionInfo..appSessionInfo');
+  console.log(!!(businessType == 4), 'businessType????businessType');
   return (
     <AppearanceProvider>
       <NavigationContainer ref={navigationRef}>
@@ -52,7 +59,29 @@ export default function Routes() {
             AuthStack(Stack, appStyle)
           )}
           {CourierStack(Stack)}
+
           {TaxiAppStack(Stack)}
+
+          <Stack.Screen
+            name={navigationStrings.CHAT_SCREEN}
+            component={ChatScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={navigationStrings.CHAT_SCREEN_FOR_VENDOR}
+            component={ChatScreenForVendor}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={navigationStrings.CHAT_ROOM}
+            component={ChatRoom}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={navigationStrings.CHAT_ROOM_FOR_VENDOR}
+            component={ChatRoomForVendor}
+            options={{headerShown: false}}
+          />
 
           <Stack.Screen
             name={navigationStrings.TABROUTESVENDOR}

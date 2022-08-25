@@ -71,7 +71,7 @@ const VariantAddons = ({
   const isDarkMode = themeColor;
   const buttonTextColor = themeColors;
   const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
-
+ console.log(addonSet,"addOnnnn")
   useFocusEffect(
     React.useCallback(() => {
       if (variantSet.length) {
@@ -275,7 +275,7 @@ const VariantAddons = ({
                   {`${
                     currencies?.primary_currency?.symbol
                   }${currencyNumberFormatter(
-                    Number(i?.multiplier) * Number(i?.price),
+                   Number(i?.price),
                     appData?.profile?.preferences?.digit_after_decimal,
                   )}`}
                 </Text>

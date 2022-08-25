@@ -242,8 +242,6 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const createRoom = async (item, type) => {
-    console.log('itemitem', item);
-
     try {
       const apiData = {
         sub_domain: '192.168.101.88', //this is static value
@@ -1077,43 +1075,45 @@ export default function OrderDetail({navigation, route}) {
                   : colors.blackOpacity86,
               }}
             />
-            <View>
-              {!!appData?.profile?.socket_url ? (
-                <TouchableOpacity
-                  onPress={() => createRoom(item, 'vendor_to_user')}
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginTop: 8,
-                  }}>
-                  <Text style={styles.startChatText}>Vendor</Text>
-                  <Image
-                    resizeMode="contain"
-                    style={styles.agentUserIcon}
-                    source={imagePath.icVendorChat}
-                  />
-                </TouchableOpacity>
-              ) : null}
+            {!userData?.is_superadmin ? (
+              <View>
+                {!!appData?.profile?.socket_url ? (
+                  <TouchableOpacity
+                    onPress={() => createRoom(item, 'vendor_to_user')}
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginTop: 8,
+                    }}>
+                    <Text style={styles.startChatText}>{strings.VENDOR}</Text>
+                    <Image
+                      resizeMode="contain"
+                      style={styles.agentUserIcon}
+                      source={imagePath.icVendorChat}
+                    />
+                  </TouchableOpacity>
+                ) : null}
 
-              {!!appData?.profile?.socket_url &&
-              !!(driverStatus?.order && driverStatus?.agent_location?.lat) ? (
-                <TouchableOpacity
-                  onPress={() => createRoom(item, 'agent_to_user')}
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginTop: 8,
-                  }}
-                  activeOpacity={0.7}>
-                  <Text style={styles.startChatText}>Agent</Text>
-                  <Image
-                    resizeMode="contain"
-                    style={styles.agentUserIcon}
-                    source={imagePath.icUserChat}
-                  />
-                </TouchableOpacity>
-              ) : null}
-            </View>
+                {!!appData?.profile?.socket_url &&
+                !!(driverStatus?.order && driverStatus?.agent_location?.lat) ? (
+                  <TouchableOpacity
+                    onPress={() => createRoom(item, 'agent_to_user')}
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginTop: 8,
+                    }}
+                    activeOpacity={0.7}>
+                    <Text style={styles.startChatText}>{strings.DRIVER}</Text>
+                    <Image
+                      resizeMode="contain"
+                      style={styles.agentUserIcon}
+                      source={imagePath.icUserChat}
+                    />
+                  </TouchableOpacity>
+                ) : null}
+              </View>
+            ) : null}
           </View>
 
           {item?.products.length
@@ -2999,9 +2999,7 @@ export default function OrderDetail({navigation, route}) {
 
   const onChat = (item) => {
     console.log('item+++', item);
-    navigation.navigate(navigationStrings.CHAT_SCREEN, {
-      data: {...item, comeFromOrder: true},
-    });
+    navigation.navigate(navigationStrings.CHAT_SCREEN, {data: {...item}});
   };
 
   const _onRateDriver = () => {
@@ -3025,7 +3023,6 @@ export default function OrderDetail({navigation, route}) {
             containerStyle={{paddingHorizontal: moderateScale(8)}}
             isDriver={cartData?.driver_rating == null}
             _onRateDriver={_onRateDriver}
-            startChatWithAgent={() => createRoom(cartItems[0], 'agent_to_user')}
           />
         ) : null}
 
@@ -3670,6 +3667,9 @@ export default function OrderDetail({navigation, route}) {
       });
   };
 
+  {
+    console.log(paramData?.from), 'param data';
+  }
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}

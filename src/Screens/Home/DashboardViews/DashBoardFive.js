@@ -10,6 +10,7 @@ import {
   ScrollView,
   Text,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {useDarkMode} from 'react-native-dark-mode';
@@ -17,13 +18,13 @@ import DashedLine from 'react-native-dashed-line';
 import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import RNExitApp from 'react-native-exit-app';
 import FastImage from 'react-native-fast-image';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {
   Menu,
   MenuOption,
   MenuOptions,
   MenuTrigger,
 } from 'react-native-popup-menu';
+import Carousel from 'react-native-snap-carousel';
 import {SvgUri} from 'react-native-svg';
 import {useSelector} from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
@@ -34,6 +35,7 @@ import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import MarketCard3 from '../../../Components/MarketCard3';
 import ProductsComp from '../../../Components/ProductsComp';
+import SubscriptionModal from '../../../Components/SubscriptionModal';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import staticStrings from '../../../constants/staticStrings';
@@ -69,6 +71,9 @@ export default function DashBoardFive({
   onPressAddLaundryItem = () => {},
   isLoadingAddons = false,
   selectedHomeCategory = {},
+  onClose,
+  onPressSubscribe,
+  isSubscription,
 }) {
   const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
@@ -117,7 +122,7 @@ export default function DashBoardFive({
       vendorsData: [],
     });
   }, [appMainData?.vendors]);
-
+  console.log(vendorsData, 'vendorsDatavendorsData');
   useEffect(() => {
     if (!!appMainData?.categories && appMainData?.categories.length) {
       if (appStyle?.homePageLayout == 5) {
@@ -410,24 +415,33 @@ export default function DashBoardFive({
           )}
         <View style={{}}>
           {!!appData?.mobile_banners?.length && (
-            <View style={{marginTop: moderateScaleVertical(4)}}>
-              <FlatList
-                horizontal
-                data={appMainData?.mobile_banners || appData?.mobile_banners}
-                keyExtractor={(item) => item.id.toString()}
-                showsHorizontalScrollIndicator={false}
-                renderItem={renderBanners}
-                ItemSeparatorComponent={() => (
-                  <View style={{marginRight: moderateScale(12)}} />
-                )}
-                ListHeaderComponent={() => (
-                  <View style={{marginLeft: moderateScale(16)}} />
-                )}
-                ListFooterComponent={() => (
-                  <View style={{marginRight: moderateScale(16)}} />
-                )}
-              />
-            </View>
+            <Carousel
+              autoplay={true}
+              loop={true}
+              autoplayInterval={2000}
+              data={appMainData?.mobile_banners || appData?.mobile_banners}
+              renderItem={renderBanners}
+              sliderWidth={width}
+              itemWidth={moderateScale(180)}
+            />
+            // <View style={{ marginTop: moderateScaleVertical(4) }}>
+            //   <FlatList
+            //     horizontal
+            //     data={appMainData?.mobile_banners || appData?.mobile_banners}
+            //     keyExtractor={(item) => item.id.toString()}
+            //     showsHorizontalScrollIndicator={false}
+            //     renderItem={renderBanners}
+            //     ItemSeparatorComponent={() => (
+            //       <View style={{ marginRight: moderateScale(12) }} />
+            //     )}
+            //     ListHeaderComponent={() => (
+            //       <View style={{ marginLeft: moderateScale(16) }} />
+            //     )}
+            //     ListFooterComponent={() => (
+            //       <View style={{ marginRight: moderateScale(16) }} />
+            //     )}
+            //   />
+            // </View>
           )}
         </View>
       </View>
@@ -1204,6 +1218,14 @@ export default function DashBoardFive({
           </Modal>
         </View>
       )}
+      {!!userData?.auth_token &&
+        !!appData?.profile?.preferences?.show_subscription_plan_popup && (
+          <SubscriptionModal
+            isVisible={isSubscription}
+            onClose={onClose}
+            onPressSubscribe={onPressSubscribe}
+          />
+        )}
     </View>
   );
 }

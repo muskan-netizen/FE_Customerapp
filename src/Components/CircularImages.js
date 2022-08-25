@@ -41,6 +41,7 @@ const CircularImages = ({
             })}
 
             {data.length > 3 ? <View style={styles.radiusStyle} >
+                {/* <Text style={{ color: 'white', fontWeight: 'bold' }}>+{data.length - 3 > 10 ? 9 : data.length - 3}</Text> */}
                 <Text style={{ color: 'white', fontWeight: 'bold' }}>+{data.length - 3}</Text>
             </View> : null}
 

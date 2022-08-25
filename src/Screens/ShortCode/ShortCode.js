@@ -1,5 +1,5 @@
 import {isEmpty} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {Image, Linking, Text, View} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import {getBundleId} from 'react-native-device-info';
@@ -11,6 +11,7 @@ import {useSelector} from 'react-redux';
 import RNFetchBlob from 'rn-fetch-blob-v2';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import SubscriptionModal from '../../Components/SubscriptionModal';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -39,7 +40,7 @@ const fs = RNFetchBlob.fs;
 export default function ShortCode({route, navigation}) {
   const shortCodeParam = route?.params?.shortCodeParam;
 
-  console.log(shortCodeParam, 'shortCodeParam>>>');
+  console.log(shortCodeParam, 'shortCodeParam>>>+++++++');
 
   const [state, setState] = useState({
     email: '',
@@ -2366,6 +2367,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.mersi:
+          updateState({
+            shortCode: shortCodes.mersi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.foodSpot:
+          updateState({
+            shortCode: shortCodes.foodSpot,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2376,12 +2389,6 @@ export default function ShortCode({route, navigation}) {
       checkScreen();
     }
   }, [shortCode, isShortcodePrefilled]);
-
-  useEffect(() => {
-    if (videoDurationEnded && initapiresponse) {
-      navigateToNextScreen(allAppData);
-    }
-  }, [videoDurationEnded, initapiresponse]);
 
   const checkScreen = () => {
     initApiHit();
@@ -2395,7 +2402,9 @@ export default function ShortCode({route, navigation}) {
   //i did added in this fun signup page replace with tabroutes
   const _onSubmitShortCode = () => {
     updateState({isLoading: true});
-    setTimeout(() => {}, 1000);
+    setTimeout(() => {
+      initApiHit();
+    }, 1000);
   };
 
   const initApiHit = async () => {
@@ -2405,13 +2414,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '4f3624',
+        // code: 'd5403a',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '4f3624',
+        // code: 'd5403a',
         code: shortCode,
       };
     }
@@ -2419,7 +2428,6 @@ export default function ShortCode({route, navigation}) {
     actions
       .initApp({}, header, false, null, null, true)
       .then((res) => {
-        console.log(res, '<====headerResponse');
         if (res.data.mobile_banners.length > 0) {
           let preLoadBanners = res.data.mobile_banners.map((item, inx) => {
             return {
@@ -2457,6 +2465,7 @@ export default function ShortCode({route, navigation}) {
             allAppData: res,
             initapiresponse: true,
           });
+          checkNavigationState(true, videoDurationEnded);
         } else {
           updateState({isLoading: false, LoadingScreen: false});
           navigateToNextScreen(res);
@@ -2531,7 +2540,7 @@ export default function ShortCode({route, navigation}) {
             handleDynamicLink(link);
           })
           .catch((err) => {
-            console.log('checking deep link >>> 3232sdsd', err);
+            console.log('checking deep link> >> 3232sdsd', err);
           });
       }
     });
@@ -2614,16 +2623,18 @@ export default function ShortCode({route, navigation}) {
       case appIds?.iPicknDrop:
         return imagePath.ipd;
       case appIds?.muvpod:
-        return imagePath.muvpod;
+        return {uri: imagePath.muvpod};
       // case appIds?.sabroson:
       //   return imagePath.sabroson
     }
   };
 
   const onVideoDurationEnded = () => {
+    // navigateToNextScreen(allAppData);
     updateState({
       videoDurationEnded: true,
     });
+    checkNavigationState(initapiresponse, true);
   };
 
   const animatedSplash = () => {
@@ -2639,8 +2650,11 @@ export default function ShortCode({route, navigation}) {
           ref={videoRef}
           source={animationVideo()} // Can be a URL or a local file.
           style={{
-            height: width,
-            width: width,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
           }}
           resizeMode={getBundleId() == appIds.muvpod ? 'contain' : 'cover'}
           onEnd={() => onVideoDurationEnded()}
@@ -2648,6 +2662,22 @@ export default function ShortCode({route, navigation}) {
       </View>
     );
   };
+
+  const checkNavigationState = (apiRes, videoEnd) => {
+    console.log('api res+++++++', apiRes);
+    console.log('videoEnd res+++++++', videoEnd);
+    if (apiRes && videoEnd) {
+      navigateToNextScreen(allAppData);
+    }
+  };
+  // useEffect(() => {
+
+  //   if (initapiresponse && videoDurationEnded) {
+
+  //     navigateToNextScreen(allAppData);
+  //   }
+  // }, [videoDurationEnded, initapiresponse]);
+
   return (
     <View
       style={{

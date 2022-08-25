@@ -1,5 +1,5 @@
 //import liraries
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import BottomSheet from 'reanimated-bottom-sheet';
 import actions from '../redux/actions';
 import {
@@ -17,18 +17,18 @@ import {
   moderateScaleVertical,
   width,
 } from '../styles/responsiveSize';
-import {showError} from '../utils/helperFunctions';
+import { showError } from '../utils/helperFunctions';
 import PendingOrderCard from './PendingOrderCard';
-import {cloneDeep, debounce} from 'lodash';
+import { cloneDeep, debounce } from 'lodash';
 import Modal from 'react-native-modal';
 import imagePath from '../constants/imagePath';
-import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
+import { StartPrinting } from '../Screens/PrinterConnection/PrinteFunc';
 
 const NotificationModal = () => {
   const pendingNotifications = useSelector(
     (state) => state?.pendingNotifications?.pendingNotifications,
   );
-  const {appData, themeColors, currencies, languages} = useSelector(
+  const { appData, themeColors, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
   const userData = useSelector((state) => state?.auth?.userData);
@@ -44,14 +44,14 @@ const NotificationModal = () => {
     isRefreshing: false,
   });
 
-  const {pageActive, acceptLoader, rejectLoader, selectedOrder, isRefreshing} =
+  const { pageActive, acceptLoader, rejectLoader, selectedOrder, isRefreshing } =
     state;
 
   //update state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
-    if (!!userData?.auth_token) {
+    if (!!userData?.auth_token && isVendorNotification) {
       (async () => {
         try {
           const res = await actions.allPendingOrders(
@@ -78,8 +78,8 @@ const NotificationModal = () => {
   }, [pageActive, isRefreshing, isVendorNotification]);
   // console.log(appMainData, 'appMainData');
 
-  const onEndReached = ({distanceFromEnd}) => {
-    updateState({pageActive: pageActive + 1});
+  const onEndReached = ({ distanceFromEnd }) => {
+    updateState({ pageActive: pageActive + 1 });
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -88,15 +88,15 @@ const NotificationModal = () => {
   });
 
   const updateOrderStatus = (acceptRejectData, status) => {
-    const {vendors} = acceptRejectData;
+    const { vendors } = acceptRejectData;
     console.log('accept rejecte data', acceptRejectData);
     console.log('status', status);
-    updateState({selectedOrder: acceptRejectData});
+    updateState({ selectedOrder: acceptRejectData });
     // return;
     if (status == 7) {
-      updateState({acceptLoader: true});
+      updateState({ acceptLoader: true });
     } else {
-      updateState({rejectLoader: true});
+      updateState({ rejectLoader: true });
     }
     let data = {};
     data['order_id'] = acceptRejectData?.id;
@@ -113,7 +113,7 @@ const NotificationModal = () => {
         console.log(res, 'res>>>acceptRejectOrder');
         if (res && res.status == 'success') {
           if (status == 7) {
-            StartPrinting({id: acceptRejectData?.id});
+            StartPrinting({ id: acceptRejectData?.id });
           }
           updateLocalStatus(res, acceptRejectData);
           return;
@@ -154,11 +154,11 @@ const NotificationModal = () => {
     });
   };
 
-  const renderItem = ({item}) => {
+  const renderItem = ({ item }) => {
     return (
       <PendingOrderCard
         data={item}
-        onPress={() => {}}
+        onPress={() => { }}
         updateOrderStatus={(data, status) => updateOrderStatus(data, status)}
         acceptLoader={acceptLoader}
         rejectLoader={rejectLoader}
@@ -168,7 +168,7 @@ const NotificationModal = () => {
   };
 
   const renderContent = () => (
-    <View style={{height: height / 1.2, alignItems: 'center'}}>
+    <View style={{ height: height / 1.2, alignItems: 'center' }}>
       <FlatList
         showsVerticalScrollIndicator={false}
         data={pendingNotifications}
@@ -177,11 +177,11 @@ const NotificationModal = () => {
         keyExtractor={(item) => (!!item?.id ? item.id.toString() : '')}
         onEndReachedThreshold={0.5}
         ListFooterComponent={() => (
-          <View style={{height: moderateScale(100)}} />
+          <View style={{ height: moderateScale(100) }} />
         )}
-        ListHeaderComponent={() => <View style={{height: moderateScale(10)}} />}
+        ListHeaderComponent={() => <View style={{ height: moderateScale(10) }} />}
         ItemSeparatorComponent={() => (
-          <View style={{marginBottom: moderateScaleVertical(12)}} />
+          <View style={{ marginBottom: moderateScaleVertical(12) }} />
         )}
       />
     </View>
@@ -194,10 +194,10 @@ const NotificationModal = () => {
         margin: 0,
         justifyContent: 'flex-end',
       }}>
-      <View style={{height: height / 1.8, alignItems: 'center'}}>
+      <View style={{ height: height / 1.8, alignItems: 'center' }}>
         <TouchableOpacity
           activeOpacity={0.8}
-          style={{marginBottom: moderateScaleVertical(8)}}
+          style={{ marginBottom: moderateScaleVertical(8) }}
           onPress={() => actions.isVendorNotification(false)}>
           <Image source={imagePath.close2} />
         </TouchableOpacity>
@@ -210,10 +210,10 @@ const NotificationModal = () => {
           onEndReachedThreshold={0.5}
           // ListFooterComponent={() => <View style={{ height: moderateScale(100) }} />}
           ListHeaderComponent={() => (
-            <View style={{height: moderateScale(10)}} />
+            <View style={{ height: moderateScale(10) }} />
           )}
           ItemSeparatorComponent={() => (
-            <View style={{marginBottom: moderateScaleVertical(12)}} />
+            <View style={{ marginBottom: moderateScaleVertical(12) }} />
           )}
         />
       </View>

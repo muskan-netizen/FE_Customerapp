@@ -209,6 +209,7 @@ export const setPrimaryAddress = (query = '', data = {}, headers = {}) => {
 };
 
 export function dineInData(res) {
+  console.log(res, 'dine_in_type' )
   setItem('dine_in_type', res);
   dispatch({
     type: types.DINE_IN_DATA,
