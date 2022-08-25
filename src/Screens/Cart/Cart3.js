@@ -707,6 +707,7 @@ function Cart({navigation, route}) {
       )
       .then((res) => {
         actions.cartItemQty({});
+        console.log(res, '<==resOccured');
         setCartItems([]);
         setCartData({});
 
@@ -2838,7 +2839,7 @@ function Cart({navigation, route}) {
                                         : colors.textGreyOpcaity7,
                                       marginBottom: moderateScale(2),
                                       marginTop: moderateScaleVertical(6),
-                                      fontFamily:fontFamily.bold
+                                      fontFamily: fontFamily.bold,
                                     }}>
                                     {strings.EXTRA}
                                   </Text>
@@ -6471,7 +6472,7 @@ function Cart({navigation, route}) {
         openCloseMapAddress={openCloseMapAddress}
         constCurrLoc={location}
       />
-
+      {console.log(location, 'locationlocation')}
       {/* Date time modal */}
       <Modal
         transparent={true}

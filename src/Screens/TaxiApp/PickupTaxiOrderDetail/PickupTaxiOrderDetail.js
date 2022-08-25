@@ -92,7 +92,7 @@ import LottieView from 'lottie-react-native';
 
 export default function PickupTaxiOrderDetail({navigation, route}) {
   const {themeColor, themeToggle} = useSelector(
-    (state) => state?.initBoot?.themeColor,
+    (state) => state?.initBoot,
   );
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;

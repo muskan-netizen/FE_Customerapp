@@ -79,7 +79,7 @@ const PhoneNumberInput = ({
         onPress={_openCountryPicker}>
         {showCountryCode && (
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text> +</Text>
+            <Text > +</Text>
             <Text
               style={{
                 fontFamily: fontFamily.medium,

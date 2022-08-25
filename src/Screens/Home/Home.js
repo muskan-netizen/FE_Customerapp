@@ -110,7 +110,7 @@ export default function Home({route, navigation}) {
     selectedAddonSet: [],
     unPresentAry: [],
     isSubscription: true,
-    stopOrderModalVisible: true,
+    stopOrderModalVisible: true,,
   });
 
   const {
@@ -133,7 +133,7 @@ export default function Home({route, navigation}) {
     selectedAddonSet,
     unPresentAry,
     isSubscription,
-    stopOrderModalVisible,
+    stopOrderModalVisible,,
   } = state;
 
   const {profile} = appData;
@@ -366,7 +366,7 @@ export default function Home({route, navigation}) {
           resolve(res);
         }
       } catch (error) {
-        reject(error);
+        reject(error);;
       }
     });
   };
@@ -401,7 +401,7 @@ export default function Home({route, navigation}) {
         address: locationData?.address || '',
         latitude: locationData?.latitude || '',
         longitude: locationData?.longitude || '',
-      };
+      };;
     }
 
     let vendorFilterData = {
@@ -419,8 +419,8 @@ export default function Home({route, navigation}) {
     {
       console.log(latlongObj, vendorFilterData, 'data>>>>>>>');
 
-      var selectedVendorType = null;
-      var defaultVendorType = null;
+      var selectedVendorType = null;;
+      var defaultVendorType = null;;
 
       console.log(
         'dineInTypedineInType',
@@ -428,12 +428,12 @@ export default function Home({route, navigation}) {
       );
 
       if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
-        defaultVendorType = appData?.profile?.preferences?.vendorMode[0]?.type; //
+        defaultVendorType = appData?.profile?.preferences?.vendorMode[0]?.type;; //
         appData?.profile?.preferences?.vendorMode.forEach((val, i) => {
           if (val?.type == dineInType) {
-            selectedVendorType = val.type;
+            selectedVendorType = val.type;;
           }
-        });
+        });;
       }
       if (!selectedVendorType) {
         actions.dineInData(defaultVendorType);
@@ -442,7 +442,7 @@ export default function Home({route, navigation}) {
         type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
         ...latlongObj,
         ...vendorFilterData,
-      };
+      };;
       let apiHeader = {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
@@ -672,17 +672,17 @@ export default function Home({route, navigation}) {
     } else if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+              item,
+              rootProducts: true,
+              // categoryData: data,
+            })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: item?.id,
-            vendor: true,
-            name: item?.name,
-            isVendorList: true,
-            fetchOffers: true,
-          })();
+              id: item?.id,
+              vendor: true,
+              name: item?.name,
+              isVendorList: true,
+              fetchOffers: true,
+            })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
@@ -719,16 +719,16 @@ export default function Home({route, navigation}) {
       if (data.redirect_to == staticStrings.VENDOR) {
         data?.is_show_category
           ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-              item,
-              rootProducts: true,
-              // categoryData: data,
-            })()
+                item,
+                rootProducts: true,
+                // categoryData: data,
+              })()
           : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-              id: data.redirect_id,
-              vendor: true,
-              name: data.redirect_name,
-              fetchOffers: true,
-            })();
+                id: data.redirect_id,
+                vendor: true,
+                name: data.redirect_name,
+                fetchOffers: true,
+              })();
       } else if (data.redirect_to == staticStrings.CATEGORY) {
         if (data?.category?.type?.title == staticStrings.VENDOR) {
           let dat2 = data;
@@ -785,13 +785,14 @@ export default function Home({route, navigation}) {
     };
 
     actions
+      
       .initApp(
-        {},
-        header,
-        true,
-        currencies?.primary_currency,
-        languages?.primary_language,
-      )
+          {},
+          header,
+          true,
+          currencies?.primary_currency,
+          languages?.primary_language,
+        )
       .then((res) => {
         console.log(res, 'initApp');
         updateState({isRefreshing: false});
@@ -1022,9 +1023,9 @@ export default function Home({route, navigation}) {
 
   const _stopOrderModalClose = () => {
     updateState({
-      stopOrderModalVisible: false,
-    });
-  };
+      stopOrderModalVisible: false,,
+    });;
+  };;
 
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
@@ -1170,7 +1171,7 @@ export default function Home({route, navigation}) {
               toggleData={appData}
               isLoading={isLoading}
             />
-            {dineInType == 'pick_drop' ? (
+            {dineInType == 'pick_drop' ? ( (
               <TaxiHomeDashbord
                 handleRefresh={() => handleRefresh()}
                 bannerPress={(item) => bannerPress(item)}
