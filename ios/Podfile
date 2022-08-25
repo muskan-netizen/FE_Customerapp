@@ -1919,6 +1919,14 @@ end
 target 'Pets' do
   
 end
+#GetDress Target
+target 'GetDress' do
+  
+end
+#Shelf Target
+target 'Shelf' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

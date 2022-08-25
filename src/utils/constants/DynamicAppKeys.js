@@ -393,6 +393,8 @@ const shortCodes = {
   greenCab: '20d107',
   axxi: 'bc1119',
   pets: '8e0436',
+  getDress:'7d11ac',
+  shelf:'345974',
 };
 
 const appIds = {
@@ -1959,6 +1961,14 @@ const appIds = {
   pets: Platform.select({
     ios: 'com.pets.order',
     android: 'com.pets.order',
+  }),
+  getDress: Platform.select({
+    ios: 'com.getDress.order',
+    android: 'com.getDress.order',
+  }),
+  shelf: Platform.select({
+    ios: 'com.shelf.order',
+    android: 'com.shelf.order',
   }),
 };
 
