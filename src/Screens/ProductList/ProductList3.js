@@ -330,6 +330,7 @@ export default function Products({route, navigation}) {
             categoryInfo={categoryInfo}
             animateText={animateText}
             section={section}
+            CartItems={CartItems}
           />
         </View>
       );
@@ -341,6 +342,7 @@ export default function Products({route, navigation}) {
       repeatItems,
       cartId,
       categoryInfo,
+      CartItems,
     ],
   );
 
@@ -3684,6 +3686,7 @@ export default function Products({route, navigation}) {
                 ListEmptyComponent={listEmptyComponent}
               />
             )}
+            <View style={{height: moderateScaleVertical(60)}} />
 
             {isVisibleModal ? (
               <TouchableWithoutFeedback

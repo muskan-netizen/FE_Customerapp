@@ -273,7 +273,6 @@ export default function DashBoardFive({
         ? '800/600'
         : '400/600',
     );
-    console.log('hfbgdh', item);
     return (
       <TouchableOpacity activeOpacity={0.8} onPress={() => bannerPress(item)}>
         <FastImage

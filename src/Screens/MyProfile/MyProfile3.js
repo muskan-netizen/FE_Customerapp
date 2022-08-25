@@ -180,53 +180,60 @@ export default function MyProfile3({route, navigation}) {
   useFocusEffect(
     React.useCallback(() => {
       getAllAddress();
-
       if (userData?.auth_token) {
-        actions
-          .getUserProfile(
-            {},
-            {
-              code: appData?.profile?.code,
-              currency: currencies?.primary_currency?.id,
-              language: languages?.primary_language?.id,
-            },
-          )
-          .then((res) => {
-            actions.updateProfile({...userData, ...res?.data});
-          })
-          .catch((err) => {
-            console.log(err, 'err>>>>>');
-          });
+        getUserProfileData();
       }
       if (!isEmpty(userData?.user_document)) {
-        let textInputs = cloneDeep(
-          userData?.user_document?.filter((x) => x?.file_type == 'Text'),
-        );
-        let images = cloneDeep(
-          userData?.user_document?.filter((x) => x?.file_type == 'Image'),
-        );
-        let pdfs = cloneDeep(
-          userData?.user_document?.filter((x) => x?.file_type == 'Pdf'),
-        );
-        textInputs.map((item, index) => {
-          textInputs[index].contents = item?.user_document?.file_name;
-        });
-
-        images.map((item, index) => {
-          images[index].value = item?.user_document?.image_file?.storage_url;
-        });
-        pdfs.map((item, index) => {
-          pdfs[index].filename = item?.user_document?.file_original_name;
-          pdfs[index].value = item?.user_document?.image_file?.storage_url;
-        });
-        updateState({
-          addtionalTextInputs: textInputs,
-          addtionalImages: images,
-          addtionalPdfs: pdfs,
-        });
+        getUserDocs();
       }
     }, []),
   );
+
+  const getUserProfileData = () => {
+    actions
+      .getUserProfile(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        actions.updateProfile({...userData, ...res?.data});
+      })
+      .catch((err) => {
+        console.log(err, 'err>>>>>');
+      });
+  };
+
+  const getUserDocs = () => {
+    let textInputs = cloneDeep(
+      userData?.user_document?.filter((x) => x?.file_type == 'Text'),
+    );
+    let images = cloneDeep(
+      userData?.user_document?.filter((x) => x?.file_type == 'Image'),
+    );
+    let pdfs = cloneDeep(
+      userData?.user_document?.filter((x) => x?.file_type == 'Pdf'),
+    );
+    textInputs.map((item, index) => {
+      textInputs[index].contents = item?.user_document?.file_name;
+    });
+
+    images.map((item, index) => {
+      images[index].value = item?.user_document?.image_file?.storage_url;
+    });
+    pdfs.map((item, index) => {
+      pdfs[index].filename = item?.user_document?.file_original_name;
+      pdfs[index].value = item?.user_document?.image_file?.storage_url;
+    });
+    updateState({
+      addtionalTextInputs: textInputs,
+      addtionalImages: images,
+      addtionalPdfs: pdfs,
+    });
+  };
 
   // changeTab function
   const changeTab = (tabData) => {
@@ -388,10 +395,6 @@ export default function MyProfile3({route, navigation}) {
         .then((res) => {
           updateState({del: del ? false : true});
           showSuccess(res.message);
-
-          // setTimeout(() => {
-          //   getAllAddress();
-          // }, 1000);
         })
         .catch((error) => {
           updateState({isLoading: false});

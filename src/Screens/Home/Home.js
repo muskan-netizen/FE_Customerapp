@@ -65,7 +65,7 @@ export default function Home({route, navigation}) {
   const {location, appMainData, dineInType} = useSelector(
     (state) => state?.home,
   );
-  console.log(dineInType, 'dineInType>>>>');
+  console.log(allAddresss, 'dineInType>>>>');
 
   console.log('appDataappDataappData', appData);
 
@@ -283,7 +283,14 @@ export default function Home({route, navigation}) {
         homeData();
         return;
       });
-  }, [selectedTabType, appData, bestSeller, openVendor, closeVendor]);
+  }, [
+    selectedTabType,
+    appData,
+    bestSeller,
+    openVendor,
+    closeVendor,
+    allAddresss,
+  ]);
 
   // useEffect(() => {
   //   homeData();
@@ -512,49 +519,6 @@ export default function Home({route, navigation}) {
     () => {
       navigation.navigate(screenName, {data});
     };
-
-  const {viewRef2, viewRef3, bannerRef} = useRef();
-
-  // const preLoadImages = async (data) => {
-  //   if (data.categories.length > 0) {
-  //     let preLoadCategories = data.categories.map((item, inx) => {
-  //       return {
-  //         uri: getImageUrl(
-  //           item?.icon?.image_fit,
-  //           item?.icon?.image_path,
-  //           '140/140',
-  //         ),
-  //       };
-  //     });
-  //     FastImage.preload(preLoadCategories); //preload categories
-  //   }
-
-  //   if (!!appData?.mobile_banners && appData?.mobile_banners?.length > 0) {
-  //     let preLoadBanner = appData?.mobile_banners.map((item) => {
-  //       return {
-  //         uri: getImageUrl(
-  //           item.image.image_fit,
-  //           item.image.image_path,
-  //           appStyle?.homePageLayout === 5 ? '600/400' : '200/400',
-  //         ),
-  //       };
-  //     });
-  //     FastImage.preload(preLoadBanner); //preload banners
-  //   }
-
-  //   if (data.vendors.length > 0) {
-  //     let preLoadVendors = data.vendors.map((item, inx) => {
-  //       return {
-  //         uri: getImageUrl(
-  //           item.banner.proxy_url || item.image.proxy_url,
-  //           item.banner.image_path || item.image.image_path,
-  //           '700/300',
-  //         ),
-  //       };
-  //     });
-  //     FastImage.preload(preLoadVendors); //preload vendors
-  //   }
-  // };
 
   const openUber = () => {
     let appName = 'Uber - Easy affordable trips';
