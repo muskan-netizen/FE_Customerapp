@@ -206,18 +206,18 @@ android {
 
     flavorDimensions "appType"
 
-    // productFlavors {
-    //            myfarma{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.myfarma'
-    //         resValue "string", "app_name", "Livian"
-    //         resValue "string", "host_name", ""
-    //         }
-    // }
+    productFlavors {
+              orderFirst{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.orderFirst'
+            resValue "string", "app_name", "OrderFirst"
+            resValue "string", "host_name", ""
+            }
+    }
 
     productFlavors {
             royoorder {
