@@ -207,14 +207,14 @@ android {
     flavorDimensions "appType"
 
 //   productFlavors{
-//      marjMarketplace{
+//     shelf{
 //             dimension "appType"
 //             versionCode 1
 //             versionName "1.0"
 //             minSdkVersion rootProject.ext.minSdkVersion
 //             targetSdkVersion rootProject.ext.targetSdkVersion
-//             applicationId 'com.marjMarketplace'
-//             resValue "string", "app_name", "Marj Marketplace"
+//             applicationId 'com.shelf.order'
+//             resValue "string", "app_name", "shelf" 
 //             resValue "string", "host_name", ""
 //             }
 //   }
@@ -5952,6 +5952,26 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.pets.order'
             resValue "string", "app_name", "Pets" 
+            resValue "string", "host_name", ""
+            }
+            getDress{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.getDress.order'
+            resValue "string", "app_name", "Get Dress" 
+            resValue "string", "host_name", ""
+            }
+         shelf{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.shelf.order'
+            resValue "string", "app_name", "shelf" 
             resValue "string", "host_name", ""
             }
     }
