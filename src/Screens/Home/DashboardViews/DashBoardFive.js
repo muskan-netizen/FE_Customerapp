@@ -414,7 +414,8 @@ export default function DashBoardFive({
             </View>
           )}
         <View style={{}}>
-          {!!appData?.mobile_banners?.length && (
+          {!!appData?.mobile_banners?.length &&
+          appStyle?.homePageLayout == 3 ? (
             <Carousel
               autoplay={true}
               loop={true}
@@ -424,24 +425,25 @@ export default function DashBoardFive({
               sliderWidth={width}
               itemWidth={moderateScale(180)}
             />
-            // <View style={{ marginTop: moderateScaleVertical(4) }}>
-            //   <FlatList
-            //     horizontal
-            //     data={appMainData?.mobile_banners || appData?.mobile_banners}
-            //     keyExtractor={(item) => item.id.toString()}
-            //     showsHorizontalScrollIndicator={false}
-            //     renderItem={renderBanners}
-            //     ItemSeparatorComponent={() => (
-            //       <View style={{ marginRight: moderateScale(12) }} />
-            //     )}
-            //     ListHeaderComponent={() => (
-            //       <View style={{ marginLeft: moderateScale(16) }} />
-            //     )}
-            //     ListFooterComponent={() => (
-            //       <View style={{ marginRight: moderateScale(16) }} />
-            //     )}
-            //   />
-            // </View>
+          ) : (
+            <View style={{marginTop: moderateScaleVertical(4)}}>
+              <FlatList
+                horizontal
+                data={appMainData?.mobile_banners || appData?.mobile_banners}
+                keyExtractor={(item) => item.id.toString()}
+                showsHorizontalScrollIndicator={false}
+                renderItem={renderBanners}
+                ItemSeparatorComponent={() => (
+                  <View style={{marginRight: moderateScale(12)}} />
+                )}
+                ListHeaderComponent={() => (
+                  <View style={{marginLeft: moderateScale(16)}} />
+                )}
+                ListFooterComponent={() => (
+                  <View style={{marginRight: moderateScale(16)}} />
+                )}
+              />
+            </View>
           )}
         </View>
       </View>
