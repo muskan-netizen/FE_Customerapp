@@ -55,6 +55,7 @@ import DeviceCountry, {
   TYPE_TELEPHONY,
   TYPE_CONFIGURATION,
 } from 'react-native-device-country';
+import {setPrimaryAddress} from '../../redux/actions/home';
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
@@ -548,11 +549,11 @@ export default function MyProfile3({route, navigation}) {
       }
     }
   };
-  useEffect(() => {
-    if (!!userData?.auth_token) {
-      getAllAddress();
-    }
-  }, [del]);
+  // useEffect(() => {
+  //   if (!!userData?.auth_token) {
+  //     getAllAddress();
+  //   }
+  // }, [del]);
 
   //get All address
   const getAllAddress = () => {
@@ -603,7 +604,7 @@ export default function MyProfile3({route, navigation}) {
       })
       .then((res) => {
         updateState({del: del ? false : true});
-
+        getAllAddress();
         showSuccess(res.message);
       })
       .catch((error) => {
@@ -781,7 +782,9 @@ export default function MyProfile3({route, navigation}) {
                   style={[
                     styles.referralCode,
                     {
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
                       fontFamily: fontFamily.bold,
                     },
                   ]}>
@@ -951,6 +954,8 @@ export default function MyProfile3({route, navigation}) {
     );
   };
 
+  console.log(address, 'address>>>address');
+
   //address view tab
   const addressView = () => {
     return (
@@ -1090,14 +1095,20 @@ export default function MyProfile3({route, navigation}) {
                         justifyContent: 'center',
                       }}>
                       <Image
-                        style={{tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black}}
+                        style={{
+                          tintColor: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                        }}
                         source={imagePath.editBlue}
                       />
                       <Text
                         style={{
                           textAlign: 'center',
                           fontFamily: fontFamily.bold,
-                          color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
                           fontSize: textScale(12),
                           paddingLeft: moderateScale(5),
                         }}>
@@ -1266,8 +1277,9 @@ export default function MyProfile3({route, navigation}) {
           {/* scrolllablr tob bar */}
           <CustomTopTabBar
             scrollEnabled={true}
-            activeStyle={{color: isDarkMode ? MyDarkTheme.colors.text : colors.black}}
-            
+            activeStyle={{
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}
             tabBarItems={tabBarData}
             onPress={(tabData) => changeTab(tabData)}
             numberOfLines={1}
@@ -1275,14 +1287,13 @@ export default function MyProfile3({route, navigation}) {
             textTabWidth={width / 2.8}
             customTextContainerStyle={{
               width: width / 2.8,
-              
+
               // flexWrap: 'wrap',
               // alignSelf:'center'
               // justifyContent: 'center',
             }}
             textStyle={{
               fontSize: textScale(13),
-              
             }}
           />
 

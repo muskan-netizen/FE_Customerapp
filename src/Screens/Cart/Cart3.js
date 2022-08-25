@@ -303,15 +303,7 @@ function Cart({navigation, route}) {
         updateState({isLoadingB: true});
       }
       getCartDetail();
-      // getAllWishListData();
-      // if (!!checkCartItem?.data) {
-      //   getCartDetail();
-      // } else {
-      //   getAllWishListData();
-      // }
-      return () => {
-        // alert('blur')
-      };
+      return () => {};
     }, [
       currencies,
       languages,
@@ -320,7 +312,6 @@ function Cart({navigation, route}) {
       selectedAddress,
       isRefreshing,
       checkCartItem?.data?.item_count,
-      // sheduledorderdate,
       sel_types,
     ]),
   );
@@ -397,7 +388,6 @@ function Cart({navigation, route}) {
     const local = moment.utc(date).local().format('DD MMM YYYY hhðŸ‡²ðŸ‡²a');
     return local;
   };
-  console.log(location, 'nocationnnnnnn');
   //get the entire cart detail
   const getCartDetail = () => {
     console.log(
@@ -893,7 +883,7 @@ function Cart({navigation, route}) {
     let order_number = res?.data?.order_number;
     // setSelectedPayment(selectedPayment);
     console.log('api res success', res);
- 
+
     let paymentData = {
       total_payable_amount: (
         Number(cartData?.total_payable_amount) +
@@ -1008,7 +998,6 @@ function Cart({navigation, route}) {
       case 30: //Paytab Payment Getway
         // updateState({ placeLoader: false });
         console.log(res.data, 'res.data>res.data');
-        // payWithFlutterWave(paymentData.orderDetail, handleOnRedirect)
         updateState({
           isModalVisibleForPayFlutterWave: true,
           paymentDataFlutterWave: paymentData,
@@ -1420,7 +1409,6 @@ function Cart({navigation, route}) {
             isLoadingB: false,
           });
         }
-        // getCartDetail();
       })
       .catch((error) => console.log(error, 'errororor'));
   };
@@ -3277,14 +3265,22 @@ function Cart({navigation, route}) {
                     <View
                       style={{
                         ...styles.deliveryFeeDropDown,
-                        borderColor: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                        borderColor: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
                       }}>
                       {appIds.hokitch == getBundleId() ? (
                         <Text style={styles.dropDownTextStyle}>
                           {strings.CHARGES}
                         </Text>
                       ) : (
-                        <Text style={{...styles.dropDownTextStyle, color:isDarkMode ? MyDarkTheme.colors.text : colors.black}}>
+                        <Text
+                          style={{
+                            ...styles.dropDownTextStyle,
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
+                          }}>
                           {
                             item?.delivery_types.filter(
                               (val2) =>
@@ -3297,7 +3293,9 @@ function Cart({navigation, route}) {
                         style={{
                           ...styles.dropDownTextStyle,
                           marginHorizontal: moderateScale(8),
-                          color:isDarkMode ? MyDarkTheme.colors.text : colors.black
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
                         }}>
                         {
                           item?.delivery_types.filter(
@@ -3310,10 +3308,11 @@ function Cart({navigation, route}) {
                         style={{
                           width: moderateScale(10),
                           height: moderateScale(10),
-                          
                         }}
                         source={imagePath.icDropdown4}
-                        tintColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
+                        tintColor={
+                          isDarkMode ? MyDarkTheme.colors.text : colors.black
+                        }
                         resizeMode="contain"
                       />
                     </View>
@@ -4654,11 +4653,15 @@ function Cart({navigation, route}) {
                     : strings.SCHEDULE_ORDER
                 }
                 borderRadius={moderateScale(13)}
-                textStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black,}}
+                textStyle={{
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}
                 containerStyle={{
                   ...styles.placeOrderButtonStyle,
                   backgroundColor: colors.transparent,
-                  borderColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  borderColor: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.black,
                   borderWidth: 0.8,
                 }}
               />
@@ -6990,7 +6993,7 @@ function Cart({navigation, route}) {
                 email: userData?.email,
                 name: userData?.name,
               },
-              amount: paymentDataFlutterWave?.total_payable_amount,
+              amount: paymentDataFlutterWave?.total_payable_amount || 0,
               currency: currencies?.primary_currency?.iso_code,
               payment_options: 'card',
             }}
