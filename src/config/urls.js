@@ -35,7 +35,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://palmettoplusdelivered.com/api/v1';
 // export const API_BASE_URL = 'https://dispatcher.releezer.shop';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
-//  export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
+//  export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1';
 // export const API_BASE_URL = 'https://masaapp.ae/api/v1'
 

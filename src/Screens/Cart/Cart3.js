@@ -2737,17 +2737,17 @@ function Cart({navigation, route}) {
                                   marginTop: moderateScaleVertical(4),
                                   fontFamily: fontFamily.regular,
                                 }}>
-                                {i?.quantity} X
+                                {i?.quantity} X {''}
                                 <Text
                                   style={{
                                     color: isDarkMode
                                       ? MyDarkTheme.colors.text
-                                      : colors.black,
+                                      : colors.textGreyOpcaity7,
                                   }}>
                                   {`${currencies?.primary_currency?.symbol}${
                                     // Number(i?.pvariant?.multiplier) *
                                     currencyNumberFormatter(
-                                      Number(i?.variants?.quantity_price),
+                                      Number(i?.variants?.price),
                                       appData?.profile?.preferences
                                         ?.digit_after_decimal,
                                     )
@@ -2832,6 +2832,7 @@ function Cart({navigation, route}) {
                                         : colors.textGreyOpcaity7,
                                       marginBottom: moderateScale(2),
                                       marginTop: moderateScaleVertical(6),
+                                      fontFamily:fontFamily.bold
                                     }}>
                                     {strings.EXTRA}
                                   </Text>

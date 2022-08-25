@@ -95,10 +95,12 @@ export default function AddMoney({navigation}) {
     paymentDataFlutterWave,
   } = state;
   useEffect(() => {
+    
     getListOfPaymentMethod();
   }, []);
-
+  
   useEffect(() => {
+   
     if (
       preferences &&
       preferences?.stripe_publishable_key != '' &&
@@ -113,8 +115,7 @@ export default function AddMoney({navigation}) {
 
   //Get list of all payment method
   const getListOfPaymentMethod = () => {
-    actions
-      .getListOfPaymentMethod(
+    actions.getListOfPaymentMethod(
         '/wallet',
         {},
         {
@@ -587,7 +588,7 @@ export default function AddMoney({navigation}) {
       .catch(errorMethod);
   };
   const _createPaymentMethod = async (cardInfo, res2) => {
-    // console.log(cardInfo, 'cardInfo');
+ 
     if (res2) {
       await createPaymentMethod({
         type: 'Card',
@@ -600,7 +601,7 @@ export default function AddMoney({navigation}) {
           if (res && res?.error && res?.error?.message) {
             showError(res?.error?.message);
           } else {
-            console.log(res, 'success_createPaymentMethod ');
+            console.log(res, 'success_createPaymentMethod');
             actions
               .getStripePaymentIntent(
                 // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,

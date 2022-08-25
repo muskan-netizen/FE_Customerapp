@@ -126,7 +126,7 @@ export default function VerifyAccount({navigation, route}) {
       })
       .then((res) => {
         console.log(res, 'resresres');
-        showSuccess(res.message);
+        showSuccess(res?.message);
         if (type == 'phone') {
           updateState({
             editablePhone: false,
