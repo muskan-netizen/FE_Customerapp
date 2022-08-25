@@ -98,7 +98,7 @@ export default function DashBoardOne({
     console.log(prop, 'prop');
     return (
       <ImgCardForBrickList
-        onPress={() =>  onPressCategory(prop)}
+        onPress={() => onPressCategory(prop)}
         text={prop.name}
         data={prop}
       />
@@ -109,11 +109,11 @@ export default function DashBoardOne({
       orderId: item?.vendors[0].order_id,
       // fromVendorApp: true,
       orderDetail: {
-        dispatch_traking_url: item?.vendors[0].dispatch_traking_url,,
+        dispatch_traking_url: item?.vendors[0].dispatch_traking_url,
       },
       selectedVendor: {id: item?.vendors[0].vendor_id},
     });
-  };;
+  };
 
   console.log(appData?.banners, 'Banners');
   const showAllTempCartOrders = () => {
@@ -137,7 +137,7 @@ export default function DashBoardOne({
                     marginTop: moderateScale(15),
                     borderRadius: moderateScale(5),
                     borderWidth: moderateScale(0.5),
-                    borderColor: themeColors?.primary_color,,
+                    borderColor: themeColors?.primary_color,
                   }}>
                   <View style={{flex: 0.7}}>
                     <Text

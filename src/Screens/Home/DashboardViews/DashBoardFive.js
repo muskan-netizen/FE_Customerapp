@@ -733,13 +733,10 @@ export default function DashBoardFive({
               style={{marginHorizontal: moderateScale(4)}}
               onPress={() => onViewAll('vendor', appMainData.vendors)}>
               <Text
-               
                 style={{
-                 
                   ...styles.viewAllText,
-                 
+
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-               
                 }}>
                 {strings.VIEW_ALL}
               </Text>
@@ -752,11 +749,9 @@ export default function DashBoardFive({
                   style={{
                     height: moderateScaleVertical(16),
                     width: moderateScale(16),
-                    tintColor:  isDarkMode
-                     
+                    tintColor: isDarkMode
                       ? MyDarkTheme.colors.text
-                     
-                      : colors.black,,
+                      : colors.black,
                   }}
                   resizeMode="contain"
                   source={imagePath.sort}
@@ -1146,10 +1141,10 @@ export default function DashBoardFive({
             animationType="slide"
             transparent={true}
             visible={isConfirmAgeModal}
-              // onRequestClose={() => {
-              //   Alert.alert("Modal has been closed.");
-              //   setModalVisible(!modalVisible);
-              // }}
+            // onRequestClose={() => {
+            //   Alert.alert("Modal has been closed.");
+            //   setModalVisible(!modalVisible);
+            // }}
           >
             <View
               style={{

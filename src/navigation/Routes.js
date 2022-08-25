@@ -84,8 +84,6 @@ export default function Routes() {
           />
 
           <Stack.Screen
-=======
->>>>>>> dee197f8768f4e25a2310b0211ed88c938f4bc21
             name={navigationStrings.TABROUTESVENDOR}
             component={TabRoutesVendor}
             options={{headerShown: false, gestureEnabled: false}}

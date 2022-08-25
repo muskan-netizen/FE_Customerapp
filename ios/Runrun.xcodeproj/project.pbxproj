@@ -29158,6 +29158,7 @@
 				8484D9FF276B56F30081DD89 /* Bundle React Native code and images */,
 				D81A2AE8DCB762BB703408A4 /* [CP] Embed Pods Frameworks */,
 				A5B34C187A62B9687875271D /* [CP] Copy Pods Resources */,
+				002D3ADE28B76E04007F4F69 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -49031,6 +49032,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Punnet/Pods-available_pods-Punnet-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		002D3ADE28B76E04007F4F69 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n\n";
 		};
 		002F30F993355FE8C13A2D3C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

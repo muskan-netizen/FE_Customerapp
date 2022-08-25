@@ -2561,6 +2561,42 @@ export default function ShortCode({route, navigation}) {
         }, 500);
       });
   };
+
+  const _onSetNavigationTypeForVideoAndImageSplash = (res) => {
+    switch (getBundleId()) {
+      case appIds.masa:
+        updateState({
+          isLoading: false,
+          LoadingScreen: false,
+          allAppData: res,
+          initapiresponse: true,
+        });
+        break;
+      case appIds.iPicknDrop:
+        updateState({
+          isLoading: false,
+          LoadingScreen: false,
+          allAppData: res,
+          initapiresponse: true,
+        });
+        break;
+
+      case appIds.muvpod:
+        updateState({
+          isLoading: false,
+          LoadingScreen: false,
+          allAppData: res,
+          initapiresponse: true,
+        });
+        break;
+
+      default:
+        updateState({isLoading: false, LoadingScreen: false});
+        navigateToNextScreen(res);
+        break;
+    }
+  };
+
   async function handleDynamicLink(deepLinkUrl) {
     if (deepLinkUrl != null) {
       setItem('deepLinkUrl', deepLinkUrl);
@@ -2736,6 +2772,7 @@ export default function ShortCode({route, navigation}) {
           }}
           resizeMode={getBundleId() == appIds.muvpod ? 'contain' : 'cover'}
           onEnd={() => onVideoDurationEnded()}
+          muted={true}
         />
       </View>
     );

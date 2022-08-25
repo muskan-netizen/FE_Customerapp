@@ -78,7 +78,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    enableHermes: true,  // clean and rebuild if changing
+    enableHermes: false,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -123,19 +123,14 @@ def enableHermes = project.ext.react.get("enableHermes", true);
 
 android {
      packagingOptions {
-      pickFirst 'lib/x86/libc++_shared.so'
-      pickFirst 'lib/x86_64/libc++_shared.so'
-      pickFirst 'lib/armeabi-v7a/libc++_shared.so'
-      pickFirst 'lib/arm64-v8a/libc++_shared.so'
-  }
-  lintOptions {
-    checkReleaseBuilds false
-    abortOnError false
-}
-    compileSdkVersion rootProject.ext.compileSdkVersion
+        pickFirst '**/*.so'
+    }
+   compileSdkVersion 31 //addded
     dexOptions {
         javaMaxHeapSize "4g"
     }
+   //  compileSdkVersion rootProject.ext.compileSdkVersion
+       compileSdkVersion 31
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -143,12 +138,11 @@ android {
     }
 
     defaultConfig {
-    //    targetSdkVersion 31 //addded 
+       targetSdkVersion 31 //addded 
         applicationId "com.codebrew"
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
       //   targetSdkVersion rootProject.ext.targetSdkVersion
-        // targetSdkVersion 31
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -1952,7 +1946,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.hokitch.orders'
+                applicationId 'com.hokitch'
                 resValue "string", "app_name", "Hokitch"
                 resValue "string", "host_name", ""
             }
@@ -2184,7 +2178,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.tmgShops.orders'
+                applicationId 'com.tmgShops'
                 resValue "string", "app_name", "TMG Shops"
                 resValue "string", "host_name", ""
             }
@@ -2350,12 +2344,12 @@ android {
             }
             fairex{
                 dimension "appType"
-                versionCode 4
+                versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
                 applicationId 'com.fairex.orders'
-                resValue "string", "app_name", "Fairex Global"
+                resValue "string", "app_name", "Fairex"
                 resValue "string", "host_name", ""
             }
             everywhere{
@@ -2721,7 +2715,6 @@ android {
                 applicationId 'com.doorstep'
                 resValue "string", "app_name", "DoorStep"
                 resValue "string", "host_name", ""
-<<<<<<< HEAD
             }
             sunshinerideshare{
                 dimension "appType"
@@ -4544,7 +4537,6 @@ android {
             resValue "string", "app_name", "Fawaz"
             resValue "string", "host_name", ""
             }
->>>>>>> dee197f8768f4e25a2310b0211ed88c938f4bc21
             grn{
             dimension "appType"
             versionCode 1
@@ -5327,7 +5319,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.myfarma'
-            resValue "string", "app_name", "Livian"
+            resValue "string", "app_name", "MyFarma"
             resValue "string", "host_name", ""
             }
             valley{
