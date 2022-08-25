@@ -77,6 +77,8 @@ import {
 } from '../../utils/helperFunctions';
 import {removeItem} from '../../utils/utils';
 import stylesFunc from './styles';
+import {isEmpty} from 'lodash';
+
 
 let timeOut = undefined;
 
@@ -330,6 +332,7 @@ export default function Products({route, navigation}) {
             categoryInfo={categoryInfo}
             animateText={animateText}
             section={section}
+            CartItems={CartItems}
           />
         </View>
       );
@@ -341,6 +344,7 @@ export default function Products({route, navigation}) {
       repeatItems,
       cartId,
       categoryInfo,
+      CartItems,
     ],
   );
 
@@ -740,7 +744,7 @@ export default function Products({route, navigation}) {
                         marginTop:
                           !DeviceInfo.getBundleId() === appIds.hokitch
                             ? moderateScaleVertical(5)
-                            : moderateScale(-20),
+                            :0,
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                         alignSelf:
@@ -836,9 +840,10 @@ export default function Products({route, navigation}) {
                     : colors.white,
                   // // minHeight: moderateScale(80),
                 }}>
-                {true ? (
+           
                   <View>
-                    <Text
+                
+                   {/* { !isEmpty(sectionListData) ?  <Text
                       style={{
                         ...styles.milesTxt,
                         color: isDarkMode
@@ -848,9 +853,9 @@ export default function Products({route, navigation}) {
                       }}
                       numberOfLines={1}>
                       {sectionListData.map((val) => {
-                        return <Text>{val.title} </Text>;
+                        return <Text>{ val?.translation[0]?.name || val.title} </Text>;
                       })}
-                    </Text>
+                    </Text> : null} */}
 
                     {!!desc && (
                       <Text
@@ -869,7 +874,7 @@ export default function Products({route, navigation}) {
                       </Text>
                     )}
                   </View>
-                ) : null}
+           
                 {!!categoryInfo?.closed_store_order_scheduled ? (
                   <Text
                     style={{
@@ -3684,6 +3689,7 @@ export default function Products({route, navigation}) {
                 ListEmptyComponent={listEmptyComponent}
               />
             )}
+            <View style={{height: moderateScaleVertical(60)}} />
 
             {isVisibleModal ? (
               <TouchableWithoutFeedback

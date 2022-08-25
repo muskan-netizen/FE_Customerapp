@@ -51,6 +51,7 @@ const ProductCard3 = ({
   businessType,
   animateText = 0,
   section = {},
+  CartItems = {},
 }) => {
   // data['qty'] = 1
   const [isAdd, setAdd] = useState(false);
@@ -331,7 +332,7 @@ const ProductCard3 = ({
                   fontSize: textScale(9),
                   color: colors.grayOpacity51,
                   marginVertical: moderateScaleVertical(4),
-                  textAlign:'left'
+                  textAlign: 'left',
                 }}>
                 {data?.vendor?.name}
               </Text>
@@ -493,6 +494,7 @@ const ProductCard3 = ({
                 ? moderateScale(30)
                 : moderateScale(20),
             }}>
+            {console.log(CartItems, 'CartItems??CartItems')}
             {data?.has_inventory == 0 ||
             !!data?.variant[0]?.quantity ||
             (!!typeId && typeId == 8) ||
@@ -503,10 +505,11 @@ const ProductCard3 = ({
                     selectedIndex == index ? moderateScaleVertical(8) : 0,
                   alignItems: 'center',
                 }}>
-                {(!!data?.check_if_in_cart_app &&
+                {((!!data?.check_if_in_cart_app &&
                   data?.check_if_in_cart_app.length > 0) ||
-                !!data?.qty ||
-                totalProductQty ? (
+                  !!data?.qty ||
+                  totalProductQty) &&
+                CartItems.data !== null ? (
                   <View
                     // pointerEvents={!!categoryInfo?.is_vendor_closed && !!categoryInfo?.closed_store_order_scheduled !== 1 ? 'none' : 'auto'}
                     style={{

@@ -241,13 +241,10 @@ function Cart({navigation, route}) {
     themeColor,
     themeToggle,
   } = useSelector((state) => state?.initBoot);
-  console.log(appData, 'core appData');
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-
-  console.log(selectedPayment, 'selectedPayment');
 
   const {preferences} = appData?.profile;
 
@@ -255,14 +252,11 @@ function Cart({navigation, route}) {
     (state) => state?.cart?.selectedAddress,
   );
   const recommendedVendorsdata = appMainData?.vendors;
-
   const {dineInType, appMainData, location} = useSelector(
     (state) => state?.home,
   );
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
-
-  console.log('isCheckSlotLoadingisCheckSlotLoading', location);
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -272,8 +266,6 @@ function Cart({navigation, route}) {
     };
 
   let businessType = appData?.profile?.preferences?.business_type || null;
-
-  console.log('cartitems', cartItems);
 
   const closeForm = () => {
     setPrescriptionModal(false);
@@ -322,8 +314,7 @@ function Cart({navigation, route}) {
       !!checkCartItem?.data?.products &&
       !!checkCartItem?.data?.products.length
     ) {
-      console.log('useEffect 1', checkCartItem);
-      // checkforAddressUpdate();
+      checkforAddressUpdate();
     }
   }, [selectedAddress, allAddresss]);
 
@@ -340,23 +331,8 @@ function Cart({navigation, route}) {
         setSelectedAddress(find);
         actions.saveAddress(find);
       } else {
-        selectAddress(allAddresss[0]);
-      }
-      return;
-    }
-    if (selectedAddress && allAddresss.length) {
-      let find = allAddresss.find(
-        (x) =>
-          x.id == selectedAddress.id &&
-          x.is_primary == selectedAddress.is_primary,
-      );
-      if (find) {
-        selectAddress(find);
-        return;
-      } else {
-        selectAddress(allAddresss[0]);
-        return;
-        // actions.saveAddress(null);
+        actions.saveAddress(null);
+        setSelectedAddress(null);
       }
       return;
     }
@@ -390,11 +366,6 @@ function Cart({navigation, route}) {
   };
   //get the entire cart detail
   const getCartDetail = () => {
-    console.log(
-      dineInType,
-      paramsData?.data?.queryURL,
-      'paramsData?.data?.queryURL',
-    );
     // alert("cart detail hit")
     let apiData = `/?type=${dineInType}${
       paramsData?.data?.queryURL ? `&${paramsData?.data?.queryURL}` : ''
@@ -466,10 +437,7 @@ function Cart({navigation, route}) {
         setSheduledorderdate(res?.data?.scheduled_date_time);
         setSheduledpickupdate(res?.data?.schedule_pickup);
         setSheduleddropoffdate(res?.data?.schedule_dropoff);
-        updateState({
-          isRefreshing: false,
-          isLoadingB: false,
-        });
+
         setScheduleType(res?.data?.schedule_type);
         if (res && res.data) {
           if (
@@ -748,7 +716,6 @@ function Cart({navigation, route}) {
   useEffect(() => {
     if (paramsData?.transactionId && !!checkCartItem?.data) {
       _directOrderPlace();
-      console.log('useEffect 2');
     }
   }, [paramsData?.transactionId]);
 
@@ -783,7 +750,6 @@ function Cart({navigation, route}) {
   //flutter wave
   var redirectTimeout;
   const handleOnRedirect = (data) => {
-    console.log('flutterwaveresponse', data);
     clearTimeout(redirectTimeout);
     redirectTimeout = setTimeout(() => {
       // do something with the result
@@ -989,7 +955,6 @@ function Cart({navigation, route}) {
         break;
       case 27: //Paytab Payment Getway
         // updateState({ placeLoader: false });
-        console.log(res.data, 'res.data>res.data');
 
         openPayTabs(paymentData);
 
@@ -997,7 +962,6 @@ function Cart({navigation, route}) {
 
       case 30: //Paytab Payment Getway
         // updateState({ placeLoader: false });
-        console.log(res.data, 'res.data>res.data');
         updateState({
           isModalVisibleForPayFlutterWave: true,
           paymentDataFlutterWave: paymentData,
@@ -1081,7 +1045,6 @@ function Cart({navigation, route}) {
     data['currency'] = currencies?.primary_currency?.iso_code;
     data['merchantname'] = appData?.profile?.company_name;
     data['countrycode'] = appData?.profile?.country?.code;
-    console.log('openPayTabsdata', data);
     try {
       const res = await payWithCard(data);
       console.log('payWithCard res++++', res);
@@ -1175,8 +1138,6 @@ function Cart({navigation, route}) {
       })
       .catch(errorMethod);
   };
-
-  console.log(dineInType, 'vendorAddress?');
 
   const _directOrderPlace = () => {
     let data = {};
@@ -1384,8 +1345,6 @@ function Cart({navigation, route}) {
       data['slot'] = selectedTimeSlots;
     }
 
-    console.log(data, 'fsdjkhfkjshfkjahsdkjfhak');
-
     // updateState({isLoading: false});
 
     actions
@@ -1417,7 +1376,6 @@ function Cart({navigation, route}) {
     // if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
     //   _offineLinePayment();
     //   return;
-    console.log('payment option', selectedPayment);
 
     if (
       selectedPayment?.id == 10 &&
@@ -1470,7 +1428,6 @@ function Cart({navigation, route}) {
   const formatDateSlot = (date, time) => {
     return moment(`${date} ${time}`, 'YYYY-MM-DD HH:mm:ss').format();
   };
-  console.log(appData, 'appDataappDataappData');
 
   //Clear cart
   const placeOrder = () => {
@@ -1546,7 +1503,6 @@ function Cart({navigation, route}) {
       var d1 = new Date();
       var d2 = new Date(localeSheduledOrderDate);
 
-      console.log('shceduleORderdata', sheduledorderdate);
       if (!selectedAddressData && dineInType !== 'takeaway') {
         // showError(strings.PLEASE_SELECT_ADDRESS);
         setModalVisible(true);
@@ -1591,7 +1547,6 @@ function Cart({navigation, route}) {
   useEffect(() => {
     if (paramsData?.redirectFrom && !!checkCartItem?.data) {
       _directOrderPlace();
-      console.log('useEffect 3');
     }
   }, [paramsData?.redirectFrom]);
 
@@ -1648,7 +1603,6 @@ function Cart({navigation, route}) {
       selectedAddressData?.id
     }&payment_option_id=${selectedPayment?.id}&action=cart`;
 
-    console.log(queryData, 'queryData');
     actions
       .openPaymentWebUrl(
         queryData,
@@ -1688,7 +1642,6 @@ function Cart({navigation, route}) {
       })
       .catch(errorMethod);
   };
-  console.log(cartData, 'cartDataaaaa');
   // const _createPaymentMethod = async (cardInfo, res2) => {
   //   console.log(cardInfo, '_createPaymentMethod>>>ardInfo');
   //   if (res2) {
@@ -1827,15 +1780,12 @@ function Cart({navigation, route}) {
   //       .catch(errorMethod);
   //   }
   // };
-  console.log(paymentMethodId, 'paymentMethodId');
   const _paymentWithStripe = async (
     cardInfo,
     tokenInfo,
     paymentMethodId,
     order_number,
   ) => {
-    console.log(order_number, 'order_numberrrrr');
-
     actions
       .getStripePaymentIntent(
         // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
@@ -1858,13 +1808,11 @@ function Cart({navigation, route}) {
         },
       )
       .then(async (res) => {
-        console.log(res, 'getStripePaymentIntent response');
         if (res && res?.client_secret) {
           const {paymentIntent, error} = await handleCardAction(
             res?.client_secret,
           );
           if (paymentIntent) {
-            console.log(paymentIntent, 'paymentIntent');
             if (paymentIntent) {
               actions
                 .confirmPaymentIntentStripe(
@@ -1954,7 +1902,6 @@ function Cart({navigation, route}) {
 
   //Offline payments
   const _offineLinePayment = async (order_number) => {
-    console.log(tokenInfo, 'tokenInfo>tokenInfo>tokenInfo');
     if (!!paymentMethodId) {
       // _createPaymentMethod(cardInfo, tokenInfo);
       _paymentWithStripe(cardInfo, tokenInfo, paymentMethodId, order_number);
@@ -2096,9 +2043,7 @@ function Cart({navigation, route}) {
       !!checkCartItem?.data.products &&
       !!checkCartItem?.data.products.length
     ) {
-      console.log('scheduleTypescheduleType', scheduleType);
       setDateAndTimeSchedule();
-      console.log('useEffect 4');
     }
   }, [scheduleType]);
 
@@ -2362,8 +2307,6 @@ function Cart({navigation, route}) {
     );
   };
   const _redirectVendorProducts = (item) => {
-    console.log(item, 'itemmmmm');
-
     moveToNewScreen(navigationStrings.PRODUCT_LIST, {
       fetchOffers: true,
       id: item?.vendor?.id,
@@ -2476,7 +2419,6 @@ function Cart({navigation, route}) {
   };
 
   const _renderItem = ({item, index}) => {
-    console.log(item, 'item>>><>>>');
     return (
       <View>
         {index === 0 && (
@@ -2581,7 +2523,6 @@ function Cart({navigation, route}) {
           {/************ start  render cart items *************/}
           {item?.vendor_products.length > 0
             ? item?.vendor_products.map((i, inx) => {
-                console.log(i, 'itemmmmmm');
                 return (
                   <Swipeable
                     ref={swipeRef}
@@ -2722,17 +2663,24 @@ function Cart({navigation, route}) {
                                 </View>
                               </View>
 
-                              <Text
+                              <View
                                 style={{
-                                  ...styles.priceItemLabel2,
-                                  fontSize: textScale(12),
-                                  color: isDarkMode
-                                    ? MyDarkTheme.colors.text
-                                    : colors.textGreyOpcaity7,
-                                  marginTop: moderateScaleVertical(4),
-                                  fontFamily: fontFamily.regular,
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
                                 }}>
-                                {i?.quantity} X {''}
+                                <Text
+                                  style={{
+                                    ...styles.priceItemLabel2,
+                                    fontSize: textScale(12),
+                                    color: isDarkMode
+                                      ? MyDarkTheme.colors.text
+                                      : colors.textGreyOpcaity7,
+                                    marginTop: moderateScaleVertical(4),
+                                    fontFamily: fontFamily.regular,
+                                  }}>
+                                  {i?.quantity} X{' '}
+                                </Text>
+
                                 <Text
                                   style={{
                                     color: isDarkMode
@@ -2748,7 +2696,7 @@ function Cart({navigation, route}) {
                                     )
                                   }`}
                                 </Text>
-                                ={' '}
+                                <Text> = </Text>
                                 <Text
                                   style={{
                                     color: isDarkMode
@@ -2758,13 +2706,13 @@ function Cart({navigation, route}) {
                                   {`${currencies?.primary_currency?.symbol}${
                                     // Number(i?.pvariant?.multiplier) *
                                     currencyNumberFormatter(
-                                      Number(i?.variants?.price),
+                                      Number(i?.variants?.quantity_price),
                                       appData?.profile?.preferences
                                         ?.digit_after_decimal,
                                     )
                                   }`}
                                 </Text>
-                              </Text>
+                              </View>
 
                               {i?.variant_options.length > 0
                                 ? i?.variant_options.map((j, jnx) => {
@@ -3237,7 +3185,13 @@ function Cart({navigation, route}) {
                 ) : null}
               </View>
             ) : (
-              <>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginVertical: moderateScaleVertical(6),
+                }}>
                 {!!item?.delivery_types && item?.delivery_types?.length > 0 ? (
                   <Text
                     style={{
@@ -3245,20 +3199,20 @@ function Cart({navigation, route}) {
                       color: isDarkMode
                         ? MyDarkTheme.colors.text
                         : colors.textGreyB,
-                      marginBottom: moderateScaleVertical(8),
                     }}>
                     {strings.DELIVERY_CHARGES}:
                   </Text>
                 ) : null}
-
-                {!!item?.delivery_types && item?.delivery_types.length > 0 ? (
+                {!!item?.delivery_types && item?.delivery_types.length == 1 ? (
+                  <Text>{`${item?.delivery_types[0]?.courier_name} ${currencies?.primary_currency?.symbol}${item?.delivery_types[0]?.rate}`}</Text>
+                ) : !!item?.delivery_types &&
+                  item?.delivery_types.length > 0 ? (
                   <ModalDropdown
                     multipleSelect={false}
                     options={item?.delivery_types}
                     renderRow={(val) => renderDropDown(val, item)}
                     dropdownStyle={{
                       minWidth: '40%',
-                      // minHeight: 50,
                       paddingHorizontal: moderateScale(6),
                       paddingVertical: moderateScaleVertical(12),
                     }}>
@@ -3318,7 +3272,7 @@ function Cart({navigation, route}) {
                     </View>
                   </ModalDropdown>
                 ) : null}
-              </>
+              </View>
             )}
 
             {/* <View style={styles.itemPriceDiscountTaxView}>
@@ -3715,7 +3669,6 @@ function Cart({navigation, route}) {
   };
 
   const selectedTip = (tip) => {
-    console.log(tip, 'tip?');
     if (tip == 'custom') {
       setSelectedTipvalue(tip);
       setSelectedTipAmount(null);
@@ -4533,6 +4486,7 @@ function Cart({navigation, route}) {
             }}>
             {strings.AMOUNT_PAYABLE}
           </Text>
+
           <Text
             style={
               isDarkMode
@@ -4753,8 +4707,6 @@ function Cart({navigation, route}) {
     );
   };
 
-  console.log('selectedAddressData', selectedAddressData);
-
   //end footer
 
   //Header section of cart screen
@@ -4777,7 +4729,10 @@ function Cart({navigation, route}) {
         value = strings.WORK;
         break;
       case 3:
-        value = data?.type_name;
+        value =
+          data?.type_name == 0 || data?.type_name == null
+            ? strings.UNKNOWN
+            : data?.type_name;
         break;
       default:
         value = strings.ADD_ADDRESS;
@@ -4977,7 +4932,6 @@ function Cart({navigation, route}) {
 
   useEffect(() => {
     if (!!checkCartItem?.data) {
-      console.log('useEffect 5');
       getItem('deepLinkUrl')
         .then((res) => {
           if (res) {
@@ -5227,8 +5181,6 @@ function Cart({navigation, route}) {
       </View>
     );
   };
-
-  console.log('sheduledorderdate+++', sheduledorderdate);
 
   if (isLoadingB) {
     return (
@@ -5507,7 +5459,6 @@ function Cart({navigation, route}) {
     }
   };
 
-  console.log(selectedTimeSlots, 'SelectedTimeSlots');
   const onSelectPayment = (data) => {
     console.log('my data++++', data);
 
@@ -5963,8 +5914,6 @@ function Cart({navigation, route}) {
       isSubmitKycLoader: true,
     });
 
-    console.log(formdata, 'formdata>>>');
-
     actions
       .submitCategoryKYC(formdata, {
         code: appData?.profile?.code,
@@ -6419,30 +6368,31 @@ function Cart({navigation, route}) {
         onPressLeft={() => navigation.navigate(navigationStrings.HOMESTACK)}
       />
 
-      <FlatList
-        data={cartItems}
-        extraData={cartItems}
-        ListHeaderComponent={cartItems?.length ? getHeader() : null}
-        ListFooterComponent={cartItems?.length ? getFooter() : null}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={(item, index) => String(index)}
-        renderItem={_renderItem}
-        style={{
-          flex: 1,
-          backgroundColor: isDarkMode
-            ? MyDarkTheme.colors.background
-            : colors.backgroundGrey,
-        }}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={handleRefresh}
-            tintColor={themeColors.primary_color}
-          />
-        }
-        ListEmptyComponent={() => (!isLoadingB ? <ListEmptyComp /> : <></>)}
-      />
-
+      {
+        <FlatList
+          data={cartItems}
+          extraData={cartItems}
+          ListHeaderComponent={cartItems?.length ? getHeader() : null}
+          ListFooterComponent={cartItems?.length ? getFooter() : null}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(item, index) => String(index)}
+          renderItem={_renderItem}
+          style={{
+            flex: 1,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.backgroundGrey,
+          }}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              tintColor={themeColors.primary_color}
+            />
+          }
+          ListEmptyComponent={() => (!isLoadingB ? <ListEmptyComp /> : <></>)}
+        />
+      }
       {!!isModalVisibleForClearCart && (
         <ConfirmationModal
           closeModal={() => closeOptionModal()}
@@ -6475,7 +6425,6 @@ function Cart({navigation, route}) {
         openCloseMapAddress={openCloseMapAddress}
         constCurrLoc={location}
       />
-      {console.log(location, 'locationlocation')}
       {/* Date time modal */}
       <Modal
         transparent={true}
@@ -6784,7 +6733,6 @@ function Cart({navigation, route}) {
                             }}>
                             {strings.TIME_SLOT}
                           </Text>
-                          {console.log(availableTimeSlots, "availableTimeSlots")}
                           <FlatList
                             horizontal
                             data={availableTimeSlots || []}
