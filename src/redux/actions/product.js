@@ -88,6 +88,7 @@ export function getProductByVendorCategoryId(
 
 //Get Category data
 export function getProductByCategoryId(query = '', data = {}, headers = {}) {
+  console.log(query,data, headers, "checkkkkprdct" )
   return new Promise((resolve, reject) => {
     apiGet(GET_DATA_BY_CATEGORY + query, data, headers)
       .then((res) => {

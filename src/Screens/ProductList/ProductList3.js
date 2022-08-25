@@ -308,7 +308,7 @@ export default function Products({ route, navigation }) {
           key={String(index)}
           style={
             {
-              // height: 180,
+              minHeight: 180,
               // minHeight: url1
               //   ? moderateScaleVertical(200)
               //   : 0,

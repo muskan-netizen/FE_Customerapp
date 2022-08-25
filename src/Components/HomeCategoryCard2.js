@@ -50,7 +50,7 @@ const HomeCategoryCard2 = ({
       activeOpacity={0.9}
       style={{
         // width: (width - moderateScale(16)) / 4,
-        marginVertical: moderateScale(0),
+        marginVertical: moderateScale(1),
         justifyContent: 'center',
         alignItems: 'center',
       }}>
@@ -99,7 +99,7 @@ const HomeCategoryCard2 = ({
             textAlign: 'center',
             marginTop: moderateScaleVertical(4),
           }}>
-          {data.name || data?.translation[0]?.name}
+          {data?.name || data?.translation[0]?.name}
         </Text>
       </View>
     </TouchableOpacity>

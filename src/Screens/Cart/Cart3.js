@@ -262,7 +262,7 @@ function Cart({navigation, route}) {
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
-  console.log('isCheckSlotLoadingisCheckSlotLoading', isCheckSlotLoading);
+  console.log('isCheckSlotLoadingisCheckSlotLoading', location);
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -887,11 +887,12 @@ function Cart({navigation, route}) {
 
   const checkPaymentOptions = (res) => {
     updateState({placeLoader: true});
+
     let paymentId = res?.data?.payment_option_id;
     let order_number = res?.data?.order_number;
-    setSelectedPayment(selectedPayment);
+    // setSelectedPayment(selectedPayment);
     console.log('api res success', res);
-
+ 
     let paymentData = {
       total_payable_amount: (
         Number(cartData?.total_payable_amount) +
@@ -1056,6 +1057,10 @@ function Cart({navigation, route}) {
       case 42: //Direct Pay Online Payment Getway
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.DIRECTPAYONLINE, paymentData);
+        break;
+      case 44: //Conekta Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.CONEKTA, paymentData);
         break;
       case 46: //Direct Pay Online Payment Getway
         updateState({placeLoader: false});
@@ -1263,7 +1268,8 @@ function Cart({navigation, route}) {
           selectedPayment?.id != 36 &&
           selectedPayment?.id != 39 &&
           selectedPayment?.id != 34 &&
-          selectedPayment?.id != 41
+          selectedPayment?.id != 41 &&
+          selectedPayment?.id != 44
         ) {
           setCartItems([]);
           setCartData({});
@@ -1422,7 +1428,6 @@ function Cart({navigation, route}) {
     // if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
     //   _offineLinePayment();
     //   return;
-    // }
     console.log('payment option', selectedPayment);
 
     if (
@@ -3271,14 +3276,14 @@ function Cart({navigation, route}) {
                     <View
                       style={{
                         ...styles.deliveryFeeDropDown,
-                        borderColor: themeColors.primary_color,
+                        borderColor: isDarkMode ? MyDarkTheme.colors.text : colors.black
                       }}>
                       {appIds.hokitch == getBundleId() ? (
                         <Text style={styles.dropDownTextStyle}>
                           {strings.CHARGES}
                         </Text>
                       ) : (
-                        <Text style={styles.dropDownTextStyle}>
+                        <Text style={{...styles.dropDownTextStyle, color:isDarkMode ? MyDarkTheme.colors.text : colors.black}}>
                           {
                             item?.delivery_types.filter(
                               (val2) =>
@@ -3291,6 +3296,7 @@ function Cart({navigation, route}) {
                         style={{
                           ...styles.dropDownTextStyle,
                           marginHorizontal: moderateScale(8),
+                          color:isDarkMode ? MyDarkTheme.colors.text : colors.black
                         }}>
                         {
                           item?.delivery_types.filter(
@@ -3303,8 +3309,10 @@ function Cart({navigation, route}) {
                         style={{
                           width: moderateScale(10),
                           height: moderateScale(10),
+                          
                         }}
                         source={imagePath.icDropdown4}
+                        tintColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
                         resizeMode="contain"
                       />
                     </View>
@@ -4551,7 +4559,7 @@ function Cart({navigation, route}) {
               onPress={() =>
                 !!userData?.auth_token
                   ? updateState({paymentModal: true})
-                  :setAppSessionRedirection()
+                  : setAppSessionRedirection()
               }
               style={{
                 ...styles.paymentMainView,
@@ -4645,11 +4653,11 @@ function Cart({navigation, route}) {
                     : strings.SCHEDULE_ORDER
                 }
                 borderRadius={moderateScale(13)}
-                textStyle={{color: themeColors.primary_color}}
+                textStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black,}}
                 containerStyle={{
                   ...styles.placeOrderButtonStyle,
                   backgroundColor: colors.transparent,
-                  borderColor: themeColors.primary_color,
+                  borderColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   borderWidth: 0.8,
                 }}
               />

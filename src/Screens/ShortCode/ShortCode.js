@@ -1,5 +1,5 @@
 import {isEmpty} from 'lodash';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {Image, Linking, Text, View} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import {getBundleId} from 'react-native-device-info';
@@ -40,7 +40,7 @@ const fs = RNFetchBlob.fs;
 export default function ShortCode({route, navigation}) {
   const shortCodeParam = route?.params?.shortCodeParam;
 
-  console.log(shortCodeParam, 'shortCodeParam>>>');
+  console.log(shortCodeParam, 'shortCodeParam>>>+++++++');
 
   const [state, setState] = useState({
     email: '',
@@ -54,7 +54,6 @@ export default function ShortCode({route, navigation}) {
     videoDurationEnded: false,
     allAppData: null,
     initapiresponse: false,
-
   });
   const {dispatch} = store;
 
@@ -69,7 +68,6 @@ export default function ShortCode({route, navigation}) {
     allAppData,
 
     initapiresponse,
-   
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {appStyle, currencies, languages} = useSelector(
@@ -81,6 +79,7 @@ export default function ShortCode({route, navigation}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const videoRef = useRef();
 
   const customColor = themeColors.primary_color;
 
@@ -2392,72 +2391,72 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.apptFindr:
-            updateState({
-              shortCode: shortCodes.apptFindr,
-              isShortcodePrefilled: true,
-            });
-            break;
-            case appIds.vdu:
-            updateState({
-              shortCode: shortCodes.vdu,
-              isShortcodePrefilled: true,
-            });
-            break;
-            case appIds.laundroZone:
-              updateState({
-                shortCode: shortCodes.laundroZone,
-                isShortcodePrefilled: true,
-              });
-              break;
-              case appIds.taxiolgy:
-              updateState({
-                shortCode: shortCodes.taxiolgy,
-                isShortcodePrefilled: true,
-              });
-              break;
-              case appIds.swipe:
-              updateState({
-                shortCode: shortCodes.swipe,
-                isShortcodePrefilled: true,
-              });
-              break;
-              case appIds.sheRyders:
-              updateState({
-                shortCode: shortCodes.sheRyders,
-                isShortcodePrefilled: true,
-              });
-              break;
-               case appIds.kurrix:
-              updateState({
-                shortCode: shortCodes.kurrix,
-                isShortcodePrefilled: true,
-              });
-              break;
-              case appIds.mrVeloz:
-                updateState({
-                  shortCode: shortCodes.mrVeloz,
-                  isShortcodePrefilled: true,
-                });
-                break;
-                case appIds.greenCab:
-                updateState({
-                  shortCode: shortCodes.greenCab,
-                  isShortcodePrefilled: true,
-                });
-                break;
-                case appIds.axxi:
-                updateState({
-                  shortCode: shortCodes.axxi,
-                  isShortcodePrefilled: true,
-                });
-                break;
-                case appIds.pets:
-                updateState({
-                  shortCode: shortCodes.pets,
-                  isShortcodePrefilled: true,
-                });
-                break;
+        case appIds.apptFindr:
+          updateState({
+            shortCode: shortCodes.apptFindr,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.vdu:
+          updateState({
+            shortCode: shortCodes.vdu,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.laundroZone:
+          updateState({
+            shortCode: shortCodes.laundroZone,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.taxiolgy:
+          updateState({
+            shortCode: shortCodes.taxiolgy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.swipe:
+          updateState({
+            shortCode: shortCodes.swipe,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sheRyders:
+          updateState({
+            shortCode: shortCodes.sheRyders,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kurrix:
+          updateState({
+            shortCode: shortCodes.kurrix,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mrVeloz:
+          updateState({
+            shortCode: shortCodes.mrVeloz,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.greenCab:
+          updateState({
+            shortCode: shortCodes.greenCab,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.axxi:
+          updateState({
+            shortCode: shortCodes.axxi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.pets:
+          updateState({
+            shortCode: shortCodes.pets,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2468,12 +2467,6 @@ export default function ShortCode({route, navigation}) {
       checkScreen();
     }
   }, [shortCode, isShortcodePrefilled]);
-
-  useEffect(() => {
-    if (videoDurationEnded && initapiresponse) {
-      navigateToNextScreen(allAppData);
-    }
-  }, [videoDurationEnded, initapiresponse]);
 
   const checkScreen = () => {
     initApiHit();
@@ -2513,7 +2506,6 @@ export default function ShortCode({route, navigation}) {
     actions
       .initApp({}, header, false, null, null, true)
       .then((res) => {
-        console.log(res, '<====headerResponse');
         if (res.data.mobile_banners.length > 0) {
           let preLoadBanners = res.data.mobile_banners.map((item, inx) => {
             return {
@@ -2534,14 +2526,16 @@ export default function ShortCode({route, navigation}) {
           });
           FastImage.preload(preLoadTutorial); //preload tutorial images
         }
-        
+
         updateState({changeInShortCode: false});
         if (getBundleId() == appIds.royoorder) {
           actions.saveShortCode(shortCode);
         }
 
         if (
-          getBundleId() == (appIds.masa || appIds.iPicknDrop || appIds.muvpod)
+          getBundleId() == appIds.masa ||
+          getBundleId() == appIds.iPicknDrop ||
+          getBundleId() == appIds.muvpod
         ) {
           updateState({
             isLoading: false,
@@ -2549,6 +2543,7 @@ export default function ShortCode({route, navigation}) {
             allAppData: res,
             initapiresponse: true,
           });
+          checkNavigationState(true, videoDurationEnded);
         } else {
           updateState({isLoading: false, LoadingScreen: false});
           navigateToNextScreen(res);
@@ -2614,8 +2609,6 @@ export default function ShortCode({route, navigation}) {
   };
 
   const navigateToNextScreen = (res) => {
-    // return;
-
     getItem('firstTime').then((el) => {
       if (!el && !isEmpty(res?.data?.dynamic_tutorial)) {
         actions.setAppSessionData('app_intro');
@@ -2697,7 +2690,6 @@ export default function ShortCode({route, navigation}) {
           </View>
         </View>
         <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
-        
       </View>
     );
   };
@@ -2716,10 +2708,11 @@ export default function ShortCode({route, navigation}) {
   };
 
   const onVideoDurationEnded = () => {
-    navigateToNextScreen(allAppData);
-    // updateState({
-    //   videoDurationEnded: true,
-    // });
+    // navigateToNextScreen(allAppData);
+    updateState({
+      videoDurationEnded: true,
+    });
+    checkNavigationState(initapiresponse, true);
   };
 
   const animatedSplash = () => {
@@ -2732,10 +2725,14 @@ export default function ShortCode({route, navigation}) {
           backgroundColor: colors.white,
         }}>
         <Video
+          ref={videoRef}
           source={animationVideo()} // Can be a URL or a local file.
           style={{
-            height: width,
-            width: width,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
           }}
           resizeMode={getBundleId() == appIds.muvpod ? 'contain' : 'cover'}
           onEnd={() => onVideoDurationEnded()}
@@ -2743,6 +2740,22 @@ export default function ShortCode({route, navigation}) {
       </View>
     );
   };
+
+  const checkNavigationState = (apiRes, videoEnd) => {
+    console.log('api res+++++++', apiRes);
+    console.log('videoEnd res+++++++', videoEnd);
+    if (apiRes && videoEnd) {
+      navigateToNextScreen(allAppData);
+    }
+  };
+  // useEffect(() => {
+
+  //   if (initapiresponse && videoDurationEnded) {
+
+  //     navigateToNextScreen(allAppData);
+  //   }
+  // }, [videoDurationEnded, initapiresponse]);
+
   return (
     <View
       style={{
@@ -2752,8 +2765,7 @@ export default function ShortCode({route, navigation}) {
           : colors.white,
       }}>
       {isShortcodePrefilled ? (
-         _renderSplash()
-         
+        _renderSplash()
       ) : (
         <WrapperContainer
           statusBarColor={colors.white}
@@ -2841,7 +2853,6 @@ export default function ShortCode({route, navigation}) {
 
             <View style={{height: 20}} />
           </View>
-         
         </WrapperContainer>
       )}
     </View>

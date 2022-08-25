@@ -81,8 +81,6 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-    <key>NSMotionUsageDescription</key>
-    <string>$(PRODUCT_NAME)would like to access your live location updates in forground mode </string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play using while you are hiking</string>
 	<key>NSCameraUsageDescription</key>
@@ -99,6 +97,8 @@
 	<string>$(PRODUCT_NAME) would like to access your current location to show nearby vendors or products</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to access to microphone to get your voice.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>$(PRODUCT_NAME)would like to access your live location updates in forground mode </string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like access to your photo gallery to upload photos and set profile picture</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
@@ -147,7 +147,6 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
-		<string>location</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

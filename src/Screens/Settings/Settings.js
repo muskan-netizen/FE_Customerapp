@@ -307,7 +307,7 @@ export default function Settings({ route, navigation }) {
         // onPress={()=>actions.isVendorNotification(true)}
         onPress={userlogout}
         style={styles.touchAbleLoginVIew}>
-        <Text style={styles.loginLogoutText}>
+        <Text style={{...styles.loginLogoutText,  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,}}>
           {!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
         </Text>
         <Image

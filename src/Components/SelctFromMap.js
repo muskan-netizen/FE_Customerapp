@@ -37,7 +37,7 @@ export default function SelctFromMap({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-console.log(location,"constCurrLocconstCurrLoc")
+  console.log(constCurrLoc,"constCurrLocconstCurrLoc")
 
   const [state, setState] = useState({
     region: {
@@ -47,8 +47,8 @@ console.log(location,"constCurrLocconstCurrLoc")
       longitudeDelta: 0.0121,
     },
     coordinate: {
-      latitude: location?.latitude || 30.7333,
-      longitude: location?.longitude || 76.7794,
+      latitude: constCurrLoc?.latitude || 30.7333,
+      longitude: constCurrLoc?.longitude || 76.7794,
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
@@ -62,7 +62,7 @@ console.log(location,"constCurrLocconstCurrLoc")
     task_type_id: null,
   });
 
-  const { region, details } = state;
+  const { region, details, } = state;
 
   const { themeColors, appStyle } = useSelector((state) => state?.initBoot);
   const updateState = (data) => setState((state) => ({ ...state, ...data }));

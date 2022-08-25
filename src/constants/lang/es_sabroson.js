@@ -962,5 +962,14 @@ export default {
     ARE_YOU_SURE_YOU_WANT_TO_DELETE:'Are you sure, you want to delete your account? Deleting your account is permanent and will remove all content and profile settings.',
     WR_ARE_CURRENTLY_NOT_OPERATING:'We are currently not operating in your location',
     WE_ACCEPT_ONLY_SCHEDULE_ORDER:'We are accepting only schedule order',
+    STORES_CAHT:"Stores Chat",
+    DRIVER_CHAT:"Driver Chat",
+    USER_CHAT:"User Chat",
+    VENDOR_CHAT:"Vendor Chat",
+    CHAT_EMPTY_ROOM:"Chat Room Empty",
+    CHAT_ROOM:"Chat Room",
+    PARTICIPANTS:"Participants",
+    VENDOR:"Vendor",
+    START_CHAT:"Start Chat",
   };
   

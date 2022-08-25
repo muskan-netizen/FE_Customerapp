@@ -82,6 +82,9 @@ export default function WebLinks({ navigation, route }) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const paramData = route?.params;
+  // const [VendorLocation, setVendorLocation] = useState(address)
+  // setVendorLocation(paramData?.formatted_address)
+  // console.log(paramData , "paramDataparamData" )
   const [state, setState] = useState({
     isLoading: false,
     htmlContent: null,
@@ -103,7 +106,7 @@ export default function WebLinks({ navigation, route }) {
     confirm_password: '',
     description: '',
     vendor_name: '',
-    address: '',
+    address:'',
     website: '',
     isDineIn: false,
     isTakeaway: false,
@@ -153,6 +156,7 @@ export default function WebLinks({ navigation, route }) {
   const { location, appMainData, dineInType } = useSelector(
     (state) => state?.home,
   );
+  console.log(location , "locationlocation")
 
   const {
     cca2,
@@ -205,7 +209,7 @@ export default function WebLinks({ navigation, route }) {
     // isTakeaway: false,
     // isDelivery: false,
   }, []);
-
+  
   useEffect(() => {
     _getLocationFromParams();
     // if (addressSearch) {
@@ -253,7 +257,7 @@ export default function WebLinks({ navigation, route }) {
     updateState({ cca2: data.cca2, callingCode: data.callingCode[0] });
     return;
   };
-
+console.log(driverRegDocs, "driverRegDocsdriverRegDocs")
   const isValidData = () => {
     if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
       const error = validator({
@@ -414,7 +418,7 @@ export default function WebLinks({ navigation, route }) {
         filename: vendorBanner.filename,
         type: vendorBanner.mime,
       });
-
+      
       // console.log(vendorRegisterationDocs, 'vendorRegDocs');
       // vendorRegDocs?.map((itm) => {
       //   if (itm?.is_required) {
@@ -569,7 +573,8 @@ export default function WebLinks({ navigation, route }) {
           .then((res) => {
             if (res && res.data) {
               if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
-                if (!!clickedIndx) {
+                console.log(clickedIndx,"clickedIndxclickedIndx")
+                if (clickedIndx != null) {
                   {
                     const driverRegistrationDocsAry = [
                       ...driverRegistrationDocs,
@@ -945,6 +950,7 @@ export default function WebLinks({ navigation, route }) {
   }
 
   const _getLocationFromParams = () => {
+    console.log( paramData?.details?.formatted_address,  location?.address ,"paramData?.details?.formatted_address")
     if (
       paramData?.details &&
       paramData?.details?.formatted_address != location?.address
@@ -958,8 +964,14 @@ export default function WebLinks({ navigation, route }) {
       updateState({
         address: address,
       });
+    } else {
+      updateState({
+        address:location?.address ,
+      });
     }
   };
+
+  console.log(address, " adressNdParam" )
 
   console.log(htmlContent, 'htmlContenthtmlContent');
 
@@ -1223,9 +1235,19 @@ export default function WebLinks({ navigation, route }) {
                   paddingBottom: 0,
                   textAlign: I18nManager.isRTL ? 'right' : 'left',
                 }}>
+
                 {address != '' && address != null
-                  ? address
+                  ? `${address}`
                   : `${strings.ADDRESS}*`}
+                  {/* { address != '' && address != null ? address :  address == '' && address == null ? vendorAddress : strings.ADDRESS } */}
+                  {/* {if(address != '' && address != null) {
+                    `${address}`
+                  } else if (address = '') {
+                    `${vendorAdrees}`
+                  } else {
+                    `${strings.ADDRESS}`
+                  }
+                }} */}
               </Text>
             </TouchableOpacity>
             {/* <BorderTextInput

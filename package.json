@@ -403,7 +403,7 @@
     "instamobileRelease": "cd android && ./gradlew assembleInstamobileRelease",
     "capcorpRelease": "cd android && ./gradlew assembleCapcorpRelease",
     "vectoRelease": "cd android && ./gradlew assembleVectoRelease",
-    "masaRelease": "cd android && ./gradlew assembleMasaRelease",
+    "masaRelease": "cd android && ./gradlew assemblemasaRelease",
     "yogofoodRelease": "cd android && ./gradlew assembleYogofoodRelease",
     "spidbiRelease": "cd android && ./gradlew assembleSpidbiRelease",
     "africanvillagemarketRelease": "cd android && ./gradlew assembleAfricanvillageMarketRelease",
