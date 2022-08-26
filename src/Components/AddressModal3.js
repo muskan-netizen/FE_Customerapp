@@ -60,13 +60,13 @@ const AddressModal3 = ({
   navigation,
   selectViaMap = false,
   openCloseMapAddress = () => {},
-  constCurrLoc
+  constCurrLoc,
 }) => {
   const mapRef = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
- 
- const {location}= useSelector((state) => state?.home);
-console.log(location,"locationlocationlocation")
+
+  const {location} = useSelector((state) => state?.home);
+  console.log(location, 'locationlocationlocation');
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   // const theme = useSelector((state) => state?.initBoot?.themeColor);
   const darkthemeusingDevice = useDarkMode();
@@ -77,7 +77,7 @@ console.log(location,"locationlocationlocation")
   const {themeColors, themeLayouts, appStyle} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
   const {profile} = appData;
-  
+
   const [state, setState] = useState({
     dropDownData: [],
     address: updateData?.address ? updateData?.address : '',
@@ -666,8 +666,6 @@ console.log(location,"locationlocationlocation")
               addressDone={addressDone}
               mapClose={() => openCloseMapAddress(2)} //address map close
               constCurrLoc={location}
-              
-
             />
           </View>
         ) : (

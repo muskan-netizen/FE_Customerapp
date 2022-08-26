@@ -7,12 +7,12 @@ import {
   Text,
   TouchableWithoutFeedback,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import {useDarkMode} from 'react-native-dark-mode';
 import DocumentPicker from 'react-native-document-picker';
 import FastImage from 'react-native-fast-image';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import AddressModal3 from '../../Components/AddressModal3';
@@ -393,7 +393,11 @@ export default function MyProfile3({route, navigation}) {
           language: languages?.primary_language?.id,
         })
         .then((res) => {
-          updateState({del: del ? false : true});
+          updateState({
+            del: del ? false : true,
+            isVisible: false,
+            selectViaMap: false,
+          });
           showSuccess(res.message);
         })
         .catch((error) => {
@@ -410,7 +414,12 @@ export default function MyProfile3({route, navigation}) {
           language: languages?.primary_language?.id,
         })
         .then((res) => {
-          updateState({del: del ? false : true});
+          updateState({
+            del: del ? false : true,
+            isVisible: false,
+            selectViaMap: false,
+          });
+
           showSuccess(res.message);
         })
         .catch((error) => {
