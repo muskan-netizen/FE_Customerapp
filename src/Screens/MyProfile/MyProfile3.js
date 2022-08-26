@@ -475,8 +475,10 @@ export default function MyProfile3({route, navigation}) {
         code: appData?.profile?.code,
       })
       .then((res) => {
+        console.log(res, 'res>>>>>res');
         updateState({isLoading: false, del: del ? false : true});
         showSuccess(res.message);
+        getAllAddress();
       })
       .catch((error) => {
         updateState({isLoading: false});
@@ -607,7 +609,7 @@ export default function MyProfile3({route, navigation}) {
       })
       .then((res) => {
         updateState({del: del ? false : true});
-        getAllAddress();
+        // getAllAddress();
         showSuccess(res.message);
       })
       .catch((error) => {
@@ -956,8 +958,6 @@ export default function MyProfile3({route, navigation}) {
       </View>
     );
   };
-
-  console.log(address, 'address>>>address');
 
   //address view tab
   const addressView = () => {

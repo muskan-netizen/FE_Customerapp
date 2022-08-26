@@ -79,7 +79,6 @@ import {removeItem} from '../../utils/utils';
 import stylesFunc from './styles';
 import {isEmpty} from 'lodash';
 
-
 let timeOut = undefined;
 
 var tempQty = 0;
@@ -744,7 +743,7 @@ export default function Products({route, navigation}) {
                         marginTop:
                           !DeviceInfo.getBundleId() === appIds.hokitch
                             ? moderateScaleVertical(5)
-                            :0,
+                            : 0,
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                         alignSelf:
@@ -840,10 +839,8 @@ export default function Products({route, navigation}) {
                     : colors.white,
                   // // minHeight: moderateScale(80),
                 }}>
-           
-                  <View>
-                
-                   {/* { !isEmpty(sectionListData) ?  <Text
+                <View>
+                  {/* { !isEmpty(sectionListData) ?  <Text
                       style={{
                         ...styles.milesTxt,
                         color: isDarkMode
@@ -857,24 +854,24 @@ export default function Products({route, navigation}) {
                       })}
                     </Text> : null} */}
 
-                    {!!desc && (
-                      <Text
-                        numberOfLines={2}
-                        style={{
-                          ...styles.milesTxt,
-                          marginLeft: 0,
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.black,
-                          marginVertical: moderateScaleVertical(4),
-                          fontSize: textScale(10.5),
-                          opacity: 0.6,
-                        }}>
-                        {desc}
-                      </Text>
-                    )}
-                  </View>
-           
+                  {!!desc && (
+                    <Text
+                      numberOfLines={2}
+                      style={{
+                        ...styles.milesTxt,
+                        marginLeft: 0,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        marginVertical: moderateScaleVertical(4),
+                        fontSize: textScale(10.5),
+                        opacity: 0.6,
+                      }}>
+                      {desc}
+                    </Text>
+                  )}
+                </View>
+
                 {!!categoryInfo?.closed_store_order_scheduled ? (
                   <Text
                     style={{
@@ -2669,10 +2666,6 @@ export default function Products({route, navigation}) {
     });
     // navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
   };
-  console.log(
-    cloneSectionList,
-    'cloneSectionListcloneSectionListcloneSectionList',
-  );
 
   // Search with more
   const onSearchWithinMenu = (text, data = [], withApiSearch = false) => {
@@ -3436,14 +3429,6 @@ export default function Products({route, navigation}) {
   const renderSectionFooter = (props) => {
     const {section} = props;
 
-    console.log('section?.data ', section?.data);
-    console.log('section?.data_count ', section?.data_count);
-    console.log(
-      productDataLengthAfterViewMoreSearch,
-      searchInput,
-      'searchInputsearchInput',
-    );
-    //&& !!(searchInput && productDataLengthAfterViewMoreSearch?.length !=0)
     return section?.data.length !== section?.data_count &&
       section?.data.length !== 0 &&
       searchInput &&

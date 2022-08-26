@@ -3684,7 +3684,12 @@ export default function OrderDetail({navigation, route}) {
             ? imagePath.icBackb
             : imagePath.back
         }
-        centerTitle={strings.ORDER + `${'#'}${cartData?.order_number || ''}`}
+        centerTitle={
+          strings.ORDER +
+          ` ${isLoading ? '' : '#'}${
+            isLoading ? 'xxxxxxxx' : cartData?.order_number || ''
+          }`
+        }
         customRight={!!cartData?.reports?.report?.original ? customRight : ''}
         onPressLeft={
           paramData?.from
