@@ -45,6 +45,7 @@ import {
   MyCash,
   OpenPay,
   Userede,
+  Conekta,
 } from '../Screens';
 import MyProfile from '../Screens/MyProfile/MyProfile2';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
@@ -296,6 +297,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.VERIFY_ACCOUNT}
         component={VerifyAccount}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.CONEKTA}
+        component={Conekta}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

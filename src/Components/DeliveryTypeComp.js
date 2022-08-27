@@ -5,22 +5,23 @@ import {
   Text,
   TouchableOpacity,
   View,
-  FlatList
+  FlatList,
 } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { moderateScale, textScale } from '../styles/responsiveSize';
-import { useSelector } from 'react-redux';
+import React, {useCallback, useEffect, useState} from 'react';
+import {moderateScale, textScale} from '../styles/responsiveSize';
+import {useSelector} from 'react-redux';
 import strings from '../constants/lang';
 import actions from '../redux/actions';
 import deviceInfoModule from 'react-native-device-info';
-import { showError, showSuccess } from '../utils/helperFunctions';
-import { MyDarkTheme } from '../styles/theme';
+import {showError, showSuccess} from '../utils/helperFunctions';
+import {MyDarkTheme} from '../styles/theme';
 import colors from '../styles/colors';
 import imagePath from '../constants/imagePath';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dark-mode';
+import {isEmpty} from 'lodash';
 
-function DeliveryTypeComp({ selectedToggle = () => { } }) {
-  const { cartItemCount } = useSelector((state) => state?.cart);
+function DeliveryTypeComp({selectedToggle = () => {}}) {
+  const {cartItemCount} = useSelector((state) => state?.cart);
   const {
     appData,
     themeColors,
@@ -30,20 +31,20 @@ function DeliveryTypeComp({ selectedToggle = () => { } }) {
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
-  const { dineInType } = useSelector((state) => state?.home);
+  const {dineInType} = useSelector((state) => state?.home);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
 
-  const styles = stylesFunc({ fontFamily, themeColors, isDarkMode });
+  const styles = stylesFunc({fontFamily, themeColors, isDarkMode});
 
   const [state, setState] = useState({
     tabs: [],
   });
 
-  const { tabs } = state;
+  const {tabs} = state;
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   useEffect(() => {
     addAllTabs();
@@ -51,10 +52,12 @@ function DeliveryTypeComp({ selectedToggle = () => { } }) {
 
   const addAllTabs = () => {
     if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
-      updateState({ tabs: appData?.profile?.preferences?.vendorMode });
+      updateState({tabs: appData?.profile?.preferences?.vendorMode});
     }
     return;
   };
+
+  console.log(appData?.profile, 'appData?.profile?.preferences?.vendorMode');
 
   const _onTableItm = (value, indx) => {
     const newTabs = [...tabs];
@@ -80,7 +83,7 @@ function DeliveryTypeComp({ selectedToggle = () => { } }) {
         text: strings.CANCEL,
         onPress: () => console.log('Cancel Pressed'),
       },
-      { text: strings.CLEAR_CART2, onPress: () => clearCart(item, indx) },
+      {text: strings.CLEAR_CART2, onPress: () => clearCart(item, indx)},
     ]);
   };
 
@@ -107,34 +110,36 @@ function DeliveryTypeComp({ selectedToggle = () => { } }) {
     showError(error?.message || error?.error);
   };
 
-  const renderItem = useCallback(({ item, index }) => {
+  console.log(tabs, 'tabstabstabstabs');
 
-    return (
-      <TouchableOpacity
-        activeOpacity={1}
-        disabled={item?.isActive}
-        onPress={() =>
-          !(
-            cartItemCount?.message == null &&
-            cartItemCount?.data?.item_count > 0
-          )
-            ? _onTableItm(item, index)
-            : dineInFunction(item, index)
-        }
-        key={index}
-        style={{
-          ...styles.tabItemView,
-          marginRight: 8,
-          borderBottomColor:
-            dineInType == item?.type && isDarkMode
-              ? MyDarkTheme.colors.white
-              : dineInType == item?.type && !isDarkMode
+  const renderItem = useCallback(
+    ({item, index}) => {
+      return (
+        <TouchableOpacity
+          activeOpacity={1}
+          disabled={item?.isActive}
+          onPress={() =>
+            !(
+              cartItemCount?.message == null &&
+              cartItemCount?.data?.item_count > 0
+            )
+              ? _onTableItm(item, index)
+              : dineInFunction(item, index)
+          }
+          key={index}
+          style={{
+            ...styles.tabItemView,
+            marginRight: 8,
+            borderBottomColor:
+              dineInType == item?.type && isDarkMode
+                ? MyDarkTheme.colors.white
+                : dineInType == item?.type && !isDarkMode
                 ? themeColors.primary_color
                 : isDarkMode
-                  ? colors.blackOpacity0
-                  : colors.greyColor1,
-        }}>
-        {/* <Image
+                ? colors.blackOpacity0
+                : colors.greyColor1,
+          }}>
+          {/* <Image
           source={item.icon}
           style={{
             ...styles.tabItemImg,
@@ -147,24 +152,32 @@ function DeliveryTypeComp({ selectedToggle = () => { } }) {
           }}
           resizeMode="contain"
         /> */}
-        <Text
-          style={{
-            ...styles.tabItemTxt,
-            color:
-              item.isActive && isDarkMode
-                ? MyDarkTheme.colors.white
-                : item.isActive && !isDarkMode
+          <Text
+            style={{
+              ...styles.tabItemTxt,
+              color:
+                item.isActive && isDarkMode
+                  ? MyDarkTheme.colors.white
+                  : item.isActive && !isDarkMode
                   ? themeColors.primary_color
                   : colors.greyLight,
-          }}>
-          {item?.name}
-        </Text>
-      </TouchableOpacity>
-    )
-  }, [tabs, appData])
+            }}>
+            {item?.name}
+          </Text>
+        </TouchableOpacity>
+      );
+    },
+    [tabs, appData],
+  );
 
-  const awesomeChildListKeyExtractor = useCallback((item) => `awesome-child-key-${item?.type}`, [tabs]);
+  const awesomeChildListKeyExtractor = useCallback(
+    (item) => `awesome-child-key-${item?.type}`,
+    [tabs],
+  );
 
+  if (isEmpty(tabs)) {
+    return <></>;
+  }
   return (
     <View
       style={{
@@ -179,15 +192,18 @@ function DeliveryTypeComp({ selectedToggle = () => { } }) {
         data={tabs}
         renderItem={renderItem}
         keyExtractor={awesomeChildListKeyExtractor}
-        ListFooterComponent={() => <View style={{ marginLeft: moderateScale(16) }} />}
-        ListHeaderComponent={() => <View style={{ marginRight: moderateScale(16) }} />}
+        ListFooterComponent={() => (
+          <View style={{marginLeft: moderateScale(16)}} />
+        )}
+        ListHeaderComponent={() => (
+          <View style={{marginRight: moderateScale(16)}} />
+        )}
       />
-
     </View>
   );
 }
 
-export function stylesFunc({ fontFamily, themeColors, isDarkMode }) {
+export function stylesFunc({fontFamily, themeColors, isDarkMode}) {
   const styles = StyleSheet.create({
     tabMainStyle: {
       borderRadius: moderateScale(10),

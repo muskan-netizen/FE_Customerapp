@@ -992,153 +992,162 @@ export default function Addaddress({navigation, route}) {
       </View>
 
       <View style={{flex: 1}}>
-        <View
-          style={{
-            ...commonStyles.shadowStyle,
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.background
-              : colors.white,
-            paddingBottom: moderateScaleVertical(8),
-            shadowOffset: {width: 0, height: moderateScale(6)},
-            borderRadius: 0,
-          }}>
-          {dropLocationData.map((val, i) => {
-            return (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginHorizontal: moderateScale(16),
-                  alignItems: 'center',
-                  marginVertical: moderateScale(2),
-                  justifyContent: 'space-between',
-                }}>
-                <View style={{flex: 0.05, alignItems: 'center'}}>
-                  {renderDotContainer(i)}
-                </View>
-                <View style={{flex: 0.9, marginLeft: moderateScale(20)}}>
-                  <SearchPlaces
-                    curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
-                    autoFocus={i == dropLocationData.length - 1 ? true : false}
-                    placeHolder={
-                      i == 0
-                        ? strings.PICKUP_LOCATION
-                        : i == 1
-                        ? strings.WHERETO
-                        : strings.ADD_A_STOP
-                    }
-                    value={val.pre_address} // instant update search value
-                    mapKey={profile?.preferences?.map_key} //send here google Key
-                    fetchArrayResult={(data) =>
-                      updateState({
-                        searchResult: {data: data, currentIndex: i},
-                      })
-                    }
-                    setValue={(text) => updateCurValues(text, i)} //return & update on change text value
-                    onFocus={() =>
-                      updateState({
-                        searchResult: {...searchResult, currentIndex: i},
-                      })
-                    }
-                    _moveToNextScreen={() => _moveToNextScreen(i)}
-                    onClear={() => onClearAddress('', i)}
-                    index={i}
-                  />
-                </View>
-                <View style={{marginHorizontal: moderateScale(8)}} />
-                <View style={{flex: 0.1}}>
-                  {i >= 1 && (
-                    <TouchableOpacity
-                      hitSlop={{
-                        top: 30,
-                        right: 30,
-                        left: 30,
-                        bottom: 30,
-                      }}
-                      onPress={() =>
-                        addRemove(
-                          dropLocationData.length - 1 == i ? true : false,
-                          i,
-                        )
+        <View>
+          <View
+            style={{
+              ...commonStyles.shadowStyle,
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.background
+                : colors.white,
+              paddingBottom: moderateScaleVertical(8),
+              shadowOffset: {width: 0, height: moderateScale(6)},
+              borderRadius: 0,
+            }}>
+            {dropLocationData.map((val, i) => {
+              return (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginHorizontal: moderateScale(16),
+                    alignItems: 'center',
+                    marginVertical: moderateScale(2),
+                    justifyContent: 'space-between',
+                  }}>
+                  <View style={{flex: 0.05, alignItems: 'center'}}>
+                    {renderDotContainer(i)}
+                  </View>
+                  <View style={{flex: 0.9, marginLeft: moderateScale(20)}}>
+                    <SearchPlaces
+                      curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
+                      autoFocus={
+                        i == dropLocationData.length - 1 ? true : false
                       }
-                      activeOpacity={1}>
-                      <Animated.Image
-                        style={{
-                          tintColor: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.black,
-                          transform: [
-                            {
-                              rotate:
-                                dropLocationData.length - 1 == i
-                                  ? '0deg'
-                                  : '45deg',
-                            },
-                          ],
+                      placeHolder={
+                        i == 0
+                          ? strings.PICKUP_LOCATION
+                          : i == 1
+                          ? strings.WHERETO
+                          : strings.ADD_A_STOP
+                      }
+                      value={val.pre_address} // instant update search value
+                      mapKey={profile?.preferences?.map_key} //send here google Key
+                      fetchArrayResult={(data) =>
+                        updateState({
+                          searchResult: {data: data, currentIndex: i},
+                        })
+                      }
+                      setValue={(text) => updateCurValues(text, i)} //return & update on change text value
+                      onFocus={() =>
+                        updateState({
+                          searchResult: {...searchResult, currentIndex: i},
+                        })
+                      }
+                      _moveToNextScreen={() => _moveToNextScreen(i)}
+                      onClear={() => onClearAddress('', i)}
+                      index={i}
+                    />
+                  </View>
+                  <View style={{marginHorizontal: moderateScale(8)}} />
+                  <View style={{flex: 0.1}}>
+                    {i >= 1 && (
+                      <TouchableOpacity
+                        hitSlop={{
+                          top: 30,
+                          right: 30,
+                          left: 30,
+                          bottom: 30,
                         }}
-                        source={imagePath.icAdd}
-                      />
-                    </TouchableOpacity>
-                  )}
+                        onPress={() =>
+                          addRemove(
+                            dropLocationData.length - 1 == i ? true : false,
+                            i,
+                          )
+                        }
+                        activeOpacity={1}>
+                        <Animated.Image
+                          style={{
+                            tintColor: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
+                            transform: [
+                              {
+                                rotate:
+                                  dropLocationData.length - 1 == i
+                                    ? '0deg'
+                                    : '45deg',
+                              },
+                            ],
+                          }}
+                          source={imagePath.icAdd}
+                        />
+                      </TouchableOpacity>
+                    )}
+                  </View>
                 </View>
+              );
+            })}
+          </View>
+
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+            onMomentumScrollBegin={() => Keyboard.dismiss()}>
+            {!!searchResult?.data && searchResult?.data.length > 0 ? (
+              <View style={{marginTop: moderateScaleVertical(16)}}>
+                <View style={{...styles.savedAddressView}}>
+                  <Image
+                    style={{marginHorizontal: moderateScale(12)}}
+                    source={imagePath.starRoundedBackground}
+                  />
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      ...styles.addresssLableName,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
+                    {strings.SEARCHED_RESULTS}
+                  </Text>
+                </View>
+                {searchResult?.data.map((item, i) => {
+                  console.log(item, 'itemm');
+                  return renderSearchItem(item);
+                })}
               </View>
-            );
-          })}
+            ) : appData?.profile?.preferences?.is_static_dropoff ? null : (
+              <View style={{marginTop: moderateScaleVertical(16)}}>
+                <View style={{...styles.savedAddressView}}>
+                  <Image
+                    style={{marginHorizontal: moderateScale(12)}}
+                    source={imagePath.starRoundedBackground}
+                  />
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      ...styles.addresssLableName,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
+                    {strings.NEARBY_LOCATION}
+                  </Text>
+                </View>
+                {nearByAddressess.slice(0, 5).map((val) => {
+                  return renderAddressess(val);
+                })}
+              </View>
+            )}
+          </ScrollView>
         </View>
 
-        <ScrollView
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
-          onMomentumScrollBegin={() => Keyboard.dismiss()}>
-          {!!searchResult?.data && searchResult?.data.length > 0 ? (
-            <View style={{marginTop: moderateScaleVertical(16)}}>
-              <View style={{...styles.savedAddressView}}>
-                <Image
-                  style={{marginHorizontal: moderateScale(12)}}
-                  source={imagePath.starRoundedBackground}
-                />
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    ...styles.addresssLableName,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  }}>
-                  {strings.SEARCHED_RESULTS}
-                </Text>
-              </View>
-              {searchResult?.data.map((item, i) => {
-                console.log(item, 'itemm');
-                return renderSearchItem(item);
-              })}
-            </View>
-          ) : appData?.profile?.preferences?.is_static_dropoff ? null : (
-            <View style={{marginTop: moderateScaleVertical(16)}}>
-              <View style={{...styles.savedAddressView}}>
-                <Image
-                  style={{marginHorizontal: moderateScale(12)}}
-                  source={imagePath.starRoundedBackground}
-                />
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    ...styles.addresssLableName,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  }}>
-                  {strings.NEARBY_LOCATION}
-                </Text>
-              </View>
-              {nearByAddressess.slice(0, 5).map((val) => {
-                return renderAddressess(val);
-              })}
-            </View>
-          )}
-        </ScrollView>
-      </View>
-      <View
-        style={{
-          marginTop: 'auto',
-          marginBottom: moderateScaleVertical(80),
-        }}>
-        {renderbtn()}
+        <View
+          style={{
+            marginTop: 'auto',
+            marginBottom: moderateScaleVertical(80),
+          }}>
+          {renderbtn()}
+        </View>
       </View>
 
       <Modal

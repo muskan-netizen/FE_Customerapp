@@ -51,14 +51,9 @@ export default function DashBoardHeaderFive({
 }) {
   const navigation = useNavigation();
 
-  const {
-    appData,
-    themeColors,
-    appStyle,
-
-    themeColor,
-    themeToggle,
-  } = useSelector((state) => state?.initBoot);
+  const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
+    (state) => state?.initBoot,
+  );
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
@@ -67,8 +62,12 @@ export default function DashBoardHeaderFive({
   const styles = stylesFunc({themeColors, fontFamily});
 
   const imageURI = getImageUrl(
-    profileInfo?.logo?.image_fit,
-    profileInfo?.logo?.image_path,
+    isDarkMode
+      ? profileInfo?.dark_logo?.image_fit
+      : profileInfo?.logo?.image_fit,
+    isDarkMode
+      ? profileInfo?.dark_logo?.image_path
+      : profileInfo?.logo?.image_path,
     '200/400',
   );
 
@@ -94,7 +93,10 @@ export default function DashBoardHeaderFive({
               flex: 1,
               alignItems: 'center',
             }}>
-            {!!(profileInfo && profileInfo?.logo) ? (
+            {!!(
+              profileInfo &&
+              (profileInfo?.logo || profileInfo?.dark_logo)
+            ) ? (
               <FastImage
                 style={{
                   width: moderateScale(width / 6),
@@ -127,11 +129,16 @@ export default function DashBoardHeaderFive({
                   source={imagePath.redLocation}
                   resizeMode="contain"
                 />
+                {console.log(location?.type, 'location>>>>location')}
                 <View>
                   {!!location?.type && (
                     <Text numberOfLines={1} style={styles.locationTypeTxt}>
                       {location?.type === 3
-                        ? !!(location?.type_name != 0 && location?.type != '0')
+                        ? !!(
+                            location?.type_name != 0 &&
+                            location?.type != '0' &&
+                            location?.type_name !== null
+                          )
                           ? location?.type_name
                           : strings.UNKNOWN
                         : location?.type === 2
@@ -171,7 +178,11 @@ export default function DashBoardHeaderFive({
                 navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
               }>
               <Image
-                style={{tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black}}
+                style={{
+                  tintColor: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.black,
+                }}
                 source={imagePath.search1}
               />
             </TouchableOpacity>
@@ -207,7 +218,9 @@ export default function DashBoardHeaderFive({
                     height: moderateScale(20),
                     width: moderateScale(20),
                     borderRadius: moderateScale(10),
-                    tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
                   }}
                   resizeMode="contain"
                 />

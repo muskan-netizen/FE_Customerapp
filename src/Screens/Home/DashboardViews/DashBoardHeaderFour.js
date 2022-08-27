@@ -60,9 +60,13 @@ export default function DashBoardHeaderFive({
   const styles = stylesFunc({themeColors, fontFamily});
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const imageURI = getImageUrl(
-    profileInfo?.logo?.image_fit,
-    profileInfo?.logo?.image_path,
-    '800/400',
+    isDarkMode
+      ? profileInfo?.dark_logo?.image_fit
+      : profileInfo?.logo?.image_fit,
+    isDarkMode
+      ? profileInfo?.dark_logo?.image_path
+      : profileInfo?.logo?.image_path,
+    '1000/1000',
   );
 
   useEffect(() => {
@@ -397,17 +401,9 @@ export default function DashBoardHeaderFive({
               width={width / 6}
               height={moderateScaleVertical(50)}
               resizeMode="contain"
-              source={
-                profileInfo && profileInfo?.logo
-                  ? {
-                      uri: getImageUrl(
-                        profileInfo.logo.image_fit,
-                        profileInfo.logo.image_path,
-                        '1000/1000',
-                      ),
-                    }
-                  : imagePath.logo
-              }
+              source={{
+                uri: imageURI,
+              }}
             />
           ) : null}
           {!!appData?.profile?.preferences?.is_hyperlocal && (

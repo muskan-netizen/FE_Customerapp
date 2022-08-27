@@ -1,29 +1,23 @@
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
-import { useSelector } from 'react-redux';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import navigationStrings from '../navigation/navigationStrings';
 import colors from '../styles/colors';
 import {
   moderateScale,
   StatusBarHeight,
-  textScale
+  textScale,
+  width,
 } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
+import {MyDarkTheme} from '../styles/theme';
 
 const Header3 = ({
   leftIcon = imagePath.back,
   location = [],
   conatinerStyle = {},
-
 }) => {
   const {appStyle, appData} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -37,12 +31,17 @@ const Header3 = ({
     <View
       style={{
         height: StatusBarHeight,
-        paddingHorizontal: moderateScale(15),
+        marginHorizontal: moderateScale(15),
         flexDirection: 'row',
         alignItems: 'center',
-        ...conatinerStyle
+        overflow: 'hidden',
+        flex: 1,
+        ...conatinerStyle,
       }}>
       <TouchableOpacity
+        style={{
+          flex: 0.1,
+        }}
         onPress={() => {
           navigation.goBack();
         }}>
@@ -57,25 +56,26 @@ const Header3 = ({
         <TouchableOpacity
           style={{
             flexDirection: 'row',
+            flex: 1,
             alignItems: 'center',
-            marginLeft: moderateScale(15),
           }}
           onPress={() =>
             navigation.navigate(navigationStrings.LOCATION, {
               type: 'Home1',
             })
           }>
-          <Image source={imagePath.redLocation} />
+          <Image
+            style={{
+              marginRight: moderateScale(10),
+            }}
+            source={imagePath.redLocation}
+          />
           <Text
             numberOfLines={1}
             style={{
-              paddingLeft: 5,
-              // height:20,
-              lineHeight: 20,
               fontFamily: fontFamily.regular,
               color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
               fontSize: textScale(10),
-              width: '70%',
             }}>
             {location?.address}
           </Text>

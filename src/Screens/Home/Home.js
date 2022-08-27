@@ -2,18 +2,18 @@ import {useFocusEffect} from '@react-navigation/native';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Alert, BackHandler, Linking} from 'react-native';
 import AppLink from 'react-native-app-link';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
 import strings from '../../constants/lang';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import { MyDarkTheme } from '../../styles/theme';
-import { shortCodes } from '../../utils/constants/DynamicAppKeys';
+import {MyDarkTheme} from '../../styles/theme';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 
 import {
   androidBackButtonHandler,
@@ -23,7 +23,7 @@ import {
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
-import { chekLocationPermission } from '../../utils/permissions';
+import {chekLocationPermission} from '../../utils/permissions';
 import {
   DashBoardFive,
   DashBoardFour,
@@ -38,12 +38,10 @@ import Voice from '@react-native-voice/voice';
 import FastImage from 'react-native-fast-image';
 import DashBoardEight from './DashboardViews/DashBoardEight';
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
-import _, { isEmpty } from 'lodash';
+import _, {isEmpty} from 'lodash';
 import socketServices from '../../utils/scoketService';
-import SubscriptionModal from '../../Components/SubscriptionModal'; 
+import SubscriptionModal from '../../Components/SubscriptionModal';
 import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
-
-
 
 // navigator.geolocation = require('react-native-geolocation-service');
 
@@ -52,7 +50,7 @@ let maxMinObj = {
   min_select: 1,
 };
 
-export default function Home({ route, navigation }) {
+export default function Home({route, navigation}) {
   const paramData = route?.params;
   const {
     appData,
@@ -64,11 +62,12 @@ export default function Home({ route, navigation }) {
     themeToggle,
     allAddresss,
   } = useSelector((state) => state?.initBoot);
-  const { location, appMainData, dineInType } = useSelector(
+  const {location, appMainData, dineInType} = useSelector(
     (state) => state?.home,
   );
+  console.log(allAddresss, 'dineInType>>>>');
 
-  console.log("appDataappDataappData", appData)
+  console.log('appDataappDataappData', appData);
 
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const addressSearch = useSelector(
@@ -111,7 +110,7 @@ export default function Home({ route, navigation }) {
     selectedAddonSet: [],
     unPresentAry: [],
     isSubscription: true,
-    stopOrderModalVisible: true
+    stopOrderModalVisible: true,
   });
 
   const {
@@ -134,10 +133,10 @@ export default function Home({ route, navigation }) {
     selectedAddonSet,
     unPresentAry,
     isSubscription,
-    stopOrderModalVisible
+    stopOrderModalVisible,
   } = state;
 
-  const { profile } = appData;
+  const {profile} = appData;
 
   console.log('appDataappData home++', appData);
 
@@ -158,7 +157,7 @@ export default function Home({ route, navigation }) {
   );
 
   useEffect(() => {
-    updateState({ updatedData: appMainData?.categories });
+    updateState({updatedData: appMainData?.categories});
   }, [appMainData]);
 
   useEffect(() => {
@@ -176,7 +175,6 @@ export default function Home({ route, navigation }) {
     }, []),
   );
 
-
   useFocusEffect(
     useCallback(() => {
       if (!!userData?.auth_token) {
@@ -185,105 +183,128 @@ export default function Home({ route, navigation }) {
     }, []),
   );
 
-
   useEffect(() => {
-    chekLocationPermission(true).then((result) => {
-      if (result !== 'goback' && result == 'granted') {
-        console.log(result, 'chekLocationPermission');
-        getCurrentLocation('home').then((curLoc) => {
-          let locData = location?.latitude ? location : curLoc
-          console.log("res++++ chekLocationPermission", curLoc)
-          if (!!userData?.auth_token) {//IS LOGIN USER YES
-            if (!!appData?.profile?.preferences?.is_hyperlocal) { //YES
-              getAllAddress().then((savedAddress) => {
-                console.log("res++++ getAllAddress", savedAddress)
-                if (savedAddress.length > 0) {
-                  let filterAddress = savedAddress.filter(val => !!val?.latitude)
-                  console.log("res++++ getAllAddress", filterAddress)
-                  getNearestLocation(curLoc, filterAddress).then((nearestLoc) => {
-                    actions.locationData(nearestLoc);
-                    homeData(nearestLoc);
-                  }).catch(error => {
-                    actions.locationData(locData);
-                    homeData(locData);
-                    console.log("error raised in get nearestlocation", error)
-                  })
-                  return;
+    chekLocationPermission(true)
+      .then((result) => {
+        if (result !== 'goback' && result == 'granted') {
+          console.log(result, 'chekLocationPermission');
+          getCurrentLocation('home')
+            .then((curLoc) => {
+              let locData = location?.latitude ? location : curLoc;
+              console.log('res++++ chekLocationPermission', curLoc);
+              if (!!userData?.auth_token) {
+                //IS LOGIN USER YES
+                if (!!appData?.profile?.preferences?.is_hyperlocal) {
+                  //YES
+                  getAllAddress()
+                    .then((savedAddress) => {
+                      console.log('res++++ getAllAddress', savedAddress);
+                      if (savedAddress.length > 0) {
+                        let filterAddress = savedAddress.filter(
+                          (val) => !!val?.latitude,
+                        );
+                        console.log('res++++ getAllAddress', filterAddress);
+                        getNearestLocation(curLoc, filterAddress)
+                          .then((nearestLoc) => {
+                            actions.locationData(nearestLoc);
+                            homeData(nearestLoc);
+                          })
+                          .catch((error) => {
+                            actions.locationData(locData);
+                            homeData(locData);
+                            console.log(
+                              'error raised in get nearestlocation',
+                              error,
+                            );
+                          });
+                        return;
+                      } else {
+                        actions.locationData(locData);
+                        homeData(locData);
+                        return;
+                      }
+                    })
+                    .catch((error) => {
+                      homeData(locData);
+                      return;
+                    });
                 } else {
+                  //NO
+                  console.log('api hit without lat lng');
+                  homeData();
+                  return;
+                }
+              } else {
+                //In case of guest user
+                if (!!appData?.profile?.preferences?.is_hyperlocal) {
+                  //YES
+                  console.log('api hit with current lat lng');
                   actions.locationData(locData);
                   homeData(locData);
                   return;
+                } else {
+                  //NO
+                  console.log('api hit without lat lng');
+                  homeData();
+                  return;
                 }
-              }).catch(error => {
-                homeData(locData);
-                return;
-              })
-            } else { //NO
-              console.log("api hit without lat lng")
+              }
+              return;
+            })
+            .catch((err) => {
+              console.log(err, 'chekLocationPermission error');
+              console.log('api hit without lat lng');
+              homeData();
+              return;
+            });
+        } else {
+          if (appData?.profile?.preferences?.is_hyperlocal) {
+            const data = {
+              address: appData?.profile?.preferences?.Default_location_name,
+              latitude: appData?.profile?.preferences?.Default_latitude,
+              longitude: appData?.profile?.preferences?.Default_longitude,
+            };
+            if (!!data?.latitude) {
+              console.log('api hit with current lat lng');
+              actions.locationData(data);
+              homeData(data);
+              return;
+            } else {
+              console.log('api hit without lat lng');
               homeData();
               return;
             }
-          } else { //In case of guest user
-            if (!!appData?.profile?.preferences?.is_hyperlocal) { //YES
-              console.log("api hit with current lat lng")
-              actions.locationData(locData);
-              homeData(locData)
-              return;
-            } else { //NO
-              console.log("api hit without lat lng")
-              homeData()
-              return;
-            }
-          }
-          return;
-        })
-          .catch((err) => {
-            console.log(err, 'chekLocationPermission error');
-            console.log("api hit without lat lng")
-            homeData()
-            return;
-          });
-      } else {
-        if (appData?.profile?.preferences?.is_hyperlocal) {
-          const data = {
-            address: appData?.profile?.preferences?.Default_location_name,
-            latitude: appData?.profile?.preferences?.Default_latitude,
-            longitude: appData?.profile?.preferences?.Default_longitude,
-          };
-          if (!!data?.latitude) {
-            console.log("api hit with current lat lng")
-            actions.locationData(data);
-            homeData(data);
-            return;
-          } else {
-            console.log("api hit without lat lng")
-            homeData()
-            return;
           }
         }
-      }
-    }).catch((error) => {
-      console.log('error while accessing location', error)
-      console.log("api hit without lat lng")
-      homeData()
-      return;
-    });
-  }, [selectedTabType, appData, bestSeller, openVendor, closeVendor]);
-
+      })
+      .catch((error) => {
+        console.log('error while accessing location', error);
+        console.log('api hit without lat lng');
+        homeData();
+        return;
+      });
+  }, [
+    selectedTabType,
+    appData,
+    bestSeller,
+    openVendor,
+    closeVendor,
+    allAddresss,
+  ]);
 
   // useEffect(() => {
   //   homeData();
   // }, [selectedTabType, appData, location, bestSeller, openVendor, closeVendor]);
 
-
-
   useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
+    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
   }, []);
 
   const _getLocationFromParams = () => {
-
-    if (paramData?.details && paramData?.details?.formatted_address != location?.address) {
+    if (
+      paramData?.details &&
+      paramData?.details?.formatted_address != location?.address
+    ) {
       const address = paramData?.details?.formatted_address;
       const res = {
         address: address,
@@ -305,7 +326,6 @@ export default function Home({ route, navigation }) {
     }
   };
 
-
   const checkCartWithLatLang = (res) => {
     Alert.alert('', strings.THIS_WILL_REMOVE_CART, [
       {
@@ -313,7 +333,7 @@ export default function Home({ route, navigation }) {
         onPress: () => console.log('Cancel Pressed'),
         // style: 'destructive',
       },
-      { text: strings.CLEAR_CART2, onPress: () => clearCart(res) },
+      {text: strings.CLEAR_CART2, onPress: () => clearCart(res)},
     ]);
   };
 
@@ -331,7 +351,7 @@ export default function Home({ route, navigation }) {
       )
       .then((res) => {
         actions.cartItemQty(res);
-        console.log("homeData===== calling from clearCart")
+        console.log('homeData===== calling from clearCart');
         homeData(location);
       })
       .catch(errorMethod);
@@ -342,19 +362,18 @@ export default function Home({ route, navigation }) {
     homeData(res);
   };
 
-
   //get All address
   const getAllAddress = () => {
     return new Promise(async (resolve, reject) => {
       try {
-        let res = await actions.getAddress({}, { code: appData?.profile?.code })
+        let res = await actions.getAddress({}, {code: appData?.profile?.code});
         if (!!res?.data) {
           resolve(res.data);
         } else {
           resolve(res);
         }
       } catch (error) {
-        reject(error)
+        reject(error);
       }
     });
   };
@@ -380,7 +399,7 @@ export default function Home({ route, navigation }) {
   //Home data
   const homeData = (locationData = null) => {
     if (!!paramData) {
-      updateState({ searchDataLoader: true });
+      updateState({searchDataLoader: true});
     }
     let latlongObj = {};
 
@@ -389,7 +408,7 @@ export default function Home({ route, navigation }) {
         address: locationData?.address || '',
         latitude: locationData?.latitude || '',
         longitude: locationData?.longitude || '',
-      }
+      };
     }
 
     let vendorFilterData = {
@@ -399,26 +418,29 @@ export default function Home({ route, navigation }) {
       // near_me: nearMe,
     };
     if (closeVendor == 0 && openVendor == 0 && bestSeller == 0) {
-      updateState({ singleVendor: true });
+      updateState({singleVendor: true});
     } else {
-      updateState({ singleVendor: false });
+      updateState({singleVendor: false});
     }
 
     {
       console.log(latlongObj, vendorFilterData, 'data>>>>>>>');
 
-      var selectedVendorType = null
-      var defaultVendorType = null
+      var selectedVendorType = null;
+      var defaultVendorType = null;
 
-      console.log("dineInTypedineInType", appData?.profile?.preferences?.vendorMode)
+      console.log(
+        'dineInTypedineInType',
+        appData?.profile?.preferences?.vendorMode,
+      );
 
       if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
-        defaultVendorType = appData?.profile?.preferences?.vendorMode[0]?.type //
+        defaultVendorType = appData?.profile?.preferences?.vendorMode[0]?.type; //
         appData?.profile?.preferences?.vendorMode.forEach((val, i) => {
           if (val?.type == dineInType) {
-            selectedVendorType = val.type
+            selectedVendorType = val.type;
           }
-        })
+        });
       }
       if (!selectedVendorType) {
         actions.dineInData(defaultVendorType);
@@ -427,47 +449,48 @@ export default function Home({ route, navigation }) {
         type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
         ...latlongObj,
         ...vendorFilterData,
-      }
+      };
       let apiHeader = {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
-      }
-      console.log('sending api data header', apiData)
-      console.log("homeData===== calling from main function")
+      };
+      console.log('sending api data header', apiData);
+      console.log('homeData===== calling from main function');
 
-      actions.homeData(apiData, apiHeader).then(async (res) => {
-        console.log('Home data++++++', res);
-        // await preLoadImages(res.data);
-        updateState({ searchDataLoader: false });
-        if (
-          appData?.profile?.preferences?.is_hyperlocal &&
-          location?.latitude == '' &&
-          location?.longitude == ''
-        ) {
+      actions
+        .homeData(apiData, apiHeader)
+        .then(async (res) => {
+          console.log('Home data++++++', res);
+          // await preLoadImages(res.data);
+          updateState({searchDataLoader: false});
           if (
-            typeof res?.data?.reqData == 'object' &&
-            res?.data?.reqData?.latitude &&
-            res?.data?.reqData?.longitude
+            appData?.profile?.preferences?.is_hyperlocal &&
+            location?.latitude == '' &&
+            location?.longitude == ''
           ) {
-            const data = {
-              address: res?.data?.reqData?.address,
-              latitude: res?.data?.reqData?.latitude,
-              longitude: res?.data?.reqData?.longitude,
-            };
-            actions.locationData(data);
+            if (
+              typeof res?.data?.reqData == 'object' &&
+              res?.data?.reqData?.latitude &&
+              res?.data?.reqData?.longitude
+            ) {
+              const data = {
+                address: res?.data?.reqData?.address,
+                latitude: res?.data?.reqData?.latitude,
+                longitude: res?.data?.reqData?.longitude,
+              };
+              actions.locationData(data);
+            }
           }
-        }
-        setTimeout(() => {
-          updateState({
-            isLoading: false,
-            isLoadingB: false,
-            searchDataLoader: false,
-          });
-        }, 1500);
-      })
-        .catch(errorMethod)
-
+          setTimeout(() => {
+            updateState({
+              isLoading: false,
+              isLoadingB: false,
+              searchDataLoader: false,
+            });
+          }, 1500);
+        })
+        .catch(errorMethod);
     }
   };
 
@@ -488,57 +511,14 @@ export default function Home({ route, navigation }) {
   };
 
   //update state
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
-
-  const { viewRef2, viewRef3, bannerRef } = useRef();
-
-  // const preLoadImages = async (data) => {
-  //   if (data.categories.length > 0) {
-  //     let preLoadCategories = data.categories.map((item, inx) => {
-  //       return {
-  //         uri: getImageUrl(
-  //           item?.icon?.image_fit,
-  //           item?.icon?.image_path,
-  //           '140/140',
-  //         ),
-  //       };
-  //     });
-  //     FastImage.preload(preLoadCategories); //preload categories
-  //   }
-
-  //   if (!!appData?.mobile_banners && appData?.mobile_banners?.length > 0) {
-  //     let preLoadBanner = appData?.mobile_banners.map((item) => {
-  //       return {
-  //         uri: getImageUrl(
-  //           item.image.image_fit,
-  //           item.image.image_path,
-  //           appStyle?.homePageLayout === 5 ? '600/400' : '200/400',
-  //         ),
-  //       };
-  //     });
-  //     FastImage.preload(preLoadBanner); //preload banners
-  //   }
-
-  //   if (data.vendors.length > 0) {
-  //     let preLoadVendors = data.vendors.map((item, inx) => {
-  //       return {
-  //         uri: getImageUrl(
-  //           item.banner.proxy_url || item.image.proxy_url,
-  //           item.banner.image_path || item.image.image_path,
-  //           '700/300',
-  //         ),
-  //       };
-  //     });
-  //     FastImage.preload(preLoadVendors); //preload vendors
-  //   }
-  // };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   const openUber = () => {
     let appName = 'Uber - Easy affordable trips';
@@ -551,7 +531,7 @@ export default function Home({ route, navigation }) {
       appStoreLocale: appStoreLocale,
       playStoreId: playStoreId,
     })
-      .then((res) => { })
+      .then((res) => {})
       .catch((err) => {
         Linking.openURL('https://www.uber.com/in/en/');
         console.log('errro raised', err);
@@ -611,8 +591,8 @@ export default function Home({ route, navigation }) {
           item.redirect_to == staticStrings.ONDEMANDSERVICE
             ? false
             : item.redirect_to == staticStrings.PRODUCT
-              ? false
-              : true,
+            ? false
+            : true,
         name: item.name,
         isVendorList: false,
       })();
@@ -652,28 +632,27 @@ export default function Home({ route, navigation }) {
       moveToNewScreen(navigationStrings.CATEGORY_BRANDS, item)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { item })();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     } else if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-          item,
-          rootProducts: true,
-          // categoryData: data,
-        })()
+            item,
+            rootProducts: true,
+            // categoryData: data,
+          })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-          id: item?.id,
-          vendor: true,
-          name: item?.name,
-          isVendorList: true,
-          fetchOffers: true,
-        })();
+            id: item?.id,
+            vendor: true,
+            name: item?.name,
+            isVendorList: true,
+            fetchOffers: true,
+          })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
 
   console.log(appData, 'appData>>>>appData');
-
 
   //On Press banner
   const bannerPress = (data) => {
@@ -704,16 +683,16 @@ export default function Home({ route, navigation }) {
       if (data.redirect_to == staticStrings.VENDOR) {
         data?.is_show_category
           ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+              item,
+              rootProducts: true,
+              // categoryData: data,
+            })()
           : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: data.redirect_id,
-            vendor: true,
-            name: data.redirect_name,
-            fetchOffers: true,
-          })();
+              id: data.redirect_id,
+              vendor: true,
+              name: data.redirect_name,
+              fetchOffers: true,
+            })();
       } else if (data.redirect_to == staticStrings.CATEGORY) {
         if (data?.category?.type?.title == staticStrings.VENDOR) {
           let dat2 = data;
@@ -769,30 +748,31 @@ export default function Home({ route, navigation }) {
       language: languages?.primary_language?.id,
     };
 
-    actions.initApp(
-      {},
-      header,
-      true,
-      currencies?.primary_currency,
-      languages?.primary_language,
-    )
+    actions
+
+      .initApp(
+        {},
+        header,
+        true,
+        currencies?.primary_currency,
+        languages?.primary_language,
+      )
       .then((res) => {
         console.log(res, 'initApp');
-        updateState({ isRefreshing: false });
+        updateState({isRefreshing: false});
       })
       .catch((error) => {
-        updateState({ isRefreshing: false });
+        updateState({isRefreshing: false});
       });
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({ isRefreshing: true });
+    updateState({isRefreshing: true});
     initApiHit();
   };
 
   const selcetedToggle = (type) => {
-
     actions.dineInData(type);
     if (dineInType != type) {
       {
@@ -808,7 +788,7 @@ export default function Home({ route, navigation }) {
     }
   };
 
-  console.log("dineInTypedineInTypedineInType", dineInType)
+  console.log('dineInTypedineInTypedineInType', dineInType);
   const onVendorFilterSeletion = (selectedFilter) => {
     switch (selectedFilter?.id) {
       case 1:
@@ -852,7 +832,7 @@ export default function Home({ route, navigation }) {
     }
   };
 
-  const onSpeechStartHandler = (e) => { };
+  const onSpeechStartHandler = (e) => {};
   const onSpeechEndHandler = (e) => {
     updateState({
       isVoiceRecord: false,
@@ -874,7 +854,7 @@ export default function Home({ route, navigation }) {
     });
     try {
       await Voice.start(langType);
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const _onVoiceStop = async () => {
@@ -958,7 +938,7 @@ export default function Home({ route, navigation }) {
     }
   };
 
-  console.log("appMainDataappMainData", appMainData)
+  console.log('appMainDataappMainData', appMainData);
 
   const onFindVendors = () => {
     let newAry = [];
@@ -1007,9 +987,9 @@ export default function Home({ route, navigation }) {
 
   const _stopOrderModalClose = () => {
     updateState({
-      stopOrderModalVisible: false
-    })
-  }
+      stopOrderModalVisible: false,
+    });
+  };
 
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
@@ -1018,7 +998,7 @@ export default function Home({ route, navigation }) {
         return (
           <>
             <DashBoardHeaderOne navigation={navigation} location={location} />
-            {dineInType == 'pick_drop' ?
+            {dineInType == 'pick_drop' ? (
               <TaxiHomeDashbord
                 handleRefresh={() => handleRefresh()}
                 bannerPress={(item) => bannerPress(item)}
@@ -1028,7 +1008,7 @@ export default function Home({ route, navigation }) {
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
               />
-              :
+            ) : (
               <DashBoardOne
                 handleRefresh={() => handleRefresh()}
                 bannerPress={(item) => bannerPress(item)}
@@ -1047,9 +1027,7 @@ export default function Home({ route, navigation }) {
                 onPressSubscribe={_onPressSubscribe}
                 isSubscription={isSubscription}
               />
-
-            }
-
+            )}
           </>
         );
 
@@ -1057,7 +1035,7 @@ export default function Home({ route, navigation }) {
         return (
           <>
             <DashBoardHeaderOne navigation={navigation} location={location} />
-            {dineInType == 'pick_drop' ?
+            {dineInType == 'pick_drop' ? (
               <TaxiHomeDashbord
                 handleRefresh={() => handleRefresh()}
                 bannerPress={(item) => bannerPress(item)}
@@ -1067,7 +1045,7 @@ export default function Home({ route, navigation }) {
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
               />
-              :
+            ) : (
               <DashBoardFour
                 handleRefresh={() => handleRefresh()}
                 bannerPress={(item) => bannerPress(item)}
@@ -1088,7 +1066,7 @@ export default function Home({ route, navigation }) {
                 onPressSubscribe={_onPressSubscribe}
                 isSubscription={isSubscription}
               />
-            }
+            )}
           </>
         );
       case 3:
@@ -1108,7 +1086,7 @@ export default function Home({ route, navigation }) {
               _onVoiceStop={_onVoiceStop}
             />
 
-            {dineInType == 'pick_drop' ?
+            {dineInType == 'pick_drop' ? (
               <TaxiHomeDashbord
                 handleRefresh={() => handleRefresh()}
                 bannerPress={(item) => bannerPress(item)}
@@ -1118,7 +1096,7 @@ export default function Home({ route, navigation }) {
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
               />
-              :
+            ) : (
               <DashBoardFive
                 handleRefresh={() => handleRefresh()}
                 bannerPress={(item) => bannerPress(item)}
@@ -1142,7 +1120,7 @@ export default function Home({ route, navigation }) {
                 isLoadingAddons={isLoadingAddons}
                 selectedHomeCategory={selectedHomeCategory}
               />
-            }
+            )}
           </>
         );
 
@@ -1157,7 +1135,7 @@ export default function Home({ route, navigation }) {
               toggleData={appData}
               isLoading={isLoading}
             />
-            {dineInType == 'pick_drop' ?
+            {dineInType == 'pick_drop' ? (
               <TaxiHomeDashbord
                 handleRefresh={() => handleRefresh()}
                 bannerPress={(item) => bannerPress(item)}
@@ -1167,7 +1145,7 @@ export default function Home({ route, navigation }) {
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
               />
-              :
+            ) : (
               <DashBoardSix
                 handleRefresh={() => handleRefresh()}
                 bannerPress={(item) => bannerPress(item)}
@@ -1189,8 +1167,7 @@ export default function Home({ route, navigation }) {
                 onPressSubscribe={_onPressSubscribe}
                 isSubscription={isSubscription}
               />
-            }
-
+            )}
           </>
         );
 
@@ -1210,7 +1187,7 @@ export default function Home({ route, navigation }) {
               isVoiceRecord={isVoiceRecord}
               _onVoiceStop={_onVoiceStop}
             />
-            {dineInType == 'pick_drop' ?
+            {dineInType == 'pick_drop' ? (
               <TaxiHomeDashbord
                 handleRefresh={() => handleRefresh()}
                 bannerPress={(item) => bannerPress(item)}
@@ -1220,7 +1197,7 @@ export default function Home({ route, navigation }) {
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
               />
-              :
+            ) : (
               <DashBoardFive
                 handleRefresh={() => handleRefresh()}
                 bannerPress={(item) => bannerPress(item)}
@@ -1247,7 +1224,7 @@ export default function Home({ route, navigation }) {
                 onPressSubscribe={_onPressSubscribe}
                 isSubscription={isSubscription}
               />
-            }
+            )}
           </>
         );
       case 6:
@@ -1266,7 +1243,7 @@ export default function Home({ route, navigation }) {
               isVoiceRecord={isVoiceRecord}
               _onVoiceStop={_onVoiceStop}
             />
-            {dineInType == 'pick_drop' ?
+            {dineInType == 'pick_drop' ? (
               <TaxiHomeDashbord
                 handleRefresh={() => handleRefresh()}
                 bannerPress={(item) => bannerPress(item)}
@@ -1275,9 +1252,9 @@ export default function Home({ route, navigation }) {
                 appMainData={appMainData}
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
-
               />
-              : <DashBoardEight
+            ) : (
+              <DashBoardEight
                 handleRefresh={() => handleRefresh()}
                 bannerPress={(item) => bannerPress(item)}
                 isLoading={isLoading}
@@ -1300,7 +1277,7 @@ export default function Home({ route, navigation }) {
                 onPressSubscribe={_onPressSubscribe}
                 isSubscription={isSubscription}
               />
-            }
+            )}
           </>
         );
     }
@@ -1340,7 +1317,7 @@ export default function Home({ route, navigation }) {
     });
   };
 
-  const { blurRef } = useRef();
+  const {blurRef} = useRef();
 
   return (
     <WrapperContainer
@@ -1366,15 +1343,13 @@ export default function Home({ route, navigation }) {
         selectedHomeCategory={selectedHomeCategory}
         unPresentAry={unPresentAry}
       />
-      
-       {
-        !!appData?.stop_order_acceptance_for_users && (
-          <StopAcceptingOrderModal
-            isVisible={stopOrderModalVisible}
-            onClose={_stopOrderModalClose}
 
-          />
-        )}
+      {!!appData?.stop_order_acceptance_for_users && (
+        <StopAcceptingOrderModal
+          isVisible={stopOrderModalVisible}
+          onClose={_stopOrderModalClose}
+        />
+      )}
     </WrapperContainer>
   );
 }

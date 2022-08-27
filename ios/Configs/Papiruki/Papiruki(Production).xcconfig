@@ -1,12 +1,12 @@
 #include "Pods/Target Support Files/Pods-available_pods-Papiruki/Pods-available_pods-Papiruki.release.xcconfig"
 
-PROJECT_APPLE_ID = 1621044962
-PROJECT_BUNDLE_ID = com.papiruki
+PROJECT_APPLE_ID = 1638072708
+PROJECT_BUNDLE_ID = com.papiruki.userApp
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 2
+PROJECT_BUILD_NUMBER = 1
 PROJECT_APP_NAME = Papiruki
-PROJECT_GOOGLE_CLIENT_ID = 146453560969-nmbbnj0esuhss0rt99kfmcag1985eung.apps.googleusercontent.com
-PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.146453560969-nmbbnj0esuhss0rt99kfmcag1985eung
+PROJECT_GOOGLE_CLIENT_ID = 38992371629-mnfm3ddvmnjjjib9nonkcf0njj49jcf2.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.38992371629-mnfm3ddvmnjjjib9nonkcf0njj49jcf2
 PROJECT_FACEBOOK_ID = 1067264377156660
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST =PapirukiInfo

@@ -272,6 +272,7 @@ export default function MyProfile({route, navigation}) {
         });
     }
   };
+
   //this function use for chnage password
   const isValidDataOfChangePass = () => {
     const error = validations({
