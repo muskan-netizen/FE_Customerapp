@@ -393,8 +393,8 @@ const shortCodes = {
   greenCab: '20d107',
   axxi: 'bc1119',
   pets: '8e0436',
-  getDress:'7d11ac',
-  shelf:'345974',
+  getDress: '7d11ac',
+  shelf: '345974',
 };
 
 const appIds = {
@@ -511,8 +511,8 @@ const appIds = {
     android: 'com.customer.snabbhem',
   }),
   lastminutedress: Platform.select({
-    ios: 'com.codebrewLab.lastminutedress',
-    android: 'com.codebrewLab.lastminutedress',
+    ios: 'com.lastminutedress.order',
+    android: 'com.lastminutedress.order',
   }),
   rerak: Platform.select({
     ios: 'com.codebrew.rerak',
