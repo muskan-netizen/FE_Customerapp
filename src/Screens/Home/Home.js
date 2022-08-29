@@ -1,4 +1,4 @@
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Alert, BackHandler, Linking} from 'react-native';
 import AppLink from 'react-native-app-link';
@@ -65,10 +65,7 @@ export default function Home({route, navigation}) {
   const {location, appMainData, dineInType} = useSelector(
     (state) => state?.home,
   );
-  console.log(allAddresss, 'dineInType>>>>');
-
-  console.log('appDataappDataappData', appData);
-
+  const isFocused = useIsFocused();
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const addressSearch = useSelector(
     (state) => state?.addressSearch.addressSearch,
@@ -138,8 +135,6 @@ export default function Home({route, navigation}) {
 
   const {profile} = appData;
 
-  console.log('appDataappData home++', appData);
-
   useEffect(() => {
     if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
       socketServices.initializeSocket(appData?.profile?.socket_url);
@@ -187,23 +182,19 @@ export default function Home({route, navigation}) {
     chekLocationPermission(true)
       .then((result) => {
         if (result !== 'goback' && result == 'granted') {
-          console.log(result, 'chekLocationPermission');
           getCurrentLocation('home')
             .then((curLoc) => {
               let locData = location?.latitude ? location : curLoc;
-              console.log('res++++ chekLocationPermission', curLoc);
               if (!!userData?.auth_token) {
                 //IS LOGIN USER YES
                 if (!!appData?.profile?.preferences?.is_hyperlocal) {
                   //YES
                   getAllAddress()
                     .then((savedAddress) => {
-                      console.log('res++++ getAllAddress', savedAddress);
                       if (savedAddress.length > 0) {
                         let filterAddress = savedAddress.filter(
                           (val) => !!val?.latitude,
                         );
-                        console.log('res++++ getAllAddress', filterAddress);
                         getNearestLocation(curLoc, filterAddress)
                           .then((nearestLoc) => {
                             actions.locationData(nearestLoc);
@@ -212,10 +203,6 @@ export default function Home({route, navigation}) {
                           .catch((error) => {
                             actions.locationData(locData);
                             homeData(locData);
-                            console.log(
-                              'error raised in get nearestlocation',
-                              error,
-                            );
                           });
                         return;
                       } else {
@@ -230,7 +217,6 @@ export default function Home({route, navigation}) {
                     });
                 } else {
                   //NO
-                  console.log('api hit without lat lng');
                   homeData();
                   return;
                 }
@@ -238,13 +224,11 @@ export default function Home({route, navigation}) {
                 //In case of guest user
                 if (!!appData?.profile?.preferences?.is_hyperlocal) {
                   //YES
-                  console.log('api hit with current lat lng');
                   actions.locationData(locData);
                   homeData(locData);
                   return;
                 } else {
                   //NO
-                  console.log('api hit without lat lng');
                   homeData();
                   return;
                 }
@@ -252,8 +236,6 @@ export default function Home({route, navigation}) {
               return;
             })
             .catch((err) => {
-              console.log(err, 'chekLocationPermission error');
-              console.log('api hit without lat lng');
               homeData();
               return;
             });
@@ -265,12 +247,10 @@ export default function Home({route, navigation}) {
               longitude: appData?.profile?.preferences?.Default_longitude,
             };
             if (!!data?.latitude) {
-              console.log('api hit with current lat lng');
               actions.locationData(data);
               homeData(data);
               return;
             } else {
-              console.log('api hit without lat lng');
               homeData();
               return;
             }
@@ -351,7 +331,6 @@ export default function Home({route, navigation}) {
       )
       .then((res) => {
         actions.cartItemQty(res);
-        console.log('homeData===== calling from clearCart');
         homeData(location);
       })
       .catch(errorMethod);
@@ -398,6 +377,9 @@ export default function Home({route, navigation}) {
 
   //Home data
   const homeData = (locationData = null) => {
+    if (!isFocused) {
+      return;
+    }
     if (!!paramData) {
       updateState({searchDataLoader: true});
     }
@@ -424,8 +406,6 @@ export default function Home({route, navigation}) {
     }
 
     {
-      console.log(latlongObj, vendorFilterData, 'data>>>>>>>');
-
       var selectedVendorType = null;
       var defaultVendorType = null;
 
@@ -456,7 +436,6 @@ export default function Home({route, navigation}) {
         language: languages?.primary_language?.id,
       };
       console.log('sending api data header', apiData);
-      console.log('homeData===== calling from main function');
 
       actions
         .homeData(apiData, apiHeader)
@@ -652,8 +631,6 @@ export default function Home({route, navigation}) {
     }
   };
 
-  console.log(appData, 'appData>>>>appData');
-
   //On Press banner
   const bannerPress = (data) => {
     let item = {};
@@ -788,7 +765,6 @@ export default function Home({route, navigation}) {
     }
   };
 
-  console.log('dineInTypedineInTypedineInType', dineInType);
   const onVendorFilterSeletion = (selectedFilter) => {
     switch (selectedFilter?.id) {
       case 1:
@@ -937,8 +913,6 @@ export default function Home({route, navigation}) {
       });
     }
   };
-
-  console.log('appMainDataappMainData', appMainData);
 
   const onFindVendors = () => {
     let newAry = [];

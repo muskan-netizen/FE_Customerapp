@@ -1,21 +1,29 @@
 import BottomSheet from '@gorhom/bottom-sheet';
 import React from 'react';
 import {StyleSheet} from 'react-native';
+import colors from '../styles/colors';
 
 const BottomSheetModal = ({
-  children,
-  sheetRef,
-  minSnapPoint = 0,
-  maxSnapPoint = 0,
+  children = <></>,
+  sheetRef = null,
+  snapPoints = [0],
   index = 0,
   enableContentPanningGesture = false,
+  handleComponent = () => <></>,
+  backgroundStyle = {},
 }) => {
   return (
     <BottomSheet
       ref={sheetRef}
-      snapPoints={[minSnapPoint, maxSnapPoint]}
+      snapPoints={snapPoints}
       index={index}
-      enableContentPanningGesture={enableContentPanningGesture}>
+      enableContentPanningGesture={enableContentPanningGesture}
+      handleComponent={handleComponent}
+      detached={true}
+      backgroundStyle={{
+        backgroundColor: colors.blackOpacity30,
+        ...backgroundStyle,
+      }}>
       {children}
     </BottomSheet>
   );

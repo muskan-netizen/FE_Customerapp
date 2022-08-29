@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   Image,
   ScrollView,
@@ -20,6 +20,7 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
 import {
@@ -29,6 +30,7 @@ import {
 } from '../utils/helperFunctions';
 import TransparentButtonWithTxtAndIcon from './TransparentButtonWithTxtAndIcon';
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {Shadow} from 'react-native-shadow-2';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -172,17 +174,46 @@ const ChooseAddressModal = ({
     );
   };
 
+  const handleComponent = useCallback(() => {
+    return (
+      <Shadow
+        sides={['top']}
+        distance={2}
+        style={{
+          ...styles.handleShadowView,
+          backgroundColor: isDarkMode ? '#6C6C6C' : colors.white,
+        }}>
+        <View
+          style={{
+            ...styles.handleView,
+            backgroundColor: isDarkMode ? colors.white : colors.black,
+          }}
+        />
+      </Shadow>
+    );
+  }, []);
+
   if (isVisible) {
     return (
       <BottomSheet
         key={isVisible}
-        index={1}
-        snapPoints={[0, height / 1.8]}
+        index={0}
+        snapPoints={[height / 1.3]}
         activeOffsetY={[-1, 1]}
         failOffsetX={[-5, 5]}
+        enablePanDownToClose={true}
         animateOnMount={true}
+        // // handleIndicatorStyle={{
+        // //   backgroundColor: isDarkMode ? colors.white : colors.black,
+        // // }}
+        // handleStyle={{
+        //   backgroundColor: isDarkMode ? '#939393' : colors.white,
+        //   borderTopLeftRadius: moderateScale(15),
+        //   borderTopRightRadius: moderateScale(15),
+        // }}
+        handleComponent={handleComponent}
         onChange={(index) => {
-          if (index === 0) {
+          if (index === -1) {
             onClose();
           }
           playHapticEffect(hapticEffects.impactMedium);
@@ -191,23 +222,19 @@ const ChooseAddressModal = ({
           <BottomSheetScrollView
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
-            style={[
-              styles.modalMainViewContainer,
-              {
+            style={{
+              ...styles.modalMainViewContainer,
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.white,
+            }}>
+            <View
+              style={{
+                ...styles.modalMainViewContainer,
                 backgroundColor: isDarkMode
                   ? MyDarkTheme.colors.lightDark
                   : colors.white,
-              },
-            ]}>
-            <View
-              style={
-                isDarkMode
-                  ? [
-                      styles.modalMainViewContainer,
-                      {backgroundColor: MyDarkTheme.colors.lightDark},
-                    ]
-                  : styles.modalMainViewContainer
-              }>
+              }}>
               <View style={styles.selectAndAddesssView}>
                 <Text
                   numberOfLines={1}
@@ -302,9 +329,8 @@ export function stylesData({fontFamily}) {
     },
     modalMainViewContainer: {
       flex: 1,
-      backgroundColor: colors.white,
-      borderTopLeftRadius: 20,
-      borderTopRightRadius: 20,
+      // borderTopLeftRadius: 20,
+      // borderTopRightRadius: 20,
       // overflow: 'hidden',
     },
     selectAndAddesssView: {
@@ -330,6 +356,21 @@ export function stylesData({fontFamily}) {
       color: colors.textGreyD,
       fontFamily: fontFamily.bold,
       fontSize: textScale(16),
+    },
+    handleView: {
+      height: 6,
+      width: moderateScale(35),
+
+      borderRadius: moderateScale(8),
+    },
+    handleShadowView: {
+      borderRadius: 0,
+      borderTopLeftRadius: moderateScale(15),
+      borderTopRightRadius: moderateScale(15),
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: moderateScaleVertical(25),
+      width: width,
     },
   });
   return styles;

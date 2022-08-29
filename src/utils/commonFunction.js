@@ -48,7 +48,8 @@ const cameraHandler = async (data, option) => {
 
 const toFixed = (n, fixed) => {
   if (n > 0 && fixed > 0) {
-    return `${n}`.match(new RegExp(`^-?\\d+(?:\.\\d{0,${fixed}})?`))[0];
+    // return `${n}`.match(new RegExp(`^-?\\d+(?:\.\\d{0,${fixed}})?`))[0];
+    return n.toFixed(fixed);
   } else return n;
 };
 
@@ -59,7 +60,6 @@ const commaFormater = (num) => {
 };
 const currencyNumberFormatter = (number, digitAfterDecimal = 2) => {
   let newFormatedDecimalNumber = toFixed(number, digitAfterDecimal);
-
   return commaFormater(newFormatedDecimalNumber);
 };
 

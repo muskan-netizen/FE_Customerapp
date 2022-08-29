@@ -393,8 +393,8 @@ const shortCodes = {
   greenCab: '20d107',
   axxi: 'bc1119',
   pets: '8e0436',
-  getDress:'7d11ac',
-  shelf:'345974',
+  getDress: '7d11ac',
+  shelf: '345974',
 };
 
 const appIds = {

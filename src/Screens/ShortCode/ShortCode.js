@@ -40,8 +40,6 @@ const fs = RNFetchBlob.fs;
 export default function ShortCode({route, navigation}) {
   const shortCodeParam = route?.params?.shortCodeParam;
 
-  console.log(shortCodeParam, 'shortCodeParam>>>+++++++');
-
   const [state, setState] = useState({
     email: '',
     password: '',
@@ -2457,13 +2455,13 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.getDress:
+        case appIds.getDress:
           updateState({
             shortCode: shortCodes.getDress,
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.shelf:
+        case appIds.shelf:
           updateState({
             shortCode: shortCodes.shelf,
             isShortcodePrefilled: true,
@@ -2474,7 +2472,6 @@ export default function ShortCode({route, navigation}) {
   }, []);
 
   useEffect(() => {
-    console.log(shortCode, isShortcodePrefilled, 'fldkfslskdfk');
     if (shortCode && isShortcodePrefilled) {
       checkScreen();
     }

@@ -26,7 +26,6 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     availableBalanceText: {
       fontFamily: fontFamily.bold,
       fontSize: moderateScale(12),
-      color: colors.textGreyB,
     },
     availableBalanceValue: {
       fontFamily: fontFamily.bold,
@@ -121,21 +120,19 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       opacity: 0.7,
       color: isDarkMode ? MyDarkTheme.colors.text : colors.redB,
       fontFamily: fontFamily.medium,
-      fontSize: textScale(14),
+      fontSize: textScale(13),
       paddingHorizontal: 10,
       paddingTop: 0,
       paddingBottom: 0,
       textAlign: I18nManager.isRTL ? 'right' : 'left',
     },
     textInputView: {
-     
       flexDirection: 'row',
       height: moderateScaleVertical(49),
       color: colors.white,
       borderWidth: 1,
       borderRadius: 13,
-      borderColor: colors.borderLight,
-      borderBottomColor: isDarkMode
+      borderColor: isDarkMode
         ? MyDarkTheme.colors.text
         : colors.lightGreyBorder,
       paddingHorizontal: moderateScale(12),

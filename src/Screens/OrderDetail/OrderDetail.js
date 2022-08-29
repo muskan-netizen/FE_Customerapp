@@ -63,6 +63,10 @@ import stylesFun from './stylesCart';
 import {Calendar} from 'react-native-calendars';
 import Modal from 'react-native-modal';
 import GradientButton from '../../Components/GradientButton';
+import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
+import HeaderLoader from '../../Components/Loaders/HeaderLoader';
+import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
+import BannerLoader from '../../Components/Loaders/BannerLoader';
 
 const {height, width} = Dimensions.get('window');
 
@@ -91,6 +95,8 @@ export default function OrderDetail({navigation, route}) {
     [],
   );
   const [minimumDelayVendorDate, setMinimumDelayVendorDate] = useState(null);
+
+  const [orderDetailLoader, setOrderDetailLoader] = useState(true);
 
   const [state, setState] = useState({
     isLoading: true,
@@ -177,8 +183,6 @@ export default function OrderDetail({navigation, route}) {
     (state) => state.initBoot,
   );
 
-  console.log(driverStatus, 'driverStatusdriverStatusdriverStatus');
-
   const {preferences} = appData?.profile;
   let businessType = preferences?.business_type;
 
@@ -201,16 +205,6 @@ export default function OrderDetail({navigation, route}) {
       : Communications.text(number.toString());
   };
   const isFocused = useIsFocused();
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     updateState({ isLoading: true });
-  //     if (!!userData?.auth_token) {
-  //       // _getOrderDetailScreen();
-  //     } else {
-  //       showError(strings.UNAUTHORIZED_MESSAGE);
-  //     }
-  //   }, [currencies, languages, paramData]),
-  // );
 
   useInterval(
     () => {
@@ -277,6 +271,8 @@ export default function OrderDetail({navigation, route}) {
     ? trackingUrl.replace('/order/', '/order-details/')
     : null;
 
+  console.log(isLoading, 'isLoading....');
+
   /*********Get order detail screen********* */
   const _getOrderDetailScreen = () => {
     let data = {};
@@ -299,6 +295,7 @@ export default function OrderDetail({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        setOrderDetailLoader(false);
         console.log(res.data, 'order detail res===>>>>');
 
         if (
@@ -358,11 +355,7 @@ export default function OrderDetail({navigation, route}) {
               animate(lat, lng);
             }
           }
-          console.log(
-            driverStatus?.agent_location?.lat,
-            driverStatus?.agent_location?.long,
-            'driverStatus?.agent_location?.lat',
-          );
+
           if (!trackingUrl) {
             updateState({
               trackingUrl: res.data.vendors[0].dispatch_traking_url,
@@ -2564,7 +2557,6 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const onCenter = () => {
-    console.log('driverStatusdriverStatus', driverStatus);
     // return
     mapRef.current.fitToCoordinates(
       [
@@ -2591,8 +2583,6 @@ export default function OrderDetail({navigation, route}) {
       },
     );
   };
-
-  console.log('driverStatusdriverStatus', driverStatus);
 
   const acceptRejectDriverUpdation = (status) => {
     if (
@@ -3667,15 +3657,363 @@ export default function OrderDetail({navigation, route}) {
       });
   };
 
-  {
-    console.log(paramData?.from), 'param data';
+  if (isLoading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: colors.white,
+          alignItems: 'center',
+        }}>
+        <HeaderLoader
+          widthLeft={moderateScale(30)}
+          rectWidthLeft={moderateScale(30)}
+          heightLeft={moderateScaleVertical(30)}
+          rectHeightLeft={moderateScaleVertical(30)}
+          widthRight={moderateScale(200)}
+          rectWidthRight={moderateScale(200)}
+          heightRight={moderateScale(20)}
+          rectHeightRight={moderateScale(20)}
+          isRight={true}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            width: width - moderateScale(30),
+          }}
+          rightViewStyle={{
+            marginLeft: width / 5.5,
+          }}
+        />
+
+        <HeaderLoader
+          widthLeft={moderateScale(width / 1.2)}
+          rectWidthLeft={moderateScale(width / 1.2)}
+          heightLeft={moderateScaleVertical(140)}
+          rectHeightLeft={moderateScaleVertical(140)}
+          isRight={false}
+          rx={15}
+          ry={15}
+          viewStyles={{
+            marginTop: moderateScaleVertical(20),
+          }}
+        />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            alignSelf: 'flex-start',
+            marginVertical: moderateScaleVertical(10),
+            marginLeft: moderateScale(15),
+          }}>
+          <CircularProfileLoader isDesc={false} />
+          <View>
+            <HeaderLoader
+              widthLeft={moderateScale(130)}
+              rectWidthLeft={moderateScale(130)}
+              rectHeightLeft={moderateScaleVertical(20)}
+              isRight={false}
+              rx={4}
+              ry={4}
+            />
+            <HeaderLoader
+              widthLeft={moderateScale(70)}
+              rectWidthLeft={moderateScale(70)}
+              rectHeightLeft={moderateScaleVertical(20)}
+              isRight={false}
+              rx={4}
+              ry={4}
+            />
+          </View>
+        </View>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            alignSelf: 'flex-start',
+            marginLeft: moderateScale(15),
+            justifyContent: 'space-between',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+            }}>
+            <HeaderLoader
+              widthLeft={moderateScale(100)}
+              rectWidthLeft={moderateScale(100)}
+              heightLeft={moderateScaleVertical(100)}
+              rectHeightLeft={moderateScaleVertical(100)}
+              isRight={false}
+              rx={15}
+              ry={15}
+            />
+            <View>
+              <HeaderLoader
+                widthLeft={moderateScale(130)}
+                rectWidthLeft={moderateScale(130)}
+                rectHeightLeft={moderateScaleVertical(10)}
+                heightLeft={10}
+                isRight={false}
+                rx={4}
+                ry={4}
+              />
+              <HeaderLoader
+                widthLeft={moderateScale(70)}
+                rectWidthLeft={moderateScale(70)}
+                rectHeightLeft={moderateScaleVertical(10)}
+                viewStyles={{
+                  marginTop: moderateScaleVertical(10),
+                }}
+                heightLeft={10}
+                isRight={false}
+                rx={4}
+                ry={4}
+              />
+              <HeaderLoader
+                widthLeft={moderateScale(70)}
+                rectWidthLeft={moderateScale(70)}
+                rectHeightLeft={moderateScaleVertical(10)}
+                viewStyles={{
+                  marginTop: moderateScaleVertical(10),
+                }}
+                heightLeft={10}
+                isRight={false}
+                rx={4}
+                ry={4}
+              />
+              <HeaderLoader
+                widthLeft={moderateScale(70)}
+                rectWidthLeft={moderateScale(70)}
+                rectHeightLeft={moderateScaleVertical(10)}
+                heightLeft={10}
+                viewStyles={{
+                  marginTop: moderateScaleVertical(10),
+                }}
+                isRight={false}
+                rx={4}
+                ry={4}
+              />
+              <HeaderLoader
+                widthLeft={moderateScale(70)}
+                rectWidthLeft={moderateScale(70)}
+                rectHeightLeft={moderateScaleVertical(10)}
+                heightLeft={10}
+                viewStyles={{
+                  marginTop: moderateScaleVertical(10),
+                }}
+                isRight={false}
+                rx={4}
+                ry={4}
+              />
+            </View>
+          </View>
+          <HeaderLoader
+            widthLeft={moderateScale(20)}
+            rectWidthLeft={moderateScale(20)}
+            heightLeft={moderateScaleVertical(20)}
+            rectHeightLeft={moderateScaleVertical(20)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+        </View>
+        <HeaderLoader
+          widthLeft={moderateScale(80)}
+          rectWidthLeft={moderateScale(80)}
+          heightLeft={moderateScaleVertical(20)}
+          rectHeightLeft={moderateScaleVertical(20)}
+          widthRight={moderateScale(40)}
+          rectWidthRight={moderateScale(40)}
+          heightRight={moderateScale(20)}
+          rectHeightRight={moderateScale(20)}
+          isRight={true}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            alignItems: 'center',
+            width: width - moderateScale(30),
+            marginTop: moderateScaleVertical(20),
+          }}
+          rightViewStyle={{
+            marginLeft: width / 5.5,
+          }}
+        />
+        <HeaderLoader
+          widthLeft={moderateScale(80)}
+          rectWidthLeft={moderateScale(80)}
+          heightLeft={moderateScaleVertical(20)}
+          rectHeightLeft={moderateScaleVertical(20)}
+          widthRight={moderateScale(40)}
+          rectWidthRight={moderateScale(40)}
+          heightRight={moderateScale(20)}
+          rectHeightRight={moderateScale(20)}
+          isRight={true}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            alignItems: 'center',
+            width: width - moderateScale(30),
+            marginTop: moderateScaleVertical(10),
+          }}
+          rightViewStyle={{
+            marginLeft: width / 5.5,
+          }}
+        />
+        <HeaderLoader
+          widthLeft={moderateScale(80)}
+          rectWidthLeft={moderateScale(80)}
+          heightLeft={moderateScaleVertical(20)}
+          rectHeightLeft={moderateScaleVertical(20)}
+          isRight={false}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            alignSelf: 'flex-start',
+            marginTop: moderateScaleVertical(40),
+          }}
+        />
+
+        <View
+          style={{
+            flexDirection: 'row',
+            alignSelf: 'flex-start',
+
+            justifyContent: 'space-between',
+            marginTop: moderateScaleVertical(10),
+          }}>
+          <HeaderLoader
+            widthLeft={moderateScale(70)}
+            rectWidthLeft={moderateScale(70)}
+            heightLeft={moderateScaleVertical(70)}
+            rectHeightLeft={moderateScaleVertical(70)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+
+          <HeaderLoader
+            widthLeft={moderateScale(170)}
+            rectWidthLeft={moderateScale(170)}
+            rectHeightLeft={moderateScaleVertical(10)}
+            heightLeft={10}
+            isRight={false}
+            rx={4}
+            ry={4}
+            viewStyles={{
+              marginTop: moderateScaleVertical(20),
+            }}
+          />
+        </View>
+
+        <HeaderLoader
+          widthLeft={moderateScale(80)}
+          rectWidthLeft={moderateScale(80)}
+          heightLeft={moderateScaleVertical(20)}
+          rectHeightLeft={moderateScaleVertical(20)}
+          widthRight={moderateScale(40)}
+          rectWidthRight={moderateScale(40)}
+          heightRight={moderateScale(20)}
+          rectHeightRight={moderateScale(20)}
+          isRight={true}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            alignItems: 'center',
+            width: width - moderateScale(30),
+            marginTop: moderateScaleVertical(10),
+          }}
+          rightViewStyle={{
+            marginLeft: width / 5.5,
+          }}
+        />
+        <HeaderLoader
+          widthLeft={moderateScale(80)}
+          rectWidthLeft={moderateScale(80)}
+          heightLeft={moderateScaleVertical(20)}
+          rectHeightLeft={moderateScaleVertical(20)}
+          widthRight={moderateScale(40)}
+          rectWidthRight={moderateScale(40)}
+          heightRight={moderateScale(20)}
+          rectHeightRight={moderateScale(20)}
+          isRight={true}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            alignItems: 'center',
+            width: width - moderateScale(30),
+            marginTop: moderateScaleVertical(10),
+          }}
+          rightViewStyle={{
+            marginLeft: width / 5.5,
+          }}
+        />
+        <HeaderLoader
+          widthLeft={moderateScale(80)}
+          rectWidthLeft={moderateScale(80)}
+          heightLeft={moderateScaleVertical(20)}
+          rectHeightLeft={moderateScaleVertical(20)}
+          widthRight={moderateScale(40)}
+          rectWidthRight={moderateScale(40)}
+          heightRight={moderateScale(20)}
+          rectHeightRight={moderateScale(20)}
+          isRight={true}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            alignItems: 'center',
+            width: width - moderateScale(30),
+            marginTop: moderateScaleVertical(10),
+          }}
+          rightViewStyle={{
+            marginLeft: width / 5.5,
+          }}
+        />
+        <HeaderLoader
+          widthLeft={moderateScale(80)}
+          rectWidthLeft={moderateScale(80)}
+          heightLeft={moderateScaleVertical(20)}
+          rectHeightLeft={moderateScaleVertical(20)}
+          isRight={false}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            alignItems: 'center',
+            width: width - moderateScale(30),
+            marginTop: moderateScaleVertical(40),
+          }}
+        />
+        <HeaderLoader
+          widthLeft={moderateScale(80)}
+          rectWidthLeft={moderateScale(80)}
+          heightLeft={moderateScaleVertical(20)}
+          rectHeightLeft={moderateScaleVertical(20)}
+          widthRight={moderateScale(40)}
+          rectWidthRight={moderateScale(40)}
+          heightRight={moderateScale(20)}
+          rectHeightRight={moderateScale(20)}
+          isRight={true}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            alignItems: 'center',
+            width: width - moderateScale(30),
+            marginTop: moderateScaleVertical(10),
+          }}
+          rightViewStyle={{
+            marginLeft: width / 5.5,
+          }}
+        />
+      </View>
+    );
   }
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
-      source={loaderOne}
-      isLoadingB={isLoading}>
+      source={loaderOne}>
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2

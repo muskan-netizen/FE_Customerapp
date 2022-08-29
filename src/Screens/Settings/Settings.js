@@ -1,5 +1,5 @@
-import { useFocusEffect } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
 import {
   I18nManager,
   Image,
@@ -11,17 +11,17 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dark-mode';
 import DropDownPicker from 'react-native-dropdown-picker';
-import RNRestart from 'react-native-restart'; // Import package from node modules
+import RNRestart from 'react-native-restart';
 import LinearGradient from 'react-native-linear-gradient';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
 import Header from '../../Components/Header';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
-import strings, { changeLaguage } from '../../constants/lang/index';
+import strings, {changeLaguage} from '../../constants/lang/index';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
@@ -31,13 +31,13 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
-import { setItem } from '../../utils/utils';
+import {MyDarkTheme} from '../../styles/theme';
+import {setItem} from '../../utils/utils';
 import stylesFunc from './styles';
 import DeviceInfo from 'react-native-device-info';
-import { API_BASE_URL } from '../../config/urls';
+import {API_BASE_URL} from '../../config/urls';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
+import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
 import BackgroundService from 'react-native-background-actions';
 import {
   hapticEffects,
@@ -47,8 +47,7 @@ import {
 } from '../../utils/helperFunctions';
 import navigationStrings from '../../navigation/navigationStrings';
 
-
-export default function Settings({ route, navigation }) {
+export default function Settings({route, navigation}) {
   // const appData = useSelector(state => state?.initBoot?.appData);
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -56,10 +55,10 @@ export default function Settings({ route, navigation }) {
   const userData = useSelector((state) => state.auth.userData);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { currencies, appData, languages, appStyle, themeColors } = useSelector(
+  const {currencies, appData, languages, appStyle, themeColors} = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(toggleTheme, "togletheme ")
+  console.log(toggleTheme, 'togletheme ');
   console.log(currencies, 'lang');
   const [state, setState] = useState({
     isLoading: false,
@@ -96,8 +95,8 @@ export default function Settings({ route, navigation }) {
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ fontFamily, themeColors });
-  const commonStyles = commonStylesFunc({ fontFamily });
+  const styles = stylesFunc({fontFamily, themeColors});
+  const commonStyles = commonStylesFunc({fontFamily});
 
   useFocusEffect(
     React.useCallback(() => {
@@ -113,27 +112,27 @@ export default function Settings({ route, navigation }) {
       isOn: toggleTheme,
       selectedThemeOption: theme
         ? {
-          id: 2,
-          image: imagePath.dark,
-          selectedImage: imagePath.done,
-          type: 'dark',
-        }
+            id: 2,
+            image: imagePath.dark,
+            selectedImage: imagePath.done,
+            type: 'dark',
+          }
         : {
-          id: 1,
-          image: imagePath.light,
-          selectedImage: imagePath.done,
-          type: 'light',
-        },
+            id: 1,
+            image: imagePath.light,
+            selectedImage: imagePath.done,
+            type: 'light',
+          },
     });
   }, [currencies, languages]);
   //update state
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   //Update currency
   const updateCurrency = (item) => {
@@ -145,9 +144,9 @@ export default function Settings({ route, navigation }) {
         primary_currency: data,
       };
       setItem('setPrimaryCurrent', currenciesData);
-      updateState({ isLoading: true });
+      updateState({isLoading: true});
       setTimeout(() => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
         actions.updateCurrency(data);
       }, 1000);
     }
@@ -155,7 +154,7 @@ export default function Settings({ route, navigation }) {
 
   //Update language
   const updateLanguage = (item) => {
-    console.log(item, "itemmmm")
+    console.log(item, 'itemmmm');
     const data = languages.all_languages.filter((x) => x.id == item.id)[0];
     // console.log(data, "setLang")
     if (data.sort_code !== languages.primary_language.sort_code) {
@@ -167,7 +166,7 @@ export default function Settings({ route, navigation }) {
       // updateState({isLoading: true});
       setItem('setPrimaryLanguage', languagesData);
       setTimeout(() => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
         actions.updateLanguage(data);
         onSubmitLang(data.sort_code, languagesData);
       }, 1000);
@@ -199,7 +198,7 @@ export default function Settings({ route, navigation }) {
             RNRestart.Restart();
           }
           BluetoothManager.disconnect(JSON.parse(res).boundAddress).then(
-            (s) => { },
+            (s) => {},
           );
         } else {
           if (lang === 'ar') {
@@ -265,8 +264,8 @@ export default function Settings({ route, navigation }) {
       selectedThemeOption && selectedThemeOption?.id == item?.id
         ? null
         : updateState({
-          selectedThemeOption: item,
-        });
+            selectedThemeOption: item,
+          });
     }
   };
 
@@ -274,8 +273,6 @@ export default function Settings({ route, navigation }) {
   //   API_BASE_URL
   //   console.log("API_BASE_URL")
   // },[])
-
-
 
   const userlogout = () => {
     if (!!userData?.auth_token) {
@@ -292,12 +289,12 @@ export default function Settings({ route, navigation }) {
             actions.cartItemQty('');
             actions.saveAddress('');
             actions.addSearchResults('clear');
-            actions.setAppSessionData('on_login')
+            actions.setAppSessionData('on_login');
           },
         },
       ]);
     } else {
-      actions.setAppSessionData('on_login')
+      actions.setAppSessionData('on_login');
     }
   };
 
@@ -307,16 +304,20 @@ export default function Settings({ route, navigation }) {
         // onPress={()=>actions.isVendorNotification(true)}
         onPress={userlogout}
         style={styles.touchAbleLoginVIew}>
-        <Text style={{...styles.loginLogoutText,  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,}}>
+        <Text
+          style={{
+            ...styles.loginLogoutText,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          }}>
           {!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
         </Text>
         <Image
           source={imagePath.rightBlue}
-          style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
+          style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
         />
       </TouchableOpacity>
-    )
-  }
+    );
+  };
 
   const onDeleteAccount = () => {
     if (!!userData?.auth_token) {
@@ -332,9 +333,9 @@ export default function Settings({ route, navigation }) {
         },
       ]);
     } else {
-      actions.setAppSessionData('on_login')
+      actions.setAppSessionData('on_login');
     }
-  }
+  };
 
   const deleleUserAccount = async () => {
     try {
@@ -344,18 +345,19 @@ export default function Settings({ route, navigation }) {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
-        })
-      console.log("delete user account res", res)
+        },
+      );
+      console.log('delete user account res', res);
       actions.userLogout();
       actions.cartItemQty('');
       actions.saveAddress('');
       actions.addSearchResults('clear');
-      actions.setAppSessionData('on_login')
+      actions.setAppSessionData('on_login');
     } catch (error) {
-      console.log('erro raised', error)
-      showError(error?.message)
+      console.log('erro raised', error);
+      showError(error?.message);
     }
-  }
+  };
 
   return (
     <WrapperContainer
@@ -370,23 +372,21 @@ export default function Settings({ route, navigation }) {
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-              ? imagePath.icBackb
-              : imagePath.back
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={strings.SETTINGS}
         // rightIcon={imagePath.cartShop}
         headerStyle={
           isDarkMode
-            ? { backgroundColor: MyDarkTheme.colors.background }
-            : { backgroundColor: colors.white }
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
         }
-
-
         customRight={logoutView}
       />
 
-      <View style={{ ...commonStyles.headerTopLine }} />
-      <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <View style={{...commonStyles.headerTopLine}} />
+      <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
         <View
           style={{
             marginHorizontal: moderateScale(20),
@@ -403,7 +403,7 @@ export default function Settings({ route, navigation }) {
             {strings.APPEARANCE}
           </Text>
         </View>
-        <View style={{ height: 10 }} />
+        <View style={{height: 10}} />
 
         <View
           style={{
@@ -479,9 +479,9 @@ export default function Settings({ route, navigation }) {
               style={
                 isDarkMode
                   ? [
-                    styles.darkAppearanceTextStyle,
-                    { color: MyDarkTheme.colors.text },
-                  ]
+                      styles.darkAppearanceTextStyle,
+                      {color: MyDarkTheme.colors.text},
+                    ]
                   : styles.darkAppearanceTextStyle
               }>
               {strings.AUTOMATIC}
@@ -496,9 +496,9 @@ export default function Settings({ route, navigation }) {
               animationSpeed={400}
             />
           </View>
-          <View style={{ height: 10 }} />
+          <View style={{height: 10}} />
         </View>
-        <View style={{ height: moderateScaleVertical(30) }} />
+        <View style={{height: moderateScaleVertical(30)}} />
         {Platform.OS === 'android' ? (
           <LinearGradient
             style={{
@@ -543,7 +543,7 @@ export default function Settings({ route, navigation }) {
                 appCurrencies?.primary_currency?.label ||
                 ''
               }
-              containerStyle={{ height: 40, marginTop: moderateScaleVertical(5) }}
+              containerStyle={{height: 40, marginTop: moderateScaleVertical(5)}}
               style={{
                 backgroundColor: isDarkMode
                   ? MyDarkTheme.colors.lightDark
@@ -671,7 +671,7 @@ export default function Settings({ route, navigation }) {
                 appCurrencies?.primary_currency?.label ||
                 ''
               }
-              containerStyle={{ height: 40, marginTop: moderateScaleVertical(5) }}
+              containerStyle={{height: 40, marginTop: moderateScaleVertical(5)}}
               style={{
                 backgroundColor: isDarkMode
                   ? MyDarkTheme.colors.lightDark
@@ -764,27 +764,30 @@ export default function Settings({ route, navigation }) {
             alignSelf: 'center',
             marginBottom: moderateScaleVertical(90),
             marginTop: moderateScaleVertical(24),
-            alignItems: 'center'
+            alignItems: 'center',
           }}>
           <Text
             style={{
               ...commonStyles.regularFont11,
               color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
             }}>
-            App Version {`${DeviceInfo.getVersion()}`} {`(${DeviceInfo.getBuildNumber()})`} {API_BASE_URL == 'https://api.rostaging.com/api/v1' ? 'S' : ''}
+            App Version {`${DeviceInfo.getVersion()}`}{' '}
+            {`(${DeviceInfo.getBuildNumber()})`}{' '}
+            {API_BASE_URL == 'https://api.rostaging.com/api/v1' ? 'S' : ''}
           </Text>
 
-      {!!userData?.auth_token ?    <Text
-            onPress={onDeleteAccount}
-            style={{
-              ...commonStyles.regularFont11,
-              color: colors.redB,
-              marginTop: moderateScaleVertical(4)
-            }}>
-            {strings.DELETE_ACCOUNT}
-          </Text> : null}
+          {!!userData?.auth_token ? (
+            <Text
+              onPress={onDeleteAccount}
+              style={{
+                ...commonStyles.regularFont11,
+                color: colors.redB,
+                marginTop: moderateScaleVertical(4),
+              }}>
+              {strings.DELETE_ACCOUNT}
+            </Text>
+          ) : null}
         </View>
-       
       </ScrollView>
     </WrapperContainer>
   );

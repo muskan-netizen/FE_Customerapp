@@ -136,7 +136,6 @@ export default function TaxiHomeScreen({route, navigation}) {
     ]);
   };
 
-  console.log('appMainDataappMainData', appMainData);
   const clearCart = (location) => {
     updateLatLang(location);
     actions
@@ -339,7 +338,7 @@ export default function TaxiHomeScreen({route, navigation}) {
 
   //onPress Category
   const onPressCategory = (item) => {
-    console.log(item,"item>>>>>item")
+    console.log(item, 'item>>>>>item');
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -437,8 +436,6 @@ export default function TaxiHomeScreen({route, navigation}) {
       }
     }
   };
-
-  console.log('appMainDataappMainData', appMainData);
 
   //Reloads the screen
   const initApiHit = () => {

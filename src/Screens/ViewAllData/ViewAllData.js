@@ -269,8 +269,6 @@ export default function ViewAllData({route, navigation}) {
     return <View style={{height: moderateScale(100)}}></View>;
   };
 
-  console.log(location, 'location>>>>location');
-
   return (
     <WrapperContainer
       bgColor={

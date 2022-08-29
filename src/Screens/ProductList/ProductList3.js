@@ -1306,7 +1306,7 @@ export default function Products({route, navigation}) {
         })
         .catch((error) => errorMethodSecond(error, [], item, section, inx));
     },
-    [cloneSectionList, productListData, selectedCartItem],
+    [cloneSectionList, productListData, selectedCartItem, categoryInfo],
   );
 
   const checkIsCustomize = useCallback(
@@ -3109,12 +3109,11 @@ export default function Products({route, navigation}) {
 
   const bottomSheetHeader = () => {
     return (
-      <View
-        style={{
-          height: 0,
-          backgroundColor: 'transparent',
-        }}
-      />
+      <TouchableOpacity
+        onPress={() => setIsVisibleModal(false)}
+        style={{alignSelf: 'center', marginBottom: moderateScaleVertical(16)}}>
+        <Image source={imagePath.icClose4} />
+      </TouchableOpacity>
     );
   };
 
@@ -3210,18 +3209,6 @@ export default function Products({route, navigation}) {
     categoryInfo?.desc ||
     (!!categoryInfo?.translation &&
       categoryInfo?.translation[0]?.meta_description);
-
-  const backgroundComponent = () => {
-    return (
-      <TouchableOpacity
-        onPress={() => setIsVisibleModal(false)}
-        style={{alignSelf: 'center', marginBottom: moderateScaleVertical(16)}}>
-        <Image source={imagePath.icClose4} />
-      </TouchableOpacity>
-    );
-  };
-
-  console.log('productListDataproductListData', productListData);
 
   const appendData = async (section) => {
     console.log('section', section);
@@ -3718,20 +3705,20 @@ export default function Products({route, navigation}) {
                   <BottomSheet
                     ref={bottomSheetRef}
                     index={1}
-                    snapPoints={[0, height / 1.5, height / 1.25]}
+                    snapPoints={[height / 1.5, height / 1.25]}
                     enablePanDownToClose
                     activeOffsetY={[-1, 1]}
                     failOffsetX={[-5, 5]}
                     animateOnMount={true}
                     handleComponent={bottomSheetHeader}
                     onChange={(index) => {
-                      if (index == 0) {
+                      if (index == -1) {
                         onCloseModal();
                       }
                       // playHapticEffect(hapticEffects.impactMedium);
                     }}
                     backdropComponent={() => <View style={{height: 0}} />}
-                    backgroundComponent={backgroundComponent}>
+                    backgroundComponent={() => <></>}>
                     <BottomSheetScrollView
                       keyboardShouldPersistTaps="handled"
                       showsVerticalScrollIndicator={false}

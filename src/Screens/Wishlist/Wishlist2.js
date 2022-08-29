@@ -11,7 +11,10 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import {moderateScale} from '../../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+} from '../../styles/responsiveSize';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
@@ -20,46 +23,43 @@ import {MyDarkTheme} from '../../styles/theme';
 import WishlistCard from '../../Components/WishlistCard';
 
 export default function Wishlist2({navigation}) {
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const {
+    appData,
+    appStyle,
+    currencies,
+    languages,
+    themeColors,
+    themeColor,
+    themeToggle,
+  } = useSelector((state) => state?.initBoot);
+  const {userData} = useSelector((state) => state?.auth);
+
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const [state, setState] = useState({
     isLoading: false,
     isRefreshing: false,
     wishlistArray: [],
-    limit: 4,
+    limit: 10,
     pageNo: 1,
+    isHitApi: true,
   });
-  const {isLoading, limit, pageNo, isRefreshing, wishlistArray} = state;
+  const {isLoading, limit, pageNo, isRefreshing, wishlistArray, isHitApi} =
+    state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const userData = useSelector((state) => state?.auth?.userData);
 
-  const {appData, appStyle, currencies, languages, themeColors} = useSelector(
-    (state) => state?.initBoot,
-  );
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      updateState({pageNo: 1, limit: 4});
-      getAllWishListData();
-    });
-    return unsubscribe;
-  }, [navigation]);
-
   const getAllWishListData = () => {
-    if (!!userData?.auth_token) {
-      getAllWishlistItems();
-    } else {
-      // showError(strings.UNAUTHORIZED_MESSAGE);
-    }
+    getAllWishlistItems();
   };
 
   useEffect(() => {
-    getAllWishListData();
+    if (isHitApi) {
+      getAllWishListData();
+    }
   }, [pageNo, isRefreshing]);
 
   /*  GET ALL WISHLISTED ITEMS API FUNCTION  */
@@ -81,8 +81,8 @@ export default function Wishlist2({navigation}) {
           pageNo == 1 ? res.data.data : [...wishlistArray, ...res.data.data];
         updateState({
           isLoading: false,
-
           isRefreshing: false,
+          isHitApi: res.data.data.length == 0 ? false : true,
           wishlistArray:
             newArray && newArray.length
               ? newArray.map((i, inx) => {
@@ -144,12 +144,6 @@ export default function Wishlist2({navigation}) {
         data={item.product}
         onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item.product)}
       />
-      // <ProductCard
-      //   data={item.product}
-      //   onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item.product)}
-      //   onAddtoWishlist={() => _onAddtoWishlist(item.product)}
-      //   addToCart={() => _addToCart(item)}
-      // />
     );
   };
 
@@ -192,39 +186,37 @@ export default function Wishlist2({navigation}) {
         }
       />
       <View style={{...commonStyles.headerTopLine}} />
-      <FlatList
-        data={wishlistArray}
-        renderItem={renderProduct}
-        keyExtractor={(item, index) => String(index)}
-        ListHeaderComponent={
-          <View style={{height: !wishlistArray.length > 0 ? 20 : 0}} />
-        }
-        keyboardShouldPersistTaps="always"
-        // numColumns={2}
-        showsVerticalScrollIndicator={false}
-        // style={{ flex: 1 }}
-        contentContainerStyle={{
-          flexGrow: 1,
-        }}
-        // ItemSeparatorComponent={() => <View style={{ height: 1 }} />}
-        // columnWrapperStyle={{
-        //   justifyContent: 'space-between',
-        //   marginHorizontal: moderateScale(14),
-        // }}
-        refreshing={isRefreshing}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={handleRefresh}
-            tintColor={themeColors.primary_color}
-            // titleColor="#fff"
-          />
-        }
-        onEndReached={onEndReachedDelayed}
-        onEndReachedThreshold={0.009}
-        ListFooterComponent={() => <View style={{height: 20}} />}
-        ListEmptyComponent={<ListEmptyProduct isLoading={isLoading} />}
-      />
+      <View
+        style={{
+          flex: 1,
+          paddingBottom: moderateScaleVertical(70),
+        }}>
+        <FlatList
+          data={wishlistArray}
+          renderItem={renderProduct}
+          keyExtractor={(item, index) => String(index)}
+          ListHeaderComponent={
+            <View style={{height: !wishlistArray.length > 0 ? 20 : 0}} />
+          }
+          keyboardShouldPersistTaps="always"
+          showsVerticalScrollIndicator={false}
+          refreshing={isRefreshing}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              tintColor={themeColors.primary_color}
+            />
+          }
+          onEndReachedThreshold={0.5}
+          onEndReached={onEndReached}
+          initialNumToRender={6}
+          ListFooterComponent={() => <View style={{height: 20}} />}
+          ListEmptyComponent={
+            isLoading ? <ListEmptyProduct isLoading={isLoading} /> : null
+          }
+        />
+      </View>
     </WrapperContainer>
   );
 }

@@ -91,9 +91,7 @@ import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
 import LottieView from 'lottie-react-native';
 
 export default function PickupTaxiOrderDetail({navigation, route}) {
-  const {themeColor, themeToggle} = useSelector(
-    (state) => state?.initBoot,
-  );
+  const {themeColor, themeToggle} = useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const paramData = route?.params;
@@ -814,13 +812,15 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         });
         showSuccess(response?.message);
         {
-          paramData?.keyValue ? navigation.goBack() : navigation.navigate(navigationStrings.HOMESTACK);
+          paramData?.keyValue
+            ? navigation.goBack()
+            : navigation.navigate(navigationStrings.HOMESTACK);
         }
       })
       .catch(errorMethod);
   };
 
-  console.log(paramData,"paramData>>")
+  console.log(paramData, 'paramData>>');
 
   let subscription_percent =
     (orderFullDetail?.order_details?.order_detail?.subscription_discount /
@@ -897,7 +897,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         </View>
 
         <View style={{flex: 1}}>
-          
           {!isLoading && !!tasks?.length > 0 && (
             <MapView
               provider={PROVIDER_GOOGLE} // remove if not using Google Maps
@@ -1015,7 +1014,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
           index={0}
           snapPoints={[height / 3.4, height]}
           animateOnMount={true}
-          // onChange={(inx) => updateState({ hideShowBack: inx })}
           onChange={() => playHapticEffect(hapticEffects.impactMedium)}
           handleComponent={bottomSheetHeader}>
           <BottomSheetScrollView

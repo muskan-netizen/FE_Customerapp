@@ -51,7 +51,6 @@ const TaxiBannerHome = ({
     setActiveState(index);
   };
 
-  console.log(appStyle, 'appStyleappStyle>>>>');
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   const renderCarousel = (image) => (

@@ -1,11 +1,13 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, isEmpty, set} from 'lodash';
+import {handleCardAction, StripeProvider} from '@stripe/stripe-react-native';
+import {PayWithFlutterwave} from 'flutterwave-react-native';
+import {cloneDeep, isEmpty} from 'lodash';
 import moment from 'moment';
 import React, {Fragment, useCallback, useEffect, useRef, useState} from 'react';
 import {
   Alert,
   Animated,
-  Dimensions,
+  BackHandler,
   FlatList,
   I18nManager,
   Image,
@@ -18,19 +20,18 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  TouchableWithoutFeedback,
-  BackHandler,
 } from 'react-native';
+import ActionSheet from 'react-native-actionsheet';
 import * as Animatable from 'react-native-animatable';
 import {Calendar} from 'react-native-calendars';
 import {useDarkMode} from 'react-native-dark-mode';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import DocumentPicker from 'react-native-document-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import * as RNLocalize from 'react-native-localize';
 import Modal from 'react-native-modal';
 import ModalDropdown from 'react-native-modal-dropdown';
@@ -54,22 +55,23 @@ import WishlistCard from '../../Components/WishlistCard';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
-import Vi from '../../constants/lang/vi';
+import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {hitSlopProp} from '../../styles/commonStyles';
-import staticStrings from '../../constants/staticStrings';
 import {
   height,
   moderateScale,
   moderateScaleVertical,
-  StatusBarHeight,
   textScale,
   width,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {
+  cameraHandler,
+  currencyNumberFormatter,
+} from '../../utils/commonFunction';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {
   getImageUrl,
@@ -79,27 +81,11 @@ import {
   showSuccess,
   timeInLocalLangauge,
 } from '../../utils/helperFunctions';
+import {generateTransactionRef, payWithCard} from '../../utils/paystackMethod';
+import {androidCameraPermission} from '../../utils/permissions';
 import {getItem, removeItem, setItem} from '../../utils/utils';
 import stylesFun from './styles';
-import {
-  CardField,
-  createToken,
-  initStripe,
-  StripeProvider,
-  handleCardAction,
-  createPaymentMethod,
-  confirmPayment,
-} from '@stripe/stripe-react-native';
-import {cameraHandler} from '../../utils/commonFunction';
-import ActionSheet from 'react-native-actionsheet';
-import {androidCameraPermission} from '../../utils/permissions';
-import DocumentPicker from 'react-native-document-picker';
-import {generateTransactionRef, payWithCard} from '../../utils/paystackMethod';
-import {PayWithFlutterwave} from 'flutterwave-react-native';
 
-import {FlutterwaveInit} from 'flutterwave-react-native';
-import {setRedirection} from '../../redux/actions/auth';
-import ImagePicker from 'react-native-image-crop-picker';
 import BottomModal from '../../Components/BottomModal';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 
@@ -243,8 +229,8 @@ function Cart({navigation, route}) {
   } = useSelector((state) => state?.initBoot);
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
 
   const {preferences} = appData?.profile;
 
@@ -840,8 +826,8 @@ function Cart({navigation, route}) {
       }, 200);
     }
   };
-  //flutter wave
 
+  //flutter wave
   const checkPaymentOptions = (res) => {
     updateState({placeLoader: true});
 
@@ -3717,7 +3703,7 @@ function Cart({navigation, route}) {
               : colors.greyNew,
           }}
           placeholderTextColor={
-            isDarkMode ? colors.textGreyB : colors.textGreyB
+            isDarkMode ? colors.whiteOpacity77 : colors.textGreyB
           }
           placeholder={strings.SPECIAL_INSTRUCTION}
           returnKeyType={'next'}
@@ -4518,7 +4504,7 @@ function Cart({navigation, route}) {
               style={{
                 ...styles.paymentMainView,
                 backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.background
+                  ? MyDarkTheme.colors.lightDark
                   : colors.greyNew,
               }}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -4716,11 +4702,6 @@ function Cart({navigation, route}) {
     if (!!vendorAddress) {
       return (value = strings.HOME_1);
     }
-    // vendorAddress
-    // ? strings.HOME_1
-    // : selectedAddressData.type
-    //   ? strings.HOME
-    //   : strings.ADD_ADDRESS
     switch (data?.type) {
       case 1:
         value = strings.HOME;
@@ -5234,6 +5215,7 @@ function Cart({navigation, route}) {
             rectWidthLeft={moderateScale(100)}
             heightLeft={15}
             rectHeightLeft={15}
+            isRight={false}
             rx={5}
             ry={5}
             viewStyles={{

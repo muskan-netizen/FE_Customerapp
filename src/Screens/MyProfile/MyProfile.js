@@ -68,7 +68,6 @@ export default function MyProfile({route, navigation}) {
   const paramData = route?.params;
   const appData = useSelector((state) => state?.initBoot?.appData);
   const userData = useSelector((state) => state?.auth?.userData);
-  console.log(userData, 'userData>>');
   const [state, setState] = useState({
     currentPassword: '',
     newPassword: '',

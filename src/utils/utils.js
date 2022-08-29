@@ -106,7 +106,6 @@ export async function apiReq(
       // cancelToken:source.token
     };
 
-    console.log(headers, 'headersheadersheaders');
     if (method === 'get' || method === 'delete') {
       data = {
         ...requestOptions,
@@ -115,8 +114,8 @@ export async function apiReq(
       };
     }
 
-    console.log(headers, 'headersheaders');
-    console.log(data, 'datadata');
+    console.log('header sending--->', headers);
+    console.log('data sending ---->', data);
     //
     axios[method](endPoint, data, {headers})
       .then((result) => {

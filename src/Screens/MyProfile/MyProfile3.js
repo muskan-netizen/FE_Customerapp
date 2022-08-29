@@ -1,22 +1,25 @@
 import {useFocusEffect} from '@react-navigation/native';
+import codes from 'country-calling-code';
 import {cloneDeep, isEmpty} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   Image,
   ScrollView,
   Text,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  TouchableOpacity,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import {useDarkMode} from 'react-native-dark-mode';
+import DeviceCountry from 'react-native-device-country';
 import DocumentPicker from 'react-native-document-picker';
 import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
+import AddressBottomSheet from '../../Components/AddressBottomSheet';
 import AddressModal3 from '../../Components/AddressModal3';
-import BorderTextInput from '../../Components/BorderTextInput';
+import BottomSheetModal from '../../Components/BottomSheetModal';
 import CustomTopTabBar from '../../Components/CustomTopTabBar';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
@@ -48,14 +51,6 @@ import {
 import {androidCameraPermission} from '../../utils/permissions';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
-import codes from 'country-calling-code';
-import * as RNLocalize from 'react-native-localize';
-import DeviceCountry, {
-  TYPE_ANY,
-  TYPE_TELEPHONY,
-  TYPE_CONFIGURATION,
-} from 'react-native-device-country';
-import {setPrimaryAddress} from '../../redux/actions/home';
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
@@ -77,14 +72,13 @@ export default function MyProfile3({route, navigation}) {
   const {
     languages,
     themeColors,
-    themeLayouts,
     appStyle,
     themeColor,
     themeToggle,
     appData,
     currencies,
   } = useSelector((state) => state?.initBoot);
-  const userData = useSelector((state) => state?.auth?.userData);
+  const {userData} = useSelector((state) => state?.auth);
 
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
@@ -179,6 +173,9 @@ export default function MyProfile3({route, navigation}) {
   };
   useFocusEffect(
     React.useCallback(() => {
+      // updateState({
+      //   isLoading: true,
+      // });
       getAllAddress();
       if (userData?.auth_token) {
         getUserProfileData();
@@ -202,9 +199,7 @@ export default function MyProfile3({route, navigation}) {
       .then((res) => {
         actions.updateProfile({...userData, ...res?.data});
       })
-      .catch((err) => {
-        console.log(err, 'err>>>>>');
-      });
+      .catch(errorMethod);
   };
 
   const getUserDocs = () => {
@@ -375,18 +370,24 @@ export default function MyProfile3({route, navigation}) {
   };
 
   const errorMethod = (error) => {
-    console.log(error, 'error>>>');
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    console.log(error, 'in error method...');
+    updateState({
+      isLoading: false,
+      isLoadingB: false,
+      isRefreshing: false,
+      isVisible: false,
+      selectViaMap: false,
+    });
     showError(error?.message || error?.error);
   };
 
   const addUpdateLocation = (childData) => {
-    //setModalVisible(false);
-
+    updateState({
+      selectViaMap: false,
+      isLoading: true,
+      isVisible: false,
+    });
     if (type == 'addAddress') {
-      // updateState({isLoading: true});
-      updateState({isLoading: true});
-
       actions
         .addAddress(childData, {
           code: appData?.profile?.code,
@@ -395,17 +396,17 @@ export default function MyProfile3({route, navigation}) {
         .then((res) => {
           updateState({
             del: del ? false : true,
-            isVisible: false,
-            selectViaMap: false,
+            isLoading: false,
           });
           showSuccess(res.message);
+          console.log('called...2');
+          getAllAddress();
         })
         .catch((error) => {
           updateState({isLoading: false});
           showError(error?.message || error?.error);
         });
     } else if (type == 'updateAddress') {
-      updateState({isLoading: true});
       let query = `/${selectedId}`;
 
       actions
@@ -416,16 +417,13 @@ export default function MyProfile3({route, navigation}) {
         .then((res) => {
           updateState({
             del: del ? false : true,
-            isVisible: false,
-            selectViaMap: false,
+            isLoading: false,
           });
-
+          console.log('called...3');
+          getAllAddress();
           showSuccess(res.message);
         })
-        .catch((error) => {
-          updateState({isLoading: false});
-          showError(error?.message || error?.error);
-        });
+        .catch(errorMethod);
     }
   };
   //this function use for chnage password
@@ -486,7 +484,8 @@ export default function MyProfile3({route, navigation}) {
       .then((res) => {
         console.log(res, 'res>>>>>res');
         updateState({isLoading: false, del: del ? false : true});
-        showSuccess(res.message);
+        // showSuccess(res.message);
+        console.log('called...4');
         getAllAddress();
       })
       .catch((error) => {
@@ -563,11 +562,6 @@ export default function MyProfile3({route, navigation}) {
       }
     }
   };
-  // useEffect(() => {
-  //   if (!!userData?.auth_token) {
-  //     getAllAddress();
-  //   }
-  // }, [del]);
 
   //get All address
   const getAllAddress = () => {
@@ -579,35 +573,25 @@ export default function MyProfile3({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log('res++++++', res);
         actions.saveAllUserAddress(res.data);
         updateState({address: res.data, isLoading: false, indicator: false});
-        setModalVisible(false);
       })
-      .catch((error) => {
-        updateState({isLoading: false});
-        showError(error?.message || error?.error);
-        setModalVisible(false);
-      });
+      .catch(errorMethod);
   };
 
-  const setModalVisible = (visible, type, id, data) => {
-    if (!!userData?.auth_token) {
-      updateState({
-        updateData: data,
-        isVisible: visible,
-        type: type,
-        selectedId: id,
-      });
-    } else {
-      showError(strings.UNAUTHORIZED_MESSAGE);
-    }
+  const setModalVisible = (visible = false, type = '', id = '', data = {}) => {
+    console.log('for address modal....', visible, type, id, data);
+    updateState({
+      updateData: data,
+      isVisible: visible,
+      type: type,
+      selectedId: id,
+    });
   };
 
   //Delete address
   const delAddress = (id) => {
     updateState({isLoading: true});
-
     let data = {};
     let query = `/${id}`;
 
@@ -618,7 +602,8 @@ export default function MyProfile3({route, navigation}) {
       })
       .then((res) => {
         updateState({del: del ? false : true});
-        // getAllAddress();
+
+        getAllAddress();
         showSuccess(res.message);
       })
       .catch((error) => {
@@ -994,7 +979,9 @@ export default function MyProfile3({route, navigation}) {
             }}>
             {strings.SAVED_LOCATIONS}
           </Text>
-          <TouchableOpacity onPress={() => setModalVisible(true, 'addAddress')}>
+          <TouchableOpacity
+            disabled={isLoading}
+            onPress={() => setModalVisible(true, 'addAddress')}>
             <Text
               style={{
                 fontSize: textScale(12),
@@ -1168,7 +1155,8 @@ export default function MyProfile3({route, navigation}) {
     );
   };
 
-  //
+  const sheetRef = useRef(null);
+
   return (
     <WrapperContainer
       isLoadingB={isLoading}
@@ -1195,14 +1183,12 @@ export default function MyProfile3({route, navigation}) {
           paddingBottom: 25,
         }}>
         <View
-          style={
-            isDarkMode
-              ? [
-                  styles.topSection,
-                  {backgroundColor: MyDarkTheme.colors.background},
-                ]
-              : styles.topSection
-          }>
+          style={{
+            ...styles.topSection,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.backgroundGreyC,
+          }}>
           <TouchableWithoutFeedback onPress={showActionSheet}>
             <View
               style={{
@@ -1324,19 +1310,19 @@ export default function MyProfile3({route, navigation}) {
           destructiveButtonIndex={2}
           onPress={(index) => cameraHandle(index)}
         />
-
-        <AddressModal3
+      </KeyboardAwareScrollView>
+      {isVisible ? (
+        <AddressBottomSheet
           navigation={navigation}
           updateData={updateData}
-          isVisible={isVisible}
           indicator={indicator}
-          onClose={onModalClose}
           type={type}
           passLocation={(data) => addUpdateLocation(data)}
           openCloseMapAddress={openCloseMapAddress}
           selectViaMap={selectViaMap}
+          onCloseSheet={onModalClose}
         />
-      </KeyboardAwareScrollView>
+      ) : null}
       <View style={{height: moderateScaleVertical(60)}} />
     </WrapperContainer>
   );

@@ -78,7 +78,6 @@ export default function DashBoardFive({
   const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(appStyle, 'appStyleappStyle>>>>');
   const userData = useSelector((state) => state?.auth?.userData);
 
   const darkthemeusingDevice = useDarkMode();
@@ -123,7 +122,6 @@ export default function DashBoardFive({
       vendorsData: [],
     });
   }, [appMainData?.vendors]);
-  console.log(vendorsData, 'vendorsDatavendorsData');
   useEffect(() => {
     if (!!appMainData?.categories && appMainData?.categories.length) {
       if (appStyle?.homePageLayout == 5) {
@@ -145,8 +143,6 @@ export default function DashBoardFive({
   }, [appMainData?.categories]);
 
   const {currSelectedFilter} = state;
-
-  console.log('businessType', businessType);
 
   const onSelectedFilter = (selectedFilter) => {
     updateState({showMenu: false, currSelectedFilter: selectedFilter});
@@ -206,7 +202,6 @@ export default function DashBoardFive({
     checkAgeModalPermission();
   }, []);
 
-  console.log(userData, 'userData>>');
   const onConfirmAge = async (userPermission) => {
     try {
       const getIsUserCofirmedAgeModal = await getItem(
@@ -746,7 +741,7 @@ export default function DashBoardFive({
           <Menu style={{alignSelf: 'flex-end'}}>
             <MenuTrigger>
               <View style={styles.menuView}>
-                <Image
+                <FastImage
                   style={{
                     height: moderateScaleVertical(16),
                     width: moderateScale(16),

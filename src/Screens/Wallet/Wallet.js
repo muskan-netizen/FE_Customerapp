@@ -42,7 +42,7 @@ import {getImageUrl, showError} from '../../utils/helperFunctions';
 import {showMessage} from 'react-native-flash-message';
 import ContentLoader, {Rect, Circle} from 'react-content-loader/native';
 import {BarIndicator, UIActivityIndicator} from 'react-native-indicators';
-import { color } from 'react-native-reanimated';
+import {color} from 'react-native-reanimated';
 import BorderTextInput from '../../Components/BorderTextInput';
 
 export default function Wallet({navigation}) {
@@ -61,16 +61,13 @@ export default function Wallet({navigation}) {
     searchLoader: false,
     errorRaised: null,
   });
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+
+  const {appData, themeColors, currencies, themeColor, themeToggle, appStyle} =
+    useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {appData, themeColors, currencies} = useSelector(
-    (state) => state?.initBoot,
-  );
-  const userData = useSelector((state) => state.auth.userData);
-  const {appStyle} = useSelector((state) => state?.initBoot);
+
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});
   const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
@@ -496,6 +493,7 @@ export default function Wallet({navigation}) {
       </View>
       <Modal
         isVisible={transferModal}
+        // isVisible={true}
         style={{
           margin: 0,
           justifyContent: 'flex-end',
@@ -524,6 +522,7 @@ export default function Wallet({navigation}) {
                 ...styles.nameTextStyle,
                 marginLeft: 0,
                 fontSize: textScale(16),
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
               {strings.TRANSFER_FUNDS}
             </Text>
@@ -532,26 +531,18 @@ export default function Wallet({navigation}) {
             </TouchableOpacity>
           </View>
           <Text
-            style={
-              isDarkMode
-                ? [
-                    styles.availableBalanceText,
-                    {color: MyDarkTheme.colors.text},
-                  ]
-                : styles.availableBalanceText
-            }>
+            style={{
+              ...styles.availableBalanceText,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
+            }}>
             {strings.AVAILABLE_BALANCE}
           </Text>
           <View style={{flexDirection: 'row'}}>
             <Text
-              style={
-                isDarkMode
-                  ? [
-                      styles.availableBalanceValue,
-                      {color: MyDarkTheme.colors.text},
-                    ]
-                  : styles.availableBalanceValue
-              }>
+              style={{
+                ...styles.availableBalanceValue,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
               {currencies?.primary_currency?.symbol}{' '}
               {currencyNumberFormatter(
                 wallet_amount,
@@ -560,25 +551,29 @@ export default function Wallet({navigation}) {
             </Text>
           </View>
 
-          <Text style={styles.headingStyle}>{strings.AMOUNT_TO_TRANSFER}</Text>
+          <Text
+            style={{
+              ...styles.headingStyle,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}>
+            {strings.AMOUNT_TO_TRANSFER}
+          </Text>
           <View style={styles.textInputView}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-              }}>
-              <TextInput
-                placeholder={strings.ENTER_AMOUNT}
-                onChangeText={(text) => updateState({transferAmount: text})}
-                textInputStyle={styles.textInputStyle}
-                keyboardType="number-pad"
-              />
-            </View>
+            <TextInput
+              placeholder={strings.ENTER_AMOUNT}
+              placeholderTextColor={
+                isDarkMode ? MyDarkTheme.colors.text : colors.black
+              }
+              onChangeText={(text) => updateState({transferAmount: text})}
+              style={styles.textInputStyle}
+              keyboardType="number-pad"
+            />
           </View>
           <Text
             style={{
               ...styles.headingStyle,
-           
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              marginTop: moderateScaleVertical(10),
             }}>
             {strings.TRANSFER_TO}
           </Text>
@@ -588,9 +583,11 @@ export default function Wallet({navigation}) {
                 placeholder={
                   strings.ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE
                 }
-                placeholderTextColor= {isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51}
+                placeholderTextColor={
+                  isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51
+                }
                 onChangeText={(text) => updateState({transferEmail: text})}
-                textInputStyle={styles.textInputStyle}
+                style={styles.textInputStyle}
               />
             </View>
             {searchLoader ? (
