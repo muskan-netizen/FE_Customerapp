@@ -808,6 +808,7 @@
     "@react-native-community/blur": "https://github.com/flyingSAP/react-native-blur",
     "@react-native-community/cli-platform-android": "^7.0.1",
     "@react-native-community/clipboard": "^1.5.1",
+    "@react-native-community/google-signin": "^5.0.0",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/netinfo": "^8.1.0",
     "@react-native-community/push-notification-ios": "^1.10.1",

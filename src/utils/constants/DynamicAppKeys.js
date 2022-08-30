@@ -512,7 +512,7 @@ const appIds = {
   }),
   lastminutedress: Platform.select({
     ios: 'com.codebrewLab.lastminutedress',
-    android: 'com.codebrewLab.lastminutedress',
+    android: 'com.lastminutedress.order',
   }),
   rerak: Platform.select({
     ios: 'com.codebrew.rerak',
@@ -1525,7 +1525,7 @@ const appIds = {
   }),
   aauJau: Platform.select({
     ios: 'com.aauJau',
-    android: 'com.aauJau',
+    android: 'com.app.aaujau',
   }),
   mediPick: Platform.select({
     ios: 'com.mediPick',

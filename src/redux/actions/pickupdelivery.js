@@ -36,7 +36,6 @@ export function placeDelievryOrder(data = {}, headers = {}) {
 
 //Get all nearby Drivers NearBy Me
 export function getAllNearByDrivers(data = {}, headers = {}) {
-  console.log(data,headers,"headersheadersheadersheaders");
   return new Promise((resolve, reject) => {
     apiPost(ALL_NEARBY_DRIVERS, data, headers)
       .then((res) => {

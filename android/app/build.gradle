@@ -206,18 +206,18 @@ android {
 
     flavorDimensions "appType"
 
-//   productFlavors{
-//     shelf{
-//             dimension "appType"
-//             versionCode 1
-//             versionName "1.0"
-//             minSdkVersion rootProject.ext.minSdkVersion
-//             targetSdkVersion rootProject.ext.targetSdkVersion
-//             applicationId 'com.shelf.order'
-//             resValue "string", "app_name", "shelf" 
-//             resValue "string", "host_name", ""
-//             }
-//   }
+  productFlavors{
+            lastminutedress{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.lastminutedress.orde'
+                resValue "string", "app_name", "Last Minute Dress"
+                resValue "string", "host_name", ""
+            }
+  }
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -517,7 +517,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrewLab.lastminutedress'
+                applicationId 'com.lastminutedress.orde'
                 resValue "string", "app_name", "Last Minute Dress"
                 resValue "string", "host_name", ""
             }

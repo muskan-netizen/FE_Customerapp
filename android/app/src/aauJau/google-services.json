@@ -1,64 +1,64 @@
 {
   "project_info": {
-    "project_number": "976498463142",
-    "project_id": "aau-jau",
-    "storage_bucket": "aau-jau.appspot.com"
+    "project_number": "9254014448",
+    "project_id": "aau-jaau",
+    "storage_bucket": "aau-jaau.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:976498463142:android:44490bd223ec51a0187f67",
+        "mobilesdk_app_id": "1:9254014448:android:3afed57dce3eb152336135",
         "android_client_info": {
-          "package_name": "com.aauJau"
+          "package_name": "com.app.aaujau"
         }
       },
       "oauth_client": [
         {
-          "client_id": "976498463142-85ib09jrnkajfs0f6t4tl458t8h2looe.apps.googleusercontent.com",
+          "client_id": "9254014448-0r11htqieovjjksm1rine1eqtcdca3gm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.aauJau",
+            "package_name": "com.app.aaujau",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "976498463142-qu1j7l486icma8eeutl30dgkdr9bditn.apps.googleusercontent.com",
+          "client_id": "9254014448-fjc6cidgjphvob53vtcakp3crln46n1o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.aauJau",
+            "package_name": "com.app.aaujau",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "976498463142-v8ptj1l2o5s8rgi6o6tntl8039c5856g.apps.googleusercontent.com",
+          "client_id": "9254014448-i9gko1t6htlvtdn7aan37d28fripgdbd.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.aauJau",
+            "package_name": "com.app.aaujau",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "976498463142-eccqbatug5m5chlojkjqf1n78o3hi1hq.apps.googleusercontent.com",
+          "client_id": "9254014448-fnpg1ep6b57qoehl8eniodq7ajhrn8vl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCDxEtGSXoxHuFaoHe32cXFJQziHaDi7Ms"
+          "current_key": "AIzaSyAu-b3QGvzY3TPjDxXYx0TRAEYAcoyoVM8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "976498463142-eccqbatug5m5chlojkjqf1n78o3hi1hq.apps.googleusercontent.com",
+              "client_id": "9254014448-fnpg1ep6b57qoehl8eniodq7ajhrn8vl.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "976498463142-65b16kl2c5bfrs9a6a3o35rodbbi55g0.apps.googleusercontent.com",
+              "client_id": "9254014448-1o36hhs6jcmogmq7ghsp3p76tvtrf2c0.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.aauJau"
+                "bundle_id": "aaujaau"
               }
             }
           ]

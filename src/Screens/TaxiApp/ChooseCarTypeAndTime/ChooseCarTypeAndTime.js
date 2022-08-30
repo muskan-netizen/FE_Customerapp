@@ -341,6 +341,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
   //error handling of api
   const errorMethod = (error) => {
+    // alert("utyhtgyrtertcytfgh")
     console.log(error, 'errorOccured');
     updateState({
       isLoading: false,
@@ -684,6 +685,7 @@ console.log(scheduleDateTime,"scheduleDateTime")
 
 
   const getAllDrivers = () => {
+    
     actions.getAllNearByDrivers(
       {
         latitude: myCurrentLocationDetails?.latitude,
@@ -696,11 +698,13 @@ console.log(scheduleDateTime,"scheduleDateTime")
         language: languages?.primary_language?.id,
       }
     ).then((res) => {
-      console.log(res,'all listed drivers');
+      console.log(res,'all listed drivers>>>>');
       updateState({
         allListedDrivers: res?.data
       })
-    }).catch(errorMethod)
+    }).catch(
+     errorMethod
+    )
   }
 
 
