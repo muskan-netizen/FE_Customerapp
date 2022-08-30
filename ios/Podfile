@@ -1927,6 +1927,18 @@ end
 target 'Shelf' do
   
 end
+#baly Target
+target 'Baly' do
+  
+end
+#Nuvoni Target
+target 'Nuvoni' do
+  
+end
+#FairDeal Target
+target 'FairDeal' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

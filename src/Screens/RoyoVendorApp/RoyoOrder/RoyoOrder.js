@@ -325,7 +325,7 @@ const removeItemfromData=(id)=>{
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
         // centerTitle="Orders | Foodies hub  "
-        centerTitle={'Orders | ' + storeSelectedVendor?.name || ''}
+        centerTitle={strings.ORDER +' | ' + storeSelectedVendor?.name || ''}
         onPressCenterTitle={() => _reDirectToVendorList()}
         onPressImageAlongwithTitle={() => _reDirectToVendorList()}
         noLeftIcon

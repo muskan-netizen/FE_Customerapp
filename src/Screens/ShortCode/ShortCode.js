@@ -2457,15 +2457,39 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.getDress:
+        case appIds.getDress:
           updateState({
             shortCode: shortCodes.getDress,
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.shelf:
+        case appIds.shelf:
           updateState({
             shortCode: shortCodes.shelf,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.baly:
+          updateState({
+            shortCode: shortCodes.baly,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.nuvoni:
+          updateState({
+            shortCode: shortCodes.nuvoni,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.syloMart:
+          updateState({
+            shortCode: shortCodes.syloMart,
+            isShortcodePrefilled: true,
+          });
+          break;
+          case appIds.fairDeal:
+          updateState({
+            shortCode: shortCodes.fairDeal,
             isShortcodePrefilled: true,
           });
           break;

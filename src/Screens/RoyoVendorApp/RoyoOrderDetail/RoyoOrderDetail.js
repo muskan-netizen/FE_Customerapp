@@ -329,7 +329,7 @@ const RoyoOrderDetail = (props) => {
       <Header
         headerStyle={{ marginVertical: moderateScaleVertical(16) }}
         leftIcon={imagePath.backRoyo}
-        centerTitle={`Order #${data.order_number}`}
+        centerTitle={strings.ORDERS+`#${data.order_number}`}
       />
       {/* <View style={{...styles.orderNumberBox, zIndex: -1}}>
         <Text style={styles.orderNumber}>Order #{data.order_number}</Text>

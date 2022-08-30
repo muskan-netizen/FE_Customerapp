@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "204891452516",
+    "project_id": "fair-deal-e89fd",
+    "storage_bucket": "fair-deal-e89fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204891452516:android:39bae14b6cda2b6985db71",
+        "android_client_info": {
+          "package_name": "com.fairDeal.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204891452516-6vmkn465blkjkrgd5n5gj7nef6b9r2cq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fairDeal.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "204891452516-7qs8vdod7psk8m31rb7jkabr6jqhiv6j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fairDeal.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "204891452516-rv5o1qoq1n9kka5u2jj6ubssohokfgna.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fairDeal.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "204891452516-8rj8l8jr9eo61uo8kki2qnvrda7ki5i2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5Xv9UKG22YFhuUzce-daTwWAoStekvjg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204891452516-8rj8l8jr9eo61uo8kki2qnvrda7ki5i2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
