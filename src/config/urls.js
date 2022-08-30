@@ -127,11 +127,11 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://baytukom-order.netsolutionindia.com/api/v1';
 
 // knock knock
-<<<<<<< HEAD
+
 // export const API_BASE_URL = 'https://knockknock.online/api/v1'
-=======
-export const API_BASE_URL = 'https://knockknock.online/api/v1'
->>>>>>> abba3749ee42860e3c5c6abb62856d84bcf04bc4
+
+// export const API_BASE_URL = 'https://knockknock.online/api/v1'
+
 
 // export const API_BASE_URL = 'https://papiruki.com/api/v1'
 
@@ -223,10 +223,8 @@ export const API_BASE_URL = 'https://knockknock.online/api/v1'
 // export const API_BASE_URL = 'https://destinationops.com/api/v1';
 // export const API_BASE_URL = 'https://bustanfakieh.com/api/v1';
 // export const API_BASE_URL = 'https://cabdeliv.com/api/v1';
-<<<<<<< HEAD
 // // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
-=======
->>>>>>> abba3749ee42860e3c5c6abb62856d84bcf04bc4
+
 //export const API_BASE_URL = 'https://orderchekout.com/api/v1';
 // export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
