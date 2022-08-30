@@ -1,6 +1,12 @@
 import {useFocusEffect} from '@react-navigation/native';
+<<<<<<< HEAD
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {Alert, BackHandler, Linking, DeviceEventEmitter} from 'react-native';
+
+=======
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Alert, BackHandler, Linking} from 'react-native';
+>>>>>>> abba3749ee42860e3c5c6abb62856d84bcf04bc4
 import AppLink from 'react-native-app-link';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
@@ -283,14 +289,7 @@ export default function Home({route, navigation}) {
         homeData();
         return;
       });
-  }, [
-    selectedTabType,
-    appData,
-    bestSeller,
-    openVendor,
-    closeVendor,
-    allAddresss,
-  ]);
+  }, [selectedTabType, appData, bestSeller, openVendor, closeVendor]);
 
   // useEffect(() => {
   //   homeData();
@@ -519,6 +518,49 @@ export default function Home({route, navigation}) {
     () => {
       navigation.navigate(screenName, {data});
     };
+
+  const {viewRef2, viewRef3, bannerRef} = useRef();
+
+  // const preLoadImages = async (data) => {
+  //   if (data.categories.length > 0) {
+  //     let preLoadCategories = data.categories.map((item, inx) => {
+  //       return {
+  //         uri: getImageUrl(
+  //           item?.icon?.image_fit,
+  //           item?.icon?.image_path,
+  //           '140/140',
+  //         ),
+  //       };
+  //     });
+  //     FastImage.preload(preLoadCategories); //preload categories
+  //   }
+
+  //   if (!!appData?.mobile_banners && appData?.mobile_banners?.length > 0) {
+  //     let preLoadBanner = appData?.mobile_banners.map((item) => {
+  //       return {
+  //         uri: getImageUrl(
+  //           item.image.image_fit,
+  //           item.image.image_path,
+  //           appStyle?.homePageLayout === 5 ? '600/400' : '200/400',
+  //         ),
+  //       };
+  //     });
+  //     FastImage.preload(preLoadBanner); //preload banners
+  //   }
+
+  //   if (data.vendors.length > 0) {
+  //     let preLoadVendors = data.vendors.map((item, inx) => {
+  //       return {
+  //         uri: getImageUrl(
+  //           item.banner.proxy_url || item.image.proxy_url,
+  //           item.banner.image_path || item.image.image_path,
+  //           '700/300',
+  //         ),
+  //       };
+  //     });
+  //     FastImage.preload(preLoadVendors); //preload vendors
+  //   }
+  // };
 
   const openUber = () => {
     let appName = 'Uber - Easy affordable trips';
@@ -749,7 +791,6 @@ export default function Home({route, navigation}) {
     };
 
     actions
-
       .initApp(
         {},
         header,
@@ -998,6 +1039,7 @@ export default function Home({route, navigation}) {
         return (
           <>
             <DashBoardHeaderOne navigation={navigation} location={location} />
+<<<<<<< HEAD
             {dineInType == 'pick_drop' ? (
               <TaxiHomeDashbord
                 handleRefresh={() => handleRefresh()}
@@ -1023,11 +1065,29 @@ export default function Home({route, navigation}) {
                 selcetedToggle={selcetedToggle}
                 toggleData={appData}
                 navigation={navigation}
-                onClose={_closeModal}
-                onPressSubscribe={_onPressSubscribe}
-                isSubscription={isSubscription}
               />
             )}
+=======
+            <DashBoardOne
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              tempCartData={tempCartData}
+              onPressCategory={(item) => onPressCategory(item)}
+              onPressVendor={(item) => {
+                onPressVendor(item);
+              }}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              navigation={navigation}
+              onClose={_closeModal}
+              onPressSubscribe={_onPressSubscribe}
+              isSubscription={isSubscription}
+
+            />
+>>>>>>> abba3749ee42860e3c5c6abb62856d84bcf04bc4
           </>
         );
 
@@ -1035,6 +1095,7 @@ export default function Home({route, navigation}) {
         return (
           <>
             <DashBoardHeaderOne navigation={navigation} location={location} />
+<<<<<<< HEAD
             {dineInType == 'pick_drop' ? (
               <TaxiHomeDashbord
                 handleRefresh={() => handleRefresh()}
@@ -1062,11 +1123,31 @@ export default function Home({route, navigation}) {
                 selcetedToggle={selcetedToggle}
                 toggleData={appData}
                 navigation={navigation}
-                onClose={_closeModal}
-                onPressSubscribe={_onPressSubscribe}
-                isSubscription={isSubscription}
               />
             )}
+=======
+            <DashBoardFour
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => {
+                onPressCategory(item);
+              }}
+              onPressVendor={(item) => {
+                onPressVendor(item);
+              }}
+              tempCartData={tempCartData}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              navigation={navigation}
+              onClose={_closeModal}
+              onPressSubscribe={_onPressSubscribe}
+              isSubscription={isSubscription}
+
+            />
+>>>>>>> abba3749ee42860e3c5c6abb62856d84bcf04bc4
           </>
         );
       case 3:
@@ -1086,6 +1167,7 @@ export default function Home({route, navigation}) {
               _onVoiceStop={_onVoiceStop}
             />
 
+<<<<<<< HEAD
             {dineInType == 'pick_drop' ? (
               <TaxiHomeDashbord
                 handleRefresh={() => handleRefresh()}
@@ -1121,6 +1203,36 @@ export default function Home({route, navigation}) {
                 selectedHomeCategory={selectedHomeCategory}
               />
             )}
+=======
+            <DashBoardFive
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => {
+                onPressCategory(item);
+              }}
+              onPressVendor={(item) => {
+                onPressVendor(item);
+              }}
+              isDineInSelected={isDineInSelected}
+              selcetedToggle={selcetedToggle}
+              tempCartData={tempCartData}
+              toggleData={appData}
+              navigation={navigation}
+              onVendorFilterSeletion={onVendorFilterSeletion}
+              singleVendor={singleVendor}
+              onPressAddLaundryItem={onPressAddLaundryItem}
+              isLoadingAddons={isLoadingAddons}
+              selectedHomeCategory={selectedHomeCategory}
+              onClose={_closeModal}
+              onPressSubscribe={_onPressSubscribe}
+              isSubscription={isSubscription}
+
+            />
+           
+>>>>>>> abba3749ee42860e3c5c6abb62856d84bcf04bc4
           </>
         );
 
@@ -1135,6 +1247,7 @@ export default function Home({route, navigation}) {
               toggleData={appData}
               isLoading={isLoading}
             />
+<<<<<<< HEAD
             {dineInType == 'pick_drop' ? (
               <TaxiHomeDashbord
                 handleRefresh={() => handleRefresh()}
@@ -1163,11 +1276,33 @@ export default function Home({route, navigation}) {
                 selcetedToggle={selcetedToggle}
                 toggleData={appData}
                 navigation={navigation}
-                onClose={_closeModal}
-                onPressSubscribe={_onPressSubscribe}
-                isSubscription={isSubscription}
               />
             )}
+=======
+
+            <DashBoardSix
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => {
+                onPressCategory(item);
+              }}
+              onPressVendor={(item) => {
+                onPressVendor(item);
+              }}
+              tempCartData={tempCartData}
+              isDineInSelected={isDineInSelected}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              navigation={navigation}
+              onClose={_closeModal}
+              onPressSubscribe={_onPressSubscribe}
+              isSubscription={isSubscription}
+
+            />
+>>>>>>> abba3749ee42860e3c5c6abb62856d84bcf04bc4
           </>
         );
 
@@ -1187,6 +1322,7 @@ export default function Home({route, navigation}) {
               isVoiceRecord={isVoiceRecord}
               _onVoiceStop={_onVoiceStop}
             />
+<<<<<<< HEAD
             {dineInType == 'pick_drop' ? (
               <TaxiHomeDashbord
                 handleRefresh={() => handleRefresh()}
@@ -1220,11 +1356,38 @@ export default function Home({route, navigation}) {
                 onPressAddLaundryItem={onPressAddLaundryItem}
                 isLoadingAddons={isLoadingAddons}
                 selectedHomeCategory={selectedHomeCategory}
-                onClose={_closeModal}
-                onPressSubscribe={_onPressSubscribe}
-                isSubscription={isSubscription}
               />
             )}
+=======
+
+            <DashBoardFive
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => {
+                onPressCategory(item);
+              }}
+              onPressVendor={(item) => {
+                onPressVendor(item);
+              }}
+              isDineInSelected={isDineInSelected}
+              selcetedToggle={selcetedToggle}
+              tempCartData={tempCartData}
+              toggleData={appData}
+              navigation={navigation}
+              onVendorFilterSeletion={onVendorFilterSeletion}
+              singleVendor={singleVendor}
+              onPressAddLaundryItem={onPressAddLaundryItem}
+              isLoadingAddons={isLoadingAddons}
+              selectedHomeCategory={selectedHomeCategory}
+              onClose={_closeModal}
+              onPressSubscribe={_onPressSubscribe}
+              isSubscription={isSubscription}
+
+            />
+>>>>>>> abba3749ee42860e3c5c6abb62856d84bcf04bc4
           </>
         );
       case 6:
@@ -1243,6 +1406,7 @@ export default function Home({route, navigation}) {
               isVoiceRecord={isVoiceRecord}
               _onVoiceStop={_onVoiceStop}
             />
+<<<<<<< HEAD
             {dineInType == 'pick_drop' ? (
               <TaxiHomeDashbord
                 handleRefresh={() => handleRefresh()}
@@ -1273,11 +1437,35 @@ export default function Home({route, navigation}) {
                 navigation={navigation}
                 onVendorFilterSeletion={onVendorFilterSeletion}
                 singleVendor={singleVendor}
-                onClose={_closeModal}
-                onPressSubscribe={_onPressSubscribe}
-                isSubscription={isSubscription}
               />
             )}
+=======
+
+            <DashBoardEight
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => {
+                onPressCategory(item);
+              }}
+              onPressVendor={(item) => {
+                onPressVendor(item);
+              }}
+              isDineInSelected={isDineInSelected}
+              selcetedToggle={selcetedToggle}
+              tempCartData={tempCartData}
+              toggleData={appData}
+              navigation={navigation}
+              onVendorFilterSeletion={onVendorFilterSeletion}
+              singleVendor={singleVendor}
+              onClose={_closeModal}
+              onPressSubscribe={_onPressSubscribe}
+              isSubscription={isSubscription}
+
+            />
+>>>>>>> abba3749ee42860e3c5c6abb62856d84bcf04bc4
           </>
         );
     }
@@ -1316,9 +1504,15 @@ export default function Home({route, navigation}) {
       isSubscription: false,
     });
   };
+<<<<<<< HEAD
 
   const {blurRef} = useRef();
 
+=======
+ 
+  const {blurRef} = useRef();
+  
+>>>>>>> abba3749ee42860e3c5c6abb62856d84bcf04bc4
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
@@ -1343,13 +1537,32 @@ export default function Home({route, navigation}) {
         selectedHomeCategory={selectedHomeCategory}
         unPresentAry={unPresentAry}
       />
-
+<<<<<<< HEAD
+      {!!userData?.auth_token &&
+        !!appData?.profile?.preferences?.show_subscription_plan_popup && (
+          <SubscriptionModal
+            isVisible={isSubscription}
+            onClose={_closeModal}
+            onPressSubscribe={_onPressSubscribe}
+          />
+        )}
       {!!appData?.stop_order_acceptance_for_users && (
         <StopAcceptingOrderModal
           isVisible={stopOrderModalVisible}
           onClose={_stopOrderModalClose}
         />
       )}
+=======
+      
+       {
+        !!appData?.stop_order_acceptance_for_users && (
+          <StopAcceptingOrderModal
+            isVisible={stopOrderModalVisible}
+            onClose={_stopOrderModalClose}
+
+          />
+        )}
+>>>>>>> abba3749ee42860e3c5c6abb62856d84bcf04bc4
     </WrapperContainer>
   );
 }
