@@ -129,9 +129,6 @@ android {
     dexOptions {
         javaMaxHeapSize "4g"
     }
-    lintOptions { 
-  checkReleaseBuilds false 
-}
    //  compileSdkVersion rootProject.ext.compileSdkVersion
        compileSdkVersion 31
 
