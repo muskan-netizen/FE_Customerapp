@@ -71,7 +71,7 @@ export default function Home({route, navigation}) {
   const {location, appMainData, dineInType} = useSelector(
     (state) => state?.home,
   );
-  console.log(dineInType, "dineInType>>>>")
+  console.log(allAddresss, 'dineInType>>>>');
 
   console.log('appDataappDataappData', appData);
 

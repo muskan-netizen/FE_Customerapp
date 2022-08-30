@@ -991,7 +991,7 @@ export default function Addaddress({navigation, route}) {
         </View>
       </View>
 
-      <View style={{flex: 1,}}>
+      <View style={{flex: 1}}>
         <View>
           <View
             style={{
@@ -1141,15 +1141,14 @@ export default function Addaddress({navigation, route}) {
           </ScrollView>
         </View>
 
-        <View style={{
-          marginTop:'auto',
-          marginBottom:moderateScaleVertical(80)
-        }}>
-        {renderbtn()}
+        <View
+          style={{
+            marginTop: 'auto',
+            marginBottom: moderateScaleVertical(80),
+          }}>
+          {renderbtn()}
         </View>
-     
       </View>
-   
 
       <Modal
         onClose={onClose}

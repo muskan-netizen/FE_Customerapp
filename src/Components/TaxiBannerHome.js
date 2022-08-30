@@ -1,10 +1,27 @@
 import React, {useState} from 'react';
-import {ImageBackground, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  Image,
+  Text,
+  View,
+} from 'react-native';
 import CardView from 'react-native-cardview';
 import FastImage from 'react-native-fast-image';
 import Carousel from 'react-native-snap-carousel';
-import {moderateScale, width} from '../styles/responsiveSize';
+import {
+  height,
+  moderateScale,
+  moderateScaleVertical,
+  width,
+} from '../styles/responsiveSize';
 import {getImageUrl} from '../utils/helperFunctions';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
+// import DeviceInfo, {getBundleId} from 'react-native-device-info';
+
+import {appIds} from '../utils/constants/DynamicAppKeys';
 
 const TaxiBannerHome = ({
   imagestyle = {},
@@ -22,6 +39,7 @@ const TaxiBannerHome = ({
   onPress = () => {},
   childView = null,
   showLightbox = false,
+  appStyle = {},
 }) => {
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -33,6 +51,7 @@ const TaxiBannerHome = ({
     setActiveState(index);
   };
 
+  console.log(appStyle, 'appStyleappStyle>>>>');
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   const renderCarousel = (image) => (
@@ -45,7 +64,7 @@ const TaxiBannerHome = ({
   const _onPress = () => {
     updateState({showLightboxView: true});
   };
-  const bannerDataImages = ({item, index}) => {
+  const bannerImage = ({item, index}) => {
     const imageUrl = item?.image?.path
       ? getImageUrl(
           item?.image?.path.image_fit,
@@ -57,6 +76,49 @@ const TaxiBannerHome = ({
           item?.image?.image_path,
           '2000/600',
         );
+    console.log(imageUrl, 'yfgusdf');
+    return (
+      <TouchableOpacity activeOpacity={1} onPress={() => onPress(item)}>
+        <FastImage
+          source={{
+            uri: imageUrl,
+            priority: FastImage.priority.high,
+            cache: FastImage.cacheControl.immutable,
+          }}
+          style={{
+            height:
+              appStyle?.homePageLayout == 5
+                ? moderateScale(140)
+                : DeviceInfo.getBundleId() == appIds.masa
+                ? moderateScale(260)
+                : height / 3.8,
+            width:
+              appStyle?.homePageLayout == 5
+                ? width / 1.2
+                : DeviceInfo.getBundleId() == appIds.masa
+                ? width / 1.1
+                : moderateScale(160),
+            borderRadius: moderateScale(16),
+          }}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+      </TouchableOpacity>
+    );
+  };
+  const bannerDataImages = ({item, index}) => {
+    // console.log(imageUrl, 'yfgusdf');
+    const imageUrl = item?.image?.path
+      ? getImageUrl(
+          item?.image?.path.image_fit,
+          item?.image.path.image_path,
+          '2000/600',
+        )
+      : getImageUrl(
+          item?.image?.image_fit,
+          item?.image?.image_path,
+          '2000/600',
+        );
+    console.log(imageUrl, 'yfgusdf');
 
     return (
       <>
@@ -98,21 +160,45 @@ const TaxiBannerHome = ({
       </>
     );
   };
+
   return (
-    <CardView style={[styles.cardViewStyle, cardViewStyle]}>
-      <Carousel
-      layout={'default'}
-        ref={bannerRef}
-        data={bannerData}
-        renderItem={bannerDataImages}
-        autoplay={true}
-        loop={true}
-        autoplayInterval={3000}
-        sliderWidth={sliderWidth}
-        itemWidth={itemWidth}
-        onSnapToItem={(index) => setSnapState(index)}
-      />
-    </CardView>
+    <>
+      {appStyle.homePageLayout == 3 ? (
+        <View style={{marginTop: moderateScaleVertical(4)}}>
+          <FlatList
+            ref={bannerRef}
+            data={bannerData}
+            renderItem={bannerImage}
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
+            ItemSeparatorComponent={() => (
+              <View style={{marginRight: moderateScale(12)}} />
+            )}
+            ListHeaderComponent={() => (
+              <View style={{marginLeft: moderateScale(16)}} />
+            )}
+            ListFooterComponent={() => (
+              <View style={{marginRight: moderateScale(16)}} />
+            )}
+          />
+        </View>
+      ) : (
+        <CardView style={[styles.cardViewStyle, cardViewStyle]}>
+          <Carousel
+            layout={'default'}
+            ref={bannerRef}
+            data={bannerData}
+            renderItem={bannerDataImages}
+            autoplay={true}
+            loop={true}
+            autoplayInterval={3000}
+            sliderWidth={sliderWidth}
+            itemWidth={itemWidth}
+            onSnapToItem={(index) => setSnapState(index)}
+          />
+        </CardView>
+      )}
+    </>
   );
 };
 

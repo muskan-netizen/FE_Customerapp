@@ -1867,6 +1867,66 @@ end
 target 'FoodSpot' do
   
 end
+#KaribaMart Target
+target 'KaribaMart' do
+  
+end
+#SourceWith Target
+target 'SourceWith' do
+  
+end
+#ApptFindr Target
+target 'ApptFindr' do
+  
+end
+#VDU Target
+target 'VDU' do
+  
+end
+#LaundroZone Target
+target 'LaundroZone' do
+  
+end
+#Taxiolgy Target
+target 'Taxiolgy' do
+  
+end
+#Swipe Target
+target 'Swipe' do
+  
+end
+#SheRyders Target
+target 'SheRyders' do
+  
+end
+#Kurrix Target
+target 'Kurrix' do
+  
+end
+#MrVeloz Target
+target 'MrVeloz' do
+  
+end
+#GreenCab Target
+target 'GreenCab' do
+  
+end
+#Axxi Target
+target 'Axxi' do
+  
+end
+#Pets Target
+target 'Pets' do
+  
+end
+#GetDress Target
+target 'GetDress' do
+  
+end
+#Shelf Target
+target 'Shelf' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

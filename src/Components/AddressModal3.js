@@ -77,6 +77,7 @@ console.log(location,"locationlocationlocation")
   const {themeColors, themeLayouts, appStyle} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
   const {profile} = appData;
+  
   const [state, setState] = useState({
     dropDownData: [],
     address: updateData?.address ? updateData?.address : '',
@@ -785,7 +786,7 @@ console.log(location,"locationlocationlocation")
                       marginLeft: moderateScale(4),
                       color: isDarkMode
                         ? MyDarkTheme.colors.text
-                        : colors.borderLight,
+                        : colors.black,
                     }}>
                     {strings.SELECT_VIA_MAP}
                   </Text>

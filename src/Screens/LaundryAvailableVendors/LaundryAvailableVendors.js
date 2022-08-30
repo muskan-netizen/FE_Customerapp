@@ -130,7 +130,7 @@ export default function LaundryAvailableVendors({navigation, route}) {
 
   const renderItem = ({item, index}) => {
     return (
-      <View style={styles.mainRowStyle}>
+      <View style={{...styles.mainRowStyle}}>
         <View style={{flex: 0.2}}>
           <FastImage
             source={{
@@ -145,31 +145,49 @@ export default function LaundryAvailableVendors({navigation, route}) {
             style={styles.vendorImgStyle}
           />
         </View>
-        {!isEmpty(item?.product) && (
-          <View
-            style={{
-              ...styles.completePartialMatchView,
-              backgroundColor:
-                item?.product[0]?.match == 'C' ? colors.greenC : colors.redF,
-            }}>
-            <Text
-              style={{
-                ...styles.completePartialMatchTxt,
-                color:
-                  item?.product[0]?.match == 'C' ? colors.greenD : colors.redG,
-              }}>
-              {item?.product[0]?.match == 'C'
-                ? strings.COMPLETE_MATCH
-                : strings.PARTIAL_MATCH}
-            </Text>
-          </View>
-        )}
+
         <View
           style={{
             paddingHorizontal: moderateScale(20),
             flex: 0.8,
           }}>
-          <Text style={styles.vendorTitle}>{item?.name}</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <Text
+              style={{
+                ...styles.vendorTitle,
+                flex: 0.95,
+              }}>
+              {item?.name}
+            </Text>
+            {!isEmpty(item?.product) && (
+              <View
+                style={{
+                  ...styles.completePartialMatchView,
+                  backgroundColor:
+                    item?.product[0]?.match == 'C'
+                      ? colors.greenC
+                      : colors.redF,
+                }}>
+                <Text
+                  style={{
+                    ...styles.completePartialMatchTxt,
+                    color:
+                      item?.product[0]?.match == 'C'
+                        ? colors.greenD
+                        : colors.redG,
+                  }}>
+                  {item?.product[0]?.match == 'C'
+                    ? strings.COMPLETE_MATCH
+                    : strings.PARTIAL_MATCH}
+                </Text>
+              </View>
+            )}
+          </View>
+
           <View style={styles.locationImgView}>
             <Image
               source={imagePath.icLocationBlue}
@@ -245,18 +263,16 @@ export function stylesFunc({fontFamily, themeColors, isDarkMode}) {
       backgroundColor: colors.greenC,
       alignItems: 'center',
       justifyContent: 'center',
-      paddingHorizontal: moderateScale(4),
-      paddingVertical: moderateScale(4),
-      position: 'absolute',
-      right: 10,
-      top: 10,
+
       borderRadius: moderateScale(2),
+      height: moderateScaleVertical(20),
     },
     completePartialMatchTxt: {
       fontFamily: fontFamily.medium,
       fontSize: textScale(8),
       color: colors.greenD,
       textTransform: 'uppercase',
+      paddingHorizontal: 4,
     },
     vendorTitle: {
       fontFamily: fontFamily?.bold,

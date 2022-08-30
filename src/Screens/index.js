@@ -150,3 +150,4 @@ export {default as Userede} from './PaymentGateways/Userede';
 export {default as SubcategoryVendor} from './SubcategoryVendor/SubcategoryVendor';
 export {default as ChatScreenForVendor} from './ChatScreen/ChatScreenForVendor';
 export {default as ChatRoomForVendor} from './ChatRoom/ChatRoomForVendor';
+export {default as Conekta} from './PaymentGateways/Conekta';

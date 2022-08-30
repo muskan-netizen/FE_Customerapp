@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "193395047021",
+    "project_id": "kurrix-8cd9c",
+    "storage_bucket": "kurrix-8cd9c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193395047021:android:1344590db1955f8d7c9d64",
+        "android_client_info": {
+          "package_name": "com.kurrix.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "193395047021-20ol7c2bb6jhnva4ngi0ih02gaveu04e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kurrix.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "193395047021-jghl668igap539j2a9pkbdr5gtiimprr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kurrix.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "193395047021-m6m18cdj12ilkir9ec23djih5efl3f6n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kurrix.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "193395047021-tjr5itv7nng5souadoe9cct9qkjbdopu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVz9vOKdxzKRcaLJqh3OaCy0giLyJ252M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "193395047021-tjr5itv7nng5souadoe9cct9qkjbdopu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { RefreshControl, ScrollView, View, Text, TouchableOpacity } from 'react-native';
-import { useSelector } from 'react-redux';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  RefreshControl,
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import {useSelector} from 'react-redux';
 import BannerHome from '../../../Components/BannerHome';
 import BrickList from '../../../Components/BrickList';
 import ImgCardForBrickList from '../../../Components/ImgCardForBrickList';
@@ -15,25 +21,28 @@ import {
   sliderWidth,
   textScale,
 } from '../../../styles/responsiveSize';
-import { getColorCodeWithOpactiyNumber, getImageUrl } from '../../../utils/helperFunctions';
+import {
+  getColorCodeWithOpactiyNumber,
+  getImageUrl,
+} from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 import ToggleTabBar from './ToggleTabBar';
 
 export default function DashBoardOne({
-  handleRefresh = () => { },
-  bannerPress = () => { },
+  handleRefresh = () => {},
+  bannerPress = () => {},
   //   appMainData = {},
   isLoading = true,
   isRefreshing = false,
-  onPressCategory = () => { },
+  onPressCategory = () => {},
   selcetedToggle,
   toggleData,
   isDineInSelected = false,
-  tempCartData=null,
-  navigation={},
-  onClose,
-  onPressSubscribe,
-  isSubscription
+  tempCartData = null,
+  navigation = {},
+  onClose = () => {},
+  onPressSubscribe = () => {},
+  isSubscription = false,
 }) {
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -49,12 +58,12 @@ export default function DashBoardOne({
   console.log(homeData, 'homeData');
 
   const fontFamily = appStyle?.fontSizeData;
-  const { bannerRef } = useRef();
-  const { slider1ActiveSlide, newCategoryData } = state;
-  const styles = stylesFunc({ themeColors, fontFamily });
+  const {bannerRef} = useRef();
+  const {slider1ActiveSlide, newCategoryData} = state;
+  const styles = stylesFunc({themeColors, fontFamily});
 
   //update state
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
   const newCategoryAry =
     appMainData && appMainData?.categories ? [...appMainData?.categories] : [];
   useEffect(() => {
@@ -66,31 +75,30 @@ export default function DashBoardOne({
     newCategoryAry.forEach((element, index) => {
       if (index <= setValue + gapper) {
         element['span'] = 1.5;
-        updateState({ newCategoryData: [...newCategoryAry] });
+        updateState({newCategoryData: [...newCategoryAry]});
       } else if (index === setValue + 1 + gapper) {
         element['span'] = 3;
-        updateState({ newCategoryData: [...newCategoryAry] });
+        updateState({newCategoryData: [...newCategoryAry]});
       } else if (
         index === setValue + 2 + gapper ||
         index === setValue + 3 + gapper
       ) {
         element['span'] = 1.5;
         element['rowHeight'] = moderateScaleVertical(250);
-        updateState({ newCategoryData: [...newCategoryAry] });
+        updateState({newCategoryData: [...newCategoryAry]});
       } else {
         element['span'] = 3;
-        updateState({ newCategoryData: [...newCategoryAry] });
+        updateState({newCategoryData: [...newCategoryAry]});
         gapper += setItems;
       }
     });
   };
 
   const renderView = (prop) => {
-    console.log(prop,"prop")
+    console.log(prop, 'prop');
     return (
-   
       <ImgCardForBrickList
-        onPress={() =>onPressCategory(prop)}
+        onPress={() => onPressCategory(prop)}
         text={prop.name}
         data={prop}
       />
@@ -101,20 +109,18 @@ export default function DashBoardOne({
       orderId: item?.vendors[0].order_id,
       // fromVendorApp: true,
       orderDetail: {
-        dispatch_traking_url: item?.vendors[0].dispatch_traking_url
+        dispatch_traking_url: item?.vendors[0].dispatch_traking_url,
       },
-      selectedVendor: { id: item?.vendors[0].vendor_id },
+      selectedVendor: {id: item?.vendors[0].vendor_id},
     });
-  }
+  };
 
-  console.log(appData?.banners, "Banners");
+  console.log(appData?.banners, 'Banners');
   const showAllTempCartOrders = () => {
     return (
       <View>
-        {
-          tempCartData &&
-            tempCartData.length
-            ? tempCartData.map((item, index) => {
+        {tempCartData && tempCartData.length
+          ? tempCartData.map((item, index) => {
               return (
                 <TouchableOpacity
                   onPress={() => onPressViewEditAndReplace(item)}
@@ -131,19 +137,36 @@ export default function DashBoardOne({
                     marginTop: moderateScale(15),
                     borderRadius: moderateScale(5),
                     borderWidth: moderateScale(0.5),
-                    borderColor: themeColors?.primary_color
+                    borderColor: themeColors?.primary_color,
                   }}>
-                  <View style={{ flex: 0.7 }}>
-                    <Text style={{ fontSize: textScale(12), fontFamily: fontFamily.medium }}>{strings.YOURDRIVERHASMODIFIED}</Text>
-                    <Text style={{ fontSize: textScale(12), paddingTop: moderateScale(5), fontFamily: fontFamily.bold }}>{strings.VIEW_DETAIL}</Text>
+                  <View style={{flex: 0.7}}>
+                    <Text
+                      style={{
+                        fontSize: textScale(12),
+                        fontFamily: fontFamily.medium,
+                      }}>
+                      {strings.YOURDRIVERHASMODIFIED}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: textScale(12),
+                        paddingTop: moderateScale(5),
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {strings.VIEW_DETAIL}
+                    </Text>
                   </View>
-                  <View style={{ flex: 0.3, alignItems: 'flex-end' }}>
-                    <Text style={{ fontSize: textScale(14), fontFamily: fontFamily.medium }}>{`#${item?.order_number}`}</Text>
+                  <View style={{flex: 0.3, alignItems: 'flex-end'}}>
+                    <Text
+                      style={{
+                        fontSize: textScale(14),
+                        fontFamily: fontFamily.medium,
+                      }}>{`#${item?.order_number}`}</Text>
                   </View>
                 </TouchableOpacity>
               );
             })
-            : null}
+          : null}
       </View>
     );
   };
@@ -160,13 +183,13 @@ export default function DashBoardOne({
       }
       alwaysBounceVertical={true}
       showsVerticalScrollIndicator={false}
-      style={{ flex: 1, marginHorizontal: moderateScale(3) }}>
+      style={{flex: 1, marginHorizontal: moderateScale(3)}}>
       {isLoading && (
         <CardLoader
           listSize={1}
           cardWidth={sliderWidth}
           height={180}
-          containerStyle={{ marginHorizontal: moderateScale(10) }}
+          containerStyle={{marginHorizontal: moderateScale(10)}}
         />
       )}
       {!!(
@@ -175,21 +198,21 @@ export default function DashBoardOne({
         appData?.banners &&
         appData.banners.length
       ) && (
-          <>
-            {appData?.banners ? (
-              <BannerHome
-                bannerRef={bannerRef}
-                slider1ActiveSlide={slider1ActiveSlide}
-                bannerData={appData?.banners ? appData?.banners : []}
-                sliderWidth={sliderWidth}
-                itemWidth={itemWidth}
-                onSnapToItem={(index) => updateState({ slider1ActiveSlide: index })}
-                onPress={(item) => bannerPress(item)}
-              />
-            ) : null}
-            <View style={{ height: moderateScaleVertical(5) }} />
-          </>
-        )}
+        <>
+          {appData?.banners ? (
+            <BannerHome
+              bannerRef={bannerRef}
+              slider1ActiveSlide={slider1ActiveSlide}
+              bannerData={appData?.banners ? appData?.banners : []}
+              sliderWidth={sliderWidth}
+              itemWidth={itemWidth}
+              onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}
+              onPress={(item) => bannerPress(item)}
+            />
+          ) : null}
+          <View style={{height: moderateScaleVertical(5)}} />
+        </>
+      )}
 
       <ToggleTabBar
         toggleData={toggleData}
@@ -200,9 +223,9 @@ export default function DashBoardOne({
 
       {isLoading && <CardLoader listSize={6} isRow />}
       {!isLoading &&
-        appMainData &&
-        appMainData?.categories &&
-        appMainData?.categories.length ? (
+      appMainData &&
+      appMainData?.categories &&
+      appMainData?.categories.length ? (
         <BrickList
           data={newCategoryData}
           renderItem={(prop) => renderView(prop)}
@@ -211,15 +234,12 @@ export default function DashBoardOne({
       ) : null}
       <View style={{height: moderateScaleVertical(65)}} />
       {!!userData?.auth_token &&
-           !!appData?.profile?.preferences?.show_subscription_plan_popup && (
-          
-            <SubscriptionModal
-       
+        !!appData?.profile?.preferences?.show_subscription_plan_popup && (
+          <SubscriptionModal
             isVisible={isSubscription}
             onClose={onClose}
             onPressSubscribe={onPressSubscribe}
           />
-          
         )}
     </ScrollView>
   );

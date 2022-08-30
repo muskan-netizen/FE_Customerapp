@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "1052544908182",
+    "project_id": "axxi-97717",
+    "storage_bucket": "axxi-97717.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052544908182:android:84d3def8c845ccedadfbb7",
+        "android_client_info": {
+          "package_name": "com.axxi.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052544908182-55hps27bsvm5v9ds6jr5trm1p3futfb3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.axxi.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1052544908182-hf30kb6eshibl089kt571ejsbsqiendb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.axxi.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "1052544908182-mmlj7vete7v64hvdu74kgfs767magdbk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.axxi.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "1052544908182-vab46kvoosissh1gandq9kbcuc5ms92f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhv6Ei958XDgU9EeMHDQI_GFWUPifS9Z0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052544908182-vab46kvoosissh1gandq9kbcuc5ms92f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1052544908182-kulqbi6dnoamjr6llvemp0g0im46iq6n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.axxi.order"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

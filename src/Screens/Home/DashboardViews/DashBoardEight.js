@@ -72,9 +72,9 @@ export default function DashBoardEight({
   toggleData = {},
   onVendorFilterSeletion = () => {},
   tempCartData = null,
-  onClose,
-  onPressSubscribe,
-  isSubscription
+  onClose = () => {},
+  onPressSubscribe = () => {},
+  isSubscription = false,
 }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -837,15 +837,12 @@ export default function DashBoardEight({
         />
       </ScrollView>
       {!!userData?.auth_token &&
-           !!appData?.profile?.preferences?.show_subscription_plan_popup && (
-          
-            <SubscriptionModal
-       
+        !!appData?.profile?.preferences?.show_subscription_plan_popup && (
+          <SubscriptionModal
             isVisible={isSubscription}
             onClose={onClose}
             onPressSubscribe={onPressSubscribe}
           />
-          
         )}
     </View>
   );

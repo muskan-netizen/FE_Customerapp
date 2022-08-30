@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-available_pods-SheRyders/Pods-available_pods-SheRyders.release.xcconfig"
+
+PROJECT_APPLE_ID = 1640234481
+PROJECT_BUNDLE_ID =com.sheRyders.order
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME =She Ryders
+PROJECT_GOOGLE_CLIENT_ID =242937110599-fteth6ubotm834dau0no1j2d310788js.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.242937110599-fteth6ubotm834dau0no1j2d310788js
+PROJECT_FACEBOOK_ID = 401397145467684
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =SheRydersInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

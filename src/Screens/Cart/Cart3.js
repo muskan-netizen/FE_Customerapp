@@ -241,13 +241,10 @@ function Cart({navigation, route}) {
     themeColor,
     themeToggle,
   } = useSelector((state) => state?.initBoot);
-  console.log(appData, 'core appData');
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-
-  console.log(selectedPayment, 'selectedPayment');
 
   const {preferences} = appData?.profile;
 
@@ -255,14 +252,11 @@ function Cart({navigation, route}) {
     (state) => state?.cart?.selectedAddress,
   );
   const recommendedVendorsdata = appMainData?.vendors;
-
   const {dineInType, appMainData, location} = useSelector(
     (state) => state?.home,
   );
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
-
-  console.log('isCheckSlotLoadingisCheckSlotLoading', location);
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -272,8 +266,6 @@ function Cart({navigation, route}) {
     };
 
   let businessType = appData?.profile?.preferences?.business_type || null;
-
-  console.log('cartitems', cartItems);
 
   const closeForm = () => {
     setPrescriptionModal(false);
@@ -303,15 +295,7 @@ function Cart({navigation, route}) {
         updateState({isLoadingB: true});
       }
       getCartDetail();
-      // getAllWishListData();
-      // if (!!checkCartItem?.data) {
-      //   getCartDetail();
-      // } else {
-      //   getAllWishListData();
-      // }
-      return () => {
-        // alert('blur')
-      };
+      return () => {};
     }, [
       currencies,
       languages,
@@ -320,7 +304,6 @@ function Cart({navigation, route}) {
       selectedAddress,
       isRefreshing,
       checkCartItem?.data?.item_count,
-      // sheduledorderdate,
       sel_types,
     ]),
   );
@@ -331,8 +314,7 @@ function Cart({navigation, route}) {
       !!checkCartItem?.data?.products &&
       !!checkCartItem?.data?.products.length
     ) {
-      console.log('useEffect 1', checkCartItem);
-      // checkforAddressUpdate();
+      checkforAddressUpdate();
     }
   }, [selectedAddress, allAddresss]);
 
@@ -349,23 +331,8 @@ function Cart({navigation, route}) {
         setSelectedAddress(find);
         actions.saveAddress(find);
       } else {
-        selectAddress(allAddresss[0]);
-      }
-      return;
-    }
-    if (selectedAddress && allAddresss.length) {
-      let find = allAddresss.find(
-        (x) =>
-          x.id == selectedAddress.id &&
-          x.is_primary == selectedAddress.is_primary,
-      );
-      if (find) {
-        selectAddress(find);
-        return;
-      } else {
-        selectAddress(allAddresss[0]);
-        return;
-        // actions.saveAddress(null);
+        actions.saveAddress(null);
+        setSelectedAddress(null);
       }
       return;
     }
@@ -397,14 +364,8 @@ function Cart({navigation, route}) {
     const local = moment.utc(date).local().format('DD MMM YYYY hhðŸ‡²ðŸ‡²a');
     return local;
   };
-  console.log(location, 'nocationnnnnnn');
   //get the entire cart detail
   const getCartDetail = () => {
-    console.log(
-      dineInType,
-      paramsData?.data?.queryURL,
-      'paramsData?.data?.queryURL',
-    );
     // alert("cart detail hit")
     let apiData = `/?type=${dineInType}${
       paramsData?.data?.queryURL ? `&${paramsData?.data?.queryURL}` : ''
@@ -476,10 +437,7 @@ function Cart({navigation, route}) {
         setSheduledorderdate(res?.data?.scheduled_date_time);
         setSheduledpickupdate(res?.data?.schedule_pickup);
         setSheduleddropoffdate(res?.data?.schedule_dropoff);
-        updateState({
-          isRefreshing: false,
-          isLoadingB: false,
-        });
+
         setScheduleType(res?.data?.schedule_type);
         if (res && res.data) {
           if (
@@ -707,6 +665,7 @@ function Cart({navigation, route}) {
       )
       .then((res) => {
         actions.cartItemQty({});
+        console.log(res, '<==resOccured');
         setCartItems([]);
         setCartData({});
 
@@ -757,7 +716,6 @@ function Cart({navigation, route}) {
   useEffect(() => {
     if (paramsData?.transactionId && !!checkCartItem?.data) {
       _directOrderPlace();
-      console.log('useEffect 2');
     }
   }, [paramsData?.transactionId]);
 
@@ -792,7 +750,6 @@ function Cart({navigation, route}) {
   //flutter wave
   var redirectTimeout;
   const handleOnRedirect = (data) => {
-    console.log('flutterwaveresponse', data);
     clearTimeout(redirectTimeout);
     redirectTimeout = setTimeout(() => {
       // do something with the result
@@ -887,9 +844,10 @@ function Cart({navigation, route}) {
 
   const checkPaymentOptions = (res) => {
     updateState({placeLoader: true});
+
     let paymentId = res?.data?.payment_option_id;
     let order_number = res?.data?.order_number;
-    setSelectedPayment(selectedPayment);
+    // setSelectedPayment(selectedPayment);
     console.log('api res success', res);
 
     let paymentData = {
@@ -997,7 +955,6 @@ function Cart({navigation, route}) {
         break;
       case 27: //Paytab Payment Getway
         // updateState({ placeLoader: false });
-        console.log(res.data, 'res.data>res.data');
 
         openPayTabs(paymentData);
 
@@ -1005,8 +962,6 @@ function Cart({navigation, route}) {
 
       case 30: //Paytab Payment Getway
         // updateState({ placeLoader: false });
-        console.log(res.data, 'res.data>res.data');
-        // payWithFlutterWave(paymentData.orderDetail, handleOnRedirect)
         updateState({
           isModalVisibleForPayFlutterWave: true,
           paymentDataFlutterWave: paymentData,
@@ -1057,6 +1012,10 @@ function Cart({navigation, route}) {
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.DIRECTPAYONLINE, paymentData);
         break;
+      case 44: //Conekta Payment Getway
+        updateState({placeLoader: false});
+        navigation.navigate(navigationStrings.CONEKTA, paymentData);
+        break;
       case 46: //Direct Pay Online Payment Getway
         updateState({placeLoader: false});
         navigation.navigate(navigationStrings.KHALTI, paymentData);
@@ -1086,7 +1045,6 @@ function Cart({navigation, route}) {
     data['currency'] = currencies?.primary_currency?.iso_code;
     data['merchantname'] = appData?.profile?.company_name;
     data['countrycode'] = appData?.profile?.country?.code;
-    console.log('openPayTabsdata', data);
     try {
       const res = await payWithCard(data);
       console.log('payWithCard res++++', res);
@@ -1181,8 +1139,6 @@ function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
-  console.log(dineInType, 'vendorAddress?');
-
   const _directOrderPlace = () => {
     let data = {};
     data['vendor_id'] = cartData?.products[0]?.vendor_id;
@@ -1263,7 +1219,8 @@ function Cart({navigation, route}) {
           selectedPayment?.id != 36 &&
           selectedPayment?.id != 39 &&
           selectedPayment?.id != 34 &&
-          selectedPayment?.id != 41
+          selectedPayment?.id != 41 &&
+          selectedPayment?.id != 44
         ) {
           setCartItems([]);
           setCartData({});
@@ -1388,8 +1345,6 @@ function Cart({navigation, route}) {
       data['slot'] = selectedTimeSlots;
     }
 
-    console.log(data, 'fsdjkhfkjshfkjahsdkjfhak');
-
     // updateState({isLoading: false});
 
     actions
@@ -1413,7 +1368,6 @@ function Cart({navigation, route}) {
             isLoadingB: false,
           });
         }
-        // getCartDetail();
       })
       .catch((error) => console.log(error, 'errororor'));
   };
@@ -1422,7 +1376,6 @@ function Cart({navigation, route}) {
     // if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
     //   _offineLinePayment();
     //   return;
-    console.log('payment option', selectedPayment);
 
     if (
       selectedPayment?.id == 10 &&
@@ -1475,7 +1428,6 @@ function Cart({navigation, route}) {
   const formatDateSlot = (date, time) => {
     return moment(`${date} ${time}`, 'YYYY-MM-DD HH:mm:ss').format();
   };
-  console.log(appData, 'appDataappDataappData');
 
   //Clear cart
   const placeOrder = () => {
@@ -1551,7 +1503,6 @@ function Cart({navigation, route}) {
       var d1 = new Date();
       var d2 = new Date(localeSheduledOrderDate);
 
-      console.log('shceduleORderdata', sheduledorderdate);
       if (!selectedAddressData && dineInType !== 'takeaway') {
         // showError(strings.PLEASE_SELECT_ADDRESS);
         setModalVisible(true);
@@ -1596,7 +1547,6 @@ function Cart({navigation, route}) {
   useEffect(() => {
     if (paramsData?.redirectFrom && !!checkCartItem?.data) {
       _directOrderPlace();
-      console.log('useEffect 3');
     }
   }, [paramsData?.redirectFrom]);
 
@@ -1653,7 +1603,6 @@ function Cart({navigation, route}) {
       selectedAddressData?.id
     }&payment_option_id=${selectedPayment?.id}&action=cart`;
 
-    console.log(queryData, 'queryData');
     actions
       .openPaymentWebUrl(
         queryData,
@@ -1693,7 +1642,6 @@ function Cart({navigation, route}) {
       })
       .catch(errorMethod);
   };
-  console.log(cartData, 'cartDataaaaa');
   // const _createPaymentMethod = async (cardInfo, res2) => {
   //   console.log(cardInfo, '_createPaymentMethod>>>ardInfo');
   //   if (res2) {
@@ -1832,15 +1780,12 @@ function Cart({navigation, route}) {
   //       .catch(errorMethod);
   //   }
   // };
-  console.log(paymentMethodId, 'paymentMethodId');
   const _paymentWithStripe = async (
     cardInfo,
     tokenInfo,
     paymentMethodId,
     order_number,
   ) => {
-    console.log(order_number, 'order_numberrrrr');
-
     actions
       .getStripePaymentIntent(
         // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
@@ -1863,13 +1808,11 @@ function Cart({navigation, route}) {
         },
       )
       .then(async (res) => {
-        console.log(res, 'getStripePaymentIntent response');
         if (res && res?.client_secret) {
           const {paymentIntent, error} = await handleCardAction(
             res?.client_secret,
           );
           if (paymentIntent) {
-            console.log(paymentIntent, 'paymentIntent');
             if (paymentIntent) {
               actions
                 .confirmPaymentIntentStripe(
@@ -1959,7 +1902,6 @@ function Cart({navigation, route}) {
 
   //Offline payments
   const _offineLinePayment = async (order_number) => {
-    console.log(tokenInfo, 'tokenInfo>tokenInfo>tokenInfo');
     if (!!paymentMethodId) {
       // _createPaymentMethod(cardInfo, tokenInfo);
       _paymentWithStripe(cardInfo, tokenInfo, paymentMethodId, order_number);
@@ -2101,9 +2043,7 @@ function Cart({navigation, route}) {
       !!checkCartItem?.data.products &&
       !!checkCartItem?.data.products.length
     ) {
-      console.log('scheduleTypescheduleType', scheduleType);
       setDateAndTimeSchedule();
-      console.log('useEffect 4');
     }
   }, [scheduleType]);
 
@@ -2367,8 +2307,6 @@ function Cart({navigation, route}) {
     );
   };
   const _redirectVendorProducts = (item) => {
-    console.log(item, 'itemmmmm');
-
     moveToNewScreen(navigationStrings.PRODUCT_LIST, {
       fetchOffers: true,
       id: item?.vendor?.id,
@@ -2481,7 +2419,6 @@ function Cart({navigation, route}) {
   };
 
   const _renderItem = ({item, index}) => {
-    console.log(item, 'item>>><>>>');
     return (
       <View>
         {index === 0 && (
@@ -2586,7 +2523,6 @@ function Cart({navigation, route}) {
           {/************ start  render cart items *************/}
           {item?.vendor_products.length > 0
             ? item?.vendor_products.map((i, inx) => {
-                console.log(i, 'itemmmmmm');
                 return (
                   <Swipeable
                     ref={swipeRef}
@@ -2727,17 +2663,24 @@ function Cart({navigation, route}) {
                                 </View>
                               </View>
 
-                              <Text
+                              <View
                                 style={{
-                                  ...styles.priceItemLabel2,
-                                  fontSize: textScale(12),
-                                  color: isDarkMode
-                                    ? MyDarkTheme.colors.text
-                                    : colors.textGreyOpcaity7,
-                                  marginTop: moderateScaleVertical(4),
-                                  fontFamily: fontFamily.regular,
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
                                 }}>
-                                {i?.quantity} X {''}
+                                <Text
+                                  style={{
+                                    ...styles.priceItemLabel2,
+                                    fontSize: textScale(12),
+                                    color: isDarkMode
+                                      ? MyDarkTheme.colors.text
+                                      : colors.textGreyOpcaity7,
+                                    marginTop: moderateScaleVertical(4),
+                                    fontFamily: fontFamily.regular,
+                                  }}>
+                                  {i?.quantity} X{' '}
+                                </Text>
+
                                 <Text
                                   style={{
                                     color: isDarkMode
@@ -2753,7 +2696,7 @@ function Cart({navigation, route}) {
                                     )
                                   }`}
                                 </Text>
-                                ={' '}
+                                <Text> = </Text>
                                 <Text
                                   style={{
                                     color: isDarkMode
@@ -2763,13 +2706,13 @@ function Cart({navigation, route}) {
                                   {`${currencies?.primary_currency?.symbol}${
                                     // Number(i?.pvariant?.multiplier) *
                                     currencyNumberFormatter(
-                                      Number(i?.variants?.price),
+                                      Number(i?.variants?.quantity_price),
                                       appData?.profile?.preferences
                                         ?.digit_after_decimal,
                                     )
                                   }`}
                                 </Text>
-                              </Text>
+                              </View>
 
                               {i?.variant_options.length > 0
                                 ? i?.variant_options.map((j, jnx) => {
@@ -2832,7 +2775,7 @@ function Cart({navigation, route}) {
                                         : colors.textGreyOpcaity7,
                                       marginBottom: moderateScale(2),
                                       marginTop: moderateScaleVertical(6),
-                                      fontFamily:fontFamily.bold
+                                      fontFamily: fontFamily.bold,
                                     }}>
                                     {strings.EXTRA}
                                   </Text>
@@ -3242,7 +3185,13 @@ function Cart({navigation, route}) {
                 ) : null}
               </View>
             ) : (
-              <>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginVertical: moderateScaleVertical(6),
+                }}>
                 {!!item?.delivery_types && item?.delivery_types?.length > 0 ? (
                   <Text
                     style={{
@@ -3250,34 +3199,42 @@ function Cart({navigation, route}) {
                       color: isDarkMode
                         ? MyDarkTheme.colors.text
                         : colors.textGreyB,
-                      marginBottom: moderateScaleVertical(8),
                     }}>
                     {strings.DELIVERY_CHARGES}:
                   </Text>
                 ) : null}
-
-                {!!item?.delivery_types && item?.delivery_types.length > 0 ? (
+                {!!item?.delivery_types && item?.delivery_types.length == 1 ? (
+                  <Text>{`${item?.delivery_types[0]?.courier_name} ${currencies?.primary_currency?.symbol}${item?.delivery_types[0]?.rate}`}</Text>
+                ) : !!item?.delivery_types &&
+                  item?.delivery_types.length > 0 ? (
                   <ModalDropdown
                     multipleSelect={false}
                     options={item?.delivery_types}
                     renderRow={(val) => renderDropDown(val, item)}
                     dropdownStyle={{
                       minWidth: '40%',
-                      // minHeight: 50,
                       paddingHorizontal: moderateScale(6),
                       paddingVertical: moderateScaleVertical(12),
                     }}>
                     <View
                       style={{
                         ...styles.deliveryFeeDropDown,
-                        borderColor: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                        borderColor: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
                       }}>
                       {appIds.hokitch == getBundleId() ? (
                         <Text style={styles.dropDownTextStyle}>
                           {strings.CHARGES}
                         </Text>
                       ) : (
-                        <Text style={{...styles.dropDownTextStyle, color:isDarkMode ? MyDarkTheme.colors.text : colors.black}}>
+                        <Text
+                          style={{
+                            ...styles.dropDownTextStyle,
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
+                          }}>
                           {
                             item?.delivery_types.filter(
                               (val2) =>
@@ -3290,7 +3247,9 @@ function Cart({navigation, route}) {
                         style={{
                           ...styles.dropDownTextStyle,
                           marginHorizontal: moderateScale(8),
-                          color:isDarkMode ? MyDarkTheme.colors.text : colors.black
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
                         }}>
                         {
                           item?.delivery_types.filter(
@@ -3303,16 +3262,17 @@ function Cart({navigation, route}) {
                         style={{
                           width: moderateScale(10),
                           height: moderateScale(10),
-                          
                         }}
                         source={imagePath.icDropdown4}
-                        tintColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
+                        tintColor={
+                          isDarkMode ? MyDarkTheme.colors.text : colors.black
+                        }
                         resizeMode="contain"
                       />
                     </View>
                   </ModalDropdown>
                 ) : null}
-              </>
+              </View>
             )}
 
             {/* <View style={styles.itemPriceDiscountTaxView}>
@@ -3709,7 +3669,6 @@ function Cart({navigation, route}) {
   };
 
   const selectedTip = (tip) => {
-    console.log(tip, 'tip?');
     if (tip == 'custom') {
       setSelectedTipvalue(tip);
       setSelectedTipAmount(null);
@@ -4527,6 +4486,7 @@ function Cart({navigation, route}) {
             }}>
             {strings.AMOUNT_PAYABLE}
           </Text>
+
           <Text
             style={
               isDarkMode
@@ -4553,7 +4513,7 @@ function Cart({navigation, route}) {
               onPress={() =>
                 !!userData?.auth_token
                   ? updateState({paymentModal: true})
-                  :setAppSessionRedirection()
+                  : setAppSessionRedirection()
               }
               style={{
                 ...styles.paymentMainView,
@@ -4647,11 +4607,15 @@ function Cart({navigation, route}) {
                     : strings.SCHEDULE_ORDER
                 }
                 borderRadius={moderateScale(13)}
-                textStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black,}}
+                textStyle={{
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}
                 containerStyle={{
                   ...styles.placeOrderButtonStyle,
                   backgroundColor: colors.transparent,
-                  borderColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  borderColor: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.black,
                   borderWidth: 0.8,
                 }}
               />
@@ -4743,8 +4707,6 @@ function Cart({navigation, route}) {
     );
   };
 
-  console.log('selectedAddressData', selectedAddressData);
-
   //end footer
 
   //Header section of cart screen
@@ -4767,7 +4729,10 @@ function Cart({navigation, route}) {
         value = strings.WORK;
         break;
       case 3:
-        value = data?.type_name;
+        value =
+          data?.type_name == 0 || data?.type_name == null
+            ? strings.UNKNOWN
+            : data?.type_name;
         break;
       default:
         value = strings.ADD_ADDRESS;
@@ -4967,7 +4932,6 @@ function Cart({navigation, route}) {
 
   useEffect(() => {
     if (!!checkCartItem?.data) {
-      console.log('useEffect 5');
       getItem('deepLinkUrl')
         .then((res) => {
           if (res) {
@@ -5217,8 +5181,6 @@ function Cart({navigation, route}) {
       </View>
     );
   };
-
-  console.log('sheduledorderdate+++', sheduledorderdate);
 
   if (isLoadingB) {
     return (
@@ -5497,7 +5459,6 @@ function Cart({navigation, route}) {
     }
   };
 
-  console.log(selectedTimeSlots, 'SelectedTimeSlots');
   const onSelectPayment = (data) => {
     console.log('my data++++', data);
 
@@ -5953,8 +5914,6 @@ function Cart({navigation, route}) {
       isSubmitKycLoader: true,
     });
 
-    console.log(formdata, 'formdata>>>');
-
     actions
       .submitCategoryKYC(formdata, {
         code: appData?.profile?.code,
@@ -6409,30 +6368,31 @@ function Cart({navigation, route}) {
         onPressLeft={() => navigation.navigate(navigationStrings.HOMESTACK)}
       />
 
-      <FlatList
-        data={cartItems}
-        extraData={cartItems}
-        ListHeaderComponent={cartItems?.length ? getHeader() : null}
-        ListFooterComponent={cartItems?.length ? getFooter() : null}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={(item, index) => String(index)}
-        renderItem={_renderItem}
-        style={{
-          flex: 1,
-          backgroundColor: isDarkMode
-            ? MyDarkTheme.colors.background
-            : colors.backgroundGrey,
-        }}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={handleRefresh}
-            tintColor={themeColors.primary_color}
-          />
-        }
-        ListEmptyComponent={() => (!isLoadingB ? <ListEmptyComp /> : <></>)}
-      />
-
+      {
+        <FlatList
+          data={cartItems}
+          extraData={cartItems}
+          ListHeaderComponent={cartItems?.length ? getHeader() : null}
+          ListFooterComponent={cartItems?.length ? getFooter() : null}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(item, index) => String(index)}
+          renderItem={_renderItem}
+          style={{
+            flex: 1,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.backgroundGrey,
+          }}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              tintColor={themeColors.primary_color}
+            />
+          }
+          ListEmptyComponent={() => (!isLoadingB ? <ListEmptyComp /> : <></>)}
+        />
+      }
       {!!isModalVisibleForClearCart && (
         <ConfirmationModal
           closeModal={() => closeOptionModal()}
@@ -6465,7 +6425,6 @@ function Cart({navigation, route}) {
         openCloseMapAddress={openCloseMapAddress}
         constCurrLoc={location}
       />
-
       {/* Date time modal */}
       <Modal
         transparent={true}
@@ -6774,7 +6733,6 @@ function Cart({navigation, route}) {
                             }}>
                             {strings.TIME_SLOT}
                           </Text>
-                          {console.log(availableTimeSlots, "availableTimeSlots")}
                           <FlatList
                             horizontal
                             data={availableTimeSlots || []}
@@ -6983,7 +6941,7 @@ function Cart({navigation, route}) {
                 email: userData?.email,
                 name: userData?.name,
               },
-              amount: paymentDataFlutterWave?.total_payable_amount,
+              amount: paymentDataFlutterWave?.total_payable_amount || 0,
               currency: currencies?.primary_currency?.iso_code,
               payment_options: 'card',
             }}

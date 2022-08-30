@@ -517,8 +517,7 @@ export default {
   ipd: require('../assets/ipd.mp4'),
   icCar: require('../assets/images/ic_topviewcar.png'),
   muvpod: require('../assets/muvpod.mp4'),
-  // muvpod:
-  //   'https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/app_splashscreen/73jvbtlLAQCkDgO58NZ8Zx9tdoOnoxlgNICcS7Gp.mp4',
+  // 'https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/app_splashscreen/73jvbtlLAQCkDgO58NZ8Zx9tdoOnoxlgNICcS7Gp.mp4',
   sabroson: require('../assets/sabroson.mp4'),
   icSos: require('../assets/images/RoyoorderNewImages/ic_sos.png'),
   subscribe: require('../assets/images/subscribe.png'),
@@ -532,8 +531,10 @@ export default {
   send: require('../assets/images/ic_send.png'),
   icBgLight: require('../assets/images/ic_lightbg.png'),
   icBgDark: require('../assets/images/ic_darkbg.png'),
-  icUserChat: require('../assets/images/ic_userchat.png'),
-  icVendorChat: require('../assets/images/ic_vendorchat.png'),
   icDriverChat: require('../assets/images/ic_driver.png'),
   icStoreChat: require('../assets/images/ic_store.png'),
+  icBikeMarker1: require('../assets/images/mapMarkers/ic_bike.png'),
+  iccycleMarker: require('../assets/images/mapMarkers/ic_cycle.png'),
+  icmanMarker: require('../assets/images/mapMarkers/ic_man.png'),
+  ictruckMarker: require('../assets/images/mapMarkers/ic_truck.png'),
 };

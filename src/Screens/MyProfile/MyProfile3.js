@@ -55,6 +55,7 @@ import DeviceCountry, {
   TYPE_TELEPHONY,
   TYPE_CONFIGURATION,
 } from 'react-native-device-country';
+import {setPrimaryAddress} from '../../redux/actions/home';
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
@@ -179,53 +180,60 @@ export default function MyProfile3({route, navigation}) {
   useFocusEffect(
     React.useCallback(() => {
       getAllAddress();
-
       if (userData?.auth_token) {
-        actions
-          .getUserProfile(
-            {},
-            {
-              code: appData?.profile?.code,
-              currency: currencies?.primary_currency?.id,
-              language: languages?.primary_language?.id,
-            },
-          )
-          .then((res) => {
-            actions.updateProfile({...userData, ...res?.data});
-          })
-          .catch((err) => {
-            console.log(err, 'err>>>>>');
-          });
+        getUserProfileData();
       }
       if (!isEmpty(userData?.user_document)) {
-        let textInputs = cloneDeep(
-          userData?.user_document?.filter((x) => x?.file_type == 'Text'),
-        );
-        let images = cloneDeep(
-          userData?.user_document?.filter((x) => x?.file_type == 'Image'),
-        );
-        let pdfs = cloneDeep(
-          userData?.user_document?.filter((x) => x?.file_type == 'Pdf'),
-        );
-        textInputs.map((item, index) => {
-          textInputs[index].contents = item?.user_document?.file_name;
-        });
-
-        images.map((item, index) => {
-          images[index].value = item?.user_document?.image_file?.storage_url;
-        });
-        pdfs.map((item, index) => {
-          pdfs[index].filename = item?.user_document?.file_original_name;
-          pdfs[index].value = item?.user_document?.image_file?.storage_url;
-        });
-        updateState({
-          addtionalTextInputs: textInputs,
-          addtionalImages: images,
-          addtionalPdfs: pdfs,
-        });
+        getUserDocs();
       }
     }, []),
   );
+
+  const getUserProfileData = () => {
+    actions
+      .getUserProfile(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        actions.updateProfile({...userData, ...res?.data});
+      })
+      .catch((err) => {
+        console.log(err, 'err>>>>>');
+      });
+  };
+
+  const getUserDocs = () => {
+    let textInputs = cloneDeep(
+      userData?.user_document?.filter((x) => x?.file_type == 'Text'),
+    );
+    let images = cloneDeep(
+      userData?.user_document?.filter((x) => x?.file_type == 'Image'),
+    );
+    let pdfs = cloneDeep(
+      userData?.user_document?.filter((x) => x?.file_type == 'Pdf'),
+    );
+    textInputs.map((item, index) => {
+      textInputs[index].contents = item?.user_document?.file_name;
+    });
+
+    images.map((item, index) => {
+      images[index].value = item?.user_document?.image_file?.storage_url;
+    });
+    pdfs.map((item, index) => {
+      pdfs[index].filename = item?.user_document?.file_original_name;
+      pdfs[index].value = item?.user_document?.image_file?.storage_url;
+    });
+    updateState({
+      addtionalTextInputs: textInputs,
+      addtionalImages: images,
+      addtionalPdfs: pdfs,
+    });
+  };
 
   // changeTab function
   const changeTab = (tabData) => {
@@ -387,10 +395,6 @@ export default function MyProfile3({route, navigation}) {
         .then((res) => {
           updateState({del: del ? false : true});
           showSuccess(res.message);
-
-          // setTimeout(() => {
-          //   getAllAddress();
-          // }, 1000);
         })
         .catch((error) => {
           updateState({isLoading: false});
@@ -548,11 +552,11 @@ export default function MyProfile3({route, navigation}) {
       }
     }
   };
-  useEffect(() => {
-    if (!!userData?.auth_token) {
-      getAllAddress();
-    }
-  }, [del]);
+  // useEffect(() => {
+  //   if (!!userData?.auth_token) {
+  //     getAllAddress();
+  //   }
+  // }, [del]);
 
   //get All address
   const getAllAddress = () => {
@@ -603,7 +607,7 @@ export default function MyProfile3({route, navigation}) {
       })
       .then((res) => {
         updateState({del: del ? false : true});
-
+        getAllAddress();
         showSuccess(res.message);
       })
       .catch((error) => {
@@ -781,7 +785,9 @@ export default function MyProfile3({route, navigation}) {
                   style={[
                     styles.referralCode,
                     {
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
                       fontFamily: fontFamily.bold,
                     },
                   ]}>
@@ -951,6 +957,8 @@ export default function MyProfile3({route, navigation}) {
     );
   };
 
+  console.log(address, 'address>>>address');
+
   //address view tab
   const addressView = () => {
     return (
@@ -1090,14 +1098,20 @@ export default function MyProfile3({route, navigation}) {
                         justifyContent: 'center',
                       }}>
                       <Image
-                        style={{tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black}}
+                        style={{
+                          tintColor: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                        }}
                         source={imagePath.editBlue}
                       />
                       <Text
                         style={{
                           textAlign: 'center',
                           fontFamily: fontFamily.bold,
-                          color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
                           fontSize: textScale(12),
                           paddingLeft: moderateScale(5),
                         }}>
@@ -1266,8 +1280,9 @@ export default function MyProfile3({route, navigation}) {
           {/* scrolllablr tob bar */}
           <CustomTopTabBar
             scrollEnabled={true}
-            activeStyle={{color: isDarkMode ? MyDarkTheme.colors.text : colors.black}}
-            
+            activeStyle={{
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}
             tabBarItems={tabBarData}
             onPress={(tabData) => changeTab(tabData)}
             numberOfLines={1}
@@ -1275,14 +1290,13 @@ export default function MyProfile3({route, navigation}) {
             textTabWidth={width / 2.8}
             customTextContainerStyle={{
               width: width / 2.8,
-              
+
               // flexWrap: 'wrap',
               // alignSelf:'center'
               // justifyContent: 'center',
             }}
             textStyle={{
               fontSize: textScale(13),
-              
             }}
           />
 

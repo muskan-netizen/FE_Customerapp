@@ -531,7 +531,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrewLab.lastminutedress'
+                applicationId 'com.lastminutedress.orde'
                 resValue "string", "app_name", "Last Minute Dress"
                 resValue "string", "host_name", ""
             }

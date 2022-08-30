@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {
   FlatList,
   Image,
@@ -70,6 +70,7 @@ import {
   getAddressFromLatLong,
   getCurrentLocationFromApi,
 } from '../../../utils/googlePlaceApi';
+import useInterval from '../../../utils/useInterval';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => {},
@@ -83,7 +84,6 @@ export default function TaxiHomeDashbord({
   isDineInSelected = false,
   location = {},
 }) {
-  const mapRef = React.createRef();
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -136,17 +136,18 @@ export default function TaxiHomeDashbord({
     fullMapShow: false,
     isVisibleAddressModal: false,
     pickupAddress: {},
+    allListedDrivers: [],
   });
   console.log(location, 'loaction');
   console.log(region, 'region');
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  
+
   let findCabCategory = appMainData?.categories?.find(
     (x) => x?.redirect_to == staticStrings.PICKUPANDDELIEVRY,
   );
 
   console.log(appMainData?.categories, 'findCabCategory');
-  const {appData, themeColors, appStyle, languages} = useSelector(
+  const {appData, currencies, themeColors, appStyle, languages} = useSelector(
     (state) => state?.initBoot,
   );
   console.log(languages, 'languages>new');
@@ -173,7 +174,8 @@ export default function TaxiHomeDashbord({
     del,
     isLoadingModal,
     fullMapShow,
-    selectViaMap
+    selectViaMap,
+    allListedDrivers,
   } = state;
   const styles = stylesFunc({themeColors, fontFamily});
 
@@ -198,6 +200,103 @@ export default function TaxiHomeDashbord({
       }
     }, []),
   );
+
+  //show apdding from all the sides for drivers on map
+
+  //Finding All NearBy Drivers
+
+  const isFocused = useIsFocused();
+  useInterval(
+    () => {
+      if (location?.latitude && location?.longitude && userData?.auth_token) {
+        getAllDrivers();
+      }
+    },
+    isFocused ? 5000 : null,
+  );
+
+  const mapRef = useRef();
+
+  useEffect(() => {
+    if (allListedDrivers && allListedDrivers?.length) {
+      let arr = [];
+      allListedDrivers?.map((i, inx) => {
+        if (
+          i &&
+          i?.agentlog?.lat &&
+          i?.agentlog?.lat != NaN &&
+          i?.agentlog?.long != NaN
+        ) {
+          arr = [
+            ...arr,
+            {
+              latitude: Number(i?.agentlog?.lat),
+              longitude: Number(i?.agentlog?.long),
+            },
+          ];
+        }
+      });
+      console.log('i am calling');
+      // animate(region);
+      fitPadding(arr);
+    }
+  }, []);
+
+  const fitPadding = (newArray) => {
+    if (mapRef.current) {
+      mapRef.current.fitToCoordinates([...newArray], {
+        edgePadding: {top: 100, right: 80, bottom: 80, left: 80},
+        animated: true,
+      });
+    }
+  };
+
+  const getAllDrivers = () => {
+    actions
+      .getAllNearByDrivers(
+        {
+          latitude: location?.latitude,
+          longitude: location?.longitude,
+        },
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'response>>>>>>>>>>>>>>drivers ');
+
+        updateState({
+          allListedDrivers: res?.data,
+        });
+      })
+      .catch((error) => {
+        console.log(error, 'error>>>>>>>>>>>>>.drivers');
+      });
+  };
+
+  //render marker on map with driver type
+
+  const renderDriverTypeMarkes = (type) => {
+    switch (type?.vehicle_type_id) {
+      case 1:
+        return imagePath.icmanMarker;
+        break;
+      case 2:
+        return imagePath.iccycleMarker;
+        break;
+      case 3:
+        return imagePath.icbikeMarker;
+        break;
+      case 4:
+        return imagePath.icCar;
+        break;
+      case 5:
+        return imagePath.ictruckMarker;
+        break;
+    }
+  };
 
   useEffect(() => {
     if (!!userData?.auth_token) {
@@ -260,7 +359,6 @@ export default function TaxiHomeDashbord({
 
   const addUpdateLocation = (childData) => {
     //setModalVisible(false);
-    console.log(childData, 'childData>childData');
     updateState({isLoading: true});
 
     actions
@@ -271,7 +369,7 @@ export default function TaxiHomeDashbord({
         console.log(res, 'res>res>res');
         updateState({del: del ? false : true});
         showSuccess(res.message);
-       setModalVisible(false)
+        setModalVisible(false);
       })
       .catch((error) => {
         updateState({isLoading: false});
@@ -279,14 +377,12 @@ export default function TaxiHomeDashbord({
       });
   };
 
-
   const openCloseMapAddress = (type) => {
-    updateState({ selectViaMap: type == 1 ? true : false });
+    updateState({selectViaMap: type == 1 ? true : false});
   };
 
-
   const setModalVisible = (visible, type, id, data) => {
-    updateState({ selectViaMap: false });
+    updateState({selectViaMap: false});
     if (!!userData?.auth_token) {
       updateState({
         updateData: data,
@@ -397,7 +493,6 @@ export default function TaxiHomeDashbord({
     );
   };
 
-  console.log('location location', location);
   const moveToScreen = (details) => {
     updateState({fullMapShow: false});
     if (!!userData?.auth_token) {
@@ -563,8 +658,6 @@ export default function TaxiHomeDashbord({
     );
   };
 
-  console.log(slectedDate, 'selectedTimeselectedTime');
-
   return (
     <View
       style={{
@@ -588,6 +681,7 @@ export default function TaxiHomeDashbord({
         style={{flex: 1, zIndex: 1000}}>
         <>
           <TaxiBannerHome
+            appStyle={appStyle}
             bannerRef={bannerRef}
             slider1ActiveSlide={slider1ActiveSlide}
             bannerData={[...appData?.mobile_banners]}
@@ -877,7 +971,36 @@ export default function TaxiHomeDashbord({
               // onRegionChangeComplete={_onRegionChange}
               // showsMyLocationButton={true}
               // pointerEvents={'none'}
-            />
+            >
+              {allListedDrivers?.map((coordinate, index) => {
+                return (
+                  <Marker.Animated
+                    // tracksViewChanges={agent_location == null}
+                    coordinate={{
+                      latitude: Number(coordinate?.agentlog?.lat),
+                      longitude: Number(coordinate?.agentlog?.long),
+                    }}>
+                    <Image
+                      style={{
+                        zIndex: 99,
+                        // height:46,
+                        // width: 32,
+                        transform: [
+                          {
+                            rotate: `${Number(
+                              coordinate?.agentlog?.heading_angle
+                                ? coordinate?.agentlog?.heading_angle
+                                : 0,
+                            )}deg`,
+                          },
+                        ],
+                      }}
+                      source={renderDriverTypeMarkes(coordinate)}
+                    />
+                  </Marker.Animated>
+                );
+              })}
+            </MapView>
             <SafeAreaView>
               <TouchableOpacity
                 onPress={() => updateState({fullMapShow: false})}
