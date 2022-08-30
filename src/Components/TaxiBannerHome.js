@@ -26,7 +26,6 @@ const TaxiBannerHome = ({
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     showLightboxView: false,
-    // profileInfo: null
   });
   const {slider1ActiveSlide, showLightboxView} = state;
   const setSnapState = (index) => {
@@ -102,6 +101,7 @@ const TaxiBannerHome = ({
   return (
     <CardView style={[styles.cardViewStyle, cardViewStyle]}>
       <Carousel
+      layout={'default'}
         ref={bannerRef}
         data={bannerData}
         renderItem={bannerDataImages}
@@ -111,7 +111,6 @@ const TaxiBannerHome = ({
         sliderWidth={sliderWidth}
         itemWidth={itemWidth}
         onSnapToItem={(index) => setSnapState(index)}
-       
       />
     </CardView>
   );

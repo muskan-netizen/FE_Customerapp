@@ -294,6 +294,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   //Modal to select time
 
   const _confirmAndPay = () => {
+   
     console.log(selectedCarOption, 'selectedCarOption');
     let data = {};
 

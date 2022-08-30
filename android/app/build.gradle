@@ -209,15 +209,26 @@ android {
 
     flavorDimensions "appType"
 
+<<<<<<< HEAD
   productFlavors{
                  euodooTechnologies{
+=======
+    productFlavors {
+           
+                   knockknock{
+>>>>>>> abba3749ee42860e3c5c6abb62856d84bcf04bc4
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
+<<<<<<< HEAD
             applicationId 'com.euodooTechnologies.order'
             resValue "string", "app_name", "Euodoo Technologies "
+=======
+            applicationId 'com.knockKnock.userApp'
+            resValue "string", "app_name", "Knockknock"
+>>>>>>> abba3749ee42860e3c5c6abb62856d84bcf04bc4
             resValue "string", "host_name", ""
             }
   }

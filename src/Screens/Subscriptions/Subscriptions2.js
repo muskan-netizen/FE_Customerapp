@@ -1,5 +1,5 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {createRef, useEffect, useState} from 'react';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import React, {createRef, useCallback, useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -57,6 +57,7 @@ export default function Subscriptions2({navigation, route}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const [isReloadPage, setIsReloadPage] = useState(false)
   const [state, setState] = useState({
     isLoading: false,
     isLoadingB: false,
@@ -111,19 +112,26 @@ export default function Subscriptions2({navigation, route}) {
 
   const explosion = createRef();
 
+  const isFocused = useIsFocused()
+
   useFocusEffect(
     React.useCallback(() => {
       updateState({isLoadingB: true});
       getAllSubscriptions();
       console.log(explosion, 'explosion');
-    }, []),
+      console.log(isFocused, "isFocusedisFocused")
+      // console.log(isLoading, isLoadingB , "ldng , ldngb")
+      console.log('getAllSubscriptionsEffect')
+    }, [isFocused]),
   );
+
+
 
   // useEffect(() => {
   //   updateState({isLoadingB: true});
   //   getAllSubscriptions();
   //   console.log(explosion, 'explosion');
-  // }, []);
+  // }, [ isReloadPage,]);
 
   useEffect(() => {
     if (
@@ -150,7 +158,8 @@ export default function Subscriptions2({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log('Get all subscription plans', res);
+        console.log('getAllSubscriptionsFunction')
+        console.log('getAllSubscriptionsFunction', res);
         updateState({
           isLoadingB: false,
           isLoading: false,
@@ -386,7 +395,7 @@ export default function Subscriptions2({navigation, route}) {
               <CardField
                 postalCodeEnabled={false}
                 placeholder={{
-                  number: '4242 4242 4242 4242',
+                  number: '4242 4242 ',
                 }}
                 cardStyle={{
                   backgroundColor: '#FFFFFF',
@@ -656,9 +665,9 @@ export default function Subscriptions2({navigation, route}) {
     updateState({isModalVisibleForPayment: false});
     if (!!selectedPaymentMethod) {
       if (selectedPaymentMethod?.id == 4) {
-        console.log(selectedPaymentMethod?.id, 'selectedPaymentMethod?.id');
-
+        console.log(selectedPaymentMethod?.id, 'selectedPaymentMethod?.id>>');
         _offineLinePayment();
+        setIsReloadPage(true)
         return;
       } else if (selectedPaymentMethod?.id == 27) {
         let paymentData = {
@@ -833,7 +842,7 @@ export default function Subscriptions2({navigation, route}) {
     if (cardInfo) {
       //  updateState({isModalVisibleForPayment: false});
 
-      await createToken({...cardInfo, type: 'Card'})
+      await createToken({...cardInfo, type: 'Card',})
         .then((res) => {
           console.log(res, 'res>');
           console.log(selectedPlan, 'selectedPlan>');
@@ -963,7 +972,7 @@ export default function Subscriptions2({navigation, route}) {
       .catch(errorMethod);
   };
 
-  const listHeaderComponent = () => {
+  const listHeaderComponent = useCallback( () => {
     return (
       <>
         {!!currentSubscription && (
@@ -996,7 +1005,43 @@ export default function Subscriptions2({navigation, route}) {
         )}
       </>
     );
-  };
+  }, [isReloadPage , currentSubscription])
+ 
+  
+  // const listHeaderComponent = () => {
+  //   return (
+  //     <>
+  //       {!!currentSubscription && (
+  //         <>
+  //           <View style={{marginVertical: moderateScale(10)}}>
+  //             <Text
+  //               style={
+  //                 isDarkMode
+  //                   ? [
+  //                       styles.subscriptionTitle,
+  //                       {color: MyDarkTheme.colors.text},
+  //                     ]
+  //                   : styles.subscriptionTitle
+  //               }>
+  //               {strings.MYSUBSCRIPTION}
+  //             </Text>
+  //           </View>
+  //           <SubscriptionComponent2
+  //             data={currentSubscription?.plan}
+  //             subscriptionData={currentSubscription}
+  //             clientCurrency={clientCurrency}
+  //             allSubscriptions={allSubscriptions}
+  //             currentSubscription={true}
+  //             payNowUpcoming={() =>
+  //               selectSpecificSubscriptionPlan(currentSubscription?.plan)
+  //             }
+  //             cancelSubscription={() => cancelSubscription(currentSubscription)}
+  //           />
+  //         </>
+  //       )}
+  //     </>
+  //   );
+  // };
 
   return (
     <WrapperContainer

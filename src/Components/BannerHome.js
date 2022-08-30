@@ -26,7 +26,6 @@ const BannerHome = ({
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     showLightboxView: false,
-    // profileInfo: null
   });
   const {slider1ActiveSlide, showLightboxView} = state;
   const setSnapState = (index) => {
@@ -98,7 +97,7 @@ const BannerHome = ({
     <CardView style={[styles.cardViewStyle, cardViewStyle]}>
       <Carousel
         ref={bannerRef}
-        data={bannerData && bannerData?.length?bannerData:[]}
+        data={bannerData && bannerData?.length ? bannerData : []}
         renderItem={bannerDataImages}
         autoplay={true}
         loop={true}

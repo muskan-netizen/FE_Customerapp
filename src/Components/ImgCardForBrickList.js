@@ -41,7 +41,34 @@ const ImgCardForBrickList = ({
         containerStyle,
         {...getScaleTransformationStyle(scaleInAnimated)},
       ]}>
+        {/* <Text>jgfjgjfggj</Text> */}
+        {/* <View>
+        <Image
+          PlaceholderContent={
+            <Image
+              source={{
+                uri: getImageUrl(
+                  data.image.proxy_url,
+                  data.image.image_path,
+                  '60/28',
+                ),
+              }}
+              style={[styles.imgLarge, imageStyle]}
+            />
+          }
+          source={{
+            uri: getImageUrl(
+              data.image.proxy_url,
+              data.image.image_path,
+              '600/280',
+            ),
+          }}
+          style={[styles.imgLarge, imageStyle]}
+        />
+        </View> */}
       <Animated.View>
+       
+
         <Image
           PlaceholderContent={
             <Image
@@ -68,13 +95,14 @@ const ImgCardForBrickList = ({
         <View
           ref={viewRef2}
           style={[styles.blurContainer, {alignSelf: 'center'}]}>
-          <BlurView
+          
+          {/* <BlurView
             style={styles.absolute}
             viewRef={viewRef2}
             blurType="light"
             blurAmount={20}
             blurRadius={20}
-          />
+          /> */}
           <Text style={styles.txt}>{text}</Text>
         </View>
       </Animated.View>
@@ -105,16 +133,20 @@ export function stylesData({fontFamily}) {
       bottom: 10,
       alignItems: 'center',
       justifyContent: 'center',
-      // backgroundColor: 'rgba(255,255,255,.35)',
+      backgroundColor: 'rgba(255,255,255,.35)',
       borderRadius: moderateScaleVertical(15),
-      height: moderateScaleVertical(30),
+      height: moderateScaleVertical(40),
       width: moderateScale(130),
       overflow: 'hidden',
+
     },
     txt: {
       color: colors.white,
       fontFamily: fontFamily.bold,
       opacity: 0.9,
+      alignSelf:'center',
+      textAlign:'center'
+     
     },
     absolute: {
       position: 'absolute',

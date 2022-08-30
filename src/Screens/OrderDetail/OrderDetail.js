@@ -3588,13 +3588,13 @@ export default function OrderDetail({ navigation, route }) {
       });
   };
 
+  {console.log(paramData?.from), "param data"}
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
-
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2

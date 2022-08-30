@@ -40,7 +40,6 @@ const Banner = ({
     slider1ActiveSlide: 0,
     showLightboxView: false,
     imageLoader: true,
-    // profileInfo: null
   });
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {slider1ActiveSlide, showLightboxView} = state;

@@ -51,10 +51,12 @@ function DeliveryTypeComp({ selectedToggle = () => { } }) {
 
   const addAllTabs = () => {
     if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
-      updateState({ tabs: appData?.profile?.preferences?.vendorMode });
+      updateState({ tabs: appData?.profile?.preferences?.vendorMode});
     }
     return;
   };
+
+  console.log(appData?.profile,"appData?.profile?.preferences?.vendorMode");
 
   const _onTableItm = (value, indx) => {
     const newTabs = [...tabs];
@@ -106,6 +108,8 @@ function DeliveryTypeComp({ selectedToggle = () => { } }) {
   const errorMethod = (error) => {
     showError(error?.message || error?.error);
   };
+
+  console.log(tabs,"tabstabstabstabs");
 
   const renderItem = useCallback(({ item, index }) => {
 

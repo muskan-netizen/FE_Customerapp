@@ -213,7 +213,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error ,"errororors");
         updateState({
           searchData: [],
           isLoading: false,
