@@ -1939,6 +1939,10 @@ end
 target 'FairDeal' do
   
 end
+#SyloMart Target
+target 'SyloMart' do
+  
+end
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

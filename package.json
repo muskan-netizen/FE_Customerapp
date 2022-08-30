@@ -401,6 +401,7 @@
     "nuvoni": "react-native run-android --variant=nuvoniDebug --appIdSuffix=nuvoni",
     "syloMart": "react-native run-android --variant=syloMartDebug --appIdSuffix=syloMart",
     "fairDeal": "react-native run-android --variant=fairDealDebug --appIdSuffix=fairDeal",
+    
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
     "bustanfakiehRelease": "cd android && ./gradlew assembleBustanFakiehRelease",
@@ -796,6 +797,7 @@
     "nuvoniRelease": "cd android && ./gradlew assemblenuvoniRelease",
     "syloMartRelease": "cd android && ./gradlew assemblesyloMartRelease",
     "fairDealRelease": "cd android && ./gradlew assemblefairDealRelease",
+   
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",

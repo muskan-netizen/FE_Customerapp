@@ -399,6 +399,7 @@ const shortCodes = {
   nuvoni:'0f3d8d',
   syloMart:'f5358d',
   fairDeal:'e5e082',
+ 
 };
 
 const appIds = {
@@ -1990,6 +1991,7 @@ const appIds = {
     ios: 'com.fairDeal.order',
     android: 'com.fairDeal.order',
   }),
+  
 };
 
 const socialKeys = {
