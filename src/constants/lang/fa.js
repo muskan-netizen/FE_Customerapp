@@ -1891,7 +1891,7 @@ TAKE_ME_OUT: 'منو ببر بیرون'
 ,
 TERMSANDCONDITIONS: 'شرایط و ضوابط'
 ,
-ORDER_COMPLETED: 'سفارش تکمیل شد!!'
+ORDER_COMPLETED: 'سفارش تکمیل شد!!',
 
-
+ORDER:'Orders'
 }

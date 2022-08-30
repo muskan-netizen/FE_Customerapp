@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "101001301113",
+    "project_id": "nuvoni-dc711",
+    "storage_bucket": "nuvoni-dc711.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101001301113:android:62b0d985b9c2c3d4b818a8",
+        "android_client_info": {
+          "package_name": "com.nuvoni.orders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "101001301113-1f6mjjpnhtm3upduomj1dvej3ns8ph5j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nuvoni.orders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "101001301113-1v507e30rraot7dsddsq1sh7hj6va4ce.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nuvoni.orders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "101001301113-ooks78fvhg52rofk8qtqopilrn7ho4kv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nuvoni.orders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "101001301113-ikk1qil156acdrp0tickr7ahtfq42320.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDgPUa6JkEDD4rRFk854LdShAv_UDq1Y0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "101001301113-ikk1qil156acdrp0tickr7ahtfq42320.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "101001301113-a13jc7bvgih673teegkvfpt5ut8sqf6q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nuvoni.orders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -927,5 +927,6 @@ montant`,
   CHAT_ROOM:"Chat Room",
   PARTICIPANTS:"Participants",
   VENDOR:"Vendor",
-  START_CHAT:"Start Chat"
+  START_CHAT:"Start Chat",
+  ORDER:'Orders'
 };
