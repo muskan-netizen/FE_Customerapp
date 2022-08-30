@@ -207,15 +207,36 @@ android {
     flavorDimensions "appType"
 
   productFlavors{
-            lastminutedress{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.lastminutedress.orde'
-                resValue "string", "app_name", "Last Minute Dress"
-                resValue "string", "host_name", ""
+   
+              nuvoni{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.nuvoni.orders'
+            resValue "string", "app_name", "Nuvoni" 
+            resValue "string", "host_name", ""
+            }
+             baly{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.baly.orders'
+            resValue "string", "app_name", "Baly" 
+            resValue "string", "host_name", ""
+            }
+            fairDeal{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.fairDeal.order'
+            resValue "string", "app_name", "Fair Deal" 
+            resValue "string", "host_name", ""
             }
   }
     productFlavors {
@@ -5972,6 +5993,46 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.shelf.order'
             resValue "string", "app_name", "shelf" 
+            resValue "string", "host_name", ""
+            }
+         baly{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.baly.orders'
+            resValue "string", "app_name", "Baly" 
+            resValue "string", "host_name", ""
+            }
+              nuvoni{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.nuvoni.order'
+            resValue "string", "app_name", "Nuvoni" 
+            resValue "string", "host_name", ""
+            }
+         syloMart{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.syloMart.order'
+            resValue "string", "app_name", "SyloMart" 
+            resValue "string", "host_name", ""
+            }
+         fairDeal{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.fairDeal.order'
+            resValue "string", "app_name", "Fair Deal" 
             resValue "string", "host_name", ""
             }
     }

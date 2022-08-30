@@ -395,6 +395,11 @@ const shortCodes = {
   pets: '8e0436',
   getDress:'7d11ac',
   shelf:'345974',
+  baly:'3ae3ec',
+  nuvoni:'0f3d8d',
+  syloMart:'f5358d',
+  fairDeal:'e5e082',
+ 
 };
 
 const appIds = {
@@ -1970,6 +1975,23 @@ const appIds = {
     ios: 'com.shelf.order',
     android: 'com.shelf.order',
   }),
+  baly: Platform.select({
+    ios: 'com.baly.orders',
+    android: 'com.baly.orders',
+  }),
+  nuvoni: Platform.select({
+    ios: 'com.nuvoni.orders',
+    android: 'com.nuvoni.orders',
+  }),
+  syloMart: Platform.select({
+    ios: 'com.syloMart.order',
+    android: 'com.syloMart.order',
+  }),
+  fairDeal: Platform.select({
+    ios: 'com.fairDeal.order',
+    android: 'com.fairDeal.order',
+  }),
+  
 };
 
 const socialKeys = {
