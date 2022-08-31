@@ -996,4 +996,5 @@ Amount`,
   PARTICIPANTS: 'Participants',
   VENDOR: 'Vendor',
   START_CHAT: 'Start Chat',
+  EMPTY_WISHLIST: 'Your wish list is empty.',
 };

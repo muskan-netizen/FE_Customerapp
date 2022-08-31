@@ -2766,7 +2766,6 @@ export default function Products({route, navigation}) {
             }}
           />
           {cloneSectionList.map((el, index) => {
-            console.log('cloneSectionList>>>el', el);
             return (
               <TouchableOpacity
                 key={index}

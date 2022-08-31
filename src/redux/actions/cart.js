@@ -48,7 +48,6 @@ import types from '../types';
 const {dispatch} = store;
 
 export const saveAddress = (data) => {
-  console.log(data, 'data>>>>data>>>data');
   saveSelectedAddress(data).then((suc) => {
     dispatch({
       type: types.SELECTED_ADDRESS,
@@ -59,7 +58,7 @@ export const saveAddress = (data) => {
 
 //Get Cart Detail
 export function getCartDetail(url, data = {}, headers = {}) {
-  console.log(GET_CART_DETAIL+url,data,headers,"headers");
+  console.log(GET_CART_DETAIL + url, data, headers, 'headers');
   return new Promise((resolve, reject) => {
     apiGet(GET_CART_DETAIL + url, data, headers)
       .then((res) => {
@@ -229,7 +228,7 @@ export function getListOfPaymentMethod(query = '', data = {}, headers = {}) {
 
 //Get List of payment method
 export function openPaymentWebUrl(query = '', data = {}, headers = {}) {
-  console.log('payment++ query', GETWEBURL+query);
+  console.log('payment++ query', GETWEBURL + query);
   console.log('payment++ data', data);
   return new Promise((resolve, reject) => {
     apiGet(GETWEBURL + query, data, headers)

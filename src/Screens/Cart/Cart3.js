@@ -303,7 +303,7 @@ function Cart({navigation, route}) {
       checkforAddressUpdate();
     }
   }, [selectedAddress, allAddresss]);
-
+  console.log(allAddresss, 'allAddresss..');
   //check for addreess Update and change
   const checkforAddressUpdate = () => {
     if (allAddresss.length == 0) {
@@ -3190,7 +3190,12 @@ function Cart({navigation, route}) {
                   </Text>
                 ) : null}
                 {!!item?.delivery_types && item?.delivery_types.length == 1 ? (
-                  <Text>{`${item?.delivery_types[0]?.courier_name} ${currencies?.primary_currency?.symbol}${item?.delivery_types[0]?.rate}`}</Text>
+                  <Text>{`${item?.delivery_types[0]?.courier_name} ${
+                    currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
+                    Number(item?.delivery_types[0]?.rate),
+                    appData?.profile?.preferences?.digit_after_decimal,
+                  )}`}</Text>
                 ) : !!item?.delivery_types &&
                   item?.delivery_types.length > 0 ? (
                   <ModalDropdown
@@ -3951,6 +3956,7 @@ function Cart({navigation, route}) {
                   ? preferences?.want_to_tip_nomenclature
                   : strings.DOYOUWANTTOGIVEATIP}
               </Text>
+
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -4749,6 +4755,7 @@ function Cart({navigation, route}) {
               }}>
               {homeType(selectedAddressData)}
             </Text>
+            {console.log(selectedAddressData, 'selectedAddressData.')}
             <Text
               numberOfLines={2}
               style={{
@@ -4796,6 +4803,7 @@ function Cart({navigation, route}) {
   };
   //SelectAddress
   const selectAddress = (address) => {
+    console.log('here....', address);
     if (!!userData?.auth_token) {
       // updateState({ isLoadingB: true });
       let data = {};
@@ -4805,6 +4813,7 @@ function Cart({navigation, route}) {
           code: appData?.profile?.code,
         })
         .then((res) => {
+          console.log(res, 'response ... set primary');
           actions.saveAddress(address);
           setSelectedAddress(address);
           updateState({
@@ -4816,6 +4825,11 @@ function Cart({navigation, route}) {
         .catch(errorMethod);
     }
   };
+
+  useEffect(() => {
+    getAllAddress();
+    return () => {};
+  }, []);
 
   //Add and update the addreess
   const addUpdateLocation = (childData) => {

@@ -279,6 +279,8 @@ export function getAddressComponent(details, update) {
 
 export const sessionHandler = (error) => {
   actions.userLogout();
+  actions.cartItemQty('');
+  actions.saveAddress(null);
   actions.setAppSessionData('guest_login');
 };
 
@@ -358,7 +360,7 @@ const timeInLocalLangauge = (value, selectedLanguage) => {
   })}`;
 };
 
-const getNearestLocation = async(currentLocation, savedLocations = []) => {
+const getNearestLocation = async (currentLocation, savedLocations = []) => {
   const points = savedLocations.map((item, indx) => {
     const distance = getDistance(
       {

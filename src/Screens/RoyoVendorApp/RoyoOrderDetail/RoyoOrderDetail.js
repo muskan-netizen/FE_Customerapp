@@ -47,7 +47,6 @@ const RoyoOrderDetail = (props) => {
 
   const navigation = useNavigation();
 
-  console.log(data, 'dataaaaaaaaaa');
   const [state, setState] = useState({
     address: '',
     isLoadingB: false,
@@ -481,6 +480,17 @@ const RoyoOrderDetail = (props) => {
               <Text style={styles.font15Semibold}>
                 -{currencies?.primary_currency?.symbol}{' '}
                 {Number(data.total_discount).toFixed(2)}
+              </Text>
+            </View>
+          )}
+
+          {!!data?.tip_amount && Number(data?.tip_amount) !== 0 && (
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.font15Medium}>{strings.TIP_AMOUNT}</Text>
+              <Text style={styles.font15Semibold}>
+                {currencies?.primary_currency?.symbol}{' '}
+                {Number(data.tip_amount).toFixed(2)}
               </Text>
             </View>
           )}

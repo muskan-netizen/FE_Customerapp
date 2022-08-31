@@ -537,4 +537,6 @@ export default {
   iccycleMarker: require('../assets/images/mapMarkers/ic_cycle.png'),
   icmanMarker: require('../assets/images/mapMarkers/ic_man.png'),
   ictruckMarker: require('../assets/images/mapMarkers/ic_truck.png'),
+  icUserChat: require('../assets/images/ic_userchat.png'),
+  icVendorChat: require('../assets/images/ic_vendorchat.png'),
 };

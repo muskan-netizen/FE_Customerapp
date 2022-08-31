@@ -37,7 +37,7 @@ navigator.geolocation = require('react-native-geolocation-service');
 const ChooseAddressModal = ({
   isVisible = false,
   onClose,
-  selectAddress,
+  selectAddress = () => {},
   openAddressModal,
   selectedAddress,
 }) => {

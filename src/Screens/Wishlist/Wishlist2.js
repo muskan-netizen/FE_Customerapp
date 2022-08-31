@@ -12,6 +12,7 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
@@ -212,9 +213,14 @@ export default function Wishlist2({navigation}) {
           onEndReached={onEndReached}
           initialNumToRender={6}
           ListFooterComponent={() => <View style={{height: 20}} />}
-          ListEmptyComponent={
-            isLoading ? <ListEmptyProduct isLoading={isLoading} /> : null
-          }
+          ListEmptyComponent={() => (
+            <ListEmptyProduct
+              containerStyle={{
+                marginTop: height / 4,
+              }}
+              isLoading={isLoading}
+            />
+          )}
         />
       </View>
     </WrapperContainer>

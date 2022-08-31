@@ -27,7 +27,7 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
-import {currencyNumberFormatter} from '../utils/commonFunction';
+import {currencyNumberFormatter, dateParser} from '../utils/commonFunction';
 import {getImageUrl, showError} from '../utils/helperFunctions';
 import ButtonWithLoader from './ButtonWithLoader';
 
@@ -172,10 +172,10 @@ const OrderCardVendorComponent2 = ({
           </TouchableOpacity>
         </View>
       ) : null}
-      {/* {console.log('checking ssa', data)} */}
+      ß{' '}
       {data?.order_status?.current_status?.title !== strings.DELIVERED &&
         data?.order_status?.current_status?.title !== strings.REJECTED &&
-        (!!etaTime || !!data?.scheduled_date_time) && (
+        (!!etaTime || !!dateParser(data?.scheduled_date_time)) && (
           <View
             style={{
               ...styles.ariveView,
@@ -187,11 +187,10 @@ const OrderCardVendorComponent2 = ({
                 color: colors.white,
               }}>
               {strings.YOUR_ORDER_WILL_ARRIVE_BY}{' '}
-              {data?.scheduled_date_time ? data?.scheduled_date_time : etaTime}
+              {dateParser(data?.scheduled_date_time) || etaTime}
             </Text>
           </View>
         )}
-
       <View
         style={{
           flex: 1,
@@ -262,7 +261,6 @@ const OrderCardVendorComponent2 = ({
           </Text>
         </View>
       </View>
-
       <View
         style={[
           styles.borderStyle,
@@ -602,7 +600,6 @@ const OrderCardVendorComponent2 = ({
           </TouchableOpacity>
         ) : null}
       </View>
-
       <Modal
         isVisible={!!cancellationItem ? true : false}
         onBackdropPress={hideModal}

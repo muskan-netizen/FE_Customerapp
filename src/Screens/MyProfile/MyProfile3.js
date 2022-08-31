@@ -173,11 +173,8 @@ export default function MyProfile3({route, navigation}) {
   };
   useFocusEffect(
     React.useCallback(() => {
-      // updateState({
-      //   isLoading: true,
-      // });
-      getAllAddress();
       if (userData?.auth_token) {
+        getAllAddress();
         getUserProfileData();
       }
       if (!isEmpty(userData?.user_document)) {
@@ -232,6 +229,9 @@ export default function MyProfile3({route, navigation}) {
 
   // changeTab function
   const changeTab = (tabData) => {
+    // if (tabData.title == strings.ADDRESS) {
+    //   updateState({isLoading: true});
+    // }
     let clonedArray = cloneDeep(tabBarData);
     clonedArray.map((item) => {
       if (item.title == tabData.title) {
@@ -384,7 +384,7 @@ export default function MyProfile3({route, navigation}) {
   const addUpdateLocation = (childData) => {
     updateState({
       selectViaMap: false,
-      isLoading: true,
+      // isLoading: true,
       isVisible: false,
     });
     if (type == 'addAddress') {
@@ -394,13 +394,22 @@ export default function MyProfile3({route, navigation}) {
           language: languages?.primary_language?.id,
         })
         .then((res) => {
+          const allAddresses = address;
+          const previousPrimaryItem = allAddresses.find(
+            (itm) => itm?.is_primary == 1,
+          );
+
+          if (!!previousPrimaryItem) {
+            const indxToUpdatePrimary =
+              allAddresses.indexOf(previousPrimaryItem);
+            allAddresses[indxToUpdatePrimary].is_primary = 0;
+          }
           updateState({
             del: del ? false : true,
             isLoading: false,
+            address: [...allAddresses, res?.data],
           });
           showSuccess(res.message);
-          console.log('called...2');
-          getAllAddress();
         })
         .catch((error) => {
           updateState({isLoading: false});
@@ -408,19 +417,23 @@ export default function MyProfile3({route, navigation}) {
         });
     } else if (type == 'updateAddress') {
       let query = `/${selectedId}`;
-
       actions
         .updateAddress(query, childData, {
           code: appData?.profile?.code,
           language: languages?.primary_language?.id,
         })
         .then((res) => {
+          const allAddresses = address;
+          const objForIndx = allAddresses.find(
+            (item) => item?.id == selectedId,
+          );
+          const indexToUpdateItem = allAddresses.indexOf(objForIndx);
+          allAddresses[indexToUpdateItem] = res?.data;
           updateState({
             del: del ? false : true,
             isLoading: false,
+            address: allAddresses,
           });
-          console.log('called...3');
-          getAllAddress();
           showSuccess(res.message);
         })
         .catch(errorMethod);
@@ -473,20 +486,31 @@ export default function MyProfile3({route, navigation}) {
   };
 
   //Select Primary Address
-  const setPrimaryLocation = (id) => {
+  const setPrimaryLocation = (item) => {
     updateState({isLoading: true});
     let data = {};
-    let query = `/${id}`;
+    let query = `/${item?.id}`;
     actions
       .setPrimaryAddress(query, data, {
         code: appData?.profile?.code,
       })
       .then((res) => {
-        console.log(res, 'res>>>>>res');
-        updateState({isLoading: false, del: del ? false : true});
-        // showSuccess(res.message);
-        console.log('called...4');
-        getAllAddress();
+        const allAddresses = address;
+        const indxToUpdateItem = allAddresses.indexOf(item);
+        const previousPrimaryItem = allAddresses.find(
+          (itm) => itm.is_primary === 1,
+        );
+        if (!!previousPrimaryItem) {
+          const indxToUpdatePrimary = allAddresses.indexOf(previousPrimaryItem);
+          allAddresses[indxToUpdatePrimary].is_primary = 0;
+        }
+        allAddresses[indxToUpdateItem].is_primary = 1;
+        updateState({
+          isLoading: false,
+          del: del ? false : true,
+          address: allAddresses,
+        });
+        showSuccess(res.message);
       })
       .catch((error) => {
         updateState({isLoading: false});
@@ -565,6 +589,7 @@ export default function MyProfile3({route, navigation}) {
 
   //get All address
   const getAllAddress = () => {
+    updateState({isLoading: true});
     actions
       .getAddress(
         {},
@@ -573,6 +598,7 @@ export default function MyProfile3({route, navigation}) {
         },
       )
       .then((res) => {
+        console.log(res, 'kjsfksdhfkhsdf');
         actions.saveAllUserAddress(res.data);
         updateState({address: res.data, isLoading: false, indicator: false});
       })
@@ -590,10 +616,10 @@ export default function MyProfile3({route, navigation}) {
   };
 
   //Delete address
-  const delAddress = (id) => {
+  const delAddress = (item) => {
     updateState({isLoading: true});
     let data = {};
-    let query = `/${id}`;
+    let query = `/${item?.id}`;
 
     actions
       .deleteAddress(query, data, {
@@ -601,9 +627,16 @@ export default function MyProfile3({route, navigation}) {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        updateState({del: del ? false : true});
+        const allAddresses = address;
+        const indexToDeleteItem = allAddresses.indexOf(item);
+        allAddresses.splice(indexToDeleteItem, 1);
+        actions.saveAllUserAddress(allAddresses);
+        updateState({
+          del: del ? false : true,
+          address: allAddresses,
+          isLoading: false,
+        });
 
-        getAllAddress();
         showSuccess(res.message);
       })
       .catch((error) => {
@@ -1002,7 +1035,7 @@ export default function MyProfile3({route, navigation}) {
                   borderBottomColor: colors.lightGreyBorder,
                   borderBottomWidth: moderateScaleVertical(1),
                 }}>
-                <TouchableOpacity onPress={() => setPrimaryLocation(itm.id)}>
+                <TouchableOpacity onPress={() => setPrimaryLocation(itm)}>
                   <View
                     style={{
                       marginHorizontal: moderateScale(24),
@@ -1116,7 +1149,7 @@ export default function MyProfile3({route, navigation}) {
                     </TouchableOpacity>
                     <View style={{flex: 0.05}} />
                     <TouchableOpacity
-                      onPress={() => delAddress(itm.id)}
+                      onPress={() => delAddress(itm)}
                       style={{
                         width: width / 4.5,
                         backgroundColor: getColorCodeWithOpactiyNumber(

@@ -48,18 +48,19 @@ import {
 import navigationStrings from '../../navigation/navigationStrings';
 
 export default function Settings({route, navigation}) {
-  // const appData = useSelector(state => state?.initBoot?.appData);
-
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const userData = useSelector((state) => state.auth.userData);
+  const {
+    currencies,
+    appData,
+    languages,
+    appStyle,
+    themeColors,
+    themeToggle,
+    themeColor,
+  } = useSelector((state) => state?.initBoot);
+  const {userData} = useSelector((state) => state?.auth);
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {currencies, appData, languages, appStyle, themeColors} = useSelector(
-    (state) => state?.initBoot,
-  );
-  console.log(toggleTheme, 'togletheme ');
-  console.log(currencies, 'lang');
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+
   const [state, setState] = useState({
     isLoading: false,
     country: 'uk',
@@ -109,8 +110,8 @@ export default function Settings({route, navigation}) {
 
   useEffect(() => {
     updateState({
-      isOn: toggleTheme,
-      selectedThemeOption: theme
+      isOn: !!themeToggle,
+      selectedThemeOption: themeColor
         ? {
             id: 2,
             image: imagePath.dark,

@@ -400,6 +400,7 @@ const RoyoAddProduct = ({route, navigation}) => {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
+        'Content-Type': 'multipart/form-data',
       })
       .then(async (res) => {
         showSuccess(res?.message);

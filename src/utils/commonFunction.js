@@ -88,4 +88,11 @@ export function getRandomColor() {
   return color;
 }
 
+export function dateParser(dateString) {
+  const newDt = Date.parse(dateString);
+  if (!isNaN(newDt)) {
+    return dateString;
+  } else null;
+}
+
 export {cameraHandler, currencyNumberFormatter};
