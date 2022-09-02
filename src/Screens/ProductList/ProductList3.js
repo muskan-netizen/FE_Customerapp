@@ -1,7 +1,4 @@
-import BottomSheet, {
-  BottomSheetScrollView,
-  BottomSheetFooter,
-} from '@gorhom/bottom-sheet';
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {BlurView} from '@react-native-community/blur';
 import Clipboard from '@react-native-community/clipboard';
 import _, {cloneDeep, debounce} from 'lodash';
@@ -1256,8 +1253,8 @@ export default function Products({route, navigation}) {
       actions
         .addProductsToCart(data, {
           code: appData.profile.code,
-          currency: currencies.primary_currency.id,
-          language: languages.primary_language.id,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
           systemuser: DeviceInfo.getUniqueId(),
         })
         .then((res) => {
@@ -1573,12 +1570,12 @@ export default function Products({route, navigation}) {
     console.log('api hit getAllProductsByVendorCategory', data);
     actions
       .getProductByVendorCategoryId(
-        `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?page=${pageNo}`,
+        `/${data?.vendorData?.slug}/${data?.categoryInfo?.slug}?page=${pageNo}`,
         {},
         {
           code: appData.profile.code,
-          currency: currencies.primary_currency.id,
-          language: languages.primary_language.id,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
           systemuser: DeviceInfo.getUniqueId(),
         },
       )
@@ -1677,8 +1674,8 @@ export default function Products({route, navigation}) {
         {},
         {
           code: appData.profile.code,
-          currency: currencies.primary_currency.id,
-          language: languages.primary_language.id,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
           latitude: appMainData?.reqData?.latitude,
           longitude: appMainData?.reqData?.longitude,
           systemuser: DeviceInfo.getUniqueId(),
@@ -3245,8 +3242,8 @@ export default function Products({route, navigation}) {
       console.log(ProductTags, 'ProductTags?ProductTags');
       let headers = {
         code: appData.profile.code,
-        currency: currencies.primary_currency.id,
-        language: languages.primary_language.id,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
         latitude: appMainData?.reqData?.latitude,
         longitude: appMainData?.reqData?.longitude,
         systemuser: DeviceInfo.getUniqueId(),
@@ -3391,8 +3388,8 @@ export default function Products({route, navigation}) {
       actions
         .addProductsToCart(data, {
           code: appData.profile.code,
-          currency: currencies.primary_currency.id,
-          language: languages.primary_language.id,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
           systemuser: DeviceInfo.getUniqueId(),
         })
         .then(async (res) => {

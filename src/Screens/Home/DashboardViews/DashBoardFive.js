@@ -302,8 +302,8 @@ export default function DashBoardFive({
 
   const renderLaundryBanners = ({item}) => {
     const imageUrl = getImageUrl(
-      item.image.image_fit,
-      item.image.image_path,
+      item?.image?.image_fit,
+      item?.image?.image_path,
       '400/600',
     );
 

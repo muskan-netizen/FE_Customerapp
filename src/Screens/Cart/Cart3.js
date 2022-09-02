@@ -164,6 +164,7 @@ function Cart({navigation, route}) {
   const [selectedPrescriptionImgs, setPrescriptionImgs] = useState([]);
   const [isPrescriptionLoading, setPrescriptionLoading] = useState(false);
   const [isCheckSlotLoading, setCheckSloatLoading] = useState(false);
+  const [isShimmerLoading, setIsShimmerLoading] = useState(true);
 
   const [state, setState] = useState({
     showTaxFeeArea: false,
@@ -375,6 +376,7 @@ function Cart({navigation, route}) {
         console.log('cart details>>>', res);
         closeForm();
         actions.cartItemQty(res);
+        setIsShimmerLoading(false);
         let checkDate = !!res?.data?.scheduled_date_time;
         updateState({deliveryFeeLoader: false, isSubmitFaqLoader: false});
 
@@ -489,9 +491,7 @@ function Cart({navigation, route}) {
           // setLaundryAvailableDropOffSlot(res.data.slots);
 
           setCartData(res.data);
-          setSelectedTipvalue(
-            res?.data?.total_payable_amount == 0 ? 'custom' : null,
-          );
+
           updateState({
             isLoadingB: false,
             isRefreshing: false,
@@ -500,7 +500,6 @@ function Cart({navigation, route}) {
             //if schedule type is null then hit the api again with now option
             setDateAndTimeSchedule();
           }
-
           if (
             res?.data &&
             res?.data?.tip.length &&
@@ -3966,16 +3965,14 @@ function Cart({navigation, route}) {
                     return (
                       <TouchableOpacity
                         key={String(jnx)}
-                        style={[
-                          styles.tipArrayStyle,
-                          {
-                            backgroundColor:
-                              selectedTipvalue?.value == j?.value
-                                ? themeColors.primary_color
-                                : 'transparent',
-                            flex: 0.18,
-                          },
-                        ]}
+                        style={{
+                          ...styles.tipArrayStyle,
+                          backgroundColor:
+                            selectedTipvalue?.value == j?.value
+                              ? themeColors.primary_color
+                              : 'transparent',
+                          flex: 0.18,
+                        }}
                         onPress={() => selectedTip(j)}>
                         <Text
                           style={
@@ -5177,7 +5174,7 @@ function Cart({navigation, route}) {
     );
   };
 
-  if (isLoadingB) {
+  if (isShimmerLoading) {
     return (
       <WrapperContainer
         bgColor={
@@ -5428,7 +5425,7 @@ function Cart({navigation, route}) {
           // device_token: DeviceInfo.getUniqueId(),
         },
       );
-      console.log('avail slots++', res);
+
       if (modalType == 'pickup') {
         setLaundryAvailablePickupSlot(res);
       }

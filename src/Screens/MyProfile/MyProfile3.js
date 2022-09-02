@@ -598,7 +598,6 @@ export default function MyProfile3({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'kjsfksdhfkhsdf');
         actions.saveAllUserAddress(res.data);
         updateState({address: res.data, isLoading: false, indicator: false});
       })

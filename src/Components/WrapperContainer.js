@@ -44,7 +44,6 @@ const WrapperContainer = ({
           ? MyDarkTheme.colors.background
           : statusBarColor,
       }}>
-      {console.log(isLoadingB, 'isLoadingB>>>>')}
       <StatusBar
         backgroundColor={
           isDarkMode ? MyDarkTheme.colors.background : statusBarColor

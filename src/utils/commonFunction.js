@@ -50,7 +50,7 @@ const toFixed = (n, fixed) => {
   if (n > 0 && fixed > 0) {
     // return `${n}`.match(new RegExp(`^-?\\d+(?:\.\\d{0,${fixed}})?`))[0];
     return n.toFixed(fixed);
-  } else return n;
+  } else return Math.trunc(n);
 };
 
 const commaFormater = (num) => {

@@ -172,7 +172,6 @@ const OrderCardVendorComponent2 = ({
           </TouchableOpacity>
         </View>
       ) : null}
-      ß{' '}
       {data?.order_status?.current_status?.title !== strings.DELIVERED &&
         data?.order_status?.current_status?.title !== strings.REJECTED &&
         (!!etaTime || !!dateParser(data?.scheduled_date_time)) && (
