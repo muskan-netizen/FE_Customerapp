@@ -282,6 +282,8 @@ const removeItemfromData=(id)=>{
   };
 
   const orderDetail = (item) => {
+    alert('okkkk')
+    return
     navigation.navigate(navigationStrings.ORDER_DETAIL, {
       data: item,
       selectedVendor: storeSelectedVendor,

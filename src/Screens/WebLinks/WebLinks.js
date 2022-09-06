@@ -4,6 +4,7 @@ import {
   FlatList,
   I18nManager,
   Image,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -49,6 +50,13 @@ import validator from '../../utils/validations';
 import stylesFun from './styles';
 import Accordion from 'react-native-collapsible/Accordion';
 import { WebView } from 'react-native-webview';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+  MenuProvider
+} from 'react-native-popup-menu';
 
 let clickedIndx = null;
 let clickedItem = null;
@@ -106,7 +114,7 @@ export default function WebLinks({ navigation, route }) {
     confirm_password: '',
     description: '',
     vendor_name: '',
-    address:'',
+    address: '',
     website: '',
     isDineIn: false,
     isTakeaway: false,
@@ -156,7 +164,7 @@ export default function WebLinks({ navigation, route }) {
   const { location, appMainData, dineInType } = useSelector(
     (state) => state?.home,
   );
-  console.log(location , "locationlocation")
+  console.log(location, "locationlocation")
 
   const {
     cca2,
@@ -209,7 +217,7 @@ export default function WebLinks({ navigation, route }) {
     // isTakeaway: false,
     // isDelivery: false,
   }, []);
-  
+
   useEffect(() => {
     _getLocationFromParams();
     // if (addressSearch) {
@@ -257,7 +265,7 @@ export default function WebLinks({ navigation, route }) {
     updateState({ cca2: data.cca2, callingCode: data.callingCode[0] });
     return;
   };
-console.log(driverRegDocs, "driverRegDocsdriverRegDocs")
+  console.log(driverRegDocs, "driverRegDocsdriverRegDocs")
   const isValidData = () => {
     if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
       const error = validator({
@@ -418,7 +426,7 @@ console.log(driverRegDocs, "driverRegDocsdriverRegDocs")
         filename: vendorBanner.filename,
         type: vendorBanner.mime,
       });
-      
+
       // console.log(vendorRegisterationDocs, 'vendorRegDocs');
       // vendorRegDocs?.map((itm) => {
       //   if (itm?.is_required) {
@@ -573,7 +581,7 @@ console.log(driverRegDocs, "driverRegDocsdriverRegDocs")
           .then((res) => {
             if (res && res.data) {
               if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
-                console.log(clickedIndx,"clickedIndxclickedIndx")
+                console.log(clickedIndx, "clickedIndxclickedIndx")
                 if (clickedIndx != null) {
                   {
                     const driverRegistrationDocsAry = [
@@ -950,7 +958,7 @@ console.log(driverRegDocs, "driverRegDocsdriverRegDocs")
   }
 
   const _getLocationFromParams = () => {
-    console.log( paramData?.details?.formatted_address,  location?.address ,"paramData?.details?.formatted_address")
+    console.log(paramData?.details?.formatted_address, location?.address, "paramData?.details?.formatted_address")
     if (
       paramData?.details &&
       paramData?.details?.formatted_address != location?.address
@@ -966,12 +974,12 @@ console.log(driverRegDocs, "driverRegDocsdriverRegDocs")
       });
     } else {
       updateState({
-        address:location?.address ,
+        address: location?.address,
       });
     }
   };
 
-  console.log(address, " adressNdParam" )
+  console.log(address, " adressNdParam")
 
   console.log(htmlContent, 'htmlContenthtmlContent');
 
@@ -983,254 +991,257 @@ console.log(driverRegDocs, "driverRegDocsdriverRegDocs")
       statusBarColor={colors.white}
       isLoadingB={isLoading}
       source={loaderOne}>
-      <Header
-        leftIcon={
-          appStyle?.homePageLayout === 2
-            ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-              ? imagePath.icBackb
-              : imagePath.back
-        }
-        centerTitle={(paramData && paramData?.title) || ''}
-        headerStyle={
-          isDarkMode
-            ? { backgroundColor: MyDarkTheme.colors.background }
-            : { backgroundColor: Colors.white }
-        }
-      />
-      <View style={{ ...commonStyles.headerTopLine }} />
-      {console.log(I18nManager.isRTL, "I18nManager.isRTL")}
-      <KeyboardAwareScrollView
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          flexGrow: 1,
-        }}>
-        <View
-          style={{
-            marginTop: moderateScaleVertical(20),
-            marginHorizontal: moderateScale(20),
-
-            justifyContent: I18nManager.isRTL ? 'flex-end' : 'flex-start',
-            flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+      <MenuProvider>
+        <Header
+          leftIcon={
+            appStyle?.homePageLayout === 2
+              ? imagePath.backArrow
+              : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+                ? imagePath.icBackb
+                : imagePath.back
+          }
+          centerTitle={(paramData && paramData?.title) || ''}
+          headerStyle={
+            isDarkMode
+              ? { backgroundColor: MyDarkTheme.colors.background }
+              : { backgroundColor: Colors.white }
+          }
+        />
+        <View style={{ ...commonStyles.headerTopLine }} />
+        {console.log(I18nManager.isRTL, "I18nManager.isRTL")}
+        <KeyboardAwareScrollView
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            flexGrow: 1,
           }}>
-          {htmlContent && (
-            //  <View style={{flexDirection: I18nManager.isRTL ? 'row-reverse': 'row' }} >
-            <RenderHtml
-              contentWidth={width}
-              source={{ html: htmlContent }}
-              tagsStyles={{
-                p: {
-                  color: isDarkMode ? colors.white : colors.black,
-                  // alignSelf: I18nManager.isRTL ? 'left' : 'right',
-                  // textAlign: I18nManager.isRTL ? 'left' : 'right',
-                  // textAlign:'right',
+          <View
+            style={{
+              marginTop: moderateScaleVertical(20),
+              marginHorizontal: moderateScale(20),
 
-                }
-              }}
-            />
-            //  </View>
-            // <HTMLView
-            //   stylesheet={isDarkMode ? htmlStyle : null}
-            //   value={`<p>${htmlContent}</p>`}
-            // />
-          )}
-        </View>
-
-        {driverRegDocs?.page_detail?.primary?.type_of_form == 1 && (
-          <View style={styles.mainView}>
-            <View style={{
-              marginBottom: moderateScaleVertical(12),
+              justifyContent: I18nManager.isRTL ? 'flex-end' : 'flex-start',
               flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-              alignSelf: 'flex-start',
             }}>
-              <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
-            </View>
-            <BorderTextInput
-              placeholder={`${strings.YOUR_NAME}*`}
-              onChangeText={_onChangeText('fullname')}
-              containerStyle={styles.containerStyle}
-            />
+            {htmlContent && (
+              //  <View style={{flexDirection: I18nManager.isRTL ? 'row-reverse': 'row' }} >
+              <RenderHtml
+                contentWidth={width}
+                source={{ html: htmlContent }}
+                tagsStyles={{
+                  p: {
+                    color: isDarkMode ? colors.white : colors.black,
+                    // alignSelf: I18nManager.isRTL ? 'left' : 'right',
+                    // textAlign: I18nManager.isRTL ? 'left' : 'right',
+                    // textAlign:'right',
 
-            <BorderTextInput
-              placeholder={`${strings.YOUR_EMAIL}*`}
-              onChangeText={_onChangeText('email')}
-              containerStyle={styles.containerStyle}
-              keyboardType={'email-address'}
-            />
-            <PhoneNumberInput
-              onCountryChange={_onCountryChange}
-              onChangePhone={(phoneNumber) =>
-                updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })
-              }
-              cca2={cca2}
-              phoneNumber={phoneNumber}
-              callingCode={state.callingCode}
-              placeholder={`${strings.YOUR_PHONE_NUMBER}*`}
-              keyboardType={'phone-pad'}
-              containerStyle={styles.containerStyle}
-            />
+                  }
+                }}
+              />
+              //  </View>
+              // <HTMLView
+              //   stylesheet={isDarkMode ? htmlStyle : null}
+              //   value={`<p>${htmlContent}</p>`}
+              // />
+            )}
+          </View>
 
-            <BorderTextInput
-              placeholder={strings.ENTER_TITLE}
-              label={'Title'}
-              onChangeText={_onChangeText('title')}
-              containerStyle={styles.containerStyle}
-            />
-
-            <BorderTextInput
-              secureTextEntry={true}
-              placeholder={`${strings.ENTER_PASSWORD}*`}
-              onChangeText={_onChangeText('password')}
-              containerStyle={styles.containerStyle}
-            />
-            <BorderTextInput
-              secureTextEntry={true}
-              placeholder={`${strings.CONFIRM_PASSWORD}*`}
-              onChangeText={_onChangeText('confirm_password')}
-              containerStyle={styles.containerStyle}
-            />
-            <View style={{ marginVertical: moderateScaleVertical(10) }}>
-              <View style={{ flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-              alignSelf: 'flex-start',}} >
-                 <Text style={styles.detailStyle }>{strings.STORE_DETAILS}</Text>
+          {driverRegDocs?.page_detail?.primary?.type_of_form == 1 && (
+            <View style={styles.mainView}>
+              <View style={{
+                marginBottom: moderateScaleVertical(12),
+                flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                alignSelf: 'flex-start',
+              }}>
+                <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
               </View>
-              <View style={{ marginVertical: moderateScaleVertical(20) }}>
-                <View style={{ flexDirection: 'row' }}>
-                  <View
-                    style={{
-                      width: width / 2 - moderateScale(22),
-                    }}>
-                    <Text style={styles.uploadText}>
-                      {strings.UPLOAD_LOGO}*
-                    </Text>
-                    <TouchableOpacity
-                      onPress={() => {
-                        isVendorLogo = true;
-                        actionSheet.current.show();
+              <BorderTextInput
+                placeholder={`${strings.YOUR_NAME}*`}
+                onChangeText={_onChangeText('fullname')}
+                containerStyle={styles.containerStyle}
+              />
+
+              <BorderTextInput
+                placeholder={`${strings.YOUR_EMAIL}*`}
+                onChangeText={_onChangeText('email')}
+                containerStyle={styles.containerStyle}
+                keyboardType={'email-address'}
+              />
+              <PhoneNumberInput
+                onCountryChange={_onCountryChange}
+                onChangePhone={(phoneNumber) =>
+                  updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })
+                }
+                cca2={cca2}
+                phoneNumber={phoneNumber}
+                callingCode={state.callingCode}
+                placeholder={`${strings.YOUR_PHONE_NUMBER}*`}
+                keyboardType={'phone-pad'}
+                containerStyle={styles.containerStyle}
+              />
+
+              <BorderTextInput
+                placeholder={strings.ENTER_TITLE}
+                label={'Title'}
+                onChangeText={_onChangeText('title')}
+                containerStyle={styles.containerStyle}
+              />
+
+              <BorderTextInput
+                secureTextEntry={true}
+                placeholder={`${strings.ENTER_PASSWORD}*`}
+                onChangeText={_onChangeText('password')}
+                containerStyle={styles.containerStyle}
+              />
+              <BorderTextInput
+                secureTextEntry={true}
+                placeholder={`${strings.CONFIRM_PASSWORD}*`}
+                onChangeText={_onChangeText('confirm_password')}
+                containerStyle={styles.containerStyle}
+              />
+              <View style={{ marginVertical: moderateScaleVertical(10) }}>
+                <View style={{
+                  flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                  alignSelf: 'flex-start',
+                }} >
+                  <Text style={styles.detailStyle}>{strings.STORE_DETAILS}</Text>
+                </View>
+                <View style={{ marginVertical: moderateScaleVertical(20) }}>
+                  <View style={{ flexDirection: 'row' }}>
+                    <View
+                      style={{
+                        width: width / 2 - moderateScale(22),
                       }}>
+                      <Text style={styles.uploadText}>
+                        {strings.UPLOAD_LOGO}*
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          isVendorLogo = true;
+                          actionSheet.current.show();
+                        }}>
+                        <View style={styles.imageView}>
+                          <View
+                            style={[
+                              styles.viewOverImage2,
+                              { borderStyle: 'dashed' },
+                            ]}>
+                            <Image
+                              source={
+                                vendorLogo?.path
+                                  ? { uri: vendorLogo.path }
+                                  : imagePath.icCamIcon
+                              }
+                              // source={{uri:'file:///storage/emulated/0/Android/data/com.donepacked/files/Pictures/111fa92e-6b97-46e9-a459-a50b57c91641.jpg'}}
+                              style={{
+                                // tintColor: vendorLogo.path
+                                //   ? null
+                                //   : themeColors.primary_color,
+                                height: vendorLogo.path ? height / 6 - 10 : 30,
+                                width: vendorLogo.path
+                                  ? width / 2 - moderateScale(62)
+                                  : moderateScale(30),
+                              }}
+                              resizeMode="cover"
+                            />
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                    <View
+                      style={{
+                        width: width / 2 - moderateScale(22),
+                      }}>
+                      <Text style={styles.uploadText}>
+                        {strings.UPLOAD_BANNER}
+                      </Text>
+
                       <View style={styles.imageView}>
-                        <View
+                        <TouchableOpacity
+                          onPress={() => {
+                            isVendorLogo = false;
+
+                            actionSheet.current.show();
+                          }}
                           style={[
                             styles.viewOverImage2,
                             { borderStyle: 'dashed' },
                           ]}>
                           <Image
                             source={
-                              vendorLogo?.path
-                                ? { uri: vendorLogo.path }
+                              vendorBanner.path
+                                ? { uri: vendorBanner.path }
                                 : imagePath.icCamIcon
                             }
-                            // source={{uri:'file:///storage/emulated/0/Android/data/com.donepacked/files/Pictures/111fa92e-6b97-46e9-a459-a50b57c91641.jpg'}}
                             style={{
-                              // tintColor: vendorLogo.path
+                              // tintColor: vendorBanner.path
                               //   ? null
                               //   : themeColors.primary_color,
-                              height: vendorLogo.path ? height / 6 - 10 : 30,
-                              width: vendorLogo.path
+                              height: vendorBanner.path
+                                ? height / 6 - 10
+                                : moderateScale(30),
+                              width: vendorBanner.path
                                 ? width / 2 - moderateScale(62)
                                 : moderateScale(30),
                             }}
                             resizeMode="cover"
                           />
-                        </View>
+                        </TouchableOpacity>
                       </View>
-                    </TouchableOpacity>
-                  </View>
-                  <View
-                    style={{
-                      width: width / 2 - moderateScale(22),
-                    }}>
-                    <Text style={styles.uploadText}>
-                      {strings.UPLOAD_BANNER}
-                    </Text>
-
-                    <View style={styles.imageView}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          isVendorLogo = false;
-
-                          actionSheet.current.show();
-                        }}
-                        style={[
-                          styles.viewOverImage2,
-                          { borderStyle: 'dashed' },
-                        ]}>
-                        <Image
-                          source={
-                            vendorBanner.path
-                              ? { uri: vendorBanner.path }
-                              : imagePath.icCamIcon
-                          }
-                          style={{
-                            // tintColor: vendorBanner.path
-                            //   ? null
-                            //   : themeColors.primary_color,
-                            height: vendorBanner.path
-                              ? height / 6 - 10
-                              : moderateScale(30),
-                            width: vendorBanner.path
-                              ? width / 2 - moderateScale(62)
-                              : moderateScale(30),
-                          }}
-                          resizeMode="cover"
-                        />
-                      </TouchableOpacity>
                     </View>
                   </View>
                 </View>
               </View>
-            </View>
 
-            <BorderTextInput
-              placeholder={`${strings.VENDOR_NAME}*`}
-              onChangeText={_onChangeText('vendor_name')}
-              containerStyle={styles.containerStyle}
-            />
-            <BorderTextInput
-              placeholder={`${strings.DESCRIPTION}*`}
-              onChangeText={_onChangeText('description')}
-              containerStyle={styles.containerStyle}
-            />
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() =>
-                navigation.navigate(navigationStrings.LOCATION, {
-                  type: 'vendorRegistration',
-                })
-              }
-              style={{
-                flexDirection: 'row',
-                height: moderateScaleVertical(49),
-                color: colors.white,
-                borderWidth: 1,
-                borderRadius: 13,
-                borderColor: isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.borderLight,
-                marginBottom: 20,
-                overflow: 'hidden',
-                alignItems: 'center',
-                ...styles.containerStyle,
-              }}>
-              <Text
+              <BorderTextInput
+                placeholder={`${strings.VENDOR_NAME}*`}
+                onChangeText={_onChangeText('vendor_name')}
+                containerStyle={styles.containerStyle}
+              />
+              <BorderTextInput
+                placeholder={`${strings.DESCRIPTION}*`}
+                onChangeText={_onChangeText('description')}
+                containerStyle={styles.containerStyle}
+              />
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() =>
+                  navigation.navigate(navigationStrings.LOCATION, {
+                    type: 'vendorRegistration',
+                  })
+                }
                 style={{
-                  flex: 1,
-                  opacity: 0.7,
-                  color: isDarkMode
+                  flexDirection: 'row',
+                  height: moderateScaleVertical(49),
+                  color: colors.white,
+                  borderWidth: 1,
+                  borderRadius: 13,
+                  borderColor: isDarkMode
                     ? MyDarkTheme.colors.text
-                    : colors.textGreyOpcaity7,
-                  fontFamily: fontFamily.medium,
-                  fontSize: textScale(14),
-                  paddingHorizontal: 8,
-                  paddingTop: 0,
-                  paddingBottom: 0,
-                  textAlign: I18nManager.isRTL ? 'right' : 'left',
+                    : colors.borderLight,
+                  marginBottom: 20,
+                  overflow: 'hidden',
+                  alignItems: 'center',
+                  ...styles.containerStyle,
                 }}>
+                <Text
+                  style={{
+                    flex: 1,
+                    opacity: 0.7,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
+                    fontFamily: fontFamily.medium,
+                    fontSize: textScale(14),
+                    paddingHorizontal: 8,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    textAlign: I18nManager.isRTL ? 'right' : 'left',
+                  }}>
 
-                {address != '' && address != null
-                  ? `${address}`
-                  : `${strings.ADDRESS}*`}
+                  {address != '' && address != null
+                    ? `${address}`
+                    : `${strings.ADDRESS}*`}
                   {/* { address != '' && address != null ? address :  address == '' && address == null ? vendorAddress : strings.ADDRESS } */}
                   {/* {if(address != '' && address != null) {
                     `${address}`
@@ -1240,239 +1251,241 @@ console.log(driverRegDocs, "driverRegDocsdriverRegDocs")
                     `${strings.ADDRESS}`
                   }
                 }} */}
-              </Text>
-            </TouchableOpacity>
-            {/* <BorderTextInput
+                </Text>
+              </TouchableOpacity>
+              {/* <BorderTextInput
               placeholder={`${strings.ADDRESS}*`}
               onChangeText={_onChangeText('address')}
               containerStyle={styles.containerStyle}
             /> */}
-            <BorderTextInput
-              placeholder={strings.WEBSITE}
-              onChangeText={_onChangeText('website')}
-              containerStyle={styles.containerStyle}
-            />
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+              <BorderTextInput
+                placeholder={strings.WEBSITE}
+                onChangeText={_onChangeText('website')}
+                containerStyle={styles.containerStyle}
+              />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
 
-                marginHorizontal: moderateScale(10),
-                marginVertical: moderateScaleVertical(16),
-              }}>
-              {!!appData?.profile?.preferences?.dinein_check && (
-                <View
+                  marginHorizontal: moderateScale(10),
+                  marginVertical: moderateScaleVertical(16),
+                }}>
+                {!!appData?.profile?.preferences?.dinein_check && (
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        marginBottom: moderateScaleVertical(8),
+                        fontFamily: fontFamily.medium,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.textGreyOpcaity7,
+                      }}>
+                      {strings.DINE_IN}
+                    </Text>
+                    <ToggleSwitch
+                      isOn={isDineIn}
+                      onColor={themeColors.primary_color}
+                      offColor={
+                        isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                      }
+                      size="small"
+                      onToggle={() => updateState({ isDineIn: !isDineIn })}
+                    />
+                  </View>
+                )}
+                {!!appData?.profile?.preferences?.takeaway_check && (
+                  <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text
+                      style={{
+                        marginBottom: moderateScaleVertical(8),
+                        fontFamily: fontFamily.medium,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.textGreyOpcaity7,
+                      }}>
+                      {strings.TAKEAWAY}
+                    </Text>
+                    <ToggleSwitch
+                      isOn={isTakeaway}
+                      onColor={themeColors.primary_color}
+                      offColor={
+                        isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                      }
+                      size="small"
+                      onToggle={() => updateState({ isTakeaway: !isTakeaway })}
+                    />
+                  </View>
+                )}
+                {!!appData?.profile?.preferences?.delivery_check && (
+                  <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text
+                      style={{
+                        marginBottom: moderateScaleVertical(8),
+                        fontFamily: fontFamily.medium,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.textGreyOpcaity7,
+                      }}>
+                      {strings.DELIVERY}
+                    </Text>
+                    <ToggleSwitch
+                      isOn={isDelivery}
+                      onColor={themeColors.primary_color}
+                      offColor={
+                        isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                      }
+                      size="small"
+                      onToggle={() => updateState({ isDelivery: !isDelivery })}
+                    />
+                  </View>
+                )}
+              </View>
+              <View
+                style={{
+                  marginHorizontal: moderateScale(5),
+                }}>
+                <FlatList
+                  keyExtractor={(itm, indx) => indx.toString()}
+                  data={vendorRegDocs}
+                  renderItem={_renderFields}
+                />
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  marginVertical: moderateScale(10),
+                  alignItems: 'center',
+                }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    updateState({ isTermsConditions: !isTermsConditions })
+                  }>
+                  <Image
+                    source={
+                      isTermsConditions ? imagePath.check : imagePath.unCheck
+                    }
+                  />
+                </TouchableOpacity>
+                <Text
                   style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    fontFamily: fontFamily.regular,
+                    marginLeft: moderateScale(3),
+                    color: isDarkMode ? colors.white : colors.black
                   }}>
+                  {strings.I_ACCEPT}{' '}
+                </Text>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress={() => _onLinkPress('terms')}>
                   <Text
                     style={{
-                      marginBottom: moderateScaleVertical(8),
-                      fontFamily: fontFamily.medium,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.textGreyOpcaity7,
+                      fontFamily: fontFamily.regular,
+                      color: colors.blueColor,
                     }}>
-                    {strings.DINE_IN}
+                    {/* {strings.TERMS_CONDITIONS} */}
                   </Text>
-                  <ToggleSwitch
-                    isOn={isDineIn}
-                    onColor={themeColors.primary_color}
-                    offColor={
-                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
-                    }
-                    size="small"
-                    onToggle={() => updateState({ isDineIn: !isDineIn })}
-                  />
-                </View>
-              )}
-              {!!appData?.profile?.preferences?.takeaway_check && (
-                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                </TouchableOpacity>
+                <Text style={{ fontFamily: fontFamily.regular, color: isDarkMode ? colors.white : colors.black }}>
+                  {' '}
+                  {strings.HAVE_READ}{' '}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => _onLinkPress('privacy')}
+                  activeOpacity={0.7}>
                   <Text
                     style={{
-                      marginBottom: moderateScaleVertical(8),
-                      fontFamily: fontFamily.medium,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.textGreyOpcaity7,
+                      fontFamily: fontFamily.regular,
+                      color: colors.blueColor,
                     }}>
-                    {strings.TAKEAWAY}
+                    {strings.PRIVACY_POLICY}
                   </Text>
-                  <ToggleSwitch
-                    isOn={isTakeaway}
-                    onColor={themeColors.primary_color}
-                    offColor={
-                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
-                    }
-                    size="small"
-                    onToggle={() => updateState({ isTakeaway: !isTakeaway })}
-                  />
-                </View>
-              )}
-              {!!appData?.profile?.preferences?.delivery_check && (
-                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                  <Text
-                    style={{
-                      marginBottom: moderateScaleVertical(8),
-                      fontFamily: fontFamily.medium,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.textGreyOpcaity7,
-                    }}>
-                    {strings.DELIVERY}
-                  </Text>
-                  <ToggleSwitch
-                    isOn={isDelivery}
-                    onColor={themeColors.primary_color}
-                    offColor={
-                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
-                    }
-                    size="small"
-                    onToggle={() => updateState({ isDelivery: !isDelivery })}
-                  />
-                </View>
-              )}
-            </View>
-            <View
-              style={{
-                marginHorizontal: moderateScale(5),
-              }}>
-              <FlatList
-                keyExtractor={(itm, indx) => indx.toString()}
-                data={vendorRegDocs}
-                renderItem={_renderFields}
+                </TouchableOpacity>
+              </View>
+
+              <GradientButton
+                textStyle={{
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.borderLight
+                }}
+                onPress={_onSubmit}
+                marginTop={moderateScaleVertical(5)}
+                btnText={strings.SUBMIT}
+              />
+              <View
+                style={{
+                  height: moderateScaleVertical(24),
+                  marginBottom: moderateScaleVertical(44),
+                }}
               />
             </View>
+          )}
 
-            <View
-              style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                marginVertical: moderateScale(10),
-                alignItems: 'center',
+          {driverRegDocs?.page_detail?.primary?.type_of_form == 2 && (
+            <View style={styles.mainView}>
+              <View style={{
+                marginBottom: moderateScaleVertical(12), flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                alignSelf: 'flex-start',
               }}>
-              <TouchableOpacity
-                onPress={() =>
-                  updateState({ isTermsConditions: !isTermsConditions })
-                }>
-                <Image
-                  source={
-                    isTermsConditions ? imagePath.check : imagePath.unCheck
-                  }
-                />
-              </TouchableOpacity>
-              <Text
-                style={{
-                  fontFamily: fontFamily.regular,
-                  marginLeft: moderateScale(3),
-                  color: isDarkMode ? colors.white : colors.black
-                }}>
-                {strings.I_ACCEPT}{' '}
-              </Text>
+                <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
+              </View>
+
+              <Text style={{ ...styles.labelTxt, color: isDarkMode ? colors.white : colors.blackOpacity43 }}>{strings.UPLOAD_PHOTO}</Text>
               <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={() => _onLinkPress('terms')}>
-                <Text
-                  style={{
-                    fontFamily: fontFamily.regular,
-                    color: colors.blueColor,
-                  }}>
-                  {/* {strings.TERMS_CONDITIONS} */}
-                </Text>
-              </TouchableOpacity>
-              <Text style={{ fontFamily: fontFamily.regular, color: isDarkMode ? colors.white : colors.black }}>
-                {' '}
-                {strings.HAVE_READ}{' '}
-              </Text>
-              <TouchableOpacity
-                onPress={() => _onLinkPress('privacy')}
-                activeOpacity={0.7}>
-                <Text
-                  style={{
-                    fontFamily: fontFamily.regular,
-                    color: colors.blueColor,
-                  }}>
-                  {strings.PRIVACY_POLICY}
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            <GradientButton
-              textStyle={{
-                color: isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.borderLight
-              }}
-              onPress={_onSubmit}
-              marginTop={moderateScaleVertical(5)}
-              btnText={strings.SUBMIT}
-            />
-            <View
-              style={{
-                height: moderateScaleVertical(24),
-                marginBottom: moderateScaleVertical(44),
-              }}
-            />
-          </View>
-        )}
-
-        {driverRegDocs?.page_detail?.primary?.type_of_form == 2 && (
-          <View style={styles.mainView}>
-            <View style={{ marginBottom: moderateScaleVertical(12), flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-              alignSelf: 'flex-start', }}>
-              <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
-            </View>
-
-            <Text style={{ ...styles.labelTxt, color: isDarkMode ? colors.white : colors.blackOpacity43 }}>{strings.UPLOAD_PHOTO}</Text>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() => {
-                actionSheet.current.show();
-              }}
-              style={{
-                ...styles.imageView,
-                // marginVertical: moderateScale(5),
-                marginHorizontal: 0,
-                marginBottom: moderateScaleVertical(14),
-              }}>
-              <Image
-                source={driverPic ? { uri: driverPic.path } : imagePath.icCamIcon}
-                style={{
-                  // tintColor: !driverPic ? themeColors.primary_color : null,
-                  height: driverPic ? height / 6 - moderateScale(15) : 30,
-                  width: driverPic ? width - moderateScale(80) : 30,
+                onPress={() => {
+                  actionSheet.current.show();
                 }}
-                resizeMode={'cover'}
+                style={{
+                  ...styles.imageView,
+                  // marginVertical: moderateScale(5),
+                  marginHorizontal: 0,
+                  marginBottom: moderateScaleVertical(14),
+                }}>
+                <Image
+                  source={driverPic ? { uri: driverPic.path } : imagePath.icCamIcon}
+                  style={{
+                    // tintColor: !driverPic ? themeColors.primary_color : null,
+                    height: driverPic ? height / 6 - moderateScale(15) : 30,
+                    width: driverPic ? width - moderateScale(80) : 30,
+                  }}
+                  resizeMode={'cover'}
+                />
+              </TouchableOpacity>
+
+              <Text style={styles.labelTxt}>{strings.YOUR_NAME}</Text>
+
+              <BorderTextInput
+                placeholder={''}
+                onChangeText={_onChangeText('driverName')}
+                containerStyle={styles.containerStyle}
               />
-            </TouchableOpacity>
 
-            <Text style={styles.labelTxt}>{strings.YOUR_NAME}</Text>
+              <Text style={styles.labelTxt}>{strings.YOUR_PHONE_NUMBER}</Text>
 
-            <BorderTextInput
-              placeholder={''}
-              onChangeText={_onChangeText('driverName')}
-              containerStyle={styles.containerStyle}
-            />
-
-            <Text style={styles.labelTxt}>{strings.YOUR_PHONE_NUMBER}</Text>
-
-            <PhoneNumberInput
-              onCountryChange={_onCountryChange}
-              onChangePhone={(phoneNumber) =>
-                updateState({
-                  driverPhoneNumber: phoneNumber.replace(/[^0-9]/g, ''),
-                })
-              }
-              cca2={cca2}
-              phoneNumber={driverPhoneNumber}
-              callingCode={state.callingCode}
-              placeholder={''}
-              keyboardType={'phone-pad'}
-              containerStyle={styles.containerStyle}
-            />
-
-            <View style={{ zIndex: 10 }}>
+              <PhoneNumberInput
+                onCountryChange={_onCountryChange}
+                onChangePhone={(phoneNumber) =>
+                  updateState({
+                    driverPhoneNumber: phoneNumber.replace(/[^0-9]/g, ''),
+                  })
+                }
+                cca2={cca2}
+                phoneNumber={driverPhoneNumber}
+                callingCode={state.callingCode}
+                placeholder={''}
+                keyboardType={'phone-pad'}
+                containerStyle={styles.containerStyle}
+              />
+            {/* type ================================== */}
+              <View style={{ zIndex: 10 }}>
               <TouchableOpacity
                 style={{
                   borderRadius: 8,
@@ -1503,12 +1516,13 @@ console.log(driverRegDocs, "driverRegDocsdriverRegDocs")
               {isDriverType && (
                 <View
                   style={{
-                    top: moderateScaleVertical(40),
+                    // top: moderateScaleVertical(40),
+                    top: moderateScaleVertical(-12),
                     borderWidth: 1,
                     borderColor: colors.borderColorB,
                     backgroundColor: colors.white,
                     width: '100%',
-                    position: 'absolute',
+                    position: 'relative',
                     paddingHorizontal: moderateScale(10),
                     paddingVertical: moderateScale(5),
                     shadowOffset: { width: 0, height: 1 },
@@ -1526,6 +1540,7 @@ console.log(driverRegDocs, "driverRegDocsdriverRegDocs")
                         }
                         style={{
                           marginVertical: moderateScale(5),
+                          zIndex: 12,
                         }}>
                         <Text>{itm.name}</Text>
                       </TouchableOpacity>
@@ -1535,322 +1550,430 @@ console.log(driverRegDocs, "driverRegDocsdriverRegDocs")
               )}
             </View>
 
-            <View style={{ zIndex: 5 }}>
-              <TouchableOpacity
-                style={{
-                  borderRadius: 8,
-                  height: moderateScaleVertical(44),
-                  marginBottom: moderateScaleVertical(14),
-                  paddingHorizontal: moderateScale(5),
-                  borderWidth: 1,
-                  borderColor: isDarkMode ? colors.white : colors.borderLight,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
-                activeOpacity={0.7}
-                onPress={() =>
-                  updateState({
-                    isTeams: !isTeams,
-                    isDriverType: false,
-                    isTagsShow: false,
-                  })
-                }>
-                <Text style={{ ...styles.labelTxt, marginBottom: 0 }}>
-                  {!!selectedTeam ? selectedTeam?.name : strings.TEAMS}
-                </Text>
-                <Image source={imagePath.dropDownNew} style={{ tintColor: isDarkMode ? colors.white : colors.black }} />
-              </TouchableOpacity>
+               {/* <View style={{
+                borderRadius: 8,
+                height: moderateScaleVertical(44),
+                marginBottom: moderateScaleVertical(14),
+                paddingHorizontal: moderateScale(5),
+                borderWidth: 1,
+                borderColor: isDarkMode ? colors.white : colors.borderLight,
+              }} >
 
-              {isTeams && (
-                <View
-                  style={{
-                    top: moderateScaleVertical(44),
-                    position: 'absolute',
-                    borderWidth: 1,
-                    borderColor: colors.borderColorB,
-                    backgroundColor: colors.white,
-                    width: '100%',
-                    paddingHorizontal: moderateScale(10),
-                    paddingVertical: moderateScale(5),
-                    shadowOffset: { width: 0, height: 1 },
-                    shadowOpacity: 0.1,
-                  }}>
-                  {driverRegDocs?.teams.length > 0 ? (
-                    <View>
-                      {driverRegDocs?.teams.map((itm, indx) => {
-                        return (
-                          <TouchableOpacity
-                            key={indx}
-                            onPress={() =>
-                              updateState({
-                                selectedTeam: itm,
-                                isTeams: false,
-                              })
-                            }
-                            style={{
-                              marginVertical: moderateScale(5),
-                            }}>
-                            <Text>{itm.name}</Text>
-                          </TouchableOpacity>
-                        );
-                      })}
-                    </View>
-                  ) : (
-                    <View
-                      style={{
-                        width: '100%',
-                        height: moderateScale(30),
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: colors.white,
-                      }}>
-                      <Text
-                        style={{
-                          fontFamily: fontFamily.medium,
-                          fontSize: moderateScale(13),
-                        }}>
-                        {strings.NODATAFOUND}
-                      </Text>
-                    </View>
-                  )}
-                </View>
-              )}
-            </View>
 
-            <View style={{ marginBottom: moderateScaleVertical(14), zIndex: 2 }}>
-              <View
-                onLayout={(event) => {
-                  updateState({
-                    tagsViewHeight: event.nativeEvent.layout.height,
-                  });
-                }}
-                style={{
-                  minHeight: moderateScaleVertical(44),
-                  color: colors.white,
-                  borderWidth: 1,
-                  borderColor: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.borderLight,
-                  borderRadius: 8,
-                  paddingVertical: 3,
-                  paddingHorizontal: 3,
-                  justifyContent: 'center',
-                }}>
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                  {selectedTags.length > 0 && (
-                    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                      <FlatList
-                        numColumns={3}
-                        data={selectedTags}
-                        renderItem={({ item, index }) => (
-                          <TouchableOpacity
-                            onPress={() => removeTag(item, index)}
-                            activeOpacity={0.7}
-                            style={{
-                              borderWidth: 1,
-                              borderColor: colors.borderColorB,
-                              alignItems: 'center',
-                              backgroundColor: colors.borderColorB,
-                              marginHorizontal: moderateScale(2),
-                              flexDirection: 'row',
-                              marginVertical: 3,
-                              width: (width - moderateScale(52)) / 3,
-                              justifyContent: 'space-around',
-                              borderRadius: moderateScale(5),
-                              paddingVertical: moderateScale(3),
-                            }}>
-                            <Image
-                              source={imagePath.ic_cross}
-                              style={{
-                                height: 15,
-                                width: 15,
-                                tintColor: colors.blackOpacity70,
-                              }}
-                            />
-                            <Text
-                              style={{
-                                fontFamily: fontFamily.regular,
-                                marginRight: 3,
-                              }}>
-                              {item?.name}
-                            </Text>
-                          </TouchableOpacity>
-                        )}
-                      />
-                    </View>
-                  )}
-                  <TextInput
-                    placeholderTextColor={isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.borderLight}
-                    placeholder={strings.TAGS}
-                    onFocus={() => updateState({ isTagsShow: true })}
-                    onBlur={() => updateState({ isTagsShow: false })}
-                    onChangeText={onSearchTags}
+                <Menu >
+                  <MenuTrigger
+                    // children={}
                     style={{
-                      opacity: 0.7,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.textGreyOpcaity7,
-                      fontFamily: fontFamily.medium,
-                      fontSize: textScale(14),
-                      paddingHorizontal: 8,
-                      textAlign: I18nManager.isRTL ? 'right' : 'left',
-                      marginVertical: 3,
-                      marginHorizontal: 3,
+                      paddingTop: 8,
+                    }}    
+                    text={!!selectedDriverType
+                      ? selectedDriverType.name
+                      : strings.TYPE} />
+                  <MenuOptions
+                    optionsContainerStyle={{
+                      width: moderateScale(width / 1.2),
+                      // alignItems: "center",
+                      zIndex: 1,
+                      // minWidth: moderateScale(width - 40),
+                      marginTop: Platform.OS == 'android' ? moderateScaleVertical(45) : 0
                     }}
-                  />
-                </View>
-              </View>
-              {isTagsShow && (
-                <View
-                  style={{
-                    backgroundColor: colors.white,
-                    position: 'absolute',
-                    shadowOffset: { width: 0, height: 1 },
-                    shadowOpacity: 0.1,
-                    width: '100%',
+                  >
+                    {driverTypes.map((itm, indx) => {
+                      console.log(itm, driverTypes, "itmitmitmitm")
 
-                    top: tagsViewHeight,
-                  }}>
-                  {driverTagsAry.length > 0 ? (
-                    <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
-                      {driverTagsAry.map((item, index) => {
-                        return (
-                          <TouchableOpacity
-                            onPress={() => _onTagSelect(item, index)}
-                            activeOpacity={0.7}
-                            style={{
-                              borderWidth: 1,
-                              borderColor: selectedTags.includes(item)
-                                ? themeColors.primary_color
-                                : colors.borderColorB,
-                              width: (width - moderateScale(70)) / 3,
-                              alignItems: 'center',
-                              marginVertical: moderateScale(5),
-                              paddingVertical: moderateScale(5),
-                              marginHorizontal: moderateScale(5),
-                              zIndex: 1,
-                              backgroundColor: selectedTags.includes(item)
-                                ? themeColors.primary_color
-                                : colors.borderColorB,
-                              borderRadius: moderateScale(5),
-                            }}>
+                      return (
+                        <>
+                          <MenuOption
+                            onSelect={() => updateState({ selectedDriverType: itm, isDriverType: false })}>
                             <Text
                               style={{
-                                textAlign: 'center',
-                                color: selectedTags.includes(item)
-                                  ? colors.white
-                                  : colors.black,
-                              }}>
-                              {item?.name}
+                                color:
+                                  itm?.id == selectedDriverType?.id
+                                    ? colors.redB
+                                    : colors.black,
+                              }}
+                            >
+                              {itm.name}
                             </Text>
-                          </TouchableOpacity>
-                        );
-                      })}
-                    </View>
-                  ) : (
-                    <View
-                      style={{
-                        width: '100%',
-                        height: moderateScale(30),
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      <Text
+                          </MenuOption>
+                        </>
+                      );
+                    })}
+                  </MenuOptions>
+                </Menu>
+              </View> */}
+
+              <View style={{ zIndex: 5 }}>
+                <TouchableOpacity
+                  style={{
+                    borderRadius: 8,
+                    height: moderateScaleVertical(44),
+                    marginBottom: moderateScaleVertical(14),
+                    paddingHorizontal: moderateScale(5),
+                    borderWidth: 1,
+                    borderColor: isDarkMode ? colors.white : colors.borderLight,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}
+                  activeOpacity={0.7}
+                  onPress={() =>
+                    updateState({
+                      isTeams: !isTeams,
+                      isDriverType: false,
+                      isTagsShow: false,
+                    })
+                  }>
+                  <Text style={{ ...styles.labelTxt, marginBottom: 0 }}>
+                    {!!selectedTeam ? selectedTeam?.name : strings.TEAMS}
+                  </Text>
+                  <Image source={imagePath.dropDownNew} style={{ tintColor: isDarkMode ? colors.white : colors.black }} />
+                </TouchableOpacity>
+
+                {isTeams && (
+                  <View
+                    style={{
+                      top: moderateScaleVertical(-12),
+                      position: 'relative',
+                      borderWidth: 1,
+                      borderColor: colors.borderColorB,
+                      backgroundColor: colors.white,
+                      width: '100%',
+                      paddingHorizontal: moderateScale(10),
+                      paddingVertical: moderateScale(5),
+                      shadowOffset: { width: 0, height: 1 },
+                      shadowOpacity: 0.1,
+                    }}>
+                    {driverRegDocs?.teams.length > 0 ? (
+                      <View>
+                        {driverRegDocs?.teams.map((itm, indx) => {
+                          return (
+                            <TouchableOpacity
+                              key={indx}
+                              onPress={() =>
+                                updateState({
+                                  selectedTeam: itm,
+                                  isTeams: false,
+                                })
+                              }
+                              style={{
+                                marginVertical: moderateScale(5),
+                              }}>
+                              <Text>{itm.name}</Text>
+                            </TouchableOpacity>
+                          );
+                        })}
+                      </View>
+                    ) : (
+                      <View
                         style={{
-                          fontFamily: fontFamily.medium,
-                          fontSize: moderateScale(13),
+                          width: '100%',
+                          height: moderateScale(30),
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          backgroundColor: colors.white,
                         }}>
-                        {strings.NODATAFOUND}
-                      </Text>
-                    </View>
-                  )}
+                        <Text
+                          style={{
+                            fontFamily: fontFamily.medium,
+                            fontSize: moderateScale(13),
+                          }}>
+                          {strings.NODATAFOUND}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                )}
+              </View>
+
+              {/* Teamsss ======= */}
+
+              {/* <View style={{
+                borderRadius: 8,
+                height: moderateScaleVertical(44),
+                marginBottom: moderateScaleVertical(14),
+                paddingHorizontal: moderateScale(5),
+                borderWidth: 1,
+                borderColor: isDarkMode ? colors.white : colors.borderLight,
+              }} >
+                <Menu >
+                  <MenuTrigger
+                    // children={}
+                    style={{
+                      paddingTop: 8,
+                    }}
+                    text= {!!selectedTeam ? selectedTeam?.name : strings.TEAMS} />
+                  <MenuOptions
+                    optionsContainerStyle={{
+                      width: moderateScale(width / 1.2),
+                      // alignItems: "center",
+                      zIndex: 1,
+                      // minWidth: moderateScale(width - 40),
+                      marginTop: Platform.OS == 'android' ? moderateScaleVertical(45) : 0
+                    }}
+                  >
+                  {driverRegDocs?.teams.map((itm, indx) => {
+                      console.log(itm, driverTypes, "itmitmitmitm")
+
+                      return (
+                        <>
+                          <MenuOption
+                            onSelect={() =>  updateState({selectedTeam: itm, isTeams: false})}>
+                            <Text
+                              style={{
+                                color:
+                                  itm?.id == selectedTeam?.id
+                                    ? colors.redB
+                                    : colors.black,
+                              }}
+                            >
+                              {itm.name}
+                            </Text>
+                          </MenuOption>
+                        </>
+                      );
+                    })}
+                  </MenuOptions>
+                </Menu>
+              </View> */}
+
+              <View style={{ marginBottom: moderateScaleVertical(14), zIndex: 2 }}>
+                <View
+                  onLayout={(event) => {
+                    updateState({
+                      tagsViewHeight: event.nativeEvent.layout.height,
+                    });
+                  }}
+                  style={{
+                    minHeight: moderateScaleVertical(44),
+                    color: colors.white,
+                    borderWidth: 1,
+                    borderColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.borderLight,
+                    borderRadius: 8,
+                    paddingVertical: 3,
+                    paddingHorizontal: 3,
+                    justifyContent: 'center',
+                  }}>
+                  <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                    {selectedTags.length > 0 && (
+                      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                        <FlatList
+                          numColumns={3}
+                          data={selectedTags}
+                          renderItem={({ item, index }) => (
+                            <TouchableOpacity
+                              onPress={() => removeTag(item, index)}
+                              activeOpacity={0.7}
+                              style={{
+                                borderWidth: 1,
+                                borderColor: colors.borderColorB,
+                                alignItems: 'center',
+                                backgroundColor: colors.borderColorB,
+                                marginHorizontal: moderateScale(2),
+                                flexDirection: 'row',
+                                marginVertical: 3,
+                                width: (width - moderateScale(52)) / 3,
+                                justifyContent: 'space-around',
+                                borderRadius: moderateScale(5),
+                                paddingVertical: moderateScale(3),
+                              }}>
+                              <Image
+                                source={imagePath.ic_cross}
+                                style={{
+                                  height: 15,
+                                  width: 15,
+                                  tintColor: colors.blackOpacity70,
+                                }}
+                              />
+                              <Text
+                                style={{
+                                  fontFamily: fontFamily.regular,
+                                  marginRight: 3,
+                                }}>
+                                {item?.name}
+                              </Text>
+                            </TouchableOpacity>
+                          )}
+                        />
+                      </View>
+                    )}
+                    <TextInput
+                      placeholderTextColor={isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.borderLight}
+                      placeholder={strings.TAGS}
+                      onFocus={() => updateState({ isTagsShow: true })}
+                      onBlur={() => updateState({ isTagsShow: false })}
+                      onChangeText={onSearchTags}
+                      style={{
+                        opacity: 0.7,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.textGreyOpcaity7,
+                        fontFamily: fontFamily.medium,
+                        fontSize: textScale(14),
+                        paddingHorizontal: 8,
+                        textAlign: I18nManager.isRTL ? 'right' : 'left',
+                        marginVertical: 3,
+                        marginHorizontal: 3,
+                      }}
+                    />
+                  </View>
                 </View>
+                {isTagsShow && (
+                  <View
+                    style={{
+                      backgroundColor: colors.white,
+                      position: 'relative',
+                      shadowOffset: { width: 0, height: 1 },
+                      shadowOpacity: 0.1,
+                      width: '100%',
+                      // zIndex: 15,
+                      // elevation: (Platform.OS === 'android') ? 50 : 0,
+                      // top: tagsViewHeight,
+                    }}>
+                    {driverTagsAry.length > 0 ? (
+                      <View style={{ flexWrap: 'wrap', flexDirection: 'row'  }}>
+                        {driverTagsAry.map((item, index) => {
+                          return (
+                            <TouchableOpacity
+                              onPress={() => _onTagSelect(item, index)}
+                              activeOpacity={0.7}
+                              style={{
+                                borderWidth: 1,
+                                borderColor: selectedTags.includes(item)
+                                  ? themeColors.primary_color
+                                  : colors.borderColorB,
+                                width: (width - moderateScale(70)) / 3,
+                                alignItems: 'center',
+                                marginVertical: moderateScale(5),
+                                paddingVertical: moderateScale(5),
+                                marginHorizontal: moderateScale(5),
+                                // zIndex: 1,
+                                backgroundColor: selectedTags.includes(item)
+                                  ? themeColors.primary_color
+                                  : colors.borderColorB,
+                                borderRadius: moderateScale(5),
+                                zIndex: 15,
+                                elevation: (Platform.OS === 'android') ? 50 : 0
+                              }}>
+                              <Text
+                                style={{
+                                  textAlign: 'center',
+                                  color: selectedTags.includes(item)
+                                    ? colors.white
+                                    : colors.black,
+                                }}>
+                                {item?.name}
+                              </Text>
+                            </TouchableOpacity>
+                          );
+                        })}
+                      </View>
+                    ) : (
+                      <View
+                        style={{
+                          width: '100%',
+                          height: moderateScale(30),
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            fontFamily: fontFamily.medium,
+                            fontSize: moderateScale(13),
+                          }}>
+                          {strings.NODATAFOUND}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                )}
+              </View>
+              <Text style={styles.labelTxt}>{strings.TRANSPORT_DETAILS}</Text>
+
+              <BorderTextInput
+                placeholder={strings.EXAMPLE_TEXT}
+                onChangeText={_onChangeText('driverTransportDetails')}
+                containerStyle={styles.containerStyle}
+              />
+              <Text style={styles.labelTxt}>{strings.UID}</Text>
+
+              <BorderTextInput
+                placeholder={''}
+                onChangeText={_onChangeText('driverUID')}
+                containerStyle={styles.containerStyle}
+              />
+              <Text style={styles.labelTxt}>{strings.LICENCE_PLATE}</Text>
+
+              <BorderTextInput
+                placeholder={''}
+                onChangeText={_onChangeText('driverLicencePlate')}
+                containerStyle={styles.containerStyle}
+              />
+              <Text style={styles.labelTxt}>{strings.COLOR}</Text>
+
+              <BorderTextInput
+                placeholder={''}
+                onChangeText={_onChangeText('driverColor')}
+                containerStyle={styles.containerStyle}
+              />
+              {!!driverRegDocs && (
+                <Text
+                  style={{
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.borderLight,
+                    fontFamily: fontFamily.bold,
+                    fontSize: textScale(13),
+                    marginVertical: moderateScaleVertical(5),
+                  }}>
+                  {strings.TRANSPORT_TYPE}
+                </Text>
               )}
-            </View>
-            <Text style={styles.labelTxt}>{strings.TRANSPORT_DETAILS}</Text>
+              <FlatList
+                keyExtractor={(itm, indx) => indx.toString()}
+                data={driverRegDocs?.transport_types}
+                horizontal={true}
+                ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+                renderItem={_renderTransportTypes}
+              />
 
-            <BorderTextInput
-              placeholder={strings.EXAMPLE_TEXT}
-              onChangeText={_onChangeText('driverTransportDetails')}
-              containerStyle={styles.containerStyle}
-            />
-            <Text style={styles.labelTxt}>{strings.UID}</Text>
+              <FlatList
+                keyExtractor={(itm, indx) => indx.toString()}
+                data={driverRegDocs?.driver_registration_documents}
+                renderItem={_renderFields}
+              />
 
-            <BorderTextInput
-              placeholder={''}
-              onChangeText={_onChangeText('driverUID')}
-              containerStyle={styles.containerStyle}
-            />
-            <Text style={styles.labelTxt}>{strings.LICENCE_PLATE}</Text>
-
-            <BorderTextInput
-              placeholder={''}
-              onChangeText={_onChangeText('driverLicencePlate')}
-              containerStyle={styles.containerStyle}
-            />
-            <Text style={styles.labelTxt}>{strings.COLOR}</Text>
-
-            <BorderTextInput
-              placeholder={''}
-              onChangeText={_onChangeText('driverColor')}
-              containerStyle={styles.containerStyle}
-            />
-            {!!driverRegDocs && (
-              <Text
-                style={{
+              <GradientButton
+                textStyle={{
                   color: isDarkMode
                     ? MyDarkTheme.colors.text
-                    : colors.borderLight,
-                  fontFamily: fontFamily.bold,
-                  fontSize: textScale(13),
-                  marginVertical: moderateScaleVertical(5),
-                }}>
-                {strings.TRANSPORT_TYPE}
-              </Text>
-            )}
-            <FlatList
-              keyExtractor={(itm, indx) => indx.toString()}
-              data={driverRegDocs?.transport_types}
-              horizontal={true}
-              ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
-              renderItem={_renderTransportTypes}
-            />
-
-            <FlatList
-              keyExtractor={(itm, indx) => indx.toString()}
-              data={driverRegDocs?.driver_registration_documents}
-              renderItem={_renderFields}
-            />
-
-            <GradientButton
-              textStyle={{
-                color: isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.borderLight
-              }}
-              onPress={_onSubmit}
-              marginTop={moderateScaleVertical(10)}
-              btnText={strings.SUBMIT}
-            />
-            <View
-              style={{
-                height: moderateScaleVertical(24),
-                marginBottom: moderateScaleVertical(44),
-              }}
-            />
-          </View>
-        )}
-      </KeyboardAwareScrollView>
-      <ActionSheet
-        ref={actionSheet}
-        options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
-        cancelButtonIndex={2}
-        destructiveButtonIndex={2}
-        onPress={(index) => cameraHandle(index)}
-      />
+                    : colors.borderLight
+                }}
+                onPress={_onSubmit}
+                marginTop={moderateScaleVertical(10)}
+                btnText={strings.SUBMIT}
+              />
+              <View
+                style={{
+                  height: moderateScaleVertical(24),
+                  marginBottom: moderateScaleVertical(44),
+                }}
+              />
+            </View>
+          )}
+        </KeyboardAwareScrollView>
+        <ActionSheet
+          ref={actionSheet}
+          options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
+          cancelButtonIndex={2}
+          destructiveButtonIndex={2}
+          onPress={(index) => cameraHandle(index)}
+        />
+      </MenuProvider>
     </WrapperContainer>
   );
 }

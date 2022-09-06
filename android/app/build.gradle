@@ -123,19 +123,14 @@ def enableHermes = project.ext.react.get("enableHermes", true);
 
 android {
      packagingOptions {
-      pickFirst 'lib/x86/libc++_shared.so'
-      pickFirst 'lib/x86_64/libc++_shared.so'
-      pickFirst 'lib/armeabi-v7a/libc++_shared.so'
-      pickFirst 'lib/arm64-v8a/libc++_shared.so'
-  }
-  lintOptions {
-    checkReleaseBuilds false
-    abortOnError false
-}
-    compileSdkVersion rootProject.ext.compileSdkVersion
+        pickFirst '**/*.so'
+    }
+   compileSdkVersion 31 //addded
     dexOptions {
         javaMaxHeapSize "4g"
     }
+   //  compileSdkVersion rootProject.ext.compileSdkVersion
+       compileSdkVersion 31
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -143,12 +138,11 @@ android {
     }
 
     defaultConfig {
-    //    targetSdkVersion 31 //addded 
+       targetSdkVersion 31 //addded 
         applicationId "com.codebrew"
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
       //   targetSdkVersion rootProject.ext.targetSdkVersion
-        // targetSdkVersion 31
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -213,15 +207,14 @@ android {
     flavorDimensions "appType"
 
     productFlavors {
-           
-           hellodeliver{
+                zuzuclean{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.hellodeliver'
-                resValue "string", "app_name", "Hello Deliver"
+                applicationId 'com.zuzuclean'
+                resValue "string", "app_name", "Zuzu Clean"
                 resValue "string", "host_name", ""
             }
     }
@@ -5833,6 +5826,8 @@ android {
     //         resValue "string", "host_name", ""
     //         }
     // }
+
+    
 }
 
 dependencies {

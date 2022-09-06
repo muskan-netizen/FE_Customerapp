@@ -28,7 +28,7 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { shortCodes } from '../../utils/constants/DynamicAppKeys';
+import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
 import { useDarkMode } from 'react-native-dark-mode';
 import { MyDarkTheme } from '../../styles/theme';
 import LottieView from 'lottie-react-native';
@@ -44,6 +44,7 @@ import ContentLoader, { Rect, Circle } from 'react-content-loader/native';
 import { getCurrentLocation } from '../../utils/helperFunctions';
 import { useFocusEffect } from '@react-navigation/native';
 import Voice from '@react-native-voice/voice';
+import { getBundleId } from 'react-native-device-info';
 
 let isNoMore = false;
 let onEndReachedCalledDuringMomentum = false;
@@ -622,7 +623,8 @@ export default function SearchProductVendorItem2({ navigation, route }) {
               flex: 0.2,
             }}
             hitSlop={hitSlopProp}>
-            <Image
+          {getBundleId() == appIds.sorDelivery ? null : (
+              <Image
               source={
                 appStyle?.homePageLayout === 3 ||
                   appStyle?.homePageLayout === 5 ||
@@ -635,6 +637,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
                 transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
               }}
             />
+          ) }
           </TouchableOpacity>
 
           <SearchBar

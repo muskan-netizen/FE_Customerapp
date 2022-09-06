@@ -2738,7 +2738,21 @@ function Cart({navigation, route}) {
                                   fontFamily: fontFamily.regular,
                                 }}>
                                 {i?.quantity} X
+                                {' '}
                                 <Text
+                                  style={{
+                                    color: isDarkMode
+                                      ? MyDarkTheme.colors.text
+                                      : colors.black,
+                                  }}>
+                                  {`${currencies?.primary_currency?.symbol}${
+                                    // Number(i?.pvariant?.multiplier) *
+                                    currencyNumberFormatter(
+                                      Number(i?.variants?.price),
+                                      appData?.profile?.preferences
+                                        ?.digit_after_decimal,
+                                    )
+                                  }`} = <Text
                                   style={{
                                     color: isDarkMode
                                       ? MyDarkTheme.colors.text
@@ -2753,21 +2767,6 @@ function Cart({navigation, route}) {
                                     )
                                   }`}
                                 </Text>
-                                ={' '}
-                                <Text
-                                  style={{
-                                    color: isDarkMode
-                                      ? MyDarkTheme.colors.text
-                                      : colors.black,
-                                  }}>
-                                  {`${currencies?.primary_currency?.symbol}${
-                                    // Number(i?.pvariant?.multiplier) *
-                                    currencyNumberFormatter(
-                                      Number(i?.variants?.price),
-                                      appData?.profile?.preferences
-                                        ?.digit_after_decimal,
-                                    )
-                                  }`}
                                 </Text>
                               </Text>
 
