@@ -18,7 +18,7 @@ export function onStartChat(data = {}, headers = {}) {
 export function fetchUserChat(data = {}, headers = {}) {
   return new Promise(async(resolve, reject) => {
     const getAppData = await getItem('appData');
-    console.log("getAppDatagetAppData",getAppData)
+   
     const socketUrl = getAppData?.appData?.profile?.socket_url
 
     apiPost(socketUrl + USER_CHAT, data, headers)
