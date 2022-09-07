@@ -539,4 +539,5 @@ export default {
   ictruckMarker: require('../assets/images/mapMarkers/ic_truck.png'),
   icUserChat: require('../assets/images/ic_userchat.png'),
   icVendorChat: require('../assets/images/ic_vendorchat.png'),
+  icOtherAddressType: require('../assets/images/RoyoorderNewImages/ic_other_address.png'),
 };

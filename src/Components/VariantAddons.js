@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep} from 'lodash';
+import {cloneDeep, isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
@@ -71,7 +71,7 @@ const VariantAddons = ({
   const isDarkMode = themeColor;
   const buttonTextColor = themeColors;
   const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
- console.log(addonSet,"addOnnnn")
+  console.log(addonSet, 'addOnnnn');
   useFocusEffect(
     React.useCallback(() => {
       if (variantSet.length) {
@@ -275,7 +275,7 @@ const VariantAddons = ({
                   {`${
                     currencies?.primary_currency?.symbol
                   }${currencyNumberFormatter(
-                   Number(i?.price),
+                    Number(i?.price),
                     appData?.profile?.preferences?.digit_after_decimal,
                   )}`}
                 </Text>
@@ -1024,15 +1024,19 @@ const VariantAddons = ({
               animation="fadeInUp"
               style={styles.mainView}>
               <View>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    ...styles.productName,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                    fontFamily: fontFamily.bold,
-                  }}>
-                  {productdetail?.translation[0]?.title}
-                </Text>
+                {!isEmpty(productdetail) ? (
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      ...styles.productName,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      fontFamily: fontFamily.bold,
+                    }}>
+                    {productdetail?.translation[0]?.title || ''}
+                  </Text>
+                ) : null}
 
                 {/* rating View */}
                 {productDetailData?.averageRating !== null && (
@@ -1080,7 +1084,8 @@ const VariantAddons = ({
                 )}
               </View>
 
-              {productdetail?.translation[0]?.body_html != null && (
+              {!isEmpty(productdetail) &&
+              productdetail?.translation[0]?.body_html != null ? (
                 <View>
                   <Text
                     style={{
@@ -1096,7 +1101,7 @@ const VariantAddons = ({
                   </Text>
                   <View style={{marginBottom: 10}} />
                 </View>
-              )}
+              ) : null}
 
               <View
                 style={{

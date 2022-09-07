@@ -71,7 +71,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     },
     addMoneyListDesc: {
       // height: 60,
-      flex: 0.6,
+      flex: 0.7,
       paddingTop: moderateScale(2),
       paddingLeft: moderateScale(10),
     },
@@ -86,7 +86,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     },
     addedMoneyValueCon: {
       // height: 60,
-      flex: 0.2,
+      flex: 0.1,
       flexDirection: 'row',
       justifyContent: 'flex-end',
       paddingRight: moderateScale(10),
@@ -118,7 +118,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     textInputStyle: {
       flex: 1,
       opacity: 0.7,
-      color: isDarkMode ? MyDarkTheme.colors.text : colors.redB,
+      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
       fontFamily: fontFamily.medium,
       fontSize: textScale(13),
       paddingHorizontal: 10,

@@ -1301,7 +1301,9 @@ export default function Products({route, navigation}) {
             btnLoader: false,
           });
         })
-        .catch((error) => errorMethodSecond(error, [], item, section, inx));
+        .catch((error) => {
+          errorMethodSecond(error, [], item, section, inx);
+        });
     },
     [cloneSectionList, productListData, selectedCartItem, categoryInfo],
   );
@@ -3404,7 +3406,10 @@ export default function Products({route, navigation}) {
           updateState({isLoadingC: false, btnLoader: false});
           // onClose();
         })
-        .catch((error) => errorMethodSecond(error, addonSet));
+        .catch((error) => {
+          console.log('called...2', addonSet);
+          errorMethodSecond(error, addonSet);
+        });
       return;
     }
   };
@@ -3849,7 +3854,7 @@ export default function Products({route, navigation}) {
                                   textTransform: 'capitalize',
                                   color: colors.white,
                                 }}
-                                onPress={() => addToCart(addonSet)}
+                                onPress={() => addSingleItem(addonSet)}
                                 btnText={`${strings.ADD_ITEM} - ${
                                   currencies?.primary_currency?.symbol
                                 } ${getAdditionalPriceOfAddons()}`}

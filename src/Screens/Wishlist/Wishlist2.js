@@ -1,9 +1,9 @@
-import {debounce} from 'lodash';
 import React, {useEffect, useState} from 'react';
-import {FlatList, RefreshControl, View, Text} from 'react-native';
+import {FlatList, RefreshControl, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
-import ProductCard from '../../Components/ProductCard';
+import WishlistCard from '../../Components/WishlistCard';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -11,17 +11,10 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import {
-  height,
-  moderateScale,
-  moderateScaleVertical,
-} from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {showError, showSuccess} from '../../utils/helperFunctions';
-import ListEmptyProduct from './ListEmptyProduct';
-import {useDarkMode} from 'react-native-dark-mode';
+import {height, moderateScaleVertical} from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import WishlistCard from '../../Components/WishlistCard';
+import {showError} from '../../utils/helperFunctions';
+import ListEmptyProduct from './ListEmptyProduct';
 
 export default function Wishlist2({navigation}) {
   const {
@@ -37,6 +30,7 @@ export default function Wishlist2({navigation}) {
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const [isShimmerLoading, setIsShimmerLoading] = useState(true);
   const [state, setState] = useState({
     isLoading: false,
     isRefreshing: false,
@@ -53,19 +47,14 @@ export default function Wishlist2({navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});
 
-  const getAllWishListData = () => {
-    getAllWishlistItems();
-  };
-
   useEffect(() => {
     if (isHitApi) {
-      getAllWishListData();
+      getAllWishlistItems();
     }
   }, [pageNo, isRefreshing]);
 
   /*  GET ALL WISHLISTED ITEMS API FUNCTION  */
   const getAllWishlistItems = () => {
-    updateState({isLoading: true});
     actions
       .getWishlistProducts(
         `?limit=${limit}&page=${pageNo}`,
@@ -77,9 +66,10 @@ export default function Wishlist2({navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'getAllWishListData>>>>>>');
+        console.log(res, 'wishlist api response...');
         let newArray =
           pageNo == 1 ? res.data.data : [...wishlistArray, ...res.data.data];
+        setIsShimmerLoading(false);
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -96,32 +86,6 @@ export default function Wishlist2({navigation}) {
       .catch(errorMethod);
   };
 
-  /* ADD-REMOVE ITEM TO WISHLIST FUNCTION  */
-  const _onAddtoWishlist = (item) => {
-    updateState({isLoading: true});
-    actions
-      .updateProductWishListData(
-        `/${item.id}`,
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      )
-      .then((res) => {
-        showSuccess(res.message);
-        const updatedWishlistArray = wishlistArray.filter(
-          (i) => i?.product_id !== item?.id,
-        );
-
-        updateState({wishlistArray: updatedWishlistArray, isLoading: false});
-      })
-      .catch((err) => {
-        updateState({isLoading: false});
-      });
-  };
-
   const moveToNewScreen =
     (screenName, data = {}) =>
     () => {
@@ -129,6 +93,7 @@ export default function Wishlist2({navigation}) {
     };
 
   const errorMethod = (error) => {
+    setIsShimmerLoading(false);
     updateState({
       isLoading: false,
       isRefreshing: false,
@@ -155,11 +120,6 @@ export default function Wishlist2({navigation}) {
   const onEndReached = ({distanceFromEnd}) => {
     updateState({pageNo: pageNo + 1});
   };
-
-  const onEndReachedDelayed = debounce(onEndReached, 1000, {
-    leading: true,
-    trailing: false,
-  });
 
   return (
     <WrapperContainer
@@ -215,10 +175,10 @@ export default function Wishlist2({navigation}) {
           ListFooterComponent={() => <View style={{height: 20}} />}
           ListEmptyComponent={() => (
             <ListEmptyProduct
+              isLoading={isShimmerLoading}
               containerStyle={{
                 marginTop: height / 4,
               }}
-              isLoading={isLoading}
             />
           )}
         />

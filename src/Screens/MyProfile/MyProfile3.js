@@ -3,6 +3,7 @@ import codes from 'country-calling-code';
 import {cloneDeep, isEmpty} from 'lodash';
 import React, {useRef, useState} from 'react';
 import {
+  Alert,
   Image,
   ScrollView,
   Text,
@@ -616,6 +617,16 @@ export default function MyProfile3({route, navigation}) {
 
   //Delete address
   const delAddress = (item) => {
+    Alert.alert('', strings.DELETE_ADDRESS_CONFIRM_MSG, [
+      {
+        text: strings.NO,
+        onPress: () => console.log('Cancel Pressed'),
+      },
+      {text: strings.YES, onPress: () => onPressDelete(item)},
+    ]);
+  };
+
+  const onPressDelete = (item) => {
     updateState({isLoading: true});
     let data = {};
     let query = `/${item?.id}`;
@@ -1058,7 +1069,9 @@ export default function MyProfile3({route, navigation}) {
                         source={
                           itm?.type == 1
                             ? imagePath.home
-                            : imagePath.workInActive
+                            : itm?.type == 2
+                            ? imagePath.workInActive
+                            : imagePath.icOtherAddressType
                         }
                       />
                     </View>
@@ -1317,10 +1330,6 @@ export default function MyProfile3({route, navigation}) {
             textTabWidth={width / 2.8}
             customTextContainerStyle={{
               width: width / 2.8,
-
-              // flexWrap: 'wrap',
-              // alignSelf:'center'
-              // justifyContent: 'center',
             }}
             textStyle={{
               fontSize: textScale(13),

@@ -45,13 +45,11 @@ const MarketCard3 = ({
   imageResizeMode = 'cover',
   isMaxSaftey = true,
 }) => {
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appStyle, themeColors, appData} = useSelector(
+  const {appStyle, themeColors, themeColor, appData, themeToggle} = useSelector(
     (state) => state?.initBoot,
   );
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, extraStyles, MyDarkTheme, isDarkMode});
@@ -182,23 +180,11 @@ const MarketCard3 = ({
     <TouchableOpacity
       activeOpacity={1}
       onPress={onPress}
-      style={
-        !!data?.is_vendor_closed && data?.closed_store_order_scheduled == 0
-          ? {
-              ...styles.mainTouchContainer,
-              ...getScaleTransformationStyle(scaleInAnimated),
-              backgroundColor: isDarkMode
-                ? colors.whiteOpacity15
-                : getColorCodeWithOpactiyNumber(
-                    colors.textGreyLight.substring(1),
-                    20,
-                  ),
-            }
-          : {
-              ...styles.mainTouchContainer,
-              ...getScaleTransformationStyle(scaleInAnimated),
-            }
-      }
+      style={{
+        ...styles.mainTouchContainer,
+        ...getScaleTransformationStyle(scaleInAnimated),
+        overflow: 'hidden',
+      }}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       <View>
@@ -267,15 +253,24 @@ const MarketCard3 = ({
           </View>
         )}
       </View>
-      <View style={{padding: moderateScale(8)}}>
+      <View
+        style={{
+          padding: moderateScale(8),
+          backgroundColor:
+            !!data?.is_vendor_closed && data?.closed_store_order_scheduled == 0
+              ? getColorCodeWithOpactiyNumber(
+                  colors.textGreyLight.substring(1),
+                  20,
+                )
+              : colors.whiteOpacity15,
+        }}>
         <View style={styles.descView}>
           <Text
             numberOfLines={1}
-            style={
-              isDarkMode
-                ? [styles.categoryText, {color: MyDarkTheme.colors.text}]
-                : styles.categoryText
-            }>
+            style={{
+              ...styles.categoryText,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}>
             {data.name}
           </Text>
 

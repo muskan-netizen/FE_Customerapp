@@ -2,7 +2,7 @@ import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {isEmpty} from 'lodash';
 import moment from 'moment';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
@@ -54,24 +54,29 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default function ChooseCarTypeAndTime({navigation, route}) {
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
   console.log('my route', paramData);
   const bottomSheetRef = useRef(null);
-  console.log(paramData?.cabVendors, 'paramData?.cabVendors[0]');
+  const mapRef = useRef();
+  const markerRef = useRef(null);
 
-  const {appData, currencies, languages, themeColors, appStyle} = useSelector(
-    (state) => state?.initBoot,
-  );
-  const {profile} = appData;
-  const userData = useSelector((state) => state?.auth?.userData);
+  const {
+    appData,
+    currencies,
+    languages,
+    themeColors,
+    appStyle,
+    themeToggle,
+    themeColor,
+  } = useSelector((state) => state?.initBoot);
+  const {userData} = useSelector((state) => state?.auth);
   const {pickUpTimeType, location} = useSelector((state) => state?.home);
 
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const {profile} = appData;
   const fontFamily = appStyle?.fontSizeData;
-  const [refArr, setRefArr] = useState([]);
+  const styles = stylesFun({fontFamily, themeColors});
 
   const [state, setState] = useState({
     region: {
@@ -216,16 +221,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     allListedDrivers,
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const styles = stylesFun({fontFamily, themeColors});
-  const commonStyles = commonStylesFun({fontFamily});
-
-  const walletAmount = useSelector(
-    (state) => state?.product?.walletData?.wallet_amount,
-  );
-
-  const mapRef = useRef();
-
-  const markerRef = useRef(null);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -235,12 +230,13 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       // updateState({isLoadingB: true});
     }, [paramData]),
   );
-  console.log(selectedPayment, 'selectedPayment');
   useEffect(() => {
     Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+    setTimeout(() => {
+      onCenter();
+    }, 3000);
   }, []);
 
-  const _confirmAddress = (addressType) => {};
   const _onRegionChange = (region) => {
     updateState({region: region});
     _getAddressBasedOnCoordinates(region);
@@ -511,7 +507,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       })
       .catch(errorMethod);
   };
-  console.log(scheduleDateTime, 'scheduleDateTime');
   const _confirmAndPay = () => {
     console.log(selectedPayment.id, 'selectedPayment.id');
     let data = {};
@@ -890,8 +885,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     })();
   };
 
-  console.log('app data');
-
   const uploadImage = async (img) => {
     console.log('selected image', img);
 
@@ -917,8 +910,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       showError(error?.error || error?.message);
     }
   };
-
-  console.log('image uploaded res', uploadImages);
 
   const updateInstruction = (val) => {
     updateState({taskInstruction: val});
@@ -1083,30 +1074,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     navigation.navigate(navigationStrings.CABDRIVERLOCATIONANDDETAIL, {});
   };
 
-  // const _pickerOpen = (value) => {
-  //   updateState({[value]: true});
-  // };
-
-  // const _pickerCancel = (value) => {
-  //   updateState({[value]: false});
-  // };
-
-  // const _onDayPress = (value) => {
-  //   updateState({selectedDate: value.dateString});
-  // };
-
-  // const _modalOkPress = (value1, value2) => {
-  //   updateState({
-  //     [value1]: false,
-  //     [value2]: value2 === 'pickedUpTime' ? formatedTime : selectedDate,
-  //   });
-  // };
-
-  // const _onNewDateChange = (value) => {
-  //   updateState({formatedTime: moment(value).format('hh:mm A')});
-  // };
-
-  const onCenter = () => {
+  const onCenter = useCallback(() => {
     if (paramData?.location.length > 0 && !!mapRef?.current?.fitToCoordinates) {
       mapRef.current.fitToCoordinates(paramData?.location, {
         edgePadding: {
@@ -1117,7 +1085,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         },
       });
     }
-  };
+  }, []);
 
   const onPressPickUpNow = () => {
     selectedCarOption
@@ -1160,7 +1128,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             customMapStyle={
               appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
             }
-            style={{height: height / 2.3}}
+            style={{height: height / 1.25}}
             region={region}
             initialRegion={region}
             tracksViewChanges={false}>

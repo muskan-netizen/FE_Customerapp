@@ -50,26 +50,13 @@ const SearchPlaces = ({
   index = 0,
   isTaxiFlow = false,
 }) => {
-  console.log(index, 'in MapPlaceComp map key');
-
-  console.log(RNLocalize.getCountry(), 'timezone');
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appData, appStyle, themeColors, currencies, languages} = useSelector(
+  const {appData, currencies, languages, themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
   );
-  const {constCurrLoc} = useSelector((state) => state?.home);
-
-  console.log('cur lag lng', currentLatLong);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const textChangeHandler = async (data) => {
-    console.log(
-      appData?.profile?.preferences?.is_static_dropoff,
-      'searching texts',
-    );
     setValue(data);
     if (!!appData?.profile?.preferences?.is_static_dropoff && index !== 0) {
       let query = {};

@@ -500,17 +500,6 @@ function Cart({navigation, route}) {
             //if schedule type is null then hit the api again with now option
             setDateAndTimeSchedule();
           }
-          if (
-            res?.data &&
-            res?.data?.tip.length &&
-            preferences?.auto_implement_5_percent_tip
-          ) {
-            setSelectedTipvalue(res?.data?.tip[0]);
-            setSelectedTipAmount(res?.data?.tip[0]?.value);
-          } else {
-            setSelectedTipvalue(null);
-            setSelectedTipAmount(null);
-          }
         } else {
           setVendorAddress('');
           setCartItems([]);
@@ -1176,7 +1165,7 @@ function Cart({navigation, route}) {
       .then((res) => {
         console.log(res, 'placeOrder');
         actions.reloadData(!reloadData);
-        setSelectedTipvalue(null);
+
         setPickupDriverComment(null);
         setDropOffDriverComment(null);
         setVendorComment(null);
@@ -3264,365 +3253,6 @@ function Cart({navigation, route}) {
                 ) : null}
               </View>
             )}
-
-            {/* <View style={styles.itemPriceDiscountTaxView}>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
-                    : styles.priceItemLabel
-                }>
-                {strings.AMOUNT}
-              </Text>
-
-              <Text
-                style={
-                  isDarkMode
-                    ? [
-                        styles.priceItemLabel2,
-                        {
-                          color: MyDarkTheme.colors.text,
-                        },
-                      ]
-                    : styles.priceItemLabel2
-                }>
-                {currencies?.primary_currency?.symbol}
-                {currencyNumberFormatter(
-                  Number(
-                    item?.payable_amount ? item?.payable_amount : 0,
-                  ), appData?.profile?.preferences?.digit_after_decimal
-                )}
-              </Text>
-            </View> */}
-
-            {/* <View style={styles.bottomTabLableValue}>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
-                    : styles.priceItemLabel
-                }>
-                {strings.SUBTOTAL}
-              </Text>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
-                    : styles.priceItemLabel
-                }>{`${currencies?.primary_currency?.symbol}${Number(
-                cartData?.gross_paybale_amount,
-              ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
-            </View>
-            {!!cartData?.wallet_amount && (
-              <View style={styles.bottomTabLableValue}>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>
-                  {strings.WALLET}
-                </Text>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>{`${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.wallet_amount ? cartData?.wallet_amount : 0,
-                ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
-              </View>
-            )}
-            {!!cartData?.loyalty_amount && (
-              <View style={styles.bottomTabLableValue}>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>
-                  {strings.LOYALTY}
-                </Text>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>{`-${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
-                ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
-              </View>
-            )}
-
-            {!!cartData?.wallet_amount_used && (
-              <View style={styles.bottomTabLableValue}>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>
-                  {strings.WALLET}
-                </Text>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>{`-${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.wallet_amount_used
-                    ? cartData?.wallet_amount_used
-                    : 0,
-                ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
-              </View>
-            )}
-            {!!cartData?.total_subscription_discount && (
-              <View style={styles.bottomTabLableValue}>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>
-                  {strings.TOTALSUBSCRIPTION}
-                </Text>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>{`-${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.total_subscription_discount,
-                ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
-              </View>
-            )} */}
-
-            {/* {!!cartData?.total_discount_amount && (
-            <View style={styles.bottomTabLableValue}>
-              <Text style={styles.priceItemLabel}>
-                {strings.TOTAL_DISCOUNT}
-              </Text>
-              <Text style={styles.priceItemLabel}>{`-${
-                currencies?.primary_currency?.symbol
-              }${Number(cartData?.total_discount_amount).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
-            </View>
-          )} */}
-
-            {/* {!!appData?.profile?.preferences?.tip_before_order &&
-              !!cartData?.tip &&
-              cartData?.tip.length && (
-                <View
-                  style={[
-                    styles.bottomTabLableValue,
-                    {
-                      flexDirection: 'column',
-                      marginTop: moderateScaleVertical(8),
-                    },
-                  ]}>
-                  <Text
-                    style={
-                      isDarkMode
-                        ? [
-                            styles.priceTipLabel,
-                            {color: MyDarkTheme.colors.text},
-                          ]
-                        : [styles.priceTipLabel]
-                    }>
-                    {strings.DOYOUWANTTOGIVEATIP}
-                  </Text>
-                  <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={{flexGrow: 1}}>
-                    {cartData?.total_payable_amount !== 0 &&
-                      cartData?.tip.map((j, jnx) => {
-                        return (
-                          <TouchableOpacity
-                            key={String(jnx)}
-                            style={[
-                              styles.tipArrayStyle,
-                              {
-                                backgroundColor:
-                                  selectedTipvalue?.value == j?.value
-                                    ? themeColors.primary_color
-                                    : 'transparent',
-                                flex: 0.18,
-                              },
-                            ]}
-                            onPress={() => selectedTip(j)}>
-                            <Text
-                              style={
-                                isDarkMode
-                                  ? {
-                                      color:
-                                        selectedTipvalue?.value == j?.value
-                                          ? colors.white
-                                          : MyDarkTheme.colors.text,
-                                    }
-                                  : {
-                                      color:
-                                        selectedTipvalue?.value == j?.value
-                                          ? colors.white
-                                          : colors.black,
-                                    }
-                              }>
-                              {`${currencies?.primary_currency?.symbol} ${j.value}`}
-                            </Text>
-                            <Text
-                              style={{
-                                color:
-                                  selectedTipvalue?.value == j?.value
-                                    ? colors.white
-                                    : colors.textGreyB,
-                              }}>
-                              {j.label}
-                            </Text>
-                          </TouchableOpacity>
-                        );
-                      })}
-
-                    <TouchableOpacity
-                      style={[
-                        styles.tipArrayStyle2,
-                        {
-                          backgroundColor:
-                            selectedTipvalue == 'custom'
-                              ? themeColors.primary_color
-                              : 'transparent',
-                          flex:
-                            cartData?.total_payable_amount !== 0 ? 0.45 : 0.2,
-                        },
-                      ]}
-                      onPress={() => selectedTip('custom')}>
-                      <Text
-                        style={
-                          isDarkMode
-                            ? {
-                                color:
-                                  selectedTipvalue == 'custom'
-                                    ? colors.white
-                                    : MyDarkTheme.colors.text,
-                              }
-                            : {
-                                color:
-                                  selectedTipvalue == 'custom'
-                                    ? colors.white
-                                    : colors.black,
-                              }
-                        }>
-                        {strings.CUSTOM}
-                      </Text>
-                    </TouchableOpacity>
-                  </ScrollView>
-
-                  {!!selectedTipvalue && selectedTipvalue == 'custom' && (
-                    <View
-                      style={{
-                        borderRadius: 5,
-                        borderWidth: 0.5,
-                        borderColor: colors.textGreyB,
-                        height: 40,
-                        marginTop: moderateScaleVertical(8),
-                      }}>
-                      <TextInput
-                        value={selectedTipAmount}
-                        onChangeText={(text) =>
-                          updateState({selectedTipAmount: text})
-                        }
-                        style={{
-                          height: 40,
-                          alignItems: 'center',
-                          paddingHorizontal: 10,
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.textGreyOpcaity7,
-                        }}
-                        maxLength={5}
-                        returnKeyType={'done'}
-                        keyboardType={'number-pad'}
-                        placeholder={strings.ENTER_CUSTOM_AMOUNT}
-                        placeholderTextColor={
-                          isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.textGreyOpcaity7
-                        }
-                      />
-                    </View>
-                  )}
-                </View>
-              )} */}
-
-            {/* {!!cartData?.total_tax && (
-              <View style={styles.bottomTabLableValue}>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>
-                  {strings.TAX_AMOUNT}
-                </Text>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>{`${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.total_tax ? cartData?.total_tax : 0,
-                ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
-              </View>
-            )}
-
-            <View style={styles.amountPayable}>
-              <Text
-                style={{
-                  ...styles.priceItemLabel2,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                {strings.AMOUNT_PAYABLE}
-              </Text>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel2, {color: MyDarkTheme.colors.text}]
-                    : styles.priceItemLabel2
-                }>{`${currencies?.primary_currency?.symbol}${(
-                Number(cartData?.total_payable_amount) +
-                (selectedTipAmount != null && selectedTipAmount != ''
-                  ? Number(selectedTipAmount)
-                  : 0)
-              ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
-            </View> */}
           </View>
         </View>
       </View>
@@ -3975,21 +3605,14 @@ function Cart({navigation, route}) {
                         }}
                         onPress={() => selectedTip(j)}>
                         <Text
-                          style={
-                            isDarkMode
-                              ? {
-                                  color:
-                                    selectedTipvalue?.value == j?.value
-                                      ? colors.white
-                                      : MyDarkTheme.colors.text,
-                                }
-                              : {
-                                  color:
-                                    selectedTipvalue?.value == j?.value
-                                      ? colors.white
-                                      : colors.black,
-                                }
-                          }>
+                          style={{
+                            color:
+                              selectedTipvalue?.value == j?.value
+                                ? colors.white
+                                : isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.black,
+                          }}>
                           {`${currencies?.primary_currency?.symbol} ${j.value}`}
                         </Text>
                         <Text
@@ -6383,7 +6006,9 @@ function Cart({navigation, route}) {
               tintColor={themeColors.primary_color}
             />
           }
-          ListEmptyComponent={() => (!isLoadingB ? <ListEmptyComp /> : <></>)}
+          ListEmptyComponent={() =>
+            !isShimmerLoading ? <ListEmptyComp /> : <></>
+          }
         />
       }
       {!!isModalVisibleForClearCart && (

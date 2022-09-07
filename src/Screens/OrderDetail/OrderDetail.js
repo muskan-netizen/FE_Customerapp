@@ -3733,8 +3733,100 @@ export default function OrderDetail({navigation, route}) {
             flexDirection: 'row',
             alignItems: 'center',
             alignSelf: 'flex-start',
-            marginLeft: moderateScale(15),
+            marginLeft: moderateScale(10),
             justifyContent: 'space-between',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+            }}>
+            <HeaderLoader
+              widthLeft={moderateScale(100)}
+              rectWidthLeft={moderateScale(100)}
+              heightLeft={moderateScaleVertical(100)}
+              rectHeightLeft={moderateScaleVertical(100)}
+              isRight={false}
+              rx={15}
+              ry={15}
+            />
+            <View>
+              <HeaderLoader
+                widthLeft={moderateScale(130)}
+                rectWidthLeft={moderateScale(130)}
+                rectHeightLeft={moderateScaleVertical(10)}
+                heightLeft={10}
+                isRight={false}
+                rx={4}
+                ry={4}
+              />
+              <HeaderLoader
+                widthLeft={moderateScale(70)}
+                rectWidthLeft={moderateScale(70)}
+                rectHeightLeft={moderateScaleVertical(10)}
+                viewStyles={{
+                  marginTop: moderateScaleVertical(10),
+                }}
+                heightLeft={10}
+                isRight={false}
+                rx={4}
+                ry={4}
+              />
+              <HeaderLoader
+                widthLeft={moderateScale(70)}
+                rectWidthLeft={moderateScale(70)}
+                rectHeightLeft={moderateScaleVertical(10)}
+                viewStyles={{
+                  marginTop: moderateScaleVertical(10),
+                }}
+                heightLeft={10}
+                isRight={false}
+                rx={4}
+                ry={4}
+              />
+              <HeaderLoader
+                widthLeft={moderateScale(70)}
+                rectWidthLeft={moderateScale(70)}
+                rectHeightLeft={moderateScaleVertical(10)}
+                heightLeft={10}
+                viewStyles={{
+                  marginTop: moderateScaleVertical(10),
+                }}
+                isRight={false}
+                rx={4}
+                ry={4}
+              />
+              <HeaderLoader
+                widthLeft={moderateScale(70)}
+                rectWidthLeft={moderateScale(70)}
+                rectHeightLeft={moderateScaleVertical(10)}
+                heightLeft={10}
+                viewStyles={{
+                  marginTop: moderateScaleVertical(10),
+                }}
+                isRight={false}
+                rx={4}
+                ry={4}
+              />
+            </View>
+          </View>
+          <HeaderLoader
+            widthLeft={moderateScale(20)}
+            rectWidthLeft={moderateScale(20)}
+            heightLeft={moderateScaleVertical(20)}
+            rectHeightLeft={moderateScaleVertical(20)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            alignSelf: 'flex-start',
+            marginLeft: moderateScale(10),
+            justifyContent: 'space-between',
+            marginTop: moderateScaleVertical(20),
           }}>
           <View
             style={{

@@ -89,6 +89,7 @@ export default function Wallet({navigation}) {
     errorRaised,
     searchLoader,
   } = state;
+
   useFocusEffect(
     React.useCallback(() => {
       getWalletData();
@@ -284,19 +285,21 @@ export default function Wallet({navigation}) {
           }}>
           <View style={styles.addedMoneyTimeCon}>
             <Text
-              style={
-                isDarkMode
-                  ? [styles.addedMoneyMonth, {color: MyDarkTheme.colors.text}]
-                  : styles.addedMoneyMonth
-              }>
+              style={{
+                ...styles.addedMoneyMonth,
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.walletTextD,
+              }}>
               {moment(item.created_at).format('ll')}
             </Text>
             <Text
-              style={
-                isDarkMode
-                  ? [styles.addedMoneyMonth, {color: MyDarkTheme.colors.text}]
-                  : styles.addedMoneyTime
-              }>
+              style={{
+                ...styles.addedMoneyMonth,
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.walletTextD,
+              }}>
               {moment(item.created_at).format('LT')}
             </Text>
           </View>
@@ -425,12 +428,16 @@ export default function Wallet({navigation}) {
         </View>
         <View style={styles.addMoneyCon}>
           <TouchableOpacity onPress={goToAddMoney} style={styles.addMoneybtn}>
-            <Text style={styles.addMoneyText}>{strings.ADD_MONEY}</Text>
+            <Text style={{...styles.addMoneyText, letterSpacing: 1}}>
+              {strings.ADD_MONEY}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={onTransferFunds}
             style={styles.addMoneybtn}>
-            <Text style={styles.addMoneyText}>{strings.TRANSFER_FUNDS}</Text>
+            <Text style={{...styles.addMoneyText, letterSpacing: 1}}>
+              {strings.TRANSFER_FUNDS}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -562,7 +569,7 @@ export default function Wallet({navigation}) {
             <TextInput
               placeholder={strings.ENTER_AMOUNT}
               placeholderTextColor={
-                isDarkMode ? MyDarkTheme.colors.text : colors.black
+                isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51
               }
               onChangeText={(text) => updateState({transferAmount: text})}
               style={styles.textInputStyle}
@@ -656,10 +663,14 @@ export default function Wallet({navigation}) {
             <ButtonWithLoader
               btnStyle={{
                 flex: 1,
-                backgroundColor: themeColors.primary_color,
-                borderWidth: 0,
+                backgroundColor: colors.white,
+                borderWidth: 1,
+                borderColor: themeColors.primary_color,
               }}
               btnText={strings.CANCEL}
+              btnTextStyle={{
+                color: themeColors.primary_color,
+              }}
               onPress={modalClose}
             />
           </View>

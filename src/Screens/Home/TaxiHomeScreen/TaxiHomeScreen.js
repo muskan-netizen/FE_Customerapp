@@ -207,7 +207,6 @@ export default function TaxiHomeScreen({route, navigation}) {
       .catch((error) => console.log('error while accessing location', error));
   }, []);
 
-  console.log('location address', location);
   useFocusEffect(
     React.useCallback(() => {
       // homeData();

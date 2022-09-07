@@ -138,19 +138,12 @@ export default function TaxiHomeDashbord({
     pickupAddress: {},
     allListedDrivers: [],
   });
-  console.log(location, 'loaction');
-  console.log(region, 'region');
+
   const appMainData = useSelector((state) => state?.home?.appMainData);
 
-  let findCabCategory = appMainData?.categories?.find(
-    (x) => x?.redirect_to == staticStrings.PICKUPANDDELIEVRY,
-  );
-
-  console.log(appMainData?.categories, 'findCabCategory');
   const {appData, currencies, themeColors, appStyle, languages} = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(languages, 'languages>new');
   const fontFamily = appStyle?.fontSizeData;
   const {bannerRef} = useRef();
   const {
@@ -265,8 +258,6 @@ export default function TaxiHomeDashbord({
         },
       )
       .then((res) => {
-        console.log(res, 'response>>>>>>>>>>>>>>drivers ');
-
         updateState({
           allListedDrivers: res?.data,
         });
@@ -313,8 +304,6 @@ export default function TaxiHomeDashbord({
         },
       )
       .then((res) => {
-        // actions.saveAllUserAddress(res.data);
-        console.log('res?>>>>>>>>>>>>>>', res);
         updateState({
           allSavedAddress: res.data,
           isLoading: false,

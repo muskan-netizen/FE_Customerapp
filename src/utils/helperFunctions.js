@@ -22,6 +22,7 @@ import DeviceCountry, {
   TYPE_TELEPHONY,
   TYPE_CONFIGURATION,
 } from 'react-native-device-country';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {
@@ -282,6 +283,7 @@ export const sessionHandler = (error) => {
   actions.cartItemQty('');
   actions.saveAddress(null);
   actions.setAppSessionData('guest_login');
+  AsyncStorage.clear();
 };
 
 export const getScaleTransformationStyle = (

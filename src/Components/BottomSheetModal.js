@@ -1,7 +1,9 @@
 import BottomSheet from '@gorhom/bottom-sheet';
 import React from 'react';
 import {StyleSheet} from 'react-native';
+import {View} from 'react-native-animatable';
 import colors from '../styles/colors';
+import {height} from '../styles/responsiveSize';
 
 const BottomSheetModal = ({
   children = <></>,
@@ -21,7 +23,7 @@ const BottomSheetModal = ({
       handleComponent={handleComponent}
       detached={true}
       backgroundStyle={{
-        backgroundColor: colors.blackOpacity30,
+        backgroundColor: colors.blackOpacity10,
         ...backgroundStyle,
       }}>
       {children}
