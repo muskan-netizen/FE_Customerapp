@@ -3355,7 +3355,7 @@ export default function Products({route, navigation}) {
 
     addonSet.map((i, inx) => {
       const temp = checkIfMaxReached(i.min_select, i.setoptions);
-      console.log('temp value', temp);
+
       if (temp) {
         i.setoptions.map((j, jnx) => {
           if (j?.value == true) {
@@ -3854,7 +3854,7 @@ export default function Products({route, navigation}) {
                                   textTransform: 'capitalize',
                                   color: colors.white,
                                 }}
-                                onPress={() => addSingleItem(addonSet)}
+                                onPress={() => addToCart(addonSet)}
                                 btnText={`${strings.ADD_ITEM} - ${
                                   currencies?.primary_currency?.symbol
                                 } ${getAdditionalPriceOfAddons()}`}

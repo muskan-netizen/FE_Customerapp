@@ -1006,17 +1006,19 @@ const VariantAddons = ({
                   })
                 }
               />
-              <View style={{paddingTop: 5}}>
-                <Pagination
-                  dotsLength={productDetailData?.product_media?.length}
-                  activeDotIndex={slider1ActiveSlide}
-                  dotColor={'grey'}
-                  dotStyle={[styles.dotStyle]}
-                  inactiveDotColor={'black'}
-                  inactiveDotOpacity={0.4}
-                  inactiveDotScale={0.8}
-                />
-              </View>
+              {!isEmpty(productDetailData) ? (
+                <View style={{paddingTop: 5}}>
+                  <Pagination
+                    dotsLength={productDetailData?.product_media?.length}
+                    activeDotIndex={slider1ActiveSlide}
+                    dotColor={'grey'}
+                    dotStyle={[styles.dotStyle]}
+                    inactiveDotColor={'black'}
+                    inactiveDotOpacity={0.4}
+                    inactiveDotScale={0.8}
+                  />
+                </View>
+              ) : null}
             </View>
 
             <Animatable.View
