@@ -895,8 +895,8 @@ const appIds = {
     android: 'com.noki',
   }),
   driveree: Platform.select({
-    ios: 'com.driveree',
-    android: 'com.driveree',
+    ios: 'com.driveree.orders',
+    android: 'com.driveree.orders',
   }),
   rxnow: Platform.select({
     ios: 'com.app.rxnow',
@@ -1428,7 +1428,7 @@ const appIds = {
   }),
   dbairro: Platform.select({
     ios: 'com.app.dbairro',
-    android: 'com.dbairro',
+    android: 'com.Dbairro.order',
   }),
   knockknock: Platform.select({
     ios: 'com.knockKnock.userApp',
@@ -1508,8 +1508,8 @@ const appIds = {
     android: 'com.upstreet',
   }),
   newYorkMiniMart: Platform.select({
-    ios: 'com.newYorkMiniMart',
-    android: 'com.newYorkMiniMart',
+    ios: 'com.littlebird.order',
+    android: 'com.littlebird.order',
   }),
   airlinesRecruiter: Platform.select({
     ios: 'com.airlinesRecruiter',

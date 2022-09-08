@@ -13,7 +13,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://Orderfirst.rostaging.com/api/v1';
 // export const API_BASE_URL='https://halatalabat.com/api/v1';
 // export const API_BASE_URL = 'https://marksoublet.rostaging.com/api/v1';
@@ -74,7 +74,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // hokitch
 // export const API_BASE_URL = 'https://about.hokitch.com/api/v1'
 // lastminutedress
-export const API_BASE_URL = 'https://lastminutedress.com/api/v1';
+// export const API_BASE_URL = 'https://lastminutedress.com/api/v1';
 //Vishwas
 // export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
 // export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
@@ -96,6 +96,8 @@ export const API_BASE_URL = 'https://lastminutedress.com/api/v1';
 // export const API_BASE_URL = 'https://fairexglobal.com/api/v1';
 // export const API_BASE_URL = 'https://beachhopdelivery.com/api/v1';
 //export const API_BASE_URL = 'https://elixir.royoorders.com/api/v1';
+
+// export const API_BASE_URL = 'https://farmersouq.rostaging.com/api/v1';
 
 //export const API_BASE_URL='https://lift.gd/api/v1';
 // export const API_BASE_URL = 'https://gusto.royoorders.com/api/v1';
@@ -131,6 +133,12 @@ export const API_BASE_URL = 'https://lastminutedress.com/api/v1';
 //Harbans
 // export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
 
+// ottoweed
+// export const API_BASE_URL = 'order.ottoweed.com/api/v1';
+
+// perucabs
+// export const API_BASE_URL = 'https://perucabs.com/api/v1';
+
 //Vishwas
 // export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
 
@@ -141,6 +149,12 @@ export const API_BASE_URL = 'https://lastminutedress.com/api/v1';
 // export const API_BASE_URL = 'https://order.orderfirst.store/api/v1';
 //baytukom
 // export const API_BASE_URL ='https://baytukom-order.netsolutionindia.com/api/v1';
+
+//littlebird
+// export const API_BASE_URL = 'https://littlebird.store/api/v1';
+
+//taxe
+// export const API_BASE_URL = 'https://taxe.rostaging.com/api/v1';
 
 // knock knock
 // export const API_BASE_URL = 'https://knockknock.online/api/v1';
