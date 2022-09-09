@@ -308,6 +308,7 @@ export default function WebLinks({ navigation, route }) {
   };
 
   const _onSubmit = () => {
+    console.log(driverRegistrationDocs, "driverRegistrationDocs")
     const checkValid = isValidData();
     if (!checkValid) {
       return;
@@ -370,13 +371,14 @@ export default function WebLinks({ navigation, route }) {
           item?.item.file_type === 'Image'
             ? {
               uri: item.fileData.path,
-              name: item.fileData.filename,
-              filename: item.fileData.filename,
+              name: item.fileData.filename ||  item?.item?.name,
+              filename: item.fileData.filename ||  item?.item?.name,
               type: item.fileData.mime,
             }
             : item?.fileData,
         );
       });
+      console.log(formData,"formDataaaaaa")
       updateState({ isLoading: true });
       actions
         .driverRegisteration(formData, {
@@ -394,6 +396,7 @@ export default function WebLinks({ navigation, route }) {
           showSuccess(res.message);
           navigation.goBack();
         })
+        // err => console.log(err ,"formDataaaaaaererrr")
         .catch(errorMethod);
     } else {
       var formData = new FormData();
@@ -494,7 +497,6 @@ export default function WebLinks({ navigation, route }) {
           navigation.goBack();
         })
         .catch(errorMethod);
-      // }
     }
   };
 
