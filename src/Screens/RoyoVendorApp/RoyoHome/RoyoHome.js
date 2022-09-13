@@ -505,7 +505,6 @@ const RoyoHome = (props) => {
       </View>
     );
   };
-
   const onEndReachedVendor = () => {
     if (vendorLoadMore.current) {
       vendorPage.current = vendorPage.current + 1;

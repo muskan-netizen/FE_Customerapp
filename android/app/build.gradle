@@ -131,6 +131,8 @@ android {
     }
    //  compileSdkVersion rootProject.ext.compileSdkVersion
        compileSdkVersion 31
+   //  compileSdkVersion rootProject.ext.compileSdkVersion
+       compileSdkVersion 31
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -207,37 +209,26 @@ android {
     flavorDimensions "appType"
 
   productFlavors{
-              royoorder {
-                dimension "appType"
-                versionCode 3
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                // applicationIdSuffix ".royoorder"
-                applicationId 'com.codebrew.royoorder'
-                resValue "string", "app_name", "RoyoOrder"
-                resValue "string", "host_name", "sales.royoorders.com"
-            }
-                        gokab{
+            hellodeliver{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.gokab'
-                resValue "string", "app_name", "GoKab"
+                applicationId 'com.codebrew.hellodeliver'
+                resValue "string", "app_name", "Hello Deliver"
                 resValue "string", "host_name", ""
             }
-      grub{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.customer.grub'
-                resValue "string", "app_name", "Grub"
-                resValue "string", "host_name", ""
-            }
+    //   grub{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.customer.grub'
+    //             resValue "string", "app_name", "Grub"
+    //             resValue "string", "host_name", ""
+    //         }
   }
     // productFlavors {
     //         royoorder {

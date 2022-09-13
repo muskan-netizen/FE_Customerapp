@@ -37,12 +37,26 @@ navigator.geolocation = require('react-native-geolocation-service');
 
 export default function TaxiHomeScreen({route, navigation}) {
   const paramData = route?.params;
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const {location, dineInType, appMainData} = useSelector(
+    (state) => state?.home,
+  );
+  const {cartItemCount} = useSelector((state) => state?.cart);
+  const {
+    appData,
+    themeColors,
+    themeLayouts,
+    currencies,
+    languages,
+    internetConnection,
+    appStyle,
+    isDineInSelected,
+    themeColor,
+    themeToggle,
+  } = useSelector((state) => state?.initBoot);
+  const {userData} = useSelector((state) => state?.auth);
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
-  const location = useSelector((state) => state?.home?.location);
   const [state, setState] = useState({
     isLoading: true,
     latitude: location?.latitude,
@@ -56,23 +70,7 @@ export default function TaxiHomeScreen({route, navigation}) {
     isDineInSelected: false,
     locationObj: {},
   });
-  const appMainData = useSelector((state) => state?.home?.appMainData);
-  const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
-  const {
-    appData,
-    themeColors,
-    themeLayouts,
-    currencies,
-    languages,
-    internetConnection,
-    appStyle,
-    isDineInSelected,
-  } = useSelector((state) => state?.initBoot);
 
-  const {userData} = useSelector((state) => state?.auth);
-  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
-
-  const {profile} = appData;
   const {
     updateTime,
     isLoading,
@@ -165,7 +163,7 @@ export default function TaxiHomeScreen({route, navigation}) {
     }
   }, [updateTime]);
   useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+    Geocoder.init(appData?.profile?.preferences?.map_key, {language: 'en'}); // set the language
   }, []);
 
   useEffect(() => {
@@ -256,7 +254,7 @@ export default function TaxiHomeScreen({route, navigation}) {
 
     console.log(
       {
-        type: dine_In_Type ? dine_In_Type : dine_In_Type,
+        type: dineInType ? dineInType : dineInType,
         ...latlongObj,
       },
       'latlongObj>>Data',
@@ -265,7 +263,7 @@ export default function TaxiHomeScreen({route, navigation}) {
     actions
       .homeData(
         {
-          type: dine_In_Type ? dine_In_Type : dine_In_Type,
+          type: dineInType ? dineInType : dineInType,
           ...latlongObj,
         },
         {
@@ -491,7 +489,7 @@ export default function TaxiHomeScreen({route, navigation}) {
 
   useEffect(() => {
     homeData();
-  }, [selectedTabType, appData, dine_In_Type]);
+  }, [selectedTabType, appData, dineInType]);
 
   ///onPressCategory2
   const onPressCategory2 = (data) => {

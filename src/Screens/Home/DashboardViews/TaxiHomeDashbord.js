@@ -94,7 +94,7 @@ export default function TaxiHomeDashbord({
   const {appData, currencies, themeColors, appStyle, languages} = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(appData?.profile?.preferences, 'appDataDataaaaaa');
+
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
@@ -153,9 +153,6 @@ export default function TaxiHomeDashbord({
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
 
-  const {appData, currencies, themeColors, appStyle, languages} = useSelector(
-    (state) => state?.initBoot,
-  );
   const fontFamily = appStyle?.fontSizeData;
   const {bannerRef} = useRef();
   const {

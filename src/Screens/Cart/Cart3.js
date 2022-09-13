@@ -1085,7 +1085,6 @@ function Cart({navigation, route}) {
       paymentData?.orderDetail?.order_number
     }&token=${!!cardInfo ? cardInfo : null}&action=cart`;
 
-   
     actions
       .openPaymentWebUrl(
         queryData,
@@ -2678,7 +2677,9 @@ function Cart({navigation, route}) {
                                   {`${currencies?.primary_currency?.symbol}${
                                     // Number(i?.pvariant?.multiplier) *
                                     currencyNumberFormatter(
-                                      Number(i?.variants?.quantity_price),
+                                      Number(
+                                        i?.variants?.quantity_quantity_price,
+                                      ),
                                       appData?.profile?.preferences
                                         ?.digit_after_decimal,
                                     )
@@ -3287,7 +3288,6 @@ function Cart({navigation, route}) {
   };
 
   const selectedTip = (tip) => {
-   
     if (tip == 'custom') {
       setSelectedTipvalue(tip);
       setSelectedTipAmount(null);
