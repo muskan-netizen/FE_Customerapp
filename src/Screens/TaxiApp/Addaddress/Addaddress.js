@@ -447,7 +447,6 @@ export default function Addaddress({navigation, route}) {
   const getNearByAddress = async (latlng) => {
     try {
       const res = await nearbySearch(latlng, profile?.preferences?.map_key);
-      console.log('nearby search res+++++', res.results);
       updateState({
         nearByAddressess: res.results,
       });

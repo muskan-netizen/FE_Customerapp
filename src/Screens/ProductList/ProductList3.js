@@ -242,6 +242,8 @@ export default function Products({route, navigation}) {
   const [selectedSection, setSelectedSection] = useState(null);
   const [listendLoad, stListendLoader] = useState(false);
   const [repeatItems, setRepeatItems] = useState(null);
+  const [isAddonLoading, setIsAddonLoading] = useState(false);
+  const [isRepeastModal, setIsRepeatModal] = useState(false);
   const [selectedCartItem, setSelectedCarItems] = useState(null);
   const [differentAddsOns, setDifferentAddsOns] = useState([]);
   const [selectedDiffAdsOnItem, setSelectedDiffAdsOnItem] = useState(null);
@@ -280,6 +282,8 @@ export default function Products({route, navigation}) {
   const userData = useSelector((state) => state?.auth?.userData);
   //app Main Data
   const appMainData = useSelector((state) => state?.home?.appMainData);
+
+  console.log(repeatItems, 'repeatItems.....repeatItems');
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -1382,7 +1386,8 @@ export default function Products({route, navigation}) {
         };
         console.log('api data checkLastAdded', apiData);
         try {
-          // setRepeatItems(true);
+          setIsAddonLoading(true);
+          setIsRepeatModal(true);
           const res = await actions.checkLastAdded(apiData, header);
           console.log('check last addedres++++++', res);
           if (!!res.data) {
@@ -1399,10 +1404,12 @@ export default function Products({route, navigation}) {
             };
             setSelectedSection(section);
             setRepeatItems(addData);
+            setIsAddonLoading(false);
           }
         } catch (error) {
           console.log('error riased++++', error);
           showError(error?.message || error?.error);
+          setIsAddonLoading(false);
         }
         return;
       }
@@ -2372,7 +2379,7 @@ export default function Products({route, navigation}) {
       1,
       updateLocalQty,
     );
-    setRepeatItems(null);
+    setIsRepeatModal(false);
   };
 
   const onAddNew = () => {
@@ -2387,7 +2394,7 @@ export default function Products({route, navigation}) {
     let getTypeId =
       !!repeatItems?.item?.category &&
       repeatItems?.item?.category.category_detail?.type_id;
-    setRepeatItems(null);
+    setIsRepeatModal(false);
     setSelectedCarItems(repeatItems?.item);
     setIsVisibleModal(true);
     updateState({
@@ -3960,12 +3967,13 @@ export default function Products({route, navigation}) {
           />
 
           {/* Add new addons and repeat item view */}
-          {!!repeatItems ? (
+          {!!isRepeastModal ? (
             <RepeatModal
               data={repeatItems?.item}
-              modalHide={() => setRepeatItems(null)}
+              modalHide={() => setIsRepeatModal(false)}
               onRepeat={onRepeat}
               onAddNew={onAddNew}
+              isAddonLoading={isAddonLoading}
             />
           ) : null}
 
