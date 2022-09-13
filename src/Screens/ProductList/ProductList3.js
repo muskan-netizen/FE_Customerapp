@@ -3882,7 +3882,7 @@ export default function Products({route, navigation}) {
             ]}
             visible={updateQtyLoader}
           />
-
+          {console.log(CartItems, 'CartItemsCartItemsCartItems')}
           {!searchInput && !isVisibleModal && (
             <GradientCartView
               onPress={() => {
@@ -3898,7 +3898,7 @@ export default function Products({route, navigation}) {
                     } | ${
                       currencies.primary_currency.symbol
                     } ${currencyNumberFormatter(
-                      Number(CartItems.data.total_payable_amount),
+                      Number(CartItems?.data?.gross_paybale_amount),
                       appData?.profile?.preferences?.digit_after_decimal,
                     )}`
                   : ''

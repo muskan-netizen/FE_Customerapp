@@ -226,8 +226,7 @@ const RoyoAddProduct = ({route, navigation}) => {
       )
       .then((res) => {
         const productInfo = res?.data?.product_detail;
-        console.log(productInfo, 'productDetails<<<<<');
-        console.log(productDetailParam, 'productDetails<<<<<');
+
         updateState({
           isLoading: false,
           isLoadingB: false,

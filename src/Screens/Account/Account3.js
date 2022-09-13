@@ -113,8 +113,15 @@ export default function Account3({navigation}) {
 
   const onShare = () => {
     console.log('onShare', appData);
-    if (!!appData?.domain_link) {
-      let hyperLink = appData?.domain_link + '/share';
+    if (
+      !!appData?.profile?.preferences?.android_app_link ||
+      !!appData?.profile?.preferences?.ios_link
+    ) {
+      let hyperLink =
+        Platform.OS === 'android'
+          ? appData?.profile?.preferences?.android_app_link 
+          : appData?.profile?.preferences?.ios_link;
+
       let options = {url: hyperLink};
       Share.open(options)
         .then((res) => {

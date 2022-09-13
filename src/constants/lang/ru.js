@@ -951,4 +951,5 @@ YOUR_RIDE_WILL_START_SOON: " ВАША ПОЕЗДКА СКОРО НАЧНЕТСЯ
   PARTICIPANTS:"Participants",
   VENDOR:"Vendor",
   START_CHAT:"Start Chat",
+  MINIMUM_ORDER_VALUE:"Minimum order value"
 };

@@ -21,6 +21,7 @@ import es_elcheragio from './es_elcheragio';
 import es_heybuddy from './es_heybuddy';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
 import es_sabroson from './es_sabroson';
+import ar_baytukom from './ar_baytukom';
 
 
 //Spanish fils
@@ -38,9 +39,18 @@ const spanishfile = () => {
   }
 };
 
+const arbicFile = ()=>{
+  switch (DeviceInfo.getBundleId()) {
+    case appIds?.baytukom:
+       return ar_baytukom
+    default:
+      return ar;
+  }
+}
+
 let strings = new LocalizedStrings({
   en: en,
-  ar: ar,
+  ar: arbicFile(),
   es: spanishfile(),
   de: de,
   fr: fr,

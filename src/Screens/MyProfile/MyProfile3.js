@@ -311,8 +311,6 @@ export default function MyProfile3({route, navigation}) {
       let concatinatedArray = addtionalImages.concat(addtionalPdfs);
       if (!isEmpty(concatinatedArray)) {
         concatinatedArray.map((i, inx) => {
-          console.log(i, 'i>>><<<<<<');
-
           if (i?.value) {
             formdata.append(
               i?.primary?.slug,

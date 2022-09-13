@@ -108,6 +108,7 @@ export default function Home({route, navigation}) {
     unPresentAry: [],
     isSubscription: true,
     stopOrderModalVisible: true,
+    curLatLong: null,
   });
 
   const {
@@ -131,6 +132,7 @@ export default function Home({route, navigation}) {
     unPresentAry,
     isSubscription,
     stopOrderModalVisible,
+    curLatLong,
   } = state;
 
   const {profile} = appData;
@@ -187,6 +189,9 @@ export default function Home({route, navigation}) {
         if (result !== 'goback' && result == 'granted') {
           getCurrentLocation('home')
             .then((curLoc) => {
+              updateState({
+                curLatLong: curLoc,
+              });
               let locData = location?.latitude ? location : curLoc;
               if (!!userData?.auth_token) {
                 //IS LOGIN USER YES
@@ -278,7 +283,7 @@ export default function Home({route, navigation}) {
   // useEffect(() => {
   //   homeData();
   // }, [selectedTabType, appData, location, bestSeller, openVendor, closeVendor]);
-
+  console.log(location, 'locationlocation');
   useEffect(() => {
     Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
   }, []);
@@ -984,6 +989,8 @@ export default function Home({route, navigation}) {
                 appMainData={appMainData}
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
+                location={location}
+                curLatLong={curLatLong}
               />
             ) : (
               <DashBoardOne
@@ -1021,6 +1028,8 @@ export default function Home({route, navigation}) {
                 appMainData={appMainData}
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
+                location={location}
+                curLatLong={curLatLong}
               />
             ) : (
               <DashBoardFour
@@ -1072,6 +1081,8 @@ export default function Home({route, navigation}) {
                 appMainData={appMainData}
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
+                location={location}
+                curLatLong={curLatLong}
               />
             ) : (
               <DashBoardFive
@@ -1121,6 +1132,8 @@ export default function Home({route, navigation}) {
                 appMainData={appMainData}
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
+                location={location}
+                curLatLong={curLatLong}
               />
             ) : (
               <DashBoardSix
@@ -1173,6 +1186,8 @@ export default function Home({route, navigation}) {
                 appMainData={appMainData}
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
+                location={location}
+                curLatLong={curLatLong}
               />
             ) : (
               <DashBoardFive
@@ -1229,6 +1244,8 @@ export default function Home({route, navigation}) {
                 appMainData={appMainData}
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
+                location={location}
+                curLatLong={curLatLong}
               />
             ) : (
               <DashBoardEight

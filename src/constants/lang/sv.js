@@ -943,4 +943,5 @@ export default {
   PARTICIPANTS:"Participants",
   VENDOR:"Vendor",
   START_CHAT:"Start Chat",
+  MINIMUM_ORDER_VALUE:"Minimum order value"
 };
