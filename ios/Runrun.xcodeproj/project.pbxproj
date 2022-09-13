@@ -30545,6 +30545,7 @@
 				84C73FF127D78D2100C6D89C /* Start Packager */,
 				35B429778D4727C635DA68C7 /* [CP] Embed Pods Frameworks */,
 				AA409F1B0AC59F6C7839C53F /* [CP] Copy Pods Resources */,
+				9897F54728CB1B7000F12BF9 /* Bundle React Native code and images */,
 			);
 			buildRules = (
 			);
@@ -99788,6 +99789,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-ElentaMart/Pods-available_pods-ElentaMart-frameworks.sh\"\n";
 		};
+		9897F54728CB1B7000F12BF9 /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n\n";
+		};
 		98A0F6A20E44E1FC9A61020E /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -148643,7 +148662,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = 38326S722Q;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

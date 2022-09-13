@@ -1011,8 +1011,8 @@ const appIds = {
     android: 'com.ssuum',
   }),
   blacnetwork: Platform.select({
-    ios: 'com.blacnetwork',
-    android: 'com.blacnetwork',
+    ios: 'com.blacnetwork.orders',
+    android: 'com.blacnetwork.orders',
   }),
   threadagain: Platform.select({
     ios: 'com.threadagain',

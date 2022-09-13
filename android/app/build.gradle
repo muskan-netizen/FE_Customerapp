@@ -205,15 +205,15 @@ android {
     flavorDimensions "appType"
 
 //   productFlavors{
-//                          ola{
-//             dimension "appType"
-//             versionCode 1
-//             versionName "1.0"
-//             minSdkVersion rootProject.ext.minSdkVersion
-//             targetSdkVersion rootProject.ext.targetSdkVersion
-//             applicationId 'com.app.ola'
-//             resValue "string", "app_name", "Ola"
-//             resValue "string", "host_name", ""
+//                          blacnetwork{
+//                 dimension "appType"
+//                 versionCode 1
+//                 versionName "1.0"
+//                 minSdkVersion rootProject.ext.minSdkVersion
+//                 targetSdkVersion rootProject.ext.targetSdkVersion         
+//                 applicationId 'com.blacnetwork.orders'
+//                 resValue "string", "app_name", "Blac Network"
+//                 resValue "string", "host_name", ""
 //             }
 //   }
     productFlavors {
@@ -1774,7 +1774,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.blacnetwork'
+                applicationId 'com.blacnetwork.orders'
                 resValue "string", "app_name", "Blac Network"
                 resValue "string", "host_name", ""
             }
@@ -3490,16 +3490,6 @@ android {
                 targetSdkVersion rootProject.ext.targetSdkVersion         
                 applicationId 'com.ssuum'
                 resValue "string", "app_name", "Ssuum"
-                resValue "string", "host_name", ""
-            }
-            blacnetwork{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.blacnetwork'
-                resValue "string", "app_name", "Blac Network"
                 resValue "string", "host_name", ""
             }
             threadagain{
