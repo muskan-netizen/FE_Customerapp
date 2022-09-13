@@ -1645,10 +1645,10 @@ target 'AmazingTaxi' do
   
 end
 
-# # JazzyBug Target
-# target 'JazzyBug' do
+# JazzyBug Target
+target 'JazzyBug' do
   
-# end
+end
 
 # # Myfarma Target
  target 'Myfarma' do
@@ -1939,11 +1939,56 @@ end
 target 'FairDeal' do
   
 end
-#SyloMart Target
-target 'SyloMart' do
+# #SyloMart Target
+# target 'SyloMart' do
+  
+# end
+
+#HezniTaxi Target
+target 'HezniTaxi' do
   
 end
 
+#OnTheWheel Target
+target 'OnTheWheel' do
+  
+end
+
+#ValleyMeats Target
+target 'ValleyMeats' do
+  
+end
+#Perucabs Target
+target 'Perucabs' do
+  
+end
+
+
+#Hafizjwlry Target
+target 'Hafizjwlry' do
+  
+end
+
+
+#Jana Target
+target 'Jana' do
+  
+end
+
+#MYWAYBILL Target
+target 'MYWAYBILL' do
+  
+end
+
+#Cattch
+target 'Cattch' do
+
+end
+
+#Tezras
+target 'Tezras' do
+
+end
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

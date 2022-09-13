@@ -13,7 +13,11 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+
+// export const API_BASE_URL = 'https://perucabs.com/api/v1';
+
+// export const API_BASE_URL = 'https://sunshinerideshare.com/api/v1';
 // export const API_BASE_URL = 'https://Orderfirst.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'https://aaujaaunepal.com/api/v1'
@@ -32,7 +36,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://foodnests.com/api/v1'
 // export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1'
 // export const API_BASE_URL = 'https://bluebundles.org/api/v1'
-// export const API_BASE_URL = 'https://bimol.in/api/v1'
+// export const API_BASE_URL = 'https://bimol.in/api/v1';
 // export const API_BASE_URL = 'https://ineed.do/api/v1'
 // export const API_BASE_URL = 'https://fairexglobal.com/api/v1'
 // export const API_BASE_URL = 'https://drusdeliveries.com/api/v1';
@@ -41,7 +45,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 //  export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1';
-export const API_BASE_URL = 'https://masaapp.ae/api/v1'
+// export const API_BASE_URL = 'https://masaapp.ae/api/v1';
 
 //export const API_BASE_URL = 'https://ace.royoorders.com/api/v1'
 //live
@@ -68,7 +72,7 @@ export const API_BASE_URL = 'https://masaapp.ae/api/v1'
 
 // export const API_BASE_URL = 'https://butlerdeliveryusa.com/api/v1'
 
-// export const API_BASE_URL = 'https://shoorafresh.com.au/api/v1'
+// export const API_BASE_URL = 'https://shoorafresh.com.au/api/v1';
 //
 
 // hokitch
@@ -147,7 +151,6 @@ export const API_BASE_URL = 'https://masaapp.ae/api/v1'
 // export const API_BASE_URL = 'https://knockknock.online/api/v1'
 
 // export const API_BASE_URL = 'https://knockknock.online/api/v1'
-
 
 // export const API_BASE_URL = 'https://papiruki.com/api/v1'
 
