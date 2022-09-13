@@ -179,6 +179,9 @@ export default function Home({route, navigation}) {
   );
 
   useEffect(() => {
+    if (isRefreshing) {
+      return;
+    }
     chekLocationPermission(true)
       .then((result) => {
         if (result !== 'goback' && result == 'granted') {

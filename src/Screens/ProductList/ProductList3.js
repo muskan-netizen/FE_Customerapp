@@ -2354,13 +2354,8 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        actions.cartItemQty(res);
-        addSingleItem(item, section, inx);
-        if (addonSet) {
-        } else {
-          // addToCart();
-        }
-        // showSuccess(res?.message);
+        actions.cartItemQty({});
+        setIsVisibleModal(false);
       })
       .catch(errorMethod);
   };
@@ -3922,6 +3917,8 @@ export default function Products({route, navigation}) {
               // }
             />
           )}
+
+          {console.log(CartItems, 'CartItemsCartItems')}
 
           <BottomSlideModal
             mainContainView={RenderOfferView}
