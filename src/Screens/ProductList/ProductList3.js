@@ -1078,27 +1078,29 @@ export default function Products({route, navigation}) {
             marginHorizontal: moderateScale(12),
           }}>
           {categoryInfo?.is_show_products_with_category ? (
-            <SearchBar
-              autoFocus={false}
-              containerStyle={{
-                flex: 1,
-                // marginHorizontal: moderateScale(18),
-                borderRadius: moderateScale(8),
-                backgroundColor: isDarkMode
-                  ? colors.whiteOpacity15
-                  : colors.greyColor,
-                height: moderateScaleVertical(37),
-              }}
-              searchValue={searchInput}
-              placeholder={strings.SEARCH_WITHIN_MENU}
-              onChangeText={(value) => onSearchWithinMenu(value)}
-              showRightIcon={searchInput ? true : false}
-              rightIconStyle={{
-                tintColor: isDarkMode ? colors.white : colors.black,
-              }}
-              rightIconPress={() => onSearchWithinMenu('')}
-              showVoiceRecord={false}
-            />
+            getBundleId() == appIds.muvpod ? null : (
+              <SearchBar
+                autoFocus={false}
+                containerStyle={{
+                  flex: 1,
+                  // marginHorizontal: moderateScale(18),
+                  borderRadius: moderateScale(8),
+                  backgroundColor: isDarkMode
+                    ? colors.whiteOpacity15
+                    : colors.greyColor,
+                  height: moderateScaleVertical(37),
+                }}
+                searchValue={searchInput}
+                placeholder={strings.SEARCH_WITHIN_MENU}
+                onChangeText={(value) => onSearchWithinMenu(value)}
+                showRightIcon={searchInput ? true : false}
+                rightIconStyle={{
+                  tintColor: isDarkMode ? colors.white : colors.black,
+                }}
+                rightIconPress={() => onSearchWithinMenu('')}
+                showVoiceRecord={false}
+              />
+            )
           ) : null}
 
           {/* 
@@ -1820,7 +1822,6 @@ export default function Products({route, navigation}) {
       )
       .then((res) => {
         console.log(res, 'resres');
-
         if (!!res?.data) {
           console.log(res, 'res getProductByCategoryId');
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
@@ -2075,7 +2076,6 @@ export default function Products({route, navigation}) {
     if (type == 1) {
       quanitity = Number(isExistqty) + quantityToIncreaseDecrease;
     } else {
-      console.log(isExistqty, item?.minimum_order_count, 'kdhgkjdfkjgh');
       if (
         Number(isExistqty - item?.batch_count) <
         Number(item?.minimum_order_count)

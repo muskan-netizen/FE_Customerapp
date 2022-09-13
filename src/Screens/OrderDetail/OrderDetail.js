@@ -1041,6 +1041,7 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const _renderItem = ({item, index}) => {
+    console.log(item,"itemitemitemitem");
     return (
       <View
         key={index}

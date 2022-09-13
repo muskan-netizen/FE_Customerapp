@@ -205,6 +205,9 @@ export default function Account3({navigation}) {
     }
   };
 
+
+
+
   return (
     <View
       style={{

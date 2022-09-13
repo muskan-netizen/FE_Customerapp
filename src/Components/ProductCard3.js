@@ -321,7 +321,7 @@ const ProductCard3 = ({
                 fontFamily: fontFamily.regular,
                 fontSize: textScale(12),
                 width: width / 2.5,
-                textTransform: 'capitalize',
+                //textTransform: 'capitalize',
                 // flex:1
               }}>
               {data?.translation[0]?.title || data?.title || data?.sku}

@@ -64,19 +64,22 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       <FastImage
+      resizeMode='contain'
         source={{
           uri: imageUrl,
           cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.high,
+          
         }}
         style={{
           height: moderateScale(100),
           width: width / 2.5,
           backgroundColor: isDarkMode
             ? colors.whiteOpacity22
-            : colors.blackOpacity20,
+            : colors.white,
           borderRadius: moderateScale(8),
           ...imageStyle,
+          
         }}
         imageStyle={{
           borderRadius: moderateScale(10),
