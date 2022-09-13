@@ -273,10 +273,6 @@ export default function Products({route, navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
   const styles = stylesFunc({themeColors, fontFamily, isDarkMode, MyDarkTheme});
-  console.log(
-    productDataLengthAfterViewMoreSearch,
-    'productDataLengthAfterViewMoreSearch',
-  );
 
   //Saving the initial state
   const initialState = cloneDeep(state);
@@ -1016,7 +1012,6 @@ export default function Products({route, navigation}) {
             marginBottom: moderateScale(15),
           }}
           contentContainerStyle={{alignItems: 'center'}}>
-          {console.log(ProductTags, 'ProductTags')}
           {ProductTags &&
             ProductTags.map((el, index) => {
               return (
@@ -1036,7 +1031,6 @@ export default function Products({route, navigation}) {
                     size="small"
                     onToggle={() => {
                       // playHapticEffect(hapticEffects.impactLight);
-                      console.log(ProductTags, 'ProductTags');
                       const updatedArr = ProductTags.map((el, idx) => {
                         console.log(el, 'ellll');
                         if (idx === index) {
@@ -2582,7 +2576,6 @@ export default function Products({route, navigation}) {
   };
 
   // useEffect(() => {
-  //   // console.log(ProductTags, 'ProductTags');
   //   let EnabledTags = ProductTags.filter((el) => el.isSelected);
   //   console.log(EnabledTags, 'EnabledTags');
   //   if (EnabledTags.length > 0) {

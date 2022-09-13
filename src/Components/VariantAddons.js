@@ -92,7 +92,7 @@ const VariantAddons = ({
           getProductDetail();
         }
       }
-    }, [productdetail, isVisible]),
+    }, []),
   );
 
   const getProductDetailBasedOnFilter = (variantSetData) => {
@@ -127,7 +127,7 @@ const VariantAddons = ({
 
   useEffect(() => {
     getProductDetail();
-  }, [productdetail, isVisible]);
+  }, []);
 
   const getProductDetail = () => {
     console.log('api hit getProductDetail');

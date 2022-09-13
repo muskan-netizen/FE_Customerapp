@@ -2409,11 +2409,8 @@ export default function ProductWithCategory({route, navigation}) {
   };
 
   useEffect(() => {
-    // console.log(ProductTags, 'ProductTags');
     let EnabledTags = ProductTags.filter((el) => el.isSelected);
-    console.log(EnabledTags, 'EnabledTags');
     if (EnabledTags.length > 0) {
-      console.log(sectionListData, 'sectionListData>>>>BEFORE');
       const newArr = sectionListData.map((el) => {
         const records =
           el.data &&
