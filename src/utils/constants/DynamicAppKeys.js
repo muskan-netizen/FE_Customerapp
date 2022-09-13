@@ -1817,7 +1817,7 @@ const appIds = {
   }),
   smokeRun: Platform.select({
     ios: 'com.smokeRun.order',
-    android: 'com.smokeRun.order',
+    android: 'com.smokerun.ordersapp',
   }),
   myEvPlus: Platform.select({
     ios: 'com.myEvPlus.order',

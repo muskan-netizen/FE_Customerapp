@@ -41,7 +41,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 //  export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1';
-export const API_BASE_URL = 'https://masaapp.ae/api/v1'
+// export const API_BASE_URL = 'https://masaapp.ae/api/v1'
 
 //export const API_BASE_URL = 'https://ace.royoorders.com/api/v1'
 //live
@@ -69,7 +69,7 @@ export const API_BASE_URL = 'https://masaapp.ae/api/v1'
 // export const API_BASE_URL = 'https://butlerdeliveryusa.com/api/v1'
 
 // export const API_BASE_URL = 'https://shoorafresh.com.au/api/v1'
-//
+// export const API_BASE_URL = 'https://qdelo.rostaging.com/api/v1'
 
 // hokitch
 // export const API_BASE_URL = 'https://about.hokitch.com/api/v1'
@@ -84,7 +84,7 @@ export const API_BASE_URL = 'https://masaapp.ae/api/v1'
 // export const API_BASE_URL = 'https://hometowndelivery21.com/api/v1';
 //export const API_BASE_URL = 'https://click2deliver.co.uk/api/v1';
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
-
+// export const API_BASE_URL = 'https://dropitoffusa.com/api/v1';
 // export const API_BASE_URL = 'https://viversbox.com/api/v1'
 // export const API_BASE_URL = 'https://halatalabat.com/api/v1'
 
@@ -192,7 +192,7 @@ export const API_BASE_URL = 'https://masaapp.ae/api/v1'
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1';  //sales demo
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
-// export const API_BASE_URL = 'https://hemptify.com/api/v1';
+export const API_BASE_URL = 'https://hemptify.com/api/v1';
 // export const API_BASE_URL = 'https://sirvu.ca/api/v1';
 // export const API_BASE_URL = 'https://empirehub.com/api/v1';
 // export const API_BASE_URL = 'https://ullaz.co.ke/api/v1';
@@ -202,8 +202,6 @@ export const API_BASE_URL = 'https://masaapp.ae/api/v1'
 // export const API_BASE_URL='https://hivefair.com/api/v1';
 // export const API_BASE_URL = 'https://www.ored.co/api/v1'; //ored
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
-
-// export const API_BASE_URL = 'https://gdotdelivery.com/api/v1'
 
 // export const API_BASE_URL = 'https://961a-112-196-88-218.ngrok.io/api/v1'; // preet
 // export const API_BASE_URL = 'http://192.168.98.185:8060/api/v1'; // sujata
