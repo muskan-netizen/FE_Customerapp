@@ -2487,13 +2487,66 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.fairDeal:
+        case appIds.fairDeal:
           updateState({
             shortCode: shortCodes.fairDeal,
             isShortcodePrefilled: true,
           });
           break;
-          
+        case appIds.hezniTaxi:
+          updateState({
+            shortCode: shortCodes.hezniTaxi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.onTheWheel:
+          updateState({
+            shortCode: shortCodes.onTheWheel,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.valleyMeats:
+          updateState({
+            shortCode: shortCodes.valleyMeats,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.perucabs:
+          updateState({
+            shortCode: shortCodes.perucabs,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hafizjwlry:
+          updateState({
+            shortCode: shortCodes.hafizjwlry,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.jana:
+          updateState({
+            shortCode: shortCodes.jana,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.myWayBill:
+          updateState({
+            shortCode: shortCodes.myWayBill,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.cattch:
+          updateState({
+            shortCode: shortCodes.cattch,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.tezras:
+          updateState({
+            shortCode: shortCodes.tezras,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

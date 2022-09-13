@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "405651116857",
+    "project_id": "hafiz-jwlry",
+    "storage_bucket": "hafiz-jwlry.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:405651116857:android:a6d2ffc21ae499830fcee8",
+        "android_client_info": {
+          "package_name": "com.hafizjwlry.orderapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "405651116857-rk8q2ceii91r2064h7rbr7j706lmi602.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hafizjwlry.orderapp",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "405651116857-va7g5ti31bijc5977fnk0oeiuib2nqrv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hafizjwlry.orderapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "405651116857-velfrdnhj0hc2o7b2e37e19er8jrqdul.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hafizjwlry.orderapp",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "405651116857-64hktj9bsaj1it4mehk76rimhmjdo5uu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXBVoO7NxFo16HFrRxi7jRh1oqRmJGWjA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "405651116857-64hktj9bsaj1it4mehk76rimhmjdo5uu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "405651116857-8ucqulgaupsun6k6u27p80gbkm3g95c2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hafizjwlry.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

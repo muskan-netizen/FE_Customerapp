@@ -125,11 +125,10 @@ android {
      packagingOptions {
         pickFirst '**/*.so'
     }
-   compileSdkVersion 31 //addded
+   
     dexOptions {
         javaMaxHeapSize "4g"
     }
-   //  compileSdkVersion rootProject.ext.compileSdkVersion
        compileSdkVersion 31
 
     compileOptions {
@@ -138,10 +137,8 @@ android {
     }
 
     defaultConfig {
-       targetSdkVersion 31 //addded 
         applicationId "com.codebrew"
         minSdkVersion rootProject.ext.minSdkVersion
-      //   targetSdkVersion rootProject.ext.targetSdkVersion
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
@@ -207,14 +204,14 @@ android {
     flavorDimensions "appType"
 
   productFlavors{
-                      qdelo{
+            tezras{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.qdelo.order'
-            resValue "string", "app_name", "Qdelo"
+            applicationId 'com.tezras.royoorders'
+            resValue "string", "app_name", "Tezras" 
             resValue "string", "host_name", ""
             }
   }
@@ -5358,7 +5355,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.keystoneDelivery'
+            applicationId 'com.keystone.orders'
             resValue "string", "app_name", "Keystone Delivery"
             resValue "string", "host_name", ""
             }
@@ -5911,7 +5908,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.kurrix.order'
-            resValue "string", "app_name", "Kurrix" 
+            resValue "string", "app_name", "Goadeliv" 
             resValue "string", "host_name", ""
             }
             mrVeloz{
@@ -6014,6 +6011,97 @@ android {
             resValue "string", "app_name", "Fair Deal" 
             resValue "string", "host_name", ""
             }
+           hezniTaxi{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.heznitaxi.royoorders'
+            resValue "string", "app_name", "Hezni Taxi" 
+            resValue "string", "host_name", ""
+            }
+          onTheWheel{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.onthewheel.royorders'
+            resValue "string", "app_name", "On The Wheels" 
+            resValue "string", "host_name", ""
+            }
+          valleyMeats{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.valleymeats.royoorders'
+            resValue "string", "app_name", "Valley Meats" 
+            resValue "string", "host_name", ""
+            }
+          perucabs{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.perucabs.royoorders'
+            resValue "string", "app_name", "Perucabs" 
+            resValue "string", "host_name", ""
+            }
+          hafizjwlry{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.hafizjwlry.orderapp'
+            resValue "string", "app_name", "Hafiz jwlry" 
+            resValue "string", "host_name", ""
+            }
+          jana{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.jana.royoordersapp'
+            resValue "string", "app_name", "Jana" 
+            resValue "string", "host_name", ""
+            }
+          myWayBill{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.mywaybill.royoorders'
+            resValue "string", "app_name", "MYWAYBILL" 
+            resValue "string", "host_name", ""
+            }
+          cattch{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.cattch.royoorders'
+            resValue "string", "app_name", "Cattch" 
+            resValue "string", "host_name", ""
+            }
+           tezras{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.tezras.royoorders'
+            resValue "string", "app_name", "Tezras" 
+            resValue "string", "host_name", ""
+            }
+    
     }
 }
 
