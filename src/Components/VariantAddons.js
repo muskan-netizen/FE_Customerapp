@@ -49,7 +49,7 @@ import Modal from 'react-native-modal';
 import ImageViewer from 'react-native-image-zoom-viewer';
 
 const VariantAddons = ({
-  productdetail = {},
+  productdetail = null,
   isVisible = false,
   showShimmer,
   shimmerClose = () => {},
@@ -109,7 +109,7 @@ const VariantAddons = ({
       .then((res) => {
         console.log(res.data, 'res.data by vendor id ');
         updateState({
-          productDetailData: res.data,
+          productDetailData: res?.data,
           productPriceData: {
             multiplier: res.data.multiplier,
             price: res.data.price,
@@ -144,7 +144,7 @@ const VariantAddons = ({
       .then((res) => {
         console.log(res.data, 'res.data++ prodcut detail');
         updateState({
-          productDetailData: res.data.products,
+          productDetailData: res?.data?.products,
           relatedProducts: res.data.relatedProducts,
           productPriceData: res.data.products.variant[0],
           addonSet: res.data.products.add_on,

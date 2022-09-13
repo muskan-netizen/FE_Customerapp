@@ -1,5 +1,5 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-//s export const API_BASE_URL ='https://sales.focushires.com/api/v1';
+// export const API_BASE_URL ='https://sales.focushires.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.99.124:8001/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';

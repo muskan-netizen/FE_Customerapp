@@ -998,4 +998,5 @@ export default {
   TAKE_ME_OUT: 'Portami fuori',
   TERMSANDCONDITIONS: 'Termini e Condizioni',
   ORDER_COMPLETED: 'Ordine completato !!',
+  MINIMUM_ORDER_VALUE:"Minimum order value"
 };

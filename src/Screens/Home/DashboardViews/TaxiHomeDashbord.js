@@ -83,6 +83,7 @@ export default function TaxiHomeDashbord({
   toggleData,
   isDineInSelected = false,
   location = {},
+  curLatLong={}
 }) {
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -90,20 +91,23 @@ export default function TaxiHomeDashbord({
   const userData = useSelector((state) => state?.auth?.userData);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-
+  const {appData, currencies, themeColors, appStyle, languages} = useSelector(
+    (state) => state?.initBoot,
+  );
+console.log(appData?.profile?.preferences,"appDataDataaaaaa")
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
     date: new Date(),
     region: {
-      latitude: parseFloat(location?.latitude),
-      longitude: parseFloat(location?.longitude),
+      latitude: !!curLatLong?.latitude?parseFloat(curLatLong.latitude):parseFloat(location?.latitude),
+      longitude: !!curLatLong?.longitude? parseFloat(curLatLong.longitude): parseFloat(location?.longitude),
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
     coordinate: {
-      latitude: parseFloat(location?.latitude),
-      longitude: parseFloat(location?.longitude),
+      latitude: !!curLatLong?.latitude?parseFloat(curLatLong.latitude):parseFloat(location?.latitude),
+      longitude: !!curLatLong?.latitude? parseFloat(curLatLong.longitude): parseFloat(location?.longitude),
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
@@ -147,10 +151,8 @@ export default function TaxiHomeDashbord({
   );
 
   console.log(appMainData?.categories, 'findCabCategory');
-  const {appData, currencies, themeColors, appStyle, languages} = useSelector(
-    (state) => state?.initBoot,
-  );
-  console.log(languages, 'languages>new');
+
+  console.log(curLatLong, 'curLatLong>new');
   const fontFamily = appStyle?.fontSizeData;
   const {bannerRef} = useRef();
   const {
@@ -882,12 +884,12 @@ export default function TaxiHomeDashbord({
                     }}
                     // provider={MapView.PROVIDER_GOOGLE}
                     region={{
-                      latitude: !!location?.latitude
+                      latitude: !!curLatLong?.latitude? parseFloat(curLatLong?.latitude): !!location?.latitude
                         ? parseFloat(location?.latitude)
-                        : 30.7333,
-                      longitude: !!location?.longitude
+                        : appData?.profile?.preferences?.Default_latitude,
+                      longitude: !!curLatLong?.longitude ? parseFloat(curLatLong?.longitude):!!location?.longitude
                         ? parseFloat(location?.longitude)
-                        : 76.7794,
+                        : appData?.profile?.preferences?.Default_latitude,
                       latitudeDelta: 0.015,
                       longitudeDelta: 0.0121,
                     }}
@@ -898,12 +900,12 @@ export default function TaxiHomeDashbord({
                   >
                     <Marker
                       coordinate={{
-                        latitude: !!location?.latitude
+                        latitude: !!curLatLong?.latitude ? parseFloat(curLatLong?.latitude):!!location?.latitude
                           ? parseFloat(location?.latitude)
-                          : 30.7333,
-                        longitude: !!location?.latitude
+                          : appData?.profile?.preferences?.Default_latitude,
+                        longitude:!!curLatLong?.longitude ?parseFloat(curLatLong?.longitude) : !!location?.longitude
                           ? parseFloat(location?.longitude)
-                          : 76.7794,
+                          : appData?.profile?.preferences?.Default_longitude,
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
                       }}
@@ -957,12 +959,12 @@ export default function TaxiHomeDashbord({
               }
               style={{...StyleSheet.absoluteFillObject}}
               region={{
-                latitude: !!location?.latitude
+                latitude: !!curLatLong?.latitude ? parseFloat(curLatLong?.latitude) : !!location?.latitude
                   ? parseFloat(location?.latitude)
-                  : 30.7333,
-                longitude: !!location?.longitude
+                  : appData?.profile?.preferences?.Default_latitude,
+                longitude: !!curLatLong?.longitude ?parseFloat(curLatLong?.longitude)  :!!location?.longitude
                   ? parseFloat(location?.longitude)
-                  : 76.7794,
+                  : appData?.profile?.preferences?.Default_longitude,
                 latitudeDelta: 0.015,
                 longitudeDelta: 0.0121,
               }}

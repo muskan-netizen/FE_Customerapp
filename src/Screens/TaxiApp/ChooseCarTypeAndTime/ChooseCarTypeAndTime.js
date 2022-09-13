@@ -700,7 +700,9 @@ console.log(scheduleDateTime,"scheduleDateTime")
       updateState({
         allListedDrivers: res?.data
       })
-    }).catch(errorMethod)
+    }).catch(
+        error=>console.log(error)
+    )
   }
 
 

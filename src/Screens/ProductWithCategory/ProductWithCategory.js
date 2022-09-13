@@ -686,7 +686,7 @@ export default function ProductWithCategory({ route, navigation }) {
                                                         fontFamily: fontFamily.medium,
                                                         color: colors.white,
                                                     }}>
-                                                    Minimum order value{' '}
+                                                    {strings.MINIMUM_ORDER_VALUE}{' '}
                                                     {currencies?.primary_currency?.symbol}
                                                     {categoryInfo?.order_min_amount}
                                                 </Text>

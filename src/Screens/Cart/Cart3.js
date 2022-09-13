@@ -1111,9 +1111,7 @@ function Cart({navigation, route}) {
       paymentData?.orderDetail?.order_number
     }&token=${!!cardInfo ? cardInfo : null}&action=cart`;
 
-    {
-      alert('heyyyy');
-    }
+   
     actions
       .openPaymentWebUrl(
         queryData,

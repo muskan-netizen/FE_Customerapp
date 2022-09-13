@@ -494,7 +494,7 @@ const ProductCard3 = ({
                 ? moderateScale(30)
                 : moderateScale(20),
             }}>
-            {console.log(CartItems, 'CartItems??CartItems')}
+         
             {data?.has_inventory == 0 ||
             !!data?.variant[0]?.quantity ||
             (!!typeId && typeId == 8) ||

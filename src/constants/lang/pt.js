@@ -962,4 +962,5 @@ Amount`,
   PARTICIPANTS:"Participants",
   VENDOR:"Vendor",
   START_CHAT:"Start Chat",
+  MINIMUM_ORDER_VALUE:"Valor Mínimo de Pedido"
 };
