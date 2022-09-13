@@ -1082,7 +1082,10 @@ export default function Products({route, navigation}) {
             marginBottom: moderateScaleVertical(8),
             marginHorizontal: moderateScale(12),
           }}>
-          {categoryInfo?.is_show_products_with_category ? (
+          {categoryInfo?.is_show_products_with_category  ?
+          
+          getBundleId()==appIds.muvpod ?null :
+          (
             <SearchBar
               autoFocus={false}
               containerStyle={{

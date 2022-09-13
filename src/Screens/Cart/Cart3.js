@@ -3669,6 +3669,7 @@ function Cart({navigation, route}) {
   };
 
   const selectedTip = (tip) => {
+   
     if (tip == 'custom') {
       setSelectedTipvalue(tip);
       setSelectedTipAmount(null);
