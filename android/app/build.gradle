@@ -205,40 +205,20 @@ android {
     }
 
     flavorDimensions "appType"
+    // productFlavors{
+    //        qdelo{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.qdelo.order'
+    //         resValue "string", "app_name", "Qdelo"
+    //         resValue "string", "host_name", ""
+    //         }
+    // }
 
-  productFlavors{
-   
-              nuvoni{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.nuvoni.orders'
-            resValue "string", "app_name", "Nuvoni" 
-            resValue "string", "host_name", ""
-            }
-             baly{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.baly.orders'
-            resValue "string", "app_name", "Baly" 
-            resValue "string", "host_name", ""
-            }
-            fairDeal{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.fairDeal.order'
-            resValue "string", "app_name", "Fair Deal" 
-            resValue "string", "host_name", ""
-            }
-  }
+
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -1310,7 +1290,7 @@ android {
             }
             empire{
                 dimension "appType"
-                versionCode 1
+                versionCode 3
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -4632,7 +4612,7 @@ android {
 
             dbairro{
             dimension "appType"
-            versionCode 2
+            versionCode 3
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -6011,7 +5991,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.nuvoni.order'
+            applicationId 'com.nuvoni.orders'
             resValue "string", "app_name", "Nuvoni" 
             resValue "string", "host_name", ""
             }
