@@ -100,7 +100,7 @@ export default function Home({route, navigation}) {
     openVendor: 0,
     closeVendor: 0,
     bestSeller: 0,
-    nearMe: 1,
+
     tempCartData: null,
     isVoiceRecord: false,
     singleVendor: false,
@@ -125,7 +125,7 @@ export default function Home({route, navigation}) {
     openVendor,
     closeVendor,
     bestSeller,
-    nearMe,
+
     isVoiceRecord,
     singleVendor,
     selectedAddonSet,
@@ -271,19 +271,8 @@ export default function Home({route, navigation}) {
         homeData();
         return;
       });
-  }, [
-    selectedTabType,
-    appData,
-    bestSeller,
-    openVendor,
-    closeVendor,
-    allAddresss,
-  ]);
+  }, [selectedTabType, appData, allAddresss]);
 
-  // useEffect(() => {
-  //   homeData();
-  // }, [selectedTabType, appData, location, bestSeller, openVendor, closeVendor]);
-  console.log(location, 'locationlocation');
   useEffect(() => {
     Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
   }, []);
@@ -384,7 +373,7 @@ export default function Home({route, navigation}) {
   };
 
   //Home data
-  const homeData = (locationData = null) => {
+  const homeData = (locationData = null, selectedFilter = null) => {
     if (!isFocused) {
       return;
     }
@@ -402,10 +391,9 @@ export default function Home({route, navigation}) {
     }
 
     let vendorFilterData = {
-      close_vendor: closeVendor,
-      open_vendor: openVendor,
-      best_vendor: bestSeller,
-      // near_me: nearMe,
+      open_vendor: selectedFilter?.id == 1 ? 1 : 0,
+      close_vendor: selectedFilter?.id == 2 ? 1 : 0,
+      best_vendor: selectedFilter?.id == 3 ? 1 : 0,
     };
     if (closeVendor == 0 && openVendor == 0 && bestSeller == 0) {
       updateState({singleVendor: true});
@@ -774,46 +762,13 @@ export default function Home({route, navigation}) {
   };
 
   const onVendorFilterSeletion = (selectedFilter) => {
-    switch (selectedFilter?.id) {
-      case 1:
-        updateState({
-          isLoadingB: true,
-          openVendor: 1,
-          closeVendor: 0,
-          bestSeller: 0,
-          nearMe: 0,
-        });
-        break;
-      case 2:
-        updateState({
-          isLoadingB: true,
-          openVendor: 0,
-          closeVendor: 1,
-          bestSeller: 0,
-          nearMe: 0,
-        });
-        break;
-      case 3:
-        updateState({
-          isLoadingB: true,
-          openVendor: 0,
-          closeVendor: 0,
-          bestSeller: 1,
-          nearMe: 0,
-        });
-        break;
-      case 4:
-        updateState({
-          isLoadingB: true,
-          openVendor: 0,
-          closeVendor: 0,
-          bestSeller: 0,
-          nearMe: 1,
-        });
-        break;
-      default:
-        break;
-    }
+    updateState({
+      isLoadingB: true,
+      openVendor: selectedFilter?.id == 1 ? 1 : 0,
+      closeVendor: selectedFilter?.id == 2 ? 1 : 0,
+      bestSeller: selectedFilter?.id == 3 ? 1 : 0,
+    });
+    homeData(null, selectedFilter);
   };
 
   const onSpeechStartHandler = (e) => {};
