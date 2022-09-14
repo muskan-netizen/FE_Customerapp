@@ -999,4 +999,5 @@ Amount`,
   EMPTY_WISHLIST: 'Your wish list is empty.',
   DELETE_ADDRESS_CONFIRM_MSG: 'Are you sure you want to delete an address?',
   MINIMUM_ORDER_VALUE: 'Minimum order value',
+  ORDER: 'Orders',
 };

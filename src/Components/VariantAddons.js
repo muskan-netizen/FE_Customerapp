@@ -80,8 +80,8 @@ const VariantAddons = ({
             let find = i.options.filter((x) => x.value);
             if (find.length) {
               return {
-                variant_id: find[0].variant_id,
-                optionId: find[0].id,
+                variant_id: find[0]?.variant_id,
+                optionId: find[0]?.id,
               };
             }
           })
@@ -149,8 +149,8 @@ const VariantAddons = ({
           productPriceData: res.data.products.variant[0],
           addonSet: res.data.products.add_on,
           venderDetail: res.data.products.vendor,
-          productTotalQuantity: res.data.products.variant[0].quantity,
-          productVariantId: res.data.products.variant[0].id,
+          productTotalQuantity: res.data.products.variant[0]?.quantity,
+          productVariantId: res.data.products.variant[0]?.id,
           productSku: res.data.products.sku,
           variantSet: res.data.products.variant_set,
           typeId: res?.data?.products?.category?.category_detail?.type_id,
@@ -396,8 +396,8 @@ const VariantAddons = ({
           let find = i.options.filter((x) => x.value);
           if (find.length) {
             return {
-              variant_id: find[0].variant_id,
-              optionId: find[0].id,
+              variant_id: find[0]?.variant_id,
+              optionId: find[0]?.id,
             };
           }
         })
@@ -983,6 +983,7 @@ const VariantAddons = ({
                 : '#fff',
               marginHorizontal: moderateScale(10),
             }}>
+              
             <View
               style={{
                 flex: 1,
@@ -1264,12 +1265,7 @@ const styles = StyleSheet.create({
     // marginRight: 20
   },
   dotStyle: {height: 12, width: 12, borderRadius: 12 / 2},
-  ratingColor: {
-    color: colors.backgroundGrey,
-    paddingLeft: 5,
-    fontSize: textScale(12),
-    fontFamily: fontFamily.medium,
-  },
+  
   dropDownStyle: {
     paddingHorizontal: moderateScale(8),
     borderRadius: moderateScale(4),

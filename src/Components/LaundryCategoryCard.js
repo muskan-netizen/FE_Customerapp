@@ -54,7 +54,7 @@ const LaundryCategoryCard = ({
                 priority: FastImage.priority.high,
               }}
               resizeMode="cover"
-              onLoad={onLoad}
+              // onLoad={onLoad}
             />
           </View>
         )}

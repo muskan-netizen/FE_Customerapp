@@ -937,6 +937,8 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
               style={{height: height / 1.8, width: '100%'}}
               initialRegion={region}
               ref={mapRef}
+
+              
               // cacheEnabled={true}
               customMapStyle={
                 appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey

@@ -2357,7 +2357,11 @@ export default function Products({route, navigation}) {
         actions.cartItemQty({});
         setIsVisibleModal(false);
       })
-      .catch(errorMethod);
+      .catch(
+        (error)=>{
+          console.log(error, "erorrrrrr")
+        }
+      );
   };
 
   const onRepeat = async () => {

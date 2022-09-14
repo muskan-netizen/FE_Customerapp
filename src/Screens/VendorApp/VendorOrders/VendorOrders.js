@@ -448,5 +448,5 @@ export default function VendorOrders({navigation, route}) {
         </View>
       </Modal>
     </WrapperContainer>
-  );
+  )
 }
