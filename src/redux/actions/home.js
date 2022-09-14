@@ -30,14 +30,12 @@ export function homeData(data = {}, headers = {}, isShortCode = false) {
     apiPost(HOMEPAGE_DATA_URL, data, headers)
       .then((res) => {
         if (!isShortCode) {
-          console.log('goesHere', res);
           dispatch({
             type: types.HOME_DATA,
             payload: res.data,
           });
         }
         resolve(res);
-        console.log(res, "homepage")
       })
       .catch((error) => {
         reject(error);
@@ -209,7 +207,7 @@ export const setPrimaryAddress = (query = '', data = {}, headers = {}) => {
 };
 
 export function dineInData(res) {
-  console.log(res, 'dine_in_type' )
+  console.log(res, 'dine_in_type');
   setItem('dine_in_type', res);
   dispatch({
     type: types.DINE_IN_DATA,

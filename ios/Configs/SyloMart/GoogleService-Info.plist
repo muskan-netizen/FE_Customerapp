@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>515310918675-1c283keh92mcmep07cr9e728i3qb4mvt.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.515310918675-1c283keh92mcmep07cr9e728i3qb4mvt</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>515310918675-0lrnq4rlm9npr1va1d58t997ltc0nknf.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyClIilaNbqZj96k2EUFMT94X8MfN3BpUoI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>515310918675</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.syloMart.order</string>
+	<key>PROJECT_ID</key>
+	<string>sloymart</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sloymart.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:515310918675:ios:2747ff5346e1a055bc33e6</string>
+</dict>
+</plist>

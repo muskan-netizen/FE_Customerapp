@@ -129,4 +129,5 @@ export default {
   redF: '#EECFD1',
   redG: '#E02020',
   statusbarColor: '#F4F8FB',
+  whiteOpacity85: 'rgba(255,255,255,0.85)',
 };

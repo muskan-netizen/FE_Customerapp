@@ -154,7 +154,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
   const _confirmAddress = (addressType) => {};
   const _onRegionChange = (region) => {
-    console.log(region, 'region>>region>regionregion');
     updateState({region: region});
     _getAddressBasedOnCoordinates(region);
     // animate(region);
@@ -168,10 +167,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     };
 
   useEffect(() => {
-    console.log(selectedVendorOption, 'selectedVendorOption');
-    {
-      !!selectedVendorOption && _getAllCarAndPrices();
-    }
+    !!selectedVendorOption && _getAllCarAndPrices();
   }, [selectedVendorOption]);
 
   useEffect(() => {
@@ -294,7 +290,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   //Modal to select time
 
   const _confirmAndPay = () => {
-   
     console.log(selectedCarOption, 'selectedCarOption');
     let data = {};
 

@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1077772636620-gpn0c6ghv8pjugsi86de7ba466m2184b.apps.googleusercontent.com</string>
+	<string>930101044670-0jg0famq8uo8mtki28emj2maaft56cq7.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1077772636620-gpn0c6ghv8pjugsi86de7ba466m2184b</string>
+	<string>com.googleusercontent.apps.930101044670-0jg0famq8uo8mtki28emj2maaft56cq7</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>1077772636620-qcr14u7npfba71ek2eqbm4vjtkh7srjs.apps.googleusercontent.com</string>
+	<string>930101044670-0k2iorha32f5okklm7mndasrrnc34v59.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAeT_3lAnC09B1VtYBMXii0wWboDN78Ip8</string>
+	<string>AIzaSyCEFddFpYLTq_LjLrqBWfin1RHHS5Tvzd0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1077772636620</string>
+	<string>930101044670</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.app.dbairro</string>
 	<key>PROJECT_ID</key>
-	<string>dbairro-2062f</string>
+	<string>dbairro-order</string>
 	<key>STORAGE_BUCKET</key>
-	<string>dbairro-2062f.appspot.com</string>
+	<string>dbairro-order.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1077772636620:ios:6171455833f6dbcd330d69</string>
+	<string>1:930101044670:ios:3921a938000ad89a48c5ef</string>
 </dict>
 </plist>

@@ -23,7 +23,7 @@ import HomeStack from './HomeStack';
 import navigationStrings from './navigationStrings';
 import DeviceInfo from 'react-native-device-info';
 import MyOrdersStack from './MyOrdersStack';
-import { SearchProductVendorItem2 } from '../Screens';
+import {SearchProductVendorItem2} from '../Screens';
 import SearchProductVendorStack from './SearchProductVendorStack';
 
 const Tab = createBottomTabNavigator();
@@ -32,8 +32,8 @@ let showBottomBar_ = true;
 
 export default function TabRoutes(props) {
   const [showBottomBar, setShowBottomBar] = useState(true);
-  const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
-  const appMainData = useSelector((state) => state?.home?.appMainData);
+  const {cartItemCount} = useSelector((state) => state?.cart);
+  const {appMainData} = useSelector((state) => state?.home);
   const {appStyle, appData, redirectedFrom} = useSelector(
     (state) => state?.initBoot,
   );
@@ -205,6 +205,42 @@ export default function TabRoutes(props) {
           // unmountOnBlur: true,
         })}
       />
+
+      {DeviceInfo.getBundleId() == appIds.sorDelivery && (
+        <Tab.Screen
+          component={SearchProductVendorStack}
+          name={navigationStrings.SEARCH}
+          options={({route}) => ({
+            tabBarLabel: strings.SEARCH,
+            tabBarIcon: ({focused, tintColor}) => (
+              <Image
+                resizeMode="contain"
+                style={[
+                  appStyle?.tabBarLayout === 2 || appStyle?.tabBarLayout === 1
+                    ? {tintColor: 'white'}
+                    : {tintColor: tintColor},
+                  appStyle?.tabBarLayout === 2 && {height: 23, width: 23},
+                ]}
+                source={
+                  appStyle?.tabBarLayout === 5
+                    ? focused
+                      ? imagePath.search
+                      : imagePath.search1
+                    : appStyle?.tabBarLayout === 4
+                    ? focused
+                      ? imagePath.search
+                      : imagePath.search1
+                    : focused
+                    ? imagePath.search
+                    : imagePath.search1
+                }
+              />
+            ),
+            //  unmountOnBlur: true,
+          })}
+        />
+      )}
+
       <Tab.Screen
         component={CartStack}
         name={navigationStrings.CART}
@@ -280,13 +316,9 @@ export default function TabRoutes(props) {
                 ]}
                 source={
                   appStyle?.tabBarLayout === 5
-                    ? focused
-                      ? imagePath.myOrder2
-                      : imagePath.myOrder2
+                    ? imagePath.myOrder2
                     : appStyle?.tabBarLayout === 4
-                    ? focused
-                      ? imagePath.myOrder2
-                      : imagePath.myOrder2
+                    ? imagePath.myOrder2
                     : focused
                     ? imagePath.tabEActive
                     : imagePath.tabEInActive
@@ -297,38 +329,7 @@ export default function TabRoutes(props) {
           })}
         />
       )}
-      {DeviceInfo.getBundleId() == appIds.sorDelivery && (
-        <Tab.Screen
-          component={SearchProductVendorStack}
-          name={navigationStrings.SEARCH}
-          options={({route}) => ({
-            tabBarLabel: strings.SEARCH,
-            tabBarIcon: ({focused, tintColor}) => (
-              <Image
-                resizeMode="contain"
-                style={[
-                  (appStyle?.tabBarLayout === 2 || appStyle?.tabBarLayout === 1) ? {tintColor : 'white'} : {tintColor: tintColor},
-                  appStyle?.tabBarLayout === 2 && {height: 23, width: 23},
-                ]}
-                source={
-                  appStyle?.tabBarLayout === 5
-                    ? focused
-                      ? imagePath.search
-                      : imagePath.search1
-                    : appStyle?.tabBarLayout === 4
-                    ? focused
-                      ? imagePath.search
-                      : imagePath.search1
-                    : focused
-                    ? imagePath.search
-                    : imagePath.search1
-                }
-              />
-            ),
-            //  unmountOnBlur: true,
-          })}
-        />
-      )}
+
       {brandTab}
       {celebTab}
       <Tab.Screen

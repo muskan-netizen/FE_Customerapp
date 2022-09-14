@@ -129,7 +129,6 @@ export default function DashBoardHeaderFive({
                   source={imagePath.redLocation}
                   resizeMode="contain"
                 />
-                {console.log(location?.type, 'location>>>>location')}
                 <View>
                   {!!location?.type && (
                     <Text numberOfLines={1} style={styles.locationTypeTxt}>

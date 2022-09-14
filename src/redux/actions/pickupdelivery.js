@@ -1,4 +1,8 @@
-import {ALL_NEARBY_DRIVERS, GET_ALL_CAR_AND_PRICE, PLACE_DELIVERY_ORDER} from '../../config/urls';
+import {
+  ALL_NEARBY_DRIVERS,
+  GET_ALL_CAR_AND_PRICE,
+  PLACE_DELIVERY_ORDER,
+} from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
 import types from '../types';
@@ -8,7 +12,7 @@ const {dispatch} = store;
 
 //Get vendor info and Category data
 export function getAllCarAndPrices(query = '', data = {}, headers = {}) {
-  console.log(GET_ALL_CAR_AND_PRICE+query,data,"queryquery");
+  console.log(GET_ALL_CAR_AND_PRICE + query, data, 'queryquery');
   return new Promise((resolve, reject) => {
     apiPost(GET_ALL_CAR_AND_PRICE + query, data, headers)
       .then((res) => {
@@ -33,10 +37,8 @@ export function placeDelievryOrder(data = {}, headers = {}) {
   });
 }
 
-
 //Get all nearby Drivers NearBy Me
 export function getAllNearByDrivers(data = {}, headers = {}) {
-  console.log(data,headers,"headersheadersheadersheaders");
   return new Promise((resolve, reject) => {
     apiPost(ALL_NEARBY_DRIVERS, data, headers)
       .then((res) => {

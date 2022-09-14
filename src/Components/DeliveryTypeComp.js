@@ -8,7 +8,7 @@ import {
   FlatList,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
-import {moderateScale, textScale} from '../styles/responsiveSize';
+import {moderateScale, textScale, width} from '../styles/responsiveSize';
 import {useSelector} from 'react-redux';
 import strings from '../constants/lang';
 import actions from '../redux/actions';
@@ -56,8 +56,6 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
     }
     return;
   };
-
-  console.log(appData?.profile, 'appData?.profile?.preferences?.vendorMode');
 
   const _onTableItm = (value, indx) => {
     const newTabs = [...tabs];
@@ -110,8 +108,6 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
     showError(error?.message || error?.error);
   };
 
-  console.log(tabs, 'tabstabstabstabs');
-
   const renderItem = useCallback(
     ({item, index}) => {
       return (
@@ -129,7 +125,6 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
           key={index}
           style={{
             ...styles.tabItemView,
-            marginRight: 8,
             borderBottomColor:
               dineInType == item?.type && isDarkMode
                 ? MyDarkTheme.colors.white
@@ -138,6 +133,10 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
                 : isDarkMode
                 ? colors.blackOpacity0
                 : colors.greyColor1,
+            width:
+              tabs.length == 2
+                ? (width - moderateScale(16)) / 2
+                : (width - moderateScale(16)) / 3,
           }}>
           {/* <Image
           source={item.icon}
@@ -175,9 +174,10 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
     [tabs],
   );
 
-  if (isEmpty(tabs)) {
+  if (tabs.length <= 1) {
     return <></>;
   }
+
   return (
     <View
       style={{
@@ -216,7 +216,6 @@ export function stylesFunc({fontFamily, themeColors, isDarkMode}) {
       height: moderateScale(40),
       alignItems: 'center',
       justifyContent: 'center',
-      flexDirection: 'row',
     },
     tabItemImg: {
       height: moderateScale(16),

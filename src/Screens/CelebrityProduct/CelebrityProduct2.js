@@ -707,8 +707,6 @@ export default function CelebrityProduct2({route, navigation}) {
       return;
     }
 
-    console.log('item+++', item);
-
     if (item?.add_on?.length !== 0 || item?.variantSet?.length !== 0) {
       updateState({
         updateQtyLoader: false,

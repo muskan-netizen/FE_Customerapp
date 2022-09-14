@@ -1,4 +1,4 @@
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Alert, BackHandler, Linking} from 'react-native';
 import AppLink from 'react-native-app-link';
@@ -65,10 +65,7 @@ export default function Home({route, navigation}) {
   const {location, appMainData, dineInType} = useSelector(
     (state) => state?.home,
   );
-  console.log(allAddresss, 'dineInType>>>>');
-
-  console.log('appDataappDataappData', appData);
-
+  const isFocused = useIsFocused();
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const addressSearch = useSelector(
     (state) => state?.addressSearch.addressSearch,
@@ -103,7 +100,7 @@ export default function Home({route, navigation}) {
     openVendor: 0,
     closeVendor: 0,
     bestSeller: 0,
-    nearMe: 1,
+
     tempCartData: null,
     isVoiceRecord: false,
     singleVendor: false,
@@ -111,6 +108,7 @@ export default function Home({route, navigation}) {
     unPresentAry: [],
     isSubscription: true,
     stopOrderModalVisible: true,
+    curLatLong: null,
   });
 
   const {
@@ -127,18 +125,17 @@ export default function Home({route, navigation}) {
     openVendor,
     closeVendor,
     bestSeller,
-    nearMe,
+
     isVoiceRecord,
     singleVendor,
     selectedAddonSet,
     unPresentAry,
     isSubscription,
     stopOrderModalVisible,
+    curLatLong,
   } = state;
 
   const {profile} = appData;
-
-  console.log('appDataappData home++', appData);
 
   useEffect(() => {
     if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
@@ -184,26 +181,28 @@ export default function Home({route, navigation}) {
   );
 
   useEffect(() => {
+    if (isRefreshing) {
+      return;
+    }
     chekLocationPermission(true)
       .then((result) => {
         if (result !== 'goback' && result == 'granted') {
-          console.log(result, 'chekLocationPermission');
           getCurrentLocation('home')
             .then((curLoc) => {
+              updateState({
+                curLatLong: curLoc,
+              });
               let locData = location?.latitude ? location : curLoc;
-              console.log('res++++ chekLocationPermission', curLoc);
               if (!!userData?.auth_token) {
                 //IS LOGIN USER YES
                 if (!!appData?.profile?.preferences?.is_hyperlocal) {
                   //YES
                   getAllAddress()
                     .then((savedAddress) => {
-                      console.log('res++++ getAllAddress', savedAddress);
                       if (savedAddress.length > 0) {
                         let filterAddress = savedAddress.filter(
                           (val) => !!val?.latitude,
                         );
-                        console.log('res++++ getAllAddress', filterAddress);
                         getNearestLocation(curLoc, filterAddress)
                           .then((nearestLoc) => {
                             actions.locationData(nearestLoc);
@@ -212,10 +211,6 @@ export default function Home({route, navigation}) {
                           .catch((error) => {
                             actions.locationData(locData);
                             homeData(locData);
-                            console.log(
-                              'error raised in get nearestlocation',
-                              error,
-                            );
                           });
                         return;
                       } else {
@@ -230,7 +225,6 @@ export default function Home({route, navigation}) {
                     });
                 } else {
                   //NO
-                  console.log('api hit without lat lng');
                   homeData();
                   return;
                 }
@@ -238,13 +232,11 @@ export default function Home({route, navigation}) {
                 //In case of guest user
                 if (!!appData?.profile?.preferences?.is_hyperlocal) {
                   //YES
-                  console.log('api hit with current lat lng');
                   actions.locationData(locData);
                   homeData(locData);
                   return;
                 } else {
                   //NO
-                  console.log('api hit without lat lng');
                   homeData();
                   return;
                 }
@@ -252,8 +244,6 @@ export default function Home({route, navigation}) {
               return;
             })
             .catch((err) => {
-              console.log(err, 'chekLocationPermission error');
-              console.log('api hit without lat lng');
               homeData();
               return;
             });
@@ -265,12 +255,10 @@ export default function Home({route, navigation}) {
               longitude: appData?.profile?.preferences?.Default_longitude,
             };
             if (!!data?.latitude) {
-              console.log('api hit with current lat lng');
               actions.locationData(data);
               homeData(data);
               return;
             } else {
-              console.log('api hit without lat lng');
               homeData();
               return;
             }
@@ -283,18 +271,7 @@ export default function Home({route, navigation}) {
         homeData();
         return;
       });
-  }, [
-    selectedTabType,
-    appData,
-    bestSeller,
-    openVendor,
-    closeVendor,
-    allAddresss,
-  ]);
-
-  // useEffect(() => {
-  //   homeData();
-  // }, [selectedTabType, appData, location, bestSeller, openVendor, closeVendor]);
+  }, [selectedTabType, appData, allAddresss]);
 
   useEffect(() => {
     Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
@@ -351,7 +328,6 @@ export default function Home({route, navigation}) {
       )
       .then((res) => {
         actions.cartItemQty(res);
-        console.log('homeData===== calling from clearCart');
         homeData(location);
       })
       .catch(errorMethod);
@@ -397,7 +373,10 @@ export default function Home({route, navigation}) {
   };
 
   //Home data
-  const homeData = (locationData = null) => {
+  const homeData = (locationData = null, selectedFilter = null) => {
+    if (!isFocused) {
+      return;
+    }
     if (!!paramData) {
       updateState({searchDataLoader: true});
     }
@@ -412,10 +391,9 @@ export default function Home({route, navigation}) {
     }
 
     let vendorFilterData = {
-      close_vendor: closeVendor,
-      open_vendor: openVendor,
-      best_vendor: bestSeller,
-      // near_me: nearMe,
+      open_vendor: selectedFilter?.id == 1 ? 1 : 0,
+      close_vendor: selectedFilter?.id == 2 ? 1 : 0,
+      best_vendor: selectedFilter?.id == 3 ? 1 : 0,
     };
     if (closeVendor == 0 && openVendor == 0 && bestSeller == 0) {
       updateState({singleVendor: true});
@@ -424,8 +402,6 @@ export default function Home({route, navigation}) {
     }
 
     {
-      console.log(latlongObj, vendorFilterData, 'data>>>>>>>');
-
       var selectedVendorType = null;
       var defaultVendorType = null;
 
@@ -456,7 +432,6 @@ export default function Home({route, navigation}) {
         language: languages?.primary_language?.id,
       };
       console.log('sending api data header', apiData);
-      console.log('homeData===== calling from main function');
 
       actions
         .homeData(apiData, apiHeader)
@@ -652,8 +627,6 @@ export default function Home({route, navigation}) {
     }
   };
 
-  console.log(appData, 'appData>>>>appData');
-
   //On Press banner
   const bannerPress = (data) => {
     let item = {};
@@ -788,48 +761,14 @@ export default function Home({route, navigation}) {
     }
   };
 
-  console.log('dineInTypedineInTypedineInType', dineInType);
   const onVendorFilterSeletion = (selectedFilter) => {
-    switch (selectedFilter?.id) {
-      case 1:
-        updateState({
-          isLoadingB: true,
-          openVendor: 1,
-          closeVendor: 0,
-          bestSeller: 0,
-          nearMe: 0,
-        });
-        break;
-      case 2:
-        updateState({
-          isLoadingB: true,
-          openVendor: 0,
-          closeVendor: 1,
-          bestSeller: 0,
-          nearMe: 0,
-        });
-        break;
-      case 3:
-        updateState({
-          isLoadingB: true,
-          openVendor: 0,
-          closeVendor: 0,
-          bestSeller: 1,
-          nearMe: 0,
-        });
-        break;
-      case 4:
-        updateState({
-          isLoadingB: true,
-          openVendor: 0,
-          closeVendor: 0,
-          bestSeller: 0,
-          nearMe: 1,
-        });
-        break;
-      default:
-        break;
-    }
+    updateState({
+      isLoadingB: true,
+      openVendor: selectedFilter?.id == 1 ? 1 : 0,
+      closeVendor: selectedFilter?.id == 2 ? 1 : 0,
+      bestSeller: selectedFilter?.id == 3 ? 1 : 0,
+    });
+    homeData(location, selectedFilter);
   };
 
   const onSpeechStartHandler = (e) => {};
@@ -938,8 +877,6 @@ export default function Home({route, navigation}) {
     }
   };
 
-  console.log('appMainDataappMainData', appMainData);
-
   const onFindVendors = () => {
     let newAry = [];
     selectedLaundryCategory?.estimate_product_addons.map((item, index) => {
@@ -1007,6 +944,8 @@ export default function Home({route, navigation}) {
                 appMainData={appMainData}
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
+                location={location}
+                curLatLong={curLatLong}
               />
             ) : (
               <DashBoardOne
@@ -1044,6 +983,8 @@ export default function Home({route, navigation}) {
                 appMainData={appMainData}
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
+                location={location}
+                curLatLong={curLatLong}
               />
             ) : (
               <DashBoardFour
@@ -1095,6 +1036,8 @@ export default function Home({route, navigation}) {
                 appMainData={appMainData}
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
+                location={location}
+                curLatLong={curLatLong}
               />
             ) : (
               <DashBoardFive
@@ -1144,6 +1087,8 @@ export default function Home({route, navigation}) {
                 appMainData={appMainData}
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
+                location={location}
+                curLatLong={curLatLong}
               />
             ) : (
               <DashBoardSix
@@ -1196,6 +1141,8 @@ export default function Home({route, navigation}) {
                 appMainData={appMainData}
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
+                location={location}
+                curLatLong={curLatLong}
               />
             ) : (
               <DashBoardFive
@@ -1252,6 +1199,8 @@ export default function Home({route, navigation}) {
                 appMainData={appMainData}
                 onPressCategory={(item) => onPressCategory(item)}
                 toggleData={appData}
+                location={location}
+                curLatLong={curLatLong}
               />
             ) : (
               <DashBoardEight

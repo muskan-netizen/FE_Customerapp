@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>93441502791-cb142cldq4c6bg6k4tkaa9cdovk1hrq7.apps.googleusercontent.com</string>
+	<string>903417914665-ekjra72ksj3gbhuos148ump5rbpt0koi.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.93441502791-cb142cldq4c6bg6k4tkaa9cdovk1hrq7</string>
+	<string>com.googleusercontent.apps.903417914665-ekjra72ksj3gbhuos148ump5rbpt0koi</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>93441502791-03dqq13dgnl10kr09evk9b94rnava1n7.apps.googleusercontent.com</string>
+	<string>903417914665-cdkqgj07vci29ajh2h3mmq31iuiai16u.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDK-M3UecmrN1ksuht4ysx4PlTIx7xr7yQ</string>
+	<string>AIzaSyDLNyK88KCioLKQzMlErkBFlBgRcikqm6g</string>
 	<key>GCM_SENDER_ID</key>
-	<string>93441502791</string>
+	<string>903417914665</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.application.knockknock</string>
+	<string>com.knockKnock.userApp</string>
 	<key>PROJECT_ID</key>
-	<string>royodispatcher8</string>
+	<string>knock-knock-user</string>
 	<key>STORAGE_BUCKET</key>
-	<string>royodispatcher8.appspot.com</string>
+	<string>knock-knock-user.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:93441502791:ios:b1ce4117349a02a4a08b62</string>
+	<string>1:903417914665:ios:a5fb8833899605c644c338</string>
 </dict>
 </plist>

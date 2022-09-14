@@ -30,8 +30,6 @@ export default function Routes() {
   );
   const {appStyle} = useSelector((state) => state?.initBoot);
   const businessType = appStyle?.homePageLayout;
-  console.log(appSessionInfo, 'appSessionInfo..appSessionInfo');
-  console.log(!!(businessType == 4), 'businessType????businessType');
   return (
     <AppearanceProvider>
       <NavigationContainer ref={navigationRef}>

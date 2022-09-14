@@ -1,11 +1,13 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, isEmpty, set} from 'lodash';
+import {handleCardAction, StripeProvider} from '@stripe/stripe-react-native';
+import {PayWithFlutterwave} from 'flutterwave-react-native';
+import {cloneDeep, isEmpty} from 'lodash';
 import moment from 'moment';
 import React, {Fragment, useCallback, useEffect, useRef, useState} from 'react';
 import {
   Alert,
   Animated,
-  Dimensions,
+  BackHandler,
   FlatList,
   I18nManager,
   Image,
@@ -18,19 +20,18 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  TouchableWithoutFeedback,
-  BackHandler,
 } from 'react-native';
+import ActionSheet from 'react-native-actionsheet';
 import * as Animatable from 'react-native-animatable';
 import {Calendar} from 'react-native-calendars';
 import {useDarkMode} from 'react-native-dark-mode';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import DocumentPicker from 'react-native-document-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import * as RNLocalize from 'react-native-localize';
 import Modal from 'react-native-modal';
 import ModalDropdown from 'react-native-modal-dropdown';
@@ -54,22 +55,23 @@ import WishlistCard from '../../Components/WishlistCard';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
-import Vi from '../../constants/lang/vi';
+import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {hitSlopProp} from '../../styles/commonStyles';
-import staticStrings from '../../constants/staticStrings';
 import {
   height,
   moderateScale,
   moderateScaleVertical,
-  StatusBarHeight,
   textScale,
   width,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {
+  cameraHandler,
+  currencyNumberFormatter,
+} from '../../utils/commonFunction';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {
   getImageUrl,
@@ -79,27 +81,11 @@ import {
   showSuccess,
   timeInLocalLangauge,
 } from '../../utils/helperFunctions';
+import {generateTransactionRef, payWithCard} from '../../utils/paystackMethod';
+import {androidCameraPermission} from '../../utils/permissions';
 import {getItem, removeItem, setItem} from '../../utils/utils';
 import stylesFun from './styles';
-import {
-  CardField,
-  createToken,
-  initStripe,
-  StripeProvider,
-  handleCardAction,
-  createPaymentMethod,
-  confirmPayment,
-} from '@stripe/stripe-react-native';
-import {cameraHandler} from '../../utils/commonFunction';
-import ActionSheet from 'react-native-actionsheet';
-import {androidCameraPermission} from '../../utils/permissions';
-import DocumentPicker from 'react-native-document-picker';
-import {generateTransactionRef, payWithCard} from '../../utils/paystackMethod';
-import {PayWithFlutterwave} from 'flutterwave-react-native';
 
-import {FlutterwaveInit} from 'flutterwave-react-native';
-import {setRedirection} from '../../redux/actions/auth';
-import ImagePicker from 'react-native-image-crop-picker';
 import BottomModal from '../../Components/BottomModal';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 
@@ -178,6 +164,7 @@ function Cart({navigation, route}) {
   const [selectedPrescriptionImgs, setPrescriptionImgs] = useState([]);
   const [isPrescriptionLoading, setPrescriptionLoading] = useState(false);
   const [isCheckSlotLoading, setCheckSloatLoading] = useState(false);
+  const [isShimmerLoading, setIsShimmerLoading] = useState(true);
 
   const [state, setState] = useState({
     showTaxFeeArea: false,
@@ -243,8 +230,8 @@ function Cart({navigation, route}) {
   } = useSelector((state) => state?.initBoot);
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
 
   const {preferences} = appData?.profile;
 
@@ -317,7 +304,7 @@ function Cart({navigation, route}) {
       checkforAddressUpdate();
     }
   }, [selectedAddress, allAddresss]);
-
+  console.log(allAddresss, 'allAddresss..');
   //check for addreess Update and change
   const checkforAddressUpdate = () => {
     if (allAddresss.length == 0) {
@@ -389,6 +376,7 @@ function Cart({navigation, route}) {
         console.log('cart details>>>', res);
         closeForm();
         actions.cartItemQty(res);
+        setIsShimmerLoading(false);
         let checkDate = !!res?.data?.scheduled_date_time;
         updateState({deliveryFeeLoader: false, isSubmitFaqLoader: false});
 
@@ -503,9 +491,7 @@ function Cart({navigation, route}) {
           // setLaundryAvailableDropOffSlot(res.data.slots);
 
           setCartData(res.data);
-          setSelectedTipvalue(
-            res?.data?.total_payable_amount == 0 ? 'custom' : null,
-          );
+
           updateState({
             isLoadingB: false,
             isRefreshing: false,
@@ -513,18 +499,6 @@ function Cart({navigation, route}) {
           if (!res?.data?.schedule_type && res.data.products.length > 0) {
             //if schedule type is null then hit the api again with now option
             setDateAndTimeSchedule();
-          }
-
-          if (
-            res?.data &&
-            res?.data?.tip.length &&
-            preferences?.auto_implement_5_percent_tip
-          ) {
-            setSelectedTipvalue(res?.data?.tip[0]);
-            setSelectedTipAmount(res?.data?.tip[0]?.value);
-          } else {
-            setSelectedTipvalue(null);
-            setSelectedTipAmount(null);
           }
         } else {
           setVendorAddress('');
@@ -840,8 +814,8 @@ function Cart({navigation, route}) {
       }, 200);
     }
   };
-  //flutter wave
 
+  //flutter wave
   const checkPaymentOptions = (res) => {
     updateState({placeLoader: true});
 
@@ -1111,9 +1085,6 @@ function Cart({navigation, route}) {
       paymentData?.orderDetail?.order_number
     }&token=${!!cardInfo ? cardInfo : null}&action=cart`;
 
-    {
-      alert('heyyyy');
-    }
     actions
       .openPaymentWebUrl(
         queryData,
@@ -1191,7 +1162,7 @@ function Cart({navigation, route}) {
       .then((res) => {
         console.log(res, 'placeOrder');
         actions.reloadData(!reloadData);
-        setSelectedTipvalue(null);
+
         setPickupDriverComment(null);
         setDropOffDriverComment(null);
         setVendorComment(null);
@@ -2706,7 +2677,9 @@ function Cart({navigation, route}) {
                                   {`${currencies?.primary_currency?.symbol}${
                                     // Number(i?.pvariant?.multiplier) *
                                     currencyNumberFormatter(
-                                      Number(i?.variants?.quantity_price),
+                                      Number(
+                                        i?.variants?.quantity_quantity_price,
+                                      ),
                                       appData?.profile?.preferences
                                         ?.digit_after_decimal,
                                     )
@@ -3204,7 +3177,12 @@ function Cart({navigation, route}) {
                   </Text>
                 ) : null}
                 {!!item?.delivery_types && item?.delivery_types.length == 1 ? (
-                  <Text>{`${item?.delivery_types[0]?.courier_name} ${currencies?.primary_currency?.symbol}${item?.delivery_types[0]?.rate}`}</Text>
+                  <Text>{`${item?.delivery_types[0]?.courier_name} ${
+                    currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
+                    Number(item?.delivery_types[0]?.rate),
+                    appData?.profile?.preferences?.digit_after_decimal,
+                  )}`}</Text>
                 ) : !!item?.delivery_types &&
                   item?.delivery_types.length > 0 ? (
                   <ModalDropdown
@@ -3274,365 +3252,6 @@ function Cart({navigation, route}) {
                 ) : null}
               </View>
             )}
-
-            {/* <View style={styles.itemPriceDiscountTaxView}>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
-                    : styles.priceItemLabel
-                }>
-                {strings.AMOUNT}
-              </Text>
-
-              <Text
-                style={
-                  isDarkMode
-                    ? [
-                        styles.priceItemLabel2,
-                        {
-                          color: MyDarkTheme.colors.text,
-                        },
-                      ]
-                    : styles.priceItemLabel2
-                }>
-                {currencies?.primary_currency?.symbol}
-                {currencyNumberFormatter(
-                  Number(
-                    item?.payable_amount ? item?.payable_amount : 0,
-                  ), appData?.profile?.preferences?.digit_after_decimal
-                )}
-              </Text>
-            </View> */}
-
-            {/* <View style={styles.bottomTabLableValue}>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
-                    : styles.priceItemLabel
-                }>
-                {strings.SUBTOTAL}
-              </Text>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
-                    : styles.priceItemLabel
-                }>{`${currencies?.primary_currency?.symbol}${Number(
-                cartData?.gross_paybale_amount,
-              ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
-            </View>
-            {!!cartData?.wallet_amount && (
-              <View style={styles.bottomTabLableValue}>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>
-                  {strings.WALLET}
-                </Text>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>{`${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.wallet_amount ? cartData?.wallet_amount : 0,
-                ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
-              </View>
-            )}
-            {!!cartData?.loyalty_amount && (
-              <View style={styles.bottomTabLableValue}>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>
-                  {strings.LOYALTY}
-                </Text>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>{`-${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
-                ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
-              </View>
-            )}
-
-            {!!cartData?.wallet_amount_used && (
-              <View style={styles.bottomTabLableValue}>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>
-                  {strings.WALLET}
-                </Text>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>{`-${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.wallet_amount_used
-                    ? cartData?.wallet_amount_used
-                    : 0,
-                ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
-              </View>
-            )}
-            {!!cartData?.total_subscription_discount && (
-              <View style={styles.bottomTabLableValue}>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>
-                  {strings.TOTALSUBSCRIPTION}
-                </Text>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>{`-${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.total_subscription_discount,
-                ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
-              </View>
-            )} */}
-
-            {/* {!!cartData?.total_discount_amount && (
-            <View style={styles.bottomTabLableValue}>
-              <Text style={styles.priceItemLabel}>
-                {strings.TOTAL_DISCOUNT}
-              </Text>
-              <Text style={styles.priceItemLabel}>{`-${
-                currencies?.primary_currency?.symbol
-              }${Number(cartData?.total_discount_amount).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
-            </View>
-          )} */}
-
-            {/* {!!appData?.profile?.preferences?.tip_before_order &&
-              !!cartData?.tip &&
-              cartData?.tip.length && (
-                <View
-                  style={[
-                    styles.bottomTabLableValue,
-                    {
-                      flexDirection: 'column',
-                      marginTop: moderateScaleVertical(8),
-                    },
-                  ]}>
-                  <Text
-                    style={
-                      isDarkMode
-                        ? [
-                            styles.priceTipLabel,
-                            {color: MyDarkTheme.colors.text},
-                          ]
-                        : [styles.priceTipLabel]
-                    }>
-                    {strings.DOYOUWANTTOGIVEATIP}
-                  </Text>
-                  <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={{flexGrow: 1}}>
-                    {cartData?.total_payable_amount !== 0 &&
-                      cartData?.tip.map((j, jnx) => {
-                        return (
-                          <TouchableOpacity
-                            key={String(jnx)}
-                            style={[
-                              styles.tipArrayStyle,
-                              {
-                                backgroundColor:
-                                  selectedTipvalue?.value == j?.value
-                                    ? themeColors.primary_color
-                                    : 'transparent',
-                                flex: 0.18,
-                              },
-                            ]}
-                            onPress={() => selectedTip(j)}>
-                            <Text
-                              style={
-                                isDarkMode
-                                  ? {
-                                      color:
-                                        selectedTipvalue?.value == j?.value
-                                          ? colors.white
-                                          : MyDarkTheme.colors.text,
-                                    }
-                                  : {
-                                      color:
-                                        selectedTipvalue?.value == j?.value
-                                          ? colors.white
-                                          : colors.black,
-                                    }
-                              }>
-                              {`${currencies?.primary_currency?.symbol} ${j.value}`}
-                            </Text>
-                            <Text
-                              style={{
-                                color:
-                                  selectedTipvalue?.value == j?.value
-                                    ? colors.white
-                                    : colors.textGreyB,
-                              }}>
-                              {j.label}
-                            </Text>
-                          </TouchableOpacity>
-                        );
-                      })}
-
-                    <TouchableOpacity
-                      style={[
-                        styles.tipArrayStyle2,
-                        {
-                          backgroundColor:
-                            selectedTipvalue == 'custom'
-                              ? themeColors.primary_color
-                              : 'transparent',
-                          flex:
-                            cartData?.total_payable_amount !== 0 ? 0.45 : 0.2,
-                        },
-                      ]}
-                      onPress={() => selectedTip('custom')}>
-                      <Text
-                        style={
-                          isDarkMode
-                            ? {
-                                color:
-                                  selectedTipvalue == 'custom'
-                                    ? colors.white
-                                    : MyDarkTheme.colors.text,
-                              }
-                            : {
-                                color:
-                                  selectedTipvalue == 'custom'
-                                    ? colors.white
-                                    : colors.black,
-                              }
-                        }>
-                        {strings.CUSTOM}
-                      </Text>
-                    </TouchableOpacity>
-                  </ScrollView>
-
-                  {!!selectedTipvalue && selectedTipvalue == 'custom' && (
-                    <View
-                      style={{
-                        borderRadius: 5,
-                        borderWidth: 0.5,
-                        borderColor: colors.textGreyB,
-                        height: 40,
-                        marginTop: moderateScaleVertical(8),
-                      }}>
-                      <TextInput
-                        value={selectedTipAmount}
-                        onChangeText={(text) =>
-                          updateState({selectedTipAmount: text})
-                        }
-                        style={{
-                          height: 40,
-                          alignItems: 'center',
-                          paddingHorizontal: 10,
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.textGreyOpcaity7,
-                        }}
-                        maxLength={5}
-                        returnKeyType={'done'}
-                        keyboardType={'number-pad'}
-                        placeholder={strings.ENTER_CUSTOM_AMOUNT}
-                        placeholderTextColor={
-                          isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.textGreyOpcaity7
-                        }
-                      />
-                    </View>
-                  )}
-                </View>
-              )} */}
-
-            {/* {!!cartData?.total_tax && (
-              <View style={styles.bottomTabLableValue}>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>
-                  {strings.TAX_AMOUNT}
-                </Text>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.priceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.priceItemLabel
-                  }>{`${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.total_tax ? cartData?.total_tax : 0,
-                ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
-              </View>
-            )}
-
-            <View style={styles.amountPayable}>
-              <Text
-                style={{
-                  ...styles.priceItemLabel2,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                {strings.AMOUNT_PAYABLE}
-              </Text>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel2, {color: MyDarkTheme.colors.text}]
-                    : styles.priceItemLabel2
-                }>{`${currencies?.primary_currency?.symbol}${(
-                Number(cartData?.total_payable_amount) +
-                (selectedTipAmount != null && selectedTipAmount != ''
-                  ? Number(selectedTipAmount)
-                  : 0)
-              ).toFixed(appData?.profile?.preferences?.digit_after_decimal)}`}</Text>
-            </View> */}
           </View>
         </View>
       </View>
@@ -3669,7 +3288,6 @@ function Cart({navigation, route}) {
   };
 
   const selectedTip = (tip) => {
-   
     if (tip == 'custom') {
       setSelectedTipvalue(tip);
       setSelectedTipAmount(null);
@@ -3718,7 +3336,7 @@ function Cart({navigation, route}) {
               : colors.greyNew,
           }}
           placeholderTextColor={
-            isDarkMode ? colors.textGreyB : colors.textGreyB
+            isDarkMode ? colors.whiteOpacity77 : colors.textGreyB
           }
           placeholder={strings.SPECIAL_INSTRUCTION}
           returnKeyType={'next'}
@@ -3966,6 +3584,7 @@ function Cart({navigation, route}) {
                   ? preferences?.want_to_tip_nomenclature
                   : strings.DOYOUWANTTOGIVEATIP}
               </Text>
+
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -3975,33 +3594,24 @@ function Cart({navigation, route}) {
                     return (
                       <TouchableOpacity
                         key={String(jnx)}
-                        style={[
-                          styles.tipArrayStyle,
-                          {
-                            backgroundColor:
-                              selectedTipvalue?.value == j?.value
-                                ? themeColors.primary_color
-                                : 'transparent',
-                            flex: 0.18,
-                          },
-                        ]}
+                        style={{
+                          ...styles.tipArrayStyle,
+                          backgroundColor:
+                            selectedTipvalue?.value == j?.value
+                              ? themeColors.primary_color
+                              : 'transparent',
+                          flex: 0.18,
+                        }}
                         onPress={() => selectedTip(j)}>
                         <Text
-                          style={
-                            isDarkMode
-                              ? {
-                                  color:
-                                    selectedTipvalue?.value == j?.value
-                                      ? colors.white
-                                      : MyDarkTheme.colors.text,
-                                }
-                              : {
-                                  color:
-                                    selectedTipvalue?.value == j?.value
-                                      ? colors.white
-                                      : colors.black,
-                                }
-                          }>
+                          style={{
+                            color:
+                              selectedTipvalue?.value == j?.value
+                                ? colors.white
+                                : isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.black,
+                          }}>
                           {`${currencies?.primary_currency?.symbol} ${j.value}`}
                         </Text>
                         <Text
@@ -4519,7 +4129,7 @@ function Cart({navigation, route}) {
               style={{
                 ...styles.paymentMainView,
                 backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.background
+                  ? MyDarkTheme.colors.lightDark
                   : colors.greyNew,
               }}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -4717,11 +4327,6 @@ function Cart({navigation, route}) {
     if (!!vendorAddress) {
       return (value = strings.HOME_1);
     }
-    // vendorAddress
-    // ? strings.HOME_1
-    // : selectedAddressData.type
-    //   ? strings.HOME
-    //   : strings.ADD_ADDRESS
     switch (data?.type) {
       case 1:
         value = strings.HOME;
@@ -4769,6 +4374,7 @@ function Cart({navigation, route}) {
               }}>
               {homeType(selectedAddressData)}
             </Text>
+            {console.log(selectedAddressData, 'selectedAddressData.')}
             <Text
               numberOfLines={2}
               style={{
@@ -4816,6 +4422,7 @@ function Cart({navigation, route}) {
   };
   //SelectAddress
   const selectAddress = (address) => {
+    console.log('here....', address);
     if (!!userData?.auth_token) {
       // updateState({ isLoadingB: true });
       let data = {};
@@ -4825,6 +4432,7 @@ function Cart({navigation, route}) {
           code: appData?.profile?.code,
         })
         .then((res) => {
+          console.log(res, 'response ... set primary');
           actions.saveAddress(address);
           setSelectedAddress(address);
           updateState({
@@ -4836,6 +4444,11 @@ function Cart({navigation, route}) {
         .catch(errorMethod);
     }
   };
+
+  useEffect(() => {
+    getAllAddress();
+    return () => {};
+  }, []);
 
   //Add and update the addreess
   const addUpdateLocation = (childData) => {
@@ -5183,7 +4796,7 @@ function Cart({navigation, route}) {
     );
   };
 
-  if (isLoadingB) {
+  if (isShimmerLoading) {
     return (
       <WrapperContainer
         bgColor={
@@ -5235,6 +4848,7 @@ function Cart({navigation, route}) {
             rectWidthLeft={moderateScale(100)}
             heightLeft={15}
             rectHeightLeft={15}
+            isRight={false}
             rx={5}
             ry={5}
             viewStyles={{
@@ -5433,7 +5047,7 @@ function Cart({navigation, route}) {
           // device_token: DeviceInfo.getUniqueId(),
         },
       );
-      console.log('avail slots++', res);
+
       if (modalType == 'pickup') {
         setLaundryAvailablePickupSlot(res);
       }
@@ -6391,7 +6005,9 @@ function Cart({navigation, route}) {
               tintColor={themeColors.primary_color}
             />
           }
-          ListEmptyComponent={() => (!isLoadingB ? <ListEmptyComp /> : <></>)}
+          ListEmptyComponent={() =>
+            !isShimmerLoading ? <ListEmptyComp /> : <></>
+          }
         />
       }
       {!!isModalVisibleForClearCart && (

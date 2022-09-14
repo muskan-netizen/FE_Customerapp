@@ -1,7 +1,6 @@
-import {TouchableOpacity} from '@gorhom/bottom-sheet';
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 import {
