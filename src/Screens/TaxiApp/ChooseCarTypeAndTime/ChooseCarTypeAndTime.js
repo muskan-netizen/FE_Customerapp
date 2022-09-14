@@ -169,7 +169,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     isScheduleModalVisible: false,
     scheduleDateTime: {},
     myCurrentLocationDetails: {},
-    allListedDrivers: [],,
+    allListedDrivers: [],
   });
   const {
     selectedPayment,
@@ -218,7 +218,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     isScheduleModalVisible,
     scheduleDateTime,
     myCurrentLocationDetails,
-    allListedDrivers,,
+    allListedDrivers,
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -295,9 +295,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           schedule_date_delivery: scheduleDateTime?.selectedDateAndTime
             ? scheduleDateTime?.selectedDateAndTime
             : `${pickedUpDate ? pickedUpDate : ''} ${
-                
                 pickedUpTime ? pickedUpTime : ''
-                }`,
+              }`,
         },
         {
           code: appData?.profile?.code,
@@ -310,8 +309,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(
-                  appData?.profile?.preferences?.digit_after_decimal,
-                )
+                appData?.profile?.preferences?.digit_after_decimal,
+              )
             : 0,
           availableCarList:
             pageNo == 1
@@ -432,7 +431,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     });
     switch (paymentId) {
       case 4: //Stripe Payment Getway
-         console.log(' i amerereerererere');
+        console.log(' i amerereerererere');
         sendStripeToken(extraData, res);
         break;
       case 6: //Payfast Payment Getway
@@ -634,8 +633,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             .then((res) => {
               console.log('current lcoation', res);
               updateState({
-                myCurrentLocationDetails: res,,
-              });;
+                myCurrentLocationDetails: res,
+              });
             })
             .catch((err) => {
               console.log('error raised', location);
@@ -665,13 +664,10 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
   useEffect(() => {
     if (
-      
       myCurrentLocationDetails?.latitude &&
-     
       myCurrentLocationDetails?.longitude
-    
     ) {
-      getAllDrivers();;
+      getAllDrivers();
     }
   }, [selectedCarOption?.tags]);
 
@@ -851,22 +847,22 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         onPressPickUpNow={() => {
           selectedCarOption
             ? updateState({
-                  // pickUpTimeType: 'now',
-                  showPaymentModal: true,
-                  redirectFromNow: true,
-                  showCarModal: false,
-                })
+                // pickUpTimeType: 'now',
+                showPaymentModal: true,
+                redirectFromNow: true,
+                showCarModal: false,
+              })
             : showError(strings.PLEASE_SELECT_CAR);
         }}
         isLoading={isLoading}
         onPressPickUplater={() => {
           selectedCarOption
             ? updateState({
-                  // pickUpTimeType: 'schedule',
-                  showTimeModal: true,
-                  redirectFromNow: false,
-                  showCarModal: false,
-                })
+                // pickUpTimeType: 'schedule',
+                showTimeModal: true,
+                redirectFromNow: false,
+                showCarModal: false,
+              })
             : showError(strings.PLEASE_SELECT_CAR);
         }}
         availableCarList={availableCarList}
@@ -1095,30 +1091,30 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const onPressPickUpNow = () => {
     selectedCarOption
       ? updateState({
-            // pickUpTimeType: 'now',
-            showPaymentModal: true,
-            redirectFromNow: true,
-            showCarModal: false,
-          })
+          // pickUpTimeType: 'now',
+          showPaymentModal: true,
+          redirectFromNow: true,
+          showCarModal: false,
+        })
       : showError(strings.PLEASE_SELECT_CAR);
   };
 
   const renderDriverTypeMarkes = (type) => {
     switch (type?.vehicle_type_id) {
       case 1:
-        return imagePath.icmanMarker;;
+        return imagePath.icmanMarker;
         break;
       case 2:
-        return imagePath.iccycleMarker;;
+        return imagePath.iccycleMarker;
         break;
       case 3:
-        return imagePath.icBikeMarker1;;
+        return imagePath.icBikeMarker1;
         break;
       case 4:
-        return imagePath.icCar;;
+        return imagePath.icCar;
         break;
       case 5:
-        return imagePath.ictruckMarker;;
+        return imagePath.ictruckMarker;
         break;
     }
   };
@@ -1156,10 +1152,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
                         {
                           rotate: `${Number(
                             coordinate?.agentlog?.heading_angle
-                             
                               ? coordinate?.agentlog?.heading_angle
-                             
-                              : 0,,
+                              : 0,
                           )}deg`,
                         },
                       ],
@@ -1167,7 +1161,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
                     source={renderDriverTypeMarkes(coordinate)}
                   />
                 </Marker.Animated>
-              );;
+              );
             })}
 
             <MapViewDirections
@@ -1276,10 +1270,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
                 }}
                 onPress={_openDateTimeModal}
                 btnText={`${
-                  
                   scheduleDateTime?.selectedDateAndTime
-                      ? `${scheduleDateTime?.selectedDateAndTime}`
-                      : slectedDate || selectedTime
+                    ? `${scheduleDateTime?.selectedDateAndTime}`
+                    : slectedDate || selectedTime
                     ? `${slectedDate} ${selectedTime}`
                     : 'Schedule a ride'
                 }`}
@@ -1294,13 +1287,11 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
                   themeColors.primary_color,
                 ]}
                 textStyle={{
-                 
                   textTransform: 'none',
-                 
+
                   fontSize: textScale(14),
-                 
+
                   marginHorizontal: moderateScale(5),
-               ,
                 }}
                 onPress={
                   selectedCarOption?.variant[0]?.price > 0
