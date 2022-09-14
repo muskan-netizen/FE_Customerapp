@@ -721,8 +721,8 @@ const appIds = {
     android: 'com.yourlaundryapp',
   }),
   hemptyfy: Platform.select({
-    ios: 'com.hemptyfy',
-    android: 'com.hemptyfy',
+    ios: 'com.hemptyfy.orders',
+    android: 'com.hemptyfy.orders',
   }),
   sharu: Platform.select({
     ios: 'com.sharu',
