@@ -85,7 +85,6 @@ export default function DashBoardFive({
   const appMainData = useSelector((state) => state?.home?.appMainData);
   let businessType = appData?.profile?.preferences?.business_type || null;
   const allCategory = appMainData?.categories;
-  console.log(appMainData, 'appDtaa');
   const checkForBrand =
     allCategory &&
     allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
@@ -410,7 +409,8 @@ export default function DashBoardFive({
           )}
         <View style={{}}>
           {!!appData?.mobile_banners?.length &&
-          appStyle?.homePageLayout == 3 && getBundleId()!== appIds?.masa ? (
+          appStyle?.homePageLayout == 3 &&
+          getBundleId() !== appIds?.masa ? (
             <Carousel
               autoplay={true}
               loop={true}

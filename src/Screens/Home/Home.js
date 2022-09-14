@@ -768,7 +768,7 @@ export default function Home({route, navigation}) {
       closeVendor: selectedFilter?.id == 2 ? 1 : 0,
       bestSeller: selectedFilter?.id == 3 ? 1 : 0,
     });
-    homeData(null, selectedFilter);
+    homeData(location, selectedFilter);
   };
 
   const onSpeechStartHandler = (e) => {};
