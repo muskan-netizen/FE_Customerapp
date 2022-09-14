@@ -1,58 +1,65 @@
 {
   "project_info": {
-    "project_number": "202669499984",
-    "project_id": "newyorkminimart-eb5e0",
-    "storage_bucket": "newyorkminimart-eb5e0.appspot.com"
+    "project_number": "614765572717",
+    "project_id": "little-bird-356913",
+    "storage_bucket": "little-bird-356913.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:202669499984:android:810604a905d728fc8e9355",
+        "mobilesdk_app_id": "1:614765572717:android:bf846886152187d80fc564",
         "android_client_info": {
-          "package_name": "com.newYorkMiniMart"
+          "package_name": "com.littlebird.order"
         }
       },
       "oauth_client": [
         {
-          "client_id": "202669499984-2peos1ath0kv6rb6voaghimat2dtiiec.apps.googleusercontent.com",
+          "client_id": "614765572717-a27g9vd0p3m8ennp7121lfheia86ogmg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.newYorkMiniMart",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "202669499984-aj4ovjbu671hgmbjlc70cva06ah122q0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.newYorkMiniMart",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "202669499984-t5qeeahh9cji7vq7rs5lml1alc9psvvj.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.newYorkMiniMart",
+            "package_name": "com.littlebird.order",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "202669499984-5jrhcuibk8ee2a6njmjkmd7rap6ht8st.apps.googleusercontent.com",
+          "client_id": "614765572717-jj1dnvgdg993tt4v7antk2d2c8gt3p3k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.littlebird.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "614765572717-pee2rf2972mbu1bce1i00a8g76h4mhgf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.littlebird.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "614765572717-ope0ea2ddtfdc0vuc3b3rlg7k2k8qbkg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCpupfETttjKVrgQ5evbDjJ0F-UUyusr-o"
+          "current_key": "AIzaSyBzp6N5pIVzB_Eom7HiO3t2muBGHTsHQFI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "202669499984-5jrhcuibk8ee2a6njmjkmd7rap6ht8st.apps.googleusercontent.com",
+              "client_id": "614765572717-ope0ea2ddtfdc0vuc3b3rlg7k2k8qbkg.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "614765572717-goi1s3iqs69u2ul1pckad2g0o2nja6ph.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.littlebird.order"
+              }
             }
           ]
         }

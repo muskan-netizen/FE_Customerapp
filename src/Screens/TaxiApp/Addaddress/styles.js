@@ -239,7 +239,6 @@ export default ({
     switchRiderText: {
       fontSize: textScale(12),
       fontFamily: fontFamily.medium,
-
       marginHorizontal: moderateScale(10),
     },
     showFriendListModalHeaderContainer: {
@@ -278,7 +277,7 @@ export default ({
       fontSize: textScale(14),
     },
     addAddressScreenTitle: {
-      fontSize: textScale(15),
+      fontSize: textScale(16),
       fontFamily: fontFamily.medium,
       marginHorizontal: moderateScale(10),
     },

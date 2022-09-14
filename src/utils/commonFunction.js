@@ -48,8 +48,9 @@ const cameraHandler = async (data, option) => {
 
 const toFixed = (n, fixed) => {
   if (n > 0 && fixed > 0) {
-    return `${n}`.match(new RegExp(`^-?\\d+(?:\.\\d{0,${fixed}})?`))[0];
-  } else return n;
+    // return `${n}`.match(new RegExp(`^-?\\d+(?:\.\\d{0,${fixed}})?`))[0];
+    return n.toFixed(fixed);
+  } else return Math.trunc(n);
 };
 
 const commaFormater = (num) => {
@@ -59,7 +60,6 @@ const commaFormater = (num) => {
 };
 const currencyNumberFormatter = (number, digitAfterDecimal = 2) => {
   let newFormatedDecimalNumber = toFixed(number, digitAfterDecimal);
-
   return commaFormater(newFormatedDecimalNumber);
 };
 
@@ -86,6 +86,13 @@ export function getRandomColor() {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
+}
+
+export function dateParser(dateString) {
+  const newDt = Date.parse(dateString);
+  if (!isNaN(newDt)) {
+    return dateString;
+  } else null;
 }
 
 export {cameraHandler, currencyNumberFormatter};

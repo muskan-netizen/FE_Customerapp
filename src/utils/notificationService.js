@@ -136,6 +136,20 @@ export const notificationListener = async () => {
       (created) =>
         console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
     );
+
+    // // created channel for custom notii 
+    // PushNotification.createChannel(
+    //   {
+    //     channelId: 'sound-channel-id', // (required)
+    //     channelName: `Sound channel 2`, // (required)
+    //     channelDescription: 'A sound channel 2', // (optional) default: undefined.
+    //     soundName: 'customnotii.mp3', // (optional) See `soundName` parameter of `localNotification` function
+    //     importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+    //     vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+    //   },
+    //   (created) =>
+    //     console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+    // );
   }
 
   messaging()
@@ -153,6 +167,14 @@ export const notificationListener = async () => {
         if (Platform.OS == 'ios' && notification.sound == 'notification.wav') {
           actions.isVendorNotification(true);
         }
+
+        // // added check for customnotii
+        // if (
+        //   Platform.OS == 'android' &&
+        //   notification.android.sound == 'customnotii.mp3'
+        // ) {
+        //   actions.isVendorNotification(true);
+        // }
       }
     });
 

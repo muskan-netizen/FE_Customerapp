@@ -332,7 +332,7 @@ export default function ProductDetail({route, navigation}) {
     if (error?.message?.alert == 1) {
       updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
       // showError(error?.message?.error || error?.error);
-     
+
       Alert.alert('', strings.ALREADY_EXIST, [
         {
           text: strings.CANCEL,
@@ -467,7 +467,7 @@ export default function ProductDetail({route, navigation}) {
 
   const variantSetValue = (item) => {
     const {options, type, variant_type_id} = item;
-    console.log('variantSetValuevariantSetValue', variant_type_id);
+    console.log('variantSetValuevariantSetValue', item);
     if (type == 1) {
       return (
         <View>
@@ -578,6 +578,7 @@ export default function ProductDetail({route, navigation}) {
           />
           <ScrollView showsVerticalScrollIndicator={false}>
             {options.map((i, inx) => {
+              console.log(i, '............');
               return (
                 <TouchableOpacity
                   key={inx}
@@ -1275,7 +1276,7 @@ export default function ProductDetail({route, navigation}) {
                         tagsStyles={{
                           p: {
                             color: isDarkMode ? colors.white : colors.black,
-                            textAlign:'left'
+                            textAlign: 'left',
                           },
                         }}
                       />

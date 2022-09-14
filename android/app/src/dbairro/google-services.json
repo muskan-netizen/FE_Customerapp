@@ -1,449 +1,58 @@
 {
   "project_info": {
-    "project_number": "93441502791",
-    "project_id": "royodispatcher8",
-    "storage_bucket": "royodispatcher8.appspot.com"
+    "project_number": "930101044670",
+    "project_id": "dbairro-order",
+    "storage_bucket": "dbairro-order.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:93441502791:android:a10683e11fd65d93a08b62",
+        "mobilesdk_app_id": "1:930101044670:android:931ae3f402492d5748c5ef",
         "android_client_info": {
-          "package_name": "com.Dbairro.royodispatcher"
+          "package_name": "com.Dbairro.order"
         }
       },
       "oauth_client": [
         {
-          "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyANMqEHQTGQiOi-ZehCSGggXRsacdmSNWE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "93441502791-5ntmbq6gu3h6spgtuf2pl4fovh9s3243.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.Qrider.Dispatch"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:93441502791:android:00a7d7e001a7e357a08b62",
-        "android_client_info": {
-          "package_name": "com.Delivery.royodispatcher"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyANMqEHQTGQiOi-ZehCSGggXRsacdmSNWE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "93441502791-5ntmbq6gu3h6spgtuf2pl4fovh9s3243.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.Qrider.Dispatch"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:93441502791:android:b0c7d0a731aa0432a08b62",
-        "android_client_info": {
-          "package_name": "com.Dlvrd.royodispatcher"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyANMqEHQTGQiOi-ZehCSGggXRsacdmSNWE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "93441502791-5ntmbq6gu3h6spgtuf2pl4fovh9s3243.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.Qrider.Dispatch"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:93441502791:android:c6775bdc70dd4ef8a08b62",
-        "android_client_info": {
-          "package_name": "com.HelloDeliver.royodispatcher"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyANMqEHQTGQiOi-ZehCSGggXRsacdmSNWE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "93441502791-5ntmbq6gu3h6spgtuf2pl4fovh9s3243.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.Qrider.Dispatch"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:93441502791:android:ef823367811892eba08b62",
-        "android_client_info": {
-          "package_name": "com.ICare.royodispatcher"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyANMqEHQTGQiOi-ZehCSGggXRsacdmSNWE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "93441502791-5ntmbq6gu3h6spgtuf2pl4fovh9s3243.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.Qrider.Dispatch"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:93441502791:android:e06700adc29edff1a08b62",
-        "android_client_info": {
-          "package_name": "com.Knockknock.royodispatcher"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyANMqEHQTGQiOi-ZehCSGggXRsacdmSNWE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "93441502791-5ntmbq6gu3h6spgtuf2pl4fovh9s3243.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.Qrider.Dispatch"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:93441502791:android:baa55b54288ee50ba08b62",
-        "android_client_info": {
-          "package_name": "com.Qrider.royodispatcher"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyANMqEHQTGQiOi-ZehCSGggXRsacdmSNWE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "93441502791-5ntmbq6gu3h6spgtuf2pl4fovh9s3243.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.Qrider.Dispatch"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:93441502791:android:7358fe5acd5c36ada08b62",
-        "android_client_info": {
-          "package_name": "com.Slider.royodispatcher"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyANMqEHQTGQiOi-ZehCSGggXRsacdmSNWE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "93441502791-5ntmbq6gu3h6spgtuf2pl4fovh9s3243.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.Qrider.Dispatch"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:93441502791:android:d5a95545b1bbefcea08b62",
-        "android_client_info": {
-          "package_name": "com.TimHomeServices.royodispatcher"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyANMqEHQTGQiOi-ZehCSGggXRsacdmSNWE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "93441502791-5ntmbq6gu3h6spgtuf2pl4fovh9s3243.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.Qrider.Dispatch"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:93441502791:android:18d5ab5cc88103d0a08b62",
-        "android_client_info": {
-          "package_name": "com.dbairro"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "93441502791-695u7cu0679lu42q33dognprab9ouf21.apps.googleusercontent.com",
+          "client_id": "930101044670-0k2iorha32f5okklm7mndasrrnc34v59.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.dbairro",
+            "package_name": "com.Dbairro.order",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "93441502791-cofup52btn52gq7lm5h87eqh6h4rsmda.apps.googleusercontent.com",
+          "client_id": "930101044670-9jv5jji60nkdstl5gbu2cvg7raksmk4a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.dbairro",
+            "package_name": "com.Dbairro.order",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "93441502791-v1eamcs0nmju73ip17i03d9lg8e5a6fa.apps.googleusercontent.com",
+          "client_id": "930101044670-mcpk0rb2i45p3kpe7n2p5t7pub5nqmic.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.dbairro",
+            "package_name": "com.Dbairro.order",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
+          "client_id": "930101044670-st04i99id6ub3sja841mtjd4p2t8d5ql.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyANMqEHQTGQiOi-ZehCSGggXRsacdmSNWE"
+          "current_key": "AIzaSyDQ_nXLlD01hhkmPqyqP_XMhfiFTWIR-Mc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
+              "client_id": "930101044670-st04i99id6ub3sja841mtjd4p2t8d5ql.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "93441502791-5ntmbq6gu3h6spgtuf2pl4fovh9s3243.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.Qrider.Dispatch"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:93441502791:android:b332b26898326d2aa08b62",
-        "android_client_info": {
-          "package_name": "com.scoopaTechnologies"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "93441502791-dkhgatli7bg8k6v7vphlar12tgcp57vr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.scoopaTechnologies",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "93441502791-hefmsefivnqt0ae2i76a8e1ie7mnbpfg.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.scoopaTechnologies",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "93441502791-q9ndf7jvo5iftfib5h1sh6o53c2pnhdm.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.scoopaTechnologies",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyANMqEHQTGQiOi-ZehCSGggXRsacdmSNWE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "93441502791-lehiugp28k9gcosirvu84sl7v6uauiq5.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "93441502791-5ntmbq6gu3h6spgtuf2pl4fovh9s3243.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.Qrider.Dispatch"
-              }
             }
           ]
         }

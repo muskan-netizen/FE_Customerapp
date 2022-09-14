@@ -26,11 +26,11 @@ const CircularProfileLoader = ({
       />
 
       {isDesc && (
-        <>
-          <Rect x="80" y="12" rx="8" ry="8" width="60" height="16" />
-          <Rect x="80" y="40" rx="8" ry="8" width="70" height="9" />
-          <Rect x="80" y="55" rx="8" ry="8" width="70" height="9" />
-        </>
+        <View>
+          <Rect x={80} y={12} rx={8} ry={8} width={60} height={16} />
+          <Rect x={80} y={40} rx={8} ry={8} width={60} height={9} />
+          <Rect x={80} y={55} rx={8} ry={8} width={60} height={9} />
+        </View>
       )}
     </ContentLoader>
   );

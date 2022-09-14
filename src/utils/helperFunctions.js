@@ -22,6 +22,7 @@ import DeviceCountry, {
   TYPE_TELEPHONY,
   TYPE_CONFIGURATION,
 } from 'react-native-device-country';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {
@@ -279,7 +280,10 @@ export function getAddressComponent(details, update) {
 
 export const sessionHandler = (error) => {
   actions.userLogout();
+  actions.cartItemQty('');
+  actions.saveAddress(null);
   actions.setAppSessionData('guest_login');
+  AsyncStorage.clear();
 };
 
 export const getScaleTransformationStyle = (
@@ -358,7 +362,7 @@ const timeInLocalLangauge = (value, selectedLanguage) => {
   })}`;
 };
 
-const getNearestLocation = async(currentLocation, savedLocations = []) => {
+const getNearestLocation = async (currentLocation, savedLocations = []) => {
   const points = savedLocations.map((item, indx) => {
     const distance = getDistance(
       {

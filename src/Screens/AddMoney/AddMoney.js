@@ -80,7 +80,6 @@ export default function AddMoney({navigation}) {
   );
 
   const userData = useSelector((state) => state.auth.userData);
-  console.log(userData, 'userDatauserDatauserData');
   const {preferences} = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});

@@ -26,16 +26,6 @@ export function initApp(
   refreshlang = false,
 ) {
   return new Promise((resolve, reject) => {
-    console.log(
-      data,
-      headers,
-      reload,
-      primary_curreny,
-      primary_language,
-      refreshlang,
-      'allDataHeader>>>>',
-    );
-    console.log(headers, 'headersheadersheaders');
     apiPost(APP_INITIAL_SETTINGS, data, headers)
       .then(async (res) => {
         let data = res?.data;

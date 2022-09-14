@@ -51,7 +51,7 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const AddressModal3 = ({
   updateData,
   isVisible = false,
-  onClose,
+  onClose = () => {},
   type,
   passLocation,
   toggleModal,
@@ -60,13 +60,12 @@ const AddressModal3 = ({
   navigation,
   selectViaMap = false,
   openCloseMapAddress = () => {},
-  constCurrLoc
+  constCurrLoc,
 }) => {
   const mapRef = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
- 
- const {location}= useSelector((state) => state?.home);
-console.log(location,"locationlocationlocation")
+
+  const {location} = useSelector((state) => state?.home);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   // const theme = useSelector((state) => state?.initBoot?.themeColor);
   const darkthemeusingDevice = useDarkMode();
@@ -77,7 +76,7 @@ console.log(location,"locationlocationlocation")
   const {themeColors, themeLayouts, appStyle} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
   const {profile} = appData;
-  
+
   const [state, setState] = useState({
     dropDownData: [],
     address: updateData?.address ? updateData?.address : '',
@@ -666,8 +665,6 @@ console.log(location,"locationlocationlocation")
               addressDone={addressDone}
               mapClose={() => openCloseMapAddress(2)} //address map close
               constCurrLoc={location}
-              
-
             />
           </View>
         ) : (
@@ -732,31 +729,6 @@ console.log(location,"locationlocationlocation")
                     }}
                   />
                 </View>
-
-                {/* <GooglePlaceInput
-              getDefaultValue={address}
-              type={type}
-              navigation={navigation}
-              googleApiKey={profile?.preferences?.map_key}
-              textInputContainer={styles.textGoogleInputContainerAddress}
-              listView={styles.listView}
-              textInput={{
-                height: moderateScaleVertical(35),
-                borderRadius: 13,
-                backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.lightDark
-                  : colors.white,
-                color: isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.textGreyOpcaity7,
-                textAlign: I18nManager.isRTL ? 'right' : 'left',
-              }}
-              addressHelper={(results) => addressHelper(results)}
-              handleAddressOnKeyUp={(text) => handleAddressOnKeyUp(text)}
-              placeholderTextColor={
-                isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7
-              }
-            /> */}
 
                 <View style={{marginHorizontal: moderateScale(6)}} />
                 <TouchableOpacity
@@ -834,7 +806,6 @@ console.log(location,"locationlocationlocation")
                   height: moderateScale(16),
                 }}
               />
-              {/* <Image source={imagePath.currentLocation} /> */}
               <View style={{}}>
                 <Text
                   style={{
@@ -857,48 +828,11 @@ console.log(location,"locationlocationlocation")
                 </Text>
               </View>
             </TouchableOpacity>
-            {/* <View style={styles.textInputContainerAddress}>
-            <TextInput
-              onChangeText={_onChangeText('address')}
-              placeholder={strings.SEARCH_LOCATION}
-              style={[
-                styles.addressTextStyle,
-                {
-                  textAlign: I18nManager.isRTL ? 'right' : 'left',
-                  ...getTextInputStyle(address, 2),
-                },
-              ]}
-              multiline={false}
-              // style={getTextInputStyle(address, 2)}
-              numberOfLines={2}
-              value={address}
-              onFocus={() => {
-                updateState({showDialogBox: true});
-              }}
-            />
-          </View> */}
 
-            {/* {showDialogBox && dropDownData && dropDownData.length > 0 && (
-          <View style={styles.addressDropDownView}>{renderDropDown()}</View>
-        )} */}
             <View
               style={{
                 zIndex: -1000,
-                // marginTop: moderateScaleVertical(80)
               }}>
-              {/* <View> */}
-              {/* <View style={styles.useCurrentLocationView}>
-            <Image
-              style={{tintColor: themeColors.primary_color}}
-              source={imagePath.locationGreen}
-            />
-            <TouchableOpacity>
-              <Text style={styles.useCurrentLocationText}>
-                {strings.USECURRENTLOACTION}
-              </Text>
-            </TouchableOpacity>
-          </View> */}
-
               <BorderTextInputWithLable
                 onChangeText={_onChangeText('houseNo')}
                 placeholder={strings.HOUSE_NO}
@@ -991,13 +925,6 @@ console.log(location,"locationlocationlocation")
 
               <View
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                {/* <BorderTextInput
-              containerStyle={{flex: 0.45}}
-              onChangeText={_onChangeText('country')}
-              placeholder={strings.COUNTRY}
-              textInputStyle={getTextInputStyle(country)}
-              value={country}
-            /> */}
                 <View style={{flex: 0.48}}>
                   <View
                     style={{
@@ -1179,12 +1106,7 @@ console.log(location,"locationlocationlocation")
           </KeyboardAwareScrollView>
         )}
       </View>
-
-      {/* </View> */}
-      {/* </ScrollView> */}
     </Modal>
-    //   </View>
-    // </View>
   );
 };
 

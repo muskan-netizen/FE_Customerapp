@@ -38,7 +38,8 @@ const CustomTopTabBar = ({
         horizontal
         scrollEnabled={scrollEnabled}
         alwaysBounceHorizontal={false}
-        showsHorizontalScrollIndicator={false}>
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{}}>
         {tabBarItems &&
           tabBarItems.map((i, inx) => {
             return (

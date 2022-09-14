@@ -78,7 +78,6 @@ export default function DashBoardFive({
   const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(appStyle, 'appStyleappStyle>>>>');
   const userData = useSelector((state) => state?.auth?.userData);
 
   const darkthemeusingDevice = useDarkMode();
@@ -86,7 +85,6 @@ export default function DashBoardFive({
   const appMainData = useSelector((state) => state?.home?.appMainData);
   let businessType = appData?.profile?.preferences?.business_type || null;
   const allCategory = appMainData?.categories;
-  console.log(appMainData, 'appDtaa');
   const checkForBrand =
     allCategory &&
     allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
@@ -123,7 +121,6 @@ export default function DashBoardFive({
       vendorsData: [],
     });
   }, [appMainData?.vendors]);
-  console.log(vendorsData, 'vendorsDatavendorsData');
   useEffect(() => {
     if (!!appMainData?.categories && appMainData?.categories.length) {
       if (appStyle?.homePageLayout == 5) {
@@ -145,8 +142,6 @@ export default function DashBoardFive({
   }, [appMainData?.categories]);
 
   const {currSelectedFilter} = state;
-
-  console.log('businessType', businessType);
 
   const onSelectedFilter = (selectedFilter) => {
     updateState({showMenu: false, currSelectedFilter: selectedFilter});
@@ -206,7 +201,6 @@ export default function DashBoardFive({
     checkAgeModalPermission();
   }, []);
 
-  console.log(userData, 'userData>>');
   const onConfirmAge = async (userPermission) => {
     try {
       const getIsUserCofirmedAgeModal = await getItem(
@@ -307,8 +301,8 @@ export default function DashBoardFive({
 
   const renderLaundryBanners = ({item}) => {
     const imageUrl = getImageUrl(
-      item.image.image_fit,
-      item.image.image_path,
+      item?.image?.image_fit,
+      item?.image?.image_path,
       '400/600',
     );
 
@@ -415,7 +409,8 @@ export default function DashBoardFive({
           )}
         <View style={{}}>
           {!!appData?.mobile_banners?.length &&
-          appStyle?.homePageLayout == 3 ? (
+          appStyle?.homePageLayout == 3 &&
+          getBundleId() !== appIds?.masa ? (
             <Carousel
               autoplay={true}
               loop={true}
@@ -710,96 +705,105 @@ export default function DashBoardFive({
       );
     }
     return (
-      <View key={Math.random()}>
-        <View style={{...styles.viewAllVeiw}}>
-          <Text
-            numberOfLines={1}
-            style={{
-              ...styles.exploreStoresTxt,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              marginTop: 0,
-              flex: 1,
-            }}>
-            {getBundleId() == appIds.quickLube
-              ? vendorsData.length > 1
-                ? `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}`
-                : strings.BOOK_HERE
-              : `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}`}
-            {/* {strings.EXPLORE_STORES}{' '}
+      <View
+        key={Math.random()}
+        style={{
+          marginBottom:
+            getBundleId() == appIds.muvpod ? moderateScaleVertical(10) : 0,
+        }}>
+        {getBundleId() == appIds.muvpod ? null : (
+          <View style={{...styles.viewAllVeiw}}>
+            <Text
+              numberOfLines={1}
+              style={{
+                ...styles.exploreStoresTxt,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                marginTop: 0,
+                flex: 1,
+              }}>
+              {getBundleId() == appIds.quickLube
+                ? vendorsData.length > 1
+                  ? `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}`
+                  : strings.BOOK_HERE
+                : `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}`}
+              {/* {strings.EXPLORE_STORES}{' '}
             {appData?.profile?.preferences?.vendors_nomenclature} */}
-          </Text>
+            </Text>
 
-          {!!vendorsData && vendorsData.length > 1 && (
-            <TouchableOpacity
-              style={{marginHorizontal: moderateScale(4)}}
-              onPress={() => onViewAll('vendor', appMainData.vendors)}>
-              <Text
-                style={{
-                  ...styles.viewAllText,
-
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                {strings.VIEW_ALL}
-              </Text>
-            </TouchableOpacity>
-          )}
-          <Menu style={{alignSelf: 'flex-end'}}>
-            <MenuTrigger>
-              <View style={styles.menuView}>
-                <Image
-                  style={{
-                    height: moderateScaleVertical(16),
-                    width: moderateScale(16),
-                    tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
-                  }}
-                  resizeMode="contain"
-                  source={imagePath.sort}
-                />
+            {!!vendorsData && vendorsData.length > 1 && (
+              <TouchableOpacity
+                style={{marginHorizontal: moderateScale(4)}}
+                onPress={() => onViewAll('vendor', appMainData.vendors)}>
                 <Text
                   style={{
-                    fontSize: textScale(12),
-                    marginHorizontal: moderateScale(5),
-                    fontFamily: fontFamily.regular,
+                    ...styles.viewAllText,
+
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}>
-                  {!currSelectedFilter
-                    ? strings.RELEVANCE
-                    : currSelectedFilter?.type}
+                  {strings.VIEW_ALL}
                 </Text>
-              </View>
-            </MenuTrigger>
-            <MenuOptions
-              customStyles={{
-                optionsContainer: {
-                  marginTop: moderateScaleVertical(36),
-                  width: moderateScale(100),
-                },
-              }}>
-              {homeAllFilters()?.map((item, index) => {
-                return (
-                  <View key={index}>
-                    <MenuOption
-                      onSelect={() => onSelectedFilter(item)}
-                      key={String(index)}
-                      text={item?.type}
-                      style={{
-                        marginVertical: moderateScaleVertical(5),
-                      }}
-                    />
-                    <View
-                      style={{
-                        borderBottomWidth: 1,
-                        borderBottomColor: colors.greyColor,
-                      }}
-                    />
-                  </View>
-                );
-              })}
-            </MenuOptions>
-          </Menu>
-        </View>
+              </TouchableOpacity>
+            )}
+            <Menu style={{alignSelf: 'flex-end'}}>
+              <MenuTrigger>
+                <View style={styles.menuView}>
+                  <FastImage
+                    style={{
+                      height: moderateScaleVertical(16),
+                      width: moderateScale(16),
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}
+                    resizeMode="contain"
+                    source={imagePath.sort}
+                  />
+                  <Text
+                    style={{
+                      fontSize: textScale(12),
+                      marginHorizontal: moderateScale(5),
+                      fontFamily: fontFamily.regular,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
+                    {!currSelectedFilter
+                      ? strings.RELEVANCE
+                      : currSelectedFilter?.type}
+                  </Text>
+                </View>
+              </MenuTrigger>
+              <MenuOptions
+                customStyles={{
+                  optionsContainer: {
+                    marginTop: moderateScaleVertical(36),
+                    width: moderateScale(100),
+                  },
+                }}>
+                {homeAllFilters()?.map((item, index) => {
+                  return (
+                    <View key={index}>
+                      <MenuOption
+                        onSelect={() => onSelectedFilter(item)}
+                        key={String(index)}
+                        text={item?.type}
+                        style={{
+                          marginVertical: moderateScaleVertical(5),
+                        }}
+                      />
+                      <View
+                        style={{
+                          borderBottomWidth: 1,
+                          borderBottomColor: colors.greyColor,
+                        }}
+                      />
+                    </View>
+                  );
+                })}
+              </MenuOptions>
+            </Menu>
+          </View>
+        )}
       </View>
     );
   };

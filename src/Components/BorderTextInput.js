@@ -1,4 +1,4 @@
-import { concat } from 'lodash';
+import {concat} from 'lodash';
 import React, {useEffect, useRef} from 'react';
 import {
   I18nManager,
@@ -33,7 +33,7 @@ const BorderTextInput = ({
   borderRadius = 13,
   isShowPassword,
   rightIconStyle = {},
-  require= false,
+  require = false,
   ...props
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -76,15 +76,14 @@ const BorderTextInput = ({
 
       <TextInput
         selectionColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
-        placeholder={placeholder.concat(!!require?'*':'')}
+        placeholder={placeholder.concat(!!require ? '*' : '')}
         placeholderTextColor={
           isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB
         }
-        
         style={{
           flex: 1,
           opacity: 0.7,
-          color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7,
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           fontFamily: fontFamily.medium,
           fontSize: textScale(14),
           paddingHorizontal: 8,
@@ -100,7 +99,6 @@ const BorderTextInput = ({
         value={value}
         secureTextEntry={secureTextEntry}
         autoCapitalize={'none'}
-
         {...props}
       />
 
@@ -109,7 +107,13 @@ const BorderTextInput = ({
           style={{justifyContent: 'center', marginRight: 10}}
           hitSlop={hitSlopProp}
           onPress={onPressRight}>
-          <Image style={{...rightIconStyle,tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black}} source={rightIcon} />
+          <Image
+            style={{
+              ...rightIconStyle,
+              tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}
+            source={rightIcon}
+          />
         </TouchableOpacity>
       )}
     </View>

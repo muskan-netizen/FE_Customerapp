@@ -40,8 +40,6 @@ const fs = RNFetchBlob.fs;
 export default function ShortCode({route, navigation}) {
   const shortCodeParam = route?.params?.shortCodeParam;
 
-  console.log(shortCodeParam, 'shortCodeParam>>>+++++++');
-
   const [state, setState] = useState({
     email: '',
     password: '',
@@ -2457,15 +2455,93 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.getDress:
+        case appIds.getDress:
           updateState({
             shortCode: shortCodes.getDress,
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.shelf:
+        case appIds.shelf:
           updateState({
             shortCode: shortCodes.shelf,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.baly:
+          updateState({
+            shortCode: shortCodes.baly,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.nuvoni:
+          updateState({
+            shortCode: shortCodes.nuvoni,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.syloMart:
+          updateState({
+            shortCode: shortCodes.syloMart,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.fairDeal:
+          updateState({
+            shortCode: shortCodes.fairDeal,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hezniTaxi:
+          updateState({
+            shortCode: shortCodes.hezniTaxi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.onTheWheel:
+          updateState({
+            shortCode: shortCodes.onTheWheel,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.valleyMeats:
+          updateState({
+            shortCode: shortCodes.valleyMeats,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.perucabs:
+          updateState({
+            shortCode: shortCodes.perucabs,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hafizjwlry:
+          updateState({
+            shortCode: shortCodes.hafizjwlry,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.jana:
+          updateState({
+            shortCode: shortCodes.jana,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.myWayBill:
+          updateState({
+            shortCode: shortCodes.myWayBill,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.cattch:
+          updateState({
+            shortCode: shortCodes.cattch,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.tezras:
+          updateState({
+            shortCode: shortCodes.tezras,
             isShortcodePrefilled: true,
           });
           break;
@@ -2474,7 +2550,6 @@ export default function ShortCode({route, navigation}) {
   }, []);
 
   useEffect(() => {
-    console.log(shortCode, isShortcodePrefilled, 'fldkfslskdfk');
     if (shortCode && isShortcodePrefilled) {
       checkScreen();
     }

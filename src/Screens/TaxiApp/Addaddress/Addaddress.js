@@ -1,33 +1,26 @@
 import {useFocusEffect} from '@react-navigation/native';
-import { update } from 'lodash';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Animated,
+  FlatList,
   Image,
+  Keyboard,
+  Platform,
+  ScrollView,
   Text,
   TouchableOpacity,
   View,
-  ScrollView,
-  Keyboard,
-  FlatList,
-  Platform,
 } from 'react-native';
-import CountryPicker, {Flag} from 'react-native-country-picker-modal';
 import {useDarkMode} from 'react-native-dark-mode';
 import {getBundleId} from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import BorderTextInput from '../../../Components/BorderTextInput';
 import CustomSwitchTabBar from '../../../Components/CustomSwitchTabBar';
 import DropDown from '../../../Components/DropDown';
 import GradientButton from '../../../Components/GradientButton';
 import Modal from '../../../Components/Modal';
-import PhoneNumberInput from '../../../Components/PhoneNumberInput';
-import PhoneNumberInput2 from '../../../Components/PhoneNumberInput2';
-import PhoneNumberInputWithUnderline from '../../../Components/PhoneNumberInputWithUnderline';
 import SearchPlaces from '../../../Components/SearchPlaces';
-import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang/index';
@@ -37,11 +30,11 @@ import { getStaticLocations } from '../../../redux/actions/pickupdelivery';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
-  height,
 } from '../../../styles/responsiveSize';
 import {MyDarkTheme} from '../../../styles/theme';
 import {appIds} from '../../../utils/constants/DynamicAppKeys';
@@ -53,32 +46,26 @@ import {
 } from '../../../utils/googlePlaceApi';
 import {
   getAddressComponent,
-  showError,
-  getColorCodeWithOpactiyNumber,
   getPhoneNumberFromPhoneBook,
   getRandomColor,
+  showError,
 } from '../../../utils/helperFunctions';
 import {
   checkContactPermission,
   chekLocationPermission,
   locationPermission,
 } from '../../../utils/permissions';
-import validations from '../../../utils/validations';
 import stylesFun from './styles';
 
 export default function Addaddress({navigation, route}) {
   const paramData = route?.params;
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const userData = useSelector((state) => state?.auth?.userData);
-  const {appData, allAddresss, themeColors, appStyle} = useSelector(
-    (state) => state?.initBoot,
-  );
-
-  const {book_for_friend} = appData?.profile?.preferences;
+  const {userData} = useSelector((state) => state?.auth);
   const {pickUpTimeType} = useSelector((state) => state?.home);
+  const {appData, allAddresss, themeColors, appStyle, themeColor, themeToggle} =
+    useSelector((state) => state?.initBoot);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const {book_for_friend} = appData?.profile?.preferences;
 
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
@@ -290,11 +277,6 @@ export default function Addaddress({navigation, route}) {
       });
   };
 
-  const errorMethod = (error) => {
-    updateState({isLoading: false, isRefreshing: false});
-    showError(error?.message || error?.error);
-  };
-
   const _moveToNextScreen = (updateIndex) => {
     let existLatLng = {
       latitude: dropLocationData[updateIndex]?.latitude || 0,
@@ -493,7 +475,6 @@ export default function Addaddress({navigation, route}) {
   const getNearByAddress = async (latlng) => {
     try {
       const res = await nearbySearch(latlng, profile?.preferences?.map_key);
-      console.log('nearby search res+++++', res.results);
       updateState({
         nearByAddressess: res.results,
       });
@@ -773,8 +754,6 @@ export default function Addaddress({navigation, route}) {
     );
   };
 
-  console.log(allAddedFriends.length, 'allAddedFriends.length>10');
-
   const allListFriendModalContent = () => {
     return (
       <>
@@ -784,7 +763,7 @@ export default function Addaddress({navigation, route}) {
             ...styles.modalMainContainer,
             paddingHorizontal: moderateScale(10),
             marginVertical: 1,
-            paddingVertical: 1,
+            paddingTop: moderateScale(12),
           }}>
           <View
             style={{
@@ -807,24 +786,16 @@ export default function Addaddress({navigation, route}) {
                 source={imagePath.backArrowCourier}
               />
             </TouchableOpacity>
-            <View>
-              <TouchableOpacity
-                style={{flexDirection: 'row', alignItems: 'center'}}
-                onPress={onShowHideFriendListModal}>
-                <Image source={imagePath.user} />
-                <Text
-                  style={[
-                    styles.switchRiderText,
-                    {
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    },
-                  ]}>
-                  {strings.SWITCH_RIDER}
-                </Text>
-                <Image source={imagePath.icDropdown4} />
-              </TouchableOpacity>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Image source={imagePath.user} />
+              <Text
+                style={{
+                  ...styles.switchRiderText,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
+                {strings.SWITCH_RIDER}
+              </Text>
+              <Image source={imagePath.icDropdown4} />
             </View>
           </View>
         </View>
@@ -1216,7 +1187,7 @@ console.log(dropLocationData,"selectedLoactionselectedLoaction")
         <View
           style={{
             marginTop: 'auto',
-            marginBottom: moderateScaleVertical(80),
+            marginBottom: moderateScaleVertical(50),
           }}>
           {renderbtn()}
         </View>

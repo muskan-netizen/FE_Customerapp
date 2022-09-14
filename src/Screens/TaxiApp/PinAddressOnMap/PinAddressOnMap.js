@@ -111,8 +111,6 @@ export default function HomeScreenTaxi({navigation, route}) {
     // animate(region);
   };
 
-  console.log(region, 'regionregion');
-
   const _getAddressBasedOnCoordinates = (region) => {
     Geocoder.from({
       latitude: region.latitude,
@@ -124,7 +122,6 @@ export default function HomeScreenTaxi({navigation, route}) {
           formattedAddress: json.results[0].formatted_address,
         });
         let detail = {};
-        console.log('scroll detail', json.results[0]);
         detail = {
           formatted_address: json.results[0].formatted_address,
           geometry: {

@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 import {
   moderateScale,
@@ -13,21 +13,21 @@ import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../utils/helperFunctions';
-import { SvgUri } from 'react-native-svg';
+import {SvgUri} from 'react-native-svg';
 import Elevations from 'react-native-elevation';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 const TaxiHomeCategoryCard = ({
   data = {},
-  onPress = () => { },
+  onPress = () => {},
   isLoading = false,
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { appStyle } = useSelector((state) => state?.initBoot);
+  const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const imageURI = getImageUrl(
     data?.icon?.image_fit,
@@ -36,8 +36,6 @@ const TaxiHomeCategoryCard = ({
   );
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
-
-  console.log("data category", imageURI)
 
   return (
     <TouchableOpacity
@@ -60,16 +58,15 @@ const TaxiHomeCategoryCard = ({
               colors.taxiCategoryGrayColor,
               30,
             ),
-            paddingHorizontal:  moderateScale(8),
+            paddingHorizontal: moderateScale(8),
             borderRadius: 10,
           }}>
           {!!isSVG ? (
-            <View style={{ height: moderateScale(50), width: moderateScale(50) }}>
+            <View style={{height: moderateScale(50), width: moderateScale(50)}}>
               <SvgUri
                 height={moderateScale(50)}
                 width={moderateScale(50)}
                 uri={imageURI}
-                
               />
             </View>
           ) : (

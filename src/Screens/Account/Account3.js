@@ -82,14 +82,6 @@ export default function Account3({navigation}) {
 
   const userData = useSelector((state) => state.auth.userData);
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  console.log('user data', userData);
-
-  console.log(contact_phone_number, 'userDAta>>>>>>>');
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     _scrollRef.current.scrollTo(0);
-  //   }, []),
-  // );
 
   //Share your app
 
@@ -212,6 +204,9 @@ export default function Account3({navigation}) {
         break;
     }
   };
+
+
+
 
   return (
     <View

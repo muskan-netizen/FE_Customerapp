@@ -103,7 +103,6 @@ const ProductCard2 = ({
             )}`}
           </Text>
         </View>
-        {console.log('>>>>><<<<<<', data)}
         {/* {data?.translation[0]?.body_html ? (
           <HTMLView
             value={`<p>${data?.translation[0]?.body_html} </p>`}

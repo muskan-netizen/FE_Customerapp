@@ -1,65 +1,58 @@
 {
   "project_info": {
-    "project_number": "1036563889902",
-    "project_id": "blac-network-97223",
-    "storage_bucket": "blac-network-97223.appspot.com"
+    "project_number": "161825010783",
+    "project_id": "blacnetwork-f9c84",
+    "storage_bucket": "blacnetwork-f9c84.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1036563889902:android:c7689e422e2cee7753bdff",
+        "mobilesdk_app_id": "1:161825010783:android:e7dcba648e015edf0b57ea",
         "android_client_info": {
-          "package_name": "com.blacnetwork"
+          "package_name": "com.blacnetwork.orders"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1036563889902-0v8ca1jm897bd2fvt3r1oot21flnmkjg.apps.googleusercontent.com",
+          "client_id": "161825010783-ac0mmq3hk19u8c0dka62v9fehf8ncfke.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.blacnetwork",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "1036563889902-1okeq2620209l9ds75l32e7l15l0c0jk.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.blacnetwork",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "1036563889902-8lmu2fpgh0500396misuoor27fht4i8l.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.blacnetwork",
+            "package_name": "com.blacnetwork.orders",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "1036563889902-qrp0nv2la1nrqa1gvb092uh6l71ckkhn.apps.googleusercontent.com",
+          "client_id": "161825010783-ik058f433p87pvpm331d4envkvbjp595.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blacnetwork.orders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "161825010783-p220lo5n999f05sbc2kk7tuuo5rb1ma0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blacnetwork.orders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "161825010783-n0b8iqghlnc4d2raef600o4bnpc84fbq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDsppf1-SKgF5kYnmPfbgvRFOFTAeMfI8I"
+          "current_key": "AIzaSyBKYOgw2hYjcTzdzgyRXGDEUe6j-19sCrw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1036563889902-qrp0nv2la1nrqa1gvb092uh6l71ckkhn.apps.googleusercontent.com",
+              "client_id": "161825010783-n0b8iqghlnc4d2raef600o4bnpc84fbq.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "1036563889902-7i1vvlvkmb98281j1l64b1os6avdsals.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.blacnetwork"
-              }
             }
           ]
         }

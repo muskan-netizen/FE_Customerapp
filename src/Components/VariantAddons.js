@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep} from 'lodash';
+import {cloneDeep, isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
@@ -71,7 +71,7 @@ const VariantAddons = ({
   const isDarkMode = themeColor;
   const buttonTextColor = themeColors;
   const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
- console.log(addonSet,"addOnnnn")
+  console.log(addonSet, 'addOnnnn');
   useFocusEffect(
     React.useCallback(() => {
       if (variantSet.length) {
@@ -80,8 +80,8 @@ const VariantAddons = ({
             let find = i.options.filter((x) => x.value);
             if (find.length) {
               return {
-                variant_id: find[0].variant_id,
-                optionId: find[0].id,
+                variant_id: find[0]?.variant_id,
+                optionId: find[0]?.id,
               };
             }
           })
@@ -92,7 +92,7 @@ const VariantAddons = ({
           getProductDetail();
         }
       }
-    }, [productdetail, isVisible]),
+    }, []),
   );
 
   const getProductDetailBasedOnFilter = (variantSetData) => {
@@ -127,7 +127,7 @@ const VariantAddons = ({
 
   useEffect(() => {
     getProductDetail();
-  }, [productdetail, isVisible]);
+  }, []);
 
   const getProductDetail = () => {
     console.log('api hit getProductDetail');
@@ -149,8 +149,8 @@ const VariantAddons = ({
           productPriceData: res.data.products.variant[0],
           addonSet: res.data.products.add_on,
           venderDetail: res.data.products.vendor,
-          productTotalQuantity: res.data.products.variant[0].quantity,
-          productVariantId: res.data.products.variant[0].id,
+          productTotalQuantity: res.data.products.variant[0]?.quantity,
+          productVariantId: res.data.products.variant[0]?.id,
           productSku: res.data.products.sku,
           variantSet: res.data.products.variant_set,
           typeId: res?.data?.products?.category?.category_detail?.type_id,
@@ -275,7 +275,7 @@ const VariantAddons = ({
                   {`${
                     currencies?.primary_currency?.symbol
                   }${currencyNumberFormatter(
-                   Number(i?.price),
+                    Number(i?.price),
                     appData?.profile?.preferences?.digit_after_decimal,
                   )}`}
                 </Text>
@@ -396,8 +396,8 @@ const VariantAddons = ({
           let find = i.options.filter((x) => x.value);
           if (find.length) {
             return {
-              variant_id: find[0].variant_id,
-              optionId: find[0].id,
+              variant_id: find[0]?.variant_id,
+              optionId: find[0]?.id,
             };
           }
         })
@@ -983,6 +983,7 @@ const VariantAddons = ({
                 : '#fff',
               marginHorizontal: moderateScale(10),
             }}>
+              
             <View
               style={{
                 flex: 1,
@@ -1006,17 +1007,19 @@ const VariantAddons = ({
                   })
                 }
               />
-              <View style={{paddingTop: 5}}>
-                <Pagination
-                  dotsLength={productDetailData?.product_media?.length}
-                  activeDotIndex={slider1ActiveSlide}
-                  dotColor={'grey'}
-                  dotStyle={[styles.dotStyle]}
-                  inactiveDotColor={'black'}
-                  inactiveDotOpacity={0.4}
-                  inactiveDotScale={0.8}
-                />
-              </View>
+              {!isEmpty(productDetailData) ? (
+                <View style={{paddingTop: 5}}>
+                  <Pagination
+                    dotsLength={productDetailData?.product_media?.length}
+                    activeDotIndex={slider1ActiveSlide}
+                    dotColor={'grey'}
+                    dotStyle={[styles.dotStyle]}
+                    inactiveDotColor={'black'}
+                    inactiveDotOpacity={0.4}
+                    inactiveDotScale={0.8}
+                  />
+                </View>
+              ) : null}
             </View>
 
             <Animatable.View
@@ -1024,15 +1027,19 @@ const VariantAddons = ({
               animation="fadeInUp"
               style={styles.mainView}>
               <View>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    ...styles.productName,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                    fontFamily: fontFamily.bold,
-                  }}>
-                  {productdetail?.translation[0]?.title}
-                </Text>
+                {!isEmpty(productdetail) ? (
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      ...styles.productName,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      fontFamily: fontFamily.bold,
+                    }}>
+                    {productdetail?.translation[0]?.title || ''}
+                  </Text>
+                ) : null}
 
                 {/* rating View */}
                 {productDetailData?.averageRating !== null && (
@@ -1080,7 +1087,8 @@ const VariantAddons = ({
                 )}
               </View>
 
-              {productdetail?.translation[0]?.body_html != null && (
+              {!isEmpty(productdetail) &&
+              productdetail?.translation[0]?.body_html != null ? (
                 <View>
                   <Text
                     style={{
@@ -1096,7 +1104,7 @@ const VariantAddons = ({
                   </Text>
                   <View style={{marginBottom: 10}} />
                 </View>
-              )}
+              ) : null}
 
               <View
                 style={{
@@ -1257,12 +1265,7 @@ const styles = StyleSheet.create({
     // marginRight: 20
   },
   dotStyle: {height: 12, width: 12, borderRadius: 12 / 2},
-  ratingColor: {
-    color: colors.backgroundGrey,
-    paddingLeft: 5,
-    fontSize: textScale(12),
-    fontFamily: fontFamily.medium,
-  },
+  
   dropDownStyle: {
     paddingHorizontal: moderateScale(8),
     borderRadius: moderateScale(4),

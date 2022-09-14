@@ -321,7 +321,7 @@ const ProductCard3 = ({
                 fontFamily: fontFamily.regular,
                 fontSize: textScale(12),
                 width: width / 2.5,
-                textTransform: 'capitalize',
+                //textTransform: 'capitalize',
                 // flex:1
               }}>
               {data?.translation[0]?.title || data?.title || data?.sku}
@@ -494,7 +494,6 @@ const ProductCard3 = ({
                 ? moderateScale(30)
                 : moderateScale(20),
             }}>
-         
             {data?.has_inventory == 0 ||
             !!data?.variant[0]?.quantity ||
             (!!typeId && typeId == 8) ||
@@ -516,8 +515,10 @@ const ProductCard3 = ({
                       ...styles.addBtnStyle,
                       paddingVertical: 0,
                       height: moderateScale(38),
-                      // backgroundColor: themeColors.primary_color,
-                      backgroundColor: colors.greyColor2,
+
+                      backgroundColor: isDarkMode
+                        ? themeColors.primary_color
+                        : colors.greyColor2,
                       alignItems: 'center',
                       flexDirection: 'row',
                       justifyContent: 'space-between',
@@ -532,7 +533,9 @@ const ProductCard3 = ({
                       hitSlop={hitSlopProp}>
                       <Image
                         style={{
-                          tintColor: themeColors.primary_color,
+                          tintColor: isDarkMode
+                            ? colors.white
+                            : themeColors.primary_color,
                         }}
                         source={imagePath.icMinus2}
                       />
@@ -570,7 +573,9 @@ const ProductCard3 = ({
                               style={{
                                 fontFamily: fontFamily.medium,
                                 fontSize: moderateScale(14),
-                                color: themeColors.primary_color,
+                                color: isDarkMode
+                                  ? colors.white
+                                  : themeColors.primary_color,
                                 // height: moderateScale(100),
                                 marginHorizontal: moderateScale(8),
                               }}>
@@ -588,7 +593,9 @@ const ProductCard3 = ({
                       onPress={onIncrementQty}>
                       <Image
                         style={{
-                          tintColor: themeColors.primary_color,
+                          tintColor: isDarkMode
+                            ? colors.white
+                            : themeColors.primary_color,
                         }}
                         source={imagePath.icAdd4}
                       />
@@ -602,7 +609,9 @@ const ProductCard3 = ({
                       onPress={addToCart}
                       style={{
                         ...styles.addBtnStyle,
-                        backgroundColor: colors.greyColor2,
+                        backgroundColor: isDarkMode
+                          ? themeColors.primary_color
+                          : colors.greyColor2,
                         width: moderateScale(100),
                         minHeight: moderateScaleVertical(35),
                       }}>
@@ -613,7 +622,13 @@ const ProductCard3 = ({
                         />
                       ) : (
                         <View>
-                          <Text style={styles.addStyleText}>
+                          <Text
+                            style={{
+                              ...styles.addStyleText,
+                              color: isDarkMode
+                                ? colors.white
+                                : themeColors.primary_color,
+                            }}>
                             {strings.ADD}{' '}
                             {data?.minimum_order_count > 1
                               ? `(${data?.minimum_order_count})`

@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>202669499984-gippkapjh065r1fjjb64679fkb7stpuh.apps.googleusercontent.com</string>
+	<string>614765572717-goi1s3iqs69u2ul1pckad2g0o2nja6ph.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.202669499984-gippkapjh065r1fjjb64679fkb7stpuh</string>
+	<string>com.googleusercontent.apps.614765572717-goi1s3iqs69u2ul1pckad2g0o2nja6ph</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>202669499984-2peos1ath0kv6rb6voaghimat2dtiiec.apps.googleusercontent.com</string>
+	<string>614765572717-a27g9vd0p3m8ennp7121lfheia86ogmg.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAKqNe92VmTGoCWxm5W1cNEYU3kCTOOGR4</string>
+	<string>AIzaSyCrJbmye-8JqHYC8fUhg_GycH4uOGlvDbI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>202669499984</string>
+	<string>614765572717</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.newYorkMiniMart</string>
+	<string>com.littlebird.order</string>
 	<key>PROJECT_ID</key>
-	<string>newyorkminimart-eb5e0</string>
+	<string>little-bird-356913</string>
 	<key>STORAGE_BUCKET</key>
-	<string>newyorkminimart-eb5e0.appspot.com</string>
+	<string>little-bird-356913.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:202669499984:ios:e770469268f3d5298e9355</string>
+	<string>1:614765572717:ios:d82f84c685f2bd270fc564</string>
 </dict>
 </plist>

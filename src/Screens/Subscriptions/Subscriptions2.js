@@ -50,6 +50,7 @@ import {
   createPaymentMethod,
   confirmPayment,
 } from '@stripe/stripe-react-native';
+import {currencyNumberFormatter} from '../../utils/commonFunction';
 export default function Subscriptions2({navigation, route}) {
   //   console.log(route, 'route>>>');
   const paramData = route?.params;
@@ -57,7 +58,7 @@ export default function Subscriptions2({navigation, route}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const [isReloadPage, setIsReloadPage] = useState(false)
+  const [isReloadPage, setIsReloadPage] = useState(false);
   const [state, setState] = useState({
     isLoading: false,
     isLoadingB: false,
@@ -112,20 +113,18 @@ export default function Subscriptions2({navigation, route}) {
 
   const explosion = createRef();
 
-  const isFocused = useIsFocused()
+  const isFocused = useIsFocused();
 
   useFocusEffect(
     React.useCallback(() => {
       updateState({isLoadingB: true});
       getAllSubscriptions();
       console.log(explosion, 'explosion');
-      console.log(isFocused, "isFocusedisFocused")
+      console.log(isFocused, 'isFocusedisFocused');
       // console.log(isLoading, isLoadingB , "ldng , ldngb")
-      console.log('getAllSubscriptionsEffect')
+      console.log('getAllSubscriptionsEffect');
     }, [isFocused]),
   );
-
-
 
   // useEffect(() => {
   //   updateState({isLoadingB: true});
@@ -158,7 +157,7 @@ export default function Subscriptions2({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log('getAllSubscriptionsFunction')
+        console.log('getAllSubscriptionsFunction');
         console.log('getAllSubscriptionsFunction', res);
         updateState({
           isLoadingB: false,
@@ -480,7 +479,6 @@ export default function Subscriptions2({navigation, route}) {
     );
   };
 
-  console.log(isLoading, 'isLoadingisLoadingisLoading');
   //Modal main component
   const modalMainContent = () => {
     return (
@@ -496,7 +494,10 @@ export default function Subscriptions2({navigation, route}) {
             style={[
               styles.title2,
               {marginTop: moderateScale(10)},
-            ]}>{`${selectedPlan?.price}/${selectedPlan?.frequency}`}</Text>
+            ]}>{`${currencyNumberFormatter(
+            selectedPlan?.price,
+            appData?.profile?.preferences?.digit_after_decimal,
+          )}/${selectedPlan?.frequency}`}</Text>
         </View>
 
         <View
@@ -667,7 +668,7 @@ export default function Subscriptions2({navigation, route}) {
       if (selectedPaymentMethod?.id == 4) {
         console.log(selectedPaymentMethod?.id, 'selectedPaymentMethod?.id>>');
         _offineLinePayment();
-        setIsReloadPage(true)
+        setIsReloadPage(true);
         return;
       } else if (selectedPaymentMethod?.id == 27) {
         let paymentData = {
@@ -842,7 +843,7 @@ export default function Subscriptions2({navigation, route}) {
     if (cardInfo) {
       //  updateState({isModalVisibleForPayment: false});
 
-      await createToken({...cardInfo, type: 'Card',})
+      await createToken({...cardInfo, type: 'Card'})
         .then((res) => {
           console.log(res, 'res>');
           console.log(selectedPlan, 'selectedPlan>');
@@ -907,7 +908,6 @@ export default function Subscriptions2({navigation, route}) {
               flexDirection: 'row',
               justifyContent: 'space-between',
               marginBottom: moderateScale(10),
-              
             }}>
             <GradientButton
               colorsArray={[
@@ -919,7 +919,9 @@ export default function Subscriptions2({navigation, route}) {
               borderRadius={moderateScale(5)}
               containerStyle={{
                 marginHorizontal: moderateScale(10),
-                width: paymentOptions.length ? width / 3 : width-moderateScale(100),
+                width: paymentOptions.length
+                  ? width / 3
+                  : width - moderateScale(100),
               }}
               btnText={strings.CANCEL}
             />
@@ -972,7 +974,7 @@ export default function Subscriptions2({navigation, route}) {
       .catch(errorMethod);
   };
 
-  const listHeaderComponent = useCallback( () => {
+  const listHeaderComponent = useCallback(() => {
     return (
       <>
         {!!currentSubscription && (
@@ -1005,9 +1007,8 @@ export default function Subscriptions2({navigation, route}) {
         )}
       </>
     );
-  }, [isReloadPage , currentSubscription])
- 
-  
+  }, [isReloadPage, currentSubscription]);
+
   // const listHeaderComponent = () => {
   //   return (
   //     <>

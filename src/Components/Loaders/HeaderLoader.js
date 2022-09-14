@@ -20,6 +20,7 @@ const HeaderLoader = ({
   isRight = true,
   rx = 15,
   ry = 15,
+  rightViewStyle = {},
 }) => {
   return (
     <View
@@ -45,6 +46,9 @@ const HeaderLoader = ({
           rectHeight={rectHeightRight}
           rx={rx}
           ry={ry}
+          viewStyles={{
+            ...rightViewStyle,
+          }}
         />
       )}
     </View>

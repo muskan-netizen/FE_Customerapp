@@ -83,7 +83,7 @@ export default function TaxiHomeDashbord({
   toggleData,
   isDineInSelected = false,
   location = {},
-  curLatLong={}
+  curLatLong = {},
 }) {
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -94,20 +94,28 @@ export default function TaxiHomeDashbord({
   const {appData, currencies, themeColors, appStyle, languages} = useSelector(
     (state) => state?.initBoot,
   );
-console.log(appData?.profile?.preferences,"appDataDataaaaaa")
+
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
     date: new Date(),
     region: {
-      latitude: !!curLatLong?.latitude?parseFloat(curLatLong.latitude):parseFloat(location?.latitude),
-      longitude: !!curLatLong?.longitude? parseFloat(curLatLong.longitude): parseFloat(location?.longitude),
+      latitude: !!curLatLong?.latitude
+        ? parseFloat(curLatLong.latitude)
+        : parseFloat(location?.latitude),
+      longitude: !!curLatLong?.longitude
+        ? parseFloat(curLatLong.longitude)
+        : parseFloat(location?.longitude),
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
     coordinate: {
-      latitude: !!curLatLong?.latitude?parseFloat(curLatLong.latitude):parseFloat(location?.latitude),
-      longitude: !!curLatLong?.latitude? parseFloat(curLatLong.longitude): parseFloat(location?.longitude),
+      latitude: !!curLatLong?.latitude
+        ? parseFloat(curLatLong.latitude)
+        : parseFloat(location?.latitude),
+      longitude: !!curLatLong?.latitude
+        ? parseFloat(curLatLong.longitude)
+        : parseFloat(location?.longitude),
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
@@ -142,17 +150,9 @@ console.log(appData?.profile?.preferences,"appDataDataaaaaa")
     pickupAddress: {},
     allListedDrivers: [],
   });
-  console.log(location, 'loaction');
-  console.log(region, 'region');
+
   const appMainData = useSelector((state) => state?.home?.appMainData);
 
-  let findCabCategory = appMainData?.categories?.find(
-    (x) => x?.redirect_to == staticStrings.PICKUPANDDELIEVRY,
-  );
-
-  console.log(appMainData?.categories, 'findCabCategory');
-
-  console.log(curLatLong, 'curLatLong>new');
   const fontFamily = appStyle?.fontSizeData;
   const {bannerRef} = useRef();
   const {
@@ -267,8 +267,6 @@ console.log(appData?.profile?.preferences,"appDataDataaaaaa")
         },
       )
       .then((res) => {
-        console.log(res, 'response>>>>>>>>>>>>>>drivers ');
-
         updateState({
           allListedDrivers: res?.data,
         });
@@ -315,8 +313,6 @@ console.log(appData?.profile?.preferences,"appDataDataaaaaa")
         },
       )
       .then((res) => {
-        // actions.saveAllUserAddress(res.data);
-        console.log('res?>>>>>>>>>>>>>>', res);
         updateState({
           allSavedAddress: res.data,
           isLoading: false,
@@ -884,10 +880,14 @@ console.log(appData?.profile?.preferences,"appDataDataaaaaa")
                     }}
                     // provider={MapView.PROVIDER_GOOGLE}
                     region={{
-                      latitude: !!curLatLong?.latitude? parseFloat(curLatLong?.latitude): !!location?.latitude
+                      latitude: !!curLatLong?.latitude
+                        ? parseFloat(curLatLong?.latitude)
+                        : !!location?.latitude
                         ? parseFloat(location?.latitude)
                         : appData?.profile?.preferences?.Default_latitude,
-                      longitude: !!curLatLong?.longitude ? parseFloat(curLatLong?.longitude):!!location?.longitude
+                      longitude: !!curLatLong?.longitude
+                        ? parseFloat(curLatLong?.longitude)
+                        : !!location?.longitude
                         ? parseFloat(location?.longitude)
                         : appData?.profile?.preferences?.Default_latitude,
                       latitudeDelta: 0.015,
@@ -900,10 +900,14 @@ console.log(appData?.profile?.preferences,"appDataDataaaaaa")
                   >
                     <Marker
                       coordinate={{
-                        latitude: !!curLatLong?.latitude ? parseFloat(curLatLong?.latitude):!!location?.latitude
+                        latitude: !!curLatLong?.latitude
+                          ? parseFloat(curLatLong?.latitude)
+                          : !!location?.latitude
                           ? parseFloat(location?.latitude)
                           : appData?.profile?.preferences?.Default_latitude,
-                        longitude:!!curLatLong?.longitude ?parseFloat(curLatLong?.longitude) : !!location?.longitude
+                        longitude: !!curLatLong?.longitude
+                          ? parseFloat(curLatLong?.longitude)
+                          : !!location?.longitude
                           ? parseFloat(location?.longitude)
                           : appData?.profile?.preferences?.Default_longitude,
                         latitudeDelta: 0.015,
@@ -959,10 +963,14 @@ console.log(appData?.profile?.preferences,"appDataDataaaaaa")
               }
               style={{...StyleSheet.absoluteFillObject}}
               region={{
-                latitude: !!curLatLong?.latitude ? parseFloat(curLatLong?.latitude) : !!location?.latitude
+                latitude: !!curLatLong?.latitude
+                  ? parseFloat(curLatLong?.latitude)
+                  : !!location?.latitude
                   ? parseFloat(location?.latitude)
                   : appData?.profile?.preferences?.Default_latitude,
-                longitude: !!curLatLong?.longitude ?parseFloat(curLatLong?.longitude)  :!!location?.longitude
+                longitude: !!curLatLong?.longitude
+                  ? parseFloat(curLatLong?.longitude)
+                  : !!location?.longitude
                   ? parseFloat(location?.longitude)
                   : appData?.profile?.preferences?.Default_longitude,
                 latitudeDelta: 0.015,

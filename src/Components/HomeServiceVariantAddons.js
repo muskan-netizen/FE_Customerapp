@@ -44,7 +44,6 @@ import GradientButton from './GradientButton';
 import HtmlViewComp from './HtmlViewComp';
 import CardLoader from './Loaders/CardLoader';
 
-
 const HomeServiceVariantAddons = ({
   productdetail = {},
   isVisible = false,
@@ -1356,10 +1355,8 @@ const HomeServiceVariantAddons = ({
                     marginTop: moderateScaleVertical(6),
                   }}>
                   {strings.IN}{' '}
-                  {
-                    productdetail?.category?.category_detail?.translation[0]
-                      ?.name
-                  }
+                  {productdetail?.category?.category_detail?.translation[0]
+                    ?.name || productdetail?.category?.category_detail?.slug}
                 </Text>
 
                 {/* rating View */}
@@ -1391,15 +1388,15 @@ const HomeServiceVariantAddons = ({
               {productdetail?.translation[0]?.body_html != null && (
                 <View>
                   <RenderHTML
-                        contentWidth={width}
-                        source={{html: productdetail?.translation[0]?.body_html}}
-                        tagsStyles={{
-                          p: {
-                            color: isDarkMode ? colors.white : colors.textGreyB,
-                          },
-                        }}
-                      />
-                  
+                    contentWidth={width}
+                    source={{html: productdetail?.translation[0]?.body_html}}
+                    tagsStyles={{
+                      p: {
+                        color: isDarkMode ? colors.white : colors.textGreyB,
+                      },
+                    }}
+                  />
+
                   <View style={{marginBottom: 10}} />
                 </View>
               )}

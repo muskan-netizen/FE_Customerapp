@@ -166,8 +166,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   );
   const mapRef = useRef();
 
-  console.log('driverStatusdriverStatus', orderStatus);
-
   useInterval(
     () => {
       if (urlValue) {

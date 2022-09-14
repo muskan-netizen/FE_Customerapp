@@ -91,9 +91,7 @@ import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
 import LottieView from 'lottie-react-native';
 
 export default function PickupTaxiOrderDetail({navigation, route}) {
-  const {themeColor, themeToggle} = useSelector(
-    (state) => state?.initBoot,
-  );
+  const {themeColor, themeToggle} = useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const paramData = route?.params;
@@ -814,13 +812,15 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         });
         showSuccess(response?.message);
         {
-          paramData?.keyValue ? navigation.goBack() : navigation.navigate(navigationStrings.HOMESTACK);
+          paramData?.keyValue
+            ? navigation.goBack()
+            : navigation.navigate(navigationStrings.HOMESTACK);
         }
       })
       .catch(errorMethod);
   };
 
-  console.log(paramData,"paramData>>")
+  console.log(paramData, 'paramData>>');
 
   let subscription_percent =
     (orderFullDetail?.order_details?.order_detail?.subscription_discount /
@@ -846,9 +846,43 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       console.log('sendWhatsAppMessage -----> ', 'message link is undefined');
     }
   };
-  {
-    console.log(isLoading, 'isLoadingisLoadingisLoading');
-  }
+
+  const onChat = (item) => {
+    navigation.navigate(navigationStrings.CHAT_SCREEN, {data: {...item}});
+  };
+
+  const createRoom = async (item, type) => {
+    try {
+      const apiData = {
+        sub_domain: '192.168.101.88', //this is static value
+        client_id: String(appData?.profile.id),
+        db_name: appData?.profile?.database_name,
+        user_id: String(userData?.id),
+        type: type,
+        order_vendor_id: String(item?.id),
+        vendor_id: String(item?.vendor_id),
+        order_id: String(item?.order_id),
+      };
+      updateState({isLoading: true});
+
+      console.log('sending api data', apiData);
+      const res = await actions.onStartChat(apiData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      });
+      console.log('start chat res', res);
+      updateState({isLoading: false});
+      if (!!res?.roomData) {
+        onChat(res.roomData);
+      }
+    } catch (error) {
+      console.log('error raised in start chat api', error);
+      showError(error?.message);
+      updateState({isLoading: false});
+    }
+  };
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -897,13 +931,14 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         </View>
 
         <View style={{flex: 1}}>
-          
           {!isLoading && !!tasks?.length > 0 && (
             <MapView
               provider={PROVIDER_GOOGLE} // remove if not using Google Maps
               style={{height: height / 1.8, width: '100%'}}
               initialRegion={region}
               ref={mapRef}
+
+              
               // cacheEnabled={true}
               customMapStyle={
                 appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
@@ -1015,7 +1050,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
           index={0}
           snapPoints={[height / 3.4, height]}
           animateOnMount={true}
-          // onChange={(inx) => updateState({ hideShowBack: inx })}
           onChange={() => playHapticEffect(hapticEffects.impactMedium)}
           handleComponent={bottomSheetHeader}>
           <BottomSheetScrollView
@@ -1032,6 +1066,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     marginHorizontal: moderateScale(16),
+                    alignItems: 'center',
                   }}>
                   <Text
                     style={
@@ -1074,7 +1109,63 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     </TouchableOpacity>
                   ) : null}
                 </View>
-
+                <View
+                  style={{
+                    paddingHorizontal: moderateScale(20),
+                    paddingVertical: moderateScaleVertical(10),
+                  }}>
+                  {!userData?.is_superadmin ? (
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      {!!appData?.profile?.socket_url ? (
+                        <TouchableOpacity
+                          onPress={() =>
+                            createRoom(
+                              orderFullDetail?.order_details,
+                              'vendor_to_user',
+                            )
+                          }
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}>
+                          <Text style={styles.startChatText}>
+                            {strings.VENDOR}
+                          </Text>
+                          <Image
+                            resizeMode="contain"
+                            style={styles.agentUserIcon}
+                            source={imagePath.icVendorChat}
+                          />
+                        </TouchableOpacity>
+                      ) : null}
+                      {/* 
+                      {!!appData?.profile?.socket_url &&
+                        !!(driverStatus?.order && driverStatus?.agent_location?.lat) ? ( */}
+                      <TouchableOpacity
+                        onPress={() =>
+                          createRoom(
+                            orderFullDetail?.order_details,
+                            'agent_to_user',
+                          )
+                        }
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}
+                        activeOpacity={0.7}>
+                        <Text style={styles.startChatText}>
+                          {strings.DRIVER}
+                        </Text>
+                        <Image
+                          resizeMode="contain"
+                          style={styles.agentUserIcon}
+                          source={imagePath.icUserChat}
+                        />
+                      </TouchableOpacity>
+                      {/* ) : null} */}
+                    </View>
+                  ) : null}
+                </View>
                 <View
                   style={{
                     flexDirection: 'row',

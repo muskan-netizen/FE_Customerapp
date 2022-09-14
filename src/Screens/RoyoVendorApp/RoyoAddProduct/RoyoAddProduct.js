@@ -226,8 +226,7 @@ const RoyoAddProduct = ({route, navigation}) => {
       )
       .then((res) => {
         const productInfo = res?.data?.product_detail;
-        console.log(productInfo, 'productDetails<<<<<');
-        console.log(productDetailParam, 'productDetails<<<<<');
+
         updateState({
           isLoading: false,
           isLoadingB: false,
@@ -400,6 +399,7 @@ const RoyoAddProduct = ({route, navigation}) => {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
+        'Content-Type': 'multipart/form-data',
       })
       .then(async (res) => {
         showSuccess(res?.message);

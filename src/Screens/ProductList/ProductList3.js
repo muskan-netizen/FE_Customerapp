@@ -1,7 +1,4 @@
-import BottomSheet, {
-  BottomSheetScrollView,
-  BottomSheetFooter,
-} from '@gorhom/bottom-sheet';
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {BlurView} from '@react-native-community/blur';
 import Clipboard from '@react-native-community/clipboard';
 import _, {cloneDeep, debounce} from 'lodash';
@@ -78,7 +75,6 @@ import {
 import {removeItem} from '../../utils/utils';
 import stylesFunc from './styles';
 import {isEmpty} from 'lodash';
-
 
 let timeOut = undefined;
 
@@ -246,6 +242,8 @@ export default function Products({route, navigation}) {
   const [selectedSection, setSelectedSection] = useState(null);
   const [listendLoad, stListendLoader] = useState(false);
   const [repeatItems, setRepeatItems] = useState(null);
+  const [isAddonLoading, setIsAddonLoading] = useState(false);
+  const [isRepeastModal, setIsRepeatModal] = useState(false);
   const [selectedCartItem, setSelectedCarItems] = useState(null);
   const [differentAddsOns, setDifferentAddsOns] = useState([]);
   const [selectedDiffAdsOnItem, setSelectedDiffAdsOnItem] = useState(null);
@@ -277,10 +275,6 @@ export default function Products({route, navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
   const styles = stylesFunc({themeColors, fontFamily, isDarkMode, MyDarkTheme});
-  console.log(
-    productDataLengthAfterViewMoreSearch,
-    'productDataLengthAfterViewMoreSearch',
-  );
 
   //Saving the initial state
   const initialState = cloneDeep(state);
@@ -288,6 +282,8 @@ export default function Products({route, navigation}) {
   const userData = useSelector((state) => state?.auth?.userData);
   //app Main Data
   const appMainData = useSelector((state) => state?.home?.appMainData);
+
+  console.log(repeatItems, 'repeatItems.....repeatItems');
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -744,7 +740,7 @@ export default function Products({route, navigation}) {
                         marginTop:
                           !DeviceInfo.getBundleId() === appIds.hokitch
                             ? moderateScaleVertical(5)
-                            :0,
+                            : 0,
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                         alignSelf:
@@ -840,10 +836,8 @@ export default function Products({route, navigation}) {
                     : colors.white,
                   // // minHeight: moderateScale(80),
                 }}>
-           
-                  <View>
-                
-                   {/* { !isEmpty(sectionListData) ?  <Text
+                <View>
+                  {/* { !isEmpty(sectionListData) ?  <Text
                       style={{
                         ...styles.milesTxt,
                         color: isDarkMode
@@ -857,24 +851,24 @@ export default function Products({route, navigation}) {
                       })}
                     </Text> : null} */}
 
-                    {!!desc && (
-                      <Text
-                        numberOfLines={2}
-                        style={{
-                          ...styles.milesTxt,
-                          marginLeft: 0,
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.black,
-                          marginVertical: moderateScaleVertical(4),
-                          fontSize: textScale(10.5),
-                          opacity: 0.6,
-                        }}>
-                        {desc}
-                      </Text>
-                    )}
-                  </View>
-           
+                  {!!desc && (
+                    <Text
+                      numberOfLines={2}
+                      style={{
+                        ...styles.milesTxt,
+                        marginLeft: 0,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        marginVertical: moderateScaleVertical(4),
+                        fontSize: textScale(10.5),
+                        opacity: 0.6,
+                      }}>
+                      {desc}
+                    </Text>
+                  )}
+                </View>
+
                 {!!categoryInfo?.closed_store_order_scheduled ? (
                   <Text
                     style={{
@@ -1022,7 +1016,6 @@ export default function Products({route, navigation}) {
             marginBottom: moderateScale(15),
           }}
           contentContainerStyle={{alignItems: 'center'}}>
-          {console.log(ProductTags, 'ProductTags')}
           {ProductTags &&
             ProductTags.map((el, index) => {
               return (
@@ -1042,7 +1035,6 @@ export default function Products({route, navigation}) {
                     size="small"
                     onToggle={() => {
                       // playHapticEffect(hapticEffects.impactLight);
-                      console.log(ProductTags, 'ProductTags');
                       const updatedArr = ProductTags.map((el, idx) => {
                         console.log(el, 'ellll');
                         if (idx === index) {
@@ -1086,27 +1078,29 @@ export default function Products({route, navigation}) {
             marginHorizontal: moderateScale(12),
           }}>
           {categoryInfo?.is_show_products_with_category ? (
-            <SearchBar
-              autoFocus={false}
-              containerStyle={{
-                flex: 1,
-                // marginHorizontal: moderateScale(18),
-                borderRadius: moderateScale(8),
-                backgroundColor: isDarkMode
-                  ? colors.whiteOpacity15
-                  : colors.greyColor,
-                height: moderateScaleVertical(37),
-              }}
-              searchValue={searchInput}
-              placeholder={strings.SEARCH_WITHIN_MENU}
-              onChangeText={(value) => onSearchWithinMenu(value)}
-              showRightIcon={searchInput ? true : false}
-              rightIconStyle={{
-                tintColor: isDarkMode ? colors.white : colors.black,
-              }}
-              rightIconPress={() => onSearchWithinMenu('')}
-              showVoiceRecord={false}
-            />
+            getBundleId() == appIds.muvpod ? null : (
+              <SearchBar
+                autoFocus={false}
+                containerStyle={{
+                  flex: 1,
+                  // marginHorizontal: moderateScale(18),
+                  borderRadius: moderateScale(8),
+                  backgroundColor: isDarkMode
+                    ? colors.whiteOpacity15
+                    : colors.greyColor,
+                  height: moderateScaleVertical(37),
+                }}
+                searchValue={searchInput}
+                placeholder={strings.SEARCH_WITHIN_MENU}
+                onChangeText={(value) => onSearchWithinMenu(value)}
+                showRightIcon={searchInput ? true : false}
+                rightIconStyle={{
+                  tintColor: isDarkMode ? colors.white : colors.black,
+                }}
+                rightIconPress={() => onSearchWithinMenu('')}
+                showVoiceRecord={false}
+              />
+            )
           ) : null}
 
           {/* 
@@ -1259,8 +1253,8 @@ export default function Products({route, navigation}) {
       actions
         .addProductsToCart(data, {
           code: appData.profile.code,
-          currency: currencies.primary_currency.id,
-          language: languages.primary_language.id,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
           systemuser: DeviceInfo.getUniqueId(),
         })
         .then((res) => {
@@ -1307,9 +1301,11 @@ export default function Products({route, navigation}) {
             btnLoader: false,
           });
         })
-        .catch((error) => errorMethodSecond(error, [], item, section, inx));
+        .catch((error) => {
+          errorMethodSecond(error, [], item, section, inx);
+        });
     },
-    [cloneSectionList, productListData, selectedCartItem],
+    [cloneSectionList, productListData, selectedCartItem, categoryInfo],
   );
 
   const checkIsCustomize = useCallback(
@@ -1392,7 +1388,8 @@ export default function Products({route, navigation}) {
         };
         console.log('api data checkLastAdded', apiData);
         try {
-          // setRepeatItems(true);
+          setIsAddonLoading(true);
+          setIsRepeatModal(true);
           const res = await actions.checkLastAdded(apiData, header);
           console.log('check last addedres++++++', res);
           if (!!res.data) {
@@ -1409,10 +1406,12 @@ export default function Products({route, navigation}) {
             };
             setSelectedSection(section);
             setRepeatItems(addData);
+            setIsAddonLoading(false);
           }
         } catch (error) {
           console.log('error riased++++', error);
           showError(error?.message || error?.error);
+          setIsAddonLoading(false);
         }
         return;
       }
@@ -1576,12 +1575,12 @@ export default function Products({route, navigation}) {
     console.log('api hit getAllProductsByVendorCategory', data);
     actions
       .getProductByVendorCategoryId(
-        `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?page=${pageNo}`,
+        `/${data?.vendorData?.slug}/${data?.categoryInfo?.slug}?page=${pageNo}`,
         {},
         {
           code: appData.profile.code,
-          currency: currencies.primary_currency.id,
-          language: languages.primary_language.id,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
           systemuser: DeviceInfo.getUniqueId(),
         },
       )
@@ -1680,8 +1679,8 @@ export default function Products({route, navigation}) {
         {},
         {
           code: appData.profile.code,
-          currency: currencies.primary_currency.id,
-          language: languages.primary_language.id,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
           latitude: appMainData?.reqData?.latitude,
           longitude: appMainData?.reqData?.longitude,
           systemuser: DeviceInfo.getUniqueId(),
@@ -1823,7 +1822,6 @@ export default function Products({route, navigation}) {
       )
       .then((res) => {
         console.log(res, 'resres');
-
         if (!!res?.data) {
           console.log(res, 'res getProductByCategoryId');
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
@@ -2078,7 +2076,6 @@ export default function Products({route, navigation}) {
     if (type == 1) {
       quanitity = Number(isExistqty) + quantityToIncreaseDecrease;
     } else {
-      console.log(isExistqty, item?.minimum_order_count, 'kdhgkjdfkjgh');
       if (
         Number(isExistqty - item?.batch_count) <
         Number(item?.minimum_order_count)
@@ -2357,16 +2354,14 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-
-        actions.cartItemQty(res);
-        addSingleItem(item, section, inx);
-        if (addonSet) {
-        } else {
-          // addToCart();
-        }
-        // showSuccess(res?.message);
+        actions.cartItemQty({});
+        setIsVisibleModal(false);
       })
-      .catch(errorMethod);
+      .catch(
+        (error)=>{
+          console.log(error, "erorrrrrr")
+        }
+      );
   };
 
   const onRepeat = async () => {
@@ -2383,7 +2378,7 @@ export default function Products({route, navigation}) {
       1,
       updateLocalQty,
     );
-    setRepeatItems(null);
+    setIsRepeatModal(false);
   };
 
   const onAddNew = () => {
@@ -2398,7 +2393,7 @@ export default function Products({route, navigation}) {
     let getTypeId =
       !!repeatItems?.item?.category &&
       repeatItems?.item?.category.category_detail?.type_id;
-    setRepeatItems(null);
+    setIsRepeatModal(false);
     setSelectedCarItems(repeatItems?.item);
     setIsVisibleModal(true);
     updateState({
@@ -2587,7 +2582,6 @@ export default function Products({route, navigation}) {
   };
 
   // useEffect(() => {
-  //   // console.log(ProductTags, 'ProductTags');
   //   let EnabledTags = ProductTags.filter((el) => el.isSelected);
   //   console.log(EnabledTags, 'EnabledTags');
   //   if (EnabledTags.length > 0) {
@@ -2670,10 +2664,6 @@ export default function Products({route, navigation}) {
     });
     // navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
   };
-  console.log(
-    cloneSectionList,
-    'cloneSectionListcloneSectionListcloneSectionList',
-  );
 
   // Search with more
   const onSearchWithinMenu = (text, data = [], withApiSearch = false) => {
@@ -2774,7 +2764,6 @@ export default function Products({route, navigation}) {
             }}
           />
           {cloneSectionList.map((el, index) => {
-            console.log('cloneSectionList>>>el', el);
             return (
               <TouchableOpacity
                 key={index}
@@ -3117,12 +3106,11 @@ export default function Products({route, navigation}) {
 
   const bottomSheetHeader = () => {
     return (
-      <View
-        style={{
-          height: 0,
-          backgroundColor: 'transparent',
-        }}
-      />
+      <TouchableOpacity
+        onPress={() => setIsVisibleModal(false)}
+        style={{alignSelf: 'center', marginBottom: moderateScaleVertical(16)}}>
+        <Image source={imagePath.icClose4} />
+      </TouchableOpacity>
     );
   };
 
@@ -3219,18 +3207,6 @@ export default function Products({route, navigation}) {
     (!!categoryInfo?.translation &&
       categoryInfo?.translation[0]?.meta_description);
 
-  const backgroundComponent = () => {
-    return (
-      <TouchableOpacity
-        onPress={() => setIsVisibleModal(false)}
-        style={{alignSelf: 'center', marginBottom: moderateScaleVertical(16)}}>
-        <Image source={imagePath.icClose4} />
-      </TouchableOpacity>
-    );
-  };
-
-  console.log('productListDataproductListData', productListData);
-
   const appendData = async (section) => {
     console.log('section', section);
 
@@ -3267,8 +3243,8 @@ export default function Products({route, navigation}) {
       console.log(ProductTags, 'ProductTags?ProductTags');
       let headers = {
         code: appData.profile.code,
-        currency: currencies.primary_currency.id,
-        language: languages.primary_language.id,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
         latitude: appMainData?.reqData?.latitude,
         longitude: appMainData?.reqData?.longitude,
         systemuser: DeviceInfo.getUniqueId(),
@@ -3378,7 +3354,7 @@ export default function Products({route, navigation}) {
 
     addonSet.map((i, inx) => {
       const temp = checkIfMaxReached(i.min_select, i.setoptions);
-      console.log('temp value', temp);
+
       if (temp) {
         i.setoptions.map((j, jnx) => {
           if (j?.value == true) {
@@ -3413,8 +3389,8 @@ export default function Products({route, navigation}) {
       actions
         .addProductsToCart(data, {
           code: appData.profile.code,
-          currency: currencies.primary_currency.id,
-          language: languages.primary_language.id,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
           systemuser: DeviceInfo.getUniqueId(),
         })
         .then(async (res) => {
@@ -3429,7 +3405,10 @@ export default function Products({route, navigation}) {
           updateState({isLoadingC: false, btnLoader: false});
           // onClose();
         })
-        .catch((error) => errorMethodSecond(error, addonSet));
+        .catch((error) => {
+          console.log('called...2', addonSet);
+          errorMethodSecond(error, addonSet);
+        });
       return;
     }
   };
@@ -3437,14 +3416,6 @@ export default function Products({route, navigation}) {
   const renderSectionFooter = (props) => {
     const {section} = props;
 
-    console.log('section?.data ', section?.data);
-    console.log('section?.data_count ', section?.data_count);
-    console.log(
-      productDataLengthAfterViewMoreSearch,
-      searchInput,
-      'searchInputsearchInput',
-    );
-    //&& !!(searchInput && productDataLengthAfterViewMoreSearch?.length !=0)
     return section?.data.length !== section?.data_count &&
       section?.data.length !== 0 &&
       searchInput &&
@@ -3734,20 +3705,20 @@ export default function Products({route, navigation}) {
                   <BottomSheet
                     ref={bottomSheetRef}
                     index={1}
-                    snapPoints={[0, height / 1.5, height / 1.25]}
+                    snapPoints={[height / 1.5, height / 1.25]}
                     enablePanDownToClose
                     activeOffsetY={[-1, 1]}
                     failOffsetX={[-5, 5]}
                     animateOnMount={true}
                     handleComponent={bottomSheetHeader}
                     onChange={(index) => {
-                      if (index == 0) {
+                      if (index == -1) {
                         onCloseModal();
                       }
                       // playHapticEffect(hapticEffects.impactMedium);
                     }}
                     backdropComponent={() => <View style={{height: 0}} />}
-                    backgroundComponent={backgroundComponent}>
+                    backgroundComponent={() => <></>}>
                     <BottomSheetScrollView
                       keyboardShouldPersistTaps="handled"
                       showsVerticalScrollIndicator={false}
@@ -3915,7 +3886,7 @@ export default function Products({route, navigation}) {
             ]}
             visible={updateQtyLoader}
           />
-{console.log(CartItems,"CartItemsCartItemsCartItems")}
+          {console.log(CartItems, 'CartItemsCartItemsCartItems')}
           {!searchInput && !isVisibleModal && (
             <GradientCartView
               onPress={() => {
@@ -3950,6 +3921,8 @@ export default function Products({route, navigation}) {
               // }
             />
           )}
+
+          {console.log(CartItems, 'CartItemsCartItems')}
 
           <BottomSlideModal
             mainContainView={RenderOfferView}
@@ -3995,12 +3968,13 @@ export default function Products({route, navigation}) {
           />
 
           {/* Add new addons and repeat item view */}
-          {!!repeatItems ? (
+          {!!isRepeastModal ? (
             <RepeatModal
               data={repeatItems?.item}
-              modalHide={() => setRepeatItems(null)}
+              modalHide={() => setIsRepeatModal(false)}
               onRepeat={onRepeat}
               onAddNew={onAddNew}
+              isAddonLoading={isAddonLoading}
             />
           ) : null}
 
