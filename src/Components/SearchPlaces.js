@@ -49,6 +49,7 @@ const SearchPlaces = ({
   currentLatLong = {},
   index=0,
   isTaxiFlow = false
+
 }) => {
   console.log(index, 'in MapPlaceComp map key');
 

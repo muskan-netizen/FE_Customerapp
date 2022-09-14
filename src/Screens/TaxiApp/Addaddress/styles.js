@@ -282,6 +282,17 @@ export default ({
       fontFamily: fontFamily.medium,
       marginHorizontal: moderateScale(10),
     },
+    textInput: {
+      backgroundColor:colors.greyNew,
+      borderWidth:0,
+      color: colors.black,
+      height: moderateScaleVertical(34),
+      paddingHorizontal: moderateScale(12),
+      fontSize: 14,
+      marginBottom: 0,
+      marginTop: 4,
+   
+    },
   });
   return styles;
 };

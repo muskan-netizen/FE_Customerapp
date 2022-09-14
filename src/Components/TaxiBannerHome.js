@@ -76,7 +76,7 @@ const TaxiBannerHome = ({
           item?.image?.image_path,
           '2000/600',
         );
-    console.log(imageUrl, 'yfgusdf');
+
     return (
       <TouchableOpacity activeOpacity={1} onPress={() => onPress(item)}>
         <FastImage
@@ -106,7 +106,7 @@ const TaxiBannerHome = ({
     );
   };
   const bannerDataImages = ({item, index}) => {
-    // console.log(imageUrl, 'yfgusdf');
+
     const imageUrl = item?.image?.path
       ? getImageUrl(
           item?.image?.path.image_fit,
@@ -118,7 +118,7 @@ const TaxiBannerHome = ({
           item?.image?.image_path,
           '2000/600',
         );
-    console.log(imageUrl, 'yfgusdf');
+  
 
     return (
       <>
