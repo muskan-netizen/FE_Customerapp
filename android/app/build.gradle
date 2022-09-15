@@ -205,14 +205,14 @@ android {
     flavorDimensions "appType"
 
 //   productFlavors{
-//                   blacnetwork{
+//                  empire{
 //                 dimension "appType"
-//                 versionCode 1
+//                 versionCode 4
 //                 versionName "1.0"
 //                 minSdkVersion rootProject.ext.minSdkVersion
 //                 targetSdkVersion rootProject.ext.targetSdkVersion         
-//                 applicationId 'com.blacnetwork.orders'
-//                 resValue "string", "app_name", "Blac Network"
+//                 applicationId 'com.application.empire'
+//                 resValue "string", "app_name", "Empire"
 //                 resValue "string", "host_name", ""
 //             }
 //   }

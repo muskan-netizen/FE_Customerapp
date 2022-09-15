@@ -33,7 +33,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://hokitch.com/api/v1';
 
 // blacnetwork
-export const API_BASE_URL = 'https://app.blacnetwork.com/api/v1';
+// export const API_BASE_URL = 'https://app.blacnetwork.com/api/v1';
 
 // export const API_BASE_URL = 'https://smartershopper.co.uk/api/v1'
 // export const API_BASE_URL = ' https://36kel.com.ph/api/v1'
@@ -217,7 +217,7 @@ export const API_BASE_URL = 'https://app.blacnetwork.com/api/v1';
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://hemptify.com/api/v1';
 // export const API_BASE_URL = 'https://sirvu.ca/api/v1';
-// export const API_BASE_URL = 'https://empirehub.com/api/v1';
+export const API_BASE_URL = 'https://empirehub.com/api/v1';
 // export const API_BASE_URL = 'https://ullaz.co.ke/api/v1';
 // export const API_BASE_URL = 'https://localdropoff.info/api/v1';
 // export const API_BASE_URL = 'https://onscart.com/api/v1';
