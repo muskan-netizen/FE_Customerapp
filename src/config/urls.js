@@ -38,7 +38,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // hemptify
 // export const API_BASE_URL = 'https://hemptify.com/api/v1';
 
-export const API_BASE_URL = 'https://app.baubau.app/api/v1';
+// export const API_BASE_URL = 'https://app.baubau.app/api/v1';
 
 // export const API_BASE_URL = 'https://smartershopper.co.uk/api/v1'
 // export const API_BASE_URL = ' https://36kel.com.ph/api/v1'
@@ -205,7 +205,7 @@ export const API_BASE_URL = 'https://app.baubau.app/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
-//  export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
+export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://order.veg-hub.com/api/v1';
 // export const API_BASE_URL = 'https://seratho.com/api/v1';
