@@ -415,6 +415,7 @@ const shortCodes = {
   kwivar: '2037b0',
   parcel: '60277b',
   lex: 'a7f382',
+  smokyKitchen: '8c4efa',
 };
 
 const appIds = {
@@ -2065,6 +2066,10 @@ const appIds = {
   lex: Platform.select({
     ios: 'com.lex.royoorders',
     android: 'com.lex.royoorders',
+  }),
+  smokyKitchen: Platform.select({
+    ios: 'com.smokyKitchen.royoorders',
+    android: 'com.smokyKitchen.royoorders',
   }),
 };
 
