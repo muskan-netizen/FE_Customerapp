@@ -2547,6 +2547,42 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.eureka:
+          updateState({
+            shortCode: shortCodes.eureka,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kaypee:
+          updateState({
+            shortCode: shortCodes.kaypee,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hitaxi:
+          updateState({
+            shortCode: shortCodes.hitaxi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kwivar:
+          updateState({
+            shortCode: shortCodes.kwivar,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.parcel:
+          updateState({
+            shortCode: shortCodes.parcel,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.lex:
+          updateState({
+            shortCode: shortCodes.lex,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

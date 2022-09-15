@@ -203,18 +203,18 @@ android {
 
     flavorDimensions "appType"
 
-  productFlavors{
-            tezras{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.tezras.royoorders'
-            resValue "string", "app_name", "Tezras" 
-            resValue "string", "host_name", ""
-            }
-  }
+//   productFlavors{
+//                      hitaxi{
+//             dimension "appType"
+//             versionCode 1
+//             versionName "1.0"
+//             minSdkVersion rootProject.ext.minSdkVersion
+//             targetSdkVersion rootProject.ext.targetSdkVersion
+//             applicationId 'com.hitaxi.royoorders'
+//             resValue "string", "app_name", "Hitaxi" 
+//             resValue "string", "host_name", ""
+//             }
+//   }
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -6101,7 +6101,69 @@ android {
             resValue "string", "app_name", "Tezras" 
             resValue "string", "host_name", ""
             }
+           eureka{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.eureka.royoorders'
+            resValue "string", "app_name", "Eureka" 
+            resValue "string", "host_name", ""
+            }
+           kaypee{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.kaypee.royoorders'
+            resValue "string", "app_name", "Kaypee" 
+            resValue "string", "host_name", ""
+            }
+           hitaxi{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.hitaxi.royoorders'
+            resValue "string", "app_name", "Hitaxi" 
+            resValue "string", "host_name", ""
+            }
+
+           kwivar{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.kwivar.royoorders'
+            resValue "string", "app_name", "Kwivar" 
+            resValue "string", "host_name", ""
+            }
     
+           parcel{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.parcel.royoorders'
+            resValue "string", "app_name", "Parcel" 
+            resValue "string", "host_name", ""
+            }
+
+            lex{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.lex.royoorders'
+            resValue "string", "app_name", "Lex" 
+            resValue "string", "host_name", ""
+            }
     }
 }
 
