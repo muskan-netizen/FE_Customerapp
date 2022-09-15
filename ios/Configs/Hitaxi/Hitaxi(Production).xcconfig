@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-available_pods-Hitaxi/Pods-available_pods-Hitaxi.release.xcconfig"
+
+PROJECT_APPLE_ID = 6443400983
+PROJECT_BUNDLE_ID =com.hitaxi.royoorders
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = Hitaxi
+PROJECT_GOOGLE_CLIENT_ID =861949969644-2g7l0ll4il91vev3go7qjbhhj4ffoq56.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.861949969644-2g7l0ll4il91vev3go7qjbhhj4ffoq56
+PROJECT_FACEBOOK_ID = 1153512625227349
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =HitaxiInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

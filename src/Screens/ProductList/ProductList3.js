@@ -2357,11 +2357,9 @@ export default function Products({route, navigation}) {
         actions.cartItemQty({});
         setIsVisibleModal(false);
       })
-      .catch(
-        (error)=>{
-          console.log(error, "erorrrrrr")
-        }
-      );
+      .catch((error) => {
+        console.log(error, 'erorrrrrr');
+      });
   };
 
   const onRepeat = async () => {
@@ -3886,7 +3884,6 @@ export default function Products({route, navigation}) {
             ]}
             visible={updateQtyLoader}
           />
-          {console.log(CartItems, 'CartItemsCartItemsCartItems')}
           {!searchInput && !isVisibleModal && (
             <GradientCartView
               onPress={() => {
@@ -3921,8 +3918,6 @@ export default function Products({route, navigation}) {
               // }
             />
           )}
-
-          {console.log(CartItems, 'CartItemsCartItems')}
 
           <BottomSlideModal
             mainContainView={RenderOfferView}

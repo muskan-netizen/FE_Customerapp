@@ -20,6 +20,7 @@ const initial_state = {
     longitude: '',
   },
   pickUpTimeType: 'now',
+  isLocationSearched: false,
 };
 
 export default function (state = initial_state, action) {
@@ -59,7 +60,7 @@ export default function (state = initial_state, action) {
       const data = action.payload;
       return {
         ...state,
-        dineInType: !!data ? data : 'delivery' ,
+        dineInType: !!data ? data : 'delivery',
       };
     }
 
@@ -68,6 +69,14 @@ export default function (state = initial_state, action) {
       return {
         ...state,
         pickUpTimeType: data,
+      };
+    }
+
+    case types.IS_LOCATION_SEARCHED: {
+      const data = action.payload;
+      return {
+        ...state,
+        isLocationSearched: data,
       };
     }
 

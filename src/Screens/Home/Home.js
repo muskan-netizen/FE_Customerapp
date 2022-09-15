@@ -62,7 +62,7 @@ export default function Home({route, navigation}) {
     themeToggle,
     allAddresss,
   } = useSelector((state) => state?.initBoot);
-  const {location, appMainData, dineInType} = useSelector(
+  const {location, appMainData, dineInType, isLocationSearched} = useSelector(
     (state) => state?.home,
   );
   const isFocused = useIsFocused();
@@ -158,7 +158,12 @@ export default function Home({route, navigation}) {
   }, [appMainData]);
 
   useEffect(() => {
-    _getLocationFromParams();
+    if (
+      paramData?.details &&
+      paramData?.details?.formatted_address != location?.address
+    ) {
+      _getLocationFromParams();
+    }
   }, [paramData?.details]);
 
   useFocusEffect(
@@ -181,9 +186,6 @@ export default function Home({route, navigation}) {
   );
 
   useEffect(() => {
-    if (isRefreshing) {
-      return;
-    }
     chekLocationPermission(true)
       .then((result) => {
         if (result !== 'goback' && result == 'granted') {
@@ -203,15 +205,23 @@ export default function Home({route, navigation}) {
                         let filterAddress = savedAddress.filter(
                           (val) => !!val?.latitude,
                         );
+
                         getNearestLocation(curLoc, filterAddress)
                           .then((nearestLoc) => {
-                            actions.locationData(nearestLoc);
-                            homeData(nearestLoc);
+                            //ifTab selected
+                            if (isLocationSearched || isRefreshing) {
+                              actions.locationData(locData);
+                              homeData(locData);
+                            } else {
+                              actions.locationData(nearestLoc);
+                              homeData(nearestLoc);
+                            }
                           })
                           .catch((error) => {
                             actions.locationData(locData);
                             homeData(locData);
                           });
+
                         return;
                       } else {
                         actions.locationData(locData);
@@ -278,28 +288,24 @@ export default function Home({route, navigation}) {
   }, []);
 
   const _getLocationFromParams = () => {
+    actions.isLocationSearched(true);
+    const address = paramData?.details?.formatted_address;
+    const res = {
+      address: address,
+      latitude: paramData?.details?.geometry?.location.lat,
+      longitude: paramData?.details?.geometry?.location.lng,
+    };
     if (
-      paramData?.details &&
-      paramData?.details?.formatted_address != location?.address
+      res?.latitude != location?.latitude &&
+      res?.longitude != location?.longitude
     ) {
-      const address = paramData?.details?.formatted_address;
-      const res = {
-        address: address,
-        latitude: paramData?.details?.geometry?.location.lat,
-        longitude: paramData?.details?.geometry?.location.lng,
-      };
-      if (
-        res?.latitude != location?.latitude &&
-        res?.longitude != location?.longitude
-      ) {
-        if (cartItemCount?.data?.item_count) {
-          checkCartWithLatLang(res);
-        } else {
-          updateLatLang(res);
-        }
+      if (cartItemCount?.data?.item_count) {
+        checkCartWithLatLang(res);
       } else {
         updateLatLang(res);
       }
+    } else {
+      updateLatLang(res);
     }
   };
 
