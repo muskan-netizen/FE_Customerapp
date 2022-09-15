@@ -1562,8 +1562,8 @@ const appIds = {
     android: 'com.redglee',
   }),
   dropItOffUsa: Platform.select({
-    ios: 'com.dropItOffUsa',
-    android: 'com.dropItOffUsa',
+    ios: 'com.dropItOffUsa.royoOrders',
+    android: 'com.dropItOffUsa.royoOrders',
   }),
   handyPickup: Platform.select({
     ios: 'com.handyPickup',

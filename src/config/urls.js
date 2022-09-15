@@ -36,7 +36,9 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://app.blacnetwork.com/api/v1';
 
 // hemptify
-export const API_BASE_URL = 'https://hemptify.com/api/v1';
+// export const API_BASE_URL = 'https://hemptify.com/api/v1';
+
+export const API_BASE_URL = 'https://app.baubau.app/api/v1';
 
 // export const API_BASE_URL = 'https://smartershopper.co.uk/api/v1'
 // export const API_BASE_URL = ' https://36kel.com.ph/api/v1'
