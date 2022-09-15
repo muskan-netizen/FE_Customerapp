@@ -29,7 +29,10 @@ import {
   showError,
 } from '../utils/helperFunctions';
 import TransparentButtonWithTxtAndIcon from './TransparentButtonWithTxtAndIcon';
-import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import BottomSheet, {
+  BottomSheetScrollView,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
 import {Shadow} from 'react-native-shadow-2';
 
 navigator.geolocation = require('react-native-geolocation-service');
@@ -90,7 +93,7 @@ const ChooseAddressModal = ({
     return (
       <ScrollView
         contentContainerStyle={{
-          marginTop: moderateScaleVertical(10),
+          flexGrow: 1,
         }}>
         {allAddress ? (
           <>
@@ -219,9 +222,7 @@ const ChooseAddressModal = ({
           playHapticEffect(hapticEffects.impactMedium);
         }}>
         <View style={{flex: 1}}>
-          <BottomSheetScrollView
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
+          <BottomSheetView
             style={{
               ...styles.modalMainViewContainer,
               backgroundColor: isDarkMode
@@ -282,7 +283,7 @@ const ChooseAddressModal = ({
               </View>
               {addressView()}
             </View>
-          </BottomSheetScrollView>
+          </BottomSheetView>
         </View>
       </BottomSheet>
     );
