@@ -194,9 +194,7 @@ export default function Home({route, navigation}) {
               updateState({
                 curLatLong: curLoc,
               });
-              console.log(location, 'location.....location');
               let locData = location?.latitude ? location : curLoc;
-              console.log(locData, 'locData....locData');
               if (!!userData?.auth_token) {
                 //IS LOGIN USER YES
                 if (!!appData?.profile?.preferences?.is_hyperlocal) {
@@ -212,12 +210,9 @@ export default function Home({route, navigation}) {
                           .then((nearestLoc) => {
                             //ifTab selected
                             if (isLocationSearched || isRefreshing) {
-                              console.log('callled... in....');
-                              console.log(locData, 'locData....locData');
                               actions.locationData(locData);
                               homeData(locData);
                             } else {
-                              console.log('callled... out....');
                               actions.locationData(nearestLoc);
                               homeData(nearestLoc);
                             }
@@ -291,8 +286,6 @@ export default function Home({route, navigation}) {
   useEffect(() => {
     Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
   }, []);
-
-  console.log(isLocationSearched, 'isLocationSearched...isLocationSearched');
 
   const _getLocationFromParams = () => {
     actions.isLocationSearched(true);

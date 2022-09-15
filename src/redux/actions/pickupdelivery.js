@@ -1,8 +1,4 @@
-import {
-  ALL_NEARBY_DRIVERS,
-  GET_ALL_CAR_AND_PRICE,
-  PLACE_DELIVERY_ORDER,
-} from '../../config/urls';
+import {ALL_NEARBY_DRIVERS, GET_ALL_CAR_AND_PRICE, PLACE_DELIVERY_ORDER, STATIC_DROP_LOCATIONS} from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
 import types from '../types';
@@ -49,3 +45,16 @@ export function getAllNearByDrivers(data = {}, headers = {}) {
       });
   });
 }
+
+
+export const getStaticLocations = (query = '', data={}, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiGet(STATIC_DROP_LOCATIONS + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
