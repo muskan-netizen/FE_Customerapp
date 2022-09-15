@@ -396,16 +396,6 @@ export default function OrderDetail({navigation, route}) {
                       ),
                   )
               : null,
-
-            // ? dineInType==="Delivery"? labels.indexOf(
-            //       res.data.vendors[0].order_status?.current_status?.title
-            //         .charAt(0)
-            //         .toUpperCase() +
-            //         res.data.vendors[0].order_status?.current_status?.title.slice(
-            //           1,
-            //         ),
-            //     ) :  res.data.vendors[0].order_status?.current_status?.title==="Order Predpared"? 3,
-
             orderStatus: res?.data?.vendors[0]?.order_status,
           });
         }
@@ -1041,7 +1031,7 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const _renderItem = ({item, index}) => {
-    console.log(item,"itemitemitemitem");
+    console.log(item, 'itemitemitemitem');
     return (
       <View
         key={index}
@@ -1861,104 +1851,107 @@ export default function OrderDetail({navigation, route}) {
           style={{
             padding: moderateScale(16),
           }}>
-          <Text
-            style={{
-              ...styles.summaryText,
-              fontSize: textScale(12),
-              color: isDarkMode
-                ? MyDarkTheme.colors.text
-                : colors.blackOpacity43,
-            }}>
-            {/* {console.log(preferences?.business_type, "preferences?.business_type")}
+          {!!cartData?.address_id ? ( // delivery address will visible only if dine_in_type==delivery
+            <View>
+              <Text
+                style={{
+                  ...styles.summaryText,
+                  fontSize: textScale(12),
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity43,
+                }}>
+                {/* {console.log(preferences?.business_type, "preferences?.business_type")}
             { (preferences?.business_type == 'home_service') ? strings.DELIEVERY_ADDRESS: 'Service Address' } */}
-            {getBundleId() == appIds.quickLube &&
-            preferences?.business_type == 'home_service'
-              ? strings.SERVICE_ADDRESS
-              : strings.DELIEVERY_ADDRESS}
-          </Text>
+                {getBundleId() == appIds.quickLube &&
+                preferences?.business_type == 'home_service'
+                  ? strings.SERVICE_ADDRESS
+                  : strings.DELIEVERY_ADDRESS}
+              </Text>
 
-          <View
-            style={{
-              flexDirection: 'row',
-              marginBottom: moderateScaleVertical(16),
-            }}>
-            {!!cartData?.address?.latitude ? (
               <View
                 style={{
-                  height: moderateScale(60),
-                  width: moderateScale(60),
-                  borderRadius: 10,
+                  flexDirection: 'row',
+                  marginBottom: moderateScaleVertical(16),
                 }}>
-                <MapView
-                  scrollEnabled={false}
-                  zoomEnabled={false}
-                  zoomTapEnabled={false}
-                  zoomControlEnabled={false}
-                  pitchEnabled={false}
-                  toolbarEnabled={false}
-                  scrollDuringRotateOrZoomEnabled={false}
-                  style={{
-                    height: moderateScale(60),
-                    width: moderateScale(60),
-                    borderRadius: 10,
-                  }}
-                  region={{
-                    latitude: Number(cartData?.address?.latitude),
-                    longitude: Number(cartData?.address?.longitude),
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0922,
-                  }}>
-                  <Marker
-                    coordinate={{
-                      latitude: Number(cartData?.address?.latitude),
-                      longitude: Number(cartData?.address?.longitude),
-                      latitudeDelta: 0.0922,
-                      longitudeDelta: 0.0922,
-                    }}
-                    image={imagePath.markerPin}
-                  />
-                </MapView>
+                {!!cartData?.address?.latitude ? (
+                  <View
+                    style={{
+                      height: moderateScale(60),
+                      width: moderateScale(60),
+                      borderRadius: 10,
+                    }}>
+                    <MapView
+                      scrollEnabled={false}
+                      zoomEnabled={false}
+                      zoomTapEnabled={false}
+                      zoomControlEnabled={false}
+                      pitchEnabled={false}
+                      toolbarEnabled={false}
+                      scrollDuringRotateOrZoomEnabled={false}
+                      style={{
+                        height: moderateScale(60),
+                        width: moderateScale(60),
+                        borderRadius: 10,
+                      }}
+                      region={{
+                        latitude: Number(cartData?.address?.latitude),
+                        longitude: Number(cartData?.address?.longitude),
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0922,
+                      }}>
+                      <Marker
+                        coordinate={{
+                          latitude: Number(cartData?.address?.latitude),
+                          longitude: Number(cartData?.address?.longitude),
+                          latitudeDelta: 0.0922,
+                          longitudeDelta: 0.0922,
+                        }}
+                        image={imagePath.markerPin}
+                      />
+                    </MapView>
+                  </View>
+                ) : (
+                  <Image source={imagePath.mapIcon} />
+                )}
+                {/* Service Address */}
+
+                <View style={{marginLeft: moderateScale(12), flex: 1}}>
+                  {cartData?.luxury_option_id == 3 ? (
+                    <Text
+                      style={{
+                        ...styles.summaryText,
+                        fontSize: textScale(12),
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.blackOpacity43,
+                        flex: 1,
+                      }}>
+                      {cartData?.vendors[0]?.vendor?.address}
+                    </Text>
+                  ) : (
+                    <Text
+                      style={{
+                        ...styles.summaryText,
+                        fontSize: textScale(12),
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.blackOpacity43,
+                        flex: 1,
+                      }}>
+                      {`${
+                        cartData?.address?.house_number === null
+                          ? ''
+                          : `${cartData?.address?.house_number}, `
+                      }`}
+                      {cartData?.address?.address} {''}
+                      {cartData?.address?.pincode}
+                    </Text>
+                  )}
+                </View>
               </View>
-            ) : (
-              <Image source={imagePath.mapIcon} />
-            )}
-            {/* Service Address */}
-
-            <View style={{marginLeft: moderateScale(12), flex: 1}}>
-              {cartData?.luxury_option_id == 3 ? (
-                <Text
-                  style={{
-                    ...styles.summaryText,
-                    fontSize: textScale(12),
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.blackOpacity43,
-                    flex: 1,
-                  }}>
-                  {cartData?.vendors[0]?.vendor?.address}
-                </Text>
-              ) : (
-                <Text
-                  style={{
-                    ...styles.summaryText,
-                    fontSize: textScale(12),
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.blackOpacity43,
-                    flex: 1,
-                  }}>
-                  {`${
-                    cartData?.address?.house_number === null
-                      ? ''
-                      : `${cartData?.address?.house_number}, `
-                  }`}
-                  {cartData?.address?.address} {''}
-                  {cartData?.address?.pincode}
-                </Text>
-              )}
             </View>
-          </View>
-
+          ) : null}
           <LeftRightText
             leftText={strings.ORDER_NUMBER}
             rightText={`#${cartData?.order_number || ''}`}

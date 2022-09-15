@@ -8,7 +8,7 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import fontFamily from '../styles/fontFamily';
@@ -30,15 +30,13 @@ const DropDown = ({
 }) => {
   const [modalShow, setModalShow] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
-  const { themeColors} = useSelector(
-    (state) => state?.initBoot,
-  );
+  const {themeColors} = useSelector((state) => state?.initBoot);
   const onSelect = (item, i) => {
     setSelectedIndex(i);
     fetchValues(item);
     setModalShow(false);
   };
-  console.log(data,"dataaaaaaaa")
+
   return (
     <View style={{marginBottom: moderateScaleVertical(marginBottom)}}>
       <TouchableOpacity
@@ -46,7 +44,7 @@ const DropDown = ({
         onPress={() => setModalShow(!modalShow)}
         style={{...styles.inputStyle, ...inputStyle}}>
         <Text
-         numberOfLines={1}
+          numberOfLines={1}
           style={{
             ...styles.textStyle,
             ...textStyle,
@@ -92,12 +90,13 @@ const DropDown = ({
                         ? themeColors.primary_color
                         : colors.black,
                     fontFamily:
-                      selectedIndex == i
-                        ? fontFamily.bold
-                        : fontFamily.regular,
+                      selectedIndex == i ? fontFamily.bold : fontFamily.regular,
                   }}>
-                  {val?.address || val?.full_name_english || val?.name || val || val?.address}
-                 
+                  {val?.address ||
+                    val?.full_name_english ||
+                    val?.name ||
+                    val ||
+                    val?.address}
                 </Text>
               </TouchableOpacity>
             );

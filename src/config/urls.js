@@ -35,6 +35,11 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // blacnetwork
 // export const API_BASE_URL = 'https://app.blacnetwork.com/api/v1';
 
+// hemptify
+// export const API_BASE_URL = 'https://hemptify.com/api/v1';
+
+// export const API_BASE_URL = 'https://app.baubau.app/api/v1';
+
 // export const API_BASE_URL = 'https://smartershopper.co.uk/api/v1'
 // export const API_BASE_URL = ' https://36kel.com.ph/api/v1'
 // export const API_BASE_URL = 'https://order.orderfirst.store/api/v1'
@@ -200,7 +205,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
-//  export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
+// export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://order.veg-hub.com/api/v1';
 // export const API_BASE_URL = 'https://seratho.com/api/v1';
@@ -213,7 +218,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://canupickmeup.com/api/v1';
 
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
-// export const API_BASE_URL = 'https://sales.royoorders.com/api/v1';  //sales demo
+export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://hemptify.com/api/v1';
 // export const API_BASE_URL = 'https://sirvu.ca/api/v1';
@@ -548,4 +553,4 @@ export const VENDOR_CHAT = '/api/room/fetchRoomByVendor';
 export const SEND_MESSAGE = '/api/chat/sendMessageJoin';
 export const GET_ALL_MESSAGES = '/api/chat';
 export const ALL_ROOM_USER = '/api/chat/getRoomUser';
-export const STATIC_DROP_LOCATIONS=getApiUrl('/static-dropoff-locations')
+export const STATIC_DROP_LOCATIONS = getApiUrl('/static-dropoff-locations');

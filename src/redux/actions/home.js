@@ -312,3 +312,10 @@ export const getSubCategoryVendors = (data, headers = {}) => {
       });
   });
 };
+
+export const isLocationSearched = (flag) => {
+  dispatch({
+    type: types.IS_LOCATION_SEARCHED,
+    payload: flag,
+  });
+};
