@@ -721,8 +721,8 @@ const appIds = {
     android: 'com.yourlaundryapp',
   }),
   hemptyfy: Platform.select({
-    ios: 'com.hemptyfy',
-    android: 'com.hemptyfy',
+    ios: 'com.hemptyfy.orders',
+    android: 'com.hemptyfy.orders',
   }),
   sharu: Platform.select({
     ios: 'com.sharu',
@@ -1562,8 +1562,8 @@ const appIds = {
     android: 'com.redglee',
   }),
   dropItOffUsa: Platform.select({
-    ios: 'com.dropItOffUsa',
-    android: 'com.dropItOffUsa',
+    ios: 'com.dropItOffUsa.royoOrders',
+    android: 'com.dropItOffUsa.royoOrders',
   }),
   handyPickup: Platform.select({
     ios: 'com.handyPickup',
