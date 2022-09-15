@@ -415,7 +415,7 @@ export default function DashBoardFive({
           )}
         <View style={{}}>
           {!!appData?.mobile_banners?.length &&
-          appStyle?.homePageLayout == 3 ? (
+          appStyle?.homePageLayout == 3 && getBundleId()!== appIds?.masa ? (
             <Carousel
               autoplay={true}
               loop={true}

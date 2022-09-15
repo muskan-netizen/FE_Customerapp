@@ -2362,7 +2362,11 @@ export default function Products({route, navigation}) {
         }
         // showSuccess(res?.message);
       })
-      .catch(errorMethod);
+      .catch(
+        (error)=>{
+          console.log(error, "erorrrrrr")
+        }
+      );
   };
 
   const onRepeat = async () => {
