@@ -33,7 +33,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://hokitch.com/api/v1';
 
 // blacnetwork
-export const API_BASE_URL = 'https://app.blacnetwork.com/api/v1';
+// export const API_BASE_URL = 'https://app.blacnetwork.com/api/v1';
 
 // hemptify
 // export const API_BASE_URL = 'https://hemptify.com/api/v1';
@@ -120,7 +120,7 @@ export const API_BASE_URL = 'https://app.blacnetwork.com/api/v1';
 // export const API_BASE_URL = 'https://d8f2-103-72-170-243.ngrok.io/api/v1';
 
 //heyBuddy
-// export const API_BASE_URL = 'https://d8f2-103-72-170-243.ngrok.io/api/v1';
+// export const API_BASE_URL = 'https://heybuddy.com.mx/api/v1';
 
 // export const API_BASE_URL = 'https://groupystore.com/api/v1';
 // export const API_BASE_URL = 'https://dimahalal.com/api/v1'; // dimaVega
@@ -265,7 +265,7 @@ export const API_BASE_URL = 'https://app.blacnetwork.com/api/v1';
 // export const API_BASE_URL = 'https://destinationops.com/api/v1';
 // export const API_BASE_URL = 'https://bustanfakieh.com/api/v1';
 // export const API_BASE_URL = 'https://cabdeliv.com/api/v1';
-// // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
+// export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
 
 //export const API_BASE_URL = 'https://orderchekout.com/api/v1';
 // export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';

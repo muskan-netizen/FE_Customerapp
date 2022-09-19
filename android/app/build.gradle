@@ -205,9 +205,9 @@ android {
     flavorDimensions "appType"
 
 //   productFlavors{
-//               heyBuddy{
+//                      heyBuddy{
 //             dimension "appType"
-//             versionCode 2
+//             versionCode 4
 //             versionName "1.0"
 //             minSdkVersion rootProject.ext.minSdkVersion
 //             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -380,7 +380,7 @@ android {
             }
            helpnowrightnow{
                 dimension "appType"
-                versionCode 6
+                versionCode 7
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
