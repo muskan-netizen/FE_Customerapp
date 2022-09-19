@@ -884,12 +884,16 @@ export default function TaxiHomeDashbord({
                         ? parseFloat(curLatLong?.latitude)
                         : !!location?.latitude
                         ? parseFloat(location?.latitude)
-                        : appData?.profile?.preferences?.Default_latitude,
+                        : !!appData?.profile?.preferences?.Default_latitude
+                        ? appData?.profile?.preferences?.Default_latitude
+                        : 30.7333,
                       longitude: !!curLatLong?.longitude
                         ? parseFloat(curLatLong?.longitude)
                         : !!location?.longitude
                         ? parseFloat(location?.longitude)
-                        : appData?.profile?.preferences?.Default_latitude,
+                        : !!appData?.profile?.preferences?.Default_latitude
+                        ? appData?.profile?.preferences?.Default_latitude
+                        : 76.7794,
                       latitudeDelta: 0.015,
                       longitudeDelta: 0.0121,
                     }}
@@ -900,16 +904,8 @@ export default function TaxiHomeDashbord({
                   >
                     <Marker
                       coordinate={{
-                        latitude: !!curLatLong?.latitude
-                          ? parseFloat(curLatLong?.latitude)
-                          : !!location?.latitude
-                          ? parseFloat(location?.latitude)
-                          : appData?.profile?.preferences?.Default_latitude,
-                        longitude: !!curLatLong?.longitude
-                          ? parseFloat(curLatLong?.longitude)
-                          : !!location?.longitude
-                          ? parseFloat(location?.longitude)
-                          : appData?.profile?.preferences?.Default_longitude,
+                        latitude: 30.7333,
+                        longitude: 76.7794,
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
                       }}
