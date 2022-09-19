@@ -965,7 +965,7 @@ Amount`,
   YOU_ALREADY_HAVE_ITEMS_FROM_ANOTHER_STORE_DO_YOU_WANT_TO_DISCARD_THEM:
     'You already have items from another store. Do you want to discard them?',
   DELETE_ACCOUNT: 'Delete Account',
-  CATEGORY_KYC: 'Categoory KYC',
+  CATEGORY_KYC: 'Category KYC',
   COMPLETE_MATCH: 'Complete Match',
   PARTIAL_MATCH: 'Partial Match',
   AVAILABLE_VENDORS: 'Available Vendors',

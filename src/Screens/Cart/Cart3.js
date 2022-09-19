@@ -214,6 +214,7 @@ function Cart({navigation, route}) {
     isSubmitKycLoader,
     isModalVisibleForPayFlutterWave,
     paymentDataFlutterWave,
+  
   } = state;
 
   //Redux store data
@@ -242,6 +243,7 @@ function Cart({navigation, route}) {
   const {dineInType, appMainData, location} = useSelector(
     (state) => state?.home,
   );
+ 
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -253,7 +255,7 @@ function Cart({navigation, route}) {
     };
 
   let businessType = appData?.profile?.preferences?.business_type || null;
-
+  
   const closeForm = () => {
     setPrescriptionModal(false);
     updateState({
@@ -3296,12 +3298,12 @@ function Cart({navigation, route}) {
   const _onGiftBoxSelection = () => {
     updateState({isGiftBoxSelected: !isGiftBoxSelected});
   };
-
+ console.log(kycImages,"kycImageskycImages")
   //get footer start
   const getFooter = () => {
     return (
       <View style={{}}>
-        {!!cartData?.category_kyc_count && (
+        {!!cartData?.category_kyc_count && !!userData?.auth_token && (
           <ButtonComponent
             onPress={onCategoryKYC}
             btnText={strings.CATEGORY_KYC}
@@ -5287,6 +5289,7 @@ function Cart({navigation, route}) {
                     <View
                       style={{
                         marginTop: moderateScaleVertical(10),
+                       
                       }}>
                       <View
                         style={{
@@ -5519,7 +5522,7 @@ function Cart({navigation, route}) {
     updateState({
       isSubmitKycLoader: true,
     });
-
+    
     actions
       .submitCategoryKYC(formdata, {
         code: appData?.profile?.code,
@@ -5548,6 +5551,7 @@ function Cart({navigation, route}) {
   };
 
   const getImageFieldView = (type, index) => {
+  
     return (
       <View
         style={{
@@ -5660,7 +5664,7 @@ function Cart({navigation, route}) {
         ) : (
           <View
             style={{
-              flex: 1,
+              // flex: 1,
               paddingHorizontal: moderateScale(15),
             }}>
             <ScrollView
@@ -5672,10 +5676,12 @@ function Cart({navigation, route}) {
                 kycTxtInpts.map((item, index) => {
                   return getTextInputField(item, index);
                 })}
-
+ 
               {!isEmpty(kycImages) && (
+           
                 <View style={styles.viewStyleForUploadImage}>
                   {kycImages.map((item, index) => {
+                    
                     return getImageFieldView(item, index);
                   })}
                 </View>
@@ -5978,7 +5984,7 @@ function Cart({navigation, route}) {
         <FlatList
           data={cartItems}
           extraData={cartItems}
-          ListHeaderComponent={cartItems?.length ? getHeader() : null}
+          ListHeaderComponent={(cartItems?.length) ? getHeader() : null}
           ListFooterComponent={cartItems?.length ? getFooter() : null}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item, index) => String(index)}
