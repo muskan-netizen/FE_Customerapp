@@ -215,7 +215,7 @@ android {
 //                 resValue "string", "app_name", "Empire"
 //                 resValue "string", "host_name", ""
 //             }
-//   }
+  }
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -380,7 +380,7 @@ android {
             }
            helpnowrightnow{
                 dimension "appType"
-                versionCode 6
+                versionCode 7
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion

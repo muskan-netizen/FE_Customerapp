@@ -217,7 +217,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://hemptify.com/api/v1';
 // export const API_BASE_URL = 'https://sirvu.ca/api/v1';
-export const API_BASE_URL = 'https://empirehub.com/api/v1';
+// export const API_BASE_URL = 'https://empirehub.com/api/v1';
 // export const API_BASE_URL = 'https://ullaz.co.ke/api/v1';
 // export const API_BASE_URL = 'https://localdropoff.info/api/v1';
 // export const API_BASE_URL = 'https://onscart.com/api/v1';
@@ -264,7 +264,7 @@ export const API_BASE_URL = 'https://empirehub.com/api/v1';
 
 //export const API_BASE_URL = 'https://orderchekout.com/api/v1';
 // export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
-// export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
+export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
 // export const API_BASE_URL = 'https://ufood.ca/api/v1';
 // export const API_BASE_URL = 'https://app.vici.la/api/v1';
 // export const API_BASE_URL = 'https://blipdelivery.com/api/v1';
