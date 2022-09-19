@@ -621,7 +621,8 @@ function Cart({navigation, route}) {
   };
 
   const bottomButtonClick = () => {
-    updateState({isLoadingB: true, isModalVisibleForClearCart: false});
+    setIsShimmerLoading(true);
+    updateState({isModalVisibleForClearCart: false});
     removeItem('selectedTable');
     setTimeout(() => {
       clearEntireCart();
