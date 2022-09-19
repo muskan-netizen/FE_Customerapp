@@ -904,17 +904,8 @@ export default function TaxiHomeDashbord({
                   >
                     <Marker
                       coordinate={{
-<<<<<<< HEAD
-                        latitude: !!location?.latitude
-                          ? parseFloat(location?.latitude)
-                          : 30.7333,
-                        longitude: !!location?.latitude
-                          ? parseFloat(location?.longitude)
-                          : 76.7794,
-=======
                         latitude: 30.7333,
                         longitude: 76.7794,
->>>>>>> eb64ee6d3f65ab9aa2a00d4a754f18f1ffa05d36
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
                       }}
