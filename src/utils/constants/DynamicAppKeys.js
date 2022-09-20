@@ -96,8 +96,8 @@ const shortCodes = {
   goody: '397840',
   grub: '2f3120',
   gusto: 'd1b1a0',
-  // gokab: 'fb78f0', live
-  gokab: '578b33', // staging
+  gokab: 'fb78f0', // live
+  // gokab: '578b33', // staging
   suel: '638bd1',
   elixir: '574467',
   ace: '2d98b5',
