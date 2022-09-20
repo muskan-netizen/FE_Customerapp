@@ -2019,6 +2019,30 @@ end
 target 'Lex' do
 
 end
+#Flank
+target 'Flank' do
+
+end
+
+#Zynoride
+target 'Zynoride' do
+
+end
+
+#Mealsarehere
+target 'Mealsarehere' do
+
+end
+
+#Loamscape
+target 'Loamscape' do
+
+end
+
+#Delcolink
+target 'Delcolink' do
+
+end
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

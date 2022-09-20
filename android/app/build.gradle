@@ -205,57 +205,15 @@ android {
     flavorDimensions "appType"
 
   productFlavors{
-    
-        //   grub{
-        //         dimension "appType"
-        //         versionCode 1
-        //         versionName "1.0"
-        //         minSdkVersion rootProject.ext.minSdkVersion
-        //         targetSdkVersion rootProject.ext.targetSdkVersion
-        //         applicationId 'com.customer.grub'
-        //         resValue "string", "app_name", "Grub"
-        //         resValue "string", "host_name", ""
-        //     }
-                      gokab{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.gokab'
-                resValue "string", "app_name", "GoKab"
-                resValue "string", "host_name", ""
-            }
-                      ace{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.customer.ace'
-                resValue "string", "app_name", "Ace"
-                resValue "string", "host_name", ""
-            }
-                     zest{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.zest.customer'
-                resValue "string", "app_name", "Zest"
-                resValue "string", "host_name", ""
-
-            }
-                        homeric{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.homeric'
-                resValue "string", "app_name", "Homeric"
-                resValue "string", "host_name", ""  
+            smokyKitchen{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.smokyKitchen.royoorders'
+            resValue "string", "app_name", "SmokyKitchen" 
+            resValue "string", "host_name", ""
             }
   }
     // productFlavors {
@@ -813,7 +771,7 @@ android {
     //             dimension "appType"
     //             versionCode 11
     //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersio
+    //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.app.codiner'
     //             resValue "string", "app_name", "Codiner"
@@ -6120,6 +6078,66 @@ android {
     //         targetSdkVersion rootProject.ext.targetSdkVersion
     //         applicationId 'com.lex.royoorders'
     //         resValue "string", "app_name", "Lex" 
+    //         resValue "string", "host_name", ""
+    //         }
+    //         smokyKitchen{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.smokyKitchen.royoorders'
+    //         resValue "string", "app_name", "SmokyKitchen" 
+    //         resValue "string", "host_name", ""
+    //         }
+    //         flank{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.flank.royoorders'
+    //         resValue "string", "app_name", "Flank" 
+    //         resValue "string", "host_name", ""
+    //         }
+    //         zynoride{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.zynoride.royoorders'
+    //         resValue "string", "app_name", "Zynoride" 
+    //         resValue "string", "host_name", ""
+    //         }
+    //         mealsarehere{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.mealsarehere.royoorders'
+    //         resValue "string", "app_name", "Meals are here" 
+    //         resValue "string", "host_name", ""
+    //         }
+    //          loamscape{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.loamscape.royoorders'
+    //         resValue "string", "app_name", "Loamscape" 
+    //         resValue "string", "host_name", ""
+    //         }
+    //         delcolink{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.delcolink.royoorders'
+    //         resValue "string", "app_name", "Delcolink" 
     //         resValue "string", "host_name", ""
     //         }
     // }

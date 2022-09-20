@@ -2581,6 +2581,42 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.smokyKitchen:
+          updateState({
+            shortCode: shortCodes.smokyKitchen,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.flank:
+          updateState({
+            shortCode: shortCodes.flank,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.zynoride:
+          updateState({
+            shortCode: shortCodes.zynoride,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mealsarehere:
+          updateState({
+            shortCode: shortCodes.mealsarehere,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.loamscape:
+          updateState({
+            shortCode: shortCodes.loamscape,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.delcolink:
+          updateState({
+            shortCode: shortCodes.delcolink,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2629,7 +2665,7 @@ export default function ShortCode({route, navigation}) {
     actions
       .initApp({}, header, false, null, null, true)
       .then((res) => {
-        console.log(res,"ressssssssss")
+        console.log(res, 'ressssssssss');
         if (res.data.mobile_banners.length > 0) {
           let preLoadBanners = res.data.mobile_banners.map((item, inx) => {
             return {
