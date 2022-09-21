@@ -1939,10 +1939,10 @@ end
 target 'FairDeal' do
   
 end
-# #SyloMart Target
-# target 'SyloMart' do
+#SyloMart Target
+target 'SyloMart' do
   
-# end
+end
 
 #HezniTaxi Target
 target 'HezniTaxi' do
@@ -2041,6 +2041,16 @@ end
 
 #Delcolink
 target 'Delcolink' do
+
+end
+
+#YouSmokeShop
+target 'YouSmokeShop' do
+
+end
+
+#Doober
+target 'Doober' do
 
 end
 post_install do |installer|

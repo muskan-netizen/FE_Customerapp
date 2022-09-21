@@ -421,6 +421,8 @@ const shortCodes = {
   mealsarehere: 'c00a78',
   loamscape: 'ded864',
   delcolink: 'a2726b',
+  youSmokeShop: '76b26a',
+  doober: 'e8a1af',
 };
 
 const appIds = {
@@ -2095,6 +2097,14 @@ const appIds = {
   delcolink: Platform.select({
     ios: 'com.delcolink.royoorders',
     android: 'com.delcolink.royoorders',
+  }),
+  youSmokeShop: Platform.select({
+    ios: 'com.youSmokeShop.royoorders',
+    android: 'com.youSmokeShop.royoorders',
+  }),
+  doober: Platform.select({
+    ios: 'com.doober.royoorders',
+    android: 'com.doober.royoorders',
   }),
 };
 
