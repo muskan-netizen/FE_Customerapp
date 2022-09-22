@@ -2357,11 +2357,9 @@ export default function Products({route, navigation}) {
         actions.cartItemQty({});
         setIsVisibleModal(false);
       })
-      .catch(
-        (error)=>{
-          console.log(error, "erorrrrrr")
-        }
-      );
+      .catch((error) => {
+        console.log(error, 'erorrrrrr');
+      });
   };
 
   const onRepeat = async () => {
@@ -3607,6 +3605,9 @@ export default function Products({route, navigation}) {
                 ListHeaderComponent={listHeaderComponent2()}
                 stickySectionHeadersEnabled={false}
                 keyExtractor={awesomeChildListKeyExtractor}
+                contentContainerStyle={{
+                  paddingBottom: moderateScaleVertical(60),
+                }}
                 // tabBarStyle={styles.tabBar}
                 // ItemSeparatorComponent={() => <View style={styles.separator} />}
                 renderTab={renderSectionTab}
@@ -3661,7 +3662,7 @@ export default function Products({route, navigation}) {
                 ListEmptyComponent={listEmptyComponent}
               />
             )}
-            <View style={{height: moderateScaleVertical(60)}} />
+            {/* <View style={{height: moderateScaleVertical(60)}} /> */}
 
             {isVisibleModal ? (
               <TouchableWithoutFeedback
@@ -3886,7 +3887,6 @@ export default function Products({route, navigation}) {
             ]}
             visible={updateQtyLoader}
           />
-          {console.log(CartItems, 'CartItemsCartItemsCartItems')}
           {!searchInput && !isVisibleModal && (
             <GradientCartView
               onPress={() => {
@@ -3921,8 +3921,6 @@ export default function Products({route, navigation}) {
               // }
             />
           )}
-
-          {console.log(CartItems, 'CartItemsCartItems')}
 
           <BottomSlideModal
             mainContainView={RenderOfferView}

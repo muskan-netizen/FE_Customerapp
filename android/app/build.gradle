@@ -205,15 +205,57 @@ android {
     flavorDimensions "appType"
 
   productFlavors{
-        grub{
+    
+        //   grub{
+        //         dimension "appType"
+        //         versionCode 1
+        //         versionName "1.0"
+        //         minSdkVersion rootProject.ext.minSdkVersion
+        //         targetSdkVersion rootProject.ext.targetSdkVersion
+        //         applicationId 'com.customer.grub'
+        //         resValue "string", "app_name", "Grub"
+        //         resValue "string", "host_name", ""
+        //     }
+                      gokab{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.customer.grub'
-                resValue "string", "app_name", "Grub"
+                applicationId 'com.gokab'
+                resValue "string", "app_name", "GoKab"
                 resValue "string", "host_name", ""
+            }
+                      ace{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.customer.ace'
+                resValue "string", "app_name", "Ace"
+                resValue "string", "host_name", ""
+            }
+                     zest{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.zest.customer'
+                resValue "string", "app_name", "Zest"
+                resValue "string", "host_name", ""
+
+            }
+                        homeric{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.homeric'
+                resValue "string", "app_name", "Homeric"
+                resValue "string", "host_name", ""  
             }
   }
     // productFlavors {
@@ -1024,12 +1066,12 @@ android {
     //         }
     //         hemptyfy{
     //             dimension "appType"
-    //             versionCode 1
+    //             versionCode 2
     //             versionName "1.0"
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.hemptyfy'
-    //             resValue "string", "app_name", "Hempti Fy"
+    //             applicationId 'com.hemptyfy.orders'
+    //             resValue "string", "app_name", "Hemptify"
     //             resValue "string", "host_name", ""
     //         }
     //         sharu{
@@ -1042,16 +1084,7 @@ android {
     //             resValue "string", "app_name", "Sharu"
     //             resValue "string", "host_name", ""
     //         }
-    //         smcompany{
-    //             dimension "appType"
-    //             versionCode 1
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.smcompany'
-    //             resValue "string", "app_name", "SMCompany" 
-    //             resValue "string", "host_name", ""
-    //         }
+
     //         totum4U{
     //             dimension "appType"
     //             versionCode 1
@@ -1072,16 +1105,7 @@ android {
     //             resValue "string", "app_name", "HMC"
     //             resValue "string", "host_name", ""
     //         }
-    //         groupy{
-    //             dimension "appType"
-    //             versionCode 1
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.groupy'
-    //             resValue "string", "app_name", "Groupy"
-    //             resValue "string", "host_name", ""
-    //         }
+
     //         weeat{
     //             dimension "appType"
     //             versionCode 1
@@ -2784,26 +2808,7 @@ android {
     //             resValue "string", "app_name", "Your Laundry App"
     //             resValue "string", "host_name", ""
     //         }
-    //         hemptyfy{
-    //             dimension "appType"
-    //             versionCode 1
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.hemptyfy'
-    //             resValue "string", "app_name", "Hempti Fy"
-    //             resValue "string", "host_name", ""
-    //         }
-    //         sharu{
-    //             dimension "appType"
-    //             versionCode 1
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.sharu'
-    //             resValue "string", "app_name", "Sharu"
-    //             resValue "string", "host_name", ""
-    //         }
+
     //         smcompany{
     //             dimension "appType"
     //             versionCode 1
@@ -2814,16 +2819,7 @@ android {
     //             resValue "string", "app_name", "SMCompany" 
     //             resValue "string", "host_name", ""
     //         }
-    //         totum4U{
-    //             dimension "appType"
-    //             versionCode 1
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.totum4U'
-    //             resValue "string", "app_name", "Totum4U"
-    //             resValue "string", "host_name", ""
-    //         }
+
     //         hmc{
     //             dimension "appType"
     //             versionCode 136
@@ -2844,16 +2840,7 @@ android {
     //             resValue "string", "app_name", "Groupy"
     //             resValue "string", "host_name", ""
     //         }
-    //         weeat{
-    //             dimension "appType"
-    //             versionCode 1
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.weeat'
-    //             resValue "string", "app_name", "WeEat"
-    //             resValue "string", "host_name", ""
-    //         }
+
     //         gorillas{
     //             dimension "appType"
     //             versionCode 1
@@ -4897,7 +4884,7 @@ android {
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.dropItOffUsa'
+    //         applicationId 'com.dropItOffUsa.royoOrders'
     //         resValue "string", "app_name", "DropItOffUsa"
     //         resValue "string", "host_name", ""
     //         }
@@ -6073,7 +6060,68 @@ android {
     //         resValue "string", "app_name", "Tezras" 
     //         resValue "string", "host_name", ""
     //         }
+    //        eureka{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.eureka.royoorders'
+    //         resValue "string", "app_name", "Eureka" 
+    //         resValue "string", "host_name", ""
+    //         }
+    //        kaypee{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.kaypee.royoorders'
+    //         resValue "string", "app_name", "Kaypee" 
+    //         resValue "string", "host_name", ""
+    //         }
+    //        hitaxi{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.hitaxi.royoorders'
+    //         resValue "string", "app_name", "Hitaxi" 
+    //         resValue "string", "host_name", ""
+    //         }
+
+    //        kwivar{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.kwivar.royoorders'
+    //         resValue "string", "app_name", "Kwivar" 
+    //         resValue "string", "host_name", ""
+    //         }
     
+    //        parcel{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.parcel.royoorders'
+    //         resValue "string", "app_name", "Parcel" 
+    //         resValue "string", "host_name", ""
+    //         }
+    //         lex{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.lex.royoorders'
+    //         resValue "string", "app_name", "Lex" 
+    //         resValue "string", "host_name", ""
+    //         }
     // }
 }
 

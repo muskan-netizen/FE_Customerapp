@@ -947,6 +947,12 @@ const HomeServiceVariantAddons = ({
       onClose();
     }
   };
+
+  console.log(
+    productdetail,
+    'productdetailproductdetailproductdetailproductdetail',
+  );
+
   const addTimeDate = (selectedDate, selectedTime) => {
     // productShedule();
     onClose();
@@ -1295,7 +1301,7 @@ const HomeServiceVariantAddons = ({
             style={{
               ...styles.modalMainViewContainer,
               backgroundColor: isDarkMode
-                ? MyDarkTheme.colors.background
+                ? MyDarkTheme?.colors?.background
                 : '#fff',
             }}>
             <View
@@ -1355,8 +1361,10 @@ const HomeServiceVariantAddons = ({
                     marginTop: moderateScaleVertical(6),
                   }}>
                   {strings.IN}{' '}
-                  {productdetail?.category?.category_detail?.translation[0]
-                    ?.name || productdetail?.category?.category_detail?.slug}
+                  {productdetail?.translation[0]?.title
+                    ? productdetail?.translation[0]?.title
+                    : productdetail?.category?.category_detail?.translation[0]
+                        ?.name}
                 </Text>
 
                 {/* rating View */}

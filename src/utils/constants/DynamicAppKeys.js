@@ -96,8 +96,8 @@ const shortCodes = {
   goody: '397840',
   grub: '2f3120',
   gusto: 'd1b1a0',
-  // gokab: 'fb78f0', live
-  gokab: '578b33', // staging
+  gokab: 'fb78f0', // live
+  // gokab: '578b33', // staging
   suel: '638bd1',
   elixir: '574467',
   ace: '2d98b5',
@@ -409,6 +409,12 @@ const shortCodes = {
   myWayBill: '32f1ae',
   cattch: 'c399db',
   tezras: '424d92',
+  eureka: '7feaa0',
+  kaypee: 'ed9a42',
+  hitaxi: 'fb240c',
+  kwivar: '2037b0',
+  parcel: '60277b',
+  lex: 'a7f382',
 };
 
 const appIds = {
@@ -721,8 +727,8 @@ const appIds = {
     android: 'com.yourlaundryapp',
   }),
   hemptyfy: Platform.select({
-    ios: 'com.hemptyfy',
-    android: 'com.hemptyfy',
+    ios: 'com.hemptyfy.orders',
+    android: 'com.hemptyfy.orders',
   }),
   sharu: Platform.select({
     ios: 'com.sharu',
@@ -1562,8 +1568,8 @@ const appIds = {
     android: 'com.redglee',
   }),
   dropItOffUsa: Platform.select({
-    ios: 'com.dropItOffUsa',
-    android: 'com.dropItOffUsa',
+    ios: 'com.dropItOffUsa.royoOrders',
+    android: 'com.dropItOffUsa.royoOrders',
   }),
   handyPickup: Platform.select({
     ios: 'com.handyPickup',
@@ -2035,6 +2041,30 @@ const appIds = {
   tezras: Platform.select({
     ios: 'com.tezras.royoorders',
     android: 'com.tezras.royoorders',
+  }),
+  eureka: Platform.select({
+    ios: 'com.eureka.royoorders',
+    android: 'com.eureka.royoorders',
+  }),
+  kaypee: Platform.select({
+    ios: 'com.kaypee.royoorders',
+    android: 'com.kaypee.royoorders',
+  }),
+  hitaxi: Platform.select({
+    ios: 'com.hitaxi.royoorders',
+    android: 'com.hitaxi.royoorders',
+  }),
+  kwivar: Platform.select({
+    ios: 'com.kwivar.royoorders',
+    android: 'com.kwivar.royoorders',
+  }),
+  parcel: Platform.select({
+    ios: 'com.parcel.royoorders',
+    android: 'com.parcel.royoorders',
+  }),
+  lex: Platform.select({
+    ios: 'com.lex.royoorders',
+    android: 'com.lex.royoorders',
   }),
 };
 

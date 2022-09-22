@@ -1,6 +1,11 @@
+import BottomSheet, {
+  BottomSheetFlatList,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useCallback, useState} from 'react';
 import {
+  FlatList,
   Image,
   ScrollView,
   StyleSheet,
@@ -9,6 +14,7 @@ import {
   View,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
+import {Shadow} from 'react-native-shadow-2';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
@@ -29,8 +35,6 @@ import {
   showError,
 } from '../utils/helperFunctions';
 import TransparentButtonWithTxtAndIcon from './TransparentButtonWithTxtAndIcon';
-import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
-import {Shadow} from 'react-native-shadow-2';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -85,94 +89,72 @@ const ChooseAddressModal = ({
         showError(error?.message || error?.error);
       });
   };
-  //address view tab
-  const addressView = () => {
+
+  const renderItem = useCallback(({item, index}) => {
+    console.log('fsdlkfhsldkjf');
     return (
-      <ScrollView
-        contentContainerStyle={{
-          marginTop: moderateScaleVertical(10),
-        }}>
-        {allAddress ? (
-          <>
-            {allAddress.map((itm, inx) => {
-              return (
-                <TouchableOpacity
-                  key={String(inx)}
-                  onPress={() => selectAddress(itm)}>
-                  <View
-                    key={inx}
-                    style={{
-                      borderBottomColor: colors.lightGreyBorder,
-                      borderBottomWidth: moderateScaleVertical(1),
-                      borderTopWidth: moderateScaleVertical(1),
-                      borderTopColor: colors.lightGreyBorder,
-                    }}>
-                    <View
-                      style={{
-                        marginHorizontal: moderateScale(24),
-                        marginTop: moderateScaleVertical(20),
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginBottom: moderateScaleVertical(12),
-                      }}>
-                      <View
-                        style={{
-                          flex: 0.1,
-                          alignItems: 'flex-start',
-                          justifyContent: 'center',
-                        }}>
-                        <Image
-                          style={
-                            isDarkMode && {tintColor: MyDarkTheme.colors.text}
-                          }
-                          source={imagePath.home}
-                        />
-                      </View>
-                      <View style={{flex: 0.8}}>
-                        <Text
-                          numberOfLines={2}
-                          style={
-                            isDarkMode
-                              ? [
-                                  styles.address,
-                                  {
-                                    textAlign: 'left',
-                                    color: MyDarkTheme.colors.text,
-                                  },
-                                ]
-                              : [styles.address, {textAlign: 'left'}]
-                          }>
-                          {!!itm?.house_number ? itm?.house_number + ', ' : ''}
-                          {itm?.address}
-                        </Text>
-                      </View>
-                      {selectedAddress ? (
-                        selectedAddress.id == itm.id ? (
-                          <View
-                            style={{
-                              flex: 0.1,
-                              alignItems: 'flex-end',
-                              justifyContent: 'center',
-                            }}>
-                            <Image source={imagePath.done} />
-                          </View>
-                        ) : null
-                      ) : null}
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              );
-            })}
-          </>
-        ) : null}
+      <TouchableOpacity onPress={() => selectAddress(item)}>
         <View
           style={{
-            height: moderateScale(80),
-          }}
-        />
-      </ScrollView>
+            borderBottomColor: colors.lightGreyBorder,
+            borderBottomWidth: moderateScaleVertical(1),
+            borderTopWidth: moderateScaleVertical(1),
+            borderTopColor: colors.lightGreyBorder,
+          }}>
+          <View
+            style={{
+              marginHorizontal: moderateScale(24),
+              marginTop: moderateScaleVertical(20),
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginBottom: moderateScaleVertical(12),
+            }}>
+            <View
+              style={{
+                flex: 0.1,
+                alignItems: 'flex-start',
+                justifyContent: 'center',
+              }}>
+              <Image
+                style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
+                source={imagePath.home}
+              />
+            </View>
+            <View style={{flex: 0.8}}>
+              <Text
+                numberOfLines={2}
+                style={
+                  isDarkMode
+                    ? [
+                        styles.address,
+                        {
+                          textAlign: 'left',
+                          color: MyDarkTheme.colors.text,
+                        },
+                      ]
+                    : [styles.address, {textAlign: 'left'}]
+                }>
+                {!!item?.house_number ? item?.house_number + ', ' : ''}
+                {item?.address}
+              </Text>
+            </View>
+            {selectedAddress ? (
+              selectedAddress.id == item.id ? (
+                <View
+                  style={{
+                    flex: 0.1,
+                    alignItems: 'flex-end',
+                    justifyContent: 'center',
+                  }}>
+                  <Image source={imagePath.done} />
+                </View>
+              ) : null
+            ) : null}
+          </View>
+        </View>
+      </TouchableOpacity>
     );
-  };
+  }, []);
 
   const handleComponent = useCallback(() => {
     return (
@@ -199,8 +181,8 @@ const ChooseAddressModal = ({
         key={isVisible}
         index={0}
         snapPoints={[height / 1.3]}
-        activeOffsetY={[-1, 1]}
-        failOffsetX={[-5, 5]}
+        // activeOffsetY={[-1, 1]}
+        // failOffsetX={[-5, 5]}
         enablePanDownToClose={true}
         animateOnMount={true}
         // // handleIndicatorStyle={{
@@ -218,72 +200,60 @@ const ChooseAddressModal = ({
           }
           playHapticEffect(hapticEffects.impactMedium);
         }}>
-        <View style={{flex: 1}}>
-          <BottomSheetScrollView
-            keyboardShouldPersistTaps="handled"
+        <BottomSheetView
+          style={{
+            ...styles.modalMainViewContainer,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : colors.white,
+          }}>
+          <View style={styles.selectAndAddesssView}>
+            <Text
+              numberOfLines={1}
+              style={
+                isDarkMode
+                  ? [styles.selectAddressText, {color: MyDarkTheme.colors.text}]
+                  : styles.selectAddressText
+              }>
+              {strings.SELECT_AN_ADDRESS}
+            </Text>
+          </View>
+          <TransparentButtonWithTxtAndIcon
+            btnText={strings.ADD_NEW_ADDRESS}
+            icon={imagePath.add}
+            onPress={openAddressModal}
+            textStyle={
+              isDarkMode
+                ? {marginLeft: 10, color: MyDarkTheme.colors.text}
+                : {marginLeft: 10}
+            }
+            borderRadius={moderateScale(13)}
+            containerStyle={{
+              marginHorizontal: 20,
+              alignItems: 'flex-start',
+            }}
+            marginBottom={moderateScaleVertical(20)}
+          />
+          <View style={{height: 1, backgroundColor: colors.lightGreyBg}} />
+          <View style={styles.savedAddressView}>
+            <Text
+              numberOfLines={1}
+              style={
+                isDarkMode
+                  ? [styles.savedAddressText, {color: MyDarkTheme.colors.text}]
+                  : styles.savedAddressText
+              }>
+              {strings.SAVED_ADDRESS}
+            </Text>
+          </View>
+
+          <BottomSheetFlatList
+            data={allAddress}
+            keyExtractor={(item, index) => String(index)}
             showsVerticalScrollIndicator={false}
-            style={{
-              ...styles.modalMainViewContainer,
-              backgroundColor: isDarkMode
-                ? MyDarkTheme.colors.lightDark
-                : colors.white,
-            }}>
-            <View
-              style={{
-                ...styles.modalMainViewContainer,
-                backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.lightDark
-                  : colors.white,
-              }}>
-              <View style={styles.selectAndAddesssView}>
-                <Text
-                  numberOfLines={1}
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.selectAddressText,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.selectAddressText
-                  }>
-                  {strings.SELECT_AN_ADDRESS}
-                </Text>
-              </View>
-              <TransparentButtonWithTxtAndIcon
-                btnText={strings.ADD_NEW_ADDRESS}
-                icon={imagePath.add}
-                onPress={openAddressModal}
-                textStyle={
-                  isDarkMode
-                    ? {marginLeft: 10, color: MyDarkTheme.colors.text}
-                    : {marginLeft: 10}
-                }
-                borderRadius={moderateScale(13)}
-                containerStyle={{
-                  marginHorizontal: 20,
-                  alignItems: 'flex-start',
-                }}
-                marginBottom={moderateScaleVertical(20)}
-              />
-              <View style={{height: 1, backgroundColor: colors.lightGreyBg}} />
-              <View style={styles.savedAddressView}>
-                <Text
-                  numberOfLines={1}
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.savedAddressText,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.savedAddressText
-                  }>
-                  {strings.SAVED_ADDRESS}
-                </Text>
-              </View>
-              {addressView()}
-            </View>
-          </BottomSheetScrollView>
-        </View>
+            renderItem={renderItem}
+          />
+        </BottomSheetView>
       </BottomSheet>
     );
   }
@@ -348,7 +318,7 @@ export function stylesData({fontFamily}) {
     },
     savedAddressView: {
       flexDirection: 'row',
-      marginTop: moderateScaleVertical(15),
+      marginVertical: moderateScaleVertical(15),
       paddingHorizontal: moderateScale(24),
     },
     savedAddressText: {

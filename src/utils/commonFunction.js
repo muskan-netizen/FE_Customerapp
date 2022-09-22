@@ -49,7 +49,7 @@ const cameraHandler = async (data, option) => {
 const toFixed = (n, fixed) => {
   if (n > 0 && fixed > 0) {
     // return `${n}`.match(new RegExp(`^-?\\d+(?:\.\\d{0,${fixed}})?`))[0];
-    return n.toFixed(fixed);
+    return Number(n).toFixed(fixed);
   } else return Math.trunc(n);
 };
 
