@@ -423,6 +423,8 @@ const shortCodes = {
   delcolink: 'a2726b',
   youSmokeShop: '76b26a',
   doober: 'e8a1af',
+  inmotion: '0e2db7',
+  eatHalal: '607c84',
 };
 
 const appIds = {
@@ -2105,6 +2107,14 @@ const appIds = {
   doober: Platform.select({
     ios: 'com.doober.royoorders',
     android: 'com.doober.royoorders',
+  }),
+  inmotion: Platform.select({
+    ios: 'com.inmotion.royoorders',
+    android: 'com.inmotion.royoorders',
+  }),
+  eatHalal: Platform.select({
+    ios: 'com.eathalal.royoorders',
+    android: 'com.eathalal.royoorders',
   }),
 };
 

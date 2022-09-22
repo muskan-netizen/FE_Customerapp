@@ -2629,6 +2629,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.inmotion:
+          updateState({
+            shortCode: shortCodes.inmotion,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.eatHalal:
+          updateState({
+            shortCode: shortCodes.eatHalal,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
