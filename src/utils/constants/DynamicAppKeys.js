@@ -426,6 +426,7 @@ const shortCodes = {
   inmotion: '0e2db7',
   eatHalal: '607c84',
   jeevann: '31afbb',
+  novamed: '0954a9',
 };
 
 const appIds = {
@@ -2120,6 +2121,10 @@ const appIds = {
   jeevann: Platform.select({
     ios: 'com.jeevann.royoorders',
     android: 'com.jeevann.royoorders',
+  }),
+  novamed: Platform.select({
+    ios: 'com.novamed.royoorders',
+    android: 'com.novamed.royoorders',
   }),
 };
 

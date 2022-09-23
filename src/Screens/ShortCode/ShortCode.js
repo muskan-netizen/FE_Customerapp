@@ -2647,6 +2647,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.novamed:
+          updateState({
+            shortCode: shortCodes.novamed,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
