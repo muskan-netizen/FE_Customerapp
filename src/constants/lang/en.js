@@ -1000,4 +1000,5 @@ Amount`,
   DELETE_ADDRESS_CONFIRM_MSG: 'Are you sure you want to delete an address?',
   MINIMUM_ORDER_VALUE: 'Minimum order value',
   ORDER: 'Orders',
+   THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us'
 };

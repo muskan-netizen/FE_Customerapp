@@ -930,4 +930,5 @@ montant`,
   START_CHAT: 'Start Chat',
   MINIMUM_ORDER_VALUE: 'Minimum order value',
   ORDER: 'Orders',
+  THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us'
 };
