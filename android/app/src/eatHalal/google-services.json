@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "629808565419",
+    "project_id": "eathalal-a5f0e",
+    "storage_bucket": "eathalal-a5f0e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:629808565419:android:90d0f8f983c023a4c83bee",
+        "android_client_info": {
+          "package_name": "com.eathalal.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "629808565419-0b63fe8vg563q7k8ttg9ed7g7i3rulfh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eathalal.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "629808565419-c74aro0av7923jbopj6d2761qimve1su.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eathalal.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "629808565419-j950kjv2u1lc2n9g8q46329l74tq21dj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eathalal.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "629808565419-fb0q2vcqt8b2f0vf5buv452vpjbcdncj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOx8mxPBCIf92bwiOmH2yrEhzWM6D-qc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "629808565419-fb0q2vcqt8b2f0vf5buv452vpjbcdncj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "629808565419-1dg1tfj6o3is814al2eumnf5smj6r41k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.eathalal.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

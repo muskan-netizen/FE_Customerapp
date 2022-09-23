@@ -446,6 +446,7 @@ export default function Account3({navigation}) {
           // iconRight={imagePath.goRight}
           // rightIconStyle={{tintColor: colors.textGreyLight}}
         />
+
         {!!userData?.auth_token &&
           Platform.OS === 'android' &&
           (businessType == 'taxi' ? null : (
@@ -508,7 +509,26 @@ export default function Account3({navigation}) {
           // iconRight={imagePath.goRight}
           // rightIconStyle={{tintColor: colors.textGreyLight}}
         />
-
+        {!!userData?.auth_token ? null : (
+          <View style={styles.loginView}>
+            <TouchableOpacity
+              // onPress={()=>actions.isVendorNotification(true)}
+              onPress={() => actions.setAppSessionData('on_login')}
+              style={styles.touchAbleLoginVIew}>
+              <Text
+                style={{
+                  ...styles.loginLogoutText,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
+                {strings.LOGIN}
+              </Text>
+              <Image
+                source={imagePath.rightBlue}
+                style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
         {!!userData?.auth_token &&
           !!appMainData?.is_admin &&
           businessType != 4 && (

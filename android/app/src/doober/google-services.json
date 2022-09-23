@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "763580318308",
+    "project_id": "doober-9d8d1",
+    "storage_bucket": "doober-9d8d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763580318308:android:1d3580a0384eb623d7d571",
+        "android_client_info": {
+          "package_name": "com.doober.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "763580318308-1ib9rcockusaigl11qeaq78sl6fjc6ur.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doober.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "763580318308-423df0bt9t36a3mdd54c1shc9dku7qa4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doober.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "763580318308-lr3vq0a9qbcmmod6j2rdkig9n3958cl2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doober.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "763580318308-0q8g5rasi0j5t0kkitmd1msbo6aaa4nt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNlEQm2snHU6Xc9TPnsErdTRBzsRSpNHY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763580318308-0q8g5rasi0j5t0kkitmd1msbo6aaa4nt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "763580318308-2t4j0ivu49l5qoq4bkikkc02d0u6hicp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doober.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

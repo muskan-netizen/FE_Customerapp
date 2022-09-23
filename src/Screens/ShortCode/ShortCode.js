@@ -2617,6 +2617,30 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.youSmokeShop:
+          updateState({
+            shortCode: shortCodes.youSmokeShop,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.doober:
+          updateState({
+            shortCode: shortCodes.doober,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.inmotion:
+          updateState({
+            shortCode: shortCodes.inmotion,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.eatHalal:
+          updateState({
+            shortCode: shortCodes.eatHalal,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
