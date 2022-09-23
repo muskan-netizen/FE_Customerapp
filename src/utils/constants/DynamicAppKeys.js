@@ -416,6 +416,11 @@ const shortCodes = {
   parcel: '60277b',
   lex: 'a7f382',
   smokyKitchen: '8c4efa',
+  flank: '3de814',
+  zynoride: '2768e6',
+  mealsarehere: 'c00a78',
+  loamscape: 'ded864',
+  delcolink: 'a2726b',
 };
 
 const appIds = {
@@ -2070,6 +2075,26 @@ const appIds = {
   smokyKitchen: Platform.select({
     ios: 'com.smokyKitchen.royoorders',
     android: 'com.smokyKitchen.royoorders',
+  }),
+  flank: Platform.select({
+    ios: 'com.flank.royoorders',
+    android: 'com.flank.royoorders',
+  }),
+  zynoride: Platform.select({
+    ios: 'com.zynoride.royoorders',
+    android: 'com.zynoride.royoorders',
+  }),
+  mealsarehere: Platform.select({
+    ios: 'com.mealsarehere.royoorders',
+    android: 'com.mealsarehere.royoorders',
+  }),
+  loamscape: Platform.select({
+    ios: 'com.loamscape.royoorders',
+    android: 'com.loamscape.royoorders',
+  }),
+  delcolink: Platform.select({
+    ios: 'com.delcolink.royoorders',
+    android: 'com.delcolink.royoorders',
   }),
 };
 

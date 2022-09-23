@@ -205,15 +205,15 @@ android {
     flavorDimensions "appType"
 
   productFlavors{
-          donepacked{
-                dimension "appType"
-                versionCode 7
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.donepacked'
-                resValue "string", "app_name", "Donepacked"
-                resValue "string", "host_name", ""
+            loamscape{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.loamscape.royoorders'
+            resValue "string", "app_name", "Loamscape" 
+            resValue "string", "host_name", ""
             }
   }
     productFlavors {
@@ -771,7 +771,7 @@ android {
                 dimension "appType"
                 versionCode 11
                 versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersio
+                minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
                 applicationId 'com.app.codiner'
                 resValue "string", "app_name", "Codiner"
@@ -6088,6 +6088,56 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.smokyKitchen.royoorders'
             resValue "string", "app_name", "SmokyKitchen" 
+            resValue "string", "host_name", ""
+            }
+            flank{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.flank.royoorders'
+            resValue "string", "app_name", "Flank" 
+            resValue "string", "host_name", ""
+            }
+            zynoride{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.zynoride.royoorders'
+            resValue "string", "app_name", "Zynoride" 
+            resValue "string", "host_name", ""
+            }
+            mealsarehere{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.mealsarehere.royoorders'
+            resValue "string", "app_name", "Meals are here" 
+            resValue "string", "host_name", ""
+            }
+             loamscape{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.loamscape.royoorders'
+            resValue "string", "app_name", "Loamscape" 
+            resValue "string", "host_name", ""
+            }
+            delcolink{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.delcolink.royoorders'
+            resValue "string", "app_name", "Delcolink" 
             resValue "string", "host_name", ""
             }
     }

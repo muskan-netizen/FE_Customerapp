@@ -11,3 +11,5 @@
 -keep class com.rt2zz.reactnativecontacts.** {*;}
 -keepclassmembers class com.rt2zz.reactnativecontacts.** {*;}
 -keep public class com.horcrux.svg.** {*;}
+-keep class com.facebook.react.turbomodule.** { *; }
+
