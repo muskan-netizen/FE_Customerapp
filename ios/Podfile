@@ -1989,6 +1989,36 @@ end
 target 'Tezras' do
 
 end
+
+#Eureka
+target 'Eureka' do
+
+end
+
+#Kaypee
+target 'Kaypee' do
+
+end
+
+#Hitaxi
+target 'Hitaxi' do
+
+end
+
+#Kwivar
+target 'Kwivar' do
+
+end
+
+#Parcel
+target 'Parcel' do
+
+end
+
+#Lex
+target 'Lex' do
+
+end
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

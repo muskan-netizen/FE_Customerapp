@@ -2545,6 +2545,42 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.eureka:
+          updateState({
+            shortCode: shortCodes.eureka,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kaypee:
+          updateState({
+            shortCode: shortCodes.kaypee,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hitaxi:
+          updateState({
+            shortCode: shortCodes.hitaxi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kwivar:
+          updateState({
+            shortCode: shortCodes.kwivar,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.parcel:
+          updateState({
+            shortCode: shortCodes.parcel,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.lex:
+          updateState({
+            shortCode: shortCodes.lex,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2579,13 +2615,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: 'fa47e7',
+        // code: 'a7952f',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '245bae',
+        // code: 'a7952f',
         code: shortCode,
       };
     }

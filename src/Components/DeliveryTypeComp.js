@@ -138,19 +138,6 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
                 ? (width - moderateScale(16)) / 2
                 : (width - moderateScale(16)) / 3,
           }}>
-          {/* <Image
-          source={item.icon}
-          style={{
-            ...styles.tabItemImg,
-            tintColor:
-              item.isActive && isDarkMode
-                ? MyDarkTheme.colors.white
-                : item.isActive && !isDarkMode
-                  ? themeColors.primary_color
-                  : colors.greyLight,
-          }}
-          resizeMode="contain"
-        /> */}
           <Text
             style={{
               ...styles.tabItemTxt,
@@ -166,7 +153,7 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
         </TouchableOpacity>
       );
     },
-    [tabs, appData],
+    [tabs, appData, cartItemCount],
   );
 
   const awesomeChildListKeyExtractor = useCallback(

@@ -1,0 +1,14 @@
+#include "Pods/Target Support Files/Pods-available_pods-Lex/Pods-available_pods-Lex.debug.xcconfig"
+
+PROJECT_APPLE_ID = 1645282123
+PROJECT_BUNDLE_ID =com.lex.royoorders
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = Lex
+PROJECT_GOOGLE_CLIENT_ID =740151605966-3gkupr886mcm4vam5v817skdma4m1v6h.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.740151605966-3gkupr886mcm4vam5v817skdma4m1v6h
+PROJECT_FACEBOOK_ID = 665892928200556
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =LexInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4
+

@@ -105,7 +105,7 @@ function Cart({navigation, route}) {
   const reloadData = useSelector((state) => state?.reloadData?.reloadData);
   const [defaultSelectedTable, setDefaultSelectedTable] = useState('');
   const [type, setType] = useState('');
-  const [vendorAddress, setVendorAddress] = useState('');
+  const [vendorAddress, setVendorAddress] = useState({});
   const [instruction, setInstruction] = useState('');
   const [selectedDateFromCalendar, setSelectedDateFromCalendar] = useState('');
   const [selectedTimeSlots, setSelectedTimeSlots] = useState('');
@@ -304,7 +304,7 @@ function Cart({navigation, route}) {
       checkforAddressUpdate();
     }
   }, [selectedAddress, allAddresss]);
-  console.log(allAddresss, 'allAddresss..');
+
   //check for addreess Update and change
   const checkforAddressUpdate = () => {
     if (allAddresss.length == 0) {
@@ -377,6 +377,8 @@ function Cart({navigation, route}) {
         closeForm();
         actions.cartItemQty(res);
         setIsShimmerLoading(false);
+        dineInType != 'delivery' &&
+          setVendorAddress(res?.data?.vendor_details?.vendor_address || {});
         let checkDate = !!res?.data?.scheduled_date_time;
         updateState({deliveryFeeLoader: false, isSubmitFaqLoader: false});
 
@@ -501,7 +503,6 @@ function Cart({navigation, route}) {
             setDateAndTimeSchedule();
           }
         } else {
-          setVendorAddress('');
           setCartItems([]);
           setCartData({});
           updateState({
@@ -618,7 +619,8 @@ function Cart({navigation, route}) {
   };
 
   const bottomButtonClick = () => {
-    updateState({isLoadingB: true, isModalVisibleForClearCart: false});
+    setIsShimmerLoading(true);
+    updateState({isModalVisibleForClearCart: false});
     removeItem('selectedTable');
     setTimeout(() => {
       clearEntireCart();
@@ -1151,14 +1153,7 @@ function Cart({navigation, route}) {
     console.log(headerData, 'headerData');
 
     actions
-      .placeOrder(data, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        latitude: !isEmpty(location) ? location?.latitude.toString() : '',
-        longitude: !isEmpty(location) ? location?.longitude.toString() : '',
-        // systemuser: DeviceInfo.getUniqueId(),
-      })
+      .placeOrder(data, headerData)
       .then((res) => {
         console.log(res, 'placeOrder');
         actions.reloadData(!reloadData);
@@ -2651,7 +2646,6 @@ function Cart({navigation, route}) {
                                   }}>
                                   {i?.quantity} X{' '}
                                 </Text>
-
                                 <Text
                                   style={{
                                     color: isDarkMode
@@ -2677,9 +2671,7 @@ function Cart({navigation, route}) {
                                   {`${currencies?.primary_currency?.symbol}${
                                     // Number(i?.pvariant?.multiplier) *
                                     currencyNumberFormatter(
-                                      Number(
-                                        i?.variants?.quantity_quantity_price,
-                                      ),
+                                      Number(i?.variants?.quantity_price),
                                       appData?.profile?.preferences
                                         ?.digit_after_decimal,
                                     )
@@ -4324,7 +4316,7 @@ function Cart({navigation, route}) {
 
   const homeType = (data) => {
     let value = strings.HOME;
-    if (!!vendorAddress) {
+    if (!isEmpty(vendorAddress)) {
       return (value = strings.HOME_1);
     }
     switch (data?.type) {
@@ -4349,7 +4341,7 @@ function Cart({navigation, route}) {
   const getHeader = () => {
     return (
       <TouchableOpacity
-        disabled={!!vendorAddress}
+        disabled={!isEmpty(vendorAddress)}
         onPress={() => setModalVisible(true)}
         style={{
           ...styles.topLable,
@@ -4374,7 +4366,7 @@ function Cart({navigation, route}) {
               }}>
               {homeType(selectedAddressData)}
             </Text>
-            {console.log(selectedAddressData, 'selectedAddressData.')}
+
             <Text
               numberOfLines={2}
               style={{
@@ -4382,8 +4374,8 @@ function Cart({navigation, route}) {
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 marginTop: moderateScaleVertical(4),
               }}>
-              {vendorAddress
-                ? vendorAddress
+              {!isEmpty(vendorAddress)
+                ? vendorAddress?.address
                 : selectedAddressData
                 ? `${
                     !!selectedAddressData?.house_number
@@ -4394,7 +4386,7 @@ function Cart({navigation, route}) {
             </Text>
           </View>
         </View>
-        {!vendorAddress && (
+        {isEmpty(vendorAddress) && (
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => setModalVisible(true)}>
