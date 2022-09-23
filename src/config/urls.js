@@ -10,7 +10,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'
 // export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1'
-// export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1' // surivendor sir
+// export const API_BASE_URL = 'http://192.168.99.136:8001/api/v1'; // amit sir
 
 // export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1'
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
@@ -27,7 +27,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL='https://halatalabat.com/api/v1';
 // export const API_BASE_URL = 'https://marksoublet.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://papiruki.com/api/v1'
-// export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
+export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
 // export const API_BASE_URL = 'https://baubau.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'https://hokitch.com/api/v1';
@@ -218,7 +218,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://canupickmeup.com/api/v1';
 
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
-export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
+// export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://hemptify.com/api/v1';
 // export const API_BASE_URL = 'https://sirvu.ca/api/v1';

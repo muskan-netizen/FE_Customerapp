@@ -1726,6 +1726,7 @@ export default function Products({route, navigation}) {
                 : [...productListData, ...res?.data?.products.data],
             );
           } else {
+            loadMore = false;
             setLoading(false);
           }
         }

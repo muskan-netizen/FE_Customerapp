@@ -109,6 +109,7 @@ export default function Home({route, navigation}) {
     isSubscription: true,
     stopOrderModalVisible: true,
     curLatLong: null,
+    selectedFilterType: {},
   });
 
   const {
@@ -125,7 +126,7 @@ export default function Home({route, navigation}) {
     openVendor,
     closeVendor,
     bestSeller,
-
+    selectedFilterType,
     isVoiceRecord,
     singleVendor,
     selectedAddonSet,
@@ -163,6 +164,9 @@ export default function Home({route, navigation}) {
       paramData?.details?.formatted_address != location?.address
     ) {
       _getLocationFromParams();
+      updateState({
+        selectedFilterType: {},
+      });
     }
   }, [paramData?.details]);
 
@@ -410,11 +414,6 @@ export default function Home({route, navigation}) {
     {
       var selectedVendorType = null;
       var defaultVendorType = null;
-
-      console.log(
-        'dineInTypedineInType',
-        appData?.profile?.preferences?.vendorMode,
-      );
 
       if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
         defaultVendorType = appData?.profile?.preferences?.vendorMode[0]?.type; //
@@ -753,6 +752,11 @@ export default function Home({route, navigation}) {
 
   const selcetedToggle = (type) => {
     actions.dineInData(type);
+
+    updateState({
+      selectedFilterType: {},
+    });
+
     if (dineInType != type) {
       {
         updateState({
@@ -773,6 +777,7 @@ export default function Home({route, navigation}) {
       openVendor: selectedFilter?.id == 1 ? 1 : 0,
       closeVendor: selectedFilter?.id == 2 ? 1 : 0,
       bestSeller: selectedFilter?.id == 3 ? 1 : 0,
+      selectedFilterType: selectedFilter,
     });
     homeData(location, selectedFilter);
   };
@@ -1068,6 +1073,7 @@ export default function Home({route, navigation}) {
                 onPressAddLaundryItem={onPressAddLaundryItem}
                 isLoadingAddons={isLoadingAddons}
                 selectedHomeCategory={selectedHomeCategory}
+                selectedFilterType={selectedFilterType}
               />
             )}
           </>
@@ -1176,6 +1182,7 @@ export default function Home({route, navigation}) {
                 onClose={_closeModal}
                 onPressSubscribe={_onPressSubscribe}
                 isSubscription={isSubscription}
+                selectedFilterType={selectedFilterType}
               />
             )}
           </>
@@ -1231,6 +1238,7 @@ export default function Home({route, navigation}) {
                 onClose={_closeModal}
                 onPressSubscribe={_onPressSubscribe}
                 isSubscription={isSubscription}
+                selectedFilterType={selectedFilterType}
               />
             )}
           </>

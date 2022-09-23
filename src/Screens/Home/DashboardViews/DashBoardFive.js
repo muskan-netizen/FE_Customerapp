@@ -9,8 +9,8 @@ import {
   RefreshControl,
   ScrollView,
   Text,
-  View,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {useDarkMode} from 'react-native-dark-mode';
@@ -74,6 +74,7 @@ export default function DashBoardFive({
   onClose = () => {},
   onPressSubscribe = () => {},
   isSubscription = false,
+  selectedFilterType = {},
 }) {
   const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
@@ -98,7 +99,7 @@ export default function DashBoardFive({
     isVendorColumnList: false,
     vendorsData: [],
     showMenu: false,
-    currSelectedFilter: null,
+
     categoriesData: [],
     seeMore: false,
   });
@@ -140,13 +141,6 @@ export default function DashBoardFive({
       categoriesData: [],
     });
   }, [appMainData?.categories]);
-
-  const {currSelectedFilter} = state;
-
-  const onSelectedFilter = (selectedFilter) => {
-    updateState({showMenu: false, currSelectedFilter: selectedFilter});
-    onVendorFilterSeletion(selectedFilter);
-  };
 
   const homeAllFilters = () => {
     let homeFilter = [
@@ -767,9 +761,9 @@ export default function DashBoardFive({
                         ? MyDarkTheme.colors.text
                         : colors.black,
                     }}>
-                    {!currSelectedFilter
+                    {isEmpty(selectedFilterType)
                       ? strings.RELEVANCE
-                      : currSelectedFilter?.type}
+                      : selectedFilterType?.type}
                   </Text>
                 </View>
               </MenuTrigger>
@@ -784,7 +778,7 @@ export default function DashBoardFive({
                   return (
                     <View key={index}>
                       <MenuOption
-                        onSelect={() => onSelectedFilter(item)}
+                        onSelect={() => onVendorFilterSeletion(item)}
                         key={String(index)}
                         text={item?.type}
                         style={{
