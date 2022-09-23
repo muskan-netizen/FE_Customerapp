@@ -425,6 +425,7 @@ const shortCodes = {
   doober: 'e8a1af',
   inmotion: '0e2db7',
   eatHalal: '607c84',
+  jeevann: '31afbb',
 };
 
 const appIds = {
@@ -2115,6 +2116,10 @@ const appIds = {
   eatHalal: Platform.select({
     ios: 'com.eathalal.royoorders',
     android: 'com.eathalal.royoorders',
+  }),
+  jeevann: Platform.select({
+    ios: 'com.jeevann.royoorders',
+    android: 'com.jeevann.royoorders',
   }),
 };
 

@@ -2641,6 +2641,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.jeevann:
+          updateState({
+            shortCode: shortCodes.jeevann,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

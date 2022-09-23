@@ -6191,6 +6191,16 @@ android {
             resValue "string", "app_name", "Eat Halal" 
             resValue "string", "host_name", ""
             }
+            jeevann{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.jeevann.royoorders'
+            resValue "string", "app_name", "Jeevann" 
+            resValue "string", "host_name", ""
+            }
     }
 }
 
