@@ -125,6 +125,8 @@ android {
      packagingOptions {
         pickFirst '**/*.so'
     }
+
+    
    
     dexOptions {
         javaMaxHeapSize "4g"
@@ -216,15 +218,15 @@ android {
         //         resValue "string", "app_name", "Grub"
         //         resValue "string", "host_name", ""
         //     }
-                      gokab{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.gokab'
-                resValue "string", "app_name", "GoKab"
-                resValue "string", "host_name", ""
+                            myWayBill{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.mywaybill.royoorders'
+            resValue "string", "app_name", "MYWAYBILL" 
+            resValue "string", "host_name", ""
             }
                       ace{
                 dimension "appType"

@@ -10,7 +10,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'
 // export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1'
-// export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1' // surivendor sir
+// export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1' // surandar sir
 
 // export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1'
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
