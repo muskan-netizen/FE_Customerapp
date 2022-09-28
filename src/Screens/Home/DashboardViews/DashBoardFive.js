@@ -738,7 +738,7 @@ export default function DashBoardFive({
                   style={{
                     ...styles.viewAllText,
 
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    color: isDarkMode ? MyDarkTheme.colors.text : themeColors.primary_color,
                   }}>
                   {strings.VIEW_ALL}
                 </Text>

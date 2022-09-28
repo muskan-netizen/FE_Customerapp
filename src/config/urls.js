@@ -1,5 +1,5 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL ='https://sales.focushires.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.100.66:9091/api/v1';
@@ -163,7 +163,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://swantaxi.net/api/v1';
 // export const API_BASE_URL = 'https://order.orderfirst.store/api/v1';
 //baytukom
-// export const API_BASE_URL ='https://baytukom-order.netsolutionindia.com/api/v1';
+export const API_BASE_URL ='https://baytukom-order.netsolutionindia.com/api/v1';
 
 //littlebird
 // export const API_BASE_URL = 'https://littlebird.store/api/v1';
