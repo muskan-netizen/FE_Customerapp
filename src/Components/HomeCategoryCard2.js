@@ -38,11 +38,11 @@ const HomeCategoryCard2 = ({
   const onLoad = (evl) => {};
 
   let imgHeight =
-    appStyle?.homePageLayout === 5 ? moderateScale(80) : moderateScale(50);
+    appStyle?.homePageLayout === 5 ? moderateScale(60) : moderateScale(50);
   let imgWidth =
-    appStyle?.homePageLayout === 5 ? moderateScale(80) : moderateScale(50);
+    appStyle?.homePageLayout === 5 ? moderateScale(60) : moderateScale(50);
   let imgRadius =
-    appStyle?.homePageLayout === 5 ? moderateScale(40) : moderateScale(25);
+    appStyle?.homePageLayout === 5 ? moderateScale(30) : moderateScale(25);
 
   return (
     <TouchableOpacity

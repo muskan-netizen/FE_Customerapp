@@ -163,7 +163,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://swantaxi.net/api/v1';
 // export const API_BASE_URL = 'https://order.orderfirst.store/api/v1';
 //baytukom
-export const API_BASE_URL ='https://baytukom-order.netsolutionindia.com/api/v1';
+// export const API_BASE_URL ='https://baytukom-order.netsolutionindia.com/api/v1';
 
 //littlebird
 // export const API_BASE_URL = 'https://littlebird.store/api/v1';
@@ -287,7 +287,7 @@ export const API_BASE_URL ='https://baytukom-order.netsolutionindia.com/api/v1';
 // export const API_BASE_URL = 'https://marketplace.verofax.com/api/v1';
 // export const API_BASE_URL = 'https://order.loopwhole.ca/api/v1';
 // export const API_BASE_URL = 'https://elcheregio.mx/api/v1';
-// export const API_BASE_URL = 'https://donepacked.com/api/v1';
+export const API_BASE_URL = 'https://donepacked.com/api/v1';
 // export const API_BASE_URL = 'https://cannabusxpress.com/api/v1';
 // export const API_BASE_URL = 'https://order-dev.taquick.com/api/v1';
 // export const API_BASE_URL = 'https://yeboy.mx/api/v1';

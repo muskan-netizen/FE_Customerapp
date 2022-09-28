@@ -106,7 +106,7 @@ export default function DashBoardFive({
     state;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
-
+ console.log(appMainData,"appMainDataappMainData")
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
