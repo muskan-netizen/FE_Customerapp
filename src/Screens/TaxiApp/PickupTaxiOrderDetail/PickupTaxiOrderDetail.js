@@ -244,7 +244,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   //     updateState({ isLoading: false });
   //   }
   // }, []);
-
+  console.log(urlValue,"urlValueurlValueurlValueurlValue")
   useInterval(
     () => {
       if (urlValue) {
@@ -295,7 +295,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         '/order-details/',
       )
     : null;
-  console.log(new_dispatch_traking_url, 'new_dispatch_traking_url');
+  console.log(new_dispatch_traking_url, 'new_dispatch_traking_urlnew_dispatch_traking_url');
   /*********Update driver detail screen********* */
   const _updateDriverLocationLocation = async (url) => {
     let apiData = {
@@ -363,7 +363,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
           cancelError: null,
         });
         console.log('error raised', error);
-        // showError(error?.message || error?.error);
+        showError(error?.message || error?.error);
       }
     }
   };
