@@ -16,8 +16,8 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
-export const API_BASE_URL = 'https://perucabs.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://perucabs.com/api/v1';
 
 // export const API_BASE_URL = 'https://smokykitchen.royoorders.com/api/v1';
 
@@ -123,7 +123,7 @@ export const API_BASE_URL = 'https://perucabs.com/api/v1';
 // export const API_BASE_URL = 'https://d8f2-103-72-170-243.ngrok.io/api/v1';
 
 //heyBuddy
-export const API_BASE_URL = 'https://heybuddy.com.mx/api/v1';
+// export const API_BASE_URL = 'https://heybuddy.com.mx/api/v1';
 
 // export const API_BASE_URL = 'https://groupystore.com/api/v1';
 // export const API_BASE_URL = 'https://dimahalal.com/api/v1'; // dimaVega
@@ -176,9 +176,7 @@ export const API_BASE_URL = 'https://heybuddy.com.mx/api/v1';
 
 // knock knock
 
-// export const API_BASE_URL = 'https://knockknock.online/api/v1'
-
-// export const API_BASE_URL = 'https://knockknock.online/api/v1'
+// export const API_BASE_URL = 'https://order.knockknock.online/api/v1';
 
 // export const API_BASE_URL = 'https://papiruki.com/api/v1'
 

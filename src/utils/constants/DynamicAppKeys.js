@@ -426,7 +426,8 @@ const shortCodes = {
   inmotion: '0e2db7',
   eatHalal: '607c84',
   jeevann: '31afbb',
-  novamed: '0954a9',
+  novamed: '3b5cd2',
+  awamer: 'c6df5f',
 };
 
 const appIds = {
@@ -2125,6 +2126,10 @@ const appIds = {
   novamed: Platform.select({
     ios: 'com.novamed.royoorders',
     android: 'com.novamed.royoorders',
+  }),
+  awamer: Platform.select({
+    ios: 'com.awamer.royoorders',
+    android: 'com.awamer.royoorders',
   }),
 };
 
