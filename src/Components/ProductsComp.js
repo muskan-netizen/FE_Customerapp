@@ -64,22 +64,18 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       <FastImage
-      resizeMode='contain'
+        resizeMode="contain"
         source={{
           uri: imageUrl,
           cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.high,
-          
         }}
         style={{
           height: moderateScale(100),
           width: width / 2.5,
-          backgroundColor: isDarkMode
-            ? colors.whiteOpacity22
-            : colors.white,
+          backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
           borderRadius: moderateScale(8),
           ...imageStyle,
-          
         }}
         imageStyle={{
           borderRadius: moderateScale(10),
@@ -114,7 +110,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
             textAlign: 'left',
             lineHeight: moderateScale(16),
           }}>
-          {translation[0]?.title}
+          {translation[0]?.title || item?.title}
         </Text>
         <Text
           numberOfLines={1}

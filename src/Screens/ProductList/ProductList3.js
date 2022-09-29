@@ -271,6 +271,7 @@ export default function Products({route, navigation}) {
   });
   const [tagFilteredData, setTagFilteredData] = useState([]);
   const [isFilteredData, setIsFilteredData] = useState(false);
+  const [isSocialMediaModal, setIsSocialMediaModal] = useState(false);
 
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
@@ -679,7 +680,22 @@ export default function Products({route, navigation}) {
                       />
                     </TouchableOpacity>
                   </View>
-
+                  <TouchableOpacity
+                    hitSlop={styles.hitSlopProp}
+                    activeOpacity={0.7}
+                    style={{
+                      alignSelf: 'flex-end',
+                      marginHorizontal: moderateScale(16),
+                    }}
+                    onPress={() => setIsSocialMediaModal(true)}>
+                    <Image
+                      source={imagePath.icShareb}
+                      style={{
+                        tintColor: colors.white,
+                        transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                      }}
+                    />
+                  </TouchableOpacity>
                   <View
                     style={{
                       width: width,
@@ -4009,6 +4025,13 @@ export default function Products({route, navigation}) {
           ) : null}
         </View>
       </View>
+      <BottomSheet
+        ref={bottomSheetRef}
+        index={0}
+        snapPoints={[height / 3]}
+        enablePanDownToClose
+        handleComponent={() => <></>}
+      />
     </WrapperContainer>
   );
 }

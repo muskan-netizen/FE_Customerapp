@@ -411,11 +411,6 @@ export default function Home({route, navigation}) {
       var selectedVendorType = null;
       var defaultVendorType = null;
 
-      console.log(
-        'dineInTypedineInType',
-        appData?.profile?.preferences?.vendorMode,
-      );
-
       if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
         defaultVendorType = appData?.profile?.preferences?.vendorMode[0]?.type; //
         appData?.profile?.preferences?.vendorMode.forEach((val, i) => {
