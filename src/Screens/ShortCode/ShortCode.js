@@ -2641,6 +2641,24 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.jeevann:
+          updateState({
+            shortCode: shortCodes.jeevann,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.novamed:
+          updateState({
+            shortCode: shortCodes.novamed,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.awamer:
+          updateState({
+            shortCode: shortCodes.awamer,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

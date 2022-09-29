@@ -437,7 +437,7 @@ export default function Home({route, navigation}) {
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
       };
-      console.log('sending api data header', apiData);
+      console.log('sending api data header', apiData, apiHeader);
 
       actions
         .homeData(apiData, apiHeader)

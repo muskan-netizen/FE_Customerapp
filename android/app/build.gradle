@@ -203,19 +203,7 @@ android {
     }
 
     flavorDimensions "appType"
-
-//   productFlavors{
-//             syloMart{
-//             dimension "appType"
-//             versionCode 1
-//             versionName "1.0"
-//             minSdkVersion rootProject.ext.minSdkVersion
-//             targetSdkVersion rootProject.ext.targetSdkVersion
-//             applicationId 'com.syloMart.order'
-//             resValue "string", "app_name", "SyloMart" 
-//             resValue "string", "host_name", ""
-//             }
-//   }
+    
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -4550,8 +4538,8 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.knockknock'
-            resValue "string", "app_name", "Knockknock"
+            applicationId 'com.knockKnock.userApp'
+            resValue "string", "app_name", "Knock Knock.Online"
             resValue "string", "host_name", ""
             }
             qrider{
@@ -6189,6 +6177,36 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.eathalal.royoorders'
             resValue "string", "app_name", "Eat Halal" 
+            resValue "string", "host_name", ""
+            }
+            jeevann{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.jeevann.royoorders'
+            resValue "string", "app_name", "Jeevann" 
+            resValue "string", "host_name", ""
+            }
+            novamed{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.novamed.royoorders'
+            resValue "string", "app_name", "Novamed" 
+            resValue "string", "host_name", ""
+            }
+            awamer{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.awamer.royoorders'
+            resValue "string", "app_name", "Awamer" 
             resValue "string", "host_name", ""
             }
     }
