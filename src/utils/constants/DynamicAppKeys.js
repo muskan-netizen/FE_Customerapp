@@ -1181,7 +1181,7 @@ const appIds = {
   }),
   sxm2go: Platform.select({
     ios: 'com.sxm2go',
-    android: 'com.sxm2go',
+    android: 'com.sxm2go.userapp',
   }),
   pinkydeli: Platform.select({
     ios: 'com.codebrew.pinkydeli',
