@@ -2658,7 +2658,7 @@ export default function ShortCode({route, navigation}) {
 
         if (
           getBundleId() == appIds.masa ||
-          getBundleId() == appIds.iPicknDrop ||
+       
           getBundleId() == appIds.muvpod
         ) {
           updateState({
@@ -2821,8 +2821,8 @@ export default function ShortCode({route, navigation}) {
     switch (getBundleId()) {
       case appIds.masa:
         return animatedSplash();
-      case appIds.iPicknDrop:
-        return animatedSplash();
+      // case appIds.iPicknDrop:
+      //   return animatedSplash();
       case appIds.muvpod:
         return animatedSplash();
       default:
