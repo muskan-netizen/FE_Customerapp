@@ -772,7 +772,7 @@ android {
                 dimension "appType"
                 versionCode 11
                 versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersio
+                minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
                 applicationId 'com.app.codiner'
                 resValue "string", "app_name", "Codiner"
