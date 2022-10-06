@@ -6187,8 +6187,8 @@ function Cart({navigation, route}) {
                                     color: colors.blackOpacity66,
                                   }}>
                                   {!laundrySelectedPickupDate
-                                    ? ' Please select date.'
-                                    : ' Slots are not found for selected date.'}
+                                    ? strings.PLEASE_SELECT_DATE
+                                    : strings.SLOTS_NOT_FOUND_FOR_DATE}
                                 </Text>
                               </View>
                             )}
@@ -6239,8 +6239,8 @@ function Cart({navigation, route}) {
                                     color: colors.blackOpacity66,
                                   }}>
                                   {!laundrySelectedDropOffDate
-                                    ? ' Please select date.'
-                                    : ' Slots are not found for selected date.'}
+                                    ? strings.PLEASE_SELECT_DATE
+                                    : strings.SLOTS_NOT_FOUND_FOR_DATE}
                                 </Text>
                               </View>
                             )}

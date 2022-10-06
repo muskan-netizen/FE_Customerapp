@@ -1,25 +1,30 @@
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {
-  CardField, createPaymentMethod, createToken,
+  CardField,
+  createPaymentMethod,
+  createToken,
   initStripe,
-  StripeProvider
+  StripeProvider,
 } from '@stripe/stripe-react-native';
+import {isEmpty} from 'lodash';
 // import {CardField, createToken, initStripe} from '@stripe/stripe-react-native';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
-  Keyboard, ScrollView, StyleSheet,
+  Keyboard,
+  ScrollView,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { useDarkMode } from 'react-native-dark-mode';
-import { useSelector } from 'react-redux';
+import {useDarkMode} from 'react-native-dark-mode';
+import {useSelector} from 'react-redux';
 import CheckoutPaymentView from '../Components/CheckoutPaymentView';
 import GradientButton from '../Components/GradientButton';
 import Header from '../Components/Header';
-import { loaderOne } from '../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../Components/WrapperContainer';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang/index';
@@ -29,10 +34,9 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width
+  width,
 } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
-import { getColorCodeWithOpactiyNumber } from '../utils/helperFunctions';
+import {MyDarkTheme} from '../styles/theme';
 import HomeLoader from './Loaders/HomeLoader';
 export default function SelectPaymentModal({
   onSelectPayment,
@@ -50,7 +54,6 @@ export default function SelectPaymentModal({
   );
   const {preferences} = appData?.profile;
 
-  console.log(appData, 'appDataappDataappData');
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
 
@@ -147,11 +150,15 @@ export default function SelectPaymentModal({
 
   //Error handling in screen
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false,btnLoader:false});
+    updateState({
+      isLoading: false,
+      isLoadingB: false,
+      isRefreshing: false,
+      btnLoader: false,
+    });
     // showError(error?.message || error?.error);
     console.log(error, 'error');
     alert(error?.message || error?.error);
-
   };
 
   const _createPaymentMethod = async (cardInfo, res2) => {
@@ -159,7 +166,7 @@ export default function SelectPaymentModal({
     if (res2) {
       await createPaymentMethod({
         type: 'Card',
-        token:res2,
+        token: res2,
         card: cardInfo,
         billing_details: {
           name: 'Jenny Rosen',
@@ -203,7 +210,7 @@ export default function SelectPaymentModal({
               console.log(cardInfo, 'stripeTokencardInfo>>');
               if (!!res?.error) {
                 alert(res.error.localizedMessage);
-                updateState({isLoading: false,btnLoader:false});
+                updateState({isLoading: false, btnLoader: false});
                 return;
               }
               if (res && res?.token && res.token?.id) {
@@ -245,20 +252,6 @@ export default function SelectPaymentModal({
     }
   };
 
-  // //Select/ Update payment method
-  // const selectPaymentMethod = (data, inx) => {
-  //   console.log(selectedPaymentMethod,"selectedPaymentMethod")
-  //   console.log(data,"data")
-  //   if (selectedPaymentMethod?.id === 4) {
-  //     return;
-  //   }
-  //   {
-  //     selectedPaymentMethod && selectedPaymentMethod?.id == data?.id
-  //       ? updateState({selectedPaymentMethod: null})
-  //       : updateState({selectedPaymentMethod: data});
-  //   }
-  // };
-
   //Select/ Update payment method
   const selectPaymentMethod = (data, inx) => {
     {
@@ -268,127 +261,8 @@ export default function SelectPaymentModal({
     }
   };
 
-  //upadte box style on click
-  const getAndCheckStyle = (item) => {
-    // return {}
-    if (selectedPaymentMethod && selectedPaymentMethod.id == item.id) {
-      return {
-        borderColor: themeColors.primary_color,
-      };
-    } else {
-      return {
-        backgroundColor: 'transparent',
-        borderColor: getColorCodeWithOpactiyNumber('1E2428', 20),
-      };
-    }
-  };
-
-  const _renderItemPayments = ({item, index}) => {
-    return (
-      <Animatable.View
-        // animation={'slideInUp'}
-        // duration={200}
-        style={{flex: 1}}>
-        <TouchableOpacity
-          onPress={() => selectPaymentMethod(item, index)}
-          key={index}
-          style={[
-            styles.caseOnDeliveryView,
-            //  {...getAndCheckStyle(item)}
-          ]}>
-          <Image
-            source={
-              selectedPaymentMethod && selectedPaymentMethod?.id == item.id
-                ? imagePath.radioActive
-                : imagePath.radioInActive
-            }
-          />
-          {/* {strings.CASE_ON_DELIVERY} */}
-          <Text
-            style={
-              isDarkMode
-                ? [styles.caseOnDeliveryText, {color: MyDarkTheme.colors.text}]
-                : styles.caseOnDeliveryText
-            }>
-            {item?.title_lng ? item?.title_lng : item?.title}
-          </Text>
-        </TouchableOpacity>
-        {!!(
-          selectedPaymentMethod &&
-          selectedPaymentMethod?.id == item.id &&
-          selectedPaymentMethod?.off_site == 0 &&
-          selectedPaymentMethod?.id === 4
-        ) && (
-          <View>
-            <CardField
-              postalCodeEnabled={false}
-              placeholder={{
-                number: '4242 4242 4242 4242',
-              }}
-              cardStyle={{
-                backgroundColor: colors.white,
-                textColor: colors.black,
-              }}
-              style={{
-                width: '100%',
-                height: 50,
-                marginVertical: 10,
-              }}
-              onCardChange={(cardDetails) => {
-                _onChangeStripeData(cardDetails);
-              }}
-              onFocus={(focusedField) => {
-                console.log('focusField', focusedField);
-              }}
-              onBlur={() => {
-                Keyboard.dismiss();
-              }}
-            />
-          </View>
-        )}
-        {!!(
-          selectedPaymentMethod &&
-          selectedPaymentMethod?.id == item.id &&
-          selectedPaymentMethod?.off_site == 0 &&
-          selectedPaymentMethod?.id === 17
-        ) && (
-          <CheckoutPaymentView
-            cardTokenized={(e) => {
-              updateState({isLoading: false});
-              if (e.token) {
-                onSelectPayment({
-                  selectedPaymentMethod,
-                  cardInfo: e.token,
-                });
-                paymentModalClose();
-              }
-            }}
-            cardTokenizationFailed={(e) => {
-              setTimeout(() => {
-                updateState({isLoading: false});
-                alert(strings.INVALID_CARD_DETAILS);
-                // showError(strings.INVALID_CARD_DETAILS);
-              }, 1000);
-            }}
-            onPressSubmit={(res) => {
-              updateState({
-                isLoading: true,
-              });
-            }}
-            btnTitle={strings.SELECT}
-            isSubmitBtn
-            submitBtnStyle={{
-              width: '100%',
-              height: moderateScale(45),
-            }}
-          />
-        )}
-      </Animatable.View>
-    );
-  };
-
   const _onChangeStripeData = (cardDetails) => {
-    console.log("_onChangeStripeData_onChangeStripeData",cardDetails)
+    console.log('_onChangeStripeData_onChangeStripeData', cardDetails);
     if (cardDetails?.complete) {
       // updateState({
       //   cardInfo: {
@@ -494,7 +368,7 @@ export default function SelectPaymentModal({
             marginHorizontal: moderateScaleVertical(20),
             marginTop: moderateScaleVertical(10),
           }}>
-          {payementMethods && payementMethods?.length
+          {!isEmpty(payementMethods)
             ? payementMethods.map((item, index) => {
                 return (
                   <>
@@ -611,34 +485,6 @@ export default function SelectPaymentModal({
                 </Text>
               )}
         </ScrollView>
-        {/* <KeyboardAwareScrollView
-          alwaysBounceVertical={true}
-          showsVerticalScrollIndicator={false}
-          style={{
-            marginHorizontal: moderateScaleVertical(20),
-          }}> */}
-
-        {/* <FlatList
-            data={payementMethods}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            keyboardShouldPersistTaps={'handled'}
-            // horizontal
-            style={{marginTop: moderateScaleVertical(10)}}
-            keyExtractor={(item, index) => String(index)}
-            renderItem={_renderItemPayments}
-            ItemSeparatorComponent={() => (
-              <View style={{marginBottom: moderateScaleVertical(16)}} />
-            )}
-            ListEmptyComponent={() =>
-              !isLoading && (
-                <Text style={{textAlign: 'center'}}>
-                  {strings.NO_PAYMENT_METHOD}
-                </Text>
-              )
-            }
-          /> */}
-        {/* </KeyboardAwareScrollView> */}
 
         <View
           style={{

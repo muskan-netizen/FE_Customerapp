@@ -1000,4 +1000,6 @@ Amount`,
   DELETE_ADDRESS_CONFIRM_MSG: 'Are you sure you want to delete an address?',
   MINIMUM_ORDER_VALUE: 'Minimum order value',
   ORDER: 'Orders',
+  PLEASE_SELECT_DATE: ' Please select date.',
+  SLOTS_NOT_FOUND_FOR_DATE: ' Slots not found for selected date',
 };
