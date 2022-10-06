@@ -4226,16 +4226,16 @@ android {
     //         resValue "string", "app_name", "Elenta Mart"
     //         resValue "string", "host_name", ""
     //         }  
-    //             exprexPro{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.exprexPro'
-    //         resValue "string", "app_name", "ExprexPro"
-    //         resValue "string", "host_name", ""
-    //         }  
+                exprexPro{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.exprexPro'
+            resValue "string", "app_name", "ExprexPro"
+            resValue "string", "host_name", ""
+            }  
     //         fresHest{
     //         dimension "appType"
     //         versionCode 1
