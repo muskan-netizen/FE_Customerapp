@@ -1,5 +1,5 @@
 import {useScrollToTop} from '@react-navigation/native';
-import {isEmpty} from 'lodash';
+import _, {isEmpty} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
@@ -9,8 +9,8 @@ import {
   RefreshControl,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {useDarkMode} from 'react-native-dark-mode';
@@ -74,7 +74,6 @@ export default function DashBoardFive({
   onClose = () => {},
   onPressSubscribe = () => {},
   isSubscription = false,
-  selectedFilterType = {},
 }) {
   const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
@@ -99,7 +98,7 @@ export default function DashBoardFive({
     isVendorColumnList: false,
     vendorsData: [],
     showMenu: false,
-
+    currSelectedFilter: null,
     categoriesData: [],
     seeMore: false,
   });
@@ -112,9 +111,9 @@ export default function DashBoardFive({
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   useEffect(() => {
-    if (appMainData?.vendors && appMainData?.vendors.length) {
+    if (appMainData?.vendors && !isEmpty(appMainData?.vendors)) {
       updateState({
-        vendorsData: appMainData?.vendors,
+        vendorsData: _.values(appMainData?.vendors),
       });
       return;
     }
@@ -142,31 +141,22 @@ export default function DashBoardFive({
     });
   }, [appMainData?.categories]);
 
+  const {currSelectedFilter} = state;
+
+  const onSelectedFilter = (selectedFilter) => {
+    updateState({showMenu: false, currSelectedFilter: selectedFilter});
+    onVendorFilterSeletion(selectedFilter);
+  };
+
   const homeAllFilters = () => {
     let homeFilter = [
       {id: 1, type: strings.OPEN},
       {id: 2, type: strings.CLOSE},
       {id: 3, type: strings.BESTSELLER},
     ];
-    // if (appData?.profile?.preferences?.is_hyperlocal) {
-    //   homeFilter.push({ id: 4, type: strings.NEAR_BY });
-    // } else {
-    //   if (homeFilter.length > 3) {
-    //     homeFilter.pop();
-    //   }
-    // }
+
     return homeFilter;
   };
-
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     const backHandler = BackHandler.addEventListener(
-  //       'hardwareBackPress',
-  //       androidBackButtonHandler,
-  //     );
-  //     return () => backHandler.remove();
-  //   }, []),
-  // );
 
   const OnTakeMeOut = () => {
     RNExitApp.exitApp();
@@ -335,7 +325,7 @@ export default function DashBoardFive({
                   key={'7'}
                   numColumns={4}
                   data={categoriesData}
-                  keyExtractor={(item) => item.id.toString()}
+                  keyExtractor={(item) => item?.id?.toString()}
                   showsHorizontalScrollIndicator={false}
                   renderItem={_renderItem}
                   ItemSeparatorComponent={() => (
@@ -347,7 +337,7 @@ export default function DashBoardFive({
                   key={'6'}
                   horizontal
                   data={categoriesData}
-                  keyExtractor={(item) => item.id.toString()}
+                  keyExtractor={(item) => item?.id?.toString()}
                   showsHorizontalScrollIndicator={false}
                   renderItem={_renderItem}
                   ItemSeparatorComponent={() => (
@@ -419,7 +409,7 @@ export default function DashBoardFive({
               <FlatList
                 horizontal
                 data={appMainData?.mobile_banners || appData?.mobile_banners}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item?.id?.toString()}
                 showsHorizontalScrollIndicator={false}
                 renderItem={renderBanners}
                 ItemSeparatorComponent={() => (
@@ -761,9 +751,9 @@ export default function DashBoardFive({
                         ? MyDarkTheme.colors.text
                         : colors.black,
                     }}>
-                    {isEmpty(selectedFilterType)
+                    {!currSelectedFilter
                       ? strings.RELEVANCE
-                      : selectedFilterType?.type}
+                      : currSelectedFilter?.type}
                   </Text>
                 </View>
               </MenuTrigger>
@@ -778,7 +768,7 @@ export default function DashBoardFive({
                   return (
                     <View key={index}>
                       <MenuOption
-                        onSelect={() => onVendorFilterSeletion(item)}
+                        onSelect={() => onSelectedFilter(item)}
                         key={String(index)}
                         text={item?.type}
                         style={{
@@ -891,7 +881,7 @@ export default function DashBoardFive({
             <FlatList
               horizontal
               data={appData?.mobile_banners}
-              keyExtractor={(item) => item.id.toString()}
+              keyExtractor={(item) => item?.id?.toString()}
               showsHorizontalScrollIndicator={false}
               renderItem={renderLaundryBanners}
               ItemSeparatorComponent={() => (
@@ -921,7 +911,7 @@ export default function DashBoardFive({
             <FlatList
               key={'6'}
               data={categoriesData}
-              keyExtractor={(item) => item.id.toString()}
+              keyExtractor={(item) => item?.id?.toString()}
               showsHorizontalScrollIndicator={false}
               renderItem={_renderLaundryItem}
               contentContainerStyle={{
@@ -965,7 +955,7 @@ export default function DashBoardFive({
                 alwaysBounceVertical={true}
                 // ref={ref}
                 data={vendorsData}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item?.id?.toString()}
                 showsHorizontalScrollIndicator={false}
                 renderItem={_renderVendors}
                 ListEmptyComponent={() => (
@@ -1012,7 +1002,7 @@ export default function DashBoardFive({
                           horizontal
                           data={appMainData?.brands}
                           renderItem={renderBrands}
-                          keyExtractor={(item) => item.id.toString()}
+                          keyExtractor={(item) => item?.id?.toString()}
                           ItemSeparatorComponent={() => (
                             <View style={{marginRight: moderateScale(12)}} />
                           )}
@@ -1047,7 +1037,7 @@ export default function DashBoardFive({
                       horizontal
                       data={appMainData?.featured_products}
                       renderItem={renderFeaturedProducts}
-                      keyExtractor={(item) => item.id.toString()}
+                      keyExtractor={(item) => item?.id?.toString()}
                       ItemSeparatorComponent={() => (
                         <View style={{marginRight: moderateScale(16)}} />
                       )}
@@ -1076,7 +1066,7 @@ export default function DashBoardFive({
                         horizontal
                         data={appMainData?.new_products}
                         renderItem={renderFeaturedProducts}
-                        keyExtractor={(item) => item.id.toString()}
+                        keyExtractor={(item) => item?.id?.toString()}
                         ItemSeparatorComponent={() => (
                           <View style={{marginRight: moderateScale(16)}} />
                         )}

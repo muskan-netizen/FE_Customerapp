@@ -1,4 +1,7 @@
-import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import BottomSheet, {
+  BottomSheetFlatList,
+  BottomSheetScrollView,
+} from '@gorhom/bottom-sheet';
 import {BlurView} from '@react-native-community/blur';
 import Clipboard from '@react-native-community/clipboard';
 import _, {cloneDeep, debounce} from 'lodash';
@@ -16,6 +19,7 @@ import {
   TouchableWithoutFeedback,
   View,
   ActivityIndicator,
+  Linking,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo, {getBundleId} from 'react-native-device-info';
@@ -680,22 +684,23 @@ export default function Products({route, navigation}) {
                       />
                     </TouchableOpacity>
                   </View>
-                  <TouchableOpacity
-                    hitSlop={styles.hitSlopProp}
-                    activeOpacity={0.7}
-                    style={{
-                      alignSelf: 'flex-end',
-                      marginHorizontal: moderateScale(16),
-                    }}
-                    onPress={() => setIsSocialMediaModal(true)}>
-                    <Image
-                      source={imagePath.icShareb}
+                  {!isEmpty(categoryInfo?.social_media_links) ? (
+                    <TouchableOpacity
+                      activeOpacity={0.7}
                       style={{
-                        tintColor: colors.white,
-                        transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                        alignSelf: 'flex-end',
+                        marginHorizontal: moderateScale(16),
                       }}
-                    />
-                  </TouchableOpacity>
+                      onPress={() => setIsSocialMediaModal(true)}>
+                      <Image
+                        source={imagePath.icSocialShare}
+                        style={{
+                          tintColor: colors.white,
+                          transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                        }}
+                      />
+                    </TouchableOpacity>
+                  ) : null}
                   <View
                     style={{
                       width: width,
@@ -3428,6 +3433,10 @@ export default function Products({route, navigation}) {
     }
   };
 
+  const onPressSocialMediaItem = (item) => {
+    Linking.openURL(item?.url);
+  };
+
   const renderSectionFooter = (props) => {
     const {section} = props;
 
@@ -4026,13 +4035,55 @@ export default function Products({route, navigation}) {
           ) : null}
         </View>
       </View>
-      <BottomSheet
-        ref={bottomSheetRef}
-        index={0}
-        snapPoints={[height / 3]}
-        enablePanDownToClose
-        handleComponent={() => <></>}
-      />
+      {isSocialMediaModal ? (
+        <BottomSheet
+          ref={bottomSheetRef}
+          index={0}
+          snapPoints={[200]}
+          // style={{minHeight: 100, maxHeight: 200}}
+          enablePanDownToClose
+          onChange={(index) => {
+            if (index == -1) {
+              setIsSocialMediaModal(false);
+            }
+            // playHapticEffect(hapticEffects.impactMedium);
+          }}
+          handleComponent={() => <></>}
+          containerStyle={{
+            backgroundColor: colors.blackOpacity66,
+          }}>
+          <View
+            style={{
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+            }}>
+            {!isEmpty(categoryInfo?.social_media_links)
+              ? categoryInfo?.social_media_links.map((item, index) => {
+                  return (
+                    <TouchableOpacity
+                      onPress={() => onPressSocialMediaItem(item)}
+                      style={{
+                        width: '24%',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        paddingTop: 15,
+                      }}>
+                      <Image
+                        source={{uri: item?.icon_url}}
+                        style={{
+                          height: 40,
+                          width: 40,
+                        }}
+                      />
+                    </TouchableOpacity>
+                  );
+                })
+              : null}
+          </View>
+        </BottomSheet>
+      ) : null}
     </WrapperContainer>
   );
 }
