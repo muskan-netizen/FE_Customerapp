@@ -1079,10 +1079,10 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     if (paramData?.location.length > 0 && !!mapRef?.current?.fitToCoordinates) {
       mapRef.current.fitToCoordinates(paramData?.location, {
         edgePadding: {
-          right: width / 3.2,
-          bottom: height / 20,
-          left: width / 3.2,
-          top: height / 20,
+          right: 80,
+          bottom: 500,
+          left: 80,
+          top: 80,
         },
       });
     }
@@ -1190,14 +1190,14 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
                   totalDistance: result.distance.toFixed(2),
                   totalDuration: result.duration.toFixed(2),
                 });
-                mapRef.current.fitToCoordinates(result.coordinates, {
-                  edgePadding: {
-                    right: width / 3.2,
-                    bottom: height / 20,
-                    left: width / 3.2,
-                    top: height / 20,
-                  },
-                });
+                // mapRef.current.fitToCoordinates(result.coordinates, {
+                //   edgePadding: {
+                //     right: width / 3.2,
+                //     bottom: height ,
+                //     left: width / 3.2,
+                //     top: height / 20,
+                //   },
+                // });
               }}
               onError={(errorMessage) => {
                 // console.log('GOT AN ERROR');

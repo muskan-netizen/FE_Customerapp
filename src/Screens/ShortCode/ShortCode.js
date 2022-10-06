@@ -2616,13 +2616,13 @@ export default function ShortCode({route, navigation}) {
     if (!!res?.primary_language?.id) {
       header = {
         // code: 'a7952f',
-        code: shortCode,
+        code: '245bae',
         language: res?.primary_language?.id,
       };
     } else {
       header = {
         // code: 'a7952f',
-        code: shortCode,
+        code: '245bae',
       };
     }
     console.log(header, 'header*******');
