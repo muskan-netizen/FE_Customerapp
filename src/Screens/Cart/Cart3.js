@@ -88,6 +88,7 @@ import stylesFun from './styles';
 
 import BottomModal from '../../Components/BottomModal';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
+import DropDown from '../../Components/DropDown';
 
 let clickedItem = {};
 let isFAQsSubmitted = true;
@@ -189,6 +190,7 @@ function Cart({navigation, route}) {
     isSubmitKycLoader: false,
     isModalVisibleForPayFlutterWave: false,
     paymentDataFlutterWave: null,
+    selectedType:null
   });
 
   const {
@@ -214,6 +216,7 @@ function Cart({navigation, route}) {
     isSubmitKycLoader,
     isModalVisibleForPayFlutterWave,
     paymentDataFlutterWave,
+    selectedType
   } = state;
 
   //Redux store data
@@ -242,6 +245,7 @@ function Cart({navigation, route}) {
   const {dineInType, appMainData, location} = useSelector(
     (state) => state?.home,
   );
+
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -669,6 +673,8 @@ function Cart({navigation, route}) {
       isCategoryKycLoader: false,
       isSubmitKycLoader: false,
       isModalVisibleForPayFlutterWave: false,
+      isProductOrderForm:false
+      
     });
     setPrescriptionModal(false);
     setPrescriptionLoading(false);
@@ -2291,6 +2297,7 @@ function Cart({navigation, route}) {
   };
 
   const getProductFAQs = (item) => {
+    console.log(item, 'itemitemitem');
     clickedItem = item;
     updateState({
       isProductOrderForm: true,
@@ -2305,6 +2312,7 @@ function Cart({navigation, route}) {
         },
       )
       .then((res) => {
+        console.log(res, 'ressssssss>>>>>>>');
         setProductFaqs(res?.data);
         updateState({
           isProductLoader: false,
@@ -2328,8 +2336,12 @@ function Cart({navigation, route}) {
   };
 
   const onChangeText = (item, text, index, arrLength) => {
+   
     // const myAnswerdArray = [];
+    
+   
     const answerdArray = [...myAnswerdArray];
+    
     answerdArray[index] = {
       question: item?.translations[0]?.name,
       answer: text,
@@ -2362,6 +2374,7 @@ function Cart({navigation, route}) {
       updateState({
         isSubmitFaqLoader: true,
       });
+      console.log(myAnswerdArray,"myAnswerdArraymyAnswerdArray")
       actions
         .updateProductFAQs(
           {
@@ -3297,12 +3310,12 @@ function Cart({navigation, route}) {
   const _onGiftBoxSelection = () => {
     updateState({isGiftBoxSelected: !isGiftBoxSelected});
   };
-
+  console.log(kycImages, 'kycImageskycImages');
   //get footer start
   const getFooter = () => {
     return (
       <View style={{}}>
-        {!!cartData?.category_kyc_count && (
+        {!!cartData?.category_kyc_count && !!userData?.auth_token && (
           <ButtonComponent
             onPress={onCategoryKYC}
             btnText={strings.CATEGORY_KYC}
@@ -5204,7 +5217,13 @@ function Cart({navigation, route}) {
   const openCloseMapAddress = (type) => {
     updateState({selectViaMap: type == 1 ? true : false});
   };
-
+const onSelect= (val,item,index)=>{
+  
+  updateState ( {
+    selectedType:val?.translations[0].name
+  })
+  onChangeText(item, val?.translations[0].name, index, item?.length)
+}
   const renderProductForm = () => {
     return (
       <KeyboardAvoidingView
@@ -5284,64 +5303,135 @@ function Cart({navigation, route}) {
               <ScrollView>
                 {productFaqs.map((item, index) => {
                   setAllRequiredQuestions(item, index);
-                  return (
-                    <View
-                      style={{
-                        marginTop: moderateScaleVertical(10),
-                      }}>
+                  if (item?.file_type === 'Text') {
+                    return (
                       <View
                         style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
+                          marginTop: moderateScaleVertical(10),
                         }}>
-                        <Text
+                        <View
                           style={{
-                            marginBottom: moderateScaleVertical(10),
-                            color: colors.redColor,
+                            flexDirection: 'row',
+                            alignItems: 'center',
                           }}>
-                          {`${item?.is_required ? '* ' : ''}`}
-                        </Text>
-                        <Text
+                          <Text
+                            style={{
+                              marginBottom: moderateScaleVertical(10),
+                              color: colors.redColor,
+                            }}>
+                            {`${item?.is_required ? '* ' : ''}`}
+                          </Text>
+                          <Text
+                            style={{
+                              marginBottom: moderateScaleVertical(10),
+                              fontFamily: fontFamily.medium,
+                              color: isDarkMode ? colors.white : colors.blackC,
+                            }}>
+                            {item?.translations[0]?.name}
+                          </Text>
+                        </View>
+                        <View
                           style={{
-                            marginBottom: moderateScaleVertical(10),
-                            fontFamily: fontFamily.medium,
-                            color: isDarkMode ? colors.white : colors.blackC,
+                            // marginVertical: moderateScaleVertical(16),
+                            backgroundColor: isDarkMode
+                              ? colors.whiteOpacity15
+                              : colors.greyNew,
+                            height: moderateScale(42),
+                            borderRadius: moderateScale(4),
+                            paddingHorizontal: moderateScale(8),
                           }}>
-                          {item?.translations[0]?.name}
-                        </Text>
+                          <TextInput
+                            placeholder={strings.ANSWER}
+                            onChangeText={(text) =>
+                              onChangeText(item, text, index, item?.length)
+                            }
+                            style={{
+                              ...styles.insctructionText,
+                              color: isDarkMode
+                                ? colors.textGreyB
+                                : colors.black,
+                            }}
+                            placeholderTextColor={
+                              isDarkMode
+                                ? colors.textGreyB
+                                : colors.blackOpacity40
+                            }
+                          />
+                        </View>
                       </View>
+                    );
+                  }
+                  if (item?.file_type === 'selector') {
+                    return (
                       <View
                         style={{
-                          // marginVertical: moderateScaleVertical(16),
-                          backgroundColor: isDarkMode
-                            ? colors.whiteOpacity15
-                            : colors.greyNew,
-                          height: moderateScale(42),
-                          borderRadius: moderateScale(4),
-                          paddingHorizontal: moderateScale(8),
+                          marginTop: moderateScaleVertical(10),
+                          zIndex:5
                         }}>
-                        <TextInput
-                          placeholder={strings.ANSWER}
-                          onChangeText={(text) =>
-                            onChangeText(item, text, index, item?.length)
-                          }
+                        <View
                           style={{
-                            ...styles.insctructionText,
-                            color: isDarkMode ? colors.textGreyB : colors.black,
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              marginBottom: moderateScaleVertical(10),
+                              color: colors.redColor,
+                            }}>
+                            {`${item?.is_required ? '* ' : ''}`}
+                          </Text>
+                          <Text
+                            style={{
+                              marginBottom: moderateScaleVertical(10),
+                              fontFamily: fontFamily.medium,
+                              color: isDarkMode ? colors.white : colors.blackC,
+                            }}>
+                            {item?.translations[0]?.name}
+                          </Text>
+                        </View>
+                        <DropDown
+                          value={selectedType}
+                          modalStyle={{
+                            width:width-moderateScale(50)
                           }}
-                          placeholderTextColor={
-                            isDarkMode
-                              ? colors.textGreyB
-                              : colors.blackOpacity40
-                          }
+                          selectedIndexByProps={-1}
+                          placeholder={strings.SELECT_ANS}
+                          data={item?.options}
+                          fetchValues={(val)=>onSelect(val,item,index)}
+                          marginBottom={0}
+                          // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
                         />
+                        {/* <View
+                          style={{
+                            // marginVertical: moderateScaleVertical(16),
+                            backgroundColor: isDarkMode
+                              ? colors.whiteOpacity15
+                              : colors.greyNew,
+                            height: moderateScale(42),
+                            borderRadius: moderateScale(4),
+                            paddingHorizontal: moderateScale(8),
+                          }}>
+                          <TextInput
+                            placeholder={strings.ANSWER}
+                            onChangeText={(text) =>
+                              onChangeText(item, text, index, item?.length)
+                            }
+                            style={{
+                              ...styles.insctructionText,
+                              color: isDarkMode ? colors.textGreyB : colors.black,
+                            }}
+                            placeholderTextColor={
+                              isDarkMode
+                                ? colors.textGreyB
+                                : colors.blackOpacity40
+                            }
+                          />
+                        </View> */}
                       </View>
-                    </View>
-                  );
+                    );
+                  }
                 })}
-              </ScrollView>
-
-              <GradientButton
+                 <GradientButton
                 colorsArray={[
                   themeColors.primary_color,
                   themeColors.primary_color,
@@ -5356,7 +5446,11 @@ function Cart({navigation, route}) {
                 btnText={strings.SUBMIT}
                 marginTop={moderateScaleVertical(16)}
                 marginBottom={moderateScaleVertical(16)}
+               
               />
+              </ScrollView>
+
+             
             </View>
           )}
         </View>
@@ -5661,7 +5755,7 @@ function Cart({navigation, route}) {
         ) : (
           <View
             style={{
-              flex: 1,
+              // flex: 1,
               paddingHorizontal: moderateScale(15),
             }}>
             <ScrollView

@@ -119,6 +119,7 @@ export default function Products({route, navigation}) {
   let selectedFilters = useRef(null);
   // console.log(route.params, 'route.params');
   const {data} = route.params;
+ 
   const routeData = data?.fetchOffers;
   const {blurRef} = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -1016,7 +1017,7 @@ export default function Products({route, navigation}) {
             marginBottom: moderateScale(15),
           }}
           contentContainerStyle={{alignItems: 'center'}}>
-          {ProductTags &&
+          {ProductTags && 
             ProductTags.map((el, index) => {
               return (
                 <View
@@ -3872,6 +3873,7 @@ export default function Products({route, navigation}) {
               onMenuTap={onMenuTap}
               isLoading={btnLoader}
               sectionListData={sectionListData}
+              isCategoryExist={!!data?.categoryExist}
               // btnStyle={
               //   appStyle?.tabBarLayout == 4 && {marginBottom: moderateScale(160)}
               // }

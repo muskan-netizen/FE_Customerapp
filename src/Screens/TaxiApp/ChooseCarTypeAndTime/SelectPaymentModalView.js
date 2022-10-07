@@ -40,6 +40,7 @@ import Modal from "react-native-modal";
 import { isEmpty } from "lodash";
 import { appIds } from "../../../utils/constants/DynamicAppKeys";
 import { getBundleId } from "react-native-device-info";
+import DropDown from '../../../Components/DropDown';
 
 export default function SelectPaymentModalView({
   isLoading = false,
@@ -757,64 +758,113 @@ export default function SelectPaymentModalView({
               </View>
 
               {productFaqQuestionAnswers?.product_faq?.map((item, index) => {
+                console.log(item,"itemitemitem");
                 setAllRequiredQuestions(item, index);
-                return (
-                  <View
-                    style={{
-                      marginTop: moderateScaleVertical(10),
-                    }}
-                  >
-                    <View
-                      style={{ flexDirection: "row", alignItems: "center" }}
-                    >
-                      <Text
-                        style={{
-                          marginBottom: moderateScaleVertical(10),
-                          color: colors.redColor,
-                        }}
-                      >
-                        {`${item?.is_required ? "* " : ""}`}
-                      </Text>
-                      <Text
-                        style={{
-                          marginBottom: moderateScaleVertical(10),
-                          fontFamily: fontFamily.medium,
-                          color: isDarkMode ? colors.white : colors.blackC,
-                        }}
-                      >
-                        {item?.translations[0]?.name}
-                      </Text>
-                    </View>
+              
+                // if (item?.file_type === 'selector') {
+                //   return (
+                //     <View
+                //       style={{
+                //         marginTop: moderateScaleVertical(10),
+                //         zIndex:5
+                //       }}>
+                //       <View
+                //         style={{
+                //           flexDirection: 'row',
+                //           alignItems: 'center',
+                //         }}>
+                //         <Text
+                //           style={{
+                //             marginBottom: moderateScaleVertical(10),
+                //             color: colors.redColor,
+                //           }}>
+                //           {`${item?.is_required ? '* ' : ''}`}
+                //         </Text>
+                //         <Text
+                //           style={{
+                //             marginBottom: moderateScaleVertical(10),
+                //             fontFamily: fontFamily.medium,
+                //             color: isDarkMode ? colors.white : colors.blackC,
+                //           }}>
+                //           {item?.translations[0]?.name}
+                //         </Text>
+                //       </View>
+                //        <DropDown
+                //        // value={selectedType}
+                //         modalStyle={{
+                //           width:width-moderateScale(50)
+                //         }}
+                //         selectedIndexByProps={-1}
+                //         placeholder={strings.SELECT_ANS}
+                //         data={item?.options}
+                //         fetchValues={(val)=>onSelect(val,item,index)}
+                //         marginBottom={0}
+                //         // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
+                //       /> 
+                    
+                //     </View>
+                //   );
+                // }
+                if (item?.file_type != 'selector') {
+                  return (
                     <View
                       style={{
-                        // marginVertical: moderateScaleVertical(16),
-                        backgroundColor: isDarkMode
-                          ? colors.whiteOpacity15
-                          : colors.greyNew,
-                        height: moderateScale(42),
-                        borderRadius: moderateScale(4),
-                        paddingHorizontal: moderateScale(8),
-                      }}
-                    >
-                      <TextInput
-                        multiline
-                        placeholder={strings.ANSWER}
-                        onChangeText={(text) =>
-                          onChangeText(item, text, index, item?.length)
-                        }
+                        marginTop: moderateScaleVertical(10),
+                      }}>
+                      <View
                         style={{
-                          ...styles.insctructionText,
-                          color: isDarkMode ? colors.textGreyB : colors.black,
-                        }}
-                        onSubmitEditing={Keyboard.dismiss}
-                        placeholderTextColor={
-                          isDarkMode ? colors.textGreyB : colors.blackOpacity40
-                        }
-                      />
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            marginBottom: moderateScaleVertical(10),
+                            color: colors.redColor,
+                          }}>
+                          {`${item?.is_required ? '* ' : ''}`}
+                        </Text>
+                        <Text
+                          style={{
+                            marginBottom: moderateScaleVertical(10),
+                            fontFamily: fontFamily.medium,
+                            color: isDarkMode ? colors.white : colors.blackC,
+                          }}>
+                          {item?.translations[0]?.name}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          // marginVertical: moderateScaleVertical(16),
+                          backgroundColor: isDarkMode
+                            ? colors.whiteOpacity15
+                            : colors.greyNew,
+                          height: moderateScale(42),
+                          borderRadius: moderateScale(4),
+                          paddingHorizontal: moderateScale(8),
+                        }}>
+                        <TextInput
+                          placeholder={strings.ANSWER}
+                          onChangeText={(text) =>
+                            onChangeText(item, text, index, item?.length)
+                          }
+                          style={{
+                            ...styles.insctructionText,
+                            color: isDarkMode
+                              ? colors.textGreyB
+                              : colors.black,
+                          }}
+                          placeholderTextColor={
+                            isDarkMode
+                              ? colors.textGreyB
+                              : colors.blackOpacity40
+                          }
+                        />
+                      </View>
                     </View>
-                  </View>
-                );
+                  );
+                }
               })}
+              
 
               <View
                 style={{

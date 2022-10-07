@@ -138,7 +138,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     selectedDateAndTime: `${moment().format('YYYY-MM-DD')} ${moment().format(
       'H:MM',
     )}`,
-    selectedVendorOption: paramData?.cabVendors[0]
+    selectedVendorOption: !!paramData?.cabVendors[0]
       ? paramData?.cabVendors[0]
       : null,
     pageNo: 1,

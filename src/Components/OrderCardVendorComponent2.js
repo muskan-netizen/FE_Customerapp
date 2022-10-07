@@ -62,6 +62,7 @@ const OrderCardVendorComponent2 = ({
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
+
   const businessType = appData?.profile?.preferences?.business_type || null;
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;

@@ -106,7 +106,7 @@ export default function DashBoardFive({
     state;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
-
+ console.log(appMainData,"appMainDataappMainData")
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -737,7 +737,7 @@ export default function DashBoardFive({
                 <Text
                   style={{
                     ...styles.viewAllText,
-                    color:themeColors?.primary_color,
+                    color: isDarkMode ? MyDarkTheme.colors.text : themeColors.primary_color,
                   }}>
                   {strings.VIEW_ALL}
                 </Text>

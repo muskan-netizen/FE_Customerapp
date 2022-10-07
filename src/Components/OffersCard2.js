@@ -112,14 +112,15 @@ const OffersCard2 = ({data = {}, onPress = () => {}}) => {
           marginVertical: moderateScaleVertical(6),
         }}>
         <Text
-          numberOfLines={1}
+          numberOfLines={2}
           style={{
             ...commonStyles.futuraHeavyBt,
             fontSize: textScale(16),
             fontFamily: fontFamily.medium,
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           }}>
-          {data?.title}
+           
+          {data?.short_desc}
         </Text>
         <Text
           style={{
