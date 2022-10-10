@@ -204,17 +204,18 @@ android {
 
     flavorDimensions "appType"
 
-  productFlavors {
-                       bauBau{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.baubau'
-            resValue "string", "app_name", "BauBau"
-            resValue "string", "host_name", ""
+  productFlavors{
+                       africanvillagemarket{
+                dimension "appType"
+                versionCode 4
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.africanvillagemarket'
+                resValue "string", "app_name", "African village Market"
+                resValue "string", "host_name", ""
             }
+            
   }
     // productFlavors {
     //         royoorder {
@@ -771,7 +772,7 @@ android {
     //             dimension "appType"
     //             versionCode 11
     //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersio
+    //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.app.codiner'
     //             resValue "string", "app_name", "Codiner"
@@ -3738,16 +3739,6 @@ android {
     //             resValue "string", "app_name", "Sofia"
     //             resValue "string", "host_name", ""
     //         }
-    //         mml{
-    //             dimension "appType"
-    //             versionCode 1
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion         
-    //             applicationId 'com.app.mml'
-    //             resValue "string", "app_name", "MML"
-    //             resValue "string", "host_name", ""
-    //         }
     //              bimol{
     //             dimension "appType"
     //             versionCode 2
@@ -3827,16 +3818,6 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion         
     //             applicationId 'com.farmersouq'
     //             resValue "string", "app_name", "FARMER SOUQ"
-    //             resValue "string", "host_name", ""
-    //         }
-    //         tmgShops{
-    //             dimension "appType"
-    //             versionCode 1
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion         
-    //             applicationId 'com.tmgShops'
-    //             resValue "string", "app_name", "TMG Shops"
     //             resValue "string", "host_name", ""
     //         }
     //         stitchesonsite{
@@ -4539,7 +4520,7 @@ android {
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.knockKnock.userApp'
+    //         applicationId 'com.knockknock'
     //         resValue "string", "app_name", "Knockknock"
     //         resValue "string", "host_name", ""
     //         }
