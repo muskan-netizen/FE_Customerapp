@@ -96,6 +96,7 @@ export default function SelectPaymentModalView({
   const [myFaqValidationArray, setMyFaqValidationArray] = useState([]);
   const [validationFucCalled, setvalidationFucCalled] = useState(true);
   const [faqModalLayoutHeight, setfaqModalLayoutHeight] = useState(null);
+  const [selectedType,setSelectedType]=useState(null)
 
   //Naviagtion to specific screen
   const moveToNewScreen = (screenName, data = {}) => () => {
@@ -214,6 +215,7 @@ export default function SelectPaymentModalView({
       question: item?.translations[0]?.name,
       answer: text,
     };
+    console.log(answerdArray,"answerdArray");
 
     if (item?.is_required) {
       setvalidationFucCalled(false);
@@ -229,6 +231,7 @@ export default function SelectPaymentModalView({
     setMyAllanswers(answerdArray);
   };
 
+
   const setAllRequiredQuestions = (item, index) => {
     if (validationFucCalled) {
       if (item?.is_required) {
@@ -242,6 +245,14 @@ export default function SelectPaymentModalView({
       }
     }
   };
+
+
+  const onSelect= (val,item,index)=>{
+    console.log(val,item,index,"val,item,index");
+    setSelectedType(val?.translations[0].name)
+    onChangeText(item, val?.translations[0].name, index, item?.length)
+  }
+
 
   return (
     <View
@@ -761,50 +772,50 @@ export default function SelectPaymentModalView({
                 console.log(item,"itemitemitem");
                 setAllRequiredQuestions(item, index);
               
-                // if (item?.file_type === 'selector') {
-                //   return (
-                //     <View
-                //       style={{
-                //         marginTop: moderateScaleVertical(10),
-                //         zIndex:5
-                //       }}>
-                //       <View
-                //         style={{
-                //           flexDirection: 'row',
-                //           alignItems: 'center',
-                //         }}>
-                //         <Text
-                //           style={{
-                //             marginBottom: moderateScaleVertical(10),
-                //             color: colors.redColor,
-                //           }}>
-                //           {`${item?.is_required ? '* ' : ''}`}
-                //         </Text>
-                //         <Text
-                //           style={{
-                //             marginBottom: moderateScaleVertical(10),
-                //             fontFamily: fontFamily.medium,
-                //             color: isDarkMode ? colors.white : colors.blackC,
-                //           }}>
-                //           {item?.translations[0]?.name}
-                //         </Text>
-                //       </View>
-                //        <DropDown
-                //        // value={selectedType}
-                //         modalStyle={{
-                //           width:width-moderateScale(50)
-                //         }}
-                //         selectedIndexByProps={-1}
-                //         placeholder={strings.SELECT_ANS}
-                //         data={item?.options}
-                //         fetchValues={(val)=>onSelect(val,item,index)}
-                //         marginBottom={0}
-                //         // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
-                //       /> 
+                if (item?.file_type === 'selector') {
+                  return (
+                    <View
+                      style={{
+                        marginTop: moderateScaleVertical(10),
+                        zIndex:5
+                      }}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            marginBottom: moderateScaleVertical(10),
+                            color: colors.redColor,
+                          }}>
+                          {`${item?.is_required ? '* ' : ''}`}
+                        </Text>
+                        <Text
+                          style={{
+                            marginBottom: moderateScaleVertical(10),
+                            fontFamily: fontFamily.medium,
+                            color: isDarkMode ? colors.white : colors.blackC,
+                          }}>
+                          {item?.translations[0]?.name}
+                        </Text>
+                      </View>
+                       <DropDown
+                       value={selectedType}
+                        modalStyle={{
+                          width:width-moderateScale(50)
+                        }}
+                        selectedIndexByProps={-1}
+                        placeholder={strings.SELECT_ANS}
+                        data={item?.selection}
+                        fetchValues={(val)=>onSelect(val,item,index)}
+                        marginBottom={0}
+                        // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
+                      /> 
                     
-                //     </View>
-                //   );
-                // }
+                    </View>
+                  );
+                }
                 if (item?.file_type != 'selector') {
                   return (
                     <View

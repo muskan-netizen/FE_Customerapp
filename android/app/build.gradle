@@ -4226,7 +4226,7 @@ android {
     //         resValue "string", "app_name", "Elenta Mart"
     //         resValue "string", "host_name", ""
     //         }  
-                exprexPro{
+            exprexPro{
             dimension "appType"
             versionCode 1
             versionName "1.0"
