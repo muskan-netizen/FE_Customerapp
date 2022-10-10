@@ -2659,6 +2659,42 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.goTech:
+          updateState({
+            shortCode: shortCodes.goTech,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.idrv:
+          updateState({
+            shortCode: shortCodes.idrv,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.qwiker:
+          updateState({
+            shortCode: shortCodes.qwiker,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.spryton:
+          updateState({
+            shortCode: shortCodes.spryton,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.nittosadai:
+          updateState({
+            shortCode: shortCodes.nittosadai,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.clickokart:
+          updateState({
+            shortCode: shortCodes.clickokart,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2693,13 +2729,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: 'a7952f',
+        // code: '245bae',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: 'a7952f',
+        // code: '245bae',
         code: shortCode,
       };
     }

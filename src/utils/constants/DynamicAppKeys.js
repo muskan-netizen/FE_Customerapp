@@ -428,6 +428,12 @@ const shortCodes = {
   jeevann: '31afbb',
   novamed: '3b5cd2',
   awamer: 'c6df5f',
+  goTech: 'd87a1f',
+  idrv: '07ba5d',
+  qwiker: '9eeb4d',
+  spryton: 'd0a063',
+  nittosadai: '26662c',
+  clickokart: 'f34c51',
 };
 
 const appIds = {
@@ -2130,6 +2136,30 @@ const appIds = {
   awamer: Platform.select({
     ios: 'com.awamer.royoorders',
     android: 'com.awamer.royoorders',
+  }),
+  goTech: Platform.select({
+    ios: 'com.goTech.royoorders',
+    android: 'com.goTech.royoorders',
+  }),
+  idrv: Platform.select({
+    ios: 'com.idvr.royoorders',
+    android: 'com.idvr.royoorders',
+  }),
+  qwiker: Platform.select({
+    ios: 'com.qwiker.royoorders',
+    android: 'com.qwiker.royoorders',
+  }),
+  spryton: Platform.select({
+    ios: 'com.spryton.royoorders',
+    android: 'com.spryton.royoorders',
+  }),
+  nittosadai: Platform.select({
+    ios: 'com.nittosadai.royoorders',
+    android: 'com.nittosadai.royoorders',
+  }),
+  clickokart: Platform.select({
+    ios: 'com.clickokart.royoorders',
+    android: 'com.clickokart.royoorders',
   }),
 };
 

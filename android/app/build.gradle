@@ -203,7 +203,7 @@ android {
     }
 
     flavorDimensions "appType"
-    
+
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -6207,6 +6207,67 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.awamer.royoorders'
             resValue "string", "app_name", "Awamer" 
+            resValue "string", "host_name", ""
+            }
+            goTech{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.goTech.royoorders'
+            resValue "string", "app_name", "GoTech" 
+            resValue "string", "host_name", ""
+            }
+               idrv{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.idvr.royoorders'
+            resValue "string", "app_name", "IDRV" 
+            resValue "string", "host_name", ""
+            }
+
+            qwiker{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.qwiker.royoorders'
+            resValue "string", "app_name", "Qwiker" 
+            resValue "string", "host_name", ""
+            }
+               spryton{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.spryton.royoorders'
+            resValue "string", "app_name", "Spryton" 
+            resValue "string", "host_name", ""
+            }
+               nittosadai{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.nittosadai.royoorders'
+            resValue "string", "app_name", "Nittosadai" 
+            resValue "string", "host_name", ""
+            }
+               clickokart{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.clickokart.royoorders'
+            resValue "string", "app_name", "CLICKOKART" 
             resValue "string", "host_name", ""
             }
     }

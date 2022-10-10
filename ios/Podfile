@@ -2077,6 +2077,32 @@ end
 target 'Awamer' do
 
 end
+
+#GoTech
+target 'GoTech' do
+
+end
+#IDRV
+target 'IDRV' do
+
+end
+
+#Qwiker
+target 'Qwiker' do
+
+end
+
+#Spryton
+target 'Spryton' do
+end
+
+#Nittosadai
+target 'Nittosadai' do
+end
+
+#Clickokart
+target 'Clickokart' do
+end
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
