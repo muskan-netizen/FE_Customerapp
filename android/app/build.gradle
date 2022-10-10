@@ -203,7 +203,6 @@ android {
     }
 
     flavorDimensions "appType"
-
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -6268,6 +6267,36 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.clickokart.royoorders'
             resValue "string", "app_name", "CLICKOKART" 
+            resValue "string", "host_name", ""
+               }
+                tiimo{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.tiimo.royoorders'
+            resValue "string", "app_name", "Tiimo" 
+            resValue "string", "host_name", ""
+            }
+            verz{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.verz.royoorders'
+            resValue "string", "app_name", "Verz" 
+            resValue "string", "host_name", ""
+            }
+             ragiomigo{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.ragiomigo.royoorders'
+            resValue "string", "app_name", "RagioMigo" 
             resValue "string", "host_name", ""
             }
     }

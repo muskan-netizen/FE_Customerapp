@@ -2103,6 +2103,19 @@ end
 #Clickokart
 target 'Clickokart' do
 end
+
+#Tiimo
+target 'Tiimo' do
+end
+
+#Verz
+target 'Verz' do
+end
+
+#RagioMigo
+target 'RagioMigo' do
+end
+
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

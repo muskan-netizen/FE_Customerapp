@@ -434,6 +434,9 @@ const shortCodes = {
   spryton: 'd0a063',
   nittosadai: '26662c',
   clickokart: 'f34c51',
+  tiimo: 'aac5d5',
+  verz: '2e1b4a',
+  ragiomigo: '',
 };
 
 const appIds = {
@@ -2160,6 +2163,18 @@ const appIds = {
   clickokart: Platform.select({
     ios: 'com.clickokart.royoorders',
     android: 'com.clickokart.royoorders',
+  }),
+  tiimo: Platform.select({
+    ios: 'com.tiimo.royoorders',
+    android: 'com.tiimo.royoorders',
+  }),
+  verz: Platform.select({
+    ios: 'com.verz.royoorders',
+    android: 'com.verz.royoorders',
+  }),
+  ragiomigo: Platform.select({
+    ios: 'com.ragiomigo.royoorders',
+    android: 'com.ragiomigo.royoorders',
   }),
 };
 

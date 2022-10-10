@@ -2695,6 +2695,24 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.tiimo:
+          updateState({
+            shortCode: shortCodes.tiimo,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.verz:
+          updateState({
+            shortCode: shortCodes.verz,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ragiomigo:
+          updateState({
+            shortCode: shortCodes.ragiomigo,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2773,7 +2791,8 @@ export default function ShortCode({route, navigation}) {
         if (
           getBundleId() == appIds.masa ||
           getBundleId() == appIds.iPicknDrop ||
-          getBundleId() == appIds.muvpod
+          getBundleId() == appIds.muvpod ||
+          getBundleId == appIds.hezniTaxi
         ) {
           updateState({
             isLoading: false,
@@ -2976,6 +2995,8 @@ export default function ShortCode({route, navigation}) {
       //   return imagePath.ipd;
       case appIds?.muvpod:
         return imagePath.muvpod;
+      case appIds?.hezniTaxi:
+        return imagePath.hezniTaxi;
       // case appIds?.sabroson:
       //   return imagePath.sabroson
     }
