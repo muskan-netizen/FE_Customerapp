@@ -205,15 +205,15 @@ android {
     flavorDimensions "appType"
 
 //   productFlavors{
-//                      ace{
-//                 dimension "appType"
-//                 versionCode 1
-//                 versionName "1.0"
-//                 minSdkVersion rootProject.ext.minSdkVersion
-//                 targetSdkVersion rootProject.ext.targetSdkVersion         
-//                 applicationId 'com.customer.ace'
-//                 resValue "string", "app_name", "Ace"
-//                 resValue "string", "host_name", ""
+//                       dropItOffUsa{
+//             dimension "appType"
+//             versionCode 1
+//             versionName "1.0"
+//             minSdkVersion rootProject.ext.minSdkVersion
+//             targetSdkVersion rootProject.ext.targetSdkVersion
+//             applicationId 'com.dropItOffUsaOrder'
+//             resValue "string", "app_name", "DropItOffUsa"
+//             resValue "string", "host_name", ""
 //             }
             
 //   }
@@ -4823,7 +4823,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.dropItOffUsa.royoOrders'
+            applicationId 'com.dropItOffUsaOrder'
             resValue "string", "app_name", "DropItOffUsa"
             resValue "string", "host_name", ""
             }
@@ -5405,7 +5405,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.abbeRides'
+            applicationId 'com.abbeRides.Orders'
             resValue "string", "app_name", "Abbe Rides"
             resValue "string", "host_name", ""
             }

@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>185228398571-bp775bmhcmo01c62ib105hv6bo755ijl.apps.googleusercontent.com</string>
+	<string>947716773070-q8s4eqa1mpog1fddvllo8cb3eeec42ve.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.185228398571-bp775bmhcmo01c62ib105hv6bo755ijl</string>
+	<string>com.googleusercontent.apps.947716773070-q8s4eqa1mpog1fddvllo8cb3eeec42ve</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>185228398571-a4r8rtig5g2m2i31fm9totjak5kpju0n.apps.googleusercontent.com</string>
+	<string>947716773070-6jkk8bbsd2c2h17msqrkplff2t27k8ju.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBAeg_Kzr6YWjf71dmEyd2zHS6iAsY8Vrc</string>
+	<string>AIzaSyAsJc2U_Noe7nXo2FO8PHbH6Px_Idi2kEk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>185228398571</string>
+	<string>947716773070</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.dropItOffUsa</string>
 	<key>PROJECT_ID</key>
-	<string>dropitoffusa-cb79e</string>
+	<string>drop-it-off-usa</string>
 	<key>STORAGE_BUCKET</key>
-	<string>dropitoffusa-cb79e.appspot.com</string>
+	<string>drop-it-off-usa.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:185228398571:ios:138b236764d048b13e53ae</string>
+	<string>1:947716773070:ios:49d2a5f237c05571acac9f</string>
 </dict>
 </plist>
