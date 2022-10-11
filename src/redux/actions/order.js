@@ -24,6 +24,7 @@ import {
   STORE_VENDOR_COUNT,
   ALL_VENDOR_ORDERS,
   RESCHDULE_ORDER,
+  GENERATE_INVOICE,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -309,7 +310,17 @@ export function ratingToDriver(data = {}, headers = {}) {
       });
   });
 }
-
+export function genrateInvoice(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(GENERATE_INVOICE, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
 export function storeVendors(query, headers = {}) {
   return apiGet(SOTRE_VENDORS + query, {}, headers);
 }
