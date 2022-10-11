@@ -6299,6 +6299,16 @@ android {
             resValue "string", "app_name", "RagioMigo" 
             resValue "string", "host_name", ""
             }
+              jimsAutoRescue{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.jimsautorescue.royoorders'
+            resValue "string", "app_name", "Jim's Auto Rescue" 
+            resValue "string", "host_name", ""
+            }
     }
 }
 

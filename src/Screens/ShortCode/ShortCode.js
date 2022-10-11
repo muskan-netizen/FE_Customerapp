@@ -2713,6 +2713,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.jimsAutoRescue:
+          updateState({
+            shortCode: shortCodes.jimsAutoRescue,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

@@ -436,7 +436,8 @@ const shortCodes = {
   clickokart: 'f34c51',
   tiimo: 'aac5d5',
   verz: '2e1b4a',
-  ragiomigo: '',
+  ragiomigo: '39c82e',
+  jimsAutoRescue: '',
 };
 
 const appIds = {
@@ -2175,6 +2176,10 @@ const appIds = {
   ragiomigo: Platform.select({
     ios: 'com.ragiomigo.royoorders',
     android: 'com.ragiomigo.royoorders',
+  }),
+  jimsAutoRescue: Platform.select({
+    ios: 'com.jimsautorescue.royoorders',
+    android: 'com.jimsautorescue.royoorders',
   }),
 };
 
