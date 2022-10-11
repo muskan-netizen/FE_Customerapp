@@ -35779,7 +35779,6 @@
 			buildConfigurationList = F46FF6ED2846063300EFF1C2 /* Build configuration list for PBXNativeTarget "SorDelivery" */;
 			buildPhases = (
 				07326C130188305873FD3EC9 /* [CP] Check Pods Manifest.lock */,
-				F62E2831849201E8A23D6C73 /* ShellScript */,
 				F46FF6C82846063300EFF1C2 /* Sources */,
 				F46FF6CC2846063300EFF1C2 /* Frameworks */,
 				F46FF6CE2846063300EFF1C2 /* Resources */,
@@ -35787,6 +35786,7 @@
 				F46FF6EA2846063300EFF1C2 /* ShellScript */,
 				2474D98A9E6093141BB74932 /* [CP] Embed Pods Frameworks */,
 				C0BEEADC9B29080803D29EAE /* [CP] Copy Pods Resources */,
+				1031E08928F3EB1F00400E91 /* Start Packager */,
 			);
 			buildRules = (
 			);
@@ -55729,6 +55729,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		1031E08928F3EB1F00400E91 /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
 		};
 		1032F2A92825070400D48388 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -132482,26 +132500,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-MylaGlobal/Pods-available_pods-MylaGlobal-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		F62E2831849201E8A23D6C73 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-available_pods-SorDelivery-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-DingDongDelivers/Pods-available_pods-DingDongDelivers-frameworks.sh\"\n";
 		};
 		F6457C19D50A568B7E816641 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
