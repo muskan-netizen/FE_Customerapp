@@ -152,7 +152,7 @@ export default function Home({route, navigation}) {
       return () => backHandler.remove();
     }, []),
   );
-
+  console.log(appMainData, 'appMainDataappMainData');
   useEffect(() => {
     updateState({updatedData: appMainData?.categories});
   }, [appMainData]);
@@ -933,7 +933,7 @@ export default function Home({route, navigation}) {
       stopOrderModalVisible: false,
     });
   };
-
+  // console.log(appStyle?.homePageLayout, 'homePageLayouthomePageLayout');
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
       // switch (case_) {

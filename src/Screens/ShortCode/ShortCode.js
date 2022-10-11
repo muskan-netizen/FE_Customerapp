@@ -2581,6 +2581,120 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.smokyKitchen:
+          updateState({
+            shortCode: shortCodes.smokyKitchen,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.flank:
+          updateState({
+            shortCode: shortCodes.flank,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.zynoride:
+          updateState({
+            shortCode: shortCodes.zynoride,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mealsarehere:
+          updateState({
+            shortCode: shortCodes.mealsarehere,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.loamscape:
+          updateState({
+            shortCode: shortCodes.loamscape,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.delcolink:
+          updateState({
+            shortCode: shortCodes.delcolink,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.youSmokeShop:
+          updateState({
+            shortCode: shortCodes.youSmokeShop,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.doober:
+          updateState({
+            shortCode: shortCodes.doober,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.inmotion:
+          updateState({
+            shortCode: shortCodes.inmotion,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.eatHalal:
+          updateState({
+            shortCode: shortCodes.eatHalal,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.jeevann:
+          updateState({
+            shortCode: shortCodes.jeevann,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.novamed:
+          updateState({
+            shortCode: shortCodes.novamed,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.awamer:
+          updateState({
+            shortCode: shortCodes.awamer,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.goTech:
+          updateState({
+            shortCode: shortCodes.goTech,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.idrv:
+          updateState({
+            shortCode: shortCodes.idrv,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.qwiker:
+          updateState({
+            shortCode: shortCodes.qwiker,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.spryton:
+          updateState({
+            shortCode: shortCodes.spryton,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.nittosadai:
+          updateState({
+            shortCode: shortCodes.nittosadai,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.clickokart:
+          updateState({
+            shortCode: shortCodes.clickokart,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2615,13 +2729,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: 'a7952f',
+        // code: '245bae',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: 'a7952f',
+        // code: '245bae',
         code: shortCode,
       };
     }

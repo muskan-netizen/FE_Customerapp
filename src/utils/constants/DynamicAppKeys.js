@@ -415,6 +415,25 @@ const shortCodes = {
   kwivar: '2037b0',
   parcel: '60277b',
   lex: 'a7f382',
+  smokyKitchen: '8c4efa',
+  flank: '3de814',
+  zynoride: '2768e6',
+  mealsarehere: 'c00a78',
+  loamscape: 'ded864',
+  delcolink: 'a2726b',
+  youSmokeShop: '76b26a',
+  doober: 'e8a1af',
+  inmotion: '0e2db7',
+  eatHalal: '607c84',
+  jeevann: '31afbb',
+  novamed: '3b5cd2',
+  awamer: 'c6df5f',
+  goTech: 'd87a1f',
+  idrv: '07ba5d',
+  qwiker: '9eeb4d',
+  spryton: 'd0a063',
+  nittosadai: '26662c',
+  clickokart: 'f34c51',
 };
 
 const appIds = {
@@ -1168,7 +1187,7 @@ const appIds = {
   }),
   sxm2go: Platform.select({
     ios: 'com.sxm2go',
-    android: 'com.sxm2go',
+    android: 'com.sxm2go.userapp',
   }),
   pinkydeli: Platform.select({
     ios: 'com.codebrew.pinkydeli',
@@ -2065,6 +2084,82 @@ const appIds = {
   lex: Platform.select({
     ios: 'com.lex.royoorders',
     android: 'com.lex.royoorders',
+  }),
+  smokyKitchen: Platform.select({
+    ios: 'com.smokyKitchen.royoorders',
+    android: 'com.smokyKitchen.royoorders',
+  }),
+  flank: Platform.select({
+    ios: 'com.flank.royoorders',
+    android: 'com.flank.royoorders',
+  }),
+  zynoride: Platform.select({
+    ios: 'com.zynoride.royoorders',
+    android: 'com.zynoride.royoorders',
+  }),
+  mealsarehere: Platform.select({
+    ios: 'com.mealsarehere.royoorders',
+    android: 'com.mealsarehere.royoorders',
+  }),
+  loamscape: Platform.select({
+    ios: 'com.loamscape.royoorders',
+    android: 'com.loamscape.royoorders',
+  }),
+  delcolink: Platform.select({
+    ios: 'com.delcolink.royoorders',
+    android: 'com.delcolink.royoorders',
+  }),
+  youSmokeShop: Platform.select({
+    ios: 'com.youSmokeShop.royoorders',
+    android: 'com.youSmokeShop.royoorders',
+  }),
+  doober: Platform.select({
+    ios: 'com.doober.royoorders',
+    android: 'com.doober.royoorders',
+  }),
+  inmotion: Platform.select({
+    ios: 'com.inmotion.royoorders',
+    android: 'com.inmotion.royoorders',
+  }),
+  eatHalal: Platform.select({
+    ios: 'com.eathalal.royoorders',
+    android: 'com.eathalal.royoorders',
+  }),
+  jeevann: Platform.select({
+    ios: 'com.jeevann.royoorders',
+    android: 'com.jeevann.royoorders',
+  }),
+  novamed: Platform.select({
+    ios: 'com.novamed.royoorders',
+    android: 'com.novamed.royoorders',
+  }),
+  awamer: Platform.select({
+    ios: 'com.awamer.royoorders',
+    android: 'com.awamer.royoorders',
+  }),
+  goTech: Platform.select({
+    ios: 'com.goTech.royoorders',
+    android: 'com.goTech.royoorders',
+  }),
+  idrv: Platform.select({
+    ios: 'com.idvr.royoorders',
+    android: 'com.idvr.royoorders',
+  }),
+  qwiker: Platform.select({
+    ios: 'com.qwiker.royoorders',
+    android: 'com.qwiker.royoorders',
+  }),
+  spryton: Platform.select({
+    ios: 'com.spryton.royoorders',
+    android: 'com.spryton.royoorders',
+  }),
+  nittosadai: Platform.select({
+    ios: 'com.nittosadai.royoorders',
+    android: 'com.nittosadai.royoorders',
+  }),
+  clickokart: Platform.select({
+    ios: 'com.clickokart.royoorders',
+    android: 'com.clickokart.royoorders',
   }),
 };
 
