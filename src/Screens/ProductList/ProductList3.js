@@ -3113,7 +3113,7 @@ export default function Products({route, navigation}) {
   };
 
   const onShare = () => {
-    console.log('onShare', appData);
+    console.log('onShare', categoryInfo.share_link);
     if (!!categoryInfo.share_link) {
       let hyperLink = categoryInfo.share_link;
       let options = {url: hyperLink};
@@ -3605,9 +3605,6 @@ export default function Products({route, navigation}) {
                 ListHeaderComponent={listHeaderComponent2()}
                 stickySectionHeadersEnabled={false}
                 keyExtractor={awesomeChildListKeyExtractor}
-                contentContainerStyle={{
-                  paddingBottom: moderateScaleVertical(60),
-                }}
                 // tabBarStyle={styles.tabBar}
                 // ItemSeparatorComponent={() => <View style={styles.separator} />}
                 renderTab={renderSectionTab}
