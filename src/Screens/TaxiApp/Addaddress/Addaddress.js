@@ -335,7 +335,7 @@ export default function Addaddress({navigation, route}) {
               textStyle={{textTransform: 'none', fontSize: textScale(16)}}
               onPress={saveAddressAndRedirect}
               marginTop={moderateScaleVertical(10)}
-              marginBottom={moderateScaleVertical(10)}
+              marginBottom={moderateScaleVertical(30)}
               btnText={strings.DONE}
             />
           </View>

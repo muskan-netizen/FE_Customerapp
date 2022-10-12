@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "526027781955",
+    "project_id": "loamscape",
+    "storage_bucket": "loamscape.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526027781955:android:73d0c3fc5e0ed1e26421f6",
+        "android_client_info": {
+          "package_name": "com.loamscape.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "526027781955-81tevhh87s0j761q54q6hnl4js3866cj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.loamscape.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "526027781955-c1sgb357nr64ssqfa5vd64ndcl54v7e8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.loamscape.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "526027781955-de2ci2fqu775hjbvjm99hpi8pla4cbns.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.loamscape.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "526027781955-v7hak9ujj8i7l5ogm3qcovtcap3el0cn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-ImaMoghD4rb_yW74v5_ynNC5q7u-pOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "526027781955-v7hak9ujj8i7l5ogm3qcovtcap3el0cn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "526027781955-u9a08ugpjnrj1tpmag9drrfbi1bf15hj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.loamscape.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

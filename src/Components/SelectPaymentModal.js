@@ -661,7 +661,7 @@ export default function SelectPaymentModal({
             <GradientButton
               onPress={selectPaymentOption}
               marginTop={moderateScaleVertical(10)}
-              marginBottom={moderateScaleVertical(10)}
+              marginBottom={height / 9}
               btnText={strings.SELECT}
               indicator={btnLoader}
               indicatorColor={colors.white}

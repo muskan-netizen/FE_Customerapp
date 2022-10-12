@@ -180,7 +180,7 @@ export default function TaxiHomeDashbord({
     allListedDrivers,
   } = state;
   const styles = stylesFunc({themeColors, fontFamily});
-
+  console.log(appData, 'appDataappData');
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
