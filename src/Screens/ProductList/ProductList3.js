@@ -3608,6 +3608,9 @@ export default function Products({route, navigation}) {
                 ListHeaderComponent={listHeaderComponent2()}
                 stickySectionHeadersEnabled={false}
                 keyExtractor={awesomeChildListKeyExtractor}
+                contentContainerStyle={{
+                  paddingBottom: moderateScaleVertical(60),
+                }}
                 // tabBarStyle={styles.tabBar}
                 // ItemSeparatorComponent={() => <View style={styles.separator} />}
                 renderTab={renderSectionTab}
@@ -3615,6 +3618,9 @@ export default function Products({route, navigation}) {
                 // ListFooterComponent={() => (
                 //   <View style={{height: moderateScale(80)}} />
                 // )}
+                contentContainerStyle={{
+                  paddingBottom:moderateScale(60)
+                }}
                 renderSectionHeader={renderSectionHeader}
                 ListEmptyComponent={listEmptyComponent}
                 onScrollToIndexFailed={(val) => console.log('indexed failed')}
@@ -3662,7 +3668,7 @@ export default function Products({route, navigation}) {
                 ListEmptyComponent={listEmptyComponent}
               />
             )}
-            <View style={{height: moderateScaleVertical(60)}} />
+            {/* <View style={{height: moderateScaleVertical(60)}} /> */}
 
             {isVisibleModal ? (
               <TouchableWithoutFeedback

@@ -1939,10 +1939,10 @@ end
 target 'FairDeal' do
   
 end
-# #SyloMart Target
-# target 'SyloMart' do
+#SyloMart Target
+target 'SyloMart' do
   
-# end
+end
 
 #HezniTaxi Target
 target 'HezniTaxi' do
@@ -2018,6 +2018,90 @@ end
 #Lex
 target 'Lex' do
 
+end
+#Flank
+target 'Flank' do
+
+end
+
+#Zynoride
+target 'Zynoride' do
+
+end
+
+#Mealsarehere
+target 'Mealsarehere' do
+
+end
+
+#Loamscape
+target 'Loamscape' do
+
+end
+
+#Delcolink
+target 'Delcolink' do
+
+end
+
+#YouSmokeShop
+target 'YouSmokeShop' do
+
+end
+
+#Doober
+target 'Doober' do
+
+end
+
+#Inmotion
+target 'Inmotion' do
+
+end
+
+
+#EatHalal
+target 'EatHalal' do
+
+end
+#Jeevann
+target 'Jeevann' do
+
+end
+#Novamed
+target 'Novamed' do
+
+end
+
+#Awamer
+target 'Awamer' do
+
+end
+
+#GoTech
+target 'GoTech' do
+
+end
+#IDRV
+target 'IDRV' do
+
+end
+
+#Qwiker
+target 'Qwiker' do
+
+end
+
+#Spryton
+target 'Spryton' do
+end
+
+#Nittosadai
+target 'Nittosadai' do
+end
+
+#Clickokart
+target 'Clickokart' do
 end
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

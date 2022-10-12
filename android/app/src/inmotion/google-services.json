@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "622443663378",
+    "project_id": "inmotion-3f52d",
+    "storage_bucket": "inmotion-3f52d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:622443663378:android:6141cc1441479ca8fe48cb",
+        "android_client_info": {
+          "package_name": "com.inmotion.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "622443663378-811aqdolv0qlqi16ibei0j8ejh7q2nka.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.inmotion.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "622443663378-evfi5nmov1cn8u5fuagkm4aoq8lntba3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.inmotion.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "622443663378-rvaj70p2nfr8qmjs53b5jgth9ue2dnhj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.inmotion.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "622443663378-kisdspc121m1taat8388np2jutrt9m05.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmPuxyx4LIq9Ypv1nlXFJDSmOFWfHKS3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "622443663378-kisdspc121m1taat8388np2jutrt9m05.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "622443663378-q086c6ct95un0gkpgk2vg1p0af5mjsno.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.inmotion.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

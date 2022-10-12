@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "679772787002",
+    "project_id": "spryton-cf459",
+    "storage_bucket": "spryton-cf459.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679772787002:android:05b50905e8983e64568003",
+        "android_client_info": {
+          "package_name": "com.spryton.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "679772787002-a5pbvj2covjntfkml3f3v9poh83942t2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spryton.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "679772787002-b4b3cnekjdbdd9r861ha52u64vhgirnc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spryton.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "679772787002-qjbhcapd1r6tcfg3vjin7mkdsrdf00b0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spryton.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "679772787002-9i30btg04mh7v7oafoabop4rr0ategsr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmKlawcsUvnDI9rT1tzPQdUJMLjCm5zec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "679772787002-9i30btg04mh7v7oafoabop4rr0ategsr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

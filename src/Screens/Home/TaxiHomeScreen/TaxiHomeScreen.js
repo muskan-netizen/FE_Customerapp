@@ -41,7 +41,6 @@ export default function TaxiHomeScreen({route, navigation}) {
   const {location, dineInType, appMainData} = useSelector(
     (state) => state?.home,
   );
-
   const {cartItemCount} = useSelector((state) => state?.cart);
   const {
     appData,

@@ -1,8 +1,8 @@
-import { debounce } from 'lodash';
-import React, { useEffect, useState } from 'react';
-import { FlatList, Image, RefreshControl, View } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
-import { useSelector } from 'react-redux';
+import {debounce} from 'lodash';
+import React, {useEffect, useState} from 'react';
+import {FlatList, Image, RefreshControl, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import {useSelector} from 'react-redux';
 import Header3 from '../../Components/Header3';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import SearchLoader from '../../Components/Loaders/SearchLoader';
@@ -20,12 +20,12 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
-import { showError } from '../../utils/helperFunctions';
+import {MyDarkTheme} from '../../styles/theme';
+import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from './ListEmptyVendors';
 import * as Animatable from 'react-native-animatable';
 
-export default function Vendors3({ route, navigation }) {
+export default function Vendors3({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -37,7 +37,7 @@ export default function Vendors3({ route, navigation }) {
     isRefreshing: false,
     listData: [],
   });
-  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
+  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state.initBoot);
 
   const categoryData = useSelector((state) => state?.vendor?.categoryData);
@@ -46,20 +46,20 @@ export default function Vendors3({ route, navigation }) {
   // alert(dine_In_Type);
   const location = useSelector((state) => state?.home?.location);
 
-  const { isLoading, pageNo, isRefreshing, limit, listData } = state;
-  const { data } = route.params;
+  const {isLoading, pageNo, isRefreshing, limit, listData} = state;
+  const {data} = route.params;
   //update state
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({ fontFamily });
+  const commonStyles = commonStylesFun({fontFamily});
 
   useEffect(() => {
     actions
@@ -74,7 +74,7 @@ export default function Vendors3({ route, navigation }) {
       )
       .then((res) => {
         console.log('vendor data', res);
-        updateState({ isLoading: false, isRefreshing: false });
+        updateState({isLoading: false, isRefreshing: false});
         updateState({
           listData:
             pageNo == 1
@@ -94,18 +94,18 @@ export default function Vendors3({ route, navigation }) {
   }, [pageNo, isRefreshing]);
 
   const errorMethod = (error) => {
-    updateState({ isLoading: false, isRefreshing: false });
+    updateState({isLoading: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({ pageNo: 1, isRefreshing: true });
+    updateState({pageNo: 1, isRefreshing: true});
   };
 
   //pagination of data
-  const onEndReached = ({ distanceFromEnd }) => {
-    updateState({ pageNo: pageNo + 1 });
+  const onEndReached = ({distanceFromEnd}) => {
+    updateState({pageNo: pageNo + 1});
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -115,33 +115,30 @@ export default function Vendors3({ route, navigation }) {
 
   //************Check the redirecton screen********/
   const _checkRedirectScreen = (item) => {
-    
-
     {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-          item,
-          rootProducts: true,
-          categoryData: data,
-        })()
+            item,
+            rootProducts: true,
+            categoryData: data,
+          })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-          id: item.id,
-          vendor: true,
-          name: item.name,
-          category_slug: data?.slug,
-          fetchOffers: true,
-          categoryExist: data?.id || null
-        })();
+            id: item.id,
+            vendor: true,
+            name: item.name,
+            category_slug: data?.slug,
+            fetchOffers: true,
+            categoryExist: data?.id || null,
+          })();
     }
   };
 
-  const _renderItem = ({ item, index }) => {
+  const _renderItem = ({item, index}) => {
     return (
       <Animatable.View
         animation={'fadeInUp'}
         delay={index * 60}
-        style={{ marginHorizontal: moderateScale(15) }}
-      >
+        style={{marginHorizontal: moderateScale(15)}}>
         <MarketCard3 onPress={() => _checkRedirectScreen(item)} data={item} />
       </Animatable.View>
     );
@@ -171,7 +168,7 @@ export default function Vendors3({ route, navigation }) {
       />
       {/* <View style={{flexDirection: 'row', alignItems: 'center'}}> */}
       {isLoading ? (
-        <SearchLoader viewStyles={{ marginVertical: moderateScale(17) }} />
+        <SearchLoader viewStyles={{marginVertical: moderateScale(17)}} />
       ) : (
         <SearchBar2 navigation={navigation} />
       )}
@@ -185,9 +182,9 @@ export default function Vendors3({ route, navigation }) {
         /> */}
       {/* </View> */}
       {!!isLoading ? (
-        <View style={{ alignItems: 'center' }}>
+        <View style={{alignItems: 'center'}}>
           <HeaderLoader
-            viewStyles={{ marginTop: 5 }}
+            viewStyles={{marginTop: 5}}
             widthLeft={width - moderateScaleVertical(40)}
             rectWidthLeft={width - moderateScaleVertical(40)}
             heightLeft={moderateScaleVertical(170)}
@@ -197,7 +194,7 @@ export default function Vendors3({ route, navigation }) {
             ry={15}
           />
           <HeaderLoader
-            viewStyles={{ marginTop: 15 }}
+            viewStyles={{marginTop: 15}}
             widthLeft={width - moderateScaleVertical(40)}
             rectWidthLeft={width - moderateScaleVertical(40)}
             heightLeft={moderateScaleVertical(170)}
@@ -207,7 +204,7 @@ export default function Vendors3({ route, navigation }) {
             ry={15}
           />
           <HeaderLoader
-            viewStyles={{ marginTop: 15 }}
+            viewStyles={{marginTop: 15}}
             widthLeft={width - moderateScaleVertical(40)}
             rectWidthLeft={width - moderateScaleVertical(40)}
             heightLeft={moderateScaleVertical(170)}
@@ -217,7 +214,7 @@ export default function Vendors3({ route, navigation }) {
             ry={15}
           />
           <HeaderLoader
-            viewStyles={{ marginTop: 15 }}
+            viewStyles={{marginTop: 15}}
             widthLeft={width - moderateScaleVertical(40)}
             rectWidthLeft={width - moderateScaleVertical(40)}
             heightLeft={moderateScaleVertical(170)}
@@ -227,7 +224,7 @@ export default function Vendors3({ route, navigation }) {
             ry={15}
           />
           <HeaderLoader
-            viewStyles={{ marginTop: 15 }}
+            viewStyles={{marginTop: 15}}
             widthLeft={width - moderateScaleVertical(40)}
             rectWidthLeft={width - moderateScaleVertical(40)}
             heightLeft={moderateScaleVertical(170)}
@@ -241,7 +238,7 @@ export default function Vendors3({ route, navigation }) {
         <FlatList
           showsVerticalScrollIndicator={false}
           data={(!isLoading && listData) || []}
-          ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+          ItemSeparatorComponent={() => <View style={{height: 8}} />}
           keyExtractor={(item, index) => String(index)}
           renderItem={_renderItem}
           refreshing={isRefreshing}
@@ -250,7 +247,7 @@ export default function Vendors3({ route, navigation }) {
               refreshing={isRefreshing}
               onRefresh={handleRefresh}
               tintColor={themeColors.primary_color}
-            // titleColor="#fff"
+              // titleColor="#fff"
             />
           }
           getItemLayout={getItemLayout}
@@ -273,7 +270,7 @@ export default function Vendors3({ route, navigation }) {
               </View>
             )
           }
-          ListFooterComponent={() => <View style={{ height: 100 }} />}
+          ListFooterComponent={() => <View style={{height: 100}} />}
         />
       )}
     </WrapperContainer>

@@ -35,7 +35,7 @@ const Header3 = ({
         flexDirection: 'row',
         alignItems: 'center',
         overflow: 'hidden',
-        flex: 1,
+        // flex: 1,
         ...conatinerStyle,
       }}>
       <TouchableOpacity

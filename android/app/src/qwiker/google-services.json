@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "472373704362",
+    "project_id": "qwiker-6c251",
+    "storage_bucket": "qwiker-6c251.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:472373704362:android:67934ec40ce41ab56582d3",
+        "android_client_info": {
+          "package_name": "com.qwiker.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "472373704362-5nj44o279i30rjj0iclqps4gc9b2gmr7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qwiker.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "472373704362-kceusm7q5aijtopkih74jm3gqa1o4gun.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qwiker.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "472373704362-oo21qrul645oag4la5bj5ocv2paq7r22.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qwiker.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "472373704362-6dnk8mlrldtl7gb9b3ll5pqjfqjuu0rb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkzY8jHxd_BrfSgUC7piSjMVVf_rNY5SE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "472373704362-6dnk8mlrldtl7gb9b3ll5pqjfqjuu0rb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "472373704362-ep4rhl12r9prmc70ud1l9vo39341ias0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.qwiker.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
