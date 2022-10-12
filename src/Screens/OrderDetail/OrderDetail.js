@@ -2554,7 +2554,7 @@ export default function OrderDetail({navigation, route}) {
             }}
           />
         </View>
-        {console.log(appData?.profile?.preferences?.facturama_invoice,"fact")}
+  
         {
           dispatcherStatus?.order_status?.current_status?.title ==
            strings.DELIVERED &&  
