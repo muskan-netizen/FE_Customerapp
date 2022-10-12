@@ -437,7 +437,8 @@ const shortCodes = {
   tiimo: 'aac5d5',
   verz: '2e1b4a',
   ragiomigo: '39c82e',
-  jimsAutoRescue: '',
+  jimsAutoRescue: '4fc57b',
+  carryfood: '86d81e',
 };
 
 const appIds = {
@@ -2180,6 +2181,10 @@ const appIds = {
   jimsAutoRescue: Platform.select({
     ios: 'com.jimsautorescue.royoorders',
     android: 'com.jimsautorescue.royoorders',
+  }),
+  carryfood: Platform.select({
+    ios: 'com.carryfood.royoorders',
+    android: 'com.carryfood.royoorders',
   }),
 };
 
