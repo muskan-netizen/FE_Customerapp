@@ -54,15 +54,16 @@ const TaxiHomeCategoryCard = ({
         <View
           style={{
             flex: 0.8,
-            backgroundColor: getColorCodeWithOpactiyNumber(
-              colors.taxiCategoryGrayColor,
-              30,
-            ),
+            backgroundColor: colors.lightGreyBg,
             paddingHorizontal: moderateScale(8),
-            borderRadius: 10,
+            borderRadius: moderateScale(5),
           }}>
           {!!isSVG ? (
-            <View style={{height: moderateScale(50), width: moderateScale(50)}}>
+            <View
+              style={{
+                height: moderateScale(50),
+                width: moderateScale(50),
+              }}>
               <SvgUri
                 height={moderateScale(50)}
                 width={moderateScale(50)}

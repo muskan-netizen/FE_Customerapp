@@ -883,6 +883,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const _redirectToPayement = () => {
     moveToNewScreen(navigationStrings.PAYMENT_OPTIONS, {
       screenName: strings.PAYMENT,
+      paramData:paramData
     })();
   };
 
