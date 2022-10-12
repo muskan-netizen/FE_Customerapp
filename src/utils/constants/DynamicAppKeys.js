@@ -1592,8 +1592,8 @@ const appIds = {
     android: 'com.redglee',
   }),
   dropItOffUsa: Platform.select({
-    ios: 'com.dropItOffUsa.royoOrders',
-    android: 'com.dropItOffUsa.royoOrders',
+    ios: 'com.dropItOffUsa',
+    android: 'com.dropItOffUsaOrder',
   }),
   handyPickup: Platform.select({
     ios: 'com.handyPickup',
@@ -1827,8 +1827,8 @@ const appIds = {
   }),
 
   abbeRides: Platform.select({
-    ios: 'com.abbeRides',
-    android: 'com.abbeRides',
+    ios: 'com.abbeRides.Orders',
+    android: 'com.abbeRides.Orders',
   }),
   nrsa: Platform.select({
     ios: 'com.nrsa',

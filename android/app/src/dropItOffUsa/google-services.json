@@ -7,34 +7,34 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:947716773070:android:98ed7d949e2eeb64acac9f",
+        "mobilesdk_app_id": "1:947716773070:android:7377d0837445e00bacac9f",
         "android_client_info": {
-          "package_name": "com.dropItOffUsa.royoOrders"
+          "package_name": "com.dropItOffUsaOrder"
         }
       },
       "oauth_client": [
         {
-          "client_id": "947716773070-82l37sksutu04ijtqnmh2d5or7666gc7.apps.googleusercontent.com",
+          "client_id": "947716773070-6jkk8bbsd2c2h17msqrkplff2t27k8ju.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.dropItOffUsa.royoOrders",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "947716773070-fg0d6ls8bs5r0f87ioq26vkd32vifhm4.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.dropItOffUsa.royoOrders",
+            "package_name": "com.dropItOffUsaOrder",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "947716773070-ghnc9opu5i1da1st0po99jhh340137lv.apps.googleusercontent.com",
+          "client_id": "947716773070-8d87a90e7oj5bohssof2b8uv8o60ham4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.dropItOffUsa.royoOrders",
+            "package_name": "com.dropItOffUsaOrder",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "947716773070-msthqr51k4k5gj7hrnvoqdjopsdk7kh2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dropItOffUsaOrder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
