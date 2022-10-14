@@ -248,7 +248,6 @@ export default function SelectPaymentModalView({
 
 
   const onSelect= (val,item,index)=>{
-    console.log(val,item,index,"val,item,index");
     setSelectedType(val?.translations[0].name)
     onChangeText(item, val?.translations[0].name, index, item?.length)
   }

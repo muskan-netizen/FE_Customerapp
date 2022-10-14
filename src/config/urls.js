@@ -336,8 +336,8 @@ export const CHANGE_PASSWORD = getApiUrl('/changePassword');
 export const CONTACT_US = getApiUrl('/contact-us');
 export const VERIFY_ACCOUNT = getApiUrl('/auth/verifyAccount');
 export const RESEND_OTP = getApiUrl('/auth/sendToken');
-export const INCREASE_ITEM_QNT = getApiUrl('/cart/increaseItem');
-export const DECREASE_ITEM_QNT = getApiUrl('/cart/decreaseItem');
+// export const INCREASE_ITEM_QNT = getApiUrl('/cart/increaseItem');
+// export const DECREASE_ITEM_QNT = getApiUrl('/cart/decreaseItem');
 export const GET_DATA_BY_CATEGORY_FILTERS = getApiUrl('/category/filters');
 export const GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE = getApiUrl(
   '/v2/category/filters',
