@@ -2608,6 +2608,8 @@ export default function ShortCode({route, navigation}) {
     }, 1000);
   };
 
+  
+
   const initApiHit = async () => {
     const res = await getItem('setPrimaryLanguage');
 
@@ -2615,14 +2617,14 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-       code: '1e1c90',
-      //  code: shortCode,
+       //code: '245bae',
+       code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-         code: '1e1c90',
-        //code: shortCode,
+        // code: '245bae',
+        code: shortCode,
       };
     }
     console.log(header, 'header*******');

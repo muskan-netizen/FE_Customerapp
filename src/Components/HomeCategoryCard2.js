@@ -99,7 +99,7 @@ const HomeCategoryCard2 = ({
             textAlign: 'center',
             marginTop: moderateScaleVertical(4),
           }}>
-          {data?.name || data?.translation[0]?.name}
+          {data?.name || data?.translation&&data?.translation[0]?.name}
         </Text>
       </View>
     </TouchableOpacity>
