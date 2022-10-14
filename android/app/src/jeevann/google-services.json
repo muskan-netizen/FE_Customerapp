@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "721486092870",
+    "project_id": "jeevann-61c32",
+    "storage_bucket": "jeevann-61c32.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721486092870:android:5536ca0bfbb1c8a355c847",
+        "android_client_info": {
+          "package_name": "com.jeevann.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "721486092870-0ae6au35s698o07ml4pg3he1clb5jfnk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jeevann.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "721486092870-e5doud6k9r3i0k6engrpr034m6h18m2q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jeevann.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "721486092870-gb7fi9n1k0bajjv0gm1biomo2vbppc4v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jeevann.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "721486092870-6v6eiil0tkruuu87s28qteoj10vsbtvd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1PlSqn6-NuhqXAh9o48_Y-xicrZfIfhA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "721486092870-6v6eiil0tkruuu87s28qteoj10vsbtvd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "721486092870-i52r8g6274es84pl0rg6rjdbomotp8h9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jeevann.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
