@@ -2615,13 +2615,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        code: '4a7329',
+        code: '1e1c90',
         // code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        code: '4a7329',
+        code: '1e1c90',
         // code: shortCode,
       };
     }

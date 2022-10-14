@@ -2,7 +2,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL ='https://hitaxi-order.netsolutionindia.com/api/v1';
 
-export const API_BASE_URL = 'http://192.168.100.68:8000/api/v1';
+export const API_BASE_URL = 'http://192.168.100.66:9091/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
