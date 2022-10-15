@@ -438,6 +438,7 @@ const shortCodes = {
   verz: '2e1b4a',
   regiomigo: '39c82e',
   jimsAutoRescue: '4fc57b',
+  carryfood: '86d81e'
 };
 
 const appIds = {
@@ -1351,7 +1352,7 @@ const appIds = {
   }),
   ambutap: Platform.select({
     ios: 'com.ambutap',
-    android: 'com.ambutap',
+    android: 'com.ambutap.userapp',
   }),
   sabroson: Platform.select({
     ios: 'com.sabroson.orders',
@@ -1591,8 +1592,8 @@ const appIds = {
     android: 'com.redglee',
   }),
   dropItOffUsa: Platform.select({
-    ios: 'com.dropItOffUsa.royoOrders',
-    android: 'com.dropItOffUsa.royoOrders',
+    ios: 'com.dropItOffUsa',
+    android: 'com.dropItOffUsaOrder',
   }),
   handyPickup: Platform.select({
     ios: 'com.handyPickup',
@@ -1826,8 +1827,8 @@ const appIds = {
   }),
 
   abbeRides: Platform.select({
-    ios: 'com.abbeRides',
-    android: 'com.abbeRides',
+    ios: 'com.abbeRides.Orders',
+    android: 'com.abbeRides.Orders',
   }),
   nrsa: Platform.select({
     ios: 'com.nrsa',
@@ -2180,6 +2181,10 @@ const appIds = {
   jimsAutoRescue: Platform.select({
     ios: 'com.jimsautorescue.royoorders',
     android: 'com.jimsautorescue.royoorders',
+  }),
+  carryfood: Platform.select({
+    ios: 'com.carryfood.royoorders',
+    android: 'com.carryfood.royoorders',
   }),
 };
 

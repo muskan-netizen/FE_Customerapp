@@ -1232,14 +1232,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           animateOnMount={true}
           handleComponent={carModalHeader}
           onChange={() => playHapticEffect(hapticEffects.impactMedium)}>
-          <BottomSheetScrollView
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-            style={{
-              backgroundColor: isDarkMode
-                ? MyDarkTheme.colors.background
-                : colors.white,
-            }}>
+          
             <View
               style={{
                 flex: 1,
@@ -1250,7 +1243,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
               {!!showCarModal && _selectCarModalView()}
               {!!showPaymentModal && _selectPaymentView()}
             </View>
-          </BottomSheetScrollView>
         </BottomSheet>
         {!!showCarModal && (
           <View

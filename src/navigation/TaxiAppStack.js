@@ -107,7 +107,7 @@ export default function (Stack) {
         component={DirectPayOnline}
         options={{headerShown: false}}
       />
-        <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.KHALTI}
         component={Khalti}
         options={{headerShown: false}}

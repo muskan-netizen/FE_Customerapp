@@ -3113,7 +3113,7 @@ export default function Products({route, navigation}) {
   };
 
   const onShare = () => {
-    console.log('onShare', categoryInfo.share_link);
+    console.log('onShare', categoryInfo);
     if (!!categoryInfo.share_link) {
       let hyperLink = categoryInfo.share_link;
       let options = {url: hyperLink};

@@ -2722,6 +2722,12 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.carryfood:
+          updateState({
+            shortCode: shortCodes.carryfood,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2801,7 +2807,8 @@ export default function ShortCode({ route, navigation }) {
           getBundleId() == appIds.masa ||
           getBundleId() == appIds.iPicknDrop ||
           getBundleId() == appIds.muvpod ||
-          getBundleId() == appIds.hezniTaxi
+          getBundleId() == appIds.hezniTaxi ||
+          getBundleId() == appIds.flank
         ) {
           updateState({
             isLoading: false,
@@ -2865,6 +2872,14 @@ export default function ShortCode({ route, navigation }) {
         });
         break;
 
+        case appIds.flank:
+        updateState({
+          isLoading: false,
+          LoadingScreen: false,
+          allAppData: res,
+          initapiresponse: true,
+        });
+        break;
 
       default:
         updateState({ isLoading: false, LoadingScreen: false });
@@ -2973,12 +2988,14 @@ export default function ShortCode({ route, navigation }) {
     switch (getBundleId()) {
       case appIds.masa:
         return animatedSplash();
-      case appIds.iPicknDrop:
-        return animatedSplash();
+      // case appIds.iPicknDrop:
+      //   return animatedSplash();
       case appIds.muvpod:
         return animatedSplash();
       case appIds.hezniTaxi:
         return animatedSplash();
+        case appIds.flank:
+          return animatedSplash();
       default:
         return imageSplash();
     }
@@ -3018,6 +3035,8 @@ export default function ShortCode({ route, navigation }) {
         return imagePath.muvpod;
       case appIds?.hezniTaxi:
         return imagePath.HezniSplash;
+        case appIds?.flank:
+          return imagePath.flanksplash;
       // case appIds?.sabroson:
       //   return imagePath.sabroson
     }
