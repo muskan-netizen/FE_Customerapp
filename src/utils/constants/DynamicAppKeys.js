@@ -1439,7 +1439,7 @@ const appIds = {
   }),
   xborne: Platform.select({
     ios: 'com.xborne',
-    android: 'com.xborne',
+    android: 'com.xborne.order',
   }),
   fawaz: Platform.select({
     ios: 'com.fawaz',
@@ -1978,8 +1978,8 @@ const appIds = {
     android: 'com.swipe.order',
   }),
   sheRyders: Platform.select({
-    ios: 'com.sheRyders.order',
-    android: 'com.sheRyders.order',
+    ios: 'com.sheRyders',
+    android: 'com.sheRyders',
   }),
   kurrix: Platform.select({
     ios: 'com.kurrix.order',
