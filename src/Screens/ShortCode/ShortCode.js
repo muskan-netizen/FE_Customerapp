@@ -2728,6 +2728,12 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.nhazi:
+          updateState({
+            shortCode: shortCodes.nhazi,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

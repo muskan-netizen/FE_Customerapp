@@ -438,7 +438,12 @@ const shortCodes = {
   verz: '2e1b4a',
   regiomigo: '39c82e',
   jimsAutoRescue: '4fc57b',
+<<<<<<< HEAD
   carryfood: '86d81e'
+=======
+  carryfood: '86d81e',
+  nhazi: 'abaf70',
+>>>>>>> 389c4e689b03c9ab9b1a5aba7391d0853968d02b
 };
 
 const appIds = {
@@ -1191,7 +1196,7 @@ const appIds = {
     android: 'com.vendorspot',
   }),
   sxm2go: Platform.select({
-    ios: 'com.sxm2go',
+    ios: 'com.sxm2go.userapp',
     android: 'com.sxm2go.userapp',
   }),
   pinkydeli: Platform.select({
@@ -2185,6 +2190,10 @@ const appIds = {
   carryfood: Platform.select({
     ios: 'com.carryfood.royoorders',
     android: 'com.carryfood.royoorders',
+  }),
+  nhazi: Platform.select({
+    ios: 'com.nhazi.royoorders',
+    android: 'com.nhazi.royoorders',
   }),
 };
 
