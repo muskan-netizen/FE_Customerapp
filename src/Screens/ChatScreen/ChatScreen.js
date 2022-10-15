@@ -158,13 +158,13 @@ export default function ChatScreen({ route, navigation }) {
  
     
 
-       const allRoomUsersAppartFromAgent= res?.userData.splice(res?.userData.findIndex(item => item?.user_type != "agent") )
-       const allAgentIds= res?.userData.splice(res?.userData.findIndex(item => item?.user_type == "agent") )
-       console.log(allRoomUsersAppartFromAgent,allAgentIds,"allChatUseresallChatUseres");
+       const allRoomUsersAppartFromAgentAry= res?.userData.splice(res?.userData.findIndex(item => item?.user_type != "agent") )
+       const allAgentIdsAry= res?.userData.splice(res?.userData.findIndex(item => item?.user_type == "agent") )
+       console.log(allRoomUsersAppartFromAgentAry,allAgentIdsAry,"allChatUseresallChatUseres");
        
        updateState({
-        allRoomUsersAppartFromAgent:allRoomUsersAppartFromAgent,
-        allAgentIds:allAgentIds,
+        allRoomUsersAppartFromAgent:allRoomUsersAppartFromAgentAry,
+        allAgentIds:allAgentIdsAry,
           roomUsers: res?.userData,
         });
        
@@ -172,7 +172,7 @@ export default function ChatScreen({ route, navigation }) {
     } catch (error) {
       console.log("error raised in fetchAllRoomUser api", error);
     }
-  }, []);
+  }, [allRoomUsersAppartFromAgent, allAgentIds, roomUsers]);
 
   
 
@@ -250,12 +250,13 @@ export default function ChatScreen({ route, navigation }) {
     } catch (error) {
       console.log("error raised in fetchAllMessages api", error);
     }
-  }, []);
+  }, [allRoomUsersAppartFromAgent, allAgentIds]);
 
 
-   console.log("paramDataparamDataparamData",userData );
 
-  const sendToUserNotification = async (id, text) => {
+  const sendToUserNotification = (id, text) => {
+    console.log("paramDataparamDataparamData",allRoomUsersAppartFromAgent,allAgentIds );
+
     let apiData = {
       user_ids: allRoomUsersAppartFromAgent,
       roomId: id,
@@ -263,7 +264,7 @@ export default function ChatScreen({ route, navigation }) {
       text_message: text,
       chat_type: paramData?.type,
       order_id: paramData?.order_id,
-      all_agentids: _.isEmpty(allAgentIds)?[]:allAgentIds,
+      all_agentids: allAgentIds,
       order_vendor_id:paramData?.order_vendor_id,
       username:userData?.name,
       vendor_id:paramData?.vendor_id,
