@@ -203,18 +203,7 @@ android {
     }
 
     flavorDimensions "appType"
-    productFlavors{
-           carryfood{ 
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.carryfood.royoorders'
-            resValue "string", "app_name", "Carry Food" 
-            resValue "string", "host_name", ""
-            }
-    }
+    
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -6329,6 +6318,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.carryfood.royoorders'
             resValue "string", "app_name", "Carry Food" 
+            resValue "string", "host_name", ""
+            }
+              nhazi{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.nhazi.royoorders'
+            resValue "string", "app_name", "Nhazi" 
             resValue "string", "host_name", ""
             }
     }

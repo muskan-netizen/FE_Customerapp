@@ -1,6 +1,6 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
-export const API_BASE_URL = 'https://spryntz.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://spryntz.com/api/v1';
 // export const API_BASE_URL ='https://sales.focushires.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.96.166:9091/api/v1';

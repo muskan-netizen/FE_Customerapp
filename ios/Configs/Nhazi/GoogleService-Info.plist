@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>336736452054-5lqpop1q56lkjcn3b59o7bp4ljqu2krq.apps.googleusercontent.com</string>
+	<string>77803987686-hh8ht94agkuamei9g9utqu2s337kqmf1.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.336736452054-5lqpop1q56lkjcn3b59o7bp4ljqu2krq</string>
+	<string>com.googleusercontent.apps.77803987686-hh8ht94agkuamei9g9utqu2s337kqmf1</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>336736452054-4cfhsbrqo1niq4ov27hesio2k8ue9395.apps.googleusercontent.com</string>
+	<string>77803987686-2m5l6d1cduk8ep0dj2in6vd50pbufb7t.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCJ96jrg9612FMsZsiXNMwDONPnAtMlZO0</string>
+	<string>AIzaSyA_uxZRN34zbRKBpJwqSe_1fcAXHmQvCUY</string>
 	<key>GCM_SENDER_ID</key>
-	<string>336736452054</string>
+	<string>77803987686</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.sxm2go.userapp</string>
+	<string>com.nhazi.royoorders</string>
 	<key>PROJECT_ID</key>
-	<string>sxm2go-d16dd</string>
+	<string>nhazi-a9e1a</string>
 	<key>STORAGE_BUCKET</key>
-	<string>sxm2go-d16dd.appspot.com</string>
+	<string>nhazi-a9e1a.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:336736452054:ios:bc9599efbd956e82293877</string>
+	<string>1:77803987686:ios:b0d9fbf581452f307e9127</string>
 </dict>
 </plist>
