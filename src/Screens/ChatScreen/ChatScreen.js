@@ -66,10 +66,8 @@ export default function ChatScreen({ route, navigation }) {
     isLoading: false,
     roomUsers: [],
     isVoiceRecord: false,
-    chatUsersData: {},
-    chatAgentData: {},
-    chatVendorData: {},
-    chatAdminData: {},
+    allRoomUsersAppartFromAgent:[],
+    allAgentIds:[]
   });
   const {
     isLoading,
@@ -77,9 +75,8 @@ export default function ChatScreen({ route, navigation }) {
     isVoiceRecord,
     showParticipant,
     chatUsersData,
-    chatAgentData,
-    chatVendorData,
-    chatAdminData,
+    allRoomUsersAppartFromAgent,
+    allAgentIds
   } = state;
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -158,23 +155,19 @@ export default function ChatScreen({ route, navigation }) {
       );
       console.log("fetchAllRoomUser res", res);
       if (!!res?.userData && isFocused) {
-        console.log(res?.userData, "res?.userData");
-        var chatAgentData = res?.userData?.find(
-          (item) => item?.user_type == "agent"
-        );
-        var chatVendorData = res?.userData?.find(
-          (item) => item?.user_type == "vendor"
-        );
-        var chatAdminData = res?.userData?.find(
-          (item) => item?.user_type == "admin"
-        );
-        updateState({
-          chatAgentData: chatAgentData ? chatAgentData : {},
-          chatVendorData: chatVendorData ? chatVendorData : {},
-          chatAdminData: chatAdminData ? chatAdminData : {},
+ 
+    
+
+       const allRoomUsersAppartFromAgent= res?.userData.splice(res?.userData.findIndex(item => item?.user_type != "agent") )
+       const allAgentIds= res?.userData.splice(res?.userData.findIndex(item => item?.user_type == "agent") )
+       console.log(allRoomUsersAppartFromAgent,allAgentIds,"allChatUseresallChatUseres");
+       
+       updateState({
+        allRoomUsersAppartFromAgent:allRoomUsersAppartFromAgent,
+        allAgentIds:allAgentIds,
           roomUsers: res?.userData,
         });
-        console.log(chatVendorData,chatAgentData,chatAdminData,"chatUsersDatachatUsersData");
+       
       }
     } catch (error) {
       console.log("error raised in fetchAllRoomUser api", error);
@@ -260,29 +253,30 @@ export default function ChatScreen({ route, navigation }) {
   }, []);
 
 
-  // console.log("paramDataparamDataparamData", [chatVendorData,chatAdminData]);
+   console.log("paramDataparamDataparamData",userData );
 
   const sendToUserNotification = async (id, text) => {
     let apiData = {
-      user_ids: [chatVendorData,chatAdminData],
+      user_ids: allRoomUsersAppartFromAgent,
       roomId: id,
       roomIdText: paramData?.room_id,
       text_message: text,
       chat_type: paramData?.type,
       order_id: paramData?.order_id,
-      all_agentids: _.isEmpty(chatAgentData)?[]:[chatAgentData],
+      all_agentids: _.isEmpty(allAgentIds)?[]:allAgentIds,
       order_vendor_id:paramData?.order_vendor_id,
       username:userData?.name,
-      vendor_id:paramData?.vendor_id
-    };
-    
-
+      vendor_id:paramData?.vendor_id,
+      auth_id:userData?.id
+    };    
+   console.log(apiData,"apiDataapiDataapiData");
+  
     actions.sendNotification(apiData, {
       code: appData?.profile?.code,
       currency: currencies?.primary_currency?.id,
       language: languages?.primary_language?.id,
     }).then((res)=>{
-      console.log(res,"response+++++");
+      console.log(res,"response+++++",apiData);
     }).catch((error)=>{
       console.log(error,"errororr in notification");
     })
