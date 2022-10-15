@@ -205,16 +205,16 @@ android {
     flavorDimensions "appType"
 
   productFlavors{
-               donepacked{
-                dimension "appType"
-                versionCode 7
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.donepacked'
-                resValue "string", "app_name", "Donepacked"
-                resValue "string", "host_name", ""
-            }
+             exprexPro{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.exprexPro'
+            resValue "string", "app_name", "ExprexPro"
+            resValue "string", "host_name", ""
+            } 
   }
     // productFlavors {
     //         royoorder {
