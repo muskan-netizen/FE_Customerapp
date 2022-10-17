@@ -233,7 +233,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   useEffect(() => {
     Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
     setTimeout(() => {
-      fitTopadding();
+      onCenter();
     }, 3000);
   }, []);
 
@@ -883,6 +883,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const _redirectToPayement = () => {
     moveToNewScreen(navigationStrings.PAYMENT_OPTIONS, {
       screenName: strings.PAYMENT,
+      paramData:paramData
     })();
   };
 
@@ -1087,18 +1088,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       });
     }
   }, []);
-  const fitTopadding = useCallback(() => {
-    if (paramData?.location.length > 0 && !!mapRef?.current?.fitToCoordinates) {
-      mapRef.current.fitToCoordinates(paramData?.location, {
-        edgePadding: {
-          right: width / 3,
-          bottom: height / 4,
-          left: width / 3,
-          top: height / 10,
-        },
-      });
-    }
-  }, []);
+
   const onPressPickUpNow = () => {
     selectedCarOption
       ? updateState({
@@ -1242,14 +1232,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           animateOnMount={true}
           handleComponent={carModalHeader}
           onChange={() => playHapticEffect(hapticEffects.impactMedium)}>
-          <BottomSheetScrollView
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-            style={{
-              backgroundColor: isDarkMode
-                ? MyDarkTheme.colors.background
-                : colors.white,
-            }}>
+          
             <View
               style={{
                 flex: 1,
@@ -1260,7 +1243,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
               {!!showCarModal && _selectCarModalView()}
               {!!showPaymentModal && _selectPaymentView()}
             </View>
-          </BottomSheetScrollView>
         </BottomSheet>
         {!!showCarModal && (
           <View

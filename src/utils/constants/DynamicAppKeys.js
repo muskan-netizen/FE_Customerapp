@@ -436,8 +436,11 @@ const shortCodes = {
   clickokart: 'f34c51',
   tiimo: 'aac5d5',
   verz: '2e1b4a',
-  ragiomigo: '39c82e',
+  regiomigo: '39c82e',
   jimsAutoRescue: '4fc57b',
+<<<<<<< HEAD
+  carryfood: '86d81e'
+=======
   carryfood: '86d81e',
   nhazi: 'abaf70',
   petverse: '9d740f',
@@ -1355,7 +1358,7 @@ const appIds = {
   }),
   ambutap: Platform.select({
     ios: 'com.ambutap',
-    android: 'com.ambutap',
+    android: 'com.ambutap.userapp',
   }),
   sabroson: Platform.select({
     ios: 'com.sabroson.orders',
@@ -2177,7 +2180,7 @@ const appIds = {
     ios: 'com.verz.royoorders',
     android: 'com.verz.royoorders',
   }),
-  ragiomigo: Platform.select({
+  regiomigo: Platform.select({
     ios: 'com.ragiomigo.royoorders',
     android: 'com.ragiomigo.royoorders',
   }),
