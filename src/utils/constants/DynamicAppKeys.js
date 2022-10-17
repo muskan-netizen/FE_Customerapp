@@ -440,6 +440,8 @@ const shortCodes = {
   jimsAutoRescue: '4fc57b',
   carryfood: '86d81e',
   nhazi: 'abaf70',
+  petverse: '9d740f',
+  clickndrop: '9536ba',
 };
 
 const appIds = {
@@ -2190,6 +2192,14 @@ const appIds = {
   nhazi: Platform.select({
     ios: 'com.nhazi.royoorders',
     android: 'com.nhazi.royoorders',
+  }),
+  petverse: Platform.select({
+    ios: 'com.petverse.royoorders',
+    android: 'com.petverse.royoorders',
+  }),
+  clickndrop: Platform.select({
+    ios: 'com.clickndrop.royoorders',
+    android: 'com.clickndrop.royoorders',
   }),
 };
 

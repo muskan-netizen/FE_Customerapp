@@ -2731,6 +2731,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.petverse:
+          updateState({
+            shortCode: shortCodes.petverse,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.clickndrop:
+          updateState({
+            shortCode: shortCodes.clickndrop,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
