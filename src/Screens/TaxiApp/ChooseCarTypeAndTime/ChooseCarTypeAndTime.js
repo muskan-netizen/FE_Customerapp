@@ -49,11 +49,7 @@ import DatePicker from 'react-native-date-picker';
 import {chekLocationPermission} from '../../../utils/permissions';
 import useInterval from '../../../utils/useInterval';
 // import Modal from '../../../Components/Modal';
-<<<<<<< HEAD
-import {PayWithFlutterwave} from 'flutterwave-react-native';
-=======
 import {FlutterwaveButton, PayWithFlutterwave} from 'flutterwave-react-native';
->>>>>>> bf46524ab5d789383119922afc6f374ff7f7fe12
 import { generateTransactionRef } from '../../../utils/paystackMethod';
 
 const ASPECT_RATIO = width / height;
@@ -395,14 +391,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
                 // do something with the result
                 updateState({
                   isModalVisibleForPayFlutterWave: false,
-<<<<<<< HEAD
                   indicatorLoader: false,
                   // deliveryFeeLoader: false,
-=======
-                  
-                  indicatorLoader: false,
-                  deliveryFeeLoader: false,
->>>>>>> bf46524ab5d789383119922afc6f374ff7f7fe12
                 });
               }, 200);
             }

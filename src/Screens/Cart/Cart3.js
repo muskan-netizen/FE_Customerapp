@@ -190,7 +190,7 @@ function Cart({navigation, route}) {
     isSubmitKycLoader: false,
     isModalVisibleForPayFlutterWave: false,
     paymentDataFlutterWave: null,
-    selectedType:null
+    selectedType: null,
   });
 
   const {
@@ -216,7 +216,7 @@ function Cart({navigation, route}) {
     isSubmitKycLoader,
     isModalVisibleForPayFlutterWave,
     paymentDataFlutterWave,
-    selectedType
+    selectedType,
   } = state;
 
   //Redux store data
@@ -237,7 +237,7 @@ function Cart({navigation, route}) {
   const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
 
   const {preferences} = appData?.profile;
-
+  console.log(appData, 'preferencespreferences');
   const selectedAddressData = useSelector(
     (state) => state?.cart?.selectedAddress,
   );
@@ -673,8 +673,7 @@ function Cart({navigation, route}) {
       isCategoryKycLoader: false,
       isSubmitKycLoader: false,
       isModalVisibleForPayFlutterWave: false,
-      isProductOrderForm:false
-      
+      isProductOrderForm: false,
     });
     setPrescriptionModal(false);
     setPrescriptionLoading(false);
@@ -2336,12 +2335,10 @@ function Cart({navigation, route}) {
   };
 
   const onChangeText = (item, text, index, arrLength) => {
-   
     // const myAnswerdArray = [];
-    
-   
+
     const answerdArray = [...myAnswerdArray];
-    
+
     answerdArray[index] = {
       question: item?.translations[0]?.name,
       answer: text,
@@ -2374,7 +2371,7 @@ function Cart({navigation, route}) {
       updateState({
         isSubmitFaqLoader: true,
       });
-      console.log(myAnswerdArray,"myAnswerdArraymyAnswerdArray")
+      console.log(myAnswerdArray, 'myAnswerdArraymyAnswerdArray');
       actions
         .updateProductFAQs(
           {
@@ -4027,6 +4024,117 @@ function Cart({navigation, route}) {
             )}`}</Text>
           </Animatable.View>
         )}
+        {(!!preferences?.advance_booking_amount &&
+          cartData?.advance_payable_amount > 0) && (
+          <Animatable.View
+            style={{
+              ...styles.bottomTabLableValue,
+              marginTop: moderateScale(8),
+              marginBottom: moderateScale(2),
+            }}>
+            <TouchableOpacity
+              activeOpacity={0.9}
+              hitSlop={hitSlopProp}
+              onPress={() => updateState({showTaxFeeArea: !showTaxFeeArea})}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text
+                  style={{
+                    ...styles.priceItemLabel,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyB,
+                  }}>
+                  {'Advance Payable Amount'}
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles.priceItemLabel
+              }>{`${currencies?.primary_currency?.symbol} ${Number(
+              cartData?.advance_payable_amount,
+            ).toFixed(
+              appData?.profile?.preferences?.digit_after_decimal,
+            )}`}</Text>
+          </Animatable.View>
+        )}
+        {(!!preferences?.advance_booking_amount &&
+          cartData?.pending_amount > 0) && (
+          <Animatable.View
+            style={{
+              ...styles.bottomTabLableValue,
+              marginTop: moderateScale(8),
+              marginBottom: moderateScale(2),
+            }}>
+            <TouchableOpacity
+              activeOpacity={0.9}
+              hitSlop={hitSlopProp}
+              onPress={() => updateState({showTaxFeeArea: !showTaxFeeArea})}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text
+                  style={{
+                    ...styles.priceItemLabel,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyB,
+                  }}>
+                  {'Pending Amount'}
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles.priceItemLabel
+              }>{`${currencies?.primary_currency?.symbol} ${Number(
+              cartData?.pending_amount,
+            ).toFixed(
+              appData?.profile?.preferences?.digit_after_decimal,
+            )}`}</Text>
+          </Animatable.View>
+        )}
+         {(!!preferences?.advance_booking_amount &&
+          cartData?.total_amount > 0) && (
+          <Animatable.View
+            style={{
+              ...styles.bottomTabLableValue,
+              marginTop: moderateScale(8),
+              marginBottom: moderateScale(2),
+            }}>
+            <TouchableOpacity
+              activeOpacity={0.9}
+              hitSlop={hitSlopProp}
+              onPress={() => updateState({showTaxFeeArea: !showTaxFeeArea})}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text
+                  style={{
+                    ...styles.priceItemLabel,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyB,
+                  }}>
+                  {'Total Amount'}
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles.priceItemLabel
+              }>{`${currencies?.primary_currency?.symbol} ${Number(
+              cartData?.total_amount,
+            ).toFixed(
+              appData?.profile?.preferences?.digit_after_decimal,
+            )}`}</Text>
+          </Animatable.View>
+        )}
         {showTaxFeeArea && (
           <View>
             <Animatable.View
@@ -5217,13 +5325,12 @@ function Cart({navigation, route}) {
   const openCloseMapAddress = (type) => {
     updateState({selectViaMap: type == 1 ? true : false});
   };
-const onSelect= (val,item,index)=>{
-  
-  updateState ( {
-    selectedType:val?.translations[0].name
-  })
-  onChangeText(item, val?.translations[0].name, index, item?.length)
-}
+  const onSelect = (val, item, index) => {
+    updateState({
+      selectedType: val?.translations[0].name,
+    });
+    onChangeText(item, val?.translations[0].name, index, item?.length);
+  };
   const renderProductForm = () => {
     return (
       <KeyboardAvoidingView
@@ -5366,7 +5473,7 @@ const onSelect= (val,item,index)=>{
                       <View
                         style={{
                           marginTop: moderateScaleVertical(10),
-                          zIndex:5
+                          zIndex: 5,
                         }}>
                         <View
                           style={{
@@ -5392,12 +5499,12 @@ const onSelect= (val,item,index)=>{
                         <DropDown
                           value={selectedType}
                           modalStyle={{
-                            width:width-moderateScale(50)
+                            width: width - moderateScale(50),
                           }}
                           selectedIndexByProps={-1}
                           placeholder={strings.SELECT_ANS}
                           data={item?.options}
-                          fetchValues={(val)=>onSelect(val,item,index)}
+                          fetchValues={(val) => onSelect(val, item, index)}
                           marginBottom={0}
                           // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
                         />
@@ -5431,26 +5538,23 @@ const onSelect= (val,item,index)=>{
                     );
                   }
                 })}
-                 <GradientButton
-                colorsArray={[
-                  themeColors.primary_color,
-                  themeColors.primary_color,
-                ]}
-                textStyle={{
-                  textTransform: 'none',
-                  fontSize: textScale(12),
-                }}
-                indicator={isSubmitFaqLoader}
-                indicatorColor={colors.white}
-                onPress={setAllFormData}
-                btnText={strings.SUBMIT}
-                marginTop={moderateScaleVertical(16)}
-                marginBottom={moderateScaleVertical(16)}
-               
-              />
+                <GradientButton
+                  colorsArray={[
+                    themeColors.primary_color,
+                    themeColors.primary_color,
+                  ]}
+                  textStyle={{
+                    textTransform: 'none',
+                    fontSize: textScale(12),
+                  }}
+                  indicator={isSubmitFaqLoader}
+                  indicatorColor={colors.white}
+                  onPress={setAllFormData}
+                  btnText={strings.SUBMIT}
+                  marginTop={moderateScaleVertical(16)}
+                  marginBottom={moderateScaleVertical(16)}
+                />
               </ScrollView>
-
-             
             </View>
           )}
         </View>
@@ -6574,6 +6678,7 @@ const onSelect= (val,item,index)=>{
             <SelectPaymentModal
               onSelectPayment={onSelectPayment}
               paymentModalClose={() => updateState({paymentModal: false})}
+              dineInType={dineInType}
             />
           </StripeProvider>
         </View>

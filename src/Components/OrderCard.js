@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   },
   date: {
     fontFamily: fontFamily.regular,
-    fontSize: 13,
+    fontSize: 11,
     color: colors.blackOpacity66,
   },
   btnText: {

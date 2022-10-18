@@ -2329,6 +2329,34 @@ export default function OrderDetail({navigation, route}) {
               MyDarkTheme={MyDarkTheme}
             />
           )}
+          {!!cartData?.advance_payable_amount &&
+            cartData?.advance_payable_amount > 0 && (
+              <LeftRightText
+                leftText={"Advance Payable Amount"}
+                rightText={`${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(cartData?.advance_payable_amount),
+                  appData?.profile?.preferences?.digit_after_decimal,
+                )}`}
+                isDarkMode={isDarkMode}
+                MyDarkTheme={MyDarkTheme}
+              />
+            )}
+           {!!cartData?.pending_amount &&
+            cartData?.pending_amount > 0 && (
+              <LeftRightText
+                leftText={"Pending Amount"}
+                rightText={` ${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(cartData?.pending_amount),
+                  appData?.profile?.preferences?.digit_after_decimal,
+                )}`}
+                isDarkMode={isDarkMode}
+                MyDarkTheme={MyDarkTheme}
+              />
+            )}
           <View
             style={{
               ...styles.dottedLine,

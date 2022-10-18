@@ -495,6 +495,26 @@ const RoyoOrderDetail = (props) => {
             </View>
           )}
 
+{!!orderInfo?.advance_paid_amount && Number(orderInfo?.advance_paid_amount) > 0 && (
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.font15Medium}>{"Advance Paid Amount"}</Text>
+              <Text style={styles.font15Semibold}>
+                {currencies?.primary_currency?.symbol}{' '}
+                {Number(orderInfo.advance_paid_amount).toFixed(2)}
+              </Text>
+            </View>
+          )}
+        {!!orderInfo?.pending_amount && Number(orderInfo?.pending_amount) > 0 && (
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.font15Medium}>{"Pending Amount"}</Text>
+              <Text style={styles.font15Semibold}>
+                {currencies?.primary_currency?.symbol}{' '}
+                {Number(orderInfo.pending_amount).toFixed(2)}
+              </Text>
+            </View>
+          )}
           <View style={styles.dashLine} />
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>{strings.TOTAL}</Text>
