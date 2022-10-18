@@ -3,7 +3,7 @@ import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {isEmpty} from 'lodash';
 import moment from 'moment';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
+import {FlatList, Image, Text, TouchableOpacity, View,Modal} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
@@ -48,7 +48,7 @@ import BottomViewModal from '../../../Components/BottomViewModal';
 import DatePicker from 'react-native-date-picker';
 import {chekLocationPermission} from '../../../utils/permissions';
 import useInterval from '../../../utils/useInterval';
-import Modal from '../../../Components/Modal';
+// import Modal from '../../../Components/Modal';
 import {PayWithFlutterwave} from 'flutterwave-react-native';
 import { generateTransactionRef } from '../../../utils/paystackMethod';
 
@@ -371,28 +371,32 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           .then((res) => {
             console.log(res, 'openSdkUrl');
             if (res && res?.status == 'Success') {
-              setCartItems([]);
-              setCartData({});
-              actions.reloadData(!reloadData);
-              moveToNewScreen(navigationStrings.ORDERSUCESS, {
-                orderDetail: {
-                  order_number:
-                    paymentDataFlutterWave?.orderDetail?.order_number,
-                  id: paymentDataFlutterWave?.orderDetail?.id,
-                },
-              })();
+              // alert("hii")
+              // setCartItems([]);
+              // setCartData({});
+              // actions.reloadData(!reloadData);
+              moveToNewScreen(navigationStrings.PICKUPTAXIORDERDETAILS,
+                paymentDataFlutterWave
+              //    {
+              //   orderDetail: {
+              //     order_number:
+              //       paymentDataFlutterWave?.orderDetail?.order_number,
+              //     id: paymentDataFlutterWave?.orderDetail?.id,
+              //   },
+              // }
+              )();
             } else {
               redirectTimeout = setTimeout(() => {
                 // do something with the result
                 updateState({
                   isModalVisibleForPayFlutterWave: false,
-                  placeLoader: false,
-                  deliveryFeeLoader: false,
+                  indicatorLoader: false,
+                  // deliveryFeeLoader: false,
                 });
               }, 200);
             }
           })
-          .catch(errorMethod);
+          .catch(error=>console.log(error,"errroro111"));
       } else {
         let apiData = {
           order_number: paymentDataFlutterWave?.orderDetail?.order_number,
@@ -414,12 +418,14 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
               // do something with the result
               updateState({
                 isModalVisibleForPayFlutterWave: false,
-                placeLoader: false,
+                indicatorLoader: false,
                 deliveryFeeLoader: false,
               });
             }, 200);
           })
-          .catch(errorMethod);
+          .catch(
+            error=>console.log(error,"errorrrr")
+          );
       }
     } catch (error) {
       console.log('error raised', error);
@@ -1446,7 +1452,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           />
         </TouchableOpacity>
       </View>
-      <Modal
+     { isModalVisibleForPayFlutterWave &&
+     
+     <Modal
         onBackdropPress={() =>
           updateState({
             isModalVisibleForPayFlutterWave: false,
@@ -1488,7 +1496,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             }}
           />
         </View>
-      </Modal>
+      </Modal>}
       <PaymentProcessingModal
         isModalVisible={isModalVisible}
         updateModalState={_updateState}
