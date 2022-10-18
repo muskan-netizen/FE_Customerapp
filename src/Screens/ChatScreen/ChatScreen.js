@@ -255,8 +255,6 @@ export default function ChatScreen({ route, navigation }) {
 
 
   const sendToUserNotification = (id, text) => {
-    console.log("paramDataparamDataparamData",allRoomUsersAppartFromAgent,allAgentIds );
-
     let apiData = {
       user_ids: allRoomUsersAppartFromAgent,
       roomId: id,
