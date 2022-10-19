@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import MyShare from 'react-native-share';
 import {
   View,
@@ -21,13 +21,14 @@ import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import fontFamily from '../../../styles/fontFamily';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../../../styles/responsiveSize';
 import {customMarginBottom} from '../../../utils/constants/constants';
-import {getImageUrl, showError} from '../../../utils/helperFunctions';
+import {getImageUrl, showError, showSuccess} from '../../../utils/helperFunctions';
 import {dialCall} from '../../../utils/openNativeApp';
 import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import {isEmpty} from 'lodash';
@@ -37,12 +38,18 @@ import {currencyNumberFormatter} from '../../../utils/commonFunction';
 import navigationStrings from '../../../navigation/navigationStrings';
 import {useNavigation} from '@react-navigation/native';
 
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import BorderTextInput from '../../../Components/BorderTextInput';
+import GradientButton from '../../../Components/GradientButton';
+
 const RoyoOrderDetail = (props) => {
+  const bottomSheetRef = useRef(null);
   const userData = useSelector((state) => state?.auth?.userData);
   const {data, selectedVendor} = props.route.params;
   const {appData, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
+  console.log(appData,"appDataappData")
   const {preferences} = appData?.profile;
 
   const navigation = useNavigation();
@@ -55,6 +62,12 @@ const RoyoOrderDetail = (props) => {
     upcoming_status: data?.order_status.upcoming_status,
     orderInfo: {},
     userDocumentList: [],
+    isUpdateOrder:false,
+    updateReason:'',
+    updatedPrice:'',
+    order_vendor_product_id:'',
+    order_product_old_price:'',
+    isLoading:false
   });
   const {
     showUpcomingStatus,
@@ -64,6 +77,12 @@ const RoyoOrderDetail = (props) => {
     address,
     orderInfo,
     userDocumentList,
+    isUpdateOrder,
+    updateReason,
+    updatedPrice,
+    order_vendor_product_id,
+    order_product_old_price,
+    isLoading
   } = state;
 
   const fun = async () => {
@@ -87,7 +106,10 @@ const RoyoOrderDetail = (props) => {
   useEffect(() => {
     _getOrderDetailScreen();
   }, []);
-
+ //On change textinput
+ const _onChangeText = (key) => (val) => {
+  updateState({[key]: val});
+};
   const createRoom = async (item) => {
     try {
       const apiData = {
@@ -161,6 +183,7 @@ const RoyoOrderDetail = (props) => {
       isLoadingB: false,
       isLoading: false,
       isLoadingC: false,
+      isUpdateOrder:false
     });
     showError(error?.message || error?.error);
   };
@@ -242,7 +265,14 @@ const RoyoOrderDetail = (props) => {
     //   </View>
     // </View>
   };
+  const editOrder = (item)=>{
+    updateState({
+      isUpdateOrder:true,
+      order_vendor_product_id:item?.id,
+      order_product_old_price:item?.price
 
+    })
+  }
   const renderItem = useCallback(({item, index}) => {
     return (
       <View style={styles.itemBox}>
@@ -257,12 +287,35 @@ const RoyoOrderDetail = (props) => {
           }}
         />
         <View style={{flex: 1, justifyContent: 'space-around'}}>
-          <View style={{}}>
+          <View style={{ }}>
+            <View style={{
+             
+              flexDirection:'row',
+              justifyContent:'space-between'
+            }}>
             <View style={{flex: 0.8}}>
               <Text style={styles.font16Medium}>
                 {item?.translation?.title}
               </Text>
             </View>
+            {!!appData?.profile?.preferences?.update_order_product_price ?(
+           <TouchableOpacity 
+           hitSlop={{
+            top:50,
+            bottom:50,
+            right:50,
+            left:50,
+           }}
+            onPress={()=>editOrder(item)}
+            style={{
+              
+            }}
+           >
+           <Image  source={imagePath?.edit1Royo}/>
+           </TouchableOpacity>) : <></>}
+            </View>
+            
+            
 
             {!userData?.is_superadmin ? (
               <View style={{marginVertical: moderateScaleVertical(8)}}>
@@ -283,7 +336,8 @@ const RoyoOrderDetail = (props) => {
               </View>
             ) : null}
           </View>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row',justifyContent:'space-between'}}>
+            <View>
             <Text style={styles.font13Regular}>
               {item.quantity}
               {strings.UNIT} {'x'}{' '}
@@ -292,6 +346,14 @@ const RoyoOrderDetail = (props) => {
               {currencies?.primary_currency?.symbol}{' '}
               {Number(item.price).toFixed(2)}
             </Text>
+            </View>
+            <View>
+               <Text style={styles.font16Semibold}>
+          {`${currencies?.primary_currency?.symbol} ${Number(
+            item.quantity * item.price,
+          ).toFixed(2)}`}
+        </Text>
+            </View>
           </View>
           {item?.product_addons.length > 0
             ? item?.product_addons.map((j) => {
@@ -311,14 +373,39 @@ const RoyoOrderDetail = (props) => {
               })
             : null}
         </View>
-        <Text style={styles.font16Semibold}>
-          {`${currencies?.primary_currency?.symbol} ${Number(
-            item.quantity * item.price,
-          ).toFixed(2)}`}
-        </Text>
+        
+       
       </View>
     );
   }, []);
+
+  const onSubmit = ()=>{
+    updateState({
+      isLoading:true
+    })
+
+    let data ={}
+    data["order_vendor_product_id"]=order_vendor_product_id,
+    data["order_product_old_price"]=order_product_old_price,
+    data["new_product_price"]=updatedPrice,
+    data["update_price_reason"]=updateReason,
+
+     console.log(data,"sending Dataaaaa")
+     actions?.venderUpdateOrder(data,{
+      code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+     }).then(
+      (res)=>{
+        console.log(res,"resssupdate"),
+        updateState({isUpdateOrder:false,
+         isLoading:false
+        })
+        showSuccess(res?.message)
+        _getOrderDetailScreen()
+      }
+     ).catch(errorMethod)
+  }
   return (
     <WrapperContainer
       isLoading={isLoadingB}
@@ -406,15 +493,15 @@ const RoyoOrderDetail = (props) => {
 
         <View style={{margin: moderateScaleVertical(16)}}>
           {!!(
-            Number(data?.vendors[0].subtotal_amount) &&
-            !!Number(data?.vendors[0].subtotal_amount) !== 0
+            Number(data?.total_amount) &&
+            !!Number(data?.total_amount) !== 0
           ) && (
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>
               <Text style={styles.font15Semibold}>
                 {currencies?.primary_currency?.symbol}{' '}
-                {Number(data?.vendors[0].subtotal_amount).toFixed(2)}
+                {Number(orderInfo?.total_amount).toFixed(2)}
               </Text>
             </View>
           )}
@@ -505,7 +592,7 @@ const RoyoOrderDetail = (props) => {
               </Text>
             </View>
           )}
-        {!!orderInfo?.pending_amount && Number(orderInfo?.pending_amount) > 0 && (
+        {Number(orderInfo?.advance_paid_amount) > 0 && !!orderInfo?.pending_amount && Number(orderInfo?.pending_amount) > 0 && (
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.font15Medium}>{"Pending Amount"}</Text>
@@ -520,7 +607,7 @@ const RoyoOrderDetail = (props) => {
             <Text style={styles.font15Medium}>{strings.TOTAL}</Text>
             <Text style={{...styles.font15Semibold, color: colors.themeColor2}}>
               {`${currencies?.primary_currency?.symbol} ${Number(
-                data?.payable_amount,
+                orderInfo?.payable_amount,
               ).toFixed(2)}`}
             </Text>
           </View>
@@ -616,7 +703,85 @@ const RoyoOrderDetail = (props) => {
             />
           </View>
         ) : null}
-      </ScrollView>
+          </ScrollView>
+        {
+          !!isUpdateOrder  ?
+          (
+            <BottomSheet
+            ref={bottomSheetRef}
+            index={0}
+            snapPoints={[height]}
+            activeOffsetY={[-1, 1]}
+            failOffsetX={[-5, 5]}
+            animateOnMount={true}
+            handleComponent={null}
+           
+            > 
+              <TouchableOpacity 
+              style={{
+                alignSelf:"center",
+                
+              }}
+                onPress={()=>{
+                  updateState({
+                    isUpdateOrder:false
+                  })
+                }}
+              >
+                 <Image 
+                  source={imagePath?.close2}
+                />
+              </TouchableOpacity>
+              <View style={{
+                flex:1,
+                backgroundColor:colors?.grey2
+              }}>
+                <View 
+                 style={{
+                  marginTop:moderateScale(40),
+                  flex:1,
+                  marginHorizontal:moderateScale(16)
+                 }}
+                >
+                   <BorderTextInput
+               
+                 onChangeText={_onChangeText('updatedPrice')}
+                  placeholder={"Enter updated price"}
+                  
+                 
+                  autoCapitalize={'none'}
+                  autoFocus={true}
+                  returnKeyType={'next'}
+                />
+                <BorderTextInput
+                containerStyle={{
+                  height:moderateScale(100)
+                }}
+                 onChangeText={_onChangeText('updateReason')}
+                  placeholder={"Reason"}
+                  
+                 
+                  autoCapitalize={'none'}
+                  autoFocus={true}
+                  returnKeyType={'next'}
+                />
+                <GradientButton 
+                indicator={isLoading}
+                onPress={onSubmit}
+                btnText={"Submit"}
+                colorsArray={[colors?.black,colors?.black]} 
+                 containerStyle={{
+                 
+                 }}
+                /> 
+
+                </View>
+              </View>
+            </BottomSheet>
+          )
+           :null
+        }
+    
     </WrapperContainer>
   );
 };

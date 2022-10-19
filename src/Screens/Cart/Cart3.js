@@ -2464,6 +2464,7 @@ function Cart({navigation, route}) {
               ...styles.vendorView,
               // paddingHorizontal: moderateScale(8),
               flexDirection: 'column',
+             
             }}>
             <TouchableOpacity onPress={() => _redirectVendorProducts(item)}>
               <Text
@@ -2957,7 +2958,26 @@ function Cart({navigation, route}) {
                               : ''
                           }`}</Text>
                         )}
+                        
                       </View>
+                     {  !!i?.is_processor_enable &&
+                     
+                     <View>
+                          <Text
+                            style={{
+                              fontSize: moderateScale(14),
+                              fontFamily: fontFamily.regular,
+                              color: colors.black,
+                            }}
+                          >{"Processor Name : "} {i?.processor_name} </Text>
+                          <Text
+                           style={{
+                            fontSize: moderateScale(14),
+                            fontFamily: fontFamily.regular,
+                            color: colors.black,
+                          }}
+                          >{"Date : "} {i?.processor_date} </Text>
+                        </View>}
                       {/* <View style={styles.dashedLine} /> */}
                     </Animated.View>
                   </Swipeable>
@@ -3264,6 +3284,7 @@ function Cart({navigation, route}) {
             )}
           </View>
         </View>
+       
       </View>
     );
   };
@@ -6698,6 +6719,7 @@ function Cart({navigation, route}) {
                 <SelectPaymentModal
                   onSelectPayment={onSelectPayment}
                   paymentModalClose={() => updateState({paymentModal: false})}
+                  dineInType={dineInType}
                 />
               </StripeProvider>
             </View>

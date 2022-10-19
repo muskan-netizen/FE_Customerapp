@@ -1383,6 +1383,7 @@ export default function OrderDetail({navigation, route}) {
                               {strings.WRITE_REVIEW}
                             </Text>
                           </View>
+                          
                           {/* {i?.product_rating?.rating ? (
                           <View>
                             <Text
@@ -1395,8 +1396,27 @@ export default function OrderDetail({navigation, route}) {
                             </Text>
                           </View>
                         ) : null} */}
+                        
                         </View>
                       ) : null}
+                      {  !!i?.is_processor_enable &&
+                     
+                     <View>
+                          <Text
+                            style={{
+                              fontSize: moderateScale(14),
+                              fontFamily: fontFamily.regular,
+                              color: colors.black,
+                            }}
+                          >{"Processor Name : "} {i?.processor_name} </Text>
+                          <Text
+                           style={{
+                            fontSize: moderateScale(14),
+                            fontFamily: fontFamily.regular,
+                            color: colors.black,
+                          }}
+                          >{"Date : "} {i?.processor_date} </Text>
+                        </View>}
                     </View>
                   );
                 } else {
@@ -2329,14 +2349,14 @@ export default function OrderDetail({navigation, route}) {
               MyDarkTheme={MyDarkTheme}
             />
           )}
-          {!!cartData?.advance_payable_amount &&
-            cartData?.advance_payable_amount > 0 && (
+          {!!cartData?.advance_paid_amount &&
+            cartData?.advance_paid_amount > 0 && (
               <LeftRightText
-                leftText={"Advance Payable Amount"}
+                leftText={"Advance Paid Amount"}
                 rightText={`${
                   currencies?.primary_currency?.symbol
                 }${currencyNumberFormatter(
-                  Number(cartData?.advance_payable_amount),
+                  Number(cartData?.advance_paid_amount),
                   appData?.profile?.preferences?.digit_after_decimal,
                 )}`}
                 isDarkMode={isDarkMode}

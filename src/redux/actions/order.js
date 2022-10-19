@@ -25,6 +25,7 @@ import {
   ALL_VENDOR_ORDERS,
   RESCHDULE_ORDER,
   GENERATE_INVOICE,
+  VENDER_UPDATE_ORDER,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -313,6 +314,17 @@ export function ratingToDriver(data = {}, headers = {}) {
 export function genrateInvoice(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiPost(GENERATE_INVOICE, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+export function venderUpdateOrder(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(VENDER_UPDATE_ORDER, data, headers)
       .then((res) => {
         resolve(res);
       })
