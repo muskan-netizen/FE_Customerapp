@@ -32,6 +32,8 @@ import {MyDarkTheme} from '../../../styles/theme';
 import {getColorCodeWithOpactiyNumber} from '../../../utils/helperFunctions';
 import navigationStrings from '../../../navigation/navigationStrings';
 import SubscriptionModal from '../../../Components/SubscriptionModal';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { getBundleId } from 'react-native-device-info';
 
 export default function DashBoardFour({
   handleRefresh = () => {},
@@ -186,6 +188,9 @@ export default function DashBoardFour({
           <View style={{height: moderateScaleVertical(5)}} />
         </>
       ) : null}
+      {/* {console.log(toggleData,"toggleDatatoggleData")} */}
+      {console.log(selcetedToggle,"toggleDatatoggleDataselcetedToggle")}
+
       <ToggleTabBar toggleData={toggleData} selcetedToggle={selcetedToggle} />
       {showAllTempCartOrders()}
       {userData?.auth_token && (
@@ -237,7 +242,7 @@ export default function DashBoardFour({
                 ? [styles.nearVendorTxt, {color: MyDarkTheme.colors.text}]
                 : styles.nearVendorTxt
             }>
-            {strings.NEAR_VENDOR}
+            {getBundleId() == appIds.sorDelivery ? strings.NEAR_RESTAURANTS :  strings.NEAR_VENDOR}
           </Text>
         </>
       ) : null}
@@ -308,7 +313,7 @@ export default function DashBoardFour({
           onPress={_changeVendorListStyle}
           style={styles.applyPromoBtn}>
           <Text style={styles.viewAllBtn}>
-            {!isVendorColumnList ? strings.VIEW_ALL_VENDORS : strings.CLOSE}
+            {!isVendorColumnList ? getBundleId() == appIds.sorDelivery?  strings.RESTAURANTS :  strings.VIEW_ALL_VENDORS : getBundleId() == appIds.sorDelivery? strings.CLOSES : strings.CLOSE}
           </Text>
         </TouchableOpacity>
       ) : null}

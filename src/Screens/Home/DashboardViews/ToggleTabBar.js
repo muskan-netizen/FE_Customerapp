@@ -3,7 +3,7 @@ import {View, Text, Alert} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
 import MaterialTabs from 'react-native-material-tabs';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import colors from '../../../styles/colors';
 import {
   moderateScale,
@@ -15,6 +15,7 @@ import {showError, showSuccess} from '../../../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import strings from '../../../constants/lang';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
 
 export default function ToggleTabBar({
   selcetedToggle,
@@ -44,6 +45,8 @@ export default function ToggleTabBar({
     addAllTabs();
     getSelectedTab();
   }, [appData]);
+
+console.log(toggleData,"toggleDatatoggleData")
 
   useEffect(() => {
     if (dine_In_Type == 'dine_in') {
@@ -150,12 +153,14 @@ export default function ToggleTabBar({
       }
     }
   };
-
+console.log( toggleData?.profile?.preferences," toggleData?.profile?.preferences?.dinein_check")
   const addAllTabs = () => {
     const localTabsArray = [];
     userSelectedtab();
     if (toggleData?.profile?.preferences?.delivery_check == 1) {
-      localTabsArray.push(strings.DELIVERY);
+      let tabname = toggleData?.profile?.preferences?.vendorMode[0]?.name
+      localTabsArray.push(getBundleId() == appIds.sorDelivery ? tabname: strings.DELIVERY );
+      // localTabsArray.push(strings.DELIVERY);
       if (
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
@@ -164,7 +169,9 @@ export default function ToggleTabBar({
       }
     }
     if (toggleData?.profile?.preferences?.dinein_check == 1) {
-      localTabsArray.push(strings.DINE_IN);
+      let tabname = toggleData?.profile?.preferences?.vendorMode[1].name
+      localTabsArray.push(getBundleId() == appIds.sorDelivery ? tabname: strings.DINE_IN );
+      // localTabsArray.push(strings.DINE_IN);
       if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
@@ -173,7 +180,8 @@ export default function ToggleTabBar({
       }
     }
     if (toggleData?.profile?.preferences?.takeaway_check == 1) {
-      localTabsArray.push(strings.TAKEAWAY);
+      let tabname = toggleData?.profile?.preferences?.vendorMode[2].name
+      localTabsArray.push(getBundleId() == appIds.sorDelivery ? tabname: strings.TAKEAWAY );
       if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 0

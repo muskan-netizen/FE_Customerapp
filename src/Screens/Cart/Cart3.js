@@ -5736,7 +5736,7 @@ function Cart({navigation, route}) {
 
     selectedPrescriptionImgs.map((item) => {
       formdata.append('prescriptions[]', {
-        name: item?.filename,
+        name: item?.filename || item?.mime,
         type: item?.mime,
         uri: item?.path,
       });
