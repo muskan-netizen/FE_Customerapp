@@ -1993,6 +1993,7 @@ export default function Products({route, navigation}) {
     if (loadMore) {
       updateState({pageNo: pageNo + 1});
       getAllListItems(pageNo + 1);
+      setLoading(false);
     }
   };
 
@@ -3613,7 +3614,7 @@ export default function Products({route, navigation}) {
                 //   <View style={{height: moderateScale(80)}} />
                 // )}
                 contentContainerStyle={{
-                  paddingBottom:moderateScale(60)
+                  paddingBottom: moderateScale(60),
                 }}
                 renderSectionHeader={renderSectionHeader}
                 ListEmptyComponent={listEmptyComponent}

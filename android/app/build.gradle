@@ -203,7 +203,7 @@ android {
     }
 
     flavorDimensions "appType"
-    
+  
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -6328,6 +6328,46 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.nhazi.royoorders'
             resValue "string", "app_name", "Nhazi" 
+            resValue "string", "host_name", ""
+            }
+            petverse{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.petverse.royoorders'
+            resValue "string", "app_name", "Petverse" 
+            resValue "string", "host_name", ""
+            }
+            clickndrop{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.clickndrop.royoorders'
+            resValue "string", "app_name", "Click n drop" 
+            resValue "string", "host_name", ""
+            }
+             lifehomefit{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.lifehomefit.royoorders'
+            resValue "string", "app_name", "Life Home Fit" 
+            resValue "string", "host_name", ""
+            }
+              appi{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.appi.royoorders'
+            resValue "string", "app_name", "Appi" 
             resValue "string", "host_name", ""
             }
     }

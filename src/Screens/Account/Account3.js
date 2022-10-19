@@ -112,14 +112,14 @@ export default function Account3({navigation}) {
   };
 
   const onShare = () => {
-    console.log('onShare', appData);
+    console.log('onShare', appData?.profile?.preferences);
     if (
       !!appData?.profile?.preferences?.android_app_link ||
       !!appData?.profile?.preferences?.ios_link
     ) {
       let hyperLink =
         Platform.OS === 'android'
-          ? appData?.profile?.preferences?.android_app_link 
+          ? appData?.profile?.preferences?.android_app_link
           : appData?.profile?.preferences?.ios_link;
 
       let options = {url: hyperLink};
@@ -204,9 +204,6 @@ export default function Account3({navigation}) {
         break;
     }
   };
-
-
-
 
   return (
     <View

@@ -438,12 +438,12 @@ const shortCodes = {
   verz: '2e1b4a',
   regiomigo: '39c82e',
   jimsAutoRescue: '4fc57b',
-<<<<<<< HEAD
-  carryfood: '86d81e'
-=======
   carryfood: '86d81e',
   nhazi: 'abaf70',
->>>>>>> 389c4e689b03c9ab9b1a5aba7391d0853968d02b
+  petverse: '',
+  clickndrop: '9536ba',
+  lifehomefit: '191bdb',
+  appi: 'e5e222',
 };
 
 const appIds = {
@@ -2194,6 +2194,22 @@ const appIds = {
   nhazi: Platform.select({
     ios: 'com.nhazi.royoorders',
     android: 'com.nhazi.royoorders',
+  }),
+  petverse: Platform.select({
+    ios: 'com.petverse.royoorders',
+    android: 'com.petverse.royoorders',
+  }),
+  clickndrop: Platform.select({
+    ios: 'com.clickndrop.royoorders',
+    android: 'com.clickndrop.royoorders',
+  }),
+  lifehomefit: Platform.select({
+    ios: 'com.lifehomefit.royoorders',
+    android: 'com.lifehomefit.royoorders',
+  }),
+  appi: Platform.select({
+    ios: 'com.appi.royoorders',
+    android: 'com.appi.royoorders',
   }),
 };
 
