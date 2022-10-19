@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>476185024325-horn8mvgei9r9v2p0evs0t4hlc1qa92s.apps.googleusercontent.com</string>
+	<string>81746367369-el89c6p51orah7cr284flukneq8ncdc7.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.476185024325-horn8mvgei9r9v2p0evs0t4hlc1qa92s</string>
+	<string>com.googleusercontent.apps.81746367369-el89c6p51orah7cr284flukneq8ncdc7</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>476185024325-gpsggv7lr425f3qn6b6du3vpm9ip1nqg.apps.googleusercontent.com</string>
+	<string>81746367369-brvan37q44ca9caa81765146b61igvn7.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCn_S6IMnMPGQA8UuSCxfwmJ9ZsoJ-wQLw</string>
+	<string>AIzaSyAnWr6GVSIPT3q_FV-X_jY0wMUVXnLhGf0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>476185024325</string>
+	<string>81746367369</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.abbeRides</string>
+	<string>com.abbeRides.Orders</string>
 	<key>PROJECT_ID</key>
-	<string>abbe-rides-8f79f</string>
+	<string>abberides-58035</string>
 	<key>STORAGE_BUCKET</key>
-	<string>abbe-rides-8f79f.appspot.com</string>
+	<string>abberides-58035.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:476185024325:ios:57cc0f94d5b2139a06102c</string>
+	<string>1:81746367369:ios:c7e2a0a4e462d3ae9f4758</string>
 </dict>
 </plist>

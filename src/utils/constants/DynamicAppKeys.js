@@ -1748,8 +1748,8 @@ const appIds = {
     android: 'com.myfarma',
   }),
   valley: Platform.select({
-    ios: 'com.valley',
-    android: 'com.valley',
+    ios: 'com.valleyOrder',
+    android: 'com.valleyOrder',
   }),
   kartAndKarry: Platform.select({
     ios: 'com.kartandkarry',

@@ -185,6 +185,9 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 //littlebird
 // export const API_BASE_URL = 'https://littlebird.store/api/v1';
 
+//valley
+// export const API_BASE_URL = 'https://ourvalley.app/api/v1';
+
 //taxe
 // export const API_BASE_URL = 'https://taxe.rostaging.com/api/v1';
 

@@ -34,6 +34,7 @@ import {
   moderateScaleVertical,
   textScale,
   width,
+  height,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
 import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
