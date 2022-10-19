@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "152129819683",
+    "project_id": "clickokart-1f3d4",
+    "storage_bucket": "clickokart-1f3d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152129819683:android:0c8bd60e854c4ade7c8d96",
+        "android_client_info": {
+          "package_name": "com.clickokart.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "152129819683-6nrq54110llcdb1a5oaa8eunfm68t2ep.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsGLKfqVPu_Uc9N849RzAhtcawEHG-7TU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "152129819683-6nrq54110llcdb1a5oaa8eunfm68t2ep.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "152129819683-8ir5fbobcn0r8k1uo5qfghmsjmi2tt5r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.clickokart.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

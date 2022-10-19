@@ -1,4 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {handleCardAction, StripeProvider} from '@stripe/stripe-react-native';
 import {PayWithFlutterwave} from 'flutterwave-react-native';
 import {cloneDeep, isEmpty} from 'lodash';
@@ -100,7 +101,7 @@ function Cart({navigation, route}) {
   let paramsData = route?.params;
 
   let actionSheet = useRef(null);
-
+  const bottomSheetRef = useRef(null);
   const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
   const darkthemeusingDevice = useDarkMode();
   const reloadData = useSelector((state) => state?.reloadData?.reloadData);
@@ -580,6 +581,13 @@ function Cart({navigation, route}) {
     }
   };
 
+  const _handleComponent = () => {
+    return (
+      <>
+        <Text>asdfi</Text>
+      </>
+    );
+  };
   //decrementing/removeing products from cart
   const removeProductFromCart = (item) => {
     let data = {};
@@ -6666,7 +6674,37 @@ function Cart({navigation, route}) {
           </ScrollView>
         </View>
       </Modal>
-      <Modal
+      {!!paymentModal ? (
+        <BottomSheet
+          ref={bottomSheetRef}
+          index={0}
+          snapPoints={[height]}
+          activeOffsetY={[-1, 1]}
+          failOffsetX={[-5, 5]}
+          animateOnMount={true}
+          handleComponent={null}>
+          <BottomSheetScrollView
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+            style={{
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.background
+                : colors.backgroundGrey,
+            }}>
+            <View style={{height: height}}>
+              <StripeProvider
+                publishableKey={preferences?.stripe_publishable_key}
+                merchantIdentifier="merchant.identifier">
+                <SelectPaymentModal
+                  onSelectPayment={onSelectPayment}
+                  paymentModalClose={() => updateState({paymentModal: false})}
+                />
+              </StripeProvider>
+            </View>
+          </BottomSheetScrollView>
+        </BottomSheet>
+      ) : null}
+      {/* <Modal
         isVisible={paymentModal}
         style={{
           margin: 0,
@@ -6682,7 +6720,7 @@ function Cart({navigation, route}) {
             />
           </StripeProvider>
         </View>
-      </Modal>
+      </Modal> */}
 
       <BottomModal
         onBackdropPress={closeForm}

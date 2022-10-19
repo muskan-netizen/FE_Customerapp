@@ -241,7 +241,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   useEffect(() => {
     Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
     setTimeout(() => {
-      onCenter();
+      fitTopadding();
     }, 3000);
   }, []);
 
@@ -1204,7 +1204,18 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       });
     }
   }, []);
-
+  const fitTopadding = useCallback(() => {
+    if (paramData?.location.length > 0 && !!mapRef?.current?.fitToCoordinates) {
+      mapRef.current.fitToCoordinates(paramData?.location, {
+        edgePadding: {
+          right: width / 3,
+          bottom: height / 4,
+          left: width / 3,
+          top: height / 10,
+        },
+      });
+    }
+  }, []);
   const onPressPickUpNow = () => {
     selectedCarOption
       ? updateState({

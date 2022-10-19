@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>721486092870-i52r8g6274es84pl0rg6rjdbomotp8h9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.721486092870-i52r8g6274es84pl0rg6rjdbomotp8h9</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>721486092870-0ae6au35s698o07ml4pg3he1clb5jfnk.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCvNDH0uz5a-c4C1m3rzpcQkbWSrUNLnTI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>721486092870</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.jeevann.royoorders</string>
+	<key>PROJECT_ID</key>
+	<string>jeevann-61c32</string>
+	<key>STORAGE_BUCKET</key>
+	<string>jeevann-61c32.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:721486092870:ios:89bd0633265e297e55c847</string>
+</dict>
+</plist>

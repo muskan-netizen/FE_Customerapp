@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>679772787002-5kmmokvqrfs69ho3vcv1linnvlifer1n.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.679772787002-5kmmokvqrfs69ho3vcv1linnvlifer1n</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>679772787002-a5pbvj2covjntfkml3f3v9poh83942t2.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDK2DOfBYDkOLo5nDSwButJkHexaLuVaoE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>679772787002</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.spryton.royoorders</string>
+	<key>PROJECT_ID</key>
+	<string>spryton-cf459</string>
+	<key>STORAGE_BUCKET</key>
+	<string>spryton-cf459.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:679772787002:ios:6043b47bab706279568003</string>
+</dict>
+</plist>

@@ -1,25 +1,29 @@
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {
-  CardField, createPaymentMethod, createToken,
+  CardField,
+  createPaymentMethod,
+  createToken,
   initStripe,
-  StripeProvider
+  StripeProvider,
 } from '@stripe/stripe-react-native';
 // import {CardField, createToken, initStripe} from '@stripe/stripe-react-native';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
-  Keyboard, ScrollView, StyleSheet,
+  Keyboard,
+  ScrollView,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { useDarkMode } from 'react-native-dark-mode';
-import { useSelector } from 'react-redux';
+import {useDarkMode} from 'react-native-dark-mode';
+import {useSelector} from 'react-redux';
 import CheckoutPaymentView from '../Components/CheckoutPaymentView';
 import GradientButton from '../Components/GradientButton';
 import Header from '../Components/Header';
-import { loaderOne } from '../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../Components/WrapperContainer';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang/index';
@@ -29,10 +33,11 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width
+  width,
+  height,
 } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
-import { getColorCodeWithOpactiyNumber } from '../utils/helperFunctions';
+import {MyDarkTheme} from '../styles/theme';
+import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
 import HomeLoader from './Loaders/HomeLoader';
 export default function SelectPaymentModal({
   onSelectPayment,
@@ -149,11 +154,15 @@ export default function SelectPaymentModal({
 
   //Error handling in screen
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false,btnLoader:false});
+    updateState({
+      isLoading: false,
+      isLoadingB: false,
+      isRefreshing: false,
+      btnLoader: false,
+    });
     // showError(error?.message || error?.error);
     console.log(error, 'error');
     alert(error?.message || error?.error);
-
   };
 
   const _createPaymentMethod = async (cardInfo, res2) => {
@@ -161,7 +170,7 @@ export default function SelectPaymentModal({
     if (res2) {
       await createPaymentMethod({
         type: 'Card',
-        token:res2,
+        token: res2,
         card: cardInfo,
         billing_details: {
           name: 'Jenny Rosen',
@@ -205,7 +214,7 @@ export default function SelectPaymentModal({
               console.log(cardInfo, 'stripeTokencardInfo>>');
               if (!!res?.error) {
                 alert(res.error.localizedMessage);
-                updateState({isLoading: false,btnLoader:false});
+                updateState({isLoading: false, btnLoader: false});
                 return;
               }
               if (res && res?.token && res.token?.id) {
@@ -390,7 +399,7 @@ export default function SelectPaymentModal({
   };
 
   const _onChangeStripeData = (cardDetails) => {
-    console.log("_onChangeStripeData_onChangeStripeData",cardDetails)
+    console.log('_onChangeStripeData_onChangeStripeData', cardDetails);
     if (cardDetails?.complete) {
       // updateState({
       //   cardInfo: {
@@ -498,6 +507,7 @@ export default function SelectPaymentModal({
           }}>
           {payementMethods && payementMethods?.length
             ? payementMethods.map((item, index) => {
+                console.log(item, 'item>>>>');
                 return (
                   <>
                     <Animatable.View
@@ -654,7 +664,7 @@ export default function SelectPaymentModal({
             <GradientButton
               onPress={selectPaymentOption}
               marginTop={moderateScaleVertical(10)}
-              marginBottom={moderateScaleVertical(10)}
+              marginBottom={height / 9}
               btnText={strings.SELECT}
               indicator={btnLoader}
               indicatorColor={colors.white}

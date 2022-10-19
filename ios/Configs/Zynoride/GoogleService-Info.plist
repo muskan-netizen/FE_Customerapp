@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>404265822096-h62ukr1qloh9p671fgnjirs29i3v2ghl.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.404265822096-h62ukr1qloh9p671fgnjirs29i3v2ghl</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>404265822096-4v5ahm5l5rn1lh5rs8aru09ri563viq6.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAeQQTfKbuJJwUBoIlshNZVzPtzQ19XmG8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>404265822096</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.zynoride.royoorders</string>
+	<key>PROJECT_ID</key>
+	<string>zynoride</string>
+	<key>STORAGE_BUCKET</key>
+	<string>zynoride.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:404265822096:ios:4b578a88eae5e3b8b4b515</string>
+</dict>
+</plist>

@@ -3616,6 +3616,7 @@ export default function Products({route, navigation}) {
                 // ListFooterComponent={() => (
                 //   <View style={{height: moderateScale(80)}} />
                 // )}
+
                 renderSectionHeader={renderSectionHeader}
                 ListEmptyComponent={listEmptyComponent}
                 onScrollToIndexFailed={(val) => console.log('indexed failed')}

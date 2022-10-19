@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>558995833371-if3occ83juqik0s59phrai0r8okrn13i.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.558995833371-if3occ83juqik0s59phrai0r8okrn13i</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>558995833371-2hokq3qp9benm47oumqfnjmof5suqioq.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBrTaDXyDHXyRBwtsvfgtTqIxdnPvVr9tU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>558995833371</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.youSmokeShop.royoorders</string>
+	<key>PROJECT_ID</key>
+	<string>yousmokeshop-558af</string>
+	<key>STORAGE_BUCKET</key>
+	<string>yousmokeshop-558af.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:558995833371:ios:06fcf341ab867cf7e9aebe</string>
+</dict>
+</plist>
