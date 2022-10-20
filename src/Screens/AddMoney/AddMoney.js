@@ -410,7 +410,7 @@ export default function AddMoney({navigation}) {
   };
 
   const _addMoneyToWallet = () => {
-    console.log(selectedPaymentMethod, 'selectedPaymentMethod');
+    console.log(selectedPaymentMethod, 'selectedPaymentMethodselectedPaymentMethod');
 
     if (amount == '') {
       showError(strings.PLEASE_ENTER_OR_SELECT_AMOUNT);

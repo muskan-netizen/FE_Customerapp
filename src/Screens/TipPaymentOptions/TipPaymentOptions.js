@@ -310,33 +310,6 @@ export default function TipPaymentOptions({ navigation, route }) {
             .then((res) => {
               if (res && res?.token && res.token?.id) {
                 _createPaymentMethod(cardInfo, res.token?.id);
-                // updateState({isLoading: false});
-                // actions
-                //   .tipAfterOrder(
-                //     {
-                //       tip_amount: data?.selectedTipAmount,
-                //       order_number: data?.order_number,
-                //       transaction_id: res.token?.id,
-                //     },
-                //     {
-                //       code: appData?.profile?.code,
-                //       currency: currencies?.primary_currency?.id,
-                //       language: languages?.primary_language?.id,
-                //     },
-                //   )
-                //   .then((res) => {
-                //     updateState({isLoading: false});
-                //     if (res && res?.status == 'Success' && res?.data) {
-                //       Alert.alert('', strings.PAYMENT_SUCCESS, [
-                //         {
-                //           text: strings.OK,
-                //           onPress: () => console.log('Cancel Pressed'),
-                //         },
-                //       ]);
-                //       navigation.navigate(navigationStrings.ORDER_DETAIL);
-                //     }
-                //   })
-                //   .catch(errorMethod);
               } else {
                 updateState({ isLoading: false });
               }

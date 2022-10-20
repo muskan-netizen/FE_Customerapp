@@ -111,6 +111,8 @@ export default function Account3({navigation}) {
     }
   };
 
+  console.log(userData,"appDataappData")
+
   const onShare = () => {
     console.log('onShare', appData?.profile?.preferences);
     if (

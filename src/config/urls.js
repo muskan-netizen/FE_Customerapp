@@ -7,8 +7,8 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://spryntz.com/api/v1';
 // export const API_BASE_URL ='https://sales.focushires.com/api/v1';
 
-// export const API_BASE_URL = 'http://192.168.96.166:9091/api/v1';
-// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+//export const API_BASE_URL = 'http://192.168.98.136:8001/api/v1';
+//  export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
 // export const API_BASE_URL = 'https://hellodeliver.in/api/v1';
@@ -129,7 +129,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 //export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
 //  export const API_BASE_URL = 'https://fairexglobal.com/api/v1';
 // export const API_BASE_URL = 'https://sabroson.com.mx/api/v1'
-// export const API_BASE_URL = 'https://dbairro.com/api/v1';
+ //export const API_BASE_URL = 'https://dbairro.com/api/v1';
 // export const API_BASE_URL = 'https://meltivers.com/api/v1';
 // export const API_BASE_URL = 'https://ourvalley.app/api/v1';
 // export const API_BASE_URL = 'https://fairexglobal.com/api/v1';
@@ -240,7 +240,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://canupickmeup.com/api/v1';
 
 // export const API_BASE_URL = 'https://hmc.royoorders.com/api/v1';
-// export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
+//export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://hemptify.com/api/v1';
 // export const API_BASE_URL = 'https://sirvu.ca/api/v1';
@@ -358,8 +358,8 @@ export const CHANGE_PASSWORD = getApiUrl('/changePassword');
 export const CONTACT_US = getApiUrl('/contact-us');
 export const VERIFY_ACCOUNT = getApiUrl('/auth/verifyAccount');
 export const RESEND_OTP = getApiUrl('/auth/sendToken');
-export const INCREASE_ITEM_QNT = getApiUrl('/cart/increaseItem');
-export const DECREASE_ITEM_QNT = getApiUrl('/cart/decreaseItem');
+// export const INCREASE_ITEM_QNT = getApiUrl('/cart/increaseItem');
+// export const DECREASE_ITEM_QNT = getApiUrl('/cart/decreaseItem');
 export const GET_DATA_BY_CATEGORY_FILTERS = getApiUrl('/category/filters');
 export const GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE = getApiUrl(
   '/v2/category/filters',
@@ -574,4 +574,8 @@ export const VENDOR_CHAT = '/api/room/fetchRoomByVendor';
 export const SEND_MESSAGE = '/api/chat/sendMessageJoin';
 export const GET_ALL_MESSAGES = '/api/chat';
 export const ALL_ROOM_USER = '/api/chat/getRoomUser';
+
+
+
+// static drop-location
 export const STATIC_DROP_LOCATIONS = getApiUrl('/static-dropoff-locations');
