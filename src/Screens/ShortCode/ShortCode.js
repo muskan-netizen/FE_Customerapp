@@ -2807,7 +2807,7 @@ export default function ShortCode({route, navigation}) {
       };
     } else {
       header = {
-        // code: '1da2e9',
+       //  code: '1da2e9',
         code: shortCode,
       };
     }

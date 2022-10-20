@@ -229,7 +229,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     paymentDataFlutterWave
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
-
+console.log(availableCarList,'availableCarListavailableCarList')
   useFocusEffect(
     React.useCallback(() => {
       if (paramData && paramData?.selectedMethod) {
@@ -835,7 +835,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
                 ? themeColors.secondary_color
                 : colors.black,
           }}>
-          {item?.name || ''}
+          {item?.name || item?.translation_title}
         </Text>
       </TouchableOpacity>
     );
@@ -931,7 +931,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
               color: isDarkMode ? colors.whiteOpacity77 : colors.black,
               marginTop: moderateScaleVertical(8),
             }}>
-            {availableCarList.length > 0 ? strings.CHOOSE_A_TRIP : ''}
+            {availableCarList?.length > 0 ? strings.CHOOSE_A_TRIP : ''}
           </Text>
         </View>
         <View style={{marginVertical: moderateScale(8)}}>
@@ -949,6 +949,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             ListFooterComponent={() => (
               <View style={{marginRight: moderateScale(16)}} />
             )}
+            showsHorizontalScrollIndicator={false}
           />
         </View>
       </View>
@@ -1370,7 +1371,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
               marginHorizontal: moderateScale(16),
               flexDirection: 'row',
             }}>
-            {availableCarList.length > 0 && (
+            {availableCarList?.length > 0 && (
               <GradientButton
                 colorsArray={[colors.white, colors.white]}
                 textStyle={{
@@ -1390,7 +1391,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
               />
             )}
 
-            {availableCarList.length > 0 && (
+            {availableCarList?.length > 0 && (
               <GradientButton
                 colorsArray={[
                   themeColors.primary_color,

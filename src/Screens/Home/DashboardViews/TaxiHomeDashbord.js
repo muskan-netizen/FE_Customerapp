@@ -152,7 +152,7 @@ export default function TaxiHomeDashbord({
   });
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
-
+  console.log(appMainData,'appMainDataappMainData')
   const fontFamily = appStyle?.fontSizeData;
   const {bannerRef} = useRef();
   const {

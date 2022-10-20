@@ -4341,7 +4341,7 @@ function Cart({navigation, route}) {
               </Text>
             </TouchableOpacity>
           )}
-
+     
         {!!cartData?.deliver_status ||
         cartData?.closed_store_order_scheduled ? (
           <View
