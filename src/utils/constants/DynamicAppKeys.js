@@ -434,6 +434,17 @@ const shortCodes = {
   spryton: 'd0a063',
   nittosadai: '26662c',
   clickokart: 'f34c51',
+  tiimo: 'aac5d5',
+  verz: '2e1b4a',
+  regiomigo: '39c82e',
+  jimsAutoRescue: '4fc57b',
+  carryfood: '86d81e',
+  nhazi: 'abaf70',
+  petverse: '',
+  clickndrop: '9536ba',
+  lifehomefit: '191bdb',
+  appi: 'e5e222',
+  dbairro_: '2b7742',
 };
 
 const appIds = {
@@ -1186,7 +1197,7 @@ const appIds = {
     android: 'com.vendorspot',
   }),
   sxm2go: Platform.select({
-    ios: 'com.sxm2go',
+    ios: 'com.sxm2go.userapp',
     android: 'com.sxm2go.userapp',
   }),
   pinkydeli: Platform.select({
@@ -1347,7 +1358,7 @@ const appIds = {
   }),
   ambutap: Platform.select({
     ios: 'com.ambutap',
-    android: 'com.ambutap',
+    android: 'com.ambutap.userapp',
   }),
   sabroson: Platform.select({
     ios: 'com.sabroson.orders',
@@ -2160,6 +2171,50 @@ const appIds = {
   clickokart: Platform.select({
     ios: 'com.clickokart.royoorders',
     android: 'com.clickokart.royoorders',
+  }),
+  tiimo: Platform.select({
+    ios: 'com.tiimo.royoorders',
+    android: 'com.tiimo.royoorders',
+  }),
+  verz: Platform.select({
+    ios: 'com.verz.royoorders',
+    android: 'com.verz.royoorders',
+  }),
+  regiomigo: Platform.select({
+    ios: 'com.ragiomigo.royoorders',
+    android: 'com.ragiomigo.royoorders',
+  }),
+  jimsAutoRescue: Platform.select({
+    ios: 'com.jimsautorescue.royoorders',
+    android: 'com.jimsautorescue.royoorders',
+  }),
+  carryfood: Platform.select({
+    ios: 'com.carryfood.royoorders',
+    android: 'com.carryfood.royoorders',
+  }),
+  nhazi: Platform.select({
+    ios: 'com.nhazi.royoorders',
+    android: 'com.nhazi.royoorders',
+  }),
+  petverse: Platform.select({
+    ios: 'com.petverse.royoorders',
+    android: 'com.petverse.royoorders',
+  }),
+  clickndrop: Platform.select({
+    ios: 'com.clickndrop.royoorders',
+    android: 'com.clickndrop.royoorders',
+  }),
+  lifehomefit: Platform.select({
+    ios: 'com.lifehomefit.royoorders',
+    android: 'com.lifehomefit.royoorders',
+  }),
+  appi: Platform.select({
+    ios: 'com.appi.royoorders',
+    android: 'com.appi.royoorders',
+  }),
+  dbairro_: Platform.select({
+    ios: 'com.dbairroapp.royoorders',
+    android: 'com.dbairroapp.royoorders',
   }),
 };
 

@@ -30,11 +30,11 @@ import strings from '../constants/lang/index';
 import actions from '../redux/actions';
 import colors from '../styles/colors';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
-  height,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
 import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
@@ -42,6 +42,7 @@ import HomeLoader from './Loaders/HomeLoader';
 export default function SelectPaymentModal({
   onSelectPayment,
   paymentModalClose = () => {},
+  dineInType
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const navigation = useNavigation();
@@ -129,9 +130,10 @@ export default function SelectPaymentModal({
 
   //Get list of all payment method
   const getListOfPaymentMethod = () => {
+    let apiData = `/cart?service_type=${dineInType}`
     actions
       .getListOfPaymentMethod(
-        '/cart',
+        apiData,
         {},
         {
           code: appData?.profile?.code,
@@ -621,34 +623,7 @@ export default function SelectPaymentModal({
                 </Text>
               )}
         </ScrollView>
-        {/* <KeyboardAwareScrollView
-          alwaysBounceVertical={true}
-          showsVerticalScrollIndicator={false}
-          style={{
-            marginHorizontal: moderateScaleVertical(20),
-          }}> */}
-
-        {/* <FlatList
-            data={payementMethods}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            keyboardShouldPersistTaps={'handled'}
-            // horizontal
-            style={{marginTop: moderateScaleVertical(10)}}
-            keyExtractor={(item, index) => String(index)}
-            renderItem={_renderItemPayments}
-            ItemSeparatorComponent={() => (
-              <View style={{marginBottom: moderateScaleVertical(16)}} />
-            )}
-            ListEmptyComponent={() =>
-              !isLoading && (
-                <Text style={{textAlign: 'center'}}>
-                  {strings.NO_PAYMENT_METHOD}
-                </Text>
-              )
-            }
-          /> */}
-        {/* </KeyboardAwareScrollView> */}
+      
 
         <View
           style={{

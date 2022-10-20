@@ -540,4 +540,6 @@ export default {
   icUserChat: require('../assets/images/ic_userchat.png'),
   icVendorChat: require('../assets/images/ic_vendorchat.png'),
   icOtherAddressType: require('../assets/images/RoyoorderNewImages/ic_other_address.png'),
+  HezniSplash: require('../assets/HezniSplash.mp4'),
+  flanksplash: require('../assets/Flanksplash.mp4')
 };

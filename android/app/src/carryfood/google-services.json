@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "625240769618",
+    "project_id": "carry-food-f995c",
+    "storage_bucket": "carry-food-f995c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625240769618:android:a2ad5d064348d945c84b8b",
+        "android_client_info": {
+          "package_name": "com.carryfood.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "625240769618-tpitc14q8iq842akrgth7m9mrrg56tmn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgvYJw0vmFzhC99ITX5P2qxxKwfDxa6hU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "625240769618-tpitc14q8iq842akrgth7m9mrrg56tmn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "625240769618-l444cmv9kgcejnqqni1fjpqa67i76k02.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.carryfood.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

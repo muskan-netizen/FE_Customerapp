@@ -203,8 +203,6 @@ android {
     }
 
     flavorDimensions "appType"
-   
-
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -4245,7 +4243,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.ambutap'
+                applicationId 'com.ambutap.userapp'
                 resValue "string", "app_name", "AmbuTap"
                 resValue "string", "host_name", ""
             }
@@ -6271,6 +6269,116 @@ android {
             resValue "string", "app_name", "CLICKOKART" 
             resValue "string", "host_name", ""
                }
+                tiimo{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.tiimo.royoorders'
+            resValue "string", "app_name", "Tiimo" 
+            resValue "string", "host_name", ""
+            }
+            verz{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.verz.royoorders'
+            resValue "string", "app_name", "Verz" 
+            resValue "string", "host_name", ""
+            }
+             ragiomigo{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.ragiomigo.royoorders'
+            resValue "string", "app_name", "RagioMigo" 
+            resValue "string", "host_name", ""
+            }
+              jimsAutoRescue{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.jimsautorescue.royoorders'
+            resValue "string", "app_name", "Jim's Auto Rescue" 
+            resValue "string", "host_name", ""
+            }
+              carryfood{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.carryfood.royoorders'
+            resValue "string", "app_name", "Carry Food" 
+            resValue "string", "host_name", ""
+            }
+              nhazi{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.nhazi.royoorders'
+            resValue "string", "app_name", "Nhazi" 
+            resValue "string", "host_name", ""
+            }
+            petverse{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.petverse.royoorders'
+            resValue "string", "app_name", "Petverse" 
+            resValue "string", "host_name", ""
+            }
+            clickndrop{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.clickndrop.royoorders'
+            resValue "string", "app_name", "Click n drop" 
+            resValue "string", "host_name", ""
+            }
+             lifehomefit{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.lifehomefit.royoorders'
+            resValue "string", "app_name", "Life Home Fit" 
+            resValue "string", "host_name", ""
+            }
+              appi{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.appi.royoorders'
+            resValue "string", "app_name", "Appi" 
+            resValue "string", "host_name", ""
+            }
+              dbairro_{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.dbairroapp.royoorders'
+            resValue "string", "app_name", "Dbairro_" 
+            resValue "string", "host_name", ""
+            }
     }
 }
 

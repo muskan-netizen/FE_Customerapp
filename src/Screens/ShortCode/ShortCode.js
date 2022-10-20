@@ -120,7 +120,10 @@ export default function ShortCode({route, navigation}) {
           });
           break;
         case appIds.masa:
-          updateState({shortCode: shortCodes.masa, isShortcodePrefilled: true});
+          updateState({
+            shortCode: shortCodes.masa,
+            isShortcodePrefilled: true,
+          });
           break;
         case appIds.yogofood:
           updateState({
@@ -2695,6 +2698,73 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.tiimo:
+          updateState({
+            shortCode: shortCodes.tiimo,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.verz:
+          updateState({
+            shortCode: shortCodes.verz,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.regiomigo:
+          updateState({
+            shortCode: shortCodes.regiomigo,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.jimsAutoRescue:
+          updateState({
+            shortCode: shortCodes.jimsAutoRescue,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.carryfood:
+          updateState({
+            shortCode: shortCodes.carryfood,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.nhazi:
+          updateState({
+            shortCode: shortCodes.nhazi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.petverse:
+          updateState({
+            shortCode: shortCodes.petverse,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.clickndrop:
+          updateState({
+            shortCode: shortCodes.clickndrop,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.lifehomefit:
+          updateState({
+            shortCode: shortCodes.lifehomefit,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.appi:
+          updateState({
+            shortCode: shortCodes.appi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.dbairro_:
+          updateState({
+            shortCode: shortCodes.dbairro_,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2722,6 +2792,8 @@ export default function ShortCode({route, navigation}) {
     }, 1000);
   };
 
+  
+
   const initApiHit = async () => {
     const res = await getItem('setPrimaryLanguage');
 
@@ -2729,14 +2801,14 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '245bae',
-        code: '2f3120',
+        // code: '1da2e9',
+        code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '245bae',
-        code: '2f3120',
+        // code: '1da2e9',
+        code: shortCode,
       };
     }
     console.log(header, 'header*******');
@@ -2770,7 +2842,13 @@ export default function ShortCode({route, navigation}) {
           actions.saveShortCode(shortCode);
         }
 
-        if (getBundleId() == appIds.masa || getBundleId() == appIds.muvpod) {
+        if (
+          getBundleId() == appIds.masa ||
+          getBundleId() == appIds.iPicknDrop ||
+          getBundleId() == appIds.muvpod ||
+          getBundleId() == appIds.hezniTaxi ||
+          getBundleId() == appIds.flank
+        ) {
           updateState({
             isLoading: false,
             LoadingScreen: false,
@@ -2816,6 +2894,24 @@ export default function ShortCode({route, navigation}) {
         break;
 
       case appIds.muvpod:
+        updateState({
+          isLoading: false,
+          LoadingScreen: false,
+          allAppData: res,
+          initapiresponse: true,
+        });
+        break;
+
+      case appIds.hezniTaxi:
+        updateState({
+          isLoading: false,
+          LoadingScreen: false,
+          allAppData: res,
+          initapiresponse: true,
+        });
+        break;
+
+      case appIds.flank:
         updateState({
           isLoading: false,
           LoadingScreen: false,
@@ -2935,6 +3031,10 @@ export default function ShortCode({route, navigation}) {
       //   return animatedSplash();
       case appIds.muvpod:
         return animatedSplash();
+      case appIds.hezniTaxi:
+        return animatedSplash();
+      case appIds.flank:
+        return animatedSplash();
       default:
         return imageSplash();
     }
@@ -2972,6 +3072,10 @@ export default function ShortCode({route, navigation}) {
       //   return imagePath.ipd;
       case appIds?.muvpod:
         return imagePath.muvpod;
+      case appIds?.hezniTaxi:
+        return imagePath.HezniSplash;
+      case appIds?.flank:
+        return imagePath.flanksplash;
       // case appIds?.sabroson:
       //   return imagePath.sabroson
     }

@@ -45,11 +45,12 @@ const PaymentOptions = ({navigation, route}) => {
   const {appData, appStyle, themeColors} = useSelector(
     (state) => state.initBoot,
   );
+
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-
+  const paramData =route?.params?.data?.paramData;
   const walletAmount = useSelector(
     (state) => state?.product?.walletData?.wallet_amount,
   );
@@ -144,6 +145,7 @@ const PaymentOptions = ({navigation, route}) => {
     }
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
       selectedMethod: item,
+      ...paramData
     });
   };
 

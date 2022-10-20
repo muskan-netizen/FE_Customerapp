@@ -92,11 +92,11 @@ const DropDown = ({
                     fontFamily:
                       selectedIndex == i ? fontFamily.bold : fontFamily.regular,
                   }}>
-                  {val?.address ||
+                  {val?.address || val?.translations[0]?.name ||val?.address ||
                     val?.full_name_english ||
                     val?.name ||
-                    val ||
-                    val?.address}
+                    val  
+                    }
                 </Text>
               </TouchableOpacity>
             );
