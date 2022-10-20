@@ -34,8 +34,7 @@ import {
   VENDOR_CATEGORIES,
   ALL_VENDOR_DATA,
   GET_MORE_CATEGORIES,
-  VENDOR_OPTIMIZE_V2
-
+  VENDOR_OPTIMIZE_V2,
 } from '../../config/urls';
 import {apiGet, apiPost, setWalletData} from '../../utils/utils';
 import store from '../store';
@@ -55,7 +54,7 @@ export function storeWishList(data) {}
 //Get all Products by Vendor id
 
 export function getProductByVendorId(query = '', data = {}, headers = {}) {
-  console.log("sendng headers",headers)
+  console.log('sendng headers', headers);
   return new Promise((resolve, reject) => {
     apiGet(GET_PRODUCT_DATA_BY_VENDORID + query, data, headers)
       .then((res) => {
@@ -66,7 +65,6 @@ export function getProductByVendorId(query = '', data = {}, headers = {}) {
       });
   });
 }
-
 
 //Get all Products by Vendor id
 
@@ -88,7 +86,7 @@ export function getProductByVendorCategoryId(
 
 //Get Category data
 export function getProductByCategoryId(query = '', data = {}, headers = {}) {
-  console.log(query,data, headers, "checkkkkprdct" )
+  console.log(query, data, headers, 'checkkkkprdct');
   return new Promise((resolve, reject) => {
     apiGet(GET_DATA_BY_CATEGORY + query, data, headers)
       .then((res) => {
@@ -100,7 +98,11 @@ export function getProductByCategoryId(query = '', data = {}, headers = {}) {
   });
 }
 
-export function getProductByCategoryIdOptamize(query = '', data = {}, headers = {}) {
+export function getProductByCategoryIdOptamize(
+  query = '',
+  data = {},
+  headers = {},
+) {
   return new Promise((resolve, reject) => {
     apiGet(GET_DATA_BY_CATEGORY_OPTAMIZE + query, data, headers)
       .then((res) => {
@@ -189,10 +191,7 @@ export const getProductByVendorFilters = (
   });
 };
 
-export const newVendorFilters = (
-  data = {},
-  headers = {},
-) => {
+export const newVendorFilters = (data = {}, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(NEW_VENDOR_FILTER, data, headers)
       .then((res) => {
@@ -204,10 +203,7 @@ export const newVendorFilters = (
   });
 };
 
-export const vendorFilterOptimize = (
-  data = {},
-  headers = {},
-) => {
+export const vendorFilterOptimize = (data = {}, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(VENDOR_PRODUCTS_OPTIMIZE_FILTERS, data, headers)
       .then((res) => {
@@ -235,7 +231,6 @@ export function getProductDetailByVariants(
         resolve(res);
       })
       .catch((error) => {
-       
         reject(error);
       });
   });
@@ -498,6 +493,7 @@ export function deleteProductImage(data = {}, headers = {}) {
 }
 
 export function getVendorFilters(query = '', data = {}, headers = {}) {
+  console.log(query, data, headers, 'query,data,dataquery,data,data');
   return new Promise((resolve, reject) => {
     apiGet(VENDOR_OPTIMIZE_FILTERS + query, data, headers)
       .then((res) => {
@@ -509,8 +505,12 @@ export function getVendorFilters(query = '', data = {}, headers = {}) {
   });
 }
 
-export function getProductByVendorIdOptamize(query = '', data = {}, headers = {}) {
-  console.log("sendng headers",headers)
+export function getProductByVendorIdOptamize(
+  query = '',
+  data = {},
+  headers = {},
+) {
+  console.log('sendng headers', headers);
   return new Promise((resolve, reject) => {
     apiGet(VENDOR_OPTIMIZE + query, data, headers)
       .then((res) => {
@@ -523,19 +523,22 @@ export function getProductByVendorIdOptamize(query = '', data = {}, headers = {}
 }
 
 export function allVendorCategories(query, headers) {
-  return apiGet(VENDOR_CATEGORIES + query, {}, headers)
+  return apiGet(VENDOR_CATEGORIES + query, {}, headers);
 }
 
 export function allVendorData(query, headers) {
-  return apiGet(ALL_VENDOR_DATA + query, {}, headers)
+  return apiGet(ALL_VENDOR_DATA + query, {}, headers);
 }
 
-
-export function getProductByVendorIdOptamizeV2(query = '', data = {}, headers = {}) {
-  return apiGet(VENDOR_OPTIMIZE_V2 + query, data, headers)   
+export function getProductByVendorIdOptamizeV2(
+  query = '',
+  data = {},
+  headers = {},
+) {
+  return apiGet(VENDOR_OPTIMIZE_V2 + query, data, headers);
 }
 
 export function getMoreCategories(query = '', data = {}, headers = {}) {
-  console.log(GET_MORE_CATEGORIES+query , data , headers , "dataaa>>>")
-  return apiPost(GET_MORE_CATEGORIES + query, data, headers)
+  console.log(GET_MORE_CATEGORIES + query, data, headers, 'dataaa>>>');
+  return apiPost(GET_MORE_CATEGORIES + query, data, headers);
 }

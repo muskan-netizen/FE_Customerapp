@@ -2730,13 +2730,13 @@ export default function ShortCode({route, navigation}) {
     if (!!res?.primary_language?.id) {
       header = {
         // code: '245bae',
-        code: shortCode,
+        code: '2f3120',
         language: res?.primary_language?.id,
       };
     } else {
       header = {
         // code: '245bae',
-        code: shortCode,
+        code: '2f3120',
       };
     }
     console.log(header, 'header*******');
@@ -2770,11 +2770,7 @@ export default function ShortCode({route, navigation}) {
           actions.saveShortCode(shortCode);
         }
 
-        if (
-          getBundleId() == appIds.masa ||
-       
-          getBundleId() == appIds.muvpod
-        ) {
+        if (getBundleId() == appIds.masa || getBundleId() == appIds.muvpod) {
           updateState({
             isLoading: false,
             LoadingScreen: false,

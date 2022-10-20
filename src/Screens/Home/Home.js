@@ -569,9 +569,9 @@ export default function Home({route, navigation}) {
         fetchOffers: true,
         id: item.id,
         vendor:
-          item.redirect_to == staticStrings.ONDEMANDSERVICE
-            ? false
-            : item.redirect_to == staticStrings.PRODUCT
+          item.redirect_to == staticStrings.ONDEMANDSERVICE ||
+          item.redirect_to == staticStrings.PRODUCT ||
+          item?.redirect_to == staticStrings.LAUNDRY
             ? false
             : true,
         name: item.name,

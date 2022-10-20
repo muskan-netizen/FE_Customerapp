@@ -4,6 +4,8 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL ='https://sales.focushires.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.96.166:9091/api/v1';
+// export const API_BASE_URL = 'http://192.168.100.66:9091/api/v1';
+
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
@@ -75,6 +77,9 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 //export const API_BASE_URL = 'https://ace.royoorders.com/api/v1'
 //live
 
+// dishefs
+// export const API_BASE_URL = 'https://order.dishefs.com/api/v1';
+
 // bustamovepartybus
 // export const API_BASE_URL = 'https://order.bustamovepartybus.com/api/v1';
 
@@ -138,6 +143,9 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 //heyBuddy
 // export const API_BASE_URL = 'https://heybuddy.com.mx/api/v1';
+
+//myjazzybug
+// export const API_BASE_URL = 'https://myjazzybug.club/api/v1';
 
 // export const API_BASE_URL = 'https://groupystore.com/api/v1';
 // export const API_BASE_URL = 'https://dimahalal.com/api/v1'; // dimaVega
