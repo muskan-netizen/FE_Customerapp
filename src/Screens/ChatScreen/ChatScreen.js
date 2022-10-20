@@ -271,7 +271,6 @@ export default function ChatScreen({ route, navigation }) {
       auth_id:userData?.id
     };    
    console.log(apiData,"apiDataapiDataapiData");
-  
     actions.sendNotification(apiData, {
       code: appData?.profile?.code,
       currency: currencies?.primary_currency?.id,
