@@ -1,33 +1,31 @@
-import {useFocusEffect} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
 import {
-  Dimensions,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-  BackHandler,
+  Alert,
   Animated,
-  TextInput,
+  BackHandler,
+  Dimensions,
+  Image,
   Keyboard,
   Linking,
-  Alert,
-  ActivityIndicator,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-import {
-  defaultLoader,
-  loaderOne,
-} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {useIsFocused} from '@react-navigation/native';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapViewDirections from 'react-native-maps-directions';
 import {
   getImageUrl,
   hapticEffects,
@@ -37,37 +35,34 @@ import {
 } from '../../../utils/helperFunctions';
 import stylesFunc from './styles';
 const {height, width} = Dimensions.get('window');
-import MapViewDirections from 'react-native-maps-directions';
-import MapView, {Marker, Callout, PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
-import {useIsFocused} from '@react-navigation/native';
 
-import Communications from 'react-native-communications';
-import navigationStrings from '../../../navigation/navigationStrings';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../../styles/theme';
-import TaxiOrderDetailView from './TaxiOrderDetailView';
-import SearchingForDriverView from './SearchingForDriverView';
-import useInterval from '../../../utils/useInterval';
 import {cloneDeep} from 'lodash';
+import Communications from 'react-native-communications';
+import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
+import navigationStrings from '../../../navigation/navigationStrings';
+import {MyDarkTheme} from '../../../styles/theme';
+import useInterval from '../../../utils/useInterval';
+import SearchingForDriverView from './SearchingForDriverView';
+import TaxiOrderDetailView from './TaxiOrderDetailView';
 
+import moment from 'moment';
+import {FlatList} from 'react-native';
+import StarRating from 'react-native-star-rating';
+import ButtonWithLoader from '../../../Components/ButtonWithLoader';
+import CustomCallouts from '../../../Components/CustomCallouts';
+import LeftRightText from '../../../Components/LeftRightText';
+import RoundImg from '../../../Components/RoundImg';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../../../styles/responsiveSize';
-import StarRating from 'react-native-star-rating';
-import {mapStyleGrey} from '../../../utils/constants/MapStyle';
-import RoundImg from '../../../Components/RoundImg';
-import LeftRightText from '../../../Components/LeftRightText';
-import SearchDriver from '../ChooseCarTypeAndTime/SearchDriver';
-import moment from 'moment';
-import ButtonWithLoader from '../../../Components/ButtonWithLoader';
-import {FlatList} from 'react-native';
-import CustomCallouts from '../../../Components/CustomCallouts';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
 import {appIds} from '../../../utils/constants/DynamicAppKeys';
-import {currencyNumberFormatter} from '../../../utils/commonFunction';
+import {mapStyleGrey} from '../../../utils/constants/MapStyle';
+import SearchDriver from '../ChooseCarTypeAndTime/SearchDriver';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -84,11 +79,8 @@ const CANCLE_TASK_TIME = 45000;
 // import 'moment/locale/tr';
 // import 'moment/locale/vi';
 // import 'moment/locale/ar';
-import 'moment/min/locales'; // Import all moment-locales -- it's just 400kb
 import 'moment-timezone';
-import Loader from '../../../Components/Loader';
-import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
-import LottieView from 'lottie-react-native';
+import 'moment/min/locales'; // Import all moment-locales -- it's just 400kb
 
 export default function PickupTaxiOrderDetail({navigation, route}) {
   const {themeColor, themeToggle} = useSelector((state) => state?.initBoot);
@@ -172,6 +164,8 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const isFocused = useIsFocused();
   const bottomSheetRef = useRef(null);
 
@@ -937,8 +931,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
               style={{height: height / 1.8, width: '100%'}}
               initialRegion={region}
               ref={mapRef}
-
-              
               // cacheEnabled={true}
               customMapStyle={
                 appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
@@ -1198,10 +1190,11 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     }}>
                     <Text style={styles.statusText}>
                       {' '}
-                      {currencies?.primary_currency?.symbol}
-                      {currencyNumberFormatter(
+                      {tokenConverterPlusCurrencyNumberFormater(
                         Number(orderFullDetail.order_details?.payable_amount),
-                        appData?.profile?.preferences?.digit_after_decimal,
+                        digit_after_decimal,
+                        additional_preferences,
+                        currencies?.primary_currency?.symbol,
                       )}
                     </Text>
                     <Text
@@ -1677,13 +1670,13 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       <View>
                         <LeftRightText
                           leftText={strings.DELIVERYFEE}
-                          rightText={` ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          rightText={` ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.delivery_fee,
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )}`}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
@@ -1698,13 +1691,13 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       <View>
                         <LeftRightText
                           leftText={strings.SUBTOTAL}
-                          rightText={` ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          rightText={` ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.subtotal_amount,
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )}`}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
@@ -1719,13 +1712,13 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       <View>
                         <LeftRightText
                           leftText={strings.DISCOUNT}
-                          rightText={` ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          rightText={` ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.discount_amount,
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )}`}
                           leftTextStyle={{color: themeColors.primary_color}}
                           rightTextStyle={{color: themeColors.primary_color}}
@@ -1746,18 +1739,22 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                         <LeftRightText
                           leftText={`${
                             strings.SUBSCRIPTION_DISCOUNT
-                          } ${'('} ${currencyNumberFormatter(
+                          } ${'('} ${tokenConverterPlusCurrencyNumberFormater(
                             Number(subscription_percent),
-                            appData?.profile?.preferences?.digit_after_decimal,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )} ${'%)'}`}
                           rightText={` ${'-'} ${
                             currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          } ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.order_detail
                                 ?.subscription_discount,
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )} `}
                           leftTextStyle={{color: themeColors.primary_color}}
                           rightTextStyle={{color: themeColors.primary_color}}
@@ -1774,13 +1771,13 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       <View>
                         <LeftRightText
                           leftText={strings.TAX_AMOUNT}
-                          rightText={` ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          rightText={` ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.taxable_amount,
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )}`}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
@@ -1796,14 +1793,14 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       <View>
                         <LeftRightText
                           leftText={strings.TOTAL}
-                          rightText={` ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          rightText={` ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.order_detail
                                 ?.payable_amount,
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )}`}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}

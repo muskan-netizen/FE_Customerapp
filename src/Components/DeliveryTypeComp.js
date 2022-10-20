@@ -7,8 +7,13 @@ import {
   View,
   FlatList,
 } from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
-import {moderateScale, textScale, width} from '../styles/responsiveSize';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  textScale,
+  width,
+} from '../styles/responsiveSize';
 import {useSelector} from 'react-redux';
 import strings from '../constants/lang';
 import actions from '../redux/actions';
@@ -172,11 +177,13 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
         borderBottomColor: isDarkMode
           ? colors.whiteOpacity22
           : colors.borderColorD,
+        marginBottom: moderateScaleVertical(12),
       }}>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
         data={tabs}
+        initialScrollIndex={tabs.findIndex((item) => item?.type == dineInType)}
         renderItem={renderItem}
         keyExtractor={awesomeChildListKeyExtractor}
         ListFooterComponent={() => (

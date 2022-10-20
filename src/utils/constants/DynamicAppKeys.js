@@ -101,6 +101,7 @@ const shortCodes = {
   suel: '638bd1',
   elixir: '574467',
   ace: '2d98b5',
+  // ace: '245bae',
   punnet: 'd2cca0',
   homeric: 'c8fbba',
   voltaic: 'd8473d',

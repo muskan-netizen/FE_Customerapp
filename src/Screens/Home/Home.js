@@ -520,8 +520,6 @@ export default function Home({route, navigation}) {
   };
 
   const onPressVendor = (item) => {
-    console.log('item+++', item);
-
     if (item?.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
         if (shortCodes.arenagrub == appData?.profile?.code) {

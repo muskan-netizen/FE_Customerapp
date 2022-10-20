@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Animated,
   Image,
-  ImageBackground,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -21,7 +20,7 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
-import {currencyNumberFormatter} from '../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
 import {
   getImageUrl,
   getScaleTransformationStyle,
@@ -32,6 +31,9 @@ import {
 const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const {additional_preferences, digit_after_decimal} = useSelector(
+    (state) => state?.initBoot?.appData?.profile?.preferences,
+  );
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {themeColors, appStyle, currencies, appData} = useSelector(
@@ -142,6 +144,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
               )}
             </View>
             <View style={{marginHorizontal: 10}} />
+
             <View style={{flex: 0.5, alignItems: 'flex-end'}}>
               <Text
                 numberOfLines={1}
@@ -151,12 +154,12 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 }}>
                 <Text>
-                  {`${
-                    currencies?.primary_currency?.symbol
-                  } ${currencyNumberFormatter(
-                    Number(variant[0]?.price),
-                    appData?.profile?.preferences?.digit_after_decimal,
-                  )}`}
+                  {tokenConverterPlusCurrencyNumberFormater(
+                    variant[0]?.price,
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
+                  )}
                 </Text>
               </Text>
             </View>

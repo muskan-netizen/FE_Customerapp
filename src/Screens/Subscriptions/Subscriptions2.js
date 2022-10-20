@@ -1,4 +1,5 @@
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import {PayWithFlutterwave} from 'flutterwave-react-native';
 import React, {createRef, useCallback, useEffect, useState} from 'react';
 import {
   FlatList,
@@ -12,6 +13,7 @@ import {
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
+import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
 import CheckoutPaymentView from '../../Components/CheckoutPaymentView';
 import GradientButton from '../../Components/GradientButton';
@@ -27,9 +29,15 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {generateTransactionRef, payWithCard} from '../../utils/paystackMethod';
-import {PayWithFlutterwave} from 'flutterwave-react-native';
-import Modal from 'react-native-modal';
 // import SubscriptionComponent from '../../Components/SubscriptionComponent';
+import {
+  CardField,
+  createPaymentMethod,
+  createToken,
+  handleCardAction,
+  initStripe,
+  StripeProvider,
+} from '@stripe/stripe-react-native';
 import {
   height,
   moderateScale,
@@ -41,16 +49,7 @@ import {MyDarkTheme} from '../../styles/theme';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptySubscriptions from './ListEmptySubscriptions';
 import stylesFun from './styles';
-import {
-  CardField,
-  createToken,
-  initStripe,
-  StripeProvider,
-  handleCardAction,
-  createPaymentMethod,
-  confirmPayment,
-} from '@stripe/stripe-react-native';
-import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../utils/commonFunction';
 export default function Subscriptions2({navigation, route}) {
   //   console.log(route, 'route>>>');
   const paramData = route?.params;
@@ -100,6 +99,8 @@ export default function Subscriptions2({navigation, route}) {
   const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const {preferences} = appData?.profile;
   const userData = useSelector((state) => state.auth.userData);
   const fontFamily = appStyle?.fontSizeData;
@@ -490,14 +491,14 @@ export default function Subscriptions2({navigation, route}) {
             marginVertical: moderateScale(20),
           }}>
           <Text style={styles.title}>{selectedPlan?.title}</Text>
-          <Text
-            style={[
-              styles.title2,
-              {marginTop: moderateScale(10)},
-            ]}>{`${currencyNumberFormatter(
-            selectedPlan?.price,
-            appData?.profile?.preferences?.digit_after_decimal,
-          )}/${selectedPlan?.frequency}`}</Text>
+          <Text style={[styles.title2, {marginTop: moderateScale(10)}]}>
+            {tokenConverterPlusCurrencyNumberFormater(
+              Number(selectedPlan?.price) / Number(selectedPlan?.frequency),
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}
+          </Text>
         </View>
 
         <View

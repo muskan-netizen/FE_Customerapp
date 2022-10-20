@@ -366,14 +366,23 @@ export default ({fontFamily}) => {
       color: colors.redB,
       fontFamily: fontFamily.medium,
       fontSize: textScale(12),
-      marginRight:moderateScale(6)
+      marginRight: moderateScale(6),
     },
     agentUserIcon: {
       tintColor: colors?.redB,
       width: moderateScale(15),
-      height:moderateScale(15)
-
-    }
+      height: moderateScale(15),
+    },
+    startEndDateTitle: {
+      fontSize: moderateScale(12),
+      fontFamily: fontFamily.bold,
+      color: colors.black,
+    },
+    startEndDateValueTxt: {
+      fontSize: moderateScale(11),
+      fontFamily: fontFamily.regular,
+      color: colors.blackOpacity66,
+    },
   });
   return styles;
 };

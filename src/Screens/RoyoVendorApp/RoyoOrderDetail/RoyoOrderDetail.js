@@ -1,22 +1,25 @@
-import moment from 'moment';
+import {useNavigation} from '@react-navigation/native';
+import {isEmpty} from 'lodash';
 import React, {useCallback, useEffect, useState} from 'react';
-import MyShare from 'react-native-share';
 import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Share,
   FlatList,
-  Linking,
+  Image,
+  ScrollView,
+  Share,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+import MyShare from 'react-native-share';
 import {useSelector} from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import Header from '../../../Components/Header';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
+import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import fontFamily from '../../../styles/fontFamily';
@@ -26,16 +29,10 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
 import {customMarginBottom} from '../../../utils/constants/constants';
 import {getImageUrl, showError} from '../../../utils/helperFunctions';
 import {dialCall} from '../../../utils/openNativeApp';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
-import {isEmpty} from 'lodash';
-import FastImage from 'react-native-fast-image';
-import strings from '../../../constants/lang';
-import {currencyNumberFormatter} from '../../../utils/commonFunction';
-import navigationStrings from '../../../navigation/navigationStrings';
-import {useNavigation} from '@react-navigation/native';
 
 const RoyoOrderDetail = (props) => {
   const userData = useSelector((state) => state?.auth?.userData);
@@ -43,6 +40,8 @@ const RoyoOrderDetail = (props) => {
   const {appData, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const {preferences} = appData?.profile;
 
   const navigation = useNavigation();
@@ -289,8 +288,12 @@ const RoyoOrderDetail = (props) => {
               {strings.UNIT} {'x'}{' '}
             </Text>
             <Text style={styles.font14Regular}>
-              {currencies?.primary_currency?.symbol}{' '}
-              {Number(item.price).toFixed(2)}
+              {tokenConverterPlusCurrencyNumberFormater(
+                Number(item.price),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
             </Text>
           </View>
           {item?.product_addons.length > 0
@@ -299,11 +302,11 @@ const RoyoOrderDetail = (props) => {
                   <View>
                     <Text>
                       {`(${j.option_title})`} ={' '}
-                      {`${
-                        currencies?.primary_currency?.symbol
-                      }${currencyNumberFormatter(
+                      {`${tokenConverterPlusCurrencyNumberFormater(
                         Number(j.price),
-                        appData?.profile?.preferences?.digit_after_decimal,
+                        digit_after_decimal,
+                        additional_preferences,
+                        currencies?.primary_currency?.symbol,
                       )}`}
                     </Text>
                   </View>
@@ -312,9 +315,12 @@ const RoyoOrderDetail = (props) => {
             : null}
         </View>
         <Text style={styles.font16Semibold}>
-          {`${currencies?.primary_currency?.symbol} ${Number(
-            item.quantity * item.price,
-          ).toFixed(2)}`}
+          {tokenConverterPlusCurrencyNumberFormater(
+            Number(item.quantity * item.price),
+            digit_after_decimal,
+            additional_preferences,
+            currencies?.primary_currency?.symbol,
+          )}
         </Text>
       </View>
     );
@@ -329,7 +335,7 @@ const RoyoOrderDetail = (props) => {
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
         leftIcon={imagePath.backRoyo}
-        centerTitle={strings.ORDERS+`#${data.order_number}`}
+        centerTitle={strings.ORDERS + `#${data.order_number}`}
       />
       {/* <View style={{...styles.orderNumberBox, zIndex: -1}}>
         <Text style={styles.orderNumber}>Order #{data.order_number}</Text>
@@ -413,8 +419,12 @@ const RoyoOrderDetail = (props) => {
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>
               <Text style={styles.font15Semibold}>
-                {currencies?.primary_currency?.symbol}{' '}
-                {Number(data?.vendors[0].subtotal_amount).toFixed(2)}
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(data?.vendors[0].subtotal_amount),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
             </View>
           )}
@@ -423,8 +433,12 @@ const RoyoOrderDetail = (props) => {
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.font15Medium}>{strings.DELIVERYFEE}</Text>
               <Text style={styles.font15Semibold}>
-                {currencies?.primary_currency?.symbol}{' '}
-                {Number(data?.total_delivery_fee).toFixed(2)}
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(data?.total_delivery_fee),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
             </View>
           )}
@@ -439,8 +453,12 @@ const RoyoOrderDetail = (props) => {
                   : strings.FIXED_FEE}
               </Text>
               <Text style={styles.font15Semibold}>
-                {currencies?.primary_currency?.symbol}{' '}
-                {Number(data.fixed_fee_amount).toFixed(2)}
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(data.fixed_fee_amount),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
             </View>
           )}
@@ -451,10 +469,13 @@ const RoyoOrderDetail = (props) => {
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.font15Medium}>{strings.TAXES_FEES}</Text>
               <Text style={styles.font15Semibold}>
-                {currencies?.primary_currency?.symbol}{' '}
-                {(
-                  Number(data?.total_service_fee) + Number(data?.taxable_amount)
-                ).toFixed(2)}
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(data?.total_service_fee) +
+                    Number(data?.taxable_amount),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
             </View>
           )}
@@ -467,8 +488,12 @@ const RoyoOrderDetail = (props) => {
                   {strings.CONTAINER_CHARGES}
                 </Text>
                 <Text style={styles.font15Semibold}>
-                  {currencies?.primary_currency?.symbol}{' '}
-                  {Number(data?.total_container_charges).toFixed(2)}
+                  {tokenConverterPlusCurrencyNumberFormater(
+                    Number(data?.total_container_charges),
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
+                  )}
                 </Text>
               </View>
             )}
@@ -478,8 +503,13 @@ const RoyoOrderDetail = (props) => {
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.font15Medium}>{strings.DISCOUNT}</Text>
               <Text style={styles.font15Semibold}>
-                -{currencies?.primary_currency?.symbol}{' '}
-                {Number(data.total_discount).toFixed(2)}
+                -
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(data?.total_discount),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
             </View>
           )}
@@ -489,8 +519,12 @@ const RoyoOrderDetail = (props) => {
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.font15Medium}>{strings.TIP_AMOUNT}</Text>
               <Text style={styles.font15Semibold}>
-                {currencies?.primary_currency?.symbol}{' '}
-                {Number(data.tip_amount).toFixed(2)}
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(data?.tip_amount),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
             </View>
           )}
@@ -499,9 +533,12 @@ const RoyoOrderDetail = (props) => {
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>{strings.TOTAL}</Text>
             <Text style={{...styles.font15Semibold, color: colors.themeColor2}}>
-              {`${currencies?.primary_currency?.symbol} ${Number(
+              {tokenConverterPlusCurrencyNumberFormater(
                 data?.payable_amount,
-              ).toFixed(2)}`}
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
             </Text>
           </View>
         </View>

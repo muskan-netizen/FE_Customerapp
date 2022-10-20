@@ -1,21 +1,19 @@
 import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
-import React, {useRef} from 'react';
+import React from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import {getBundleId} from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
-import commonStylesFun from '../../../styles/commonStyles';
 import {
   height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
 } from '../../../styles/responsiveSize';
 import {MyDarkTheme} from '../../../styles/theme';
-import {currencyNumberFormatter} from '../../../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
 import {appIds} from '../../../utils/constants/DynamicAppKeys';
 import {getImageUrl} from '../../../utils/helperFunctions';
 import ListEmptyCar from './ListEmptyCar';
@@ -30,6 +28,8 @@ export default function AvailableDriver({
 }) {
   const {appData, themeColors, appStyle, themeToggle, themeColor, currencies} =
     useSelector((state) => state?.initBoot);
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
@@ -134,10 +134,12 @@ export default function AvailableDriver({
               fontSize: textScale(14),
               textAlign: 'left',
             }}>
-            {`${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
+            {tokenConverterPlusCurrencyNumberFormater(
               Number(item.tags_price),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}
           </Text>
         </TouchableOpacity>
         {selectedCarOption?.id == item?.id && allListedDrivers?.length ? (

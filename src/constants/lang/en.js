@@ -1002,4 +1002,5 @@ Amount`,
   ORDER: 'Orders',
   PLEASE_SELECT_DATE: ' Please select date.',
   SLOTS_NOT_FOUND_FOR_DATE: ' Slots not found for selected date',
+  ADDITIONAL_CHARGES: 'Additional Charges',
 };

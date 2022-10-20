@@ -167,7 +167,6 @@ export default function DashBoardFive({
       const getIsUserCofirmedAgeModal = await getItem(
         'isUserConfirmedAgeModal',
       );
-      console.log(getIsUserCofirmedAgeModal, 'isUserConfirmedAgeModal');
       if (
         getIsUserCofirmedAgeModal !== null &&
         !!(userData && userData?.auth_token)

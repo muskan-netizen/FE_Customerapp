@@ -2661,11 +2661,10 @@ export default function ShortCode({route, navigation}) {
         code: shortCode,
       };
     }
-    console.log(header, 'header*******');
     actions
       .initApp({}, header, false, null, null, true)
       .then((res) => {
-        console.log(res, 'ressssssssss');
+        console.log('header response--->', res);
         if (res.data.mobile_banners.length > 0) {
           let preLoadBanners = res.data.mobile_banners.map((item, inx) => {
             return {

@@ -26,7 +26,7 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang/index';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
-import { getStaticLocations } from '../../../redux/actions/pickupdelivery';
+import {getStaticLocations} from '../../../redux/actions/pickupdelivery';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
 import {
@@ -115,8 +115,8 @@ export default function Addaddress({navigation, route}) {
     showFriendListModal: false,
     allAddedFriends: [],
     selectedFriendForRide: {id: 0},
-    staticLocation:[],
-    selectedLoaction:[]
+    staticLocation: [],
+    selectedLoaction: [],
   });
   const {
     pageNo,
@@ -146,7 +146,7 @@ export default function Addaddress({navigation, route}) {
     allAddedFriends,
     selectedFriendForRide,
     staticLocation,
-    selectedLoaction
+    selectedLoaction,
   } = state;
 
   const [modalLayoutHeight, setModalLayoutHeight] = useState(0);
@@ -177,26 +177,28 @@ export default function Addaddress({navigation, route}) {
       getAllAddress();
     }
   }, [paramData]);
-  useEffect(()=>{
-    getStaticLocations()
-  },[])
-  const getStaticLocations = () =>{
-    actions.getStaticLocations('',{},{
-      code: appData?.profile?.code,
-    }).then(
-      (res)=>{
-        console.log(res,"locationssssss")
-        updateState ( {
-          staticLocation:[...res?.data]
-        })
-      }
-
-   ).catch(
-    error=>{
-      console.log(error,"locationssssss")
-    }
-   )
-  }
+  useEffect(() => {
+    getStaticLocations();
+  }, []);
+  const getStaticLocations = () => {
+    actions
+      .getStaticLocations(
+        '',
+        {},
+        {
+          code: appData?.profile?.code,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'locationssssss');
+        updateState({
+          staticLocation: [...res?.data],
+        });
+      })
+      .catch((error) => {
+        console.log(error, 'locationssssss');
+      });
+  };
   //get All address
   const getAllAddress = () => {
     actions
@@ -360,7 +362,7 @@ export default function Addaddress({navigation, route}) {
   };
 
   const moveToNextScreenWithAddressData = () => {
-    console.log(dropLocationData,"dropLocationData")
+    console.log(dropLocationData, 'dropLocationData');
     let location = [];
     if (
       dropLocationData[0].pre_address == '' ||
@@ -650,7 +652,7 @@ export default function Addaddress({navigation, route}) {
   };
 
   const updateCurValues = (text, i) => {
-    console.log(text,"texttttttt")
+    console.log(text, 'texttttttt');
     const cloneArr = dropLocationData;
     cloneArr[i].pre_address = text;
     updateState({dropLocationData: cloneArr});
@@ -841,12 +843,12 @@ export default function Addaddress({navigation, route}) {
     );
   };
 
- const onSelectedLocation = (data)=>{
-  console.log(data)
-  updateState({
-    selectedLoaction:data?.address
-  })
- }
+  const onSelectedLocation = (data) => {
+    console.log(data);
+    updateState({
+      selectedLoaction: data?.address,
+    });
+  };
   const _onAddRiderContact = (type) => {
     switch (type) {
       case 0:
@@ -895,25 +897,23 @@ export default function Addaddress({navigation, route}) {
       });
   };
 
+  const fetchValues = (item, i) => {
+    console.log(i, 'itemmmmm');
+    updateState({
+      // selectedLoaction[i]:item?.address
+      selectedLoaction: [...selectedLoaction, item?.address],
+    });
+    let cloneArr = dropLocationData;
+    cloneArr[i].pre_address = item.address;
+    cloneArr[i].address = item.address;
+    cloneArr[i].latitude = item?.latitude;
+    cloneArr[i].longitude = item?.longitude;
+    cloneArr[i].task_type_id = 2;
 
-const fetchValues = (item,i)=>{
-
-  console.log(i,"itemmmmm")
-  updateState({
-    // selectedLoaction[i]:item?.address
-    selectedLoaction: [...selectedLoaction,item?.address]
-  })
-   let cloneArr = dropLocationData;
-        cloneArr[i].pre_address = item.address;
-        cloneArr[i].address = item.address;
-        cloneArr[i].latitude = item?.latitude;
-        cloneArr[i].longitude = item?.longitude;
-        cloneArr[i].task_type_id = 2;
-  
-  console.log(cloneArr,"cloneArrcloneArr")
-  updateState({dropLocationData: cloneArr});
-}
-console.log(dropLocationData,"selectedLoactionselectedLoaction")
+    console.log(cloneArr, 'cloneArrcloneArr');
+    updateState({dropLocationData: cloneArr});
+  };
+  console.log(dropLocationData, 'selectedLoactionselectedLoaction');
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -1038,55 +1038,53 @@ console.log(dropLocationData,"selectedLoactionselectedLoaction")
                   <View style={{flex: 0.05, alignItems: 'center'}}>
                     {renderDotContainer(i)}
                   </View>
-                  {
-                    i>0 && appData?.profile?.preferences?.is_static_dropoff ? 
-                  <View style={{flex: 0.9, marginLeft: moderateScale(20)}}>
-                    <DropDown
-                    value={dropLocationData[i].address}
-                    inputStyle={styles.textInput}
-                    selectedIndexByProps={-1}
-                    placeholder={"select Drop Location"}
-                    data={staticLocation}
-                   fetchValues= {(val)=>fetchValues(val,i)}
-                    marginBottom={0}
-                    // onSelect={onPressAddress}
-                    // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
-                  />
+                  {i > 0 && appData?.profile?.preferences?.is_static_dropoff ? (
+                    <View style={{flex: 0.9, marginLeft: moderateScale(20)}}>
+                      <DropDown
+                        value={dropLocationData[i].address}
+                        inputStyle={styles.textInput}
+                        selectedIndexByProps={-1}
+                        placeholder={'select Drop Location'}
+                        data={staticLocation}
+                        fetchValues={(val) => fetchValues(val, i)}
+                        marginBottom={0}
+                        // onSelect={onPressAddress}
+                        // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
+                      />
                     </View>
-                    : 
-                     <View style={{flex: 0.9, marginLeft: moderateScale(20)}}>
-                    
-                    <SearchPlaces
-                      curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
-                      autoFocus={
-                        i == dropLocationData.length - 1 ? true : false
-                      }
-                      placeHolder={
-                        i == 0
-                          ? strings.PICKUP_LOCATION
-                          : i == 1
-                          ? strings.WHERETO
-                          : strings.ADD_A_STOP
-                      }
-                      value={val.pre_address} // instant update search value
-                      mapKey={profile?.preferences?.map_key} //send here google Key
-                      fetchArrayResult={(data) =>
-                        updateState({
-                          searchResult: {data: data, currentIndex: i},
-                        })
-                      }
-                      setValue={(text) => updateCurValues(text, i)} //return & update on change text value
-                      onFocus={() =>
-                        updateState({
-                          searchResult: {...searchResult, currentIndex: i},
-                        })
-                      }
-                      _moveToNextScreen={() => _moveToNextScreen(i)}
-                      onClear={() => onClearAddress('', i)}
-                      index={i}
-                    />
-                  </View>
-                  }
+                  ) : (
+                    <View style={{flex: 0.9, marginLeft: moderateScale(20)}}>
+                      <SearchPlaces
+                        curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
+                        autoFocus={
+                          i == dropLocationData.length - 1 ? true : false
+                        }
+                        placeHolder={
+                          i == 0
+                            ? strings.PICKUP_LOCATION
+                            : i == 1
+                            ? strings.WHERETO
+                            : strings.ADD_A_STOP
+                        }
+                        value={val.pre_address} // instant update search value
+                        mapKey={profile?.preferences?.map_key} //send here google Key
+                        fetchArrayResult={(data) =>
+                          updateState({
+                            searchResult: {data: data, currentIndex: i},
+                          })
+                        }
+                        setValue={(text) => updateCurValues(text, i)} //return & update on change text value
+                        onFocus={() =>
+                          updateState({
+                            searchResult: {...searchResult, currentIndex: i},
+                          })
+                        }
+                        _moveToNextScreen={() => _moveToNextScreen(i)}
+                        onClear={() => onClearAddress('', i)}
+                        index={i}
+                      />
+                    </View>
+                  )}
                   <View style={{marginHorizontal: moderateScale(8)}} />
                   <View style={{flex: 0.1}}>
                     {i >= 1 && (
@@ -1155,10 +1153,7 @@ console.log(dropLocationData,"selectedLoactionselectedLoaction")
                   return renderSearchItem(item);
                 })}
               </View>
-            ) : appData?.profile?.preferences?.is_static_dropoff ? 
-            
-            null
-            : (
+            ) : appData?.profile?.preferences?.is_static_dropoff ? null : (
               <View style={{marginTop: moderateScaleVertical(16)}}>
                 <View style={{...styles.savedAddressView}}>
                   <Image

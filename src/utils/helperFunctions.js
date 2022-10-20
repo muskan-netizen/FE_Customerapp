@@ -37,7 +37,6 @@ const getCurrentLocation = (type) =>
           position.coords.longitude,
           type,
         ).then((res) => {
-          console.log(res, 'response in utils file');
           if (type == 'home') {
             const data = {
               ...cords,
