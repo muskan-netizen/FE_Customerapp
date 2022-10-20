@@ -3998,7 +3998,6 @@ function Cart({navigation, route}) {
                 />
               </View>
             </TouchableOpacity>
-
             <Text
               style={
                 isDarkMode
@@ -4089,7 +4088,6 @@ function Cart({navigation, route}) {
             }}>
             {strings.AMOUNT_PAYABLE}
           </Text>
-
           <Text
             style={
               isDarkMode

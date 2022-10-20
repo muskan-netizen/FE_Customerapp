@@ -239,7 +239,7 @@ export default function DashBoardNine({
   };
 
   const _renderVendors = ({ item, index }) => (
-    <View style={{ marginHorizontal: moderateScale(16) }}>
+    <View style={{ marginHorizontal: moderateScale(8) }}>
       <MarketCard4
         data={item}
         onPress={() => onPressVendor(item)}
@@ -1055,11 +1055,12 @@ return (
           <>
             {vendorHeader()}
             <FlatList
-              scrollEnabled={false}
+              scrollEnabled={true}
               horizontal={true}
               // ListHeaderComponent={vendorHeader()}
               showsVerticalScrollIndicator={false}
-              alwaysBounceVertical={true}
+              // alwaysBounceVertical={true}
+              alwaysBounceHorizontal={true}
               // ref={ref}
               data={vendorsData}
               keyExtractor={(item) => item.id.toString()}
@@ -1093,7 +1094,7 @@ return (
                 </View>
               )}
               ItemSeparatorComponent={() => (
-                <View style={{ height: moderateScale(10) }} />
+                <View style={{ height: moderateScale(5) }} />
               )}
             />
           </>
