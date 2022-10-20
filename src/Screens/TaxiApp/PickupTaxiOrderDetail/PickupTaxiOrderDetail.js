@@ -284,7 +284,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   }, [driverStatus]);
 
   console.log(
-    paramData?.orderDetail,
+    paramData,
     'paramData?.orderDetail?.dispatch_traking_url',
   );
 

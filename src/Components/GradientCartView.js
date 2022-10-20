@@ -31,8 +31,10 @@ const GradientCartView = ({
   ifCartShow,
   isMenuBtnShow,
   isLoading = false,
-  sectionListData = []
+  sectionListData = [],
+  isCategoryExist=false
 }) => {
+  console.log(sectionListData,"sectionListDatasectionListData")
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const buttonTextColor = themeColors;
@@ -133,7 +135,7 @@ const GradientCartView = ({
         <Animatable.View
           duration={400}
           animation={ifCartShow ? menuBtnAnimation : menuBtnAnimationReverse}>
-          {sectionListData.length > 1 ?<BrowseMenuButton
+          {sectionListData.length > 1 && !isCategoryExist ?<BrowseMenuButton
             fontFamily={fontFamily}
             onMenuTap={onMenuTap}
             // containerStyle={{ marginBottom: moderateScale(-58) }}

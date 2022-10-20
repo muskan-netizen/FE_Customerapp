@@ -119,6 +119,7 @@ export default function Products({route, navigation}) {
   let selectedFilters = useRef(null);
   // console.log(route.params, 'route.params');
   const {data} = route.params;
+ 
   const routeData = data?.fetchOffers;
   const {blurRef} = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -1016,8 +1017,7 @@ export default function Products({route, navigation}) {
             marginBottom: moderateScale(15),
           }}
           contentContainerStyle={{alignItems: 'center'}}>
-            {console.log(ProductTags,"ProductTagsProductTags")}
-          {ProductTags &&
+          {ProductTags && 
             ProductTags.map((el, index) => {
               return (
                 <View
@@ -1485,50 +1485,6 @@ export default function Products({route, navigation}) {
     }
   };
 
-  //  to load  catagerios by A-z
-  // const onAtoZFilter  =  () => {
-  //   try {
-  //     let allFilterData = cloneDeep(allFilters);
-  //     var newData = [];
-  //     var variants = [];
-  //     var options = [];
-
-  //     var allSelectedVariantOptionsPairs = allFilterData
-  //         .filter((i) => i?.id != -1 && i?.id != -2)
-  //         .map((itm, inx) => {
-  //             return itm?.value;
-  //         })
-  //         .map((j, jnx) => {
-  //             if (j.length) return j.filter((x) => x?.value?.selected);
-  //         })
-  //         .filter((final) => final?.length)
-  //         .map((finalArray, finalIndex) => {
-  //             finalArray?.map((z, znx) => {
-  //                 newData?.push(z);
-  //             });
-  //             return finalArray;
-  //         });
-
-  //     if (newData.length) {
-  //         newData.map((i) => {
-  //             variants.push(i?.variant_type_id);
-  //             options.push(i?.id);
-  //         });
-  //         allSelectedVariantOptionsPairs = newData;
-  //     }
-
-  //     let filterData = {
-  //         selectedSorting: 'a_to_z',
-  //         selectedVariants: variants,
-  //         selectedOptions: options,
-  //         sleectdBrands: []
-  //     }
-  //     onFilterApply(filterData)
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
   useEffect(() => {
     getAllVendorFilters();
   }, []);
@@ -1720,6 +1676,7 @@ export default function Products({route, navigation}) {
             if (res.data.products.data.length == 0) {
               loadMore = false;
             }
+            loadMore = false;
             setCategoryInfo(res?.data?.vendor);
             setLoading(false);
             setProductListData(
@@ -1823,7 +1780,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'resres');
+        console.log(res.data.listData.data.length, 'resres');
         if (!!res?.data) {
           console.log(res, 'res getProductByCategoryId');
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
@@ -1834,6 +1791,7 @@ export default function Products({route, navigation}) {
           if (res.data.listData.data.length == 0) {
             loadMore = false;
           }
+          loadMore = false;
           // onAtoZFilter()
           setProductListData(
             pageNo == 1
@@ -1995,6 +1953,7 @@ export default function Products({route, navigation}) {
     if (loadMore) {
       updateState({pageNo: pageNo + 1});
       getAllListItems(pageNo + 1);
+      setLoading(false);
     }
   };
 
@@ -3116,7 +3075,7 @@ export default function Products({route, navigation}) {
   };
 
   const onShare = () => {
-    console.log('onShare', appData);
+    console.log('onShare', categoryInfo);
     if (!!categoryInfo.share_link) {
       let hyperLink = categoryInfo.share_link;
       let options = {url: hyperLink};
@@ -3608,9 +3567,6 @@ export default function Products({route, navigation}) {
                 ListHeaderComponent={listHeaderComponent2()}
                 stickySectionHeadersEnabled={false}
                 keyExtractor={awesomeChildListKeyExtractor}
-                contentContainerStyle={{
-                  paddingBottom: moderateScaleVertical(60),
-                }}
                 // tabBarStyle={styles.tabBar}
                 // ItemSeparatorComponent={() => <View style={styles.separator} />}
                 renderTab={renderSectionTab}
@@ -3619,7 +3575,7 @@ export default function Products({route, navigation}) {
                 //   <View style={{height: moderateScale(80)}} />
                 // )}
                 contentContainerStyle={{
-                  paddingBottom:moderateScale(60)
+                  paddingBottom: moderateScale(60),
                 }}
                 renderSectionHeader={renderSectionHeader}
                 ListEmptyComponent={listEmptyComponent}
@@ -3924,6 +3880,7 @@ export default function Products({route, navigation}) {
               onMenuTap={onMenuTap}
               isLoading={btnLoader}
               sectionListData={sectionListData}
+              isCategoryExist={!!data?.categoryExist}
               // btnStyle={
               //   appStyle?.tabBarLayout == 4 && {marginBottom: moderateScale(160)}
               // }

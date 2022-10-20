@@ -30,8 +30,8 @@ export default ({fontFamily, themeColors}) => {
       paddingVertical: moderateScaleVertical(10),
       paddingHorizontal: moderateScaleVertical(10),
       marginVertical: moderateScaleVertical(10),
-      flexDirection: 'row',
-      alignItems: 'center',
+      // flexDirection: 'row',
+      // alignItems: 'center',
     },
     viewOffers: {
       color: themeColors.primary_color,

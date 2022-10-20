@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "497788164537",
+    "project_id": "tiimo-c7ed3",
+    "storage_bucket": "tiimo-c7ed3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497788164537:android:1cec34a3aa6d48bd8b3e68",
+        "android_client_info": {
+          "package_name": "com.tiimo.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "497788164537-jq9d8uc5e3eepc3qg7c190icnupgaoh7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU2O6AmuZ_jLsqVQBAAVIbh0rqTbYnqNQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "497788164537-jq9d8uc5e3eepc3qg7c190icnupgaoh7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "497788164537-uekd0avi0f8e9dphvmmf3c5rrbqudovl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tiimo.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

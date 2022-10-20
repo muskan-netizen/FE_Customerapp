@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>414788535604-p1ke8ncpp1lg7dqcheuv8qs90d7iop85.apps.googleusercontent.com</string>
+	<string>336736452054-5lqpop1q56lkjcn3b59o7bp4ljqu2krq.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.414788535604-p1ke8ncpp1lg7dqcheuv8qs90d7iop85</string>
+	<string>com.googleusercontent.apps.336736452054-5lqpop1q56lkjcn3b59o7bp4ljqu2krq</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>414788535604-4s2a3k77bh17jg1l71auf8cm17n92u9f.apps.googleusercontent.com</string>
+	<string>336736452054-4cfhsbrqo1niq4ov27hesio2k8ue9395.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAjj1ANkEGYV0dAsnj485JTT3ZQF3k8tSM</string>
+	<string>AIzaSyCJ96jrg9612FMsZsiXNMwDONPnAtMlZO0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>414788535604</string>
+	<string>336736452054</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.sxm2go</string>
+	<string>com.sxm2go.userapp</string>
 	<key>PROJECT_ID</key>
-	<string>sxm2go-8c9e2</string>
+	<string>sxm2go-d16dd</string>
 	<key>STORAGE_BUCKET</key>
-	<string>sxm2go-8c9e2.appspot.com</string>
+	<string>sxm2go-d16dd.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:414788535604:ios:b6bedd086192f0a4b31161</string>
+	<string>1:336736452054:ios:bc9599efbd956e82293877</string>
 </dict>
 </plist>

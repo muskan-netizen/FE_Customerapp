@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>361406271565-iuo45f93933b6avmii6ur573f5v5i0g8.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.361406271565-iuo45f93933b6avmii6ur573f5v5i0g8</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>361406271565-144jf90h0mugnnc3krl0ftpm0ha70sm4.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyARhLU_sISF3StfRbm04X9gUV3ewaHTXDs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>361406271565</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.dbairroapp.royoorders</string>
+	<key>PROJECT_ID</key>
+	<string>dbairro-app</string>
+	<key>STORAGE_BUCKET</key>
+	<string>dbairro-app.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:361406271565:ios:dbb5ec444e149cbf3d4c04</string>
+</dict>
+</plist>

@@ -448,6 +448,7 @@ const AddressModal3 = ({
     return navigator.geolocation.default.getCurrentPosition(
       (position) => {
         // const location = JSON.stringify(position);
+        // console.log(position.coords.longitude,'position.coords.latitude')
         Geocoder.from({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,

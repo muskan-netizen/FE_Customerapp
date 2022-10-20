@@ -104,7 +104,7 @@ export default function TaxiHomeDashbord({
         ? parseFloat(curLatLong.latitude)
         : parseFloat(location?.latitude),
       longitude: !!curLatLong?.longitude
-        ? parseFloat(curLatLong.longitude)
+        ? parseFloat(curLatLong?.longitude)
         : parseFloat(location?.longitude),
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
@@ -152,7 +152,7 @@ export default function TaxiHomeDashbord({
   });
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
-
+  console.log(appMainData,'appMainDataappMainData')
   const fontFamily = appStyle?.fontSizeData;
   const {bannerRef} = useRef();
   const {
@@ -986,12 +986,12 @@ const longitudes =  !!curLatLong?.longitude
                   ? parseFloat(curLatLong?.latitude)
                   : !!location?.latitude
                   ? parseFloat(location?.latitude)
-                  : appData?.profile?.preferences?.Default_latitude,
+                  : 30.7333,
                 longitude: !!curLatLong?.longitude
                   ? parseFloat(curLatLong?.longitude)
                   : !!location?.longitude
                   ? parseFloat(location?.longitude)
-                  : appData?.profile?.preferences?.Default_longitude,
+                  : 76.7794,
                 latitudeDelta: 0.015,
                 longitudeDelta: 0.0121,
               }}
