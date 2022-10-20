@@ -444,6 +444,7 @@ const shortCodes = {
   clickndrop: '9536ba',
   lifehomefit: '191bdb',
   appi: 'e5e222',
+  dbairro_: '2b7742',
 };
 
 const appIds = {
@@ -2210,6 +2211,10 @@ const appIds = {
   appi: Platform.select({
     ios: 'com.appi.royoorders',
     android: 'com.appi.royoorders',
+  }),
+  dbairro_: Platform.select({
+    ios: 'com.dbairroapp.royoorders',
+    android: 'com.dbairroapp.royoorders',
   }),
 };
 

@@ -2759,6 +2759,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.dbairro_:
+          updateState({
+            shortCode: shortCodes.dbairro_,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
