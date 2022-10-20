@@ -2792,6 +2792,8 @@ export default function ShortCode({route, navigation}) {
     }, 1000);
   };
 
+  
+
   const initApiHit = async () => {
     const res = await getItem('setPrimaryLanguage');
 

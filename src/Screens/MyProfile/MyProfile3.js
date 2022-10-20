@@ -381,6 +381,7 @@ export default function MyProfile3({route, navigation}) {
   };
 
   const addUpdateLocation = (childData) => {
+    console.log(childData,"childDatachildDatachildDatachildData");
     updateState({
       selectViaMap: false,
       // isLoading: true,
