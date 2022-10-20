@@ -203,28 +203,6 @@ android {
     }
 
     flavorDimensions "appType"
-    productFlavors{
-            ihelp{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.customer.Ihelp'
-                resValue "string", "app_name", "IHELP"
-                resValue "string", "host_name", ""
-            } 
-            taxiolgy{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.taxiolgy.order'
-            resValue "string", "app_name", "Taxiolgy" 
-            resValue "string", "host_name", ""
-            }
-    }
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -354,7 +332,7 @@ android {
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
                 applicationId 'com.africanvillagemarket'
-                resValue "string", "app_name", "AVM"
+                resValue "string", "app_name", "African village Market"
                 resValue "string", "host_name", ""
             }
 
@@ -4457,7 +4435,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.xborne.order'
+            applicationId 'com.xborne'
             resValue "string", "app_name", "Xborne"
             resValue "string", "host_name", ""
             }
@@ -5674,7 +5652,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.danielleBejjani'
+            applicationId 'com.danielleBejjani.order'
             resValue "string", "app_name", "Danielle Bejjani" 
             resValue "string", "host_name", ""
             }
@@ -5834,7 +5812,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.sheRyders'
+            applicationId 'com.sheRyders.order'
             resValue "string", "app_name", "She Ryders" 
             resValue "string", "host_name", ""
             }
@@ -6349,6 +6327,56 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.nhazi.royoorders'
             resValue "string", "app_name", "Nhazi" 
+            resValue "string", "host_name", ""
+            }
+            petverse{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.petverse.royoorders'
+            resValue "string", "app_name", "Petverse" 
+            resValue "string", "host_name", ""
+            }
+            clickndrop{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.clickndrop.royoorders'
+            resValue "string", "app_name", "Click n drop" 
+            resValue "string", "host_name", ""
+            }
+             lifehomefit{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.lifehomefit.royoorders'
+            resValue "string", "app_name", "Life Home Fit" 
+            resValue "string", "host_name", ""
+            }
+              appi{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.appi.royoorders'
+            resValue "string", "app_name", "Appi" 
+            resValue "string", "host_name", ""
+            }
+              dbairro_{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.dbairroapp.royoorders'
+            resValue "string", "app_name", "Dbairro_" 
             resValue "string", "host_name", ""
             }
     }

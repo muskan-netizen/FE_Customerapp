@@ -964,4 +964,5 @@ Amount`,
   START_CHAT: 'Start Chat',
   ORDER: 'Orders',
   MINIMUM_ORDER_VALUE: 'Valor Mínimo de Pedido',
+  THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us'
 };

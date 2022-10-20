@@ -2,7 +2,7 @@ import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
 import LottieView from 'lottie-react-native';
 import moment from 'moment';
-import React, {Fragment, useEffect, useRef, useState} from 'react';
+import React, {Fragment, useCallback, useEffect, useRef, useState} from 'react';
 import * as Animatable from 'react-native-animatable';
 import {
   Dimensions,
@@ -17,6 +17,7 @@ import {
   View,
   Animated,
   Linking,
+  Alert,
 } from 'react-native';
 import Communications from 'react-native-communications';
 import {useDarkMode} from 'react-native-dark-mode';
@@ -67,6 +68,7 @@ import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
 import BannerLoader from '../../Components/Loaders/BannerLoader';
+import ButtonWithLoader from '../../Components/ButtonWithLoader';
 
 const {height, width} = Dimensions.get('window');
 
@@ -151,6 +153,7 @@ export default function OrderDetail({navigation, route}) {
     isVisibleTimeModal: false,
     currentPickupDate: paramData?.orderDetail?.schedule_pickup,
     currentDropOffDate: paramData?.orderDetail?.schedule_dropoff,
+    isLoadingA:false
   });
   const {
     showTaxFeeArea,
@@ -175,6 +178,8 @@ export default function OrderDetail({navigation, route}) {
     isVisibleTimeModal,
     currentPickupDate,
     currentDropOffDate,
+    isLoadingA
+
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -405,7 +410,7 @@ export default function OrderDetail({navigation, route}) {
 
   const errorMethod = (error) => {
     console.log(error, 'Error>>>>>>');
-    updateState({isLoading: false, isLoading: false, isLoadingC: false});
+    updateState({isLoading: false, isLoadingA: false, isLoadingC: false});
     // showError(error?.message || error?.error);
   };
 
@@ -460,7 +465,35 @@ export default function OrderDetail({navigation, route}) {
   const onSuccessRating = () => {
     getOrders();
   };
-
+  const generateInvoice = useCallback(() => {
+    updateState({
+      isLoadingA: true,
+    });
+    actions
+      .genrateInvoice(
+        {order_number: cartData?.order_number},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          timezone: RNLocalize.getTimeZone(),
+          // systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+       
+        updateState({
+          isLoadingA: false,
+        });
+        Alert.alert("",res?.message,[
+          {
+            text: strings.OK,
+            onPress: () => console.log('Okay pressed'),
+          },
+        ])
+      })
+      .catch(errorMethod);
+  });
   const _renderItem2 = ({item, index}) => {
     return (
       <View key={index}>
@@ -1350,6 +1383,7 @@ export default function OrderDetail({navigation, route}) {
                               {strings.WRITE_REVIEW}
                             </Text>
                           </View>
+                          
                           {/* {i?.product_rating?.rating ? (
                           <View>
                             <Text
@@ -1362,8 +1396,27 @@ export default function OrderDetail({navigation, route}) {
                             </Text>
                           </View>
                         ) : null} */}
+                        
                         </View>
                       ) : null}
+                      {  !!i?.is_processor_enable &&
+                     
+                     <View>
+                          <Text
+                            style={{
+                              fontSize: moderateScale(14),
+                              fontFamily: fontFamily.regular,
+                              color: colors.black,
+                            }}
+                          >{"Processor Name : "} {i?.processor_name} </Text>
+                          <Text
+                           style={{
+                            fontSize: moderateScale(14),
+                            fontFamily: fontFamily.regular,
+                            color: colors.black,
+                          }}
+                          >{"Date : "} {i?.processor_date} </Text>
+                        </View>}
                     </View>
                   );
                 } else {
@@ -2296,6 +2349,34 @@ export default function OrderDetail({navigation, route}) {
               MyDarkTheme={MyDarkTheme}
             />
           )}
+          {!!cartData?.advance_paid_amount &&
+            cartData?.advance_paid_amount > 0 && (
+              <LeftRightText
+                leftText={"Advance Paid Amount"}
+                rightText={`${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(cartData?.advance_paid_amount),
+                  appData?.profile?.preferences?.digit_after_decimal,
+                )}`}
+                isDarkMode={isDarkMode}
+                MyDarkTheme={MyDarkTheme}
+              />
+            )}
+           {!!cartData?.pending_amount &&
+            cartData?.pending_amount > 0 && (
+              <LeftRightText
+                leftText={"Pending Amount"}
+                rightText={` ${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(cartData?.pending_amount),
+                  appData?.profile?.preferences?.digit_after_decimal,
+                )}`}
+                isDarkMode={isDarkMode}
+                MyDarkTheme={MyDarkTheme}
+              />
+            )}
           <View
             style={{
               ...styles.dottedLine,
@@ -2521,6 +2602,27 @@ export default function OrderDetail({navigation, route}) {
             }}
           />
         </View>
+  
+        {
+          dispatcherStatus?.order_status?.current_status?.title ==
+           strings.DELIVERED &&  
+            !!appData?.profile?.preferences?.facturama_invoice
+           && (
+            <ButtonWithLoader
+            color={themeColors?.primary_color}
+            isLoading={isLoadingA}
+              onPress={generateInvoice}
+              btnStyle={{
+                marginHorizontal: moderateScale(8),
+                borderColor: themeColors.primary_color,
+              }}
+              btnText={'Generate Invoice'}
+              btnTextStyle={{
+                color: themeColors.primary_color,
+              }}
+            />
+          )
+        }
       </View>
     );
   };

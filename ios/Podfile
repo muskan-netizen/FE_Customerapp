@@ -2127,6 +2127,26 @@ end
 #Nhazi
 target 'Nhazi' do
 end
+
+#Petverse
+target 'Petverse' do
+end
+
+#Clickndrop
+target 'Clickndrop' do
+end
+
+#Lifehomefit
+target 'Lifehomefit' do
+end
+
+#Appi
+target 'Appi' do
+end
+
+#Dbairro_
+target 'Dbairro_' do
+end
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

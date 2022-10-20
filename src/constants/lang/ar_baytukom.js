@@ -927,4 +927,5 @@ export default {
   CATEGORY_KYC: 'Categoory KYC',
   VISIT_INSTAGRAM: 'Visit Instagram',
   SOS: 'SOS',
+  THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us'
 };

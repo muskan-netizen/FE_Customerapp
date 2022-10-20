@@ -935,7 +935,9 @@ export default function Home({route, navigation}) {
   };
   // console.log(appStyle?.homePageLayout, 'homePageLayouthomePageLayout');
   const renderHomeScreen = () => {
+
     switch (appStyle?.homePageLayout) {
+   
       // switch (case_) {
       case 1:
         return (

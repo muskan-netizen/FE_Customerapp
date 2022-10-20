@@ -970,5 +970,6 @@ export default {
   PARTICIPANTS:"Participants",
   VENDOR:"Vendor",
   START_CHAT:"Start Chat",
-  ORDER:'Orders'
+  ORDER:'Orders',
+  THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us'
 };

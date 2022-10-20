@@ -3,7 +3,7 @@ import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {isEmpty} from 'lodash';
 import moment from 'moment';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
+import {FlatList, Image, Text, TouchableOpacity, View,Modal} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
@@ -48,6 +48,9 @@ import BottomViewModal from '../../../Components/BottomViewModal';
 import DatePicker from 'react-native-date-picker';
 import {chekLocationPermission} from '../../../utils/permissions';
 import useInterval from '../../../utils/useInterval';
+// import Modal from '../../../Components/Modal';
+import {FlutterwaveButton, PayWithFlutterwave} from 'flutterwave-react-native';
+import { generateTransactionRef } from '../../../utils/paystackMethod';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -69,6 +72,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
+  console.log(appData,"appDataappDataappData")
   const {userData} = useSelector((state) => state?.auth);
   const {pickUpTimeType, location} = useSelector((state) => state?.home);
 
@@ -138,7 +142,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     selectedDateAndTime: `${moment().format('YYYY-MM-DD')} ${moment().format(
       'H:MM',
     )}`,
-    selectedVendorOption: paramData?.cabVendors[0]
+    selectedVendorOption: !!paramData?.cabVendors[0]
       ? paramData?.cabVendors[0]
       : null,
     pageNo: 1,
@@ -170,6 +174,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     scheduleDateTime: {},
     myCurrentLocationDetails: {},
     allListedDrivers: [],
+    isModalVisibleForPayFlutterWave: false,
+    paymentDataFlutterWave: null,
   });
   const {
     selectedPayment,
@@ -219,6 +225,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     scheduleDateTime,
     myCurrentLocationDetails,
     allListedDrivers,
+    isModalVisibleForPayFlutterWave,
+    paymentDataFlutterWave
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
 console.log(availableCarList,'availableCarListavailableCarList')
@@ -305,7 +313,7 @@ console.log(availableCarList,'availableCarListavailableCarList')
         },
       )
       .then((res) => {
-        console.log(res, 'ressssss');
+     
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(
@@ -332,7 +340,105 @@ console.log(availableCarList,'availableCarListavailableCarList')
       })
       .catch(errorMethod);
   };
+  //flutter wave
+  var redirectTimeout;
+  const handleOnRedirect = (data) => {
+    clearTimeout(redirectTimeout);
+    redirectTimeout = setTimeout(() => {
+      // do something with the result
+      updateState({isModalVisibleForPayFlutterWave: false});
+    }, 200);
+    try {
+      if (data && data?.transaction_id) {
+        let apiData = {
+          payment_option_id: paymentDataFlutterWave?.payment_option_id,
+          order_number: paymentDataFlutterWave?.orderDetail?.order_number,
+          transaction_id: data?.transaction_id,
+          amount: paymentDataFlutterWave?.total_payable_amount,
+          action: 'cart',
+        };
 
+        console.log(apiData, 'apiData');
+        actions
+          .openSdkUrl(
+            `/${paymentDataFlutterWave?.selectedPayment?.code?.toLowerCase()}`,
+            apiData,
+            {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+            },
+          )
+          .then((res) => {
+            console.log(res, 'openSdkUrl');
+            if (res && res?.status == 'Success') {
+              // alert("hii")
+              // setCartItems([]);
+              // setCartData({});
+              // actions.reloadData(!reloadData);
+              moveToNewScreen(navigationStrings.PICKUPTAXIORDERDETAILS,
+                paymentDataFlutterWave
+              //    {
+              //   orderDetail: {
+              //     order_number:
+              //       paymentDataFlutterWave?.orderDetail?.order_number,
+              //     id: paymentDataFlutterWave?.orderDetail?.id,
+              //   },
+              // }
+              )();
+            } else {
+              redirectTimeout = setTimeout(() => {
+                // do something with the result
+                updateState({
+                  isModalVisibleForPayFlutterWave: false,
+                  indicatorLoader: false,
+                  // deliveryFeeLoader: false,
+                });
+              }, 200);
+            }
+          })
+          .catch(error=>console.log(error,"errroro111"));
+      } else {
+        let apiData = {
+          order_number: paymentDataFlutterWave?.orderDetail?.order_number,
+          action: 'cart',
+        };
+        actions
+          .cancelSdkUrl(
+            `/${paymentDataFlutterWave?.selectedPayment?.code?.toLowerCase()}`,
+            apiData,
+            {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+            },
+          )
+          .then((res) => {
+            console.log(res, 'cancelPaytabUrl---resfrompaytab');
+            redirectTimeout = setTimeout(() => {
+              // do something with the result
+              updateState({
+                isModalVisibleForPayFlutterWave: false,
+                indicatorLoader: false,
+                deliveryFeeLoader: false,
+              });
+            }, 200);
+          })
+          .catch(
+            error=>console.log(error,"errorrrr")
+          );
+      }
+    } catch (error) {
+      console.log('error raised', error);
+      redirectTimeout = setTimeout(() => {
+        // do something with the result
+        updateState({
+          isModalVisibleForPayFlutterWave: false,
+          indicatorLoader: false,
+        });
+      }, 200);
+    }
+  };
   //error handling of api
   const errorMethod = (error) => {
     // alert("utyhtgyrtertcytfgh")
@@ -342,6 +448,7 @@ console.log(availableCarList,'availableCarListavailableCarList')
       isLoadingB: false,
       isRefreshing: false,
       indicatorLoader: false,
+      isModalVisibleForPayFlutterWave: false,
     });
     showError(error?.message || error?.error || error?.description);
   };
@@ -451,6 +558,16 @@ console.log(availableCarList,'availableCarListavailableCarList')
         break;
       case 47: //Khalti Payment Gatway
         navigation.navigate(navigationStrings.KHALTI, paymentData);
+        break;
+      case 30: //FlutterWave Payment Getway
+        
+        updateState({
+          isModalVisibleForPayFlutterWave: true,
+          paymentDataFlutterWave: paymentData,
+        });
+
+        // openPayTabs(paymentData)
+
         break;
       default:
         console.log('i mah shfjgdghdjgs');
@@ -1081,10 +1198,10 @@ console.log(availableCarList,'availableCarListavailableCarList')
     if (paramData?.location.length > 0 && !!mapRef?.current?.fitToCoordinates) {
       mapRef.current.fitToCoordinates(paramData?.location, {
         edgePadding: {
-          right: width / 3.2,
-          bottom: height / 20,
-          left: width / 3.2,
-          top: height / 20,
+          right: 80,
+          bottom: 500,
+          left: 80,
+          top: 80,
         },
       });
     }
@@ -1192,14 +1309,14 @@ console.log(availableCarList,'availableCarListavailableCarList')
                   totalDistance: result.distance.toFixed(2),
                   totalDuration: result.duration.toFixed(2),
                 });
-                mapRef.current.fitToCoordinates(result.coordinates, {
-                  edgePadding: {
-                    right: width / 3.2,
-                    bottom: height / 20,
-                    left: width / 3.2,
-                    top: height / 20,
-                  },
-                });
+                // mapRef.current.fitToCoordinates(result.coordinates, {
+                //   edgePadding: {
+                //     right: width / 3.2,
+                //     bottom: height ,
+                //     left: width / 3.2,
+                //     top: height / 20,
+                //   },
+                // });
               }}
               onError={(errorMessage) => {
                 // console.log('GOT AN ERROR');
@@ -1330,7 +1447,52 @@ console.log(availableCarList,'availableCarListavailableCarList')
           />
         </TouchableOpacity>
       </View>
-
+     { isModalVisibleForPayFlutterWave &&
+     
+     <Modal
+        onBackdropPress={() =>
+          updateState({
+            isModalVisibleForPayFlutterWave: false,
+            indicatorLoader: false,
+          })
+        }
+        isVisible={isModalVisibleForPayFlutterWave}
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end',
+          // marginBottom: 20,
+        }}>
+        <View
+          style={{
+            padding: moderateScale(20),
+            backgroundColor: colors?.white,
+            height: height / 2,
+            justifyContent: 'flex-end',
+          }}>
+          <PayWithFlutterwave
+            onAbort={() =>
+              updateState({
+                isModalVisibleForPayFlutterWave: false,
+                indicatorLoader: false,
+              })
+            }
+            onRedirect={handleOnRedirect}
+            options={{
+              tx_ref: generateTransactionRef(10),
+              authorization:
+                appData?.profile?.preferences?.flutterwave_public_key,
+              customer: {
+                email: userData?.email,
+                name: userData?.name,
+              },
+              amount: Number(paymentDataFlutterWave?.total_payable_amount) || 0,
+              currency: currencies?.primary_currency?.iso_code,
+              payment_options: 'card',
+            }}
+          />
+         
+        </View>
+      </Modal>}
       <PaymentProcessingModal
         isModalVisible={isModalVisible}
         updateModalState={_updateState}

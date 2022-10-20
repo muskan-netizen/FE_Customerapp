@@ -440,6 +440,11 @@ const shortCodes = {
   jimsAutoRescue: '4fc57b',
   carryfood: '86d81e',
   nhazi: 'abaf70',
+  petverse: '',
+  clickndrop: '9536ba',
+  lifehomefit: '191bdb',
+  appi: 'e5e222',
+  dbairro_: '2b7742',
 };
 
 const appIds = {
@@ -1754,8 +1759,8 @@ const appIds = {
     android: 'com.myfarma',
   }),
   valley: Platform.select({
-    ios: 'com.valley',
-    android: 'com.valley',
+    ios: 'com.valleyOrder',
+    android: 'com.valleyOrder',
   }),
   kartAndKarry: Platform.select({
     ios: 'com.kartandkarry',
@@ -2190,6 +2195,26 @@ const appIds = {
   nhazi: Platform.select({
     ios: 'com.nhazi.royoorders',
     android: 'com.nhazi.royoorders',
+  }),
+  petverse: Platform.select({
+    ios: 'com.petverse.royoorders',
+    android: 'com.petverse.royoorders',
+  }),
+  clickndrop: Platform.select({
+    ios: 'com.clickndrop.royoorders',
+    android: 'com.clickndrop.royoorders',
+  }),
+  lifehomefit: Platform.select({
+    ios: 'com.lifehomefit.royoorders',
+    android: 'com.lifehomefit.royoorders',
+  }),
+  appi: Platform.select({
+    ios: 'com.appi.royoorders',
+    android: 'com.appi.royoorders',
+  }),
+  dbairro_: Platform.select({
+    ios: 'com.dbairroapp.royoorders',
+    android: 'com.dbairroapp.royoorders',
   }),
 };
 

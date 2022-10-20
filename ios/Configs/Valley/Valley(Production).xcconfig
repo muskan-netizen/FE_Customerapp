@@ -1,12 +1,12 @@
 #include "Pods/Target Support Files/Pods-available_pods-Valley/Pods-available_pods-Valley.Release.xcconfig"
 
-PROJECT_APPLE_ID = 1625863395
-PROJECT_BUNDLE_ID = com.valley
+PROJECT_APPLE_ID = 6443857240
+PROJECT_BUNDLE_ID = com.valleyOrder
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 2
+PROJECT_BUILD_NUMBER = 1
 PROJECT_APP_NAME = Valley
-PROJECT_GOOGLE_CLIENT_ID = 848727796618-rog7afamcifd3q2daqoo9mhiui1j7lid.apps.googleusercontent.com
-PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.848727796618-rog7afamcifd3q2daqoo9mhiui1j7lid
+PROJECT_GOOGLE_CLIENT_ID = 877850913674-ho9vtugagmva0s91mtudrvc5497kqgk9.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.877850913674-ho9vtugagmva0s91mtudrvc5497kqgk9
 PROJECT_FACEBOOK_ID = 3420081474885654
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST = ValleyInfo

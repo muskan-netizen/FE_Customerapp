@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "831776698886",
+    "project_id": "petverse-8806e",
+    "storage_bucket": "petverse-8806e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831776698886:android:a6afa531d5d7f7334d8987",
+        "android_client_info": {
+          "package_name": "com.petverse.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "831776698886-2j5ksan3bor0ibrf6c1bl1604kekka0s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petverse.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "831776698886-5efr1itmllull9ksjviuaocvuuiqaohv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petverse.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "831776698886-j3go0cmiqmkkn5f1i57mq1g5c88b0gi2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petverse.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "831776698886-jsget2a861m53j1mvd34j64drn07va7o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSQSca-h5Fs1rW8kXWGdSrVWU9ZHAoeY8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "831776698886-jsget2a861m53j1mvd34j64drn07va7o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "831776698886-21dklfgdkpmhcp4miad9plkprqsb6b0j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.petverse.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
