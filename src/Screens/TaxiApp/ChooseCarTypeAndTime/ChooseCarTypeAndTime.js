@@ -221,7 +221,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     allListedDrivers,
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
-
+console.log(availableCarList,'availableCarListavailableCarList')
   useFocusEffect(
     React.useCallback(() => {
       if (paramData && paramData?.selectedMethod) {
@@ -233,7 +233,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   useEffect(() => {
     Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
     setTimeout(() => {
-      fitTopadding();
+      onCenter();
     }, 3000);
   }, []);
 
@@ -718,7 +718,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
                 ? themeColors.secondary_color
                 : colors.black,
           }}>
-          {item?.name || ''}
+          {item?.name || item?.translation_title}
         </Text>
       </TouchableOpacity>
     );
@@ -814,7 +814,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
               color: isDarkMode ? colors.whiteOpacity77 : colors.black,
               marginTop: moderateScaleVertical(8),
             }}>
-            {availableCarList.length > 0 ? strings.CHOOSE_A_TRIP : ''}
+            {availableCarList?.length > 0 ? strings.CHOOSE_A_TRIP : ''}
           </Text>
         </View>
         <View style={{marginVertical: moderateScale(8)}}>
@@ -832,6 +832,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             ListFooterComponent={() => (
               <View style={{marginRight: moderateScale(16)}} />
             )}
+            showsHorizontalScrollIndicator={false}
           />
         </View>
       </View>
@@ -883,6 +884,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const _redirectToPayement = () => {
     moveToNewScreen(navigationStrings.PAYMENT_OPTIONS, {
       screenName: strings.PAYMENT,
+      paramData:paramData
     })();
   };
 
@@ -1087,18 +1089,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       });
     }
   }, []);
-  const fitTopadding = useCallback(() => {
-    if (paramData?.location.length > 0 && !!mapRef?.current?.fitToCoordinates) {
-      mapRef.current.fitToCoordinates(paramData?.location, {
-        edgePadding: {
-          right: width / 3,
-          bottom: height / 4,
-          left: width / 3,
-          top: height / 10,
-        },
-      });
-    }
-  }, []);
+
   const onPressPickUpNow = () => {
     selectedCarOption
       ? updateState({
@@ -1242,14 +1233,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           animateOnMount={true}
           handleComponent={carModalHeader}
           onChange={() => playHapticEffect(hapticEffects.impactMedium)}>
-          <BottomSheetScrollView
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-            style={{
-              backgroundColor: isDarkMode
-                ? MyDarkTheme.colors.background
-                : colors.white,
-            }}>
+          
             <View
               style={{
                 flex: 1,
@@ -1260,7 +1244,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
               {!!showCarModal && _selectCarModalView()}
               {!!showPaymentModal && _selectPaymentView()}
             </View>
-          </BottomSheetScrollView>
         </BottomSheet>
         {!!showCarModal && (
           <View
@@ -1271,7 +1254,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
               marginHorizontal: moderateScale(16),
               flexDirection: 'row',
             }}>
-            {availableCarList.length > 0 && (
+            {availableCarList?.length > 0 && (
               <GradientButton
                 colorsArray={[colors.white, colors.white]}
                 textStyle={{
@@ -1291,7 +1274,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
               />
             )}
 
-            {availableCarList.length > 0 && (
+            {availableCarList?.length > 0 && (
               <GradientButton
                 colorsArray={[
                   themeColors.primary_color,

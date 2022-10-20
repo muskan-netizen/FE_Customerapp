@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "876993775673",
+    "project_id": "verz-a64ad",
+    "storage_bucket": "verz-a64ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876993775673:android:ad1d8c10378df9835a65e8",
+        "android_client_info": {
+          "package_name": "com.verz.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876993775673-77rd8she30qr2vvf7sv5hrk0tnter092.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.verz.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "876993775673-8ku1k63aj29gftpo08ifjpdv1qmin3i1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.verz.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "876993775673-fil0eer2umrjo3raj5f5i9tne640v63s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.verz.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "876993775673-9aa4avnpc286n925rbmrbmifkj72h8q2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvzmXbA93UvDpEVbCACZZ8jPyGy9RGlsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "876993775673-9aa4avnpc286n925rbmrbmifkj72h8q2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "876993775673-4sgjhagkbklna5j6joqu9fpemg1su1cf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.verz.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

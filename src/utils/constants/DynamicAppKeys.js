@@ -434,6 +434,12 @@ const shortCodes = {
   spryton: 'd0a063',
   nittosadai: '26662c',
   clickokart: 'f34c51',
+  tiimo: 'aac5d5',
+  verz: '2e1b4a',
+  regiomigo: '39c82e',
+  jimsAutoRescue: '4fc57b',
+  carryfood: '86d81e',
+  nhazi: 'abaf70',
 };
 
 const appIds = {
@@ -1186,7 +1192,7 @@ const appIds = {
     android: 'com.vendorspot',
   }),
   sxm2go: Platform.select({
-    ios: 'com.sxm2go',
+    ios: 'com.sxm2go.userapp',
     android: 'com.sxm2go.userapp',
   }),
   pinkydeli: Platform.select({
@@ -1347,7 +1353,7 @@ const appIds = {
   }),
   ambutap: Platform.select({
     ios: 'com.ambutap',
-    android: 'com.ambutap',
+    android: 'com.ambutap.userapp',
   }),
   sabroson: Platform.select({
     ios: 'com.sabroson.orders',
@@ -1587,8 +1593,8 @@ const appIds = {
     android: 'com.redglee',
   }),
   dropItOffUsa: Platform.select({
-    ios: 'com.dropItOffUsa.royoOrders',
-    android: 'com.dropItOffUsa.royoOrders',
+    ios: 'com.dropItOffUsa',
+    android: 'com.dropItOffUsaOrder',
   }),
   handyPickup: Platform.select({
     ios: 'com.handyPickup',
@@ -1822,8 +1828,8 @@ const appIds = {
   }),
 
   abbeRides: Platform.select({
-    ios: 'com.abbeRides',
-    android: 'com.abbeRides',
+    ios: 'com.abbeRides.Orders',
+    android: 'com.abbeRides.Orders',
   }),
   nrsa: Platform.select({
     ios: 'com.nrsa',
@@ -1915,7 +1921,7 @@ const appIds = {
   }),
   danielleBejjani: Platform.select({
     ios: 'com.danielleBejjani.order',
-    android: 'com.danielleBejjani.order',
+    android: 'com.danielleBejjani',
   }),
   yallaEat: Platform.select({
     ios: 'com.yallaEat.order',
@@ -2160,6 +2166,30 @@ const appIds = {
   clickokart: Platform.select({
     ios: 'com.clickokart.royoorders',
     android: 'com.clickokart.royoorders',
+  }),
+  tiimo: Platform.select({
+    ios: 'com.tiimo.royoorders',
+    android: 'com.tiimo.royoorders',
+  }),
+  verz: Platform.select({
+    ios: 'com.verz.royoorders',
+    android: 'com.verz.royoorders',
+  }),
+  regiomigo: Platform.select({
+    ios: 'com.ragiomigo.royoorders',
+    android: 'com.ragiomigo.royoorders',
+  }),
+  jimsAutoRescue: Platform.select({
+    ios: 'com.jimsautorescue.royoorders',
+    android: 'com.jimsautorescue.royoorders',
+  }),
+  carryfood: Platform.select({
+    ios: 'com.carryfood.royoorders',
+    android: 'com.carryfood.royoorders',
+  }),
+  nhazi: Platform.select({
+    ios: 'com.nhazi.royoorders',
+    android: 'com.nhazi.royoorders',
   }),
 };
 
