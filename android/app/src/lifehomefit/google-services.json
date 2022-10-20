@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "902068857318",
+    "project_id": "lifehomefit-17294",
+    "storage_bucket": "lifehomefit-17294.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902068857318:android:85c34a4e2c5c869fb58e27",
+        "android_client_info": {
+          "package_name": "com.lifehomefit.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "902068857318-6oqa68oc90jmblrq65t9bro18vrc9oo3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lifehomefit.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "902068857318-d8ksk7g77vr9492lc0gbi52cf95u5q05.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lifehomefit.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "902068857318-npevvnotqvblr62keqhdj6029427f78c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lifehomefit.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "902068857318-8vqbei282rg4heg191vkb6ptb68jccrb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB32e7I7YWWSJVgqJ9M4xB6kmTzNCNFPmE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "902068857318-8vqbei282rg4heg191vkb6ptb68jccrb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "902068857318-lhqrbrnodqtnfjp6u7r4be5q48o32vhn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.lifehomefit.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

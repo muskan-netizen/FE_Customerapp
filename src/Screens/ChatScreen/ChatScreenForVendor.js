@@ -39,8 +39,10 @@ export default function ChatScreenForVendor({ route, navigation }) {
         showParticipant: false,
         isLoading: false,
         roomUsers: [],
+        allRoomUsersAppartFromAgent: [],
+        allAgentIds: []
     })
-    const { isLoading, roomUsers, showParticipant } = state
+    const { isLoading, roomUsers, showParticipant, allRoomUsersAppartFromAgent, allAgentIds } = state
     const updateState = (data) => setState((state) => ({ ...state, ...data }))
 
     const isFocused = useIsFocused();
@@ -99,12 +101,19 @@ export default function ChatScreenForVendor({ route, navigation }) {
             })
             console.log('fetchAllRoomUser res', res)
             if (!!res?.userData && isFocused) {
-                updateState({ roomUsers: res?.userData })
+
+                const allRoomUsersAppartFromAgentAry = res?.userData.splice(res?.userData.findIndex(item => item?.user_type != "agent"))
+                const allAgentIdsAry = res?.userData.splice(res?.userData.findIndex(item => item?.user_type == "agent"))
+                updateState({
+                    allRoomUsersAppartFromAgent: allRoomUsersAppartFromAgentAry,
+                    allAgentIds: allAgentIdsAry,
+                    roomUsers: res?.userData,
+                });
             }
         } catch (error) {
             console.log('error raised in fetchAllRoomUser api', error)
         }
-    }, [])
+    }, [allRoomUsersAppartFromAgent, allAgentIds])
 
     const onSend = useCallback(async (messages = []) => {
         if (String(messages[0].text).trim().length < 1) {
@@ -145,15 +154,21 @@ export default function ChatScreenForVendor({ route, navigation }) {
         } catch (error) {
             console.log('error raised in fetchAllMessages api', error)
         }
-    }, [])
+    }, [allRoomUsersAppartFromAgent, allAgentIds])
 
     const sendToUserNotification = async (id, text) => {
         let apiData = {
-            user_ids: roomUsers,
+            user_ids: allRoomUsersAppartFromAgent,
             roomId: id,
             roomIdText: paramData?.room_id,
             text_message: text,
             chat_type: paramData?.type,
+            order_id: paramData?.order_id,
+            all_agentids: allAgentIds,
+            order_vendor_id: paramData?.order_vendor_id,
+            username: userData?.name,
+            vendor_id: paramData?.vendor_id,
+            auth_id: userData?.id
 
         }
         console.log("sending api data", apiData)
@@ -453,13 +468,13 @@ const stylesFun = ({ fontFamily, isDarkMode }) => {
             backgroundColor: isDarkMode ? '#2c2c2e' : '#ffffff',
             paddingTop: Platform.OS == 'ios' ? 10 : undefined,
             borderRadius: moderateScale(20),
-            paddingHorizontal:  moderateScale(20),
+            paddingHorizontal: moderateScale(20),
             textAlignVertical: 'center',
             fontFamily: fontFamily.regular,
             alignSelf: 'center',
             color: isDarkMode ? colors.white : colors.black,
             marginTop: moderateScaleVertical(6)
-          }
+        }
     });
     return styles
 }

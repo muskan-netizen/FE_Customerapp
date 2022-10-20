@@ -8,7 +8,7 @@ const {dispatch} = store;
 
 //Get vendor info and Category data
 export function getAllCarAndPrices(query = '', data = {}, headers = {}) {
-  console.log(GET_ALL_CAR_AND_PRICE + query, data, 'queryquery');
+  console.log(GET_ALL_CAR_AND_PRICE + query, data, headers,'queryquery');
   return new Promise((resolve, reject) => {
     apiPost(GET_ALL_CAR_AND_PRICE + query, data, headers)
       .then((res) => {

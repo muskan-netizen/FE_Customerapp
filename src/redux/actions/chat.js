@@ -108,6 +108,7 @@ export function getAllRoomUser(query = '', data = {}, headers = {}) {
 }
 
 export function sendNotification(data = {}, headers = {}) {
+  console.log(SEND_NOTIFCATION,data,"all notification data");
   return new Promise(async(resolve, reject) => {
     apiPost(SEND_NOTIFCATION, data, headers)
       .then((response) => {

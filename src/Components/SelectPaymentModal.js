@@ -30,11 +30,11 @@ import strings from '../constants/lang/index';
 import actions from '../redux/actions';
 import colors from '../styles/colors';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
-  height,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
 import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
@@ -623,34 +623,7 @@ export default function SelectPaymentModal({
                 </Text>
               )}
         </ScrollView>
-        {/* <KeyboardAwareScrollView
-          alwaysBounceVertical={true}
-          showsVerticalScrollIndicator={false}
-          style={{
-            marginHorizontal: moderateScaleVertical(20),
-          }}> */}
-
-        {/* <FlatList
-            data={payementMethods}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            keyboardShouldPersistTaps={'handled'}
-            // horizontal
-            style={{marginTop: moderateScaleVertical(10)}}
-            keyExtractor={(item, index) => String(index)}
-            renderItem={_renderItemPayments}
-            ItemSeparatorComponent={() => (
-              <View style={{marginBottom: moderateScaleVertical(16)}} />
-            )}
-            ListEmptyComponent={() =>
-              !isLoading && (
-                <Text style={{textAlign: 'center'}}>
-                  {strings.NO_PAYMENT_METHOD}
-                </Text>
-              )
-            }
-          /> */}
-        {/* </KeyboardAwareScrollView> */}
+      
 
         <View
           style={{

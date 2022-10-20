@@ -6712,7 +6712,7 @@ function Cart({navigation, route}) {
                 ? MyDarkTheme.colors.background
                 : colors.backgroundGrey,
             }}>
-            <View style={{height: height}}>
+            <View>
               <StripeProvider
                 publishableKey={preferences?.stripe_publishable_key}
                 merchantIdentifier="merchant.identifier">

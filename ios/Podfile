@@ -1,6 +1,6 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
-platform :ios, '12.0'
+platform :ios, '11.0'
 
 abstract_target 'available_pods' do
   
@@ -2102,6 +2102,50 @@ end
 
 #Clickokart
 target 'Clickokart' do
+end
+
+#Tiimo
+target 'Tiimo' do
+end
+
+#Verz
+target 'Verz' do
+end
+
+#RagioMigo
+target 'RagioMigo' do
+end
+
+#JimsAutoRescue
+target 'JimsAutoRescue' do
+end
+
+#Carryfood
+target 'Carryfood' do
+end
+
+#Nhazi
+target 'Nhazi' do
+end
+
+#Petverse
+target 'Petverse' do
+end
+
+#Clickndrop
+target 'Clickndrop' do
+end
+
+#Lifehomefit
+target 'Lifehomefit' do
+end
+
+#Appi
+target 'Appi' do
+end
+
+#Dbairro_
+target 'Dbairro_' do
 end
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
