@@ -695,7 +695,7 @@ export default function TaxiHomeDashbord({
         <FlatList
           horizontal={getBundleId() == appIds.hezniTaxi ? false : true}
           data={appMainData?.categories}
-          numColumns={getBundleId() == appIds.hezniTaxi ? 3 : 0}
+          numColumns={getBundleId() == appIds.hezniTaxi ? 3 : null}
           style={{
             marginTop: moderateScaleVertical(10),
             // marginHorizontal: moderateScale(10),
