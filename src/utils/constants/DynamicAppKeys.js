@@ -1450,7 +1450,7 @@ const appIds = {
   }),
   xborne: Platform.select({
     ios: 'com.xborne',
-    android: 'com.xborne',
+    android: 'com.xborne.order',
   }),
   fawaz: Platform.select({
     ios: 'com.fawaz',
@@ -1759,8 +1759,8 @@ const appIds = {
     android: 'com.myfarma',
   }),
   valley: Platform.select({
-    ios: 'com.valley',
-    android: 'com.valley',
+    ios: 'com.valleyOrder',
+    android: 'com.valleyOrder',
   }),
   kartAndKarry: Platform.select({
     ios: 'com.kartandkarry',
@@ -1926,7 +1926,7 @@ const appIds = {
   }),
   danielleBejjani: Platform.select({
     ios: 'com.danielleBejjani.order',
-    android: 'com.danielleBejjani.order',
+    android: 'com.danielleBejjani',
   }),
   yallaEat: Platform.select({
     ios: 'com.yallaEat.order',
@@ -1989,8 +1989,8 @@ const appIds = {
     android: 'com.swipe.order',
   }),
   sheRyders: Platform.select({
-    ios: 'com.sheRyders.order',
-    android: 'com.sheRyders.order',
+    ios: 'com.sheRyders',
+    android: 'com.sheRyders',
   }),
   kurrix: Platform.select({
     ios: 'com.kurrix.order',

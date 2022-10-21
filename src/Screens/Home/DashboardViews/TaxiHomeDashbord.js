@@ -20,7 +20,7 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
 import {appIds} from '../../../utils/constants/DynamicAppKeys';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import {
   height,
   itemWidth,
@@ -152,7 +152,7 @@ export default function TaxiHomeDashbord({
   });
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
-
+  console.log(appMainData, 'appMainDataappMainData');
   const fontFamily = appStyle?.fontSizeData;
   const {bannerRef} = useRef();
   const {
@@ -693,8 +693,9 @@ export default function TaxiHomeDashbord({
         <Loader isLoading={isLoadingModal} />
 
         <FlatList
-          horizontal
+          horizontal={getBundleId() == appIds.hezniTaxi ? false : true}
           data={appMainData?.categories}
+          numColumns={getBundleId() == appIds.hezniTaxi ? 3 : 0}
           style={{
             marginTop: moderateScaleVertical(10),
             // marginHorizontal: moderateScale(10),

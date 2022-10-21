@@ -1675,6 +1675,7 @@ export default function Products({route, navigation}) {
             if (res.data.products.data.length == 0) {
               loadMore = false;
             }
+            loadMore = false;
             setCategoryInfo(res?.data?.vendor);
             setLoading(false);
             setProductListData(
@@ -1778,7 +1779,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'resres');
+        console.log(res.data.listData.data.length, 'resres');
         if (!!res?.data) {
           console.log(res, 'res getProductByCategoryId');
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
@@ -1789,6 +1790,7 @@ export default function Products({route, navigation}) {
           if (res.data.listData.data.length == 0) {
             loadMore = false;
           }
+          loadMore = false;
           // onAtoZFilter()
           setProductListData(
             pageNo == 1

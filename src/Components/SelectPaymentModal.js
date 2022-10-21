@@ -42,6 +42,7 @@ import HomeLoader from './Loaders/HomeLoader';
 export default function SelectPaymentModal({
   onSelectPayment,
   paymentModalClose = () => {},
+  dineInType
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const navigation = useNavigation();
@@ -129,9 +130,10 @@ export default function SelectPaymentModal({
 
   //Get list of all payment method
   const getListOfPaymentMethod = () => {
+    let apiData = `/cart?service_type=${dineInType}`
     actions
       .getListOfPaymentMethod(
-        '/cart',
+        apiData,
         {},
         {
           code: appData?.profile?.code,
