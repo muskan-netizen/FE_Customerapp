@@ -2464,7 +2464,6 @@ function Cart({navigation, route}) {
               ...styles.vendorView,
               // paddingHorizontal: moderateScale(8),
               flexDirection: 'column',
-             
             }}>
             <TouchableOpacity onPress={() => _redirectVendorProducts(item)}>
               <Text
@@ -2697,6 +2696,22 @@ function Cart({navigation, route}) {
                                   }`}
                                 </Text>
                               </View>
+                              {!!i?.product?.product_delivery_fee ? (
+                                <View>
+                                  <Text
+                                    style={{
+                                      color: isDarkMode
+                                        ? MyDarkTheme.colors.text
+                                        : colors.black,
+                                    }}>
+                                    {`${
+                                      strings.DELIVERY_CHARGES
+                                    } :- ${currencyNumberFormatter(
+                                      Number(i?.product?.product_delivery_fee),
+                                    )}`}
+                                  </Text>
+                                </View>
+                              ) : null}
 
                               {i?.variant_options.length > 0
                                 ? i?.variant_options.map((j, jnx) => {
@@ -2958,26 +2973,27 @@ function Cart({navigation, route}) {
                               : ''
                           }`}</Text>
                         )}
-                        
                       </View>
-                     {  !!i?.is_processor_enable &&
-                     
-                     <View>
+                      {!!i?.is_processor_enable && (
+                        <View>
                           <Text
                             style={{
                               fontSize: moderateScale(14),
                               fontFamily: fontFamily.regular,
                               color: colors.black,
-                            }}
-                          >{"Processor Name : "} {i?.processor_name} </Text>
+                            }}>
+                            {'Processor Name : '} {i?.processor_name}{' '}
+                          </Text>
                           <Text
-                           style={{
-                            fontSize: moderateScale(14),
-                            fontFamily: fontFamily.regular,
-                            color: colors.black,
-                          }}
-                          >{"Date : "} {i?.processor_date} </Text>
-                        </View>}
+                            style={{
+                              fontSize: moderateScale(14),
+                              fontFamily: fontFamily.regular,
+                              color: colors.black,
+                            }}>
+                            {'Date : '} {i?.processor_date}{' '}
+                          </Text>
+                        </View>
+                      )}
                       {/* <View style={styles.dashedLine} /> */}
                     </Animated.View>
                   </Swipeable>
@@ -3206,6 +3222,7 @@ function Cart({navigation, route}) {
                     {strings.DELIVERY_CHARGES}:
                   </Text>
                 ) : null}
+
                 {!!item?.delivery_types && item?.delivery_types.length == 1 ? (
                   <Text>{`${item?.delivery_types[0]?.courier_name} ${
                     currencies?.primary_currency?.symbol
@@ -3284,7 +3301,6 @@ function Cart({navigation, route}) {
             )}
           </View>
         </View>
-       
       </View>
     );
   };
@@ -4052,45 +4068,44 @@ function Cart({navigation, route}) {
             )}`}</Text>
           </Animatable.View>
         )}
-        {(!!preferences?.advance_booking_amount &&
-          cartData?.advance_payable_amount > 0) && (
-          <Animatable.View
-            style={{
-              ...styles.bottomTabLableValue,
-              marginTop: moderateScale(8),
-              marginBottom: moderateScale(2),
-            }}>
-            <TouchableOpacity
-              activeOpacity={0.9}
-              hitSlop={hitSlopProp}
-              onPress={() => updateState({showTaxFeeArea: !showTaxFeeArea})}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text
-                  style={{
-                    ...styles.priceItemLabel,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyB,
-                  }}>
-                  {'Advance Payable Amount'}
-                </Text>
-              </View>
-            </TouchableOpacity>
+        {!!preferences?.advance_booking_amount &&
+          cartData?.advance_payable_amount > 0 && (
+            <Animatable.View
+              style={{
+                ...styles.bottomTabLableValue,
+                marginTop: moderateScale(8),
+                marginBottom: moderateScale(2),
+              }}>
+              <TouchableOpacity
+                activeOpacity={0.9}
+                hitSlop={hitSlopProp}
+                onPress={() => updateState({showTaxFeeArea: !showTaxFeeArea})}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Text
+                    style={{
+                      ...styles.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                    }}>
+                    {'Advance Payable Amount'}
+                  </Text>
+                </View>
+              </TouchableOpacity>
 
-            <Text
-              style={
-                isDarkMode
-                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
-                  : styles.priceItemLabel
-              }>{`${currencies?.primary_currency?.symbol} ${Number(
-              cartData?.advance_payable_amount,
-            ).toFixed(
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}</Text>
-          </Animatable.View>
-        )}
-        {(!!preferences?.advance_booking_amount &&
-          cartData?.pending_amount > 0) && (
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    : styles.priceItemLabel
+                }>{`${currencies?.primary_currency?.symbol} ${Number(
+                cartData?.advance_payable_amount,
+              ).toFixed(
+                appData?.profile?.preferences?.digit_after_decimal,
+              )}`}</Text>
+            </Animatable.View>
+          )}
+        {!!preferences?.advance_booking_amount && cartData?.pending_amount > 0 && (
           <Animatable.View
             style={{
               ...styles.bottomTabLableValue,
@@ -4126,8 +4141,7 @@ function Cart({navigation, route}) {
             )}`}</Text>
           </Animatable.View>
         )}
-         {(!!preferences?.advance_booking_amount &&
-          cartData?.total_amount > 0) && (
+        {!!preferences?.advance_booking_amount && cartData?.total_amount > 0 && (
           <Animatable.View
             style={{
               ...styles.bottomTabLableValue,
@@ -4339,7 +4353,7 @@ function Cart({navigation, route}) {
               </Text>
             </TouchableOpacity>
           )}
-     
+
         {!!cartData?.deliver_status ||
         cartData?.closed_store_order_scheduled ? (
           <View
