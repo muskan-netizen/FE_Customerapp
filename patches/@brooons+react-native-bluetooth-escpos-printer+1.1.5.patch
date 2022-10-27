@@ -22,6 +22,30 @@ index 0000000..ce38974
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/04406dfefc7184323c4a53e24f153e72.bin b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/04406dfefc7184323c4a53e24f153e72.bin
 new file mode 100644
 index 0000000..e69de29
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/169a2a0e7eaf096222fbc1dbefe24eaa.bin b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/169a2a0e7eaf096222fbc1dbefe24eaa.bin
+new file mode 100644
+index 0000000..0d259dd
+--- /dev/null
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/169a2a0e7eaf096222fbc1dbefe24eaa.bin
+@@ -0,0 +1 @@
++o/classes
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/169a2a0e7eaf096222fbc1dbefe24eaa/classes/classes.dex b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/169a2a0e7eaf096222fbc1dbefe24eaa/classes/classes.dex
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/21e69a2ee549720bae377ccf10433ee7.bin b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/21e69a2ee549720bae377ccf10433ee7.bin
+new file mode 100644
+index 0000000..0d259dd
+--- /dev/null
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/21e69a2ee549720bae377ccf10433ee7.bin
+@@ -0,0 +1 @@
++o/classes
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/21e69a2ee549720bae377ccf10433ee7/classes/classes.dex b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/21e69a2ee549720bae377ccf10433ee7/classes/classes.dex
+new file mode 100644
+index 0000000..1654abc
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/21e69a2ee549720bae377ccf10433ee7/classes/classes.dex differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/64f608cc930d6c4ab0f0e6dfe320d26e.bin b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/64f608cc930d6c4ab0f0e6dfe320d26e.bin
+new file mode 100644
+index 0000000..e69de29
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/68e9c0ba07038230f869695360eadfa1.bin b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/68e9c0ba07038230f869695360eadfa1.bin
 new file mode 100644
 index 0000000..0d259dd
@@ -31,8 +55,7 @@ index 0000000..0d259dd
 +o/classes
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/68e9c0ba07038230f869695360eadfa1/classes/classes.dex b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/68e9c0ba07038230f869695360eadfa1/classes/classes.dex
 new file mode 100644
-index 0000000..1654abc
-Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/68e9c0ba07038230f869695360eadfa1/classes/classes.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/source/buildConfig/debug/cn/jystudio/bluetooth/BuildConfig.java b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/source/buildConfig/debug/cn/jystudio/bluetooth/BuildConfig.java
 new file mode 100644
 index 0000000..81aa281
@@ -3843,89 +3866,89 @@ index 0000000..7154626
 +int xml rn_dev_preferences 0x0
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
 new file mode 100644
-index 0000000..1a089e1
+index 0000000..dcea0d8
 --- /dev/null
 +++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/jniLibs"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/debug/jniLibs"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/jniLibs"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/debug/jniLibs"/></dataSet></merger>
 \ No newline at end of file
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeDebugShaders/merger.xml b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
 new file mode 100644
-index 0000000..8937331
+index 0000000..4c60782
 --- /dev/null
 +++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/debug/shaders"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/debug/shaders"/></dataSet></merger>
 \ No newline at end of file
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeReleaseJniLibFolders/merger.xml b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeReleaseJniLibFolders/merger.xml
 new file mode 100644
-index 0000000..f17a12c
+index 0000000..76283e2
 --- /dev/null
 +++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeReleaseJniLibFolders/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/jniLibs"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/release/jniLibs"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/jniLibs"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/release/jniLibs"/></dataSet></merger>
 \ No newline at end of file
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeReleaseShaders/merger.xml b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeReleaseShaders/merger.xml
 new file mode 100644
-index 0000000..c8e67e9
+index 0000000..c02a921
 --- /dev/null
 +++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeReleaseShaders/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/shaders"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/release/shaders"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/shaders"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/release/shaders"/></dataSet></merger>
 \ No newline at end of file
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugAssets/merger.xml b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugAssets/merger.xml
 new file mode 100644
-index 0000000..3351504
+index 0000000..0a8cd4e
 --- /dev/null
 +++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugAssets/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/assets"/><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/shader_assets/debug/out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/debug/assets"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/assets"/><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/shader_assets/debug/out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/debug/assets"/></dataSet></merger>
 \ No newline at end of file
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
 new file mode 100644
-index 0000000..928cee6
+index 0000000..7df9976
 --- /dev/null
 +++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
 @@ -0,0 +1 @@
-+#Sat Aug 20 18:35:22 IST 2022
++#Thu Oct 27 14:41:15 IST 2022
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugResources/merger.xml b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugResources/merger.xml
 new file mode 100644
-index 0000000..445cf17
+index 0000000..79ecf8b
 --- /dev/null
 +++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugResources/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/res"/><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/rs/debug"/><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/res"/><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/rs/debug"/><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/debug/res"/></dataSet><mergedItems/></merger>
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/res"/><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/rs/debug"/><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/res"/><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/rs/debug"/><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/debug/res"/></dataSet><mergedItems/></merger>
 \ No newline at end of file
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageReleaseAssets/merger.xml b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageReleaseAssets/merger.xml
 new file mode 100644
-index 0000000..b7d63ad
+index 0000000..67b6dc4
 --- /dev/null
 +++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageReleaseAssets/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/assets"/><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/shader_assets/release/out"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/release/assets"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/assets"/><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/shader_assets/release/out"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/release/assets"/></dataSet></merger>
 \ No newline at end of file
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageReleaseResources/compile-file-map.properties b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageReleaseResources/compile-file-map.properties
 new file mode 100644
-index 0000000..6882bec
+index 0000000..be7c555
 --- /dev/null
 +++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageReleaseResources/compile-file-map.properties
 @@ -0,0 +1 @@
-+#Sat Aug 20 18:47:55 IST 2022
++#Thu Oct 27 16:19:16 IST 2022
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageReleaseResources/merger.xml b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageReleaseResources/merger.xml
 new file mode 100644
-index 0000000..f55e235
+index 0000000..a86a90f
 --- /dev/null
 +++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageReleaseResources/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/res"/><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/rs/release"/><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/resValues/release"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/res"/><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/rs/release"/><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/resValues/release"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="release$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/release/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="release" generated-set="release$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/release/res"/></dataSet><mergedItems/></merger>
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/res"/><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/rs/release"/><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/resValues/release"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/res"/><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/rs/release"/><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/resValues/release"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="release$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/release/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="release" generated-set="release$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/release/res"/></dataSet><mergedItems/></merger>
 \ No newline at end of file
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/BluetoothService$ConnectedThread.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/BluetoothService$ConnectedThread.class
 new file mode 100644
@@ -4161,7 +4184,7 @@ index 0000000..78ac5b8
 +local
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt
 new file mode 100644
-index 0000000..f8cba28
+index 0000000..9342b75
 --- /dev/null
 +++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt
 @@ -0,0 +1,24 @@
@@ -4171,27 +4194,27 @@ index 0000000..f8cba28
 +4
 +5    <uses-sdk
 +6        android:minSdkVersion="16"
-+6-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++6-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
 +7        android:targetSdkVersion="24" />
-+7-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++7-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
 +8
 +9    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-+9-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:5-74
-+9-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:22-71
++9-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:5-74
++9-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:22-71
 +10    <uses-permission android:name="android.permission.BLUETOOTH" />
-+10-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:5-68
-+10-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:22-65
++10-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:5-68
++10-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:22-65
 +11    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-+11-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:5-80
-+11-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:22-78
++11-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:5-80
++11-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:22-78
 +12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-+12-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:5-78
-+12-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:22-76
++12-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:5-78
++12-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:22-76
 +13
 +14</manifest>
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/manifest_merge_blame_file/release/manifest-merger-blame-release-report.txt b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/manifest_merge_blame_file/release/manifest-merger-blame-release-report.txt
 new file mode 100644
-index 0000000..f8cba28
+index 0000000..9342b75
 --- /dev/null
 +++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/manifest_merge_blame_file/release/manifest-merger-blame-release-report.txt
 @@ -0,0 +1,24 @@
@@ -4201,22 +4224,22 @@ index 0000000..f8cba28
 +4
 +5    <uses-sdk
 +6        android:minSdkVersion="16"
-+6-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++6-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
 +7        android:targetSdkVersion="24" />
-+7-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++7-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
 +8
 +9    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-+9-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:5-74
-+9-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:22-71
++9-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:5-74
++9-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:22-71
 +10    <uses-permission android:name="android.permission.BLUETOOTH" />
-+10-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:5-68
-+10-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:22-65
++10-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:5-68
++10-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:22-65
 +11    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-+11-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:5-80
-+11-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:22-78
++11-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:5-80
++11-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:22-78
 +12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-+12-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:5-78
-+12-->/Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:22-76
++12-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:5-78
++12-->/Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:22-76
 +13
 +14</manifest>
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml
@@ -7029,98 +7052,98 @@ index 0000000..5882162
 +xml rn_dev_preferences
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/outputs/logs/manifest-merger-debug-report.txt b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/outputs/logs/manifest-merger-debug-report.txt
 new file mode 100644
-index 0000000..ee236e5
+index 0000000..428c02b
 --- /dev/null
 +++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/outputs/logs/manifest-merger-debug-report.txt
 @@ -0,0 +1,41 @@
 +-- Merging decision tree log ---
 +manifest
-+ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:1-9:12
-+INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:1-9:12
-+INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:1-9:12
++ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:1-9:12
++INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:1-9:12
++INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:1-9:12
 +	package
-+		ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:3:11-42
-+		INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
-+		INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:3:11-42
++		INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
 +	xmlns:android
-+		ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:11-69
++		ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:11-69
 +uses-permission#android.permission.BLUETOOTH_ADMIN
-+ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:5-74
++ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:5-74
 +	android:name
-+		ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:22-71
++		ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:22-71
 +uses-permission#android.permission.BLUETOOTH
-+ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:5-68
++ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:5-68
 +	android:name
-+		ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:22-65
++		ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:22-65
 +uses-permission#android.permission.ACCESS_COARSE_LOCATION
-+ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:5-80
++ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:5-80
 +	android:name
-+		ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:22-78
++		ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:22-78
 +uses-permission#android.permission.ACCESS_FINE_LOCATION
-+ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:5-78
++ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:5-78
 +	android:name
-+		ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:22-76
++		ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:22-76
 +uses-sdk
-+INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
-+INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
-+INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
-+INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
-+INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
++INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
 +	android:targetSdkVersion
-+		INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
-+		ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
-+		INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
 +	android:minSdkVersion
-+		INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
-+		ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
-+		INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/outputs/logs/manifest-merger-release-report.txt b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/outputs/logs/manifest-merger-release-report.txt
 new file mode 100644
-index 0000000..ee236e5
+index 0000000..428c02b
 --- /dev/null
 +++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/outputs/logs/manifest-merger-release-report.txt
 @@ -0,0 +1,41 @@
 +-- Merging decision tree log ---
 +manifest
-+ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:1-9:12
-+INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:1-9:12
-+INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:1-9:12
++ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:1-9:12
++INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:1-9:12
++INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:1-9:12
 +	package
-+		ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:3:11-42
-+		INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
-+		INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:3:11-42
++		INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
 +	xmlns:android
-+		ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:11-69
++		ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:11-69
 +uses-permission#android.permission.BLUETOOTH_ADMIN
-+ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:5-74
++ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:5-74
 +	android:name
-+		ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:22-71
++		ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:22-71
 +uses-permission#android.permission.BLUETOOTH
-+ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:5-68
++ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:5-68
 +	android:name
-+		ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:22-65
++		ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:22-65
 +uses-permission#android.permission.ACCESS_COARSE_LOCATION
-+ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:5-80
++ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:5-80
 +	android:name
-+		ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:22-78
++		ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:22-78
 +uses-permission#android.permission.ACCESS_FINE_LOCATION
-+ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:5-78
++ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:5-78
 +	android:name
-+		ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:22-76
++		ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:22-76
 +uses-sdk
-+INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
-+INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
-+INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
-+INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
-+INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
++INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
 +	android:targetSdkVersion
-+		INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
-+		ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
-+		INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
 +	android:minSdkVersion
-+		INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
-+		ADDED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
-+		INJECTED from /Users/cbl-mac-033/Desktop/ReactNative/RoyoORders/Royo Orders 2 React Native/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		ADDED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/grj/Desktop/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
 diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/tmp/compileDebugJavaWithJavac/source-classes-mapping.txt b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/tmp/compileDebugJavaWithJavac/source-classes-mapping.txt
 new file mode 100644
 index 0000000..b000f0f
