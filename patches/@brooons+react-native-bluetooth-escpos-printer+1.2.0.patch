@@ -1,178 +1,77 @@
-diff --git a/node_modules/react-native-reanimated/android/.cxx/abi_configuration_37435m56.json b/node_modules/react-native-reanimated/android/.cxx/abi_configuration_37435m56.json
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/RNBluetoothEscposPrinter.podspec b/node_modules/@brooons/react-native-bluetooth-escpos-printer/RNBluetoothEscposPrinter.podspec
 new file mode 100644
-index 0000000..e542dae
+index 0000000..ce38974
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/.cxx/abi_configuration_37435m56.json
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/RNBluetoothEscposPrinter.podspec
 @@ -0,0 +1,14 @@
-+{
-+  "allAbis": [
-+    "armeabi-v7a",
-+    "arm64-v8a",
-+    "x86",
-+    "x86_64"
-+  ],
-+  "validAbis": [
-+    "ARMEABI_V7A",
-+    "ARM64_V8A",
-+    "X86",
-+    "X86_64"
-+  ]
-+}
++require “json”
++package = JSON.parse(File.read(File.join(__dir__, “package.json”)))
++Pod::Spec.new do |s|
++s.name = “RNBluetoothEscposPrinter”
++s.version = package[“version”]
++s.summary = package[“description”]
++s.author = broons
++s.homepage = ‘https://github.com/januslo/react-native-bluetooth-escpos-printer&#8217;
++s.license = package[“license”]
++s.platform = :ios, “11.0”
++s.source = { :git => “https://github.com/januslo/react-native-bluetooth-escpos-printer&#8221;, :tag => “#{s.version}” }
++s.source_files = “ios/**/*.{h,m}”
++s.dependency “React”
++end
 \ No newline at end of file
-diff --git a/node_modules/react-native-reanimated/android/.cxx/abi_configuration_37435m56.log b/node_modules/react-native-reanimated/android/.cxx/abi_configuration_37435m56.log
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/169a2a0e7eaf096222fbc1dbefe24eaa.bin b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/169a2a0e7eaf096222fbc1dbefe24eaa.bin
 new file mode 100644
-index 0000000..0637a08
+index 0000000..0d259dd
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/.cxx/abi_configuration_37435m56.log
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/169a2a0e7eaf096222fbc1dbefe24eaa.bin
 @@ -0,0 +1 @@
-+[]
-\ No newline at end of file
-diff --git a/node_modules/react-native-reanimated/android/.cxx/abi_configuration_37435m56_key.json b/node_modules/react-native-reanimated/android/.cxx/abi_configuration_37435m56_key.json
++o/classes
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/169a2a0e7eaf096222fbc1dbefe24eaa/classes/classes.dex b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/169a2a0e7eaf096222fbc1dbefe24eaa/classes/classes.dex
 new file mode 100644
-index 0000000..a444d81
---- /dev/null
-+++ b/node_modules/react-native-reanimated/android/.cxx/abi_configuration_37435m56_key.json
-@@ -0,0 +1,23 @@
-+{
-+  "ndkHandlerSupportedAbis": [
-+    "ARMEABI_V7A",
-+    "ARM64_V8A",
-+    "X86",
-+    "X86_64"
-+  ],
-+  "ndkHandlerDefaultAbis": [
-+    "ARMEABI_V7A",
-+    "ARM64_V8A",
-+    "X86",
-+    "X86_64"
-+  ],
-+  "externalNativeBuildAbiFilters": [
-+    "x86_64",
-+    "x86",
-+    "armeabi-v7a",
-+    "arm64-v8a"
-+  ],
-+  "ndkConfigAbiFilters": [],
-+  "splitsFilterAbis": [],
-+  "ideBuildOnlyTargetAbi": true
-+}
-\ No newline at end of file
-diff --git a/node_modules/react-native-reanimated/android/.cxx/ndk_locator_record_2h4b262l.json b/node_modules/react-native-reanimated/android/.cxx/ndk_locator_record_2h4b262l.json
+index 0000000..1654abc
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/.transforms/169a2a0e7eaf096222fbc1dbefe24eaa/classes/classes.dex differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/source/buildConfig/debug/cn/jystudio/bluetooth/BuildConfig.java b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/source/buildConfig/debug/cn/jystudio/bluetooth/BuildConfig.java
 new file mode 100644
-index 0000000..e15501c
+index 0000000..81aa281
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/.cxx/ndk_locator_record_2h4b262l.json
-@@ -0,0 +1,11 @@
-+{
-+  "ndk": "/Users/pavansharma/Library/Android/sdk/ndk/21.4.7075529",
-+  "revision": {
-+    "mMajor": 21,
-+    "mMinor": 4,
-+    "mMicro": 7075529,
-+    "mPreview": 0,
-+    "mPrecision": "MICRO",
-+    "mPreviewSeparator": " "
-+  }
-+}
-\ No newline at end of file
-diff --git a/node_modules/react-native-reanimated/android/.cxx/ndk_locator_record_2h4b262l.log b/node_modules/react-native-reanimated/android/.cxx/ndk_locator_record_2h4b262l.log
-new file mode 100644
-index 0000000..95c3d31
---- /dev/null
-+++ b/node_modules/react-native-reanimated/android/.cxx/ndk_locator_record_2h4b262l.log
-@@ -0,0 +1,32 @@
-+[
-+  {
-+    "level": "INFO",
-+    "message": "android.ndkVersion from module build.gradle is [not set]",
-+    "diagnosticCode": "UNKNOWN"
-+  },
-+  {
-+    "level": "INFO",
-+    "message": "android.ndkPath from module build.gradle is not set",
-+    "diagnosticCode": "UNKNOWN"
-+  },
-+  {
-+    "level": "INFO",
-+    "message": "ndk.dir in local.properties is not set",
-+    "diagnosticCode": "UNKNOWN"
-+  },
-+  {
-+    "level": "INFO",
-+    "message": "Not considering ANDROID_NDK_HOME because support was removed after deprecation period.",
-+    "diagnosticCode": "UNKNOWN"
-+  },
-+  {
-+    "level": "INFO",
-+    "message": "sdkFolder is /Users/pavansharma/Library/Android/sdk",
-+    "diagnosticCode": "UNKNOWN"
-+  },
-+  {
-+    "level": "INFO",
-+    "message": "Because no explicit NDK was requested, the default version [21.4.7075529] for this Android Gradle Plugin will be used",
-+    "diagnosticCode": "UNKNOWN"
-+  }
-+]
-\ No newline at end of file
-diff --git a/node_modules/react-native-reanimated/android/.cxx/ndk_locator_record_2h4b262l_key.json b/node_modules/react-native-reanimated/android/.cxx/ndk_locator_record_2h4b262l_key.json
-new file mode 100644
-index 0000000..5aaea94
---- /dev/null
-+++ b/node_modules/react-native-reanimated/android/.cxx/ndk_locator_record_2h4b262l_key.json
-@@ -0,0 +1,7 @@
-+{
-+  "sdkFolder": "/Users/pavansharma/Library/Android/sdk",
-+  "sideBySideNdkFolderNames": [
-+    "21.4.7075529",
-+    "25.1.8937393"
-+  ]
-+}
-\ No newline at end of file
-diff --git a/node_modules/react-native-reanimated/android/build/generated/source/buildConfig/release/com/swmansion/reanimated/BuildConfig.java b/node_modules/react-native-reanimated/android/build/generated/source/buildConfig/release/com/swmansion/reanimated/BuildConfig.java
-new file mode 100644
-index 0000000..5141e9e
---- /dev/null
-+++ b/node_modules/react-native-reanimated/android/build/generated/source/buildConfig/release/com/swmansion/reanimated/BuildConfig.java
-@@ -0,0 +1,18 @@
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/source/buildConfig/debug/cn/jystudio/bluetooth/BuildConfig.java
+@@ -0,0 +1,10 @@
 +/**
 + * Automatically generated file. DO NOT MODIFY
 + */
-+package com.swmansion.reanimated;
++package cn.jystudio.bluetooth;
 +
 +public final class BuildConfig {
-+  public static final boolean DEBUG = false;
-+  public static final String LIBRARY_PACKAGE_NAME = "com.swmansion.reanimated";
-+  public static final String BUILD_TYPE = "release";
-+  // Field from default config.
-+  public static final int EXOPACKAGE_FLAGS = 0;
-+  // Field from default config.
-+  public static final boolean IS_INTERNAL_BUILD = false;
-+  // Field from default config.
-+  public static final boolean IS_NEW_ARCHITECTURE_ENABLED = false;
-+  // Field from default config.
-+  public static final int REACT_NATIVE_VERSION = 63;
++  public static final boolean DEBUG = Boolean.parseBoolean("true");
++  public static final String LIBRARY_PACKAGE_NAME = "cn.jystudio.bluetooth";
++  public static final String BUILD_TYPE = "debug";
 +}
-diff --git a/node_modules/react-native-reanimated/android/build/intermediates/aapt_friendly_merged_manifests/release/aapt/AndroidManifest.xml b/node_modules/react-native-reanimated/android/build/intermediates/aapt_friendly_merged_manifests/release/aapt/AndroidManifest.xml
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/AndroidManifest.xml b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/AndroidManifest.xml
 new file mode 100644
-index 0000000..8d24fa6
+index 0000000..ca0f3b4
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/build/intermediates/aapt_friendly_merged_manifests/release/aapt/AndroidManifest.xml
-@@ -0,0 +1,9 @@
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/AndroidManifest.xml
+@@ -0,0 +1,14 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-+    package="com.swmansion.reanimated" >
++    package="cn.jystudio.bluetooth" >
 +
 +    <uses-sdk
-+        android:minSdkVersion="21"
-+        android:targetSdkVersion="31" />
++        android:minSdkVersion="16"
++        android:targetSdkVersion="24" />
++
++    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
++    <uses-permission android:name="android.permission.BLUETOOTH" />
++    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
++    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 +
 +</manifest>
 \ No newline at end of file
-diff --git a/node_modules/react-native-reanimated/android/build/intermediates/aapt_friendly_merged_manifests/release/aapt/output-metadata.json b/node_modules/react-native-reanimated/android/build/intermediates/aapt_friendly_merged_manifests/release/aapt/output-metadata.json
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/output-metadata.json b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/output-metadata.json
 new file mode 100644
-index 0000000..439d695
+index 0000000..9cd7b4a
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/build/intermediates/aapt_friendly_merged_manifests/release/aapt/output-metadata.json
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/output-metadata.json
 @@ -0,0 +1,16 @@
 +{
 +  "version": 2,
@@ -180,8 +79,8 @@ index 0000000..439d695
 +    "type": "AAPT_FRIENDLY_MERGED_MANIFESTS",
 +    "kind": "Directory"
 +  },
-+  "applicationId": "com.swmansion.reanimated",
-+  "variantName": "release",
++  "applicationId": "cn.jystudio.bluetooth",
++  "variantName": "debug",
 +  "elements": [
 +    {
 +      "type": "SINGLE",
@@ -191,32 +90,32 @@ index 0000000..439d695
 +  ]
 +}
 \ No newline at end of file
-diff --git a/node_modules/react-native-reanimated/android/build/intermediates/aar_metadata/release/aar-metadata.properties b/node_modules/react-native-reanimated/android/build/intermediates/aar_metadata/release/aar-metadata.properties
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/aar_metadata/debug/aar-metadata.properties b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/aar_metadata/debug/aar-metadata.properties
 new file mode 100644
 index 0000000..d8560bd
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/build/intermediates/aar_metadata/release/aar-metadata.properties
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/aar_metadata/debug/aar-metadata.properties
 @@ -0,0 +1,2 @@
 +aarFormatVersion=1.0
 +aarMetadataVersion=1.0
-diff --git a/node_modules/react-native-reanimated/android/build/intermediates/annotation_processor_list/release/annotationProcessors.json b/node_modules/react-native-reanimated/android/build/intermediates/annotation_processor_list/release/annotationProcessors.json
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/examples/.watchmanconfig b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/annotation_processor_list/debug/annotationProcessors.json
+similarity index 100%
+rename from node_modules/@brooons/react-native-bluetooth-escpos-printer/examples/.watchmanconfig
+rename to node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/annotation_processor_list/debug/annotationProcessors.json
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/compile_library_classes_jar/debug/classes.jar b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/compile_library_classes_jar/debug/classes.jar
 new file mode 100644
-index 0000000..9e26dfe
+index 0000000..5da8cdb
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/compile_library_classes_jar/debug/classes.jar differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/compile_r_class_jar/debug/R.jar b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/compile_r_class_jar/debug/R.jar
+new file mode 100644
+index 0000000..8508860
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/compile_r_class_jar/debug/R.jar differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/compile_symbol_list/debug/R.txt b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/compile_symbol_list/debug/R.txt
+new file mode 100644
+index 0000000..7154626
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/build/intermediates/annotation_processor_list/release/annotationProcessors.json
-@@ -0,0 +1 @@
-+{}
-\ No newline at end of file
-diff --git a/node_modules/react-native-reanimated/android/build/intermediates/compile_r_class_jar/release/R.jar b/node_modules/react-native-reanimated/android/build/intermediates/compile_r_class_jar/release/R.jar
-new file mode 100644
-index 0000000..9f5cfa9
-Binary files /dev/null and b/node_modules/react-native-reanimated/android/build/intermediates/compile_r_class_jar/release/R.jar differ
-diff --git a/node_modules/react-native-reanimated/android/build/intermediates/compile_symbol_list/release/R.txt b/node_modules/react-native-reanimated/android/build/intermediates/compile_symbol_list/release/R.txt
-new file mode 100644
-index 0000000..81234c8
---- /dev/null
-+++ b/node_modules/react-native-reanimated/android/build/intermediates/compile_symbol_list/release/R.txt
-@@ -0,0 +1,1857 @@
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/compile_symbol_list/debug/R.txt
+@@ -0,0 +1,1816 @@
 +int anim abc_fade_in 0x0
 +int anim abc_fade_out 0x0
 +int anim abc_grow_fade_in_from_bottom 0x0
@@ -365,7 +264,6 @@ index 0000000..81234c8
 +int attr fontProviderFetchTimeout 0x0
 +int attr fontProviderPackage 0x0
 +int attr fontProviderQuery 0x0
-+int attr fontProviderSystemFontFamily 0x0
 +int attr fontStyle 0x0
 +int attr fontVariationSettings 0x0
 +int attr fontWeight 0x0
@@ -413,7 +311,6 @@ index 0000000..81234c8
 +int attr navigationContentDescription 0x0
 +int attr navigationIcon 0x0
 +int attr navigationMode 0x0
-+int attr nestedScrollViewStyle 0x0
 +int attr numericModifiers 0x0
 +int attr overlapAnchor 0x0
 +int attr overlayImage 0x0
@@ -438,7 +335,6 @@ index 0000000..81234c8
 +int attr progressBarStyle 0x0
 +int attr queryBackground 0x0
 +int attr queryHint 0x0
-+int attr queryPatterns 0x0
 +int attr radioButtonStyle 0x0
 +int attr ratingBarStyle 0x0
 +int attr ratingBarStyleIndicator 0x0
@@ -465,7 +361,6 @@ index 0000000..81234c8
 +int attr seekBarStyle 0x0
 +int attr selectableItemBackground 0x0
 +int attr selectableItemBackgroundBorderless 0x0
-+int attr shortcutMatchRequired 0x0
 +int attr showAsAction 0x0
 +int attr showDividers 0x0
 +int attr showText 0x0
@@ -571,8 +466,6 @@ index 0000000..81234c8
 +int color abc_tint_switch_track 0x0
 +int color accent_material_dark 0x0
 +int color accent_material_light 0x0
-+int color androidx_core_ripple_material_light 0x0
-+int color androidx_core_secondary_text_default_material_light 0x0
 +int color background_floating_material_dark 0x0
 +int color background_floating_material_light 0x0
 +int color background_material_dark 0x0
@@ -611,6 +504,7 @@ index 0000000..81234c8
 +int color material_grey_900 0x0
 +int color notification_action_color_filter 0x0
 +int color notification_icon_bg_color 0x0
++int color notification_material_background_media_default_color 0x0
 +int color primary_dark_material_dark 0x0
 +int color primary_dark_material_light 0x0
 +int color primary_material_dark 0x0
@@ -739,6 +633,10 @@ index 0000000..81234c8
 +int dimen notification_subtext_size 0x0
 +int dimen notification_top_pad 0x0
 +int dimen notification_top_pad_large_text 0x0
++int dimen subtitle_corner_radius 0x0
++int dimen subtitle_outline_width 0x0
++int dimen subtitle_shadow_offset 0x0
++int dimen subtitle_shadow_radius 0x0
 +int dimen tooltip_corner_radius 0x0
 +int dimen tooltip_horizontal_padding 0x0
 +int dimen tooltip_margin 0x0
@@ -846,45 +744,13 @@ index 0000000..81234c8
 +int drawable redbox_top_border_background 0x0
 +int drawable tooltip_frame_dark 0x0
 +int drawable tooltip_frame_light 0x0
-+int id accessibility_action_clickable_span 0x0
 +int id accessibility_actions 0x0
-+int id accessibility_custom_action_0 0x0
-+int id accessibility_custom_action_1 0x0
-+int id accessibility_custom_action_10 0x0
-+int id accessibility_custom_action_11 0x0
-+int id accessibility_custom_action_12 0x0
-+int id accessibility_custom_action_13 0x0
-+int id accessibility_custom_action_14 0x0
-+int id accessibility_custom_action_15 0x0
-+int id accessibility_custom_action_16 0x0
-+int id accessibility_custom_action_17 0x0
-+int id accessibility_custom_action_18 0x0
-+int id accessibility_custom_action_19 0x0
-+int id accessibility_custom_action_2 0x0
-+int id accessibility_custom_action_20 0x0
-+int id accessibility_custom_action_21 0x0
-+int id accessibility_custom_action_22 0x0
-+int id accessibility_custom_action_23 0x0
-+int id accessibility_custom_action_24 0x0
-+int id accessibility_custom_action_25 0x0
-+int id accessibility_custom_action_26 0x0
-+int id accessibility_custom_action_27 0x0
-+int id accessibility_custom_action_28 0x0
-+int id accessibility_custom_action_29 0x0
-+int id accessibility_custom_action_3 0x0
-+int id accessibility_custom_action_30 0x0
-+int id accessibility_custom_action_31 0x0
-+int id accessibility_custom_action_4 0x0
-+int id accessibility_custom_action_5 0x0
-+int id accessibility_custom_action_6 0x0
-+int id accessibility_custom_action_7 0x0
-+int id accessibility_custom_action_8 0x0
-+int id accessibility_custom_action_9 0x0
 +int id accessibility_hint 0x0
 +int id accessibility_label 0x0
 +int id accessibility_role 0x0
 +int id accessibility_state 0x0
 +int id accessibility_value 0x0
++int id action0 0x0
 +int id action_bar 0x0
 +int id action_bar_activity_content 0x0
 +int id action_bar_container 0x0
@@ -910,6 +776,7 @@ index 0000000..81234c8
 +int id blocking 0x0
 +int id bottom 0x0
 +int id buttonPanel 0x0
++int id cancel_action 0x0
 +int id catalyst_redbox_title 0x0
 +int id center 0x0
 +int id centerCrop 0x0
@@ -922,9 +789,9 @@ index 0000000..81234c8
 +int id customPanel 0x0
 +int id decor_content_parent 0x0
 +int id default_activity_button 0x0
-+int id dialog_button 0x0
 +int id edit_query 0x0
 +int id end 0x0
++int id end_padder 0x0
 +int id expand_activities_button 0x0
 +int id expanded_menu 0x0
 +int id fitBottomStart 0x0
@@ -935,8 +802,6 @@ index 0000000..81234c8
 +int id focusCrop 0x0
 +int id forever 0x0
 +int id fps_text 0x0
-+int id ghost_view 0x0
-+int id ghost_view_holder 0x0
 +int id group_divider 0x0
 +int id home 0x0
 +int id icon 0x0
@@ -949,6 +814,7 @@ index 0000000..81234c8
 +int id line3 0x0
 +int id listMode 0x0
 +int id list_item 0x0
++int id media_actions 0x0
 +int id message 0x0
 +int id multiply 0x0
 +int id none 0x0
@@ -957,7 +823,6 @@ index 0000000..81234c8
 +int id notification_main_column 0x0
 +int id notification_main_column_container 0x0
 +int id parentPanel 0x0
-+int id parent_matrix 0x0
 +int id progress_circular 0x0
 +int id progress_horizontal 0x0
 +int id radio 0x0
@@ -974,8 +839,6 @@ index 0000000..81234c8
 +int id rn_redbox_report_button 0x0
 +int id rn_redbox_report_label 0x0
 +int id rn_redbox_stack 0x0
-+int id save_non_transition_alpha 0x0
-+int id save_overlay_view 0x0
 +int id screen 0x0
 +int id scrollIndicatorDown 0x0
 +int id scrollIndicatorUp 0x0
@@ -998,22 +861,13 @@ index 0000000..81234c8
 +int id src_in 0x0
 +int id src_over 0x0
 +int id start 0x0
++int id status_bar_latest_event_content 0x0
 +int id submenuarrow 0x0
 +int id submit_area 0x0
 +int id tabMode 0x0
-+int id tag_accessibility_actions 0x0
-+int id tag_accessibility_clickable_spans 0x0
-+int id tag_accessibility_heading 0x0
-+int id tag_accessibility_pane_title 0x0
-+int id tag_on_apply_window_listener 0x0
-+int id tag_on_receive_content_listener 0x0
-+int id tag_on_receive_content_mime_types 0x0
-+int id tag_screen_reader_focusable 0x0
-+int id tag_state_description 0x0
 +int id tag_transition_group 0x0
 +int id tag_unhandled_key_event_manager 0x0
 +int id tag_unhandled_key_listeners 0x0
-+int id tag_window_insets_animation_callback 0x0
 +int id text 0x0
 +int id text2 0x0
 +int id textSpacerNoButtons 0x0
@@ -1024,11 +878,6 @@ index 0000000..81234c8
 +int id title_template 0x0
 +int id top 0x0
 +int id topPanel 0x0
-+int id transition_current_scene 0x0
-+int id transition_layout_save 0x0
-+int id transition_position 0x0
-+int id transition_scene_layoutid_cache 0x0
-+int id transition_transform 0x0
 +int id uniform 0x0
 +int id up 0x0
 +int id view_tag_instance_handle 0x0
@@ -1069,13 +918,21 @@ index 0000000..81234c8
 +int layout abc_search_view 0x0
 +int layout abc_select_dialog_material 0x0
 +int layout abc_tooltip 0x0
-+int layout custom_dialog 0x0
 +int layout dev_loading_view 0x0
 +int layout fps_view 0x0
 +int layout notification_action 0x0
 +int layout notification_action_tombstone 0x0
++int layout notification_media_action 0x0
++int layout notification_media_cancel_action 0x0
++int layout notification_template_big_media 0x0
++int layout notification_template_big_media_custom 0x0
++int layout notification_template_big_media_narrow 0x0
++int layout notification_template_big_media_narrow_custom 0x0
 +int layout notification_template_custom_big 0x0
 +int layout notification_template_icon_group 0x0
++int layout notification_template_lines_media 0x0
++int layout notification_template_media 0x0
++int layout notification_template_media_custom 0x0
 +int layout notification_template_part_chronometer 0x0
 +int layout notification_template_part_time 0x0
 +int layout redbox_item_frame 0x0
@@ -1429,9 +1286,14 @@ index 0000000..81234c8
 +int style TextAppearance_AppCompat_Widget_TextView_SpinnerItem 0x0
 +int style TextAppearance_Compat_Notification 0x0
 +int style TextAppearance_Compat_Notification_Info 0x0
++int style TextAppearance_Compat_Notification_Info_Media 0x0
 +int style TextAppearance_Compat_Notification_Line2 0x0
++int style TextAppearance_Compat_Notification_Line2_Media 0x0
++int style TextAppearance_Compat_Notification_Media 0x0
 +int style TextAppearance_Compat_Notification_Time 0x0
++int style TextAppearance_Compat_Notification_Time_Media 0x0
 +int style TextAppearance_Compat_Notification_Title 0x0
++int style TextAppearance_Compat_Notification_Title_Media 0x0
 +int style TextAppearance_Widget_AppCompat_ExpandedMenu_Item 0x0
 +int style TextAppearance_Widget_AppCompat_Toolbar_Subtitle 0x0
 +int style TextAppearance_Widget_AppCompat_Toolbar_Title 0x0
@@ -1771,9 +1633,6 @@ index 0000000..81234c8
 +int styleable AppCompatTheme_windowNoTitle 120
 +int[] styleable ButtonBarLayout { 0x0 }
 +int styleable ButtonBarLayout_allowStacking 0
-+int[] styleable Capability { 0x0, 0x0 }
-+int styleable Capability_queryPatterns 0
-+int styleable Capability_shortcutMatchRequired 1
 +int[] styleable ColorStateListItem { 0x0, 0x101031f, 0x10101a5 }
 +int styleable ColorStateListItem_alpha 0
 +int styleable ColorStateListItem_android_alpha 1
@@ -1802,14 +1661,13 @@ index 0000000..81234c8
 +int styleable DrawerArrowToggle_gapBetweenBars 5
 +int styleable DrawerArrowToggle_spinBars 6
 +int styleable DrawerArrowToggle_thickness 7
-+int[] styleable FontFamily { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
++int[] styleable FontFamily { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
 +int styleable FontFamily_fontProviderAuthority 0
 +int styleable FontFamily_fontProviderCerts 1
 +int styleable FontFamily_fontProviderFetchStrategy 2
 +int styleable FontFamily_fontProviderFetchTimeout 3
 +int styleable FontFamily_fontProviderPackage 4
 +int styleable FontFamily_fontProviderQuery 5
-+int styleable FontFamily_fontProviderSystemFontFamily 6
 +int[] styleable FontFamilyFont { 0x1010532, 0x101053f, 0x1010570, 0x1010533, 0x101056f, 0x0, 0x0, 0x0, 0x0, 0x0 }
 +int styleable FontFamilyFont_android_font 0
 +int styleable FontFamilyFont_android_fontStyle 1
@@ -2074,94 +1932,229 @@ index 0000000..81234c8
 +int styleable ViewStubCompat_android_inflatedId 1
 +int styleable ViewStubCompat_android_layout 2
 +int xml rn_dev_preferences 0x0
-diff --git a/node_modules/react-native-reanimated/android/build/intermediates/incremental/mergeReleaseShaders/merger.xml b/node_modules/react-native-reanimated/android/build/intermediates/incremental/mergeReleaseShaders/merger.xml
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
 new file mode 100644
-index 0000000..ce5e7ed
+index 0000000..88e5821
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/build/intermediates/incremental/mergeReleaseShaders/merger.xml
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/shaders"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/release/shaders"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/jniLibs"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/debug/jniLibs"/></dataSet></merger>
 \ No newline at end of file
-diff --git a/node_modules/react-native-reanimated/android/build/intermediates/incremental/packageReleaseAssets/merger.xml b/node_modules/react-native-reanimated/android/build/intermediates/incremental/packageReleaseAssets/merger.xml
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeDebugShaders/merger.xml b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
 new file mode 100644
-index 0000000..cf6c6db
+index 0000000..cb84c00
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/build/intermediates/incremental/packageReleaseAssets/merger.xml
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/assets"/><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/build/intermediates/shader_assets/release/out"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/release/assets"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/debug/shaders"/></dataSet></merger>
 \ No newline at end of file
-diff --git a/node_modules/react-native-reanimated/android/build/intermediates/incremental/packageReleaseResources/compile-file-map.properties b/node_modules/react-native-reanimated/android/build/intermediates/incremental/packageReleaseResources/compile-file-map.properties
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugAssets/merger.xml b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugAssets/merger.xml
 new file mode 100644
-index 0000000..f626a13
+index 0000000..70a1bb8
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/build/intermediates/incremental/packageReleaseResources/compile-file-map.properties
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugAssets/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/assets"/><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/shader_assets/debug/out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/debug/assets"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
+new file mode 100644
+index 0000000..6a7775a
+--- /dev/null
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
 @@ -0,0 +1 @@
-+#Thu Oct 06 13:19:58 IST 2022
-diff --git a/node_modules/react-native-reanimated/android/build/intermediates/incremental/packageReleaseResources/merger.xml b/node_modules/react-native-reanimated/android/build/intermediates/incremental/packageReleaseResources/merger.xml
++#Thu Oct 27 07:50:54 IST 2022
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugResources/merger.xml b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugResources/merger.xml
 new file mode 100644
-index 0000000..f686342
+index 0000000..ad83def
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/build/intermediates/incremental/packageReleaseResources/merger.xml
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/incremental/packageDebugResources/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/res"/><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/build/generated/res/rs/release"/><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/build/generated/res/resValues/release"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/res"/><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/build/generated/res/rs/release"/><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/build/generated/res/resValues/release"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="release$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/release/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="release" generated-set="release$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/release/res"/></dataSet><mergedItems/></merger>
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/res"/><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/rs/debug"/><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/res"/><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/rs/debug"/><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/debug/res"/></dataSet><mergedItems/></merger>
 \ No newline at end of file
-diff --git a/node_modules/react-native-reanimated/android/build/intermediates/local_only_symbol_list/release/R-def.txt b/node_modules/react-native-reanimated/android/build/intermediates/local_only_symbol_list/release/R-def.txt
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/BluetoothService$ConnectedThread.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/BluetoothService$ConnectedThread.class
+new file mode 100644
+index 0000000..6d9647f
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/BluetoothService$ConnectedThread.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/BluetoothService.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/BluetoothService.class
+new file mode 100644
+index 0000000..aacb7ef
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/BluetoothService.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/BluetoothServiceStateObserver.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/BluetoothServiceStateObserver.class
+new file mode 100644
+index 0000000..acfe99a
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/BluetoothServiceStateObserver.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/BuildConfig.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/BuildConfig.class
+new file mode 100644
+index 0000000..7962725
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/BuildConfig.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/RNBluetoothEscposPrinterPackage.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/RNBluetoothEscposPrinterPackage.class
+new file mode 100644
+index 0000000..f1c3a24
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/RNBluetoothEscposPrinterPackage.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/RNBluetoothManagerModule$1.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/RNBluetoothManagerModule$1.class
+new file mode 100644
+index 0000000..4af26b1
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/RNBluetoothManagerModule$1.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/RNBluetoothManagerModule.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/RNBluetoothManagerModule.class
+new file mode 100644
+index 0000000..458b5d6
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/RNBluetoothManagerModule.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/escpos/RNBluetoothEscposPrinterModule$ColumnSplitedString.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/escpos/RNBluetoothEscposPrinterModule$ColumnSplitedString.class
+new file mode 100644
+index 0000000..42e147e
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/escpos/RNBluetoothEscposPrinterModule$ColumnSplitedString.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/escpos/RNBluetoothEscposPrinterModule.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/escpos/RNBluetoothEscposPrinterModule.class
+new file mode 100644
+index 0000000..13a5df0
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/escpos/RNBluetoothEscposPrinterModule.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/escpos/command/sdk/Command.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/escpos/command/sdk/Command.class
+new file mode 100644
+index 0000000..373728d
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/escpos/command/sdk/Command.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/escpos/command/sdk/PrintPicture.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/escpos/command/sdk/PrintPicture.class
+new file mode 100644
+index 0000000..115a50d
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/escpos/command/sdk/PrintPicture.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/escpos/command/sdk/PrinterCommand.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/escpos/command/sdk/PrinterCommand.class
+new file mode 100644
+index 0000000..4853ecb
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/escpos/command/sdk/PrinterCommand.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/RNBluetoothTscPrinterModule.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/RNBluetoothTscPrinterModule.class
+new file mode 100644
+index 0000000..4123770
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/RNBluetoothTscPrinterModule.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$BARCODETYPE.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$BARCODETYPE.class
+new file mode 100644
+index 0000000..663142e
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$BARCODETYPE.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$BITMAP_MODE.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$BITMAP_MODE.class
+new file mode 100644
+index 0000000..9f4f803
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$BITMAP_MODE.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$CODEPAGE.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$CODEPAGE.class
+new file mode 100644
+index 0000000..053e328
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$CODEPAGE.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$DENSITY.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$DENSITY.class
+new file mode 100644
+index 0000000..34f81a6
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$DENSITY.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$DIRECTION.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$DIRECTION.class
+new file mode 100644
+index 0000000..97b9e26
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$DIRECTION.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$EEC.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$EEC.class
+new file mode 100644
+index 0000000..0d5e874
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$EEC.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$ENABLE.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$ENABLE.class
+new file mode 100644
+index 0000000..48b2d34
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$ENABLE.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$FONTMUL.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$FONTMUL.class
+new file mode 100644
+index 0000000..ce967ad
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$FONTMUL.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$FONTTYPE.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$FONTTYPE.class
+new file mode 100644
+index 0000000..7c2f293
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$FONTTYPE.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$FOOT.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$FOOT.class
+new file mode 100644
+index 0000000..961f797
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$FOOT.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$READABLE.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$READABLE.class
+new file mode 100644
+index 0000000..4508456
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$READABLE.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$ROTATION.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$ROTATION.class
+new file mode 100644
+index 0000000..f157bbc
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$ROTATION.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$SPEED.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$SPEED.class
+new file mode 100644
+index 0000000..c98ce93
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand$SPEED.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand.class b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand.class
+new file mode 100644
+index 0000000..0c402de
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/javac/debug/classes/cn/jystudio/bluetooth/tsc/TscCommand.class differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/local_only_symbol_list/debug/R-def.txt b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/local_only_symbol_list/debug/R-def.txt
 new file mode 100644
 index 0000000..78ac5b8
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/build/intermediates/local_only_symbol_list/release/R-def.txt
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/local_only_symbol_list/debug/R-def.txt
 @@ -0,0 +1,2 @@
 +R_DEF: Internal format may change without notice
 +local
-diff --git a/node_modules/react-native-reanimated/android/build/intermediates/manifest_merge_blame_file/release/manifest-merger-blame-release-report.txt b/node_modules/react-native-reanimated/android/build/intermediates/manifest_merge_blame_file/release/manifest-merger-blame-release-report.txt
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt
 new file mode 100644
-index 0000000..7248a83
+index 0000000..7b0e54d
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/build/intermediates/manifest_merge_blame_file/release/manifest-merger-blame-release-report.txt
-@@ -0,0 +1,11 @@
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt
+@@ -0,0 +1,24 @@
 +1<?xml version="1.0" encoding="utf-8"?>
 +2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-+3    package="com.swmansion.reanimated" >
++3    package="cn.jystudio.bluetooth" >
 +4
 +5    <uses-sdk
-+6        android:minSdkVersion="21"
-+6-->/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml
-+7        android:targetSdkVersion="31" />
-+7-->/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml
++6        android:minSdkVersion="16"
++6-->/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++7        android:targetSdkVersion="24" />
++7-->/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
 +8
-+9</manifest>
-diff --git a/node_modules/react-native-reanimated/android/build/intermediates/merged_manifest/release/AndroidManifest.xml b/node_modules/react-native-reanimated/android/build/intermediates/merged_manifest/release/AndroidManifest.xml
++9    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
++9-->/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:5-74
++9-->/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:22-71
++10    <uses-permission android:name="android.permission.BLUETOOTH" />
++10-->/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:5-68
++10-->/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:22-65
++11    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
++11-->/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:5-80
++11-->/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:22-78
++12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
++12-->/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:5-78
++12-->/Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:22-76
++13
++14</manifest>
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml
 new file mode 100644
-index 0000000..8d24fa6
+index 0000000..ca0f3b4
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/build/intermediates/merged_manifest/release/AndroidManifest.xml
-@@ -0,0 +1,9 @@
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml
+@@ -0,0 +1,14 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-+    package="com.swmansion.reanimated" >
++    package="cn.jystudio.bluetooth" >
 +
 +    <uses-sdk
-+        android:minSdkVersion="21"
-+        android:targetSdkVersion="31" />
++        android:minSdkVersion="16"
++        android:targetSdkVersion="24" />
++
++    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
++    <uses-permission android:name="android.permission.BLUETOOTH" />
++    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
++    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 +
 +</manifest>
 \ No newline at end of file
-diff --git a/node_modules/react-native-reanimated/android/build/intermediates/navigation_json/release/navigation.json b/node_modules/react-native-reanimated/android/build/intermediates/navigation_json/release/navigation.json
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/navigation_json/debug/navigation.json b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/navigation_json/debug/navigation.json
 new file mode 100644
 index 0000000..0637a08
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/build/intermediates/navigation_json/release/navigation.json
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/navigation_json/debug/navigation.json
 @@ -0,0 +1 @@
 +[]
 \ No newline at end of file
-diff --git a/node_modules/react-native-reanimated/android/build/intermediates/packaged_manifests/release/output-metadata.json b/node_modules/react-native-reanimated/android/build/intermediates/packaged_manifests/release/output-metadata.json
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/packaged_manifests/debug/output-metadata.json b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/packaged_manifests/debug/output-metadata.json
 new file mode 100644
-index 0000000..fd93b65
+index 0000000..1119750
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/build/intermediates/packaged_manifests/release/output-metadata.json
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/packaged_manifests/debug/output-metadata.json
 @@ -0,0 +1,16 @@
 +{
 +  "version": 2,
@@ -2169,24 +2162,28 @@ index 0000000..fd93b65
 +    "type": "PACKAGED_MANIFESTS",
 +    "kind": "Directory"
 +  },
-+  "applicationId": "com.swmansion.reanimated",
-+  "variantName": "release",
++  "applicationId": "cn.jystudio.bluetooth",
++  "variantName": "debug",
 +  "elements": [
 +    {
 +      "type": "SINGLE",
 +      "filters": [],
-+      "outputFile": "../../merged_manifest/release/AndroidManifest.xml"
++      "outputFile": "../../merged_manifest/debug/AndroidManifest.xml"
 +    }
 +  ]
 +}
 \ No newline at end of file
-diff --git a/node_modules/react-native-reanimated/android/build/intermediates/symbol_list_with_package_name/release/package-aware-r.txt b/node_modules/react-native-reanimated/android/build/intermediates/symbol_list_with_package_name/release/package-aware-r.txt
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/runtime_library_classes_jar/debug/classes.jar b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/runtime_library_classes_jar/debug/classes.jar
 new file mode 100644
-index 0000000..3f30b0e
+index 0000000..90c269f
+Binary files /dev/null and b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/runtime_library_classes_jar/debug/classes.jar differ
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt
+new file mode 100644
+index 0000000..5882162
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/build/intermediates/symbol_list_with_package_name/release/package-aware-r.txt
-@@ -0,0 +1,1380 @@
-+com.swmansion.reanimated
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt
+@@ -0,0 +1,1342 @@
++cn.jystudio.bluetooth
 +anim abc_fade_in
 +anim abc_fade_out
 +anim abc_grow_fade_in_from_bottom
@@ -2335,7 +2332,6 @@ index 0000000..3f30b0e
 +attr fontProviderFetchTimeout
 +attr fontProviderPackage
 +attr fontProviderQuery
-+attr fontProviderSystemFontFamily
 +attr fontStyle
 +attr fontVariationSettings
 +attr fontWeight
@@ -2383,7 +2379,6 @@ index 0000000..3f30b0e
 +attr navigationContentDescription
 +attr navigationIcon
 +attr navigationMode
-+attr nestedScrollViewStyle
 +attr numericModifiers
 +attr overlapAnchor
 +attr overlayImage
@@ -2408,7 +2403,6 @@ index 0000000..3f30b0e
 +attr progressBarStyle
 +attr queryBackground
 +attr queryHint
-+attr queryPatterns
 +attr radioButtonStyle
 +attr ratingBarStyle
 +attr ratingBarStyleIndicator
@@ -2435,7 +2429,6 @@ index 0000000..3f30b0e
 +attr seekBarStyle
 +attr selectableItemBackground
 +attr selectableItemBackgroundBorderless
-+attr shortcutMatchRequired
 +attr showAsAction
 +attr showDividers
 +attr showText
@@ -2541,8 +2534,6 @@ index 0000000..3f30b0e
 +color abc_tint_switch_track
 +color accent_material_dark
 +color accent_material_light
-+color androidx_core_ripple_material_light
-+color androidx_core_secondary_text_default_material_light
 +color background_floating_material_dark
 +color background_floating_material_light
 +color background_material_dark
@@ -2581,6 +2572,7 @@ index 0000000..3f30b0e
 +color material_grey_900
 +color notification_action_color_filter
 +color notification_icon_bg_color
++color notification_material_background_media_default_color
 +color primary_dark_material_dark
 +color primary_dark_material_light
 +color primary_material_dark
@@ -2709,6 +2701,10 @@ index 0000000..3f30b0e
 +dimen notification_subtext_size
 +dimen notification_top_pad
 +dimen notification_top_pad_large_text
++dimen subtitle_corner_radius
++dimen subtitle_outline_width
++dimen subtitle_shadow_offset
++dimen subtitle_shadow_radius
 +dimen tooltip_corner_radius
 +dimen tooltip_horizontal_padding
 +dimen tooltip_margin
@@ -2816,45 +2812,13 @@ index 0000000..3f30b0e
 +drawable redbox_top_border_background
 +drawable tooltip_frame_dark
 +drawable tooltip_frame_light
-+id accessibility_action_clickable_span
 +id accessibility_actions
-+id accessibility_custom_action_0
-+id accessibility_custom_action_1
-+id accessibility_custom_action_10
-+id accessibility_custom_action_11
-+id accessibility_custom_action_12
-+id accessibility_custom_action_13
-+id accessibility_custom_action_14
-+id accessibility_custom_action_15
-+id accessibility_custom_action_16
-+id accessibility_custom_action_17
-+id accessibility_custom_action_18
-+id accessibility_custom_action_19
-+id accessibility_custom_action_2
-+id accessibility_custom_action_20
-+id accessibility_custom_action_21
-+id accessibility_custom_action_22
-+id accessibility_custom_action_23
-+id accessibility_custom_action_24
-+id accessibility_custom_action_25
-+id accessibility_custom_action_26
-+id accessibility_custom_action_27
-+id accessibility_custom_action_28
-+id accessibility_custom_action_29
-+id accessibility_custom_action_3
-+id accessibility_custom_action_30
-+id accessibility_custom_action_31
-+id accessibility_custom_action_4
-+id accessibility_custom_action_5
-+id accessibility_custom_action_6
-+id accessibility_custom_action_7
-+id accessibility_custom_action_8
-+id accessibility_custom_action_9
 +id accessibility_hint
 +id accessibility_label
 +id accessibility_role
 +id accessibility_state
 +id accessibility_value
++id action0
 +id action_bar
 +id action_bar_activity_content
 +id action_bar_container
@@ -2880,6 +2844,7 @@ index 0000000..3f30b0e
 +id blocking
 +id bottom
 +id buttonPanel
++id cancel_action
 +id catalyst_redbox_title
 +id center
 +id centerCrop
@@ -2892,9 +2857,9 @@ index 0000000..3f30b0e
 +id customPanel
 +id decor_content_parent
 +id default_activity_button
-+id dialog_button
 +id edit_query
 +id end
++id end_padder
 +id expand_activities_button
 +id expanded_menu
 +id fitBottomStart
@@ -2905,8 +2870,6 @@ index 0000000..3f30b0e
 +id focusCrop
 +id forever
 +id fps_text
-+id ghost_view
-+id ghost_view_holder
 +id group_divider
 +id home
 +id icon
@@ -2919,6 +2882,7 @@ index 0000000..3f30b0e
 +id line3
 +id listMode
 +id list_item
++id media_actions
 +id message
 +id multiply
 +id none
@@ -2927,7 +2891,6 @@ index 0000000..3f30b0e
 +id notification_main_column
 +id notification_main_column_container
 +id parentPanel
-+id parent_matrix
 +id progress_circular
 +id progress_horizontal
 +id radio
@@ -2944,8 +2907,6 @@ index 0000000..3f30b0e
 +id rn_redbox_report_button
 +id rn_redbox_report_label
 +id rn_redbox_stack
-+id save_non_transition_alpha
-+id save_overlay_view
 +id screen
 +id scrollIndicatorDown
 +id scrollIndicatorUp
@@ -2968,22 +2929,13 @@ index 0000000..3f30b0e
 +id src_in
 +id src_over
 +id start
++id status_bar_latest_event_content
 +id submenuarrow
 +id submit_area
 +id tabMode
-+id tag_accessibility_actions
-+id tag_accessibility_clickable_spans
-+id tag_accessibility_heading
-+id tag_accessibility_pane_title
-+id tag_on_apply_window_listener
-+id tag_on_receive_content_listener
-+id tag_on_receive_content_mime_types
-+id tag_screen_reader_focusable
-+id tag_state_description
 +id tag_transition_group
 +id tag_unhandled_key_event_manager
 +id tag_unhandled_key_listeners
-+id tag_window_insets_animation_callback
 +id text
 +id text2
 +id textSpacerNoButtons
@@ -2994,11 +2946,6 @@ index 0000000..3f30b0e
 +id title_template
 +id top
 +id topPanel
-+id transition_current_scene
-+id transition_layout_save
-+id transition_position
-+id transition_scene_layoutid_cache
-+id transition_transform
 +id uniform
 +id up
 +id view_tag_instance_handle
@@ -3039,13 +2986,21 @@ index 0000000..3f30b0e
 +layout abc_search_view
 +layout abc_select_dialog_material
 +layout abc_tooltip
-+layout custom_dialog
 +layout dev_loading_view
 +layout fps_view
 +layout notification_action
 +layout notification_action_tombstone
++layout notification_media_action
++layout notification_media_cancel_action
++layout notification_template_big_media
++layout notification_template_big_media_custom
++layout notification_template_big_media_narrow
++layout notification_template_big_media_narrow_custom
 +layout notification_template_custom_big
 +layout notification_template_icon_group
++layout notification_template_lines_media
++layout notification_template_media
++layout notification_template_media_custom
 +layout notification_template_part_chronometer
 +layout notification_template_part_time
 +layout redbox_item_frame
@@ -3399,9 +3354,14 @@ index 0000000..3f30b0e
 +style TextAppearance_AppCompat_Widget_TextView_SpinnerItem
 +style TextAppearance_Compat_Notification
 +style TextAppearance_Compat_Notification_Info
++style TextAppearance_Compat_Notification_Info_Media
 +style TextAppearance_Compat_Notification_Line2
++style TextAppearance_Compat_Notification_Line2_Media
++style TextAppearance_Compat_Notification_Media
 +style TextAppearance_Compat_Notification_Time
++style TextAppearance_Compat_Notification_Time_Media
 +style TextAppearance_Compat_Notification_Title
++style TextAppearance_Compat_Notification_Title_Media
 +style TextAppearance_Widget_AppCompat_ExpandedMenu_Item
 +style TextAppearance_Widget_AppCompat_Toolbar_Subtitle
 +style TextAppearance_Widget_AppCompat_Toolbar_Title
@@ -3534,13 +3494,12 @@ index 0000000..3f30b0e
 +styleable AppCompatTextView android_textAppearance autoSizeMaxTextSize autoSizeMinTextSize autoSizePresetSizes autoSizeStepGranularity autoSizeTextType firstBaselineToTopHeight fontFamily lastBaselineToBottomHeight lineHeight textAllCaps
 +styleable AppCompatTheme actionBarDivider actionBarItemBackground actionBarPopupTheme actionBarSize actionBarSplitStyle actionBarStyle actionBarTabBarStyle actionBarTabStyle actionBarTabTextStyle actionBarTheme actionBarWidgetTheme actionButtonStyle actionDropDownStyle actionMenuTextAppearance actionMenuTextColor actionModeBackground actionModeCloseButtonStyle actionModeCloseDrawable actionModeCopyDrawable actionModeCutDrawable actionModeFindDrawable actionModePasteDrawable actionModePopupWindowStyle actionModeSelectAllDrawable actionModeShareDrawable actionModeSplitBackground actionModeStyle actionModeWebSearchDrawable actionOverflowButtonStyle actionOverflowMenuStyle activityChooserViewStyle alertDialogButtonGroupStyle alertDialogCenterButtons alertDialogStyle alertDialogTheme android_windowAnimationStyle android_windowIsFloating autoCompleteTextViewStyle borderlessButtonStyle buttonBarButtonStyle buttonBarNegativeButtonStyle buttonBarNeutralButtonStyle buttonBarPositiveButtonStyle buttonBarStyle buttonStyle buttonStyleSmall checkboxStyle checkedTextViewStyle colorAccent colorBackgroundFloating colorButtonNormal colorControlActivated colorControlHighlight colorControlNormal colorError colorPrimary colorPrimaryDark colorSwitchThumbNormal controlBackground dialogCornerRadius dialogPreferredPadding dialogTheme dividerHorizontal dividerVertical dropDownListViewStyle dropdownListPreferredItemHeight editTextBackground editTextColor editTextStyle homeAsUpIndicator imageButtonStyle listChoiceBackgroundIndicator listDividerAlertDialog listMenuViewStyle listPopupWindowStyle listPreferredItemHeight listPreferredItemHeightLarge listPreferredItemHeightSmall listPreferredItemPaddingLeft listPreferredItemPaddingRight panelBackground panelMenuListTheme panelMenuListWidth popupMenuStyle popupWindowStyle radioButtonStyle ratingBarStyle ratingBarStyleIndicator ratingBarStyleSmall searchViewStyle seekBarStyle selectableItemBackground selectableItemBackgroundBorderless spinnerDropDownItemStyle spinnerStyle switchStyle textAppearanceLargePopupMenu textAppearanceListItem textAppearanceListItemSecondary textAppearanceListItemSmall textAppearancePopupMenuHeader textAppearanceSearchResultSubtitle textAppearanceSearchResultTitle textAppearanceSmallPopupMenu textColorAlertDialogListItem textColorSearchUrl toolbarNavigationButtonStyle toolbarStyle tooltipForegroundColor tooltipFrameBackground viewInflaterClass windowActionBar windowActionBarOverlay windowActionModeOverlay windowFixedHeightMajor windowFixedHeightMinor windowFixedWidthMajor windowFixedWidthMinor windowMinWidthMajor windowMinWidthMinor windowNoTitle
 +styleable ButtonBarLayout allowStacking
-+styleable Capability queryPatterns shortcutMatchRequired
 +styleable ColorStateListItem alpha android_alpha android_color
 +styleable CompoundButton android_button buttonTint buttonTintMode
 +styleable CoordinatorLayout keylines statusBarBackground
 +styleable CoordinatorLayout_Layout android_layout_gravity layout_anchor layout_anchorGravity layout_behavior layout_dodgeInsetEdges layout_insetEdge layout_keyline
 +styleable DrawerArrowToggle arrowHeadLength arrowShaftLength barLength color drawableSize gapBetweenBars spinBars thickness
-+styleable FontFamily fontProviderAuthority fontProviderCerts fontProviderFetchStrategy fontProviderFetchTimeout fontProviderPackage fontProviderQuery fontProviderSystemFontFamily
++styleable FontFamily fontProviderAuthority fontProviderCerts fontProviderFetchStrategy fontProviderFetchTimeout fontProviderPackage fontProviderQuery
 +styleable FontFamilyFont android_font android_fontStyle android_fontVariationSettings android_fontWeight android_ttcIndex font fontStyle fontVariationSettings fontWeight ttcIndex
 +styleable GenericDraweeHierarchy actualImageScaleType backgroundImage fadeDuration failureImage failureImageScaleType overlayImage placeholderImage placeholderImageScaleType pressedStateOverlayImage progressBarAutoRotateInterval progressBarImage progressBarImageScaleType retryImage retryImageScaleType roundAsCircle roundBottomEnd roundBottomLeft roundBottomRight roundBottomStart roundTopEnd roundTopLeft roundTopRight roundTopStart roundWithOverlayColor roundedCornerRadius roundingBorderColor roundingBorderPadding roundingBorderWidth viewAspectRatio
 +styleable GradientColor android_centerColor android_centerX android_centerY android_endColor android_endX android_endY android_gradientRadius android_startColor android_startX android_startY android_tileMode android_type
@@ -3566,50 +3525,412 @@ index 0000000..3f30b0e
 +styleable ViewBackgroundHelper android_background backgroundTint backgroundTintMode
 +styleable ViewStubCompat android_id android_inflatedId android_layout
 +xml rn_dev_preferences
-diff --git a/node_modules/react-native-reanimated/android/build/outputs/logs/manifest-merger-release-report.txt b/node_modules/react-native-reanimated/android/build/outputs/logs/manifest-merger-release-report.txt
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/outputs/logs/manifest-merger-debug-report.txt b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/outputs/logs/manifest-merger-debug-report.txt
 new file mode 100644
-index 0000000..de6a8d1
+index 0000000..b3c99e8
 --- /dev/null
-+++ b/node_modules/react-native-reanimated/android/build/outputs/logs/manifest-merger-release-report.txt
-@@ -0,0 +1,25 @@
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/outputs/logs/manifest-merger-debug-report.txt
+@@ -0,0 +1,41 @@
 +-- Merging decision tree log ---
 +manifest
-+ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml:2:1-5:12
-+INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml:2:1-5:12
-+INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml:2:1-5:12
++ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:1-9:12
++INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:1-9:12
++INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:1-9:12
 +	package
-+		ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml:3:11-45
-+		INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml
-+		INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml
++		ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:3:11-42
++		INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
 +	xmlns:android
-+		ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml:2:11-69
++		ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:2:11-69
++uses-permission#android.permission.BLUETOOTH_ADMIN
++ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:5-74
++	android:name
++		ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:4:22-71
++uses-permission#android.permission.BLUETOOTH
++ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:5-68
++	android:name
++		ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:5:22-65
++uses-permission#android.permission.ACCESS_COARSE_LOCATION
++ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:5-80
++	android:name
++		ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:6:22-78
++uses-permission#android.permission.ACCESS_FINE_LOCATION
++ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:5-78
++	android:name
++		ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml:7:22-76
 +uses-sdk
-+INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
-+INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml
-+INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml
-+INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml
-+INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml
++INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
++INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
 +	android:targetSdkVersion
-+		INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml
-+		ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml
-+		INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
 +	android:minSdkVersion
-+		INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml
-+		ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml
-+		INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/react-native-reanimated/android/src/main/AndroidManifest.xml
-diff --git a/node_modules/react-native-reanimated/android/build/tmp/compileReleaseJavaWithJavac/source-classes-mapping.txt b/node_modules/react-native-reanimated/android/build/tmp/compileReleaseJavaWithJavac/source-classes-mapping.txt
++		INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		ADDED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/pavansharma/Desktop/workspace/Office/RoyoOrders/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/src/main/AndroidManifest.xml
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/tmp/compileDebugJavaWithJavac/source-classes-mapping.txt b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/tmp/compileDebugJavaWithJavac/source-classes-mapping.txt
 new file mode 100644
-index 0000000..e69de29
-diff --git a/node_modules/react-native-reanimated/android/src/main/java/com/swmansion/reanimated/layoutReanimation/ReanimatedUIImplementation.java b/node_modules/react-native-reanimated/android/src/main/java/com/swmansion/reanimated/layoutReanimation/ReanimatedUIImplementation.java
-index 36d6a4a..372dac9 100644
---- a/node_modules/react-native-reanimated/android/src/main/java/com/swmansion/reanimated/layoutReanimation/ReanimatedUIImplementation.java
-+++ b/node_modules/react-native-reanimated/android/src/main/java/com/swmansion/reanimated/layoutReanimation/ReanimatedUIImplementation.java
-@@ -10,7 +10,7 @@ import java.util.List;
- public class ReanimatedUIImplementation extends UIImplementation {
-   public ReanimatedUIImplementation(
-       ReactApplicationContext reactContext,
--      ViewManagerResolver viewManagerResolver,
-+      UIManagerModule.ViewManagerResolver viewManagerResolver,
-       EventDispatcher eventDispatcher,
-       int minTimeLeftInFrameForNonBatchedOperationMs) {
-     this(
+index 0000000..b000f0f
+--- /dev/null
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/android/build/tmp/compileDebugJavaWithJavac/source-classes-mapping.txt
+@@ -0,0 +1,38 @@
++cn/jystudio/bluetooth/escpos/command/sdk/Command.java
++ cn.jystudio.bluetooth.escpos.command.sdk.Command
++cn/jystudio/bluetooth/RNBluetoothManagerModule.java
++ cn.jystudio.bluetooth.RNBluetoothManagerModule
++ cn.jystudio.bluetooth.RNBluetoothManagerModule$1
++cn/jystudio/bluetooth/BluetoothService.java
++ cn.jystudio.bluetooth.BluetoothService
++ cn.jystudio.bluetooth.BluetoothService$ConnectedThread
++cn/jystudio/bluetooth/escpos/RNBluetoothEscposPrinterModule.java
++ cn.jystudio.bluetooth.escpos.RNBluetoothEscposPrinterModule
++ cn.jystudio.bluetooth.escpos.RNBluetoothEscposPrinterModule$ColumnSplitedString
++cn/jystudio/bluetooth/BuildConfig.java
++ cn.jystudio.bluetooth.BuildConfig
++cn/jystudio/bluetooth/tsc/RNBluetoothTscPrinterModule.java
++ cn.jystudio.bluetooth.tsc.RNBluetoothTscPrinterModule
++cn/jystudio/bluetooth/BluetoothServiceStateObserver.java
++ cn.jystudio.bluetooth.BluetoothServiceStateObserver
++cn/jystudio/bluetooth/escpos/command/sdk/PrinterCommand.java
++ cn.jystudio.bluetooth.escpos.command.sdk.PrinterCommand
++cn/jystudio/bluetooth/escpos/command/sdk/PrintPicture.java
++ cn.jystudio.bluetooth.escpos.command.sdk.PrintPicture
++cn/jystudio/bluetooth/tsc/TscCommand.java
++ cn.jystudio.bluetooth.tsc.TscCommand
++ cn.jystudio.bluetooth.tsc.TscCommand$BARCODETYPE
++ cn.jystudio.bluetooth.tsc.TscCommand$BITMAP_MODE
++ cn.jystudio.bluetooth.tsc.TscCommand$CODEPAGE
++ cn.jystudio.bluetooth.tsc.TscCommand$DENSITY
++ cn.jystudio.bluetooth.tsc.TscCommand$DIRECTION
++ cn.jystudio.bluetooth.tsc.TscCommand$EEC
++ cn.jystudio.bluetooth.tsc.TscCommand$ENABLE
++ cn.jystudio.bluetooth.tsc.TscCommand$FONTMUL
++ cn.jystudio.bluetooth.tsc.TscCommand$FONTTYPE
++ cn.jystudio.bluetooth.tsc.TscCommand$FOOT
++ cn.jystudio.bluetooth.tsc.TscCommand$READABLE
++ cn.jystudio.bluetooth.tsc.TscCommand$ROTATION
++ cn.jystudio.bluetooth.tsc.TscCommand$SPEED
++cn/jystudio/bluetooth/RNBluetoothEscposPrinterPackage.java
++ cn.jystudio.bluetooth.RNBluetoothEscposPrinterPackage
+diff --git a/node_modules/@brooons/react-native-bluetooth-escpos-printer/index.js b/node_modules/@brooons/react-native-bluetooth-escpos-printer/index.js
+index 0980f53..4ee64f1 100644
+--- a/node_modules/@brooons/react-native-bluetooth-escpos-printer/index.js
++++ b/node_modules/@brooons/react-native-bluetooth-escpos-printer/index.js
+@@ -1,154 +1,160 @@
+ 
+-import { NativeModules } from 'react-native';
+-
+-const { BluetoothManager, BluetoothEscposPrinter, BluetoothTscPrinter } = NativeModules;
+-
+-BluetoothTscPrinter.DIRECTION = {
+-    FORWARD: 0,
+-    BACKWARD: 1
+-};
+-
+-BluetoothTscPrinter.DENSITY = {
+-    DNESITY0: 0,
+-    DNESITY1: 1,
+-    DNESITY2: 2,
+-    DNESITY3: 3,
+-    DNESITY4: 4,
+-    DNESITY5: 5,
+-    DNESITY6: 6,
+-    DNESITY7: 7,
+-    DNESITY8: 8,
+-    DNESITY9: 9,
+-    DNESITY10: 10,
+-    DNESITY11: 11,
+-    DNESITY12: 12,
+-    DNESITY13: 13,
+-    DNESITY14: 14,
+-    DNESITY15: 15
+-};
+-
+-BluetoothTscPrinter.BARCODETYPE = {
+-    CODE128: "128",
+-    CODE128M: "128M",
+-    EAN128: "EAN128",
+-    ITF25: "25",
+-    ITF25C: "25C",
+-    CODE39: "39",
+-    CODE39C: "39C",
+-    CODE39S: "39S",
+-    CODE93: "93",
+-    EAN13: "EAN13",
+-    EAN13_2: "EAN13+2",
+-    EAN13_5: "EAN13+5",
+-    EAN8: "EAN8",
+-    EAN8_2: "EAN8+2",
+-    EAN8_5: "EAN8+5",
+-    CODABAR: "CODA",
+-    POST: "POST",
+-    UPCA: "EAN13",
+-    UPCA_2: "EAN13+2",
+-    UPCA_5: "EAN13+5",
+-    UPCE: "EAN13",
+-    UPCE_2: "EAN13+2",
+-    UPCE_5: "EAN13+5",
+-    CPOST: "CPOST",
+-    MSI: "MSI",
+-    MSIC: "MSIC",
+-    PLESSEY: "PLESSEY",
+-    ITF14: "ITF14",
+-    EAN14: "EAN14"
+-};
+-BluetoothTscPrinter.FONTTYPE = {
+-    FONT_1: "1",
+-    FONT_2: "2",
+-    FONT_3: "3",
+-    FONT_4: "4",
+-    FONT_5: "5",
+-    FONT_6: "6",
+-    FONT_7: "7",
+-    FONT_8: "8",
+-    SIMPLIFIED_CHINESE: "TSS24.BF2",
+-    TRADITIONAL_CHINESE: "TST24.BF2",
+-    KOREAN: "K"
+-};
+-BluetoothTscPrinter.EEC = {
+-    LEVEL_L: "L",
+-    LEVEL_M: "M",
+-    LEVEL_Q: "Q",
+-    LEVEL_H: "H"
+-
+-};
+-BluetoothTscPrinter.ROTATION = {
+-    ROTATION_0: 0,
+-    ROTATION_90: 90,
+-    ROTATION_180: 180,
+-    ROTATION_270: 270
+-};
+- BluetoothTscPrinter.FONTMUL = {
+-    MUL_1: 1,
+-    MUL_2: 2,
+-    MUL_3: 3,
+-    MUL_4: 4,
+-    MUL_5: 5,
+-    MUL_6: 6,
+-    MUL_7: 7,
+-    MUL_8: 8,
+-    MUL_9: 9,
+-    MUL_10: 10
+-};
+-BluetoothTscPrinter.BITMAP_MODE = {
+-    OVERWRITE: 0,
+-    OR: 1,
+-    XOR: 2
+-};
+-BluetoothTscPrinter.PRINT_SPEED = {
+-    SPEED1DIV5:1,
+-    SPEED2:2,
+-    SPEED3:3,
+-    SPEED4:4
+-};
+-BluetoothTscPrinter.TEAR = {
+-	ON:'ON',
+-	OFF:'OFF'
+-};
+-BluetoothTscPrinter.READABLE = {
+-  DISABLE: 0,
+-  ENABLE: 1,
+-};
+-
+-BluetoothEscposPrinter.DEVICE_WIDTH = {
+-    WIDTH_58: 384,
+-    WIDTH_80: 576,
+-};
+-
+-BluetoothEscposPrinter.ERROR_CORRECTION = {
+-    L: 1,
+-    M: 0,
+-    Q: 3,
+-    H: 2,
+-};
+-
+-BluetoothEscposPrinter.BARCODETYPE = {
+-    UPC_A: 65, // 11<=n<=12
+-    UPC_E: 66, // 11<=n<=12
+-    JAN13: 67, // 12<=n<=12
+-    JAN8: 68, // 7<=n<=8
+-    CODE39: 69, // 1<=n<=255
+-    ITF: 70, // 1<=n<=255(even numbers)
+-    CODABAR: 71, // 1<=n<=255
+-    CODE93: 72, // 1<=n<=255
+-    CODE128: 73, // 2<=n<=255
+-};
+-
+-BluetoothEscposPrinter.ROTATION = {
+-    OFF: 0,
+-    ON: 1,
+-};
+-
+-BluetoothEscposPrinter.ALIGN = {
+-    LEFT: 0,
+-    CENTER: 1,
+-    RIGHT: 2,
+-};
+-
+-module.exports = { BluetoothManager, BluetoothEscposPrinter, BluetoothTscPrinter };
++import { NativeModules ,Platform} from 'react-native';
++
++
++
++if(Platform.OS ==='android'){
++
++    const { BluetoothManager, BluetoothEscposPrinter, BluetoothTscPrinter } = NativeModules;
++    BluetoothTscPrinter.DIRECTION = {
++        FORWARD: 0,
++        BACKWARD: 1
++    };
++    
++    BluetoothTscPrinter.DENSITY = {
++        DNESITY0: 0,
++        DNESITY1: 1,
++        DNESITY2: 2,
++        DNESITY3: 3,
++        DNESITY4: 4,
++        DNESITY5: 5,
++        DNESITY6: 6,
++        DNESITY7: 7,
++        DNESITY8: 8,
++        DNESITY9: 9,
++        DNESITY10: 10,
++        DNESITY11: 11,
++        DNESITY12: 12,
++        DNESITY13: 13,
++        DNESITY14: 14,
++        DNESITY15: 15
++    };
++    
++    BluetoothTscPrinter.BARCODETYPE = {
++        CODE128: "128",
++        CODE128M: "128M",
++        EAN128: "EAN128",
++        ITF25: "25",
++        ITF25C: "25C",
++        CODE39: "39",
++        CODE39C: "39C",
++        CODE39S: "39S",
++        CODE93: "93",
++        EAN13: "EAN13",
++        EAN13_2: "EAN13+2",
++        EAN13_5: "EAN13+5",
++        EAN8: "EAN8",
++        EAN8_2: "EAN8+2",
++        EAN8_5: "EAN8+5",
++        CODABAR: "CODA",
++        POST: "POST",
++        UPCA: "EAN13",
++        UPCA_2: "EAN13+2",
++        UPCA_5: "EAN13+5",
++        UPCE: "EAN13",
++        UPCE_2: "EAN13+2",
++        UPCE_5: "EAN13+5",
++        CPOST: "CPOST",
++        MSI: "MSI",
++        MSIC: "MSIC",
++        PLESSEY: "PLESSEY",
++        ITF14: "ITF14",
++        EAN14: "EAN14"
++    };
++    BluetoothTscPrinter.FONTTYPE = {
++        FONT_1: "1",
++        FONT_2: "2",
++        FONT_3: "3",
++        FONT_4: "4",
++        FONT_5: "5",
++        FONT_6: "6",
++        FONT_7: "7",
++        FONT_8: "8",
++        SIMPLIFIED_CHINESE: "TSS24.BF2",
++        TRADITIONAL_CHINESE: "TST24.BF2",
++        KOREAN: "K"
++    };
++    BluetoothTscPrinter.EEC = {
++        LEVEL_L: "L",
++        LEVEL_M: "M",
++        LEVEL_Q: "Q",
++        LEVEL_H: "H"
++    
++    };
++    BluetoothTscPrinter.ROTATION = {
++        ROTATION_0: 0,
++        ROTATION_90: 90,
++        ROTATION_180: 180,
++        ROTATION_270: 270
++    };
++     BluetoothTscPrinter.FONTMUL = {
++        MUL_1: 1,
++        MUL_2: 2,
++        MUL_3: 3,
++        MUL_4: 4,
++        MUL_5: 5,
++        MUL_6: 6,
++        MUL_7: 7,
++        MUL_8: 8,
++        MUL_9: 9,
++        MUL_10: 10
++    };
++    BluetoothTscPrinter.BITMAP_MODE = {
++        OVERWRITE: 0,
++        OR: 1,
++        XOR: 2
++    };
++    BluetoothTscPrinter.PRINT_SPEED = {
++        SPEED1DIV5:1,
++        SPEED2:2,
++        SPEED3:3,
++        SPEED4:4
++    };
++    BluetoothTscPrinter.TEAR = {
++        ON:'ON',
++        OFF:'OFF'
++    };
++    BluetoothTscPrinter.READABLE = {
++      DISABLE: 0,
++      ENABLE: 1,
++    };
++    
++    BluetoothEscposPrinter.DEVICE_WIDTH = {
++        WIDTH_58: 384,
++        WIDTH_80: 576,
++    };
++    
++    BluetoothEscposPrinter.ERROR_CORRECTION = {
++        L: 1,
++        M: 0,
++        Q: 3,
++        H: 2,
++    };
++    
++    BluetoothEscposPrinter.BARCODETYPE = {
++        UPC_A: 65, // 11<=n<=12
++        UPC_E: 66, // 11<=n<=12
++        JAN13: 67, // 12<=n<=12
++        JAN8: 68, // 7<=n<=8
++        CODE39: 69, // 1<=n<=255
++        ITF: 70, // 1<=n<=255(even numbers)
++        CODABAR: 71, // 1<=n<=255
++        CODE93: 72, // 1<=n<=255
++        CODE128: 73, // 2<=n<=255
++    };
++    
++    BluetoothEscposPrinter.ROTATION = {
++        OFF: 0,
++        ON: 1,
++    };
++    
++    BluetoothEscposPrinter.ALIGN = {
++        LEFT: 0,
++        CENTER: 1,
++        RIGHT: 2,
++    };
++    
++    module.exports = { BluetoothManager, BluetoothEscposPrinter, BluetoothTscPrinter };
++    
++    
++}

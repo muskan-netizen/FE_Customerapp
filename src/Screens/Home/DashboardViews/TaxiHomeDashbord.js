@@ -402,6 +402,23 @@ export default function TaxiHomeDashbord({
     );
   };
 
+  const latitudes = !!curLatLong?.latitude
+  ? parseFloat(curLatLong?.latitude)
+  : !!location?.latitude
+  ? parseFloat(location?.latitude)
+  : appData?.profile?.preferences?.Default_latitude
+
+
+const longitudes =  !!curLatLong?.longitude
+  ? parseFloat(curLatLong?.longitude)
+  : !!location?.longitude
+  ? parseFloat(location?.longitude)
+  : appData?.profile?.preferences?.Default_latitude
+
+  console.log(latitudes, 'latitudeslatitudes')
+  console.log(appData?.profile?.preferences?.Default_latitude, 'latitudeslatitudeslongitudes')
+  console.log(appData?.profile?.preferences, 'latitudeslatitudeslongitudes')
+
   const _ModalMainView = () => {
     return (
       <View style={styles.modalContainer}>
@@ -870,6 +887,7 @@ export default function TaxiHomeDashbord({
                     marginTop: moderateScaleVertical(20),
                     alignItems: 'center',
                   }}> */}
+                
                 {!!location && (
                   <MapView
                     ref={mapRef}
@@ -885,19 +903,16 @@ export default function TaxiHomeDashbord({
                         ? parseFloat(curLatLong?.latitude)
                         : !!location?.latitude
                         ? parseFloat(location?.latitude)
-                        : !!appData?.profile?.preferences?.Default_latitude
-                        ? appData?.profile?.preferences?.Default_latitude
-                        : 30.7333,
+                        : 30.733315,
                       longitude: !!curLatLong?.longitude
                         ? parseFloat(curLatLong?.longitude)
                         : !!location?.longitude
                         ? parseFloat(location?.longitude)
-                        : !!appData?.profile?.preferences?.Default_latitude
-                        ? appData?.profile?.preferences?.Default_latitude
-                        : 76.7794,
+                        : 76.779419,
                       latitudeDelta: 0.015,
                       longitudeDelta: 0.0121,
                     }}
+                    
                     // initialRegion={region}
                     showsUserLocation={true}
                     //showsMyLocationButton={true}
@@ -905,8 +920,16 @@ export default function TaxiHomeDashbord({
                   >
                     <Marker
                       coordinate={{
-                        latitude: 30.7333,
-                        longitude: 76.7794,
+                        latitude: !!curLatLong?.latitude
+                          ? parseFloat(curLatLong?.latitude)
+                          : !!location?.latitude
+                          ? parseFloat(location?.latitude)
+                          : 30.733315,
+                        longitude: !!curLatLong?.longitude
+                          ? parseFloat(curLatLong?.longitude)
+                          : !!location?.longitude
+                          ? parseFloat(location?.longitude)
+                          : 76.779419,
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
                       }}

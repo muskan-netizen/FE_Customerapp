@@ -1204,6 +1204,7 @@ export default function Products({route, navigation}) {
 
   const addSingleItem = useCallback(
     async (item, section = null, inx) => {
+      console.log(item ,'chechItemm')
       if (
         !!categoryInfo?.is_vendor_closed &&
         !categoryInfo?.show_slot &&
@@ -2518,10 +2519,11 @@ export default function Products({route, navigation}) {
       });
     }
   };
-
+  console.log(productListId?.vendor,"productListId?.vendor")
   useEffect(() => {
     if (isLoadingC) {
       getAllProductsByCategoryId(1);
+      
       if (productListId?.vendor && routeData) {
         fetchOffers();
       }
@@ -3643,6 +3645,8 @@ export default function Products({route, navigation}) {
               </TouchableWithoutFeedback>
             ) : null}
           </View>
+          
+          {console.log(isVisibleModal,"isVisibleModal")}
 
           {!!typeId && typeId == 8 ? (
             <View>

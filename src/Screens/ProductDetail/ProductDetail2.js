@@ -874,6 +874,8 @@ export default function ProductDetail2({route, navigation}) {
             </View>
 
             {/* Out of stock view */}
+            {/* {console.log(productTotalQuantity,"productTotalQuantity")} */}
+            {console.log(productDetailData?.sell_when_out_of_stock,"productTotalQuantity")}
 
             <View style={{justifyContent: 'center'}}>
               <Text

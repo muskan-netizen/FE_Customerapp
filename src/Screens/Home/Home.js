@@ -42,6 +42,8 @@ import _, {isEmpty} from 'lodash';
 import socketServices from '../../utils/scoketService';
 import SubscriptionModal from '../../Components/SubscriptionModal';
 import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
+import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
+import DashBoardNine from './DashboardViews/DashBoardNine';
 
 // navigator.geolocation = require('react-native-geolocation-service');
 
@@ -933,7 +935,7 @@ export default function Home({route, navigation}) {
       stopOrderModalVisible: false,
     });
   };
-  // console.log(appStyle?.homePageLayout, 'homePageLayouthomePageLayout');
+  console.log(appStyle?.homePageLayout, 'homePageLayouthomePageLayout');
   const renderHomeScreen = () => {
 
     switch (appStyle?.homePageLayout) {
@@ -1237,6 +1239,63 @@ export default function Home({route, navigation}) {
             )}
           </>
         );
+
+        case 7:
+          return (
+            <>
+              <DashBoardHeaderSix
+                showToggles={false}
+                navigation={navigation}
+                location={location}
+                selcetedToggle={selcetedToggle}
+                toggleData={appData}
+                isLoading={isLoading}
+                currentLocation={currentLocation}
+                isLoadingB={isLoadingB}
+                _onVoiceListen={_onVoiceListen}
+                isVoiceRecord={isVoiceRecord}
+                _onVoiceStop={_onVoiceStop}
+              />
+  
+              {dineInType == 'pick_drop' ? (
+                <TaxiHomeDashbord
+                  handleRefresh={() => handleRefresh()}
+                  bannerPress={(item) => bannerPress(item)}
+                  isLoading={isLoading}
+                  isRefreshing={isRefreshing}
+                  appMainData={appMainData}
+                  onPressCategory={(item) => onPressCategory(item)}
+                  toggleData={appData}
+                  location={location}
+                  curLatLong={curLatLong}
+                />
+              ) : (
+                <DashBoardNine
+                  handleRefresh={() => handleRefresh()}
+                  bannerPress={(item) => bannerPress(item)}
+                  isLoading={isLoading}
+                  isRefreshing={isRefreshing}
+                  appMainData={appMainData}
+                  onPressCategory={(item) => {
+                    onPressCategory(item);
+                  }}
+                  onPressVendor={(item) => {
+                    onPressVendor(item);
+                  }}
+                  isDineInSelected={isDineInSelected}
+                  selcetedToggle={selcetedToggle}
+                  tempCartData={tempCartData}
+                  toggleData={appData}
+                  navigation={navigation}
+                  onVendorFilterSeletion={onVendorFilterSeletion}
+                  singleVendor={singleVendor}
+                  onPressAddLaundryItem={onPressAddLaundryItem}
+                  isLoadingAddons={isLoadingAddons}
+                  selectedHomeCategory={selectedHomeCategory}
+                />
+              )}
+            </>
+          );
     }
   };
 

@@ -32,6 +32,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import Geocoder from 'react-native-geocoding';
 import strings from '../../../constants/lang';
 import DashBoardSeven from '../DashboardViews/DashBoardSeven';
+import Loader from '../../../Components/Loader';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -40,7 +41,6 @@ export default function TaxiHomeScreen({route, navigation}) {
   const {location, dineInType, appMainData} = useSelector(
     (state) => state?.home,
   );
-console.log(appMainData,"appMainDataappMainData");
   const {cartItemCount} = useSelector((state) => state?.cart);
   const {
     appData,
@@ -93,6 +93,90 @@ console.log(appMainData,"appMainDataappMainData");
       return () => backHandler.remove();
     }, []),
   );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      updateState({isLoading:true})
+      chekLocationPermission(true)
+      .then((result) => {
+        if (result !== 'goback') {
+          getCurrentLocation('home')
+            .then((res) => {
+              console.log('current lcoation', res);
+              if (
+                appMainData &&
+                typeof appMainData?.reqData == 'object' &&
+                appMainData?.reqData?.latitude &&
+                (location?.latitude == '' || location?.longitude == '')
+              ) {
+                const data = {
+                  address: appMainData?.reqData?.address,
+                  latitude: appMainData?.reqData?.latitude,
+                  longitude: appMainData?.reqData?.longitude,
+                };
+                actions.locationData(res);
+                updateState({locationObj: res, isLoading:false});
+              } else {
+                updateState({locationObj: res});
+                if (appData?.profile?.preferences?.is_hyperlocal) {
+                  if (!location?.address) {
+                    actions.locationData(res);
+                  }
+                }
+              }
+            })
+            .catch((err) => {
+              console.log('error raised', location);
+              // console.log("default location",location)
+              updateState({locationObj: location, isLoading:true}); // if user not gave location permission then we set pannel lat lng.
+            });
+        }
+      })
+      .catch((error) => console.log('error while accessing location', error));
+    }, []),
+  );
+
+ 
+  // useEffect(() => {
+  //   chekLocationPermission(false)
+  //     .then((result) => {
+  //       if (result !== 'goback') {
+  //         getCurrentLocation('home')
+  //           .then((res) => {
+  //             console.log('current lcoation', res);
+  //             if (
+  //               appMainData &&
+  //               typeof appMainData?.reqData == 'object' &&
+  //               appMainData?.reqData?.latitude &&
+  //               (location?.latitude == '' || location?.longitude == '')
+  //             ) {
+  //               const data = {
+  //                 address: appMainData?.reqData?.address,
+  //                 latitude: appMainData?.reqData?.latitude,
+  //                 longitude: appMainData?.reqData?.longitude,
+  //               };
+  //               actions.locationData(res);
+  //               updateState({locationObj: res});
+  //             } else {
+  //               updateState({locationObj: res});
+  //               if (appData?.profile?.preferences?.is_hyperlocal) {
+  //                 if (!location?.address) {
+  //                   actions.locationData(res);
+  //                 }
+  //               }
+  //             }
+  //           })
+  //           .catch((err) => {
+  //             console.log('error raised', location);
+  //             // console.log("default location",location)
+  //             updateState({locationObj: location}); // if user not gave location permission then we set pannel lat lng.
+  //           });
+  //       }
+  //     })
+  //     .catch((error) => console.log('error while accessing location', error));
+  // }, []);
+
+
 
   useEffect(() => {
     updateState({updatedData: appMainData?.categories});
@@ -167,44 +251,7 @@ console.log(appMainData,"appMainDataappMainData");
     Geocoder.init(appData?.profile?.preferences?.map_key, {language: 'en'}); // set the language
   }, []);
 
-  useEffect(() => {
-    chekLocationPermission(false)
-      .then((result) => {
-        if (result !== 'goback') {
-          getCurrentLocation('home')
-            .then((res) => {
-              console.log('current lcoation', res);
-              if (
-                appMainData &&
-                typeof appMainData?.reqData == 'object' &&
-                appMainData?.reqData?.latitude &&
-                (location?.latitude == '' || location?.longitude == '')
-              ) {
-                const data = {
-                  address: appMainData?.reqData?.address,
-                  latitude: appMainData?.reqData?.latitude,
-                  longitude: appMainData?.reqData?.longitude,
-                };
-                actions.locationData(res);
-                updateState({locationObj: res});
-              } else {
-                updateState({locationObj: res});
-                if (appData?.profile?.preferences?.is_hyperlocal) {
-                  if (!location?.address) {
-                    actions.locationData(res);
-                  }
-                }
-              }
-            })
-            .catch((err) => {
-              console.log('error raised', location);
-              // console.log("default location",location)
-              updateState({locationObj: location}); // if user not gave location permission then we set pannel lat lng.
-            });
-        }
-      })
-      .catch((error) => console.log('error while accessing location', error));
-  }, []);
+  
 
   useFocusEffect(
     React.useCallback(() => {
@@ -546,6 +593,8 @@ console.log(appMainData,"appMainDataappMainData");
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
+
+  {console.log(locationObj, "locationObjlocationObj")}
 
   const renderHomeScreen = () => {
     const case_ = 5;

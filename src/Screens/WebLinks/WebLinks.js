@@ -151,6 +151,7 @@ export default function WebLinks({navigation, route}) {
       : '91',
     driverTagsAry: [],
     activeSections: [],
+    isProfilePhoto:false,
   });
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -210,6 +211,7 @@ export default function WebLinks({navigation, route}) {
     callingCode,
     driverTagsAry,
     activeSections,
+    isProfilePhoto
   } = state;
 
   useEffect(() => {
@@ -368,7 +370,7 @@ export default function WebLinks({navigation, route}) {
       driverRegistrationDocs.map((item, indx) => {
         formData.append(
           item?.item?.slug,
-          item?.item.file_type === 'Image'
+          item?.item?.file_type === 'Image'
             ? {
                 uri: item.fileData.path,
                 name: item.fileData.filename || item?.item?.name,
@@ -568,9 +570,11 @@ export default function WebLinks({navigation, route}) {
   useEffect(() => {
     console.log(vendorRegisterationDocs, 'vendorRegisterationDocs');
   }, [vendorRegisterationDocs]);
-
+  
+console.log(clickedIndx,"clickedIndx")
   const cameraHandle = async (index) => {
     const permissionStatus = await androidCameraPermission();
+    console.log(index, "indxxxxxx")
     if (permissionStatus) {
       if (index == 0 || index == 1) {
         cameraHandler(index, {
@@ -581,10 +585,11 @@ export default function WebLinks({navigation, route}) {
           mediaType: 'photo',
         })
           .then((res) => {
+            console.log(res, "ressifIndx")
             if (res && res.data) {
               if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
-                console.log(clickedIndx, 'clickedIndxclickedIndx');
-                if (clickedIndx != null) {
+                // console.log(clickedIndx,"clickedIndx")
+                if (clickedIndx != null && isProfilePhoto) {
                   {
                     const driverRegistrationDocsAry = [
                       ...driverRegistrationDocs,
@@ -598,11 +603,14 @@ export default function WebLinks({navigation, route}) {
                       driverRegistrationDocs: driverRegistrationDocsAry,
                     });
                   }
+                  console.log(driverRegistrationDocs,"driverRegistrationDocs")
                   clickedIndx = null;
                 } else {
                   updateState({
                     driverPic: res,
+                    isProfilePhoto:true
                   });
+                  console.log(res, "resElse")
                 }
               } else {
                 console.log(res, 'regis doc');
@@ -698,7 +706,7 @@ export default function WebLinks({navigation, route}) {
               </Text>
             </View>
           )}
-
+          {console.log(driverRegistrationDocs[1]?.fileData?.path, 'driverRegistrationDocs[index]?.fileData?.path')}
           {item?.file_type == 'Image' && (
             <TouchableOpacity
               activeOpacity={0.7}
@@ -1477,9 +1485,10 @@ export default function WebLinks({navigation, route}) {
                   marginHorizontal: 0,
                   marginBottom: moderateScaleVertical(14),
                 }}>
+                  {console.log(driverPic, "driverPicdriverPicdriverPic")}
                 <Image
                   source={
-                    driverPic ? {uri: driverPic.path} : imagePath.icCamIcon
+                    !!driverPic ? {uri: driverPic.path} : imagePath.icCamIcon
                   }
                   style={{
                     // tintColor: !driverPic ? themeColors.primary_color : null,
@@ -1984,6 +1993,7 @@ export default function WebLinks({navigation, route}) {
                 renderItem={_renderTransportTypes}
               />
 
+              {console.log(driverRegDocs?.driver_registration_documents,"driverRegDocsdriverRegDocs")}
               <FlatList
                 keyExtractor={(itm, indx) => indx.toString()}
                 data={driverRegDocs?.driver_registration_documents}

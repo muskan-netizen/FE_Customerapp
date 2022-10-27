@@ -12,7 +12,7 @@ import {
   FlatList,
   Linking,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import Header from '../../../Components/Header';
 import WrapperContainer from '../../../Components/WrapperContainer';
@@ -34,9 +34,9 @@ import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import {isEmpty} from 'lodash';
 import FastImage from 'react-native-fast-image';
 import strings from '../../../constants/lang';
-import {currencyNumberFormatter} from '../../../utils/commonFunction';
+import { currencyNumberFormatter } from '../../../utils/commonFunction';
 import navigationStrings from '../../../navigation/navigationStrings';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import BorderTextInput from '../../../Components/BorderTextInput';
@@ -45,8 +45,8 @@ import GradientButton from '../../../Components/GradientButton';
 const RoyoOrderDetail = (props) => {
   const bottomSheetRef = useRef(null);
   const userData = useSelector((state) => state?.auth?.userData);
-  const {data, selectedVendor} = props.route.params;
-  const {appData, appStyle, currencies, languages} = useSelector(
+  const { data, selectedVendor } = props.route.params;
+  const { appData, appStyle, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
   console.log(appData,"appDataappData")
@@ -102,7 +102,6 @@ const RoyoOrderDetail = (props) => {
         alert('sorry for inconvenience , we are unable to share');
       });
   };
-
   useEffect(() => {
     _getOrderDetailScreen();
   }, []);
@@ -122,7 +121,7 @@ const RoyoOrderDetail = (props) => {
         vendor_id: String(item?.vendor_id),
         order_id: String(item?.order_id),
       };
-      updateState({isLoadingB: true});
+      updateState({ isLoadingB: true });
 
       console.log('sending api data', apiData);
       const res = await actions.onStartChat(apiData, {
@@ -131,21 +130,21 @@ const RoyoOrderDetail = (props) => {
         language: languages?.primary_language?.id,
       });
       console.log('start chat res', res);
-      updateState({isLoadingB: false});
+      updateState({ isLoadingB: false });
       if (!!res?.roomData) {
         onChat(res.roomData);
       }
     } catch (error) {
       console.log('error raised in start chat api', error);
       showError(error?.message);
-      updateState({isLoadingB: false});
+      updateState({ isLoadingB: false });
     }
   };
 
   const onChat = (item) => {
     console.log('item+++', item);
     navigation.navigate(navigationStrings.CHAT_SCREEN_FOR_VENDOR, {
-      data: {...item},
+      data: { ...item },
     });
   };
 
@@ -156,7 +155,7 @@ const RoyoOrderDetail = (props) => {
       collectedData['vendor_id'] = selectedVendor?.id;
     }
 
-    updateState({isLoadingB: true});
+    updateState({ isLoadingB: true });
     actions
       .getOrderDetail(collectedData, {
         code: appData?.profile?.code,
@@ -165,7 +164,7 @@ const RoyoOrderDetail = (props) => {
       })
       .then((res) => {
         console.log(res.data, 'order detail =====res');
-        updateState({isLoadingB: false});
+        updateState({ isLoadingB: false });
         if (res?.data) {
           updateState({
             address: res.data.address,
@@ -192,7 +191,7 @@ const RoyoOrderDetail = (props) => {
     data['order_id'] = acceptRejectData?.id;
     data['vendor_id'] = selectedVendor?.id;
     data['order_status_option_id'] = status;
-    updateState({isLoadingB: true});
+    updateState({ isLoadingB: true });
     actions
       .updateOrderStatus(data, {
         code: appData?.profile?.code,
@@ -220,7 +219,7 @@ const RoyoOrderDetail = (props) => {
       });
   };
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const toggleUpcomingStatus = () => {
     updateState({
       showUpcomingStatus: !showUpcomingStatus,
@@ -318,11 +317,11 @@ const RoyoOrderDetail = (props) => {
             
 
             {!userData?.is_superadmin ? (
-              <View style={{marginVertical: moderateScaleVertical(8)}}>
+              <View style={{ marginVertical: moderateScaleVertical(8) }}>
                 {!!appData?.profile?.socket_url ? (
                   <TouchableOpacity
                     onPress={() => createRoom(item)}
-                    style={{flexDirection: 'row', alignItems: 'center'}}>
+                    style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={styles.startChatText}>
                       {strings.START_CHAT}
                     </Text>
@@ -355,22 +354,27 @@ const RoyoOrderDetail = (props) => {
         </Text>
             </View>
           </View>
+          {!!item?.product_variant_sets ? <View style={{marginTop:moderateScale(2)}} >
+            <Text style={styles.font14Regular}>
+              {item?.product_variant_sets}
+            </Text>
+          </View> : <></>
+          }
           {item?.product_addons.length > 0
             ? item?.product_addons.map((j) => {
-                return (
-                  <View>
-                    <Text>
-                      {`(${j.option_title})`} ={' '}
-                      {`${
-                        currencies?.primary_currency?.symbol
+              return (
+                <View>
+                  <Text>
+                    {`(${j.option_title})`} ={' '}
+                    {`${currencies?.primary_currency?.symbol
                       }${currencyNumberFormatter(
                         Number(j.price),
                         appData?.profile?.preferences?.digit_after_decimal,
                       )}`}
-                    </Text>
-                  </View>
-                );
-              })
+                  </Text>
+                </View>
+              );
+            })
             : null}
         </View>
         
@@ -414,9 +418,9 @@ const RoyoOrderDetail = (props) => {
       barStyle="dark-content"
       source={loaderOne}>
       <Header
-        headerStyle={{marginVertical: moderateScaleVertical(16)}}
+        headerStyle={{ marginVertical: moderateScaleVertical(16) }}
         leftIcon={imagePath.backRoyo}
-        centerTitle={strings.ORDERS+`#${data.order_number}`}
+        centerTitle={strings.ORDERS + `#${data.order_number}`}
       />
       {/* <View style={{...styles.orderNumberBox, zIndex: -1}}>
         <Text style={styles.orderNumber}>Order #{data.order_number}</Text>
@@ -433,7 +437,7 @@ const RoyoOrderDetail = (props) => {
               disabled={!data?.order_status?.upcoming_status}
               onPress={toggleUpcomingStatus}
               activeOpacity={0.8}>
-              <Text style={{...styles.font16Semibold, color: colors.white}}>
+              <Text style={{ ...styles.font16Semibold, color: colors.white }}>
                 {current_status.title}
               </Text>
               <View>
@@ -445,25 +449,25 @@ const RoyoOrderDetail = (props) => {
                 activeOpacity={1}
                 style={styles.upcomingStatus}
                 onPress={() => updateOrderStatus(data, upcoming_status.id)}>
-                <Text style={{...styles.font16Semibold, color: colors.white}}>
+                <Text style={{ ...styles.font16Semibold, color: colors.white }}>
                   {upcoming_status.title}
                 </Text>
 
                 <Image
-                  style={{tintColor: colors.white}}
+                  style={{ tintColor: colors.white }}
                   source={imagePath.selectedRoyo}
                 />
               </TouchableOpacity>
             ) : null}
           </View>
         ) : null}
-        <View style={{...styles.orderNumberBox, zIndex: -1}}>
+        <View style={{ ...styles.orderNumberBox, zIndex: -1 }}>
           {/* <Text style={styles.orderNumber}>Order #{data.order_number}</Text> */}
           <Text style={styles.orderNumber}>{strings.ORDERAT}:</Text>
           <Text style={styles.orderTime}>{data?.date_time}</Text>
         </View>
         {!!data?.scheduled_date_time && (
-          <View style={{...styles.orderNumberBox, zIndex: -1}}>
+          <View style={{ ...styles.orderNumberBox, zIndex: -1 }}>
             {/* <Text style={styles.orderNumber}>Order #{data.order_number}</Text> */}
             <Text style={styles.orderNumber}>{strings.SCHEDULE_FOR}:</Text>
             <Text style={styles.orderTime}>{data?.scheduled_date_time}</Text>
@@ -483,7 +487,7 @@ const RoyoOrderDetail = (props) => {
           ItemSeparatorComponent={() => <View style={styles.itemSeperator} />}
         />
         {!!data?.specific_instructions && (
-          <View style={{margin: moderateScaleVertical(16)}}>
+          <View style={{ margin: moderateScaleVertical(16) }}>
             <Text style={styles.font15Medium}>{strings.INSTRUCTIONS}</Text>
             <Text style={styles.font15Semibold}>
               {data?.specific_instructions}
@@ -491,7 +495,7 @@ const RoyoOrderDetail = (props) => {
           </View>
         )}
 
-        <View style={{margin: moderateScaleVertical(16)}}>
+        <View style={{ margin: moderateScaleVertical(16) }}>
           {!!(
             Number(data?.total_amount) &&
             !!Number(data?.total_amount) !== 0
@@ -507,7 +511,7 @@ const RoyoOrderDetail = (props) => {
           )}
           {!!data?.total_delivery_fee && !!Number(data?.total_delivery_fee) && (
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={styles.font15Medium}>{strings.DELIVERYFEE}</Text>
               <Text style={styles.font15Semibold}>
                 {currencies?.primary_currency?.symbol}{' '}
@@ -518,10 +522,10 @@ const RoyoOrderDetail = (props) => {
 
           {!!data?.fixed_fee_amount && !!Number(data?.fixed_fee_amount) !== 0 && (
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={styles.font15Medium}>
                 {preferences?.fixed_fee_nomenclature != '' &&
-                preferences?.fixed_fee_nomenclature != null
+                  preferences?.fixed_fee_nomenclature != null
                   ? preferences?.fixed_fee_nomenclature
                   : strings.FIXED_FEE}
               </Text>
@@ -534,22 +538,22 @@ const RoyoOrderDetail = (props) => {
 
           {Number(data?.total_service_fee) + Number(data?.taxable_amount) !==
             0 && (
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text style={styles.font15Medium}>{strings.TAXES_FEES}</Text>
-              <Text style={styles.font15Semibold}>
-                {currencies?.primary_currency?.symbol}{' '}
-                {(
-                  Number(data?.total_service_fee) + Number(data?.taxable_amount)
-                ).toFixed(2)}
-              </Text>
-            </View>
-          )}
+              <View
+                style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text style={styles.font15Medium}>{strings.TAXES_FEES}</Text>
+                <Text style={styles.font15Semibold}>
+                  {currencies?.primary_currency?.symbol}{' '}
+                  {(
+                    Number(data?.total_service_fee) + Number(data?.taxable_amount)
+                  ).toFixed(2)}
+                </Text>
+              </View>
+            )}
 
           {!!data?.total_container_charges &&
             Number(data?.total_container_charges) !== 0 && (
               <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={styles.font15Medium}>
                   {strings.CONTAINER_CHARGES}
                 </Text>
@@ -562,7 +566,7 @@ const RoyoOrderDetail = (props) => {
 
           {!!data?.total_discount && Number(data?.total_discount) !== 0 && (
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={styles.font15Medium}>{strings.DISCOUNT}</Text>
               <Text style={styles.font15Semibold}>
                 -{currencies?.primary_currency?.symbol}{' '}
@@ -573,7 +577,7 @@ const RoyoOrderDetail = (props) => {
 
           {!!data?.tip_amount && Number(data?.tip_amount) !== 0 && (
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={styles.font15Medium}>{strings.TIP_AMOUNT}</Text>
               <Text style={styles.font15Semibold}>
                 {currencies?.primary_currency?.symbol}{' '}
@@ -603,9 +607,9 @@ const RoyoOrderDetail = (props) => {
             </View>
           )}
           <View style={styles.dashLine} />
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={styles.font15Medium}>{strings.TOTAL}</Text>
-            <Text style={{...styles.font15Semibold, color: colors.themeColor2}}>
+            <Text style={{ ...styles.font15Semibold, color: colors.themeColor2 }}>
               {`${currencies?.primary_currency?.symbol} ${Number(
                 orderInfo?.payable_amount,
               ).toFixed(2)}`}
@@ -621,7 +625,7 @@ const RoyoOrderDetail = (props) => {
             <Text style={styles.font14Semibold}>
               {strings.DELIEVERY_ADDRESS}
             </Text>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity onPress={() => dialCall(1234567890)}>
                 <Image source={imagePath.callRoyo} />
               </TouchableOpacity>
@@ -654,8 +658,8 @@ const RoyoOrderDetail = (props) => {
 
           <View style={styles.locationBox}>
             <Image style={styles.locationImage} source={imagePath.icMap} />
-            <View style={{justifyContent: 'space-evenly'}}>
-              <Text style={{fontFamily: fontFamily.semiBold, fontSize: 16}}>
+            <View style={{ justifyContent: 'space-evenly' }}>
+              <Text style={{ fontFamily: fontFamily.semiBold, fontSize: 16 }}>
                 {data?.user_name}
               </Text>
               <Text
@@ -670,16 +674,16 @@ const RoyoOrderDetail = (props) => {
               </Text>
             </View>
           </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{...styles.font14Semibold}}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={{ ...styles.font14Semibold }}>
               {strings.PAYMENT_METHOD}
             </Text>
-            <Text style={{...styles.font14Semibold, color: colors.black}}>
+            <Text style={{ ...styles.font14Semibold, color: colors.black }}>
               {data.payment_option_title}
             </Text>
           </View>
         </View>
-        <View style={{marginHorizontal: moderateScale(20)}}>
+        <View style={{ marginHorizontal: moderateScale(20) }}>
           {!isEmpty(userDocumentList) &&
             userDocumentList.map(renderUserDetails)}
         </View>
@@ -693,7 +697,7 @@ const RoyoOrderDetail = (props) => {
             />
             <ButtonWithLoader
               btnText={strings.CONFIRM}
-              btnTextStyle={{...styles.btnText, color: colors.white}}
+              btnTextStyle={{ ...styles.btnText, color: colors.white }}
               btnStyle={{
                 ...styles.btnContainer,
                 backgroundColor: colors.themeColor2,

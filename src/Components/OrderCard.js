@@ -35,6 +35,7 @@ const OrderCard = (props) => {
     themeToggle,
   } = useSelector((state) => state?.initBoot);
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  console.log(item,"itemm>>")
 
   return (
     <View style={styles.container}>

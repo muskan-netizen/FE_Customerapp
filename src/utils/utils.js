@@ -116,6 +116,7 @@ export async function apiReq(
 
     console.log('header sending--->', headers);
     console.log('data sending ---->', data);
+    console.log(data, "dataaaaaaa")
     //
     axios[method](endPoint, data, {headers})
       .then((result) => {

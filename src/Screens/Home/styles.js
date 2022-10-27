@@ -474,7 +474,20 @@ export default ({themeColors, fontFamily}) => {
       shadowOpacity: 0.25,
       shadowRadius: 4,
       elevation: 5
+    },
+    searchBarView:{
+      flexDirection: 'row',
+      paddingHorizontal: moderateScale(16),
+      height: moderateScaleVertical(48),
+      backgroundColor: colors.lightGray,
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      borderRadius: moderateScale(10),
+      marginHorizontal: moderateScale(10),
+      marginVertical:moderateScaleVertical(10)
+
     }
+    
   });
 
   return styles;

@@ -358,6 +358,7 @@ export default {
     'The specific items are not deliverable to this address. Please remove the items or change the address ',
   VIEW_ALL_VENDORS: 'View all vendors',
   CLOSE: 'Closed',
+  CLOSES:'Close',
   SELECT_CATEGORY: 'Select Category',
   EXPLORE_STORES: 'Explore',
   OPEN: 'Open',
@@ -1000,6 +1001,8 @@ Amount`,
   DELETE_ADDRESS_CONFIRM_MSG: 'Are you sure you want to delete an address?',
   MINIMUM_ORDER_VALUE: 'Minimum order value',
   ORDER: 'Orders',
+  RESTAURANTS:'Restaurants',
+  NEAR_RESTAURANTS:'Top restaurants near you',
   THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us',
   SELECT_ANS:"Select your answer"
 };
