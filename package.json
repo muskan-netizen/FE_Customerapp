@@ -952,6 +952,7 @@
     "react-native-appearance": "^0.3.4",
     "react-native-background-actions": "^2.6.4",
     "react-native-big-list": "^1.5.4",
+    "react-native-bluetooth-escpos-printer": "github:januslo/react-native-bluetooth-escpos-printer",
     "react-native-calendar-strip": "^2.2.5",
     "react-native-calendars": "^1.1274.0",
     "react-native-cardview": "^2.0.5",
