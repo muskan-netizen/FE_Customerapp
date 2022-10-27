@@ -203,6 +203,18 @@ android {
     }
 
     flavorDimensions "appType"
+    // productFlavors{
+    //       exprexPro{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.exprexPro'
+    //         resValue "string", "app_name", "ExprexPro"
+    //         resValue "string", "host_name", ""
+    //         }  
+    // }
     productFlavors {
             royoorder {
                 dimension "appType"
