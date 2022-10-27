@@ -116,10 +116,10 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'https://shoorafresh.com.au/api/v1';
 export const API_BASE_URL = 'https://africanvillage.market/api/v1';
-
+// export const API_BASE_URL='https://ipickndrop.com/api/v1'
 // hokitch
 // export const API_BASE_URL = 'https://about.hokitch.com/api/v1'
-// lastminutedress
+// lastminutedresss
 // export const API_BASE_URL = 'https://lastminutedress.com/api/v1';
 //Vishwas
 // export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
