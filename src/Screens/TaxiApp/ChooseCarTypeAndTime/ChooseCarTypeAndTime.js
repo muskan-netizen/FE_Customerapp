@@ -3,7 +3,14 @@ import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {isEmpty} from 'lodash';
 import moment from 'moment';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {FlatList, Image, Text, TouchableOpacity, View,Modal} from 'react-native';
+import {
+  FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+  Modal,
+} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
@@ -50,7 +57,7 @@ import {chekLocationPermission} from '../../../utils/permissions';
 import useInterval from '../../../utils/useInterval';
 // import Modal from '../../../Components/Modal';
 import {FlutterwaveButton, PayWithFlutterwave} from 'flutterwave-react-native';
-import { generateTransactionRef } from '../../../utils/paystackMethod';
+import {generateTransactionRef} from '../../../utils/paystackMethod';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -72,7 +79,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
-  console.log(appData,"appDataappDataappData")
+  console.log(appData, 'appDataappDataappData');
   const {userData} = useSelector((state) => state?.auth);
   const {pickUpTimeType, location} = useSelector((state) => state?.home);
 
@@ -226,10 +233,10 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     myCurrentLocationDetails,
     allListedDrivers,
     isModalVisibleForPayFlutterWave,
-    paymentDataFlutterWave
+    paymentDataFlutterWave,
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
-console.log(availableCarList,'availableCarListavailableCarList')
+  console.log(availableCarList, 'availableCarListavailableCarList');
   useFocusEffect(
     React.useCallback(() => {
       if (paramData && paramData?.selectedMethod) {
@@ -313,7 +320,6 @@ console.log(availableCarList,'availableCarListavailableCarList')
         },
       )
       .then((res) => {
-     
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(
@@ -376,15 +382,16 @@ console.log(availableCarList,'availableCarListavailableCarList')
               // setCartItems([]);
               // setCartData({});
               // actions.reloadData(!reloadData);
-              moveToNewScreen(navigationStrings.PICKUPTAXIORDERDETAILS,
-                paymentDataFlutterWave
-              //    {
-              //   orderDetail: {
-              //     order_number:
-              //       paymentDataFlutterWave?.orderDetail?.order_number,
-              //     id: paymentDataFlutterWave?.orderDetail?.id,
-              //   },
-              // }
+              moveToNewScreen(
+                navigationStrings.PICKUPTAXIORDERDETAILS,
+                paymentDataFlutterWave,
+                //    {
+                //   orderDetail: {
+                //     order_number:
+                //       paymentDataFlutterWave?.orderDetail?.order_number,
+                //     id: paymentDataFlutterWave?.orderDetail?.id,
+                //   },
+                // }
               )();
             } else {
               redirectTimeout = setTimeout(() => {
@@ -397,7 +404,7 @@ console.log(availableCarList,'availableCarListavailableCarList')
               }, 200);
             }
           })
-          .catch(error=>console.log(error,"errroro111"));
+          .catch((error) => console.log(error, 'errroro111'));
       } else {
         let apiData = {
           order_number: paymentDataFlutterWave?.orderDetail?.order_number,
@@ -424,9 +431,7 @@ console.log(availableCarList,'availableCarListavailableCarList')
               });
             }, 200);
           })
-          .catch(
-            error=>console.log(error,"errorrrr")
-          );
+          .catch((error) => console.log(error, 'errorrrr'));
       }
     } catch (error) {
       console.log('error raised', error);
@@ -560,7 +565,6 @@ console.log(availableCarList,'availableCarListavailableCarList')
         navigation.navigate(navigationStrings.KHALTI, paymentData);
         break;
       case 30: //FlutterWave Payment Getway
-        
         updateState({
           isModalVisibleForPayFlutterWave: true,
           paymentDataFlutterWave: paymentData,
@@ -1001,7 +1005,7 @@ console.log(availableCarList,'availableCarListavailableCarList')
   const _redirectToPayement = () => {
     moveToNewScreen(navigationStrings.PAYMENT_OPTIONS, {
       screenName: strings.PAYMENT,
-      paramData:paramData
+      paramData: paramData,
     })();
   };
 
@@ -1350,17 +1354,16 @@ console.log(availableCarList,'availableCarListavailableCarList')
           animateOnMount={true}
           handleComponent={carModalHeader}
           onChange={() => playHapticEffect(hapticEffects.impactMedium)}>
-          
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.background
-                  : colors.white,
-              }}>
-              {!!showCarModal && _selectCarModalView()}
-              {!!showPaymentModal && _selectPaymentView()}
-            </View>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.background
+                : colors.white,
+            }}>
+            {!!showCarModal && _selectCarModalView()}
+            {!!showPaymentModal && _selectPaymentView()}
+          </View>
         </BottomSheet>
         {!!showCarModal && (
           <View
@@ -1447,52 +1450,52 @@ console.log(availableCarList,'availableCarListavailableCarList')
           />
         </TouchableOpacity>
       </View>
-     { isModalVisibleForPayFlutterWave &&
-     
-     <Modal
-        onBackdropPress={() =>
-          updateState({
-            isModalVisibleForPayFlutterWave: false,
-            indicatorLoader: false,
-          })
-        }
-        isVisible={isModalVisibleForPayFlutterWave}
-        style={{
-          margin: 0,
-          justifyContent: 'flex-end',
-          // marginBottom: 20,
-        }}>
-        <View
+      {isModalVisibleForPayFlutterWave && (
+        <Modal
+          onBackdropPress={() =>
+            updateState({
+              isModalVisibleForPayFlutterWave: false,
+              indicatorLoader: false,
+            })
+          }
+          isVisible={isModalVisibleForPayFlutterWave}
           style={{
-            padding: moderateScale(20),
-            backgroundColor: colors?.white,
-            height: height / 2,
+            margin: 0,
             justifyContent: 'flex-end',
+            // marginBottom: 20,
           }}>
-          <PayWithFlutterwave
-            onAbort={() =>
-              updateState({
-                isModalVisibleForPayFlutterWave: false,
-                indicatorLoader: false,
-              })
-            }
-            onRedirect={handleOnRedirect}
-            options={{
-              tx_ref: generateTransactionRef(10),
-              authorization:
-                appData?.profile?.preferences?.flutterwave_public_key,
-              customer: {
-                email: userData?.email,
-                name: userData?.name,
-              },
-              amount: Number(paymentDataFlutterWave?.total_payable_amount) || 0,
-              currency: currencies?.primary_currency?.iso_code,
-              payment_options: 'card',
-            }}
-          />
-         
-        </View>
-      </Modal>}
+          <View
+            style={{
+              padding: moderateScale(20),
+              backgroundColor: colors?.white,
+              height: height / 2,
+              justifyContent: 'flex-end',
+            }}>
+            <PayWithFlutterwave
+              onAbort={() =>
+                updateState({
+                  isModalVisibleForPayFlutterWave: false,
+                  indicatorLoader: false,
+                })
+              }
+              onRedirect={handleOnRedirect}
+              options={{
+                tx_ref: generateTransactionRef(10),
+                authorization:
+                  appData?.profile?.preferences?.flutterwave_public_key,
+                customer: {
+                  email: userData?.email,
+                  name: userData?.name,
+                },
+                amount:
+                  Number(paymentDataFlutterWave?.total_payable_amount) || 0,
+                currency: currencies?.primary_currency?.iso_code,
+                payment_options: 'card',
+              }}
+            />
+          </View>
+        </Modal>
+      )}
       <PaymentProcessingModal
         isModalVisible={isModalVisible}
         updateModalState={_updateState}

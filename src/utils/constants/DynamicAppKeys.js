@@ -445,6 +445,7 @@ const shortCodes = {
   lifehomefit: '191bdb',
   appi: 'e5e222',
   dbairro_: '2b7742',
+  genee: '54f90f',
 };
 
 const appIds = {
@@ -1994,7 +1995,7 @@ const appIds = {
   }),
   kurrix: Platform.select({
     ios: 'com.kurrix.order',
-    android: 'com.kurrix.order',
+    android: 'com.goadeliv.userapp',
   }),
   mrVeloz: Platform.select({
     ios: 'com.mrVeloz.order',
@@ -2215,6 +2216,10 @@ const appIds = {
   dbairro_: Platform.select({
     ios: 'com.dbairroapp.royoorders',
     android: 'com.dbairroapp.royoorders',
+  }),
+  genee: Platform.select({
+    ios: 'com.genee.royoorders',
+    android: 'com.genee.royoorders',
   }),
 };
 

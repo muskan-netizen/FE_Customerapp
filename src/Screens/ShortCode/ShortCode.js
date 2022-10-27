@@ -2765,6 +2765,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.genee:
+          updateState({
+            shortCode: shortCodes.genee,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2792,8 +2798,6 @@ export default function ShortCode({route, navigation}) {
     }, 1000);
   };
 
-  
-
   const initApiHit = async () => {
     const res = await getItem('setPrimaryLanguage');
 
@@ -2807,7 +2811,7 @@ export default function ShortCode({route, navigation}) {
       };
     } else {
       header = {
-       //  code: '1da2e9',
+        //  code: '1da2e9',
         code: shortCode,
       };
     }

@@ -1,58 +1,65 @@
 {
   "project_info": {
-    "project_number": "193395047021",
-    "project_id": "kurrix-8cd9c",
-    "storage_bucket": "kurrix-8cd9c.appspot.com"
+    "project_number": "296449789293",
+    "project_id": "goadeliv",
+    "storage_bucket": "goadeliv.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:193395047021:android:1344590db1955f8d7c9d64",
+        "mobilesdk_app_id": "1:296449789293:android:34a28d6855c853837f1e64",
         "android_client_info": {
-          "package_name": "com.kurrix.order"
+          "package_name": "com.goadeliv.userapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "193395047021-20ol7c2bb6jhnva4ngi0ih02gaveu04e.apps.googleusercontent.com",
+          "client_id": "296449789293-4unqdh0314e5gtf4e5v48e1rvo3e273m.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.kurrix.order",
+            "package_name": "com.goadeliv.userapp",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "193395047021-jghl668igap539j2a9pkbdr5gtiimprr.apps.googleusercontent.com",
+          "client_id": "296449789293-70656pnk4tlun9k8omfqcl49gr8flab6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.kurrix.order",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "193395047021-m6m18cdj12ilkir9ec23djih5efl3f6n.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.kurrix.order",
+            "package_name": "com.goadeliv.userapp",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "193395047021-tjr5itv7nng5souadoe9cct9qkjbdopu.apps.googleusercontent.com",
+          "client_id": "296449789293-vmclcbmcp6fohftuga66ot1167b8oe9n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.goadeliv.userapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "296449789293-u1kckce8u1nqqa0ie9oe9nt3rrqm33d2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDVz9vOKdxzKRcaLJqh3OaCy0giLyJ252M"
+          "current_key": "AIzaSyAGViUMsXXDCXLH5e8f5kqDMrQQ8UgEo_Y"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "193395047021-tjr5itv7nng5souadoe9cct9qkjbdopu.apps.googleusercontent.com",
+              "client_id": "296449789293-u1kckce8u1nqqa0ie9oe9nt3rrqm33d2.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "296449789293-6easheo32k11hci3jdvei8t0oraf2t68.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.goadeliv.userapp"
+              }
             }
           ]
         }
