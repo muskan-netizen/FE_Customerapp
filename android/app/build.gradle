@@ -203,6 +203,7 @@ android {
     }
 
     flavorDimensions "appType"
+   
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -5200,7 +5201,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.amazingTaxi'
+            applicationId 'com.amazingTaxi.orders'
             resValue "string", "app_name", "Amazing Taxi"
             resValue "string", "host_name", ""
             }
@@ -6377,6 +6378,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.genee.royoorders'
             resValue "string", "app_name", "Genee" 
+            resValue "string", "host_name", ""
+            }
+               speedyDelivery{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.speedyelivery.royoorders'
+            resValue "string", "app_name", "Speedy Delivery" 
             resValue "string", "host_name", ""
             }
     }

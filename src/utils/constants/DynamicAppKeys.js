@@ -440,12 +440,13 @@ const shortCodes = {
   jimsAutoRescue: '4fc57b',
   carryfood: '86d81e',
   nhazi: 'abaf70',
-  petverse: '',
+  petverse: '9d740f',
   clickndrop: '9536ba',
   lifehomefit: '191bdb',
   appi: 'e5e222',
   dbairro_: '2b7742',
   genee: '54f90f',
+  speedyDelivery: '528728',
 };
 
 const appIds = {
@@ -2220,6 +2221,10 @@ const appIds = {
   genee: Platform.select({
     ios: 'com.genee.royoorders',
     android: 'com.genee.royoorders',
+  }),
+  speedyDelivery: Platform.select({
+    ios: 'com.speedydelivery.royoorder',
+    android: 'com.speedydelivery.royoorder',
   }),
 };
 
