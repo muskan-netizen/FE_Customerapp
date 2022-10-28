@@ -2223,8 +2223,8 @@ const appIds = {
     android: 'com.genee.royoorders',
   }),
   speedyDelivery: Platform.select({
-    ios: 'com.speedydelivery.royoorder',
-    android: 'com.speedydelivery.royoorder',
+    ios: 'com.speedydelivery.royoorders',
+    android: 'com.speedydelivery.royoorders',
   }),
 };
 

@@ -113,7 +113,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     isLoading: false,
     addressLabel: 'Glenpark',
     formattedAddress: '8502 Preston Rd. Inglewood, Maine 98380',
-    availableVendors: paramData?.cabVendors,
+    availableVendors: !isEmpty(paramData?.cabVendors)
+      ? paramData?.cabVendors
+      : [],
     availableCarList: [],
     availAbleTimes: [
       {
@@ -149,7 +151,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     selectedDateAndTime: `${moment().format('YYYY-MM-DD')} ${moment().format(
       'H:MM',
     )}`,
-    selectedVendorOption: !!paramData?.cabVendors[0]
+    selectedVendorOption: !isEmpty(paramData?.cabVendors)
       ? paramData?.cabVendors[0]
       : null,
     pageNo: 1,

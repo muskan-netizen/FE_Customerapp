@@ -44,11 +44,6 @@ export default function (Stack, appStyle) {
       />
 
       <Stack.Screen
-        name={navigationStrings.VERIFY_ACCOUNT}
-        component={VerifyAccount}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
         name={navigationStrings.FORGOT_PASSWORD}
         component={
           appStyle?.homePageLayout === 2 ? ForgotPassword2 : ForgotPassword

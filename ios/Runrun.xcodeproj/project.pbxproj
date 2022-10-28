@@ -11236,6 +11236,7 @@
 		B07E0F12D87B2C5B3610A0D3 /* libPods-available_pods-Mealsarehere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75BCD748258F5EA531F6570E /* libPods-available_pods-Mealsarehere.a */; };
 		B08FDB7A03AFA09819BAA5F0 /* libPods-available_pods-PaySic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1B064231C80809077E55561 /* libPods-available_pods-PaySic.a */; };
 		B4A8F33131926F805E678FE8 /* libPods-available_pods-Privatepremiumpickups.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 125C606C13773753BB2BBE24 /* libPods-available_pods-Privatepremiumpickups.a */; };
+		B4ED2CC24B7AA807F38C29A4 /* libPods-available_pods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DEF0CF902C71D901CCE6344C /* libPods-available_pods-RoyoOrder.a */; };
 		B611C037CBA27216969F3EE9 /* libPods-available_pods-SMCompany.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0708652C545329ECAE22A9C5 /* libPods-available_pods-SMCompany.a */; };
 		B6886F0E541D03616C3EA05E /* libPods-available_pods-InstaShop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C8B4B29EE74B706DDC78F8C /* libPods-available_pods-InstaShop.a */; };
 		B6FBE1D485217B77ED7A599C /* libPods-available_pods-BaggageTaxi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F01C27C8202DFC19D3D10A7E /* libPods-available_pods-BaggageTaxi.a */; };
@@ -16682,6 +16683,7 @@
 		DD85B0704338461932DC72F4 /* Pods-available_pods-CitySuds.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-CitySuds.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-CitySuds/Pods-available_pods-CitySuds.debug.xcconfig"; sourceTree = "<group>"; };
 		DDE720EAF67E722DA22BF732 /* Pods-available_pods-Kaypee.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Kaypee.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-Kaypee/Pods-available_pods-Kaypee.debug.xcconfig"; sourceTree = "<group>"; };
 		DDEBC906C965073BC2C08F8F /* Pods-available_pods-WeEat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-WeEat.release.xcconfig"; path = "Target Support Files/Pods-available_pods-WeEat/Pods-available_pods-WeEat.release.xcconfig"; sourceTree = "<group>"; };
+		DEF0CF902C71D901CCE6344C /* libPods-available_pods-RoyoOrder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-RoyoOrder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF2DC771D3E6A19613A7FB7B /* libPods-available_pods-Parcel.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-Parcel.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF48C514B1459610919BB5D3 /* Pods-available_pods-IAmSelling.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-IAmSelling.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-IAmSelling/Pods-available_pods-IAmSelling.debug.xcconfig"; sourceTree = "<group>"; };
 		DF76E02A84CE756948E03159 /* Pods-available_pods-Ritenow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Ritenow.release.xcconfig"; path = "Target Support Files/Pods-available_pods-Ritenow/Pods-available_pods-Ritenow.release.xcconfig"; sourceTree = "<group>"; };
@@ -18646,6 +18648,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A95980869C0047144F7F5DC /* (null) in Frameworks */,
+				B4ED2CC24B7AA807F38C29A4 /* libPods-available_pods-RoyoOrder.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -23187,6 +23190,7 @@
 				B277887769E7C46B897F8841 /* libPods-available_pods-eBOYO.a */,
 				56F03A09098403CA07467AE2 /* libPods-available_pods-iPicknDrop.a */,
 				A47BADC6A64EA325AA7EF0D0 /* libPods-available_pods-SpeedyDelivery.a */,
+				DEF0CF902C71D901CCE6344C /* libPods-available_pods-RoyoOrder.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -155475,7 +155479,7 @@
 				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = RoyoOrder;
+				PROVISIONING_PROFILE_SPECIFIER = "Speedy Delivery";
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

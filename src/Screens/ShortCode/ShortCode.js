@@ -2811,7 +2811,7 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '1da2e9',
+        // code: '245base',
         code: shortCode,
         language: res?.primary_language?.id,
       };
