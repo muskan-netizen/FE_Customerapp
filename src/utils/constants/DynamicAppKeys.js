@@ -1751,8 +1751,8 @@ const appIds = {
     android: 'com.amazingTaxi.orders',
   }),
   jazzyBug: Platform.select({
-    ios: 'com.jazzyBug',
-    android: 'com.jazzyBug',
+    ios: 'com.jazzyBugOrder',
+    android: 'com.jazzyBugOrder',
   }),
   myfarma: Platform.select({
     ios: 'com.myfarma',

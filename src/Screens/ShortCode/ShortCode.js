@@ -2800,13 +2800,13 @@ export default function ShortCode({route, navigation}) {
     if (!!res?.primary_language?.id) {
       header = {
         // code: '1da2e9',
-        code: '2d98b5',
+        code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
         //  code: '1da2e9',
-        code: '2d98b5',
+        code: shortCode,
       };
     }
     console.log(header, 'header*******');
