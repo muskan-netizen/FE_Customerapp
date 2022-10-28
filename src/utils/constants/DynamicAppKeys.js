@@ -440,7 +440,7 @@ const shortCodes = {
   jimsAutoRescue: '4fc57b',
   carryfood: '86d81e',
   nhazi: 'abaf70',
-  petverse: '',
+  petverse:'9d740f',
   clickndrop: '9536ba',
   lifehomefit: '191bdb',
   appi: 'e5e222',
