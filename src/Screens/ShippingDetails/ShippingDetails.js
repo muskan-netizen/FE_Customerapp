@@ -1,4 +1,4 @@
-import {cloneDeep} from 'lodash';
+import {cloneDeep, isEmpty} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
@@ -75,7 +75,7 @@ export default function ShippingDetails({navigation, route}) {
     callingCode: '91',
     cca2: 'IN',
     phoneNumber: '',
-    selectedVendorOption: paramData?.cabVendors[0]
+    selectedVendorOption: !isEmpty(paramData?.cabVendors)
       ? paramData?.cabVendors[0]
       : null,
     loyalityAmount: null,
@@ -85,7 +85,9 @@ export default function ShippingDetails({navigation, route}) {
     limit: 12,
     isLoading: false,
     isLoadingB: false,
-    availableVendors: paramData?.cabVendors,
+    availableVendors: !isEmpty(paramData?.cabVendors)
+      ? paramData?.cabVendors
+      : [],
     couponInfo: null,
     updatedAmount: null,
   });
