@@ -24,6 +24,7 @@ import Geocoder from 'react-native-geocoding';
 export default function PinAddressOnMap({
   onBackPress = () => {},
   onDone = () => {},
+  pickUpLocationLatLng = {},
 }) {
   const mapRef = React.createRef();
   const paramData = {};
@@ -35,18 +36,14 @@ export default function PinAddressOnMap({
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const [state, setState] = useState({
     region: {
-      latitude:
-        parseFloat(paramData?.pickUpLocationLatLng?.latitude) || 30.7333,
-      longitude:
-        parseFloat(paramData?.pickUpLocationLatLng?.longitude) || 76.7794,
+      latitude: parseFloat(pickUpLocationLatLng?.latitude) || 30.7333,
+      longitude: parseFloat(pickUpLocationLatLng?.longitude) || 76.7794,
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
     coordinate: {
-      latitude:
-        parseFloat(paramData?.pickUpLocationLatLng?.latitude) || 30.7333,
-      longitude:
-        parseFloat(paramData?.pickUpLocationLatLng?.longitude) || 76.7794,
+      latitude: parseFloat(pickUpLocationLatLng?.latitude) || 30.7333,
+      longitude: parseFloat(pickUpLocationLatLng?.longitude) || 76.7794,
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
@@ -152,24 +149,16 @@ export default function PinAddressOnMap({
   }, []);
 
   const _modeToNextScreen = () => {
-    const {params} = route;
+    // const {params} = route;
     const pickuplocationAllData = {
       longitude: details?.geometry?.location?.lng,
       latitude: details?.geometry?.location?.lat,
       address: details?.formatted_address,
-      task_type_id: paramData?.task_id,
+      task_type_id: pickUpLocationLatLng?.task_id,
       pre_address: details?.formatted_address,
       place_id: details?.place_id,
     };
-
-    if (params?.prevRoute === 'cart') {
-      params?.onGoBack(pickuplocationAllData);
-      //   navigation.goBack();
-    } else {
-      //   navigation.navigate(navigationStrings.ADDADDRESS, {
-      //     prefillAdress: pickuplocationAllData,
-      //   });
-    }
+    onDone(pickuplocationAllData);
 
     //   }
   };
@@ -184,6 +173,7 @@ export default function PinAddressOnMap({
         style={{
           ...StyleSheet.absoluteFillObject,
         }}
+        onMapLoaded={() => console.log('sdkfksdjf')}
         // region={region}
         initialRegion={region}
         // pointerEvents={'none'}

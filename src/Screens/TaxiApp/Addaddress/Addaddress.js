@@ -153,32 +153,14 @@ export default function Addaddress({navigation, route}) {
   const [modalLayoutHeight, setModalLayoutHeight] = useState(0);
   const [isPinAddressOnMapModal, setIsPinAddressOnMapModal] = useState(false);
 
+  const [pickDropData, setPickDropData] = useState({});
+
   useEffect(() => {
-    if (!!paramData?.prefillAdress) {
-      console.log('param data address', paramData);
-      const {prefillAdress} = paramData;
-      const cloneArr = dropLocationData;
-      cloneArr[searchResult.currentIndex].pre_address =
-        prefillAdress?.pre_address;
-      cloneArr[searchResult.currentIndex].latitude = prefillAdress?.latitude;
-      cloneArr[searchResult.currentIndex].longitude = prefillAdress?.longitude;
-      cloneArr[searchResult.currentIndex].task_type_id =
-        prefillAdress?.task_type_id;
-
-      // cloneArr[searchResult.currentIndex].post_code = addressData?.pincode
-      // cloneArr[searchResult.currentIndex].short_name = addressData?.states || addressData?.state
-      cloneArr[searchResult?.currentIndex].address = prefillAdress?.address;
-
-      updateState({
-        dropLocationData: cloneArr,
-        searchResult: {currentIndex: searchResult?.currentIndex, data: []},
-      });
-      console.log('clone array result', cloneArr);
-    }
     if (!!(userData && userData?.auth_token)) {
       getAllAddress();
     }
   }, [paramData]);
+
   useEffect(() => {
     getStaticLocations();
   }, []);
@@ -288,11 +270,11 @@ export default function Addaddress({navigation, route}) {
     };
     updateState({searchResult: {...searchResult, currentIndex: updateIndex}});
     setIsPinAddressOnMapModal(true);
-    // navigation.navigate(navigationStrings.PINADDRESSONMAP, {
-    //   task_id: updateIndex == 0 ? 1 : 2,
-    //   pickUpLocationLatLng:
-    //     existLatLng?.latitude !== 0 ? existLatLng : curLatLng,
-    // });
+    setPickDropData({
+      task_id: updateIndex == 0 ? 1 : 2,
+
+      ...(existLatLng?.latitude !== 0 ? existLatLng : curLatLng),
+    });
   };
 
   const renderbtn = () => {
@@ -904,7 +886,24 @@ export default function Addaddress({navigation, route}) {
     updateState({dropLocationData: cloneArr});
   };
 
-  const onSelectAddressViaMap = () => {
+  const onSelectAddressViaMap = (prefillAdress) => {
+    const cloneArr = dropLocationData;
+    cloneArr[searchResult.currentIndex].pre_address =
+      prefillAdress?.pre_address;
+    cloneArr[searchResult.currentIndex].latitude = prefillAdress?.latitude;
+    cloneArr[searchResult.currentIndex].longitude = prefillAdress?.longitude;
+    cloneArr[searchResult.currentIndex].task_type_id =
+      prefillAdress?.task_type_id;
+
+    // cloneArr[searchResult.currentIndex].post_code = addressData?.pincode
+    // cloneArr[searchResult.currentIndex].short_name = addressData?.states || addressData?.state
+    cloneArr[searchResult?.currentIndex].address = prefillAdress?.address;
+
+    updateState({
+      dropLocationData: cloneArr,
+      searchResult: {currentIndex: searchResult?.currentIndex, data: []},
+    });
+    console.log('clone array result', cloneArr);
     setIsPinAddressOnMapModal(false);
   };
 
@@ -916,6 +915,7 @@ export default function Addaddress({navigation, route}) {
         <PinAddressOnMap
           onBackPress={() => setIsPinAddressOnMapModal(false)}
           onDone={onSelectAddressViaMap}
+          pickUpLocationLatLng={pickDropData}
         />
       ) : (
         <View
