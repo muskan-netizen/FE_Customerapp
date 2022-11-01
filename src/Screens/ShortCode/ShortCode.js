@@ -2801,16 +2801,17 @@ export default function ShortCode({route, navigation}) {
 
     let header = {};
 
+
     if (!!res?.primary_language?.id) {
       header = {
-         //code: '245base',
-        code: shortCode,
+      code: '2d98b5',
+      //  code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '245base',
-        code: shortCode,
+       code: '2d98b5',
+      //  code: shortCode,
       };
     }
     console.log(header, 'header*******');

@@ -153,7 +153,8 @@ export default function OrderDetail({navigation, route}) {
     isVisibleTimeModal: false,
     currentPickupDate: paramData?.orderDetail?.schedule_pickup,
     currentDropOffDate: paramData?.orderDetail?.schedule_dropoff,
-    isLoadingA:false
+    isLoadingA:false,
+    submitedRatingToDriver:null
   });
   const {
     showTaxFeeArea,
@@ -178,7 +179,8 @@ export default function OrderDetail({navigation, route}) {
     isVisibleTimeModal,
     currentPickupDate,
     currentDropOffDate,
-    isLoadingA
+    isLoadingA,
+    submitedRatingToDriver
 
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
@@ -3094,12 +3096,41 @@ export default function OrderDetail({navigation, route}) {
     });
   };
 
+
+  // give Driver Rating
+
+  const onStarRatingForDriverPress = (rating) => {
+    console.log(rating,"ratingrating");
+    const data = {
+      order_id: cartData?.driver_rating?.order_id,
+      rating: rating,
+      review: "",
+    };
+
+
+    actions
+      .ratingToDriver(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        updateState({
+          isLoading: false,
+          submitedRatingToDriver: res?.data?.rating,
+        });
+        console.log("res++++++", res);
+      })
+      .catch(errorMethod);
+  };
+
   const getHeader = () => {
     let getUserImage = getImageUrl(
       cartData?.user_image?.image_fit,
       cartData?.user_image?.image_path,
       '500/500',
     );
+    console.log(submitedRatingToDriver,"cartDatacartDatacartData");
     return (
       <View>
         {!!(driverStatus?.order && driverStatus?.agent_location?.lat) ? (
@@ -3107,8 +3138,11 @@ export default function OrderDetail({navigation, route}) {
             data={driverStatus}
             type={strings.DRIVER}
             containerStyle={{paddingHorizontal: moderateScale(8)}}
-            isDriver={cartData?.driver_rating == null}
+            isDriver={cartData?.order_data?.order?.driver_id}
             _onRateDriver={_onRateDriver}
+            onStarRatingForDriverPress={onStarRatingForDriverPress}
+            submitedRatingToDriver={submitedRatingToDriver}
+            cartData={cartData}
           />
         ) : null}
 
@@ -4255,7 +4289,7 @@ export default function OrderDetail({navigation, route}) {
           }}
         />
 
-        {!!(ratingData || isDriverRateModal) ? (
+        {!!(isDriverRateModal) ? (
           <RatingModal
             productDetail={ratingData}
             productData={cartData}

@@ -1,12 +1,12 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+//export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://ambutap.com/api/v1';
 // export const API_BASE_URL = 'https://delivery.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://spryton.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://spryntz.com/api/v1';
 // export const API_BASE_URL ='https://sales.focushires.com/api/v1';
 //export const API_BASE_URL  ='https://shopcentral.shop/api/v1'
-// export const API_BASE_URL = 'https://8b02-103-72-170-243.ngrok.io/api/v1';
+ export const API_BASE_URL = 'https://76ef-103-72-170-243.ngrok.io/api/v1';
  // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
@@ -115,11 +115,11 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://butlerdeliveryusa.com/api/v1'
 
 // export const API_BASE_URL = 'https://shoorafresh.com.au/api/v1';
-//export const API_BASE_URL = 'https://africanvillage.market/api/v1';
-
+// export const API_BASE_URL = 'https://africanvillage.market/api/v1';
+// export const API_BASE_URL='https://ipickndrop.com/api/v1'
 // hokitch
 // export const API_BASE_URL = 'https://about.hokitch.com/api/v1'
-// lastminutedress
+// lastminutedresss
 // export const API_BASE_URL = 'https://lastminutedress.com/api/v1';
 //Vishwas
 // export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
@@ -423,6 +423,8 @@ export const GET_VENDOR_DETAIL = getApiUrl('/vendor/category/list');
 export const SEND_REFFERAL_CODE = getApiUrl('/send/referralcode');
 export const GIVE_RATING_REVIEWS = getApiUrl('/rating/update-product-rating');
 export const GET_RATING_DETAIL = getApiUrl('/rating/get-product-rating');
+export const GET_DRIVER_RATING_DETAIL = getApiUrl('/rating/get-driver-rating');
+
 export const ACCEPT_REJECT_ORDER = getApiUrl('/update/order/status');
 
 export const GET_ALL_CAR_AND_PRICE = getApiUrl(
@@ -598,3 +600,4 @@ export const ALL_ROOM_USER = '/api/chat/getRoomUser';
 // static drop-location
 export const STATIC_DROP_LOCATIONS = getApiUrl('/static-dropoff-locations');
 export const GENERATE_INVOICE = getApiUrl('/generate-facturama-invoice');
+
