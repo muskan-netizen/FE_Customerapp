@@ -447,6 +447,8 @@ const shortCodes = {
   dbairro_: '2b7742',
   genee: '54f90f',
   speedyDelivery: '528728',
+  holla: '4fe8db',
+  stabex: '7678ee',
 };
 
 const appIds = {
@@ -1927,7 +1929,7 @@ const appIds = {
     android: 'com.farmMeat.order',
   }),
   danielleBejjani: Platform.select({
-    ios: 'com.danielleBejjani.order',
+    ios: 'com.danielleBejjani',
     android: 'com.danielleBejjani',
   }),
   yallaEat: Platform.select({
@@ -2225,6 +2227,14 @@ const appIds = {
   speedyDelivery: Platform.select({
     ios: 'com.speedydelivery.royoorders',
     android: 'com.speedydelivery.royoorders',
+  }),
+  holla: Platform.select({
+    ios: 'com.holla.royoorders',
+    android: 'com.holla.royoorders',
+  }),
+  stabex: Platform.select({
+    ios: 'com.stabex.royoorders',
+    android: 'com.stabex.royoorders',
   }),
 };
 

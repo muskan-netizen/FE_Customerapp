@@ -96,47 +96,46 @@ export default function TaxiHomeScreen({route, navigation}) {
 
   useFocusEffect(
     React.useCallback(() => {
-      updateState({isLoading:true})
+      updateState({isLoading: true});
       chekLocationPermission(true)
-      .then((result) => {
-        if (result !== 'goback') {
-          getCurrentLocation('home')
-            .then((res) => {
-              console.log('current lcoation', res);
-              if (
-                appMainData &&
-                typeof appMainData?.reqData == 'object' &&
-                appMainData?.reqData?.latitude &&
-                (location?.latitude == '' || location?.longitude == '')
-              ) {
-                const data = {
-                  address: appMainData?.reqData?.address,
-                  latitude: appMainData?.reqData?.latitude,
-                  longitude: appMainData?.reqData?.longitude,
-                };
-                actions.locationData(res);
-                updateState({locationObj: res, isLoading:false});
-              } else {
-                updateState({locationObj: res});
-                if (appData?.profile?.preferences?.is_hyperlocal) {
-                  if (!location?.address) {
-                    actions.locationData(res);
+        .then((result) => {
+          if (result !== 'goback') {
+            getCurrentLocation('home')
+              .then((res) => {
+                console.log('current lcoation', res);
+                if (
+                  appMainData &&
+                  typeof appMainData?.reqData == 'object' &&
+                  appMainData?.reqData?.latitude &&
+                  (location?.latitude == '' || location?.longitude == '')
+                ) {
+                  const data = {
+                    address: appMainData?.reqData?.address,
+                    latitude: appMainData?.reqData?.latitude,
+                    longitude: appMainData?.reqData?.longitude,
+                  };
+                  actions.locationData(res);
+                  updateState({locationObj: res, isLoading: false});
+                } else {
+                  updateState({locationObj: res});
+                  if (appData?.profile?.preferences?.is_hyperlocal) {
+                    if (!location?.address) {
+                      actions.locationData(res);
+                    }
                   }
                 }
-              }
-            })
-            .catch((err) => {
-              console.log('error raised', location);
-              // console.log("default location",location)
-              updateState({locationObj: location, isLoading:true}); // if user not gave location permission then we set pannel lat lng.
-            });
-        }
-      })
-      .catch((error) => console.log('error while accessing location', error));
+              })
+              .catch((err) => {
+                console.log('error raised', location);
+                // console.log("default location",location)
+                updateState({locationObj: location, isLoading: true}); // if user not gave location permission then we set pannel lat lng.
+              });
+          }
+        })
+        .catch((error) => console.log('error while accessing location', error));
     }, []),
   );
 
- 
   // useEffect(() => {
   //   chekLocationPermission(false)
   //     .then((result) => {
@@ -175,8 +174,6 @@ export default function TaxiHomeScreen({route, navigation}) {
   //     })
   //     .catch((error) => console.log('error while accessing location', error));
   // }, []);
-
-
 
   useEffect(() => {
     updateState({updatedData: appMainData?.categories});
@@ -250,8 +247,6 @@ export default function TaxiHomeScreen({route, navigation}) {
   useEffect(() => {
     Geocoder.init(appData?.profile?.preferences?.map_key, {language: 'en'}); // set the language
   }, []);
-
-  
 
   useFocusEffect(
     React.useCallback(() => {
@@ -594,7 +589,9 @@ export default function TaxiHomeScreen({route, navigation}) {
     }
   };
 
-  {console.log(locationObj, "locationObjlocationObj")}
+  {
+    console.log(locationObj, 'locationObjlocationObj');
+  }
 
   const renderHomeScreen = () => {
     const case_ = 5;

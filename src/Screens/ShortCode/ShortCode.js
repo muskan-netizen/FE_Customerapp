@@ -2777,6 +2777,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.holla:
+          updateState({
+            shortCode: shortCodes.holla,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.stabex:
+          updateState({
+            shortCode: shortCodes.stabex,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2811,13 +2823,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '245base',
+        // code: '2d98b5',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        //  code: '1da2e9',
+        //  code: '2d98b5',
         code: shortCode,
       };
     }

@@ -203,6 +203,7 @@ android {
     }
 
     flavorDimensions "appType"
+  
     
     productFlavors {
             royoorder {
@@ -2017,7 +2018,7 @@ android {
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
                 applicationId 'com.dimavega'
-                resValue "string", "app_name", "Dima Vega"
+                resValue "string", "app_name", "Dima Halal"
                 resValue "string", "host_name", ""
             }
             skoop{
@@ -3687,16 +3688,7 @@ android {
                 resValue "string", "app_name", "SafeWalks"
                 resValue "string", "host_name", ""
             }
-            dimavega{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.dimavega'
-                resValue "string", "app_name", "Dima Vega"
-                resValue "string", "host_name", ""
-            }
+
             skoop{
                 dimension "appType"
                 versionCode 1
@@ -6388,6 +6380,26 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.speedydelivery.royoorders'
             resValue "string", "app_name", "Speedy Delivery" 
+            resValue "string", "host_name", ""
+            }
+                   holla{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.holla.royoorders'
+            resValue "string", "app_name", "/$10 Holla" 
+            resValue "string", "host_name", ""
+            }
+                   stabex{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.stabex.royoorders'
+            resValue "string", "app_name", "Stabex" 
             resValue "string", "host_name", ""
             }
     }
