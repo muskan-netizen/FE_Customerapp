@@ -513,6 +513,7 @@ export default {
   selectFriendList: require('../assets/images/BookAFriend/ic_drpdwn.png'),
   riderImage: require('../assets/images/ic_profilegrey.png'),
   //Video
+  flank: require('../assets/flankSplash.mp4'),
   masa: require('../assets/masa.mp4'),
   ipd: require('../assets/ipd.mp4'),
   icCar: require('../assets/images/ic_topviewcar.png'),

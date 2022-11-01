@@ -56,9 +56,6 @@ import socketServices from './src/utils/scoketService';
 let CodePushOptions = {checkFrequency: codePush.CheckFrequency.MANUAL};
 
 const App = () => {
-
-
-
   const [progress, setProgress] = useState(false);
   const [primaryColor, setPrimaryColor] = useState('black');
   const ConnectBTFunction = async () => {
@@ -130,7 +127,12 @@ const App = () => {
   const isDarkMode = useDarkMode();
   useEffect(() => {
     //stop splashs screen from loading
-    if (  ( getBundleId() == appIds.masa) ||  ( getBundleId() == appIds.iPicknDrop)  || ( getBundleId() == appIds.muvpod)){
+    if (
+      getBundleId() == appIds.masa ||
+      getBundleId() == appIds.iPicknDrop ||
+      getBundleId() == appIds.muvpod ||
+      getBundleId() == appIds.flank
+    ) {
       setTimeout(() => {
         SplashScreen.hide();
       }, 200);
@@ -429,7 +431,7 @@ const App = () => {
       </View>
     );
   };
-  
+
   return (
     <SafeAreaProvider>
       <MenuProvider>

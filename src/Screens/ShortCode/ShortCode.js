@@ -2694,7 +2694,8 @@ export default function ShortCode({route, navigation}) {
         if (
           getBundleId() == appIds.masa ||
           getBundleId() == appIds.iPicknDrop ||
-          getBundleId() == appIds.muvpod
+          getBundleId() == appIds.muvpod ||
+          getBundleId() == appIds.flank
         ) {
           updateState({
             isLoading: false,
@@ -2860,6 +2861,8 @@ export default function ShortCode({route, navigation}) {
         return animatedSplash();
       case appIds.muvpod:
         return animatedSplash();
+      case appIds.flank:
+        return animatedSplash();
       default:
         return imageSplash();
     }
@@ -2897,6 +2900,8 @@ export default function ShortCode({route, navigation}) {
       //   return imagePath.ipd;
       case appIds?.muvpod:
         return imagePath.muvpod;
+      case appIds?.flank:
+        return imagePath.flank;
       // case appIds?.sabroson:
       //   return imagePath.sabroson
     }
