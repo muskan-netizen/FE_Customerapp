@@ -1,6 +1,7 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://getfix.com.my/api/v1';
+// export const API_BASE_URL = 'https://smokerunstore.com/api/v1';
 // export const API_BASE_URL = 'https://ambutap.com/api/v1';
 // export const API_BASE_URL = 'https://delivery.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://spryton.royoorders.com/api/v1';
@@ -12,7 +13,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
 // export const API_BASE_URL = 'https://hellodeliver.in/api/v1';
-// export const API_BASE_URL = 'https://app.handy-pickup.com/api/v1';
+// export const API_BASE_URL = 'https://handy-pickup.com/api/v1';
 // export const API_BASE_URL = 'https://goadeliv.com/api/v1';
 // export const API_BASE_URL = 'https://boltdeliveries.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'
@@ -92,7 +93,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://compra.livian.app/api/v1';
 
 // torunz
-// export const API_BASE_URL = 'https://torunz.com/api/v1';
+export const API_BASE_URL = 'https://torunz.com/api/v1';
 
 // export const API_BASE_URL = 'https://hokitch.com/api/v1';
 // export const API_BASE_URL = 'https://toor.life/api/v1';
