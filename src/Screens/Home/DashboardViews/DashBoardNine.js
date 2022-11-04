@@ -1107,7 +1107,7 @@ return (
                 appMainData?.new_products &&
                 !!appMainData?.new_products.length && (
                   <>
-                    <View>{listHeader(strings.NEW_PRODUCTS)}</View>
+                    <View>{listHeader(strings.RECOMMENDED_FOR_YOU)}</View>
                     <FlatList
                       showsHorizontalScrollIndicator={false}
                       horizontal

@@ -312,7 +312,7 @@ export default function SelectPaymentModalView({
             ]}
           >
             {`${totalDistance} ${
-              getBundleId() === appIds?.weTogether ? "Miles" : "km"
+              getBundleId() === appIds?.weTogether ||  getBundleId() === appIds?.taxiolgy  ? "Miles" : "km"
             }`}
           </Text>
         </View>

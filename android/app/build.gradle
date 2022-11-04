@@ -204,16 +204,16 @@ android {
 
     flavorDimensions "appType"
      productFlavors {
-          citysuds{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.citysuds'
-                resValue "string", "app_name", "CitySuds"
-                resValue "string", "host_name", ""
-            } 
+        novamed{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.novamed.royoorders'
+            resValue "string", "app_name", "Novamed" 
+            resValue "string", "host_name", ""
+            }
      }
 
     // productFlavors {
@@ -6401,8 +6401,10 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.facebook.fresco:animated-gif:1.12.0'
     // For WebP support, including animated WebP
-    implementation 'com.facebook.fresco:animated-webp:1.+'
-    implementation 'com.facebook.fresco:webpsupport:1.+'
+    // implementation 'com.facebook.fresco:animated-webp:1.+'
+    implementation 'com.facebook.fresco:animated-webp:1.10.0'
+    // implementation 'com.facebook.fresco:webpsupport:1.+'
+      implementation 'com.facebook.fresco:webpsupport:1.10.0'
     // implementation project(':react-native-charts-wrapper')
     implementation 'com.facebook.android:facebook-android-sdk:9.0.0'
     // implementation 'com.google.firebase:firebase-analytics:17.3.0'
@@ -6412,8 +6414,8 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     api(platform("com.squareup.okhttp3:okhttp-bom:4.7.2"))
-api("com.squareup.okhttp3:okhttp")
-api("com.squareup.okhttp3:logging-interceptor")
+    api("com.squareup.okhttp3:okhttp")
+    api("com.squareup.okhttp3:logging-interceptor")
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'

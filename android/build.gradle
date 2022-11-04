@@ -14,6 +14,7 @@ buildscript {
         google()
 //        jcenter()
         mavenCentral()
+        // gradlePluginPortal( )
     }
     dependencies {
         classpath('com.android.tools.build:gradle:4.2.0')
@@ -40,7 +41,9 @@ allprojects {
         maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
         google()
         mavenCentral()
+       
         jcenter()
+        // gradlePluginPortal( )
         maven { url 'https://www.jitpack.io' }
         
       

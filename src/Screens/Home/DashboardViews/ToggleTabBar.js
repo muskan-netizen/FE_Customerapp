@@ -46,7 +46,8 @@ export default function ToggleTabBar({
     getSelectedTab();
   }, [appData]);
 
-console.log(toggleData,"toggleDatatoggleData")
+// console.log(toggleData,"toggleDatatoggleData")
+console.log(dine_In_Type,"toggleDatatoggleData")
 
   useEffect(() => {
     if (dine_In_Type == 'dine_in') {
