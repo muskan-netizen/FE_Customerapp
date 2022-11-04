@@ -449,6 +449,9 @@ const shortCodes = {
   speedyDelivery: '528728',
   holla: '4fe8db',
   stabex: '7678ee',
+  uberWeeds: '3e90c0',
+  cabPro: 'c672b6',
+  pointoneExpediteDelivery: 'afd6cc',
 };
 
 const appIds = {
@@ -2235,6 +2238,18 @@ const appIds = {
   stabex: Platform.select({
     ios: 'com.stabex.royoorders',
     android: 'com.stabex.royoorders',
+  }),
+  uberWeeds: Platform.select({
+    ios: 'com.uberweeds.royoorders',
+    android: 'com.uberweeds.royoorders',
+  }),
+  cabPro: Platform.select({
+    ios: 'com.cabpro.royoorders',
+    android: 'com.cabpro.royoorders',
+  }),
+  pointoneExpediteDelivery: Platform.select({
+    ios: 'com.pointoneExpediteDelivery.royoorders',
+    android: 'com.pointoneExpediteDelivery.royoorders',
   }),
 };
 

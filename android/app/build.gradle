@@ -204,7 +204,6 @@ android {
 
     flavorDimensions "appType"
   
-    
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -1004,7 +1003,7 @@ android {
             }
             mobi{
                 dimension "appType"
-                versionCode 3
+                versionCode 4
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
@@ -1368,16 +1367,7 @@ android {
                 resValue "string", "app_name", "Sambiga"
                 resValue "string", "host_name", ""
             }
-            agrionline{
-                dimension "appType"
-                versionCode 3
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.agrionline'
-                resValue "string", "app_name", "AgriOnline"
-                resValue "string", "host_name", ""
-            }
+
             quickquick{
                 dimension "appType"
                 versionCode 1
@@ -2322,16 +2312,7 @@ android {
                 resValue "string", "app_name", "Fairex"
                 resValue "string", "host_name", ""
             }
-            everywhere{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.equamd'
-                resValue "string", "app_name", "EquaMD"
-                resValue "string", "host_name", ""
-            }
+
             hellodeliver{
                 dimension "appType"
                 versionCode 1
@@ -2746,16 +2727,7 @@ android {
                 resValue "string", "app_name", "Toda"
                 resValue "string", "host_name", ""
             }
-            mobi{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.mobi'
-                resValue "string", "app_name", "MOBI"
-                resValue "string", "host_name", ""
-            }
+
             yourlaundryapp{
                 dimension "appType"
                 versionCode 1
@@ -6400,6 +6372,36 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.stabex.royoorders'
             resValue "string", "app_name", "Stabex" 
+            resValue "string", "host_name", ""
+            }
+                    uberWeeds{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.uberweeds.royoorders'
+            resValue "string", "app_name", "Uber Weeds" 
+            resValue "string", "host_name", ""
+            }
+                     cabPro{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.cabpro.royoorders'
+            resValue "string", "app_name", "I - Cab Pro" 
+            resValue "string", "host_name", ""
+            }
+                    pointoneExpediteDelivery{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.pointoneExpediteDelivery.royoorders'
+            resValue "string", "app_name", "Pointone Expedite Delivery" 
             resValue "string", "host_name", ""
             }
     }
