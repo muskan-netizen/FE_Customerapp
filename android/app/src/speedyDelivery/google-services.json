@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "747426793643",
+    "project_id": "speedy-delivery-db50d",
+    "storage_bucket": "speedy-delivery-db50d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:747426793643:android:e4b58b5a6ded00dfed0fee",
+        "android_client_info": {
+          "package_name": "com.speedydelivery.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "747426793643-2ilcrg4a57t8oio7cnj0dl45g9i5j2kn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.speedydelivery.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "747426793643-2u02b84fols1s0b3r35b8iab2c37un9a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.speedydelivery.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "747426793643-5bg8vg4ml34h312f9naroc27hbilktnu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.speedydelivery.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "747426793643-shjuocgp3pvdrgaqlj6n8mrsf4o1pihg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDI3ZYkBk_JtPXpV9zE__ySYWx6zDHRnfg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "747426793643-shjuocgp3pvdrgaqlj6n8mrsf4o1pihg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "747426793643-iph40u2ks9cdpqfkqlibep1ru722sh6d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.speedydelivery.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

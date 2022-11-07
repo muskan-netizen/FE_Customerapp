@@ -440,11 +440,18 @@ const shortCodes = {
   jimsAutoRescue: '4fc57b',
   carryfood: '86d81e',
   nhazi: 'abaf70',
-  petverse: '',
+  petverse: '9d740f',
   clickndrop: '9536ba',
   lifehomefit: '191bdb',
   appi: 'e5e222',
   dbairro_: '2b7742',
+  genee: '54f90f',
+  speedyDelivery: '528728',
+  holla: '4fe8db',
+  stabex: '7678ee',
+  uberWeeds: '3e90c0',
+  cabPro: 'c672b6',
+  pointoneExpediteDelivery: 'afd6cc',
 };
 
 const appIds = {
@@ -1925,7 +1932,7 @@ const appIds = {
     android: 'com.farmMeat.order',
   }),
   danielleBejjani: Platform.select({
-    ios: 'com.danielleBejjani.order',
+    ios: 'com.danielleBejjani',
     android: 'com.danielleBejjani',
   }),
   yallaEat: Platform.select({
@@ -1994,7 +2001,7 @@ const appIds = {
   }),
   kurrix: Platform.select({
     ios: 'com.kurrix.order',
-    android: 'com.kurrix.order',
+    android: 'com.goadeliv.userapp',
   }),
   mrVeloz: Platform.select({
     ios: 'com.mrVeloz.order',
@@ -2215,6 +2222,34 @@ const appIds = {
   dbairro_: Platform.select({
     ios: 'com.dbairroapp.royoorders',
     android: 'com.dbairroapp.royoorders',
+  }),
+  genee: Platform.select({
+    ios: 'com.genee.royoorders',
+    android: 'com.genee.royoorders',
+  }),
+  speedyDelivery: Platform.select({
+    ios: 'com.speedydelivery.royoorders',
+    android: 'com.speedydelivery.royoorders',
+  }),
+  holla: Platform.select({
+    ios: 'com.holla.royoorders',
+    android: 'com.holla.royoorders',
+  }),
+  stabex: Platform.select({
+    ios: 'com.stabex.royoorders',
+    android: 'com.stabex.royoorders',
+  }),
+  uberWeeds: Platform.select({
+    ios: 'com.uberweeds.royoorders',
+    android: 'com.uberweeds.royoorders',
+  }),
+  cabPro: Platform.select({
+    ios: 'com.cabpro.royoorders',
+    android: 'com.cabpro.royoorders',
+  }),
+  pointoneExpediteDelivery: Platform.select({
+    ios: 'com.pointoneExpediteDelivery.royoorders',
+    android: 'com.pointoneExpediteDelivery.royoorders',
   }),
 };
 
