@@ -1304,7 +1304,7 @@ export default function OrderDetail({navigation, route}) {
                             </View>
                           </View>
                         </View>
-                        {cartData?.luxury_option_name == 'Rental' ? (
+                        {cartData?.luxury_option_name == 'rental' ? (
                           <View
                             style={{
                               flexDirection: 'row',
