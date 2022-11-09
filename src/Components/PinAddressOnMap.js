@@ -25,6 +25,7 @@ export default function PinAddressOnMap({
   onBackPress = () => {},
   onDone = () => {},
   pickUpLocationLatLng = {},
+  onMapLoaded = () => {},
 }) {
   const mapRef = React.createRef();
   const paramData = {};
@@ -173,7 +174,7 @@ export default function PinAddressOnMap({
         style={{
           ...StyleSheet.absoluteFillObject,
         }}
-        onMapLoaded={() => console.log('sdkfksdjf')}
+        onMapLoaded={onMapLoaded}
         // region={region}
         initialRegion={region}
         // pointerEvents={'none'}

@@ -118,6 +118,7 @@ export default function Addaddress({navigation, route}) {
     selectedFriendForRide: {id: 0},
     staticLocation: [],
     selectedLoaction: [],
+    isLoading: false,
   });
   const {
     pageNo,
@@ -148,6 +149,7 @@ export default function Addaddress({navigation, route}) {
     selectedFriendForRide,
     staticLocation,
     selectedLoaction,
+    isLoading,
   } = state;
 
   const [modalLayoutHeight, setModalLayoutHeight] = useState(0);
@@ -268,7 +270,10 @@ export default function Addaddress({navigation, route}) {
       latitude: dropLocationData[updateIndex]?.latitude || 0,
       longitude: dropLocationData[updateIndex]?.longitude || 0,
     };
-    updateState({searchResult: {...searchResult, currentIndex: updateIndex}});
+    updateState({
+      searchResult: {...searchResult, currentIndex: updateIndex},
+      isLoading: true,
+    });
     setIsPinAddressOnMapModal(true);
     setPickDropData({
       task_id: updateIndex == 0 ? 1 : 2,
@@ -907,15 +912,23 @@ export default function Addaddress({navigation, route}) {
     setIsPinAddressOnMapModal(false);
   };
 
+  const onMapLoaded = () => {
+    updateState({
+      isLoading: false,
+    });
+  };
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
+      isLoading={isLoading}
       statusBarColor={colors.white}>
       {isPinAddressOnMapModal ? (
         <PinAddressOnMap
           onBackPress={() => setIsPinAddressOnMapModal(false)}
           onDone={onSelectAddressViaMap}
           pickUpLocationLatLng={pickDropData}
+          onMapLoaded={onMapLoaded}
         />
       ) : (
         <View
