@@ -1,9 +1,9 @@
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {Alert, BackHandler, Linking} from 'react-native';
+import {Alert, BackHandler, Linking, ScrollView} from 'react-native';
 import AppLink from 'react-native-app-link';
 import {useDarkMode} from 'react-native-dark-mode';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
 import {useSelector} from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -13,7 +13,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {MyDarkTheme} from '../../styles/theme';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
 
 import {
   androidBackButtonHandler,
@@ -1021,7 +1021,64 @@ export default function Home({route, navigation}) {
           </>
         );
       case 3:
-        return (
+        if (getBundleId() === appIds.onTheWheel ) {
+          return (
+            <>
+                  <DashBoardHeaderSix
+                    showToggles={false}
+                    navigation={navigation}
+                    location={location}
+                    selcetedToggle={selcetedToggle}
+                    toggleData={appData}
+                    isLoading={isLoading}
+                    currentLocation={currentLocation}
+                    isLoadingB={isLoadingB}
+                    _onVoiceListen={_onVoiceListen}
+                    isVoiceRecord={isVoiceRecord}
+                    _onVoiceStop={_onVoiceStop}
+                  />
+      
+                  {dineInType == 'pick_drop' ? (
+                    <TaxiHomeDashbord
+                      handleRefresh={() => handleRefresh()}
+                      bannerPress={(item) => bannerPress(item)}
+                      isLoading={isLoading}
+                      isRefreshing={isRefreshing}
+                      appMainData={appMainData}
+                      onPressCategory={(item) => onPressCategory(item)}
+                      toggleData={appData}
+                      location={location}
+                      curLatLong={curLatLong}
+                    />
+                  ) : (
+                    <DashBoardNine
+                      handleRefresh={() => handleRefresh()}
+                      bannerPress={(item) => bannerPress(item)}
+                      isLoading={isLoading}
+                      isRefreshing={isRefreshing}
+                      appMainData={appMainData}
+                      onPressCategory={(item) => {
+                        onPressCategory(item);
+                      }}
+                      onPressVendor={(item) => {
+                        onPressVendor(item);
+                      }}
+                      isDineInSelected={isDineInSelected}
+                      selcetedToggle={selcetedToggle}
+                      tempCartData={tempCartData}
+                      toggleData={appData}
+                      navigation={navigation}
+                      onVendorFilterSeletion={onVendorFilterSeletion}
+                      singleVendor={singleVendor}
+                      onPressAddLaundryItem={onPressAddLaundryItem}
+                      isLoadingAddons={isLoadingAddons}
+                      selectedHomeCategory={selectedHomeCategory}
+                    />
+                  )}
+                </>
+          )
+        } else {
+          return (
           <>
             <DashBoardHeaderFive
               showToggles={false}
@@ -1076,6 +1133,12 @@ export default function Home({route, navigation}) {
             )}
           </>
         );
+          
+        }
+
+   
+        
+        
 
       case 4:
         return (
@@ -1239,7 +1302,7 @@ export default function Home({route, navigation}) {
             )}
           </>
         );
-
+                // 3
         case 7:
           return (
             <>

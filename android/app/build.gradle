@@ -205,14 +205,14 @@ android {
     flavorDimensions "appType"
 
     productFlavors{
-          novamed{
+            onTheWheel{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.novamed.royoorders'
-            resValue "string", "app_name", "Novamed" 
+            applicationId 'com.onthewheel.royorders'
+            resValue "string", "app_name", "On The Wheels" 
             resValue "string", "host_name", ""
             }
     }

@@ -27,6 +27,7 @@ import {
 import Carousel from 'react-native-snap-carousel';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
+import DeliveryTypeCompTwo from '../../../Components/DeliveryTypeCompTwo';
 import GradientButton from '../../../Components/GradientButton';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 import LaundryCategoryCard from '../../../Components/LaundryCategoryCard';
@@ -76,6 +77,7 @@ export default function DashBoardNine({
   onClose = () => { },
   onPressSubscribe = () => { },
   isSubscription = false,
+  selcetedToggle,
 }) {
   const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
     (state) => state?.initBoot,
@@ -450,61 +452,96 @@ export default function DashBoardNine({
       () => {
         navigation.navigate(screenName, { data });
       };
-  const renderBrands = ({ item }) => {
-    console.log(item, "itemitem")
-    // const imageUrl = getImageUrl(item.image.proxy_url, item.image.image_path, '800/600');
-    const imageURI = getImageUrl(
-      item.image.proxy_url,
-      item.image.image_path,
-      '800/600',
-    );
-    const isSVG = imageURI ? imageURI.includes('.svg') : null;
-    return (
-      <TouchableOpacity
-        activeOpacity={0.7}
-        style={getBundleId() === appIds.onTheWheel ? { width: width / 2.5, height: moderateScale(150) } : {}}
-        onPress={moveToNewScreen(navigationStrings.BRANDDETAIL, item)}>
-        {isSVG ? (
-          <SvgUri
-            height={getBundleId() === appIds.onTheWheel ? moderateScale(110) : moderateScale(96)}
-            width={getBundleId() === appIds.onTheWheel ? width / 2.5 : moderateScale(96)}
-            uri={imageURI}
-          />
-        ) : (
-          <FastImage
-            source={{ uri: imageURI, priority: FastImage.priority.high }}
-            style={{
-              height: getBundleId() === appIds.onTheWheel ? moderateScale(110) : moderateScale(96),
-              width: getBundleId() === appIds.onTheWheel ? width / 2.5 : moderateScale(96),
-              borderRadius: moderateScale(10),
-              backgroundColor: isDarkMode
-                ? colors.whiteOpacity15
-                : colors.greyColor,
-            }}
-          />
-        )}
-        {console.log(item, "itemitemitemishere")}
-        {
-          getBundleId() == appIds.onTheWheel && <>
-            <View style={{ marginTop: moderateScale(5), paddingLeft: moderateScale(10) }} >
-              <Text
-                // numberOfLines={1}
-                style={{
-                  fontSize: textScale(13),
-                  fontFamily: fontFamily.medium,
-                }}>
-                   {item?.translation[0]?.title}
-                </Text>
-            <Text style={{
-              fontSize: textScale(10),
-              fontFamily: fontFamily.regular,
-            }}>{item?.bc[0]?.category_detail?.translation[0]?.name}</Text>
-          </View>
+//   const renderBrands = ({ item }) => {
+//     console.log(item, "itemitem")
+//     // const imageUrl = getImageUrl(item.image.proxy_url, item.image.image_path, '800/600');
+//     const imageURI = getImageUrl(
+//       item.image.proxy_url,
+//       item.image.image_path,
+//       '800/600',
+//     );
+//     const isSVG = imageURI ? imageURI.includes('.svg') : null;
+//     return (
+//       <TouchableOpacity
+//         activeOpacity={0.7}
+//         style={getBundleId() === appIds.onTheWheel ? { width: width / 2.5, height: moderateScale(150) } : {}}
+//         onPress={moveToNewScreen(navigationStrings.BRANDDETAIL, item)}>
+//         {isSVG ? (
+//           <SvgUri
+//             height={getBundleId() === appIds.onTheWheel ? moderateScale(110) : moderateScale(96)}
+//             width={getBundleId() === appIds.onTheWheel ? width / 2.5 : moderateScale(96)}
+//             uri={imageURI}
+//           />
+//         ) : (
+//           <FastImage
+//             source={{ uri: imageURI, priority: FastImage.priority.high }}
+//             style={{
+//               height: getBundleId() === appIds.onTheWheel ? moderateScale(110) : moderateScale(96),
+//               width: getBundleId() === appIds.onTheWheel ? width / 2.5 : moderateScale(96),
+//               borderRadius: moderateScale(10),
+//               backgroundColor: isDarkMode
+//                 ? colors.whiteOpacity15
+//                 : colors.greyColor,
+//             }}
+//           />
+//         )}
+//         {console.log(item, "itemitemitemishere")}
+//         {
+//           getBundleId() == appIds.onTheWheel && <>
+//             <View style={{ marginTop: moderateScale(5), paddingLeft: moderateScale(10) }} >
+//               <Text
+//                 // numberOfLines={1}
+//                 style={{
+//                   fontSize: textScale(13),
+//                   fontFamily: fontFamily.medium,
+//                 }}>
+//                    {item?.translation[0]?.title}
+//                 </Text>
+//             <Text style={{
+//               fontSize: textScale(10),
+//               fontFamily: fontFamily.regular,
+//             }}>{item?.bc[0]?.category_detail?.translation[0]?.name}</Text>
+//           </View>
 
-          </>
-        }
-      </TouchableOpacity >
-    );
+//           </>
+//         }
+//       </TouchableOpacity >
+//     );
+// };
+
+const renderBrands = ({item}) => {
+  // const imageUrl = getImageUrl(item.image.proxy_url, item.image.image_path, '800/600');
+  const imageURI = getImageUrl(
+    item.image.proxy_url,
+    item.image.image_path,
+    '800/600',
+  );
+  const isSVG = imageURI ? imageURI.includes('.svg') : null;
+  return (
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={moveToNewScreen(navigationStrings.BRANDDETAIL, item)}>
+      {isSVG ? (
+        <SvgUri
+          height={moderateScale(96)}
+          width={moderateScale(96)}
+          uri={imageURI}
+        />
+      ) : (
+        <FastImage
+          source={{uri: imageURI, priority: FastImage.priority.high}}
+          style={{
+            height: moderateScale(96),
+            width: moderateScale(96),
+            borderRadius: moderateScale(10),
+            backgroundColor: isDarkMode
+              ? colors.whiteOpacity15
+              : colors.greyColor,
+          }}
+        />
+      )}
+    </TouchableOpacity>
+  );
 };
 
 const onViewAll = (type, data) => {
@@ -981,6 +1018,7 @@ return (
           tintColor={themeColors.primary_color}
         />
       }>
+        <DeliveryTypeCompTwo selectedToggle={selcetedToggle} />
       {showAllTempCartOrders()}
       <Animatable.View animation={'fadeInUp'} delay={200}>
         {!!isGetEstimation ?
@@ -991,7 +1029,7 @@ return (
           </>
         }
 
-        {true && (
+        {checkForBrand && (
           <View style={{}}>
             {appMainData &&
               appMainData?.brands &&
@@ -1018,6 +1056,34 @@ return (
               )}
           </View>
         )}
+
+          {/* {checkForBrand && (
+                <View style={{}}>
+                  {appMainData &&
+                    appMainData?.brands &&
+                    !!appMainData?.brands.length && (
+                      <>
+                        <View>{listHeader(strings.POPULAR_BRANDS)}</View>
+                        <FlatList
+                          showsHorizontalScrollIndicator={false}
+                          horizontal
+                          data={appMainData?.brands}
+                          renderItem={renderBrands}
+                          keyExtractor={(item) => item.id.toString()}
+                          ItemSeparatorComponent={() => (
+                            <View style={{marginRight: moderateScale(12)}} />
+                          )}
+                          ListHeaderComponent={() => (
+                            <View style={{marginLeft: moderateScale(16)}} />
+                          )}
+                          ListFooterComponent={() => (
+                            <View style={{marginRight: moderateScale(16)}} />
+                          )}
+                        />
+                      </>
+                    )}
+                </View>
+              )} */}
 
         {businessType !== 'laundry' && (
           <View style={{}}>
@@ -1162,7 +1228,7 @@ return (
       <View
         style={{
           height:
-            Platform.OS == 'ios' ? moderateScale(60) : moderateScale(90),
+            Platform.OS == 'ios' ? moderateScale(5) : moderateScale(5),
         }}
       />
     </ScrollView>
