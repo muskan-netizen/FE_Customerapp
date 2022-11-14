@@ -154,7 +154,8 @@ export default function OrderDetail({navigation, route}) {
     currentPickupDate: paramData?.orderDetail?.schedule_pickup,
     currentDropOffDate: paramData?.orderDetail?.schedule_dropoff,
     isLoadingA:false,
-    submitedRatingToDriver:null
+    submitedRatingToDriver:null,
+    driverRatingData:null
   });
   const {
     showTaxFeeArea,
@@ -180,8 +181,8 @@ export default function OrderDetail({navigation, route}) {
     currentPickupDate,
     currentDropOffDate,
     isLoadingA,
-    submitedRatingToDriver
-
+    submitedRatingToDriver,
+    driverRatingData
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -418,6 +419,7 @@ export default function OrderDetail({navigation, route}) {
 
   const onStarRatingPress = (i, rating) => {
     // updateState({isLoading: true});
+       
     _giveRatingToProduct(i, rating);
   };
 
@@ -1137,6 +1139,7 @@ export default function OrderDetail({navigation, route}) {
 
           {item?.products.length
             ? item?.products.map((i, inx) => {
+              
                 if (item?.vendor_id == i?.vendor_id) {
                   return (
                     <View
@@ -1150,6 +1153,7 @@ export default function OrderDetail({navigation, route}) {
                           backgroundColor: isDarkMode
                             ? MyDarkTheme.colors.background
                             : '#F8F8F8',
+                            
                         }}>
                         <FastImage
                           source={
@@ -1315,8 +1319,10 @@ export default function OrderDetail({navigation, route}) {
                                       </View>
                                     </View>
                                   )}
+                                  
                                 </View>
                               )}
+                              
                             </View>
                             <View
                               style={{
@@ -1344,16 +1350,16 @@ export default function OrderDetail({navigation, route}) {
                                   }`}
                                 </Text>
                               </Text>
+                              
                             </View>
+                            
                           </View>
+                         
                         </View>
 
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                          }}></View>
+                       
                       </View>
+         
 
                       {!!driverStatus?.order &&
                       driverStatus?.order?.status === 'completed' ? (
@@ -1364,9 +1370,9 @@ export default function OrderDetail({navigation, route}) {
                             paddingBottom: moderateScaleVertical(5),
                             paddingHorizontal: moderateScale(10),
                             marginVertical: moderateScaleVertical(16),
+                           
                           }}>
                           <StarRating
-                            disabled={true}
                             maxStars={5}
                             rating={Number(i?.product_rating?.rating)}
                             selectedStar={(rating) =>
@@ -1375,16 +1381,18 @@ export default function OrderDetail({navigation, route}) {
                             fullStarColor={colors.ORANGE}
                             starSize={15}
                           />
-                          <View>
-                            <Text
-                              onPress={() => updateState({ratingData: i})}
-                              style={[
-                                styles.writeAReview,
-                                {color: themeColors.primary_color},
-                              ]}>
-                              {strings.WRITE_REVIEW}
-                            </Text>
-                          </View>
+                          {Number(i?.product_rating?.rating)?
+                           <TouchableOpacity  onPress={() => _onRateOrderOrDriver(i)}>
+                           <Text
+                             style={[
+                               styles.writeAReview,
+                               {color: themeColors.primary_color},
+                             ]}>
+                             {strings.WRITE_REVIEW}
+                           </Text>
+                         </TouchableOpacity>:null
+                          }
+                         
                           
                           {/* {i?.product_rating?.rating ? (
                           <View>
@@ -3090,19 +3098,16 @@ export default function OrderDetail({navigation, route}) {
     navigation.navigate(navigationStrings.CHAT_SCREEN, {data: {...item}});
   };
 
-  const _onRateDriver = () => {
-    updateState({
-      isDriverRateModal: true,
-    });
+  const _onRateOrderOrDriver = (item) => {
+      navigation.navigate(navigationStrings.RATEORDER, { item });
   };
 
 
   // give Driver Rating
 
   const onStarRatingForDriverPress = (rating) => {
-    console.log(rating,"ratingrating");
     const data = {
-      order_id: cartData?.driver_rating?.order_id,
+      order_id: cartData?.driver_rating?.order_id?cartData?.driver_rating?.order_id  :paramData?.orderId,
       rating: rating,
       review: "",
     };
@@ -3118,6 +3123,8 @@ export default function OrderDetail({navigation, route}) {
         updateState({
           isLoading: false,
           submitedRatingToDriver: res?.data?.rating,
+          driverRatingData:res?.data
+
         });
         console.log("res++++++", res);
       })
@@ -3130,7 +3137,9 @@ export default function OrderDetail({navigation, route}) {
       cartData?.user_image?.image_path,
       '500/500',
     );
-    console.log(submitedRatingToDriver,"cartDatacartDatacartData");
+
+    console.log(cartData?.driver_rating,submitedRatingToDriver,"cartData?.driver_rating");
+   
     return (
       <View>
         {!!(driverStatus?.order && driverStatus?.agent_location?.lat) ? (
@@ -3139,7 +3148,11 @@ export default function OrderDetail({navigation, route}) {
             type={strings.DRIVER}
             containerStyle={{paddingHorizontal: moderateScale(8)}}
             isDriver={cartData?.order_data?.order?.driver_id}
-            _onRateDriver={_onRateDriver}
+            _onRateDriver={ ()=>_onRateOrderOrDriver({
+              order_id:cartData?.driver_rating?.order_id?cartData?.driver_rating?.order_id:paramData?.orderId,
+              isDriverRate: true,
+             driverRatingData:driverRatingData?driverRatingData:cartData?.driver_rating,
+            })}
             onStarRatingForDriverPress={onStarRatingForDriverPress}
             submitedRatingToDriver={submitedRatingToDriver}
             cartData={cartData}
@@ -3434,21 +3447,7 @@ export default function OrderDetail({navigation, route}) {
             </View>
           )}
 
-        {/* {!orderStatus &&
-          paramData?.orderStatus?.current_status?.title != 'Rejected' &&
-          paramData?.orderStatus?.current_status?.title != 'Placed' && (
-            <View
-              style={{
-                marginVertical: moderateScaleVertical(20),
-              }}>
-              <StepIndicators
-                labels={labels}
-                currentPosition={currentPosition}
-                themeColor={themeColors}
-              />
-            </View>
-          )} */}
-
+       
         {!!(updatedcartItems && updatedcartItems.length) && (
           <FlatList
             data={updatedcartItems}
@@ -4289,17 +4288,7 @@ export default function OrderDetail({navigation, route}) {
           }}
         />
 
-        {!!(isDriverRateModal) ? (
-          <RatingModal
-            productDetail={ratingData}
-            productData={cartData}
-            isDriverRateModal={isDriverRateModal}
-            modalClose={() =>
-              updateState({ratingData: null, isDriverRateModal: false})
-            }
-            onSuccessRating={onSuccessRating}
-          />
-        ) : null}
+       
       </View>
 
       <Modal

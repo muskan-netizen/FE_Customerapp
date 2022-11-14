@@ -135,6 +135,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     cancelError: null,
     isWaitingOver: false,
     submitedRatingToDriver: 0,
+    driverRatingData: null,
   });
   const {
     isLoading,
@@ -168,6 +169,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     cancelError,
     isWaitingOver,
     submitedRatingToDriver,
+    driverRatingData,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -283,6 +285,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       // showSuccess(driverStatus);
     }
   }, [driverStatus]);
+  console.log(orderStatus, "driverStatusdriverStatus");
 
   const new_dispatch_traking_url = !!paramData?.orderDetail
     ?.dispatch_traking_url
@@ -291,10 +294,6 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         "/order-details/"
       )
     : null;
-  console.log(
-    new_dispatch_traking_url,
-    "new_dispatch_traking_urlnew_dispatch_traking_url"
-  );
   /*********Update driver detail screen********* */
   const _updateDriverLocationLocation = async (url) => {
     let apiData = {
@@ -377,65 +376,65 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     }
   }, [isLoading]);
 
-  /*********Get order detail screen********* */
-  const _getOrderDetailScreen = (url) => {
-    actions
-      .getOrderDetailPickUp(
-        {
-          order_id: paramData?.orderId,
-          new_dispatch_traking_url: new_dispatch_traking_url,
-        },
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          // systemuser: DeviceInfo.getUniqueId(),
-        }
-      )
-      .then((res) => {
-        console.log(res, "ressssssss");
-        // console.log(res, 'agent location2');
-        // if (JSON.stringify(tasks) !== JSON.stringify(res?.data?.tasks)) {
-        updateState({
-          tasks: res?.data?.tasks,
-        });
-        // }
+  // /*********Get order detail screen********* */
+  // const _getOrderDetailScreen = (url) => {
+  //   actions
+  //     .getOrderDetailPickUp(
+  //       {
+  //         order_id: paramData?.orderId,
+  //         new_dispatch_traking_url: new_dispatch_traking_url,
+  //       },
+  //       {
+  //         code: appData?.profile?.code,
+  //         currency: currencies?.primary_currency?.id,
+  //         language: languages?.primary_language?.id,
+  //         // systemuser: DeviceInfo.getUniqueId(),
+  //       }
+  //     )
+  //     .then((res) => {
+  //       console.log(res, "ressssssss");
+  //       // console.log(res, 'agent location2');
+  //       // if (JSON.stringify(tasks) !== JSON.stringify(res?.data?.tasks)) {
+  //       updateState({
+  //         tasks: res?.data?.tasks,
+  //       });
+  //       // }
 
-        updateState({
-          isLoading: false,
-          orderFullDetail: res?.data,
-          baseUrl: res?.data?.base_url,
-          region: {
-            latitude: res?.data?.tasks[0]?.latitude
-              ? Number(res?.data?.tasks[0].latitude)
-              : 30.7191,
-            longitude: res?.data?.tasks[0]?.longitude
-              ? Number(res?.data?.tasks[0].longitude)
-              : 76.8107,
-            latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
-          },
-          coordinate: {
-            latitude: res?.data?.tasks[0]?.latitude
-              ? Number(res?.data?.tasks[0].latitude)
-              : 30.7191,
-            longitude: res?.data?.tasks[0]?.longitude
-              ? Number(res?.data?.tasks[0].longitude)
-              : 76.8107,
-            latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
-          },
-          showOrderDetailView: true,
-          agent_location: res?.data?.agent_location,
-          orderDetail: res?.data?.order,
-          agent_image: res?.data?.agent_image,
-          driverStatus: res?.data?.order_details?.dispatcher_status,
-          isShowRating: res?.data?.order?.status == "completed" ? true : false,
-          productInfo: res?.data?.order_details?.products,
-        });
-      })
-      .catch(errorMethod);
-  };
+  //       updateState({
+  //         isLoading: false,
+  //         orderFullDetail: res?.data,
+  //         baseUrl: res?.data?.base_url,
+  //         region: {
+  //           latitude: res?.data?.tasks[0]?.latitude
+  //             ? Number(res?.data?.tasks[0].latitude)
+  //             : 30.7191,
+  //           longitude: res?.data?.tasks[0]?.longitude
+  //             ? Number(res?.data?.tasks[0].longitude)
+  //             : 76.8107,
+  //           latitudeDelta: LATITUDE_DELTA,
+  //           longitudeDelta: LONGITUDE_DELTA,
+  //         },
+  //         coordinate: {
+  //           latitude: res?.data?.tasks[0]?.latitude
+  //             ? Number(res?.data?.tasks[0].latitude)
+  //             : 30.7191,
+  //           longitude: res?.data?.tasks[0]?.longitude
+  //             ? Number(res?.data?.tasks[0].longitude)
+  //             : 76.8107,
+  //           latitudeDelta: LATITUDE_DELTA,
+  //           longitudeDelta: LONGITUDE_DELTA,
+  //         },
+  //         showOrderDetailView: true,
+  //         agent_location: res?.data?.agent_location,
+  //         orderDetail: res?.data?.order,
+  //         agent_image: res?.data?.agent_image,
+  //         driverStatus: res?.data?.order_details?.dispatcher_status,
+  //         isShowRating: res?.data?.order?.status == "completed" ? true : false,
+  //         productInfo: res?.data?.order_details?.products,
+  //       });
+  //     })
+  //     .catch(errorMethod);
+  // };
 
   const errorMethod = (error) => {
     updateState({
@@ -470,8 +469,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     data["review"] = productDetail?.product_rating?.review
       ? productDetail?.product_rating?.review
       : "";
-    // data['vendor_id'] = productDetail.vendor_id;
-    // console.log(productDetail, 'productDetail');
+
     actions
       .giveRating(data, {
         code: appData?.profile?.code,
@@ -482,6 +480,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         // console.log(res, 'resresresresres');
         let cloned_productInfo = cloneDeep(productInfo);
         // console.log(cloned_productInfo, 'cloned_productInfo');
+        console.log(res.data, "res.data");
         updateState({
           isLoading: false,
           productInfo: cloned_productInfo.map((itm, inx) => {
@@ -524,6 +523,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         updateState({
           isLoading: false,
           submitedRatingToDriver: res?.data?.rating,
+          driverRatingData: res?.data,
         });
         console.log("res++++++", res);
       })
@@ -541,11 +541,23 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     });
   };
   const rateYourOrder = (item) => {
-    console.log(item, "itemetmetemtemtemt");
     updateState({
-      isVisible: false,
+      isLoading: true,
     });
-    navigation.navigate(navigationStrings.RATEORDER, { item });
+    _updateDriverLocationLocation()
+      .then((res) => {
+        updateState({
+          isVisible: false,
+          isLoading:false
+        });
+        navigation.navigate(navigationStrings.RATEORDER, { item });
+      })
+      .catch((error) => {
+        updateState({
+          isVisible: false,
+          isLoading:false
+        });
+      });
   };
 
   const viewDriverStatus = () => {
@@ -738,40 +750,40 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   };
 
   //order detail View
-  const _selectOrderDetailView = () => {
-    return (
-      <TaxiOrderDetailView
-        // orderDetail={orderDetail}
-        isLoading={isLoading}
-        // agent_image={agent_image}
-        // agent_location={agent_location}
-        // productDetail={paramData?.orderDetail}
-        onPressCall={(orderDetail) => _onPressCall(orderDetail)}
-        onPressChat={(orderDetail) => _onPressChat(orderDetail)}
-      />
-    );
-  };
+  // const _selectOrderDetailView = () => {
+  //   return (
+  //     <TaxiOrderDetailView
+  //       // orderDetail={orderDetail}
+  //       isLoading={isLoading}
+  //       // agent_image={agent_image}
+  //       // agent_location={agent_location}
+  //       // productDetail={paramData?.orderDetail}
+  //       onPressCall={(orderDetail) => _onPressCall(orderDetail)}
+  //       onPressChat={(orderDetail) => _onPressChat(orderDetail)}
+  //     />
+  //   );
+  // };
 
-  const _selectTexiOrderDetailView = () => {
-    return (
-      <SearchingForDriverView
-        orderDetail={orderDetail}
-        isLoading={isLoading}
-        agent_image={agent_image}
-        agent_location={agent_location}
-        productDetail={paramData?.orderDetail}
-        onPressCall={(orderDetail) => _onPressCall(orderDetail)}
-        onPressChat={(orderDetail) => _onPressChat(orderDetail)}
-        totalDuration={paramData?.totalDuration}
-        selectedCarOption={paramData?.selectedCarOption}
-        productRatings={productInfo}
-        isShowRating={isShowRating}
-        navigation={navigation}
-        onStarRatingPress={onStarRatingPress}
-        driverRating={driverRating}
-      />
-    );
-  };
+  // const _selectTexiOrderDetailView = () => {
+  //   return (
+  //     <SearchingForDriverView
+  //       orderDetail={orderDetail}
+  //       isLoading={isLoading}
+  //       agent_image={agent_image}
+  //       agent_location={agent_location}
+  //       productDetail={paramData?.orderDetail}
+  //       onPressCall={(orderDetail) => _onPressCall(orderDetail)}
+  //       onPressChat={(orderDetail) => _onPressChat(orderDetail)}
+  //       totalDuration={paramData?.totalDuration}
+  //       selectedCarOption={paramData?.selectedCarOption}
+  //       productRatings={productInfo}
+  //       isShowRating={isShowRating}
+  //       navigation={navigation}
+  //       onStarRatingPress={onStarRatingPress}
+  //       driverRating={driverRating}
+  //     />
+  //   );
+  // };
 
   const offset = useRef(new Animated.Value(0)).current;
 
@@ -988,6 +1000,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       updateState({ isLoading: false });
     }
   };
+  console.log(orderStatus, "orderStatus");
 
   return (
     <WrapperContainer
@@ -1481,30 +1494,32 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                               </View>
                             )}
                           </View>
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              alignItems: "center",
-                              marginLeft: moderateScale(8),
-                            }}
-                          >
-                            <Image
-                              source={imagePath.star}
-                              style={{ tintColor: colors.yellowB }}
-                            />
-                            <Text
+                          {orderFullDetail?.avgrating > 0 && (
+                            <View
                               style={{
-                                ...styles.statusText,
-                                color: isDarkMode
-                                  ? MyDarkTheme.colors.text
-                                  : colors.black,
-                                marginLeft: moderateScale(5),
+                                flexDirection: "row",
+                                alignItems: "center",
+                                marginLeft: moderateScale(8),
                               }}
                             >
-                              {orderFullDetail?.avgrating.toFixed(2)} (
-                              {orderFullDetail?.driver_rating_count})
-                            </Text>
-                          </View>
+                              <Image
+                                source={imagePath.star}
+                                style={{ tintColor: colors.yellowB }}
+                              />
+                              <Text
+                                style={{
+                                  ...styles.statusText,
+                                  color: isDarkMode
+                                    ? MyDarkTheme.colors.text
+                                    : colors.black,
+                                  marginLeft: moderateScale(5),
+                                }}
+                              >
+                                {orderFullDetail?.avgrating.toFixed(2)} (
+                                {orderFullDetail?.driver_rating_count})
+                              </Text>
+                            </View>
+                          )}
 
                           <Text
                             style={{
@@ -1584,50 +1599,56 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         </View>
                       </View>
                     </View>
-                    
-                          <View
-                            style={{
-                              width: width / 3,
-                              marginVertical: moderateScaleVertical(10),
-                              alignSelf: "center",
-                            }}
+                    {orderStatus == "completed" && (
+                      <View
+                        style={{
+                          width: width / 3,
+                          marginVertical: moderateScaleVertical(10),
+                          alignSelf: "center",
+                        }}
+                      >
+                        <StarRating
+                          maxStars={5}
+                          rating={
+                            submitedRatingToDriver
+                              ? submitedRatingToDriver
+                              : orderFullDetail?.order_driver_rating?.rating
+                          }
+                          selectedStar={(rating) =>
+                            onStarRatingForDriverPress(rating)
+                          }
+                          fullStarColor={colors.ORANGE}
+                          starSize={25}
+                        />
+                        {submitedRatingToDriver ||
+                        orderFullDetail?.order_driver_rating?.rating ? (
+                          <TouchableOpacity
+                            onPress={() =>
+                              rateYourOrder({
+                                order_id: productInfo[0]?.order_id,
+                                isDriverRate: true,
+                                driverRatingData: driverRatingData
+                                  ? driverRatingData
+                                  : orderFullDetail?.order_driver_rating,
+                              })
+                            }
                           >
-                            <StarRating
-                              maxStars={5}
-                              rating={
-                                submitedRatingToDriver
-                                  ? submitedRatingToDriver
-                                  : orderFullDetail?.order_driver_rating?.rating
-                              }
-                              selectedStar={(rating) =>
-                                onStarRatingForDriverPress(rating)
-                              }
-                              fullStarColor={colors.ORANGE}
-                              starSize={25}
-                            />
-                            <TouchableOpacity
-                              onPress={() =>
-                                rateYourOrder({
-                                  order_id: productInfo[0]?.order_id,
-                                  isDriverRate: true,
-                                 driverRatingData:orderFullDetail?.order_driver_rating
-                                })
-                              }
+                            <Text
+                              style={{
+                                alignSelf: "center",
+                                marginVertical: moderateScaleVertical(10),
+                                fontSize: textScale(13),
+                                fontFamily: fontFamily?.bold,
+                                color: themeColors?.primary_color,
+                              }}
                             >
-                              <Text
-                                style={{
-                                  alignSelf: "center",
-                                  marginVertical: moderateScaleVertical(10),
-                                  fontSize: textScale(13),
-                                  fontFamily: fontFamily?.bold,
-                                  color: themeColors?.primary_color,
-                                }}
-                              >
-                                {strings.WRITE_A_REVIEW}
-                              </Text>
-                            </TouchableOpacity>
-                          </View>
-                        
+                              {strings.WRITE_A_REVIEW}
+                            </Text>
+                          </TouchableOpacity>
+                        ) : null}
+                      </View>
+                    )}
+
                     {!!orderFullDetail?.tasks[0]?.proof_image && (
                       <View>
                         <View style={styles.horizontalLine} />
@@ -1694,7 +1715,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     >
                       {orderFullDetail.order_details.products.map(
                         (val, index) => {
-                          console.log(val,"valvalvalval");
+                          console.log(val, "valvalvalval");
                           return (
                             <View>
                               <View
@@ -1725,22 +1746,22 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                                       borderRadius: moderateScale(45),
                                     }}
                                   />
-                                 <View>
-                                  <Text
-                                    style={{
-                                      ...styles.statusText,
-                                      color: isDarkMode
-                                        ? MyDarkTheme.colors.text
-                                        : colors.black,
-                                      marginLeft: moderateScale(10),
-                                      width: moderateScale(200),
-                                      // backgroundColor: 'red',
-                                      fontFamily: fontFamily.medium,
-                                    }}
-                                  >
-                                    {val?.product_name || ""}
-                                  </Text>
-                                  {/* <View
+                                  <View>
+                                    <Text
+                                      style={{
+                                        ...styles.statusText,
+                                        color: isDarkMode
+                                          ? MyDarkTheme.colors.text
+                                          : colors.black,
+                                        marginLeft: moderateScale(10),
+                                        width: moderateScale(200),
+                                        // backgroundColor: 'red',
+                                        fontFamily: fontFamily.medium,
+                                      }}
+                                    >
+                                      {val?.product_name || ""}
+                                    </Text>
+                                    {/* <View
                             style={{
                               flexDirection: "row",
                               alignItems: "center",
@@ -1823,48 +1844,51 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                                     </Text>
                                   </View>
                                 )}
-                                
-                                  
-                                      <View
-                                        style={{
-                                          width: width / 3,
-                                          marginVertical: moderateScaleVertical(
-                                            10
-                                          ),
-                                          alignSelf: "center",
-                                        }}
+                                {orderStatus == "completed" ? (
+                                  <View
+                                    style={{
+                                      width: width / 3,
+                                      marginVertical: moderateScaleVertical(10),
+                                      alignSelf: "center",
+                                    }}
+                                  >
+                                    <StarRating
+                                      maxStars={5}
+                                      rating={
+                                        productInfo[index]?.product_rating
+                                          ?.rating
+                                      }
+                                      selectedStar={(rating) =>
+                                        onStarRatingPress(val, rating)
+                                      }
+                                      fullStarColor={colors.ORANGE}
+                                      starSize={25}
+                                    />
+                                    {console.log(
+                                      productInfo[index]?.product_rating,
+                                      "productInfo[index]?.product_rating"
+                                    )}
+                                    {productInfo[index]?.product_rating && (
+                                      <TouchableOpacity
+                                        onPress={() => rateYourOrder(val)}
                                       >
-                                        <StarRating
-                                          maxStars={5}
-                                          rating={
-                                            productInfo[index]?.product_rating
-                                              ?.rating
-                                          }
-                                          selectedStar={(rating) =>
-                                            onStarRatingPress(val, rating)
-                                          }
-                                          fullStarColor={colors.ORANGE}
-                                          starSize={25}
-                                        />
-                                        <TouchableOpacity
-                                          onPress={() => rateYourOrder(val)}
+                                        <Text
+                                          style={{
+                                            alignSelf: "center",
+                                            marginVertical: moderateScaleVertical(
+                                              10
+                                            ),
+                                            fontSize: textScale(13),
+                                            fontFamily: fontFamily?.bold,
+                                            color: themeColors?.primary_color,
+                                          }}
                                         >
-                                          <Text
-                                            style={{
-                                              alignSelf: "center",
-                                              marginVertical: moderateScaleVertical(
-                                                10
-                                              ),
-                                              fontSize: textScale(13),
-                                              fontFamily: fontFamily?.bold,
-                                              color: themeColors?.primary_color,
-                                            }}
-                                          >
-                                            {strings.WRITE_A_REVIEW}
-                                          </Text>
-                                        </TouchableOpacity>
-                                      </View>
-                                    
+                                          {strings.WRITE_A_REVIEW}
+                                        </Text>
+                                      </TouchableOpacity>
+                                    )}
+                                  </View>
+                                ) : null}
 
                                 {val.user_product_order_form &&
                                   JSON.parse(val.user_product_order_form)

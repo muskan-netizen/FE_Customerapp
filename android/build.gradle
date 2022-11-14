@@ -45,5 +45,10 @@ allprojects {
         
       
     }
+    configurations.all {
+        resolutionStrategy {
+            force 'com.facebook.react:react-native:0.63.4'
+        }
+    }
 
 }

@@ -2805,16 +2805,15 @@ export default function ShortCode({route, navigation}) {
     if (!!res?.primary_language?.id) {
       header = {
       code: '2d98b5',
-      //  code: shortCode,
+     //   code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
        code: '2d98b5',
-      //  code: shortCode,
+       //code: shortCode,
       };
     }
-    console.log(header, 'header*******');
     actions
       .initApp({}, header, false, null, null, true)
       .then((res) => {

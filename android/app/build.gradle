@@ -235,6 +235,16 @@ android {
                 resValue "string", "app_name", "RoyoOrder"
                 resValue "string", "host_name", "sales.royoorders.com"
             }
+                      euodooTechnologies{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.euodooTechnologies.order'
+            resValue "string", "app_name", "Euodoo Technologies "
+            resValue "string", "host_name", ""
+            }
     }
     // productFlavors {
     //         royoorder {

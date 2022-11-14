@@ -42,7 +42,7 @@ const UserDetail = ({
   startChatWithAgent = () => {},
   onStarRatingForDriverPress = () => {},
 }) => {
-  console.log(cartData, "isDriverisDriver");
+  console.log(data, "datadatadata");
   const { toggleTheme, themeColors, theme, appStyle, appData } = useSelector(
     (state) => state.initBoot
   );
@@ -152,23 +152,34 @@ const UserDetail = ({
             >
               {type}
             </Text>
-            {isDriver &&
-              <Text
-              style={{
-                color: isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.blackOpacity43,
-                fontSize: textScale(10),
-                fontFamily: fontFamily.regular,
-                marginHorizontal: moderateScale(10),
-                ...textStyle,
-              }}
-            >
-              {cartData?.order_data?.avgrating.toFixed(2)} (
-              {cartData?.order_data?.driver_rating_count})
-            </Text>
-            }
-          
+            {isDriver && cartData?.order_data?.avgrating > 0 && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginHorizontal: moderateScale(10),
+                }}
+              >
+                <Image
+                  source={imagePath.star}
+                  style={{ tintColor: colors.yellowB }}
+                />
+
+                <Text
+                  style={{
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity43,
+                    fontSize: textScale(10),
+                    fontFamily: fontFamily.regular,
+                    marginHorizontal: moderateScale(3),
+                    ...textStyle,
+                  }}
+                >
+                  {cartData?.order_data?.avgrating?.toFixed(2)} (
+                  {cartData?.order_data?.driver_rating_count})
+                </Text>
+              </View>
+            )}
           </View>
 
           {isDriver && (
@@ -181,27 +192,33 @@ const UserDetail = ({
             >
               <StarRating
                 maxStars={5}
-                rating={submitedRatingToDriver}
+                rating={
+                  submitedRatingToDriver
+                    ? submitedRatingToDriver
+                    : cartData?.driver_rating?.rating
+                }
                 selectedStar={(rating) => onStarRatingForDriverPress(rating)}
                 fullStarColor={colors.ORANGE}
                 starSize={20}
               />
-              <TouchableOpacity
-                onPress={_onRateDriver}
-                style={{
-                  justifyContent: "center",
-                  backgroundColor: themeColors.primary_color,
-                  alignItems: "center",
-                  borderRadius: moderateScale(3),
-                  paddingVertical: moderateScaleVertical(2),
-                  marginHorizontal: moderateScale(8),
-                  paddingHorizontal: 2,
-                }}
-              >
-                <Text style={{ color: colors.white }}>
-                  {strings.WRITE_A_REVIEW}
-                </Text>
-              </TouchableOpacity>
+              {submitedRatingToDriver || cartData?.driver_rating?.rating ? (
+                <TouchableOpacity
+                  onPress={_onRateDriver}
+                  style={{
+                    justifyContent: "center",
+                    backgroundColor: themeColors.primary_color,
+                    alignItems: "center",
+                    borderRadius: moderateScale(3),
+                    paddingVertical: moderateScaleVertical(2),
+                    marginHorizontal: moderateScale(8),
+                    paddingHorizontal: 2,
+                  }}
+                >
+                  <Text style={{ color: colors.white }}>
+                    {strings.WRITE_A_REVIEW}
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
             </View>
           )}
         </View>

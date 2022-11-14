@@ -39,7 +39,7 @@ import stylesFunc from "./styles";
 export default function RateOrder({ navigation, route }) {
   const ratingData = route?.params?.item?.product_rating;
   const isDriverRateData = route?.params?.item;
-  console.log(isDriverRateData,"isDriverRateData");
+
 
   const [state, setState] = useState({
     isLoading: false,
@@ -183,10 +183,12 @@ export default function RateOrder({ navigation, route }) {
       // formdata.append('vendor_id', ratingData.vendor_id);
       if (imageArray.length) {
         imageArray.forEach((element) => {
+         
+          let imageRandomName = (Math.random() + 1).toString(36).substring(7);
           if (element?.id) {
           } else {
-            formdata.append("file[]", {
-              name: element.name,
+            formdata.append("files[]", {
+              name: element.name?element.name:imageRandomName,
               type: element.type,
               uri: element.uri,
             });
@@ -199,7 +201,6 @@ export default function RateOrder({ navigation, route }) {
           formdata.append("remove_files[]", element);
         });
       }
-
       actions
         .giveRating(formdata, {
           code: appData?.profile?.code,
@@ -220,9 +221,9 @@ export default function RateOrder({ navigation, route }) {
 
   //get All ratings of product
 
-  console.log(ratingData, "ratingDataratingData");
 
   const getProductReviewRatings = () => {
+  
     actions
       .getRating(
         `?id=${ratingData?.id}`,
@@ -285,7 +286,7 @@ export default function RateOrder({ navigation, route }) {
       updateState({
         // imageArray: res.data.review_files,
         rating: res.data.rating,
-        reviewText: res.data.review,
+        reviewText:res.data.review,
         isLoading: false,
        
       });
@@ -305,8 +306,11 @@ export default function RateOrder({ navigation, route }) {
       updateState({ isLoading: true });
       getDriverReviewRatings();
     } else {
-      updateState({ isLoading: true });
-      getProductReviewRatings();
+      if(ratingData){
+        updateState({ isLoading: true });
+        getProductReviewRatings();
+      }
+    
     }
   }, []);
 
@@ -320,7 +324,10 @@ export default function RateOrder({ navigation, route }) {
     if (isDriverRateData?.isDriverRate) {
       getDriverReviewRatings();
     } else {
-      getProductReviewRatings();
+      if(ratingData){
+        updateState({ isLoading: true });
+        getProductReviewRatings();
+      }
     }
   }, [isRefreshing]);
 
@@ -449,7 +456,7 @@ export default function RateOrder({ navigation, route }) {
                 <TextInput
                   style={styles.textInputStyle}
                   multiline={true}
-                  value={reviewText}
+                  value={reviewText==null?'':reviewText}
                   onChangeText={(text) => updateState({ reviewText: text })}
                 />
               </View>
