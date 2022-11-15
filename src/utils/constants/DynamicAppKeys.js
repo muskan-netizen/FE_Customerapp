@@ -1265,8 +1265,8 @@ const appIds = {
     android: 'com.customer.Ihelp',
   }),
   ullaz: Platform.select({
-    ios: 'com.ullaz',
-    android: 'com.ullaz',
+    ios: 'com.ullazOrder',
+    android: 'com.ullazOrder',
   }),
   privatepremiumpickups: Platform.select({
     ios: 'com.privatepremiumpickups',
@@ -1590,8 +1590,8 @@ const appIds = {
     android: 'com.ensoDigitalAgency',
   }),
   hiperAbasto: Platform.select({
-    ios: 'com.hiperAbasto',
-    android: 'com.hiperAbasto',
+    ios: 'com.hiperAbastoOrder',
+    android: 'com.hiperAbastoOrder',
   }),
   redglee: Platform.select({
     ios: 'com.redglee',
