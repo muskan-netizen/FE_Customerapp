@@ -939,8 +939,6 @@ export default function Home({route, navigation}) {
   const renderHomeScreen = () => {
 
     switch (appStyle?.homePageLayout) {
-   
-      // switch (case_) {
       case 1:
         return (
           <>
@@ -1134,11 +1132,7 @@ export default function Home({route, navigation}) {
           </>
         );
           
-        }
-
-   
-        
-        
+        } 
 
       case 4:
         return (
