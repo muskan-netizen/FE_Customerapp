@@ -1474,7 +1474,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         </TouchableOpacity>
         <BottomSheet
           ref={bottomSheetRef}
-          index={0}
+          index={1}
           snapPoints={[height / 2.2, height / 1.25]}
           activeOffsetY={[-1, 1]}
           failOffsetX={[-5, 5]}
