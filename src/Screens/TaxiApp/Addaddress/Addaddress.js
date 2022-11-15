@@ -176,14 +176,11 @@ export default function Addaddress({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res, 'locationssssss');
         updateState({
           staticLocation: [...res?.data],
         });
       })
-      .catch((error) => {
-        console.log(error, 'locationssssss');
-      });
+      .catch((error) => {});
   };
   //get All address
   const getAllAddress = () => {
@@ -249,7 +246,6 @@ export default function Addaddress({navigation, route}) {
         latlongData,
       )
       .then((res) => {
-        console.log(res, 'res>>>>> vendors');
         updateState({
           isLoading: false,
           isRefreshing: false,
