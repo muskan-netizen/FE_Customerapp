@@ -79,7 +79,9 @@ export default function ShortCode({route, navigation}) {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const videoRef = useRef();
 
-  const customColor = themeColors.primary_color;
+ 
+
+  const customColor = themeColors?.primary_color;
 
   useEffect(() => {
     (async () => {
@@ -2839,19 +2841,19 @@ export default function ShortCode({route, navigation}) {
 
     let header = {};
 
+
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '245bae',
+     // code: '2d98b5',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '245bae',
-        code: shortCode,
+      // code: '2d98b5',
+       code: shortCode,
       };
     }
-    console.log(header, 'header*******');
     actions
       .initApp({}, header, false, null, null, true)
       .then((res) => {
