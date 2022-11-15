@@ -1978,7 +1978,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
               backgroundColor: themeColors.primary_color,
               borderWidth: 0,
             }}
-            onPress={onCancelOrder}
+            onPress={()=>onCancelOrder(false)}
           />
         </View>
       </Modal>
