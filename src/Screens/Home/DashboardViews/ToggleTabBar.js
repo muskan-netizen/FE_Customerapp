@@ -159,6 +159,7 @@ console.log( toggleData?.profile?.preferences," toggleData?.profile?.preferences
     userSelectedtab();
     if (toggleData?.profile?.preferences?.delivery_check == 1) {
       let tabname = toggleData?.profile?.preferences?.vendorMode[0]?.name
+    
       localTabsArray.push(getBundleId() == appIds.sorDelivery ? tabname: strings.DELIVERY );
       // localTabsArray.push(strings.DELIVERY);
       if (
@@ -169,7 +170,7 @@ console.log( toggleData?.profile?.preferences," toggleData?.profile?.preferences
       }
     }
     if (toggleData?.profile?.preferences?.dinein_check == 1) {
-      let tabname = toggleData?.profile?.preferences?.vendorMode[1].name
+      let tabname = toggleData?.profile?.preferences?.vendorMode[1]?.name
       localTabsArray.push(getBundleId() == appIds.sorDelivery ? tabname: strings.DINE_IN );
       // localTabsArray.push(strings.DINE_IN);
       if (
@@ -180,7 +181,7 @@ console.log( toggleData?.profile?.preferences," toggleData?.profile?.preferences
       }
     }
     if (toggleData?.profile?.preferences?.takeaway_check == 1) {
-      let tabname = toggleData?.profile?.preferences?.vendorMode[2].name
+      let tabname = toggleData?.profile?.preferences?.vendorMode[2]?.name
       localTabsArray.push(getBundleId() == appIds.sorDelivery ? tabname: strings.TAKEAWAY );
       if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&

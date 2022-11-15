@@ -60,7 +60,7 @@ export default function VerifyAccount({navigation, route}) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   let paramsData = route?.params?.data;
-
+console.log('paramsDataparamsData',paramsData);
   const [state, setState] = useState({
     timer2: 0,
     timer: 0,

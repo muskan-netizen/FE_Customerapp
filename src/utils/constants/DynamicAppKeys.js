@@ -1341,8 +1341,8 @@ const appIds = {
     android: 'com.tumbak',
   }),
   iPicknDrop: Platform.select({
-    ios: 'com.iPicknDrop',
-    android: 'com.iPicknDrop',
+    ios: 'com.iPicknDrop.order',
+    android: 'com.iPicknDrop.orderApp',
   }),
   bluebolt: Platform.select({
     ios: 'com.app.bluebolt',
@@ -1925,7 +1925,7 @@ const appIds = {
     android: 'com.farmMeat.order',
   }),
   danielleBejjani: Platform.select({
-    ios: 'com.danielleBejjani.order',
+    ios: 'com.danielleBejjani',
     android: 'com.danielleBejjani',
   }),
   yallaEat: Platform.select({
