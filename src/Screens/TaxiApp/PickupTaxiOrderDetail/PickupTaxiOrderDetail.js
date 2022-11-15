@@ -1,24 +1,11 @@
-import { useFocusEffect } from "@react-navigation/native";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
-  Dimensions,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-  BackHandler,
-  Animated,
-  TextInput,
-  Keyboard,
-  Linking,
-  Alert,
-  ActivityIndicator,
+  Alert, Animated, BackHandler, Dimensions, Image, Keyboard,
+  Linking, ScrollView, Text, TextInput, TouchableOpacity, View
 } from "react-native";
 import { useSelector } from "react-redux";
 import {
-  defaultLoader,
-  loaderOne,
+  loaderOne
 } from "../../../Components/Loaders/AnimatedLoaderFiles";
 import WrapperContainer from "../../../Components/WrapperContainer";
 import imagePath from "../../../constants/imagePath";
@@ -26,48 +13,46 @@ import strings from "../../../constants/lang";
 import actions from "../../../redux/actions";
 import colors from "../../../styles/colors";
 
-import DeviceInfo, { getBundleId } from "react-native-device-info";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { useIsFocused } from "@react-navigation/native";
+import DeviceInfo, { getBundleId } from "react-native-device-info";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps"; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapViewDirections from "react-native-maps-directions";
 import {
   getImageUrl,
   hapticEffects,
   playHapticEffect,
   showError,
-  showSuccess,
+  showSuccess
 } from "../../../utils/helperFunctions";
 import stylesFunc from "./styles";
 const { height, width } = Dimensions.get("window");
-import MapViewDirections from "react-native-maps-directions";
-import MapView, { Marker, Callout, PROVIDER_GOOGLE } from "react-native-maps"; // remove PROVIDER_GOOGLE import if not using Google Maps
-import { useIsFocused } from "@react-navigation/native";
 
-import Communications from "react-native-communications";
-import navigationStrings from "../../../navigation/navigationStrings";
-import { useDarkMode } from "react-native-dark-mode";
-import { MyDarkTheme } from "../../../styles/theme";
-import TaxiOrderDetailView from "./TaxiOrderDetailView";
-import SearchingForDriverView from "./SearchingForDriverView";
-import useInterval from "../../../utils/useInterval";
 import { cloneDeep } from "lodash";
+import Communications from "react-native-communications";
+import { useDarkMode } from "react-native-dark-mode";
 import FastImage from "react-native-fast-image";
 import Modal from "react-native-modal";
+import navigationStrings from "../../../navigation/navigationStrings";
+import { MyDarkTheme } from "../../../styles/theme";
+import useInterval from "../../../utils/useInterval";
 
+import moment from "moment";
+import { FlatList } from "react-native";
+import StarRating from "react-native-star-rating";
+import ButtonWithLoader from "../../../Components/ButtonWithLoader";
+import CustomCallouts from "../../../Components/CustomCallouts";
+import LeftRightText from "../../../Components/LeftRightText";
+import RoundImg from "../../../Components/RoundImg";
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale,
+  textScale
 } from "../../../styles/responsiveSize";
-import StarRating from "react-native-star-rating";
-import { mapStyleGrey } from "../../../utils/constants/MapStyle";
-import RoundImg from "../../../Components/RoundImg";
-import LeftRightText from "../../../Components/LeftRightText";
-import SearchDriver from "../ChooseCarTypeAndTime/SearchDriver";
-import moment from "moment";
-import ButtonWithLoader from "../../../Components/ButtonWithLoader";
-import { FlatList } from "react-native";
-import CustomCallouts from "../../../Components/CustomCallouts";
-import { appIds } from "../../../utils/constants/DynamicAppKeys";
 import { currencyNumberFormatter } from "../../../utils/commonFunction";
+import { appIds } from "../../../utils/constants/DynamicAppKeys";
+import { mapStyleGrey } from "../../../utils/constants/MapStyle";
+import SearchDriver from "../ChooseCarTypeAndTime/SearchDriver";
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -84,11 +69,8 @@ const CANCLE_TASK_TIME = 45000;
 // import 'moment/locale/tr';
 // import 'moment/locale/vi';
 // import 'moment/locale/ar';
-import "moment/min/locales"; // Import all moment-locales -- it's just 400kb
 import "moment-timezone";
-import Loader from "../../../Components/Loader";
-import CustomAnimatedLoader from "../../../Components/CustomAnimatedLoader";
-import LottieView from "lottie-react-native";
+import "moment/min/locales"; // Import all moment-locales -- it's just 400kb
 import GradientButton from "../../../Components/GradientButton";
 
 export default function PickupTaxiOrderDetail({ navigation, route }) {
@@ -247,7 +229,6 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   //     updateState({ isLoading: false });
   //   }
   // }, []);
-  console.log(urlValue, "urlValueurlValueurlValueurlValue");
   useInterval(
     () => {
       if (urlValue) {
@@ -285,7 +266,6 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       // showSuccess(driverStatus);
     }
   }, [driverStatus]);
-  console.log(orderStatus, "driverStatusdriverStatus");
 
   const new_dispatch_traking_url = !!paramData?.orderDetail
     ?.dispatch_traking_url
@@ -294,6 +274,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         "/order-details/"
       )
     : null;
+
+
   /*********Update driver detail screen********* */
   const _updateDriverLocationLocation = async (url) => {
     let apiData = {
@@ -1270,6 +1252,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                             style={styles.agentUserIcon}
                             source={imagePath.icVendorChat}
                           />
+                          <Text>{'  '}</Text>
                         </TouchableOpacity>
                       ) : null}
 
