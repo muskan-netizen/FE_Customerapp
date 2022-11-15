@@ -769,6 +769,7 @@ export default function SelectPaymentModalView({
                         value={selectedType}
                         modalStyle={{
                           width: width - moderateScale(50),
+                          position: 'relative',
                         }}
                         selectedIndexByProps={-1}
                         placeholder={strings.SELECT_ANS}
