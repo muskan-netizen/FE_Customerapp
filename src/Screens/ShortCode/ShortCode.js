@@ -2847,8 +2847,8 @@ export default function ShortCode({route, navigation}) {
       };
     } else {
       header = {
-        code: '245bae',
-        // code: shortCode,
+        // code: '245bae',
+        code: shortCode,
       };
     }
     console.log(header, 'header*******');
