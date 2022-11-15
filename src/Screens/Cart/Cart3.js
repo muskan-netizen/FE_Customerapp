@@ -4198,7 +4198,42 @@ function Cart({navigation, route}) {
                   )}`}</Text>
                 </View>
               )}
-              {cartData?.total_tax > 0 && (
+              {
+              
+                cartData?.tax_details.map((val)=>{
+                 return(
+                  <View
+                  style={{...styles.bottomTabLableValue, marginVertical: 1}}>
+                   
+                  <Text
+                    style={{
+                      ...styles.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      fontSize: textScale(11),
+                    }}>
+                    {val?.identifier}
+                  </Text>
+
+                  <Text
+                    style={{
+                      ...styles.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      fontSize: textScale(11),
+                    }}>{`${currencies?.primary_currency?.symbol}${Number(
+                    val?.tax_amount ? val?.tax_amount: 0,
+                  ).toFixed(
+                    appData?.profile?.preferences?.digit_after_decimal,
+                  )}`}</Text>
+                </View>
+                 )
+                })
+              }
+              {/* {cartData?.total_tax > 0 && (
+                
                 <View
                   style={{...styles.bottomTabLableValue, marginVertical: 1}}>
                   <Text
@@ -4225,7 +4260,7 @@ function Cart({navigation, route}) {
                     appData?.profile?.preferences?.digit_after_decimal,
                   )}`}</Text>
                 </View>
-              )}
+              )} */}
             </Animatable.View>
           </View>
         )}

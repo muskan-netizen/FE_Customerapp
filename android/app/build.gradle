@@ -202,15 +202,16 @@ android {
         }
     }
   productFlavors {
-                    doleypharmacy{
+            royoorder {
                 dimension "appType"
-                versionCode 1
+                versionCode 3
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.doleypharmacy'
-                resValue "string", "app_name", "Doley"
-                resValue "string", "host_name", ""
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                // applicationIdSuffix ".royoorder"
+                applicationId 'com.codebrew.royoorder'
+                resValue "string", "app_name", "RoyoOrder"
+                resValue "string", "host_name", "sales.royoorders.com"
             }
   }
     flavorDimensions "appType"
@@ -6410,7 +6411,7 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     api(platform("com.squareup.okhttp3:okhttp-bom:4.7.2"))
-api("com.squareup.okhttp3:okhttp")
+ api("com.squareup.okhttp3:okhttp")
 api("com.squareup.okhttp3:logging-interceptor")
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
