@@ -682,7 +682,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         !userData?.verify_details?.is_phone_verified
       )
     ) {
-      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_TAXI, {
         ...userData,
         fromCart: true,
       })();

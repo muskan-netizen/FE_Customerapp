@@ -2175,6 +2175,46 @@ end
 #PointoneExpediteDelivery
 target 'PointoneExpediteDelivery' do
 end
+
+#TDC
+target 'TDC' do
+end
+
+#GiftyLeaf
+target 'GiftyLeaf' do
+end
+
+#FlyCommerce
+target 'FlyCommerce' do
+end
+
+#Saamanshop
+target 'Saamanshop' do
+end
+
+#PIK
+target 'PIK' do
+end
+
+#MOTINA
+target 'MOTINA' do
+end
+
+#Hungry
+target 'Hungry' do
+end
+
+#Greenhippo
+target 'Greenhippo' do
+end
+
+#Mymeddy
+target 'Mymeddy' do
+end
+
+#URyd
+target 'URyd' do
+end
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

@@ -246,7 +246,7 @@ function Cart({navigation, route}) {
   const {dineInType, appMainData, location} = useSelector(
     (state) => state?.home,
   );
-
+  console.log(dineInType, 'dineInTypedineInType');
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -382,7 +382,7 @@ function Cart({navigation, route}) {
         closeForm();
         actions.cartItemQty(res);
         setIsShimmerLoading(false);
-        dineInType != 'delivery' &&
+        !(dineInType === 'delivery' || dineInType === 'on_demand') &&
           setVendorAddress(res?.data?.vendor_details?.vendor_address || {});
         let checkDate = !!res?.data?.scheduled_date_time;
         updateState({deliveryFeeLoader: false, isSubmitFaqLoader: false});
@@ -1408,6 +1408,8 @@ function Cart({navigation, route}) {
     return moment(`${date} ${time}`, 'YYYY-MM-DD HH:mm:ss').format();
   };
 
+  console.log(vendorAddress, 'vendorAddress....');
+
   //Clear cart
   const placeOrder = () => {
     isFAQsSubmitted = true;
@@ -1482,7 +1484,10 @@ function Cart({navigation, route}) {
       var d1 = new Date();
       var d2 = new Date(localeSheduledOrderDate);
 
-      if (!selectedAddressData && dineInType !== 'takeaway') {
+      if (
+        !selectedAddressData &&
+        (dineInType === 'delivery' || dineInType === 'on_demand')
+      ) {
         // showError(strings.PLEASE_SELECT_ADDRESS);
         setModalVisible(true);
       } else if (!selectedPayment) {

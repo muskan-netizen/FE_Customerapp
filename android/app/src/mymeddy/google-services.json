@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "22689988739",
+    "project_id": "mymeddy-c0cc2",
+    "storage_bucket": "mymeddy-c0cc2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:22689988739:android:c74b07f733b582c1e01bb6",
+        "android_client_info": {
+          "package_name": "com.mymeddy.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "22689988739-14mu5u8sjapl3k6g36l322tfb0772tk5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mymeddy.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "22689988739-deo5tu7a94sajk1svc4bj373lgpl13hj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mymeddy.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "22689988739-ufs54dp0kghkss8ksojdvff8l58o319g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mymeddy.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "22689988739-a1c4d2lfq6qag1a7irl6a7muna6a050n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBm4eb6F304qkqnbVR0-12elPN78lkXUq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "22689988739-a1c4d2lfq6qag1a7irl6a7muna6a050n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "22689988739-nhv3uqrr3mlo78vt6b4h0p03u9n7kij9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mymeddy.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

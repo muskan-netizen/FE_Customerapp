@@ -941,16 +941,7 @@ android {
                 resValue "string", "app_name", "DoorStep"
                 resValue "string", "host_name", ""
             }
-            sunshinerideshare{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.sunshinerideshare'
-                resValue "string", "app_name", "Sunshine Rideshare"
-                resValue "string", "host_name", ""
-            }
+
             autotek{
                 dimension "appType"
                 versionCode 1
@@ -1916,8 +1907,8 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.foodnests'
-                resValue "string", "app_name", "FoodNests"
+                applicationId 'com.foodnests.orderapp'
+                resValue "string", "app_name", "FoodNEST(S)"
                 resValue "string", "host_name", ""
             }
             sponge{
@@ -2669,7 +2660,7 @@ android {
             }
             sunshinerideshare{
                 dimension "appType"
-                versionCode 1
+                versionCode 2
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
@@ -4194,7 +4185,7 @@ android {
             }
             ambutap{
                 dimension "appType"
-                versionCode 1
+                versionCode 3
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -4325,7 +4316,7 @@ android {
             }
             heyBuddy{
             dimension "appType"
-            versionCode 1
+            versionCode 5
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -4655,7 +4646,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.rideshare'
+            applicationId 'com.classiccab.userapp'
             resValue "string", "app_name", "Classic Cab"
             resValue "string", "host_name", ""
             }
@@ -6381,7 +6372,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.uberweeds.royoorders'
-            resValue "string", "app_name", "Uber Weeds" 
+            resValue "string", "app_name", "UberWeeds" 
             resValue "string", "host_name", ""
             }
                      cabPro{ 
@@ -6402,6 +6393,106 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.pointoneExpediteDelivery.royoorders'
             resValue "string", "app_name", "Pointone Expedite Delivery" 
+            resValue "string", "host_name", ""
+            }
+                    saamanshop{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.saamanshop.royoorders'
+            resValue "string", "app_name", "Saamanshop" 
+            resValue "string", "host_name", ""
+            }
+                    tdc{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.tdc.royoorders'
+            resValue "string", "app_name", "TDC" 
+            resValue "string", "host_name", ""
+            }
+                      giftyLeaf{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.giftyleaf.royoorders'
+            resValue "string", "app_name", "Gifty Leaf" 
+            resValue "string", "host_name", ""
+            }
+                       flyCommerce{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.flycommerce.royoorders'
+            resValue "string", "app_name", "Fly Commerce" 
+            resValue "string", "host_name", ""
+            }
+                       pik{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.pik.royoorders'
+            resValue "string", "app_name", "PIK" 
+            resValue "string", "host_name", ""
+            }
+                           motina{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.motina.royoorders'
+            resValue "string", "app_name", "MOTINA" 
+            resValue "string", "host_name", ""
+            }
+                             hungry{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.hungry.royoorders'
+            resValue "string", "app_name", "Hungry" 
+            resValue "string", "host_name", ""
+            }
+                             greenhippo{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.greenhippo.royoorders'
+            resValue "string", "app_name", "GreenHippo" 
+            resValue "string", "host_name", ""
+            }
+                              mymeddy{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.mymeddy.royoorders'
+            resValue "string", "app_name", "MyMeddy" 
+            resValue "string", "host_name", ""
+            }
+                               uryd{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.uryd.royoorders'
+            resValue "string", "app_name", "U Ryd" 
             resValue "string", "host_name", ""
             }
     }
