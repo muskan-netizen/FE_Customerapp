@@ -1004,8 +1004,8 @@ const appIds = {
     android: 'com.gumastas',
   }),
   dishefs: Platform.select({
-    ios: 'com.dishefs',
-    android: 'com.dishefs',
+    ios: 'com.dishefsOrders',
+    android: 'com.dishefsOrders',
   }),
   bilionza: Platform.select({
     ios: 'com.bilionza',
@@ -1272,8 +1272,8 @@ const appIds = {
     android: 'com.customer.Ihelp',
   }),
   ullaz: Platform.select({
-    ios: 'com.ullaz',
-    android: 'com.ullaz',
+    ios: 'com.ullazOrder',
+    android: 'com.ullazOrder',
   }),
   privatepremiumpickups: Platform.select({
     ios: 'com.privatepremiumpickups',
@@ -1597,8 +1597,8 @@ const appIds = {
     android: 'com.ensoDigitalAgency',
   }),
   hiperAbasto: Platform.select({
-    ios: 'com.hiperAbasto',
-    android: 'com.hiperAbasto',
+    ios: 'com.hiperAbastoOrder',
+    android: 'com.hiperAbastoOrder',
   }),
   redglee: Platform.select({
     ios: 'com.redglee',
@@ -1758,8 +1758,8 @@ const appIds = {
     android: 'com.amazingTaxi.orders',
   }),
   jazzyBug: Platform.select({
-    ios: 'com.jazzyBug',
-    android: 'com.jazzyBug',
+    ios: 'com.jazzyBugOrder',
+    android: 'com.jazzyBugOrder',
   }),
   myfarma: Platform.select({
     ios: 'com.myfarma',

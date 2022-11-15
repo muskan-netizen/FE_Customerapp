@@ -2696,6 +2696,22 @@ function Cart({navigation, route}) {
                                   }`}
                                 </Text>
                               </View>
+                              {!!i?.product?.product_delivery_fee ? (
+                                <View>
+                                  <Text
+                                    style={{
+                                      color: isDarkMode
+                                        ? MyDarkTheme.colors.text
+                                        : colors.black,
+                                    }}>
+                                    {`${
+                                      strings.DELIVERY_CHARGES
+                                    } :- ${currencyNumberFormatter(
+                                      Number(i?.product?.product_delivery_fee),
+                                    )}`}
+                                  </Text>
+                                </View>
+                              ) : null}
 
                               {i?.variant_options.length > 0
                                 ? i?.variant_options.map((j, jnx) => {
@@ -3206,6 +3222,7 @@ function Cart({navigation, route}) {
                     {strings.DELIVERY_CHARGES}:
                   </Text>
                 ) : null}
+
                 {!!item?.delivery_types && item?.delivery_types.length == 1 ? (
                   <Text>{`${item?.delivery_types[0]?.courier_name} ${
                     currencies?.primary_currency?.symbol

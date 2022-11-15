@@ -39,6 +39,9 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://sunshinerideshare.com/api/v1';
 // export const API_BASE_URL = 'https://Orderfirst.rostaging.com/api/v1';
 
+// handy-pickup
+// export const API_BASE_URL = 'https://app.handy-pickup.com/api/v1';
+
 // export const API_BASE_URL = 'https://aaujaaunepal.com/api/v1';
 // export const API_BASE_URL='https://halatalabat.com/api/v1';
 // export const API_BASE_URL = 'https://marksoublet.rostaging.com/api/v1';
@@ -51,6 +54,9 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // blacnetwork
 // export const API_BASE_URL = 'https://app.blacnetwork.com/api/v1';
 
+// hiperabasto
+// export const API_BASE_URL = 'https://hiperabasto.mx/api/v1';
+// 
 // sheryders
 // export const API_BASE_URL = 'https://sheryders.com/api/v1';
 
