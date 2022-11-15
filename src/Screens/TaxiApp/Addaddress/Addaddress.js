@@ -66,7 +66,7 @@ export default function Addaddress({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const {book_for_friend} = appData?.profile?.preferences;
-  console.log(paramData,'paramDataparamData')
+  console.log(appData?.profile?.preferences?.is_static_dropoff,'paramDataparamData')
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
     pageNo: 1,
@@ -898,7 +898,7 @@ export default function Addaddress({navigation, route}) {
 
 const fetchValues = (item,i)=>{
 
-  console.log(i,"itemmmmm")
+  console.log(appData?.profile?.preferences?.is_static_dropoff,"itemmmmm")
   updateState({
     // selectedLoaction[i]:item?.address
     selectedLoaction: [...selectedLoaction,item?.address]

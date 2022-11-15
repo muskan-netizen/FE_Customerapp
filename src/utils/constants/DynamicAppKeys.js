@@ -1832,8 +1832,8 @@ const appIds = {
     android: 'com.dingdongdelivery.order',
   }),
   torunz: Platform.select({
-    ios: 'com.torunz',
-    android: 'com.torunz',
+    ios: 'com.torunz.userapp',
+    android: 'com.torunz.userapp',
   }),
   kurs: Platform.select({
     ios: 'com.app.kurs',
