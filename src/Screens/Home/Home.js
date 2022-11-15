@@ -415,7 +415,7 @@ export default function Home({route, navigation}) {
 
       console.log(
         'dineInTypedineInType',
-        appData?.profile?.preferences?.vendorMode,
+        appData,
       );
 
       if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {

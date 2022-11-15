@@ -1,65 +1,58 @@
 {
   "project_info": {
-    "project_number": "792310717333",
-    "project_id": "ipickndrop-3ffe2",
-    "storage_bucket": "ipickndrop-3ffe2.appspot.com"
+    "project_number": "430510586576",
+    "project_id": "ipd-order",
+    "storage_bucket": "ipd-order.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:792310717333:android:b55264ca812c87a5f2749c",
+        "mobilesdk_app_id": "1:430510586576:android:ce7b4f5a511fc99d613cd5",
         "android_client_info": {
-          "package_name": "com.iPicknDrop"
+          "package_name": "com.iPicknDrop.orderApp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "792310717333-ag36sf58onojjj41d9j9dm9sc24p42au.apps.googleusercontent.com",
+          "client_id": "430510586576-0b06q9vtsm4rons5orgct5eesgah0seq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.iPicknDrop",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "792310717333-n8tpbg8kejukdhnept6ap6jl6alnajc5.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.iPicknDrop",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "792310717333-pcgj6v76i81cj5659nj2s9hvuak9e4ba.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.iPicknDrop",
+            "package_name": "com.iPicknDrop.orderApp",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "792310717333-ojh1ff75t7tlaoe1ud8q15csksrobto6.apps.googleusercontent.com",
+          "client_id": "430510586576-0njtd0da3ruu936k2594m8gp709m5b0i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iPicknDrop.orderApp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "430510586576-ai79j6v0826ut73iok73f92anobu4oac.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iPicknDrop.orderApp",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "430510586576-mje9amb3oqaik9qf5denjbgften57086.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAFAuSmjTcsiQ3Cefpvrp9RGeYTYwTntwk"
+          "current_key": "AIzaSyCzPlXHRUjlaL7vzVlPqBuF3uL3tboC60A"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "792310717333-ojh1ff75t7tlaoe1ud8q15csksrobto6.apps.googleusercontent.com",
+              "client_id": "430510586576-mje9amb3oqaik9qf5denjbgften57086.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "792310717333-hh3ghi30fvcde6ktbbs9surotk0t5ebu.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.iPicknDrop"
-              }
             }
           ]
         }

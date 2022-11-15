@@ -1,8 +1,9 @@
 import React from 'react';
-import {Animated, Image, Text, TouchableOpacity, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import { Animated, Image, Text, TouchableOpacity, View } from 'react-native';
+import { useDarkMode } from 'react-native-dark-mode';
+import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -12,7 +13,8 @@ import {
   moderateScaleVertical,
   width,
 } from '../styles/responsiveSize';
-import {currencyNumberFormatter} from '../utils/commonFunction';
+import { currencyNumberFormatter } from '../utils/commonFunction';
+import { appIds } from '../utils/constants/DynamicAppKeys';
 import {
   getImageUrl,
   getScaleTransformationStyle,
@@ -22,11 +24,11 @@ import {
 
 const ProductCard = ({
   data = {},
-  onPress = () => {},
+  onPress = () => { },
   cardWidth,
   cardStyle = {},
   onAddtoWishlist,
-  addToCart = () => {},
+  addToCart = () => { },
   activeOpacity = 1,
   bottomText = strings.BUY_NOW,
   nameTextStyle = {},
@@ -38,10 +40,10 @@ const ProductCard = ({
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
-  const {appStyle, appData} = useSelector((state) => state?.initBoot);
+  const { appStyle, appData } = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
-  const {themeColors, themeLayouts} = currentTheme;
-  const commonStyles = commonStylesFunc({fontFamily});
+  const { themeColors, themeLayouts } = currentTheme;
+  const commonStyles = commonStylesFunc({ fontFamily });
   const cardWidthNew = cardWidth ? cardWidth : width * 0.5 - 21.5;
   const url1 = data?.media[0]?.image?.path.proxy_url;
   const url2 = data?.media[0]?.image?.path.image_path;
@@ -57,11 +59,11 @@ const ProductCard = ({
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}
       style={[
-        {width: cardWidthNew},
-        {...commonStyles.shadowStyle},
-        {...cardStyle},
-        {...getScaleTransformationStyle(scaleInAnimated)},
-        {borderRadius: 10},
+        { width: cardWidthNew },
+        { ...commonStyles.shadowStyle },
+        { ...cardStyle },
+        { ...getScaleTransformationStyle(scaleInAnimated) },
+        { borderRadius: 10 },
       ]}>
       <Animated.View>
         <FastImage
@@ -96,7 +98,7 @@ const ProductCard = ({
             {data?.translation[0]?.title}
           </Text>
         </View>
-        <View
+        {getBundleId() !== appIds.danielleBejjani || Number(data?.variant[0]?.price) !==0? <View
           style={{
             // height: 30,
             paddingTop: moderateScale(5),
@@ -112,11 +114,12 @@ const ProductCard = ({
             }}>
             {`${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
               Number(data?.variant[0]?.multiplier) *
-                Number(data?.variant[0]?.price),
+              Number(data?.variant[0]?.price),
               appData?.profile?.preferences?.digit_after_decimal,
             )}`}
           </Text>
         </View>
+          :null}
 
         {data?.is_wishlist ? (
           <View
@@ -152,7 +155,7 @@ const ProductCard = ({
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{flex: 0.3, alignItems: 'flex-end'}}
+              style={{ flex: 0.3, alignItems: 'flex-end' }}
               onPress={onAddtoWishlist}>
               {!!data?.inwishlist ? (
                 <Image source={imagePath.whiteFilledHeart} />

@@ -3067,8 +3067,8 @@ export default function ShortCode({route, navigation}) {
     switch (getBundleId()) {
       case appIds.masa:
         return animatedSplash();
-      // case appIds.iPicknDrop:
-      //   return animatedSplash();
+      case appIds.iPicknDrop:
+        return animatedSplash();
       case appIds.muvpod:
         return animatedSplash();
       case appIds.hezniTaxi:

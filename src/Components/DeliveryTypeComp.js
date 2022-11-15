@@ -60,6 +60,7 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
   const _onTableItm = (value, indx) => {
     const newTabs = [...tabs];
     newTabs.forEach((item, index) => {
+    
       if (index === indx) {
         selectedToggle(item?.type);
         newTabs[index].isActive = true;

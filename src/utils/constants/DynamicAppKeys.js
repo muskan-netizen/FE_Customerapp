@@ -1348,8 +1348,8 @@ const appIds = {
     android: 'com.tumbak',
   }),
   iPicknDrop: Platform.select({
-    ios: 'com.iPicknDrop',
-    android: 'com.iPicknDrop',
+    ios: 'com.iPicknDrop.order',
+    android: 'com.iPicknDrop.orderApp',
   }),
   bluebolt: Platform.select({
     ios: 'com.app.bluebolt',

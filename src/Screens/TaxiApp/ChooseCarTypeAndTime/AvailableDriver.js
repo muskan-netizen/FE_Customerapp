@@ -3,6 +3,7 @@ import React, {useRef} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import {getBundleId} from 'react-native-device-info';
+import { UIActivityIndicator } from 'react-native-indicators';
 import {useSelector} from 'react-redux';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
@@ -22,11 +23,16 @@ import ListEmptyCar from './ListEmptyCar';
 import stylesFun from './styles';
 
 export default function AvailableDriver({
+  isCabPooling=false,
   isLoading = false,
+  disabled,
+  updateSeatNo,
   availableCarList = [],
   onPressAvailableCar,
   selectedCarOption = null,
   allListedDrivers,
+  removeSeats=()=>{},
+  addSeats=()=>{}
 }) {
   const {appData, themeColors, appStyle, themeToggle, themeColor, currencies} =
     useSelector((state) => state?.initBoot);
@@ -81,7 +87,7 @@ export default function AvailableDriver({
                 ),
               }}
             />
-
+            
             <View
               style={{
                 marginLeft: moderateScale(16),
@@ -118,6 +124,7 @@ export default function AvailableDriver({
                 {item?.translation[0]?.meta_description}
               </Text>
             </View>
+           
           </View>
 
           <Text
@@ -202,6 +209,109 @@ export default function AvailableDriver({
           ? MyDarkTheme.colors.background
           : colors.white,
       }}>
+         {
+       isCabPooling && availableCarList.length>0 && (<View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            // flex: 1,
+            margin: moderateScale(20)
+          }}>
+          <View>
+
+            <Text
+              numberOfLines={1}
+              style={{
+                ...styles.priceItemLabel2,
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.textGreyB,
+                fontSize: textScale(13),
+                fontFamily: fontFamily.medium,
+                width: width / 2.1,
+              }}>
+              {'Number of seats'}
+            </Text>
+
+            {/* <Text
+              numberOfLines={1}
+              style={{
+                ...styles.priceItemLabel2,
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity86,
+                fontSize: textScale(12),
+                fontFamily: fontFamily.medium,
+                width: width / 2.1,
+              }}>
+              {i?.product?.translation[0]?.title},
+            </Text> */}
+          </View>
+
+          <View
+            // pointerEvents={btnLoader ? 'none' : 'auto'}
+            style={{ minWidth: moderateScale(74) }}>
+            <View style={{
+              backgroundColor: themeColors.primary_color,
+              borderRadius: moderateScale(16),
+              paddingHorizontal: moderateScale(6),
+              paddingVertical: moderateScaleVertical(4),
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+              <TouchableOpacity
+                style={{ alignItems: 'center' }}
+                disabled={updateSeatNo == 1 || disabled?true :false}
+              onPress={removeSeats}
+              >
+                <Text style={{
+                  fontFamily: fontFamily.bold,
+                  fontSize: moderateScale(20),
+                  color: colors.white,
+                }}>
+                  -
+                </Text>
+              </TouchableOpacity>
+              <View
+                style={{
+                  alignItems: 'center',
+                  // width: moderateScale(20),
+                  height: moderateScale(20),
+                  justifyContent: 'center',
+                }}>
+                { isLoading ? (
+                  <UIActivityIndicator
+                    size={moderateScale(16)}
+                    color={colors.white}
+                  />
+                ) : (
+                  <Text style={{
+                    fontFamily: fontFamily.bold,
+                    fontSize: moderateScale(12),
+                    color: colors.white,
+                  }}>
+                    {updateSeatNo}
+                  </Text>
+                )}
+              </View>
+              <TouchableOpacity
+                style={{ alignItems: 'center' }}
+                disabled={  disabled ? true: false}
+              onPress={addSeats}
+              >
+                <Text style={{
+                  fontFamily: fontFamily.bold,
+                  fontSize: moderateScale(20),
+                  color: colors.white,
+                }}>
+                  +
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>)
+      }
       <BottomSheetFlatList
         // scrollEnabled={false}
         data={availableCarList}
