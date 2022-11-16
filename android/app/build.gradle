@@ -245,6 +245,16 @@ android {
             resValue "string", "app_name", "Euodoo Technologies "
             resValue "string", "host_name", ""
             }
+                           clickokart{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.clickokart.royoorders'
+            resValue "string", "app_name", "CLICKOKART" 
+            resValue "string", "host_name", ""
+               }
     }
     // productFlavors {
     //         royoorder {
