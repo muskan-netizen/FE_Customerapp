@@ -57,6 +57,8 @@ export default function ChatScreen({ route, navigation }) {
   );
   const styles = stylesFun({ fontFamily, isDarkMode });
 
+  console.log("paramDataparamDataparamDataparamDataparamData", paramData);
+
   let defaultImage =
     "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png";
 
@@ -154,6 +156,8 @@ export default function ChatScreen({ route, navigation }) {
         }
       );
 
+      console.log("resresresresres+++", res);
+
       if (!!res?.userData && isFocused) {
         const allRoomUsersAppartFromAgent = res?.userData.filter(function (el) {
           return el.user_type != "agent";
@@ -161,9 +165,20 @@ export default function ChatScreen({ route, navigation }) {
         const allAgentIds = res?.userData.filter(function (el) {
           return el.user_type == "agent";
         });
+
         updateState({
-          allRoomUsersAppartFromAgent: allRoomUsersAppartFromAgent,
-          allAgentIds: allAgentIds,
+          // allRoomUsersAppartFromAgent: allRoomUsersAppartFromAgent.map(
+          //   (val) => val.order_user_id
+          // ),
+          // allAgentIds: allAgentIds.map((val) => val.order_user_id),
+          allRoomUsersAppartFromAgent: allRoomUsersAppartFromAgent.map(
+            (val) => {
+              return { auth_user_id: !!userData?.is_superadmin? val?.auth_user_id: val?.vendor_id };
+            }
+          ),
+          allAgentIds: allAgentIds.map((val) => {
+            return { auth_user_id:  val?.auth_user_id };
+          }),
           roomUsers: res?.userData,
         });
       }
@@ -221,6 +236,7 @@ export default function ChatScreen({ route, navigation }) {
           //'room_name' =>$data->name,
           chat_type: paramData?.type,
         };
+        
         console.log("apiDataapiData", apiData);
         const res = await actions.sendMessage(apiData, {
           code: appData?.profile?.code,
@@ -250,21 +266,38 @@ export default function ChatScreen({ route, navigation }) {
     [allRoomUsersAppartFromAgent, allAgentIds]
   );
 
+  console.log("paramDataparamDataparamDataparamDataparamData", paramData);
+
   const sendToUserNotification = (id, text) => {
+    console.log(
+      "allRoomUsersAppartFromAgentallRoomUsersAppartFromAgent",
+      allRoomUsersAppartFromAgent
+    );
+
+    // order_vendor_id
+
+
+
     let apiData = {
-      user_ids: allRoomUsersAppartFromAgent,
+      user_ids:
+        allRoomUsersAppartFromAgent.length == 0
+          ? [{ auth_user_id:  !!userData?.is_superadmin?  paramData?.order_user_id: paramData.vendor_id }]
+          : allRoomUsersAppartFromAgent,
       roomId: id,
       roomIdText: paramData?.room_id,
       text_message: text,
       chat_type: paramData?.type,
       order_id: paramData?.order_id,
-      all_agentids: allAgentIds,
+      all_agentids:
+        allAgentIds.length == 0 ? [{ auth_user_id: paramData?.agent_id }] : allAgentIds,
       order_vendor_id: paramData?.order_vendor_id,
       username: userData?.name,
       vendor_id: paramData?.vendor_id,
       auth_id: userData?.id,
     };
+
     console.log(apiData, "apiDataapiDataapiData");
+
     actions
       .sendNotification(apiData, {
         code: appData?.profile?.code,

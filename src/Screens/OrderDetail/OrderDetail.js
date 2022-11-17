@@ -155,7 +155,8 @@ export default function OrderDetail({navigation, route}) {
     currentDropOffDate: paramData?.orderDetail?.schedule_dropoff,
     isLoadingA:false,
     submitedRatingToDriver:null,
-    driverRatingData:null
+    driverRatingData:null,
+    isLoadingB:false
   });
   const {
     showTaxFeeArea,
@@ -182,7 +183,8 @@ export default function OrderDetail({navigation, route}) {
     currentDropOffDate,
     isLoadingA,
     submitedRatingToDriver,
-    driverRatingData
+    driverRatingData,
+    isLoadingB
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -244,6 +246,12 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const createRoom = async (item, type) => {
+
+    // agent_id: String(item?.order?.driver_id),
+    // agent_db: clientInfo?.database_name,
+
+    console.log("driverStatusdriverStatus++++",driverStatus)
+ 
     try {
       const apiData = {
         sub_domain: '192.168.101.88', //this is static value
@@ -255,7 +263,15 @@ export default function OrderDetail({navigation, route}) {
         vendor_id: String(item?.vendor_id),
         order_id: String(item?.order_id),
       };
-      updateState({isLoading: true});
+
+      if(type == 'agent_to_user' && !!driverStatus?.order?.driver_id){
+        apiData.agent_id = String(driverStatus?.order?.driver_id)
+        apiData.agent_db = driverStatus.agent_dbname
+      }
+
+
+
+      updateState({isLoadingB: true});
 
       console.log('sending api data', apiData);
       const res = await actions.onStartChat(apiData, {
@@ -264,14 +280,14 @@ export default function OrderDetail({navigation, route}) {
         language: languages?.primary_language?.id,
       });
       console.log('start chat res', res);
-      updateState({isLoading: false});
+      updateState({isLoadingB: false});
       if (!!res?.roomData) {
         onChat(res.roomData);
       }
     } catch (error) {
       console.log('error raised in start chat api', error);
       showError(error?.message);
-      updateState({isLoading: false});
+      updateState({isLoadingB: false});
     }
   };
 
@@ -461,14 +477,8 @@ export default function OrderDetail({navigation, route}) {
       .catch(errorMethod);
   };
 
-  //give review and update the rate
-  const rateYourOrder = (item) => {
-    navigation.navigate(navigationStrings.RATEORDER, {item});
-  };
 
-  const onSuccessRating = () => {
-    getOrders();
-  };
+
   const generateInvoice = useCallback(() => {
     updateState({
       isLoadingA: true,
@@ -1392,21 +1402,6 @@ export default function OrderDetail({navigation, route}) {
                            </Text>
                          </TouchableOpacity>:null
                           }
-                         
-                          
-                          {/* {i?.product_rating?.rating ? (
-                          <View>
-                            <Text
-                              onPress={() => rateYourOrder(i)}
-                              style={[
-                                styles.writeAReview,
-                                { color: themeColors.primary_color },
-                              ]}>
-                              {strings.WRITE_REVIEW}
-                            </Text>
-                          </View>
-                        ) : null} */}
-                        
                         </View>
                       ) : null}
                       {  !!i?.is_processor_enable &&
@@ -4234,7 +4229,8 @@ export default function OrderDetail({navigation, route}) {
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
-      source={loaderOne}>
+      source={loaderOne}
+      isLoadingB={isLoadingB}>
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2

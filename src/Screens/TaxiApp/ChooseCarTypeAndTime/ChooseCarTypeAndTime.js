@@ -88,23 +88,25 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
 
+ 
+
   const [state, setState] = useState({
     region: {
       latitude: paramData?.location[0]?.latitude
-        ? Number(paramData?.location[0].latitude)
+        ? Number(paramData?.location[0]?.latitude)
         : 30.7191,
       longitude: paramData?.location[0]?.longitude
-        ? Number(paramData?.location[0].longitude)
+        ? Number(paramData?.location[0]?.longitude)
         : 76.8107,
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA,
     },
     coordinate: {
       latitude: paramData?.location[0]?.latitude
-        ? Number(paramData?.location[0].latitude)
+        ? Number(paramData?.location[0]?.latitude)
         : 30.7191,
       longitude: paramData?.location[0]?.longitude
-        ? Number(paramData?.location[0].longitude)
+        ? Number(paramData?.location[0]?.longitude)
         : 76.8107,
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA,
@@ -320,6 +322,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         },
       )
       .then((res) => {
+       
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(
@@ -654,7 +657,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     data['recipient_phone'] = '';
     data['recipient_email'] = '';
     data['task_description'] = taskInstruction;
-    data['amount'] = selectedCarOption?.tags_price;
+    data['amount'] = selectedCarOption?.total_tags_price;
+    data['tollamount']= selectedCarOption?.toll_fee?selectedCarOption?.toll_fee:0;
+    data['servicechargeamount']= selectedCarOption?.service_charge_amount?selectedCarOption?.service_charge_amount:0;
     data['payment_option_id'] = selectedPayment ? selectedPayment?.id : 1;
     data['vendor_id'] = selectedCarOption?.vendor_id;
     data['product_id'] = selectedCarOption?.id;
@@ -678,6 +683,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           : ` ${defaultDeviceCountryCode}${paramData?.friendBookingDetails?.mobileNumber}`
         : ''),
       console.log(data, 'dataaaaa');
+
+     
 
     if (
       !!(
@@ -708,7 +715,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       ),
       currency: currencies?.primary_currency?.iso_code,
       key: appData?.profile?.preferences?.razorpay_api_key, // Your api key
-      amount: Number(selectedCarOption?.tags_price) * 100,
+      amount: Number(selectedCarOption?.total_tags_price) * 100,
       name: appData?.profile?.company_name,
       prefill: {
         email: userData?.email,

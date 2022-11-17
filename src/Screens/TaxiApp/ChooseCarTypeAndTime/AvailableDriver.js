@@ -38,6 +38,7 @@ export default function AvailableDriver({
   // choose a trip or swipe up for more
   //Render all Available amounts
   const _renderItem = ({item, index}) => {
+    
     return (
       <View
         style={{
@@ -135,7 +136,7 @@ export default function AvailableDriver({
               textAlign: 'left',
             }}>
             {`${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
-              Number(item.tags_price),
+              Number(item.tags_price+item?.toll_fee),
               appData?.profile?.preferences?.digit_after_decimal,
             )}`}
           </Text>

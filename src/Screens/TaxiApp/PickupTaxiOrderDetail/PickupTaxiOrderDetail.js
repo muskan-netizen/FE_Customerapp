@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React,{ useEffect, useRef, useState } from "react";
 import {
   Alert, Animated, BackHandler, Dimensions, Image, Keyboard,
   Linking, ScrollView, Text, TextInput, TouchableOpacity, View
@@ -1986,6 +1986,49 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
+                     {!!orderFullDetail?.order_details?.toll_amount &&
+                    Number(orderFullDetail?.order_details?.toll_amount) !==
+                      0 && (
+                      <View>
+                        <LeftRightText
+                          leftText={'Toll fee'}
+                          rightText={` ${
+                            currencies?.primary_currency?.symbol
+                          } ${currencyNumberFormatter(
+                            Number(
+                              orderFullDetail?.order_details?.toll_amount
+                            ),
+                            appData?.profile?.preferences?.digit_after_decimal
+                          )}`}
+                          isDarkMode={isDarkMode}
+                          MyDarkTheme={MyDarkTheme}
+                          marginBottom={0}
+                        />
+                        <View style={styles.horizontalLine} />
+                      </View>
+                    )}
+                    {!!orderFullDetail?.order_details?.fixed_service_charge_amount &&
+                    Number(orderFullDetail?.order_details?.fixed_service_charge_amount) !==
+                      0 && (
+                      <View>
+                        <LeftRightText
+                          leftText={'Service Charges'}
+                          rightText={` ${
+                            currencies?.primary_currency?.symbol
+                          } ${currencyNumberFormatter(
+                            Number(
+                              orderFullDetail?.order_details?.fixed_service_charge_amount
+                            ),
+                            appData?.profile?.preferences?.digit_after_decimal
+                          )}`}
+                          isDarkMode={isDarkMode}
+                          MyDarkTheme={MyDarkTheme}
+                          marginBottom={0}
+                        />
+                        <View style={styles.horizontalLine} />
+                      </View>
+                    )}
+                   
                   {!!orderFullDetail?.order_details?.discount_amount &&
                     Number(orderFullDetail?.order_details?.discount_amount) !==
                       0 && (
@@ -2041,6 +2084,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
+                    {console.log(orderFullDetail,"orderFullDetailorderFullDetail")}
                   {!!orderFullDetail?.order_details?.taxable_amount &&
                     Number(orderFullDetail?.order_details?.taxable_amount) !==
                       0 && (
@@ -2062,6 +2106,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
+
 
                   {!!orderFullDetail?.order_details?.payable_amount &&
                     Number(orderFullDetail?.order_details?.payable_amount) !==

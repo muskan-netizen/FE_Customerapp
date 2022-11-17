@@ -1004,5 +1004,7 @@ Amount`,
   RESTAURANTS:'Restaurants',
   NEAR_RESTAURANTS:'Top restaurants near you',
   THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us',
-  SELECT_ANS:"Select your answer"
+  SELECT_ANS:"Select your answer",
+  TOLL_FEE:"Toll Fee",
+  SERVICE_CHARGES:"Service Charges"
 };

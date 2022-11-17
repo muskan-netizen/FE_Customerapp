@@ -169,6 +169,7 @@ const PaymentOptions = ({navigation, route}) => {
               selectedMethod: selectedPaymentMethod,
               cardInfo: cardInfo,
               tokenInfo: res.token?.id,
+              ...paramData
             });
           })
           .catch((err) => {

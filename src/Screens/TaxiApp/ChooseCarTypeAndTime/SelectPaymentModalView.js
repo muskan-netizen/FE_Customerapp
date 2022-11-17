@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert, Dimensions, FlatList,
   I18nManager,
@@ -240,7 +240,7 @@ export default function SelectPaymentModalView({
   };
 
   const onSelect = (val, item, index) => {
-    setSelectedType(val?.translations[0].name);
+    setSelectedType(val?.translations[0]?.name);
     onChangeText(item, val?.translations[0].name, index, item?.length);
   };
 
@@ -266,7 +266,7 @@ export default function SelectPaymentModalView({
         }}>
         {selectedCarOption
           ? `${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
-              Number(selectedCarOption?.variant[0]?.price),
+              Number(selectedCarOption?.total_tags_price),
               appData?.profile?.preferences?.digit_after_decimal,
             )}`
           : ''}
@@ -531,6 +531,78 @@ export default function SelectPaymentModalView({
               Number(loyalityAmount),
             appData?.profile?.preferences?.digit_after_decimal,
           )}`}</Text>
+        </View>
+      )}
+      {!!selectedCarOption?.toll_fee && (
+        <View
+          style={{
+            flexDirection: 'row',
+            marginHorizontal: moderateScale(20),
+            justifyContent: 'space-between',
+            marginVertical: moderateScale(16),
+          }}>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.distanceDurationDeliveryLable,
+                    {color: MyDarkTheme.colors.text},
+                  ]
+                : styles.distanceDurationDeliveryLable
+            }>
+            {'Toll Fee'}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.distanceDurationDeliveryValue,
+                    {color: MyDarkTheme.colors.text},
+                  ]
+                : styles.distanceDurationDeliveryValue
+            }>{`-${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(selectedCarOption?.variant[0]?.multiplier) *
+                Number(selectedCarOption?.toll_fee),
+              appData?.profile?.preferences?.digit_after_decimal,
+            )}`}</Text>
+        </View>
+      )}
+       {!!selectedCarOption?.service_charge_amount && (
+        <View
+          style={{
+            flexDirection: 'row',
+            marginHorizontal: moderateScale(20),
+            justifyContent: 'space-between',
+            marginBottom:moderateScaleVertical(10)
+          }}>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.distanceDurationDeliveryLable,
+                    {color: MyDarkTheme.colors.text},
+                  ]
+                : styles.distanceDurationDeliveryLable
+            }>
+            {'Service Charges'}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.distanceDurationDeliveryValue,
+                    {color: MyDarkTheme.colors.text},
+                  ]
+                : styles.distanceDurationDeliveryValue
+            }> {`-${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(selectedCarOption?.variant[0]?.multiplier) *
+                Number(selectedCarOption?.service_charge_amount),
+              appData?.profile?.preferences?.digit_after_decimal,
+            )}`}</Text>
         </View>
       )}
 
