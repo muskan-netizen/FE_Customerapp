@@ -2528,7 +2528,7 @@ function Cart({ navigation, route }) {
                           styles.cartItemImage,
                           {
                             backgroundColor: isDarkMode
-                              ? MyDarkTheme.colors.lightDark
+                              ? MyDarkTheme.colors.lightDarkWra
                               : colors.white,
                           },
                         ]}>

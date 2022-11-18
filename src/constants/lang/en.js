@@ -1004,5 +1004,7 @@ Amount`,
   RESTAURANTS:'Restaurants',
   NEAR_RESTAURANTS:'Top restaurants near you',
   THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us',
-  SELECT_ANS:"Select your answer"
+  SELECT_ANS:"Select your answer",
+  AND_HAVE_READ_THE:'and have read the',
+  I_ACCEPT_THE:'I accept the'
 };

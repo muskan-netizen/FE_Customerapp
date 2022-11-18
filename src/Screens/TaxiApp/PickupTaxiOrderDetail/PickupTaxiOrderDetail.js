@@ -176,7 +176,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   const bottomSheetRef = useRef(null);
 
   const {profile} = appData;
-
+console.log(appData,'appDataappData')
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, isDarkMode, MyDarkTheme});
   const mapRef = useRef();
@@ -1138,9 +1138,9 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                           />
                         </TouchableOpacity>
                       ) : null}
-                      {/* 
+                      
                       {!!appData?.profile?.socket_url &&
-                        !!(driverStatus?.order && driverStatus?.agent_location?.lat) ? ( */}
+                        !!(driverStatus?.order && driverStatus?.agent_location?.lat) ? ( 
                       <TouchableOpacity
                         onPress={() =>
                           createRoom(
@@ -1162,7 +1162,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                           source={imagePath.icUserChat}
                         />
                       </TouchableOpacity>
-                      {/* ) : null} */}
+                       ) : null} 
                     </View>
                   ) : null}
                 </View>

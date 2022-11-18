@@ -1,5 +1,6 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL='http://192.168.100.130:9090/api/v1'
 // export const API_BASE_URL = 'https://ambutap.com/api/v1';
 // export const API_BASE_URL = 'https://delivery.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://spryton.royoorders.com/api/v1';
@@ -50,7 +51,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://app.blacnetwork.com/api/v1';
 
 // sheryders
-export const API_BASE_URL = 'https://sheryders.com/api/v1';
+// export const API_BASE_URL = 'https://sheryders.com/api/v1';
 
 // hemptify
 // export const API_BASE_URL = 'https://hemptify.com/api/v1';

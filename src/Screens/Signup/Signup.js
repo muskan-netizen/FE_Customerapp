@@ -273,7 +273,7 @@ export default function Signup({navigation}) {
     if (!isRequired) {
       return;
     }
-    console.log(formdata, 'formdata>><');
+    console.log(formdata, '>>formdata<');
     updateState({isLoading: true});
 
     if (accept) {
@@ -680,11 +680,11 @@ export default function Signup({navigation}) {
                   style={{
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}>
-                  I accept the
+                  {strings.I_ACCEPT_THE}
                 </Text>
                 <Text
                   onPress={() =>
-                    navigation.navigate(navigationStrings.WEBLINKS, {id: 2})
+                    navigation.navigate(navigationStrings.WEBLINKS, {id: 3})
                   }
                   style={{color: colors.themeColor}}>
                   {' '}
@@ -694,11 +694,11 @@ export default function Signup({navigation}) {
                   style={{
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}>
-                  and have read the
+                 { strings.AND_HAVE_READ_THE}
                 </Text>
                 <Text
                   onPress={() =>
-                    navigation.navigate(navigationStrings.WEBLINKS, {id: 1})
+                    navigation.navigate(navigationStrings.WEBLINKS, {id: 2})
                   }
                   style={{color: colors.themeColor}}>
                   {`${strings.PRICACY_POLICY}`}.
