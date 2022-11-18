@@ -167,10 +167,6 @@ export default function ChatScreen({ route, navigation }) {
         });
 
         updateState({
-          // allRoomUsersAppartFromAgent: allRoomUsersAppartFromAgent.map(
-          //   (val) => val.order_user_id
-          // ),
-          // allAgentIds: allAgentIds.map((val) => val.order_user_id),
           allRoomUsersAppartFromAgent: allRoomUsersAppartFromAgent.map(
             (val) => {
               return { auth_user_id: !!userData?.is_superadmin? val?.auth_user_id: val?.vendor_id };
@@ -245,18 +241,7 @@ export default function ChatScreen({ route, navigation }) {
         });
         console.log("on send message res", res);
         socketServices.emit("save-message", res);
-        // const message = {
-        //   _id: userData.id,
-        //   auth_user_id: userData.id,
-        //   message: messages[0].text,
-        //   createdAt: new Date(),
-        //   username: userData?.name,
-        //   display_image: getImageUrl(
-        //     userData?.source?.proxy_url,
-        //     userData?.source?.image_path,
-        //     '200/200',
-        //   )
-        // };
+
         await sendToUserNotification(paramData?._id, messages[0].text);
         // setMessages(previousMessages => GiftedChat.append(previousMessages, message))
       } catch (error) {
@@ -266,18 +251,8 @@ export default function ChatScreen({ route, navigation }) {
     [allRoomUsersAppartFromAgent, allAgentIds]
   );
 
-  console.log("paramDataparamDataparamDataparamDataparamData", paramData);
 
   const sendToUserNotification = (id, text) => {
-    console.log(
-      "allRoomUsersAppartFromAgentallRoomUsersAppartFromAgent",
-      allRoomUsersAppartFromAgent
-    );
-
-    // order_vendor_id
-
-
-
     let apiData = {
       user_ids:
         allRoomUsersAppartFromAgent.length == 0
@@ -296,7 +271,6 @@ export default function ChatScreen({ route, navigation }) {
       auth_id: userData?.id,
     };
 
-    console.log(apiData, "apiDataapiDataapiData");
 
     actions
       .sendNotification(apiData, {
