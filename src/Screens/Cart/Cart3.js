@@ -3165,6 +3165,8 @@ function Cart({navigation, route}) {
               </View>
             )}
 
+         
+
             {appIds?.meatEasy == DeviceInfo.getBundleId() ? (
               <View style={styles.itemPriceDiscountTaxView}>
                 {!!item?.delivery_types && item?.delivery_types?.length > 0 ? (
@@ -3808,6 +3810,8 @@ function Cart({navigation, route}) {
             }>
             {strings.SUBTOTAL}
           </Text>
+          {console.log(cartData?.total_container_charges,"cartData?.total_container_charges")}
+          {console.log(cartData?.gross_paybale_amount,"cartData?.total_container_charges")}
           <Text
             style={
               isDarkMode
@@ -3816,9 +3820,9 @@ function Cart({navigation, route}) {
             }>{`${
             currencies?.primary_currency?.symbol
           }${currencyNumberFormatter(
-            Number(cartData?.gross_paybale_amount),
+            Number(cartData?.gross_paybale_amount) + Number(cartData?.total_container_charges),
             appData?.profile?.preferences?.digit_after_decimal,
-          )}`}</Text>
+          )  }`}</Text>
         </View>
 
         {/* total_delivery_fee */}
@@ -3950,7 +3954,7 @@ function Cart({navigation, route}) {
           </View>
         )}
 
-        {!!Number(cartData?.total_container_charges) && (
+        {/* {!!Number(cartData?.total_container_charges) && (
           <View style={styles.bottomTabLableValue}>
             <Text
               style={
@@ -3972,7 +3976,7 @@ function Cart({navigation, route}) {
               appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </View>
-        )}
+        )} */}
 
         {!!cartData?.wallet_amount_used && (
           <View style={styles.bottomTabLableValue}>
@@ -4022,6 +4026,50 @@ function Cart({navigation, route}) {
             )}`}</Text>
           </View>
         )}
+
+         {/* added code below  */}
+
+          {!!(cartData?.total_service_fee) && (
+              <View style={{...styles.itemPriceDiscountTaxView,...{paddingHorizontal:moderateScale(16), marginTop:moderateScaleVertical(4)}}}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.priceItemLabel,
+                          {
+                            color: MyDarkTheme.colors.text,
+                          },
+                        ]
+                      : styles.priceItemLabel
+                  }>
+                    {`Service Fee`}
+                  {/* {preferences?.fixed_fee_nomenclature != '' &&
+                  preferences?.fixed_fee_nomenclature != null
+                    ? preferences?.fixed_fee_nomenclature
+                    : strings.FIXED_FEE} */}
+                </Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.priceItemLabel,
+                          {
+                            color: MyDarkTheme.colors.text,
+                          },
+                        ]
+                      : styles.priceItemLabel
+                  }>{`${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(
+                    cartData?.total_service_fee ? cartData?.total_service_fee : 0,
+                  ),
+                  appData?.profile?.preferences?.digit_after_decimal,
+                )}`}</Text>
+              </View>
+            )}
+            
+
         {(cartData?.total_tax > 0 || cartData?.total_service_fee > 0) && (
           <Animatable.View
             style={{
@@ -4041,7 +4089,8 @@ function Cart({navigation, route}) {
                       ? MyDarkTheme.colors.text
                       : colors.textGreyB,
                   }}>
-                  {strings.TAXES_FEES}
+                  {/* {strings.TAXES_FEES} */}
+                  {`Taxes`}
                 </Text>
 
                 <Image
@@ -4053,17 +4102,15 @@ function Cart({navigation, route}) {
                 />
               </View>
             </TouchableOpacity>
+            
             <Text
               style={
                 isDarkMode
                   ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                   : styles.priceItemLabel
-              }>{`${currencies?.primary_currency?.symbol} ${(
-              Number(cartData?.total_tax ? cartData?.total_tax : 0) +
-              Number(
-                cartData?.total_service_fee ? cartData?.total_service_fee : 0,
-              )
-            ).toFixed(
+              }>
+                {`${currencies?.primary_currency?.symbol} ${(
+              Number(cartData?.total_tax ? cartData?.total_tax : 0)).toFixed(
               appData?.profile?.preferences?.digit_after_decimal,
             )}`}</Text>
           </Animatable.View>
