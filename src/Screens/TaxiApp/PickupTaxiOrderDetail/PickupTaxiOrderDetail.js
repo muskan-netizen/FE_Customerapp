@@ -1,12 +1,20 @@
-import React,{ useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  Alert, Animated, BackHandler, Dimensions, Image, Keyboard,
-  Linking, ScrollView, Text, TextInput, TouchableOpacity, View
+  Alert,
+  Animated,
+  BackHandler,
+  Dimensions,
+  Image,
+  Keyboard,
+  Linking,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { useSelector } from "react-redux";
-import {
-  loaderOne
-} from "../../../Components/Loaders/AnimatedLoaderFiles";
+import { loaderOne } from "../../../Components/Loaders/AnimatedLoaderFiles";
 import WrapperContainer from "../../../Components/WrapperContainer";
 import imagePath from "../../../constants/imagePath";
 import strings from "../../../constants/lang";
@@ -23,7 +31,7 @@ import {
   hapticEffects,
   playHapticEffect,
   showError,
-  showSuccess
+  showSuccess,
 } from "../../../utils/helperFunctions";
 import stylesFunc from "./styles";
 const { height, width } = Dimensions.get("window");
@@ -47,7 +55,7 @@ import RoundImg from "../../../Components/RoundImg";
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale
+  textScale,
 } from "../../../styles/responsiveSize";
 import { currencyNumberFormatter } from "../../../utils/commonFunction";
 import { appIds } from "../../../utils/constants/DynamicAppKeys";
@@ -118,6 +126,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     isWaitingOver: false,
     submitedRatingToDriver: 0,
     driverRatingData: null,
+    orderCancelMessage: "",
   });
   const {
     isLoading,
@@ -152,6 +161,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     isWaitingOver,
     submitedRatingToDriver,
     driverRatingData,
+    orderCancelMessage,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -274,7 +284,6 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         "/order-details/"
       )
     : null;
-
 
   /*********Update driver detail screen********* */
   const _updateDriverLocationLocation = async (url) => {
@@ -530,14 +539,14 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       .then((res) => {
         updateState({
           isVisible: false,
-          isLoading:false
+          isLoading: false,
         });
         navigation.navigate(navigationStrings.RATEORDER, { item });
       })
       .catch((error) => {
         updateState({
           isVisible: false,
-          isLoading:false
+          isLoading: false,
         });
       });
   };
@@ -871,7 +880,12 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   };
 
   const hideModal = () => {
-    updateState({ isCancleModal: false, cancelError: null });
+    updateState({
+      isCancleModal: false,
+      cancelError: null,
+      orderCancelMessage: "",
+      reason: "",
+    });
   };
 
   const onCancelOrder = (reasonForCancle) => {
@@ -905,16 +919,24 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       })
       .then((response) => {
         console.log(response, "responseFromServer");
-        updateState({
-          isBtnLoader: false,
-          isCancleModal: false,
-          cancelError: null,
-        });
-        showSuccess(response?.message);
-        {
-          paramData?.keyValue
-            ? navigation.goBack()
-            : navigation.navigate(navigationStrings.HOMESTACK);
+        if (response?.status == 403) {
+          updateState({
+            orderCancelMessage: response?.message,
+            isBtnLoader: false,
+            cancelError: null,
+          });
+        } else {
+          updateState({
+            isBtnLoader: false,
+            isCancleModal: false,
+            cancelError: null,
+          });
+          showSuccess(response?.message);
+          {
+            paramData?.keyValue
+              ? navigation.goBack()
+              : navigation.navigate(navigationStrings.HOMESTACK);
+          }
         }
       })
       .catch(errorMethod);
@@ -1252,7 +1274,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                             style={styles.agentUserIcon}
                             source={imagePath.icVendorChat}
                           />
-                          <Text>{'  '}</Text>
+                          <Text>{"  "}</Text>
                         </TouchableOpacity>
                       ) : null}
 
@@ -1986,18 +2008,16 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
-                     {!!orderFullDetail?.order_details?.toll_amount &&
+                  {!!orderFullDetail?.order_details?.toll_amount &&
                     Number(orderFullDetail?.order_details?.toll_amount) !==
                       0 && (
                       <View>
                         <LeftRightText
-                          leftText={'Toll fee'}
+                          leftText={"Toll fee"}
                           rightText={` ${
                             currencies?.primary_currency?.symbol
                           } ${currencyNumberFormatter(
-                            Number(
-                              orderFullDetail?.order_details?.toll_amount
-                            ),
+                            Number(orderFullDetail?.order_details?.toll_amount),
                             appData?.profile?.preferences?.digit_after_decimal
                           )}`}
                           isDarkMode={isDarkMode}
@@ -2007,17 +2027,21 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
-                    {!!orderFullDetail?.order_details?.fixed_service_charge_amount &&
-                    Number(orderFullDetail?.order_details?.fixed_service_charge_amount) !==
-                      0 && (
+                  {!!orderFullDetail?.order_details
+                    ?.service_fee_percentage_amount &&
+                    Number(
+                      orderFullDetail?.order_details
+                        ?.service_fee_percentage_amount
+                    ) !== 0 && (
                       <View>
                         <LeftRightText
-                          leftText={'Service Charges'}
+                          leftText={strings.SERVICE_CHARGES}
                           rightText={` ${
                             currencies?.primary_currency?.symbol
                           } ${currencyNumberFormatter(
                             Number(
-                              orderFullDetail?.order_details?.fixed_service_charge_amount
+                              orderFullDetail?.order_details
+                                ?.service_fee_percentage_amount
                             ),
                             appData?.profile?.preferences?.digit_after_decimal
                           )}`}
@@ -2028,7 +2052,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
-                   
+
                   {!!orderFullDetail?.order_details?.discount_amount &&
                     Number(orderFullDetail?.order_details?.discount_amount) !==
                       0 && (
@@ -2084,7 +2108,10 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
-                    {console.log(orderFullDetail,"orderFullDetailorderFullDetail")}
+                  {console.log(
+                    orderFullDetail,
+                    "orderFullDetailorderFullDetail"
+                  )}
                   {!!orderFullDetail?.order_details?.taxable_amount &&
                     Number(orderFullDetail?.order_details?.taxable_amount) !==
                       0 && (
@@ -2106,7 +2133,6 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
-
 
                   {!!orderFullDetail?.order_details?.payable_amount &&
                     Number(orderFullDetail?.order_details?.payable_amount) !==
@@ -2217,7 +2243,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
             overflow: "hidden",
             paddingHorizontal: moderateScale(16),
             paddingVertical: moderateScale(12),
-            marginBottom: moderateScale(keyboardHeight),
+            marginBottom:
+              Platform.OS == "ios" ? moderateScale(keyboardHeight) : 0,
           }}
         >
           <View
@@ -2245,7 +2272,11 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               />
             </TouchableOpacity>
           </View>
-
+          {!!orderCancelMessage && (
+            <Text style={{ alignSelf: "center", color: colors.redB }}>
+              {orderCancelMessage}
+            </Text>
+          )}
           {/* {!!reasonError && (
             <Text
               style={{
@@ -2307,7 +2338,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               backgroundColor: themeColors.primary_color,
               borderWidth: 0,
             }}
-            onPress={()=>onCancelOrder(false)}
+            onPress={() => onCancelOrder(false)}
           />
         </View>
       </Modal>

@@ -9,6 +9,7 @@ import {
   TextInput,
   I18nManager,
   Keyboard,
+  Platform,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import Modal from 'react-native-modal';
@@ -52,6 +53,7 @@ const OrderCardVendorComponent2 = ({
   const [reasonError, setReasonError] = useState(false);
   const [cancelLoader, setLoader] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [orderCancelMessage,setOrderCancelMessage]= useState(null)
   const {
     appData,
     themeColors,
@@ -98,7 +100,12 @@ const OrderCardVendorComponent2 = ({
       });
       setLoader(false);
       updateLocalItem(data);
+     if(res?.status ==403){
+      setOrderCancelMessage(res?.message)
+     }else{
       hideModal();
+     }
+     
       console.log('cancellation res+++++', res);
     } catch (error) {
       // showError(error?.message || error?.error)
@@ -112,6 +119,7 @@ const OrderCardVendorComponent2 = ({
     setReason('');
     setCancellationItem(null);
     setReasonError(false);
+    setOrderCancelMessage(null)
   };
 
   useEffect(() => {
@@ -608,7 +616,7 @@ const OrderCardVendorComponent2 = ({
         style={{
           margin: 0,
           justifyContent: 'flex-end',
-          marginBottom: moderateScale(keyboardHeight),
+           marginBottom: Platform.OS=='ios'? moderateScale(keyboardHeight):0,
         }}>
         <View
           style={{
@@ -643,6 +651,8 @@ const OrderCardVendorComponent2 = ({
               />
             </TouchableOpacity>
           </View>
+          {!!orderCancelMessage &&
+          <Text style={{alignSelf:'center',color:colors.redB}}>{orderCancelMessage}</Text>}
 
           {!!reasonError && (
             <Text

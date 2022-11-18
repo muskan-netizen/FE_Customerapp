@@ -246,6 +246,16 @@ android {
             resValue "string", "app_name", "WeTogether"
             resValue "string", "host_name", ""
             }
+                   taxiolgy{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.taxiolgy.order'
+            resValue "string", "app_name", "Taxiolgy" 
+            resValue "string", "host_name", ""
+            }
     }
     // productFlavors {
     //         royoorder {
