@@ -203,28 +203,18 @@ android {
     }
 
     flavorDimensions "appType"
-     productFlavors {
-                      gokab{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.gokab'
-                resValue "string", "app_name", "GoKab"
-                resValue "string", "host_name", ""
-            }
-                           clickokart{
+  productFlavors{
+            sheRyders{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.clickokart.royoorders'
-            resValue "string", "app_name", "CLICKOKART" 
+            applicationId 'com.sheRyders'
+            resValue "string", "app_name", "She Ryders" 
             resValue "string", "host_name", ""
-               }
-                         royoorder {
+            }
+                      royoorder {
                 dimension "appType"
                 versionCode 3
                 versionName "1.0"
@@ -236,27 +226,8 @@ android {
                 resValue "string", "host_name", "sales.royoorders.com"
             }
 
-                        weTogether{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.weTogether'
-            resValue "string", "app_name", "WeTogether"
-            resValue "string", "host_name", ""
-            }
-                   taxiolgy{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.taxiolgy.order'
-            resValue "string", "app_name", "Taxiolgy" 
-            resValue "string", "host_name", ""
-            }
-    }
+  }
+
     // productFlavors {
     //         royoorder {
     //             dimension "appType"

@@ -86,8 +86,12 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
-  const { userData } = useSelector((state) => state?.auth);
-  const { pickUpTimeType, location } = useSelector((state) => state?.home);
+  console.log(appData?.profile?.preferences, 'appDataappDataappData');
+  const distance_unit_for_time =
+    appData?.profile?.preferences?.distance_unit_for_time;
+  const total_distance = appData?.profile?.preferences?.distance_unit_for_time;
+  const {userData} = useSelector((state) => state?.auth);
+  const {pickUpTimeType, location} = useSelector((state) => state?.home);
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -707,7 +711,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         !userData?.verify_details?.is_phone_verified
       )
     ) {
-      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_TAXI, {
         ...userData,
         fromCart: true,
       })();
@@ -1234,6 +1238,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         indicatorLoader={indicatorLoader}
         _openDateTimeModal={_openDateTimeModal}
         allScreenParamsData={paramData}
+        distnce_unit={distance_unit_for_time}
       />
     );
   };
@@ -1365,10 +1370,15 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
               mode={"DRIVING"}
               // maxZoomLevel={20}
               onReady={(result) => {
+                console.log(result, 'result>>>>');
                 console.log(`Distance: ${result.distance} km`);
                 console.log(`Duration: ${result.duration} min.`);
                 updateState({
-                  totalDistance: result.distance.toFixed(2),
+                  totalDistance: distance_unit_for_time
+                    ? distance_unit_for_time === 'mile'
+                      ? (result.distance * 0.621371).toFixed(2)
+                      : result.distance.toFixed(2)
+                    : result.distance.toFixed(2),
                   totalDuration: result.duration.toFixed(2),
                 });
                 // mapRef.current.fitToCoordinates(result.coordinates, {

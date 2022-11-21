@@ -345,6 +345,7 @@ export default function MyProfile3({route, navigation}) {
       actions
         .profileBasicInfo(formdata, {
           code: appData?.profile?.code,
+          'Content-Type': 'multipart/form-data',
         })
         .then((res) => {
           console.log(res, 'res>>>>>');
@@ -381,7 +382,7 @@ export default function MyProfile3({route, navigation}) {
   };
 
   const addUpdateLocation = (childData) => {
-    console.log(childData,"childDatachildDatachildDatachildData");
+    console.log(childData, 'childDatachildDatachildDatachildData');
     updateState({
       selectViaMap: false,
       // isLoading: true,

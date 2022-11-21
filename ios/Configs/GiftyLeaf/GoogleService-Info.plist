@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>521262857336-05q668fgbk2e1gaq0g491j8tbmvqepqq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.521262857336-05q668fgbk2e1gaq0g491j8tbmvqepqq</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>521262857336-3dsapc6s2p6ld2lsgoqmmmtj39ie60gm.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCiczyj3au6Zu_gMtf-WxyCdQI-vBWiXdQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>521262857336</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.giftyleaf.royoorders</string>
+	<key>PROJECT_ID</key>
+	<string>giftyleaf-66012</string>
+	<key>STORAGE_BUCKET</key>
+	<string>giftyleaf-66012.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:521262857336:ios:325065c4362ae2d485418d</string>
+</dict>
+</plist>
