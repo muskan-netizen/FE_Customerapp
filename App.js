@@ -75,13 +75,9 @@ const App = () => {
     AsyncStorage.removeItem('BleDevice2');
   };
 
-  // useEffect(() => {
-  //   FastImage.clearMemoryCache()
-  //   FastImage.clearDiskCache()
-  // }, [])
 
   const [internetConnection, setInternet] = useState(true);
-  // const appMainData = useSelector((state) => state?.home?.appMainData);
+
   const appMainData = store.getState().home;
 
   async function handleDynamicLink(deepLinkUrl) {

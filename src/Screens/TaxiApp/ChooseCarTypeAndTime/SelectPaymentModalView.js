@@ -62,10 +62,12 @@ export default function SelectPaymentModalView({
   updateInstruction,
   productFaqQuestionAnswers,
   onQuestionAnswerSubmit,
+  allScreenParamsData,
   indicatorLoader = false,
   _openDateTimeModal = () => {},
+  
 }) {
-  console.log(pickUpTimeType, "pickUpTimeType+++++++");
+  console.log(updatedPrice ,"paramsData+++++++");
   console.log(selectedTime, "selectedTime+++++++");
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -102,12 +104,13 @@ export default function SelectPaymentModalView({
   };
 
   //Get list of all offers
-  const _getAllOffers = (vendor, cartData) => {
-  
+  const _getAllOffers = (vendor) => {
+   
     moveToNewScreen(navigationStrings.OFFERS2, {
       vendor: vendor,
       cabOrder: true,
       isTaxi: true,
+      paramsData:allScreenParamsData
     })();
   };
 
@@ -273,8 +276,8 @@ export default function SelectPaymentModalView({
           ? `${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
               Number(
                 selectedCarOption?.total_tags_price
-                  ? selectedCarOption?.total_tags_price
-                  : selectedCarOption?.tags_price
+                  ? selectedCarOption?.total_tags_price-(updatedPrice?updatedPrice:0)
+                  : selectedCarOption?.tags_price-(updatedPrice?updatedPrice:0)
               ),
               appData?.profile?.preferences?.digit_after_decimal
             )}`
@@ -591,7 +594,7 @@ export default function SelectPaymentModalView({
                   ]
                 : styles.distanceDurationDeliveryValue
             }
-          >{`-${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
+          >{`${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
             Number(selectedCarOption?.variant[0]?.multiplier) *
               Number(selectedCarOption?.toll_fee),
             appData?.profile?.preferences?.digit_after_decimal
@@ -630,7 +633,7 @@ export default function SelectPaymentModalView({
             }
           >
             {" "}
-            {`-${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
+            {`${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
               Number(selectedCarOption?.variant[0]?.multiplier) *
                 Number(selectedCarOption?.service_charge_amount),
               appData?.profile?.preferences?.digit_after_decimal
@@ -639,20 +642,19 @@ export default function SelectPaymentModalView({
         </View>
       )}
 
-      <View
+      <TouchableOpacity
         style={{
           ...styles.offersViewB,
           marginHorizontal: moderateScale(17),
         }}
+        onPress={()=>_getAllOffers(selectedCarOption,"")}
       >
-        <TouchableOpacity
-          onPress={() => _getAllOffers(selectedCarOption, "")}
-           style={{ flex: 1 }}
-        >
-          {couponInfo ? (
-            <TouchableOpacity
+       
+          {couponInfo && updatedPrice ? (
+            <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
-            >
+              
+           >
               <View
                 style={{
                   flex: 0.7,
@@ -679,15 +681,16 @@ export default function SelectPaymentModalView({
                   {strings.REMOVE}
                 </Text>
               </View>
-            </TouchableOpacity>
+            </View>
           ) : (
-            <TouchableOpacity
+            <View
               style={{
                 flexDirection: "row",
                 alignItems: "center",
                 flex: 1,
+                backgroundColor:'red'
               }}
-              onPress={() => _getAllOffers(selectedCarOption, "")}
+             
             >
               <Image
                 style={{ tintColor: themeColors.primary_color }}
@@ -698,10 +701,10 @@ export default function SelectPaymentModalView({
               >
                 {strings.APPLY_PROMO_CODE}
               </Text>
-            </TouchableOpacity>
+            </View>
           )}
         </TouchableOpacity>
-      </View>
+     
       {/* select payment method */}
       <TouchableOpacity
         onPress={redirectToPayement}

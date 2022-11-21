@@ -39,15 +39,18 @@ export default function Offer({ route, navigation }) {
     promocode: '',
   });
 
-  const vendorInfo = route?.params?.data;
-  const { isTaxi } = vendorInfo;
+  const paramsData = route?.params?.data;
+
+
+  
+  const { isTaxi } = paramsData;
   const { appData, appStyle, themeColors, themeLayouts, currencies, languages } =
     useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
   useEffect(() => {
-    if (vendorInfo?.cabOrder) {
+    if (paramsData?.cabOrder) {
       _getAllPromoCodesForCabs();
     } else {
       _getAllPromoCodes();
@@ -58,9 +61,9 @@ export default function Offer({ route, navigation }) {
   //Get all promo codes for cab booking
   const _getAllPromoCodesForCabs = () => {
     let data = {};
-    data['vendor_id'] = vendorInfo?.vendor?.vendor_id;
-    data['product_id'] = vendorInfo?.vendor?.id;
-    data['amount'] = vendorInfo?.vendor?.tags_price;
+    data['vendor_id'] = paramsData?.vendor?.vendor_id;
+    data['product_id'] = paramsData?.vendor?.id;
+    data['amount'] = paramsData?.vendor?.tags_price;
 
     actions
       .getAllPromoCodesForCaB(data, {
@@ -82,8 +85,8 @@ export default function Offer({ route, navigation }) {
   //Get all promo codes
   const _getAllPromoCodes = () => {
     let data = {};
-    data['vendor_id'] = vendorInfo.vendor.id;
-    data['cart_id'] = vendorInfo.cartId;
+    data['vendor_id'] = paramsData.vendor.id;
+    data['cart_id'] = paramsData.cartId;
     console.log(data, 'vendor_id');
     actions
       .getAllPromoCodes(data, {
@@ -106,8 +109,8 @@ export default function Offer({ route, navigation }) {
   //Verify your promo code
   const _verifyPromoCode = (item) => {
     let data = {};
-    data['vendor_id'] = vendorInfo.vendor.id;
-    data['cart_id'] = vendorInfo.cartId;
+    data['vendor_id'] = paramsData.vendor.id;
+    data['cart_id'] = paramsData.cartId;
     data['coupon_id'] = item.id;
     updateState({ isLoadingB: true });
     actions
@@ -122,24 +125,28 @@ export default function Offer({ route, navigation }) {
         updateState({ isLoadingB: false });
         if (res) {
           showSuccess(res?.message || res?.error);
+
+
           navigation.navigate(navigationStrings.CART, {
             promocodeDetail: {
               couponInfo: item,
-              vendorInfo: vendorInfo,
+              vendorInfo: paramsData,
+              
             },
           });
         }
       })
       .catch(errorMethod);
   };
+  
 
   //Verify your promo code
   const _verifyPromoCodeForCab = (item) => {
     let data = {};
-    data['vendor_id'] = vendorInfo?.vendor?.vendor_id;
-    data['product_id'] = vendorInfo?.vendor?.id;
+    data['vendor_id'] = paramsData?.vendor?.vendor_id;
+    data['product_id'] = paramsData?.vendor?.id;
     data['coupon_id'] = item.id;
-    data['amount'] = vendorInfo?.vendor?.tags_price;
+    data['amount'] = paramsData?.vendor?.tags_price;
     console.log(data, 'data-verify-promo');
     updateState({ isLoadingB: true });
     actions
@@ -154,11 +161,12 @@ export default function Offer({ route, navigation }) {
         updateState({ isLoadingB: false });
         if (res) {
           showSuccess(res?.message || res?.error);
-          if (vendorInfo?.pickUp) {
+        
+          if (paramsData?.pickUp) {
             navigation.navigate(navigationStrings.SHIPPING_DETAILS, {
               promocodeDetail: {
                 couponInfo: res?.data,
-                vendorInfo: vendorInfo,
+                vendorInfo: paramsData,
               },
             });
           } else {
@@ -166,18 +174,19 @@ export default function Offer({ route, navigation }) {
               !!isTaxi
                 ? navigationStrings.CHOOSECARTYPEANDTIMETAXI
                 : navigationStrings.CHOOSECARTYPEANDTIME,
-              {
-                promocodeDetail: {
-                  couponInfo: res?.data,
-                  vendorInfo: vendorInfo,
+            
+                 {
+                ...paramsData?.paramsData,couponInfo:res?.data
                 },
-              },
+              
             );
           }
         }
       })
       .catch(errorMethod);
   };
+
+
 
   const errorMethod = (error) => {
     console.log(error, 'error');
@@ -204,7 +213,7 @@ export default function Offer({ route, navigation }) {
         <OffersCard2
           data={item}
           onPress={() =>
-            vendorInfo?.cabOrder
+            paramsData?.cabOrder
               ? _verifyPromoCodeForCab(item)
               : _verifyPromoCode(item)
           }
@@ -213,7 +222,7 @@ export default function Offer({ route, navigation }) {
         <OffersCard
           data={item}
           onPress={() =>
-            vendorInfo?.cabOrder
+            paramsData?.cabOrder
               ? _verifyPromoCodeForCab(item)
               : _verifyPromoCode(item)
           }
@@ -262,8 +271,8 @@ export default function Offer({ route, navigation }) {
     }
 
     const data = {};
-    data['vendor_id'] = vendorInfo.vendor.id;
-    data['cart_id'] = vendorInfo.cartId;
+    data['vendor_id'] = paramsData.vendor.id;
+    data['cart_id'] = paramsData.cartId;
     data['promocode'] = promocode;
 
     updateState({ isLoadingB: true });
@@ -283,7 +292,7 @@ export default function Offer({ route, navigation }) {
           navigation.navigate(navigationStrings.CART, {
             promocodeDetail: {
               couponInfo: res?.data,
-              vendorInfo: vendorInfo,
+              vendorInfo: paramsData,
             },
           });
         }
