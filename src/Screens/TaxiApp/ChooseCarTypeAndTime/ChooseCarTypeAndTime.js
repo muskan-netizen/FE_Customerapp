@@ -590,7 +590,7 @@ console.log(availableCarList,'availableCarListavailableCarList')
       isLoading: true,
       indicatorLoader: true,
     });
-    console.log(JSON.stringify(data), 'data>>>>>');
+    console.log(data, 'data>>>>>');
     actions
       .placeDelievryOrder(data, {
         code: appData?.profile?.code,
