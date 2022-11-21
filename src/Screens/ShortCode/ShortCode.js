@@ -2867,6 +2867,24 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.happySingh:
+          updateState({
+            shortCode: shortCodes.happySingh,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.vital:
+          updateState({
+            shortCode: shortCodes.vital,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.parcelworks:
+          updateState({
+            shortCode: shortCodes.parcelworks,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2901,13 +2919,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '1c7d9e',
+        // code: '43d7df',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '1c7d9e',
+        // code: '43d7df',
         code: shortCode,
       };
     }

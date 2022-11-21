@@ -462,6 +462,9 @@ const shortCodes = {
   greenhippo: '2d6cda',
   mymeddy: 'dda7d5',
   uryd: 'dc8909',
+  happySingh: '87b9fc',
+  vital: 'db6f5a',
+  parcelworks: '4b5376',
 };
 
 const appIds = {
@@ -2300,6 +2303,18 @@ const appIds = {
   uryd: Platform.select({
     ios: 'com.uryd.royoorders',
     android: 'com.uryd.royoorders',
+  }),
+  happySingh: Platform.select({
+    ios: 'com.happysingh.royoorders',
+    android: 'com.happysingh.royoorders',
+  }),
+  vital: Platform.select({
+    ios: 'com.vital.royoorders',
+    android: 'com.vital.royoorders',
+  }),
+  parcelworks: Platform.select({
+    ios: 'com.parcelworks.royoorders',
+    android: 'com.parcelworks.royoorders',
   }),
 };
 
