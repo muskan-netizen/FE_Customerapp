@@ -13,6 +13,7 @@ import {
   TextInput,
   Keyboard,
   Dimensions,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -717,7 +718,9 @@ export default function SelectPaymentModalView({
             // paddingBottom: moderateScale(keyboardHeight),
           }}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <>
+            <KeyboardAvoidingView
+              keyboardVerticalOffset={height / 2.5}
+              behavior={'padding'}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -1009,7 +1012,7 @@ export default function SelectPaymentModalView({
                 marginTop={moderateScaleVertical(16)}
                 marginBottom={moderateScaleVertical(16)}
               />
-            </>
+            </KeyboardAvoidingView>
           </ScrollView>
         </View>
       </Modal>

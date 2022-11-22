@@ -46,10 +46,18 @@ import stylesFun from './styles';
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
-    // {"code": "BY", "type": "telephony"}
     getPhonesCallingCodeAndCountryData = codes.filter(
       (x) => x.isoCode2 == result.code.toUpperCase(),
     );
+
+    // [
+    //   {
+    //     country: 'United States',
+    //     countryCodes: [''],
+    //     isoCode2: 'US',
+    //     isoCode3: 'USA',
+    //   },
+    // ];
   })
   .catch((e) => {
     console.log(e);
@@ -88,20 +96,16 @@ export default function Signup({navigation}) {
   );
   const [state, setState] = useState({
     isLoading: false,
-    callingCode:
-      getPhonesCallingCodeAndCountryData &&
-      getPhonesCallingCodeAndCountryData.length
-        ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]
-        : appData?.profile.country?.phonecode
-        ? appData?.profile?.country?.phonecode
-        : '91',
-    cca2:
-      getPhonesCallingCodeAndCountryData &&
-      getPhonesCallingCodeAndCountryData.length
-        ? getPhonesCallingCodeAndCountryData[0].isoCode2
-        : appData?.profile?.country?.code
-        ? appData?.profile?.country?.code
-        : 'IN',
+    callingCode: !isEmpty(getPhonesCallingCodeAndCountryData)
+      ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace('-', '')
+      : appData?.profile.country?.phonecode
+      ? appData?.profile?.country?.phonecode
+      : '91',
+    cca2: !isEmpty(getPhonesCallingCodeAndCountryData)
+      ? getPhonesCallingCodeAndCountryData[0]?.isoCode2
+      : appData?.profile?.country?.code
+      ? appData?.profile?.country?.code
+      : 'IN',
     name: '',
     email: '',
     password: '',

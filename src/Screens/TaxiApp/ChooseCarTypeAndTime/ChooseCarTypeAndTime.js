@@ -603,7 +603,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       isLoading: true,
       indicatorLoader: true,
     });
-    console.log(JSON.stringify(data), 'data>>>>>');
+    console.log(data, 'data>>>>>');
     actions
       .placeDelievryOrder(data, {
         code: appData?.profile?.code,
@@ -1505,6 +1505,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           </View>
         </Modal>
       )}
+
+      {console.log(paymentDataFlutterWave, 'paymentDataFlutterWave...')}
       <PaymentProcessingModal
         isModalVisible={isModalVisible}
         updateModalState={_updateState}
