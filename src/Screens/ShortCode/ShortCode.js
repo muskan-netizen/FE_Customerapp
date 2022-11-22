@@ -2801,14 +2801,14 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        code: '2d98b5',
-        // code: shortCode,
+        // code: '2d98b5',
+        code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        code: '2d98b5',
-        // code: shortCode,
+        // code: '2d98b5',
+        code: shortCode,
       };
     }
     console.log(header, 'header*******');
@@ -3027,8 +3027,8 @@ export default function ShortCode({route, navigation}) {
     switch (getBundleId()) {
       case appIds.masa:
         return animatedSplash();
-      case appIds.iPicknDrop:
-        return animatedSplash();
+      // case appIds.iPicknDrop:
+      //   return animatedSplash();
       case appIds.muvpod:
         return animatedSplash();
       case appIds.hezniTaxi:
@@ -3068,8 +3068,8 @@ export default function ShortCode({route, navigation}) {
     switch (getBundleId()) {
       case appIds?.masa:
         return imagePath.masa;
-      case appIds?.iPicknDrop:
-        return imagePath.ipd;
+      // case appIds?.iPicknDrop:
+      //   return imagePath.ipd;
       case appIds?.muvpod:
         return imagePath.muvpod;
       case appIds?.hezniTaxi:
