@@ -155,7 +155,7 @@ export default ({fontFamily}) => {
     cartItemMainContainer: {
       flexDirection: 'row',
       paddingVertical: moderateScaleVertical(10),
-      paddingHorizontal: moderateScale(10),
+      // paddingHorizontal: moderateScale(10),
       backgroundColor: colors.white,
       borderRadius: moderateScale(10),
     },
@@ -366,14 +366,13 @@ export default ({fontFamily}) => {
       color: colors.redB,
       fontFamily: fontFamily.medium,
       fontSize: textScale(12),
-      marginRight:moderateScale(6)
+      marginRight: moderateScale(6),
     },
     agentUserIcon: {
       tintColor: colors?.redB,
       width: moderateScale(15),
-      height:moderateScale(15)
-
-    }
+      height: moderateScale(15),
+    },
   });
   return styles;
 };
