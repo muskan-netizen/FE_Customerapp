@@ -465,6 +465,9 @@ const shortCodes = {
   happySingh: '87b9fc',
   vital: 'db6f5a',
   parcelworks: '4b5376',
+  skyline: 'ce1ed6',
+  bliss: '6eb260',
+  rentzy: 'd4fc07',
 };
 
 const appIds = {
@@ -2315,6 +2318,18 @@ const appIds = {
   parcelworks: Platform.select({
     ios: 'com.parcelworks.royoorders',
     android: 'com.parcelworks.royoorders',
+  }),
+  skyline: Platform.select({
+    ios: 'com.skyline.royoorders',
+    android: 'com.skyline',
+  }),
+  bliss: Platform.select({
+    ios: 'com.bliss.royoorders',
+    android: 'com.bliss',
+  }),
+  rentzy: Platform.select({
+    ios: 'com.rentzy.royoorders',
+    android: 'com.rentzy',
   }),
 };
 
