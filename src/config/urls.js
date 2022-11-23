@@ -67,6 +67,8 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // sheryders
 // export const API_BASE_URL = 'https://sheryders.com/api/v1';
 
+// export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
+
 // hemptify
 // export const API_BASE_URL = 'https://hemptify.com/api/v1';
 
@@ -111,6 +113,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // torunz
 // export const API_BASE_URL = 'https://torunz.com/api/v1';
 
+// export const API_BASE_URL = 'https://todo.go912.app/en/api/v1';
 // export const API_BASE_URL = 'https://hokitch.com/api/v1';
 // export const API_BASE_URL = 'https://toor.life/api/v1';
 // export const API_BASE_URL = 'https://tmgsalesllc.com/api/v1';

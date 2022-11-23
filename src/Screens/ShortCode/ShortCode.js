@@ -2979,7 +2979,7 @@ export default function ShortCode({route, navigation}) {
 
         if (
           getBundleId() == appIds.masa ||
-          getBundleId() == appIds.iPicknDrop ||
+          // getBundleId() == appIds.iPicknDrop ||
           getBundleId() == appIds.muvpod ||
           getBundleId() == appIds.hezniTaxi ||
           getBundleId() == appIds.flank
@@ -3203,8 +3203,8 @@ export default function ShortCode({route, navigation}) {
     switch (getBundleId()) {
       case appIds?.masa:
         return imagePath.masa;
-      case appIds?.iPicknDrop:
-        return imagePath.ipd;
+      // case appIds?.iPicknDrop:
+      //   return imagePath.ipd;
       case appIds?.muvpod:
         return imagePath.muvpod;
       case appIds?.hezniTaxi:
