@@ -100,7 +100,7 @@ export default function Login({navigation}) {
       focus: false,
       countryName: '',
       isShowPassword: false,
-      appHashKey: 'WpV3+5pgxIH',
+      appHashKey: '',
     },
   });
 
@@ -189,10 +189,12 @@ export default function Login({navigation}) {
       fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
       dialCode: mobilNo.focus ? mobilNo.callingCode : '',
       countryData: mobilNo.focus ? mobilNo.cca2 : '',
-      app_hash_key: appHashKey,
     };
+    if (Platform.OS === 'android' && !!appHashKey) {
+      data['app_hash_key'] = appHashKey;
+    }
     updateState({isLoading: true});
-    console.log('chck login data >>>', data);
+
     actions
       .loginUsername(data, {
         code: appData?.profile?.code,
@@ -568,7 +570,7 @@ export default function Login({navigation}) {
             onPress={moveToNewScreen(navigationStrings.FORGOT_PASSWORD)}
             style={{
               fontFamily: fontFamily.bold,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}>
             {' '}
             {strings.FORGOT}

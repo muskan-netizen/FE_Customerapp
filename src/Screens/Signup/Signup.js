@@ -116,7 +116,7 @@ export default function Signup({navigation}) {
     addtionalTextInputs: [],
     addtionalImages: [],
     addtionalPdfs: [],
-    appHashKey: 'WpV3+5pgxIH',
+    appHashKey: '',
     subscriptionPopup: false,
   });
   const {
@@ -208,7 +208,6 @@ export default function Signup({navigation}) {
         ? formdata.append('name', phoneNumber)
         : formdata.append('name', name);
     }
-    formdata.append('app_hash_key', appHashKey);
     formdata.append('phone_number', phoneNumber);
     formdata.append('dial_code', callingCode.toString());
     formdata.append('country_code', cca2);
@@ -225,6 +224,9 @@ export default function Signup({navigation}) {
       'fcm_token',
       !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
     );
+    if (Platform.OS === 'android' && !!appHashKey) {
+      formdata.append('app_hash_key', appHashKey);
+    }
 
     var isRequired = true;
     if (!isEmpty(addtionalTextInputs)) {
