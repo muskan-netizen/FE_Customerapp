@@ -67,6 +67,11 @@ export default function (Stack, appStyle) {
         component={WebLinks}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name={navigationStrings.VERIFY_ACCOUNT}
+        component={VerifyAccount}
+        options={{headerShown: false}}
+      />
     </>
   );
 }

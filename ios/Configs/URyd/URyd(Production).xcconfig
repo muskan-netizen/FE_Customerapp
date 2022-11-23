@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-available_pods-URyd/Pods-available_pods-URyd.release.xcconfig"
+
+PROJECT_APPLE_ID = 6444404952
+PROJECT_BUNDLE_ID = com.uryd.royoorders
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = U Ryd
+PROJECT_GOOGLE_CLIENT_ID = 976065513404-ufumslghnheivkjo0a38t662e5oc9rea.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.976065513404-ufumslghnheivkjo0a38t662e5oc9rea
+PROJECT_FACEBOOK_ID = 1830180110660314
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =URydInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

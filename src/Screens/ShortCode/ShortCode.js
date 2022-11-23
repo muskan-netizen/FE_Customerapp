@@ -2710,9 +2710,9 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-        case appIds.regiomigo:
+        case appIds.ragiomigo:
           updateState({
-            shortCode: shortCodes.regiomigo,
+            shortCode: shortCodes.ragiomigo,
             isShortcodePrefilled: true,
           });
           break;
@@ -2807,6 +2807,66 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.saamanshop:
+          updateState({
+            shortCode: shortCodes.saamanshop,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.tdc:
+          updateState({
+            shortCode: shortCodes.tdc,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.giftyLeaf:
+          updateState({
+            shortCode: shortCodes.giftyLeaf,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.flyCommerce:
+          updateState({
+            shortCode: shortCodes.flyCommerce,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.pik:
+          updateState({
+            shortCode: shortCodes.pik,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.motina:
+          updateState({
+            shortCode: shortCodes.motina,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hungry:
+          updateState({
+            shortCode: shortCodes.hungry,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.greenhippo:
+          updateState({
+            shortCode: shortCodes.greenhippo,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mymeddy:
+          updateState({
+            shortCode: shortCodes.mymeddy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.uryd:
+          updateState({
+            shortCode: shortCodes.uryd,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2841,13 +2901,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '245bae',
+        // code: '1c7d9e',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '245bae',
+        // code: '1c7d9e',
         code: shortCode,
       };
     }
@@ -2884,7 +2944,7 @@ export default function ShortCode({route, navigation}) {
 
         if (
           getBundleId() == appIds.masa ||
-          getBundleId() == appIds.iPicknDrop ||
+          // getBundleId() == appIds.iPicknDrop ||
           getBundleId() == appIds.muvpod ||
           getBundleId() == appIds.hezniTaxi ||
           getBundleId() == appIds.flank
@@ -3108,8 +3168,8 @@ export default function ShortCode({route, navigation}) {
     switch (getBundleId()) {
       case appIds?.masa:
         return imagePath.masa;
-      case appIds?.iPicknDrop:
-        return imagePath.ipd;
+      // case appIds?.iPicknDrop:
+      //   return imagePath.ipd;
       case appIds?.muvpod:
         return imagePath.muvpod;
       case appIds?.hezniTaxi:
