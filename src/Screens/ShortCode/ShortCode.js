@@ -79,7 +79,7 @@ export default function ShortCode({route, navigation}) {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const videoRef = useRef();
 
-  const customColor = themeColors.primary_color;
+  const customColor = themeColors?.primary_color;
 
   useEffect(() => {
     (async () => {
@@ -2620,9 +2620,9 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-        case appIds.youSmokeShop:
+        case appIds.youSmokeShops:
           updateState({
-            shortCode: shortCodes.youSmokeShop,
+            shortCode: shortCodes.youSmokeShops,
             isShortcodePrefilled: true,
           });
           break;
@@ -2885,6 +2885,24 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.usVetsDeliver:
+          updateState({
+            shortCode: shortCodes.usVetsDeliver,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.flybuilder:
+          updateState({
+            shortCode: shortCodes.flybuilder,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.konectame:
+          updateState({
+            shortCode: shortCodes.konectame,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2929,7 +2947,6 @@ export default function ShortCode({route, navigation}) {
         code: shortCode,
       };
     }
-    console.log(header, 'header*******');
     actions
       .initApp({}, header, false, null, null, true)
       .then((res) => {

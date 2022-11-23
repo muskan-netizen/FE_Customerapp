@@ -2228,6 +2228,18 @@ end
 #parcelworks
 target 'ParcelWorks' do
 end
+
+#UsVetsDeliver
+target 'UsVetsDeliver' do
+end
+
+#Konectame
+target 'Konectame' do
+end
+
+#Fly Builder
+target 'FlyBuilder' do
+end
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

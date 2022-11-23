@@ -46,7 +46,8 @@ export default function ToggleTabBar({
     getSelectedTab();
   }, [appData]);
 
-  console.log(toggleData, 'toggleDatatoggleData');
+// console.log(toggleData,"toggleDatatoggleData")
+console.log(dine_In_Type,"toggleDatatoggleData")
 
   useEffect(() => {
     if (dine_In_Type == 'dine_in') {
@@ -174,7 +175,7 @@ export default function ToggleTabBar({
       }
     }
     if (toggleData?.profile?.preferences?.dinein_check == 1) {
-      let tabname = toggleData?.profile?.preferences?.vendorMode[1].name;
+      let tabname = toggleData?.profile?.preferences?.vendorMode[1]?.name;
       localTabsArray.push(
         getBundleId() == appIds.sorDelivery ? tabname : strings.DINE_IN,
       );
@@ -187,7 +188,7 @@ export default function ToggleTabBar({
       }
     }
     if (toggleData?.profile?.preferences?.takeaway_check == 1) {
-      let tabname = toggleData?.profile?.preferences?.vendorMode[2].name;
+      let tabname = toggleData?.profile?.preferences?.vendorMode[2]?.name;
       localTabsArray.push(
         getBundleId() == appIds.sorDelivery ? tabname : strings.TAKEAWAY,
       );

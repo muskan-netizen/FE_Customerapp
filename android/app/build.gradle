@@ -131,7 +131,6 @@ android {
     }
         compileSdkVersion 31
 
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -203,19 +202,7 @@ android {
     }
 
     flavorDimensions "appType"
-  productFlavors{
-            sheRyders{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.sheRyders'
-            resValue "string", "app_name", "She Ryders" 
-            resValue "string", "host_name", ""
-            }
 
-  }
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -4211,7 +4198,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.sabroson'
+                applicationId 'com.sabroson.orders'
                 resValue "string", "app_name", "Sabroson"
                 resValue "string", "host_name", ""
             }
@@ -5044,7 +5031,7 @@ android {
             }
              butlerDelivery{
             dimension "appType"
-            versionCode 2
+            versionCode 8
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -6096,14 +6083,14 @@ android {
             resValue "string", "app_name", "Delcolink" 
             resValue "string", "host_name", ""
             }
-            youSmokeShop{
+            youSmokeShops{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.youSmokeShop.royoorders'
-            resValue "string", "app_name", "You Smoke Shop" 
+            applicationId 'com.youSmokeShops.royoorders'
+            resValue "string", "app_name", "You Smoke Shops" 
             resValue "string", "host_name", ""
             }
              doober{
@@ -6537,6 +6524,36 @@ android {
             resValue "string", "app_name", "Parcelworks" 
             resValue "string", "host_name", ""
             }
+                        usVetsDeliver{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.UsVetsDeliver.royoorders'
+            resValue "string", "app_name", "UsVetsDeliver" 
+            resValue "string", "host_name", ""
+            }
+                            konectame{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.konectame.royoorders'
+            resValue "string", "app_name", "Konectame" 
+            resValue "string", "host_name", ""
+            }
+                                flybuilder{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.flybuilder.royoorders'
+            resValue "string", "app_name", "Fly Builder" 
+            resValue "string", "host_name", ""
+            }
     }
 }
 
@@ -6557,7 +6574,7 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     api(platform("com.squareup.okhttp3:okhttp-bom:4.7.2"))
-api("com.squareup.okhttp3:okhttp")
+ api("com.squareup.okhttp3:okhttp")
 api("com.squareup.okhttp3:logging-interceptor")
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {

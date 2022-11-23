@@ -190,7 +190,8 @@ export default function AddMoney({navigation}) {
                 isDarkMode
                   ? [styles.chooseAddMoney, {color: MyDarkTheme.colors.text}]
                   : styles.chooseAddMoney
-              }>
+              }
+              >
               {`+ ${currencies?.primary_currency?.symbol}`}{' '}
               {currencyNumberFormatter(
                 item.amount,

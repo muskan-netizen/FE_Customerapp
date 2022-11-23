@@ -1,22 +1,25 @@
-import moment from 'moment';
-import React, {useEffect, useState} from 'react';
+import {isEmpty} from 'lodash';
+import {useEffect, useState} from 'react';
 import {
   Alert,
+  Dimensions,
   FlatList,
   I18nManager,
   Image,
+  Keyboard,
   Platform,
   ScrollView,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
-  TextInput,
-  Keyboard,
-  Dimensions,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
+import {getBundleId} from 'react-native-device-info';
 import ImagePicker from 'react-native-image-crop-picker';
+import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
+import DropDown from '../../../Components/DropDown';
 import GradientButton from '../../../Components/GradientButton';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
@@ -24,7 +27,6 @@ import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
   StatusBarHeight,
@@ -33,14 +35,10 @@ import {
 } from '../../../styles/responsiveSize';
 import {MyDarkTheme} from '../../../styles/theme';
 import {currencyNumberFormatter} from '../../../utils/commonFunction';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
 import {getImageUrl} from '../../../utils/helperFunctions';
 import {androidCameraPermission} from '../../../utils/permissions';
 import stylesFun from './styles';
-import Modal from 'react-native-modal';
-import {isEmpty} from 'lodash';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
-import {getBundleId} from 'react-native-device-info';
-import DropDown from '../../../Components/DropDown';
 
 export default function SelectPaymentModalView({
   isLoading = false,
@@ -69,7 +67,7 @@ export default function SelectPaymentModalView({
   _openDateTimeModal = () => {},
 }) {
   console.log(pickUpTimeType, 'pickUpTimeType+++++++');
-  console.log(totalDistance, 'selectedTime+++++++');
+  console.log(selectedTime, 'selectedTime+++++++');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -82,11 +80,6 @@ export default function SelectPaymentModalView({
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(
-    appData?.profile?.preferences?.distance_unit_for_time,
-    'appDataappData>>>>>',
-  );
-  const distance_unit = appData?.profile?.preferences?.distance_unit_for_time;
   const fontFamily = appStyle?.fontSizeData;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({fontFamily, themeColors});
@@ -312,7 +305,12 @@ export default function SelectPaymentModalView({
               styles.distanceDurationDeliveryLable,
               {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
             ]}>
-            {`${totalDistance} ${distance_unit === 'mile' ? 'mile' : 'Km'}`}
+            {`${totalDistance} ${
+              getBundleId() === appIds?.weTogether ||
+              getBundleId() === appIds?.taxiolgy
+                ? 'Miles'
+                : 'km'
+            }`}
           </Text>
         </View>
         <View style={{flex: 0.33}}>
@@ -747,7 +745,7 @@ export default function SelectPaymentModalView({
                     <View
                       style={{
                         marginTop: moderateScaleVertical(10),
-                        zIndex: 5,
+                        zIndex: 50 / Number(index),
                       }}>
                       <View
                         style={{
@@ -774,6 +772,7 @@ export default function SelectPaymentModalView({
                         value={selectedType}
                         modalStyle={{
                           width: width - moderateScale(50),
+                          position: 'relative',
                         }}
                         selectedIndexByProps={-1}
                         placeholder={strings.SELECT_ANS}
