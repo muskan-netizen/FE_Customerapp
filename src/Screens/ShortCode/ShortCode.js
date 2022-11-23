@@ -79,7 +79,7 @@ export default function ShortCode({route, navigation}) {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const videoRef = useRef();
 
-  const customColor = themeColors.primary_color;
+  const customColor = themeColors?.primary_color;
 
   useEffect(() => {
     (async () => {
@@ -2620,9 +2620,9 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-        case appIds.youSmokeShop:
+        case appIds.youSmokeShops:
           updateState({
-            shortCode: shortCodes.youSmokeShop,
+            shortCode: shortCodes.youSmokeShops,
             isShortcodePrefilled: true,
           });
           break;
@@ -2867,6 +2867,42 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.happySingh:
+          updateState({
+            shortCode: shortCodes.happySingh,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.vital:
+          updateState({
+            shortCode: shortCodes.vital,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.parcelworks:
+          updateState({
+            shortCode: shortCodes.parcelworks,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.usVetsDeliver:
+          updateState({
+            shortCode: shortCodes.usVetsDeliver,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.flybuilder:
+          updateState({
+            shortCode: shortCodes.flybuilder,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.konectame:
+          updateState({
+            shortCode: shortCodes.konectame,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2901,17 +2937,16 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '1c7d9e',
+        // code: '43d7df',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '1c7d9e',
+        // code: '43d7df',
         code: shortCode,
       };
     }
-    console.log(header, 'header*******');
     actions
       .initApp({}, header, false, null, null, true)
       .then((res) => {

@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-available_pods-FlyBuilder/Pods-available_pods-FlyBuilder.debug.xcconfig"
+
+PROJECT_APPLE_ID = 6444650797
+PROJECT_BUNDLE_ID = com.flybuilder.royoorders
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = FlyBuilder
+PROJECT_GOOGLE_CLIENT_ID = 851759258057-g5bd87c2a1ougmoci0glh36c9bbbs4pk.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.851759258057-g5bd87c2a1ougmoci0glh36c9bbbs4pk
+PROJECT_FACEBOOK_ID = 654929092969254
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =FlyBuilderInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4
