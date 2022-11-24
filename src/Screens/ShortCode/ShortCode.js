@@ -2922,13 +2922,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-       code: '2d98b5',
-       //code: shortCode,
+       code: '245bae',
+      //  code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-    code: '2d98b5',
+    code: '245bae',
     //  code: shortCode,
       };
     }
@@ -3188,8 +3188,8 @@ export default function ShortCode({route, navigation}) {
     switch (getBundleId()) {
       case appIds?.masa:
         return imagePath.masa;
-      case appIds?.iPicknDrop:
-        return imagePath.ipd;
+      // case appIds?.iPicknDrop:
+      //   return imagePath.ipd;
       case appIds?.muvpod:
         return imagePath.muvpod;
       case appIds?.hezniTaxi:

@@ -114,7 +114,7 @@ export default function SelectPaymentModalView({
 
   //Get list of all offers
   const _getAllOffers = (vendor) => {
-   
+ 
     moveToNewScreen(navigationStrings.OFFERS2, {
       vendor: vendor,
       cabOrder: true,
@@ -549,7 +549,7 @@ export default function SelectPaymentModalView({
                     {color: MyDarkTheme.colors.text},
                   ]
                 : styles.distanceDurationDeliveryValue
-            }>{`-${
+            }>{`${
             currencies?.primary_currency?.symbol
           }${currencyNumberFormatter(
             Number(selectedCarOption?.variant[0]?.multiplier) *
