@@ -1016,19 +1016,21 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
   const uploadImage = async (img) => {
     console.log('selected image', img);
-
+    let fileName = img.path.split("Pictures/")
+      console.log(fileName,"fileName...")
     const imgData = new FormData();
     imgData.append('upload_photo', {
-      uri: img,
-      name: 'image.png',
-      fileName: 'image',
-      type: 'image/png',
+      uri: img.path,
+      name: fileName[1],
+      fileName: fileName[1],
+      type: img.mime,
     });
     try {
       const res = await actions.imageUpload(imgData, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
+        'Content-Type': 'multipart/form-data',
       });
       console.log('image upload res', res);
       updateState({
