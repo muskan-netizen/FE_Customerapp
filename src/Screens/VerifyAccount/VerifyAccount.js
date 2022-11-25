@@ -538,7 +538,7 @@ export default function VerifyAccount({navigation, route}) {
                               color: themeColors.primary_color,
                               fontFamily: fontFamily.bold,
                             }}>
-                            {`${otpTimerCounter(timer)} min`}
+                            {`${otpTimerCounter(timer)} sec`}
                           </Text>
                         </Text>
                       </View>
@@ -709,7 +709,7 @@ export default function VerifyAccount({navigation, route}) {
                             color: themeColors.primary_color,
                             fontFamily: fontFamily.bold,
                           }}>
-                          {`${otpTimerCounter(timer2)} min`}
+                          {`${otpTimerCounter(timer2)} sec`}
                         </Text>
                       </Text>
                     ) : (
