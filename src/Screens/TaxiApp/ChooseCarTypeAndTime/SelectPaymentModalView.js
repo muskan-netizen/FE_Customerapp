@@ -1,3 +1,4 @@
+import React from 'react';
 import {isEmpty} from 'lodash';
 import {useEffect, useState} from 'react';
 import {
@@ -558,63 +559,64 @@ export default function SelectPaymentModalView({
         </View>
       )}
 
-      <View
-        style={{
-          ...styles.offersViewB,
-          marginHorizontal: moderateScale(17),
-        }}
-      >
+<TouchableOpacity
+style={{
+...styles.offersViewB,
+marginHorizontal: moderateScale(17),
+}}
+onPress={()=>_getAllOffers(selectedCarOption,"")}
+>
 
-        <TouchableOpacity
-          onPress={() => _getAllOffers(selectedCarOption, '')}
-          style={{flex: 1}}>
-          {couponInfo ? (
-            <TouchableOpacity
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View
-                style={{
-                  flex: 0.7,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <Image
-                  style={{tintColor: themeColors.primary_color}}
-                  source={imagePath.percent2}
-                />
-                <Text
-                  numberOfLines={1}
-                  style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
-                  {`${strings.CODE} ${couponInfo?.name} ${strings.APPLYED}`}
-                </Text>
-              </View>
-              <View style={{flex: 0.3, alignItems: 'flex-end'}}>
-                <Text
-                  onPress={removeCoupon}
-                  style={[styles.removeCoupon, {color: colors.cartItemPrice}]}>
-                  {strings.REMOVE}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                flex: 1,
-              }}
-              onPress={() => _getAllOffers(selectedCarOption, '')}>
-              <Image
-                style={{tintColor: themeColors.primary_color}}
-                source={imagePath.percent2}
-              />
-              <Text
-                style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
-                {strings.APPLY_PROMO_CODE}
-              </Text>
-            </TouchableOpacity>
-          )}
-        </TouchableOpacity>
-      </View>
+{couponInfo && updatedPrice ? (
+<View
+style={{ flexDirection: "row", justifyContent: "space-between" }}
+
+>
+<View
+style={{
+flex: 0.7,
+flexDirection: 'row',
+alignItems: 'center',
+}}>
+<Image
+style={{tintColor: themeColors.primary_color}}
+source={imagePath.percent2}
+/>
+<Text
+numberOfLines={1}
+style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
+{`${strings.CODE} ${couponInfo?.name} ${strings.APPLYED}`}
+</Text>
+</View>
+<View style={{flex: 0.3, alignItems: 'flex-end'}}>
+<Text
+onPress={removeCoupon}
+style={[styles.removeCoupon, {color: colors.cartItemPrice}]}>
+{strings.REMOVE}
+</Text>
+</View>
+</View>
+) : (
+<View
+style={{
+flexDirection: 'row',
+alignItems: 'center',
+// flex: 1,
+// backgroundColor:'red'
+}}
+
+>
+<Image
+style={{tintColor: themeColors.primary_color}}
+source={imagePath.percent2}
+/>
+<Text
+style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
+{strings.APPLY_PROMO_CODE}
+</Text>
+</View>
+)}
+</TouchableOpacity>
       {/* select payment method */}
       <TouchableOpacity
         onPress={redirectToPayement}

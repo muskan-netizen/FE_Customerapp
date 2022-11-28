@@ -246,7 +246,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   } = state;
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const [updateSeatNO, setUpdateSeatNo] = useState(1)
-  console.log(availableCarList, 'availableCarListavailableCarList');
+  console.log(paramData, 'paramDataparamDataparamData');
+
   useFocusEffect(
     React.useCallback(() => {
       if (paramData && paramData?.selectedMethod) {

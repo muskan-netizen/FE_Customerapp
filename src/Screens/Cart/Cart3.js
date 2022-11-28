@@ -3914,9 +3914,11 @@ function Cart({ navigation, route }) {
             }
           >{`${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
             Number(cartData?.gross_paybale_amount) +
-              cartData?.total_container_charges
-              ? Number(cartData?.total_container_charges)
-              : 0,
+              Number(
+                cartData?.total_container_charges
+                  ? cartData?.total_container_charges
+                  : 0
+              ),
             appData?.profile?.preferences?.digit_after_decimal
           )}`}</Text>
         </View>
@@ -4131,7 +4133,7 @@ function Cart({ navigation, route }) {
 
         {/* added code below  */}
 
-        {!!Number(cartData?.total_service_fee) >0 && (
+        {!!Number(cartData?.total_service_fee) > 0 && (
           <View
             style={{
               ...styles.itemPriceDiscountTaxView,
