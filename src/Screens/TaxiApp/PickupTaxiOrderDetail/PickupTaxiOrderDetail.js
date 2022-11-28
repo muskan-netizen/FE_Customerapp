@@ -1241,8 +1241,8 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     cancleOrder={() => {
                       onCancelOrder('No drivers available.');
                     }}
-                    // scheduleDate={orderDetail?.scheduled_date_time}
-                    scheduleDate={true}
+                    scheduleDate={orderDetail?.scheduled_date_time}
+                   
                     isBtnLoader={isBtnLoader}
                   />
                 )}
