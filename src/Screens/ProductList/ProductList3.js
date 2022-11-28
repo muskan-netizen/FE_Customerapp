@@ -119,7 +119,7 @@ export default function Products({route, navigation}) {
   let selectedFilters = useRef(null);
   // console.log(route.params, 'route.params');
   const {data} = route.params;
- 
+
   const routeData = data?.fetchOffers;
   const {blurRef} = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -282,7 +282,7 @@ export default function Products({route, navigation}) {
   //Logged in user data
   const userData = useSelector((state) => state?.auth?.userData);
   //app Main Data
-  const appMainData = useSelector((state) => state?.home?.appMainData);
+  const {appMainData, location} = useSelector((state) => state?.home);
 
   console.log(repeatItems, 'repeatItems.....repeatItems');
 
@@ -1017,7 +1017,7 @@ export default function Products({route, navigation}) {
             marginBottom: moderateScale(15),
           }}
           contentContainerStyle={{alignItems: 'center'}}>
-          {ProductTags && 
+          {ProductTags &&
             ProductTags.map((el, index) => {
               return (
                 <View
@@ -1204,7 +1204,7 @@ export default function Products({route, navigation}) {
 
   const addSingleItem = useCallback(
     async (item, section = null, inx) => {
-      console.log(item ,'chechItemm')
+      console.log(item, 'chechItemm');
       if (
         !!categoryInfo?.is_vendor_closed &&
         !categoryInfo?.show_slot &&
@@ -1630,7 +1630,7 @@ export default function Products({route, navigation}) {
 
       apiData = apiData + `&category_id=${data?.categoryExist}`;
     }
-    console.log(apiData, 'apiData');
+    console.log(location?.latitude, 'apiData........');
     actions
       .getProductByVendorIdOptamizeV2(
         apiData,
@@ -2519,11 +2519,11 @@ export default function Products({route, navigation}) {
       });
     }
   };
-  console.log(productListId?.vendor,"productListId?.vendor")
+  console.log(productListId?.vendor, 'productListId?.vendor');
   useEffect(() => {
     if (isLoadingC) {
       getAllProductsByCategoryId(1);
-      
+
       if (productListId?.vendor && routeData) {
         fetchOffers();
       }
@@ -3645,8 +3645,8 @@ export default function Products({route, navigation}) {
               </TouchableWithoutFeedback>
             ) : null}
           </View>
-          
-          {console.log(isVisibleModal,"isVisibleModal")}
+
+          {console.log(isVisibleModal, 'isVisibleModal')}
 
           {!!typeId && typeId == 8 ? (
             <View>

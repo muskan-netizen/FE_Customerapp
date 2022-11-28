@@ -1,12 +1,12 @@
 #include "Pods/Target Support Files/Pods-available_pods-YouSmokeShop/Pods-available_pods-YouSmokeShop.debug.xcconfig"
 
-PROJECT_APPLE_ID = 6443447078
-PROJECT_BUNDLE_ID =com.youSmokeShop.royoorders
+PROJECT_APPLE_ID = 6444642171
+PROJECT_BUNDLE_ID =com.youSmokeShops.royoorders
 PROJECT_APP_VERSION = 1.0
 PROJECT_BUILD_NUMBER = 1
-PROJECT_APP_NAME = YouSmokeShop
-PROJECT_GOOGLE_CLIENT_ID =558995833371-if3occ83juqik0s59phrai0r8okrn13i.apps.googleusercontent.com
-PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.558995833371-if3occ83juqik0s59phrai0r8okrn13i
+PROJECT_APP_NAME = YouSmokeShops
+PROJECT_GOOGLE_CLIENT_ID =386985233485-8pehcrd6lhs3guloi061vegs5kuevu4p.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.386985233485-8pehcrd6lhs3guloi061vegs5kuevu4p
 PROJECT_FACEBOOK_ID = 1171062663445767
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST =YouSmokeShopInfo
