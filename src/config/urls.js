@@ -14,7 +14,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://handy-pickup.com/api/v1';
 // export const API_BASE_URL = 'https://goadeliv.com/api/v1';
 // export const API_BASE_URL = 'https://boltdeliveries.com/api/v1';
-export const API_BASE_URL = 'http://192.168.102.65:8000/api/v1'
+// export const API_BASE_URL = 'http://192.168.102.65:8000/api/v1'
 // export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1'
 // export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1' // surivendor sir
 // export const API_BASE_URL='https://myevplus.com/api/v1'
@@ -49,7 +49,7 @@ export const API_BASE_URL = 'http://192.168.102.65:8000/api/v1'
 // export const API_BASE_URL = 'https://app.blacnetwork.com/api/v1';
 
 // sheryders
-// export const API_BASE_URL = 'https://sheryders.com/api/v1';
+export const API_BASE_URL = 'https://sheryders.com/api/v1';
 
 // hemptify
 // export const API_BASE_URL = 'https://hemptify.com/api/v1';
