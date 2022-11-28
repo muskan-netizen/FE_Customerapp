@@ -24,6 +24,8 @@ export default function ({
   isWaitingOver = false,
   cancleOrder = () => {},
   isBtnLoader = false,
+  scheduleDate=null
+  
 }) {
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
@@ -59,7 +61,7 @@ export default function ({
             width: moderateScale(100),
             // marginVertical: moderateScaleVertical(40),
           }}>
-          {isWaitingOver ? (
+          {(isWaitingOver && !scheduleDate)? (
             <View>
               <Image
                 source={imagePath.icNoDrivers}
@@ -70,7 +72,14 @@ export default function ({
                 resizeMode="contain"
               />
             </View>
-          ) : (
+          ) : (!!scheduleDate )? 
+              (<View>
+                <Text>
+                  Schedule Ride...........
+                </Text>
+              </View>)
+          
+          : (
             <View>
               <LottieView
                 source={searchingLoader}
@@ -102,7 +111,7 @@ export default function ({
             </View>
           )}
         </View>
-        {isWaitingOver ? (
+        {(isWaitingOver && !scheduleDate )? (
           <View>
             <Text
               style={{
@@ -127,6 +136,7 @@ export default function ({
               }}>
               {appIds.jiffex == getBundleId()
                 ? strings.CONNECTING_YOU_TO_NEARBY_DELIVERY_AGENT
+                
                 : strings.CONNECTING_YOU_TO_NEARBY_DERIVER}
             </Text>
             <Text

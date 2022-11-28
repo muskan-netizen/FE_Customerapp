@@ -210,7 +210,8 @@ export default function Login({navigation}) {
               countryData: mobilNo?.cca2,
               data: res.data,
             });
-          } else {
+          }
+           else {
             checkIfEmailVerification(res.data);
           }
         }

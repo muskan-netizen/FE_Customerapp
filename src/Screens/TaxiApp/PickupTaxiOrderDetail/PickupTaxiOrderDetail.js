@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   Dimensions,
   View,
@@ -213,7 +213,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       keyboardDidShowListener.remove();
     };
   }, []);
-
   // useFocusEffect(
   //   React.useCallback(() => {
   //     //   updateState({isLoading: true});
@@ -1235,13 +1234,14 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                   </View>
                 )}
                 <View style={styles.horizontalLine} />
-
+               
                 {orderStatus == 'unassigned' && (
                   <SearchDriver
                     isWaitingOver={isWaitingOver}
                     cancleOrder={() => {
                       onCancelOrder('No drivers available.');
                     }}
+                    scheduleDate={orderDetail?.scheduled_date_time}
                     isBtnLoader={isBtnLoader}
                   />
                 )}
