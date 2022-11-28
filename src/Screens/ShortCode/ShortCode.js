@@ -2937,14 +2937,14 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '43d7df',
-        code: shortCode,
+        code: '35a0ed',
+        // code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '43d7df',
-        code: shortCode,
+        code: '35a0ed',
+        // code: shortCode,
       };
     }
     actions
