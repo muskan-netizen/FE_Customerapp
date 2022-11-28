@@ -94,12 +94,10 @@ export default function AddMoney({navigation}) {
     paymentDataFlutterWave,
   } = state;
   useEffect(() => {
-    
     getListOfPaymentMethod();
   }, []);
-  
+
   useEffect(() => {
-   
     if (
       preferences &&
       preferences?.stripe_publishable_key != '' &&
@@ -114,7 +112,8 @@ export default function AddMoney({navigation}) {
 
   //Get list of all payment method
   const getListOfPaymentMethod = () => {
-    actions.getListOfPaymentMethod(
+    actions
+      .getListOfPaymentMethod(
         '/wallet',
         {},
         {
@@ -190,8 +189,7 @@ export default function AddMoney({navigation}) {
                 isDarkMode
                   ? [styles.chooseAddMoney, {color: MyDarkTheme.colors.text}]
                   : styles.chooseAddMoney
-              }
-              >
+              }>
               {`+ ${currencies?.primary_currency?.symbol}`}{' '}
               {currencyNumberFormatter(
                 item.amount,
@@ -411,7 +409,10 @@ export default function AddMoney({navigation}) {
   };
 
   const _addMoneyToWallet = () => {
-    console.log(selectedPaymentMethod, 'selectedPaymentMethodselectedPaymentMethod');
+    console.log(
+      selectedPaymentMethod,
+      'selectedPaymentMethodselectedPaymentMethod',
+    );
 
     if (amount == '') {
       showError(strings.PLEASE_ENTER_OR_SELECT_AMOUNT);
@@ -579,7 +580,7 @@ export default function AddMoney({navigation}) {
             paymentUrl: res?.data || res?.payment_link,
             action: 'wallet',
           };
-             
+
           navigation.navigate(navigationStrings.ALL_IN_ONE_PAYMENTS, {
             data: sendingData,
           });
@@ -588,7 +589,6 @@ export default function AddMoney({navigation}) {
       .catch(errorMethod);
   };
   const _createPaymentMethod = async (cardInfo, res2) => {
- 
     if (res2) {
       await createPaymentMethod({
         type: 'Card',
@@ -689,7 +689,6 @@ export default function AddMoney({navigation}) {
           if (res && res?.token && res.token?.id) {
             _createPaymentMethod(cardInfo, res.token?.id);
           }
-         
 
           // if (res && res?.token && res.token?.id) {
           //   let selectedMethod = selectedPaymentMethod.code.toLowerCase();
@@ -832,6 +831,7 @@ export default function AddMoney({navigation}) {
               data={state.data}
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
+              keyboardShouldPersistTaps={'handled'}
               horizontal
               ItemSeparatorComponent={(data, index) =>
                 index == data.length ? null : (
@@ -875,7 +875,11 @@ export default function AddMoney({navigation}) {
               renderItem={_renderItemPayments}
               ListFooterComponent={listFooterComp}
               ListEmptyComponent={() => (
-                <Text style={{textAlign: 'center',color: isDarkMode ? MyDarkTheme.colors.text : colors.black,}}>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  }}>
                   {strings.NO_PAYMENT_METHOD}
                 </Text>
               )}
@@ -927,7 +931,6 @@ export default function AddMoney({navigation}) {
       {preferences?.stripe_publishable_key ? (
         <StripeProvider
           publishableKey={preferences?.stripe_publishable_key}
-          curr
           merchantIdentifier="merchant.identifier">
           {mainView()}
         </StripeProvider>

@@ -153,9 +153,9 @@ export default function OrderDetail({navigation, route}) {
     isVisibleTimeModal: false,
     currentPickupDate: paramData?.orderDetail?.schedule_pickup,
     currentDropOffDate: paramData?.orderDetail?.schedule_dropoff,
-    isLoadingA:false,
-    submitedRatingToDriver:null,
-    driverRatingData:null
+    isLoadingA: false,
+    submitedRatingToDriver: null,
+    driverRatingData: null,
   });
   const {
     showTaxFeeArea,
@@ -182,7 +182,7 @@ export default function OrderDetail({navigation, route}) {
     currentDropOffDate,
     isLoadingA,
     submitedRatingToDriver,
-    driverRatingData
+    driverRatingData,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -419,7 +419,7 @@ export default function OrderDetail({navigation, route}) {
 
   const onStarRatingPress = (i, rating) => {
     // updateState({isLoading: true});
-       
+
     _giveRatingToProduct(i, rating);
   };
 
@@ -485,16 +485,15 @@ export default function OrderDetail({navigation, route}) {
         },
       )
       .then((res) => {
-       
         updateState({
           isLoadingA: false,
         });
-        Alert.alert("",res?.message,[
+        Alert.alert('', res?.message, [
           {
             text: strings.OK,
             onPress: () => console.log('Okay pressed'),
           },
-        ])
+        ]);
       })
       .catch(errorMethod);
   });
@@ -1139,7 +1138,6 @@ export default function OrderDetail({navigation, route}) {
 
           {item?.products.length
             ? item?.products.map((i, inx) => {
-              
                 if (item?.vendor_id == i?.vendor_id) {
                   return (
                     <View
@@ -1153,7 +1151,6 @@ export default function OrderDetail({navigation, route}) {
                           backgroundColor: isDarkMode
                             ? MyDarkTheme.colors.background
                             : '#F8F8F8',
-                            
                         }}>
                         <FastImage
                           source={
@@ -1176,6 +1173,7 @@ export default function OrderDetail({navigation, route}) {
                             style={{
                               flexDirection: 'row',
                               justifyContent: 'space-between',
+                              marginRight: moderateScaleVertical(10),
                             }}>
                             <View
                               style={{
@@ -1193,7 +1191,9 @@ export default function OrderDetail({navigation, route}) {
                                 <View
                                   style={{
                                     flexDirection: 'row',
-                                    alignItems: 'center',
+                                    // alignItems: 'center',
+                                    // backgroundColor: 'yellow',
+                                    justifyContent: 'space-between',
                                   }}>
                                   <Text
                                     style={{
@@ -1215,6 +1215,34 @@ export default function OrderDetail({navigation, route}) {
                                       {i?.quantity}
                                     </Text>
                                   </Text>
+                                  <View
+                                    style={{
+                                      justifyContent: 'center',
+                                    }}>
+                                    <Text
+                                      numberOfLines={1}
+                                      style={{
+                                        ...styles.priceItemLabel2,
+                                        color: isDarkMode
+                                          ? MyDarkTheme.colors.text
+                                          : colors.blackOpacity86,
+                                        fontSize: textScale(12),
+                                        fontFamily: fontFamily.medium,
+                                      }}>
+                                      <Text style={styles.cartItemPrice}>
+                                        {`${
+                                          currencies?.primary_currency?.symbol
+                                        } ${
+                                          // Number(i?.pvariant?.multiplier) *
+                                          currencyNumberFormatter(
+                                            Number(i?.price),
+                                            appData?.profile?.preferences
+                                              ?.digit_after_decimal,
+                                          )
+                                        }`}
+                                      </Text>
+                                    </Text>
+                                  </View>
                                 </View>
                               )}
                               {!!i?.product_addons.length && (
@@ -1319,47 +1347,12 @@ export default function OrderDetail({navigation, route}) {
                                       </View>
                                     </View>
                                   )}
-                                  
                                 </View>
                               )}
-                              
                             </View>
-                            <View
-                              style={{
-                                justifyContent: 'center',
-                                alignItems: 'flex-start',
-                              }}>
-                              <Text
-                                numberOfLines={1}
-                                style={{
-                                  ...styles.priceItemLabel2,
-                                  color: isDarkMode
-                                    ? MyDarkTheme.colors.text
-                                    : colors.blackOpacity86,
-                                  fontSize: textScale(12),
-                                  fontFamily: fontFamily.medium,
-                                }}>
-                                <Text style={styles.cartItemPrice}>
-                                  {`${currencies?.primary_currency?.symbol} ${
-                                    // Number(i?.pvariant?.multiplier) *
-                                    currencyNumberFormatter(
-                                      Number(i?.price),
-                                      appData?.profile?.preferences
-                                        ?.digit_after_decimal,
-                                    )
-                                  }`}
-                                </Text>
-                              </Text>
-                              
-                            </View>
-                            
                           </View>
-                         
                         </View>
-
-                       
                       </View>
-         
 
                       {!!driverStatus?.order &&
                       driverStatus?.order?.status === 'completed' ? (
@@ -1370,7 +1363,6 @@ export default function OrderDetail({navigation, route}) {
                             paddingBottom: moderateScaleVertical(5),
                             paddingHorizontal: moderateScale(10),
                             marginVertical: moderateScaleVertical(16),
-                           
                           }}>
                           <StarRating
                             maxStars={5}
@@ -1381,19 +1373,19 @@ export default function OrderDetail({navigation, route}) {
                             fullStarColor={colors.ORANGE}
                             starSize={15}
                           />
-                          {Number(i?.product_rating?.rating)?
-                           <TouchableOpacity  onPress={() => _onRateOrderOrDriver(i)}>
-                           <Text
-                             style={[
-                               styles.writeAReview,
-                               {color: themeColors.primary_color},
-                             ]}>
-                             {strings.WRITE_REVIEW}
-                           </Text>
-                         </TouchableOpacity>:null
-                          }
-                         
-                          
+                          {Number(i?.product_rating?.rating) ? (
+                            <TouchableOpacity
+                              onPress={() => _onRateOrderOrDriver(i)}>
+                              <Text
+                                style={[
+                                  styles.writeAReview,
+                                  {color: themeColors.primary_color},
+                                ]}>
+                                {strings.WRITE_REVIEW}
+                              </Text>
+                            </TouchableOpacity>
+                          ) : null}
+
                           {/* {i?.product_rating?.rating ? (
                           <View>
                             <Text
@@ -1406,27 +1398,28 @@ export default function OrderDetail({navigation, route}) {
                             </Text>
                           </View>
                         ) : null} */}
-                        
                         </View>
                       ) : null}
-                      {  !!i?.is_processor_enable &&
-                     
-                     <View>
+                      {!!i?.is_processor_enable && (
+                        <View>
                           <Text
                             style={{
                               fontSize: moderateScale(14),
                               fontFamily: fontFamily.regular,
                               color: colors.black,
-                            }}
-                          >{"Processor Name : "} {i?.processor_name} </Text>
+                            }}>
+                            {'Processor Name : '} {i?.processor_name}{' '}
+                          </Text>
                           <Text
-                           style={{
-                            fontSize: moderateScale(14),
-                            fontFamily: fontFamily.regular,
-                            color: colors.black,
-                          }}
-                          >{"Date : "} {i?.processor_date} </Text>
-                        </View>}
+                            style={{
+                              fontSize: moderateScale(14),
+                              fontFamily: fontFamily.regular,
+                              color: colors.black,
+                            }}>
+                            {'Date : '} {i?.processor_date}{' '}
+                          </Text>
+                        </View>
+                      )}
                     </View>
                   );
                 } else {
@@ -2362,7 +2355,7 @@ export default function OrderDetail({navigation, route}) {
           {!!cartData?.advance_paid_amount &&
             cartData?.advance_paid_amount > 0 && (
               <LeftRightText
-                leftText={"Advance Paid Amount"}
+                leftText={'Advance Paid Amount'}
                 rightText={`${
                   currencies?.primary_currency?.symbol
                 }${currencyNumberFormatter(
@@ -2373,20 +2366,19 @@ export default function OrderDetail({navigation, route}) {
                 MyDarkTheme={MyDarkTheme}
               />
             )}
-           {!!cartData?.pending_amount &&
-            cartData?.pending_amount > 0 && (
-              <LeftRightText
-                leftText={"Pending Amount"}
-                rightText={` ${
-                  currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
-                  Number(cartData?.pending_amount),
-                  appData?.profile?.preferences?.digit_after_decimal,
-                )}`}
-                isDarkMode={isDarkMode}
-                MyDarkTheme={MyDarkTheme}
-              />
-            )}
+          {!!cartData?.pending_amount && cartData?.pending_amount > 0 && (
+            <LeftRightText
+              leftText={'Pending Amount'}
+              rightText={` ${
+                currencies?.primary_currency?.symbol
+              }${currencyNumberFormatter(
+                Number(cartData?.pending_amount),
+                appData?.profile?.preferences?.digit_after_decimal,
+              )}`}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+            />
+          )}
           <View
             style={{
               ...styles.dottedLine,
@@ -2612,15 +2604,13 @@ export default function OrderDetail({navigation, route}) {
             }}
           />
         </View>
-  
-        {
-          dispatcherStatus?.order_status?.current_status?.title ==
-           strings.DELIVERED &&  
-            !!appData?.profile?.preferences?.facturama_invoice
-           && (
+
+        {dispatcherStatus?.order_status?.current_status?.title ==
+          strings.DELIVERED &&
+          !!appData?.profile?.preferences?.facturama_invoice && (
             <ButtonWithLoader
-            color={themeColors?.primary_color}
-            isLoading={isLoadingA}
+              color={themeColors?.primary_color}
+              isLoading={isLoadingA}
               onPress={generateInvoice}
               btnStyle={{
                 marginHorizontal: moderateScale(8),
@@ -2631,8 +2621,7 @@ export default function OrderDetail({navigation, route}) {
                 color: themeColors.primary_color,
               }}
             />
-          )
-        }
+          )}
       </View>
     );
   };
@@ -3099,19 +3088,19 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const _onRateOrderOrDriver = (item) => {
-      navigation.navigate(navigationStrings.RATEORDER, { item });
+    navigation.navigate(navigationStrings.RATEORDER, {item});
   };
-
 
   // give Driver Rating
 
   const onStarRatingForDriverPress = (rating) => {
     const data = {
-      order_id: cartData?.driver_rating?.order_id?cartData?.driver_rating?.order_id  :paramData?.orderId,
+      order_id: cartData?.driver_rating?.order_id
+        ? cartData?.driver_rating?.order_id
+        : paramData?.orderId,
       rating: rating,
-      review: "",
+      review: '',
     };
-
 
     actions
       .ratingToDriver(data, {
@@ -3123,10 +3112,9 @@ export default function OrderDetail({navigation, route}) {
         updateState({
           isLoading: false,
           submitedRatingToDriver: res?.data?.rating,
-          driverRatingData:res?.data
-
+          driverRatingData: res?.data,
         });
-        console.log("res++++++", res);
+        console.log('res++++++', res);
       })
       .catch(errorMethod);
   };
@@ -3138,8 +3126,12 @@ export default function OrderDetail({navigation, route}) {
       '500/500',
     );
 
-    console.log(cartData?.driver_rating,submitedRatingToDriver,"cartData?.driver_rating");
-   
+    console.log(
+      cartData?.driver_rating,
+      submitedRatingToDriver,
+      'cartData?.driver_rating',
+    );
+
     return (
       <View>
         {!!(driverStatus?.order && driverStatus?.agent_location?.lat) ? (
@@ -3148,11 +3140,17 @@ export default function OrderDetail({navigation, route}) {
             type={strings.DRIVER}
             containerStyle={{paddingHorizontal: moderateScale(8)}}
             isDriver={cartData?.order_data?.order?.driver_id}
-            _onRateDriver={ ()=>_onRateOrderOrDriver({
-              order_id:cartData?.driver_rating?.order_id?cartData?.driver_rating?.order_id:paramData?.orderId,
-              isDriverRate: true,
-             driverRatingData:driverRatingData?driverRatingData:cartData?.driver_rating,
-            })}
+            _onRateDriver={() =>
+              _onRateOrderOrDriver({
+                order_id: cartData?.driver_rating?.order_id
+                  ? cartData?.driver_rating?.order_id
+                  : paramData?.orderId,
+                isDriverRate: true,
+                driverRatingData: driverRatingData
+                  ? driverRatingData
+                  : cartData?.driver_rating,
+              })
+            }
             onStarRatingForDriverPress={onStarRatingForDriverPress}
             submitedRatingToDriver={submitedRatingToDriver}
             cartData={cartData}
@@ -3447,7 +3445,6 @@ export default function OrderDetail({navigation, route}) {
             </View>
           )}
 
-       
         {!!(updatedcartItems && updatedcartItems.length) && (
           <FlatList
             data={updatedcartItems}
@@ -4287,8 +4284,6 @@ export default function OrderDetail({navigation, route}) {
             flexGrow: 1,
           }}
         />
-
-       
       </View>
 
       <Modal
