@@ -201,7 +201,6 @@ android {
 
         }
     }
-
     flavorDimensions "appType"
      productFlavors {
                pointoneExpediteDelivery{ 

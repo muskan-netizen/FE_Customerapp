@@ -58,7 +58,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://hiperabasto.mx/api/v1';
 // 
 // sheryders
-// export const API_BASE_URL = 'https://sheryders.com/api/v1';
+export const API_BASE_URL = 'https://sheryders.com/api/v1';
 
 // hemptify
 // export const API_BASE_URL = 'https://hemptify.com/api/v1';
