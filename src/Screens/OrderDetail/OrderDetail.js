@@ -1173,7 +1173,7 @@ export default function OrderDetail({navigation, route}) {
                             style={{
                               flexDirection: 'row',
                               justifyContent: 'space-between',
-                              marginRight: moderateScaleVertical(50),
+                              marginRight: moderateScaleVertical(10),
                             }}>
                             <View
                               style={{
@@ -1191,7 +1191,9 @@ export default function OrderDetail({navigation, route}) {
                                 <View
                                   style={{
                                     flexDirection: 'row',
-                                    alignItems: 'center',
+                                    // alignItems: 'center',
+                                    // backgroundColor: 'yellow',
+                                    justifyContent: 'space-between',
                                   }}>
                                   <Text
                                     style={{
@@ -1213,6 +1215,34 @@ export default function OrderDetail({navigation, route}) {
                                       {i?.quantity}
                                     </Text>
                                   </Text>
+                                  <View
+                                    style={{
+                                      justifyContent: 'center',
+                                    }}>
+                                    <Text
+                                      numberOfLines={1}
+                                      style={{
+                                        ...styles.priceItemLabel2,
+                                        color: isDarkMode
+                                          ? MyDarkTheme.colors.text
+                                          : colors.blackOpacity86,
+                                        fontSize: textScale(12),
+                                        fontFamily: fontFamily.medium,
+                                      }}>
+                                      <Text style={styles.cartItemPrice}>
+                                        {`${
+                                          currencies?.primary_currency?.symbol
+                                        } ${
+                                          // Number(i?.pvariant?.multiplier) *
+                                          currencyNumberFormatter(
+                                            Number(i?.price),
+                                            appData?.profile?.preferences
+                                              ?.digit_after_decimal,
+                                          )
+                                        }`}
+                                      </Text>
+                                    </Text>
+                                  </View>
                                 </View>
                               )}
                               {!!i?.product_addons.length && (
@@ -1319,33 +1349,6 @@ export default function OrderDetail({navigation, route}) {
                                   )}
                                 </View>
                               )}
-                            </View>
-                            <View
-                              style={{
-                                justifyContent: 'center',
-                                // alignItems: 'flex-start',
-                              }}>
-                              <Text
-                                numberOfLines={1}
-                                style={{
-                                  ...styles.priceItemLabel2,
-                                  color: isDarkMode
-                                    ? MyDarkTheme.colors.text
-                                    : colors.blackOpacity86,
-                                  fontSize: textScale(12),
-                                  fontFamily: fontFamily.medium,
-                                }}>
-                                <Text style={styles.cartItemPrice}>
-                                  {`${currencies?.primary_currency?.symbol} ${
-                                    // Number(i?.pvariant?.multiplier) *
-                                    currencyNumberFormatter(
-                                      Number(i?.price),
-                                      appData?.profile?.preferences
-                                        ?.digit_after_decimal,
-                                    )
-                                  }`}
-                                </Text>
-                              </Text>
                             </View>
                           </View>
                         </View>

@@ -174,7 +174,9 @@ export default ({fontFamily}) => {
     },
     cartItemDetailsCon: {
       // height: width / 4.5,
-      width: width - width / 4 - 20,
+      // backgroundColor: 'red',
+      flexDirection: 'row',
+      width: width - width / 4,
       paddingHorizontal: moderateScale(10),
     },
     cartItemPrice: {

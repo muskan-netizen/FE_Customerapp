@@ -7,6 +7,8 @@ import {
   StripeProvider,
 } from '@stripe/stripe-react-native';
 // import {CardField, createToken, initStripe} from '@stripe/stripe-react-native';
+// import react, {useEffect, useState} from 'react';
+// import React, {useEffect, useState} from 'react';
 import React, {useEffect, useState} from 'react';
 import {
   Image,
@@ -42,7 +44,7 @@ import HomeLoader from './Loaders/HomeLoader';
 export default function SelectPaymentModal({
   onSelectPayment,
   paymentModalClose = () => {},
-  dineInType
+  dineInType,
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const navigation = useNavigation();
@@ -130,7 +132,7 @@ export default function SelectPaymentModal({
 
   //Get list of all payment method
   const getListOfPaymentMethod = () => {
-    let apiData = `/cart?service_type=${dineInType}`
+    let apiData = `/cart?service_type=${dineInType}`;
     actions
       .getListOfPaymentMethod(
         apiData,
@@ -623,7 +625,6 @@ export default function SelectPaymentModal({
                 </Text>
               )}
         </ScrollView>
-      
 
         <View
           style={{
