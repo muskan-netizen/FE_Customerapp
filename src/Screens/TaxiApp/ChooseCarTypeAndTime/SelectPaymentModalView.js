@@ -157,7 +157,7 @@ export default function SelectPaymentModalView({
         mediaType: 'photo',
       });
       console.log('Image path', imageRes);
-      uploadImage(imageRes.path);
+      uploadImage(imageRes);
       setImage([...image, ...[imageRes?.path]]);
     } catch (error) {
       console.log(error);
@@ -174,7 +174,7 @@ export default function SelectPaymentModalView({
         mediaType: 'photo',
       });
       console.log('Image path', imageRes);
-      uploadImage(imageRes.path);
+      uploadImage(imageRes);
       setImage([...image, ...[imageRes?.path]]);
     } catch (error) {
       console.log('Image Picker error: ', error);

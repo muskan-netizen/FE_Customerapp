@@ -138,7 +138,8 @@ export function otpTimerCounter(seconds) {
   let s = seconds % 60;
   m = m < 10 ? '0' + m : m;
   s = s < 10 ? '0' + s : s;
-  return `${m}:${s}`;
+  // return `${m}:${s}`;
+  return `${s}`;
 }
 
 export function getRandomColor(opacity = 0.3) {

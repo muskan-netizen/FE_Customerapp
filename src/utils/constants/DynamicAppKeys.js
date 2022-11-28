@@ -468,6 +468,9 @@ const shortCodes = {
   usVetsDeliver: '4a533c',
   flybuilder: '7cd4bc',
   konectame: '1338c1',
+  skyline: 'ce1ed6',
+  bliss: '6eb260',
+  rentzy: 'd4fc07',
 };
 
 const appIds = {
@@ -2330,6 +2333,18 @@ const appIds = {
   flybuilder: Platform.select({
     ios: 'com.flybuilder.royoorders',
     android: 'com.flybuilder.royoorders',
+  }),
+  skyline: Platform.select({
+    ios: 'com.skyline.royoorders',
+    android: 'com.skyline',
+  }),
+  bliss: Platform.select({
+    ios: 'com.bliss.royoorders',
+    android: 'com.bliss',
+  }),
+  rentzy: Platform.select({
+    ios: 'com.rentzy.royoorders',
+    android: 'com.rentzy',
   }),
 };
 

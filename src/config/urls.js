@@ -361,6 +361,12 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // sxm2go
 // export const API_BASE_URL = 'https://order.sxm2go.com/api/v1';
+// skyline
+// export const API_BASE_URL = 'https://skyline.royoorders.com/api/v1';
+//bliss
+// export const API_BASE_URL = 'https://bliss.royoorders.com/api/v1';
+//Rentzy
+//export const API_BASE_URL = 'https://rentzy.royoorders.com/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 

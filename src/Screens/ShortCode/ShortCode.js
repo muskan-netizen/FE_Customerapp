@@ -2903,6 +2903,25 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+          
+        case appIds.skyline:
+          updateState({
+            shortCode: shortCodes.skyline,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bliss:
+          updateState({
+            shortCode: shortCodes.bliss,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.rentzy:
+          updateState({
+            shortCode: shortCodes.rentzy,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

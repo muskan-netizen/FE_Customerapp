@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "29455716557",
+    "project_id": "rentzy-78f44",
+    "storage_bucket": "rentzy-78f44.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:29455716557:android:43a4b746ce3d8f2f1a5984",
+        "android_client_info": {
+          "package_name": "com.rentzy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "29455716557-ip1k687iqnff0r56slldu8u8fanvq6mm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rentzy",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "29455716557-n4392u5vfqgsplnmhjem6cl93bul5mii.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rentzy",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "29455716557-vvmpbn1qr261fr6uddc7g14ha102232u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rentzy",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "29455716557-jevmkj4v7gtl6veh0nqqvonvdrs8vodb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQyu_rbIwpbu4c0UKsxjFkSv8i430WUK8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "29455716557-jevmkj4v7gtl6veh0nqqvonvdrs8vodb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
