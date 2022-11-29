@@ -30,6 +30,9 @@ export default function Offer({ route, navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
 
+  const paramsData = route?.params?.data;
+
+console.log(paramsData,"paramsDataparamsDataparamsData");
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
@@ -167,10 +170,7 @@ export default function Offer({ route, navigation }) {
                 ? navigationStrings.CHOOSECARTYPEANDTIMETAXI
                 : navigationStrings.CHOOSECARTYPEANDTIME,
               {
-                promocodeDetail: {
-                  couponInfo: res?.data,
-                  vendorInfo: vendorInfo,
-                },
+                ...paramsData?.paramsData,couponInfo:res?.data
               },
             );
           }

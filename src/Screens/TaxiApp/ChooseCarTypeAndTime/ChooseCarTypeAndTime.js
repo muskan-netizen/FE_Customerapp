@@ -64,7 +64,9 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default function ChooseCarTypeAndTime({ navigation, route }) {
-  const paramData = route?.params;
+  const paramData = route?.params?.promocodeDetail
+  ? route?.params?.promocodeDetail
+  : route?.params;
   console.log('my route', paramData);
   const bottomSheetRef = useRef(null);
   const mapRef = useRef();
@@ -298,12 +300,12 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   };
   useEffect(() => {
     updateState({
-      updatedAmount: paramData?.promocodeDetail?.couponInfo?.new_amount,
-      couponInfo: paramData?.promocodeDetail?.couponInfo,
+      updatedAmount: paramData?.couponInfo?.new_amount,
+      couponInfo: paramData?.couponInfo,
     });
   }, [
-    paramData?.promocodeDetail?.couponInfo,
-    paramData?.promocodeDetail?.new_amount,
+    paramData?.couponInfo,
+    paramData?.new_amount,
   ]);
 
   //Get list of all orders api
@@ -1309,7 +1311,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         totalDuration={totalDuration}
         selectedCarOption={selectedCarOption}
         navigation={navigation}
-        couponInfo={couponInfo}
+        couponInfo={paramData?.couponInfo}
         updatedPrice={updatedAmount}
         loyalityAmount={loyalityAmount}
         removeCoupon={() => removeCoupon()}
@@ -1323,6 +1325,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         onQuestionAnswerSubmit={(item) => onQuestionAnswerSubmit(item)}
         indicatorLoader={indicatorLoader}
         _openDateTimeModal={_openDateTimeModal}
+        allScreenParamsData={paramData}
         distnce_unit={distance_unit_for_time}
       />
     );
