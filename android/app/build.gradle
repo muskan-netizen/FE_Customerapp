@@ -204,6 +204,8 @@ android {
     flavorDimensions "appType"
 
 
+
+
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -1897,7 +1899,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.hokitch'
+                applicationId 'com.hokitch.orders'
                 resValue "string", "app_name", "Hokitch"
                 resValue "string", "host_name", ""
             }
@@ -3556,7 +3558,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.hokitch'
+                applicationId 'com.hokitch.orders'
                 resValue "string", "app_name", "Hokitch"
                 resValue "string", "host_name", ""
             }
@@ -4316,7 +4318,7 @@ android {
             }
             heyBuddy{
             dimension "appType"
-            versionCode 5
+            versionCode 6
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -5212,7 +5214,7 @@ android {
             }
             keystoneDelivery{
             dimension "appType"
-            versionCode 1
+            versionCode 3
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
