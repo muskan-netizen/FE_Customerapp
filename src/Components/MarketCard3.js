@@ -15,13 +15,10 @@ import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import commonStyles from '../styles/commonStyles';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
 import {appIds} from '../utils/constants/DynamicAppKeys';

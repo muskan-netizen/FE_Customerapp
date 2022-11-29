@@ -20,6 +20,7 @@ import navigationStrings from '../../../navigation/navigationStrings';
 import {isEmpty} from 'lodash';
 import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import strings from '../../../constants/lang';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
 
 const RoyoTransactions = (props) => {
   const {navigation} = props;
@@ -50,6 +51,9 @@ const RoyoTransactions = (props) => {
   const {appData, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
+
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   const {storeSelectedVendor} = useSelector((state) => state?.order);
@@ -207,8 +211,13 @@ const RoyoTransactions = (props) => {
             styles.font16Semibold,
             {color: activeIndex == 2 ? colors.redColor : colors.themeColor2},
           ]}>
-          {activeIndex == 0 ? '+' : activeIndex == 1 ? '' : '-'} {currencies?.primary_currency?.symbol}
-          {Number(item.payable_amount).toFixed(2)}
+          {activeIndex == 0 ? '+' : activeIndex == 1 ? '' : '-'}
+          {tokenConverterPlusCurrencyNumberFormater(
+            Number(item.payable_amount),
+            digit_after_decimal,
+            additional_preferences,
+            currencies?.primary_currency?.symbol,
+          )}
         </Text>
       </View>
     );
@@ -223,7 +232,7 @@ const RoyoTransactions = (props) => {
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
         leftIcon={imagePath.backRoyo}
-        centerTitle={ strings.TRANSACTIONS + ' | ' + selectedVendor?.name || ''}
+        centerTitle={strings.TRANSACTIONS + ' | ' + selectedVendor?.name || ''}
         onPressCenterTitle={() => _reDirectToVendorList()}
         onPressImageAlongwithTitle={() => _reDirectToVendorList()}
         showImageAlongwithTitle
@@ -231,8 +240,12 @@ const RoyoTransactions = (props) => {
       />
       <View style={styles.headerBox}>
         <Text style={styles.font28Semibold}>
-          {currencies?.primary_currency?.symbol}{' '}
-          {Number(totalAmtRecieved).toFixed(2)}
+          {tokenConverterPlusCurrencyNumberFormater(
+            Number(totalAmtRecieved),
+            digit_after_decimal,
+            additional_preferences,
+            currencies?.primary_currency?.symbol,
+          )}
         </Text>
         <Text style={styles.font14Semibold}>{strings.AMOUNT_RECIEVED}</Text>
       </View>
@@ -250,7 +263,13 @@ const RoyoTransactions = (props) => {
           tabTextStyle={{
             marginTop: moderateScaleVertical(0),
           }}
-          screenName={[ strings.COMPLETED, strings.PENDING, strings.REFUNDS, '', '']}
+          screenName={[
+            strings.COMPLETED,
+            strings.PENDING,
+            strings.REFUNDS,
+            '',
+            '',
+          ]}
           selectedScreen={(index) => selectedOrder(index)}
           selectedScreenIndex={activeIndex}
         />

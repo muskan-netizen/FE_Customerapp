@@ -25,6 +25,7 @@ import colors from '../../styles/colors';
 import DeviceInfo from 'react-native-device-info';
 import {isEmpty} from 'lodash';
 import navigationStrings from '../../navigation/navigationStrings';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../utils/commonFunction';
 
 export default function LaundryAvailableVendors({navigation, route}) {
   const paramData = route?.params?.data;
@@ -36,6 +37,8 @@ export default function LaundryAvailableVendors({navigation, route}) {
 
     themeColors,
   } = useSelector((state) => state?.initBoot);
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
 
   const {dineInType} = useSelector((state) => state?.home);
   const fontFamily = appStyle?.fontSizeData;
@@ -199,7 +202,12 @@ export default function LaundryAvailableVendors({navigation, route}) {
           </View>
           {!isEmpty(item?.product) && (
             <Text style={styles.priceText}>
-              {currencies?.primary_currency?.symbol} {item?.product[0]?.price}
+              {tokenConverterPlusCurrencyNumberFormater(
+                item?.product[0]?.price,
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
             </Text>
           )}
           <ButtonWithLoader

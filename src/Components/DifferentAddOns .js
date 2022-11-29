@@ -87,7 +87,6 @@ const DifferentAddOns = ({
   console.log('selectedDiffAdsOnItem datadata', data);
   const renderItem = ({item, index}) => {
     const {product, pvariant, addon_set} = item;
-    // console.log("item++++", item)
     return (
       <View pointerEvents={btnLoader ? 'none' : 'auto'} style={{}}>
         <View style={styles.flexView}>
